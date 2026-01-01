@@ -1,50 +1,57 @@
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-import productSaree1 from '@/assets/product-saree-1.jpg';
-import productLehenga1 from '@/assets/product-lehenga-1.jpg';
-import productSaree2 from '@/assets/product-saree-2.jpg';
-import productSuit1 from '@/assets/product-suit-1.jpg';
-
-const products = [
-  {
-    id: 1,
-    name: 'Chanderi Silk Saree',
-    price: 12500,
-    originalPrice: 15000,
-    category: 'Sarees',
-    isNew: true,
-    image: productSaree1,
-  },
-  {
-    id: 2,
-    name: 'Embroidered Lehenga Set',
-    price: 28000,
-    category: 'Lehengas',
-    isNew: false,
-    image: productLehenga1,
-  },
-  {
-    id: 3,
-    name: 'Banarasi Silk Saree',
-    price: 18500,
-    category: 'Sarees',
-    isNew: true,
-    image: productSaree2,
-  },
-  {
-    id: 4,
-    name: 'Palazzo Suit Set',
-    price: 9800,
-    originalPrice: 12000,
-    category: 'Suits',
-    isNew: false,
-    image: productSuit1,
-  },
-];
+import { useEffect, useState } from 'react';
+import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
+import { useCartStore } from '@/stores/cartStore';
+import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import { toast } from 'sonner';
 
 const FeaturedProducts = () => {
+  const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const addItem = useCartStore(state => state.addItem);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      setLoading(true);
+      const data = await fetchProducts(8);
+      setProducts(data);
+      setLoading(false);
+    };
+    loadProducts();
+  }, []);
+
+  const handleAddToCart = (e: React.MouseEvent, product: ShopifyProduct) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const variant = product.node.variants.edges[0]?.node;
+    if (!variant) return;
+
+    addItem({
+      product,
+      variantId: variant.id,
+      variantTitle: variant.title,
+      price: variant.price,
+      quantity: 1,
+      selectedOptions: variant.selectedOptions || []
+    });
+
+    toast.success('Added to cart', {
+      description: product.node.title,
+      position: 'top-center'
+    });
+  };
+
+  const formatPrice = (amount: string, currencyCode: string) => {
+    const num = parseFloat(amount);
+    if (currencyCode === 'INR') {
+      return `₹${num.toLocaleString('en-IN')}`;
+    }
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: currencyCode }).format(num);
+  };
+
   return (
     <section className="py-20 lg:py-28 bg-card/30">
       <div className="container mx-auto px-4 lg:px-8">
@@ -71,79 +78,89 @@ const FeaturedProducts = () => {
         </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-          {products.map((product, index) => (
-            <motion.article
-              key={product.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group"
-            >
-              <Link to={`/product/${product.id}`} className="block">
-                {/* Image Container */}
-                <div className="relative aspect-[3/4] mb-4 overflow-hidden bg-card">
-                  {/* Product Image */}
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+        {loading ? (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="aspect-[3/4] bg-card mb-4" />
+                <div className="h-3 bg-card rounded w-1/3 mb-2" />
+                <div className="h-4 bg-card rounded w-2/3 mb-2" />
+                <div className="h-4 bg-card rounded w-1/4" />
+              </div>
+            ))}
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-foreground/60 mb-2">No products found</p>
+            <p className="text-sm text-foreground/40">
+              Add products to your Shopify store to display them here.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            {products.map((product, index) => {
+              const image = product.node.images.edges[0]?.node;
+              const price = product.node.priceRange.minVariantPrice;
 
-                  {/* Badges */}
-                  <div className="absolute top-3 left-3 flex flex-col gap-2">
-                    {product.isNew && (
-                      <span className="bg-foreground text-background text-[10px] tracking-luxury uppercase px-2 py-1">
-                        New
-                      </span>
-                    )}
-                    {product.originalPrice && (
-                      <span className="bg-rose text-foreground text-[10px] tracking-luxury uppercase px-2 py-1">
-                        Sale
-                      </span>
-                    )}
-                  </div>
+              return (
+                <motion.article
+                  key={product.node.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="group"
+                >
+                  <Link to={`/product/${product.node.handle}`} className="block">
+                    {/* Image Container */}
+                    <div className="relative aspect-[3/4] mb-4 overflow-hidden bg-card">
+                      {image ? (
+                        <img
+                          src={image.url}
+                          alt={image.altText || product.node.title}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <ProductPlaceholder className="absolute inset-0 w-full h-full" />
+                      )}
 
-                  {/* Wishlist Button */}
-                  <button
-                    className="absolute top-3 right-3 p-2 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
-                    aria-label="Add to wishlist"
-                  >
-                    <Heart className="w-4 h-4" />
-                  </button>
+                      {/* Wishlist Button */}
+                      <button
+                        className="absolute top-3 right-3 p-2 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background"
+                        aria-label="Add to wishlist"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <Heart className="w-4 h-4" />
+                      </button>
 
-                  {/* Quick Shop Overlay */}
-                  <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <button className="w-full bg-background/95 backdrop-blur-sm py-3 text-xs tracking-editorial uppercase hover:bg-background transition-colors">
-                      Quick View
-                    </button>
-                  </div>
-                </div>
+                      {/* Quick Add Overlay */}
+                      <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <button 
+                          className="w-full bg-background/95 backdrop-blur-sm py-3 text-xs tracking-editorial uppercase hover:bg-background transition-colors"
+                          onClick={(e) => handleAddToCart(e, product)}
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
 
-                {/* Product Info */}
-                <div className="space-y-1">
-                  <p className="text-xs text-foreground/50 uppercase tracking-wide">
-                    {product.category}
-                  </p>
-                  <h3 className="font-serif text-sm lg:text-base group-hover:underline underline-offset-4 transition-all">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">
-                      ₹{product.price.toLocaleString()}
-                    </span>
-                    {product.originalPrice && (
-                      <span className="text-xs text-foreground/40 line-through">
-                        ₹{product.originalPrice.toLocaleString()}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            </motion.article>
-          ))}
-        </div>
+                    {/* Product Info */}
+                    <div className="space-y-1">
+                      <h3 className="font-serif text-sm lg:text-base group-hover:underline underline-offset-4 transition-all line-clamp-1">
+                        {product.node.title}
+                      </h3>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium">
+                          {formatPrice(price.amount, price.currencyCode)}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.article>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

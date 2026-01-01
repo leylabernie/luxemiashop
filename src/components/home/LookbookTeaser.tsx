@@ -2,11 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-import lookbook1 from '@/assets/lookbook-1.jpg';
-import lookbook2 from '@/assets/lookbook-2.jpg';
-import lookbook3 from '@/assets/lookbook-3.jpg';
-import lookbook4 from '@/assets/lookbook-4.jpg';
+import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 
 const LookbookTeaser = () => {
   return (
@@ -23,34 +19,18 @@ const LookbookTeaser = () => {
           >
             <div className="space-y-4">
               <div className="aspect-[3/4] overflow-hidden image-reveal">
-                <img 
-                  src={lookbook1} 
-                  alt="Elegant saree editorial" 
-                  className="w-full h-full object-cover"
-                />
+                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
               </div>
               <div className="aspect-square overflow-hidden image-reveal">
-                <img 
-                  src={lookbook2} 
-                  alt="Gold jewelry collection" 
-                  className="w-full h-full object-cover"
-                />
+                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
               </div>
             </div>
             <div className="space-y-4 pt-8">
               <div className="aspect-square overflow-hidden image-reveal">
-                <img 
-                  src={lookbook3} 
-                  alt="Embroidery detail" 
-                  className="w-full h-full object-cover"
-                />
+                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
               </div>
               <div className="aspect-[3/4] overflow-hidden image-reveal">
-                <img 
-                  src={lookbook4} 
-                  alt="Lehenga editorial" 
-                  className="w-full h-full object-cover"
-                />
+                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
               </div>
             </div>
           </motion.div>

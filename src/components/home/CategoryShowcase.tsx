@@ -1,29 +1,23 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-
-import categorySarees from '@/assets/category-sarees.jpg';
-import categoryLehengas from '@/assets/category-lehengas.jpg';
-import categorySuits from '@/assets/category-suits.jpg';
+import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 
 const categories = [
   {
     name: 'Sarees',
     description: 'Handwoven elegance',
     href: '/sarees',
-    image: categorySarees,
   },
   {
     name: 'Lehengas',
     description: 'Bridal & Festive',
     href: '/lehengas',
-    image: categoryLehengas,
   },
   {
     name: 'Suits',
     description: 'Contemporary classics',
     href: '/suits',
-    image: categorySuits,
   },
 ];
 
@@ -59,15 +53,14 @@ const CategoryShowcase = () => {
                 to={category.href}
                 className="group block relative aspect-[3/4] overflow-hidden"
               >
-                {/* Category Image */}
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                {/* Category Placeholder */}
+                <ProductPlaceholder 
+                  className="absolute inset-0 w-full h-full" 
+                  label={`${category.name} Image`} 
                 />
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-foreground/10 to-transparent" />
 
                 {/* Content Overlay */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">

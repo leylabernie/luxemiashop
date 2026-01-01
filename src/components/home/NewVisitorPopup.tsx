@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-import popupImage from '@/assets/popup-image.jpg';
 
 const NewVisitorPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +45,11 @@ const NewVisitorPopup = () => {
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-lg bg-background z-50 shadow-2xl"
           >
             <div className="grid md:grid-cols-2">
-              <div className="hidden md:block aspect-square overflow-hidden">
-                <img src={popupImage} alt="Luxury saree" className="w-full h-full object-cover" />
+              <div className="hidden md:block aspect-square overflow-hidden bg-card border-2 border-dashed border-border/50 flex flex-col items-center justify-center">
+                <div className="w-full h-full flex flex-col items-center justify-center">
+                  <ImageIcon className="w-10 h-10 text-foreground/20 mb-2" />
+                  <span className="text-xs text-foreground/30 tracking-wide uppercase">Promo Image</span>
+                </div>
               </div>
               <div className="p-8 lg:p-10 relative">
                 <button
