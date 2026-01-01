@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, User, Menu, X, Heart } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Search, ShoppingBag, User, Menu, X, Heart, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore } from '@/stores/cartStore';
+import { useAuth } from '@/hooks/useAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const navLinks = [
   { name: 'Collections', href: '/collections' },
@@ -21,8 +28,24 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   
   const wishlistItems = useWishlistStore(state => state.items);
+  const loadFromDatabase = useWishlistStore(state => state.loadFromDatabase);
   const cartItems = useCartStore(state => state.items);
   const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  
+  const { user, signOut, loading } = useAuth();
+  const navigate = useNavigate();
+
+  // Load wishlist from database when user logs in
+  useEffect(() => {
+    if (user) {
+      loadFromDatabase(user.id);
+    }
+  }, [user, loadFromDatabase]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   return (
     <>
@@ -109,13 +132,38 @@ const Header = () => {
                 )}
               </Link>
 
-              <Link 
-                to="/account"
-                className="hidden sm:flex p-2 hover:bg-card rounded-full transition-colors"
-                aria-label="Account"
-              >
-                <User className="w-4 h-4 lg:w-5 lg:h-5" />
-              </Link>
+              {/* User Menu */}
+              {!loading && (
+                user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button 
+                        className="hidden sm:flex p-2 hover:bg-card rounded-full transition-colors"
+                        aria-label="Account"
+                      >
+                        <User className="w-4 h-4 lg:w-5 lg:h-5" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem className="text-muted-foreground text-xs">
+                        {user.email}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Link 
+                    to="/auth"
+                    className="hidden sm:flex p-2 hover:bg-card rounded-full transition-colors"
+                    aria-label="Sign In"
+                  >
+                    <User className="w-4 h-4 lg:w-5 lg:h-5" />
+                  </Link>
+                )
+              )}
 
               <button
                 onClick={() => setIsCartOpen(true)}
@@ -200,6 +248,34 @@ const Header = () => {
                     </Link>
                   </motion.div>
                 ))}
+                
+                {/* Mobile Auth Links */}
+                <div className="pt-6 border-t border-border/50">
+                  {user ? (
+                    <>
+                      <p className="text-sm text-muted-foreground mb-4">{user.email}</p>
+                      <button
+                        onClick={() => {
+                          handleSignOut();
+                          setIsMenuOpen(false);
+                        }}
+                        className="flex items-center gap-2 text-lg font-light tracking-editorial uppercase text-foreground/80 hover:text-foreground transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <Link
+                      to="/auth"
+                      className="flex items-center gap-2 text-lg font-light tracking-editorial uppercase text-foreground/80 hover:text-foreground transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <User className="w-4 h-4" />
+                      Sign In
+                    </Link>
+                  )}
+                </div>
               </div>
             </motion.nav>
           </>
