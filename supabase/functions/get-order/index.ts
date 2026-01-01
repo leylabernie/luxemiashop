@@ -1,0 +1,183 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+const SHOPIFY_STORE_DOMAIN = "lovable-project-zlh0w.myshopify.com";
+const SHOPIFY_API_VERSION = "2025-07";
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const { orderNumber, email } = await req.json();
+
+    if (!orderNumber || !email) {
+      return new Response(
+        JSON.stringify({ error: "Order number and email are required" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const accessToken = Deno.env.get("SHOPIFY_ACCESS_TOKEN");
+    if (!accessToken) {
+      return new Response(
+        JSON.stringify({ error: "Shopify access token not configured" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Query Shopify Admin API for orders
+    const query = `
+      query getOrderByNumber($query: String!) {
+        orders(first: 1, query: $query) {
+          edges {
+            node {
+              id
+              name
+              email
+              createdAt
+              displayFinancialStatus
+              displayFulfillmentStatus
+              totalPriceSet {
+                shopMoney {
+                  amount
+                  currencyCode
+                }
+              }
+              shippingAddress {
+                city
+                province
+                country
+              }
+              lineItems(first: 10) {
+                edges {
+                  node {
+                    title
+                    quantity
+                    variant {
+                      image {
+                        url
+                      }
+                    }
+                    originalUnitPriceSet {
+                      shopMoney {
+                        amount
+                        currencyCode
+                      }
+                    }
+                  }
+                }
+              }
+              fulfillments {
+                trackingInfo {
+                  number
+                  url
+                }
+                status
+                createdAt
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const response = await fetch(
+      `https://${SHOPIFY_STORE_DOMAIN}/admin/api/${SHOPIFY_API_VERSION}/graphql.json`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Shopify-Access-Token": accessToken,
+        },
+        body: JSON.stringify({
+          query,
+          variables: {
+            query: `name:${orderNumber}`,
+          },
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Shopify API error:", errorText);
+      return new Response(
+        JSON.stringify({ error: "Failed to fetch order from Shopify" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const data = await response.json();
+    
+    if (data.errors) {
+      console.error("GraphQL errors:", data.errors);
+      return new Response(
+        JSON.stringify({ error: "Failed to query orders" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const orders = data.data?.orders?.edges || [];
+    
+    if (orders.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Order not found" }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const order = orders[0].node;
+    
+    // Verify email matches (case-insensitive)
+    if (order.email?.toLowerCase() !== email.toLowerCase()) {
+      return new Response(
+        JSON.stringify({ error: "Order not found" }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Return sanitized order data
+    const sanitizedOrder = {
+      id: order.id,
+      name: order.name,
+      createdAt: order.createdAt,
+      financialStatus: order.displayFinancialStatus,
+      fulfillmentStatus: order.displayFulfillmentStatus,
+      total: order.totalPriceSet?.shopMoney,
+      shippingAddress: order.shippingAddress ? {
+        city: order.shippingAddress.city,
+        province: order.shippingAddress.province,
+        country: order.shippingAddress.country,
+      } : null,
+      lineItems: order.lineItems?.edges?.map((edge: any) => ({
+        title: edge.node.title,
+        quantity: edge.node.quantity,
+        image: edge.node.variant?.image?.url,
+        price: edge.node.originalUnitPriceSet?.shopMoney,
+      })) || [],
+      fulfillments: order.fulfillments?.map((f: any) => ({
+        status: f.status,
+        createdAt: f.createdAt,
+        tracking: f.trackingInfo?.[0] || null,
+      })) || [],
+    };
+
+    return new Response(
+      JSON.stringify({ order: sanitizedOrder }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  } catch (error) {
+    console.error("Error:", error);
+    return new Response(
+      JSON.stringify({ error: "Internal server error" }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
+  }
+});

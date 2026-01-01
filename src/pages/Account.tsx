@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Mail, Phone, Package, Heart, Settings, LogOut } from 'lucide-react';
+import { User, Mail, Phone, Package, Heart, Settings, LogOut, Search } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
 import { useWishlistStore } from '@/stores/wishlistStore';
+import OrderTracking from '@/components/account/OrderTracking';
 
 const Account = () => {
   const navigate = useNavigate();
@@ -187,23 +188,16 @@ const Account = () => {
               <TabsContent value="orders">
                 <Card className="border-border/50">
                   <CardHeader>
-                    <CardTitle className="font-serif text-xl">Order History</CardTitle>
-                    <CardDescription>View your past purchases</CardDescription>
+                    <CardTitle className="font-serif text-xl flex items-center gap-2">
+                      <Search className="w-5 h-5" />
+                      Track Your Order
+                    </CardTitle>
+                    <CardDescription>
+                      Enter your order number and email to check the status of your order
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-center py-12">
-                      <Package className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
-                      <h3 className="font-serif text-lg mb-2">No orders yet</h3>
-                      <p className="text-muted-foreground text-sm mb-6">
-                        When you place an order, it will appear here
-                      </p>
-                      <Button
-                        variant="outline"
-                        onClick={() => navigate('/collections')}
-                      >
-                        Start Shopping
-                      </Button>
-                    </div>
+                    <OrderTracking />
                   </CardContent>
                 </Card>
 
