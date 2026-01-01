@@ -4,6 +4,8 @@ import { Search, ShoppingBag, User, Menu, X, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
+import { useWishlistStore } from '@/stores/wishlistStore';
+import { useCartStore } from '@/stores/cartStore';
 
 const navLinks = [
   { name: 'Collections', href: '/collections' },
@@ -17,6 +19,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  
+  const wishlistItems = useWishlistStore(state => state.items);
+  const cartItems = useCartStore(state => state.items);
+  const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
@@ -92,10 +98,15 @@ const Header = () => {
 
               <Link 
                 to="/wishlist"
-                className="hidden sm:flex p-2 hover:bg-card rounded-full transition-colors"
+                className="hidden sm:flex p-2 hover:bg-card rounded-full transition-colors relative"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4 lg:w-5 lg:h-5" />
+                {wishlistItems.length > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-foreground text-[10px] rounded-full flex items-center justify-center">
+                    {wishlistItems.length}
+                  </span>
+                )}
               </Link>
 
               <Link 
@@ -112,9 +123,11 @@ const Header = () => {
                 aria-label="Cart"
               >
                 <ShoppingBag className="w-4 h-4 lg:w-5 lg:h-5" />
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-rose text-foreground text-[10px] rounded-full flex items-center justify-center">
-                  2
-                </span>
+                {totalCartItems > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-foreground text-[10px] rounded-full flex items-center justify-center">
+                    {totalCartItems}
+                  </span>
+                )}
               </button>
             </div>
           </div>
