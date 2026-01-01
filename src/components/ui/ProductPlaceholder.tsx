@@ -3,7 +3,7 @@ import { ImageIcon } from 'lucide-react';
 interface ProductPlaceholderProps {
   className?: string;
   label?: string;
-  aspectRatio?: 'square' | 'portrait' | 'landscape';
+  aspectRatio?: 'square' | 'portrait' | 'landscape' | 'auto';
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -17,6 +17,7 @@ const ProductPlaceholder = ({
     square: 'aspect-square',
     portrait: 'aspect-[3/4]',
     landscape: 'aspect-[4/3]',
+    auto: '',
   };
 
   const iconSizes = {
