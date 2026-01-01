@@ -60,7 +60,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="font-serif text-2xl">
-              Vasantam
+              Luxemia
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed">
               Celebrating the artistry of Indian craftsmanship through timeless ethnic wear.
@@ -138,7 +138,7 @@ const Footer = () => {
       <div className="border-t border-border/50">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-foreground/50">
-            <p>© 2024 Vasantam. All rights reserved.</p>
+            <p>© 2024 Luxemia. All rights reserved.</p>
             <div className="flex gap-6">
               <Link to="/privacy" className="hover:text-foreground transition-colors">
                 Privacy Policy
