@@ -148,6 +148,12 @@ const Header = () => {
                       <DropdownMenuItem className="text-muted-foreground text-xs">
                         {user.email}
                       </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/account" className="cursor-pointer">
+                          <User className="w-4 h-4 mr-2" />
+                          My Account
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
                         <LogOut className="w-4 h-4 mr-2" />
                         Sign Out
@@ -250,10 +256,18 @@ const Header = () => {
                 ))}
                 
                 {/* Mobile Auth Links */}
-                <div className="pt-6 border-t border-border/50">
+                <div className="pt-6 border-t border-border/50 space-y-4">
                   {user ? (
                     <>
                       <p className="text-sm text-muted-foreground mb-4">{user.email}</p>
+                      <Link
+                        to="/account"
+                        className="flex items-center gap-2 text-lg font-light tracking-editorial uppercase text-foreground/80 hover:text-foreground transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <User className="w-4 h-4" />
+                        My Account
+                      </Link>
                       <button
                         onClick={() => {
                           handleSignOut();
