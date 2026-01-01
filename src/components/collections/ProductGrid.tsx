@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Heart, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import WishlistButton from '@/components/ui/WishlistButton';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
@@ -133,12 +134,12 @@ export const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
                     <Plus className="h-4 w-4" />
                     Add to Bag
                   </button>
-                  <button
-                    onClick={(e) => e.preventDefault()}
-                    className="p-2.5 bg-background/90 backdrop-blur-sm rounded-sm hover:bg-background transition-colors"
-                  >
-                    <Heart className="h-4 w-4" />
-                  </button>
+                  <WishlistButton 
+                    product={product} 
+                    size="sm" 
+                    variant="overlay"
+                    className="rounded-sm"
+                  />
                 </div>
               </div>
 
