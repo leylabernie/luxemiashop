@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-
-import heroSpring from '@/assets/hero-spring-collection.jpg';
-import heroBridal from '@/assets/hero-bridal-couture.jpg';
-import heroFestive from '@/assets/hero-festive-edit.jpg';
 
 const heroSlides = [
   {
@@ -13,21 +9,18 @@ const heroSlides = [
     title: 'The Spring Collection',
     subtitle: 'Celebrating the Art of Indian Weaves',
     cta: 'Explore Collection',
-    image: heroSpring,
   },
   {
     id: 2,
     title: 'Bridal Couture',
     subtitle: 'Timeless Elegance for Your Special Day',
     cta: 'View Bridal',
-    image: heroBridal,
   },
   {
     id: 3,
     title: 'Festive Edit',
     subtitle: 'Where Tradition Meets Contemporary',
     cta: 'Shop Festive',
-    image: heroFestive,
   },
 ];
 
@@ -87,12 +80,11 @@ const HeroSection = () => {
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="absolute inset-0"
         >
-          {/* Background Image */}
-          <img
-            src={heroSlides[currentSlide].image}
-            alt={heroSlides[currentSlide].title}
-            className="w-full h-full object-cover object-center"
-          />
+          {/* Background Placeholder */}
+          <div className="w-full h-full bg-card flex flex-col items-center justify-center border-2 border-dashed border-border/50">
+            <ImageIcon className="w-16 h-16 text-foreground/20 mb-4" />
+            <span className="text-sm text-foreground/30 tracking-wide uppercase">Hero Image</span>
+          </div>
 
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/30 to-transparent" />
