@@ -16,6 +16,11 @@ import Lehengas from "./pages/Lehengas";
 import Sarees from "./pages/Sarees";
 import Suits from "./pages/Suits";
 import Menswear from "./pages/Menswear";
+import Contact from "./pages/Contact";
+import Shipping from "./pages/Shipping";
+import Returns from "./pages/Returns";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,10 +41,24 @@ const App = () => (
             <Route path="/suits" element={<Suits />} />
             <Route path="/menswear" element={<Menswear />} />
             <Route path="/our-story" element={<BrandStory />} />
+            <Route path="/brand-story" element={<BrandStory />} />
             <Route path="/lookbook" element={<Lookbook />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/returns" element={<Returns />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            {/* Redirect missing pages to related content */}
+            <Route path="/new-arrivals" element={<Lehengas />} />
+            <Route path="/accessories" element={<Collections />} />
+            <Route path="/artisans" element={<BrandStory />} />
+            <Route path="/sustainability" element={<BrandStory />} />
+            <Route path="/press" element={<BrandStory />} />
+            <Route path="/size-guide" element={<Lehengas />} />
+            <Route path="/care-guide" element={<Returns />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
