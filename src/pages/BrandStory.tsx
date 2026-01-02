@@ -31,13 +31,13 @@ const BrandStory = () => {
           className="relative text-center px-4 max-w-4xl mx-auto"
         >
           <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-            Our Heritage
+            Our Vision
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight">
-            Weaving Stories<br />Since 1987
+            Reimagining<br />Ethnic Elegance
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Where tradition meets contemporary elegance, every thread tells a story of India's rich textile heritage.
+            Born from a passion for preserving India's rich textile heritage while embracing modern sensibilities.
           </p>
         </motion.div>
         <motion.div
@@ -52,17 +52,17 @@ const BrandStory = () => {
       {/* Origin Story - Parallax Section */}
       <ParallaxSection
         title="The Beginning"
-        subtitle="Jaipur, 1987"
-        content="In the pink city of Jaipur, where every lane whispers tales of royalty and artisanship, Vasantam was born. What started as a small atelier in the bylanes of Johari Bazaar has blossomed into a sanctuary of handcrafted elegance."
+        subtitle="Los Angeles, 2024"
+        content="LuxeMia was founded with a simple yet powerful vision: to bring the exquisite artistry of Indian ethnic wear to fashion-forward women worldwide. We partner directly with master craftsmen across India, ensuring authentic craftsmanship reaches your doorstep while supporting traditional artisan communities."
         imagePosition="right"
         bgColor="bg-card"
       />
 
       {/* Craftsmanship Section */}
       <ParallaxSection
-        title="The Artisans"
-        subtitle="Hands That Create Magic"
-        content="Behind every Vasantam piece are the skilled hands of over 200 master artisans. These craftsmen and craftswomen carry forward techniques passed down through generations—from the intricate Zardozi of Lucknow to the delicate Chikankari of Awadh."
+        title="Our Artisans"
+        subtitle="Handcrafted Excellence"
+        content="Every LuxeMia piece is created by skilled artisans who have inherited techniques passed down through generations. From the intricate Zardozi embroidery of Lucknow to the delicate threadwork of Jaipur, we celebrate and preserve these timeless art forms by connecting them with a global audience."
         imagePosition="left"
         bgColor="bg-background"
       />
@@ -160,10 +160,10 @@ const BrandStory = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <blockquote className="text-3xl md:text-4xl font-serif leading-relaxed mb-8">
-            "Every garment we create is a love letter to India's textile heritage—crafted with patience, worn with pride."
+            "We believe every woman deserves to experience the magic of handcrafted Indian artistry—wherever she is in the world."
           </blockquote>
           <cite className="text-muted-foreground not-italic">
-            — Priya Sharma, Founder & Creative Director
+            — The LuxeMia Team
           </cite>
         </motion.div>
       </section>
@@ -244,29 +244,24 @@ const philosophyPoints = [
 
 const timelineEvents = [
   {
-    year: '1987',
-    title: 'The First Stitch',
-    description: 'Vasantam opens its doors as a small atelier in Jaipur, specializing in bridal wear.',
+    year: '2024',
+    title: 'The Dream Takes Shape',
+    description: 'LuxeMia is born with a vision to bridge traditional Indian craftsmanship with modern global fashion.',
   },
   {
-    year: '1995',
-    title: 'National Recognition',
-    description: 'Our handwoven Banarasi collection wins the National Textile Award.',
+    year: '2024',
+    title: 'Artisan Partnerships',
+    description: 'Established direct relationships with master craftsmen across Jaipur, Lucknow, and Varanasi.',
   },
   {
-    year: '2005',
-    title: 'Artisan Collective',
-    description: 'Launch of our Artisan Support Program, partnering with 50+ craft clusters across India.',
+    year: '2025',
+    title: 'Digital Launch',
+    description: 'Our online boutique goes live, bringing authentic ethnic wear to customers worldwide.',
   },
   {
-    year: '2015',
-    title: 'Global Debut',
-    description: 'First international showcase at London Fashion Week, introducing Indian craft to the world.',
-  },
-  {
-    year: '2023',
-    title: 'Digital Atelier',
-    description: 'Launch of our online boutique, bringing artisanal excellence to doorsteps worldwide.',
+    year: 'Future',
+    title: 'Growing Together',
+    description: 'Expanding our artisan network and introducing new collections that honor tradition while embracing innovation.',
   },
 ];
 

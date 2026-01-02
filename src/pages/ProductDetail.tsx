@@ -8,10 +8,12 @@ import { ProductGallery } from '@/components/product/ProductGallery';
 import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
+import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
 import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 
 // Using local products for preview - switch to Shopify when ready to publish
 const USE_LOCAL_PRODUCTS = true;
@@ -21,6 +23,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -61,6 +64,20 @@ const ProductDetail = () => {
 
     loadProduct();
   }, [handle]);
+
+  // Track recently viewed
+  useEffect(() => {
+    if (product) {
+      addToRecentlyViewed({
+        id: product.id,
+        handle: product.handle,
+        title: product.title,
+        price: product.priceRange.minVariantPrice.amount,
+        currency: product.priceRange.minVariantPrice.currencyCode,
+        imageUrl: product.images.edges[0]?.node.url || '',
+      });
+    }
+  }, [product, addToRecentlyViewed]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -123,6 +140,9 @@ const ProductDetail = () => {
                 currentProductId={product.id}
                 productType={product.productType}
               />
+
+              {/* Recently Viewed */}
+              <RecentlyViewed currentProductId={product.id} />
             </motion.div>
           )}
         </div>
