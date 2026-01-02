@@ -31,10 +31,6 @@ const FAQ = () => {
           answer: 'Enter your discount code in the "Promo Code" field during checkout and click "Apply". The discount will be reflected in your order total. Note that only one discount code can be applied per order, and some exclusions may apply.',
         },
         {
-          question: 'Do you offer installment payments?',
-          answer: 'Yes! We partner with Klarna and Afterpay to offer buy-now-pay-later options. You can split your purchase into 4 interest-free payments. These options appear at checkout for eligible orders.',
-        },
-        {
           question: 'Will I receive an order confirmation?',
           answer: 'Yes, you will receive an email confirmation immediately after placing your order. This includes your order number, items ordered, and estimated delivery timeline. Check your spam folder if you do not receive it.',
         },
