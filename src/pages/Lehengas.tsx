@@ -78,6 +78,7 @@ const Lehengas = () => {
       <SEOHead
         title="Shop Bridal & Wedding Lehengas Online | Designer Lehenga Choli - LuxeMia"
         description="Discover exquisite bridal lehengas and designer lehenga choli at LuxeMia. Shop handcrafted wedding lehengas with heavy embroidery, silk, and velvet fabrics. Worldwide shipping available."
+        image="/og/og-lehengas.jpg"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },

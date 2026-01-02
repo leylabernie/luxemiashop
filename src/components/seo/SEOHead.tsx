@@ -32,6 +32,9 @@ const SEOHead = ({
   const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.com';
   const currentUrl = typeof window !== 'undefined' ? window.location.href : siteUrl;
   const canonicalUrl = canonical || currentUrl;
+  
+  // Convert relative image paths to absolute URLs
+  const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
   // Organization Schema
   const organizationSchema = {
@@ -135,7 +138,7 @@ const SEOHead = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={absoluteImage} />
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
@@ -144,7 +147,7 @@ const SEOHead = ({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={absoluteImage} />
       <meta name="twitter:site" content="@LuxeMia" />
 
       {/* Additional Meta */}

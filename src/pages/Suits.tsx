@@ -323,6 +323,7 @@ const Suits = () => {
       <SEOHead
         title="Buy Anarkali Suits & Salwar Kameez Online | Designer Suits - LuxeMia"
         description="Shop elegant Anarkali suits, Sharara sets, and designer salwar kameez at LuxeMia. Premium fabrics with intricate embroidery. Custom sizing available. Worldwide delivery."
+        image="/og/og-suits.jpg"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
