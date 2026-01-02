@@ -6,10 +6,6 @@ import { sareeProducts, type SareeProduct } from './sareeProducts';
 import { menswearProducts, type MenswearProduct } from './menswearProducts';
 import { suitProducts, type SuitProduct } from './suitProducts';
 
-// Local product images
-import gownCoralImg from '@/assets/products/viscose-jacquard-gown-coral-new.jpg';
-import gownSageImg from '@/assets/products/viscose-jacquard-gown-sage-new.jpg';
-
 export interface LocalProduct {
   id: string;
   handle: string;
@@ -558,54 +554,6 @@ export const localProducts: LocalProduct[] = [
       { id: "festive-006-m", title: "M", price: convertPrice(5395), options: { Size: "M" } },
       { id: "festive-006-l", title: "L", price: convertPrice(5395), options: { Size: "L" } },
       { id: "festive-006-xl", title: "XL", price: convertPrice(5395), options: { Size: "XL" } }
-    ],
-    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
-  },
-
-  // === GOWNS COLLECTION ===
-  {
-    id: "gown-001",
-    handle: "coral-silk-jacquard-anarkali-gown",
-    title: "Coral Silk Jacquard Anarkali Gown",
-    description: "Make a statement of refined elegance with this stunning coral pink Viscose Jacquard silk gown that exemplifies the perfect union of traditional craftsmanship and contemporary design. The rich coral hue radiates warmth and sophistication, while the luxurious jacquard weave creates intricate patterns that catch the light beautifully. This floor-length anarkali silhouette features delicate floral embroidery throughout the bodice and flowing skirt, complemented by an ethereal organza dupatta with coordinating embellishments. Perfect for festive celebrations, wedding functions, and elegant evening occasions.",
-    price: convertPrice(3250),
-    originalPrice: convertPrice(4500),
-    currency: "USD",
-    images: [gownCoralImg],
-    category: "Gowns",
-    fabric: "Viscose Jacquard Silk",
-    occasion: "Party",
-    color: "Coral Pink",
-    work: "Jacquard Embroidery",
-    tags: ["gown", "anarkali", "jacquard", "silk", "coral", "festive", "party", "ethnic", "dupatta"],
-    variants: [
-      { id: "gown-001-s", title: "S", price: convertPrice(3250), options: { Size: "S" } },
-      { id: "gown-001-m", title: "M", price: convertPrice(3250), options: { Size: "M" } },
-      { id: "gown-001-l", title: "L", price: convertPrice(3250), options: { Size: "L" } },
-      { id: "gown-001-xl", title: "XL", price: convertPrice(3250), options: { Size: "XL" } }
-    ],
-    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
-  },
-  {
-    id: "gown-002",
-    handle: "sage-green-silk-jacquard-anarkali-gown",
-    title: "Sage Green Silk Jacquard Anarkali Gown",
-    description: "Embrace serene sophistication with this exquisite sage green Viscose Jacquard silk gown that brings a refreshing contemporary palette to traditional ethnic wear. The calming sage tone is achieved through meticulous dyeing processes that ensure color depth and longevity. The luxurious jacquard fabric showcases intricate woven patterns that create dimensional texture, while delicate thread embroidery adds floral motifs throughout the graceful anarkali silhouette. Paired with a beautifully coordinated dupatta featuring complementary detailing, this ensemble is perfect for garden parties, daytime celebrations, and sophisticated evening gatherings.",
-    price: convertPrice(3250),
-    originalPrice: convertPrice(4500),
-    currency: "USD",
-    images: [gownSageImg],
-    category: "Gowns",
-    fabric: "Viscose Jacquard Silk",
-    occasion: "Party",
-    color: "Sage Green",
-    work: "Jacquard Embroidery",
-    tags: ["gown", "anarkali", "jacquard", "silk", "sage", "green", "festive", "party", "ethnic", "dupatta"],
-    variants: [
-      { id: "gown-002-s", title: "S", price: convertPrice(3250), options: { Size: "S" } },
-      { id: "gown-002-m", title: "M", price: convertPrice(3250), options: { Size: "M" } },
-      { id: "gown-002-l", title: "L", price: convertPrice(3250), options: { Size: "L" } },
-      { id: "gown-002-xl", title: "XL", price: convertPrice(3250), options: { Size: "XL" } }
     ],
     options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
   }
