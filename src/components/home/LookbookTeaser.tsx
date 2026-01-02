@@ -2,7 +2,13 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+
+const lookbookImages = [
+  'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg',
+  'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg',
+  'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Lavender-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10242(1).jpg',
+  'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg',
+];
 
 const LookbookTeaser = () => {
   return (
@@ -19,18 +25,34 @@ const LookbookTeaser = () => {
           >
             <div className="space-y-4">
               <div className="aspect-[3/4] overflow-hidden image-reveal">
-                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
+                <img 
+                  src={lookbookImages[0]} 
+                  alt="Lookbook - Mint Green Saree"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                />
               </div>
               <div className="aspect-square overflow-hidden image-reveal">
-                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
+                <img 
+                  src={lookbookImages[1]} 
+                  alt="Lookbook - Burgundy Lehenga"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                />
               </div>
             </div>
             <div className="space-y-4 pt-8">
               <div className="aspect-square overflow-hidden image-reveal">
-                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
+                <img 
+                  src={lookbookImages[2]} 
+                  alt="Lookbook - Lavender Bridal"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                />
               </div>
               <div className="aspect-[3/4] overflow-hidden image-reveal">
-                <ProductPlaceholder className="w-full h-full" label="Lookbook Image" />
+                <img 
+                  src={lookbookImages[3]} 
+                  alt="Lookbook - Emerald Lehenga"
+                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                />
               </div>
             </div>
           </motion.div>

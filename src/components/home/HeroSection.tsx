@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const heroSlides = [
   {
@@ -9,18 +10,24 @@ const heroSlides = [
     title: 'The Spring Collection',
     subtitle: 'Celebrating the Art of Indian Weaves',
     cta: 'Explore Collection',
+    link: '/collections',
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg',
   },
   {
     id: 2,
     title: 'Bridal Couture',
     subtitle: 'Timeless Elegance for Your Special Day',
     cta: 'View Bridal',
+    link: '/lehengas',
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg',
   },
   {
     id: 3,
     title: 'Festive Edit',
     subtitle: 'Where Tradition Meets Contemporary',
     cta: 'Shop Festive',
+    link: '/sarees',
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Pink-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176(1).jpg',
   },
 ];
 
@@ -80,14 +87,17 @@ const HeroSection = () => {
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
           className="absolute inset-0"
         >
-          {/* Background Placeholder */}
-          <div className="w-full h-full bg-card flex flex-col items-center justify-center border-2 border-dashed border-border/50">
-            <ImageIcon className="w-16 h-16 text-foreground/20 mb-4" />
-            <span className="text-sm text-foreground/30 tracking-wide uppercase">Hero Image</span>
+          {/* Background Image */}
+          <div className="w-full h-full">
+            <img 
+              src={heroSlides[currentSlide].image}
+              alt={heroSlides[currentSlide].title}
+              className="w-full h-full object-cover object-top"
+            />
           </div>
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-background/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent" />
 
           {/* Content */}
           <div className="absolute inset-0 flex items-center">
@@ -114,8 +124,10 @@ const HeroSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.6 }}
                 >
-                  <Button variant="hero" size="lg">
-                    {heroSlides[currentSlide].cta}
+                  <Button variant="hero" size="lg" asChild>
+                    <Link to={heroSlides[currentSlide].link}>
+                      {heroSlides[currentSlide].cta}
+                    </Link>
                   </Button>
                 </motion.div>
               </div>

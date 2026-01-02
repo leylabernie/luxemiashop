@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -21,10 +21,12 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { getLocalSareeProducts } from '@/data/localProducts';
+import { getLocalMenswearProducts } from '@/data/localProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
+import { Heart, ShoppingBag } from 'lucide-react';
 import { toast } from 'sonner';
+import { AnimatePresence } from 'framer-motion';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -33,36 +35,36 @@ const sortOptions = [
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
-const sareeFilterSections = [
+const menswearFilterSections = [
+  {
+    name: 'Category',
+    options: ['Groom Sherwanis', 'Kurta Pajamas', 'Velvet Sherwanis', 'Indo-Western'],
+  },
   {
     name: 'Occasion',
-    options: ['Wedding', 'Party', 'Festival', 'Casual', 'Bridal'],
+    options: ['Wedding', 'Occasional', 'Festival', 'Party'],
   },
   {
     name: 'Fabric',
-    options: ['Viscose Silk', 'Tissue Silk', 'Georgette', 'Chiffon', 'Cotton', 'Organza'],
-  },
-  {
-    name: 'Work',
-    options: ['Weaving Work', 'Embroidery', 'Sequins', 'Zari', 'Print'],
+    options: ['Art Silk', 'Banarasi Jacquard', 'Velvet', 'Cotton', 'Viscose', 'Silk'],
   },
   {
     name: 'Color',
-    options: ['Pink', 'Red', 'Green', 'Blue', 'Gold', 'Beige', 'Orange', 'Purple', 'Multi Color'],
+    options: ['White', 'Black', 'Grey', 'Blue', 'Maroon', 'Purple', 'Pink', 'Beige', 'Brown'],
   },
 ];
 
-const Sarees = () => {
+const Menswear = () => {
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1500]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Category']);
   
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  const allProducts = getLocalSareeProducts();
+  const allProducts = getLocalMenswearProducts();
 
   const filteredProducts = useMemo(() => {
     let products = [...allProducts];
@@ -72,19 +74,13 @@ const Sarees = () => {
       if (values.length > 0) {
         products = products.filter(p => {
           const product = p.node;
+          if (section === 'Category') {
+            return values.some(v => product.productType?.toLowerCase().includes(v.toLowerCase()));
+          }
           if (section === 'Occasion') {
-            return values.some(v => 
-              product.productType?.toLowerCase().includes(v.toLowerCase()) ||
-              product.description.toLowerCase().includes(v.toLowerCase())
-            );
+            return values.some(v => product.description.toLowerCase().includes(v.toLowerCase()));
           }
           if (section === 'Fabric') {
-            return values.some(v => 
-              product.productType?.toLowerCase().includes(v.toLowerCase()) ||
-              product.description.toLowerCase().includes(v.toLowerCase())
-            );
-          }
-          if (section === 'Work') {
             return values.some(v => product.description.toLowerCase().includes(v.toLowerCase()));
           }
           if (section === 'Color') {
@@ -163,7 +159,7 @@ const Sarees = () => {
       price: product.priceRange.minVariantPrice,
       quantity: 1,
       image: product.images.edges[0]?.node.url || '',
-      variant: 'Free Size',
+      variant: product.variants.edges[0]?.node.title || 'Default',
     });
     toast.success('Added to bag!');
   };
@@ -197,7 +193,7 @@ const Sarees = () => {
               size="sm"
               onClick={() => {
                 setActiveFilters({});
-                setPriceRange([0, 500]);
+                setPriceRange([0, 1500]);
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
@@ -232,8 +228,8 @@ const Sarees = () => {
                     value={priceRange}
                     onValueChange={(value) => setPriceRange(value as [number, number])}
                     min={0}
-                    max={500}
-                    step={25}
+                    max={1500}
+                    step={50}
                     className="py-4"
                   />
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
@@ -247,7 +243,7 @@ const Sarees = () => {
         </div>
 
         {/* Filter Sections */}
-        {sareeFilterSections.map((section) => (
+        {menswearFilterSections.map((section) => (
           <div key={section.name} className="mb-6 pb-6 border-b border-border last:border-0">
             <button
               onClick={() => toggleSection(section.name)}
@@ -312,11 +308,11 @@ const Sarees = () => {
             className="text-center px-4"
           >
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
-              Timeless Elegance
+              Groom & Wedding Guest
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Sarees</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Menswear</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Exquisite handwoven sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
+              Regal sherwanis and elegant kurta pajamas for grooms and distinguished wedding guests.
             </p>
           </motion.div>
         </section>
@@ -327,7 +323,7 @@ const Sarees = () => {
             <span>/</span>
             <Link to="/collections" className="hover:text-foreground transition-colors">Collections</Link>
             <span>/</span>
-            <span className="text-foreground">Sarees</span>
+            <span className="text-foreground">Menswear</span>
           </nav>
         </div>
 
@@ -464,4 +460,4 @@ const Sarees = () => {
   );
 };
 
-export default Sarees;
+export default Menswear;

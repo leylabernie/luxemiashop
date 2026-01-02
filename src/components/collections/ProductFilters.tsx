@@ -20,7 +20,7 @@ interface ProductFiltersProps {
 const filterSections: FilterSection[] = [
   {
     name: 'Category',
-    options: ['Sarees', 'Lehengas', 'Anarkalis', 'Salwar Suits', 'Dupattas', 'Blouses'],
+    options: ['Sarees', 'Lehengas', 'Anarkalis', 'Salwar Suits', 'Sharara Sets'],
   },
   {
     name: 'Size',
@@ -28,11 +28,11 @@ const filterSections: FilterSection[] = [
   },
   {
     name: 'Fabric',
-    options: ['Silk', 'Cotton', 'Chiffon', 'Georgette', 'Velvet', 'Organza', 'Chanderi'],
+    options: ['Silk', 'Cotton', 'Chiffon', 'Georgette', 'Velvet', 'Organza', 'Chanderi', 'Net'],
   },
   {
     name: 'Occasion',
-    options: ['Bridal', 'Festive', 'Casual', 'Party Wear', 'Office Wear'],
+    options: ['Bridal', 'Wedding', 'Festive', 'Casual', 'Party Wear'],
   },
   {
     name: 'Color',
@@ -74,9 +74,9 @@ export const ProductFilters = ({
   const totalActiveFilters = Object.values(activeFilters).flat().length;
 
   const formatPrice = (value: number) => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'INR',
+      currency: 'USD',
       maximumFractionDigits: 0,
     }).format(value);
   };

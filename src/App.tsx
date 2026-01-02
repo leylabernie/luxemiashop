@@ -15,6 +15,7 @@ import Account from "./pages/Account";
 import Lehengas from "./pages/Lehengas";
 import Sarees from "./pages/Sarees";
 import Suits from "./pages/Suits";
+import Menswear from "./pages/Menswear";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/lehengas" element={<Lehengas />} />
             <Route path="/sarees" element={<Sarees />} />
             <Route path="/suits" element={<Suits />} />
+            <Route path="/menswear" element={<Menswear />} />
             <Route path="/our-story" element={<BrandStory />} />
             <Route path="/lookbook" element={<Lookbook />} />
             <Route path="/wishlist" element={<Wishlist />} />

@@ -11,9 +11,10 @@ const lookbookData = [
     subtitle: 'Chapter I',
     description: 'As morning light cascades through ancient jharokhas, silk unfurls like petals awakening to the sun. Each thread carries stories of master artisans who have perfected their craft across generations.',
     imagePosition: 'left' as const,
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg',
     hotspots: [
-      { x: 35, y: 40, productName: 'Chanderi Silk Saree', productPrice: '₹24,500', productHandle: 'chanderi-silk-saree' },
-      { x: 60, y: 65, productName: 'Pearl Kamarbandh', productPrice: '₹8,900', productHandle: 'pearl-kamarbandh' },
+      { x: 35, y: 40, productName: 'Mint Green Kanchipuram Saree', productPrice: '$365', productHandle: 'mint-green-kanchipuram-silk-wedding-saree', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg' },
+      { x: 60, y: 65, productName: 'Pearl Maang Tikka', productPrice: '$89', productHandle: 'pearl-kamarbandh' },
     ]
   },
   {
@@ -21,9 +22,10 @@ const lookbookData = [
     subtitle: 'Chapter II',
     description: 'When evening paints the sky in hues of amber and rose, our lehengas catch the light like liquid gold. Zardozi work that has adorned royalty for centuries now graces the modern bride.',
     imagePosition: 'full' as const,
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg',
     hotspots: [
-      { x: 45, y: 35, productName: 'Zardozi Lehenga Set', productPrice: '₹1,85,000', productHandle: 'zardozi-lehenga' },
-      { x: 70, y: 55, productName: 'Heritage Maang Tikka', productPrice: '₹12,500', productHandle: 'heritage-maang-tikka' },
+      { x: 45, y: 35, productName: 'Royal Rani Pink Bridal Lehenga', productPrice: '$729', productHandle: 'royal-rani-pink-silk-bridal-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg' },
+      { x: 70, y: 55, productName: 'Kundan Maang Tikka', productPrice: '$125', productHandle: 'heritage-maang-tikka' },
     ]
   },
   {
@@ -31,9 +33,10 @@ const lookbookData = [
     subtitle: 'Chapter III',
     description: 'The rhythm of rain against marble courtyards. Indigo and emerald dance together in our handwoven collection, each piece a meditation on nature\'s infinite palette.',
     imagePosition: 'right' as const,
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg',
     hotspots: [
-      { x: 40, y: 50, productName: 'Indigo Block Print Suit', productPrice: '₹32,000', productHandle: 'indigo-block-suit' },
-      { x: 25, y: 70, productName: 'Jadau Chandbali', productPrice: '₹45,000', productHandle: 'jadau-chandbali' },
+      { x: 40, y: 50, productName: 'Emerald Wedding Lehenga', productPrice: '$285', productHandle: 'emerald-forest-wedding-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg' },
+      { x: 25, y: 70, productName: 'Jadau Chandbali', productPrice: '$450', productHandle: 'jadau-chandbali' },
     ]
   },
   {
@@ -41,9 +44,10 @@ const lookbookData = [
     subtitle: 'Chapter IV',
     description: 'Under starlit canopies, velvet meets vintage. Our evening collection speaks of quiet opulence—pieces that command attention through whispers, not shouts.',
     imagePosition: 'left' as const,
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg',
     hotspots: [
-      { x: 50, y: 45, productName: 'Velvet Anarkali', productPrice: '₹58,000', productHandle: 'velvet-anarkali' },
-      { x: 30, y: 75, productName: 'Polki Choker Set', productPrice: '₹95,000', productHandle: 'polki-choker' },
+      { x: 50, y: 45, productName: 'Burgundy Velvet Lehenga', productPrice: '$270', productHandle: 'burgundy-velvet-wedding-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg' },
+      { x: 30, y: 75, productName: 'Polki Choker Set', productPrice: '$950', productHandle: 'polki-choker' },
     ]
   },
   {
@@ -51,10 +55,11 @@ const lookbookData = [
     subtitle: 'Chapter V',
     description: 'The finale—where tradition embraces tomorrow. Our bridal collection represents the culmination of a journey through India\'s textile heritage, reimagined for the contemporary woman.',
     imagePosition: 'full' as const,
+    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg',
     hotspots: [
-      { x: 50, y: 40, productName: 'Heritage Bridal Lehenga', productPrice: '₹3,25,000', productHandle: 'heritage-bridal' },
-      { x: 65, y: 60, productName: 'Kundan Rani Haar', productPrice: '₹1,45,000', productHandle: 'kundan-rani-haar' },
-      { x: 35, y: 70, productName: 'Bridal Haath Phool', productPrice: '₹28,000', productHandle: 'bridal-haath-phool' },
+      { x: 50, y: 40, productName: 'Ethereal Pastel Pink Bridal Lehenga', productPrice: '$477', productHandle: 'ethereal-pastel-pink-bridal-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg' },
+      { x: 65, y: 60, productName: 'Kundan Rani Haar', productPrice: '$1,450', productHandle: 'kundan-rani-haar' },
+      { x: 35, y: 70, productName: 'Bridal Haath Phool', productPrice: '$280', productHandle: 'bridal-haath-phool' },
     ]
   }
 ];
@@ -84,9 +89,11 @@ const Lookbook = () => {
           className="absolute inset-0"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-foreground/50 z-10" />
-          <div className="w-full h-full bg-card flex items-center justify-center">
-            <span className="text-6xl text-foreground/20 font-serif">Lookbook 2024</span>
-          </div>
+          <img 
+            src="https://kesimg.b-cdn.net/images/650/2025y/December/59570/Lavender-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10242(1).jpg"
+            alt="Lookbook 2024"
+            className="w-full h-full object-cover object-top"
+          />
         </motion.div>
 
         <motion.div
