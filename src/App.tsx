@@ -31,6 +31,10 @@ import CareGuide from "./pages/CareGuide";
 import Accessories from "./pages/Accessories";
 import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
+import WeddingSarees from "./pages/collections/WeddingSarees";
+import BridalLehengas from "./pages/collections/BridalLehengas";
+import ReceptionOutfits from "./pages/collections/ReceptionOutfits";
+import FestiveWear from "./pages/collections/FestiveWear";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +73,11 @@ const App = () => (
               <Route path="/care-guide" element={<CareGuide />} />
               <Route path="/accessories" element={<Accessories />} />
               <Route path="/faq" element={<FAQ />} />
+              {/* Occasion-based collection pages for SEO */}
+              <Route path="/collections/wedding-sarees" element={<WeddingSarees />} />
+              <Route path="/collections/bridal-lehengas" element={<BridalLehengas />} />
+              <Route path="/collections/reception-outfits" element={<ReceptionOutfits />} />
+              <Route path="/collections/festive-wear" element={<FestiveWear />} />
               {/* Redirect missing pages to related content */}
               <Route path="/new-arrivals" element={<Lehengas />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
