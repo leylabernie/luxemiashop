@@ -31,13 +31,13 @@ const BrandStory = () => {
           className="relative text-center px-4 max-w-4xl mx-auto"
         >
           <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-            Our Vision
+            Welcome to Luxemia
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight">
-            Reimagining<br />Ethnic Elegance
+            A New Chapter<br />in Ethnic Fashion
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Born from a passion for preserving India's rich textile heritage while embracing modern sensibilities.
+            We're a new brand with a clear mission: bringing authentic Indian ethnic wear directly to you, with transparency, quality, and care.
           </p>
         </motion.div>
         <motion.div
@@ -51,18 +51,18 @@ const BrandStory = () => {
 
       {/* Origin Story - Parallax Section */}
       <ParallaxSection
-        title="The Beginning"
-        subtitle="Los Angeles, 2024"
-        content="LuxeMia was founded with a simple yet powerful vision: to bring the exquisite artistry of Indian ethnic wear to fashion-forward women worldwide. We partner directly with master craftsmen across India, ensuring authentic craftsmanship reaches your doorstep while supporting traditional artisan communities."
+        title="Why We Started"
+        subtitle="Fresh Perspective, 2025"
+        content="Luxemia was born from a genuine frustration: finding quality Indian ethnic wear online meant navigating confusing sizing, questionable quality, and impersonal service. We're building something different—a curated collection with honest descriptions, real sizing guidance, and customer service that actually responds."
         imagePosition="right"
         bgColor="bg-card"
       />
 
       {/* Craftsmanship Section */}
       <ParallaxSection
-        title="Our Artisans"
-        subtitle="Handcrafted Excellence"
-        content="Every LuxeMia piece is created by skilled artisans who have inherited techniques passed down through generations. From the intricate Zardozi embroidery of Lucknow to the delicate threadwork of Jaipur, we celebrate and preserve these timeless art forms by connecting them with a global audience."
+        title="Our Approach"
+        subtitle="Quality Over Quantity"
+        content="We're not claiming decades of heritage—we're a new team learning and growing every day. What we can promise is careful curation, quality checks on every piece, and a commitment to partnering with skilled craftspeople. We're transparent about our journey and welcome your feedback as we build this together."
         imagePosition="left"
         bgColor="bg-background"
       />
@@ -78,10 +78,10 @@ const BrandStory = () => {
             className="text-center mb-20"
           >
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-              Our Philosophy
+              What We Stand For
             </p>
             <h2 className="text-4xl md:text-5xl font-serif mb-8">
-              Slow Fashion, Lasting Beauty
+              Our Commitments to You
             </h2>
           </motion.div>
 
@@ -117,9 +117,9 @@ const BrandStory = () => {
             className="text-center mb-20"
           >
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-              Our Journey
+              Where We're Headed
             </p>
-            <h2 className="text-4xl md:text-5xl font-serif">Milestones</h2>
+            <h2 className="text-4xl md:text-5xl font-serif">Our Roadmap</h2>
           </motion.div>
 
           <div className="relative">
@@ -160,10 +160,10 @@ const BrandStory = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <blockquote className="text-3xl md:text-4xl font-serif leading-relaxed mb-8">
-            "We believe every woman deserves to experience the magic of handcrafted Indian artistry—wherever she is in the world."
+            "We're not perfect, but we're committed to getting better with every order. Thank you for being part of our beginning."
           </blockquote>
           <cite className="text-muted-foreground not-italic">
-            — The LuxeMia Team
+            — The Luxemia Team
           </cite>
         </motion.div>
       </section>
@@ -227,41 +227,41 @@ const ParallaxSection = ({ title, subtitle, content, imagePosition, bgColor }: P
 const philosophyPoints = [
   {
     icon: '◇',
-    title: 'Conscious Craft',
-    description: 'Each piece takes weeks to create, ensuring every detail receives the attention it deserves.',
+    title: 'Honest Descriptions',
+    description: "No exaggerated claims. We show real photos, accurate measurements, and genuine fabric details so you know exactly what you're getting.",
   },
   {
     icon: '○',
-    title: 'Sustainable Luxury',
-    description: 'We use natural dyes, organic fabrics, and support fair trade practices throughout our supply chain.',
+    title: 'Responsive Support',
+    description: 'Questions? Concerns? We actually reply. Our small team means you talk to real people who care about your experience.',
   },
   {
     icon: '△',
-    title: 'Timeless Design',
-    description: 'Our designs transcend seasons, creating heirlooms meant to be passed down through generations.',
+    title: 'Quality Checks',
+    description: 'Every piece is inspected before shipping. If something is not right, we fix it before it reaches you.',
   },
 ];
 
 const timelineEvents = [
   {
-    year: '2024',
-    title: 'The Dream Takes Shape',
-    description: 'LuxeMia is born with a vision to bridge traditional Indian craftsmanship with modern global fashion.',
+    year: '2025',
+    title: 'Launch',
+    description: 'Luxemia.shop goes live with our first curated collection of lehengas, sarees, and suits.',
   },
   {
-    year: '2024',
-    title: 'Artisan Partnerships',
-    description: 'Established direct relationships with master craftsmen across Jaipur, Lucknow, and Varanasi.',
+    year: '2025',
+    title: 'Building Trust',
+    description: 'Focused on delivering great first orders, gathering feedback, and refining our processes.',
   },
   {
-    year: '2026',
-    title: 'Digital Launch',
-    description: 'Our online boutique goes live, bringing authentic ethnic wear to customers worldwide.',
+    year: '2025',
+    title: 'Expanding Selection',
+    description: 'Adding new categories based on customer requests: menswear, accessories, and seasonal collections.',
   },
   {
-    year: 'Future',
-    title: 'Growing Together',
-    description: 'Expanding our artisan network and introducing new collections that honor tradition while embracing innovation.',
+    year: 'Ahead',
+    title: 'Your Feedback Shapes Us',
+    description: 'We are listening. Every review, suggestion, and critique helps us become the brand you want us to be.',
   },
 ];
 
