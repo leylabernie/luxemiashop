@@ -16,8 +16,8 @@ import {
 
 const navLinks = [
   { name: 'Collections', href: '/collections' },
-  { name: 'Sarees', href: '/collections?category=sarees' },
-  { name: 'Lehengas', href: '/collections?category=lehengas' },
+  { name: 'Sarees', href: '/sarees' },
+  { name: 'Lehengas', href: '/lehengas' },
   { name: 'Our Story', href: '/our-story' },
   { name: 'Lookbook', href: '/lookbook' },
 ];
