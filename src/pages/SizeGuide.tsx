@@ -2,7 +2,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Ruler, Info } from "lucide-react";
+import { Ruler, Info, FileText } from "lucide-react";
+import MeasurementForm from "@/components/measurements/MeasurementForm";
 
 const SizeGuide = () => {
   const lehengaSizes = [
@@ -204,25 +205,52 @@ const SizeGuide = () => {
           </div>
         </section>
 
-        {/* Custom Sizing */}
+        {/* Measurement Submission Form */}
+        <section className="py-20 bg-secondary/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center mb-12"
+              >
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+                  <FileText className="w-4 h-4" />
+                  <span className="text-sm font-medium">Submit Your Measurements</span>
+                </div>
+                <h2 className="font-display text-3xl md:text-4xl text-foreground mb-4">
+                  Custom Measurement Form
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  For custom-made garments, please submit your measurements using the form below. 
+                  We recommend having a professional tailor take your measurements for the best fit.
+                </p>
+              </motion.div>
+
+              <MeasurementForm />
+            </div>
+          </div>
+        </section>
+
+        {/* Custom Sizing Info */}
         <section className="py-16 bg-primary/5">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 mb-4">
                 <Info className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium text-primary">Custom Sizing Available</span>
+                <span className="text-sm font-medium text-primary">Need Help?</span>
               </div>
               <h2 className="font-display text-2xl md:text-3xl text-foreground mb-4">
-                Need a Custom Fit?
+                Questions About Measurements?
               </h2>
               <p className="text-muted-foreground mb-6">
-                We offer custom sizing for all our garments. Contact our styling team with your 
-                measurements for a perfectly tailored piece. Custom orders typically take 2-3 
+                Our styling team is here to help. Contact us for personalized fitting advice or 
+                if you need assistance with your measurements. Custom orders typically take 2-3 
                 weeks additional production time.
               </p>
               <p className="text-muted-foreground text-sm">
-                Email: <span className="text-primary">customfitting@shringaar.com</span> | 
-                Phone: <span className="text-primary">+91 98765 43210</span>
+                Email: <span className="text-primary">customfitting@luxemia.com</span> | 
+                Phone: <span className="text-primary">+1 (213) 555-1234</span>
               </p>
             </div>
           </div>
