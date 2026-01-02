@@ -5,27 +5,87 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { sareeProducts } from "@/data/sareeProducts";
+import { localProducts } from "@/data/localProducts";
+import { suitProducts } from "@/data/suitProducts";
 import { getOptimizedImage } from "@/lib/imageUtils";
 import LazyImage from "@/components/ui/LazyImage";
 
+type ProductCategory = "sarees" | "lehengas" | "suits";
+
+interface Product {
+  id: string;
+  handle: string;
+  title: string;
+  price: string;
+  images: string[];
+  fabric: string;
+  color: string;
+}
+
 const VirtualTryOn = () => {
   const [userImage, setUserImage] = useState<string | null>(null);
-  const [selectedSaree, setSelectedSaree] = useState<typeof sareeProducts[0] | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [category, setCategory] = useState<ProductCategory>("sarees");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Get lehengas from localProducts (filter by category)
+  const lehengaProducts: Product[] = useMemo(() => 
+    localProducts.filter(p => 
+      p.category.toLowerCase().includes('lehenga')
+    ).map(p => ({
+      id: p.id,
+      handle: p.handle,
+      title: p.title,
+      price: p.price,
+      images: p.images,
+      fabric: p.fabric,
+      color: p.color
+    })), []);
+
+  const suitProductsList: Product[] = useMemo(() => 
+    suitProducts.map(p => ({
+      id: p.id,
+      handle: p.handle,
+      title: p.title,
+      price: p.price,
+      images: p.images,
+      fabric: p.fabric,
+      color: p.color
+    })), []);
+
+  const sareeProductsList: Product[] = useMemo(() => 
+    sareeProducts.map(p => ({
+      id: p.id,
+      handle: p.handle,
+      title: p.title,
+      price: p.price,
+      images: p.images,
+      fabric: p.fabric,
+      color: p.color
+    })), []);
+
+  const currentProducts = useMemo(() => {
+    switch (category) {
+      case "lehengas": return lehengaProducts;
+      case "suits": return suitProductsList;
+      default: return sareeProductsList;
+    }
+  }, [category, lehengaProducts, suitProductsList, sareeProductsList]);
+
   const itemsPerPage = 8;
-  const totalPages = Math.ceil(sareeProducts.length / itemsPerPage);
+  const totalPages = Math.ceil(currentProducts.length / itemsPerPage);
   
-  const paginatedSarees = useMemo(() => {
+  const paginatedProducts = useMemo(() => {
     const start = currentPage * itemsPerPage;
-    return sareeProducts.slice(start, start + itemsPerPage);
-  }, [currentPage]);
+    return currentProducts.slice(start, start + itemsPerPage);
+  }, [currentPage, currentProducts]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -49,9 +109,17 @@ const VirtualTryOn = () => {
     reader.readAsDataURL(file);
   };
 
+  const getCategoryLabel = (cat: ProductCategory): string => {
+    switch (cat) {
+      case "lehengas": return "lehenga";
+      case "suits": return "suit";
+      default: return "saree";
+    }
+  };
+
   const handleTryOn = async () => {
-    if (!userImage || !selectedSaree) {
-      toast.error("Please upload your photo and select a saree");
+    if (!userImage || !selectedProduct) {
+      toast.error(`Please upload your photo and select a ${getCategoryLabel(category)}`);
       return;
     }
 
@@ -59,14 +127,15 @@ const VirtualTryOn = () => {
     setResultImage(null);
 
     try {
-      // Get high-res saree image
-      const sareeImageUrl = getOptimizedImage(selectedSaree.images[0], 'gallery');
+      // Get high-res product image
+      const productImageUrl = getOptimizedImage(selectedProduct.images[0], 'gallery');
 
       const { data, error } = await supabase.functions.invoke("virtual-tryon", {
         body: {
           userImage,
-          sareeImage: sareeImageUrl,
-          sareeTitle: selectedSaree.title
+          garmentImage: productImageUrl,
+          garmentTitle: selectedProduct.title,
+          garmentType: getCategoryLabel(category)
         }
       });
 
@@ -92,7 +161,7 @@ const VirtualTryOn = () => {
     
     const link = document.createElement("a");
     link.href = resultImage;
-    link.download = `tryon-${selectedSaree?.handle || "saree"}.png`;
+    link.download = `tryon-${selectedProduct?.handle || getCategoryLabel(category)}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -101,11 +170,18 @@ const VirtualTryOn = () => {
 
   const handleReset = () => {
     setUserImage(null);
-    setSelectedSaree(null);
+    setSelectedProduct(null);
     setResultImage(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+  };
+
+  const handleCategoryChange = (newCategory: ProductCategory) => {
+    setCategory(newCategory);
+    setCurrentPage(0);
+    setSelectedProduct(null);
+    setResultImage(null);
   };
 
   return (
@@ -125,10 +201,19 @@ const VirtualTryOn = () => {
             </p>
             <h1 className="font-serif text-4xl md:text-5xl mb-4">Virtual Try-On</h1>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Upload your photo and see how our beautiful sarees would look on you. 
+              Upload your photo and see how our beautiful ethnic wear would look on you. 
               Powered by AI for a realistic preview experience.
             </p>
           </motion.div>
+
+          {/* Category Tabs */}
+          <Tabs value={category} onValueChange={(v) => handleCategoryChange(v as ProductCategory)} className="mb-8">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-3">
+              <TabsTrigger value="sarees">Sarees</TabsTrigger>
+              <TabsTrigger value="lehengas">Lehengas</TabsTrigger>
+              <TabsTrigger value="suits">Suits</TabsTrigger>
+            </TabsList>
+          </Tabs>
 
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Left Column - Upload & Select */}
@@ -186,32 +271,34 @@ const VirtualTryOn = () => {
                 )}
               </Card>
 
-              {/* Saree Selection */}
+              {/* Product Selection */}
               <Card className="p-6">
-                <h2 className="font-serif text-xl mb-4">Select a Saree</h2>
+                <h2 className="font-serif text-xl mb-4">
+                  Select a {category === "sarees" ? "Saree" : category === "lehengas" ? "Lehenga" : "Suit"}
+                </h2>
                 
                 <div className="grid grid-cols-4 gap-2 mb-4">
-                  {paginatedSarees.map((saree) => (
+                  {paginatedProducts.map((product) => (
                     <motion.button
-                      key={saree.id}
+                      key={product.id}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => {
-                        setSelectedSaree(saree);
+                        setSelectedProduct(product);
                         setResultImage(null);
                       }}
                       className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-colors ${
-                        selectedSaree?.id === saree.id
+                        selectedProduct?.id === product.id
                           ? "border-primary"
                           : "border-transparent hover:border-primary/30"
                       }`}
                     >
                       <LazyImage
-                        src={getOptimizedImage(saree.images[0], 'thumbnail')}
-                        alt={saree.title}
+                        src={getOptimizedImage(product.images[0], 'thumbnail')}
+                        alt={product.title}
                         className="w-full h-full object-cover"
                       />
-                      {selectedSaree?.id === saree.id && (
+                      {selectedProduct?.id === product.id && (
                         <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
                           <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
                             <Sparkles className="h-3 w-3 text-primary-foreground" />
@@ -223,37 +310,39 @@ const VirtualTryOn = () => {
                 </div>
 
                 {/* Pagination */}
-                <div className="flex items-center justify-center gap-4">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
-                    disabled={currentPage === 0}
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <span className="text-sm text-muted-foreground">
-                    Page {currentPage + 1} of {totalPages}
-                  </span>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
-                    disabled={currentPage >= totalPages - 1}
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-4">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
+                      disabled={currentPage === 0}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-sm text-muted-foreground">
+                      Page {currentPage + 1} of {totalPages}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
+                      disabled={currentPage >= totalPages - 1}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
 
-                {selectedSaree && (
+                {selectedProduct && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-4 p-3 bg-muted/50 rounded-lg"
                   >
-                    <p className="font-medium text-sm">{selectedSaree.title}</p>
+                    <p className="font-medium text-sm">{selectedProduct.title}</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {selectedSaree.fabric} • {selectedSaree.color}
+                      {selectedProduct.fabric} • {selectedProduct.color}
                     </p>
                   </motion.div>
                 )}
@@ -263,7 +352,7 @@ const VirtualTryOn = () => {
               <div className="flex gap-3">
                 <Button
                   onClick={handleTryOn}
-                  disabled={!userImage || !selectedSaree || isProcessing}
+                  disabled={!userImage || !selectedProduct || isProcessing}
                   className="flex-1 h-12"
                 >
                   {isProcessing ? (
@@ -274,7 +363,7 @@ const VirtualTryOn = () => {
                   ) : (
                     <>
                       <Sparkles className="mr-2 h-4 w-4" />
-                      Try On Saree
+                      Try On {category === "sarees" ? "Saree" : category === "lehengas" ? "Lehenga" : "Suit"}
                     </>
                   )}
                 </Button>
@@ -309,7 +398,7 @@ const VirtualTryOn = () => {
                         <div className="text-center">
                           <p className="font-medium">Creating your look...</p>
                           <p className="text-sm text-muted-foreground">
-                            Our AI is draping the saree on you
+                            Our AI is styling the {getCategoryLabel(category)} on you
                           </p>
                         </div>
                       </motion.div>
@@ -349,26 +438,26 @@ const VirtualTryOn = () => {
                           <Sparkles className="h-8 w-8 text-muted-foreground" />
                         </div>
                         <p className="text-muted-foreground">
-                          {!userImage && !selectedSaree
-                            ? "Upload your photo and select a saree to see your virtual look"
+                          {!userImage && !selectedProduct
+                            ? `Upload your photo and select a ${getCategoryLabel(category)} to see your virtual look`
                             : !userImage
                             ? "Upload your photo to continue"
-                            : "Select a saree to try on"}
+                            : `Select a ${getCategoryLabel(category)} to try on`}
                         </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                {resultImage && selectedSaree && (
+                {resultImage && selectedProduct && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-4 p-4 bg-muted/50 rounded-lg"
                   >
-                    <p className="font-medium">{selectedSaree.title}</p>
+                    <p className="font-medium">{selectedProduct.title}</p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      ${selectedSaree.price} USD
+                      ${selectedProduct.price} USD
                     </p>
                     <Button
                       variant="outline"
@@ -376,7 +465,7 @@ const VirtualTryOn = () => {
                       className="mt-3 w-full"
                       asChild
                     >
-                      <a href={`/product/${selectedSaree.handle}`}>
+                      <a href={`/product/${selectedProduct.handle}`}>
                         View Product Details
                       </a>
                     </Button>
