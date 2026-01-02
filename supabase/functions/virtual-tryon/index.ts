@@ -11,11 +11,16 @@ serve(async (req) => {
   }
 
   try {
-    const { userImage, sareeImage, sareeTitle } = await req.json();
+    const { userImage, garmentImage, garmentTitle, garmentType, sareeImage, sareeTitle } = await req.json();
     
-    if (!userImage || !sareeImage) {
+    // Support both old API (sareeImage/sareeTitle) and new API (garmentImage/garmentTitle/garmentType)
+    const actualGarmentImage = garmentImage || sareeImage;
+    const actualGarmentTitle = garmentTitle || sareeTitle;
+    const actualGarmentType = garmentType || "saree";
+    
+    if (!userImage || !actualGarmentImage) {
       return new Response(
-        JSON.stringify({ error: "Both user image and saree image are required" }),
+        JSON.stringify({ error: "Both user image and garment image are required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -25,7 +30,20 @@ serve(async (req) => {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    console.log("Processing virtual try-on request for:", sareeTitle);
+    console.log("Processing virtual try-on request for:", actualGarmentTitle, "type:", actualGarmentType);
+
+    // Build garment-specific prompt
+    let drapingInstructions = "";
+    switch (actualGarmentType) {
+      case "lehenga":
+        drapingInstructions = "The lehenga should include the skirt (lehenga), blouse (choli), and dupatta. The skirt should be properly fitted at the waist with natural volume and flare. The blouse should fit naturally on the upper body. The dupatta should be elegantly draped across one shoulder or around the body as traditionally worn.";
+        break;
+      case "suit":
+        drapingInstructions = "The suit should include the kameez (tunic), bottom (churidar/palazzo/sharara), and dupatta. The kameez should drape naturally over the body following its silhouette. The bottom should be styled appropriately based on the design. The dupatta should be elegantly arranged around the neck or draped on shoulders.";
+        break;
+      default: // saree
+        drapingInstructions = "The saree should be naturally worn with proper pleating at the waist and pallu (decorative end) draped elegantly over the shoulder. The blouse should fit naturally. The pleats should fall gracefully and the fabric should drape realistically around the body.";
+    }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -41,9 +59,11 @@ serve(async (req) => {
             content: [
               {
                 type: "text",
-                text: `You are a virtual fashion try-on assistant. Take the person from the first image and dress them in the saree from the second image called "${sareeTitle}". 
-                
-Create a realistic photorealistic image of the person wearing this exact saree. Maintain the person's face, body proportions, and pose while seamlessly draping the saree on them. The saree should look naturally worn with proper pleating and draping. Keep the lighting consistent and make the final result look like a professional fashion photo. Do not add any text or watermarks.`
+                text: `You are a virtual fashion try-on assistant specializing in Indian ethnic wear. Take the person from the first image and dress them in the ${actualGarmentType} from the second image called "${actualGarmentTitle}". 
+
+${drapingInstructions}
+
+Create a realistic photorealistic image of the person wearing this exact ${actualGarmentType}. Maintain the person's face, body proportions, and pose while seamlessly styling the garment on them. Keep the lighting consistent and make the final result look like a professional fashion photo. Do not add any text or watermarks.`
               },
               {
                 type: "image_url",
@@ -51,7 +71,7 @@ Create a realistic photorealistic image of the person wearing this exact saree. 
               },
               {
                 type: "image_url",
-                image_url: { url: sareeImage }
+                image_url: { url: actualGarmentImage }
               }
             ]
           }
