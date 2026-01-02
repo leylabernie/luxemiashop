@@ -10,7 +10,7 @@ async function sendEmail(to: string, subject: string, html: string) {
       "Authorization": `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: "Luxemia <onboarding@resend.dev>",
+      from: "LuxeMia <onboarding@resend.dev>",
       html: html,
     }),
   });
@@ -151,7 +151,7 @@ const generateEmailHtml = (
     </head>
     <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 32px;">
-        <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #1a1a1a; margin: 0;">Luxemia</h1>
+        <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #1a1a1a; margin: 0;">LuxeMia</h1>
       </div>
       
       <div style="background: #FCF8F8; border-radius: 8px; padding: 32px; margin-bottom: 24px;">
@@ -186,7 +186,7 @@ const generateEmailHtml = (
       </div>
       
       <div style="text-align: center; color: #888; font-size: 14px;">
-        <p style="margin: 0 0 8px 0;">Thank you for shopping with Luxemia</p>
+        <p style="margin: 0 0 8px 0;">Thank you for shopping with LuxeMia</p>
         <p style="margin: 0;">Questions? Contact us at support@luxemia.shop</p>
       </div>
     </body>
