@@ -37,27 +37,27 @@ const sortOptions = [
 const suitFilterSections = [
   {
     name: 'Size',
-    options: ['S', 'M', 'L', 'XL'],
+    options: ['S', 'M', 'L', 'XL', 'XXL', 'Free Size'],
   },
   {
     name: 'Category',
-    options: ['Anarkali Suits', 'Salwar Suits', 'Sharara Suits', 'Kurta Sets'],
+    options: ['Anarkali Suits', 'Designer Suits', 'Sharara Suits', 'Gharara Suits', 'Palazzo Suits', 'Gowns'],
   },
   {
     name: 'Occasion',
-    options: ['Wedding', 'Party', 'Festival', 'Casual', 'Eid'],
+    options: ['Wedding', 'Party', 'Festive', 'Casual', 'Eid', 'Evening', 'Reception'],
   },
   {
     name: 'Fabric',
-    options: ['Silk', 'Roman Silk', 'Chanderi Cotton', 'Fendy Silk', 'Georgette', 'Velvet'],
+    options: ['Silk', 'Georgette', 'Chinon Silk', 'Crep Silk', 'Jacquard Silk', 'Velvet', 'Organza'],
   },
   {
     name: 'Work',
-    options: ['Embroidery', 'Sequins', 'Border Work', 'Zari', 'Print'],
+    options: ['Embroidery', 'Beadwork', 'Mirror Work', 'Sequins', 'Zari', 'Heavy Embroidery'],
   },
   {
     name: 'Color',
-    options: ['Red', 'Green', 'Pink', 'Dusty Rose', 'Grey', 'Peach', 'Beige', 'Blue'],
+    options: ['Red', 'Green', 'Pink', 'Blue', 'Gold', 'Wine', 'Navy', 'Lavender', 'Black'],
   },
 ];
 
