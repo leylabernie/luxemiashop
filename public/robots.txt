@@ -4,7 +4,7 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap locations
 Sitemap: https://luxemia.com/sitemap.xml
 
 # Crawl-delay for polite crawling
@@ -24,6 +24,7 @@ Allow: /suits
 Allow: /menswear
 Allow: /brand-story
 Allow: /lookbook
+Allow: /sitemap
 # Luxury Indian Ethnic Wear E-commerce
 
 User-agent: Googlebot

@@ -75,6 +75,15 @@ const Lehengas = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Shop Bridal & Wedding Lehengas Online | Designer Lehenga Choli - LuxeMia"
+        description="Discover exquisite bridal lehengas and designer lehenga choli at LuxeMia. Shop handcrafted wedding lehengas with heavy embroidery, silk, and velvet fabrics. Worldwide shipping available."
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Collections', url: '/collections' },
+          { name: 'Lehengas', url: '/lehengas' },
+        ]}
+      />
       <Header />
 
       <main className="pt-24 pb-16">
