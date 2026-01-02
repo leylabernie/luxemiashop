@@ -27,6 +27,8 @@ import Sustainability from "./pages/Sustainability";
 import Press from "./pages/Press";
 import SizeGuide from "./pages/SizeGuide";
 import CareGuide from "./pages/CareGuide";
+import Accessories from "./pages/Accessories";
+import FAQ from "./pages/FAQ";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -63,9 +65,11 @@ const App = () => (
             <Route path="/press" element={<Press />} />
             <Route path="/size-guide" element={<SizeGuide />} />
             <Route path="/care-guide" element={<CareGuide />} />
+            <Route path="/accessories" element={<Accessories />} />
+            <Route path="/faq" element={<FAQ />} />
             {/* Redirect missing pages to related content */}
             <Route path="/new-arrivals" element={<Lehengas />} />
-            <Route path="/accessories" element={<Collections />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

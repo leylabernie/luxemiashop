@@ -17,10 +17,10 @@ const footerLinks = {
   ],
   help: [
     { name: 'Contact Us', href: '/contact' },
+    { name: 'FAQ', href: '/faq' },
     { name: 'Shipping', href: '/shipping' },
     { name: 'Returns', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
-    { name: 'Care Guide', href: '/care-guide' },
   ],
 };
 
