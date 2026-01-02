@@ -19,8 +19,8 @@ const navLinks = [
   { name: 'Lehengas', href: '/lehengas' },
   { name: 'Sarees', href: '/sarees' },
   { name: 'Suits', href: '/suits' },
+  { name: 'Jewelry', href: '/jewelry' },
   { name: 'Try On', href: '/virtual-tryon' },
-  { name: 'Our Story', href: '/our-story' },
   { name: 'Lookbook', href: '/lookbook' },
 ];
 
