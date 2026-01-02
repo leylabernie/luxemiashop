@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, RotateCcw, Package, Calendar } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, RotateCcw, Package, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
+import { SizeGuideModal } from './SizeGuideModal';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 interface ProductInfoProps {
@@ -157,10 +158,18 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <h1 className="text-3xl lg:text-4xl font-serif leading-tight">{product.title}</h1>
 
       {/* Price */}
-      <div className="flex items-baseline gap-3">
-        <p className="text-2xl font-medium text-foreground">
-          {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
-        </p>
+      <div className="space-y-2">
+        <div className="flex items-baseline gap-3">
+          <p className="text-2xl font-medium text-foreground">
+            {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
+            <Tag className="h-3 w-3" />
+            Save 25% with code LUXE2025
+          </span>
+        </div>
         <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
       </div>
 
@@ -235,14 +244,19 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="space-y-5">
         {product.options.map((option) => (
           <div key={option.name} className="space-y-3">
-            <label className="text-sm font-medium uppercase tracking-wide">
-              {option.name}
-              {selectedOptions[option.name] && (
-                <span className="font-normal text-muted-foreground ml-2">
-                  — {selectedOptions[option.name]}
-                </span>
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium uppercase tracking-wide">
+                {option.name}
+                {selectedOptions[option.name] && (
+                  <span className="font-normal text-muted-foreground ml-2">
+                    — {selectedOptions[option.name]}
+                  </span>
+                )}
+              </label>
+              {option.name.toLowerCase() === 'size' && (
+                <SizeGuideModal category={product.productType} />
               )}
-            </label>
+            </div>
             <div className="flex flex-wrap gap-2">
               {option.values.map((value) => (
                 <button
@@ -327,8 +341,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="grid grid-cols-3 gap-3 pt-4">
         <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
           <Truck className="h-5 w-5 text-primary mb-2" />
-          <p className="text-xs font-medium">Free Shipping</p>
-          <p className="text-xs text-muted-foreground">On orders above $100</p>
+          <p className="text-xs font-medium">Worldwide Shipping</p>
+          <p className="text-xs text-muted-foreground">3-5 weeks delivery</p>
         </div>
         <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
           <RotateCcw className="h-5 w-5 text-primary mb-2" />
