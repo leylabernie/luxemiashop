@@ -9,12 +9,8 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
-import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-
-// Set to true to use local products for preview, false to fetch from Shopify
-const USE_LOCAL_PRODUCTS = true;
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -30,22 +26,11 @@ const ProductDetail = () => {
       setError(null);
       
       try {
-        if (USE_LOCAL_PRODUCTS) {
-          // Use local product for preview
-          const localProduct = getLocalProductByHandle(handle);
-          if (localProduct) {
-            setProduct(localProduct.node);
-          } else {
-            setError('Product not found');
-          }
+        const productData = await fetchProductByHandle(handle);
+        if (productData) {
+          setProduct(productData);
         } else {
-          // Fetch from Shopify when ready
-          const productData = await fetchProductByHandle(handle);
-          if (productData) {
-            setProduct(productData);
-          } else {
-            setError('Product not found');
-          }
+          setError('Product not found');
         }
       } catch (err) {
         setError('Failed to load product');
@@ -57,44 +42,6 @@ const ProductDetail = () => {
 
     loadProduct();
   }, [handle]);
-
-  // Placeholder product for empty state
-  const placeholderProduct: ShopifyProduct['node'] = {
-    id: 'placeholder',
-    title: 'Artisan Silk Saree',
-    description: 'This exquisite handwoven silk saree showcases the finest craftsmanship of Indian artisans. Each thread tells a story of tradition and elegance.',
-    handle: 'placeholder',
-    vendor: 'Vasantam',
-    productType: 'Saree',
-    priceRange: {
-      minVariantPrice: {
-        amount: '15999',
-        currencyCode: 'INR',
-      },
-    },
-    images: { edges: [] },
-    variants: {
-      edges: [
-        {
-          node: {
-            id: 'variant-1',
-            title: 'Default',
-            price: { amount: '15999', currencyCode: 'INR' },
-            availableForSale: true,
-            selectedOptions: [
-              { name: 'Size', value: 'Free Size' },
-            ],
-          },
-        },
-      ],
-    },
-    options: [
-      { name: 'Size', values: ['Free Size'] },
-      { name: 'Color', values: ['Rose Gold', 'Champagne', 'Royal Blue', 'Emerald'] },
-    ],
-  };
-
-  const displayProduct = product || placeholderProduct;
 
   return (
     <div className="min-h-screen bg-background">
@@ -108,21 +55,21 @@ const ProductDetail = () => {
             <ChevronRight className="h-4 w-4" />
             <Link to="/collections" className="hover:text-foreground transition-colors">Collections</Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">{displayProduct.title}</span>
+            <span className="text-foreground">{product?.title || 'Product'}</span>
           </nav>
 
           {isLoading ? (
             <ProductSkeleton />
-          ) : error && !product ? (
+          ) : error || !product ? (
             <div className="text-center py-20">
               <h2 className="text-2xl font-serif mb-4">Product Not Found</h2>
               <p className="text-muted-foreground mb-6">
                 This product may have been removed or the link is incorrect.
               </p>
               <Button asChild>
-                <Link to="/">
+                <Link to="/collections">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Home
+                  Browse Collections
                 </Link>
               </Button>
             </div>
@@ -136,26 +83,26 @@ const ProductDetail = () => {
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
                 {/* Gallery */}
                 <ProductGallery 
-                  images={displayProduct.images.edges} 
-                  productTitle={displayProduct.title} 
+                  images={product.images.edges} 
+                  productTitle={product.title} 
                 />
                 
                 {/* Product Info */}
-                <ProductInfo product={displayProduct} />
+                <ProductInfo product={product} />
               </div>
 
               {/* Product Tabs */}
               <div className="mb-16">
                 <ProductTabs 
-                  description={displayProduct.description}
-                  productType={displayProduct.productType}
+                  description={product.description}
+                  productType={product.productType}
                 />
               </div>
 
               {/* Complete the Look */}
               <CompleteTheLook 
-                currentProductId={displayProduct.id}
-                productType={displayProduct.productType}
+                currentProductId={product.id}
+                productType={product.productType}
               />
             </motion.div>
           )}
