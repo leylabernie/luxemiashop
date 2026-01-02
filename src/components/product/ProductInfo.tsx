@@ -52,24 +52,29 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   return specs;
 };
 
-// Calculate estimated delivery dates
+// Calculate estimated delivery dates (international shipping - 3-5 weeks)
 const getDeliveryDates = () => {
   const today = new Date();
-  const standardStart = new Date(today);
-  standardStart.setDate(today.getDate() + 7);
-  const standardEnd = new Date(today);
-  standardEnd.setDate(today.getDate() + 12);
   
-  const expressDate = new Date(today);
-  expressDate.setDate(today.getDate() + 3);
+  // Standard delivery: 3-4 weeks (21-28 days)
+  const standardStart = new Date(today);
+  standardStart.setDate(today.getDate() + 21);
+  const standardEnd = new Date(today);
+  standardEnd.setDate(today.getDate() + 28);
+  
+  // Express delivery: 2-3 weeks (14-21 days)
+  const expressStart = new Date(today);
+  expressStart.setDate(today.getDate() + 14);
+  const expressEnd = new Date(today);
+  expressEnd.setDate(today.getDate() + 21);
   
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
   };
   
   return {
     standard: `${formatDate(standardStart)} - ${formatDate(standardEnd)}`,
-    express: formatDate(expressDate),
+    express: `${formatDate(expressStart)} - ${formatDate(expressEnd)}`,
   };
 };
 
