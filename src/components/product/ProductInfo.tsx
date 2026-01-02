@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, RotateCcw, Package, Tag } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -345,14 +345,14 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <p className="text-xs text-muted-foreground">3-5 weeks delivery</p>
         </div>
         <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
-          <RotateCcw className="h-5 w-5 text-primary mb-2" />
-          <p className="text-xs font-medium">Easy Returns</p>
-          <p className="text-xs text-muted-foreground">Within 15 days</p>
+          <Shield className="h-5 w-5 text-primary mb-2" />
+          <p className="text-xs font-medium">Quality Assured</p>
+          <p className="text-xs text-muted-foreground">Handcrafted with care</p>
         </div>
         <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
           <Package className="h-5 w-5 text-primary mb-2" />
           <p className="text-xs font-medium">Secure Package</p>
-          <p className="text-xs text-muted-foreground">Gift-wrapped</p>
+          <p className="text-xs text-muted-foreground">Premium packaging</p>
         </div>
       </div>
     </div>

@@ -223,43 +223,39 @@ const Terms = () => {
                 </section>
 
                 <section id="returns" className="bg-card -mx-4 px-4 py-6 rounded-lg border border-border">
-                  <h2 className="text-xl font-serif text-foreground mb-4">8. Returns and Exchanges</h2>
+                  <h2 className="text-xl font-serif text-foreground mb-4">8. No Returns Policy</h2>
                   <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
                     <p className="font-semibold text-destructive">
-                      📹 MANDATORY: Package Opening Video Required
+                      ⚠️ ALL SALES ARE FINAL - NO RETURNS OR REFUNDS
                     </p>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.1 Video Requirement</h3>
+                      <h3 className="font-semibold text-foreground mb-2">8.1 All Sales Final</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>An unedited video recording of the package opening is MANDATORY for all return/exchange claims.</strong></li>
-                        <li>The video must show the unopened package, the opening process, and clearly display the contents.</li>
-                        <li>Claims without video evidence will be automatically denied without exception.</li>
-                        <li>The video must be submitted within 48 hours of delivery.</li>
+                        <li><strong>Due to the handcrafted, made-to-order nature of our products and international shipping logistics, we do not accept returns or offer refunds.</strong></li>
+                        <li>Each piece is crafted specifically for your order based on your measurements and selections.</li>
+                        <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.2 Eligible Returns</h3>
+                      <h3 className="font-semibold text-foreground mb-2">8.2 Manufacturing Defects</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>Returns are accepted only for manufacturing defects or errors on our part.</li>
-                        <li>Items must be unworn, unwashed, and in original condition with all tags attached.</li>
-                        <li>Return requests must be initiated within 15 days of delivery.</li>
+                        <li>Manufacturing defects are reviewed on a case-by-case basis with photo evidence.</li>
+                        <li>Contact us within 48 hours of delivery with clear photos of any defects.</li>
+                        <li>Size/fit issues due to customer-provided measurements are NOT considered defects.</li>
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.3 Non-Returnable Items</h3>
+                      <h3 className="font-semibold text-foreground mb-2">8.3 Order Cancellation</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>Custom or made-to-measure orders (regardless of fit)</li>
-                        <li>Items with incorrect customer-provided measurements</li>
-                        <li>Intimate wear, lingerie, or undergarments</li>
-                        <li>Items marked as "Final Sale"</li>
-                        <li>Items that have been worn, washed, altered, or damaged by the customer</li>
-                        <li>Items without original packaging and tags</li>
+                        <li>Order cancellations may be possible within 24 hours of placing your order.</li>
+                        <li>After production begins, cancellations are not possible.</li>
+                        <li>Contact support@luxemia.com immediately if you need to cancel.</li>
                       </ul>
                     </div>
                     <p className="text-sm">
-                      For complete details, please refer to our <a href="/returns" className="text-primary hover:underline">Returns & Exchanges Policy</a>.
+                      For complete details, please refer to our <a href="/returns" className="text-primary hover:underline">No Returns Policy</a>.
                     </p>
                   </div>
                 </section>
