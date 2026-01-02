@@ -12,6 +12,7 @@ import Lookbook from "./pages/Lookbook";
 import Wishlist from "./pages/Wishlist";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
+import Lehengas from "./pages/Lehengas";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/product/:handle" element={<ProductDetail />} />
             <Route path="/collections" element={<Collections />} />
+            <Route path="/lehengas" element={<Lehengas />} />
             <Route path="/our-story" element={<BrandStory />} />
             <Route path="/lookbook" element={<Lookbook />} />
             <Route path="/wishlist" element={<Wishlist />} />
