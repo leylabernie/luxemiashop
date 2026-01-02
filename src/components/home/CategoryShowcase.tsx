@@ -1,23 +1,30 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+
+// Helper to get high-resolution image URL
+const getHighResImage = (url: string) => {
+  return url.replace('/images/650/', '/images/1200/');
+};
 
 const categories = [
   {
     name: 'Sarees',
     description: 'Handwoven elegance',
     href: '/sarees',
+    image: getHighResImage('https://kesimg.b-cdn.net/images/650/2025y/December/59744/Pink-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176(1).jpg'),
   },
   {
     name: 'Lehengas',
     description: 'Bridal & Festive',
     href: '/lehengas',
+    image: getHighResImage('https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg'),
   },
   {
     name: 'Suits',
     description: 'Contemporary classics',
     href: '/suits',
+    image: getHighResImage('https://kesimg.b-cdn.net/images/650/2025y/December/59658/Dusty-Pink-Georgette-Party-Wear-Embroidery-Work-Salwar-Suit-Salwar-Street-Vol-5-6208-E(1).jpg'),
   },
 ];
 
@@ -53,10 +60,11 @@ const CategoryShowcase = () => {
                 to={category.href}
                 className="group block relative aspect-[3/4] overflow-hidden"
               >
-                {/* Category Placeholder */}
-                <ProductPlaceholder 
-                  className="absolute inset-0 w-full h-full" 
-                  label={`${category.name} Image`} 
+                {/* Category Image */}
+                <img 
+                  src={category.image}
+                  alt={category.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
 
                 {/* Gradient Overlay */}

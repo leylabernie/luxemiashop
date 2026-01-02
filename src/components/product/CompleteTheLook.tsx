@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { getAllLocalProducts } from '@/data/localProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface CompleteTheLookProps {
   currentProductId: string;
@@ -106,7 +107,7 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
               <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card">
                 {product.node.images.edges[0] ? (
                   <img
-                    src={product.node.images.edges[0].node.url}
+                    src={getOptimizedImage(product.node.images.edges[0].node.url, 'card')}
                     alt={product.node.images.edges[0].node.altText || product.node.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />

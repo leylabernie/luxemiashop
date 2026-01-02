@@ -6,6 +6,7 @@ import { fetchProducts, ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { toast } from 'sonner';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 const FeaturedProducts = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
@@ -116,7 +117,7 @@ const FeaturedProducts = () => {
                     <div className="relative aspect-[3/4] mb-4 overflow-hidden bg-card">
                       {image ? (
                         <img
-                          src={image.url}
+                          src={getOptimizedImage(image.url, 'card')}
                           alt={image.altText || product.node.title}
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />

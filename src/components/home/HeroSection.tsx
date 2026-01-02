@@ -4,6 +4,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
+// Helper to get high-resolution image URL
+const getHighResImage = (url: string) => {
+  // Replace /650/ with /1920/ for hero images
+  return url.replace('/images/650/', '/images/1920/');
+};
+
 const heroSlides = [
   {
     id: 1,
@@ -11,7 +17,7 @@ const heroSlides = [
     subtitle: 'Celebrating the Art of Indian Weaves',
     cta: 'Explore Collection',
     link: '/collections',
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg',
+    image: getHighResImage('https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg'),
   },
   {
     id: 2,
@@ -19,7 +25,7 @@ const heroSlides = [
     subtitle: 'Timeless Elegance for Your Special Day',
     cta: 'View Bridal',
     link: '/lehengas',
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg',
+    image: getHighResImage('https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg'),
   },
   {
     id: 3,
@@ -27,7 +33,7 @@ const heroSlides = [
     subtitle: 'Where Tradition Meets Contemporary',
     cta: 'Shop Festive',
     link: '/sarees',
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Pink-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176(1).jpg',
+    image: getHighResImage('https://kesimg.b-cdn.net/images/650/2025y/December/59744/Pink-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176(1).jpg'),
   },
 ];
 

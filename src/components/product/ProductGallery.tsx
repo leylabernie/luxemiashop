@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ZoomIn, ZoomOut, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface ProductGalleryProps {
   images: Array<{
@@ -54,7 +55,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               }`}
             >
               <img
-                src={image.node.url}
+                src={getOptimizedImage(image.node.url, 'thumbnail')}
                 alt={image.node.altText || `${productTitle} - View ${index + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -90,7 +91,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              src={currentImage.url}
+              src={getOptimizedImage(currentImage.url, 'gallery')}
               alt={currentImage.altText || productTitle}
               className="w-full h-full object-cover transition-transform duration-200"
               style={isZoomed ? {
@@ -144,7 +145,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 <X className="h-6 w-6" />
               </Button>
               <img
-                src={currentImage.url}
+                src={getOptimizedImage(currentImage.url, 'hero')}
                 alt={currentImage.altText || productTitle}
                 className="max-w-full max-h-full object-contain"
               />
