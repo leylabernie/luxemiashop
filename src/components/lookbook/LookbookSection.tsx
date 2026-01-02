@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ShoppableHotspot from './ShoppableHotspot';
-import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import LazyImage from '@/components/ui/LazyImage';
 
 interface Hotspot {
   x: number;
@@ -17,6 +17,7 @@ interface LookbookSectionProps {
   subtitle: string;
   description: string;
   imagePosition: 'left' | 'right' | 'full';
+  image: string;
   hotspots: Hotspot[];
   index: number;
 }
@@ -26,6 +27,7 @@ const LookbookSection = ({
   subtitle,
   description,
   imagePosition,
+  image,
   hotspots,
   index
 }: LookbookSectionProps) => {
@@ -49,10 +51,10 @@ const LookbookSection = ({
           style={{ y }}
           className="absolute inset-0 scale-110"
         >
-          <ProductPlaceholder 
-            className="w-full h-full" 
-            label={`Lookbook ${index + 1}`}
-            aspectRatio="auto"
+          <LazyImage 
+            src={image}
+            alt={title}
+            className="w-full h-full"
           />
           <div className="absolute inset-0 bg-foreground/30" />
         </motion.div>
@@ -112,10 +114,10 @@ const LookbookSection = ({
           style={{ y }}
           className="absolute inset-0 scale-110"
         >
-          <ProductPlaceholder 
-            className="w-full h-full" 
-            label={`Lookbook ${index + 1}`}
-            aspectRatio="auto"
+          <LazyImage 
+            src={image}
+            alt={title}
+            className="w-full h-full"
           />
         </motion.div>
 

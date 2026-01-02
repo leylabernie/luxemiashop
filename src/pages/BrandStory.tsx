@@ -254,7 +254,7 @@ const timelineEvents = [
     description: 'Established direct relationships with master craftsmen across Jaipur, Lucknow, and Varanasi.',
   },
   {
-    year: '2025',
+    year: '2026',
     title: 'Digital Launch',
     description: 'Our online boutique goes live, bringing authentic ethnic wear to customers worldwide.',
   },
