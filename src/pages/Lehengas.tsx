@@ -20,7 +20,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { type ShopifyProduct } from '@/lib/shopify';
+import { getAllLocalProducts } from '@/data/localProducts';
+
+// Using local products for preview - switch to Shopify when ready to publish
+const USE_LOCAL_PRODUCTS = true;
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -42,8 +46,10 @@ const Lehengas = () => {
     const loadProducts = async () => {
       setIsLoading(true);
       try {
-        const data = await fetchProducts(24, 'product_type:Lehenga OR tag:lehenga');
-        setProducts(data);
+        if (USE_LOCAL_PRODUCTS) {
+          const localData = getAllLocalProducts();
+          setProducts(localData);
+        }
       } catch (error) {
         console.error('Error loading products:', error);
       } finally {
