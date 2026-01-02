@@ -30,6 +30,8 @@ import SizeGuide from "./pages/SizeGuide";
 import CareGuide from "./pages/CareGuide";
 import Accessories from "./pages/Accessories";
 import FAQ from "./pages/FAQ";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import WeddingSarees from "./pages/collections/WeddingSarees";
 import BridalLehengas from "./pages/collections/BridalLehengas";
@@ -80,6 +82,9 @@ const App = () => (
               <Route path="/collections/reception-outfits" element={<ReceptionOutfits />} />
               <Route path="/collections/festive-wear" element={<FestiveWear />} />
               <Route path="/sitemap" element={<Sitemap />} />
+              {/* Blog */}
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               {/* Redirect missing pages to related content */}
               <Route path="/new-arrivals" element={<Lehengas />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
