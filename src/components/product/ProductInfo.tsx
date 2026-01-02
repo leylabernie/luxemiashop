@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, RotateCcw, Package, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
@@ -9,6 +10,68 @@ import type { ShopifyProduct } from '@/lib/shopify';
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
 }
+
+// Helper to extract product specs from tags
+const extractProductSpecs = (tags?: string[], productType?: string) => {
+  const specs: Record<string, string> = {};
+  
+  if (!tags) return specs;
+  
+  // Common fabric patterns
+  const fabricKeywords = ['silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
+  // Common work patterns
+  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven', 'handcrafted'];
+  // Color patterns
+  const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
+
+  const lowerTags = tags.map(t => t.toLowerCase());
+  
+  // Extract fabric
+  const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
+  if (foundFabric) {
+    specs.fabric = foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+  
+  // Extract work type
+  const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
+  if (foundWork.length > 0) {
+    specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
+  }
+  
+  // Extract colors
+  const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
+  if (foundColors.length > 0) {
+    specs.color = foundColors.slice(0, 2).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' & ');
+  }
+
+  // Product type as occasion
+  if (productType) {
+    specs.type = productType;
+  }
+
+  return specs;
+};
+
+// Calculate estimated delivery dates
+const getDeliveryDates = () => {
+  const today = new Date();
+  const standardStart = new Date(today);
+  standardStart.setDate(today.getDate() + 7);
+  const standardEnd = new Date(today);
+  standardEnd.setDate(today.getDate() + 12);
+  
+  const expressDate = new Date(today);
+  expressDate.setDate(today.getDate() + 3);
+  
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  };
+  
+  return {
+    standard: `${formatDate(standardStart)} - ${formatDate(standardEnd)}`,
+    express: formatDate(expressDate),
+  };
+};
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
@@ -25,6 +88,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
   const currentPrice = selectedVariant?.node.price || product.priceRange.minVariantPrice;
   const isAvailable = selectedVariant?.node.availableForSale ?? true;
+  const sku = selectedVariant?.node.sku || product.variants.edges[0]?.node.sku;
+  
+  const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
+  const deliveryDates = useMemo(() => getDeliveryDates(), []);
 
   const handleOptionSelect = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({
@@ -59,7 +126,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   };
 
   const formatPrice = (amount: string, currency: string) => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency,
     }).format(parseFloat(amount));
@@ -67,28 +134,100 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
   return (
     <div className="space-y-6">
-      {/* Vendor & Type */}
+      {/* Style No / SKU */}
+      {sku && (
+        <p className="text-xs tracking-wider text-muted-foreground font-mono">
+          Style No: {sku}
+        </p>
+      )}
+
+      {/* Vendor */}
       {product.vendor && (
-        <p className="text-sm tracking-luxury uppercase text-muted-foreground">
+        <p className="text-sm tracking-luxury uppercase text-primary font-medium">
           {product.vendor}
         </p>
       )}
 
       {/* Title */}
-      <h1 className="text-3xl lg:text-4xl font-serif">{product.title}</h1>
+      <h1 className="text-3xl lg:text-4xl font-serif leading-tight">{product.title}</h1>
 
       {/* Price */}
-      <p className="text-2xl font-light">
-        {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
-      </p>
+      <div className="flex items-baseline gap-3">
+        <p className="text-2xl font-medium text-foreground">
+          {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
+        </p>
+        <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
+      </div>
+
+      {/* Estimated Delivery */}
+      <div className="bg-card/50 border border-border/50 rounded-sm p-4 space-y-2">
+        <div className="flex items-center gap-2 text-sm">
+          <Truck className="h-4 w-4 text-primary" />
+          <span className="font-medium">Estimated Delivery</span>
+        </div>
+        <div className="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">Standard</p>
+            <p className="text-foreground">{deliveryDates.standard}</p>
+          </div>
+          <div>
+            <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">Express</p>
+            <p className="text-foreground">{deliveryDates.express}</p>
+          </div>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Product Specifications */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium uppercase tracking-wide">Product Details</h3>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+          {productSpecs.color && (
+            <>
+              <span className="text-muted-foreground">Color</span>
+              <span className="text-foreground">{productSpecs.color}</span>
+            </>
+          )}
+          {productSpecs.fabric && (
+            <>
+              <span className="text-muted-foreground">Fabric</span>
+              <span className="text-foreground">{productSpecs.fabric}</span>
+            </>
+          )}
+          {productSpecs.work && (
+            <>
+              <span className="text-muted-foreground">Work</span>
+              <span className="text-foreground">{productSpecs.work}</span>
+            </>
+          )}
+          {productSpecs.type && (
+            <>
+              <span className="text-muted-foreground">Type</span>
+              <span className="text-foreground">{productSpecs.type}</span>
+            </>
+          )}
+          <span className="text-muted-foreground">Closure</span>
+          <span className="text-foreground">Back Hook-Eye / Zip</span>
+          <span className="text-muted-foreground">Manufacturer</span>
+          <span className="text-foreground">LuxeMia Fashion Pvt Ltd</span>
+        </div>
+      </div>
+
+      <Separator />
 
       {/* Description */}
-      <p className="text-muted-foreground leading-relaxed">
-        {product.description || 'Exquisitely crafted with attention to every detail, this piece embodies the essence of traditional Indian artistry.'}
-      </p>
+      <div className="space-y-2">
+        <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
+        <p className="text-muted-foreground leading-relaxed text-sm">
+          {product.description || 'Exquisitely crafted with attention to every detail, this piece embodies the essence of traditional Indian artistry. Perfect for ceremonies, weddings, and special occasions.'}
+        </p>
+      </div>
+
+      <Separator />
 
       {/* Options */}
-      <div className="space-y-5 pt-2">
+      <div className="space-y-5">
         {product.options.map((option) => (
           <div key={option.name} className="space-y-3">
             <label className="text-sm font-medium uppercase tracking-wide">
@@ -119,7 +258,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </div>
 
       {/* Quantity */}
-      <div className="space-y-3 pt-2">
+      <div className="space-y-3">
         <label className="text-sm font-medium uppercase tracking-wide">Quantity</label>
         <div className="flex items-center gap-4">
           <div className="flex items-center border border-border rounded-sm">
@@ -129,7 +268,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             >
               <Minus className="h-4 w-4" />
             </button>
-            <span className="w-12 text-center">{quantity}</span>
+            <span className="w-12 text-center font-medium">{quantity}</span>
             <button
               onClick={() => setQuantity(quantity + 1)}
               className="p-3 hover:bg-secondary transition-colors"
@@ -141,7 +280,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </div>
 
       {/* Add to Cart */}
-      <div className="flex gap-3 pt-4">
+      <div className="flex gap-3 pt-2">
         <motion.div className="flex-1" whileTap={{ scale: 0.98 }}>
           <Button
             onClick={handleAddToCart}
@@ -180,14 +319,21 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </div>
 
       {/* Trust Badges */}
-      <div className="grid grid-cols-2 gap-4 pt-6 border-t border-border">
-        <div className="text-center py-3">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">Free Shipping</p>
-          <p className="text-sm">On orders above ₹5,000</p>
+      <div className="grid grid-cols-3 gap-3 pt-4">
+        <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
+          <Truck className="h-5 w-5 text-primary mb-2" />
+          <p className="text-xs font-medium">Free Shipping</p>
+          <p className="text-xs text-muted-foreground">On orders above $100</p>
         </div>
-        <div className="text-center py-3">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">Easy Returns</p>
-          <p className="text-sm">Within 15 days</p>
+        <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
+          <RotateCcw className="h-5 w-5 text-primary mb-2" />
+          <p className="text-xs font-medium">Easy Returns</p>
+          <p className="text-xs text-muted-foreground">Within 15 days</p>
+        </div>
+        <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
+          <Package className="h-5 w-5 text-primary mb-2" />
+          <p className="text-xs font-medium">Secure Package</p>
+          <p className="text-xs text-muted-foreground">Gift-wrapped</p>
         </div>
       </div>
     </div>
