@@ -6,6 +6,7 @@ import WishlistButton from '@/components/ui/WishlistButton';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface ProductGridProps {
   products: ShopifyProduct[];
@@ -35,9 +36,9 @@ export const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
   };
 
   const formatPrice = (amount: string, currency: string) => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency,
+      currency: 'USD',
     }).format(parseFloat(amount));
   };
 
@@ -116,7 +117,7 @@ export const ProductGrid = ({ products, isLoading }: ProductGridProps) => {
             <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card">
               {product.node.images.edges[0] ? (
                 <img
-                  src={product.node.images.edges[0].node.url}
+                  src={getOptimizedImage(product.node.images.edges[0].node.url, 'card')}
                   alt={product.node.images.edges[0].node.altText || product.node.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />

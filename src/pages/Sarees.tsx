@@ -25,6 +25,7 @@ import { getLocalSareeProducts } from '@/data/localProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -391,7 +392,7 @@ const Sarees = () => {
                     <Link to={`/product/${product.node.handle}`} className="group block">
                       <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3">
                         <img
-                          src={product.node.images.edges[0]?.node.url}
+                          src={getOptimizedImage(product.node.images.edges[0]?.node.url, 'card')}
                           alt={product.node.title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
