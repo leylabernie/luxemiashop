@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ActiveFilterTags } from '@/components/collections/ProductFilters';
+import ProductCard from '@/components/ui/ProductCard';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -26,7 +27,6 @@ import { getLocalSuitProducts } from '@/data/localProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
-import { getOptimizedImage } from '@/lib/imageUtils';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -417,61 +417,12 @@ const Suits = () => {
               {/* Product Grid */}
               <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                 {filteredProducts.map((product, index) => (
-                  <motion.div
-                    key={product.node.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
-                  >
-                    <Link to={`/product/${product.node.handle}`} className="group block">
-                      <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3">
-                        <img
-                          src={getOptimizedImage(product.node.images.edges[0]?.node.url, 'card')}
-                          alt={product.node.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
-                        
-                        {/* Quick Actions */}
-                        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                          <Button
-                            size="sm"
-                            className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
-                            onClick={(e) => handleQuickAdd(e, product.node)}
-                          >
-                            <ShoppingBag className="h-4 w-4 mr-2" />
-                            Add to Bag
-                          </Button>
-                        </div>
-                        
-                        {/* Wishlist */}
-                        <button
-                          onClick={(e) => handleWishlistToggle(e, product.node)}
-                          className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
-                        >
-                          <Heart
-                            className={`h-4 w-4 ${
-                              isInWishlist(product.node.id)
-                                ? 'fill-primary text-primary'
-                                : 'text-foreground'
-                            }`}
-                          />
-                        </button>
-                      </div>
-                      
-                      <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                          {product.node.productType}
-                        </p>
-                        <h3 className="font-serif text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
-                          {product.node.title}
-                        </h3>
-                        <p className="text-sm font-medium">
-                          {formatPrice(product.node.priceRange.minVariantPrice.amount)}
-                        </p>
-                      </div>
-                    </Link>
-                  </motion.div>
+                  <ProductCard 
+                    key={product.node.id} 
+                    product={product} 
+                    index={index}
+                    showQuickAdd={true}
+                  />
                 ))}
               </div>
 
