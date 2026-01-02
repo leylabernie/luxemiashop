@@ -75,8 +75,8 @@ export const blogPosts: BlogPost[] = [
       <p>Trust your instincts – you'll know when you've found "the one." Take photos during trials to see how the lehenga looks in different lighting. And most importantly, choose something that makes you feel confident and beautiful on your special day.</p>
     `,
     author: 'Priya Sharma',
-    publishedAt: '2024-12-15',
-    updatedAt: '2024-12-20',
+    publishedAt: '2026-01-01',
+    updatedAt: '2026-01-02',
     category: 'Bridal Guide',
     tags: ['bridal lehenga', 'wedding shopping', 'bridal fashion', 'lehenga guide'],
     image: '/og/og-lehengas.jpg',
@@ -137,8 +137,8 @@ export const blogPosts: BlogPost[] = [
       </ul>
     `,
     author: 'Anjali Mehta',
-    publishedAt: '2024-12-10',
-    updatedAt: '2024-12-18',
+    publishedAt: '2025-12-28',
+    updatedAt: '2026-01-02',
     category: 'Styling Tips',
     tags: ['saree draping', 'styling tips', 'saree fashion', 'traditional wear'],
     image: '/og/og-sarees.jpg',
@@ -146,18 +146,18 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: '3',
-    slug: 'indian-wedding-trends-2025',
-    title: 'Indian Wedding Fashion Trends to Watch in 2025',
-    excerpt: 'From sustainable fashion to tech-integrated outfits, discover the wedding trends that will define Indian celebrations in 2025.',
+    slug: 'indian-wedding-trends-2026',
+    title: 'Indian Wedding Fashion Trends to Watch in 2026',
+    excerpt: 'From sustainable fashion to tech-integrated outfits, discover the wedding trends that will define Indian celebrations in 2026.',
     content: `
       <h2>Sustainable and Eco-Friendly Fashion</h2>
-      <p>2025 marks a significant shift towards sustainable wedding fashion. Brides are increasingly choosing eco-friendly fabrics, vintage pieces, and outfits that can be repurposed. Natural dyes, organic silks, and handloom fabrics are taking center stage.</p>
+      <p>2026 marks a significant shift towards sustainable wedding fashion. Brides are increasingly choosing eco-friendly fabrics, vintage pieces, and outfits that can be repurposed. Natural dyes, organic silks, and handloom fabrics are taking center stage.</p>
       
       <h3>The Rise of Heirloom Fashion</h3>
       <p>More brides are incorporating family heirlooms into their wedding looks. Whether it's grandmother's antique jewelry or mother's wedding saree reimagined, the emotional value adds immeasurable worth to the ensemble.</p>
       
       <h2>Non-Traditional Colors</h2>
-      <p>While red remains beloved, 2025 sees an explosion of unconventional bridal colors:</p>
+      <p>While red remains beloved, 2026 sees an explosion of unconventional bridal colors:</p>
       <ul>
         <li><strong>Ivory and Off-White:</strong> For modern, minimalist brides</li>
         <li><strong>Lavender and Lilac:</strong> Soft, romantic choices</li>
@@ -186,7 +186,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
       
       <h2>Minimal Jewelry, Maximum Impact</h2>
-      <p>Less is more in 2025. Brides are choosing fewer but more impactful jewelry pieces. A single statement necklace, dramatic earrings, or an heirloom maang tikka takes precedence over layered jewelry.</p>
+      <p>Less is more in 2026. Brides are choosing fewer but more impactful jewelry pieces. A single statement necklace, dramatic earrings, or an heirloom maang tikka takes precedence over layered jewelry.</p>
       
       <h2>Tech-Integrated Fashion</h2>
       <p>LED-embedded dupattas, temperature-regulating fabrics, and QR codes woven into outfit details are among the innovative trends emerging. Technology meets tradition in exciting new ways.</p>
@@ -204,10 +204,10 @@ export const blogPosts: BlogPost[] = [
       <p>From biodegradable floral jewelry for mehendi to upcycled metal accessories, sustainable options are available for every wedding event. Brides are also choosing lab-grown diamonds and ethical gemstones.</p>
     `,
     author: 'Rahul Khanna',
-    publishedAt: '2024-12-05',
-    updatedAt: '2024-12-22',
+    publishedAt: '2025-12-20',
+    updatedAt: '2026-01-02',
     category: 'Wedding Trends',
-    tags: ['wedding trends', '2025 fashion', 'bridal trends', 'sustainable fashion'],
+    tags: ['wedding trends', '2026 fashion', 'bridal trends', 'sustainable fashion'],
     image: '/og/og-suits.jpg',
     readTime: 7
   },
@@ -287,8 +287,8 @@ export const blogPosts: BlogPost[] = [
       </ul>
     `,
     author: 'Meera Patel',
-    publishedAt: '2024-11-28',
-    updatedAt: '2024-12-15',
+    publishedAt: '2025-12-15',
+    updatedAt: '2025-12-28',
     category: 'Styling Tips',
     tags: ['accessories', 'jewelry', 'styling tips', 'ethnic fashion'],
     image: '/og/og-menswear.jpg',
@@ -401,8 +401,8 @@ export const blogPosts: BlogPost[] = [
       </ul>
     `,
     author: 'Lakshmi Iyer',
-    publishedAt: '2024-11-20',
-    updatedAt: '2024-12-10',
+    publishedAt: '2025-12-10',
+    updatedAt: '2025-12-20',
     category: 'Care Guide',
     tags: ['silk care', 'saree maintenance', 'fabric care', 'storage tips'],
     image: '/og/og-sarees.jpg',
