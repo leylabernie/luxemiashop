@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SlidersHorizontal, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import { ProductFilters, ActiveFilterTags } from '@/components/collections/ProductFilters';
-import { ProductGrid } from '@/components/collections/ProductGrid';
+import { ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -20,51 +19,289 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Slider } from '@/components/ui/slider';
+import { getLocalSuitProducts } from '@/data/localProducts';
+import { useCartStore } from '@/stores/cartStore';
+import { useWishlistStore } from '@/stores/wishlistStore';
+import { toast } from 'sonner';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
   { label: 'Newest', value: 'newest' },
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
-  { label: 'Best Selling', value: 'best-selling' },
+];
+
+const suitFilterSections = [
+  {
+    name: 'Category',
+    options: ['Anarkali Suits', 'Salwar Suits', 'Sharara Suits', 'Kurta Sets'],
+  },
+  {
+    name: 'Occasion',
+    options: ['Wedding', 'Party', 'Festival', 'Casual', 'Eid'],
+  },
+  {
+    name: 'Fabric',
+    options: ['Silk', 'Roman Silk', 'Chanderi Cotton', 'Fendy Silk', 'Georgette', 'Velvet'],
+  },
+  {
+    name: 'Work',
+    options: ['Embroidery', 'Sequins', 'Border Work', 'Zari', 'Print'],
+  },
+  {
+    name: 'Color',
+    options: ['Red', 'Green', 'Pink', 'Dusty Rose', 'Grey', 'Peach', 'Beige', 'Blue'],
+  },
 ];
 
 const Suits = () => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Category', 'Occasion']);
+  
+  const addItem = useCartStore((state) => state.addItem);
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchProducts(24, 'product_type:Suit OR product_type:Kurta OR tag:suit OR tag:kurta');
-        setProducts(data);
-      } catch (error) {
-        console.error('Error loading products:', error);
-      } finally {
-        setIsLoading(false);
+  const allProducts = getLocalSuitProducts();
+
+  const filteredProducts = useMemo(() => {
+    let products = [...allProducts];
+    
+    // Apply filters
+    Object.entries(activeFilters).forEach(([section, values]) => {
+      if (values.length > 0) {
+        products = products.filter(p => {
+          const product = p.node;
+          if (section === 'Category') {
+            return values.some(v => 
+              product.productType?.toLowerCase().includes(v.toLowerCase()) ||
+              product.title.toLowerCase().includes(v.toLowerCase())
+            );
+          }
+          if (section === 'Occasion') {
+            return values.some(v => 
+              product.productType?.toLowerCase().includes(v.toLowerCase()) ||
+              product.description.toLowerCase().includes(v.toLowerCase())
+            );
+          }
+          if (section === 'Fabric') {
+            return values.some(v => 
+              product.productType?.toLowerCase().includes(v.toLowerCase()) ||
+              product.description.toLowerCase().includes(v.toLowerCase())
+            );
+          }
+          if (section === 'Work') {
+            return values.some(v => product.description.toLowerCase().includes(v.toLowerCase()));
+          }
+          if (section === 'Color') {
+            return values.some(v => product.title.toLowerCase().includes(v.toLowerCase()));
+          }
+          return true;
+        });
       }
-    };
+    });
 
-    loadProducts();
-  }, []);
+    // Apply price filter
+    products = products.filter(p => {
+      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
 
-  const handleFilterChange = (filters: Record<string, string[]>) => {
-    setActiveFilters(filters);
+    // Apply sorting
+    switch (sortBy) {
+      case 'price-asc':
+        products.sort((a, b) => 
+          parseFloat(a.node.priceRange.minVariantPrice.amount) - 
+          parseFloat(b.node.priceRange.minVariantPrice.amount)
+        );
+        break;
+      case 'price-desc':
+        products.sort((a, b) => 
+          parseFloat(b.node.priceRange.minVariantPrice.amount) - 
+          parseFloat(a.node.priceRange.minVariantPrice.amount)
+        );
+        break;
+    }
+
+    return products;
+  }, [allProducts, activeFilters, priceRange, sortBy]);
+
+  const handleFilterChange = (section: string, option: string) => {
+    const currentOptions = activeFilters[section] || [];
+    const newOptions = currentOptions.includes(option)
+      ? currentOptions.filter((o) => o !== option)
+      : [...currentOptions, option];
+
+    setActiveFilters({
+      ...activeFilters,
+      [section]: newOptions,
+    });
   };
 
   const handleRemoveFilter = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
-    handleFilterChange({
+    setActiveFilters({
       ...activeFilters,
       [section]: currentOptions.filter((o) => o !== option),
     });
   };
+
+  const toggleSection = (section: string) => {
+    setExpandedSections((prev) =>
+      prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]
+    );
+  };
+
+  const formatPrice = (amount: string) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(parseFloat(amount));
+  };
+
+  const handleQuickAdd = (e: React.MouseEvent, product: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const variant = product.variants.edges[0]?.node;
+    addItem({
+      product: product,
+      variantId: variant?.id || product.id,
+      variantTitle: variant?.title || 'Free Size',
+      price: product.priceRange.minVariantPrice,
+      quantity: 1,
+      selectedOptions: variant?.selectedOptions || [],
+    });
+    toast.success('Added to bag!');
+  };
+
+  const handleWishlistToggle = (e: React.MouseEvent, product: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+      toast.success('Removed from wishlist');
+    } else {
+      addToWishlist(product);
+      toast.success('Added to wishlist!');
+    }
+  };
+
+  const FilterSidebar = () => (
+    <aside className="w-full lg:w-64 flex-shrink-0">
+      <div className="sticky top-28">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-serif">Filters</h2>
+          {Object.values(activeFilters).flat().length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setActiveFilters({});
+                setPriceRange([0, 200]);
+              }}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
+              Clear All
+            </Button>
+          )}
+        </div>
+
+        {/* Price Range */}
+        <div className="mb-6 pb-6 border-b border-border">
+          <button
+            onClick={() => toggleSection('Price')}
+            className="flex items-center justify-between w-full text-left mb-4"
+          >
+            <span className="text-sm font-medium uppercase tracking-wide">Price</span>
+            <ChevronDown
+              className={`h-4 w-4 transition-transform ${
+                expandedSections.includes('Price') ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {expandedSections.includes('Price') && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="space-y-4">
+                  <Slider
+                    value={priceRange}
+                    onValueChange={(value) => setPriceRange(value as [number, number])}
+                    min={0}
+                    max={200}
+                    step={10}
+                    className="py-4"
+                  />
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <span>${priceRange[0]}</span>
+                    <span>${priceRange[1]}</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Filter Sections */}
+        {suitFilterSections.map((section) => (
+          <div key={section.name} className="mb-6 pb-6 border-b border-border last:border-0">
+            <button
+              onClick={() => toggleSection(section.name)}
+              className="flex items-center justify-between w-full text-left mb-4"
+            >
+              <span className="text-sm font-medium uppercase tracking-wide">
+                {section.name}
+                {activeFilters[section.name]?.length > 0 && (
+                  <span className="ml-2 text-xs text-primary">
+                    ({activeFilters[section.name].length})
+                  </span>
+                )}
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${
+                  expandedSections.includes(section.name) ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+            <AnimatePresence>
+              {expandedSections.includes(section.name) && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-3"
+                >
+                  {section.options.map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center gap-3 cursor-pointer group"
+                    >
+                      <Checkbox
+                        checked={activeFilters[section.name]?.includes(option) || false}
+                        onCheckedChange={() => handleFilterChange(section.name, option)}
+                      />
+                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -79,11 +316,11 @@ const Suits = () => {
             className="text-center px-4"
           >
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
-              Explore Our
+              Contemporary Classics
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Suits & Kurtas</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Contemporary classics featuring elegant suits and kurta sets for every occasion.
+              Elegant Anarkalis, flowing Shararas, and graceful Salwar Suits for every celebration.
             </p>
           </motion.div>
         </section>
@@ -101,18 +338,13 @@ const Suits = () => {
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           <div className="flex gap-8">
             <div className="hidden lg:block">
-              <ProductFilters
-                onFilterChange={handleFilterChange}
-                activeFilters={activeFilters}
-                priceRange={priceRange}
-                onPriceChange={setPriceRange}
-              />
+              <FilterSidebar />
             </div>
 
             <div className="flex-1">
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <p className="text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-medium">{products.length}</span> products
+                  Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -128,12 +360,7 @@ const Suits = () => {
                         <SheetTitle>Filters</SheetTitle>
                       </SheetHeader>
                       <div className="mt-6">
-                        <ProductFilters
-                          onFilterChange={handleFilterChange}
-                          activeFilters={activeFilters}
-                          priceRange={priceRange}
-                          onPriceChange={setPriceRange}
-                        />
+                        <FilterSidebar />
                       </div>
                     </SheetContent>
                   </Sheet>
@@ -161,14 +388,80 @@ const Suits = () => {
               </div>
 
               <ActiveFilterTags filters={activeFilters} onRemove={handleRemoveFilter} />
-              <ProductGrid products={products} isLoading={isLoading} />
 
-              {!isLoading && products.length === 0 && (
+              {/* Product Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                {filteredProducts.map((product, index) => (
+                  <motion.div
+                    key={product.node.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                  >
+                    <Link to={`/product/${product.node.handle}`} className="group block">
+                      <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3">
+                        <img
+                          src={product.node.images.edges[0]?.node.url}
+                          alt={product.node.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                        
+                        {/* Quick Actions */}
+                        <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                          <Button
+                            size="sm"
+                            className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
+                            onClick={(e) => handleQuickAdd(e, product.node)}
+                          >
+                            <ShoppingBag className="h-4 w-4 mr-2" />
+                            Add to Bag
+                          </Button>
+                        </div>
+                        
+                        {/* Wishlist */}
+                        <button
+                          onClick={(e) => handleWishlistToggle(e, product.node)}
+                          className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+                        >
+                          <Heart
+                            className={`h-4 w-4 ${
+                              isInWishlist(product.node.id)
+                                ? 'fill-primary text-primary'
+                                : 'text-foreground'
+                            }`}
+                          />
+                        </button>
+                      </div>
+                      
+                      <div className="space-y-1">
+                        <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                          {product.node.productType}
+                        </p>
+                        <h3 className="font-serif text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
+                          {product.node.title}
+                        </h3>
+                        <p className="text-sm font-medium">
+                          {formatPrice(product.node.priceRange.minVariantPrice.amount)}
+                        </p>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              {filteredProducts.length === 0 && (
                 <div className="text-center py-16">
-                  <p className="text-muted-foreground mb-4">No suits found yet.</p>
-                  <Link to="/collections">
-                    <Button variant="outline">Browse All Collections</Button>
-                  </Link>
+                  <p className="text-muted-foreground mb-4">No products match your filters.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setActiveFilters({});
+                      setPriceRange([0, 200]);
+                    }}
+                  >
+                    Clear All Filters
+                  </Button>
                 </div>
               )}
             </div>
