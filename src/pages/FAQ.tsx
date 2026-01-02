@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { HelpCircle, Package, Truck, Ruler, Sparkles, CreditCard, RotateCcw, Mail } from 'lucide-react';
@@ -190,8 +192,36 @@ const FAQ = () => {
     },
   ];
 
+  // Generate FAQ Schema for structured data
+  const allFaqs = faqCategories.flatMap(category => category.faqs);
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: allFaqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="FAQ | Frequently Asked Questions - LuxeMia"
+        description="Find answers to common questions about LuxeMia orders, shipping, sizing, returns, and product care. Get help with your Indian ethnic wear purchase."
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'FAQ', url: '/faq' },
+        ]}
+      />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
       <Header />
       
       <main className="pt-24 pb-16">
