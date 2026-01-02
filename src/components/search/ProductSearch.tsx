@@ -24,6 +24,7 @@ interface ProductSearchProps {
 }
 
 const quickFilterOptions = {
+  size: ['S', 'M', 'L', 'XL', '36', '38', '40', '42', '44'],
   occasion: ['Wedding', 'Party', 'Festival', 'Casual', 'Bridal'],
   fabric: ['Silk', 'Velvet', 'Georgette', 'Cotton', 'Chiffon'],
 };
@@ -32,7 +33,8 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   const [selectedFabrics, setSelectedFabrics] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -98,6 +100,9 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
       return price >= priceRange[0] && price <= priceRange[1];
     });
     
+    // Size filter - note: we can't filter by size in search since we don't have variant data in the simplified search results
+    // This would require fetching full product data
+    
     // Occasion filter
     if (selectedOccasions.length > 0) {
       filtered = filtered.filter(product =>
@@ -113,7 +118,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
     }
     
     // Show results if query or filters are active
-    if (query.length >= 2 || selectedOccasions.length > 0 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 500) {
+    if (query.length >= 2 || selectedOccasions.length > 0 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 1000) {
       setResults(filtered.slice(0, 12));
     } else {
       setResults([]);
@@ -144,9 +149,18 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   };
 
   const clearFilters = () => {
-    setPriceRange([0, 500]);
+    setPriceRange([0, 1000]);
+    setSelectedSizes([]);
     setSelectedOccasions([]);
     setSelectedFabrics([]);
+  };
+
+  const toggleSize = (size: string) => {
+    setSelectedSizes(prev =>
+      prev.includes(size)
+        ? prev.filter(s => s !== size)
+        : [...prev, size]
+    );
   };
 
   const toggleOccasion = (occasion: string) => {
@@ -165,7 +179,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
     );
   };
 
-  const hasActiveFilters = selectedOccasions.length > 0 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 500;
+  const hasActiveFilters = selectedSizes.length > 0 || selectedOccasions.length > 0 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 1000;
 
   const formatPrice = (amount: string) => {
     return new Intl.NumberFormat('en-US', {
@@ -260,13 +274,33 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                           value={priceRange}
                           onValueChange={(value) => setPriceRange(value as [number, number])}
                           min={0}
-                          max={500}
-                          step={25}
+                          max={1000}
+                          step={50}
                           className="py-2"
                         />
                         <div className="flex justify-between text-xs text-muted-foreground">
                           <span>${priceRange[0]}</span>
                           <span>${priceRange[1]}</span>
+                        </div>
+                      </div>
+
+                      {/* Size */}
+                      <div className="space-y-2">
+                        <p className="text-sm text-muted-foreground">Size</p>
+                        <div className="flex flex-wrap gap-2">
+                          {quickFilterOptions.size.map((size) => (
+                            <button
+                              key={size}
+                              onClick={() => toggleSize(size)}
+                              className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${
+                                selectedSizes.includes(size)
+                                  ? 'bg-primary text-primary-foreground border-primary'
+                                  : 'border-border hover:bg-muted'
+                              }`}
+                            >
+                              {size}
+                            </button>
+                          ))}
                         </div>
                       </div>
 

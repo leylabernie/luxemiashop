@@ -19,12 +19,12 @@ interface ProductFiltersProps {
 
 const filterSections: FilterSection[] = [
   {
-    name: 'Category',
-    options: ['Sarees', 'Lehengas', 'Anarkalis', 'Salwar Suits', 'Sharara Sets'],
+    name: 'Size',
+    options: ['S', 'M', 'L', 'XL', 'Free Size'],
   },
   {
-    name: 'Size',
-    options: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Free Size'],
+    name: 'Category',
+    options: ['Sarees', 'Lehengas', 'Anarkalis', 'Salwar Suits', 'Sharara Sets'],
   },
   {
     name: 'Fabric',
@@ -46,7 +46,7 @@ export const ProductFilters = ({
   priceRange,
   onPriceChange,
 }: ProductFiltersProps) => {
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Category', 'Price']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category', 'Price']);
 
   const toggleSection = (section: string) => {
     setExpandedSections((prev) =>
@@ -68,7 +68,7 @@ export const ProductFilters = ({
 
   const clearAllFilters = () => {
     onFilterChange({});
-    onPriceChange([0, 100000]);
+    onPriceChange([0, 1000]);
   };
 
   const totalActiveFilters = Object.values(activeFilters).flat().length;
@@ -125,8 +125,8 @@ export const ProductFilters = ({
                     value={priceRange}
                     onValueChange={(value) => onPriceChange(value as [number, number])}
                     min={0}
-                    max={100000}
-                    step={1000}
+                    max={1000}
+                    step={50}
                     className="py-4"
                   />
                   <div className="flex items-center justify-between text-sm text-muted-foreground">

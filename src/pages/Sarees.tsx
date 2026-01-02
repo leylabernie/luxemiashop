@@ -35,6 +35,10 @@ const sortOptions = [
 
 const sareeFilterSections = [
   {
+    name: 'Size',
+    options: ['S', 'M', 'L', 'XL', 'Free Size'],
+  },
+  {
     name: 'Occasion',
     options: ['Wedding', 'Party', 'Festival', 'Casual', 'Bridal'],
   },
@@ -57,7 +61,7 @@ const Sarees = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Occasion', 'Fabric']);
   
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
@@ -72,6 +76,16 @@ const Sarees = () => {
       if (values.length > 0) {
         products = products.filter(p => {
           const product = p.node;
+          if (section === 'Size') {
+            // Check if product has any of the selected sizes in variants
+            return values.some(v => 
+              v === 'Free Size' || // Sarees often are free size
+              product.variants?.edges?.some(variant => 
+                variant.node.title === v || 
+                variant.node.selectedOptions?.some(opt => opt.value === v)
+              )
+            );
+          }
           if (section === 'Occasion') {
             return values.some(v => 
               product.productType?.toLowerCase().includes(v.toLowerCase()) ||
