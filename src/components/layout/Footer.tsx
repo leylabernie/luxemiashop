@@ -20,6 +20,7 @@ const footerLinks = {
     { name: 'Our Story', href: '/brand-story' },
     { name: 'Artisans', href: '/artisans' },
     { name: 'Sustainability', href: '/sustainability' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
   ],
   help: [
