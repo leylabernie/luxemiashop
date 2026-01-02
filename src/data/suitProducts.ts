@@ -24,8 +24,8 @@ const convertPrice = (inrPrice: number): string => Math.round(inrPrice * 0.012 *
 import kanchanChinnon10200 from '@/assets/products/kanchan-chinnon-10200.jpg';
 import kanchanChinnon10201 from '@/assets/products/kanchan-chinnon-10201.jpg';
 import kanchanChinnon10202 from '@/assets/products/kanchan-chinnon-10202.jpg';
-import gownCoralImg from '@/assets/products/viscose-jacquard-gown-coral.jpg';
-import gownSageImg from '@/assets/products/viscose-jacquard-gown-sage.jpg';
+import gownCoralImg from '@/assets/products/viscose-jacquard-gown-coral-new.jpg';
+import gownSageImg from '@/assets/products/viscose-jacquard-gown-sage-new.jpg';
 
 export const suitProducts: SuitProduct[] = [
   // === NEW ARRIVALS - GOWNS (Anarkali Style) ===
