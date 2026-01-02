@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Plus, ShoppingBag, ZoomIn } from 'lucide-react';
+import { Heart, Plus, ZoomIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
-import WishlistButton from '@/components/ui/WishlistButton';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -26,8 +26,31 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' } // Start loading 200px before entering viewport
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -94,9 +117,10 @@ export const ProductCard = ({
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
+      transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
       className={`group ${className}`}
     >
       <Link to={`/product/${product.node.handle}`}>
@@ -106,24 +130,43 @@ export const ProductCard = ({
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          {imageUrl ? (
+          {/* Shimmer Placeholder */}
+          <div
+            className={cn(
+              'absolute inset-0 bg-gradient-to-r from-card via-muted to-card transition-opacity duration-500',
+              isLoaded ? 'opacity-0' : 'opacity-100'
+            )}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/20 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+          </div>
+
+          {/* Actual Image - only render when in view */}
+          {isInView && imageUrl ? (
             <div className="w-full h-full overflow-hidden">
               <img
                 src={getOptimizedImage(imageUrl, 'card')}
                 alt={product.node.images.edges[0]?.node.altText || product.node.title}
-                className="w-full h-full object-cover transition-all duration-500"
+                loading="lazy"
+                onLoad={() => setIsLoaded(true)}
+                className={cn(
+                  'w-full h-full object-cover transition-all duration-500',
+                  isLoaded ? 'opacity-100' : 'opacity-0'
+                )}
                 style={{
                   transform: isZoomed ? 'scale(1.8)' : 'scale(1)',
                   transformOrigin: `${mousePosition.x}% ${mousePosition.y}%`,
                 }}
               />
             </div>
-          ) : (
+          ) : !imageUrl ? (
             <ProductPlaceholder aspectRatio="portrait" />
-          )}
+          ) : null}
 
           {/* Zoom indicator */}
-          <div className={`absolute top-3 left-3 p-2 rounded-full bg-background/80 backdrop-blur-sm transition-opacity duration-300 ${isZoomed ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+          <div className={cn(
+            'absolute top-3 left-3 p-2 rounded-full bg-background/80 backdrop-blur-sm transition-opacity duration-300 pointer-events-none',
+            isZoomed ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          )}>
             <ZoomIn className="h-3.5 w-3.5 text-foreground" />
           </div>
 
