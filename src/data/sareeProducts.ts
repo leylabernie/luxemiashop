@@ -472,10 +472,10 @@ export const sareeProducts: SareeProduct[] = [
     originalPrice: convertPrice(4388),
     currency: "USD",
     images: [
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Champagne-Gold-Crepe-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS201(1).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Champagne-Gold-Crepe-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS201(2).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Champagne-Gold-Crepe-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS201(3).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Champagne-Gold-Crepe-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS201(4).jpg"
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Pink-Gold-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4295(1).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Pink-Gold-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4295(2).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Pink-Gold-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4295(3).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Pink-Gold-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4295(4).jpg"
     ],
     category: "Party Sarees",
     fabric: "Georgette",
@@ -497,10 +497,10 @@ export const sareeProducts: SareeProduct[] = [
     originalPrice: convertPrice(5798),
     currency: "USD",
     images: [
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Sky-Blue-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS200(1).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Sky-Blue-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS200(2).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Sky-Blue-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS200(3).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Sky-Blue-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS200(4).jpg"
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Sky-Blue-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4299(1).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Sky-Blue-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4299(2).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Sky-Blue-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4299(3).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Sky-Blue-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4299(4).jpg"
     ],
     category: "Party Sarees",
     fabric: "Georgette",
@@ -522,10 +522,10 @@ export const sareeProducts: SareeProduct[] = [
     originalPrice: convertPrice(4989),
     currency: "USD",
     images: [
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Pink-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS202(1).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Pink-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS202(2).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Pink-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS202(3).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59704/Pink-Organza-Party-Wear-Zari-Sequins-Work-Lehenga-Choli-DRS202(4).jpg"
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Peach-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4293(1).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Peach-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4293(2).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Peach-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4293(3).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Peach-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4293(4).jpg"
     ],
     category: "Party Sarees",
     fabric: "Shimmer",
@@ -598,10 +598,10 @@ export const sareeProducts: SareeProduct[] = [
     originalPrice: convertPrice(8768),
     currency: "USD",
     images: [
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(2).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(3).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(4).jpg"
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59744/Multi-Color-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3133-B(1).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59744/Multi-Color-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3133-B(2).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59744/Multi-Color-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3133-B(3).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59744/Multi-Color-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3133-B(4).jpg"
     ],
     category: "Designer Sarees",
     fabric: "Velvet",
@@ -623,10 +623,10 @@ export const sareeProducts: SareeProduct[] = [
     originalPrice: convertPrice(6339),
     currency: "USD",
     images: [
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59644/White-Heavy-Net-Bridal-Wear-Sequins-Embroidery-Work-Bridal-Lehenga-Choli-2941-2941(1).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59644/White-Heavy-Net-Bridal-Wear-Sequins-Embroidery-Work-Bridal-Lehenga-Choli-2941-2941(2).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59644/White-Heavy-Net-Bridal-Wear-Sequins-Embroidery-Work-Bridal-Lehenga-Choli-2941-2941(3).jpg",
-      "https://kesimg.b-cdn.net/images/650/2025y/December/59644/White-Heavy-Net-Bridal-Wear-Sequins-Embroidery-Work-Bridal-Lehenga-Choli-2941-2941(4).jpg"
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Cream-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4300(1).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Cream-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4300(2).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Cream-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4300(3).jpg",
+      "https://kesimg.b-cdn.net/images/650/2025y/December/59728/Cream-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4300(4).jpg"
     ],
     category: "Designer Sarees",
     fabric: "Chiffon",
