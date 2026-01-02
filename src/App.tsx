@@ -22,6 +22,11 @@ import Returns from "./pages/Returns";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import VirtualTryOn from "./pages/VirtualTryOn";
+import Artisans from "./pages/Artisans";
+import Sustainability from "./pages/Sustainability";
+import Press from "./pages/Press";
+import SizeGuide from "./pages/SizeGuide";
+import CareGuide from "./pages/CareGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,14 +58,14 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/virtual-tryon" element={<VirtualTryOn />} />
+            <Route path="/artisans" element={<Artisans />} />
+            <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/size-guide" element={<SizeGuide />} />
+            <Route path="/care-guide" element={<CareGuide />} />
             {/* Redirect missing pages to related content */}
             <Route path="/new-arrivals" element={<Lehengas />} />
             <Route path="/accessories" element={<Collections />} />
-            <Route path="/artisans" element={<BrandStory />} />
-            <Route path="/sustainability" element={<BrandStory />} />
-            <Route path="/press" element={<BrandStory />} />
-            <Route path="/size-guide" element={<Lehengas />} />
-            <Route path="/care-guide" element={<Returns />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
