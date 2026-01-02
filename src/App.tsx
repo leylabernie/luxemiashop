@@ -28,7 +28,7 @@ import Sustainability from "./pages/Sustainability";
 import Press from "./pages/Press";
 import SizeGuide from "./pages/SizeGuide";
 import CareGuide from "./pages/CareGuide";
-import Accessories from "./pages/Accessories";
+import Jewelry from "./pages/Jewelry";
 import FAQ from "./pages/FAQ";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -74,7 +74,7 @@ const App = () => (
               <Route path="/press" element={<Press />} />
               <Route path="/size-guide" element={<SizeGuide />} />
               <Route path="/care-guide" element={<CareGuide />} />
-              <Route path="/accessories" element={<Accessories />} />
+              <Route path="/jewelry" element={<Jewelry />} />
               <Route path="/faq" element={<FAQ />} />
               {/* Occasion-based collection pages for SEO */}
               <Route path="/collections/wedding-sarees" element={<WeddingSarees />} />
