@@ -4,6 +4,7 @@ import { Search, ShoppingBag, User, Menu, X, Heart, LogOut } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
+import ProductSearch from '../search/ProductSearch';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/hooks/useAuth';
@@ -15,9 +16,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const navLinks = [
-  { name: 'Collections', href: '/collections' },
-  { name: 'Sarees', href: '/sarees' },
   { name: 'Lehengas', href: '/lehengas' },
+  { name: 'Sarees', href: '/sarees' },
+  { name: 'Suits', href: '/suits' },
+  { name: 'Menswear', href: '/menswear' },
   { name: 'Our Story', href: '/our-story' },
   { name: 'Lookbook', href: '/lookbook' },
 ];
@@ -187,31 +189,10 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Search Bar */}
-        <AnimatePresence>
-          {isSearchOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="border-t border-border/50 overflow-hidden"
-            >
-              <div className="container mx-auto px-4 py-4">
-                <div className="relative max-w-xl mx-auto">
-                  <input
-                    type="text"
-                    placeholder="Search for sarees, lehengas, suits..."
-                    className="w-full bg-transparent border-b border-foreground/30 py-3 pl-0 pr-10 text-sm focus:outline-none focus:border-foreground placeholder:text-foreground/40 font-light"
-                    autoFocus
-                  />
-                  <Search className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/50" />
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </header>
+
+      {/* Search Modal */}
+      <ProductSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
       {/* Mobile Menu */}
       <AnimatePresence>
