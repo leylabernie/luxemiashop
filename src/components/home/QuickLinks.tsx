@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 
 const quickLinks = [
   { label: 'Bestsellers', href: '/collections', featured: true },
-  { label: 'New Arrivals', href: '/new-arrivals', featured: false },
-  { label: 'Bridal Collection', href: '/lehengas', featured: true },
-  { label: 'Wedding Sarees', href: '/sarees', featured: false },
+  { label: 'Bridal Lehengas', href: '/collections/bridal-lehengas', featured: true },
+  { label: 'Wedding Sarees', href: '/collections/wedding-sarees', featured: false },
+  { label: 'Reception Outfits', href: '/collections/reception-outfits', featured: false },
+  { label: 'Festive Wear', href: '/collections/festive-wear', featured: false },
   { label: 'Designer Suits', href: '/suits', featured: false },
   { label: 'Menswear', href: '/menswear', featured: false },
 ];
