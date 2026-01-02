@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const currencies = [
-  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
   { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
   { code: 'GBP', symbol: '£', name: 'British Pound' },
   { code: 'EUR', symbol: '€', name: 'Euro' },
   { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham' },
