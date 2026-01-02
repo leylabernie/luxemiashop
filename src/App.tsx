@@ -13,6 +13,8 @@ import Wishlist from "./pages/Wishlist";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
 import Lehengas from "./pages/Lehengas";
+import Sarees from "./pages/Sarees";
+import Suits from "./pages/Suits";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,8 @@ const App = () => (
             <Route path="/product/:handle" element={<ProductDetail />} />
             <Route path="/collections" element={<Collections />} />
             <Route path="/lehengas" element={<Lehengas />} />
+            <Route path="/sarees" element={<Sarees />} />
+            <Route path="/suits" element={<Suits />} />
             <Route path="/our-story" element={<BrandStory />} />
             <Route path="/lookbook" element={<Lookbook />} />
             <Route path="/wishlist" element={<Wishlist />} />
