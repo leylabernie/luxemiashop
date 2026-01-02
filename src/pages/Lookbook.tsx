@@ -3,7 +3,16 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import LookbookSection from '@/components/lookbook/LookbookSection';
+import LazyImage from '@/components/ui/LazyImage';
 import { ArrowDown } from 'lucide-react';
+
+// Import generated lookbook images
+import heroMain from '@/assets/lookbook/hero-main.jpg';
+import chapter1Dawn from '@/assets/lookbook/chapter-1-dawn.jpg';
+import chapter2GoldenHour from '@/assets/lookbook/chapter-2-golden-hour.jpg';
+import chapter3Monsoon from '@/assets/lookbook/chapter-3-monsoon.jpg';
+import chapter4Midnight from '@/assets/lookbook/chapter-4-midnight.jpg';
+import chapter5Eternal from '@/assets/lookbook/chapter-5-eternal.jpg';
 
 const lookbookData = [
   {
@@ -11,9 +20,9 @@ const lookbookData = [
     subtitle: 'Chapter I',
     description: 'As morning light cascades through ancient jharokhas, silk unfurls like petals awakening to the sun. Each thread carries stories of master artisans who have perfected their craft across generations.',
     imagePosition: 'left' as const,
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg',
+    image: chapter1Dawn,
     hotspots: [
-      { x: 35, y: 40, productName: 'Mint Green Kanchipuram Saree', productPrice: '$365', productHandle: 'mint-green-kanchipuram-silk-wedding-saree', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg' },
+      { x: 35, y: 40, productName: 'Mint Green Kanchipuram Saree', productPrice: '$365', productHandle: 'mint-green-kanchipuram-silk-wedding-saree', image: chapter1Dawn },
       { x: 60, y: 65, productName: 'Pearl Maang Tikka', productPrice: '$89', productHandle: 'pearl-kamarbandh' },
     ]
   },
@@ -22,20 +31,20 @@ const lookbookData = [
     subtitle: 'Chapter II',
     description: 'When evening paints the sky in hues of amber and rose, our lehengas catch the light like liquid gold. Zardozi work that has adorned royalty for centuries now graces the modern bride.',
     imagePosition: 'full' as const,
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg',
+    image: chapter2GoldenHour,
     hotspots: [
-      { x: 45, y: 35, productName: 'Royal Rani Pink Bridal Lehenga', productPrice: '$729', productHandle: 'royal-rani-pink-silk-bridal-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg' },
+      { x: 45, y: 35, productName: 'Royal Rani Pink Bridal Lehenga', productPrice: '$729', productHandle: 'royal-rani-pink-silk-bridal-lehenga', image: chapter2GoldenHour },
       { x: 70, y: 55, productName: 'Kundan Maang Tikka', productPrice: '$125', productHandle: 'heritage-maang-tikka' },
     ]
   },
   {
     title: 'Monsoon Reverie',
     subtitle: 'Chapter III',
-    description: 'The rhythm of rain against marble courtyards. Indigo and emerald dance together in our handwoven collection, each piece a meditation on nature\'s infinite palette.',
+    description: "The rhythm of rain against marble courtyards. Indigo and emerald dance together in our handwoven collection, each piece a meditation on nature's infinite palette.",
     imagePosition: 'right' as const,
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg',
+    image: chapter3Monsoon,
     hotspots: [
-      { x: 40, y: 50, productName: 'Emerald Wedding Lehenga', productPrice: '$285', productHandle: 'emerald-forest-wedding-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg' },
+      { x: 40, y: 50, productName: 'Emerald Wedding Lehenga', productPrice: '$285', productHandle: 'emerald-forest-wedding-lehenga', image: chapter3Monsoon },
       { x: 25, y: 70, productName: 'Jadau Chandbali', productPrice: '$450', productHandle: 'jadau-chandbali' },
     ]
   },
@@ -44,20 +53,20 @@ const lookbookData = [
     subtitle: 'Chapter IV',
     description: 'Under starlit canopies, velvet meets vintage. Our evening collection speaks of quiet opulence—pieces that command attention through whispers, not shouts.',
     imagePosition: 'left' as const,
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg',
+    image: chapter4Midnight,
     hotspots: [
-      { x: 50, y: 45, productName: 'Burgundy Velvet Lehenga', productPrice: '$270', productHandle: 'burgundy-velvet-wedding-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg' },
+      { x: 50, y: 45, productName: 'Burgundy Velvet Lehenga', productPrice: '$270', productHandle: 'burgundy-velvet-wedding-lehenga', image: chapter4Midnight },
       { x: 30, y: 75, productName: 'Polki Choker Set', productPrice: '$950', productHandle: 'polki-choker' },
     ]
   },
   {
     title: 'Eternal Grace',
     subtitle: 'Chapter V',
-    description: 'The finale—where tradition embraces tomorrow. Our bridal collection represents the culmination of a journey through India\'s textile heritage, reimagined for the contemporary woman.',
+    description: "The finale—where tradition embraces tomorrow. Our bridal collection represents the culmination of a journey through India's textile heritage, reimagined for the contemporary woman.",
     imagePosition: 'full' as const,
-    image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg',
+    image: chapter5Eternal,
     hotspots: [
-      { x: 50, y: 40, productName: 'Ethereal Pastel Pink Bridal Lehenga', productPrice: '$477', productHandle: 'ethereal-pastel-pink-bridal-lehenga', image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg' },
+      { x: 50, y: 40, productName: 'Ethereal Pastel Pink Bridal Lehenga', productPrice: '$477', productHandle: 'ethereal-pastel-pink-bridal-lehenga', image: chapter5Eternal },
       { x: 65, y: 60, productName: 'Kundan Rani Haar', productPrice: '$1,450', productHandle: 'kundan-rani-haar' },
       { x: 35, y: 70, productName: 'Bridal Haath Phool', productPrice: '$280', productHandle: 'bridal-haath-phool' },
     ]
@@ -89,10 +98,10 @@ const Lookbook = () => {
           className="absolute inset-0"
         >
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-foreground/50 z-10" />
-          <img 
-            src="https://kesimg.b-cdn.net/images/650/2025y/December/59570/Lavender-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10242(1).jpg"
-            alt="Lookbook 2024"
-            className="w-full h-full object-cover object-top"
+          <LazyImage 
+            src={heroMain}
+            alt="Lookbook 2026"
+            className="w-full h-full"
           />
         </motion.div>
 
@@ -106,7 +115,7 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xs tracking-luxury uppercase mb-6 text-background/80"
           >
-            Spring / Summer 2024
+            Spring / Summer 2026
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 40 }}

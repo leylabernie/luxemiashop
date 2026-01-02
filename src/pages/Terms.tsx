@@ -16,7 +16,7 @@ const Terms = () => {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl md:text-5xl font-serif mb-6">Terms of Service</h1>
-              <p className="text-muted-foreground">Last updated: January 2025</p>
+              <p className="text-muted-foreground">Last updated: January 2026</p>
             </motion.div>
           </div>
         </section>

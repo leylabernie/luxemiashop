@@ -25,3 +25,10 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
   const size = sizeMap[context];
   return url.replace('/images/650/', `/images/${size}/`);
 };
+
+/**
+ * Get placeholder blur data URL
+ */
+export const getPlaceholderUrl = (): string => {
+  return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUzMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY0Ii8+PC9zdmc+';
+};
