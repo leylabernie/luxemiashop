@@ -1,3 +1,6 @@
+# LuxeMia Robots.txt
+# Luxury Indian Ethnic Wear E-commerce
+
 User-agent: Googlebot
 Allow: /
 
@@ -12,3 +15,14 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://luxemia.com/sitemap.xml
+
+# Crawl-delay for other bots
+User-agent: *
+Crawl-delay: 1
+
+# Block admin and private pages
+Disallow: /account
+Disallow: /auth
