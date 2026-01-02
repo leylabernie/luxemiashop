@@ -9,8 +9,12 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
+import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+
+// Using local products for preview - switch to Shopify when ready to publish
+const USE_LOCAL_PRODUCTS = true;
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -26,11 +30,26 @@ const ProductDetail = () => {
       setError(null);
       
       try {
-        const productData = await fetchProductByHandle(handle);
-        if (productData) {
-          setProduct(productData);
+        if (USE_LOCAL_PRODUCTS) {
+          const localProduct = getLocalProductByHandle(handle);
+          if (localProduct) {
+            setProduct(localProduct.node);
+          } else {
+            // Fallback to Shopify if not found locally
+            const productData = await fetchProductByHandle(handle);
+            if (productData) {
+              setProduct(productData);
+            } else {
+              setError('Product not found');
+            }
+          }
         } else {
-          setError('Product not found');
+          const productData = await fetchProductByHandle(handle);
+          if (productData) {
+            setProduct(productData);
+          } else {
+            setError('Product not found');
+          }
         }
       } catch (err) {
         setError('Failed to load product');
@@ -67,9 +86,9 @@ const ProductDetail = () => {
                 This product may have been removed or the link is incorrect.
               </p>
               <Button asChild>
-                <Link to="/collections">
+                <Link to="/lehengas">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Browse Collections
+                  Browse Lehengas
                 </Link>
               </Button>
             </div>

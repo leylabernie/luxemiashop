@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { SlidersHorizontal, Grid3X3, LayoutGrid, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -20,7 +20,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { type ShopifyProduct } from '@/lib/shopify';
+import { getAllLocalProducts } from '@/data/localProducts';
+
+// Using local products for preview
+const USE_LOCAL_PRODUCTS = true;
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -42,8 +46,10 @@ const Collections = () => {
     const loadProducts = async () => {
       setIsLoading(true);
       try {
-        const data = await fetchProducts(24);
-        setProducts(data);
+        if (USE_LOCAL_PRODUCTS) {
+          const localData = getAllLocalProducts();
+          setProducts(localData);
+        }
       } catch (error) {
         console.error('Error loading products:', error);
       } finally {
@@ -66,7 +72,7 @@ const Collections = () => {
     });
   };
 
-  const totalProducts = products.length || 48; // Placeholder count
+  const totalProducts = products.length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -175,7 +181,7 @@ const Collections = () => {
               <ProductGrid products={products} isLoading={isLoading} />
 
               {/* Load More */}
-              {!isLoading && (
+              {!isLoading && products.length > 0 && (
                 <div className="mt-12 text-center">
                   <Button variant="outline" size="lg" className="min-w-[200px]">
                     Load More
