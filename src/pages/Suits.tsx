@@ -35,6 +35,10 @@ const sortOptions = [
 
 const suitFilterSections = [
   {
+    name: 'Size',
+    options: ['S', 'M', 'L', 'XL'],
+  },
+  {
     name: 'Category',
     options: ['Anarkali Suits', 'Salwar Suits', 'Sharara Suits', 'Kurta Sets'],
   },
@@ -61,7 +65,7 @@ const Suits = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Category', 'Occasion']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category', 'Occasion']);
   
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
@@ -76,6 +80,15 @@ const Suits = () => {
       if (values.length > 0) {
         products = products.filter(p => {
           const product = p.node;
+          if (section === 'Size') {
+            // Check if product has any of the selected sizes in variants
+            return values.some(v => 
+              product.variants?.edges?.some(variant => 
+                variant.node.title === v || 
+                variant.node.selectedOptions?.some(opt => opt.value === v)
+              )
+            );
+          }
           if (section === 'Category') {
             return values.some(v => 
               product.productType?.toLowerCase().includes(v.toLowerCase()) ||
