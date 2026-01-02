@@ -9,8 +9,12 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
+import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+
+// Set to true to use local products for preview, false to fetch from Shopify
+const USE_LOCAL_PRODUCTS = true;
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -26,11 +30,22 @@ const ProductDetail = () => {
       setError(null);
       
       try {
-        const productData = await fetchProductByHandle(handle);
-        if (productData) {
-          setProduct(productData);
+        if (USE_LOCAL_PRODUCTS) {
+          // Use local product for preview
+          const localProduct = getLocalProductByHandle(handle);
+          if (localProduct) {
+            setProduct(localProduct.node);
+          } else {
+            setError('Product not found');
+          }
         } else {
-          setError('Product not found');
+          // Fetch from Shopify when ready
+          const productData = await fetchProductByHandle(handle);
+          if (productData) {
+            setProduct(productData);
+          } else {
+            setError('Product not found');
+          }
         }
       } catch (err) {
         setError('Failed to load product');
