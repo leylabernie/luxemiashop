@@ -152,14 +152,14 @@ const Menswear = () => {
   const handleQuickAdd = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
     e.stopPropagation();
+    const variant = product.variants.edges[0]?.node;
     addItem({
-      id: product.id,
-      variantId: product.variants.edges[0]?.node.id || product.id,
-      name: product.title,
+      product: product,
+      variantId: variant?.id || product.id,
+      variantTitle: variant?.title || 'Default',
       price: product.priceRange.minVariantPrice,
       quantity: 1,
-      image: product.images.edges[0]?.node.url || '',
-      variant: product.variants.edges[0]?.node.title || 'Default',
+      selectedOptions: variant?.selectedOptions || [],
     });
     toast.success('Added to bag!');
   };
@@ -171,13 +171,7 @@ const Menswear = () => {
       removeFromWishlist(product.id);
       toast.success('Removed from wishlist');
     } else {
-      addToWishlist({
-        productId: product.id,
-        title: product.title,
-        price: product.priceRange.minVariantPrice,
-        image: product.images.edges[0]?.node.url || '',
-        handle: product.handle,
-      });
+      addToWishlist(product);
       toast.success('Added to wishlist!');
     }
   };
