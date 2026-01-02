@@ -1,26 +1,26 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Mail } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, MapPin, Phone, Clock } from 'lucide-react';
 
 const footerLinks = {
   shop: [
-    { name: 'New Arrivals', href: '/new-arrivals' },
+    { name: 'New Arrivals', href: '/collections' },
     { name: 'Sarees', href: '/sarees' },
     { name: 'Lehengas', href: '/lehengas' },
     { name: 'Suits', href: '/suits' },
-    { name: 'Accessories', href: '/accessories' },
+    { name: 'Accessories', href: '/collections' },
   ],
   about: [
     { name: 'Our Story', href: '/brand-story' },
-    { name: 'Artisans', href: '/artisans' },
-    { name: 'Sustainability', href: '/sustainability' },
-    { name: 'Press', href: '/press' },
+    { name: 'Artisans', href: '/brand-story' },
+    { name: 'Sustainability', href: '/brand-story' },
+    { name: 'Press', href: '/brand-story' },
   ],
   help: [
     { name: 'Contact Us', href: '/contact' },
     { name: 'Shipping', href: '/shipping' },
     { name: 'Returns', href: '/returns' },
-    { name: 'Size Guide', href: '/size-guide' },
-    { name: 'Care Guide', href: '/care-guide' },
+    { name: 'Size Guide', href: '/contact' },
+    { name: 'Care Guide', href: '/contact' },
   ],
 };
 
@@ -56,7 +56,7 @@ const Footer = () => {
 
       {/* Links Section */}
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="font-serif text-2xl">
@@ -66,16 +66,16 @@ const Footer = () => {
               Celebrating the artistry of Indian craftsmanship through timeless ethnic wear.
             </p>
             <div className="flex gap-4 mt-6">
-              <a href="#" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Instagram">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Instagram">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Facebook">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Youtube">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Youtube">
                 <Youtube className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Email">
+              <a href="mailto:hello@luxemia.com" className="p-2 hover:bg-background rounded-full transition-colors" aria-label="Email">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
@@ -129,6 +129,40 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Contact</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" />
+                <span className="text-sm text-foreground/60 font-light leading-relaxed">
+                  123 Fashion District<br />
+                  Mumbai, MH 400001<br />
+                  India
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-foreground/60 flex-shrink-0" />
+                <a href="tel:+911234567890" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
+                  +91 123 456 7890
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-foreground/60 flex-shrink-0" />
+                <a href="mailto:hello@luxemia.com" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
+                  hello@luxemia.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" />
+                <span className="text-sm text-foreground/60 font-light leading-relaxed">
+                  Mon - Sat: 10am - 7pm<br />
+                  Sun: 11am - 5pm
+                </span>
+              </li>
             </ul>
           </div>
         </div>

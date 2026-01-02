@@ -1,11 +1,17 @@
 import { useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, Camera, X, Sparkles, ChevronLeft, ChevronRight, Download, RefreshCw } from "lucide-react";
+import { Upload, Camera, X, Sparkles, ChevronLeft, ChevronRight, Download, RefreshCw, Share2, Copy, Check } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { sareeProducts } from "@/data/sareeProducts";
@@ -33,6 +39,7 @@ const VirtualTryOn = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [category, setCategory] = useState<ProductCategory>("sarees");
+  const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Get lehengas from localProducts (filter by category)
@@ -166,6 +173,38 @@ const VirtualTryOn = () => {
     link.click();
     document.body.removeChild(link);
     toast.success("Image downloaded!");
+  };
+
+  const handleShare = async (platform: string) => {
+    if (!resultImage || !selectedProduct) return;
+
+    const shareText = `Check out how I look in this ${selectedProduct.title} from LuxeMia! ✨`;
+    const shareUrl = `${window.location.origin}/product/${selectedProduct.handle}`;
+
+    switch (platform) {
+      case "facebook":
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`, "_blank");
+        break;
+      case "twitter":
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, "_blank");
+        break;
+      case "pinterest":
+        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(shareText)}`, "_blank");
+        break;
+      case "whatsapp":
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`, "_blank");
+        break;
+      case "copy":
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          setCopied(true);
+          toast.success("Link copied to clipboard!");
+          setTimeout(() => setCopied(false), 2000);
+        } catch {
+          toast.error("Failed to copy link");
+        }
+        break;
+    }
   };
 
   const handleReset = () => {
@@ -416,6 +455,41 @@ const VirtualTryOn = () => {
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute bottom-4 right-4 flex gap-2">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button size="sm" variant="secondary">
+                                <Share2 className="mr-2 h-4 w-4" />
+                                Share
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => handleShare("facebook")}>
+                                Facebook
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleShare("twitter")}>
+                                Twitter / X
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleShare("pinterest")}>
+                                Pinterest
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleShare("whatsapp")}>
+                                WhatsApp
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleShare("copy")}>
+                                {copied ? (
+                                  <>
+                                    <Check className="mr-2 h-4 w-4" />
+                                    Copied!
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="mr-2 h-4 w-4" />
+                                    Copy Link
+                                  </>
+                                )}
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                           <Button
                             size="sm"
                             variant="secondary"
