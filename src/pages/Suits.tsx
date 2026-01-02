@@ -320,6 +320,15 @@ const Suits = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Buy Anarkali Suits & Salwar Kameez Online | Designer Suits - LuxeMia"
+        description="Shop elegant Anarkali suits, Sharara sets, and designer salwar kameez at LuxeMia. Premium fabrics with intricate embroidery. Custom sizing available. Worldwide delivery."
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Collections', url: '/collections' },
+          { name: 'Suits', url: '/suits' },
+        ]}
+      />
       <Header />
 
       <main className="pt-24 pb-16">
