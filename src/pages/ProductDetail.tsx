@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { ProductGallery } from '@/components/product/ProductGallery';
 import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
@@ -79,8 +80,44 @@ const ProductDetail = () => {
     }
   }, [product, addToRecentlyViewed]);
 
+  // Get category URL from product type
+  const getCategoryUrl = (productType?: string) => {
+    if (!productType) return '/collections';
+    const type = productType.toLowerCase();
+    if (type.includes('lehenga')) return '/lehengas';
+    if (type.includes('saree')) return '/sarees';
+    if (type.includes('suit') || type.includes('salwar') || type.includes('anarkali')) return '/suits';
+    if (type.includes('sherwani') || type.includes('kurta')) return '/menswear';
+    return '/collections';
+  };
+
+  const categoryUrl = getCategoryUrl(product?.productType);
+  const categoryName = product?.productType || 'Collections';
+
   return (
     <div className="min-h-screen bg-background">
+      {product && (
+        <SEOHead
+          title={`${product.title} | ${categoryName} | LuxeMia`}
+          description={product.description?.slice(0, 155) + '...' || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`}
+          type="product"
+          image={product.images.edges[0]?.node.url}
+          product={{
+            name: product.title,
+            price: product.priceRange.minVariantPrice.amount,
+            currency: product.priceRange.minVariantPrice.currencyCode,
+            image: product.images.edges[0]?.node.url || '',
+            description: product.description || '',
+            availability: 'InStock',
+            sku: product.id,
+          }}
+          breadcrumbs={[
+            { name: 'Home', url: '/' },
+            { name: categoryName, url: categoryUrl },
+            { name: product.title, url: `/product/${product.handle}` },
+          ]}
+        />
+      )}
       <Header />
       
       <main className="pt-24 pb-16">
@@ -89,7 +126,7 @@ const ProductDetail = () => {
           <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4" />
-            <Link to="/collections" className="hover:text-foreground transition-colors">Collections</Link>
+            <Link to={categoryUrl} className="hover:text-foreground transition-colors">{categoryName}</Link>
             <ChevronRight className="h-4 w-4" />
             <span className="text-foreground">{product?.title || 'Product'}</span>
           </nav>
