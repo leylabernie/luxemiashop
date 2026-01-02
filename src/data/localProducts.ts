@@ -7,8 +7,8 @@ import { menswearProducts, type MenswearProduct } from './menswearProducts';
 import { suitProducts, type SuitProduct } from './suitProducts';
 
 // Local product images
-import gownCoralImg from '@/assets/products/viscose-jacquard-gown-coral.jpg';
-import gownSageImg from '@/assets/products/viscose-jacquard-gown-sage.jpg';
+import gownCoralImg from '@/assets/products/viscose-jacquard-gown-coral-new.jpg';
+import gownSageImg from '@/assets/products/viscose-jacquard-gown-sage-new.jpg';
 
 export interface LocalProduct {
   id: string;
