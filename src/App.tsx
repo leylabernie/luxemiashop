@@ -21,6 +21,7 @@ import Shipping from "./pages/Shipping";
 import Returns from "./pages/Returns";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import VirtualTryOn from "./pages/VirtualTryOn";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/returns" element={<Returns />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/virtual-tryon" element={<VirtualTryOn />} />
             {/* Redirect missing pages to related content */}
             <Route path="/new-arrivals" element={<Lehengas />} />
             <Route path="/accessories" element={<Collections />} />
