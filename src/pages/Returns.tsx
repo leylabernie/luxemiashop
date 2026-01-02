@@ -213,7 +213,7 @@ const Returns = () => {
                   { 
                     step: '2', 
                     title: 'Submit Return Request', 
-                    desc: 'Within 7 days of delivery, email returns@shringaar.com with: your order number, description of the issue, clear photos of the defect, and upload link to your unboxing video (Google Drive, Dropbox, WeTransfer, etc.).'
+                    desc: 'Within 7 days of delivery, email returns@luxemia.com with: your order number, description of the issue, clear photos of the defect, and upload link to your unboxing video (Google Drive, Dropbox, WeTransfer, etc.).'
                   },
                   { 
                     step: '3', 

@@ -3,24 +3,24 @@ import { Instagram, Facebook, Youtube, Mail, MapPin, Phone, Clock } from 'lucide
 
 const footerLinks = {
   shop: [
-    { name: 'New Arrivals', href: '/collections' },
+    { name: 'New Arrivals', href: '/new-arrivals' },
     { name: 'Sarees', href: '/sarees' },
     { name: 'Lehengas', href: '/lehengas' },
     { name: 'Suits', href: '/suits' },
-    { name: 'Accessories', href: '/collections' },
+    { name: 'Menswear', href: '/menswear' },
   ],
   about: [
     { name: 'Our Story', href: '/brand-story' },
-    { name: 'Artisans', href: '/brand-story' },
-    { name: 'Sustainability', href: '/brand-story' },
-    { name: 'Press', href: '/brand-story' },
+    { name: 'Artisans', href: '/artisans' },
+    { name: 'Sustainability', href: '/sustainability' },
+    { name: 'Press', href: '/press' },
   ],
   help: [
     { name: 'Contact Us', href: '/contact' },
     { name: 'Shipping', href: '/shipping' },
     { name: 'Returns', href: '/returns' },
-    { name: 'Size Guide', href: '/contact' },
-    { name: 'Care Guide', href: '/contact' },
+    { name: 'Size Guide', href: '/size-guide' },
+    { name: 'Care Guide', href: '/care-guide' },
   ],
 };
 
