@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone, Clock, Send } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -92,23 +92,9 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-medium mb-1">Phone</h3>
-                      <a href="tel:+1-888-LUXEMIA" className="text-muted-foreground hover:text-foreground transition-colors">
-                        +1 (888) LUXEMIA
+                      <a href="tel:+1-215-341-9990" className="text-muted-foreground hover:text-foreground transition-colors">
+                        +1-215-341-9990
                       </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-secondary rounded-sm">
-                      <MapPin className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium mb-1">Address</h3>
-                      <p className="text-muted-foreground">
-                        LuxeMia Fashion Inc.<br />
-                        Los Angeles, CA 90001<br />
-                        United States
-                      </p>
                     </div>
                   </div>
 

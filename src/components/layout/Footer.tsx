@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Mail, MapPin, Phone, Clock } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, Phone, Clock } from 'lucide-react';
 
 const footerLinks = {
   shop: [
@@ -8,7 +8,7 @@ const footerLinks = {
     { name: 'Sarees', href: '/sarees' },
     { name: 'Lehengas', href: '/lehengas' },
     { name: 'Suits', href: '/suits' },
-    { name: 'Menswear', href: '/menswear' },
+    { name: 'Jewelry', href: '/jewelry' },
   ],
   collections: [
     { name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' },
@@ -161,18 +161,10 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
           <div>
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Contact</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-foreground/60 font-light leading-relaxed">
-                  123 Fashion District<br />
-                  Mumbai, MH 400001<br />
-                  India
-                </span>
-              </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-foreground/60 flex-shrink-0" />
-                <a href="tel:+911234567890" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
-                  +91 123 456 7890
+                <a href="tel:+1-215-341-9990" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
+                  +1-215-341-9990
                 </a>
               </li>
               <li className="flex items-center gap-3">

@@ -148,7 +148,7 @@ const accessories: Accessory[] = [
 
 const categories = ['All', 'Jewelry', 'Bags', 'Hair Accessories', 'Footwear', 'Dupattas'];
 
-const Accessories = () => {
+const Jewelry = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const addItem = useCartStore((state) => state.addItem);
 
@@ -220,7 +220,7 @@ const Accessories = () => {
               transition={{ delay: 0.1 }}
               className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
             >
-              Accessories Collection
+              Jewelry Collection
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -228,8 +228,8 @@ const Accessories = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              From statement jewelry to elegant clutches, discover the perfect finishing touches 
-              for your ethnic ensemble.
+              From statement necklaces to elegant earrings, discover exquisite handcrafted jewelry 
+              to complement your ethnic ensemble.
             </motion.p>
           </div>
         </section>
@@ -429,4 +429,4 @@ const Accessories = () => {
   );
 };
 
-export default Accessories;
+export default Jewelry;
