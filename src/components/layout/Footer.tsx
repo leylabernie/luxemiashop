@@ -10,6 +10,12 @@ const footerLinks = {
     { name: 'Suits', href: '/suits' },
     { name: 'Menswear', href: '/menswear' },
   ],
+  collections: [
+    { name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' },
+    { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
+    { name: 'Reception Outfits', href: '/collections/reception-outfits' },
+    { name: 'Festive Wear', href: '/collections/festive-wear' },
+  ],
   about: [
     { name: 'Our Story', href: '/brand-story' },
     { name: 'Artisans', href: '/artisans' },
@@ -57,7 +63,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
 
       {/* Links Section */}
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="font-serif text-2xl">
@@ -87,6 +93,23 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Shop</h4>
             <ul className="space-y-3">
               {footerLinks.shop.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Collections Links */}
+          <div>
+            <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Collections</h4>
+            <ul className="space-y-3">
+              {footerLinks.collections.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}

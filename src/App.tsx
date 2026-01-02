@@ -35,6 +35,7 @@ import WeddingSarees from "./pages/collections/WeddingSarees";
 import BridalLehengas from "./pages/collections/BridalLehengas";
 import ReceptionOutfits from "./pages/collections/ReceptionOutfits";
 import FestiveWear from "./pages/collections/FestiveWear";
+import Sitemap from "./pages/Sitemap";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ const App = () => (
               <Route path="/collections/bridal-lehengas" element={<BridalLehengas />} />
               <Route path="/collections/reception-outfits" element={<ReceptionOutfits />} />
               <Route path="/collections/festive-wear" element={<FestiveWear />} />
+              <Route path="/sitemap" element={<Sitemap />} />
               {/* Redirect missing pages to related content */}
               <Route path="/new-arrivals" element={<Lehengas />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

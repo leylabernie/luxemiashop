@@ -1,4 +1,29 @@
 # LuxeMia Robots.txt
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://luxemia.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Disallow admin and private paths
+Disallow: /api/
+Disallow: /auth/
+Disallow: /account/
+
+# Allow important paths explicitly
+Allow: /collections/
+Allow: /product/
+Allow: /sarees
+Allow: /lehengas
+Allow: /suits
+Allow: /menswear
+Allow: /brand-story
+Allow: /lookbook
 # Luxury Indian Ethnic Wear E-commerce
 
 User-agent: Googlebot

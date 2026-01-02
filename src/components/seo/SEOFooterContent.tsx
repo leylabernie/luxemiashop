@@ -13,31 +13,54 @@ const SEOFooterContent = () => {
             <p className="mb-6">
               Welcome to <strong className="text-foreground">LuxeMia</strong>, your premier destination for luxury Indian ethnic wear. 
               We bring you an exquisite collection of handcrafted <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">designer sarees</Link>, 
-              <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
+              <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
               and <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">anarkali suits</Link> that 
               blend timeless tradition with contemporary elegance.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mb-6">
               <div>
-                <h3 className="font-serif text-lg text-foreground mb-3">Sarees Collection</h3>
+                <h3 className="font-serif text-lg text-foreground mb-3">Wedding Sarees Collection</h3>
                 <p>
-                  Explore our curated range of <strong className="text-foreground">Banarasi silk sarees</strong>, 
+                  Explore our curated range of <Link to="/collections/wedding-sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees</Link> including 
+                  <strong className="text-foreground"> Banarasi silk sarees</strong>, 
                   Kanjivaram silk, Chanderi cotton, and designer georgette sarees. Each piece is crafted by skilled 
                   artisans using traditional weaving techniques passed down through generations. Perfect for weddings, 
-                  festivals, and special occasions. Our <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees</Link> collection 
+                  festivals, and special occasions. Our bridal saree collection 
                   features intricate zari work, hand embroidery, and rich color palettes.
                 </p>
               </div>
 
               <div>
-                <h3 className="font-serif text-lg text-foreground mb-3">Lehengas & Bridal Wear</h3>
+                <h3 className="font-serif text-lg text-foreground mb-3">Bridal Lehengas & Wedding Wear</h3>
                 <p>
-                  Find your dream <strong className="text-foreground">bridal lehenga</strong> in our extensive collection. 
+                  Find your dream <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga</Link> in our extensive collection. 
                   From traditional red bridal lehengas to contemporary pastels, we offer 
                   <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> designer lehenga choli</Link> sets 
                   with heavy embroidery, sequin work, and genuine zardozi detailing. Our bridal collection is designed 
                   to make every bride feel like royalty on her special day.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-6">
+              <div>
+                <h3 className="font-serif text-lg text-foreground mb-3">Reception & Party Wear</h3>
+                <p>
+                  Discover glamorous <Link to="/collections/reception-outfits" className="text-foreground hover:text-primary transition-colors underline">reception outfits</Link> and 
+                  <strong className="text-foreground"> party wear lehengas</strong>. Our collection features sequined ensembles, 
+                  cocktail sarees, and statement pieces perfect for wedding receptions, sangeet nights, and celebrations. 
+                  From metallic accents to bold silhouettes, shine bright at every event.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-serif text-lg text-foreground mb-3">Festive & Occasion Wear</h3>
+                <p>
+                  Celebrate in style with our <Link to="/collections/festive-wear" className="text-foreground hover:text-primary transition-colors underline">festive wear</Link> collection. 
+                  Shop vibrant outfits for <strong className="text-foreground">Diwali, Navratri, Karwa Chauth</strong>, and 
+                  pre-wedding ceremonies like Haldi, Mehendi, and Sangeet. From playful yellows to auspicious reds, 
+                  find the perfect ensemble for every Indian celebration.
                 </p>
               </div>
             </div>
