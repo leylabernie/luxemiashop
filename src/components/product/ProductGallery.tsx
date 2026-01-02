@@ -39,12 +39,14 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
     setZoomPosition({ x: 50, y: 50 });
   };
 
+  const showThumbnails = hasImages && images.length > 1;
+
   return (
-    <div className="flex flex-col-reverse lg:flex-row gap-4">
-      {/* Thumbnail Strip */}
-      <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0 lg:pr-2">
-        {hasImages ? (
-          images.map((image, index) => (
+    <div className={`flex flex-col-reverse lg:flex-row gap-4 ${!showThumbnails ? 'lg:block' : ''}`}>
+      {/* Thumbnail Strip - only show if multiple images */}
+      {showThumbnails && (
+        <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0 lg:pr-2">
+          {images.map((image, index) => (
             <button
               key={index}
               onClick={() => setSelectedIndex(index)}
@@ -60,22 +62,9 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 className="w-full h-full object-cover"
               />
             </button>
-          ))
-        ) : (
-          Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className={`flex-shrink-0 w-20 h-24 lg:w-24 lg:h-28 rounded-sm overflow-hidden border-2 ${
-                selectedIndex === index 
-                  ? 'border-primary' 
-                  : 'border-border'
-              }`}
-            >
-              <ProductPlaceholder aspectRatio="portrait" size="sm" />
-            </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Main Image with Zoom */}
       <div className="flex-1 relative">
