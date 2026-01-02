@@ -4,6 +4,7 @@ import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { ProductFilters, ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { ProductGrid } from '@/components/collections/ProductGrid';
 import { Button } from '@/components/ui/button';
