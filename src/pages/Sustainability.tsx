@@ -67,7 +67,7 @@ const Sustainability = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              At Shringaar, we believe that true luxury respects both people and planet. 
+              At LuxeMia, we believe that true luxury respects both people and planet. 
               Our commitment to sustainability is woven into every thread of our creations.
             </motion.p>
           </div>

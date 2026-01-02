@@ -8,38 +8,38 @@ const Press = () => {
   const pressFeatures = [
     {
       publication: "Vogue India",
-      title: "Shringaar: Redefining Bridal Couture for the Modern Indian Woman",
-      date: "December 2024",
+      title: "LuxeMia: Redefining Bridal Couture for the Modern Indian Woman",
+      date: "December 2025",
       excerpt: "How this heritage brand is blending centuries-old craftsmanship with contemporary design sensibilities."
     },
     {
       publication: "Elle India",
       title: "The Artisans Behind India's Most Coveted Lehengas",
-      date: "November 2024",
-      excerpt: "A deep dive into the master craftsmen who create Shringaar's signature pieces."
+      date: "November 2025",
+      excerpt: "A deep dive into the master craftsmen who create LuxeMia's signature pieces."
     },
     {
       publication: "Harper's Bazaar",
-      title: "Sustainable Luxury: Shringaar's Commitment to Ethical Fashion",
-      date: "October 2024",
+      title: "Sustainable Luxury: LuxeMia's Commitment to Ethical Fashion",
+      date: "October 2025",
       excerpt: "Exploring how the brand is leading the charge in sustainable ethnic fashion."
     },
     {
-      publication: "Forbes India",
+      publication: "Forbes",
       title: "Building a Heritage Brand in the Digital Age",
-      date: "September 2024",
+      date: "September 2025",
       excerpt: "The business of preserving tradition while embracing e-commerce innovation."
     },
     {
       publication: "Architectural Digest",
-      title: "Inside Shringaar's Stunning New Flagship Store",
-      date: "August 2024",
+      title: "Inside LuxeMia's Stunning New Flagship Store",
+      date: "August 2025",
       excerpt: "Where traditional Indian aesthetics meet contemporary retail design."
     },
     {
-      publication: "The Hindu",
-      title: "Reviving India's Dying Crafts: The Shringaar Story",
-      date: "July 2024",
+      publication: "The New York Times",
+      title: "Reviving India's Dying Crafts: The LuxeMia Story",
+      date: "July 2025",
       excerpt: "How the brand is creating sustainable livelihoods for artisan communities."
     }
   ];
@@ -73,7 +73,7 @@ const Press = () => {
               transition={{ delay: 0.1 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              Discover what the world's leading publications are saying about Shringaar 
+              Discover what the world's leading publications are saying about LuxeMia 
               and our mission to preserve India's artisanal heritage.
             </motion.p>
           </div>
@@ -90,7 +90,7 @@ const Press = () => {
               <div className="flex gap-4">
                 <Button variant="outline" className="gap-2">
                   <Mail className="w-4 h-4" />
-                  press@shringaar.com
+                  press@luxemia.com
                 </Button>
                 <Button className="gap-2">
                   <Download className="w-4 h-4" />

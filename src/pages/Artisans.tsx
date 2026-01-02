@@ -69,7 +69,7 @@ const Artisans = () => {
               transition={{ delay: 0.1 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              Behind every Shringaar creation are the skilled hands of India's finest craftsmen, 
+              Behind every LuxeMia creation are the skilled hands of India's finest craftsmen, 
               preserving centuries-old traditions while creating timeless pieces of wearable art.
             </motion.p>
           </div>
@@ -146,7 +146,7 @@ const Artisans = () => {
               Experience the Art of Handcraft
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Each Shringaar piece carries the soul of its maker. Discover our collections 
+              Each LuxeMia piece carries the soul of its maker. Discover our collections
               and wear a piece of India's rich artisanal heritage.
             </p>
           </div>
