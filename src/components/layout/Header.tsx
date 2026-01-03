@@ -61,7 +61,7 @@ const Header = () => {
 
         {/* Main Header */}
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+          <div className="flex items-center h-16 lg:h-20">
             {/* Mobile Menu Button */}
             <button
               className="lg:hidden p-2 -ml-2"
@@ -72,12 +72,12 @@ const Header = () => {
             </button>
 
             {/* Left Navigation - Desktop */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-6 flex-1">
               {navLinks.slice(0, 3).map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="luxury-link text-sm tracking-editorial uppercase font-light text-foreground/80 hover:text-foreground transition-colors"
+                  className="luxury-link text-sm tracking-editorial uppercase font-light text-foreground/80 hover:text-foreground transition-colors whitespace-nowrap"
                 >
                   {link.name}
                 </Link>
@@ -85,7 +85,7 @@ const Header = () => {
             </nav>
 
             {/* Center Logo */}
-            <Link to="/" className="absolute left-1/2 -translate-x-1/2">
+            <Link to="/" className="flex-shrink-0 mx-8">
               <motion.h1 
                 className="font-serif text-2xl lg:text-3xl tracking-wide"
                 initial={{ opacity: 0, y: -10 }}
@@ -97,12 +97,12 @@ const Header = () => {
             </Link>
 
             {/* Right Navigation - Desktop */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-6 flex-1 justify-end">
               {navLinks.slice(3).map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="luxury-link text-sm tracking-editorial uppercase font-light text-foreground/80 hover:text-foreground transition-colors"
+                  className="luxury-link text-sm tracking-editorial uppercase font-light text-foreground/80 hover:text-foreground transition-colors whitespace-nowrap"
                 >
                   {link.name}
                 </Link>
@@ -110,7 +110,7 @@ const Header = () => {
             </nav>
 
             {/* Right Icons */}
-            <div className="flex items-center gap-3 lg:gap-5">
+            <div className="flex items-center gap-3 lg:gap-4 ml-6">
               <CurrencySelector />
               
               <button
