@@ -27,6 +27,7 @@ import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getAllMenswearProducts } from '@/data/menswearProducts';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -55,7 +56,11 @@ const menswearFilterSections = [
 ];
 
 const Menswear = () => {
-  const { products, isLoading } = useScrapedProducts('menswear');
+  const { products: scrapedProducts, isLoading } = useScrapedProducts('menswear');
+  
+  // Use static products as fallback when no scraped products available
+  const staticProducts = useMemo(() => getAllMenswearProducts(), []);
+  const products = scrapedProducts.length > 0 ? scrapedProducts : staticProducts;
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1500]);
   const [sortBy, setSortBy] = useState('featured');
