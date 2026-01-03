@@ -11,6 +11,7 @@ import ServiceHighlights from '@/components/home/ServiceHighlights';
 import CustomerStories from '@/components/home/CustomerStories';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
+import FloatingSupport from '@/components/support/FloatingSupport';
 
 const Index = () => {
   // LocalBusiness Schema for Local SEO
@@ -163,6 +164,7 @@ const Index = () => {
       
       <Footer />
       <NewVisitorPopup />
+      <FloatingSupport />
     </div>
   );
 };
