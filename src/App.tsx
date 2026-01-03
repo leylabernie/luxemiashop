@@ -22,7 +22,7 @@ import Shipping from "./pages/Shipping";
 import Returns from "./pages/Returns";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-import VirtualTryOn from "./pages/VirtualTryOn";
+
 import Artisans from "./pages/Artisans";
 import Sustainability from "./pages/Sustainability";
 import Press from "./pages/Press";
@@ -68,7 +68,7 @@ const App = () => (
               <Route path="/returns" element={<Returns />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
-              <Route path="/virtual-tryon" element={<VirtualTryOn />} />
+              
               <Route path="/artisans" element={<Artisans />} />
               <Route path="/sustainability" element={<Sustainability />} />
               <Route path="/press" element={<Press />} />

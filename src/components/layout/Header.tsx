@@ -20,7 +20,6 @@ const navLinks = [
   { name: 'Sarees', href: '/sarees' },
   { name: 'Suits', href: '/suits' },
   { name: 'Jewelry', href: '/jewelry' },
-  { name: 'Try On', href: '/virtual-tryon' },
   { name: 'Lookbook', href: '/lookbook' },
 ];
 
