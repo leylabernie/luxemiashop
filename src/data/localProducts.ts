@@ -6,6 +6,14 @@ import { sareeProducts, type SareeProduct } from './sareeProducts';
 import { menswearProducts, type MenswearProduct } from './menswearProducts';
 import { suitProducts, type SuitProduct } from './suitProducts';
 
+// Import bridal lehenga images
+import bridalNavyBlueNetLehenga from '@/assets/products/bridal-navy-blue-net-lehenga.jpg';
+import bridalWineNetLehenga from '@/assets/products/bridal-wine-net-lehenga.jpg';
+import bridalBlackNetLehenga from '@/assets/products/bridal-black-net-lehenga.jpg';
+import bridalPinkGadhwalSilkLehenga from '@/assets/products/bridal-pink-gadhwal-silk-lehenga.jpg';
+import bridalRedGadhwalSilkLehenga from '@/assets/products/bridal-red-gadhwal-silk-lehenga.jpg';
+import bridalPinkCrepeSilkLehenga from '@/assets/products/bridal-pink-crepe-silk-lehenga.jpg';
+
 export interface LocalProduct {
   id: string;
   handle: string;
@@ -788,11 +796,151 @@ export const localProducts: LocalProduct[] = [
       { id: "designer-010-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
     ],
     options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  
+  // === NEW BRIDAL LEHENGAS FROM WHOLESALESALWAR (JAN 2026) ===
+  {
+    id: "bridal-new-001",
+    handle: "midnight-sapphire-zari-sequin-bridal-lehenga",
+    title: "Midnight Sapphire Zari & Sequin Bridal Lehenga",
+    description: "Command attention in this striking navy blue bridal masterpiece crafted from premium Heavy Net fabric. The deep midnight sapphire hue creates a sophisticated alternative to traditional bridal colors, perfect for the modern bride seeking distinction. Exquisite zari threadwork intertwines with thousands of hand-applied sequins to create mesmerizing patterns that catch every light. The intricate embroidery spans the entire lehenga, creating a cohesive work of art that seamlessly transitions from the flared skirt to the matching blouse. The coordinating dupatta features complementary embroidery with delicate borders.",
+    price: convertPrice(12895),
+    originalPrice: convertPrice(17910),
+    currency: "USD",
+    images: [bridalNavyBlueNetLehenga],
+    category: "Bridal Lehengas",
+    fabric: "Heavy Net",
+    occasion: "Bridal",
+    color: "Navy Blue",
+    work: "Zari & Sequins Embroidery",
+    tags: ["bridal", "wedding", "navy-blue", "net", "zari", "sequins", "embroidery", "new-arrival"],
+    variants: [
+      { id: "bridal-new-001-s", title: "S", price: convertPrice(12895), options: { Size: "S" } },
+      { id: "bridal-new-001-m", title: "M", price: convertPrice(12895), options: { Size: "M" } },
+      { id: "bridal-new-001-l", title: "L", price: convertPrice(12895), options: { Size: "L" } },
+      { id: "bridal-new-001-xl", title: "XL", price: convertPrice(12895), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "bridal-new-002",
+    handle: "opulent-wine-zari-sequin-bridal-lehenga",
+    title: "Opulent Wine Zari & Sequin Bridal Lehenga",
+    description: "Indulge in the rich, intoxicating beauty of this wine-hued bridal lehenga that exudes regal sophistication. Crafted from luxurious Heavy Net fabric, this ensemble features an exquisite fusion of traditional zari work and contemporary sequin embellishments. The deep wine color symbolizes celebration and abundance, making it an auspicious choice for your wedding day. Every inch showcases master artisans' dedication with intricate geometric and floral patterns that tell stories of timeless romance.",
+    price: convertPrice(12895),
+    originalPrice: convertPrice(17910),
+    currency: "USD",
+    images: [bridalWineNetLehenga],
+    category: "Bridal Lehengas",
+    fabric: "Heavy Net",
+    occasion: "Bridal",
+    color: "Wine",
+    work: "Zari & Sequins Embroidery",
+    tags: ["bridal", "wedding", "wine", "net", "zari", "sequins", "embroidery", "new-arrival"],
+    variants: [
+      { id: "bridal-new-002-s", title: "S", price: convertPrice(12895), options: { Size: "S" } },
+      { id: "bridal-new-002-m", title: "M", price: convertPrice(12895), options: { Size: "M" } },
+      { id: "bridal-new-002-l", title: "L", price: convertPrice(12895), options: { Size: "L" } },
+      { id: "bridal-new-002-xl", title: "XL", price: convertPrice(12895), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "bridal-new-003",
+    handle: "noir-elegance-zari-sequin-bridal-lehenga",
+    title: "Noir Elegance Zari & Sequin Bridal Lehenga",
+    description: "Break convention with this dramatic black bridal lehenga that redefines bridal glamour. The bold choice of noir against lustrous Heavy Net fabric creates a canvas for the stunning zari and sequin embroidery to truly shine. This statement piece features intricate silver and gold threadwork that creates striking contrast against the dark backdrop. Perfect for reception celebrations or the bride who dares to be different, this lehenga combines traditional craftsmanship with contemporary style.",
+    price: convertPrice(12895),
+    originalPrice: convertPrice(17910),
+    currency: "USD",
+    images: [bridalBlackNetLehenga],
+    category: "Bridal Lehengas",
+    fabric: "Heavy Net",
+    occasion: "Bridal",
+    color: "Black",
+    work: "Zari & Sequins Embroidery",
+    tags: ["bridal", "wedding", "black", "net", "zari", "sequins", "embroidery", "contemporary", "new-arrival"],
+    variants: [
+      { id: "bridal-new-003-s", title: "S", price: convertPrice(12895), options: { Size: "S" } },
+      { id: "bridal-new-003-m", title: "M", price: convertPrice(12895), options: { Size: "M" } },
+      { id: "bridal-new-003-l", title: "L", price: convertPrice(12895), options: { Size: "L" } },
+      { id: "bridal-new-003-xl", title: "XL", price: convertPrice(12895), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "bridal-new-004",
+    handle: "heritage-pink-gadhwal-silk-bridal-lehenga",
+    title: "Heritage Pink Gadhwal Silk Bridal Lehenga",
+    description: "Experience the magnificent legacy of Gadhwal weaving tradition in this breathtaking pink bridal lehenga. Woven from authentic Gadhwal Silk renowned for its exceptional luster and durability, this heirloom piece features elaborate zari embroidery in pure gold and silver threads. The delicate pink shade represents love, compassion, and new beginnings—perfect symbolism for your wedding day. The traditional motifs have been passed down through generations of master weavers, each pattern carrying centuries of cultural significance.",
+    price: convertPrice(24195),
+    originalPrice: convertPrice(34077),
+    currency: "USD",
+    images: [bridalPinkGadhwalSilkLehenga],
+    category: "Bridal Lehengas",
+    fabric: "Gadhwal Silk",
+    occasion: "Bridal",
+    color: "Pink",
+    work: "Zari Embroidery",
+    tags: ["bridal", "wedding", "pink", "silk", "gadhwal", "zari", "embroidery", "heritage", "luxury", "new-arrival"],
+    variants: [
+      { id: "bridal-new-004-s", title: "S", price: convertPrice(24195), options: { Size: "S" } },
+      { id: "bridal-new-004-m", title: "M", price: convertPrice(24195), options: { Size: "M" } },
+      { id: "bridal-new-004-l", title: "L", price: convertPrice(24195), options: { Size: "L" } },
+      { id: "bridal-new-004-xl", title: "XL", price: convertPrice(24195), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "bridal-new-005",
+    handle: "auspicious-red-gadhwal-silk-bridal-lehenga",
+    title: "Auspicious Red Gadhwal Silk Bridal Lehenga",
+    description: "Embrace timeless bridal tradition with this magnificent red Gadhwal Silk lehenga that embodies the essence of Indian matrimony. The auspicious vermillion red has adorned brides for millennia, symbolizing prosperity, fertility, and love. This masterpiece is woven using centuries-old techniques by artisans from the Gadhwal region, famed for producing the most lustrous silk textiles. Intricate zari embroidery in gold threads creates elaborate paisley and floral patterns that will become more beautiful with each generation.",
+    price: convertPrice(24195),
+    originalPrice: convertPrice(34077),
+    currency: "USD",
+    images: [bridalRedGadhwalSilkLehenga],
+    category: "Bridal Lehengas",
+    fabric: "Gadhwal Silk",
+    occasion: "Bridal",
+    color: "Red",
+    work: "Zari Embroidery",
+    tags: ["bridal", "wedding", "red", "silk", "gadhwal", "zari", "embroidery", "traditional", "auspicious", "new-arrival"],
+    variants: [
+      { id: "bridal-new-005-s", title: "S", price: convertPrice(24195), options: { Size: "S" } },
+      { id: "bridal-new-005-m", title: "M", price: convertPrice(24195), options: { Size: "M" } },
+      { id: "bridal-new-005-l", title: "L", price: convertPrice(24195), options: { Size: "L" } },
+      { id: "bridal-new-005-xl", title: "XL", price: convertPrice(24195), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "bridal-new-006",
+    handle: "romantic-pink-crepe-silk-wedding-lehenga",
+    title: "Romantic Pink Crepe Silk Wedding Lehenga",
+    description: "Float down the aisle in this ethereal pink Crepe Silk lehenga that combines lightweight comfort with luxurious aesthetics. The premium crepe silk drapes beautifully, creating a fluid silhouette that moves gracefully with every step. Delicate zari embroidery adorns the fabric with subtle elegance, perfect for the bride seeking sophisticated charm without overwhelming opulence. The soft pink hue flatters every skin tone and photographs beautifully in any lighting condition.",
+    price: convertPrice(3895),
+    originalPrice: convertPrice(5264),
+    currency: "USD",
+    images: [bridalPinkCrepeSilkLehenga],
+    category: "Bridal Lehengas",
+    fabric: "Crepe Silk",
+    occasion: "Wedding",
+    color: "Pink",
+    work: "Zari Embroidery",
+    tags: ["wedding", "pink", "silk", "crepe", "zari", "embroidery", "lightweight", "elegant", "new-arrival"],
+    variants: [
+      { id: "bridal-new-006-s", title: "S", price: convertPrice(3895), options: { Size: "S" } },
+      { id: "bridal-new-006-m", title: "M", price: convertPrice(3895), options: { Size: "M" } },
+      { id: "bridal-new-006-l", title: "L", price: convertPrice(3895), options: { Size: "L" } },
+      { id: "bridal-new-006-xl", title: "XL", price: convertPrice(3895), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
   }
 ];
 
 // Convert local product to ShopifyProduct format
-type ShopifyProductNode = {
+export type ShopifyProductNode = {
   id: string;
   title: string;
   description: string;
