@@ -5,3 +5,9 @@ verify_jwt = true
 
 [functions.order-webhook]
 verify_jwt = false
+
+[functions.sync-products]
+verify_jwt = false
+
+[functions.virtual-tryon]
+verify_jwt = true
