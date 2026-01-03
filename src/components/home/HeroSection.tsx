@@ -98,6 +98,9 @@ const HeroSection = () => {
               className="w-full h-full object-cover object-top"
               fetchPriority="high"
               decoding="async"
+              loading="eager"
+              sizes="100vw"
+              style={{ imageRendering: 'auto' }}
             />
           </div>
 

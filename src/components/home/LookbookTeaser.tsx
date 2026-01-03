@@ -24,34 +24,34 @@ const LookbookTeaser = () => {
             className="grid grid-cols-2 gap-4"
           >
             <div className="space-y-4">
-              <div className="aspect-[3/4] overflow-hidden image-reveal">
+              <div className="aspect-[3/4] overflow-hidden image-reveal bg-muted">
                 <img 
                   src={lookbookImages[0]} 
                   alt="Lookbook - Mint Green Saree"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              <div className="aspect-square overflow-hidden image-reveal">
+              <div className="aspect-square overflow-hidden image-reveal bg-muted">
                 <img 
                   src={lookbookImages[1]} 
                   alt="Lookbook - Burgundy Lehenga"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </div>
             <div className="space-y-4 pt-8">
-              <div className="aspect-square overflow-hidden image-reveal">
+              <div className="aspect-square overflow-hidden image-reveal bg-muted">
                 <img 
                   src={lookbookImages[2]} 
                   alt="Lookbook - Lavender Bridal"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              <div className="aspect-[3/4] overflow-hidden image-reveal">
+              <div className="aspect-[3/4] overflow-hidden image-reveal bg-muted">
                 <img 
                   src={lookbookImages[3]} 
                   alt="Lookbook - Emerald Lehenga"
-                  className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
                 />
               </div>
             </div>
