@@ -23,27 +23,31 @@ interface ScrapedProduct {
   tags: string[];
 }
 
-// Category URLs with min price filters
+// Category URLs with min price filters and pages to scrape
 const CATEGORY_URLS = [
   { 
     category: 'lehengas', 
-    url: 'https://www.wholesalesalwar.com/retail/bridal-lehenga-choli',
-    minPrice: 4000 
+    baseUrl: 'https://www.wholesalesalwar.com/retail/bridal-lehenga-choli',
+    minPrice: 4000,
+    pages: 3
   },
   { 
     category: 'suits', 
-    url: 'https://www.wholesalesalwar.com/retail/salwar-kameez',
-    minPrice: 3000 
+    baseUrl: 'https://www.wholesalesalwar.com/retail/salwar-kameez',
+    minPrice: 3000,
+    pages: 3
   },
   { 
     category: 'sarees', 
-    url: 'https://www.wholesalesalwar.com/retail/saree',
-    minPrice: 1200 
+    baseUrl: 'https://www.wholesalesalwar.com/retail/saree',
+    minPrice: 1200,
+    pages: 3
   },
   { 
     category: 'menswear', 
-    url: 'https://www.wholesalesalwar.com/retail/mens-kurta-pyjama',
-    minPrice: 1200 
+    baseUrl: 'https://www.wholesalesalwar.com/retail/mens-kurta-pyjama',
+    minPrice: 1200,
+    pages: 3
   }
 ];
 
@@ -110,9 +114,9 @@ const parseProducts = (markdown: string, category: string, minPrice: number): Sc
     // Create boutique title
     const boutiqueTitle = `${color} ${fabric} ${category === 'lehengas' ? 'Bridal Lehenga' : category === 'sarees' ? 'Designer Saree' : category === 'suits' ? 'Embroidered Suit' : 'Kurta Set'}`;
     
-    // Generate source ID from URL
-    const sourceIdMatch = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 50);
-    const sourceId = `${category}-${sourceIdMatch}-${currentPrice}`;
+    // Generate source ID from image URL (unique per product)
+    const imageHash = imageUrl.split('/').pop()?.replace(/\.[^.]+$/, '') || '';
+    const sourceId = `${category}-${imageHash}`;
     
     products.push({
       source_id: sourceId,
@@ -161,60 +165,76 @@ Deno.serve(async (req) => {
     let totalSkipped = 0;
     const errors: string[] = [];
 
-    for (const { category, url, minPrice } of CATEGORY_URLS) {
-      console.log(`Scraping ${category} from ${url}...`);
+    for (const { category, baseUrl, minPrice, pages } of CATEGORY_URLS) {
+      console.log(`Scraping ${category} (${pages} pages)...`);
       
-      try {
-        // Scrape the page using Firecrawl
-        const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${firecrawlApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            url,
-            formats: ['markdown'],
-            onlyMainContent: true,
-          }),
-        });
-
-        if (!response.ok) {
-          console.error(`Failed to scrape ${category}: ${response.status}`);
-          errors.push(`Failed to scrape ${category}`);
-          continue;
-        }
-
-        const data = await response.json();
-        const markdown = data.data?.markdown || data.markdown || '';
+      let categoryProducts: ScrapedProduct[] = [];
+      
+      for (let page = 1; page <= pages; page++) {
+        const url = page === 1 ? baseUrl : `${baseUrl}?page=${page}`;
+        console.log(`  Page ${page}: ${url}`);
         
-        if (!markdown) {
-          console.error(`No content returned for ${category}`);
-          errors.push(`No content for ${category}`);
+        try {
+          // Scrape the page using Firecrawl
+          const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${firecrawlApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              url,
+              formats: ['markdown'],
+              onlyMainContent: true,
+            }),
+          });
+
+          if (!response.ok) {
+            console.error(`Failed to scrape ${category} page ${page}: ${response.status}`);
+            continue;
+          }
+
+          const data = await response.json();
+          const markdown = data.data?.markdown || data.markdown || '';
+          
+          if (!markdown) {
+            console.log(`  No content on page ${page}, stopping pagination`);
+            break;
+          }
+
+          // Parse products from markdown
+          const products = parseProducts(markdown, category, minPrice);
+          console.log(`  Found ${products.length} products on page ${page}`);
+          
+          if (products.length === 0) {
+            console.log(`  No products above ${minPrice} INR on page ${page}, stopping pagination`);
+            break;
+          }
+          
+          categoryProducts = categoryProducts.concat(products);
+          
+          // Small delay between pages to be nice to the server
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } catch (pageError) {
+          console.error(`Error scraping page ${page}:`, pageError);
           continue;
         }
+      }
+      
+      console.log(`Found ${categoryProducts.length} total products for ${category} above ${minPrice} INR`);
 
-        // Parse products from markdown
-        const products = parseProducts(markdown, category, minPrice);
-        console.log(`Found ${products.length} products for ${category} above ${minPrice} INR`);
+      // Insert products (upsert to avoid duplicates)
+      for (const product of categoryProducts) {
+        const { error } = await supabase
+          .from('scraped_products')
+          .upsert(product, { onConflict: 'source_id' });
 
-        // Insert new products (upsert to avoid duplicates)
-        for (const product of products) {
-          const { error } = await supabase
-            .from('scraped_products')
-            .upsert(product, { onConflict: 'source_id' });
-
-          if (error) {
-            console.error(`Error inserting product: ${error.message}`);
-            totalSkipped++;
-          } else {
-            totalAdded++;
-          }
+        if (error) {
+          console.error(`Error inserting product: ${error.message}`);
+          totalSkipped++;
+        } else {
+          totalAdded++;
         }
-      } catch (categoryError) {
-        const errorMessage = categoryError instanceof Error ? categoryError.message : 'Unknown error';
-        console.error(`Error processing ${category}:`, categoryError);
-        errors.push(`Error processing ${category}: ${errorMessage}`);
       }
     }
 
