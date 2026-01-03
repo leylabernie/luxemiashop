@@ -3,16 +3,22 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+// Use local assets for reliability
+import lookbook1 from '@/assets/lookbook-1.jpg';
+import lookbook2 from '@/assets/lookbook-2.jpg';
+import lookbook3 from '@/assets/lookbook-3.jpg';
+import lookbook4 from '@/assets/lookbook-4.jpg';
+
 const lookbookImages = [
-  'https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg',
-  'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg',
-  'https://kesimg.b-cdn.net/images/650/2025y/December/59570/Lavender-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10242(1).jpg',
-  'https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg',
+  { src: lookbook1, alt: 'Elegant Designer Saree' },
+  { src: lookbook2, alt: 'Bridal Lehenga Collection' },
+  { src: lookbook3, alt: 'Wedding Couture' },
+  { src: lookbook4, alt: 'Festive Ensemble' },
 ];
 
 const LookbookTeaser = () => {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="py-20 lg:py-28 bg-secondary/30">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left - Image Grid */}
@@ -24,37 +30,37 @@ const LookbookTeaser = () => {
             className="grid grid-cols-2 gap-4"
           >
             <div className="space-y-4">
-              <div className="aspect-[3/4] overflow-hidden image-reveal bg-muted">
+              <div className="aspect-[3/4] overflow-hidden rounded-sm shadow-lg">
                 <img 
-                  src={lookbookImages[0]} 
-                  alt="Lookbook - Mint Green Saree"
-                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  src={lookbookImages[0].src} 
+                  alt={lookbookImages[0].alt}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               </div>
-              <div className="aspect-square overflow-hidden image-reveal bg-muted">
+              <div className="aspect-square overflow-hidden rounded-sm shadow-lg">
                 <img 
-                  src={lookbookImages[1]} 
-                  alt="Lookbook - Burgundy Lehenga"
-                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  src={lookbookImages[1].src} 
+                  alt={lookbookImages[1].alt}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               </div>
             </div>
             <div className="space-y-4 pt-8">
-              <div className="aspect-square overflow-hidden image-reveal bg-muted">
+              <div className="aspect-square overflow-hidden rounded-sm shadow-lg">
                 <img 
-                  src={lookbookImages[2]} 
-                  alt="Lookbook - Lavender Bridal"
-                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  src={lookbookImages[2].src} 
+                  alt={lookbookImages[2].alt}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               </div>
-              <div className="aspect-[3/4] overflow-hidden image-reveal bg-muted">
+              <div className="aspect-[3/4] overflow-hidden rounded-sm shadow-lg">
                 <img 
-                  src={lookbookImages[3]} 
-                  alt="Lookbook - Emerald Lehenga"
-                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  src={lookbookImages[3].src} 
+                  alt={lookbookImages[3].alt}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               </div>
@@ -70,7 +76,7 @@ const LookbookTeaser = () => {
             className="lg:pl-8"
           >
             <p className="text-xs tracking-luxury uppercase text-foreground/60 mb-4">
-              Lookbook 2024
+              Lookbook 2026
             </p>
             <h2 className="font-serif text-3xl lg:text-5xl mb-6 leading-tight">
               The Art of 
