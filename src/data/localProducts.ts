@@ -556,6 +556,238 @@ export const localProducts: LocalProduct[] = [
       { id: "festive-006-xl", title: "XL", price: convertPrice(5395), options: { Size: "XL" } }
     ],
     options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+
+  // === DESIGNER COLLECTION (Premium) ===
+  {
+    id: "designer-001",
+    handle: "heavy-silk-yellow-mirror-work-lehenga",
+    title: "Heavy Silk Yellow Mirror Work Lehenga",
+    description: "A radiant masterpiece that captures the essence of sunshine celebrations. This exquisite Heavy Silk lehenga features elaborate mirror work that creates a mesmerizing play of light with every movement. The warm yellow tone is perfect for mehendi ceremonies and haldi rituals, while the premium silk fabric drapes beautifully for an unforgettable silhouette.",
+    price: convertPrice(10995 * 3),
+    originalPrice: convertPrice(15062 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/December/59605/Yellow-Heavy-Silk-Party-Wear-Mirror-Work-Lehenga-Choli-Alizeh---Mirror-Maze--3612-1015(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Heavy Silk",
+    occasion: "Party",
+    color: "Yellow",
+    work: "Mirror Work",
+    tags: ["designer", "silk", "yellow", "mirror-work", "party", "mehendi", "premium"],
+    variants: [
+      { id: "designer-001-s", title: "S", price: convertPrice(10995 * 3), options: { Size: "S" } },
+      { id: "designer-001-m", title: "M", price: convertPrice(10995 * 3), options: { Size: "M" } },
+      { id: "designer-001-l", title: "L", price: convertPrice(10995 * 3), options: { Size: "L" } },
+      { id: "designer-001-xl", title: "XL", price: convertPrice(10995 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-002",
+    handle: "heavy-silk-beige-mirror-work-lehenga",
+    title: "Heavy Silk Beige Mirror Work Lehenga",
+    description: "Understated elegance meets artisan craftsmanship in this sophisticated beige Heavy Silk lehenga. The neutral palette serves as the perfect canvas for the intricate mirror work embellishments that dance with reflected light. Ideal for destination weddings and intimate celebrations where refined luxury speaks louder than bold statements.",
+    price: convertPrice(10995 * 3),
+    originalPrice: convertPrice(15062 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/December/59605/Beige-Heavy-Silk-Party-Wear-Mirror-Work-Lehenga-Choli-Alizeh---Mirror-Maze--3612-1013-A(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Heavy Silk",
+    occasion: "Party",
+    color: "Beige",
+    work: "Mirror Work",
+    tags: ["designer", "silk", "beige", "mirror-work", "party", "destination-wedding", "neutral"],
+    variants: [
+      { id: "designer-002-s", title: "S", price: convertPrice(10995 * 3), options: { Size: "S" } },
+      { id: "designer-002-m", title: "M", price: convertPrice(10995 * 3), options: { Size: "M" } },
+      { id: "designer-002-l", title: "L", price: convertPrice(10995 * 3), options: { Size: "L" } },
+      { id: "designer-002-xl", title: "XL", price: convertPrice(10995 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-003",
+    handle: "heavy-silk-sky-blue-mirror-work-lehenga",
+    title: "Heavy Silk Sky Blue Mirror Work Lehenga",
+    description: "Capture the serenity of clear horizons with this breathtaking sky blue Heavy Silk lehenga. The tranquil blue shade combined with shimmering mirror work creates an ethereal ensemble perfect for brides seeking something truly unique. This piece speaks to the modern woman who appreciates tradition but demands individuality.",
+    price: convertPrice(10995 * 3),
+    originalPrice: convertPrice(15062 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/December/59605/Sky-Blue-Heavy-Silk-Party-Wear-Mirror-Work-Lehenga-Choli-Alizeh---Mirror-Maze--3612-1012-A(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Heavy Silk",
+    occasion: "Party",
+    color: "Sky Blue",
+    work: "Mirror Work",
+    tags: ["designer", "silk", "sky-blue", "mirror-work", "party", "unique", "modern"],
+    variants: [
+      { id: "designer-003-s", title: "S", price: convertPrice(10995 * 3), options: { Size: "S" } },
+      { id: "designer-003-m", title: "M", price: convertPrice(10995 * 3), options: { Size: "M" } },
+      { id: "designer-003-l", title: "L", price: convertPrice(10995 * 3), options: { Size: "L" } },
+      { id: "designer-003-xl", title: "XL", price: convertPrice(10995 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-004",
+    handle: "heavy-silk-dusty-pink-mirror-work-lehenga",
+    title: "Heavy Silk Dusty Pink Mirror Work Lehenga",
+    description: "Romance personified in this dreamy dusty pink Heavy Silk lehenga adorned with exquisite mirror work. The muted pink tone creates a soft, feminine aesthetic that photographs beautifully in any lighting. Perfect for engagement ceremonies and pre-wedding celebrations where elegance takes center stage.",
+    price: convertPrice(10995 * 3),
+    originalPrice: convertPrice(15062 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/December/59605/Dusty-Pink-Heavy-Silk-Party-Wear-Mirror-Work-Lehenga-Choli-Alizeh---Mirror-Maze--3612-1012(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Heavy Silk",
+    occasion: "Party",
+    color: "Dusty Pink",
+    work: "Mirror Work",
+    tags: ["designer", "silk", "dusty-pink", "mirror-work", "party", "engagement", "romantic"],
+    variants: [
+      { id: "designer-004-s", title: "S", price: convertPrice(10995 * 3), options: { Size: "S" } },
+      { id: "designer-004-m", title: "M", price: convertPrice(10995 * 3), options: { Size: "M" } },
+      { id: "designer-004-l", title: "L", price: convertPrice(10995 * 3), options: { Size: "L" } },
+      { id: "designer-004-xl", title: "XL", price: convertPrice(10995 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-005",
+    handle: "organza-lavender-bridal-heavy-work-lehenga",
+    title: "Organza Lavender Bridal Heavy Work Lehenga",
+    description: "Step into ethereal elegance with this enchanting lavender Organza bridal lehenga. The delicate fabric combined with heavy embroidery work creates a masterpiece fit for the most discerning bride. The contemporary lavender shade offers a refreshing alternative to traditional bridal colors while maintaining the grandeur expected on your special day.",
+    price: convertPrice(11295 * 3),
+    originalPrice: convertPrice(15908 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/November/59368/Lavender-Organza-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-Aarohi-3474-2918-F(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Organza",
+    occasion: "Bridal",
+    color: "Lavender",
+    work: "Heavy Work",
+    tags: ["designer", "organza", "lavender", "bridal", "heavy-work", "contemporary", "premium"],
+    variants: [
+      { id: "designer-005-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
+      { id: "designer-005-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
+      { id: "designer-005-l", title: "L", price: convertPrice(11295 * 3), options: { Size: "L" } },
+      { id: "designer-005-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-006",
+    handle: "organza-red-bridal-heavy-work-lehenga",
+    title: "Organza Red Bridal Heavy Work Lehenga",
+    description: "The timeless allure of bridal red reimagined in luxurious Organza fabric. This stunning lehenga features intensive heavy work embroidery that creates depth and dimension throughout. The auspicious red shade symbolizes prosperity and new beginnings, making it the perfect choice for traditional wedding ceremonies.",
+    price: convertPrice(11295 * 3),
+    originalPrice: convertPrice(15908 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/November/59368/Red-Organza-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-Aarohi-3474-2918-E(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Organza",
+    occasion: "Bridal",
+    color: "Red",
+    work: "Heavy Work",
+    tags: ["designer", "organza", "red", "bridal", "heavy-work", "traditional", "auspicious"],
+    variants: [
+      { id: "designer-006-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
+      { id: "designer-006-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
+      { id: "designer-006-l", title: "L", price: convertPrice(11295 * 3), options: { Size: "L" } },
+      { id: "designer-006-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-007",
+    handle: "organza-white-bridal-heavy-work-lehenga",
+    title: "Organza White Bridal Heavy Work Lehenga",
+    description: "Pure elegance in pristine white Organza, this bridal masterpiece redefines contemporary wedding fashion. The heavy work embroidery on the immaculate white base creates a stunning contrast that photographs beautifully. Ideal for fusion weddings or as a striking reception outfit that commands attention.",
+    price: convertPrice(11295 * 3),
+    originalPrice: convertPrice(15908 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/November/59368/White-Organza-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-Aarohi-3474-2918-D(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Organza",
+    occasion: "Bridal",
+    color: "White",
+    work: "Heavy Work",
+    tags: ["designer", "organza", "white", "bridal", "heavy-work", "fusion", "reception"],
+    variants: [
+      { id: "designer-007-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
+      { id: "designer-007-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
+      { id: "designer-007-l", title: "L", price: convertPrice(11295 * 3), options: { Size: "L" } },
+      { id: "designer-007-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-008",
+    handle: "organza-rose-pink-bridal-heavy-work-lehenga",
+    title: "Organza Rose Pink Bridal Heavy Work Lehenga",
+    description: "Soft romance meets bridal grandeur in this enchanting rose pink Organza lehenga. The delicate pink hue combined with intensive heavy work creates a dreamy ensemble perfect for the bride who desires feminine elegance. Every detail has been meticulously crafted to ensure you shine on your most magical day.",
+    price: convertPrice(11295 * 3),
+    originalPrice: convertPrice(15908 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/November/59368/Rose-Pink-Organza-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-Aarohi-3474-2918-C(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Organza",
+    occasion: "Bridal",
+    color: "Rose Pink",
+    work: "Heavy Work",
+    tags: ["designer", "organza", "rose-pink", "bridal", "heavy-work", "romantic", "feminine"],
+    variants: [
+      { id: "designer-008-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
+      { id: "designer-008-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
+      { id: "designer-008-l", title: "L", price: convertPrice(11295 * 3), options: { Size: "L" } },
+      { id: "designer-008-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-009",
+    handle: "organza-blue-bridal-heavy-work-lehenga",
+    title: "Organza Blue Bridal Heavy Work Lehenga",
+    description: "A bold departure from tradition, this stunning blue Organza bridal lehenga makes a powerful style statement. The rich blue shade symbolizes depth and stability, while the heavy work embroidery adds the opulence expected of bridal couture. Perfect for the confident bride who charts her own path.",
+    price: convertPrice(11295 * 3),
+    originalPrice: convertPrice(15908 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/November/59368/Blue-Organza-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-Aarohi-3474-2918-B(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Organza",
+    occasion: "Bridal",
+    color: "Blue",
+    work: "Heavy Work",
+    tags: ["designer", "organza", "blue", "bridal", "heavy-work", "bold", "statement"],
+    variants: [
+      { id: "designer-009-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
+      { id: "designer-009-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
+      { id: "designer-009-l", title: "L", price: convertPrice(11295 * 3), options: { Size: "L" } },
+      { id: "designer-009-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
+  },
+  {
+    id: "designer-010",
+    handle: "organza-rust-orange-bridal-heavy-work-lehenga",
+    title: "Organza Rust Orange Bridal Heavy Work Lehenga",
+    description: "Embrace the warmth of autumn celebrations with this striking rust orange Organza bridal lehenga. The earthy yet vibrant shade creates a unique bridal look that stands apart from conventional choices. Heavy work embroidery throughout ensures this piece delivers the grandeur and sophistication befitting a bridal ensemble.",
+    price: convertPrice(11295 * 3),
+    originalPrice: convertPrice(15908 * 3),
+    currency: "USD",
+    images: ["https://kesimg.b-cdn.net/images/650/2025y/November/59368/Rust-Orange-Organza-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-Aarohi-3474-2918-A(1).jpg"],
+    category: "Designer Lehengas",
+    fabric: "Organza",
+    occasion: "Bridal",
+    color: "Rust Orange",
+    work: "Heavy Work",
+    tags: ["designer", "organza", "rust-orange", "bridal", "heavy-work", "autumn", "unique"],
+    variants: [
+      { id: "designer-010-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
+      { id: "designer-010-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
+      { id: "designer-010-l", title: "L", price: convertPrice(11295 * 3), options: { Size: "L" } },
+      { id: "designer-010-xl", title: "XL", price: convertPrice(11295 * 3), options: { Size: "XL" } }
+    ],
+    options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
   }
 ];
 
