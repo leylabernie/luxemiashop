@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { ProductFilters, ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { ProductGrid } from '@/components/collections/ProductGrid';
 import { Button } from '@/components/ui/button';
@@ -20,11 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { type ShopifyProduct } from '@/lib/shopify';
-import { getAllLocalProducts } from '@/data/localProducts';
-
-// Using local products for preview
-const USE_LOCAL_PRODUCTS = true;
+import { useScrapedProducts } from '@/hooks/useScrapedProducts';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -35,30 +32,39 @@ const sortOptions = [
 ];
 
 const Collections = () => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { products, isLoading } = useScrapedProducts();
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      try {
-        if (USE_LOCAL_PRODUCTS) {
-          const localData = getAllLocalProducts();
-          setProducts(localData);
-        }
-      } catch (error) {
-        console.error('Error loading products:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const filteredProducts = useMemo(() => {
+    let filtered = [...products];
+    
+    // Apply price filter
+    filtered = filtered.filter(p => {
+      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
 
-    loadProducts();
-  }, []);
+    // Apply sorting
+    switch (sortBy) {
+      case 'price-asc':
+        filtered.sort((a, b) => 
+          parseFloat(a.node.priceRange.minVariantPrice.amount) - 
+          parseFloat(b.node.priceRange.minVariantPrice.amount)
+        );
+        break;
+      case 'price-desc':
+        filtered.sort((a, b) => 
+          parseFloat(b.node.priceRange.minVariantPrice.amount) - 
+          parseFloat(a.node.priceRange.minVariantPrice.amount)
+        );
+        break;
+    }
+
+    return filtered;
+  }, [products, priceRange, sortBy]);
 
   const handleFilterChange = (filters: Record<string, string[]>) => {
     setActiveFilters(filters);
@@ -72,10 +78,16 @@ const Collections = () => {
     });
   };
 
-  const totalProducts = products.length;
-
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Shop All Collections | Designer Ethnic Wear - LuxeMia"
+        description="Explore our complete collection of designer lehengas, sarees, suits, and menswear. Handcrafted ethnic wear with worldwide shipping."
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Collections', url: '/collections' },
+        ]}
+      />
       <Header />
 
       <main className="pt-24 pb-16">
@@ -124,7 +136,7 @@ const Collections = () => {
               {/* Toolbar */}
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <p className="text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-medium">{totalProducts}</span> products
+                  Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -178,13 +190,20 @@ const Collections = () => {
               <ActiveFilterTags filters={activeFilters} onRemove={handleRemoveFilter} />
 
               {/* Product Grid */}
-              <ProductGrid products={products} isLoading={isLoading} />
+              <ProductGrid products={filteredProducts} isLoading={isLoading} />
 
-              {/* Load More */}
-              {!isLoading && products.length > 0 && (
-                <div className="mt-12 text-center">
-                  <Button variant="outline" size="lg" className="min-w-[200px]">
-                    Load More
+              {/* Empty state */}
+              {!isLoading && filteredProducts.length === 0 && (
+                <div className="text-center py-16">
+                  <p className="text-muted-foreground mb-4">No products found matching your criteria.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setActiveFilters({});
+                      setPriceRange([0, 100000]);
+                    }}
+                  >
+                    Clear All Filters
                   </Button>
                 </div>
               )}
