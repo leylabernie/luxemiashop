@@ -47,6 +47,75 @@ export type Database = {
         }
         Relationships: []
       }
+      scraped_products: {
+        Row: {
+          category: string
+          color: string | null
+          created_at: string
+          currency: string
+          description: string
+          fabric: string | null
+          id: string
+          image_url: string
+          is_active: boolean
+          occasion: string | null
+          original_price_inr: number | null
+          original_price_usd: number | null
+          price_inr: number
+          price_usd: number
+          source_id: string
+          source_url: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          work: string | null
+        }
+        Insert: {
+          category: string
+          color?: string | null
+          created_at?: string
+          currency?: string
+          description: string
+          fabric?: string | null
+          id?: string
+          image_url: string
+          is_active?: boolean
+          occasion?: string | null
+          original_price_inr?: number | null
+          original_price_usd?: number | null
+          price_inr: number
+          price_usd: number
+          source_id: string
+          source_url: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          work?: string | null
+        }
+        Update: {
+          category?: string
+          color?: string | null
+          created_at?: string
+          currency?: string
+          description?: string
+          fabric?: string | null
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          occasion?: string | null
+          original_price_inr?: number | null
+          original_price_usd?: number | null
+          price_inr?: number
+          price_usd?: number
+          source_id?: string
+          source_url?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          work?: string | null
+        }
+        Relationships: []
+      }
       wishlists: {
         Row: {
           created_at: string
