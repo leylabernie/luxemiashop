@@ -8,27 +8,33 @@ import categorySuitsImg from '@/assets/category-suits.jpg';
 const categories = [
   {
     name: 'Sarees',
-    description: 'Handwoven elegance',
+    subtitle: 'Handwoven Elegance',
+    description: 'Timeless silk sarees crafted by master weavers',
     href: '/sarees',
     image: categorySareesImg,
+    tag: 'Heritage Collection',
   },
   {
     name: 'Lehengas',
-    description: 'Bridal & Festive',
+    subtitle: 'Bridal & Festive',
+    description: 'Designer lehengas for your special moments',
     href: '/lehengas',
     image: categoryLehengasImg,
+    tag: 'Most Popular',
   },
   {
     name: 'Suits',
-    description: 'Contemporary classics',
+    subtitle: 'Contemporary Classics',
+    description: 'Elegant suits blending tradition with modernity',
     href: '/suits',
     image: categorySuitsImg,
+    tag: 'New Season',
   },
 ];
 
 const CategoryShowcase = () => {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -36,16 +42,19 @@ const CategoryShowcase = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-12 lg:mb-16"
         >
-          <p className="text-xs tracking-luxury uppercase text-foreground/60 mb-3">
+          <p className="text-xs tracking-luxury uppercase text-muted-foreground mb-3">
             Curated Collections
           </p>
-          <h2 className="font-serif text-3xl lg:text-4xl">Shop by Category</h2>
+          <h2 className="font-serif text-3xl lg:text-5xl mb-4">Shop by Category</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Explore our handpicked collections of authentic Indian ethnic wear
+          </p>
         </motion.div>
 
-        {/* Categories Grid */}
-        <div className="grid md:grid-cols-3 gap-4 lg:gap-6">
+        {/* Hero-style Category Grid */}
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
           {categories.map((category, index) => (
             <motion.div
               key={category.name}
@@ -53,38 +62,72 @@ const CategoryShowcase = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
+              className="group"
             >
               <Link
                 to={category.href}
-                className="group block relative aspect-[3/4] overflow-hidden"
+                className="block relative aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-sm"
+                aria-label={`Shop ${category.name} - ${category.subtitle}`}
               >
-                {/* Category Image */}
-                <img 
-                  src={category.image}
-                  alt={category.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                {/* Category Image with Parallax Effect */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <img 
+                    src={category.image}
+                    alt={`${category.name} collection - ${category.description}`}
+                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110"
+                  />
+                </div>
 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-foreground/10 to-transparent" />
+                {/* Animated Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+                
+                {/* Shine Effect on Hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+                </div>
+
+                {/* Tag Badge */}
+                <div className="absolute top-4 left-4">
+                  <span className="inline-block px-3 py-1.5 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium tracking-wide rounded-sm">
+                    {category.tag}
+                  </span>
+                </div>
 
                 {/* Content Overlay */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
-                  <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
-                    <p className="text-xs tracking-luxury uppercase text-background/80 mb-1">
-                      {category.description}
+                  <div className="transform transition-all duration-500 ease-out group-hover:-translate-y-3">
+                    {/* Subtitle */}
+                    <p className="text-xs tracking-luxury uppercase text-background/80 mb-2">
+                      {category.subtitle}
                     </p>
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-serif text-2xl lg:text-3xl text-background">
+                    
+                    {/* Title with Arrow */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="font-serif text-3xl lg:text-4xl text-background">
                         {category.name}
                       </h3>
-                      <ArrowRight className="w-5 h-5 text-background opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
+                      <div className="w-10 h-10 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">
+                        <ArrowRight className="w-5 h-5 text-background" />
+                      </div>
+                    </div>
+
+                    {/* Description - appears on hover */}
+                    <p className="text-sm text-background/80 font-light max-w-xs opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                      {category.description}
+                    </p>
+
+                    {/* CTA Button - appears on hover */}
+                    <div className="mt-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
+                      <span className="inline-flex items-center gap-2 text-sm text-background font-medium border-b border-background/50 pb-0.5 hover:border-background transition-colors">
+                        Explore Collection
+                        <ArrowRight className="w-4 h-4" />
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Hover Border Effect */}
-                <div className="absolute inset-0 border border-transparent group-hover:border-background/20 transition-colors duration-300" />
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-background/30 transition-colors duration-300 rounded-sm pointer-events-none" />
               </Link>
             </motion.div>
           ))}
