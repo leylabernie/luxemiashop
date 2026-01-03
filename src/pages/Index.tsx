@@ -3,8 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/home/HeroSection';
 import CategoryShowcase from '@/components/home/CategoryShowcase';
-import { NewArrivals } from '@/components/home/NewArrivals';
-import FeaturedProducts from '@/components/home/FeaturedProducts';
+import ShopByCategory from '@/components/home/ShopByCategory';
 import LookbookTeaser from '@/components/home/LookbookTeaser';
 import BrandValues from '@/components/home/BrandValues';
 import NewVisitorPopup from '@/components/home/NewVisitorPopup';
@@ -12,7 +11,6 @@ import SEOHead from '@/components/seo/SEOHead';
 import ServiceHighlights from '@/components/home/ServiceHighlights';
 import QuickLinks from '@/components/home/QuickLinks';
 import CustomerStories from '@/components/home/CustomerStories';
-import TrendingNow from '@/components/home/TrendingNow';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
 
 const Index = () => {
@@ -156,11 +154,8 @@ const Index = () => {
       <main className="pt-[104px] lg:pt-[120px]">
         <HeroSection />
         <ServiceHighlights />
-        <QuickLinks />
         <CategoryShowcase />
-        <NewArrivals />
-        <TrendingNow />
-        <FeaturedProducts />
+        <ShopByCategory />
         <CustomerStories />
         <LookbookTeaser />
         <BrandValues />
