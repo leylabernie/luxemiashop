@@ -29,6 +29,7 @@ const LookbookTeaser = () => {
                   src={lookbookImages[0]} 
                   alt="Lookbook - Mint Green Saree"
                   className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
               </div>
               <div className="aspect-square overflow-hidden image-reveal bg-muted">
@@ -36,6 +37,7 @@ const LookbookTeaser = () => {
                   src={lookbookImages[1]} 
                   alt="Lookbook - Burgundy Lehenga"
                   className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -45,6 +47,7 @@ const LookbookTeaser = () => {
                   src={lookbookImages[2]} 
                   alt="Lookbook - Lavender Bridal"
                   className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
               </div>
               <div className="aspect-[3/4] overflow-hidden image-reveal bg-muted">
@@ -52,6 +55,7 @@ const LookbookTeaser = () => {
                   src={lookbookImages[3]} 
                   alt="Lookbook - Emerald Lehenga"
                   className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
                 />
               </div>
             </div>
