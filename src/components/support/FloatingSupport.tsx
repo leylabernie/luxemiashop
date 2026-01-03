@@ -1,20 +1,93 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Phone, Mail, HelpCircle } from 'lucide-react';
+import { MessageCircle, X, Phone, Mail, HelpCircle, MessagesSquare } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '12153419990'; // Replace with actual number
 const WHATSAPP_MESSAGE = encodeURIComponent('Hi! I have a question about your ethnic wear collection.');
 
+// Tawk.to Property ID - Replace with your actual Tawk.to property ID
+const TAWKTO_PROPERTY_ID = '6776c6feaf5bfec1dbe69971';
+const TAWKTO_WIDGET_ID = '1igmejd2o';
+
+declare global {
+  interface Window {
+    Tawk_API?: {
+      toggle?: () => void;
+      maximize?: () => void;
+      minimize?: () => void;
+      hideWidget?: () => void;
+      showWidget?: () => void;
+      onLoad?: () => void;
+    };
+    Tawk_LoadStart?: Date;
+  }
+}
+
 const FloatingSupport = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showPulse, setShowPulse] = useState(true);
+  const [tawkLoaded, setTawkLoaded] = useState(false);
+
+  // Load Tawk.to script
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !window.Tawk_API) {
+      window.Tawk_API = {};
+      window.Tawk_LoadStart = new Date();
+
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://embed.tawk.to/${TAWKTO_PROPERTY_ID}/${TAWKTO_WIDGET_ID}`;
+      script.charset = 'UTF-8';
+      script.setAttribute('crossorigin', '*');
+      
+      script.onload = () => {
+        // Hide default Tawk.to widget - we'll use our custom button
+        const checkTawkReady = setInterval(() => {
+          if (window.Tawk_API?.hideWidget) {
+            window.Tawk_API.hideWidget();
+            setTawkLoaded(true);
+            clearInterval(checkTawkReady);
+          }
+        }, 100);
+
+        // Cleanup after 10 seconds if not loaded
+        setTimeout(() => clearInterval(checkTawkReady), 10000);
+      };
+
+      document.head.appendChild(script);
+
+      return () => {
+        // Cleanup script on unmount if needed
+        const existingScript = document.querySelector(`script[src*="embed.tawk.to"]`);
+        if (existingScript) {
+          existingScript.remove();
+        }
+      };
+    }
+  }, []);
 
   // Stop pulse animation after first interaction
   useEffect(() => {
     if (isOpen) setShowPulse(false);
   }, [isOpen]);
 
+  const openTawkChat = () => {
+    if (window.Tawk_API?.maximize) {
+      window.Tawk_API.showWidget?.();
+      window.Tawk_API.maximize();
+      setIsOpen(false);
+    }
+  };
+
   const supportOptions = [
+    {
+      icon: MessagesSquare,
+      label: 'Live Chat',
+      description: tawkLoaded ? 'Chat with us now' : 'Loading...',
+      action: openTawkChat,
+      color: 'bg-blue-500 hover:bg-blue-600',
+      isButton: true,
+    },
     {
       icon: () => (
         <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
@@ -76,12 +149,35 @@ const FloatingSupport = () => {
             <div className="p-3 space-y-2">
               {supportOptions.map((option) => {
                 const IconComponent = option.icon;
-                const isExternal = option.external;
+                const isExternal = 'external' in option && option.external;
+                const isButton = 'isButton' in option && option.isButton;
+                
+                if (isButton) {
+                  return (
+                    <button
+                      key={option.label}
+                      onClick={option.action}
+                      disabled={!tawkLoaded}
+                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors group w-full text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className={`w-10 h-10 rounded-full ${option.color} flex items-center justify-center text-white transition-colors`}>
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{option.label}</p>
+                        <p className="text-xs text-muted-foreground">{option.description}</p>
+                      </div>
+                      {!tawkLoaded && (
+                        <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                      )}
+                    </button>
+                  );
+                }
                 
                 return (
                   <a
                     key={option.label}
-                    href={option.href}
+                    href={'href' in option ? option.href : '#'}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-secondary/50 transition-colors group"
@@ -102,9 +198,9 @@ const FloatingSupport = () => {
             {/* Online Status */}
             <div className="px-4 py-3 bg-secondary/30 border-t border-border">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className={`w-2 h-2 rounded-full ${tawkLoaded ? 'bg-green-500' : 'bg-yellow-500'} animate-pulse`} />
                 <span className="text-xs text-muted-foreground">
-                  Typically replies within 30 minutes
+                  {tawkLoaded ? 'Live agents available now' : 'Connecting to support...'}
                 </span>
               </div>
             </div>
