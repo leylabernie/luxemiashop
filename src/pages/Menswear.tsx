@@ -1,12 +1,11 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ActiveFilterTags } from '@/components/collections/ProductFilters';
-import ProductCard from '@/components/ui/ProductCard';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -23,10 +22,11 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { getLocalMenswearProducts } from '@/data/localProducts';
+import { useScrapedProducts } from '@/hooks/useScrapedProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
+import type { ShopifyProduct } from '@/lib/shopify';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -52,13 +52,10 @@ const menswearFilterSections = [
     name: 'Fabric',
     options: ['Art Silk', 'Banarasi Jacquard', 'Velvet', 'Cotton', 'Viscose', 'Silk'],
   },
-  {
-    name: 'Color',
-    options: ['White', 'Black', 'Grey', 'Blue', 'Maroon', 'Purple', 'Pink', 'Beige', 'Brown'],
-  },
 ];
 
 const Menswear = () => {
+  const { products, isLoading } = useScrapedProducts('menswear');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1500]);
   const [sortBy, setSortBy] = useState('featured');
@@ -68,44 +65,11 @@ const Menswear = () => {
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  const allProducts = getLocalMenswearProducts();
-
   const filteredProducts = useMemo(() => {
-    let products = [...allProducts];
+    let filtered = [...products];
     
-    // Apply filters
-    Object.entries(activeFilters).forEach(([section, values]) => {
-      if (values.length > 0) {
-        products = products.filter(p => {
-          const product = p.node;
-          if (section === 'Size') {
-            // Check if product has any of the selected sizes in variants
-            return values.some(v => 
-              product.variants?.edges?.some(variant => 
-                variant.node.title === v || 
-                variant.node.selectedOptions?.some(opt => opt.value === v)
-              )
-            );
-          }
-          if (section === 'Category') {
-            return values.some(v => product.productType?.toLowerCase().includes(v.toLowerCase()));
-          }
-          if (section === 'Occasion') {
-            return values.some(v => product.description.toLowerCase().includes(v.toLowerCase()));
-          }
-          if (section === 'Fabric') {
-            return values.some(v => product.description.toLowerCase().includes(v.toLowerCase()));
-          }
-          if (section === 'Color') {
-            return values.some(v => product.title.toLowerCase().includes(v.toLowerCase()));
-          }
-          return true;
-        });
-      }
-    });
-
     // Apply price filter
-    products = products.filter(p => {
+    filtered = filtered.filter(p => {
       const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
       return price >= priceRange[0] && price <= priceRange[1];
     });
@@ -113,21 +77,21 @@ const Menswear = () => {
     // Apply sorting
     switch (sortBy) {
       case 'price-asc':
-        products.sort((a, b) => 
+        filtered.sort((a, b) => 
           parseFloat(a.node.priceRange.minVariantPrice.amount) - 
           parseFloat(b.node.priceRange.minVariantPrice.amount)
         );
         break;
       case 'price-desc':
-        products.sort((a, b) => 
+        filtered.sort((a, b) => 
           parseFloat(b.node.priceRange.minVariantPrice.amount) - 
           parseFloat(a.node.priceRange.minVariantPrice.amount)
         );
         break;
     }
 
-    return products;
-  }, [allProducts, activeFilters, priceRange, sortBy]);
+    return filtered;
+  }, [products, priceRange, sortBy]);
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
@@ -162,26 +126,26 @@ const Menswear = () => {
     }).format(parseFloat(amount));
   };
 
-  const handleQuickAdd = (e: React.MouseEvent, product: any) => {
+  const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
-    const variant = product.variants.edges[0]?.node;
+    const variant = product.node.variants.edges[0]?.node;
     addItem({
       product: product,
-      variantId: variant?.id || product.id,
+      variantId: variant?.id || product.node.id,
       variantTitle: variant?.title || 'Default',
-      price: product.priceRange.minVariantPrice,
+      price: product.node.priceRange.minVariantPrice,
       quantity: 1,
       selectedOptions: variant?.selectedOptions || [],
     });
-    toast.success('Added to bag!');
+    toast.success('Added to bag!', { position: 'top-center' });
   };
 
-  const handleWishlistToggle = (e: React.MouseEvent, product: any) => {
+  const handleWishlistToggle = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
+    if (isInWishlist(product.node.id)) {
+      removeFromWishlist(product.node.id);
       toast.success('Removed from wishlist');
     } else {
       addToWishlist(product);
@@ -399,21 +363,94 @@ const Menswear = () => {
               <ActiveFilterTags filters={activeFilters} onRemove={handleRemoveFilter} />
 
               {/* Product Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
-                {filteredProducts.map((product, index) => (
-                  <ProductCard 
-                    key={product.node.id} 
-                    product={product} 
-                    index={index}
-                    showQuickAdd={true}
-                  />
-                ))}
-              </div>
+              {isLoading ? (
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                  {[...Array(12)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="aspect-[3/4] bg-secondary mb-3" />
+                      <div className="h-3 bg-secondary rounded w-1/3 mb-2" />
+                      <div className="h-4 bg-secondary rounded w-2/3 mb-2" />
+                      <div className="h-4 bg-secondary rounded w-1/4" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                  {filteredProducts.map((product, index) => (
+                    <motion.div
+                      key={product.node.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.03 }}
+                    >
+                      <Link to={`/product/${product.node.handle}`} className="group block">
+                        <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3">
+                          <img
+                            src={product.node.images.edges[0]?.node.url}
+                            alt={product.node.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                          
+                          {/* Quick Actions */}
+                          <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <Button
+                              size="sm"
+                              className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
+                              onClick={(e) => handleQuickAdd(e, product)}
+                            >
+                              <ShoppingBag className="h-4 w-4 mr-2" />
+                              Add to Bag
+                            </Button>
+                          </div>
+                          
+                          {/* Wishlist */}
+                          <button
+                            onClick={(e) => handleWishlistToggle(e, product)}
+                            className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+                          >
+                            <Heart
+                              className={`h-4 w-4 ${
+                                isInWishlist(product.node.id)
+                                  ? 'fill-primary text-primary'
+                                  : 'text-foreground'
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        
+                        <div className="space-y-1">
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                            {product.node.productType}
+                          </p>
+                          <h3 className="font-serif text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
+                            {product.node.title}
+                          </h3>
+                          <p className="text-sm font-medium">
+                            {formatPrice(product.node.priceRange.minVariantPrice.amount)}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
 
-              {filteredProducts.length === 0 && (
+              {!isLoading && filteredProducts.length === 0 && (
                 <div className="text-center py-16">
-                  <p className="text-muted-foreground mb-4">No products match your filters.</p>
-                  <Button variant="outline" onClick={() => setActiveFilters({})}>
+                  <p className="text-muted-foreground mb-4">No menswear found matching your criteria.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setActiveFilters({});
+                      setPriceRange([0, 1500]);
+                    }}
+                  >
                     Clear All Filters
                   </Button>
                 </div>

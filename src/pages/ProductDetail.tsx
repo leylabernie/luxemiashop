@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
@@ -10,61 +10,22 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { RecentlyViewed } from '@/components/product/RecentlyViewed';
-import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
+import { useScrapedProductByHandle } from '@/hooks/useScrapedProducts';
 import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 
-// Using local products for preview - switch to Shopify when ready to publish
-const USE_LOCAL_PRODUCTS = true;
-
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
-  const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { product: scrapedProduct, isLoading: scrapedLoading, error: scrapedError } = useScrapedProductByHandle(handle);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
-  useEffect(() => {
-    const loadProduct = async () => {
-      if (!handle) return;
-      
-      setIsLoading(true);
-      setError(null);
-      
-      try {
-        if (USE_LOCAL_PRODUCTS) {
-          const localProduct = getLocalProductByHandle(handle);
-          if (localProduct) {
-            setProduct(localProduct.node);
-          } else {
-            // Fallback to Shopify if not found locally
-            const productData = await fetchProductByHandle(handle);
-            if (productData) {
-              setProduct(productData);
-            } else {
-              setError('Product not found');
-            }
-          }
-        } else {
-          const productData = await fetchProductByHandle(handle);
-          if (productData) {
-            setProduct(productData);
-          } else {
-            setError('Product not found');
-          }
-        }
-      } catch (err) {
-        setError('Failed to load product');
-        console.error('Error loading product:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadProduct();
-  }, [handle]);
+  // Fallback to local products if scraped product not found
+  const localProduct = handle ? getLocalProductByHandle(handle)?.node : null;
+  const product = scrapedProduct || localProduct;
+  const isLoading = scrapedLoading;
+  const error = scrapedError && !localProduct ? scrapedError : null;
 
   // Track recently viewed
   useEffect(() => {
@@ -87,7 +48,7 @@ const ProductDetail = () => {
     if (type.includes('lehenga')) return '/lehengas';
     if (type.includes('saree')) return '/sarees';
     if (type.includes('suit') || type.includes('salwar') || type.includes('anarkali')) return '/suits';
-    if (type.includes('sherwani') || type.includes('kurta')) return '/menswear';
+    if (type.includes('sherwani') || type.includes('kurta') || type.includes('menswear')) return '/menswear';
     return '/collections';
   };
 

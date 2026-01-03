@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SlidersHorizontal, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { ProductFilters, ActiveFilterTags } from '@/components/collections/ProductFilters';
-import { ProductGrid } from '@/components/collections/ProductGrid';
+import { ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -21,57 +20,251 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { type ShopifyProduct } from '@/lib/shopify';
-import { getAllLocalProducts } from '@/data/localProducts';
-
-// Using local products for preview - switch to Shopify when ready to publish
-const USE_LOCAL_PRODUCTS = true;
+import { Checkbox } from '@/components/ui/checkbox';
+import { Slider } from '@/components/ui/slider';
+import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useCartStore } from '@/stores/cartStore';
+import { useWishlistStore } from '@/stores/wishlistStore';
+import { toast } from 'sonner';
+import type { ShopifyProduct } from '@/lib/shopify';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
   { label: 'Newest', value: 'newest' },
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
-  { label: 'Best Selling', value: 'best-selling' },
+];
+
+const lehengaFilterSections = [
+  {
+    name: 'Occasion',
+    options: ['Bridal', 'Wedding', 'Party', 'Festive', 'Reception'],
+  },
+  {
+    name: 'Fabric',
+    options: ['Net', 'Silk', 'Velvet', 'Georgette', 'Chinnon', 'Roman Silk'],
+  },
+  {
+    name: 'Work',
+    options: ['Heavy Embroidery', 'Sequins', 'Zari', 'Thread Work', 'Mirror Work'],
+  },
+  {
+    name: 'Color',
+    options: ['Red', 'Pink', 'Maroon', 'Green', 'Blue', 'Gold', 'Wine', 'Purple'],
+  },
 ];
 
 const Lehengas = () => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { products, isLoading } = useScrapedProducts('lehengas');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
+  
+  const addItem = useCartStore((state) => state.addItem);
+  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      setIsLoading(true);
-      try {
-        if (USE_LOCAL_PRODUCTS) {
-          const localData = getAllLocalProducts();
-          setProducts(localData);
-        }
-      } catch (error) {
-        console.error('Error loading products:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const filteredProducts = useMemo(() => {
+    let filtered = [...products];
+    
+    // Apply price filter
+    filtered = filtered.filter(p => {
+      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
+      return price >= priceRange[0] && price <= priceRange[1];
+    });
 
-    loadProducts();
-  }, []);
+    // Apply sorting
+    switch (sortBy) {
+      case 'price-asc':
+        filtered.sort((a, b) => 
+          parseFloat(a.node.priceRange.minVariantPrice.amount) - 
+          parseFloat(b.node.priceRange.minVariantPrice.amount)
+        );
+        break;
+      case 'price-desc':
+        filtered.sort((a, b) => 
+          parseFloat(b.node.priceRange.minVariantPrice.amount) - 
+          parseFloat(a.node.priceRange.minVariantPrice.amount)
+        );
+        break;
+    }
 
-  const handleFilterChange = (filters: Record<string, string[]>) => {
-    setActiveFilters(filters);
+    return filtered;
+  }, [products, priceRange, sortBy]);
+
+  const handleFilterChange = (section: string, option: string) => {
+    const currentOptions = activeFilters[section] || [];
+    const newOptions = currentOptions.includes(option)
+      ? currentOptions.filter((o) => o !== option)
+      : [...currentOptions, option];
+
+    setActiveFilters({
+      ...activeFilters,
+      [section]: newOptions,
+    });
   };
 
   const handleRemoveFilter = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
-    handleFilterChange({
+    setActiveFilters({
       ...activeFilters,
       [section]: currentOptions.filter((o) => o !== option),
     });
   };
+
+  const toggleSection = (section: string) => {
+    setExpandedSections((prev) =>
+      prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]
+    );
+  };
+
+  const formatPrice = (amount: string) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(parseFloat(amount));
+  };
+
+  const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const variant = product.node.variants.edges[0]?.node;
+    addItem({
+      product: product,
+      variantId: variant?.id || product.node.id,
+      variantTitle: variant?.title || 'Free Size',
+      price: product.node.priceRange.minVariantPrice,
+      quantity: 1,
+      selectedOptions: variant?.selectedOptions || [],
+    });
+    toast.success('Added to bag!', { position: 'top-center' });
+  };
+
+  const handleWishlistToggle = (e: React.MouseEvent, product: ShopifyProduct) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isInWishlist(product.node.id)) {
+      removeFromWishlist(product.node.id);
+      toast.success('Removed from wishlist');
+    } else {
+      addToWishlist(product);
+      toast.success('Added to wishlist!');
+    }
+  };
+
+  const FilterSidebar = () => (
+    <aside className="w-full lg:w-64 flex-shrink-0">
+      <div className="sticky top-28">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-serif">Filters</h2>
+          {Object.values(activeFilters).flat().length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setActiveFilters({});
+                setPriceRange([0, 1000]);
+              }}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
+              Clear All
+            </Button>
+          )}
+        </div>
+
+        {/* Price Range */}
+        <div className="mb-6 pb-6 border-b border-border">
+          <button
+            onClick={() => toggleSection('Price')}
+            className="flex items-center justify-between w-full text-left mb-4"
+          >
+            <span className="text-sm font-medium uppercase tracking-wide">Price</span>
+            <ChevronDown
+              className={`h-4 w-4 transition-transform ${
+                expandedSections.includes('Price') ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+          <AnimatePresence>
+            {expandedSections.includes('Price') && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="space-y-4">
+                  <Slider
+                    value={priceRange}
+                    onValueChange={(value) => setPriceRange(value as [number, number])}
+                    min={0}
+                    max={1000}
+                    step={25}
+                    className="py-4"
+                  />
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <span>${priceRange[0]}</span>
+                    <span>${priceRange[1]}</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Filter Sections */}
+        {lehengaFilterSections.map((section) => (
+          <div key={section.name} className="mb-6 pb-6 border-b border-border last:border-0">
+            <button
+              onClick={() => toggleSection(section.name)}
+              className="flex items-center justify-between w-full text-left mb-4"
+            >
+              <span className="text-sm font-medium uppercase tracking-wide">
+                {section.name}
+                {activeFilters[section.name]?.length > 0 && (
+                  <span className="ml-2 text-xs text-primary">
+                    ({activeFilters[section.name].length})
+                  </span>
+                )}
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${
+                  expandedSections.includes(section.name) ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+            <AnimatePresence>
+              {expandedSections.includes(section.name) && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-3"
+                >
+                  {section.options.map((option) => (
+                    <label
+                      key={option}
+                      className="flex items-center gap-3 cursor-pointer group"
+                    >
+                      <Checkbox
+                        checked={activeFilters[section.name]?.includes(option) || false}
+                        onCheckedChange={() => handleFilterChange(section.name, option)}
+                      />
+                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                        {option}
+                      </span>
+                    </label>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
+    </aside>
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -122,12 +315,7 @@ const Lehengas = () => {
           <div className="flex gap-8">
             {/* Desktop Sidebar Filters */}
             <div className="hidden lg:block">
-              <ProductFilters
-                onFilterChange={handleFilterChange}
-                activeFilters={activeFilters}
-                priceRange={priceRange}
-                onPriceChange={setPriceRange}
-              />
+              <FilterSidebar />
             </div>
 
             {/* Products Area */}
@@ -135,7 +323,7 @@ const Lehengas = () => {
               {/* Toolbar */}
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <p className="text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-medium">{products.length}</span> products
+                  Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -152,12 +340,7 @@ const Lehengas = () => {
                         <SheetTitle>Filters</SheetTitle>
                       </SheetHeader>
                       <div className="mt-6">
-                        <ProductFilters
-                          onFilterChange={handleFilterChange}
-                          activeFilters={activeFilters}
-                          priceRange={priceRange}
-                          onPriceChange={setPriceRange}
-                        />
+                        <FilterSidebar />
                       </div>
                     </SheetContent>
                   </Sheet>
@@ -189,15 +372,97 @@ const Lehengas = () => {
               <ActiveFilterTags filters={activeFilters} onRemove={handleRemoveFilter} />
 
               {/* Product Grid */}
-              <ProductGrid products={products} isLoading={isLoading} />
+              {isLoading ? (
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                  {[...Array(12)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="aspect-[3/4] bg-secondary mb-3" />
+                      <div className="h-3 bg-secondary rounded w-1/3 mb-2" />
+                      <div className="h-4 bg-secondary rounded w-2/3 mb-2" />
+                      <div className="h-4 bg-secondary rounded w-1/4" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                  {filteredProducts.map((product, index) => (
+                    <motion.div
+                      key={product.node.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.03 }}
+                    >
+                      <Link to={`/product/${product.node.handle}`} className="group block">
+                        <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3">
+                          <img
+                            src={product.node.images.edges[0]?.node.url}
+                            alt={product.node.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                          
+                          {/* Quick Actions */}
+                          <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <Button
+                              size="sm"
+                              className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
+                              onClick={(e) => handleQuickAdd(e, product)}
+                            >
+                              <ShoppingBag className="h-4 w-4 mr-2" />
+                              Add to Bag
+                            </Button>
+                          </div>
+                          
+                          {/* Wishlist */}
+                          <button
+                            onClick={(e) => handleWishlistToggle(e, product)}
+                            className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
+                          >
+                            <Heart
+                              className={`h-4 w-4 ${
+                                isInWishlist(product.node.id)
+                                  ? 'fill-primary text-primary'
+                                  : 'text-foreground'
+                              }`}
+                            />
+                          </button>
+                        </div>
+                        
+                        <div className="space-y-1">
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                            {product.node.productType}
+                          </p>
+                          <h3 className="font-serif text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
+                            {product.node.title}
+                          </h3>
+                          <p className="text-sm font-medium">
+                            {formatPrice(product.node.priceRange.minVariantPrice.amount)}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
 
               {/* Empty State */}
-              {!isLoading && products.length === 0 && (
+              {!isLoading && filteredProducts.length === 0 && (
                 <div className="text-center py-16">
-                  <p className="text-muted-foreground mb-4">No lehengas found yet.</p>
-                  <Link to="/collections">
-                    <Button variant="outline">Browse All Collections</Button>
-                  </Link>
+                  <p className="text-muted-foreground mb-4">No lehengas found matching your criteria.</p>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setActiveFilters({});
+                      setPriceRange([0, 1000]);
+                    }}
+                  >
+                    Clear All Filters
+                  </Button>
                 </div>
               )}
             </div>

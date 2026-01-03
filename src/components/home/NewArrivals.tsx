@@ -2,19 +2,19 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Heart, ShoppingBag, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getAllLocalProducts } from '@/data/localProducts';
+import { useScrapedProducts } from '@/hooks/useScrapedProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
-import { getOptimizedImage } from '@/lib/imageUtils';
+import type { ShopifyProduct } from '@/lib/shopify';
 
 export const NewArrivals = () => {
+  const { products, isLoading } = useScrapedProducts();
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
-  // Get latest products (first 8 from the catalog - simulating "new arrivals")
-  const allProducts = getAllLocalProducts();
-  const newArrivals = allProducts.slice(0, 8);
+  // Get latest 8 products
+  const newArrivals = products.slice(0, 8);
 
   const formatPrice = (amount: string) => {
     return new Intl.NumberFormat('en-US', {
@@ -23,32 +23,59 @@ export const NewArrivals = () => {
     }).format(parseFloat(amount));
   };
 
-  const handleQuickAdd = (e: React.MouseEvent, product: any) => {
+  const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
-    const variant = product.variants.edges[0]?.node;
+    const variant = product.node.variants.edges[0]?.node;
     addItem({
       product: product,
-      variantId: variant?.id || product.id,
+      variantId: variant?.id || product.node.id,
       variantTitle: variant?.title || 'Default',
-      price: product.priceRange.minVariantPrice,
+      price: product.node.priceRange.minVariantPrice,
       quantity: 1,
       selectedOptions: variant?.selectedOptions || [],
     });
-    toast.success('Added to bag!');
+    toast.success('Added to bag!', { position: 'top-center' });
   };
 
-  const handleWishlistToggle = (e: React.MouseEvent, product: any) => {
+  const handleWishlistToggle = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
+    if (isInWishlist(product.node.id)) {
+      removeFromWishlist(product.node.id);
       toast.success('Removed from wishlist');
     } else {
       addToWishlist(product);
       toast.success('Added to wishlist!');
     }
   };
+
+  if (isLoading) {
+    return (
+      <section className="py-16 lg:py-24 bg-background">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 mb-4">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <p className="text-sm tracking-luxury uppercase text-muted-foreground">Just Dropped</p>
+              <Sparkles className="h-4 w-4 text-primary" />
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">New Arrivals</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="aspect-[3/4] bg-secondary mb-3 rounded-sm" />
+                <div className="h-3 bg-secondary rounded w-1/3 mb-2" />
+                <div className="h-4 bg-secondary rounded w-2/3 mb-2" />
+                <div className="h-4 bg-secondary rounded w-1/4" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 lg:py-24 bg-background">
@@ -89,9 +116,14 @@ export const NewArrivals = () => {
               <Link to={`/product/${product.node.handle}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3 rounded-sm">
                   <img
-                    src={getOptimizedImage(product.node.images.edges[0]?.node.url, 'card')}
+                    src={product.node.images.edges[0]?.node.url}
                     alt={product.node.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
                   />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
                   
@@ -108,7 +140,7 @@ export const NewArrivals = () => {
                     <Button
                       size="sm"
                       className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
-                      onClick={(e) => handleQuickAdd(e, product.node)}
+                      onClick={(e) => handleQuickAdd(e, product)}
                     >
                       <ShoppingBag className="h-4 w-4 mr-2" />
                       Quick Add
@@ -117,7 +149,7 @@ export const NewArrivals = () => {
                   
                   {/* Wishlist */}
                   <button
-                    onClick={(e) => handleWishlistToggle(e, product.node)}
+                    onClick={(e) => handleWishlistToggle(e, product)}
                     className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
                   >
                     <Heart
@@ -155,7 +187,7 @@ export const NewArrivals = () => {
           className="text-center"
         >
           <Button asChild variant="outline" size="lg" className="group">
-            <Link to="/lehengas">
+            <Link to="/collections">
               View All New Arrivals
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
