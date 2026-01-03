@@ -90,7 +90,16 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
       images: {
         edges: [{
           node: {
-            url: product.image_url.endsWith(')') ? product.image_url : product.image_url + '.jpg',
+            // Fix truncated URLs - they end with "(1" but need "(1).jpg"
+            url: (() => {
+              let imgUrl = product.image_url;
+              // Check if URL already has proper extension
+              if (/\.(jpg|jpeg|png|webp|gif)$/i.test(imgUrl)) {
+                return imgUrl;
+              }
+              // Add ).jpg for URLs ending with (1 or similar patterns
+              return imgUrl + ').jpg';
+            })(),
             altText: betterTitle
           }
         }]
