@@ -374,6 +374,18 @@ const Menswear = () => {
                     </div>
                   ))}
                 </div>
+              ) : filteredProducts.length === 0 ? (
+                <div className="text-center py-20">
+                  <div className="max-w-md mx-auto">
+                    <h3 className="font-serif text-2xl mb-4">Coming Soon</h3>
+                    <p className="text-muted-foreground mb-6">
+                      Our menswear collection featuring designer sherwanis, kurta pajamas, and Indo-western outfits is being curated. Check back soon for regal wedding attire for grooms and guests.
+                    </p>
+                    <Button asChild variant="outline">
+                      <Link to="/lehengas">Explore Bridal Collection</Link>
+                    </Button>
+                  </div>
+                </div>
               ) : (
                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                   {filteredProducts.map((product, index) => (
