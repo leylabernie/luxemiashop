@@ -97,8 +97,12 @@ const HeroSection = () => {
           <div className="w-full h-full">
             <img 
               src={heroSlides[currentSlide].image}
+              srcSet={`${heroSlides[currentSlide].image.replace('/1920/', '/1200/')} 1200w, ${heroSlides[currentSlide].image} 1920w`}
+              sizes="100vw"
               alt={heroSlides[currentSlide].title}
               className="w-full h-full object-cover object-top"
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
 
