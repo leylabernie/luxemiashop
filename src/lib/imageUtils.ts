@@ -17,13 +17,21 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
   
   const sizeMap = {
     thumbnail: 650,  // Small thumbnails, lists
-    card: 1000,      // Product cards
+    card: 650,       // Product cards - use 650 for faster loading
     gallery: 1200,   // Product gallery, detail pages
     hero: 1920,      // Hero banners, full-width images
   };
   
   const size = sizeMap[context];
-  return url.replace('/images/650/', `/images/${size}/`);
+  let optimizedUrl = url.replace('/images/650/', `/images/${size}/`);
+  
+  // Ensure URL has proper extension
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(optimizedUrl)) {
+    // URLs often end with (1 and need ).jpg
+    optimizedUrl = optimizedUrl + ').jpg';
+  }
+  
+  return optimizedUrl;
 };
 
 /**
