@@ -15,6 +15,7 @@ export interface ScrapedProduct {
   original_price_usd: number | null;
   currency: string;
   image_url: string;
+  image_urls: string[] | null;
   fabric: string | null;
   color: string | null;
   work: string | null;
@@ -88,21 +89,27 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
         }
       },
       images: {
-        edges: [{
-          node: {
-            // Fix truncated URLs - they end with "(1" but need "(1).jpg"
-            url: (() => {
-              let imgUrl = product.image_url;
-              // Check if URL already has proper extension
-              if (/\.(jpg|jpeg|png|webp|gif)$/i.test(imgUrl)) {
-                return imgUrl;
-              }
-              // Add ).jpg for URLs ending with (1 or similar patterns
-              return imgUrl + ').jpg';
-            })(),
-            altText: betterTitle
-          }
-        }]
+        edges: (() => {
+          // Use image_urls array if available, otherwise fall back to single image_url
+          const imageList = product.image_urls && product.image_urls.length > 0 
+            ? product.image_urls 
+            : [product.image_url];
+          
+          return imageList.map((imgUrl, index) => ({
+            node: {
+              // Fix truncated URLs - they end with "(1" but need "(1).jpg"
+              url: (() => {
+                // Check if URL already has proper extension
+                if (/\.(jpg|jpeg|png|webp|gif)$/i.test(imgUrl)) {
+                  return imgUrl;
+                }
+                // Add ).jpg for URLs ending with (1 or similar patterns
+                return imgUrl + ').jpg';
+              })(),
+              altText: `${betterTitle} - View ${index + 1}`
+            }
+          }));
+        })()
       },
       variants: {
         edges: [

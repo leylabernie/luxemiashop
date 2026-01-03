@@ -57,6 +57,7 @@ export type Database = {
           fabric: string | null
           id: string
           image_url: string
+          image_urls: string[] | null
           is_active: boolean
           occasion: string | null
           original_price_inr: number | null
@@ -79,6 +80,7 @@ export type Database = {
           fabric?: string | null
           id?: string
           image_url: string
+          image_urls?: string[] | null
           is_active?: boolean
           occasion?: string | null
           original_price_inr?: number | null
@@ -101,6 +103,7 @@ export type Database = {
           fabric?: string | null
           id?: string
           image_url?: string
+          image_urls?: string[] | null
           is_active?: boolean
           occasion?: string | null
           original_price_inr?: number | null
