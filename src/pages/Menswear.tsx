@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown, Heart, ShoppingBag } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -23,10 +23,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { useScrapedProducts } from '@/hooks/useScrapedProducts';
-import { useCartStore } from '@/stores/cartStore';
-import { useWishlistStore } from '@/stores/wishlistStore';
-import { toast } from 'sonner';
-import type { ShopifyProduct } from '@/lib/shopify';
+import ProductCard from '@/components/ui/ProductCard';
 import { getAllMenswearProducts } from '@/data/menswearProducts';
 
 const sortOptions = [
@@ -66,9 +63,6 @@ const Menswear = () => {
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category']);
-  
-  const addItem = useCartStore((state) => state.addItem);
-  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
   const filteredProducts = useMemo(() => {
     let filtered = [...products];
@@ -122,40 +116,6 @@ const Menswear = () => {
     setExpandedSections((prev) =>
       prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]
     );
-  };
-
-  const formatPrice = (amount: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(parseFloat(amount));
-  };
-
-  const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const variant = product.node.variants.edges[0]?.node;
-    addItem({
-      product: product,
-      variantId: variant?.id || product.node.id,
-      variantTitle: variant?.title || 'Default',
-      price: product.node.priceRange.minVariantPrice,
-      quantity: 1,
-      selectedOptions: variant?.selectedOptions || [],
-    });
-    toast.success('Added to bag!', { position: 'top-center' });
-  };
-
-  const handleWishlistToggle = (e: React.MouseEvent, product: ShopifyProduct) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isInWishlist(product.node.id)) {
-      removeFromWishlist(product.node.id);
-      toast.success('Removed from wishlist');
-    } else {
-      addToWishlist(product);
-      toast.success('Added to wishlist!');
-    }
   };
 
   const FilterSidebar = () => (
@@ -394,66 +354,12 @@ const Menswear = () => {
               ) : (
                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                   {filteredProducts.map((product, index) => (
-                    <motion.div
-                      key={product.node.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: index * 0.03 }}
-                    >
-                      <Link to={`/product/${product.node.handle}`} className="group block">
-                        <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3">
-                          <img
-                            src={product.node.images.edges[0]?.node.url}
-                            alt={product.node.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            loading="lazy"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
-                          
-                          {/* Quick Actions */}
-                          <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                            <Button
-                              size="sm"
-                              className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
-                              onClick={(e) => handleQuickAdd(e, product)}
-                            >
-                              <ShoppingBag className="h-4 w-4 mr-2" />
-                              Add to Bag
-                            </Button>
-                          </div>
-                          
-                          {/* Wishlist */}
-                          <button
-                            onClick={(e) => handleWishlistToggle(e, product)}
-                            className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
-                          >
-                            <Heart
-                              className={`h-4 w-4 ${
-                                isInWishlist(product.node.id)
-                                  ? 'fill-primary text-primary'
-                                  : 'text-foreground'
-                              }`}
-                            />
-                          </button>
-                        </div>
-                        
-                        <div className="space-y-1">
-                          <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                            {product.node.productType}
-                          </p>
-                          <h3 className="font-serif text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
-                            {product.node.title}
-                          </h3>
-                          <p className="text-sm font-medium">
-                            {formatPrice(product.node.priceRange.minVariantPrice.amount)}
-                          </p>
-                        </div>
-                      </Link>
-                    </motion.div>
+                    <ProductCard 
+                      key={product.node.id} 
+                      product={product} 
+                      index={index}
+                      showQuickAdd={true}
+                    />
                   ))}
                 </div>
               )}
