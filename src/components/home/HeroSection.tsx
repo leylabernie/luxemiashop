@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import heroSpringImg from '@/assets/hero-rose-pink-lehenga.webp';
+import heroSpringImg from '@/assets/hero-spring-collection.jpg';
 import heroBridalImg from '@/assets/hero-bridal-couture.jpg';
 import heroFestiveImg from '@/assets/hero-festive-edit.jpg';
 
