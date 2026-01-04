@@ -3,78 +3,82 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Link } from 'react-router-dom';
-import { localProducts } from '@/data/localProducts';
-import { sareeProducts } from '@/data/sareeProducts';
-import { menswearProducts } from '@/data/menswearProducts';
-import { suitProducts } from '@/data/suitProducts';
+import { fetchAllSitemapProducts, staticPages, generateXmlSitemap } from '@/lib/dynamicSitemap';
 
-// Static pages configuration
-const staticPages = [
-  { url: '/', title: 'Home', priority: 1.0, changefreq: 'daily' },
-  { url: '/collections', title: 'All Collections', priority: 0.9, changefreq: 'daily' },
-  { url: '/lehengas', title: 'Lehengas', priority: 0.9, changefreq: 'daily' },
-  { url: '/sarees', title: 'Sarees', priority: 0.9, changefreq: 'daily' },
-  { url: '/suits', title: 'Suits', priority: 0.9, changefreq: 'daily' },
-  { url: '/menswear', title: 'Menswear', priority: 0.9, changefreq: 'daily' },
-  { url: '/collections/wedding-sarees', title: 'Wedding Sarees', priority: 0.8, changefreq: 'weekly' },
-  { url: '/collections/bridal-lehengas', title: 'Bridal Lehengas', priority: 0.8, changefreq: 'weekly' },
-  { url: '/collections/reception-outfits', title: 'Reception Outfits', priority: 0.8, changefreq: 'weekly' },
-  { url: '/collections/festive-wear', title: 'Festive Wear', priority: 0.8, changefreq: 'weekly' },
-  { url: '/new-arrivals', title: 'New Arrivals', priority: 0.8, changefreq: 'daily' },
-  { url: '/lookbook', title: 'Lookbook', priority: 0.7, changefreq: 'weekly' },
-  { url: '/brand-story', title: 'Our Story', priority: 0.6, changefreq: 'monthly' },
-  { url: '/artisans', title: 'Artisans', priority: 0.6, changefreq: 'monthly' },
-  { url: '/sustainability', title: 'Sustainability', priority: 0.6, changefreq: 'monthly' },
-  { url: '/virtual-tryon', title: 'Virtual Try-On', priority: 0.7, changefreq: 'monthly' },
-  { url: '/size-guide', title: 'Size Guide', priority: 0.5, changefreq: 'monthly' },
-  { url: '/care-guide', title: 'Care Guide', priority: 0.5, changefreq: 'monthly' },
-  { url: '/contact', title: 'Contact Us', priority: 0.5, changefreq: 'monthly' },
-  { url: '/faq', title: 'FAQ', priority: 0.5, changefreq: 'monthly' },
-  { url: '/shipping', title: 'Shipping Info', priority: 0.4, changefreq: 'monthly' },
-  { url: '/returns', title: 'Returns & Exchanges', priority: 0.4, changefreq: 'monthly' },
-  { url: '/privacy', title: 'Privacy Policy', priority: 0.3, changefreq: 'yearly' },
-  { url: '/terms', title: 'Terms of Service', priority: 0.3, changefreq: 'yearly' },
-];
-
-// Generate product URLs from all product data
-const getAllProducts = () => {
-  const allProducts = [
-    ...localProducts.map(p => ({ handle: p.handle, title: p.title, category: 'Lehengas' })),
-    ...sareeProducts.map(p => ({ handle: p.handle, title: p.title, category: 'Sarees' })),
-    ...menswearProducts.map(p => ({ handle: p.handle, title: p.title, category: 'Menswear' })),
-    ...suitProducts.map(p => ({ handle: p.handle, title: p.title, category: 'Suits' })),
-  ];
-  return allProducts;
-};
+interface SitemapProduct {
+  handle: string;
+  title: string;
+  category: string;
+  images: string[];
+  lastmod?: string;
+}
 
 const Sitemap = () => {
-  const [xmlContent, setXmlContent] = useState<string>('');
-  const products = getAllProducts();
+  const [products, setProducts] = useState<SitemapProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.com';
   const currentDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    // Generate XML sitemap content
-    const xml = generateXmlSitemap(baseUrl, currentDate, products);
-    setXmlContent(xml);
-  }, [baseUrl, currentDate, products]);
+    const loadProducts = async () => {
+      try {
+        const allProducts = await fetchAllSitemapProducts();
+        setProducts(allProducts);
+      } catch (error) {
+        console.error('Error loading sitemap products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProducts();
+  }, []);
 
   // Group pages by category for display
   const pageCategories = {
-    'Main Pages': staticPages.filter(p => ['/', '/collections', '/lookbook', '/brand-story'].includes(p.url)),
-    'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/new-arrivals'].includes(p.url)),
-    'Collections': staticPages.filter(p => p.url.startsWith('/collections/')),
-    'Customer Service': staticPages.filter(p => ['/contact', '/faq', '/shipping', '/returns', '/size-guide', '/care-guide'].includes(p.url)),
-    'About Us': staticPages.filter(p => ['/artisans', '/sustainability', '/virtual-tryon'].includes(p.url)),
-    'Legal': staticPages.filter(p => ['/privacy', '/terms'].includes(p.url)),
+    'Main Pages': staticPages.filter(p => ['/', '/collections', '/lookbook', '/brand-story'].includes(p.loc)),
+    'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/jewelry', '/new-arrivals'].includes(p.loc)),
+    'Collections': staticPages.filter(p => p.loc.startsWith('/collections/')),
+    'Customer Service': staticPages.filter(p => ['/contact', '/faq', '/shipping', '/returns', '/size-guide', '/care-guide'].includes(p.loc)),
+    'About Us': staticPages.filter(p => ['/artisans', '/sustainability', '/virtual-tryon'].includes(p.loc)),
+    'Legal': staticPages.filter(p => ['/privacy', '/terms'].includes(p.loc)),
   };
 
   // Group products by category
   const productsByCategory = {
-    'Lehengas': products.filter(p => p.category === 'Lehengas'),
-    'Sarees': products.filter(p => p.category === 'Sarees'),
-    'Menswear': products.filter(p => p.category === 'Menswear'),
-    'Suits': products.filter(p => p.category === 'Suits'),
+    'Bridal Lehengas': products.filter(p => p.category.toLowerCase().includes('bridal')),
+    'Wedding Lehengas': products.filter(p => p.category.toLowerCase().includes('wedding') && !p.category.toLowerCase().includes('saree')),
+    'Party Lehengas': products.filter(p => p.category.toLowerCase().includes('party') && p.category.toLowerCase().includes('lehenga')),
+    'Sarees': products.filter(p => p.category.toLowerCase().includes('saree')),
+    'Suits': products.filter(p => p.category.toLowerCase().includes('suit') || p.category === 'suits'),
+    'Menswear': products.filter(p => p.category.toLowerCase().includes('menswear') || p.category.toLowerCase().includes('kurta')),
+    'Other': products.filter(p => {
+      const cat = p.category.toLowerCase();
+      return !cat.includes('bridal') && 
+             !cat.includes('wedding') && 
+             !cat.includes('party') && 
+             !cat.includes('saree') && 
+             !cat.includes('suit') && 
+             !cat.includes('menswear') &&
+             !cat.includes('kurta');
+    }),
+  };
+
+  // Filter out empty categories
+  const filteredCategories = Object.entries(productsByCategory)
+    .filter(([, items]) => items.length > 0);
+
+  // Handle XML download
+  const handleDownloadXml = async () => {
+    const xml = await generateXmlSitemap(baseUrl);
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sitemap.xml';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -97,16 +101,24 @@ const Sitemap = () => {
           <div className="bg-secondary/30 rounded-lg p-6 mb-12 text-center">
             <h2 className="font-serif text-lg mb-2">XML Sitemap for Search Engines</h2>
             <p className="text-sm text-muted-foreground mb-4">
-              Search engines can use our XML sitemap to discover and index all pages.
+              Search engines can use our XML sitemap to discover and index all pages, including product images.
             </p>
-            <a 
-              href="/sitemap.xml" 
-              className="inline-block px-6 py-2 bg-foreground text-background text-sm hover:bg-foreground/90 transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View XML Sitemap
-            </a>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <a 
+                href="/sitemap.xml" 
+                className="inline-block px-6 py-2 bg-foreground text-background text-sm hover:bg-foreground/90 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Static Sitemap
+              </a>
+              <button 
+                onClick={handleDownloadXml}
+                className="inline-block px-6 py-2 bg-primary text-primary-foreground text-sm hover:bg-primary/90 transition-colors"
+              >
+                Download Dynamic Sitemap (with Images)
+              </button>
+            </div>
           </div>
 
           {/* Pages Section */}
@@ -120,9 +132,9 @@ const Sitemap = () => {
                   </h3>
                   <ul className="space-y-2">
                     {pages.map(page => (
-                      <li key={page.url}>
+                      <li key={page.loc}>
                         <Link 
-                          to={page.url}
+                          to={page.loc}
                           className="text-foreground hover:text-primary transition-colors"
                         >
                           {page.title}
@@ -138,29 +150,41 @@ const Sitemap = () => {
           {/* Products Section */}
           <section>
             <h2 className="font-serif text-2xl mb-8 border-b border-border pb-4">
-              Products ({products.length} items)
+              Products {!loading && `(${products.length} items)`}
             </h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {Object.entries(productsByCategory).map(([category, categoryProducts]) => (
-                <div key={category} className="bg-card rounded-lg p-6 border border-border/50">
-                  <h3 className="font-serif text-lg mb-4">
-                    {category} <span className="text-muted-foreground text-sm font-normal">({categoryProducts.length})</span>
-                  </h3>
-                  <ul className="space-y-2 max-h-64 overflow-y-auto">
-                    {categoryProducts.map(product => (
-                      <li key={product.handle}>
-                        <Link 
-                          to={`/product/${product.handle}`}
-                          className="text-sm text-muted-foreground hover:text-foreground transition-colors line-clamp-1"
-                        >
-                          {product.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+            {loading ? (
+              <div className="text-center py-8 text-muted-foreground">Loading products...</div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-8">
+                {filteredCategories.map(([category, categoryProducts]) => (
+                  <div key={category} className="bg-card rounded-lg p-6 border border-border/50">
+                    <h3 className="font-serif text-lg mb-4">
+                      {category} <span className="text-muted-foreground text-sm font-normal">({categoryProducts.length})</span>
+                    </h3>
+                    <ul className="space-y-2 max-h-64 overflow-y-auto">
+                      {categoryProducts.map(product => (
+                        <li key={product.handle} className="flex items-center gap-2">
+                          {product.images?.[0] && (
+                            <img 
+                              src={product.images[0]} 
+                              alt="" 
+                              className="w-8 h-8 object-cover rounded"
+                              loading="lazy"
+                            />
+                          )}
+                          <Link 
+                            to={`/product/${product.handle}`}
+                            className="text-sm text-muted-foreground hover:text-foreground transition-colors line-clamp-1 flex-1"
+                          >
+                            {product.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
           {/* Stats */}
@@ -169,6 +193,9 @@ const Sitemap = () => {
               Total Pages: {staticPages.length} | Total Products: {products.length} | 
               Last Updated: {currentDate}
             </p>
+            <p className="mt-2 text-xs">
+              ✓ Enhanced with image sitemaps for Google Image Search
+            </p>
           </div>
         </div>
       </main>
@@ -176,42 +203,6 @@ const Sitemap = () => {
       <Footer />
     </div>
   );
-};
-
-// Helper function to generate XML sitemap content
-const generateXmlSitemap = (
-  baseUrl: string, 
-  currentDate: string, 
-  products: Array<{ handle: string; title: string; category: string }>
-) => {
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-`;
-
-  // Add static pages
-  staticPages.forEach(page => {
-    xml += `  <url>
-    <loc>${baseUrl}${page.url}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
-  </url>
-`;
-  });
-
-  // Add product pages
-  products.forEach(product => {
-    xml += `  <url>
-    <loc>${baseUrl}/product/${product.handle}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-`;
-  });
-
-  xml += `</urlset>`;
-  return xml;
 };
 
 export default Sitemap;

@@ -1,11 +1,13 @@
 # LuxeMia Robots.txt
 # https://www.robotstxt.org/robotstxt.html
+# Dynamic sitemap with product images for Google Image search
 
 User-agent: *
 Allow: /
 
-# Sitemap locations
+# Sitemap locations (static + dynamic)
 Sitemap: https://luxemia.com/sitemap.xml
+Sitemap: https://mxrvlizhrofsroydenti.supabase.co/functions/v1/generate-sitemap
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
@@ -22,10 +24,14 @@ Allow: /sarees
 Allow: /lehengas
 Allow: /suits
 Allow: /menswear
+Allow: /jewelry
 Allow: /brand-story
 Allow: /lookbook
 Allow: /sitemap
-# Luxury Indian Ethnic Wear E-commerce
+
+# Googlebot-Image for image search
+User-agent: Googlebot-Image
+Allow: /
 
 User-agent: Googlebot
 Allow: /
@@ -38,17 +44,3 @@ Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
-
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: https://luxemia.com/sitemap.xml
-
-# Crawl-delay for other bots
-User-agent: *
-Crawl-delay: 1
-
-# Block admin and private pages
-Disallow: /account
-Disallow: /auth
