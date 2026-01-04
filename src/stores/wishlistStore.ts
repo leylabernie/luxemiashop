@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { supabase } from '@/integrations/supabase/client';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { trackAddToWishlist } from '@/hooks/useAnalytics';
 
 interface WishlistStore {
   items: ShopifyProduct[];
@@ -26,6 +27,15 @@ export const useWishlistStore = create<WishlistStore>()(
         const exists = items.some(item => item.node.id === product.node.id);
         if (!exists) {
           set({ items: [...items, product] });
+          
+          // Track add_to_wishlist event in GA4
+          trackAddToWishlist({
+            id: product.node.id,
+            name: product.node.title,
+            price: parseFloat(product.node.priceRange.minVariantPrice.amount),
+            currency: product.node.priceRange.minVariantPrice.currencyCode,
+            category: product.node.productType,
+          });
           
           // Sync to database if user is logged in
           const { data: { user } } = await supabase.auth.getUser();

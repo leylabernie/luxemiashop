@@ -15,6 +15,7 @@ import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
+import { trackViewItem } from '@/hooks/useAnalytics';
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -27,7 +28,7 @@ const ProductDetail = () => {
   const isLoading = scrapedLoading;
   const error = scrapedError && !localProduct ? scrapedError : null;
 
-  // Track recently viewed
+  // Track recently viewed and analytics
   useEffect(() => {
     if (product) {
       addToRecentlyViewed({
@@ -37,6 +38,15 @@ const ProductDetail = () => {
         price: product.priceRange.minVariantPrice.amount,
         currency: product.priceRange.minVariantPrice.currencyCode,
         imageUrl: product.images.edges[0]?.node.url || '',
+      });
+      
+      // Track view_item event in GA4
+      trackViewItem({
+        id: product.id,
+        name: product.title,
+        price: parseFloat(product.priceRange.minVariantPrice.amount),
+        currency: product.priceRange.minVariantPrice.currencyCode,
+        category: product.productType,
       });
     }
   }, [product, addToRecentlyViewed]);

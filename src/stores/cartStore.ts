@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
+import { trackAddToCart, trackBeginCheckout } from '@/hooks/useAnalytics';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -45,6 +46,16 @@ export const useCartStore = create<CartStore>()(
         const { items } = get();
         const existingItem = items.find(i => i.variantId === item.variantId);
         
+        // Track add_to_cart event in GA4
+        trackAddToCart({
+          id: item.product.node.id,
+          name: item.product.node.title,
+          price: parseFloat(item.price.amount),
+          quantity: item.quantity,
+          currency: item.price.currencyCode,
+          category: item.product.node.productType,
+        });
+        
         if (existingItem) {
           set({
             items: items.map(i =>
@@ -88,6 +99,19 @@ export const useCartStore = create<CartStore>()(
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();
         if (items.length === 0) return null;
+
+        // Track begin_checkout event in GA4
+        const totalValue = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
+        trackBeginCheckout(
+          items.map(item => ({
+            id: item.product.node.id,
+            name: item.product.node.title,
+            price: parseFloat(item.price.amount),
+            quantity: item.quantity,
+          })),
+          totalValue,
+          items[0]?.price.currencyCode
+        );
 
         setLoading(true);
         try {
