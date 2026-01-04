@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Plus, ZoomIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -28,7 +28,13 @@ export const ProductCard = ({
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [pinchScale, setPinchScale] = useState(1);
+  const [isPinching, setIsPinching] = useState(false);
+  const [pinchOrigin, setPinchOrigin] = useState({ x: 50, y: 50 });
   const cardRef = useRef<HTMLDivElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const initialDistanceRef = useRef<number>(0);
+  const initialScaleRef = useRef<number>(1);
   
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
@@ -42,7 +48,7 @@ export const ProductCard = ({
           observer.disconnect();
         }
       },
-      { rootMargin: '200px' } // Start loading 200px before entering viewport
+      { rootMargin: '200px' }
     );
 
     if (cardRef.current) {
@@ -51,6 +57,66 @@ export const ProductCard = ({
 
     return () => observer.disconnect();
   }, []);
+
+  // Calculate distance between two touch points
+  const getDistance = useCallback((touches: React.TouchList) => {
+    if (touches.length < 2) return 0;
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }, []);
+
+  // Calculate center point between two touches
+  const getCenter = useCallback((touches: React.TouchList, rect: DOMRect) => {
+    if (touches.length < 2) return { x: 50, y: 50 };
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    const centerX = (touch1.clientX + touch2.clientX) / 2;
+    const centerY = (touch1.clientY + touch2.clientY) / 2;
+    return {
+      x: ((centerX - rect.left) / rect.width) * 100,
+      y: ((centerY - rect.top) / rect.height) * 100,
+    };
+  }, []);
+
+  // Touch handlers for pinch-to-zoom
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      setIsPinching(true);
+      initialDistanceRef.current = getDistance(e.touches);
+      initialScaleRef.current = pinchScale;
+      
+      const rect = e.currentTarget.getBoundingClientRect();
+      setPinchOrigin(getCenter(e.touches, rect));
+    }
+  }, [getDistance, getCenter, pinchScale]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length === 2 && isPinching) {
+      e.preventDefault();
+      const currentDistance = getDistance(e.touches);
+      const scaleChange = currentDistance / initialDistanceRef.current;
+      const newScale = Math.min(Math.max(initialScaleRef.current * scaleChange, 1), 3);
+      setPinchScale(newScale);
+      
+      const rect = e.currentTarget.getBoundingClientRect();
+      setPinchOrigin(getCenter(e.touches, rect));
+    }
+  }, [getDistance, getCenter, isPinching]);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length < 2) {
+      setIsPinching(false);
+      // Reset scale with a smooth transition
+      if (pinchScale <= 1.1) {
+        setPinchScale(1);
+        setPinchOrigin({ x: 50, y: 50 });
+      }
+    }
+  }, [pinchScale]);
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -105,6 +171,33 @@ export const ProductCard = ({
     setMousePosition({ x: 50, y: 50 });
   };
 
+  // Double-tap to zoom on mobile
+  const lastTapRef = useRef<number>(0);
+  const handleDoubleTap = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length !== 1) return;
+    
+    const now = Date.now();
+    const DOUBLE_TAP_DELAY = 300;
+    
+    if (now - lastTapRef.current < DOUBLE_TAP_DELAY) {
+      e.preventDefault();
+      const rect = e.currentTarget.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = ((touch.clientX - rect.left) / rect.width) * 100;
+      const y = ((touch.clientY - rect.top) / rect.height) * 100;
+      
+      if (pinchScale > 1) {
+        setPinchScale(1);
+        setPinchOrigin({ x: 50, y: 50 });
+      } else {
+        setPinchScale(2);
+        setPinchOrigin({ x, y });
+      }
+    }
+    
+    lastTapRef.current = now;
+  }, [pinchScale]);
+
   const formatPrice = (amount: string, currency: string) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -125,10 +218,17 @@ export const ProductCard = ({
     >
       <Link to={`/product/${product.node.handle}`}>
         <div 
-          className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card cursor-zoom-in"
+          ref={imageContainerRef}
+          className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card cursor-zoom-in touch-none"
           onMouseMove={handleMouseMove}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={(e) => {
+            handleDoubleTap(e);
+            handleTouchStart(e);
+          }}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {/* Shimmer Placeholder */}
           <div
@@ -147,14 +247,22 @@ export const ProductCard = ({
                 src={getOptimizedImage(imageUrl, 'card')}
                 alt={product.node.images.edges[0]?.node.altText || product.node.title}
                 loading="lazy"
+                draggable={false}
                 onLoad={() => setIsLoaded(true)}
                 className={cn(
-                  'w-full h-full object-cover transition-all duration-500',
-                  isLoaded ? 'opacity-100' : 'opacity-0'
+                  'w-full h-full object-cover select-none',
+                  isLoaded ? 'opacity-100' : 'opacity-0',
+                  isPinching ? '' : 'transition-all duration-300'
                 )}
                 style={{
-                  transform: isZoomed ? 'scale(1.8)' : 'scale(1)',
-                  transformOrigin: `${mousePosition.x}% ${mousePosition.y}%`,
+                  transform: isPinching || pinchScale > 1 
+                    ? `scale(${pinchScale})` 
+                    : isZoomed 
+                      ? 'scale(1.8)' 
+                      : 'scale(1)',
+                  transformOrigin: isPinching || pinchScale > 1 
+                    ? `${pinchOrigin.x}% ${pinchOrigin.y}%` 
+                    : `${mousePosition.x}% ${mousePosition.y}%`,
                 }}
               />
             </div>
@@ -165,7 +273,7 @@ export const ProductCard = ({
           {/* Zoom indicator */}
           <div className={cn(
             'absolute top-3 left-3 p-2 rounded-full bg-background/80 backdrop-blur-sm transition-opacity duration-300 pointer-events-none',
-            isZoomed ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+            isZoomed || pinchScale > 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
           )}>
             <ZoomIn className="h-3.5 w-3.5 text-foreground" />
           </div>
