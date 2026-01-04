@@ -110,7 +110,7 @@ const HeroSection = () => {
           {/* Content */}
           <div className="absolute inset-0 flex items-center">
             <div className="container mx-auto px-4 lg:px-8">
-              <div className="max-w-xl">
+              <div className="max-w-xl ml-12 lg:ml-16">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -123,7 +123,7 @@ const HeroSection = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.7 }}
-                  className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl mb-8 leading-tight"
+                  className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-8 leading-tight"
                 >
                   {heroSlides[currentSlide].title}
                 </motion.h2>
