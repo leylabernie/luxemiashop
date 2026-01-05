@@ -1,6 +1,44 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const SHOPIFY_WEBHOOK_SECRET = Deno.env.get("SHOPIFY_WEBHOOK_SECRET");
+
+// Verify Shopify HMAC signature
+async function verifyShopifyHmac(body: string, hmacHeader: string | null): Promise<boolean> {
+  if (!hmacHeader || !SHOPIFY_WEBHOOK_SECRET) {
+    console.error("Missing HMAC header or webhook secret");
+    return false;
+  }
+
+  try {
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(SHOPIFY_WEBHOOK_SECRET),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    
+    const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(body));
+    const computedHmac = btoa(String.fromCharCode(...new Uint8Array(signature)));
+    
+    // Constant-time comparison to prevent timing attacks
+    if (computedHmac.length !== hmacHeader.length) {
+      return false;
+    }
+    
+    let result = 0;
+    for (let i = 0; i < computedHmac.length; i++) {
+      result |= computedHmac.charCodeAt(i) ^ hmacHeader.charCodeAt(i);
+    }
+    
+    return result === 0;
+  } catch (error) {
+    console.error("HMAC verification error:", error);
+    return false;
+  }
+}
 
 async function sendEmail(to: string, subject: string, html: string) {
   const response = await fetch("https://api.resend.com/emails", {
@@ -11,6 +49,8 @@ async function sendEmail(to: string, subject: string, html: string) {
     },
     body: JSON.stringify({
       from: "LuxeMia <onboarding@resend.dev>",
+      to,
+      subject,
       html: html,
     }),
   });
@@ -201,10 +241,30 @@ serve(async (req) => {
   }
 
   try {
+    // Read body as text first for HMAC verification
+    const body = await req.text();
+    
+    // Verify Shopify HMAC signature
+    const hmacHeader = req.headers.get("x-shopify-hmac-sha256");
+    const isValid = await verifyShopifyHmac(body, hmacHeader);
+    
+    if (!isValid) {
+      console.error("Invalid HMAC signature - rejecting webhook request");
+      return new Response(
+        JSON.stringify({ error: "Invalid signature" }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+    
+    console.log("HMAC signature verified successfully");
+
     const topic = req.headers.get("x-shopify-topic") || "orders/updated";
     console.log(`Received Shopify webhook: ${topic}`);
 
-    const order: ShopifyOrder = await req.json();
+    const order: ShopifyOrder = JSON.parse(body);
     console.log(`Processing order: ${order.name || order.id}`);
 
     // Get customer email
