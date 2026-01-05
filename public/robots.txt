@@ -5,9 +5,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap locations (static + dynamic)
-Sitemap: https://luxemia.com/sitemap.xml
-Sitemap: https://mxrvlizhrofsroydenti.supabase.co/functions/v1/generate-sitemap
+# Sitemap location
+Sitemap: https://luxemia.shop/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
