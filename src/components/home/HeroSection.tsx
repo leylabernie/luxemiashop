@@ -110,7 +110,7 @@ const HeroSection = () => {
           {/* Content */}
           <div className="absolute inset-0 flex items-center">
             <div className="container mx-auto px-4 lg:px-8">
-              <div className="max-w-xl ml-12 lg:ml-16">
+              <div className="max-w-xl">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -144,21 +144,23 @@ const HeroSection = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 p-3 bg-background/80 hover:bg-background backdrop-blur-sm transition-all group"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 p-3 bg-background/80 hover:bg-background backdrop-blur-sm transition-all group"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
-      </button>
+      {/* Navigation Arrows - Bottom Right */}
+      <div className="absolute bottom-8 right-4 lg:right-8 flex gap-2">
+        <button
+          onClick={prevSlide}
+          className="p-3 bg-background/80 hover:bg-background backdrop-blur-sm transition-all group"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="p-3 bg-background/80 hover:bg-background backdrop-blur-sm transition-all group"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+        </button>
+      </div>
 
       {/* Dots Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
