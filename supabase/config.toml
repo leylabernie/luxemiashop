@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.virtual-tryon]
 verify_jwt = true
+
+[functions.image-proxy]
+verify_jwt = false

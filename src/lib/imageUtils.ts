@@ -1,5 +1,29 @@
 // Image resolution utilities for the boutique
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
+/**
+ * Check if URL is an external image that needs proxying
+ */
+const isExternalImage = (url: string): boolean => {
+  if (!url) return false;
+  // Check if it's from external domains that may block hotlinking
+  return url.includes('fashidwholesale.in') || 
+         url.includes('cdn.shopify.com') === false && 
+         url.startsWith('http') && 
+         !url.includes('supabase');
+};
+
+/**
+ * Get proxied URL for external images
+ */
+export const getProxiedImageUrl = (url: string): string => {
+  if (!url) return url;
+  if (!isExternalImage(url)) return url;
+  
+  return `${SUPABASE_URL}/functions/v1/image-proxy?url=${encodeURIComponent(url)}`;
+};
+
 /**
  * Upgrades CDN image URL to higher resolution
  * The CDN supports various sizes: 650, 800, 1000, 1200, 1500, 1920
@@ -14,6 +38,11 @@ export const getHighResImage = (url: string, size: 1200 | 1500 | 1920 = 1200): s
  */
 export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | 'gallery' | 'hero' = 'card'): string => {
   if (!url) return url;
+  
+  // For external images, proxy them
+  if (isExternalImage(url)) {
+    return getProxiedImageUrl(url);
+  }
   
   const sizeMap = {
     thumbnail: 650,  // Small thumbnails, lists
