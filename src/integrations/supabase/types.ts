@@ -64,6 +64,8 @@ export type Database = {
           original_price_usd: number | null
           price_inr: number
           price_usd: number
+          shopify_product_id: string | null
+          shopify_variant_ids: string[] | null
           source_id: string
           source_url: string
           tags: string[] | null
@@ -87,6 +89,8 @@ export type Database = {
           original_price_usd?: number | null
           price_inr: number
           price_usd: number
+          shopify_product_id?: string | null
+          shopify_variant_ids?: string[] | null
           source_id: string
           source_url: string
           tags?: string[] | null
@@ -110,6 +114,8 @@ export type Database = {
           original_price_usd?: number | null
           price_inr?: number
           price_usd?: number
+          shopify_product_id?: string | null
+          shopify_variant_ids?: string[] | null
           source_id?: string
           source_url?: string
           tags?: string[] | null
