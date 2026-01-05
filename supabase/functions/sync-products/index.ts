@@ -131,12 +131,12 @@ const extractFromImageUrl = (imageUrl: string, category: string): { title: strin
   const filename = imageUrl.split('/').pop() || '';
   
   // Check if this product should be skipped (wrong category in URL)
-  // Only filter lehengas and suits strictly - sarees source has mixed content that's acceptable
+  // Strictly filter products that don't match their category
   const skipPatterns: Record<string, string[]> = {
-    sarees: [], // Don't filter sarees - accept all from the saree category
-    lehengas: ['Saree', 'Suit', 'Kurta', 'Gown'],
+    sarees: ['Lehenga', 'Suit', 'Kurta', 'Gown', 'Plazzo', 'Palazzo', 'Sharara', 'Anarkali', 'Readymade'],
+    lehengas: ['Saree', 'Suit', 'Kurta', 'Gown', 'Plazzo', 'Palazzo', 'Sharara'],
     suits: ['Saree', 'Lehenga'],
-    menswear: ['Saree', 'Lehenga', 'Gown']
+    menswear: ['Saree', 'Lehenga', 'Gown', 'Sharara']
   };
   
   const patternsToSkip = skipPatterns[category] || [];
