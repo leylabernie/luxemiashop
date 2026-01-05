@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Plus, ZoomIn } from 'lucide-react';
+import { Heart, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
@@ -31,19 +31,13 @@ export const ProductCard = ({
   const [pinchScale, setPinchScale] = useState(1);
   const [isPinching, setIsPinching] = useState(false);
   const [pinchOrigin, setPinchOrigin] = useState({ x: 50, y: 50 });
-  const [showMagnifier, setShowMagnifier] = useState(false);
-  const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [highResLoaded, setHighResLoaded] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   
   const cardRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const initialDistanceRef = useRef<number>(0);
   const initialScaleRef = useRef<number>(1);
   
-  // Magnifier constants
-  const MAGNIFIER_SIZE = 150;
-  const ZOOM_LEVEL = 3;
   
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
@@ -166,30 +160,6 @@ export const ProductCard = ({
     }
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!imageContainerRef.current) return;
-    const rect = imageContainerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const percentX = (x / rect.width) * 100;
-    const percentY = (y / rect.height) * 100;
-    
-    setCursorPosition({ x, y });
-    setMagnifierPosition({ x: percentX, y: percentY });
-    setMousePosition({ x: percentX, y: percentY });
-  };
-
-  const handleMouseEnter = () => {
-    setShowMagnifier(true);
-    setIsZoomed(true);
-  };
-  
-  const handleMouseLeave = () => {
-    setShowMagnifier(false);
-    setIsZoomed(false);
-    setHighResLoaded(false);
-    setMousePosition({ x: 50, y: 50 });
-  };
 
   // Double-tap to zoom on mobile
   const lastTapRef = useRef<number>(0);
@@ -226,17 +196,7 @@ export const ProductCard = ({
   };
 
   const imageUrl = product.node.images.edges[0]?.node.url;
-  const highResUrl = imageUrl ? getOptimizedImage(imageUrl, 'gallery') : '';
   const isAvailable = product.node.variants.edges[0]?.node.availableForSale !== false;
-
-  // Preload high-res image when magnifier is active
-  useEffect(() => {
-    if (showMagnifier && highResUrl && !highResLoaded) {
-      const img = new Image();
-      img.src = highResUrl;
-      img.onload = () => setHighResLoaded(true);
-    }
-  }, [showMagnifier, highResUrl, highResLoaded]);
 
   return (
     <motion.div
@@ -249,10 +209,7 @@ export const ProductCard = ({
       <Link to={`/product/${product.node.handle}`}>
         <div 
           ref={imageContainerRef}
-          className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card cursor-crosshair touch-none"
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card touch-none"
           onTouchStart={(e) => {
             handleDoubleTap(e);
             handleTouchStart(e);
@@ -298,36 +255,6 @@ export const ProductCard = ({
             <ProductPlaceholder aspectRatio="portrait" />
           ) : null}
 
-          {/* Magnifier Lens */}
-          {showMagnifier && isInView && imageUrl && isLoaded && (
-            <div
-              className="absolute pointer-events-none rounded-full border-4 border-white shadow-2xl overflow-hidden z-20"
-              style={{
-                width: MAGNIFIER_SIZE,
-                height: MAGNIFIER_SIZE,
-                left: cursorPosition.x - MAGNIFIER_SIZE / 2,
-                top: cursorPosition.y - MAGNIFIER_SIZE / 2,
-                backgroundImage: `url(${highResLoaded ? highResUrl : getOptimizedImage(imageUrl, 'card')})`,
-                backgroundPosition: `${magnifierPosition.x}% ${magnifierPosition.y}%`,
-                backgroundSize: `${ZOOM_LEVEL * 100}%`,
-                backgroundRepeat: 'no-repeat',
-              }}
-            >
-              {!highResLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-                  <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Zoom indicator */}
-          <div className={cn(
-            'absolute top-3 left-3 p-2 rounded-full bg-background/80 backdrop-blur-sm transition-opacity duration-300 pointer-events-none',
-            isZoomed || pinchScale > 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-          )}>
-            <ZoomIn className="h-3.5 w-3.5 text-foreground" />
-          </div>
 
           {/* Hover Actions */}
           <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
