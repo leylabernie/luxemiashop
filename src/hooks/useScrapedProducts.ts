@@ -23,6 +23,8 @@ export interface ScrapedProduct {
   tags: string[] | null;
   created_at: string;
   is_active: boolean;
+  shopify_product_id: string | null;
+  shopify_variant_ids: string[] | null;
 }
 
 // Generate better titles from the image URL
@@ -73,9 +75,34 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
     product.fabric
   );
   
+  // Use real Shopify variant IDs if available, otherwise generate fake ones
+  const hasRealShopifyIds = product.shopify_product_id && product.shopify_variant_ids && product.shopify_variant_ids.length > 0;
+  
+  const sizeOptions = ['S', 'M', 'L', 'XL', 'XXL', 'Custom'];
+  
+  const variants = hasRealShopifyIds 
+    ? product.shopify_variant_ids!.map((variantId, index) => ({
+        node: {
+          id: variantId,
+          title: sizeOptions[index] || `Size ${index + 1}`,
+          price: { amount: product.price_usd.toString(), currencyCode: 'USD' },
+          availableForSale: true,
+          selectedOptions: [{ name: 'Size', value: sizeOptions[index] || `Size ${index + 1}` }]
+        }
+      }))
+    : sizeOptions.slice(0, 4).map((size) => ({
+        node: {
+          id: `${product.id}-${size.toLowerCase()}`,
+          title: size,
+          price: { amount: product.price_usd.toString(), currencyCode: 'USD' },
+          availableForSale: true,
+          selectedOptions: [{ name: 'Size', value: size }]
+        }
+      }));
+  
   return {
     node: {
-      id: product.id,
+      id: product.shopify_product_id || product.id,
       title: product.title || betterTitle,
       description: product.description,
       handle: product.source_id,
@@ -112,14 +139,9 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
         })()
       },
       variants: {
-        edges: [
-          { node: { id: `${product.id}-s`, title: 'S', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'S' }] } },
-          { node: { id: `${product.id}-m`, title: 'M', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'M' }] } },
-          { node: { id: `${product.id}-l`, title: 'L', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'L' }] } },
-          { node: { id: `${product.id}-xl`, title: 'XL', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'XL' }] } }
-        ]
+        edges: variants
       },
-      options: [{ name: 'Size', values: ['S', 'M', 'L', 'XL'] }]
+      options: [{ name: 'Size', values: hasRealShopifyIds ? sizeOptions : ['S', 'M', 'L', 'XL'] }]
     }
   };
 };
