@@ -1,11 +1,37 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
+declare const EdgeRuntime: {
+  waitUntil(promise: Promise<unknown>): void;
+};
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
 const SHOPIFY_STORE_DOMAIN = "lovable-project-zlh0w.myshopify.com";
+
+// Helper to trigger tracking notification in background
+const triggerTrackingNotification = async (orderData: {
+  orderId: string;
+  orderName: string;
+  customerEmail: string;
+  orderTotal?: string;
+  currency?: string;
+}) => {
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
+    await supabase.functions.invoke("send-tracking-notification", {
+      body: orderData,
+    });
+    console.log(`Tracking notification triggered for order ${orderData.orderName}`);
+  } catch (error) {
+    console.error("Failed to trigger tracking notification:", error);
+  }
+};
 const SHOPIFY_API_VERSION = "2025-07";
 
 // Helper function to return a generic "not found" response with random delay
@@ -179,6 +205,17 @@ serve(async (req) => {
         tracking: f.trackingInfo?.[0] || null,
       })) || [],
     };
+
+    // Trigger tracking notification in background (don't await)
+    EdgeRuntime.waitUntil(
+      triggerTrackingNotification({
+        orderId: order.id,
+        orderName: order.name,
+        customerEmail: order.email,
+        orderTotal: order.totalPriceSet?.shopMoney?.amount,
+        currency: order.totalPriceSet?.shopMoney?.currencyCode,
+      })
+    );
 
     return new Response(
       JSON.stringify({ order: sanitizedOrder }),
