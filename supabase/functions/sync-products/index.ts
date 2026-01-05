@@ -16,6 +16,7 @@ interface ScrapedProduct {
   original_price_inr: number;
   original_price_usd: number;
   image_url: string;
+  image_urls: string[];
   fabric: string;
   color: string;
   work: string;
@@ -229,6 +230,17 @@ const parseProducts = (markdown: string, category: string, minPrice: number): Sc
     const imageHash = imageUrl.split('/').pop()?.replace(/\.[^.]+$/, '') || '';
     const sourceId = `${category}-${imageHash}`;
     
+    // Generate multiple image URLs by looking for numbered variants
+    // Many product images have variants like (1), (2), (3) etc
+    const imageUrls: string[] = [imageUrl];
+    const baseImageUrl = imageUrl.replace(/\(\d+\)\.(jpg|jpeg|png|webp)$/i, '');
+    const ext = imageUrl.match(/\.(jpg|jpeg|png|webp)$/i)?.[0] || '.jpg';
+    
+    // Add potential variant images (2), (3), (4)
+    for (let i = 2; i <= 4; i++) {
+      imageUrls.push(`${baseImageUrl}(${i})${ext}`);
+    }
+    
     products.push({
       source_id: sourceId,
       source_url: `https://www.wholesalesalwar.com/retail/${category}`,
@@ -240,6 +252,7 @@ const parseProducts = (markdown: string, category: string, minPrice: number): Sc
       original_price_inr: originalPrice,
       original_price_usd: convertPrice(originalPrice),
       image_url: imageUrl,
+      image_urls: imageUrls,
       fabric,
       color,
       work,
