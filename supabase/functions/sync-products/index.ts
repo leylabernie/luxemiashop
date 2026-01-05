@@ -137,18 +137,18 @@ const extractFromImageUrl = (imageUrl: string, category: string): { title: strin
   const filename = imageUrl.split('/').pop() || '';
   
   // Check if this product should be skipped (wrong category in URL)
-  // Use positive matching - only accept products that match the category
-  const categoryPatterns: Record<string, string[]> = {
-    sarees: ['Saree', 'Wedding-Saree', 'Designer-Saree'],
-    lehengas: ['Lehenga', 'Chaniya-Choli'],
-    suits: ['Suit', 'Salwar', 'Kameez', 'Anarkali', 'Palazzo', 'Plazzo', 'Sharara', 'Gown', 'Pakistani'],
-    menswear: ['Kurta', 'Pyjama', 'Sherwani', 'Indo-Western', 'Nehru', 'Jodhpuri']
+  // Use negative matching - skip products that clearly belong to other categories
+  const skipPatterns: Record<string, string[]> = {
+    sarees: ['Lehenga', 'Kurta', 'Pyjama', 'Sherwani'],
+    lehengas: ['Saree', 'Kurta', 'Pyjama', 'Sherwani'],
+    suits: ['Saree', 'Lehenga', 'Kurta', 'Pyjama', 'Sherwani'],
+    menswear: ['Saree', 'Lehenga', 'Anarkali', 'Gown', 'Sharara']
   };
   
-  const patterns = categoryPatterns[category] || [];
-  const matchesCategory = patterns.some(pattern => filename.includes(pattern));
+  const patterns = skipPatterns[category] || [];
+  const shouldSkip = patterns.some(pattern => filename.includes(pattern));
   
-  if (!matchesCategory) {
+  if (shouldSkip) {
     return { title: '', fabric: '', color: '', work: '', skip: true };
   }
   
