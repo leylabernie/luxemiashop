@@ -12,6 +12,7 @@ interface ScrapedProduct {
   description: string;
   price_usd: number;
   image_url: string;
+  image_urls: string[] | null;
   category: string;
   fabric: string | null;
   color: string | null;
@@ -46,6 +47,16 @@ async function createShopifyProduct(
   if (product.color) tags.push(product.color);
   if (product.work) tags.push(product.work);
 
+  // Use multiple images if available
+  const imageUrls = product.image_urls && product.image_urls.length > 0 
+    ? product.image_urls 
+    : [product.image_url];
+  
+  const images = imageUrls.map((url, index) => ({
+    src: url,
+    alt: index === 0 ? product.title : `${product.title} - View ${index + 1}`
+  }));
+
   const shopifyProduct = {
     product: {
       title: product.title,
@@ -54,7 +65,7 @@ async function createShopifyProduct(
       product_type: productType,
       tags: tags.join(', '),
       status: 'active',
-      images: [{ src: product.image_url, alt: product.title }],
+      images,
       options: [{ name: 'Size', values: ['S', 'M', 'L', 'XL', 'XXL', 'Custom'] }],
       variants: [
         { option1: 'S', price: product.price_usd.toFixed(2), sku: `${product.source_id}-S`, inventory_management: null },
