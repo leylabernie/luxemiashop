@@ -125,6 +125,78 @@ const generateBoutiqueTitle = (fabric: string, color: string, work: string, cate
   return `${cleanColor} ${cleanFabric} ${categoryName}`;
 };
 
+// Extract product info from image URL (more reliable than title for scraped content)
+const extractFromImageUrl = (imageUrl: string, category: string): { title: string; fabric: string; color: string; work: string; skip: boolean } => {
+  const filename = imageUrl.split('/').pop() || '';
+  
+  // Check if this product should be skipped (wrong category in URL)
+  const skipPatterns: Record<string, string[]> = {
+    sarees: ['Suit', 'Gown', 'Sharara', 'Plazzo', 'Anarkali', 'Kurta', 'Lehenga'],
+    lehengas: ['Saree', 'Suit', 'Kurta', 'Gown'],
+    suits: ['Saree', 'Lehenga', 'Kurta'],
+    menswear: ['Saree', 'Lehenga', 'Suit', 'Gown']
+  };
+  
+  const patternsToSkip = skipPatterns[category] || [];
+  const shouldSkip = patternsToSkip.some(pattern => filename.includes(pattern));
+  
+  if (shouldSkip) {
+    return { title: '', fabric: '', color: '', work: '', skip: true };
+  }
+  
+  // Extract color from filename
+  const colorPatterns = [
+    'Navy-Blue', 'Wine', 'Black', 'Pink', 'Red', 'Green', 'Blue', 'Purple', 
+    'Maroon', 'Beige', 'White', 'Gold', 'Peach', 'Rani', 'Cherry', 'Burgundy', 
+    'Violet', 'Sea-Green', 'Off-White', 'Sky-Blue', 'Dusty-Pink', 'Coral', 'Sage',
+    'Mint', 'Lavender', 'Teal', 'Orange', 'Cream', 'Rose', 'Ivory', 'Mustard',
+    'Champagne', 'Turquoise', 'Emerald', 'Light-Blue', 'Multi-Color', 'Multi'
+  ];
+  
+  let color = 'Multi';
+  for (const c of colorPatterns) {
+    if (filename.includes(c)) {
+      color = c.replace(/-/g, ' ');
+      break;
+    }
+  }
+  
+  // Extract fabric from filename
+  const fabricPatterns = [
+    'Net', 'Silk', 'Georgette', 'Chiffon', 'Cotton', 'Velvet', 'Satin', 
+    'Organza', 'Crepe', 'Jacquard', 'Chinnon', 'Viscose', 'Vichitra',
+    'Khadi', 'Tissue', 'Banarasi', 'Kanjivaram'
+  ];
+  
+  let fabric = 'Premium Silk';
+  for (const f of fabricPatterns) {
+    if (filename.includes(f)) {
+      fabric = f;
+      break;
+    }
+  }
+  
+  // Extract work type from filename
+  const workPatterns = [
+    'Zari', 'Sequins', 'Embroidery', 'Heavy-Work', 'Thread', 'Kundan', 
+    'Zardozi', 'Resham', 'Weaving', 'Woven', 'Mirror', 'Stone', 
+    'Digital-Print', 'Brocade', 'Print'
+  ];
+  
+  let work = 'Handwork';
+  for (const w of workPatterns) {
+    if (filename.includes(w)) {
+      work = w.replace(/-/g, ' ');
+      break;
+    }
+  }
+  
+  // Generate boutique title from extracted info
+  const title = generateBoutiqueTitle(fabric, color, work, category);
+  
+  return { title, fabric, color, work, skip: false };
+};
+
 // Parse product from scraped markdown
 const parseProducts = (markdown: string, category: string, minPrice: number): ScrapedProduct[] => {
   const products: ScrapedProduct[] = [];
@@ -142,23 +214,16 @@ const parseProducts = (markdown: string, category: string, minPrice: number): Sc
     // Skip products below min price
     if (currentPrice < minPrice) continue;
     
-    // Extract details from title
-    const title = titleRaw.trim();
+    // Extract details from image URL (more reliable)
+    const extracted = extractFromImageUrl(imageUrl, category);
     
-    // Parse fabric, color, work from title - filter out brand names
-    const fabricMatch = title.match(/(Net|Silk|Georgette|Chiffon|Cotton|Velvet|Satin|Organza|Crepe|Jacquard|Chinnon|Viscose|Vichitra|Butterfly Net|Gadhwal Silk|Khadi Cotton)/i);
-    const colorMatch = title.match(/(Navy Blue|Wine|Black|Pink|Red|Green|Blue|Purple|Maroon|Beige|White|Gold|Peach|Rani|Rama|Cherry|Burgundy|Violet|Sea Green|Off White|Sky Blue|Dusty Pink|Coral|Sage|Mint|Lavender|Teal|Orange|Cream|Rose|Ivory|Mustard|Champagne|Turquoise|Emerald|Royal Blue)/i);
-    const workMatch = title.match(/(Zari|Sequins?|Embroidery|Heavy Work|Thread|Kundan|Zardozi|Resham|Weaving|Woven|Mirror|Stone|Digital Print|Brocade)/gi);
+    // Skip products that don't match the category
+    if (extracted.skip) {
+      console.log(`Skipping wrong category product: ${imageUrl.split('/').pop()}`);
+      continue;
+    }
     
-    // Clean fabric - remove any brand names
-    let fabric = fabricMatch ? fabricMatch[1] : 'Premium Fabric';
-    fabric = cleanTitle(fabric);
-    
-    const color = colorMatch ? colorMatch[1] : 'Multi';
-    const work = workMatch ? cleanTitle(workMatch.join(' & ')) : 'Handwork';
-    
-    // Generate boutique title - NO brand names
-    const boutiqueTitle = generateBoutiqueTitle(fabric, color, work, category);
+    const { title: boutiqueTitle, fabric, color, work } = extracted;
     
     // Generate source ID from image URL (unique per product)
     const imageHash = imageUrl.split('/').pop()?.replace(/\.[^.]+$/, '') || '';
