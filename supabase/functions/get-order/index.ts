@@ -8,6 +8,19 @@ const corsHeaders = {
 const SHOPIFY_STORE_DOMAIN = "lovable-project-zlh0w.myshopify.com";
 const SHOPIFY_API_VERSION = "2025-07";
 
+// Helper function to return a generic "not found" response with random delay
+// This prevents timing attacks that could reveal valid order numbers
+const notFoundResponse = async () => {
+  // Add random delay between 50-150ms to prevent timing analysis
+  const delay = Math.floor(Math.random() * 100) + 50;
+  await new Promise(resolve => setTimeout(resolve, delay));
+  
+  return new Response(
+    JSON.stringify({ error: "Order not found" }),
+    { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+  );
+};
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -26,8 +39,9 @@ serve(async (req) => {
 
     const accessToken = Deno.env.get("SHOPIFY_ACCESS_TOKEN");
     if (!accessToken) {
+      console.error("SHOPIFY_ACCESS_TOKEN not configured");
       return new Response(
-        JSON.stringify({ error: "Shopify access token not configured" }),
+        JSON.stringify({ error: "Service temporarily unavailable" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -109,7 +123,7 @@ serve(async (req) => {
       const errorText = await response.text();
       console.error("Shopify API error:", errorText);
       return new Response(
-        JSON.stringify({ error: "Failed to fetch order from Shopify" }),
+        JSON.stringify({ error: "Failed to fetch order" }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -126,21 +140,18 @@ serve(async (req) => {
 
     const orders = data.data?.orders?.edges || [];
     
+    // Use same response for both "order not found" and "email mismatch"
+    // to prevent enumeration attacks
     if (orders.length === 0) {
-      return new Response(
-        JSON.stringify({ error: "Order not found" }),
-        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      return await notFoundResponse();
     }
 
     const order = orders[0].node;
     
     // Verify email matches (case-insensitive)
+    // Use same response as "order not found" to prevent email enumeration
     if (order.email?.toLowerCase() !== email.toLowerCase()) {
-      return new Response(
-        JSON.stringify({ error: "Order not found" }),
-        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      return await notFoundResponse();
     }
 
     // Return sanitized order data
