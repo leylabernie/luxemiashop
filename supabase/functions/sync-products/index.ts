@@ -82,6 +82,49 @@ const generateDescription = (title: string, fabric: string, color: string, work:
   return categoryDescriptions[Math.floor(Math.random() * categoryDescriptions.length)];
 };
 
+// Brand names to filter out
+const BRAND_NAMES = [
+  'jimmy choo', 'alizeh', 'aarohi', 'suhani', 'mariyam', 'kanchan', 
+  'heeraman', 'tyohaar', 'haseena', 'kavita', 'gobuni', 'sakshi',
+  'shalini', 'verona', 'fendy', 'giraffe', 'shruti'
+];
+
+// Clean title by removing brand names and codes
+const cleanTitle = (title: string): string => {
+  let cleaned = title;
+  BRAND_NAMES.forEach(brand => {
+    const regex = new RegExp(brand, 'gi');
+    cleaned = cleaned.replace(regex, '');
+  });
+  // Remove product codes, volume numbers, etc.
+  cleaned = cleaned.replace(/vol\.?\s*\d+/gi, '');
+  cleaned = cleaned.replace(/\d{4,}/g, '');
+  cleaned = cleaned.replace(/\([^)]*\)/g, '');
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  return cleaned;
+};
+
+// Generate boutique-style title
+const generateBoutiqueTitle = (fabric: string, color: string, work: string, category: string): string => {
+  const cleanFabric = cleanTitle(fabric);
+  const cleanColor = cleanTitle(color);
+  
+  const categoryNames: Record<string, string> = {
+    lehengas: 'Bridal Lehenga',
+    sarees: 'Designer Saree', 
+    suits: 'Embroidered Ensemble',
+    menswear: 'Kurta Set'
+  };
+  
+  const categoryName = categoryNames[category] || 'Designer Piece';
+  
+  // Create elegant title without brand names
+  if (work && work !== 'Handwork') {
+    return `${cleanColor} ${cleanFabric} ${work} ${categoryName}`;
+  }
+  return `${cleanColor} ${cleanFabric} ${categoryName}`;
+};
+
 // Parse product from scraped markdown
 const parseProducts = (markdown: string, category: string, minPrice: number): ScrapedProduct[] => {
   const products: ScrapedProduct[] = [];
@@ -102,17 +145,20 @@ const parseProducts = (markdown: string, category: string, minPrice: number): Sc
     // Extract details from title
     const title = titleRaw.trim();
     
-    // Parse fabric, color, work from title
-    const fabricMatch = title.match(/(Net|Silk|Georgette|Chiffon|Cotton|Velvet|Satin|Organza|Crepe|Jacquard|Chinnon|Viscose|Jimmy Choo|Vichitra)/i);
-    const colorMatch = title.match(/(Navy Blue|Wine|Black|Pink|Red|Green|Blue|Purple|Maroon|Beige|White|Gold|Peach|Rani|Rama|Cherry|Burgundy|Violet|Sea Green|Off White|Sky Blue|Dusty Pink|Coral|Sage)/i);
-    const workMatch = title.match(/(Zari|Sequins|Embroidery|Heavy Work|Thread|Kundan|Zardozi|Resham)/gi);
+    // Parse fabric, color, work from title - filter out brand names
+    const fabricMatch = title.match(/(Net|Silk|Georgette|Chiffon|Cotton|Velvet|Satin|Organza|Crepe|Jacquard|Chinnon|Viscose|Vichitra|Butterfly Net|Gadhwal Silk|Khadi Cotton)/i);
+    const colorMatch = title.match(/(Navy Blue|Wine|Black|Pink|Red|Green|Blue|Purple|Maroon|Beige|White|Gold|Peach|Rani|Rama|Cherry|Burgundy|Violet|Sea Green|Off White|Sky Blue|Dusty Pink|Coral|Sage|Mint|Lavender|Teal|Orange|Cream|Rose|Ivory|Mustard|Champagne|Turquoise|Emerald|Royal Blue)/i);
+    const workMatch = title.match(/(Zari|Sequins?|Embroidery|Heavy Work|Thread|Kundan|Zardozi|Resham|Weaving|Woven|Mirror|Stone|Digital Print|Brocade)/gi);
     
-    const fabric = fabricMatch ? fabricMatch[1] : 'Premium Fabric';
+    // Clean fabric - remove any brand names
+    let fabric = fabricMatch ? fabricMatch[1] : 'Premium Fabric';
+    fabric = cleanTitle(fabric);
+    
     const color = colorMatch ? colorMatch[1] : 'Multi';
-    const work = workMatch ? workMatch.join(' & ') : 'Handwork';
+    const work = workMatch ? cleanTitle(workMatch.join(' & ')) : 'Handwork';
     
-    // Create boutique title
-    const boutiqueTitle = `${color} ${fabric} ${category === 'lehengas' ? 'Bridal Lehenga' : category === 'sarees' ? 'Designer Saree' : category === 'suits' ? 'Embroidered Suit' : 'Kurta Set'}`;
+    // Generate boutique title - NO brand names
+    const boutiqueTitle = generateBoutiqueTitle(fabric, color, work, category);
     
     // Generate source ID from image URL (unique per product)
     const imageHash = imageUrl.split('/').pop()?.replace(/\.[^.]+$/, '') || '';
