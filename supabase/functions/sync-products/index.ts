@@ -30,25 +30,31 @@ const CATEGORY_URLS = [
     category: 'lehengas', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/bridal-lehenga-choli',
     minPrice: 4000,
-    pages: 3
+    pages: 4
   },
   { 
     category: 'suits', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/salwar-kameez',
-    minPrice: 3000,
-    pages: 3
+    minPrice: 2500,
+    pages: 4
   },
   { 
     category: 'sarees', 
-    baseUrl: 'https://www.wholesalesalwar.com/retail/saree',
-    minPrice: 1200,
+    baseUrl: 'https://www.wholesalesalwar.com/retail/designer-saree',
+    minPrice: 1000,
+    pages: 5
+  },
+  { 
+    category: 'sarees', 
+    baseUrl: 'https://www.wholesalesalwar.com/retail/wedding-saree',
+    minPrice: 1500,
     pages: 3
   },
   { 
     category: 'menswear', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/mens-kurta-pyjama',
-    minPrice: 1200,
-    pages: 3
+    minPrice: 1000,
+    pages: 4
   }
 ];
 
@@ -131,18 +137,18 @@ const extractFromImageUrl = (imageUrl: string, category: string): { title: strin
   const filename = imageUrl.split('/').pop() || '';
   
   // Check if this product should be skipped (wrong category in URL)
-  // Strictly filter products that don't match their category
-  const skipPatterns: Record<string, string[]> = {
-    sarees: ['Lehenga', 'Suit', 'Kurta', 'Gown', 'Plazzo', 'Palazzo', 'Sharara', 'Anarkali', 'Readymade'],
-    lehengas: ['Saree', 'Suit', 'Kurta', 'Gown', 'Plazzo', 'Palazzo', 'Sharara'],
-    suits: ['Saree', 'Lehenga'],
-    menswear: ['Saree', 'Lehenga', 'Gown', 'Sharara']
+  // Use positive matching - only accept products that match the category
+  const categoryPatterns: Record<string, string[]> = {
+    sarees: ['Saree', 'Wedding-Saree', 'Designer-Saree'],
+    lehengas: ['Lehenga', 'Chaniya-Choli'],
+    suits: ['Suit', 'Salwar', 'Kameez', 'Anarkali', 'Palazzo', 'Plazzo', 'Sharara', 'Gown', 'Pakistani'],
+    menswear: ['Kurta', 'Pyjama', 'Sherwani', 'Indo-Western', 'Nehru', 'Jodhpuri']
   };
   
-  const patternsToSkip = skipPatterns[category] || [];
-  const shouldSkip = patternsToSkip.some(pattern => filename.includes(pattern));
+  const patterns = categoryPatterns[category] || [];
+  const matchesCategory = patterns.some(pattern => filename.includes(pattern));
   
-  if (shouldSkip) {
+  if (!matchesCategory) {
     return { title: '', fabric: '', color: '', work: '', skip: true };
   }
   
