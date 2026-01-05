@@ -7,11 +7,8 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
  */
 const isExternalImage = (url: string): boolean => {
   if (!url) return false;
-  // Check if it's from external domains that may block hotlinking
-  return url.includes('fashidwholesale.in') || 
-         url.includes('cdn.shopify.com') === false && 
-         url.startsWith('http') && 
-         !url.includes('supabase');
+  // Only proxy images from fashidwholesale.in
+  return url.includes('fashidwholesale.in');
 };
 
 /**
