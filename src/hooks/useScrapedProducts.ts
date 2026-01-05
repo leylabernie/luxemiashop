@@ -76,8 +76,8 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
   return {
     node: {
       id: product.id,
-      title: betterTitle,
-      description: product.description || `Exquisite ${betterTitle}. ${product.fabric ? `Crafted from premium ${product.fabric}.` : ''} ${product.work ? `Features beautiful ${product.work}.` : ''} Perfect for ${product.occasion || 'special occasions'}.`,
+      title: product.title || betterTitle,
+      description: product.description,
       handle: product.source_id,
       productType: product.category === 'lehengas' ? 'Bridal Lehengas' : 
                    product.category === 'sarees' ? 'Designer Sarees' :
