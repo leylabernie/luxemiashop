@@ -11,6 +11,7 @@ import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import { useScrapedProductByHandle } from '@/hooks/useScrapedProducts';
+import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
@@ -19,14 +20,15 @@ import { trackViewItem } from '@/hooks/useAnalytics';
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
-  const { product: scrapedProduct, isLoading: scrapedLoading, error: scrapedError } = useScrapedProductByHandle(handle);
+  const { product: scrapedProduct, isLoading: scrapedLoading } = useScrapedProductByHandle(handle);
+  const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
-  // Fallback to local products if scraped product not found
+  // Fallback chain: scraped products -> Shopify API -> local products
   const localProduct = handle ? getLocalProductByHandle(handle)?.node : null;
-  const product = scrapedProduct || localProduct;
-  const isLoading = scrapedLoading;
-  const error = scrapedError && !localProduct ? scrapedError : null;
+  const product = scrapedProduct || shopifyProduct || localProduct;
+  const isLoading = scrapedLoading || (shopifyLoading && !scrapedProduct);
+  const error = !product && !isLoading ? 'Product not found' : null;
 
   // Track recently viewed and analytics
   useEffect(() => {
