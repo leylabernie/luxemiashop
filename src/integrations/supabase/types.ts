@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      order_tracking_notifications: {
+        Row: {
+          customer_email: string
+          id: string
+          notified_at: string
+          order_id: string
+          order_name: string
+        }
+        Insert: {
+          customer_email: string
+          id?: string
+          notified_at?: string
+          order_id: string
+          order_name: string
+        }
+        Update: {
+          customer_email?: string
+          id?: string
+          notified_at?: string
+          order_id?: string
+          order_name?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

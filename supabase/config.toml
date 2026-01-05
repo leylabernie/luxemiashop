@@ -6,6 +6,9 @@ verify_jwt = true
 [functions.order-webhook]
 verify_jwt = false
 
+[functions.send-tracking-notification]
+verify_jwt = false
+
 [functions.sync-products]
 verify_jwt = false
 
