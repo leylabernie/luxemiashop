@@ -120,7 +120,7 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
     
-    const baseUrl = 'https://luxemia.com'
+    const baseUrl = 'https://luxemia.shop'
     const today = formatDate(new Date())
 
     // Fetch scraped products from database

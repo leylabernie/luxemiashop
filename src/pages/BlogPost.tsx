@@ -25,7 +25,7 @@ const BlogPost = () => {
     "@type": "Article",
     "headline": post.title,
     "description": post.excerpt,
-    "image": `https://luxemia.com${post.image}`,
+    "image": `https://luxemia.shop${post.image}`,
     "datePublished": post.publishedAt,
     "dateModified": post.updatedAt,
     "author": {
@@ -37,12 +37,12 @@ const BlogPost = () => {
       "name": "LuxeMia",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://luxemia.com/logo.png"
+        "url": "https://luxemia.shop/logo.png"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://luxemia.com/blog/${post.slug}`
+      "@id": `https://luxemia.shop/blog/${post.slug}`
     },
     "keywords": post.tags.join(", ")
   };
@@ -55,24 +55,24 @@ const BlogPost = () => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://luxemia.com"
+        "item": "https://luxemia.shop"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Blog",
-        "item": "https://luxemia.com/blog"
+        "item": "https://luxemia.shop/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": post.title,
-        "item": `https://luxemia.com/blog/${post.slug}`
+        "item": `https://luxemia.shop/blog/${post.slug}`
       }
     ]
   };
 
-  const shareUrl = `https://luxemia.com/blog/${post.slug}`;
+  const shareUrl = `https://luxemia.shop/blog/${post.slug}`;
 
   return (
     <div className="min-h-screen bg-background">

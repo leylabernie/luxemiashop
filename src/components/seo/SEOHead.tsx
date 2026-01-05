@@ -29,7 +29,7 @@ const SEOHead = ({
   breadcrumbs,
   noIndex = false,
 }: SEOHeadProps) => {
-  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.com';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.shop';
   const currentUrl = typeof window !== 'undefined' ? window.location.href : siteUrl;
   const canonicalUrl = canonical || currentUrl;
   
