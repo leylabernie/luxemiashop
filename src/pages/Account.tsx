@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Mail, Phone, Package, Heart, Settings, LogOut, Search } from 'lucide-react';
+import { User, Mail, Phone, Package, Heart, Settings, LogOut, Search, Shield } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -14,13 +14,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
+import { useUserRole } from '@/hooks/useUserRole';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import OrderTracking from '@/components/account/OrderTracking';
+import AdminTools from '@/components/account/AdminTools';
 
 const Account = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading, signOut } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useProfile();
+  const { isAdmin, loading: roleLoading } = useUserRole();
   const wishlistItems = useWishlistStore(state => state.items);
 
   const [fullName, setFullName] = useState('');
@@ -62,7 +65,7 @@ const Account = () => {
     navigate('/');
   };
 
-  if (authLoading || profileLoading) {
+  if (authLoading || profileLoading || roleLoading) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -94,7 +97,7 @@ const Account = () => {
             </div>
 
             <Tabs defaultValue="profile" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-3 bg-card">
+              <TabsList className={`grid w-full bg-card ${isAdmin ? 'grid-cols-4' : 'grid-cols-3'}`}>
                 <TabsTrigger value="profile" className="gap-2">
                   <User className="w-4 h-4" />
                   <span className="hidden sm:inline">Profile</span>
@@ -107,6 +110,12 @@ const Account = () => {
                   <Settings className="w-4 h-4" />
                   <span className="hidden sm:inline">Preferences</span>
                 </TabsTrigger>
+                {isAdmin && (
+                  <TabsTrigger value="admin" className="gap-2">
+                    <Shield className="w-4 h-4" />
+                    <span className="hidden sm:inline">Admin</span>
+                  </TabsTrigger>
+                )}
               </TabsList>
 
               {/* Profile Tab */}
@@ -309,6 +318,13 @@ const Account = () => {
                   </CardContent>
                 </Card>
               </TabsContent>
+
+              {/* Admin Tab - Only visible to admins */}
+              {isAdmin && (
+                <TabsContent value="admin">
+                  <AdminTools />
+                </TabsContent>
+              )}
             </Tabs>
           </motion.div>
         </div>
