@@ -2,258 +2,641 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   
-  <!-- Main Pages -->
+  <!-- ===== MAIN PAGES ===== -->
   <url>
-    <loc>https://luxemia.shop/</loc>
+    <loc>https://www.luxemia.shop/</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/collections</loc>
+    <loc>https://www.luxemia.shop/collections</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/lookbook</loc>
+    <loc>https://www.luxemia.shop/lookbook</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/brand-story</loc>
+    <loc>https://www.luxemia.shop/brand-story</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
-  <!-- Shop Categories -->
+  <!-- ===== SHOP CATEGORIES ===== -->
   <url>
-    <loc>https://luxemia.shop/lehengas</loc>
+    <loc>https://www.luxemia.shop/lehengas</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/sarees</loc>
+    <loc>https://www.luxemia.shop/sarees</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/suits</loc>
+    <loc>https://www.luxemia.shop/suits</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/menswear</loc>
+    <loc>https://www.luxemia.shop/menswear</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/new-arrivals</loc>
+    <loc>https://www.luxemia.shop/jewelry</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- ===== OCCASION COLLECTIONS ===== -->
+  <url>
+    <loc>https://www.luxemia.shop/collections/wedding-sarees</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/collections/bridal-lehengas</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/collections/reception-outfits</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/collections/festive-wear</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
-  <!-- Occasion Collections -->
+  <!-- ===== ABOUT & INFO PAGES ===== -->
   <url>
-    <loc>https://luxemia.shop/collections/wedding-sarees</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/collections/bridal-lehengas</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/collections/reception-outfits</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/collections/festive-wear</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- About & Info Pages -->
-  <url>
-    <loc>https://luxemia.shop/artisans</loc>
+    <loc>https://www.luxemia.shop/artisans</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/sustainability</loc>
+    <loc>https://www.luxemia.shop/sustainability</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/virtual-tryon</loc>
+    <loc>https://www.luxemia.shop/virtual-tryon</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
-  <!-- Customer Service -->
+  <!-- ===== CUSTOMER SERVICE ===== -->
   <url>
-    <loc>https://luxemia.shop/contact</loc>
+    <loc>https://www.luxemia.shop/contact</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/faq</loc>
+    <loc>https://www.luxemia.shop/faq</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/shipping</loc>
+    <loc>https://www.luxemia.shop/shipping</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/returns</loc>
+    <loc>https://www.luxemia.shop/returns</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/size-guide</loc>
+    <loc>https://www.luxemia.shop/size-guide</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/care-guide</loc>
+    <loc>https://www.luxemia.shop/care-guide</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   
-  <!-- Legal -->
+  <!-- ===== LEGAL ===== -->
   <url>
-    <loc>https://luxemia.shop/privacy</loc>
+    <loc>https://www.luxemia.shop/privacy</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/terms</loc>
+    <loc>https://www.luxemia.shop/terms</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  
-  <!-- Sitemap -->
   <url>
-    <loc>https://luxemia.shop/sitemap</loc>
+    <loc>https://www.luxemia.shop/sitemap</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   
-  <!-- Product Pages - Bridal Lehengas -->
+  <!-- ===== BRIDAL LEHENGAS ===== -->
   <url>
-    <loc>https://luxemia.shop/product/ethereal-pastel-pink-bridal-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/ethereal-pastel-pink-bridal-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg</image:loc>
+      <image:title>Ethereal Pastel Pink Bridal Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/royal-rani-pink-silk-bridal-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/royal-rani-pink-silk-bridal-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg</image:loc>
+      <image:title>Royal Rani Pink Silk Bridal Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/classic-bridal-red-silk-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/classic-bridal-red-silk-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59645/Red-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-B(1).jpg</image:loc>
+      <image:title>Classic Bridal Red Silk Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/ivory-dreamscape-net-bridal-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/ivory-dreamscape-net-bridal-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59644/White-Heavy-Net-Bridal-Wear-Sequins-Embroidery-Work-Bridal-Lehenga-Choli-2941-2941(1).jpg</image:loc>
+      <image:title>Ivory Dreamscape Net Bridal Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/lavender-mist-bridal-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/lavender-mist-bridal-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59570/Lavender-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10242(1).jpg</image:loc>
+      <image:title>Lavender Mist Bridal Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/metallic-silver-celebration-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/metallic-silver-celebration-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  
-  <!-- Product Pages - Wedding Lehengas -->
-  <url>
-    <loc>https://luxemia.shop/product/burgundy-velvet-wedding-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/wine-romance-net-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/emerald-enchantment-velvet-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/coral-sunset-georgette-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/champagne-elegance-net-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Product Pages - Party Lehengas -->
-  <url>
-    <loc>https://luxemia.shop/product/hot-pink-party-wear-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/purple-shimmer-party-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/teal-twilight-cocktail-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/rose-gold-sequin-party-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/midnight-navy-reception-lehenga</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59570/Metalic-Silver-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10245(1).jpg</image:loc>
+      <image:title>Metallic Silver Celebration Lehenga</image:title>
+    </image:image>
   </url>
   
-  <!-- Product Pages - Festive Lehengas -->
+  <!-- ===== WEDDING LEHENGAS ===== -->
   <url>
-    <loc>https://luxemia.shop/product/marigold-haldi-ceremony-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/burgundy-velvet-wedding-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg</image:loc>
+      <image:title>Burgundy Velvet Wedding Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/vibrant-green-mehendi-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/wine-romance-net-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Wine-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-B(1).jpg</image:loc>
+      <image:title>Wine Romance Net Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/sangeet-night-pink-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/emerald-forest-wedding-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg</image:loc>
+      <image:title>Emerald Forest Wedding Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/navratri-special-orange-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/royal-blue-celebration-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Blue-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-D(1).jpg</image:loc>
+      <image:title>Royal Blue Celebration Lehenga</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/diwali-gold-festive-lehenga</loc>
+    <loc>https://www.luxemia.shop/product/coral-sunset-net-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Coral-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-E(1).jpg</image:loc>
+      <image:title>Coral Sunset Net Lehenga</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/powder-pink-wedding-lehenga</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Pink-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-F(1).jpg</image:loc>
+      <image:title>Powder Pink Wedding Lehenga</image:title>
+    </image:image>
   </url>
   
-  <!-- Add more product URLs as inventory grows -->
+  <!-- ===== SAREES ===== -->
+  <url>
+    <loc>https://www.luxemia.shop/product/silk-yellow-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59800/Yellow-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-D(1).jpg</image:loc>
+      <image:title>Silk Yellow Occasional Wear Embroidery Saree</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/silk-light-pink-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59800/Light-Pink-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-C(1).jpg</image:loc>
+      <image:title>Silk Light Pink Occasional Wear Embroidery Saree</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/silk-green-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59800/Green-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-B(1).jpg</image:loc>
+      <image:title>Silk Green Occasional Wear Embroidery Saree</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/silk-sea-green-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59800/Sea-Green-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-A(1).jpg</image:loc>
+      <image:title>Silk Sea Green Occasional Wear Embroidery Saree</image:title>
+    </image:image>
+  </url>
+  
+  <!-- ===== MENSWEAR - GROOM SHERWANIS ===== -->
+  <url>
+    <loc>https://www.luxemia.shop/product/grey-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Grey-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4032(1).jpg</image:loc>
+      <image:title>Grey Art Silk Groom Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/purple-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Purple-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4031(1).jpg</image:loc>
+      <image:title>Purple Art Silk Groom Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/off-white-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Off-White-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4030(1).jpg</image:loc>
+      <image:title>Off White Art Silk Groom Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/light-pink-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Light-Pink-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4029(1).jpg</image:loc>
+      <image:title>Light Pink Art Silk Groom Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/white-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/White-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4028(1).jpg</image:loc>
+      <image:title>White Art Silk Groom Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/black-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Black-Banarasi-Jacquard-Wedding-Wear-Neck-Work-Readymade-Groom-Sherwani-4026(1).jpg</image:loc>
+      <image:title>Black Banarasi Jacquard Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/blue-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Blue-Banarasi-Jacquard-Wedding-Wear-Neck-Work-Readymade-Groom-Sherwani-4025(1).jpg</image:loc>
+      <image:title>Blue Banarasi Jacquard Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/maroon-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Maroon-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4024(1).jpg</image:loc>
+      <image:title>Maroon Banarasi Jacquard Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/mustard-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Mustard-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4023(1).jpg</image:loc>
+      <image:title>Mustard Banarasi Jacquard Sherwani</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/peach-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Peach-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4022(1).jpg</image:loc>
+      <image:title>Peach Banarasi Jacquard Sherwani</image:title>
+    </image:image>
+  </url>
+  
+  <!-- ===== MENSWEAR - KURTA PAJAMAS ===== -->
+  <url>
+    <loc>https://www.luxemia.shop/product/baby-pink-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59783/Baby-Pink-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1223(1).jpg</image:loc>
+      <image:title>Baby Pink Cotton Kurta Pajama Set</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/blue-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59783/Blue-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1222(1).jpg</image:loc>
+      <image:title>Blue Cotton Kurta Pajama Set</image:title>
+    </image:image>
+  </url>
+  
+  <!-- ===== SUITS - ANARKALI ===== -->
+  <url>
+    <loc>https://www.luxemia.shop/product/teal-green-chinnon-silk-sharara-set</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/rust-orange-chinnon-silk-sharara-set</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/black-chinnon-silk-sharara-set</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/red-silk-eid-anarkali-suit</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59797/RED-Silk-Eid-Wear-Embroidery-Work-Readymade-Anarkali-Suit-5554-681-B(1).jpg</image:loc>
+      <image:title>Red Silk Eid Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/green-silk-eid-anarkali-suit</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59797/Green-Silk-Eid-Wear-Embroidery-Work-Readymade-Anarkali-Suit-5554-681-A(1).jpg</image:loc>
+      <image:title>Green Silk Eid Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/dusty-rose-silk-party-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59793/Dusty-Rose-Silk-Party-Wear-Sequins-Work--Readymade-Anarkali-Suit-5964(1).jpg</image:loc>
+      <image:title>Dusty Rose Silk Party Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/baby-pink-roman-silk-festival-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59770/Baby-Pink-Roman-Silk-Festival-Wear-Sequins-Work-Readymade-Anarkali-Suit-Shalini-Vol-3-5546-3800-A(1).jpg</image:loc>
+      <image:title>Baby Pink Roman Silk Festival Anarkali</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/red-chanderi-cotton-casual-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59774/Red-Chanderi-Cotton-Casual-Wear-Border-Work-Readymade-Anarkali-Suit-DN-539-B(1).jpg</image:loc>
+      <image:title>Red Chanderi Cotton Casual Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/champagne-beige-chanderi-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59774/Champagne-Beige-Chanderi-Cotton-Casual-Wear-Border-Work-Readymade-Anarkali-Suit-DN-539-A(1).jpg</image:loc>
+      <image:title>Champagne Beige Chanderi Cotton Anarkali</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/peach-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59743/Peach-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-D(1).jpg</image:loc>
+      <image:title>Peach Fendy Silk Casual Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/grey-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59743/Grey-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-C(1).jpg</image:loc>
+      <image:title>Grey Fendy Silk Casual Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/green-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59743/Green-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-B(1).jpg</image:loc>
+      <image:title>Green Fendy Silk Casual Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/dusty-pink-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59743/Dusty-Pink-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-A(1).jpg</image:loc>
+      <image:title>Dusty Pink Fendy Silk Casual Anarkali Suit</image:title>
+    </image:image>
+  </url>
+  
+  <!-- ===== JEWELRY ===== -->
+  <url>
+    <loc>https://www.luxemia.shop/product/blue-diamond-work-party-earrings</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59481/Blue--Party-Wear-Diamond-Work-Pretty-Earrings-FNKDE126BLU(1).jpg</image:loc>
+      <image:title>Blue Diamond Work Party Earrings</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/blue-kundan-royal-necklace-set</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59473/Blue--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN110BLU(1).jpg</image:loc>
+      <image:title>Blue Kundan Royal Necklace Set</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/dark-green-kundan-beauty-necklace-set</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59472/Dark-Green--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103GRN(1).jpg</image:loc>
+      <image:title>Dark Green Kundan Beauty Necklace Set</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/maroon-kundan-ethnic-necklace-set</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59471/Maroon--Wedding-Wear-Kundan-Ethnic-Design-Necklace-Set-FNKN102MRN(1).jpg</image:loc>
+      <image:title>Maroon Kundan Ethnic Necklace Set</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/maroon-kundan-beauty-necklace-set</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59472/Maroon--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103MRN(1).jpg</image:loc>
+      <image:title>Maroon Kundan Beauty Necklace Set</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.luxemia.shop/product/green-kundan-festival-earrings</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59482/Green--Festival-Wear-Kundan-Shining-Earrings-FNKDE142GRN(1).jpg</image:loc>
+      <image:title>Green Kundan Festival Earrings</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Note: For complete sitemap with all 232+ products, use the dynamic sitemap at -->
+  <!-- https://mxrvlizhrofsroydenti.supabase.co/functions/v1/generate-sitemap -->
   
 </urlset>

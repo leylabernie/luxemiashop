@@ -250,17 +250,33 @@ const Suits = () => {
     }
   ];
 
+  // Generate collection schema items from products
+  const collectionItems = filteredProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Anarkali Suits & Salwar Kameez Online | Designer Suits - LuxeMia"
         description="Shop elegant Anarkali suits, Sharara sets, and designer salwar kameez at LuxeMia. Premium fabrics with intricate embroidery. Custom sizing available. Worldwide delivery."
+        type="collection"
         image="/og/og-suits.jpg"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
           { name: 'Suits', url: '/suits' },
         ]}
+        collection={{
+          name: 'Suits & Kurtas Collection',
+          description: 'Elegant Anarkali suits, Sharara sets, and designer salwar kameez.',
+          items: collectionItems,
+        }}
         faqs={suitFaqs}
       />
       <Header />

@@ -5,12 +5,21 @@ interface FAQItem {
   answer: string;
 }
 
+interface CollectionItem {
+  id: string;
+  name: string;
+  url: string;
+  image: string;
+  price: string;
+  currency: string;
+}
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
   canonical?: string;
   image?: string;
-  type?: 'website' | 'product' | 'article';
+  type?: 'website' | 'product' | 'article' | 'collection';
   product?: {
     name: string;
     price: string;
@@ -25,6 +34,11 @@ interface SEOHeadProps {
     color?: string;
     material?: string;
   };
+  collection?: {
+    name: string;
+    description: string;
+    items: CollectionItem[];
+  };
   breadcrumbs?: Array<{ name: string; url: string }>;
   faqs?: FAQItem[];
   noIndex?: boolean;
@@ -37,6 +51,7 @@ const SEOHead = ({
   image = 'https://lovable.dev/opengraph-image-p98pqg.png',
   type = 'website',
   product,
+  collection,
   breadcrumbs,
   faqs,
   noIndex = false,
@@ -214,6 +229,34 @@ const SEOHead = ({
       }
     : null;
 
+  // ItemList Schema for collection/category pages (Google Rich Results)
+  const collectionSchema = collection && collection.items.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: collection.name,
+        description: collection.description,
+        numberOfItems: collection.items.length,
+        itemListElement: collection.items.slice(0, 30).map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Product',
+            '@id': `${siteUrl}/product/${item.url}`,
+            name: item.name,
+            image: item.image,
+            url: `${siteUrl}/product/${item.url}`,
+            offers: {
+              '@type': 'Offer',
+              price: item.price,
+              priceCurrency: item.currency,
+              availability: 'https://schema.org/InStock',
+            },
+          },
+        })),
+      }
+    : null;
+
   return (
     <Helmet>
       {/* Primary Meta Tags */}
@@ -282,6 +325,11 @@ const SEOHead = ({
       {faqSchema && (
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}
+        </script>
+      )}
+      {collectionSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(collectionSchema)}
         </script>
       )}
     </Helmet>
