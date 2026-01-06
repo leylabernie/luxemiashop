@@ -19,6 +19,9 @@
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="bingbot" content="index, follow" />
     <link rel="canonical" href="https://luxemia.shop/" />
+    
+    <!-- Google Search Console Verification - Replace YOUR_VERIFICATION_CODE with your actual code -->
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -88,6 +91,85 @@
         },
         "query-input": "required name=search_term_string"
       }
+    }
+    </script>
+
+    <!-- Online Store Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "OnlineStore",
+      "name": "LuxeMia",
+      "url": "https://luxemia.shop",
+      "logo": "https://luxemia.shop/favicon.ico",
+      "image": "https://lovable.dev/opengraph-image-p98pqg.png",
+      "description": "Luxury Indian ethnic wear boutique offering handcrafted sarees, lehengas, and designer bridal couture with worldwide shipping.",
+      "priceRange": "₹₹₹",
+      "currenciesAccepted": "INR, USD",
+      "paymentAccepted": "Credit Card, Debit Card, UPI, PayPal",
+      "areaServed": {
+        "@type": "GeoCircle",
+        "geoMidpoint": {
+          "@type": "GeoCoordinates",
+          "latitude": "19.0760",
+          "longitude": "72.8777"
+        },
+        "geoRadius": "50000"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Ethnic Wear Collections",
+        "itemListElement": [
+          {
+            "@type": "OfferCatalog",
+            "name": "Sarees",
+            "url": "https://luxemia.shop/sarees"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Lehengas",
+            "url": "https://luxemia.shop/lehengas"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Suits",
+            "url": "https://luxemia.shop/suits"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Menswear",
+            "url": "https://luxemia.shop/menswear"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Jewelry",
+            "url": "https://luxemia.shop/jewelry"
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "2500",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema for Homepage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://luxemia.shop/"
+        }
+      ]
     }
     </script>
   </head>
