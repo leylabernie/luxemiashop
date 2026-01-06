@@ -79,10 +79,22 @@ const OrderTracking = () => {
         },
       });
 
-      if (fnError) throw fnError;
+      if (fnError) {
+        // Handle authentication errors specifically
+        if (fnError.message?.includes('401') || fnError.message?.includes('Unauthorized')) {
+          setError('Please log in to track your orders.');
+        } else {
+          throw fnError;
+        }
+        return;
+      }
 
       if (data?.error) {
-        setError(data.error);
+        if (data.error === 'Unauthorized') {
+          setError('Please log in to track your orders.');
+        } else {
+          setError(data.error);
+        }
         return;
       }
 
