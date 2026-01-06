@@ -4,9 +4,34 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 declare const EdgeRuntime: {
   waitUntil(promise: Promise<unknown>): void;
 };
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+// Validate JWT and return user claims
+const validateAuth = async (req: Request) => {
+  const authHeader = req.headers.get('Authorization');
+  if (!authHeader?.startsWith('Bearer ')) {
+    return { error: 'Unauthorized', status: 401 };
+  }
+
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+  
+  const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    global: { headers: { Authorization: authHeader } }
+  });
+
+  const token = authHeader.replace('Bearer ', '');
+  const { data, error } = await supabase.auth.getUser(token);
+  
+  if (error || !data?.user) {
+    return { error: 'Unauthorized', status: 401 };
+  }
+
+  return { user: data.user };
 };
 
 const SHOPIFY_STORE_DOMAIN = "lovable-project-zlh0w.myshopify.com";
@@ -54,6 +79,15 @@ serve(async (req) => {
   }
 
   try {
+    // Validate authentication
+    const authResult = await validateAuth(req);
+    if ('error' in authResult) {
+      return new Response(
+        JSON.stringify({ error: authResult.error }),
+        { status: authResult.status, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { orderNumber, email } = await req.json();
 
     if (!orderNumber || !email) {
