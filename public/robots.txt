@@ -5,8 +5,8 @@
 User-agent: *
 Allow: /
 
-# Sitemap location (dynamic sitemap with all products)
-Sitemap: https://mxrvlizhrofsroydenti.supabase.co/functions/v1/generate-sitemap
+# Sitemap location
+Sitemap: https://www.luxemia.shop/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1
