@@ -226,6 +226,30 @@ const Lehengas = () => {
     </aside>
   );
 
+  // Collection-specific FAQs for rich snippets
+  const lehengaFaqs = [
+    {
+      question: "What types of lehengas are available at LuxeMia?",
+      answer: "LuxeMia offers bridal lehengas, reception lehengas, festive lehengas, and party wear in various fabrics including Net, Silk, Velvet, Georgette, Chinnon, and Roman Silk. Each piece features exquisite embroidery, sequins, zari, or mirror work."
+    },
+    {
+      question: "How do I find the right lehenga size?",
+      answer: "We offer sizes S, M, L, XL, XXL, and Custom sizing. For bridal lehengas, we highly recommend custom sizing for a perfect fit. Provide your bust, waist, hip, and height measurements, and our tailors will create your dream lehenga."
+    },
+    {
+      question: "What is included in a lehenga set?",
+      answer: "Every LuxeMia lehenga set includes the lehenga skirt, matching choli (blouse), and dupatta. Bridal sets often include additional accessories like cancan for volume and a matching potli bag."
+    },
+    {
+      question: "How long does it take to receive a bridal lehenga?",
+      answer: "Ready-to-ship lehengas arrive in 7-12 business days (standard) or 3-5 days (express). Custom-sized bridal lehengas require 3-4 weeks for handcrafting. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
+    },
+    {
+      question: "Can I customize the color of my lehenga?",
+      answer: "Yes! Most of our lehengas can be customized in different colors. Contact our styling team with your color preferences, and we'll confirm availability and any additional timeline requirements."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -237,6 +261,7 @@ const Lehengas = () => {
           { name: 'Collections', url: '/collections' },
           { name: 'Lehengas', url: '/lehengas' },
         ]}
+        faqs={lehengaFaqs}
       />
       <Header />
 
