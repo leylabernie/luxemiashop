@@ -226,6 +226,30 @@ const Suits = () => {
     </aside>
   );
 
+  // Collection-specific FAQs for rich snippets
+  const suitFaqs = [
+    {
+      question: "What styles of suits are available at LuxeMia?",
+      answer: "LuxeMia offers Anarkali suits, Sharara sets, Gharara suits, Palazzo suits, Designer ensembles, and Gowns. Our collection features premium fabrics like Silk, Georgette, Chinnon, Velvet, and Organza with intricate embroidery and zari work."
+    },
+    {
+      question: "What sizes are available for suits?",
+      answer: "We offer sizes S, M, L, XL, XXL, and Free Size options. Custom sizing is available for all suits—simply provide your measurements and our tailors will ensure a perfect fit."
+    },
+    {
+      question: "What's the difference between Sharara and Gharara?",
+      answer: "A Sharara has wide-legged palazzo-style pants that flare from the waist. A Gharara features pants that are fitted to the knee and flare dramatically below. Both create stunning silhouettes for weddings and celebrations."
+    },
+    {
+      question: "Do suits come with dupatta and bottom?",
+      answer: "Yes, all LuxeMia suit sets include a matching kurta/top, bottom (pants, palazzo, or sharara depending on style), and dupatta. Some sets include additional accessories like belts or jewelry."
+    },
+    {
+      question: "How should I care for embroidered suits?",
+      answer: "We recommend dry cleaning for all embroidered suits. Store flat or on padded hangers to maintain shape. Keep embroidered areas wrapped in tissue paper to protect the work."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -237,6 +261,7 @@ const Suits = () => {
           { name: 'Collections', url: '/collections' },
           { name: 'Suits', url: '/suits' },
         ]}
+        faqs={suitFaqs}
       />
       <Header />
 

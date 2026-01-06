@@ -226,6 +226,30 @@ const Sarees = () => {
     </aside>
   );
 
+  // Collection-specific FAQs for rich snippets
+  const sareeFaqs = [
+    {
+      question: "What types of sarees are available at LuxeMia?",
+      answer: "LuxeMia offers a curated collection of premium sarees including Kanchipuram silk, Banarasi silk, Tissue silk, Georgette, and handwoven sarees. Our collection spans wedding sarees, festive wear, casual sarees, and occasion wear suitable for every celebration."
+    },
+    {
+      question: "How do I choose the right saree fabric?",
+      answer: "Choose Kanchipuram or Banarasi silk for weddings and grand occasions. Georgette and Chiffon work well for parties and receptions. Cotton and Tissue silk are ideal for festive wear and day events. Our expert stylists can help you select the perfect fabric for your occasion."
+    },
+    {
+      question: "Do you offer custom blouse stitching with sarees?",
+      answer: "Yes, we offer complimentary blouse stitching with every saree purchase. You can provide your measurements and preferred style (padded, princess cut, etc.), and our master tailors will create a perfectly fitted blouse."
+    },
+    {
+      question: "What is the delivery time for sarees?",
+      answer: "Standard shipping to the US takes 7-12 business days. Express shipping (3-5 days) is available at checkout. For custom blouse stitching orders, please allow an additional 5-7 days for tailoring."
+    },
+    {
+      question: "How should I care for my silk saree?",
+      answer: "We recommend professional dry cleaning for all silk sarees. Store in a cool, dry place wrapped in soft muslin cloth. Avoid direct sunlight and refold every few months to prevent permanent creases."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -237,6 +261,7 @@ const Sarees = () => {
           { name: 'Collections', url: '/collections' },
           { name: 'Sarees', url: '/sarees' },
         ]}
+        faqs={sareeFaqs}
       />
       <Header />
 

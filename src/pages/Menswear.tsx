@@ -231,6 +231,30 @@ const Menswear = () => {
     </aside>
   );
 
+  // Collection-specific FAQs for rich snippets
+  const menswearFaqs = [
+    {
+      question: "What types of men's ethnic wear are available at LuxeMia?",
+      answer: "LuxeMia offers Groom Sherwanis, Kurta Pajama sets, Velvet Sherwanis, Indo-Western outfits, and Nehru Jackets. Our collection features premium fabrics like Art Silk, Banarasi Jacquard, Velvet, and Cotton with exquisite embroidery."
+    },
+    {
+      question: "How do I find the right size for a sherwani?",
+      answer: "We offer sizes 36, 38, 40, 42, and 44. For groom sherwanis, we recommend custom sizing for a perfect fit. Provide chest, waist, hip, height, and shoulder measurements for the best results."
+    },
+    {
+      question: "What's included in a sherwani set?",
+      answer: "A complete sherwani set includes the sherwani coat, churidar pants, and matching dupatta/stole. Groom sets often include additional accessories like a safa (turban) and matching mojris (footwear) upon request."
+    },
+    {
+      question: "How long does it take to receive a groom sherwani?",
+      answer: "Ready-to-ship sherwanis arrive in 7-12 business days. Custom-tailored groom sherwanis require 3-4 weeks. For weddings, we recommend ordering 8-10 weeks in advance to allow time for fittings and alterations."
+    },
+    {
+      question: "Can I get matching outfits for the groom and groomsmen?",
+      answer: "Yes! We offer coordinated packages for grooms and groomsmen. Contact our styling team to create a cohesive look with matching or complementary sherwanis and kurta sets."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -242,6 +266,7 @@ const Menswear = () => {
           { name: 'Collections', url: '/collections' },
           { name: 'Menswear', url: '/menswear' },
         ]}
+        faqs={menswearFaqs}
       />
       <Header />
 
