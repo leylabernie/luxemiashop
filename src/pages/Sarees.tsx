@@ -250,17 +250,33 @@ const Sarees = () => {
     }
   ];
 
+  // Generate collection schema items from products
+  const collectionItems = filteredProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Designer Sarees Online | Silk, Banarasi & Wedding Sarees - LuxeMia"
         description="Shop exquisite designer sarees online at LuxeMia. Discover handcrafted Banarasi silk, Kanjivaram, Chanderi, and wedding sarees. Premium quality with worldwide shipping."
+        type="collection"
         image="/og/og-sarees.jpg"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
           { name: 'Sarees', url: '/sarees' },
         ]}
+        collection={{
+          name: 'Sarees Collection',
+          description: 'Handwoven silk sarees and designer drapes for weddings and celebrations.',
+          items: collectionItems,
+        }}
         faqs={sareeFaqs}
       />
       <Header />

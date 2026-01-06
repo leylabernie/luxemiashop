@@ -255,17 +255,33 @@ const Menswear = () => {
     }
   ];
 
+  // Generate collection schema items from products
+  const collectionItems = filteredProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Men's Ethnic Wear | Designer Sherwanis & Kurta Pajamas - LuxeMia"
         description="Shop premium men's ethnic wear at LuxeMia. Discover designer sherwanis, Indo-Western kurtas, and Nehru jackets for weddings and celebrations. Custom tailoring available."
+        type="collection"
         image="/og/og-menswear.jpg"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
           { name: 'Menswear', url: '/menswear' },
         ]}
+        collection={{
+          name: 'Menswear Collection',
+          description: 'Premium sherwanis, kurta pajamas, and Indo-Western outfits for men.',
+          items: collectionItems,
+        }}
         faqs={menswearFaqs}
       />
       <Header />
