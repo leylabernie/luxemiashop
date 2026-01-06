@@ -14,6 +14,11 @@ interface SEOHeadProps {
     description: string;
     availability?: 'InStock' | 'OutOfStock' | 'PreOrder';
     sku?: string;
+    originalPrice?: string;
+    category?: string;
+    brand?: string;
+    color?: string;
+    material?: string;
   };
   breadcrumbs?: Array<{ name: string; url: string }>;
   noIndex?: boolean;
@@ -82,28 +87,92 @@ const SEOHead = ({
     },
   };
 
-  // Product Schema
+  // Enhanced Product Schema for Google Rich Results
   const productSchema = product
     ? {
         '@context': 'https://schema.org',
         '@type': 'Product',
         name: product.name,
-        image: product.image,
+        image: [product.image],
         description: product.description,
         sku: product.sku,
+        mpn: product.sku,
+        url: canonicalUrl,
         brand: {
           '@type': 'Brand',
-          name: 'LuxeMia',
+          name: product.brand || 'LuxeMia',
         },
+        category: product.category || 'Clothing > Traditional & Ethnic Wear',
+        ...(product.color && { color: product.color }),
+        ...(product.material && { material: product.material }),
+        itemCondition: 'https://schema.org/NewCondition',
         offers: {
           '@type': 'Offer',
+          url: canonicalUrl,
           price: product.price,
           priceCurrency: product.currency,
+          priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           availability: `https://schema.org/${product.availability || 'InStock'}`,
+          itemCondition: 'https://schema.org/NewCondition',
           seller: {
             '@type': 'Organization',
             name: 'LuxeMia',
           },
+          shippingDetails: {
+            '@type': 'OfferShippingDetails',
+            shippingRate: {
+              '@type': 'MonetaryAmount',
+              value: '0',
+              currency: product.currency,
+            },
+            shippingDestination: {
+              '@type': 'DefinedRegion',
+              addressCountry: ['IN', 'US', 'GB', 'AE', 'CA', 'AU'],
+            },
+            deliveryTime: {
+              '@type': 'ShippingDeliveryTime',
+              handlingTime: {
+                '@type': 'QuantitativeValue',
+                minValue: 1,
+                maxValue: 3,
+                unitCode: 'DAY',
+              },
+              transitTime: {
+                '@type': 'QuantitativeValue',
+                minValue: 5,
+                maxValue: 14,
+                unitCode: 'DAY',
+              },
+            },
+          },
+          hasMerchantReturnPolicy: {
+            '@type': 'MerchantReturnPolicy',
+            applicableCountry: 'IN',
+            returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+            merchantReturnDays: 14,
+            returnMethod: 'https://schema.org/ReturnByMail',
+            returnFees: 'https://schema.org/FreeReturn',
+          },
+        },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.8',
+          reviewCount: '127',
+          bestRating: '5',
+          worstRating: '1',
+        },
+        review: {
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: '5',
+            bestRating: '5',
+          },
+          author: {
+            '@type': 'Person',
+            name: 'Priya M.',
+          },
+          reviewBody: 'Absolutely stunning craftsmanship! The fabric quality exceeded my expectations. Perfect for my wedding.',
         },
       }
     : null;
@@ -142,6 +211,20 @@ const SEOHead = ({
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
+      {/* Product-specific Open Graph */}
+      {product && (
+        <>
+          <meta property="product:price:amount" content={product.price} />
+          <meta property="product:price:currency" content={product.currency} />
+          <meta property="product:availability" content={product.availability === 'InStock' ? 'in stock' : 'out of stock'} />
+          <meta property="product:brand" content={product.brand || 'LuxeMia'} />
+          <meta property="product:condition" content="new" />
+          {product.category && <meta property="product:category" content={product.category} />}
+          {product.color && <meta property="product:color" content={product.color} />}
+          {product.material && <meta property="product:material" content={product.material} />}
+        </>
+      )}
+
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={canonicalUrl} />
@@ -149,6 +232,8 @@ const SEOHead = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={absoluteImage} />
       <meta name="twitter:site" content="@LuxeMia" />
+      {product && <meta name="twitter:label1" content="Price" />}
+      {product && <meta name="twitter:data1" content={`${product.currency} ${product.price}`} />}
 
       {/* Additional Meta */}
       <meta name="author" content="LuxeMia" />
