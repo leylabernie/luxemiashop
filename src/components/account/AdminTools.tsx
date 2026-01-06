@@ -11,14 +11,25 @@ const AdminTools = () => {
   const handleRegenerateSitemap = async () => {
     setIsRegenerating(true);
     try {
-      const { data, error } = await supabase.functions.invoke('regenerate-sitemap');
+      // Get current session for auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Please log in to use admin tools');
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('regenerate-sitemap', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
       
       if (error) {
         throw error;
       }
 
       toast.success('Sitemap regenerated successfully', {
-        description: `Generated ${data?.productCount || 0} product URLs`,
+        description: `Generated ${data?.stats?.products || 0} product URLs`,
       });
     } catch (error) {
       console.error('Error regenerating sitemap:', error);
