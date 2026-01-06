@@ -83,6 +83,11 @@ const ProductDetail = () => {
             description: product.description || '',
             availability: 'InStock',
             sku: product.id,
+            originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
+            category: product.productType || 'Ethnic Wear',
+            brand: (product as any).vendor || 'LuxeMia',
+            color: (product as any).options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0],
+            material: product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0],
           }}
           breadcrumbs={[
             { name: 'Home', url: '/' },
