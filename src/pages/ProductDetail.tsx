@@ -67,6 +67,26 @@ const ProductDetail = () => {
   const categoryUrl = getCategoryUrl(product?.productType);
   const categoryName = product?.productType || 'Collections';
 
+  // Product-specific FAQs for rich snippets
+  const productFaqs = product ? [
+    {
+      question: `What sizes are available for the ${product.title}?`,
+      answer: `The ${product.title} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit. Please refer to our Size Guide for detailed measurements.`
+    },
+    {
+      question: `What is the delivery time for the ${product.title}?`,
+      answer: `Standard shipping to the US takes 7-12 business days. Express shipping (3-5 business days) is available at checkout. Custom-sized orders require an additional 3-4 weeks for production.`
+    },
+    {
+      question: `Can I return the ${product.title} if it doesn't fit?`,
+      answer: `Standard-sized items can be returned within 7 days if unworn with tags attached. Custom-sized items are final sale. A mandatory unboxing video is required for all return claims.`
+    },
+    {
+      question: `How should I care for my ${categoryName.toLowerCase()}?`,
+      answer: `We recommend professional dry cleaning for all ethnic wear. Store in a cool, dry place wrapped in muslin cloth. Never iron directly on embroidery or embellishments.`
+    }
+  ] : [];
+
   return (
     <div className="min-h-screen bg-background">
       {product && (
@@ -94,6 +114,7 @@ const ProductDetail = () => {
             { name: categoryName, url: categoryUrl },
             { name: product.title, url: `/product/${product.handle}` },
           ]}
+          faqs={productFaqs}
         />
       )}
       <Header />

@@ -1,5 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
@@ -21,6 +26,7 @@ interface SEOHeadProps {
     material?: string;
   };
   breadcrumbs?: Array<{ name: string; url: string }>;
+  faqs?: FAQItem[];
   noIndex?: boolean;
 }
 
@@ -32,6 +38,7 @@ const SEOHead = ({
   type = 'website',
   product,
   breadcrumbs,
+  faqs,
   noIndex = false,
 }: SEOHeadProps) => {
   const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.shop';
@@ -191,6 +198,22 @@ const SEOHead = ({
       }
     : null;
 
+  // FAQ Schema for rich snippets
+  const faqSchema = faqs && faqs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }
+    : null;
+
   return (
     <Helmet>
       {/* Primary Meta Tags */}
@@ -254,6 +277,11 @@ const SEOHead = ({
       {breadcrumbSchema && (
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
+        </script>
+      )}
+      {faqSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
         </script>
       )}
     </Helmet>
