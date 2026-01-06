@@ -149,6 +149,33 @@ export type Database = {
         }
         Relationships: []
       }
+      sitemap_cache: {
+        Row: {
+          generated_at: string | null
+          id: string
+          page_count: number | null
+          product_count: number | null
+          sitemap_xml: string
+          updated_at: string | null
+        }
+        Insert: {
+          generated_at?: string | null
+          id?: string
+          page_count?: number | null
+          product_count?: number | null
+          sitemap_xml: string
+          updated_at?: string | null
+        }
+        Update: {
+          generated_at?: string | null
+          id?: string
+          page_count?: number | null
+          product_count?: number | null
+          sitemap_xml?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       wishlists: {
         Row: {
           created_at: string
