@@ -427,12 +427,12 @@ Deno.serve(async (req) => {
 
     console.log(`Sync complete: ${totalAdded} added, ${totalSkipped} skipped, ${deletedCount} deleted`);
 
-    // Automatically sync new products to Shopify
+    // Automatically sync ALL products to Shopify (reset + re-sync for SEO updates)
     let shopifySynced = 0;
     let shopifyFailed = 0;
     
     try {
-      console.log('Auto-syncing new products to Shopify...');
+      console.log('Auto-syncing ALL products to Shopify with SEO updates...');
       
       const syncResponse = await fetch(`${supabaseUrl}/functions/v1/sync-to-shopify`, {
         method: 'POST',
@@ -440,7 +440,10 @@ Deno.serve(async (req) => {
           'Authorization': authHeader,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ limit: 100 }), // Sync up to 100 new products
+        body: JSON.stringify({ 
+          resetSync: true,  // Always reset to update all products with latest SEO
+          limit: 200 
+        }),
       });
       
       if (syncResponse.ok) {
