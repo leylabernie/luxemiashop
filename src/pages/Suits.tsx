@@ -35,6 +35,14 @@ const sortOptions = [
 
 const suitFilterSections = [
   {
+    name: 'Size',
+    options: ['S', 'M', 'L', 'XL', 'XXL', 'Custom'],
+  },
+  {
+    name: 'Availability',
+    options: ['Ready to Ship', 'Made to Order'],
+  },
+  {
     name: 'Occasion',
     options: ['Bridal', 'Wedding', 'Party', 'Festive', 'Occasional'],
   },
