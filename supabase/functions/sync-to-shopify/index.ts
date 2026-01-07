@@ -27,11 +27,57 @@ interface ShopifyProductResponse {
       id: number;
       title: string;
     }>;
+    images: Array<{
+      id: number;
+      src: string;
+    }>;
   };
 }
 
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
-const SHOPIFY_API_VERSION = '2024-01';
+const SHOPIFY_API_VERSION = '2025-07';
+
+// Validate if an image URL is accessible
+async function validateImageUrl(url: string): Promise<boolean> {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok && response.headers.get('content-type')?.startsWith('image/');
+  } catch {
+    return false;
+  }
+}
+
+// Get valid image URLs from the product
+async function getValidImageUrls(product: ScrapedProduct): Promise<string[]> {
+  const candidateUrls: string[] = [];
+  
+  // Add main image first
+  if (product.image_url) {
+    candidateUrls.push(product.image_url);
+  }
+  
+  // Add additional images
+  if (product.image_urls && product.image_urls.length > 0) {
+    for (const url of product.image_urls) {
+      if (!candidateUrls.includes(url)) {
+        candidateUrls.push(url);
+      }
+    }
+  }
+  
+  // Validate images in parallel (limit to 5 concurrent)
+  const validUrls: string[] = [];
+  for (const url of candidateUrls.slice(0, 5)) {
+    const isValid = await validateImageUrl(url);
+    if (isValid) {
+      validUrls.push(url);
+    } else {
+      console.log(`Invalid image URL skipped: ${url}`);
+    }
+  }
+  
+  return validUrls;
+}
 
 async function createShopifyProduct(
   product: ScrapedProduct,
@@ -47,24 +93,30 @@ async function createShopifyProduct(
   if (product.color) tags.push(product.color);
   if (product.work) tags.push(product.work);
 
-  // Use multiple images if available
-  const imageUrls = product.image_urls && product.image_urls.length > 0 
-    ? product.image_urls 
-    : [product.image_url];
+  // Get validated image URLs
+  const validImageUrls = await getValidImageUrls(product);
   
-  const images = imageUrls.map((url, index) => ({
+  if (validImageUrls.length === 0) {
+    console.error(`No valid images for product: ${product.title}`);
+    return null;
+  }
+  
+  const images = validImageUrls.map((url, index) => ({
     src: url,
     alt: index === 0 ? product.title : `${product.title} - View ${index + 1}`
   }));
+
+  console.log(`Creating product "${product.title}" with ${images.length} validated images`);
 
   const shopifyProduct = {
     product: {
       title: product.title,
       body_html: product.description,
-      vendor: 'Zari Boutique',
+      vendor: 'LuxeMia',
       product_type: productType,
       tags: tags.join(', '),
       status: 'active',
+      published: true,
       images,
       options: [{ name: 'Size', values: ['S', 'M', 'L', 'XL', 'XXL', 'Custom'] }],
       variants: [
@@ -98,7 +150,7 @@ async function createShopifyProduct(
     }
 
     const data = await response.json();
-    console.log(`Created Shopify product: ${product.title} -> ID: ${data.product.id}`);
+    console.log(`Created Shopify product: ${product.title} -> ID: ${data.product.id}, Images: ${data.product.images?.length || 0}`);
     return data;
   } catch (error) {
     console.error(`Error creating product ${product.title}:`, error);
@@ -161,13 +213,34 @@ Deno.serve(async (req) => {
     // Get request body for optional filtering
     let category: string | null = null;
     let limit = 10; // Process in batches to avoid timeouts
+    let resetSync = false;
     
     try {
       const body = await req.json();
       category = body.category || null;
       limit = body.limit || 10;
+      resetSync = body.resetSync || false;
     } catch {
       // No body provided, use defaults
+    }
+
+    // Optionally reset sync status for re-syncing
+    if (resetSync) {
+      let resetQuery = supabase
+        .from('scraped_products')
+        .update({ shopify_product_id: null, shopify_variant_ids: null })
+        .eq('is_active', true);
+      
+      if (category) {
+        resetQuery = resetQuery.eq('category', category);
+      }
+      
+      const { error: resetError } = await resetQuery;
+      if (resetError) {
+        console.error('Error resetting sync status:', resetError);
+      } else {
+        console.log('Reset sync status for products');
+      }
     }
 
     // Fetch scraped products that don't have a Shopify ID yet
@@ -203,11 +276,12 @@ Deno.serve(async (req) => {
 
     let synced = 0;
     let failed = 0;
+    const failedProducts: string[] = [];
 
     for (const product of products) {
       // Add a small delay between requests to avoid rate limiting
-      if (synced > 0) {
-        await new Promise(resolve => setTimeout(resolve, 500));
+      if (synced > 0 || failed > 0) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
 
       const shopifyResponse = await createShopifyProduct(product as ScrapedProduct, shopifyAccessToken);
@@ -221,7 +295,6 @@ Deno.serve(async (req) => {
           .update({
             shopify_product_id: `gid://shopify/Product/${shopifyResponse.product.id}`,
             shopify_variant_ids: variantIds,
-            source_id: shopifyResponse.product.handle, // Update handle to match Shopify
             updated_at: new Date().toISOString(),
           })
           .eq('id', product.id);
@@ -229,11 +302,13 @@ Deno.serve(async (req) => {
         if (updateError) {
           console.error(`Failed to update product ${product.id}:`, updateError);
           failed++;
+          failedProducts.push(product.title);
         } else {
           synced++;
         }
       } else {
         failed++;
+        failedProducts.push(product.title);
       }
     }
 
@@ -245,6 +320,7 @@ Deno.serve(async (req) => {
         message: `Synced ${synced} products to Shopify`,
         synced,
         failed,
+        failedProducts: failedProducts.length > 0 ? failedProducts : undefined,
         remaining: products.length - synced - failed,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

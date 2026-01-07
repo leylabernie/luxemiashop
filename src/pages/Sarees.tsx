@@ -54,7 +54,7 @@ const sareeFilterSections = [
 const Sarees = () => {
   const { products, isLoading } = useScrapedProducts('sarees');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
@@ -124,7 +124,7 @@ const Sarees = () => {
               size="sm"
               onClick={() => {
                 setActiveFilters({});
-                setPriceRange([0, 500]);
+                setPriceRange([0, 1000]);
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
@@ -159,7 +159,7 @@ const Sarees = () => {
                     value={priceRange}
                     onValueChange={(value) => setPriceRange(value as [number, number])}
                     min={0}
-                    max={500}
+                    max={1000}
                     step={25}
                     className="py-4"
                   />
@@ -395,7 +395,7 @@ const Sarees = () => {
                     variant="outline"
                     onClick={() => {
                       setActiveFilters({});
-                      setPriceRange([0, 500]);
+                      setPriceRange([0, 1000]);
                     }}
                   >
                     Clear All Filters

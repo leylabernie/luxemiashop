@@ -35,25 +35,25 @@ const CATEGORY_URLS = [
   { 
     category: 'suits', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/salwar-kameez',
-    minPrice: 2500,
+    minPrice: 1300,
     pages: 4
   },
   { 
     category: 'sarees', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/designer-saree',
-    minPrice: 1000,
+    minPrice: 1300,
     pages: 5
   },
   { 
     category: 'sarees', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/wedding-saree',
-    minPrice: 1500,
+    minPrice: 1300,
     pages: 3
   },
   { 
     category: 'menswear', 
     baseUrl: 'https://www.wholesalesalwar.com/retail/mens-kurta-pyjama',
-    minPrice: 1000,
+    minPrice: 1300,
     pages: 4
   }
 ];
