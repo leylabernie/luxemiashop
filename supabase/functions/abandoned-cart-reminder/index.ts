@@ -1,7 +1,35 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+interface ResendEmailResponse {
+  id: string;
+}
+
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+
+async function sendEmail(options: {
+  from: string;
+  to: string[];
+  subject: string;
+  html: string;
+}): Promise<ResendEmailResponse> {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(options),
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Failed to send email: ${error}`);
+  }
+  
+  return response.json();
+}
+
+
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -219,7 +247,7 @@ const handler = async (req: Request): Promise<Response> => {
       
       for (const cart of abandonedCarts || []) {
         try {
-          const emailResponse = await resend.emails.send({
+          const emailResponse = await sendEmail({
             from: "LuxeMia <orders@luxemia.shop>",
             to: [cart.email],
             subject: "Your beautiful selections are waiting! ✨",

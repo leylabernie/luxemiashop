@@ -1,6 +1,29 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { Resend } from "https://esm.sh/resend@2.0.0";
+import { createClient } from "npm:@supabase/supabase-js@2";
+
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+
+async function sendEmailViaResend(options: {
+  from: string;
+  to: string[];
+  subject: string;
+  html: string;
+}): Promise<{ id: string }> {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(options),
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Failed to send email: ${error}`);
+  }
+  
+  return response.json();
+}
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,7 +41,7 @@ interface TrackingNotificationRequest {
   currency?: string;
 }
 
-serve(async (req) => {
+Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -49,9 +72,8 @@ serve(async (req) => {
       );
     }
 
-    // Initialize Resend
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-    if (!resendApiKey) {
+    // Check if RESEND_API_KEY is configured
+    if (!RESEND_API_KEY) {
       console.error("RESEND_API_KEY not configured");
       return new Response(
         JSON.stringify({ error: "Email service not configured" }),
@@ -59,12 +81,11 @@ serve(async (req) => {
       );
     }
 
-    const resend = new Resend(resendApiKey);
     const displayName = customerName || "Valued Customer";
     const totalDisplay = orderTotal && currency ? `${currency} ${orderTotal}` : "";
 
     // Send email to customer
-    const customerEmailResult = await resend.emails.send({
+    const customerEmailResult = await sendEmailViaResend({
       from: "Kanchan Fashion <orders@kanchanfashion.com>",
       to: [customerEmail],
       subject: `Order ${orderName} - Tracking Viewed`,
@@ -125,7 +146,7 @@ serve(async (req) => {
     console.log("Customer email sent:", customerEmailResult);
 
     // Send email to store owner
-    const ownerEmailResult = await resend.emails.send({
+    const ownerEmailResult = await sendEmailViaResend({
       from: "Kanchan Fashion <orders@kanchanfashion.com>",
       to: [STORE_OWNER_EMAIL],
       subject: `📦 Order Tracked: ${orderName}`,
