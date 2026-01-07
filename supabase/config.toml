@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.cleanup-shopify-duplicates]
 verify_jwt = false
+
+[functions.abandoned-cart-reminder]
+verify_jwt = false
