@@ -41,7 +41,7 @@ const SHOPIFY_API_VERSION = '2025-07';
 async function validateImageUrl(url: string): Promise<boolean> {
   try {
     const response = await fetch(url, { method: 'HEAD' });
-    return response.ok && response.headers.get('content-type')?.startsWith('image/');
+    return response.ok && (response.headers.get('content-type')?.startsWith('image/') ?? false);
   } catch {
     return false;
   }
