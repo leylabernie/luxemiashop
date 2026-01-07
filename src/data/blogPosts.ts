@@ -124,29 +124,29 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: '9',
-    slug: 'designer-wedding-dress-under-50000',
-    title: 'Designer Wedding Dress Under ₹50,000: Budget-Friendly Bridal Options',
+    slug: 'designer-wedding-dress-under-500',
+    title: 'Designer Wedding Dress Under $500: Budget-Friendly Bridal Options',
     excerpt: 'Beautiful bridal lehengas and wedding sarees that look expensive without the designer price tag. Smart shopping tips for budget-conscious brides.',
     content: `
       <h2>Luxury Look Without the Luxury Price</h2>
-      <p>Your wedding dress doesn't need to cost a fortune to look stunning. With smart shopping strategies and the right choices, you can find gorgeous bridal wear under ₹50,000 that photographs beautifully and makes you feel like a queen.</p>
+      <p>Your wedding dress doesn't need to cost a fortune to look stunning. With smart shopping strategies and the right choices, you can find gorgeous bridal wear under $500 that photographs beautifully and makes you feel like a queen.</p>
       
       <h2>Where to Find Budget-Friendly Bridal Wear</h2>
       <h3>Online Boutiques (Like LuxeMia!)</h3>
       <p>Online stores often offer designer-quality pieces at lower prices due to reduced overhead costs. Plus, you can compare options easily and often find exclusive online discounts.</p>
       
       <h3>Local Markets</h3>
-      <p>Chandni Chowk (Delhi), Commercial Street (Bangalore), and Linking Road (Mumbai) offer great options. Go with a clear vision and be prepared to negotiate.</p>
+      <p>Chandni Chowk (Delhi), Commercial Street (Bangalore), and Linking Road (Mumbai) offer great options if you're shopping in India. Go with a clear vision and be prepared to negotiate.</p>
       
       <h3>Off-Season Shopping</h3>
       <p>Shop during non-wedding months (January-March, June-August) for discounts up to 40% on bridal wear.</p>
       
       <h2>Budget Allocation Tips</h2>
       <ul>
-        <li><strong>Lehenga/Saree:</strong> ₹25,000-35,000 (primary outfit)</li>
-        <li><strong>Blouse Stitching:</strong> ₹2,000-5,000 (don't skimp here!)</li>
-        <li><strong>Dupatta:</strong> ₹3,000-7,000 (can elevate entire look)</li>
-        <li><strong>Accessories:</strong> ₹5,000-8,000 (shoes, clutch, hair accessories)</li>
+        <li><strong>Lehenga/Saree:</strong> $250-400 (primary outfit)</li>
+        <li><strong>Blouse Stitching:</strong> $25-60 (don't skimp here!)</li>
+        <li><strong>Dupatta:</strong> $35-80 (can elevate entire look)</li>
+        <li><strong>Accessories:</strong> $60-100 (shoes, clutch, hair accessories)</li>
       </ul>
       
       <h2>Smart Substitutions That Work</h2>
@@ -162,14 +162,150 @@ export const blogPosts: BlogPost[] = [
         <li>Rush orders with no time for alterations</li>
       </ul>
       
-      <h2>Our Top Picks Under ₹50,000</h2>
+      <h2>Our Top Picks Under $500</h2>
       <p>At LuxeMia, we've curated beautiful bridal options that balance quality, craftsmanship, and affordability. Browse our collection to find pieces that look like they cost twice the price.</p>
     `,
     author: 'Priya Sharma',
     publishedAt: '2026-01-03',
-    updatedAt: '2026-01-06',
+    updatedAt: '2026-01-07',
     category: 'Shopping Guide',
     tags: ['budget wedding dress', 'affordable bridal lehenga', 'wedding shopping', 'bridal budget', 'indian wedding'],
+    image: '/og/og-sarees.jpg',
+    readTime: 6
+  },
+  {
+    id: '11',
+    slug: 'lehenga-color-for-dark-skin',
+    title: 'Best Lehenga Colors for Dark Skin Tone: Expert Color Guide 2026',
+    excerpt: 'Find the most flattering lehenga colors for dusky and dark skin tones. From jewel tones to pastels, discover shades that make your complexion glow.',
+    content: `
+      <h2>Embrace Your Beautiful Dark Skin</h2>
+      <p>Dark and dusky skin tones are incredibly versatile and can carry colors that look stunning in photographs. The key is choosing shades that complement your undertone and create the right contrast. Here's your complete guide to finding your perfect lehenga color.</p>
+      
+      <h2>Understanding Your Undertone</h2>
+      <p>Before choosing colors, identify your undertone:</p>
+      <ul>
+        <li><strong>Warm undertone:</strong> Golden, yellow, or peachy hues in your skin</li>
+        <li><strong>Cool undertone:</strong> Blue, pink, or red hues in your skin</li>
+        <li><strong>Neutral undertone:</strong> A mix of both warm and cool</li>
+      </ul>
+      <p>Check the veins on your wrist: green veins indicate warm, blue veins indicate cool, and mixed colors indicate neutral.</p>
+      
+      <h2>Colors That Make Dark Skin Glow</h2>
+      
+      <h3>Jewel Tones (Best Choice!)</h3>
+      <p>Rich, saturated colors create stunning contrast:</p>
+      <ul>
+        <li><strong>Emerald Green:</strong> Universally flattering, photographs beautifully</li>
+        <li><strong>Royal Blue:</strong> Creates striking contrast, regal appearance</li>
+        <li><strong>Ruby Red:</strong> Traditional and stunning on darker complexions</li>
+        <li><strong>Deep Purple:</strong> Luxurious and unique, perfect for receptions</li>
+        <li><strong>Teal:</strong> Modern choice that's incredibly flattering</li>
+      </ul>
+      
+      <h3>Warm Brights</h3>
+      <p>These colors bring warmth and radiance:</p>
+      <ul>
+        <li><strong>Orange:</strong> From coral to burnt orange, all work beautifully</li>
+        <li><strong>Mustard Yellow:</strong> Vibrant and festive</li>
+        <li><strong>Hot Pink:</strong> Makes skin glow with happiness</li>
+        <li><strong>Rust:</strong> Earthy and sophisticated</li>
+      </ul>
+      
+      <h3>Metallics</h3>
+      <p>Gold is your best friend! Rose gold and copper also look stunning.</p>
+      
+      <h2>Colors to Approach with Caution</h2>
+      <ul>
+        <li><strong>Pastel pink:</strong> Can wash out darker skin (opt for hot pink instead)</li>
+        <li><strong>Baby blue:</strong> May not provide enough contrast</li>
+        <li><strong>Nude/Beige:</strong> Can blend with skin tone</li>
+        <li><strong>Pure white:</strong> Creates harsh contrast (try ivory or off-white)</li>
+      </ul>
+      
+      <h2>Styling Tips for Maximum Impact</h2>
+      <ul>
+        <li>Choose gold jewelry over silver for warm undertones</li>
+        <li>Bold, contrasting dupatta can elevate the look</li>
+        <li>Heavy gold embroidery looks spectacular on dark skin</li>
+        <li>Don't shy away from bright lips—they look amazing!</li>
+      </ul>
+    `,
+    author: 'Meera Patel',
+    publishedAt: '2026-01-06',
+    updatedAt: '2026-01-07',
+    category: 'Styling Tips',
+    tags: ['lehenga color dark skin', 'dusky skin lehenga', 'bridal colors', 'skin tone fashion', 'wedding styling'],
+    image: '/og/og-lehengas.jpg',
+    readTime: 7
+  },
+  {
+    id: '12',
+    slug: 'wedding-saree-for-mother-of-bride',
+    title: 'How to Choose Wedding Saree for Mother of Bride: Complete Guide',
+    excerpt: 'Help your mother look elegant at your wedding. Expert tips on choosing the perfect saree color, fabric, and style for mothers of brides in 2026.',
+    content: `
+      <h2>Making Mom Look Her Best</h2>
+      <p>The mother of the bride deserves to look absolutely stunning on her daughter's wedding day. Choosing the right saree involves balancing elegance, comfort, and complement to the bride's outfit. Here's your complete guide.</p>
+      
+      <h2>Coordinating with the Bride (Without Matching)</h2>
+      <p>The mother's outfit should complement, not compete with the bride:</p>
+      <ul>
+        <li><strong>Different color family:</strong> If bride wears red, consider maroon, wine, or plum</li>
+        <li><strong>Complementary tones:</strong> Pink bride pairs with peach/coral mother</li>
+        <li><strong>Similar formality:</strong> Match the level of embellishment</li>
+        <li><strong>Avoid exact matches:</strong> It's not a wedding party—individuality is beautiful</li>
+      </ul>
+      
+      <h2>Best Colors for Mother of the Bride</h2>
+      
+      <h3>For Day Ceremonies</h3>
+      <ul>
+        <li><strong>Pastel pink or peach:</strong> Soft and elegant</li>
+        <li><strong>Champagne gold:</strong> Sophisticated and festive</li>
+        <li><strong>Mint green:</strong> Fresh and modern</li>
+        <li><strong>Lavender:</strong> Gentle and graceful</li>
+      </ul>
+      
+      <h3>For Evening/Reception</h3>
+      <ul>
+        <li><strong>Navy blue:</strong> Regal and slimming</li>
+        <li><strong>Maroon:</strong> Rich and traditional</li>
+        <li><strong>Teal:</strong> Unique and flattering</li>
+        <li><strong>Deep purple:</strong> Luxurious statement</li>
+      </ul>
+      
+      <h2>Fabric Choices for Comfort</h2>
+      <p>Mother will be on her feet all day, so comfort matters:</p>
+      <ul>
+        <li><strong>Georgette:</strong> Lightweight, drapes beautifully, easy to manage</li>
+        <li><strong>Crepe silk:</strong> Elegant with good structure, not too heavy</li>
+        <li><strong>Chiffon:</strong> Flowy and comfortable for long events</li>
+        <li><strong>Avoid:</strong> Very heavy silk or velvet (tiring to wear all day)</li>
+      </ul>
+      
+      <h2>Age-Appropriate Styling</h2>
+      <ul>
+        <li>Choose subtle embroidery over heavy sequins</li>
+        <li>Opt for classic blouse designs (avoid deep backs or sleeveless)</li>
+        <li>Three-quarter sleeves are elegant and flattering</li>
+        <li>Moderate pallu length for easy management</li>
+      </ul>
+      
+      <h2>Jewelry Recommendations</h2>
+      <p>Less is more for an elegant mother-of-bride look:</p>
+      <ul>
+        <li>One statement necklace or layered delicate chains</li>
+        <li>Elegant jhumkas or chandbalis</li>
+        <li>Simple bangles or a statement cuff</li>
+        <li>Consider family heirlooms for sentimental value</li>
+      </ul>
+    `,
+    author: 'Anjali Mehta',
+    publishedAt: '2026-01-05',
+    updatedAt: '2026-01-07',
+    category: 'Wedding Guide',
+    tags: ['mother of bride saree', 'wedding saree', 'family wedding outfit', 'saree for mothers', 'wedding fashion'],
     image: '/og/og-sarees.jpg',
     readTime: 6
   },
