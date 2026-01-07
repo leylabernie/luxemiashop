@@ -127,7 +127,7 @@ Deno.serve(async (req) => {
 
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
-    const baseUrl = 'https://www.luxemia.shop'
+    const baseUrl = 'https://luxemia.shop' // CANONICAL: non-www
     const today = formatDate(new Date())
 
     // Fetch all active products from database
