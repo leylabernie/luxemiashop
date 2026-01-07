@@ -4,10 +4,46 @@ import { X, Gift, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { z } from 'zod';
+
+const emailSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required')
+    .max(255, 'Email must be less than 255 characters')
+    .email('Please enter a valid email address')
+    .refine(
+      (email) => !/<|>|script|javascript|on\w+=/i.test(email),
+      'Invalid characters in email'
+    ),
+});
+
+const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const MAX_ATTEMPTS = 3;
+
+const checkRateLimit = (): boolean => {
+  const now = Date.now();
+  const stored = localStorage.getItem(RATE_LIMIT_KEY);
+  const timestamps: number[] = stored ? JSON.parse(stored) : [];
+  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
+  return recentAttempts.length < MAX_ATTEMPTS;
+};
+
+const recordAttempt = () => {
+  const now = Date.now();
+  const stored = localStorage.getItem(RATE_LIMIT_KEY);
+  const timestamps: number[] = stored ? JSON.parse(stored) : [];
+  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
+  recentAttempts.push(now);
+  localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
+};
 
 const NewVisitorPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -35,14 +71,29 @@ const NewVisitorPopup = () => {
     return code;
   };
 
+  const validateEmail = (value: string): boolean => {
+    const result = emailSchema.safeParse({ email: value });
+    if (!result.success) {
+      setEmailError(result.error.errors[0].message);
+      return false;
+    }
+    setEmailError(null);
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !email.includes('@')) {
-      toast.error('Please enter a valid email address');
+    if (!validateEmail(email)) {
       return;
     }
 
+    if (!checkRateLimit()) {
+      toast.error('Too many attempts. Please try again in a minute.');
+      return;
+    }
+
+    recordAttempt();
     setIsSubmitting(true);
     
     try {
@@ -127,15 +178,24 @@ const NewVisitorPopup = () => {
                     </p>
                     
                     <form onSubmit={handleSubmit} className="space-y-4">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                        required
-                        disabled={isSubmitting}
-                        className="w-full bg-transparent border border-border px-4 py-3.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-foreground/40 font-light rounded-md disabled:opacity-50"
-                      />
+                      <div>
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (emailError) setEmailError(null);
+                          }}
+                          placeholder="Enter your email"
+                          required
+                          disabled={isSubmitting}
+                          maxLength={255}
+                          className={`w-full bg-transparent border px-4 py-3.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-foreground/40 font-light rounded-md disabled:opacity-50 ${emailError ? 'border-destructive' : 'border-border'}`}
+                        />
+                        {emailError && (
+                          <p className="text-destructive text-xs mt-1 text-center">{emailError}</p>
+                        )}
+                      </div>
                       <Button 
                         type="submit"
                         variant="luxury" 
