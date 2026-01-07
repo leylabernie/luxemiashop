@@ -67,25 +67,15 @@ const Index = () => {
       "itemListElement": [
         {
           "@type": "OfferCatalog",
-          "name": "Bridal Lehengas",
-          "itemListElement": {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Designer Bridal Lehengas"
-            }
-          }
+          "name": "Bridal Lehengas"
         },
         {
           "@type": "OfferCatalog",
-          "name": "Silk Sarees",
-          "itemListElement": {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Handwoven Silk Sarees"
-            }
-          }
+          "name": "Silk Sarees"
+        },
+        {
+          "@type": "OfferCatalog",
+          "name": "Anarkali Suits"
         }
       ]
     },
