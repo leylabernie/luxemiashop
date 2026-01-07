@@ -59,6 +59,39 @@ export type Database = {
         }
         Relationships: []
       }
+      blocked_ips: {
+        Row: {
+          blocked_at: string
+          blocked_until: string
+          created_at: string
+          id: string
+          ip_address: string
+          reason: string
+          updated_at: string
+          violation_count: number
+        }
+        Insert: {
+          blocked_at?: string
+          blocked_until: string
+          created_at?: string
+          id?: string
+          ip_address: string
+          reason?: string
+          updated_at?: string
+          violation_count?: number
+        }
+        Update: {
+          blocked_at?: string
+          blocked_until?: string
+          created_at?: string
+          id?: string
+          ip_address?: string
+          reason?: string
+          updated_at?: string
+          violation_count?: number
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           discount_code: string | null
@@ -154,6 +187,7 @@ export type Database = {
           identifier: string
           request_count: number
           updated_at: string
+          violation_count: number
           window_start: string
         }
         Insert: {
@@ -163,6 +197,7 @@ export type Database = {
           identifier: string
           request_count?: number
           updated_at?: string
+          violation_count?: number
           window_start?: string
         }
         Update: {
@@ -172,6 +207,7 @@ export type Database = {
           identifier?: string
           request_count?: number
           updated_at?: string
+          violation_count?: number
           window_start?: string
         }
         Relationships: []
@@ -331,6 +367,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cleanup_expired_blocks: { Args: never; Returns: undefined }
       cleanup_old_rate_limits: { Args: never; Returns: undefined }
       has_role: {
         Args: {

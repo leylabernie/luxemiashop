@@ -7,6 +7,9 @@ const corsHeaders = {
 
 const RATE_LIMIT = 5; // requests per window
 const RATE_WINDOW_MINUTES = 1; // 1 minute
+const VIOLATION_THRESHOLD = 3; // violations before blocking
+const BLOCK_DURATION_MINUTES = 60; // initial block duration
+const MAX_BLOCK_DURATION_HOURS = 24; // maximum block duration
 
 interface RateLimitRecord {
   id: string;
@@ -14,13 +17,119 @@ interface RateLimitRecord {
   endpoint: string;
   request_count: number;
   window_start: string;
+  violation_count: number;
+}
+
+interface BlockedIP {
+  id: string;
+  ip_address: string;
+  reason: string;
+  violation_count: number;
+  blocked_at: string;
+  blocked_until: string;
+}
+
+async function isIPBlocked(
+  supabase: any,
+  ipAddress: string
+): Promise<{ blocked: boolean; blockedUntil?: string }> {
+  try {
+    const { data, error } = await supabase
+      .from('blocked_ips')
+      .select('*')
+      .eq('ip_address', ipAddress)
+      .gte('blocked_until', new Date().toISOString())
+      .single() as { data: BlockedIP | null; error: any };
+
+    if (error && error.code !== 'PGRST116') {
+      console.error('Block check error:', error);
+      return { blocked: false }; // Fail open on DB errors
+    }
+
+    if (data) {
+      return { blocked: true, blockedUntil: data.blocked_until };
+    }
+
+    return { blocked: false };
+  } catch (error) {
+    console.error('Block check exception:', error);
+    return { blocked: false };
+  }
+}
+
+async function blockIP(
+  supabase: any,
+  ipAddress: string,
+  violationCount: number
+): Promise<void> {
+  try {
+    // Calculate escalating block duration based on violation count
+    const multiplier = Math.min(violationCount, 10); // Cap at 10x
+    const blockMinutes = Math.min(
+      BLOCK_DURATION_MINUTES * multiplier,
+      MAX_BLOCK_DURATION_HOURS * 60
+    );
+    const blockedUntil = new Date(Date.now() + blockMinutes * 60 * 1000).toISOString();
+
+    // Upsert the block record
+    const { error } = await supabase
+      .from('blocked_ips')
+      .upsert({
+        ip_address: ipAddress,
+        reason: 'rate_limit_abuse',
+        violation_count: violationCount,
+        blocked_at: new Date().toISOString(),
+        blocked_until: blockedUntil,
+      }, {
+        onConflict: 'ip_address'
+      });
+
+    if (error) {
+      console.error('Block IP error:', error);
+    } else {
+      console.log(`Blocked IP ${ipAddress} until ${blockedUntil} (violation #${violationCount})`);
+    }
+  } catch (error) {
+    console.error('Block IP exception:', error);
+  }
+}
+
+async function recordViolation(
+  supabase: any,
+  identifier: string,
+  endpoint: string
+): Promise<number> {
+  try {
+    // Get current violation count and increment
+    const { data, error } = await supabase
+      .from('rate_limits')
+      .select('violation_count')
+      .eq('identifier', identifier)
+      .eq('endpoint', endpoint)
+      .single() as { data: { violation_count: number } | null; error: any };
+
+    const currentCount = data?.violation_count || 0;
+    const newCount = currentCount + 1;
+
+    // Update violation count
+    await supabase
+      .from('rate_limits')
+      .update({ violation_count: newCount })
+      .eq('identifier', identifier)
+      .eq('endpoint', endpoint);
+
+    return newCount;
+  } catch (error) {
+    console.error('Record violation error:', error);
+    return 1;
+  }
 }
 
 async function checkAndUpdateRateLimit(
   supabase: any,
   identifier: string,
   endpoint: string
-): Promise<{ allowed: boolean; remaining: number }> {
+): Promise<{ allowed: boolean; remaining: number; shouldBlock: boolean; violationCount: number }> {
   try {
     const windowStart = new Date(Date.now() - RATE_WINDOW_MINUTES * 60 * 1000).toISOString();
     
@@ -35,13 +144,22 @@ async function checkAndUpdateRateLimit(
     
     if (selectError && selectError.code !== 'PGRST116') {
       console.error('Rate limit check error:', selectError);
-      return { allowed: true, remaining: RATE_LIMIT - 1 }; // Fail open on DB errors
+      return { allowed: true, remaining: RATE_LIMIT - 1, shouldBlock: false, violationCount: 0 };
     }
     
     if (existing) {
       // Record exists within window
       if (existing.request_count >= RATE_LIMIT) {
-        return { allowed: false, remaining: 0 };
+        // Record this violation
+        const violationCount = await recordViolation(supabase, identifier, endpoint);
+        const shouldBlock = violationCount >= VIOLATION_THRESHOLD;
+        
+        return { 
+          allowed: false, 
+          remaining: 0, 
+          shouldBlock, 
+          violationCount 
+        };
       }
       
       // Increment counter
@@ -54,7 +172,12 @@ async function checkAndUpdateRateLimit(
         console.error('Rate limit update error:', updateError);
       }
       
-      return { allowed: true, remaining: RATE_LIMIT - existing.request_count - 1 };
+      return { 
+        allowed: true, 
+        remaining: RATE_LIMIT - existing.request_count - 1, 
+        shouldBlock: false, 
+        violationCount: existing.violation_count 
+      };
     }
     
     // No record exists or record is outside window - upsert new one
@@ -64,7 +187,8 @@ async function checkAndUpdateRateLimit(
         identifier,
         endpoint,
         request_count: 1,
-        window_start: new Date().toISOString()
+        window_start: new Date().toISOString(),
+        violation_count: 0
       }, {
         onConflict: 'identifier,endpoint'
       });
@@ -77,15 +201,16 @@ async function checkAndUpdateRateLimit(
     if (Math.random() < 0.01) {
       try {
         await supabase.rpc('cleanup_old_rate_limits');
+        await supabase.rpc('cleanup_expired_blocks');
       } catch (cleanupErr) {
         console.log('Cleanup error (non-critical):', cleanupErr);
       }
     }
     
-    return { allowed: true, remaining: RATE_LIMIT - 1 };
+    return { allowed: true, remaining: RATE_LIMIT - 1, shouldBlock: false, violationCount: 0 };
   } catch (error) {
     console.error('Rate limit error:', error);
-    return { allowed: true, remaining: RATE_LIMIT - 1 }; // Fail open on errors
+    return { allowed: true, remaining: RATE_LIMIT - 1, shouldBlock: false, violationCount: 0 };
   }
 }
 
@@ -152,11 +277,49 @@ Deno.serve(async (req) => {
                      req.headers.get("x-real-ip") ||
                      "unknown";
 
+    // Check if IP is blocked
+    const blockStatus = await isIPBlocked(supabase, clientIP);
+    if (blockStatus.blocked) {
+      console.log(`Blocked IP attempted access: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ 
+          error: "Access temporarily blocked due to repeated abuse.",
+          blockedUntil: blockStatus.blockedUntil
+        }),
+        {
+          status: 403,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     // Check persistent rate limit
     const rateLimit = await checkAndUpdateRateLimit(supabase, clientIP, "submit-email");
     
     if (!rateLimit.allowed) {
-      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      // If this is the violation that triggers blocking, block the IP
+      if (rateLimit.shouldBlock) {
+        await blockIP(supabase, clientIP, rateLimit.violationCount);
+        console.log(`IP ${clientIP} has been blocked after ${rateLimit.violationCount} violations`);
+        
+        return new Response(
+          JSON.stringify({ 
+            error: "Access temporarily blocked due to repeated abuse. Please try again later.",
+          }),
+          {
+            status: 403,
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
+      
+      console.log(`Rate limit exceeded for IP: ${clientIP} (violation #${rateLimit.violationCount + 1})`);
       return new Response(
         JSON.stringify({ 
           error: "Too many requests. Please try again later.",
