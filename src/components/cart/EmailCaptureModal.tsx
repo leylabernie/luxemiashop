@@ -21,6 +21,27 @@ const emailSchema = z.object({
     ),
 });
 
+const RATE_LIMIT_KEY = 'cart_email_submit_timestamps';
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const MAX_ATTEMPTS = 3;
+
+const checkRateLimit = (): boolean => {
+  const now = Date.now();
+  const stored = localStorage.getItem(RATE_LIMIT_KEY);
+  const timestamps: number[] = stored ? JSON.parse(stored) : [];
+  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
+  return recentAttempts.length < MAX_ATTEMPTS;
+};
+
+const recordAttempt = () => {
+  const now = Date.now();
+  const stored = localStorage.getItem(RATE_LIMIT_KEY);
+  const timestamps: number[] = stored ? JSON.parse(stored) : [];
+  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
+  recentAttempts.push(now);
+  localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
+};
+
 interface EmailCaptureModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -49,6 +70,13 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted }: EmailCaptureMo
     if (!validateEmail(email)) {
       return;
     }
+
+    if (!checkRateLimit()) {
+      toast.error('Too many attempts. Please try again in a minute.');
+      return;
+    }
+
+    recordAttempt();
 
     setIsLoading(true);
     try {
