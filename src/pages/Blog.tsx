@@ -16,15 +16,15 @@ const Blog = () => {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "LuxeMia Fashion Blog",
-    "description": "Expert insights on Indian fashion, wedding trends, styling tips, and ethnic wear guides",
-    "url": "https://luxemia.com/blog",
+    "name": "LuxeMia Indian Wedding Dress Guide",
+    "description": "Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends",
+    "url": "https://luxemia.shop/blog",
     "publisher": {
       "@type": "Organization",
       "name": "LuxeMia",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://luxemia.com/logo.png"
+        "url": "https://luxemia.shop/logo.png"
       }
     },
     "blogPost": blogPosts.map(post => ({
@@ -37,15 +37,15 @@ const Blog = () => {
         "@type": "Person",
         "name": post.author
       },
-      "url": `https://luxemia.com/blog/${post.slug}`
+      "url": `https://luxemia.shop/blog/${post.slug}`
     }))
   };
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
-        title="Indian Fashion Blog | Wedding Trends & Styling Tips | LuxeMia"
-        description="Explore expert articles on Indian ethnic wear, bridal fashion trends, saree draping styles, and styling tips. Your ultimate guide to traditional and contemporary Indian fashion."
+        title="Indian Wedding Dress Guide: Bridal Lehenga Tips & Trends 2026"
+        description="Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion. Get insider tips from top stylists. Read now!"
       />
       <Helmet>
         <script type="application/ld+json">
@@ -60,10 +60,10 @@ const Blog = () => {
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
-                LuxeMia Fashion Journal
+                Indian Wedding Dress Guide
               </h1>
               <p className="text-lg text-muted-foreground">
-                Expert insights on Indian fashion, wedding trends, styling tips, and the art of traditional craftsmanship
+                Expert tips on bridal lehengas, wedding sarees, and styling inspiration for your perfect look
               </p>
             </div>
           </div>

@@ -16,9 +16,233 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
-    slug: 'ultimate-guide-bridal-lehenga-selection',
-    title: 'The Ultimate Guide to Choosing Your Perfect Bridal Lehenga',
-    excerpt: 'Discover how to select the ideal bridal lehenga that complements your body type, skin tone, and wedding theme. Expert tips from leading designers.',
+    slug: 'indian-wedding-dress-complete-guide',
+    title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree (Expert Tips)',
+    excerpt: 'Confused between bridal lehenga and wedding saree? Our expert guide covers everything from fabric selection to budget planning for your dream Indian wedding dress.',
+    content: `
+      <h2>Choosing the Perfect Indian Wedding Dress</h2>
+      <p>Your wedding dress is the most important outfit you'll ever wear. For Indian brides, the choice typically comes down to two stunning options: the regal bridal lehenga or the timeless wedding saree. This comprehensive guide will help you make the perfect choice for your special day.</p>
+      
+      <h2>Bridal Lehenga: The Royal Choice</h2>
+      <p>The bridal lehenga has become the most popular choice for Indian weddings, especially for the main ceremony. Its grand silhouette, heavy embroidery, and dramatic dupatta create a picture-perfect bridal look.</p>
+      
+      <h3>When to Choose a Bridal Lehenga</h3>
+      <ul>
+        <li><strong>Grand wedding venues:</strong> Lehengas complement palatial settings beautifully</li>
+        <li><strong>Winter weddings:</strong> Heavier fabrics like velvet and silk keep you warm</li>
+        <li><strong>Statement look:</strong> If you want to make a dramatic entrance</li>
+        <li><strong>First-time draping:</strong> Easier to manage than a saree</li>
+      </ul>
+      
+      <h2>Wedding Saree: Timeless Elegance</h2>
+      <p>For brides who appreciate tradition, a wedding saree offers unmatched grace. Whether it's a Kanchipuram silk or Banarasi brocade, sarees exude sophistication that never goes out of style.</p>
+      
+      <h3>When to Choose a Wedding Saree</h3>
+      <ul>
+        <li><strong>South Indian weddings:</strong> Traditional ceremonies often prefer sarees</li>
+        <li><strong>Summer weddings:</strong> Lighter fabrics offer better comfort</li>
+        <li><strong>Reception parties:</strong> Elegant yet comfortable for dancing</li>
+        <li><strong>Intimate ceremonies:</strong> Understated luxury that speaks volumes</li>
+      </ul>
+      
+      <h2>Budget Planning for Your Wedding Dress</h2>
+      <p>Indian wedding dresses range from ₹50,000 to ₹50 lakhs. Here's how to allocate your budget wisely:</p>
+      <ul>
+        <li><strong>Fabric quality:</strong> Invest in pure silk or quality georgette</li>
+        <li><strong>Handwork:</strong> Hand embroidery costs more but lasts forever</li>
+        <li><strong>Customization:</strong> Custom fitting adds 10-20% to cost</li>
+        <li><strong>Accessories:</strong> Keep 15% of budget for jewelry and footwear</li>
+      </ul>
+      
+      <h2>Shopping Timeline</h2>
+      <p>Start your bridal dress shopping 6-8 months before the wedding. This allows time for:</p>
+      <ul>
+        <li>Exploring multiple options</li>
+        <li>Custom sizing and alterations</li>
+        <li>Multiple fitting sessions</li>
+        <li>Last-minute adjustments</li>
+      </ul>
+      
+      <h2>Expert Styling Tips</h2>
+      <p>Trust your instincts when you find "the one." Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
+    `,
+    author: 'Priya Sharma',
+    publishedAt: '2026-01-05',
+    updatedAt: '2026-01-06',
+    category: 'Bridal Guide',
+    tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
+    image: '/og/og-lehengas.jpg',
+    readTime: 8
+  },
+  {
+    id: '8',
+    slug: 'red-bridal-lehenga-trends-2026',
+    title: 'Red Bridal Lehenga Designs 2026: 50+ Stunning Ideas for Your Wedding',
+    excerpt: 'Explore the latest red bridal lehenga designs from top designers. From classic crimson to modern maroon, find your perfect shade with our expert guide.',
+    content: `
+      <h2>Why Red Remains the Queen of Bridal Colors</h2>
+      <p>Red has been the traditional bridal color in Indian weddings for centuries. It symbolizes prosperity, fertility, and the auspicious beginnings of married life. In 2026, red bridal lehengas continue to dominate, but with modern twists that appeal to contemporary brides.</p>
+      
+      <h2>Trending Shades of Red for 2026</h2>
+      <h3>Classic Crimson</h3>
+      <p>The timeless true red that never fails. Perfect for traditional ceremonies and photographs. This shade works beautifully with gold zari work and kundan embroidery.</p>
+      
+      <h3>Maroon Magic</h3>
+      <p>Deeper and more sophisticated, maroon lehengas are perfect for winter weddings. They photograph exceptionally well and complement both gold and silver jewelry.</p>
+      
+      <h3>Wine Wonder</h3>
+      <p>A modern alternative to traditional red, wine-colored lehengas offer depth and contemporary appeal. Ideal for evening ceremonies and receptions.</p>
+      
+      <h3>Coral Crush</h3>
+      <p>For summer brides, coral offers a fresh take on red. It's lighter, more playful, and perfect for destination weddings.</p>
+      
+      <h2>Embroidery Styles to Consider</h2>
+      <ul>
+        <li><strong>Zardozi:</strong> Heavy metallic threadwork for maximum grandeur</li>
+        <li><strong>Resham:</strong> Colorful silk thread for a festive look</li>
+        <li><strong>Gota Patti:</strong> Rajasthani style with golden appliqué work</li>
+        <li><strong>Sequin & Stonework:</strong> Modern, sparkly, and camera-ready</li>
+        <li><strong>3D Floral:</strong> Trending sculptural flowers for added dimension</li>
+      </ul>
+      
+      <h2>Fabric Choices for Red Lehengas</h2>
+      <p><strong>Velvet:</strong> Royal, warm, and perfect for winter weddings. The fabric adds natural sheen to red.</p>
+      <p><strong>Raw Silk:</strong> Traditional and timeless, holds embroidery beautifully.</p>
+      <p><strong>Georgette:</strong> Lightweight and flowy, ideal for summer ceremonies.</p>
+      <p><strong>Net with Silk Lining:</strong> Modern, layered look with comfortable wear.</p>
+      
+      <h2>How to Style Your Red Lehenga</h2>
+      <p>Keep jewelry harmonious—kundan, polki, or temple gold work well with red. For makeup, go for nude lips and dramatic eyes, or classic red lips with subtle eye makeup. Never both dramatic.</p>
+    `,
+    author: 'Anjali Mehta',
+    publishedAt: '2026-01-04',
+    updatedAt: '2026-01-06',
+    category: 'Bridal Guide',
+    tags: ['red bridal lehenga', 'wedding lehenga', 'bridal trends', 'lehenga designs', 'indian bride'],
+    image: '/og/og-lehengas.jpg',
+    readTime: 7
+  },
+  {
+    id: '9',
+    slug: 'designer-wedding-dress-under-50000',
+    title: 'Designer Wedding Dress Under ₹50,000: Budget-Friendly Bridal Options',
+    excerpt: 'Beautiful bridal lehengas and wedding sarees that look expensive without the designer price tag. Smart shopping tips for budget-conscious brides.',
+    content: `
+      <h2>Luxury Look Without the Luxury Price</h2>
+      <p>Your wedding dress doesn't need to cost a fortune to look stunning. With smart shopping strategies and the right choices, you can find gorgeous bridal wear under ₹50,000 that photographs beautifully and makes you feel like a queen.</p>
+      
+      <h2>Where to Find Budget-Friendly Bridal Wear</h2>
+      <h3>Online Boutiques (Like LuxeMia!)</h3>
+      <p>Online stores often offer designer-quality pieces at lower prices due to reduced overhead costs. Plus, you can compare options easily and often find exclusive online discounts.</p>
+      
+      <h3>Local Markets</h3>
+      <p>Chandni Chowk (Delhi), Commercial Street (Bangalore), and Linking Road (Mumbai) offer great options. Go with a clear vision and be prepared to negotiate.</p>
+      
+      <h3>Off-Season Shopping</h3>
+      <p>Shop during non-wedding months (January-March, June-August) for discounts up to 40% on bridal wear.</p>
+      
+      <h2>Budget Allocation Tips</h2>
+      <ul>
+        <li><strong>Lehenga/Saree:</strong> ₹25,000-35,000 (primary outfit)</li>
+        <li><strong>Blouse Stitching:</strong> ₹2,000-5,000 (don't skimp here!)</li>
+        <li><strong>Dupatta:</strong> ₹3,000-7,000 (can elevate entire look)</li>
+        <li><strong>Accessories:</strong> ₹5,000-8,000 (shoes, clutch, hair accessories)</li>
+      </ul>
+      
+      <h2>Smart Substitutions That Work</h2>
+      <p><strong>Net instead of Velvet:</strong> Net lehengas can look equally grand with proper layering and are significantly cheaper.</p>
+      <p><strong>Machine embroidery:</strong> Modern machine work is nearly indistinguishable from hand embroidery in photos.</p>
+      <p><strong>Subtle zari instead of heavy zardozi:</strong> Lighter work is also more comfortable to wear.</p>
+      
+      <h2>Red Flags to Avoid</h2>
+      <ul>
+        <li>Extremely low prices (quality will show in photos)</li>
+        <li>No return/exchange policy</li>
+        <li>Synthetic fabrics marketed as silk</li>
+        <li>Rush orders with no time for alterations</li>
+      </ul>
+      
+      <h2>Our Top Picks Under ₹50,000</h2>
+      <p>At LuxeMia, we've curated beautiful bridal options that balance quality, craftsmanship, and affordability. Browse our collection to find pieces that look like they cost twice the price.</p>
+    `,
+    author: 'Priya Sharma',
+    publishedAt: '2026-01-03',
+    updatedAt: '2026-01-06',
+    category: 'Shopping Guide',
+    tags: ['budget wedding dress', 'affordable bridal lehenga', 'wedding shopping', 'bridal budget', 'indian wedding'],
+    image: '/og/og-sarees.jpg',
+    readTime: 6
+  },
+  {
+    id: '10',
+    slug: 'wedding-guest-outfit-ideas',
+    title: 'What to Wear to an Indian Wedding: Guest Outfit Guide 2026',
+    excerpt: 'Perfect outfit ideas for Indian wedding guests. From sangeet to reception, know exactly what to wear for every ceremony without outshining the bride.',
+    content: `
+      <h2>Decoding Indian Wedding Guest Dress Code</h2>
+      <p>Indian weddings are elaborate affairs with multiple ceremonies, each requiring a different outfit. As a guest, you want to look festive without overshadowing the bride. Here's your complete guide to wedding guest fashion.</p>
+      
+      <h2>Ceremony-by-Ceremony Guide</h2>
+      
+      <h3>Mehendi & Haldi</h3>
+      <p>These are casual, colorful affairs. Opt for comfortable yet stylish options:</p>
+      <ul>
+        <li>Cotton or georgette suits in bright yellows, greens, or pinks</li>
+        <li>Simple printed sarees that you don't mind getting stained</li>
+        <li>Sharara sets or palazzo suits for comfort</li>
+      </ul>
+      
+      <h3>Sangeet/Cocktail</h3>
+      <p>This is your time to shine! Go for:</p>
+      <ul>
+        <li>Sequined sarees or gowns</li>
+        <li>Trendy Indo-western outfits</li>
+        <li>Statement lehengas (but lighter than bridal)</li>
+        <li>Dramatic sleeves and contemporary silhouettes</li>
+      </ul>
+      
+      <h3>Wedding Ceremony</h3>
+      <p>Elegant and traditional is the way to go:</p>
+      <ul>
+        <li>Silk sarees or dressy suits</li>
+        <li>Avoid white, black, and red (reserved for bride)</li>
+        <li>Jewel tones like emerald, royal blue, and magenta work beautifully</li>
+        <li>Heavy embroidery is welcome, but don't compete with bridal wear</li>
+      </ul>
+      
+      <h3>Reception</h3>
+      <p>Semi-formal with a glamorous touch:</p>
+      <ul>
+        <li>Designer sarees or elegant gowns</li>
+        <li>Lighter colors like pastels, champagne, or ivory</li>
+        <li>Contemporary silhouettes like draped sarees or cape styles</li>
+      </ul>
+      
+      <h2>Colors to Embrace</h2>
+      <p><strong>Safe bets:</strong> Emerald green, royal blue, mustard, teal, coral, magenta</p>
+      <p><strong>Avoid:</strong> Red (bride's color), pure white (inauspicious), black (unless it's a reception or cocktail)</p>
+      
+      <h2>Accessories That Complete the Look</h2>
+      <ul>
+        <li>Statement jhumkas or chandbalis</li>
+        <li>Elegant clutch or potli bag</li>
+        <li>Comfortable yet stylish footwear (you'll be dancing!)</li>
+        <li>Light layered necklaces or one statement piece</li>
+      </ul>
+    `,
+    author: 'Meera Patel',
+    publishedAt: '2026-01-02',
+    updatedAt: '2026-01-06',
+    category: 'Styling Tips',
+    tags: ['wedding guest outfit', 'indian wedding', 'what to wear', 'wedding fashion', 'ethnic wear'],
+    image: '/og/og-suits.jpg',
+    readTime: 6
+  },
+  {
+    id: '2',
+    slug: 'saree-draping-styles-every-occasion',
+    title: '12 Elegant Saree Draping Styles for Every Occasion (Step-by-Step)',
+    excerpt: 'Master the art of saree draping with step-by-step guides. From classic Nivi to trendy mermaid style, learn 12 draping techniques that transform any saree.',
     content: `
       <h2>Understanding Your Body Type</h2>
       <p>Choosing the perfect bridal lehenga starts with understanding your body shape. Whether you're pear-shaped, apple-shaped, hourglass, or rectangle, there's a lehenga silhouette that will flatter your figure beautifully.</p>
