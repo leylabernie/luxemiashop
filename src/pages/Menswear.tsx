@@ -25,6 +25,7 @@ import { Slider } from '@/components/ui/slider';
 import { useScrapedProducts } from '@/hooks/useScrapedProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { getAllMenswearProducts } from '@/data/menswearProducts';
+import { filterAndSortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -35,20 +36,20 @@ const sortOptions = [
 
 const menswearFilterSections = [
   {
-    name: 'Size',
-    options: ['36', '38', '40', '42', '44'],
-  },
-  {
-    name: 'Category',
-    options: ['Groom Sherwanis', 'Kurta Pajamas', 'Velvet Sherwanis', 'Indo-Western'],
-  },
-  {
     name: 'Occasion',
     options: ['Wedding', 'Occasional', 'Festival', 'Party'],
   },
   {
     name: 'Fabric',
     options: ['Art Silk', 'Banarasi Jacquard', 'Velvet', 'Cotton', 'Viscose', 'Silk'],
+  },
+  {
+    name: 'Category',
+    options: ['Sherwani', 'Kurta', 'Indo-Western', 'Nehru Jacket'],
+  },
+  {
+    name: 'Color',
+    options: ['Maroon', 'Navy', 'Gold', 'Cream', 'Black', 'White'],
   },
 ];
 
@@ -62,35 +63,12 @@ const Menswear = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
 
+  // Apply filters and sorting using the reusable utility
   const filteredProducts = useMemo(() => {
-    let filtered = [...products];
-    
-    // Apply price filter
-    filtered = filtered.filter(p => {
-      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
-      return price >= priceRange[0] && price <= priceRange[1];
-    });
-
-    // Apply sorting
-    switch (sortBy) {
-      case 'price-asc':
-        filtered.sort((a, b) => 
-          parseFloat(a.node.priceRange.minVariantPrice.amount) - 
-          parseFloat(b.node.priceRange.minVariantPrice.amount)
-        );
-        break;
-      case 'price-desc':
-        filtered.sort((a, b) => 
-          parseFloat(b.node.priceRange.minVariantPrice.amount) - 
-          parseFloat(a.node.priceRange.minVariantPrice.amount)
-        );
-        break;
-    }
-
-    return filtered;
-  }, [products, priceRange, sortBy]);
+    return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
+  }, [products, activeFilters, priceRange, sortBy]);
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];

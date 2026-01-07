@@ -109,6 +109,14 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
       productType: product.category === 'lehengas' ? 'Bridal Lehengas' : 
                    product.category === 'sarees' ? 'Designer Sarees' :
                    product.category === 'suits' ? 'Designer Suits' : 'Menswear',
+      // Include metadata for filtering
+      metadata: {
+        occasion: product.occasion,
+        fabric: product.fabric,
+        color: product.color,
+        work: product.work,
+        tags: product.tags,
+      },
       priceRange: {
         minVariantPrice: {
           amount: product.price_usd.toString(),

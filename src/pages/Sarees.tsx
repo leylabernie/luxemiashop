@@ -24,6 +24,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { useScrapedProducts } from '@/hooks/useScrapedProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import { filterAndSortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -35,19 +36,19 @@ const sortOptions = [
 const sareeFilterSections = [
   {
     name: 'Occasion',
-    options: ['Wedding', 'Party', 'Festival', 'Casual', 'Bridal'],
+    options: ['Bridal', 'Wedding', 'Party', 'Festive', 'Occasional'],
   },
   {
     name: 'Fabric',
-    options: ['Silk', 'Georgette', 'Chiffon', 'Cotton', 'Organza', 'Tissue'],
+    options: ['Silk', 'Georgette', 'Chiffon', 'Cotton', 'Organza', 'Tissue', 'Art Silk', 'Net'],
   },
   {
     name: 'Work',
-    options: ['Weaving', 'Embroidery', 'Sequins', 'Zari', 'Print', 'Digital Print'],
+    options: ['Weaving', 'Embroidery', 'Sequins', 'Zari', 'Heavy Work', 'Print'],
   },
   {
     name: 'Color',
-    options: ['Pink', 'Red', 'Green', 'Blue', 'Gold', 'Beige', 'Orange', 'Purple'],
+    options: ['Pink', 'Red', 'Green', 'Blue', 'Gold', 'Beige', 'Maroon', 'Purple', 'Cream'],
   },
 ];
 
@@ -59,33 +60,10 @@ const Sarees = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
 
+  // Apply filters and sorting using the reusable utility
   const filteredProducts = useMemo(() => {
-    let filtered = [...products];
-    
-    // Apply price filter
-    filtered = filtered.filter(p => {
-      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
-      return price >= priceRange[0] && price <= priceRange[1];
-    });
-
-    // Apply sorting
-    switch (sortBy) {
-      case 'price-asc':
-        filtered.sort((a, b) => 
-          parseFloat(a.node.priceRange.minVariantPrice.amount) - 
-          parseFloat(b.node.priceRange.minVariantPrice.amount)
-        );
-        break;
-      case 'price-desc':
-        filtered.sort((a, b) => 
-          parseFloat(b.node.priceRange.minVariantPrice.amount) - 
-          parseFloat(a.node.priceRange.minVariantPrice.amount)
-        );
-        break;
-    }
-
-    return filtered;
-  }, [products, priceRange, sortBy]);
+    return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
+  }, [products, activeFilters, priceRange, sortBy]);
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];

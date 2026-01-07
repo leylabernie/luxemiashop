@@ -6,6 +6,15 @@ const SHOPIFY_STORE_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 const SHOPIFY_STOREFRONT_TOKEN = 'c98d10d5abd95e6a8d6ddbed223ef4b4';
 
+// Product metadata for filtering
+export interface ProductMetadata {
+  occasion?: string | null;
+  fabric?: string | null;
+  color?: string | null;
+  work?: string | null;
+  tags?: string[] | null;
+}
+
 export interface ShopifyProduct {
   node: {
     id: string;
@@ -16,6 +25,7 @@ export interface ShopifyProduct {
     vendor?: string;
     productType?: string;
     tags?: string[];
+    metadata?: ProductMetadata;
     priceRange: {
       minVariantPrice: {
         amount: string;
