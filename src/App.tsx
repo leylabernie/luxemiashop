@@ -39,6 +39,7 @@ import BridalLehengas from "./pages/collections/BridalLehengas";
 import ReceptionOutfits from "./pages/collections/ReceptionOutfits";
 import FestiveWear from "./pages/collections/FestiveWear";
 import Sitemap from "./pages/Sitemap";
+import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
 
@@ -90,6 +91,7 @@ const App = () => (
                 <Route path="/collections/reception-outfits" element={<ReceptionOutfits />} />
                 <Route path="/collections/festive-wear" element={<FestiveWear />} />
                 <Route path="/sitemap" element={<Sitemap />} />
+                <Route path="/admin" element={<AdminDashboard />} />
                 {/* Blog */}
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
