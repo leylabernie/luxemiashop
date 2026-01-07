@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RefreshCw, Shield, ShoppingBag, Download } from 'lucide-react';
+import { RefreshCw, Shield, ShoppingBag, Download, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -9,6 +9,7 @@ const AdminTools = () => {
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isScraping, setIsScraping] = useState(false);
+  const [isCleaning, setIsCleaning] = useState(false);
 
   const handleRegenerateSitemap = async () => {
     setIsRegenerating(true);
@@ -118,6 +119,40 @@ const AdminTools = () => {
     }
   };
 
+  const handleCleanupDuplicates = async () => {
+    setIsCleaning(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Please log in to use admin tools');
+        return;
+      }
+
+      toast.info('Cleaning up duplicate products... This may take a few minutes');
+
+      const { data, error } = await supabase.functions.invoke('cleanup-shopify-duplicates', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+      
+      if (error) {
+        throw error;
+      }
+
+      toast.success(`Removed ${data?.duplicatesDeleted || 0} duplicate products`, {
+        description: `${data?.uniqueProductsRemaining || 0} unique products remain in Shopify`,
+      });
+    } catch (error) {
+      console.error('Error cleaning duplicates:', error);
+      toast.error('Failed to clean up duplicates', {
+        description: error instanceof Error ? error.message : 'Please try again later',
+      });
+    } finally {
+      setIsCleaning(false);
+    }
+  };
+
   return (
     <Card className="border-border/50">
       <CardHeader>
@@ -192,6 +227,24 @@ const AdminTools = () => {
               Re-sync All
             </Button>
           </div>
+        </div>
+
+        <div className="flex items-center justify-between p-4 bg-destructive/10 rounded-lg border border-destructive/20">
+          <div>
+            <p className="font-medium text-destructive">Cleanup Duplicate Products</p>
+            <p className="text-sm text-muted-foreground">
+              Remove duplicate products from Shopify (keeps oldest)
+            </p>
+          </div>
+          <Button
+            onClick={handleCleanupDuplicates}
+            disabled={isCleaning || isSyncing || isScraping}
+            variant="destructive"
+            className="gap-2"
+          >
+            <Trash2 className={`w-4 h-4 ${isCleaning ? 'animate-pulse' : ''}`} />
+            {isCleaning ? 'Cleaning...' : 'Remove Duplicates'}
+          </Button>
         </div>
       </CardContent>
     </Card>

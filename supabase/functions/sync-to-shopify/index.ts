@@ -37,6 +37,44 @@ interface ShopifyProductResponse {
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_API_VERSION = '2025-07';
 
+// Check if a product with the same title already exists in Shopify
+async function checkProductExistsInShopify(title: string, accessToken: string): Promise<number | null> {
+  try {
+    // Search for products with the same title
+    const encodedTitle = encodeURIComponent(title);
+    const response = await fetch(
+      `https://${SHOPIFY_STORE_DOMAIN}/admin/api/${SHOPIFY_API_VERSION}/products.json?title=${encodedTitle}&limit=10`,
+      {
+        headers: {
+          'X-Shopify-Access-Token': accessToken,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      console.error(`Failed to search for existing product: ${response.status}`);
+      return null;
+    }
+
+    const data = await response.json();
+    
+    // Find exact title match
+    const existingProduct = data.products?.find((p: { title: string }) => 
+      p.title.toLowerCase() === title.toLowerCase()
+    );
+    
+    if (existingProduct) {
+      console.log(`Found existing product "${title}" with ID: ${existingProduct.id}`);
+      return existingProduct.id;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error(`Error checking for existing product:`, error);
+    return null;
+  }
+}
+
 // Validate if an image URL is accessible
 async function validateImageUrl(url: string): Promise<boolean> {
   try {
@@ -397,12 +435,35 @@ Deno.serve(async (req) => {
 
     let synced = 0;
     let failed = 0;
+    let skipped = 0;
     const failedProducts: string[] = [];
 
     for (const product of products) {
       // Add a small delay between requests to avoid rate limiting
-      if (synced > 0 || failed > 0) {
+      if (synced > 0 || failed > 0 || skipped > 0) {
         await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+
+      // Generate the SEO title that would be used
+      const seoTitle = generateSEOTitle(product as ScrapedProduct);
+      
+      // Check if product already exists in Shopify
+      const existingProductId = await checkProductExistsInShopify(seoTitle, shopifyAccessToken);
+      
+      if (existingProductId) {
+        console.log(`Skipping "${seoTitle}" - already exists in Shopify (ID: ${existingProductId})`);
+        
+        // Update the scraped product with existing Shopify ID
+        await supabase
+          .from('scraped_products')
+          .update({
+            shopify_product_id: `gid://shopify/Product/${existingProductId}`,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', product.id);
+        
+        skipped++;
+        continue;
       }
 
       const shopifyResponse = await createShopifyProduct(product as ScrapedProduct, shopifyAccessToken);
@@ -433,16 +494,17 @@ Deno.serve(async (req) => {
       }
     }
 
-    console.log(`Sync complete: ${synced} synced, ${failed} failed`);
+    console.log(`Sync complete: ${synced} synced, ${skipped} skipped (already exist), ${failed} failed`);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Synced ${synced} products to Shopify`,
+        message: `Synced ${synced} products to Shopify (${skipped} already existed)`,
         synced,
+        skipped,
         failed,
         failedProducts: failedProducts.length > 0 ? failedProducts : undefined,
-        remaining: products.length - synced - failed,
+        remaining: products.length - synced - failed - skipped,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
