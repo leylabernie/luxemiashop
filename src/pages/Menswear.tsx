@@ -59,7 +59,7 @@ const Menswear = () => {
   const staticProducts = useMemo(() => getAllMenswearProducts(), []);
   const products = scrapedProducts.length > 0 ? scrapedProducts : staticProducts;
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category']);
@@ -129,7 +129,7 @@ const Menswear = () => {
               size="sm"
               onClick={() => {
                 setActiveFilters({});
-                setPriceRange([0, 1500]);
+                setPriceRange([0, 2000]);
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
@@ -164,7 +164,7 @@ const Menswear = () => {
                     value={priceRange}
                     onValueChange={(value) => setPriceRange(value as [number, number])}
                     min={0}
-                    max={1500}
+                    max={2000}
                     step={50}
                     className="py-4"
                   />
@@ -412,7 +412,7 @@ const Menswear = () => {
                     variant="outline"
                     onClick={() => {
                       setActiveFilters({});
-                      setPriceRange([0, 1500]);
+                      setPriceRange([0, 2000]);
                     }}
                   >
                     Clear All Filters
