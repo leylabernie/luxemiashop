@@ -321,7 +321,27 @@ const Account = () => {
 
               {/* Admin Tab - Only visible to admins */}
               {isAdmin && (
-                <TabsContent value="admin">
+                <TabsContent value="admin" className="space-y-6">
+                  <Card className="border-border/50">
+                    <CardHeader>
+                      <CardTitle className="font-serif text-xl flex items-center gap-2">
+                        <Shield className="w-5 h-5" />
+                        Admin Dashboard
+                      </CardTitle>
+                      <CardDescription>
+                        Access the full admin dashboard to manage security, blocked IPs, and rate limits
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Button
+                        onClick={() => navigate('/admin')}
+                        className="bg-foreground text-background hover:bg-foreground/90 gap-2"
+                      >
+                        <Shield className="w-4 h-4" />
+                        Open Admin Dashboard
+                      </Button>
+                    </CardContent>
+                  </Card>
                   <AdminTools />
                 </TabsContent>
               )}
