@@ -19,6 +19,58 @@ export const applyProductFilters = (
     
     filtered = filtered.filter(p => {
       const metadata = p.node.metadata;
+      const variants = p.node.variants?.edges || [];
+
+      // Handle Size filter - check variant options
+      if (normalizedCategory === 'size') {
+        return values.some(filterValue => {
+          const filterLower = filterValue.toLowerCase();
+          
+          // Check variant selectedOptions for size
+          return variants.some(v => 
+            v.node.selectedOptions?.some(opt => 
+              opt.name.toLowerCase() === 'size' && 
+              opt.value.toLowerCase().includes(filterLower)
+            )
+          ) || 
+          // Also check product options
+          p.node.options?.some(opt => 
+            opt.name.toLowerCase() === 'size' && 
+            opt.values.some(val => val.toLowerCase().includes(filterLower))
+          ) ||
+          // Check tags for size info
+          metadata?.tags?.some(tag => tag.toLowerCase().includes(filterLower));
+        });
+      }
+
+      // Handle Availability filter
+      if (normalizedCategory === 'availability') {
+        return values.some(filterValue => {
+          const filterLower = filterValue.toLowerCase();
+          
+          if (filterLower.includes('ready')) {
+            // Check if any variant is available for sale
+            const hasAvailable = variants.some(v => v.node.availableForSale);
+            // Or check tags for "ready to ship"
+            const hasReadyTag = metadata?.tags?.some(tag => 
+              tag.toLowerCase().includes('ready') || tag.toLowerCase().includes('in stock')
+            );
+            return hasAvailable || hasReadyTag;
+          }
+          
+          if (filterLower.includes('made to order') || filterLower.includes('custom')) {
+            // Check tags for made to order
+            return metadata?.tags?.some(tag => 
+              tag.toLowerCase().includes('made to order') || 
+              tag.toLowerCase().includes('custom') ||
+              tag.toLowerCase().includes('pre-order')
+            );
+          }
+          
+          return true;
+        });
+      }
+
       if (!metadata) return false;
 
       // Map filter category to metadata field

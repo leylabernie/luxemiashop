@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 
-interface FilterSection {
+export interface FilterSection {
   name: string;
   options: string[];
 }
@@ -15,28 +15,33 @@ interface ProductFiltersProps {
   activeFilters: Record<string, string[]>;
   priceRange: [number, number];
   onPriceChange: (range: [number, number]) => void;
+  filterSections?: FilterSection[];
 }
 
-const filterSections: FilterSection[] = [
+const defaultFilterSections: FilterSection[] = [
   {
     name: 'Size',
-    options: ['S', 'M', 'L', 'XL', 'Free Size'],
+    options: ['S', 'M', 'L', 'XL', 'XXL', 'Free Size', 'Custom'],
   },
   {
-    name: 'Category',
-    options: ['Sarees', 'Lehengas', 'Anarkalis', 'Salwar Suits', 'Sharara Sets'],
-  },
-  {
-    name: 'Fabric',
-    options: ['Silk', 'Cotton', 'Chiffon', 'Georgette', 'Velvet', 'Organza', 'Chanderi', 'Net'],
+    name: 'Availability',
+    options: ['Ready to Ship', 'Made to Order'],
   },
   {
     name: 'Occasion',
-    options: ['Bridal', 'Wedding', 'Festive', 'Casual', 'Party Wear'],
+    options: ['Bridal', 'Wedding', 'Festive', 'Party', 'Casual'],
+  },
+  {
+    name: 'Fabric',
+    options: ['Silk', 'Cotton', 'Chiffon', 'Georgette', 'Velvet', 'Organza', 'Net'],
   },
   {
     name: 'Color',
     options: ['Red', 'Pink', 'Blue', 'Green', 'Gold', 'White', 'Black', 'Multi'],
+  },
+  {
+    name: 'Work',
+    options: ['Embroidery', 'Sequins', 'Zari', 'Heavy Work', 'Printed', 'Plain'],
   },
 ];
 
@@ -45,8 +50,9 @@ export const ProductFilters = ({
   activeFilters,
   priceRange,
   onPriceChange,
+  filterSections = defaultFilterSections,
 }: ProductFiltersProps) => {
-  const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category', 'Price']);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['Price', 'Availability', 'Occasion']);
 
   const toggleSection = (section: string) => {
     setExpandedSections((prev) =>

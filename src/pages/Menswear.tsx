@@ -36,6 +36,14 @@ const sortOptions = [
 
 const menswearFilterSections = [
   {
+    name: 'Size',
+    options: ['S', 'M', 'L', 'XL', 'XXL', '3XL', 'Custom'],
+  },
+  {
+    name: 'Availability',
+    options: ['Ready to Ship', 'Made to Order'],
+  },
+  {
     name: 'Occasion',
     options: ['Wedding', 'Occasional', 'Festival', 'Party'],
   },
