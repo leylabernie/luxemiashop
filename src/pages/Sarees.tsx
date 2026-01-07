@@ -263,8 +263,8 @@ const Sarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Designer Sarees Online | Silk, Banarasi & Wedding Sarees - LuxeMia"
-        description="Shop exquisite designer sarees online at LuxeMia. Discover handcrafted Banarasi silk, Kanjivaram, Chanderi, and wedding sarees. Premium quality with worldwide shipping."
+        title="Designer Sarees Online: Silk & Wedding Sarees from $49 | LuxeMia"
+        description="Buy 300+ designer sarees online. Banarasi silk, Kanjivaram & wedding sarees with free US shipping. Premium quality, easy returns. Shop now!"
         type="collection"
         image="/og/og-sarees.jpg"
         breadcrumbs={[
