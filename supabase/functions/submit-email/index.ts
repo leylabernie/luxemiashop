@@ -5,28 +5,88 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// In-memory rate limiting store (resets on function cold start)
-// For production, consider using Redis or a database table
-const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 5; // requests per window
+const RATE_WINDOW_MINUTES = 1; // 1 minute
 
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 5;
+interface RateLimitRecord {
+  id: string;
+  identifier: string;
+  endpoint: string;
+  request_count: number;
+  window_start: string;
+}
 
-function checkRateLimit(identifier: string): { allowed: boolean; remaining: number; resetIn: number } {
-  const now = Date.now();
-  const record = rateLimitStore.get(identifier);
-
-  if (!record || now > record.resetTime) {
-    rateLimitStore.set(identifier, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
-    return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1, resetIn: RATE_LIMIT_WINDOW };
+async function checkAndUpdateRateLimit(
+  supabase: any,
+  identifier: string,
+  endpoint: string
+): Promise<{ allowed: boolean; remaining: number }> {
+  try {
+    const windowStart = new Date(Date.now() - RATE_WINDOW_MINUTES * 60 * 1000).toISOString();
+    
+    // Check existing rate limit record within current window
+    const { data: existing, error: selectError } = await supabase
+      .from('rate_limits')
+      .select('*')
+      .eq('identifier', identifier)
+      .eq('endpoint', endpoint)
+      .gte('window_start', windowStart)
+      .single() as { data: RateLimitRecord | null; error: any };
+    
+    if (selectError && selectError.code !== 'PGRST116') {
+      console.error('Rate limit check error:', selectError);
+      return { allowed: true, remaining: RATE_LIMIT - 1 }; // Fail open on DB errors
+    }
+    
+    if (existing) {
+      // Record exists within window
+      if (existing.request_count >= RATE_LIMIT) {
+        return { allowed: false, remaining: 0 };
+      }
+      
+      // Increment counter
+      const { error: updateError } = await supabase
+        .from('rate_limits')
+        .update({ request_count: existing.request_count + 1 })
+        .eq('id', existing.id);
+      
+      if (updateError) {
+        console.error('Rate limit update error:', updateError);
+      }
+      
+      return { allowed: true, remaining: RATE_LIMIT - existing.request_count - 1 };
+    }
+    
+    // No record exists or record is outside window - upsert new one
+    const { error: upsertError } = await supabase
+      .from('rate_limits')
+      .upsert({
+        identifier,
+        endpoint,
+        request_count: 1,
+        window_start: new Date().toISOString()
+      }, {
+        onConflict: 'identifier,endpoint'
+      });
+    
+    if (upsertError) {
+      console.error('Rate limit upsert error:', upsertError);
+    }
+    
+    // Clean up old entries occasionally (1% chance per request)
+    if (Math.random() < 0.01) {
+      try {
+        await supabase.rpc('cleanup_old_rate_limits');
+      } catch (cleanupErr) {
+        console.log('Cleanup error (non-critical):', cleanupErr);
+      }
+    }
+    
+    return { allowed: true, remaining: RATE_LIMIT - 1 };
+  } catch (error) {
+    console.error('Rate limit error:', error);
+    return { allowed: true, remaining: RATE_LIMIT - 1 }; // Fail open on errors
   }
-
-  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
-    return { allowed: false, remaining: 0, resetIn: record.resetTime - now };
-  }
-
-  record.count++;
-  return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - record.count, resetIn: record.resetTime - now };
 }
 
 function validateEmail(email: string): { valid: boolean; error?: string } {
@@ -81,28 +141,33 @@ Deno.serve(async (req) => {
     });
   }
 
+  // Initialize Supabase client with service role for admin operations
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
   try {
     // Get client IP for rate limiting
     const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
                      req.headers.get("x-real-ip") ||
                      "unknown";
 
-    // Check rate limit
-    const rateLimit = checkRateLimit(clientIP);
+    // Check persistent rate limit
+    const rateLimit = await checkAndUpdateRateLimit(supabase, clientIP, "submit-email");
     
     if (!rateLimit.allowed) {
       console.log(`Rate limit exceeded for IP: ${clientIP}`);
       return new Response(
         JSON.stringify({ 
           error: "Too many requests. Please try again later.",
-          retryAfter: Math.ceil(rateLimit.resetIn / 1000)
+          retryAfter: 60
         }),
         {
           status: 429,
           headers: {
             ...corsHeaders,
             "Content-Type": "application/json",
-            "Retry-After": String(Math.ceil(rateLimit.resetIn / 1000)),
+            "Retry-After": "60",
             "X-RateLimit-Remaining": "0",
           },
         }
@@ -128,11 +193,6 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    // Initialize Supabase client with service role for admin operations
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const sanitizedEmail = email.trim().toLowerCase();
 
