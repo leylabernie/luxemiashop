@@ -427,12 +427,45 @@ Deno.serve(async (req) => {
 
     console.log(`Sync complete: ${totalAdded} added, ${totalSkipped} skipped, ${deletedCount} deleted`);
 
+    // Automatically sync new products to Shopify
+    let shopifySynced = 0;
+    let shopifyFailed = 0;
+    
+    try {
+      console.log('Auto-syncing new products to Shopify...');
+      
+      const syncResponse = await fetch(`${supabaseUrl}/functions/v1/sync-to-shopify`, {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ limit: 100 }), // Sync up to 100 new products
+      });
+      
+      if (syncResponse.ok) {
+        const syncData = await syncResponse.json();
+        shopifySynced = syncData.synced || 0;
+        shopifyFailed = syncData.failed || 0;
+        console.log(`Shopify sync: ${shopifySynced} synced, ${shopifyFailed} failed`);
+      } else {
+        const errorText = await syncResponse.text();
+        console.error('Failed to auto-sync to Shopify:', errorText);
+        errors.push(`Shopify sync failed: ${errorText}`);
+      }
+    } catch (shopifyError) {
+      console.error('Error auto-syncing to Shopify:', shopifyError);
+      errors.push(`Shopify sync error: ${shopifyError instanceof Error ? shopifyError.message : 'Unknown'}`);
+    }
+
     return new Response(
       JSON.stringify({ 
         success: true, 
         added: totalAdded,
         skipped: totalSkipped,
         deleted: deletedCount,
+        shopifySynced,
+        shopifyFailed,
         errors: errors.length > 0 ? errors : undefined
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

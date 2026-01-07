@@ -79,6 +79,125 @@ async function getValidImageUrls(product: ScrapedProduct): Promise<string[]> {
   return validUrls;
 }
 
+// Generate SEO-optimized title for Shopify
+function generateSEOTitle(product: ScrapedProduct): string {
+  const parts: string[] = [];
+  
+  // Color first (most searched)
+  if (product.color && product.color !== 'Multi') {
+    parts.push(product.color);
+  }
+  
+  // Fabric (quality indicator)
+  if (product.fabric) {
+    parts.push(product.fabric);
+  }
+  
+  // Work type (craftsmanship)
+  if (product.work && product.work !== 'Handwork') {
+    parts.push(product.work);
+  }
+  
+  // Category name
+  const categoryNames: Record<string, string> = {
+    lehengas: 'Bridal Lehenga',
+    sarees: 'Designer Saree',
+    suits: 'Embroidered Suit',
+    menswear: 'Mens Kurta Pyjama'
+  };
+  parts.push(categoryNames[product.category] || 'Designer Wear');
+  
+  // Add "for Women" or "for Men" for SEO
+  if (product.category === 'menswear') {
+    parts.push('for Men');
+  } else {
+    parts.push('for Women');
+  }
+  
+  return parts.join(' ');
+}
+
+// Generate SEO-optimized description for Shopify
+function generateSEODescription(product: ScrapedProduct): string {
+  const { color, fabric, work, category } = product;
+  
+  const occasionMap: Record<string, string[]> = {
+    lehengas: ['wedding', 'bridal', 'sangeet', 'reception', 'engagement'],
+    sarees: ['wedding', 'party', 'festive', 'puja', 'celebration'],
+    suits: ['party', 'festive', 'casual', 'office', 'celebration'],
+    menswear: ['wedding', 'festive', 'puja', 'celebration', 'party']
+  };
+  
+  const occasions = occasionMap[category] || ['special occasion'];
+  
+  return `
+<p><strong>Elevate your style</strong> with this stunning ${color} ${fabric} ${category === 'lehengas' ? 'lehenga' : category === 'sarees' ? 'saree' : category === 'suits' ? 'suit' : 'kurta set'}. Expertly crafted with ${work}, this piece combines traditional artistry with contemporary elegance.</p>
+
+<h3>Product Highlights</h3>
+<ul>
+<li><strong>Fabric:</strong> Premium ${fabric} for ultimate comfort and drape</li>
+<li><strong>Color:</strong> Rich ${color} shade that complements all skin tones</li>
+<li><strong>Work:</strong> Exquisite ${work} by skilled artisans</li>
+<li><strong>Occasion:</strong> Perfect for ${occasions.slice(0, 3).join(', ')}</li>
+</ul>
+
+<h3>Why Choose LuxeMia?</h3>
+<ul>
+<li>✓ Authentic Indian craftsmanship</li>
+<li>✓ Premium quality fabrics</li>
+<li>✓ Custom sizing available</li>
+<li>✓ Worldwide shipping</li>
+<li>✓ Easy returns within 14 days</li>
+</ul>
+
+<p><em>Each piece is carefully inspected before shipping to ensure you receive only the finest quality ethnic wear.</em></p>
+`.trim();
+}
+
+// Generate SEO tags for Shopify
+function generateSEOTags(product: ScrapedProduct): string[] {
+  const tags: string[] = [];
+  
+  // Category tags
+  const categoryTags: Record<string, string[]> = {
+    lehengas: ['lehenga', 'bridal lehenga', 'wedding lehenga', 'indian bridal wear', 'lehenga choli'],
+    sarees: ['saree', 'designer saree', 'indian saree', 'wedding saree', 'party wear saree'],
+    suits: ['salwar suit', 'salwar kameez', 'indian suit', 'designer suit', 'party wear suit'],
+    menswear: ['kurta', 'kurta pyjama', 'mens indian wear', 'wedding kurta', 'ethnic wear men']
+  };
+  
+  tags.push(...(categoryTags[product.category] || []));
+  
+  // Color tag
+  if (product.color) {
+    tags.push(product.color.toLowerCase());
+    tags.push(`${product.color.toLowerCase()} ${product.category}`);
+  }
+  
+  // Fabric tag
+  if (product.fabric) {
+    tags.push(product.fabric.toLowerCase());
+    tags.push(`${product.fabric.toLowerCase()} ${product.category}`);
+  }
+  
+  // Work tag
+  if (product.work) {
+    tags.push(product.work.toLowerCase());
+    tags.push(`${product.work.toLowerCase()} work`);
+  }
+  
+  // Occasion tags
+  tags.push('indian ethnic wear', 'traditional wear', 'festive wear');
+  if (product.category === 'lehengas') {
+    tags.push('bridal', 'wedding', 'sangeet', 'reception');
+  }
+  
+  // New arrival tag
+  tags.push('new arrival', 'trending');
+  
+  return [...new Set(tags)]; // Remove duplicates
+}
+
 async function createShopifyProduct(
   product: ScrapedProduct,
   accessToken: string
@@ -87,11 +206,10 @@ async function createShopifyProduct(
                       product.category === 'sarees' ? 'Designer Sarees' :
                       product.category === 'suits' ? 'Designer Suits' : 'Menswear';
 
-  // Build tags from product attributes
-  const tags: string[] = [product.category];
-  if (product.fabric) tags.push(product.fabric);
-  if (product.color) tags.push(product.color);
-  if (product.work) tags.push(product.work);
+  // Generate SEO-optimized content
+  const seoTitle = generateSEOTitle(product);
+  const seoDescription = generateSEODescription(product);
+  const seoTags = generateSEOTags(product);
 
   // Get validated image URLs
   const validImageUrls = await getValidImageUrls(product);
@@ -101,20 +219,23 @@ async function createShopifyProduct(
     return null;
   }
   
+  // Generate SEO-optimized alt text for images
   const images = validImageUrls.map((url, index) => ({
     src: url,
-    alt: index === 0 ? product.title : `${product.title} - View ${index + 1}`
+    alt: index === 0 
+      ? `${seoTitle} - Front View` 
+      : `${seoTitle} - ${['Back', 'Detail', 'Close-up'][index - 1] || 'View'} ${index + 1}`
   }));
 
-  console.log(`Creating product "${product.title}" with ${images.length} validated images`);
+  console.log(`Creating product "${seoTitle}" with ${images.length} validated images and ${seoTags.length} SEO tags`);
 
   const shopifyProduct = {
     product: {
-      title: product.title,
-      body_html: product.description,
+      title: seoTitle,
+      body_html: seoDescription,
       vendor: 'LuxeMia',
       product_type: productType,
-      tags: tags.join(', '),
+      tags: seoTags.join(', '),
       status: 'active',
       published: true,
       images,
