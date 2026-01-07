@@ -62,15 +62,6 @@ const NewVisitorPopup = () => {
     localStorage.setItem('vasantam_popup_seen', 'true');
   };
 
-  const generateDiscountCode = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = 'LUXE15-';
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
-  };
-
   const validateEmail = (value: string): boolean => {
     const result = emailSchema.safeParse({ email: value });
     if (!result.success) {
@@ -97,28 +88,35 @@ const NewVisitorPopup = () => {
     setIsSubmitting(true);
     
     try {
-      const discountCode = generateDiscountCode();
-      
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .insert({
+      // Use rate-limited edge function
+      const { data, error } = await supabase.functions.invoke('submit-email', {
+        body: {
           email: email.toLowerCase().trim(),
+          type: 'newsletter',
           source: 'welcome_popup',
-          discount_code: discountCode,
-        });
+        },
+      });
 
-      if (error) {
-        if (error.code === '23505') {
-          toast.info('You\'re already subscribed! Check your email for your discount code.');
-        } else {
-          throw error;
+      if (error) throw error;
+
+      if (data?.error) {
+        if (data.retryAfter) {
+          toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
+          return;
         }
+        throw new Error(data.error);
+      }
+
+      if (data?.duplicate) {
+        toast.info('You\'re already subscribed! Check your email for your discount code.');
       } else {
         setIsSuccess(true);
         toast.success('Welcome to LuxeMia! Your discount code is ready.');
         
         // Copy discount code to clipboard
-        navigator.clipboard.writeText(discountCode).catch(() => {});
+        if (data?.discountCode) {
+          navigator.clipboard.writeText(data.discountCode).catch(() => {});
+        }
       }
     } catch (error) {
       console.error('Subscription error:', error);

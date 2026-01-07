@@ -32,3 +32,6 @@ verify_jwt = false
 
 [functions.abandoned-cart-reminder]
 verify_jwt = false
+
+[functions.submit-email]
+verify_jwt = false
