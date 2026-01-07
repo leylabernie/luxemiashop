@@ -6,6 +6,20 @@ import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
+import { z } from 'zod';
+
+const emailSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Email is required')
+    .max(255, 'Email must be less than 255 characters')
+    .email('Please enter a valid email address')
+    .refine(
+      (email) => !/<|>|script|javascript|on\w+=/i.test(email),
+      'Invalid characters in email'
+    ),
+});
 
 interface EmailCaptureModalProps {
   isOpen: boolean;
@@ -16,11 +30,25 @@ interface EmailCaptureModalProps {
 const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted }: EmailCaptureModalProps) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
   const { items } = useCartStore();
+
+  const validateEmail = (value: string): boolean => {
+    const result = emailSchema.safeParse({ email: value });
+    if (!result.success) {
+      setEmailError(result.error.errors[0].message);
+      return false;
+    }
+    setEmailError(null);
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    
+    if (!validateEmail(email)) {
+      return;
+    }
 
     setIsLoading(true);
     try {
@@ -102,14 +130,23 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted }: EmailCaptureMo
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                type="email"
-                placeholder="your@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="text-center"
-              />
+              <div>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (emailError) setEmailError(null);
+                  }}
+                  required
+                  className={`text-center ${emailError ? 'border-destructive' : ''}`}
+                  maxLength={255}
+                />
+                {emailError && (
+                  <p className="text-destructive text-xs mt-1 text-center">{emailError}</p>
+                )}
+              </div>
               <Button
                 type="submit"
                 variant="luxury"
