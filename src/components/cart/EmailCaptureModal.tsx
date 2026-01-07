@@ -98,16 +98,26 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted }: EmailCaptureMo
         image: item.product.node.images?.edges?.[0]?.node?.url || null,
       }));
 
-      // Save abandoned cart to database
-      const { error } = await supabase.from('abandoned_carts').insert({
-        email: email.trim(),
-        cart_items: cartItems,
-        cart_total: cartTotal,
-        currency: 'USD',
-        status: 'pending',
+      // Use rate-limited edge function
+      const { data, error } = await supabase.functions.invoke('submit-email', {
+        body: {
+          email: email.trim(),
+          type: 'cart',
+          cartItems,
+          cartTotal,
+          currency: 'USD',
+        },
       });
 
       if (error) throw error;
+
+      if (data?.error) {
+        if (data.retryAfter) {
+          toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
+          return;
+        }
+        throw new Error(data.error);
+      }
 
       toast.success('Email saved! We\'ll remind you about your cart.');
       onEmailSubmitted(email);
