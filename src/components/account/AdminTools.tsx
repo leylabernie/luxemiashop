@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RefreshCw, Shield, ShoppingBag } from 'lucide-react';
+import { RefreshCw, Shield, ShoppingBag, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -8,6 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 const AdminTools = () => {
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [isScraping, setIsScraping] = useState(false);
 
   const handleRegenerateSitemap = async () => {
     setIsRegenerating(true);
@@ -83,6 +84,40 @@ const AdminTools = () => {
     }
   };
 
+  const handleScrapeProducts = async () => {
+    setIsScraping(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error('Please log in to use admin tools');
+        return;
+      }
+
+      toast.info('Scraping products... This may take a few minutes');
+
+      const { data, error } = await supabase.functions.invoke('sync-products', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+      
+      if (error) {
+        throw error;
+      }
+
+      toast.success(`Scraped ${data?.added || 0} products`, {
+        description: `Synced to Shopify: ${data?.shopifySynced || 0}${data?.shopifyFailed > 0 ? `, Failed: ${data.shopifyFailed}` : ''}`,
+      });
+    } catch (error) {
+      console.error('Error scraping products:', error);
+      toast.error('Failed to scrape products', {
+        description: error instanceof Error ? error.message : 'Please try again later',
+      });
+    } finally {
+      setIsScraping(false);
+    }
+  };
+
   return (
     <Card className="border-border/50">
       <CardHeader>
@@ -115,6 +150,23 @@ const AdminTools = () => {
 
         <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
           <div>
+            <p className="font-medium">Scrape & Sync Products</p>
+            <p className="text-sm text-muted-foreground">
+              Scrape new products and auto-sync to Shopify with SEO
+            </p>
+          </div>
+          <Button
+            onClick={handleScrapeProducts}
+            disabled={isScraping || isSyncing}
+            className="gap-2"
+          >
+            <Download className={`w-4 h-4 ${isScraping ? 'animate-bounce' : ''}`} />
+            {isScraping ? 'Scraping...' : 'Scrape & Sync'}
+          </Button>
+        </div>
+
+        <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+          <div>
             <p className="font-medium">Sync Products to Shopify</p>
             <p className="text-sm text-muted-foreground">
               Push unsynced products with images to Shopify
@@ -123,7 +175,7 @@ const AdminTools = () => {
           <div className="flex gap-2">
             <Button
               onClick={() => handleSyncToShopify(false)}
-              disabled={isSyncing}
+              disabled={isSyncing || isScraping}
               variant="outline"
               className="gap-2"
             >
@@ -132,7 +184,7 @@ const AdminTools = () => {
             </Button>
             <Button
               onClick={() => handleSyncToShopify(true)}
-              disabled={isSyncing}
+              disabled={isSyncing || isScraping}
               variant="secondary"
               className="gap-2"
             >
