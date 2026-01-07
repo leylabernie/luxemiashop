@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, Trash2, Loader2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import EmailCaptureModal from './EmailCaptureModal';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -11,18 +13,31 @@ interface CartDrawerProps {
 
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const { items, isLoading, updateQuantity, removeItem, createCheckout } = useCartStore();
+  const [showEmailCapture, setShowEmailCapture] = useState(false);
+  const [capturedEmail, setCapturedEmail] = useState<string | null>(null);
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
 
   const formatPrice = (amount: number, currency: string) => {
-    if (currency === 'INR') {
-      return `₹${amount.toLocaleString('en-IN')}`;
-    }
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount);
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
 
-  const handleCheckout = async () => {
+  const handleCheckoutClick = () => {
+    // If we haven't captured email yet, show the modal
+    if (!capturedEmail) {
+      setShowEmailCapture(true);
+    } else {
+      proceedToCheckout();
+    }
+  };
+
+  const handleEmailSubmitted = (email: string) => {
+    setCapturedEmail(email);
+    proceedToCheckout();
+  };
+
+  const proceedToCheckout = async () => {
     const checkoutUrl = await createCheckout();
     if (checkoutUrl) {
       window.open(checkoutUrl, '_blank');
@@ -149,7 +164,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   variant="luxury" 
                   size="lg" 
                   className="w-full"
-                  onClick={handleCheckout}
+                  onClick={handleCheckoutClick}
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -173,6 +188,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               </div>
             )}
           </motion.aside>
+
+          {/* Email Capture Modal */}
+          <EmailCaptureModal
+            isOpen={showEmailCapture}
+            onClose={() => setShowEmailCapture(false)}
+            onEmailSubmitted={handleEmailSubmitted}
+          />
         </>
       )}
     </AnimatePresence>
