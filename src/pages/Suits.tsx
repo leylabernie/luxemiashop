@@ -54,7 +54,7 @@ const suitFilterSections = [
 const Suits = () => {
   const { products, isLoading } = useScrapedProducts('suits');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 300]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Size', 'Category']);
@@ -124,7 +124,7 @@ const Suits = () => {
               size="sm"
               onClick={() => {
                 setActiveFilters({});
-                setPriceRange([0, 300]);
+                setPriceRange([0, 500]);
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
@@ -155,14 +155,14 @@ const Suits = () => {
                 transition={{ duration: 0.2 }}
               >
                 <div className="space-y-4">
-                  <Slider
-                    value={priceRange}
-                    onValueChange={(value) => setPriceRange(value as [number, number])}
-                    min={0}
-                    max={300}
-                    step={10}
-                    className="py-4"
-                  />
+                    <Slider
+                      value={priceRange}
+                      onValueChange={(value) => setPriceRange(value as [number, number])}
+                      min={0}
+                      max={500}
+                      step={10}
+                      className="py-4"
+                    />
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span>${priceRange[0]}</span>
                     <span>${priceRange[1]}</span>
@@ -391,11 +391,11 @@ const Suits = () => {
               {!isLoading && filteredProducts.length === 0 && (
                 <div className="text-center py-16">
                   <p className="text-muted-foreground mb-4">No suits found matching your criteria.</p>
-                  <Button
+                <Button
                     variant="outline"
                     onClick={() => {
                       setActiveFilters({});
-                      setPriceRange([0, 300]);
+                      setPriceRange([0, 500]);
                     }}
                   >
                     Clear All Filters
