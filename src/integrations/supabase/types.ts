@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      newsletter_subscribers: {
+        Row: {
+          discount_code: string | null
+          discount_used: boolean | null
+          email: string
+          id: string
+          is_active: boolean
+          source: string | null
+          subscribed_at: string
+        }
+        Insert: {
+          discount_code?: string | null
+          discount_used?: boolean | null
+          email: string
+          id?: string
+          is_active?: boolean
+          source?: string | null
+          subscribed_at?: string
+        }
+        Update: {
+          discount_code?: string | null
+          discount_used?: boolean | null
+          email?: string
+          id?: string
+          is_active?: boolean
+          source?: string | null
+          subscribed_at?: string
+        }
+        Relationships: []
+      }
       order_tracking_notifications: {
         Row: {
           customer_email: string
