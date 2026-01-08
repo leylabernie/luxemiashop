@@ -85,7 +85,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   const isMobile = useIsMobile();
   
   const MAGNIFIER_SIZE = 200;
-  const ZOOM_LEVEL = 2.5;
+  const ZOOM_LEVEL = 0.5; // Zoom out effect - shows more of the image
   const MAX_LIGHTBOX_ZOOM = 4;
 
   // Use validated images - only show ones that actually loaded
