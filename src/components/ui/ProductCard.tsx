@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -18,12 +18,12 @@ interface ProductCardProps {
   className?: string;
 }
 
-export const ProductCard = ({ 
+export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({ 
   product, 
   index = 0, 
   showQuickAdd = true,
   className = '' 
-}: ProductCardProps) => {
+}, ref) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isLoaded, setIsLoaded] = useState(false);
@@ -204,7 +204,15 @@ export const ProductCard = ({
 
   return (
     <motion.div
-      ref={cardRef}
+      ref={(node) => {
+        // Merge external ref with internal cardRef
+        cardRef.current = node;
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      }}
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: animationDelay }}
@@ -317,6 +325,8 @@ export const ProductCard = ({
       </Link>
     </motion.div>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;

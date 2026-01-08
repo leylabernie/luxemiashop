@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -61,7 +61,7 @@ const suitFilterSections = [
 ];
 
 const Suits = () => {
-  const { products, isLoading, isLoadingMore, hasMore, lastProductRef } = useInfiniteProducts('suits');
+  const { products, isLoading, isLoadingMore, hasMore, lastProductRef, loadMore } = useInfiniteProducts('suits');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState('featured');
@@ -72,6 +72,15 @@ const Suits = () => {
   const filteredProducts = useMemo(() => {
     return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
   }, [products, activeFilters, priceRange, sortBy]);
+
+  // Auto-load more products when filters reduce visible results but more exist
+  useEffect(() => {
+    const hasActiveFilters = Object.values(activeFilters).some(arr => arr.length > 0) || priceRange[0] > 0 || priceRange[1] < 500;
+    
+    if (hasActiveFilters && filteredProducts.length < 12 && hasMore && !isLoadingMore) {
+      loadMore();
+    }
+  }, [filteredProducts.length, hasMore, isLoadingMore, loadMore, activeFilters, priceRange]);
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
@@ -365,18 +374,16 @@ const Suits = () => {
                 <>
                   <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
                     {filteredProducts.map((product, index) => {
-                      const isLastProduct = index === filteredProducts.length - 1;
+                      const rawIndex = products.findIndex(p => p.node.id === product.node.id);
+                      const isLastRawProduct = rawIndex === products.length - 1;
                       return (
-                        <div 
+                        <ProductCard 
                           key={product.node.id}
-                          ref={isLastProduct ? lastProductRef : null}
-                        >
-                          <ProductCard 
-                            product={product} 
-                            index={index % 20}
-                            showQuickAdd={true}
-                          />
-                        </div>
+                          ref={isLastRawProduct ? lastProductRef : null}
+                          product={product} 
+                          index={index % 20}
+                          showQuickAdd={true}
+                        />
                       );
                     })}
                   </div>
