@@ -111,25 +111,42 @@ const cleanTitle = (title: string): string => {
   return cleaned;
 };
 
-// Generate boutique-style title
+// Generate SEO-optimized title with primary keywords first
+// Format: Primary Keyword + Occasion | Color + Fabric + Work | Buy Online USA - LuxeMia
 const generateBoutiqueTitle = (fabric: string, color: string, work: string, category: string): string => {
   const cleanFabric = cleanTitle(fabric);
   const cleanColor = cleanTitle(color);
+  const cleanWork = work && work !== 'Handwork' ? work : '';
   
-  const categoryNames: Record<string, string> = {
-    lehengas: 'Bridal Lehenga',
-    sarees: 'Designer Saree', 
-    suits: 'Embroidered Ensemble',
-    menswear: 'Kurta Set'
+  // Primary keywords and occasion modifiers by category
+  const categoryConfig: Record<string, { primary: string; occasion: string; type: string }> = {
+    lehengas: { 
+      primary: 'Bridal Lehenga', 
+      occasion: 'for Wedding',
+      type: 'Heavy Work'
+    },
+    sarees: { 
+      primary: 'Designer Saree', 
+      occasion: 'for Wedding & Party',
+      type: 'Traditional'
+    },
+    suits: { 
+      primary: 'Anarkali Suit', 
+      occasion: 'for Festive Wear',
+      type: 'Embroidered'
+    },
+    menswear: { 
+      primary: 'Mens Kurta Pajama', 
+      occasion: 'for Wedding',
+      type: 'Ethnic'
+    }
   };
   
-  const categoryName = categoryNames[category] || 'Designer Piece';
+  const config = categoryConfig[category] || categoryConfig.lehengas;
+  const workType = cleanWork || config.type;
   
-  // Create elegant title without brand names
-  if (work && work !== 'Handwork') {
-    return `${cleanColor} ${cleanFabric} ${work} ${categoryName}`;
-  }
-  return `${cleanColor} ${cleanFabric} ${categoryName}`;
+  // SEO-optimized format: Primary Keyword + Occasion | Color + Fabric + Work | Buy Online USA - LuxeMia
+  return `${config.primary} ${config.occasion} | ${cleanColor} ${cleanFabric} ${workType} | Buy Online USA - LuxeMia`;
 };
 
 // Extract product info from image URL (more reliable than title for scraped content)
