@@ -68,14 +68,116 @@ const Menswear = () => {
   const staticProducts = useMemo(() => getAllMenswearProducts(), []);
   const products = scrapedProducts.length > 0 ? scrapedProducts : staticProducts;
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
 
-  // Apply filters and sorting using the reusable utility
+  // Apply filters and sorting - use INR price for filtering
   const filteredProducts = useMemo(() => {
-    return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
+    // First filter by INR price from metadata
+    let filtered = products.filter(p => {
+      const metadata = (p.node as { metadata?: { priceInr?: number | null } }).metadata;
+      const priceInr = metadata?.priceInr;
+      if (priceInr === undefined || priceInr === null) {
+        // For products without INR price, use USD conversion estimate
+        const priceUsd = parseFloat(p.node.priceRange.minVariantPrice.amount);
+        const estimatedInr = priceUsd / 0.012 / 2.5; // Reverse conversion
+        return estimatedInr >= priceRange[0] && estimatedInr <= priceRange[1];
+      }
+      return priceInr >= priceRange[0] && priceInr <= priceRange[1];
+    });
+    
+    // Apply other filters (excluding price since we handled it above)
+    Object.entries(activeFilters).forEach(([category, values]) => {
+      if (values.length === 0) return;
+      
+      const normalizedCategory = category.toLowerCase();
+      
+      filtered = filtered.filter(p => {
+        const metadata = (p.node as { metadata?: { occasion?: string | null; fabric?: string | null; color?: string | null; tags?: string[] | null } }).metadata;
+        const variants = p.node.variants?.edges || [];
+
+        // Handle Size filter
+        if (normalizedCategory === 'size') {
+          return values.some(filterValue => {
+            const filterLower = filterValue.toLowerCase();
+            return variants.some(v => 
+              v.node.selectedOptions?.some(opt => 
+                opt.name.toLowerCase() === 'size' && 
+                opt.value.toLowerCase().includes(filterLower)
+              )
+            ) || 
+            p.node.options?.some(opt => 
+              opt.name.toLowerCase() === 'size' && 
+              opt.values.some(val => val.toLowerCase().includes(filterLower))
+            );
+          });
+        }
+
+        // For category filter, check title
+        if (normalizedCategory === 'category') {
+          return values.some(filterValue => {
+            const filterLower = filterValue.toLowerCase();
+            return p.node.title.toLowerCase().includes(filterLower);
+          });
+        }
+
+        if (!metadata) return true; // Allow products without metadata to pass non-size filters
+
+        let productValue: string | null | undefined;
+
+        switch (normalizedCategory) {
+          case 'occasion':
+            productValue = metadata.occasion;
+            break;
+          case 'fabric':
+            productValue = metadata.fabric;
+            break;
+          case 'color':
+            productValue = metadata.color;
+            break;
+          default:
+            return true;
+        }
+
+        return values.some(filterValue => {
+          const filterLower = filterValue.toLowerCase();
+          if (productValue && productValue.toLowerCase().includes(filterLower)) {
+            return true;
+          }
+          if (metadata.tags?.some(tag => tag.toLowerCase().includes(filterLower))) {
+            return true;
+          }
+          return false;
+        });
+      });
+    });
+    
+    // Apply sorting
+    const sorted = [...filtered];
+    switch (sortBy) {
+      case 'price-asc':
+        sorted.sort((a, b) => {
+          const metaA = (a.node as { metadata?: { priceInr?: number | null } }).metadata;
+          const metaB = (b.node as { metadata?: { priceInr?: number | null } }).metadata;
+          const priceA = metaA?.priceInr || parseFloat(a.node.priceRange.minVariantPrice.amount) / 0.012 / 2.5;
+          const priceB = metaB?.priceInr || parseFloat(b.node.priceRange.minVariantPrice.amount) / 0.012 / 2.5;
+          return priceA - priceB;
+        });
+        break;
+      case 'price-desc':
+        sorted.sort((a, b) => {
+          const metaA = (a.node as { metadata?: { priceInr?: number | null } }).metadata;
+          const metaB = (b.node as { metadata?: { priceInr?: number | null } }).metadata;
+          const priceA = metaA?.priceInr || parseFloat(a.node.priceRange.minVariantPrice.amount) / 0.012 / 2.5;
+          const priceB = metaB?.priceInr || parseFloat(b.node.priceRange.minVariantPrice.amount) / 0.012 / 2.5;
+          return priceB - priceA;
+        });
+        break;
+    }
+    
+    return sorted;
   }, [products, activeFilters, priceRange, sortBy]);
 
   const handleFilterChange = (section: string, option: string) => {
@@ -115,7 +217,7 @@ const Menswear = () => {
               size="sm"
               onClick={() => {
                 setActiveFilters({});
-                setPriceRange([0, 2000]);
+                setPriceRange([0, 200000]);
               }}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
@@ -150,13 +252,13 @@ const Menswear = () => {
                     value={priceRange}
                     onValueChange={(value) => setPriceRange(value as [number, number])}
                     min={0}
-                    max={2000}
-                    step={50}
+                    max={200000}
+                    step={1000}
                     className="py-4"
                   />
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>${priceRange[0]}</span>
-                    <span>${priceRange[1]}</span>
+                    <span>₹{priceRange[0].toLocaleString('en-IN')}</span>
+                    <span>₹{priceRange[1].toLocaleString('en-IN')}</span>
                   </div>
                 </div>
               </motion.div>
@@ -398,7 +500,7 @@ const Menswear = () => {
                     variant="outline"
                     onClick={() => {
                       setActiveFilters({});
-                      setPriceRange([0, 2000]);
+                      setPriceRange([0, 200000]);
                     }}
                   >
                     Clear All Filters

@@ -13,6 +13,7 @@ export interface ProductMetadata {
   color?: string | null;
   work?: string | null;
   tags?: string[] | null;
+  priceInr?: number | null;
 }
 
 export interface ShopifyProduct {

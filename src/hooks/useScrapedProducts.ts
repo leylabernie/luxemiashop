@@ -145,6 +145,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
         color: product.color,
         work: product.work,
         tags: product.tags,
+        priceInr: product.price_inr,
       },
       priceRange: {
         minVariantPrice: {
