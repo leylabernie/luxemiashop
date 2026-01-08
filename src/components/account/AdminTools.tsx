@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { Progress } from '@/components/ui/progress';
+import { useUserRole } from '@/hooks/useUserRole';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ValidationResult {
   total_validated: number;
@@ -15,6 +17,27 @@ interface ValidationResult {
 }
 
 const AdminTools = () => {
+  const { isAdmin, loading: roleLoading } = useUserRole();
+  
+  // Don't render for non-admins
+  if (roleLoading) {
+    return (
+      <Card className="border-border/50">
+        <CardHeader>
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-4 w-48 mt-2" />
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Skeleton className="h-24 w-full" />
+          <Skeleton className="h-16 w-full" />
+        </CardContent>
+      </Card>
+    );
+  }
+  
+  if (!isAdmin) {
+    return null;
+  }
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isScraping, setIsScraping] = useState(false);
