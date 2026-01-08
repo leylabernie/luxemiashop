@@ -66,6 +66,25 @@ const generateBetterTitle = (imageUrl: string, category: string, color: string |
   return parts.join(' ') || base;
 };
 
+// Fix truncated image URLs - they end with "(1" but need "(1).jpg"
+const fixImageUrl = (url: string): string => {
+  if (!url) return '';
+  
+  // Check if URL already has proper extension
+  if (/\.(jpg|jpeg|png|webp|gif)$/i.test(url)) {
+    return url;
+  }
+  
+  // Add ).jpg for URLs ending with (1 or similar patterns
+  // Handle both (1 and (1(2 patterns
+  if (/\(\d+$/.test(url)) {
+    return url + ').jpg';
+  }
+  
+  // Default fallback - add .jpg
+  return url + '.jpg';
+};
+
 // Convert scraped product to Shopify format for display
 export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct => {
   const betterTitle = generateBetterTitle(
@@ -133,14 +152,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
           return imageList.map((imgUrl, index) => ({
             node: {
               // Fix truncated URLs - they end with "(1" but need "(1).jpg"
-              url: (() => {
-                // Check if URL already has proper extension
-                if (/\.(jpg|jpeg|png|webp|gif)$/i.test(imgUrl)) {
-                  return imgUrl;
-                }
-                // Add ).jpg for URLs ending with (1 or similar patterns
-                return imgUrl + ').jpg';
-              })(),
+              url: fixImageUrl(imgUrl),
               altText: `${betterTitle} - View ${index + 1}`
             }
           }));

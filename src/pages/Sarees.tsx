@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useInfiniteProducts } from '@/hooks/useInfiniteProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
 
@@ -61,7 +61,7 @@ const sareeFilterSections = [
 ];
 
 const Sarees = () => {
-  const { products, isLoading } = useScrapedProducts('sarees');
+  const { products, isLoading, isLoadingMore, hasMore, lastProductRef } = useInfiniteProducts('sarees');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sortBy, setSortBy] = useState('featured');
@@ -362,16 +362,38 @@ const Sarees = () => {
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-                  {filteredProducts.map((product, index) => (
-                    <ProductCard 
-                      key={product.node.id} 
-                      product={product} 
-                      index={index}
-                      showQuickAdd={true}
-                    />
-                  ))}
-                </div>
+                <>
+                  <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+                    {filteredProducts.map((product, index) => {
+                      const isLastProduct = index === filteredProducts.length - 1;
+                      return (
+                        <div 
+                          key={product.node.id}
+                          ref={isLastProduct ? lastProductRef : null}
+                        >
+                          <ProductCard 
+                            product={product} 
+                            index={index % 20}
+                            showQuickAdd={true}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {isLoadingMore && (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="h-6 w-6 animate-spin text-primary mr-2" />
+                      <span className="text-muted-foreground">Loading more...</span>
+                    </div>
+                  )}
+                  
+                  {!hasMore && filteredProducts.length > 0 && (
+                    <div className="text-center py-8 text-muted-foreground">
+                      You've seen all {filteredProducts.length} sarees
+                    </div>
+                  )}
+                </>
               )}
 
               {!isLoading && filteredProducts.length === 0 && (
