@@ -84,8 +84,8 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   const imageRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   
-  const MAGNIFIER_SIZE = 200;
-  const ZOOM_LEVEL = 3; // Zoom in effect - magnifies the image
+  const MAGNIFIER_SIZE = 250; // Larger magnifier for better viewing
+  const ZOOM_LEVEL = 2; // 2x zoom for crisp detail without too much blur
   const MAX_LIGHTBOX_ZOOM = 4;
 
   // Use validated images - only show ones that actually loaded
@@ -99,20 +99,20 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
       setSelectedIndex(0);
     }
   }, [displayImages.length, selectedIndex]);
-  const highResUrl = currentImage ? getOptimizedImage(currentImage.url, 'hero') : '';
+  const highResUrl = currentImage ? getOptimizedImage(currentImage.url, 'hero') : ''; // 1920px for crisp zoom
 
   // Swipe gesture support
   const dragX = useMotionValue(0);
   const dragOpacity = useTransform(dragX, [-100, 0, 100], [0.5, 1, 0.5]);
 
-  // Preload high-res image when hovering
+  // Preload high-res image immediately when component mounts for better zoom quality
   useEffect(() => {
-    if ((showMagnifier || isLightboxOpen) && highResUrl && !highResLoaded) {
+    if (highResUrl && !highResLoaded) {
       const img = new Image();
       img.src = highResUrl;
       img.onload = () => setHighResLoaded(true);
     }
-  }, [showMagnifier, isLightboxOpen, highResUrl, highResLoaded]);
+  }, [highResUrl, highResLoaded]);
 
   // Reset high-res loaded state when image changes
   useEffect(() => {
@@ -319,8 +319,8 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
             <ProductPlaceholder aspectRatio="portrait" size="lg" />
           )}
 
-          {/* Magnifier Lens - Desktop only */}
-          {showMagnifier && currentImage && !isMobile && (
+          {/* Magnifier Lens - Desktop only, uses high-res image for crisp zoom */}
+          {showMagnifier && currentImage && !isMobile && highResLoaded && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -331,20 +331,29 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 height: MAGNIFIER_SIZE,
                 left: cursorPosition.x - MAGNIFIER_SIZE / 2,
                 top: cursorPosition.y - MAGNIFIER_SIZE / 2,
-                backgroundImage: `url(${highResLoaded ? highResUrl : getOptimizedImage(currentImage.url, 'gallery')})`,
+                backgroundImage: `url(${highResUrl})`,
                 backgroundPosition: `${magnifierPosition.x}% ${magnifierPosition.y}%`,
                 backgroundSize: `${ZOOM_LEVEL * 100}%`,
                 backgroundRepeat: 'no-repeat',
                 zIndex: 10,
               }}
+            />
+          )}
+          
+          {/* Loading indicator while high-res loads */}
+          {showMagnifier && currentImage && !isMobile && !highResLoaded && (
+            <div 
+              className="absolute pointer-events-none rounded-full border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center bg-background/80"
+              style={{
+                width: MAGNIFIER_SIZE,
+                height: MAGNIFIER_SIZE,
+                left: cursorPosition.x - MAGNIFIER_SIZE / 2,
+                top: cursorPosition.y - MAGNIFIER_SIZE / 2,
+                zIndex: 10,
+              }}
             >
-              {/* Loading indicator inside magnifier */}
-              {!highResLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                </div>
-              )}
-            </motion.div>
+              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
           )}
 
           {/* Controls */}
