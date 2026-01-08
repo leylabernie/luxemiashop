@@ -146,10 +146,14 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
     // Store container size for zoom calculation
     setContainerSize({ width: rect.width, height: rect.height });
     
-    // Calculate the position in the zoomed image
-    // For proper magnification, we need to offset based on zoom level
-    const bgX = (x / rect.width) * 100;
-    const bgY = (y / rect.height) * 100;
+    // Calculate background position in pixels for proper magnification
+    // The magnifier shows a zoomed portion centered on cursor
+    const zoomedWidth = rect.width * ZOOM_LEVEL;
+    const zoomedHeight = rect.height * ZOOM_LEVEL;
+    
+    // Position: cursor position * zoom level - half magnifier size (to center)
+    const bgX = (x / rect.width) * zoomedWidth - MAGNIFIER_SIZE / 2;
+    const bgY = (y / rect.height) * zoomedHeight - MAGNIFIER_SIZE / 2;
     
     setCursorPosition({ x, y });
     setMagnifierPosition({ x: bgX, y: bgY });
@@ -337,8 +341,9 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 left: cursorPosition.x - MAGNIFIER_SIZE / 2,
                 top: cursorPosition.y - MAGNIFIER_SIZE / 2,
                 backgroundImage: `url(${highResUrl})`,
-                backgroundPosition: `${magnifierPosition.x}% ${magnifierPosition.y}%`,
-                // Set background size to container size * zoom level for proper magnification
+                // Position in pixels - negative to show the correct zoomed area
+                backgroundPosition: `-${magnifierPosition.x}px -${magnifierPosition.y}px`,
+                // Background size = container * zoom level
                 backgroundSize: `${containerSize.width * ZOOM_LEVEL}px ${containerSize.height * ZOOM_LEVEL}px`,
                 backgroundRepeat: 'no-repeat',
                 zIndex: 10,
