@@ -66,9 +66,20 @@ const generateBetterTitle = (imageUrl: string, category: string, color: string |
   return parts.join(' ') || base;
 };
 
-// Fix truncated image URLs - they end with "(1" but need "(1).jpg"
+// Fix truncated/malformed image URLs
+// Handles patterns like:
+// - "(1" -> "(1).jpg" (missing extension)
+// - "(1(2).jpg" -> "(2).jpg" (malformed multi-image URL)
+// - "(1(3).jpg" -> "(3).jpg"
 const fixImageUrl = (url: string): string => {
   if (!url) return '';
+  
+  // Fix malformed multi-image URLs like "(1(2).jpg" -> "(2).jpg"
+  // The source scraper incorrectly captured these as "(1(2).jpg" instead of "(2).jpg"
+  const malformedPattern = /\(1\((\d+)\)\.jpg$/i;
+  if (malformedPattern.test(url)) {
+    return url.replace(malformedPattern, '($1).jpg');
+  }
   
   // Check if URL already has proper extension
   if (/\.(jpg|jpeg|png|webp|gif)$/i.test(url)) {
@@ -76,7 +87,6 @@ const fixImageUrl = (url: string): string => {
   }
   
   // Add ).jpg for URLs ending with (1 or similar patterns
-  // Handle both (1 and (1(2 patterns
   if (/\(\d+$/.test(url)) {
     return url + ').jpg';
   }
