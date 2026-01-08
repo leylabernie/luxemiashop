@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Maximize2, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,63 @@ interface ProductGalleryProps {
   productTitle: string;
 }
 
+// Hook to validate images and filter out broken ones
+const useValidatedImages = (images: ProductGalleryProps['images']) => {
+  const [validatedImages, setValidatedImages] = useState<ProductGalleryProps['images']>([]);
+  const [isValidating, setIsValidating] = useState(true);
+
+  useEffect(() => {
+    if (!images || images.length === 0) {
+      setValidatedImages([]);
+      setIsValidating(false);
+      return;
+    }
+
+    setIsValidating(true);
+    const validated: ProductGalleryProps['images'] = [];
+    let loadedCount = 0;
+
+    images.forEach((image, index) => {
+      const img = new Image();
+      const optimizedUrl = getOptimizedImage(image.node.url, 'thumbnail');
+      
+      img.onload = () => {
+        validated[index] = image;
+        loadedCount++;
+        if (loadedCount === images.length) {
+          // Filter out undefined entries (failed images)
+          setValidatedImages(validated.filter(Boolean));
+          setIsValidating(false);
+        }
+      };
+      
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === images.length) {
+          setValidatedImages(validated.filter(Boolean));
+          setIsValidating(false);
+        }
+      };
+      
+      img.src = optimizedUrl;
+    });
+
+    // Timeout fallback - don't wait forever
+    const timeout = setTimeout(() => {
+      if (isValidating) {
+        setValidatedImages(validated.filter(Boolean));
+        setIsValidating(false);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [images]);
+
+  return { validatedImages, isValidating };
+};
+
 export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
+  const { validatedImages, isValidating } = useValidatedImages(images);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [showMagnifier, setShowMagnifier] = useState(false);
@@ -32,8 +88,17 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   const ZOOM_LEVEL = 2.5;
   const MAX_LIGHTBOX_ZOOM = 4;
 
-  const hasImages = images && images.length > 0;
-  const currentImage = hasImages ? images[selectedIndex]?.node : null;
+  // Use validated images - only show ones that actually loaded
+  const displayImages = validatedImages.length > 0 ? validatedImages : images;
+  const hasImages = displayImages && displayImages.length > 0;
+  const currentImage = hasImages ? displayImages[selectedIndex]?.node : null;
+  
+  // Reset selected index if it's out of bounds after validation
+  useEffect(() => {
+    if (selectedIndex >= displayImages.length && displayImages.length > 0) {
+      setSelectedIndex(0);
+    }
+  }, [displayImages.length, selectedIndex]);
   const highResUrl = currentImage ? getOptimizedImage(currentImage.url, 'hero') : '';
 
   // Swipe gesture support
@@ -58,17 +123,17 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
 
   // Preload adjacent images
   useEffect(() => {
-    if (hasImages) {
+    if (hasImages && displayImages.length > 1) {
       const preloadIndexes = [
-        (selectedIndex - 1 + images.length) % images.length,
-        (selectedIndex + 1) % images.length,
+        (selectedIndex - 1 + displayImages.length) % displayImages.length,
+        (selectedIndex + 1) % displayImages.length,
       ];
       preloadIndexes.forEach((index) => {
         const img = new Image();
-        img.src = getOptimizedImage(images[index].node.url, 'gallery');
+        img.src = getOptimizedImage(displayImages[index].node.url, 'gallery');
       });
     }
-  }, [selectedIndex, images, hasImages]);
+  }, [selectedIndex, displayImages, hasImages]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!imageRef.current || isMobile) return;
@@ -101,13 +166,13 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
 
   const handlePrevImage = useCallback((e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
+    setSelectedIndex((prev) => (prev === 0 ? displayImages.length - 1 : prev - 1));
+  }, [displayImages.length]);
 
   const handleNextImage = useCallback((e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
+    setSelectedIndex((prev) => (prev === displayImages.length - 1 ? 0 : prev + 1));
+  }, [displayImages.length]);
 
   // Handle swipe gestures
   const handleDragEnd = (_: any, info: PanInfo) => {
@@ -177,14 +242,26 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
     };
   }, [isLightboxOpen]);
 
-  const showThumbnails = hasImages && images.length > 1;
+  // Only show thumbnails if we have multiple validated images
+  const showThumbnails = hasImages && displayImages.length > 1;
+
+  // Show loading skeleton while validating
+  if (isValidating && images.length > 0) {
+    return (
+      <div className="flex flex-col-reverse lg:flex-row gap-4">
+        <div className="flex-1 relative">
+          <div className="aspect-[3/4] rounded-sm overflow-hidden bg-muted animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`flex flex-col-reverse lg:flex-row gap-4 ${!showThumbnails ? 'lg:block' : ''}`}>
-      {/* Thumbnail Strip - only show if multiple images */}
+      {/* Thumbnail Strip - only show if multiple validated images */}
       {showThumbnails && (
         <div className="flex lg:flex-col gap-2 sm:gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0 lg:pr-2 scrollbar-hide">
-          {images.map((image, index) => (
+          {displayImages.map((image, index) => (
             <motion.button
               key={index}
               onClick={() => setSelectedIndex(index)}
@@ -221,7 +298,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
           {currentImage ? (
             <motion.div
               className="w-full h-full"
-              drag={isMobile && hasImages && images.length > 1 ? "x" : false}
+              drag={isMobile && hasImages && displayImages.length > 1 ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.2}
               onDragEnd={handleDragEnd}
@@ -286,9 +363,9 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
           </div>
 
           {/* Mobile Swipe Indicators */}
-          {isMobile && hasImages && images.length > 1 && (
+          {isMobile && hasImages && displayImages.length > 1 && (
             <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {images.map((_, index) => (
+              {displayImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => {
@@ -313,15 +390,15 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
           </div>
 
           {/* Image Counter - Desktop */}
-          {!isMobile && hasImages && images.length > 1 && (
+          {!isMobile && hasImages && displayImages.length > 1 && (
             <div className="absolute bottom-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-sm text-sm">
-              {selectedIndex + 1} / {images.length}
+              {selectedIndex + 1} / {displayImages.length}
             </div>
           )}
         </motion.div>
 
         {/* Desktop Navigation Arrows */}
-        {!isMobile && hasImages && images.length > 1 && (
+        {!isMobile && hasImages && displayImages.length > 1 && (
           <>
             <Button
               variant="secondary"
@@ -390,7 +467,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               </div>
 
               {/* Navigation Arrows */}
-              {images.length > 1 && (
+              {displayImages.length > 1 && (
                 <>
                   <Button
                     variant="ghost"
@@ -459,9 +536,9 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               </motion.div>
 
               {/* Thumbnail Strip in Lightbox */}
-              {images.length > 1 && (
+              {displayImages.length > 1 && (
                 <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 bg-black/50 backdrop-blur-sm rounded-lg max-w-[90vw] overflow-x-auto scrollbar-hide">
-                  {images.map((image, index) => (
+                  {displayImages.map((image, index) => (
                     <motion.button
                       key={index}
                       whileHover={{ scale: 1.05 }}
