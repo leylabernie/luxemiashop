@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ const quickFilterOptions = {
   fabric: ['Silk', 'Velvet', 'Georgette', 'Cotton', 'Chiffon'],
 };
 
-const ProductSearch = forwardRef<HTMLDivElement, ProductSearchProps>(({ isOpen, onClose }, ref) => {
+const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [showFilters, setShowFilters] = useState(false);
@@ -442,8 +442,6 @@ const ProductSearch = forwardRef<HTMLDivElement, ProductSearchProps>(({ isOpen, 
       )}
     </AnimatePresence>
   );
-});
-
-ProductSearch.displayName = 'ProductSearch';
+};
 
 export default ProductSearch;
