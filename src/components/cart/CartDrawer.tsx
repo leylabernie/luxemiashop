@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, Trash2, Loader2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ interface CartDrawerProps {
   onClose: () => void;
 }
 
-const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
+const CartDrawer = forwardRef<HTMLDivElement, CartDrawerProps>(({ isOpen, onClose }, ref) => {
   const { items, isLoading, updateQuantity, removeItem, createCheckout } = useCartStore();
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [capturedEmail, setCapturedEmail] = useState<string | null>(null);
@@ -199,6 +199,8 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       )}
     </AnimatePresence>
   );
-};
+});
+
+CartDrawer.displayName = 'CartDrawer';
 
 export default CartDrawer;
