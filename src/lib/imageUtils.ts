@@ -7,8 +7,8 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
  */
 const isExternalImage = (url: string): boolean => {
   if (!url) return false;
-  // Only proxy images from fashidwholesale.in
-  return url.includes('fashidwholesale.in');
+  // Proxy images from these domains that have hotlink protection
+  return url.includes('kesimg.b-cdn.net') || url.includes('fashidwholesale.in');
 };
 
 /**
@@ -36,9 +36,16 @@ export const getHighResImage = (url: string, size: 1200 | 1500 | 1920 = 1200): s
 export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | 'gallery' | 'hero' = 'card'): string => {
   if (!url) return url;
   
-  // For external images, proxy them
-  if (isExternalImage(url)) {
-    return getProxiedImageUrl(url);
+  let optimizedUrl = url;
+  
+  // Ensure URL has proper extension first
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(optimizedUrl)) {
+    // URLs often end with (1 and need ).jpg
+    if (/\(\d+$/.test(optimizedUrl)) {
+      optimizedUrl = optimizedUrl + ').jpg';
+    } else {
+      optimizedUrl = optimizedUrl + '.jpg';
+    }
   }
   
   const sizeMap = {
@@ -49,12 +56,11 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
   };
   
   const size = sizeMap[context];
-  let optimizedUrl = url.replace('/images/650/', `/images/${size}/`);
+  optimizedUrl = optimizedUrl.replace('/images/650/', `/images/${size}/`);
   
-  // Ensure URL has proper extension
-  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(optimizedUrl)) {
-    // URLs often end with (1 and need ).jpg
-    optimizedUrl = optimizedUrl + ').jpg';
+  // For external images, proxy them to bypass hotlink protection
+  if (isExternalImage(optimizedUrl)) {
+    return getProxiedImageUrl(optimizedUrl);
   }
   
   return optimizedUrl;
