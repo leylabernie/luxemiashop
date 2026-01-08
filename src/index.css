@@ -283,3 +283,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--sage-deep));
 }
+
+/* Safe area support for iOS devices with notches */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Add bottom padding to main content on mobile to prevent overlap with bottom nav */
+@media (max-width: 767px) {
+  main {
+    padding-bottom: 5rem;
+  }
+}

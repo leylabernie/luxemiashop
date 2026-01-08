@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking } from "./hooks/useAnalytics";
+import MobileBottomNav from "./components/layout/MobileBottomNav";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Collections from "./pages/Collections";
@@ -55,7 +56,7 @@ const App = () => (
       <AuthProvider>
         <TooltipProvider>
           <Toaster />
-          <Sonner />
+          <Sonner position="top-center" />
           <BrowserRouter>
             <PageTracker>
               <Routes>
@@ -100,6 +101,7 @@ const App = () => (
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              <MobileBottomNav />
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>
