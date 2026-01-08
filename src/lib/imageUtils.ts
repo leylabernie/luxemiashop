@@ -33,20 +33,39 @@ export const getHighResImage = (url: string, size: 1200 | 1500 | 1920 = 1200): s
 /**
  * Get optimized image URL based on usage context
  */
+/**
+ * Fix malformed image URLs from the database
+ * Handles patterns like:
+ * - "(1" -> "(1).jpg" (missing extension)
+ * - "(1(2).jpg" -> "(2).jpg" (malformed multi-image URL)
+ */
+const fixMalformedUrl = (url: string): string => {
+  if (!url) return url;
+  
+  // Fix malformed multi-image URLs like "(1(2).jpg" -> "(2).jpg"
+  const malformedPattern = /\(1\((\d+)\)\.jpg$/i;
+  if (malformedPattern.test(url)) {
+    return url.replace(malformedPattern, '($1).jpg');
+  }
+  
+  // Ensure URL has proper extension
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(url)) {
+    // URLs often end with (1 and need ).jpg
+    if (/\(\d+$/.test(url)) {
+      return url + ').jpg';
+    } else {
+      return url + '.jpg';
+    }
+  }
+  
+  return url;
+};
+
 export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | 'gallery' | 'hero' = 'card'): string => {
   if (!url) return url;
   
-  let optimizedUrl = url;
-  
-  // Ensure URL has proper extension first
-  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(optimizedUrl)) {
-    // URLs often end with (1 and need ).jpg
-    if (/\(\d+$/.test(optimizedUrl)) {
-      optimizedUrl = optimizedUrl + ').jpg';
-    } else {
-      optimizedUrl = optimizedUrl + '.jpg';
-    }
-  }
+  // First fix any malformed URLs
+  let optimizedUrl = fixMalformedUrl(url);
   
   const sizeMap = {
     thumbnail: 650,  // Small thumbnails, lists
