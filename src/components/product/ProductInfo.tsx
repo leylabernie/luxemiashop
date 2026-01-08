@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock, Star, Clock, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -337,22 +337,89 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </Button>
       </div>
 
-      {/* Trust Badges */}
-      <div className="grid grid-cols-3 gap-3 pt-4">
-        <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
-          <Truck className="h-5 w-5 text-primary mb-2" />
-          <p className="text-xs font-medium">Worldwide Shipping</p>
-          <p className="text-xs text-muted-foreground">3-5 weeks delivery</p>
+      {/* Customer Reviews Summary */}
+      <div className="flex items-center gap-3 pt-4 pb-2">
+        <div className="flex items-center gap-1">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <Star
+              key={star}
+              className={`h-4 w-4 ${star <= 4 ? 'fill-amber-400 text-amber-400' : 'fill-amber-400/30 text-amber-400/30'}`}
+            />
+          ))}
         </div>
-        <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
-          <Shield className="h-5 w-5 text-primary mb-2" />
-          <p className="text-xs font-medium">Quality Assured</p>
-          <p className="text-xs text-muted-foreground">Handcrafted with care</p>
+        <span className="text-sm font-medium">4.8</span>
+        <span className="text-sm text-muted-foreground">(127 reviews)</span>
+        <BadgeCheck className="h-4 w-4 text-primary ml-auto" />
+        <span className="text-xs text-primary font-medium">Verified Seller</span>
+      </div>
+
+      <Separator />
+
+      {/* Trust Badges - Enhanced */}
+      <div className="grid grid-cols-2 gap-3 pt-4">
+        <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <Award className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm font-medium">100% Authentic</p>
+            <p className="text-xs text-muted-foreground">Certified handcrafted</p>
+          </div>
         </div>
-        <div className="flex flex-col items-center text-center p-3 bg-card/50 rounded-sm border border-border/30">
-          <Package className="h-5 w-5 text-primary mb-2" />
-          <p className="text-xs font-medium">Secure Package</p>
-          <p className="text-xs text-muted-foreground">Premium packaging</p>
+        <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <RefreshCcw className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm font-medium">Easy Returns</p>
+            <p className="text-xs text-muted-foreground">7-day return policy</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <Lock className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm font-medium">Secure Checkout</p>
+            <p className="text-xs text-muted-foreground">SSL encrypted</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <Truck className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-sm font-medium">Global Shipping</p>
+            <p className="text-xs text-muted-foreground">Trackable delivery</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Additional Trust Elements */}
+      <div className="space-y-3 pt-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Clock className="h-4 w-4 text-primary" />
+          <span>Order within <span className="text-foreground font-medium">2 hrs 34 mins</span> for fastest delivery</span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Shield className="h-4 w-4 text-primary" />
+          <span>Quality checked by <span className="text-foreground font-medium">LuxeMia artisans</span></span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Package className="h-4 w-4 text-primary" />
+          <span>Premium packaging with <span className="text-foreground font-medium">gift box included</span></span>
+        </div>
+      </div>
+
+      {/* Payment Methods */}
+      <div className="pt-4 border-t border-border/30 mt-4">
+        <p className="text-xs text-muted-foreground mb-2">We Accept</p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Visa</div>
+          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Mastercard</div>
+          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Amex</div>
+          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">PayPal</div>
+          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">UPI</div>
         </div>
       </div>
     </div>
