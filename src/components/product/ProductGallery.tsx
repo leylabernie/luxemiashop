@@ -81,11 +81,12 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   const [highResLoaded, setHighResLoaded] = useState(false);
   const [lightboxZoom, setLightboxZoom] = useState(1);
   const [lightboxPan, setLightboxPan] = useState({ x: 0, y: 0 });
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
   
-  const MAGNIFIER_SIZE = 250; // Larger magnifier for better viewing
-  const ZOOM_LEVEL = 2; // 2x zoom for crisp detail without too much blur
+  const MAGNIFIER_SIZE = 200;
+  const ZOOM_LEVEL = 2.5; // 2.5x magnification
   const MAX_LIGHTBOX_ZOOM = 4;
 
   // Use validated images - only show ones that actually loaded
@@ -142,12 +143,16 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Calculate percentage position for background
-    const percentX = (x / rect.width) * 100;
-    const percentY = (y / rect.height) * 100;
+    // Store container size for zoom calculation
+    setContainerSize({ width: rect.width, height: rect.height });
+    
+    // Calculate the position in the zoomed image
+    // For proper magnification, we need to offset based on zoom level
+    const bgX = (x / rect.width) * 100;
+    const bgY = (y / rect.height) * 100;
     
     setCursorPosition({ x, y });
-    setMagnifierPosition({ x: percentX, y: percentY });
+    setMagnifierPosition({ x: bgX, y: bgY });
   };
 
   const handleMouseEnter = () => {
@@ -320,7 +325,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
           )}
 
           {/* Magnifier Lens - Desktop only, uses high-res image for crisp zoom */}
-          {showMagnifier && currentImage && !isMobile && highResLoaded && (
+          {showMagnifier && currentImage && !isMobile && highResLoaded && containerSize.width > 0 && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -333,7 +338,8 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 top: cursorPosition.y - MAGNIFIER_SIZE / 2,
                 backgroundImage: `url(${highResUrl})`,
                 backgroundPosition: `${magnifierPosition.x}% ${magnifierPosition.y}%`,
-                backgroundSize: `${ZOOM_LEVEL * 100}%`,
+                // Set background size to container size * zoom level for proper magnification
+                backgroundSize: `${containerSize.width * ZOOM_LEVEL}px ${containerSize.height * ZOOM_LEVEL}px`,
                 backgroundRepeat: 'no-repeat',
                 zIndex: 10,
               }}
