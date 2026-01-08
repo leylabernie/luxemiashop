@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -22,9 +22,18 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { useInfiniteProducts } from '@/hooks/useInfiniteProducts';
+import { usePaginatedProducts } from '@/hooks/usePaginatedProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -61,7 +70,7 @@ const suitFilterSections = [
 ];
 
 const Suits = () => {
-  const { products, isLoading, isLoadingMore, hasMore, lastProductRef, loadMore } = useInfiniteProducts('suits');
+  const { products, isLoading, currentPage, totalPages, totalCount, goToPage } = usePaginatedProducts('suits');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState('featured');
@@ -73,14 +82,22 @@ const Suits = () => {
     return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
   }, [products, activeFilters, priceRange, sortBy]);
 
-  // Auto-load more products when filters reduce visible results but more exist
-  useEffect(() => {
-    const hasActiveFilters = Object.values(activeFilters).some(arr => arr.length > 0) || priceRange[0] > 0 || priceRange[1] < 500;
-    
-    if (hasActiveFilters && filteredProducts.length < 12 && hasMore && !isLoadingMore) {
-      loadMore();
+  // Generate pagination numbers
+  const getPageNumbers = () => {
+    const pages: (number | 'ellipsis')[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push('ellipsis');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push('ellipsis');
+      pages.push(totalPages);
     }
-  }, [filteredProducts.length, hasMore, isLoadingMore, loadMore, activeFilters, priceRange]);
+    return pages;
+  };
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
@@ -373,31 +390,55 @@ const Suits = () => {
               ) : (
                 <>
                   <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-                    {filteredProducts.map((product, index) => {
-                      const rawIndex = products.findIndex(p => p.node.id === product.node.id);
-                      const isLastRawProduct = rawIndex === products.length - 1;
-                      return (
-                        <ProductCard 
-                          key={product.node.id}
-                          ref={isLastRawProduct ? lastProductRef : null}
-                          product={product} 
-                          index={index % 20}
-                          showQuickAdd={true}
-                        />
-                      );
-                    })}
+                    {filteredProducts.map((product, index) => (
+                      <ProductCard 
+                        key={product.node.id}
+                        product={product} 
+                        index={index % 24}
+                        showQuickAdd={true}
+                      />
+                    ))}
                   </div>
                   
-                  {isLoadingMore && (
-                    <div className="flex items-center justify-center py-8">
-                      <Loader2 className="h-6 w-6 animate-spin text-primary mr-2" />
-                      <span className="text-muted-foreground">Loading more...</span>
-                    </div>
-                  )}
-                  
-                  {!hasMore && filteredProducts.length > 0 && (
-                    <div className="text-center py-8 text-muted-foreground">
-                      You've seen all {filteredProducts.length} suits
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="mt-12">
+                      <Pagination>
+                        <PaginationContent>
+                          <PaginationItem>
+                            <PaginationPrevious 
+                              onClick={() => goToPage(currentPage - 1)}
+                              className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                            />
+                          </PaginationItem>
+                          
+                          {getPageNumbers().map((page, idx) => (
+                            <PaginationItem key={idx}>
+                              {page === 'ellipsis' ? (
+                                <PaginationEllipsis />
+                              ) : (
+                                <PaginationLink
+                                  onClick={() => goToPage(page)}
+                                  isActive={currentPage === page}
+                                  className="cursor-pointer"
+                                >
+                                  {page}
+                                </PaginationLink>
+                              )}
+                            </PaginationItem>
+                          ))}
+                          
+                          <PaginationItem>
+                            <PaginationNext 
+                              onClick={() => goToPage(currentPage + 1)}
+                              className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+                            />
+                          </PaginationItem>
+                        </PaginationContent>
+                      </Pagination>
+                      <p className="text-center text-sm text-muted-foreground mt-4">
+                        Page {currentPage} of {totalPages} ({totalCount} products)
+                      </p>
                     </div>
                   )}
                 </>
