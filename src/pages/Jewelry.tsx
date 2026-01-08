@@ -1,21 +1,62 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { Heart, ShoppingBag, Sparkles, Crown, Gem, CircleDot } from 'lucide-react';
+import { Heart, ShoppingBag, Sparkles, Crown, Gem, CircleDot, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { jewelryProducts, jewelryCategories, type JewelryProduct } from '@/data/jewelryProducts';
 
+const PRODUCTS_PER_PAGE = 24;
+
 const Jewelry = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
 
-  const filteredProducts = selectedCategory === 'All' 
-    ? jewelryProducts 
-    : jewelryProducts.filter(item => item.category === selectedCategory);
+  const filteredProducts = useMemo(() => 
+    selectedCategory === 'All' 
+      ? jewelryProducts 
+      : jewelryProducts.filter(item => item.category === selectedCategory),
+    [selectedCategory]
+  );
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  // Reset to page 1 when category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, 4, '...', totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+      }
+    }
+    return pages;
+  };
 
   const handleAddToCart = (product: JewelryProduct) => {
     addItem({
@@ -146,12 +187,12 @@ const Jewelry = () => {
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center mb-8">
               <p className="text-muted-foreground">
-                Showing {filteredProducts.length} {selectedCategory === 'All' ? 'jewelry items' : selectedCategory.toLowerCase()}
+                Showing {paginatedProducts.length} of {filteredProducts.length} {selectedCategory === 'All' ? 'jewelry items' : selectedCategory.toLowerCase()}
               </p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredProducts.map((product, index) => (
+              {paginatedProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -227,6 +268,44 @@ const Jewelry = () => {
                 </motion.div>
               ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-12 flex justify-center items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                
+                {getPageNumbers().map((page, index) => (
+                  typeof page === 'number' ? (
+                    <Button
+                      key={index}
+                      variant={currentPage === page ? 'default' : 'outline'}
+                      size="icon"
+                      onClick={() => goToPage(page)}
+                    >
+                      {page}
+                    </Button>
+                  ) : (
+                    <span key={index} className="px-2 text-muted-foreground">...</span>
+                  )
+                ))}
+                
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
           </div>
         </section>
 
