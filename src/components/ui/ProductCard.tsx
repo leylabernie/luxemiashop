@@ -198,12 +198,16 @@ export const ProductCard = ({
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isAvailable = product.node.variants.edges[0]?.node.availableForSale !== false;
 
+  // Reduce animation delay on mobile for faster perceived loading
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const animationDelay = isMobile ? Math.min(index * 0.02, 0.1) : Math.min(index * 0.05, 0.3);
+
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
+      transition={{ duration: 0.4, delay: animationDelay }}
       className={`group ${className}`}
     >
       <Link to={`/product/${product.node.handle}`}>
@@ -256,9 +260,24 @@ export const ProductCard = ({
           ) : null}
 
 
-          {/* Hover Actions */}
-          <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-            <div className="flex gap-2">
+          {/* Mobile Wishlist Button - Always visible on mobile */}
+          <button
+            onClick={handleWishlistToggle}
+            className="absolute top-2 right-2 p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center bg-background/90 backdrop-blur-sm rounded-full transition-all z-10 lg:opacity-0 lg:group-hover:opacity-100"
+            aria-label={isInWishlist(product.node.id) ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart
+              className={`h-4 w-4 ${
+                isInWishlist(product.node.id)
+                  ? 'fill-primary text-primary'
+                  : 'text-foreground'
+              }`}
+            />
+          </button>
+
+          {/* Hover Actions - Desktop only */}
+          <div className="hidden lg:flex absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+            <div className="flex gap-2 w-full">
               {showQuickAdd && (
                 <Button
                   onClick={handleQuickAdd}
@@ -269,18 +288,6 @@ export const ProductCard = ({
                   Add to Bag
                 </Button>
               )}
-              <button
-                onClick={handleWishlistToggle}
-                className="p-2.5 bg-background/95 hover:bg-background backdrop-blur-sm rounded-md transition-colors"
-              >
-                <Heart
-                  className={`h-4 w-4 ${
-                    isInWishlist(product.node.id)
-                      ? 'fill-primary text-primary'
-                      : 'text-foreground'
-                  }`}
-                />
-              </button>
             </div>
           </div>
 

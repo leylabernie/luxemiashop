@@ -351,18 +351,18 @@ const Sarees = () => {
 
               {/* Product Grid */}
               {isLoading ? (
-                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
                   {[...Array(12)].map((_, i) => (
                     <div key={i} className="animate-pulse">
-                      <div className="aspect-[3/4] bg-secondary mb-3" />
-                      <div className="h-3 bg-secondary rounded w-1/3 mb-2" />
-                      <div className="h-4 bg-secondary rounded w-2/3 mb-2" />
-                      <div className="h-4 bg-secondary rounded w-1/4" />
+                      <div className="aspect-[3/4] bg-secondary mb-2 sm:mb-3" />
+                      <div className="h-2 sm:h-3 bg-secondary rounded w-1/3 mb-1 sm:mb-2" />
+                      <div className="h-3 sm:h-4 bg-secondary rounded w-2/3 mb-1 sm:mb-2" />
+                      <div className="h-3 sm:h-4 bg-secondary rounded w-1/4" />
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
                   {filteredProducts.map((product, index) => (
                     <ProductCard 
                       key={product.node.id} 

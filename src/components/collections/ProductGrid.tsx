@@ -6,22 +6,25 @@ import type { ShopifyProduct } from '@/lib/shopify';
 interface ProductGridProps {
   products: ShopifyProduct[];
   isLoading: boolean;
-  columns?: 3 | 4;
+  columns?: 2 | 3 | 4;
 }
 
 export const ProductGrid = ({ products, isLoading, columns = 4 }: ProductGridProps) => {
-  const gridCols = columns === 3 
-    ? 'grid-cols-2 lg:grid-cols-3' 
-    : 'grid-cols-2 lg:grid-cols-4';
+  // Mobile: always 2 cols, tablet+: respect columns prop
+  const gridCols = columns === 2
+    ? 'grid-cols-2'
+    : columns === 3 
+      ? 'grid-cols-2 md:grid-cols-3' 
+      : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
 
   if (isLoading) {
     return (
-      <div className={`grid ${gridCols} gap-4 lg:gap-6`}>
+      <div className={`grid ${gridCols} gap-2 sm:gap-4 lg:gap-6`}>
         {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} className="animate-pulse">
-            <div className="aspect-[3/4] bg-card rounded-sm mb-4" />
-            <div className="h-4 bg-card rounded w-3/4 mb-2" />
-            <div className="h-4 bg-card rounded w-1/2" />
+            <div className="aspect-[3/4] bg-card rounded-sm mb-2 sm:mb-4" />
+            <div className="h-3 sm:h-4 bg-card rounded w-3/4 mb-1 sm:mb-2" />
+            <div className="h-3 sm:h-4 bg-card rounded w-1/2" />
           </div>
         ))}
       </div>
@@ -30,16 +33,16 @@ export const ProductGrid = ({ products, isLoading, columns = 4 }: ProductGridPro
 
   if (products.length === 0) {
     return (
-      <div className={`grid ${gridCols} gap-4 lg:gap-6`}>
+      <div className={`grid ${gridCols} gap-2 sm:gap-4 lg:gap-6`}>
         {placeholderProducts.map((item, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.05 }}
+            transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.15) }}
             className="group"
           >
-            <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card">
+            <div className="relative aspect-[3/4] mb-2 sm:mb-4 overflow-hidden rounded-sm bg-card">
               <ProductPlaceholder aspectRatio="portrait" label={item.label} />
               
               {/* Badge */}
@@ -64,7 +67,7 @@ export const ProductGrid = ({ products, isLoading, columns = 4 }: ProductGridPro
   }
 
   return (
-    <div className={`grid ${gridCols} gap-4 lg:gap-6`}>
+    <div className={`grid ${gridCols} gap-2 sm:gap-4 lg:gap-6`}>
       {products.map((product, index) => (
         <ProductCard 
           key={product.node.id} 

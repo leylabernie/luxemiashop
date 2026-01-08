@@ -62,9 +62,9 @@ const Header = () => {
         {/* Main Header */}
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center h-16 lg:h-20">
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Touch optimized */}
             <button
-              className="lg:hidden p-2 -ml-2"
+              className="lg:hidden p-3 -ml-3 min-w-[44px] min-h-[44px] flex items-center justify-center active:bg-card/50 rounded-lg transition-colors"
               onClick={() => setIsMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -109,26 +109,28 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Right Icons */}
-            <div className="flex items-center gap-3 lg:gap-4 ml-6">
-              <CurrencySelector />
+            {/* Right Icons - Touch optimized */}
+            <div className="flex items-center gap-1 sm:gap-2 lg:gap-4 ml-auto sm:ml-6">
+              <div className="hidden sm:block">
+                <CurrencySelector />
+              </div>
               
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 hover:bg-card rounded-full transition-colors"
+                className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-card active:bg-card/70 rounded-full transition-colors"
                 aria-label="Search"
               >
-                <Search className="w-4 h-4 lg:w-5 lg:h-5" />
+                <Search className="w-5 h-5" />
               </button>
 
               <Link 
                 to="/wishlist"
-                className="hidden sm:flex p-2 hover:bg-card rounded-full transition-colors relative"
+                className="hidden sm:flex p-3 min-w-[44px] min-h-[44px] items-center justify-center hover:bg-card rounded-full transition-colors relative"
                 aria-label="Wishlist"
               >
-                <Heart className="w-4 h-4 lg:w-5 lg:h-5" />
+                <Heart className="w-5 h-5" />
                 {wishlistItems.length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-foreground text-[10px] rounded-full flex items-center justify-center">
+                  <span className="absolute top-1 right-1 w-4 h-4 bg-primary text-foreground text-[10px] rounded-full flex items-center justify-center">
                     {wishlistItems.length}
                   </span>
                 )}
@@ -175,12 +177,12 @@ const Header = () => {
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 hover:bg-card rounded-full transition-colors"
+                className="relative p-3 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-card active:bg-card/70 rounded-full transition-colors"
                 aria-label="Cart"
               >
-                <ShoppingBag className="w-4 h-4 lg:w-5 lg:h-5" />
+                <ShoppingBag className="w-5 h-5" />
                 {totalCartItems > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-foreground text-[10px] rounded-full flex items-center justify-center">
+                  <span className="absolute top-1 right-1 w-4 h-4 bg-primary text-foreground text-[10px] rounded-full flex items-center justify-center">
                     {totalCartItems}
                   </span>
                 )}
