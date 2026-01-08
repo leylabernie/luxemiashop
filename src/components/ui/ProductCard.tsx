@@ -31,7 +31,7 @@ export const ProductCard = ({
   const [pinchScale, setPinchScale] = useState(1);
   const [isPinching, setIsPinching] = useState(false);
   const [pinchOrigin, setPinchOrigin] = useState({ x: 50, y: 50 });
-  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
   
   const cardRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -232,7 +232,7 @@ export const ProductCard = ({
           </div>
 
           {/* Actual Image - only render when in view */}
-          {isInView && imageUrl ? (
+          {isInView && imageUrl && !imageError ? (
             <div className="w-full h-full overflow-hidden">
               <img
                 src={getOptimizedImage(imageUrl, 'card')}
@@ -240,6 +240,7 @@ export const ProductCard = ({
                 loading="lazy"
                 draggable={false}
                 onLoad={() => setIsLoaded(true)}
+                onError={() => setImageError(true)}
                 className={cn(
                   'w-full h-full object-cover select-none',
                   isLoaded ? 'opacity-100' : 'opacity-0',
@@ -255,9 +256,9 @@ export const ProductCard = ({
                 }}
               />
             </div>
-          ) : !imageUrl ? (
+          ) : (
             <ProductPlaceholder aspectRatio="portrait" />
-          ) : null}
+          )}
 
 
           {/* Mobile Wishlist Button - Always visible on mobile */}
