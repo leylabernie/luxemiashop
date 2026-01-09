@@ -25,15 +25,7 @@ import { Slider } from '@/components/ui/slider';
 import { usePaginatedProducts } from '@/hooks/usePaginatedProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination';
+import { PaginationWithInput } from '@/components/ui/pagination-with-input';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -401,46 +393,13 @@ const Sarees = () => {
                   </div>
                   
                   {/* Pagination */}
-                  {totalPages > 1 && (
-                    <div className="mt-12">
-                      <Pagination>
-                        <PaginationContent>
-                          <PaginationItem>
-                            <PaginationPrevious 
-                              onClick={() => goToPage(currentPage - 1)}
-                              className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                            />
-                          </PaginationItem>
-                          
-                          {getPageNumbers().map((page, idx) => (
-                            <PaginationItem key={idx}>
-                              {page === 'ellipsis' ? (
-                                <PaginationEllipsis />
-                              ) : (
-                                <PaginationLink
-                                  onClick={() => goToPage(page)}
-                                  isActive={currentPage === page}
-                                  className="cursor-pointer"
-                                >
-                                  {page}
-                                </PaginationLink>
-                              )}
-                            </PaginationItem>
-                          ))}
-                          
-                          <PaginationItem>
-                            <PaginationNext 
-                              onClick={() => goToPage(currentPage + 1)}
-                              className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                            />
-                          </PaginationItem>
-                        </PaginationContent>
-                      </Pagination>
-                      <p className="text-center text-sm text-muted-foreground mt-4">
-                        Page {currentPage} of {totalPages} ({totalCount} products)
-                      </p>
-                    </div>
-                  )}
+                  <PaginationWithInput
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalCount={totalCount}
+                    onPageChange={goToPage}
+                    getPageNumbers={getPageNumbers}
+                  />
                 </>
               )}
 
