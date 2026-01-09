@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
@@ -12,8 +12,9 @@ import { jewelryProducts, jewelryCategories, type JewelryProduct } from '@/data/
 const PRODUCTS_PER_PAGE = 24;
 
 const Jewelry = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get('category') || 'All';
+  const currentPage = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
   const addItem = useCartStore((state) => state.addItem);
 
   const filteredProducts = useMemo(() => 
@@ -30,14 +31,30 @@ const Jewelry = () => {
     return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
   }, [filteredProducts, currentPage]);
 
-  // Reset to page 1 when category changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedCategory]);
+  // Note: Page reset is handled in setSelectedCategory function
+
+  const setSelectedCategory = (category: string) => {
+    setSearchParams(params => {
+      if (category === 'All') {
+        params.delete('category');
+      } else {
+        params.set('category', category);
+      }
+      params.delete('page');
+      return params;
+    }, { replace: true });
+  };
 
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      setSearchParams(params => {
+        if (page === 1) {
+          params.delete('page');
+        } else {
+          params.set('page', String(page));
+        }
+        return params;
+      }, { replace: true });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
