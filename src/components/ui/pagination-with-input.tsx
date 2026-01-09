@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -49,6 +49,20 @@ export const PaginationWithInput = ({
     <div className="mt-12 space-y-4">
       <Pagination>
         <PaginationContent>
+          {/* First Page */}
+          <PaginationItem>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onPageChange(1)}
+              disabled={currentPage === 1}
+              className="h-9 w-9"
+              aria-label="Go to first page"
+            >
+              <ChevronsLeft className="h-4 w-4" />
+            </Button>
+          </PaginationItem>
+
           <PaginationItem>
             <PaginationPrevious
               onClick={() => onPageChange(currentPage - 1)}
@@ -77,6 +91,20 @@ export const PaginationWithInput = ({
               onClick={() => onPageChange(currentPage + 1)}
               className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
             />
+          </PaginationItem>
+
+          {/* Last Page */}
+          <PaginationItem>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onPageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="h-9 w-9"
+              aria-label="Go to last page"
+            >
+              <ChevronsRight className="h-4 w-4" />
+            </Button>
           </PaginationItem>
         </PaginationContent>
       </Pagination>
