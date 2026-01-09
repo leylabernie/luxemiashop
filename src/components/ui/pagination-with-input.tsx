@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,6 +42,43 @@ export const PaginationWithInput = ({
       handleGoToPage();
     }
   };
+
+  const handleGlobalKeyDown = useCallback((e: KeyboardEvent) => {
+    // Don't trigger if user is typing in an input
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      return;
+    }
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        if (currentPage > 1) {
+          onPageChange(currentPage - 1);
+        }
+        break;
+      case 'ArrowRight':
+        if (currentPage < totalPages) {
+          onPageChange(currentPage + 1);
+        }
+        break;
+      case 'Home':
+        if (currentPage !== 1) {
+          e.preventDefault();
+          onPageChange(1);
+        }
+        break;
+      case 'End':
+        if (currentPage !== totalPages) {
+          e.preventDefault();
+          onPageChange(totalPages);
+        }
+        break;
+    }
+  }, [currentPage, totalPages, onPageChange]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [handleGlobalKeyDown]);
 
   if (totalPages <= 1) return null;
 
