@@ -4,7 +4,8 @@ import { Link, useSearchParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
-import { Heart, ShoppingBag, Sparkles, Crown, Gem, CircleDot, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, ShoppingBag, Sparkles, Crown, Gem, CircleDot } from 'lucide-react';
+import { PaginationWithInput } from '@/components/ui/pagination-with-input';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { jewelryProducts, jewelryCategories, type JewelryProduct } from '@/data/jewelryProducts';
@@ -59,17 +60,17 @@ const Jewelry = () => {
     }
   };
 
-  const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
+  const getPageNumbers = (): (number | 'ellipsis')[] => {
+    const pages: (number | 'ellipsis')[] = [];
     if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages);
+        pages.push(1, 2, 3, 4, 'ellipsis', totalPages);
       } else if (currentPage >= totalPages - 2) {
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+        pages.push(1, 'ellipsis', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+        pages.push(1, 'ellipsis', currentPage - 1, currentPage, currentPage + 1, 'ellipsis', totalPages);
       }
     }
     return pages;
@@ -287,42 +288,13 @@ const Jewelry = () => {
             </div>
 
             {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => goToPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                
-                {getPageNumbers().map((page, index) => (
-                  typeof page === 'number' ? (
-                    <Button
-                      key={index}
-                      variant={currentPage === page ? 'default' : 'outline'}
-                      size="icon"
-                      onClick={() => goToPage(page)}
-                    >
-                      {page}
-                    </Button>
-                  ) : (
-                    <span key={index} className="px-2 text-muted-foreground">...</span>
-                  )
-                ))}
-                
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => goToPage(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
-            )}
+            <PaginationWithInput
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalCount={filteredProducts.length}
+              onPageChange={goToPage}
+              getPageNumbers={getPageNumbers}
+            />
           </div>
         </section>
 
