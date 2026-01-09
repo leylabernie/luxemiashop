@@ -1,17 +1,21 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { convertToShopifyFormat, type ScrapedProduct } from './useScrapedProducts';
 
 const PRODUCTS_PER_PAGE = 24;
 
 export const usePaginatedProducts = (category?: string) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
+  // Get current page from URL, default to 1
+  const currentPage = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
   const totalPages = Math.ceil(totalCount / PRODUCTS_PER_PAGE);
 
   const fetchProducts = useCallback(async (page: number) => {
@@ -68,17 +72,21 @@ export const usePaginatedProducts = (category?: string) => {
     fetchProducts(currentPage);
   }, [currentPage, fetchProducts]);
 
-  // Reset to page 1 when category changes
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [category]);
+  // Note: Category is typically static per page, so no reset needed
 
   const goToPage = useCallback((page: number) => {
     if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
+      setSearchParams(params => {
+        if (page === 1) {
+          params.delete('page');
+        } else {
+          params.set('page', String(page));
+        }
+        return params;
+      }, { replace: true });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [totalPages]);
+  }, [totalPages, setSearchParams]);
 
   return { 
     products, 
