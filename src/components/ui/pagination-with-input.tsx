@@ -29,10 +29,15 @@ export const PaginationWithInput = ({
 }: PaginationWithInputProps) => {
   const [inputValue, setInputValue] = useState('');
 
+  const handlePageChange = useCallback((page: number) => {
+    onPageChange(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [onPageChange]);
+
   const handleGoToPage = () => {
     const page = parseInt(inputValue, 10);
     if (!isNaN(page) && page >= 1 && page <= totalPages) {
-      onPageChange(page);
+      handlePageChange(page);
       setInputValue('');
     }
   };
@@ -52,28 +57,28 @@ export const PaginationWithInput = ({
     switch (e.key) {
       case 'ArrowLeft':
         if (currentPage > 1) {
-          onPageChange(currentPage - 1);
+          handlePageChange(currentPage - 1);
         }
         break;
       case 'ArrowRight':
         if (currentPage < totalPages) {
-          onPageChange(currentPage + 1);
+          handlePageChange(currentPage + 1);
         }
         break;
       case 'Home':
         if (currentPage !== 1) {
           e.preventDefault();
-          onPageChange(1);
+          handlePageChange(1);
         }
         break;
       case 'End':
         if (currentPage !== totalPages) {
           e.preventDefault();
-          onPageChange(totalPages);
+          handlePageChange(totalPages);
         }
         break;
     }
-  }, [currentPage, totalPages, onPageChange]);
+  }, [currentPage, totalPages, handlePageChange]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleGlobalKeyDown);
@@ -91,7 +96,7 @@ export const PaginationWithInput = ({
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => onPageChange(1)}
+              onClick={() => handlePageChange(1)}
               disabled={currentPage === 1}
               className="h-9 w-9"
               aria-label="Go to first page"
@@ -102,7 +107,7 @@ export const PaginationWithInput = ({
 
           <PaginationItem>
             <PaginationPrevious
-              onClick={() => onPageChange(currentPage - 1)}
+              onClick={() => handlePageChange(currentPage - 1)}
               className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
             />
           </PaginationItem>
@@ -113,7 +118,7 @@ export const PaginationWithInput = ({
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  onClick={() => onPageChange(page)}
+                  onClick={() => handlePageChange(page)}
                   isActive={currentPage === page}
                   className="cursor-pointer"
                 >
@@ -125,7 +130,7 @@ export const PaginationWithInput = ({
 
           <PaginationItem>
             <PaginationNext
-              onClick={() => onPageChange(currentPage + 1)}
+              onClick={() => handlePageChange(currentPage + 1)}
               className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
             />
           </PaginationItem>
@@ -135,7 +140,7 @@ export const PaginationWithInput = ({
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => onPageChange(totalPages)}
+              onClick={() => handlePageChange(totalPages)}
               disabled={currentPage === totalPages}
               className="h-9 w-9"
               aria-label="Go to last page"
