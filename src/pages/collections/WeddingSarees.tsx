@@ -1,73 +1,18 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ProductGrid } from '@/components/collections/ProductGrid';
 import { ProductFilters } from '@/components/collections/ProductFilters';
-import { sareeProducts } from '@/data/sareeProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-
-// Helper to convert to Shopify format
-const convertToShopifyFormat = (product: typeof sareeProducts[0]) => ({
-  node: {
-    id: product.id,
-    title: product.title,
-    description: product.description,
-    handle: product.handle,
-    productType: product.category,
-    priceRange: {
-      minVariantPrice: {
-        amount: product.price,
-        currencyCode: product.currency
-      }
-    },
-    images: {
-      edges: product.images.map((url, index) => ({
-        node: {
-          url,
-          altText: `${product.title} - Image ${index + 1}`
-        }
-      }))
-    },
-    variants: {
-      edges: product.variants.map(variant => ({
-        node: {
-          id: variant.id,
-          title: variant.title,
-          price: {
-            amount: variant.price,
-            currencyCode: product.currency
-          },
-          availableForSale: true,
-          selectedOptions: Object.entries(variant.options).map(([name, value]) => ({
-            name,
-            value
-          }))
-        }
-      }))
-    },
-    options: product.options
-  }
-});
 
 const WeddingSarees = () => {
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
-
-  // Filter for wedding occasion sarees from raw data
-  const weddingSarees = useMemo(() => {
-    return sareeProducts
-      .filter(product => {
-        const tags = product.tags || [];
-        return tags.some(t => 
-          t.toLowerCase().includes('wedding') || 
-          t.toLowerCase().includes('bridal')
-        );
-      })
-      .map(convertToShopifyFormat);
-  }, []);
+  const { products: weddingSarees, isLoading } = useShopifyProducts('sarees');
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,7 +77,7 @@ const WeddingSarees = () => {
             <div className="flex-1">
               <ProductGrid 
                 products={weddingSarees} 
-                isLoading={false}
+                isLoading={isLoading}
               />
             </div>
           </div>
