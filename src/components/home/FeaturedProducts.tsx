@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 const FeaturedProducts = () => {
-  const { products, isLoading } = useScrapedProducts();
+  const { products, isLoading } = useShopifyProducts();
   const addItem = useCartStore(state => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TrendingUp, ArrowRight, Heart, ShoppingBag } from 'lucide-react';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 const TrendingNow = () => {
-  const { products, isLoading } = useScrapedProducts('lehengas');
+  const { products, isLoading } = useShopifyProducts('lehengas');
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
