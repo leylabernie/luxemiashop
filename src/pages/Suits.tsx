@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { usePaginatedProducts } from '@/hooks/usePaginatedProducts';
+import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
 import { PaginationWithInput } from '@/components/ui/pagination-with-input';
@@ -62,7 +62,7 @@ const suitFilterSections = [
 ];
 
 const Suits = () => {
-  const { products, isLoading, currentPage, totalPages, totalCount, goToPage } = usePaginatedProducts('suits');
+  const { products, isLoading, currentPage, totalPages, totalCount, goToPage } = useShopifyPaginatedProducts('suits');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState('featured');

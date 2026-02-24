@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { getAllMenswearProducts } from '@/data/menswearProducts';
 import { filterAndSortProducts } from '@/lib/productFilters';
@@ -62,11 +62,11 @@ const menswearFilterSections = [
 ];
 
 const Menswear = () => {
-  const { products: scrapedProducts, isLoading } = useScrapedProducts('menswear');
+  const { products: shopifyProducts, isLoading } = useShopifyProducts('menswear');
   
-  // Use static products as fallback when no scraped products available
+  // Use static products as fallback when no Shopify products available
   const staticProducts = useMemo(() => getAllMenswearProducts(), []);
-  const products = scrapedProducts.length > 0 ? scrapedProducts : staticProducts;
+  const products = shopifyProducts.length > 0 ? shopifyProducts : staticProducts;
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]);
   const [sortBy, setSortBy] = useState('featured');
