@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
 
-// Map internal categories to Shopify product_type queries
+// Map internal categories to Shopify tag-based queries
 const CATEGORY_QUERY_MAP: Record<string, string> = {
-  lehengas: 'product_type:"Bridal Lehengas" OR product_type:"Bridal Lehenga"',
-  sarees: 'product_type:"Designer Sarees" OR product_type:"Designer Saree"',
-  suits: 'product_type:"Designer Suits" OR product_type:"Designer Suit"',
-  menswear: 'product_type:"Menswear"',
+  lehengas: 'tag:"Lehengas" OR tag:"Wedding Lehengas"',
+  sarees: 'tag:"Sarees" OR tag:"Wedding Guest Sarees"',
+  suits: 'tag:"Suits" OR tag:"Designer Suits"',
+  menswear: 'tag:"Kurta Sets" OR tag:"Kurta Pajama Vest" OR tag:"Sherwani for Groom"',
+  jewelry: 'tag:"Bridal Jewelry Set" OR tag:"Temple Jewelry" OR tag:"Wedding Accessories"',
 };
 
 export const useShopifyProducts = (category?: string) => {
