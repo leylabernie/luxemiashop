@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { motion } from "framer-motion";
 import { Droplets, Wind, Sun, AlertTriangle, Sparkles, Shield } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -101,6 +102,11 @@ const CareGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Garment Care Guide — LuxeMia"
+        description="Expert care instructions for your luxury Indian ethnic wear. Learn how to preserve silk sarees, lehengas, and embroidered garments for generations."
+        canonical="https://luxemia.shop/care-guide"
+      />
       <Header />
       
       <main className="pt-24">

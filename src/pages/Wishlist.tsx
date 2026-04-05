@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Heart, ShoppingBag, Trash2, ArrowRight } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore, type CartItem } from '@/stores/cartStore';
@@ -41,6 +42,11 @@ const Wishlist = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="My Wishlist — LuxeMia"
+        description="View and manage your LuxeMia wishlist. Save your favorite luxury Indian ethnic wear pieces for later."
+        canonical="https://luxemia.shop/wishlist"
+      />
       <Header />
 
       <main className="pt-[104px] lg:pt-[120px]">
