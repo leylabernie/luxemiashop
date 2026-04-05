@@ -200,7 +200,7 @@ const ProductDetail = () => {
                 />
                 
                 {/* Product Info */}
-                <ProductInfo product={product} />
+                <ProductInfo key={product.id} product={product} />
               </div>
 
               {/* Product Tabs */}

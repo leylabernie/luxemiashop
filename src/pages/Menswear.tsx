@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -22,9 +22,9 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
-import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { getAllMenswearProducts } from '@/data/menswearProducts';
+import { useScrapedProducts } from '@/hooks/useScrapedProducts';
 import { filterAndSortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -62,11 +62,11 @@ const menswearFilterSections = [
 ];
 
 const Menswear = () => {
-  const { products: shopifyProducts, isLoading } = useShopifyProducts('menswear');
-  
-  // Use static products as fallback when no Shopify products available
+  const { products: scrapedProducts, isLoading, isLoadingMore, hasMore, loadMore } = useScrapedProducts('menswear');
+
+  // Use static products as fallback when no scraped products available
   const staticProducts = useMemo(() => getAllMenswearProducts(), []);
-  const products = shopifyProducts.length > 0 ? shopifyProducts : staticProducts;
+  const products = scrapedProducts.length > 0 ? scrapedProducts : staticProducts;
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]);
   const [sortBy, setSortBy] = useState('featured');
@@ -491,6 +491,27 @@ const Menswear = () => {
                       showQuickAdd={true}
                     />
                   ))}
+                </div>
+              )}
+
+              {/* Load More */}
+              {hasMore && !isLoading && filteredProducts.length > 0 && (
+                <div className="flex justify-center mt-12">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={loadMore}
+                    disabled={isLoadingMore}
+                  >
+                    {isLoadingMore ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      'Load More Products'
+                    )}
+                  </Button>
                 </div>
               )}
 
