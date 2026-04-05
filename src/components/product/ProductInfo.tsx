@@ -80,7 +80,23 @@ const getDeliveryDates = () => {
 };
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  // Auto-select options when there's only one value per option (e.g. "Default Title")
+  const defaultOptions = useMemo(() => {
+    const defaults: Record<string, string> = {};
+    const hasRealOptions = product.options.some(
+      (opt) => opt.values.length > 1 || (opt.values.length === 1 && opt.values[0] !== 'Default Title')
+    );
+    if (!hasRealOptions || product.variants.edges.length === 1) {
+      product.options.forEach((opt) => {
+        if (opt.values.length === 1) {
+          defaults[opt.name] = opt.values[0];
+        }
+      });
+    }
+    return defaults;
+  }, [product.options, product.variants.edges.length]);
+
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
@@ -167,7 +183,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
             <Tag className="h-3 w-3" />
-            Save 25% with code LUXE2025
+            Save 25% with code LUXE2026
           </span>
         </div>
         <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
@@ -240,9 +256,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       <Separator />
 
-      {/* Options */}
+      {/* Options — hide sections with only a "Default Title" value */}
       <div className="space-y-5">
-        {product.options.map((option) => (
+        {product.options
+          .filter((option) => !(option.values.length === 1 && option.values[0] === 'Default Title'))
+          .map((option) => (
           <div key={option.name} className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium uppercase tracking-wide">

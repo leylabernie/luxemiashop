@@ -196,12 +196,17 @@ const ParallaxSection = ({ title, subtitle, content, imagePosition, bgColor }: P
         <div className={`grid md:grid-cols-2 gap-16 items-center ${imagePosition === 'left' ? '' : 'md:grid-flow-dense'}`}>
           <motion.div
             style={{ y }}
-            className={`relative aspect-[4/5] bg-secondary rounded-sm overflow-hidden ${
+            className={`relative aspect-[4/5] rounded-sm overflow-hidden ${
               imagePosition === 'left' ? 'md:order-1' : 'md:order-2'
             }`}
           >
-            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30">
-              <span className="text-sm uppercase tracking-luxury">Editorial Image</span>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#f5e6d3] via-[#e8d5c4] to-[#d4b896]">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+                <div className="w-16 h-px bg-foreground/20 mb-6" />
+                <span className="text-sm uppercase tracking-luxury text-foreground/40 font-serif">Luxemia</span>
+                <div className="w-16 h-px bg-foreground/20 mt-6" />
+              </div>
             </div>
           </motion.div>
 
