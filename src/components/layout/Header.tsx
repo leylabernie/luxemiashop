@@ -55,7 +55,7 @@ const Header = () => {
         {/* Announcement Bar */}
         <div className="bg-card py-2 text-center">
           <p className="text-xs tracking-luxury uppercase text-foreground/70">
-            New Year Sale — Up to 30% Off Bridal Collection | Use Code: LUXE2026
+            Spring Collection — Up to 30% Off | Use Code: LUXE2026
           </p>
         </div>
 

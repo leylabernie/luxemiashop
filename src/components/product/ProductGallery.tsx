@@ -273,12 +273,17 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
           {displayImages.map((image, index) => (
             <motion.button
               key={index}
-              onClick={() => setSelectedIndex(index)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setSelectedIndex(index);
+              }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`flex-shrink-0 w-16 h-20 sm:w-20 sm:h-24 lg:w-24 lg:h-28 rounded-sm overflow-hidden border-2 transition-all duration-300 ${
-                selectedIndex === index 
-                  ? 'border-primary shadow-md ring-2 ring-primary/20' 
+                selectedIndex === index
+                  ? 'border-primary shadow-md ring-2 ring-primary/20'
                   : 'border-border hover:border-primary/50'
               }`}
             >
@@ -287,6 +292,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 alt={image.node.altText || `${productTitle} - View ${index + 1}`}
                 className="w-full h-full object-cover"
                 loading="lazy"
+                draggable={false}
               />
             </motion.button>
           ))}
@@ -388,13 +394,15 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               {displayImages.map((_, index) => (
                 <button
                   key={index}
+                  type="button"
                   onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     setSelectedIndex(index);
                   }}
                   className={`w-2 h-2 rounded-full transition-all ${
-                    selectedIndex === index 
-                      ? 'bg-primary w-4' 
+                    selectedIndex === index
+                      ? 'bg-primary w-4'
                       : 'bg-primary/30'
                   }`}
                 />
@@ -561,15 +569,17 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                   {displayImages.map((image, index) => (
                     <motion.button
                       key={index}
+                      type="button"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
                         setSelectedIndex(index);
                       }}
                       className={`flex-shrink-0 w-10 h-12 sm:w-12 sm:h-14 rounded overflow-hidden border-2 transition-all duration-200 ${
-                        selectedIndex === index 
-                          ? 'border-white shadow-lg scale-110' 
+                        selectedIndex === index
+                          ? 'border-white shadow-lg scale-110'
                           : 'border-transparent opacity-60 hover:opacity-100'
                       }`}
                     >
@@ -577,6 +587,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                         src={getOptimizedImage(image.node.url, 'thumbnail')}
                         alt={image.node.altText || `${productTitle} - View ${index + 1}`}
                         className="w-full h-full object-cover"
+                        draggable={false}
                       />
                     </motion.button>
                   ))}

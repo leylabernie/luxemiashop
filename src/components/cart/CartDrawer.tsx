@@ -37,10 +37,15 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     proceedToCheckout();
   };
 
+  const handleEmailSkipped = () => {
+    setShowEmailCapture(false);
+    proceedToCheckout();
+  };
+
   const proceedToCheckout = async () => {
     const checkoutUrl = await createCheckout();
     if (checkoutUrl) {
-      window.open(checkoutUrl, '_blank');
+      window.location.href = checkoutUrl;
       onClose();
     }
   };
@@ -194,6 +199,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             isOpen={showEmailCapture}
             onClose={() => setShowEmailCapture(false)}
             onEmailSubmitted={handleEmailSubmitted}
+            onSkip={handleEmailSkipped}
           />
         </>
       )}

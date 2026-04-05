@@ -177,22 +177,29 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
   };
 };
 
+const PAGE_SIZE = 50;
+
 export const useScrapedProducts = (category?: string) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
       setError(null);
-      
+      setPage(0);
+
       try {
         let query = supabase
           .from('scraped_products')
           .select('*')
           .eq('is_active', true)
-          .order('created_at', { ascending: false });
+          .order('created_at', { ascending: false })
+          .range(0, PAGE_SIZE);
 
         if (category) {
           query = query.eq('category', category);
@@ -208,6 +215,7 @@ export const useScrapedProducts = (category?: string) => {
 
         const formattedProducts = (data || []).map(convertToShopifyFormat);
         setProducts(formattedProducts);
+        setHasMore((data || []).length > PAGE_SIZE);
       } catch (err) {
         console.error('Error in useScrapedProducts:', err);
         setError('Failed to load products');
@@ -219,7 +227,43 @@ export const useScrapedProducts = (category?: string) => {
     fetchProducts();
   }, [category]);
 
-  return { products, isLoading, error };
+  const loadMore = async () => {
+    const nextPage = page + 1;
+    const from = (nextPage * PAGE_SIZE) + 1;
+    const to = from + PAGE_SIZE;
+
+    setIsLoadingMore(true);
+    try {
+      let query = supabase
+        .from('scraped_products')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false })
+        .range(from, to);
+
+      if (category) {
+        query = query.eq('category', category);
+      }
+
+      const { data, error: fetchError } = await query;
+
+      if (fetchError) {
+        console.error('Error loading more products:', fetchError);
+        return;
+      }
+
+      const formattedProducts = (data || []).map(convertToShopifyFormat);
+      setProducts((prev) => [...prev, ...formattedProducts]);
+      setHasMore((data || []).length > PAGE_SIZE);
+      setPage(nextPage);
+    } catch (err) {
+      console.error('Error loading more products:', err);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
+  return { products, isLoading, isLoadingMore, error, hasMore, loadMore };
 };
 
 export const useScrapedProductByHandle = (handle: string | undefined) => {
