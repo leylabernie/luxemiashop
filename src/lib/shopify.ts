@@ -190,6 +190,10 @@ const CART_CREATE_MUTATION = `
             node {
               id
               quantity
+              attributes {
+                key
+                value
+              }
               merchandise {
                 ... on ProductVariant {
                   id
@@ -271,11 +275,14 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number }>): Promise<string> {
+export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string> {
   try {
     const lines = items.map(item => ({
       quantity: item.quantity,
       merchandiseId: item.variantId,
+      ...(item.customAttributes?.length && {
+        attributes: item.customAttributes.map(attr => ({ key: attr.key, value: attr.value })),
+      }),
     }));
 
     const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {

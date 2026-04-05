@@ -16,6 +16,10 @@ export interface CartItem {
     name: string;
     value: string;
   }>;
+  customAttributes?: Array<{
+    key: string;
+    value: string;
+  }>;
 }
 
 interface CartStore {
@@ -116,7 +120,11 @@ export const useCartStore = create<CartStore>()(
         setLoading(true);
         try {
           const checkoutUrl = await createStorefrontCheckout(
-            items.map(item => ({ variantId: item.variantId, quantity: item.quantity }))
+            items.map(item => ({
+              variantId: item.variantId,
+              quantity: item.quantity,
+              customAttributes: item.customAttributes,
+            }))
           );
           setCheckoutUrl(checkoutUrl);
           return checkoutUrl;

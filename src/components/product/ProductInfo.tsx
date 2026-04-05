@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
+import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 interface ProductInfoProps {
@@ -99,6 +100,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
+  const [stitchingSize, setStitchingSize] = useState<string | null>(null);
+  const [showSizeValidation, setShowSizeValidation] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
 
   // Find the matching variant based on selected options
@@ -115,11 +118,27 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
   const deliveryDates = useMemo(() => getDeliveryDates(), []);
 
+  // Determine if the currently selected variant requires stitching size
+  const needsStitchingSize = useMemo(() => {
+    const allSelectedValues = Object.values(selectedOptions);
+    return allSelectedValues.some(
+      (val) => val.toLowerCase().includes('stitching') && !val.toLowerCase().startsWith('unstitched')
+    );
+  }, [selectedOptions]);
+
   const handleOptionSelect = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({
       ...prev,
       [optionName]: value,
     }));
+    // Reset stitching size when switching to Unstitched
+    if (
+      value.toLowerCase().startsWith('unstitched') ||
+      (!value.toLowerCase().includes('stitching'))
+    ) {
+      setStitchingSize(null);
+      setShowSizeValidation(false);
+    }
   };
 
   const handleAddToCart = async () => {
@@ -128,8 +147,19 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       return;
     }
 
+    if (needsStitchingSize && !stitchingSize) {
+      setShowSizeValidation(true);
+      toast.error('Please select a stitching size');
+      return;
+    }
+
     setIsAdding(true);
-    
+
+    const customAttributes =
+      needsStitchingSize && stitchingSize
+        ? [{ key: 'Stitching Size', value: stitchingSize }]
+        : undefined;
+
     addItem({
       product: { node: product },
       variantId: selectedVariant.node.id,
@@ -137,6 +167,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       price: selectedVariant.node.price,
       quantity,
       selectedOptions: selectedVariant.node.selectedOptions,
+      customAttributes,
     });
 
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -293,6 +324,15 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
         ))}
       </div>
+
+      {/* Stitching Size Selector */}
+      {needsStitchingSize && (
+        <StitchingSizeSelector
+          selectedSize={stitchingSize}
+          onSizeChange={setStitchingSize}
+          showValidation={showSizeValidation}
+        />
+      )}
 
       {/* Quantity */}
       <div className="space-y-3">
