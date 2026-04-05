@@ -3,11 +3,11 @@ import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
 
 // Map internal categories to Shopify tag-based queries
 const CATEGORY_QUERY_MAP: Record<string, string> = {
-  lehengas: 'tag:"Lehengas" OR tag:"Wedding Lehengas"',
-  sarees: 'tag:"Sarees" OR tag:"Wedding Guest Sarees"',
-  suits: 'tag:"Suits" OR tag:"Designer Suits"',
-  menswear: 'tag:"Kurta Sets" OR tag:"Kurta Pajama Vest" OR tag:"Sherwani for Groom"',
-  jewelry: 'tag:"Bridal Jewelry Set" OR tag:"Temple Jewelry" OR tag:"Wedding Accessories"',
+  lehengas: 'tag:"Lehenga" OR tag:"Lehengas" OR tag:"Wedding Lehenga"',
+  sarees: 'tag:"Saree" OR tag:"Wedding Saree" OR tag:"Draped Saree"',
+  suits: 'tag:"Salwar Suit" OR tag:"Anarkali Suit" OR tag:"Sharara Set" OR tag:"Palazzo Set"',
+  menswear: 'tag:"Mens Ethnic Wear"',
+  jewelry: 'tag:"Jewellery" OR tag:"Kundan Jewellery" OR tag:"Necklace Set"',
 };
 
 export const useShopifyProducts = (category?: string) => {
