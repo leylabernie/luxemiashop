@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Camera, X, Sparkles, ChevronLeft, ChevronRight, Download, RefreshCw, Share2, Copy, Check } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -225,6 +226,11 @@ const VirtualTryOn = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
+      <SEOHead
+        title="Virtual Try-On — LuxeMia"
+        description="Try on LuxeMia's luxury Indian ethnic wear virtually. Upload your photo and preview sarees, lehengas, and suits with our AI-powered virtual try-on."
+        canonical="https://luxemia.shop/virtual-try-on"
+      />
       <Header />
       
       <main className="flex-1 pt-24 pb-16">

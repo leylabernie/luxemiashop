@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { motion } from "framer-motion";
 import { ExternalLink, Download, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,6 +55,11 @@ const Press = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Press & Media — LuxeMia"
+        description="LuxeMia in the press. Read our latest media coverage, awards, and recognition in publications like Vogue India, Elle, and Harper's Bazaar."
+        canonical="https://luxemia.shop/press"
+      />
       <Header />
       
       <main className="pt-24">

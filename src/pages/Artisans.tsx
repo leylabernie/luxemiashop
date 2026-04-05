@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { motion } from "framer-motion";
 
 const Artisans = () => {
@@ -50,6 +51,11 @@ const Artisans = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Our Artisans — LuxeMia"
+        description="Meet the master artisans behind LuxeMia's luxury Indian ethnic wear. Over 200 artisan families preserving centuries-old craftsmanship across 12 Indian states."
+        canonical="https://luxemia.shop/artisans"
+      />
       <Header />
       
       <main className="pt-24">

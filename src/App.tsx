@@ -40,6 +40,7 @@ import BridalLehengas from "./pages/collections/BridalLehengas";
 import ReceptionOutfits from "./pages/collections/ReceptionOutfits";
 import FestiveWear from "./pages/collections/FestiveWear";
 import Sitemap from "./pages/Sitemap";
+import VirtualTryOn from "./pages/VirtualTryOn";
 import AdminDashboard from "./pages/AdminDashboard";
 
 const queryClient = new QueryClient();
@@ -85,6 +86,7 @@ const App = () => (
                 <Route path="/size-guide" element={<SizeGuide />} />
                 <Route path="/care-guide" element={<CareGuide />} />
                 <Route path="/jewelry" element={<Jewelry />} />
+                <Route path="/virtual-try-on" element={<VirtualTryOn />} />
                 <Route path="/faq" element={<FAQ />} />
                 {/* Occasion-based collection pages for SEO */}
                 <Route path="/collections/wedding-sarees" element={<WeddingSarees />} />
