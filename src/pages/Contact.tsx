@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, Clock, Send } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -34,6 +35,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Contact Us — LuxeMia"
+        description="Get in touch with LuxeMia. Questions about orders, sizing, or custom tailoring? Reach us via email, phone, or WhatsApp."
+        canonical="https://luxemia.shop/contact"
+      />
       <Header />
       
       <main className="pt-24 pb-16">

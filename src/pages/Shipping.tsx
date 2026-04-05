@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Truck, Clock, Globe, Package, AlertTriangle, FileText, DollarSign } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const shippingRates = [
@@ -83,6 +84,11 @@ const importDutyRates = [
 const Shipping = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Shipping Information — LuxeMia"
+        description="LuxeMia shipping rates, delivery times, and international shipping details. Free shipping on qualifying orders to USA, UK, and worldwide."
+        canonical="https://luxemia.shop/shipping"
+      />
       <Header />
       
       <main className="pt-24 pb-16">

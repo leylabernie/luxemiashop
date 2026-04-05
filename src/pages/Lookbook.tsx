@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import LookbookSection from '@/components/lookbook/LookbookSection';
 import LazyImage from '@/components/ui/LazyImage';
 import { ArrowDown } from 'lucide-react';
@@ -86,6 +87,11 @@ const Lookbook = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Lookbook — LuxeMia"
+        description="Explore the LuxeMia lookbook. Curated styling inspiration for Indian ethnic wear, bridal outfits and festive collections."
+        canonical="https://luxemia.shop/lookbook"
+      />
       <Header />
 
       {/* Hero Section */}

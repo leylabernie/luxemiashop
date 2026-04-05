@@ -1,10 +1,16 @@
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 
 const Privacy = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Privacy Policy — LuxeMia"
+        description="Read the LuxeMia privacy policy. Learn how we collect, use, and protect your personal information when you shop with us."
+        canonical="https://luxemia.shop/privacy"
+      />
       <Header />
       
       <main className="pt-24 pb-16">

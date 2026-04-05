@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Heart, ShoppingBag, Sparkles, Crown, Gem, CircleDot } from 'lucide-react';
 import { PaginationWithInput } from '@/components/ui/pagination-with-input';
@@ -115,6 +116,11 @@ const Jewelry = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Indian Bridal Jewelry — LuxeMia"
+        description="Shop stunning Indian bridal jewelry at LuxeMia. Kundan, polki, temple jewelry and more. Perfect for weddings and festive occasions."
+        canonical="https://luxemia.shop/jewelry"
+      />
       <Header />
       
       <main className="pt-24 pb-16">

@@ -356,8 +356,9 @@ const Menswear = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Men's Ethnic Wear | Designer Sherwanis & Kurta Pajamas - LuxeMia"
-        description="Shop premium men's ethnic wear at LuxeMia. Discover designer sherwanis, Indo-Western kurtas, and Nehru jackets for weddings and celebrations. Custom tailoring available."
+        title="Men's Indian Ethnic Wear — LuxeMia"
+        description="Shop men's Indian ethnic wear at LuxeMia. Designer sherwanis, kurta pajamas, and Nehru jackets for weddings and celebrations."
+        canonical="https://luxemia.shop/menswear"
         type="collection"
         image="/og/og-menswear.jpg"
         breadcrumbs={[

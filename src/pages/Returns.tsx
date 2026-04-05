@@ -2,11 +2,17 @@ import { motion } from 'framer-motion';
 import { XCircle, AlertTriangle, Video, Ruler, Clock, Shield, CheckCircle } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const Returns = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Returns & Exchanges — LuxeMia"
+        description="LuxeMia returns and exchange policy. Learn about our hassle-free return process for Indian ethnic wear purchases."
+        canonical="https://luxemia.shop/returns"
+      />
       <Header />
       
       <main className="pt-24 pb-16">

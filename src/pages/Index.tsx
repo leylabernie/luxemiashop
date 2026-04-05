@@ -127,9 +127,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead 
-        title="Indian Wedding Dress & Bridal Lehengas | Designer Sarees - LuxeMia"
-        description="Shop stunning Indian wedding dresses, bridal lehengas & designer sarees. Handcrafted ethnic wear with free shipping to USA. Save 20% on first order!"
+      <SEOHead
+        title="LuxeMia — Luxury Indian Ethnic Wear | Sarees, Lehengas & Suits"
+        description="Shop luxury Indian ethnic wear at LuxeMia. Designer lehengas, silk sarees, salwar suits. Free shipping to USA & UK."
+        canonical="https://luxemia.shop/"
       />
       <Helmet>
         <script type="application/ld+json">
