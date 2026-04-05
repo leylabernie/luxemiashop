@@ -42,19 +42,25 @@ export const getHighResImage = (url: string, size: 1200 | 1500 | 1920 = 1200): s
 const fixMalformedUrl = (url: string): string => {
   if (!url) return url;
   
+  // Strip query string for extension checks, preserve it for the final URL
+  const [basePath, queryString] = url.split('?');
+  
   // Fix malformed multi-image URLs like "(1(2).jpg" -> "(2).jpg"
   const malformedPattern = /\(1\((\d+)\)\.jpg$/i;
-  if (malformedPattern.test(url)) {
-    return url.replace(malformedPattern, '($1).jpg');
+  if (malformedPattern.test(basePath)) {
+    const fixed = basePath.replace(malformedPattern, '($1).jpg');
+    return queryString ? `${fixed}?${queryString}` : fixed;
   }
   
-  // Ensure URL has proper extension
-  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(url)) {
+  // Ensure URL has proper extension (check base path without query string)
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(basePath)) {
     // URLs often end with (1 and need ).jpg
-    if (/\(\d+$/.test(url)) {
-      return url + ').jpg';
+    if (/\(\d+$/.test(basePath)) {
+      const fixed = basePath + ').jpg';
+      return queryString ? `${fixed}?${queryString}` : fixed;
     } else {
-      return url + '.jpg';
+      const fixed = basePath + '.jpg';
+      return queryString ? `${fixed}?${queryString}` : fixed;
     }
   }
   
