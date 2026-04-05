@@ -22,9 +22,10 @@ import {
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
+import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { PaginationWithInput } from '@/components/ui/pagination-with-input';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -61,7 +62,7 @@ const suitFilterSections = [
 ];
 
 const Suits = () => {
-  const { products, isLoading, isLoadingMore, hasMore, loadMore } = useScrapedProducts('suits');
+  const { products, isLoading, currentPage, totalPages, totalCount, goToPage } = useShopifyPaginatedProducts('suits');
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [sortBy, setSortBy] = useState('featured');
@@ -72,6 +73,23 @@ const Suits = () => {
   const filteredProducts = useMemo(() => {
     return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
   }, [products, activeFilters, priceRange, sortBy]);
+
+  // Generate pagination numbers
+  const getPageNumbers = () => {
+    const pages: (number | 'ellipsis')[] = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push('ellipsis');
+      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push('ellipsis');
+      pages.push(totalPages);
+    }
+    return pages;
+  };
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
@@ -375,26 +393,14 @@ const Suits = () => {
                     ))}
                   </div>
                   
-                  {/* Load More */}
-                  {hasMore && filteredProducts.length > 0 && (
-                    <div className="flex justify-center mt-12">
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        onClick={loadMore}
-                        disabled={isLoadingMore}
-                      >
-                        {isLoadingMore ? (
-                          <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Loading...
-                          </>
-                        ) : (
-                          'Load More Products'
-                        )}
-                      </Button>
-                    </div>
-                  )}
+                  {/* Pagination */}
+                  <PaginationWithInput
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalCount={totalCount}
+                    onPageChange={goToPage}
+                    getPageNumbers={getPageNumbers}
+                  />
                 </>
               )}
 
