@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import Header from '@/components/layout/Header';
@@ -115,6 +116,45 @@ const ProductDetail = () => {
             { name: product.title, url: `/product/${product.handle}` },
           ]}
           faqs={productFaqs}
+        />
+      )}
+      {product && (
+        <Helmet>
+          <title>{`${product.title} — LuxeMia`}</title>
+          <meta name="description" content={product.description ? product.description.replace(/<[^>]+>/g, '').slice(0, 155) : `Shop ${product.title} at LuxeMia. Luxury Indian ethnic wear.`} />
+          <link rel="canonical" href={`https://luxemia.shop/products/${product.handle}`} />
+        </Helmet>
+      )}
+      {product && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org/",
+              "@type": "Product",
+              "name": product.title,
+              "description": product.description
+                ? product.description.replace(/<[^>]+>/g, '')
+                : '',
+              "image": product.images?.edges?.map((edge: any) => edge.node.url) || [],
+              "sku": product.id,
+              "brand": {
+                "@type": "Brand",
+                "name": "LuxeMia"
+              },
+              "offers": {
+                "@type": "Offer",
+                "url": `https://luxemia.shop/products/${product.handle}`,
+                "priceCurrency": product.priceRange?.minVariantPrice?.currencyCode || "USD",
+                "price": product.priceRange?.minVariantPrice?.amount || "0",
+                "availability": "https://schema.org/InStock",
+                "seller": {
+                  "@type": "Organization",
+                  "name": "LuxeMia"
+                }
+              }
+            })
+          }}
         />
       )}
       <Header />

@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 
 const BrandStory = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,11 @@ const BrandStory = () => {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background">
+      <SEOHead
+        title="Our Story — LuxeMia"
+        description="Discover the LuxeMia story. Learn about our mission to bring authentic Indian ethnic wear and artisanal craftsmanship to the world."
+        canonical="https://luxemia.shop/our-story"
+      />
       <Header />
 
       {/* Hero Section with Parallax */}

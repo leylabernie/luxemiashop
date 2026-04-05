@@ -1,11 +1,17 @@
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 import { AlertTriangle, FileText, Scale } from 'lucide-react';
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Terms of Service — LuxeMia"
+        description="Review the LuxeMia terms of service. Understand our policies on orders, payments, shipping, and returns before shopping."
+        canonical="https://luxemia.shop/terms"
+      />
       <Header />
       
       <main className="pt-24 pb-16">

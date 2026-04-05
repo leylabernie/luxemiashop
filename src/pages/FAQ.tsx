@@ -206,8 +206,9 @@ const FAQ = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="FAQ | Frequently Asked Questions - LuxeMia"
-        description="Find answers to common questions about LuxeMia orders, shipping, sizing, returns, and product care. Get help with your Indian ethnic wear purchase."
+        title="Frequently Asked Questions — LuxeMia"
+        description="Find answers to common questions about LuxeMia orders, shipping, sizing, returns, and product care."
+        canonical="https://luxemia.shop/faq"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'FAQ', url: '/faq' },

@@ -267,8 +267,9 @@ const Lehengas = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Bridal Lehengas 2026: Wedding Lehenga Designs from $199 | LuxeMia"
-        description="Shop 500+ bridal lehengas with heavy embroidery. Red, pink & designer wedding lehengas with free US shipping. Easy returns & custom sizing available!"
+        title="Bridal & Designer Lehengas — LuxeMia"
+        description="Shop bridal and designer lehengas at LuxeMia. Heavy embroidery, custom sizing, and free US shipping on all wedding lehengas."
+        canonical="https://luxemia.shop/lehengas"
         type="collection"
         image="/og/og-lehengas.jpg"
         breadcrumbs={[

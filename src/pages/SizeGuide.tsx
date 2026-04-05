@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SEOHead from "@/components/seo/SEOHead";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Ruler, Info, FileText } from "lucide-react";
@@ -32,6 +33,11 @@ const SizeGuide = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Size Guide — LuxeMia"
+        description="Find your perfect fit with the LuxeMia size guide. Measurements for lehengas, sarees, salwar suits, and blouses with US and UK conversions."
+        canonical="https://luxemia.shop/size-guide"
+      />
       <Header />
       
       <main className="pt-24">
