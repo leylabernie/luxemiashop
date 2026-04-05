@@ -111,7 +111,19 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     );
   });
 
-  const currentPrice = selectedVariant?.node.price || product.priceRange.minVariantPrice;
+  // Find the best-matching variant for price display even when not all options are selected.
+  // This ensures the price updates as soon as a stitching type is picked.
+  const bestMatchVariant = selectedVariant || product.variants.edges.reduce<{ variant: typeof product.variants.edges[0] | null; matchCount: number }>(
+    (best, variant) => {
+      const matchCount = variant.node.selectedOptions.filter(
+        (option) => selectedOptions[option.name] === option.value
+      ).length;
+      return matchCount > best.matchCount ? { variant, matchCount } : best;
+    },
+    { variant: null, matchCount: 0 }
+  ).variant;
+
+  const currentPrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
   const isAvailable = selectedVariant?.node.availableForSale ?? true;
   const sku = selectedVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
@@ -214,7 +226,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
             <Tag className="h-3 w-3" />
-            Save 25% with code LUXE2026
+            Save 30% with code LUXE2026
           </span>
         </div>
         <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>

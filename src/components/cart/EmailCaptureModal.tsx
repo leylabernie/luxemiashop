@@ -46,9 +46,10 @@ interface EmailCaptureModalProps {
   isOpen: boolean;
   onClose: () => void;
   onEmailSubmitted: (email: string) => void;
+  onSkip?: () => void;
 }
 
-const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted }: EmailCaptureModalProps) => {
+const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailCaptureModalProps) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -203,7 +204,7 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted }: EmailCaptureMo
               </Button>
               <button
                 type="button"
-                onClick={onClose}
+                onClick={onSkip || onClose}
                 className="w-full text-sm text-foreground/50 hover:text-foreground transition-colors"
               >
                 Skip for now

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -32,7 +32,7 @@ const sortOptions = [
 ];
 
 const Collections = () => {
-  const { products, isLoading } = useScrapedProducts();
+  const { products, isLoading, isLoadingMore, hasMore, loadMore } = useScrapedProducts();
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState('featured');
@@ -191,6 +191,27 @@ const Collections = () => {
 
               {/* Product Grid */}
               <ProductGrid products={filteredProducts} isLoading={isLoading} />
+
+              {/* Load More */}
+              {hasMore && !isLoading && filteredProducts.length > 0 && (
+                <div className="flex justify-center mt-12">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={loadMore}
+                    disabled={isLoadingMore}
+                  >
+                    {isLoadingMore ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      'Load More Products'
+                    )}
+                  </Button>
+                </div>
+              )}
 
               {/* Empty state */}
               {!isLoading && filteredProducts.length === 0 && (
