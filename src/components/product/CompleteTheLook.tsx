@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -7,45 +7,88 @@ import { getAllLocalProducts } from '@/data/localProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { supabase } from '@/integrations/supabase/client';
+import { convertToShopifyFormat, type ScrapedProduct } from '@/hooks/useScrapedProducts';
+import type { ShopifyProduct } from '@/lib/shopify';
 
 interface CompleteTheLookProps {
   currentProductId: string;
   productType?: string;
 }
 
+// Determine the complementary category for cross-selling
+const getComplementaryCategory = (productType: string): string | null => {
+  const type = productType.toLowerCase();
+  if (type.includes('lehenga') || type.includes('saree')) return 'menswear';
+  if (type.includes('sherwani') || type.includes('kurta') || type.includes('menswear')) return 'lehengas';
+  if (type.includes('suit')) return 'sarees';
+  return null;
+};
+
 export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLookProps) => {
   const addItem = useCartStore((state) => state.addItem);
+  const [scrapedRecs, setScrapedRecs] = useState<ShopifyProduct[]>([]);
 
-  // Get recommendations from different categories
-  const recommendations = useMemo(() => {
-    const allProducts = getAllLocalProducts();
-    
-    // Filter out current product and get products from different categories
-    const currentCategory = productType?.toLowerCase() || '';
-    
-    // Get products from different categories for variety
-    const otherProducts = allProducts.filter(p => {
-      if (p.node.id === currentProductId) return false;
-      
-      // Try to get complementary items
-      const prodType = p.node.productType?.toLowerCase() || '';
-      
-      // If current is lehenga/saree, suggest menswear or suits
-      if (currentCategory.includes('lehenga') || currentCategory.includes('saree')) {
-        return prodType.includes('sherwani') || prodType.includes('kurta') || prodType.includes('suit');
+  // Fetch recommendations from Supabase
+  useEffect(() => {
+    const fetchRecs = async () => {
+      try {
+        const complementary = productType ? getComplementaryCategory(productType) : null;
+
+        // Fetch products from a different category for variety
+        let query = supabase
+          .from('scraped_products')
+          .select('*')
+          .eq('is_active', true)
+          .limit(12);
+
+        if (complementary) {
+          query = query.eq('category', complementary);
+        }
+
+        const { data } = await query;
+
+        if (data && data.length > 0) {
+          const formatted = (data as ScrapedProduct[])
+            .filter(p => (p.shopify_product_id || p.id) !== currentProductId)
+            .map(convertToShopifyFormat);
+          setScrapedRecs(formatted);
+        }
+      } catch {
+        // Silently fall back to local products
       }
-      // If current is menswear, suggest lehengas or sarees
-      if (currentCategory.includes('sherwani') || currentCategory.includes('kurta')) {
-        return prodType.includes('lehenga') || prodType.includes('saree');
-      }
-      // Default: just get different products
-      return true;
-    });
-    
-    // Shuffle and take first 4
-    const shuffled = otherProducts.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 4);
+    };
+
+    fetchRecs();
   }, [currentProductId, productType]);
+
+  // Use scraped products if available, otherwise fall back to local products
+  const recommendations = useMemo(() => {
+    let pool: ShopifyProduct[] = scrapedRecs;
+
+    if (pool.length === 0) {
+      // Fallback to local products
+      const allProducts = getAllLocalProducts();
+      const currentCategory = productType?.toLowerCase() || '';
+
+      pool = allProducts.filter(p => {
+        if (p.node.id === currentProductId) return false;
+        const prodType = p.node.productType?.toLowerCase() || '';
+
+        if (currentCategory.includes('lehenga') || currentCategory.includes('saree')) {
+          return prodType.includes('sherwani') || prodType.includes('kurta') || prodType.includes('suit');
+        }
+        if (currentCategory.includes('sherwani') || currentCategory.includes('kurta')) {
+          return prodType.includes('lehenga') || prodType.includes('saree');
+        }
+        return prodType !== currentCategory;
+      });
+    }
+
+    // Shuffle and take first 4
+    const shuffled = [...pool].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 4);
+  }, [currentProductId, productType, scrapedRecs]);
 
   const handleQuickAdd = (product: any, e: React.MouseEvent) => {
     e.preventDefault();
