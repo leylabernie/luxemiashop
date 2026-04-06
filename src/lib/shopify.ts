@@ -275,8 +275,23 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string> {
+export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string> {
   try {
+    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
+    // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
+    const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
+
+    if (hasFakeIds) {
+      console.log('Detected fake variant IDs, routing to Shopify product page instead of direct checkout');
+      // If we have a handle, we can redirect to the product page on the Shopify store
+      // This is a safer fallback than failing the checkout
+      if (items.length === 1 && items[0].handle) {
+        return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${items[0].handle}`;
+      }
+      // If multiple items or no handle, redirect to the cart page
+      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart`;
+    }
+
     const lines = items.map(item => ({
       quantity: item.quantity,
       merchandiseId: item.variantId,
@@ -296,6 +311,11 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     if (cartData.data?.cartCreate?.userErrors && cartData.data.cartCreate.userErrors.length > 0) {
       const errorMessages = cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
       console.error('Shopify cart creation errors:', errorMessages);
+      
+      // Fallback for user errors (like invalid variant IDs that weren't caught by the prefix check)
+      if (items.length === 1 && items[0].handle) {
+        return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${items[0].handle}`;
+      }
       throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
@@ -313,6 +333,10 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     return url.toString();
   } catch (error) {
     console.error('Error creating storefront checkout:', error);
-    throw error;
+    // Final fallback: redirect to Shopify store home or cart if everything fails
+    if (items.length === 1 && items[0].handle) {
+      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${items[0].handle}`;
+    }
+    return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart`;
   }
 }

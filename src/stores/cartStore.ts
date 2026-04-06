@@ -123,6 +123,7 @@ export const useCartStore = create<CartStore>()(
             items.map(item => ({
               variantId: item.variantId,
               quantity: item.quantity,
+              handle: item.product.node.handle,
               customAttributes: item.customAttributes,
             }))
           );
