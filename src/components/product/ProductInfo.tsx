@@ -159,12 +159,6 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
 
-  // Whether blouse neckline selector should show
-  const showNeckline = useMemo(() => {
-    if (!isBlouseProductType(product.productType, product.tags)) return false;
-    return needsStitchingSize; // only when a stitching option (not Unstitched) is selected
-  }, [product.productType, product.tags, needsStitchingSize]);
-
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
     // Check both option names and values for stitching-related selections
@@ -177,6 +171,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       return isStitchingOption && !isUnstitched;
     });
   }, [selectedOptions]);
+
+  // Whether blouse neckline selector should show
+  const showNeckline = useMemo(() => {
+    if (!isBlouseProductType(product.productType, product.tags)) return false;
+    return needsStitchingSize; // only when a stitching option (not Unstitched) is selected
+  }, [product.productType, product.tags, needsStitchingSize]);
 
   const handleOptionSelect = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({
