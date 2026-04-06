@@ -5,7 +5,7 @@ import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
 const CATEGORY_QUERY_MAP: Record<string, string> = {
   lehengas: 'tag:"lehenga-choli" OR tag:"Lehenga" OR tag:"Lehengas" OR tag:"Wedding Lehenga"',
   sarees: 'tag:"saree" OR tag:"Saree" OR tag:"Wedding Saree" OR tag:"Draped Saree"',
-  suits: 'tag:"kurta-pajama" OR tag:"sherwani" OR tag:"mens" OR tag:"Salwar Suit" OR tag:"Anarkali Suit" OR tag:"Sharara Set" OR tag:"Palazzo Set"',
+  suits: 'tag:"salwar" OR tag:"anarkali" OR tag:"sharara" OR tag:"palazzo" OR tag:"Salwar Suit" OR tag:"Anarkali Suit" OR tag:"Sharara Set" OR tag:"Palazzo Set"',
   menswear: 'tag:"sherwani" OR tag:"kurta-pajama" OR tag:"mens" OR tag:"Mens Ethnic Wear"',
   jewelry: 'tag:"jewellery" OR tag:"Jewellery" OR tag:"Kundan Jewellery" OR tag:"Necklace Set"',
 };

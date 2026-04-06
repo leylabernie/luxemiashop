@@ -8,7 +8,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const isExternalImage = (url: string): boolean => {
   if (!url) return false;
   // Proxy images from these domains that have hotlink protection
-  return url.includes('kesimg.b-cdn.net') || url.includes('fashidwholesale.in');
+  return url.includes('kesimg.b-cdn.net') || url.includes('fashidwholesale.in') || url.includes('wholesalesalwar.com');
 };
 
 /**
