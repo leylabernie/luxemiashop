@@ -26,6 +26,7 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { getAllMenswearProducts } from '@/data/menswearProducts';
 import { filterAndSortProducts } from '@/lib/productFilters';
+import { OccasionFilter, filterByOccasion } from '@/components/collections/OccasionFilter';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -72,6 +73,7 @@ const Menswear = () => {
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
+  const [occasionFilter, setOccasionFilter] = useState('All');
 
   // Apply filters and sorting - use INR price for filtering
   const filteredProducts = useMemo(() => {
@@ -179,6 +181,11 @@ const Menswear = () => {
     
     return sorted;
   }, [products, activeFilters, priceRange, sortBy]);
+
+  // Apply occasion filter on top of other filters
+  const displayProducts = useMemo(() => {
+    return filterByOccasion(filteredProducts, occasionFilter);
+  }, [filteredProducts, occasionFilter]);
 
   const handleFilterChange = (section: string, option: string) => {
     const currentOptions = activeFilters[section] || [];
@@ -344,7 +351,7 @@ const Menswear = () => {
   ];
 
   // Generate collection schema items from products
-  const collectionItems = filteredProducts.slice(0, 30).map(p => ({
+  const collectionItems = displayProducts.slice(0, 30).map(p => ({
     id: p.node.id,
     name: p.node.title,
     url: p.node.handle,
@@ -410,9 +417,14 @@ const Menswear = () => {
             </div>
 
             <div className="flex-1">
+              {/* Occasion Filter Pills */}
+              <div className="mb-6">
+                <OccasionFilter selected={occasionFilter} onChange={setOccasionFilter} />
+              </div>
+
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <p className="text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
+                  Showing <span className="text-foreground font-medium">{displayProducts.length}</span> products
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -469,7 +481,7 @@ const Menswear = () => {
                     </div>
                   ))}
                 </div>
-              ) : filteredProducts.length === 0 ? (
+              ) : displayProducts.length === 0 ? (
                 <div className="text-center py-20">
                   <div className="max-w-md mx-auto">
                     <h3 className="font-serif text-2xl mb-4">Coming Soon</h3>
@@ -483,7 +495,7 @@ const Menswear = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-                  {filteredProducts.map((product, index) => (
+                  {displayProducts.map((product, index) => (
                     <ProductCard 
                       key={product.node.id} 
                       product={product} 
@@ -494,7 +506,7 @@ const Menswear = () => {
                 </div>
               )}
 
-              {!isLoading && filteredProducts.length === 0 && (
+              {!isLoading && displayProducts.length === 0 && (
                 <div className="text-center py-16">
                   <p className="text-muted-foreground mb-4">No menswear found matching your criteria.</p>
                   <Button

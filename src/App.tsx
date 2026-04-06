@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
+import WhatsAppButton from "./components/WhatsAppButton";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
 import Collections from "./pages/Collections";
@@ -104,6 +105,7 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <MobileBottomNav />
+              <WhatsAppButton />
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>

@@ -26,6 +26,7 @@ import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
 import { PaginationWithInput } from '@/components/ui/pagination-with-input';
+import { OccasionFilter, filterByOccasion } from '@/components/collections/OccasionFilter';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -68,11 +69,13 @@ const Suits = () => {
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
+  const [occasionFilter, setOccasionFilter] = useState('All');
 
   // Apply filters and sorting using the reusable utility
   const filteredProducts = useMemo(() => {
-    return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
-  }, [products, activeFilters, priceRange, sortBy]);
+    const sorted = filterAndSortProducts(products, activeFilters, priceRange, sortBy);
+    return filterByOccasion(sorted, occasionFilter);
+  }, [products, activeFilters, priceRange, sortBy, occasionFilter]);
 
   // Generate pagination numbers
   const getPageNumbers = () => {
@@ -321,6 +324,11 @@ const Suits = () => {
             </div>
 
             <div className="flex-1">
+              {/* Occasion Filter Pills */}
+              <div className="mb-6">
+                <OccasionFilter selected={occasionFilter} onChange={setOccasionFilter} />
+              </div>
+
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <p className="text-sm text-muted-foreground">
                   Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
