@@ -283,13 +283,13 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
 
     if (hasFakeIds) {
       console.log('Detected fake variant IDs, routing to Shopify product page instead of direct checkout');
-      // If we have a handle, we can redirect to the product page on the Shopify store
-      // This is a safer fallback than failing the checkout
-      if (items.length === 1 && items[0].handle) {
-        return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${items[0].handle}`;
+      // Redirect to the first product's page on the Shopify store so the customer can purchase from there
+      const firstHandle = items.find(item => item.handle)?.handle;
+      if (firstHandle) {
+        return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${firstHandle}`;
       }
-      // If multiple items or no handle, redirect to the cart page
-      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart`;
+      // If no handle available, redirect to the store homepage
+      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
     }
 
     const lines = items.map(item => ({
@@ -333,10 +333,11 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     return url.toString();
   } catch (error) {
     console.error('Error creating storefront checkout:', error);
-    // Final fallback: redirect to Shopify store home or cart if everything fails
-    if (items.length === 1 && items[0].handle) {
-      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${items[0].handle}`;
+    // Final fallback: redirect to Shopify product page or store homepage
+    const firstHandle = items.find(item => item.handle)?.handle;
+    if (firstHandle) {
+      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${firstHandle}`;
     }
-    return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart`;
+    return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
   }
 }
