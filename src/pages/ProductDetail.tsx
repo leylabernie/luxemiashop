@@ -25,9 +25,22 @@ const ProductDetail = () => {
   const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
-  // Fallback chain: scraped products -> Shopify API -> local products
+  // Fallback chain: scraped products (with Shopify data if available) -> Shopify API -> local products
   const localProduct = handle ? getLocalProductByHandle(handle)?.node : null;
-  const product = scrapedProduct || shopifyProduct || localProduct;
+  
+  // If we have both scraped and Shopify product, merge them (use Shopify variants/options with scraped metadata)
+  let product = scrapedProduct;
+  if (scrapedProduct && shopifyProduct) {
+    // Merge Shopify data into scraped product for better variant/option support
+    product = {
+      ...scrapedProduct,
+      variants: shopifyProduct.variants,
+      options: shopifyProduct.options,
+      priceRange: shopifyProduct.priceRange,
+    };
+  }
+  
+  product = product || shopifyProduct || localProduct;
   const isLoading = scrapedLoading || (shopifyLoading && !scrapedProduct);
   const error = !product && !isLoading ? 'Product not found' : null;
 

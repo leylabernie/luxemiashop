@@ -96,7 +96,7 @@ const fixImageUrl = (url: string): string => {
 };
 
 // Convert scraped product to Shopify format for display
-export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct => {
+export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?: any): ShopifyProduct => {
   const betterTitle = generateBetterTitle(
     product.image_url, 
     product.category, 
@@ -108,6 +108,50 @@ export const convertToShopifyFormat = (product: ScrapedProduct): ShopifyProduct 
   const hasRealShopifyIds = product.shopify_product_id && product.shopify_variant_ids && product.shopify_variant_ids.length > 0;
   
   const sizeOptions = ['S', 'M', 'L', 'XL', 'XXL', 'Custom'];
+  
+  // If we have a real Shopify product, use its variants and options directly
+  if (shopifyProduct && shopifyProduct.variants && shopifyProduct.options) {
+    return {
+      node: {
+        id: shopifyProduct.id || product.shopify_product_id || product.id,
+        title: shopifyProduct.title || product.title || betterTitle,
+        description: shopifyProduct.description || product.description,
+        handle: shopifyProduct.handle || product.source_id,
+        productType: shopifyProduct.productType || product.category,
+        vendor: shopifyProduct.vendor,
+        metadata: {
+          occasion: product.occasion,
+          fabric: product.fabric,
+          color: product.color,
+          work: product.work,
+          tags: product.tags,
+          priceInr: product.price_inr,
+        },
+        priceRange: shopifyProduct.priceRange || {
+          minVariantPrice: {
+            amount: product.price_usd.toString(),
+            currencyCode: 'USD'
+          }
+        },
+        images: shopifyProduct.images || {
+          edges: (() => {
+            const imageList = product.image_urls && product.image_urls.length > 0 
+              ? product.image_urls 
+              : [product.image_url];
+            
+            return imageList.map((imgUrl, index) => ({
+              node: {
+                url: fixImageUrl(imgUrl),
+                altText: `${betterTitle} - View ${index + 1}`
+              }
+            }));
+          })()
+        },
+        variants: shopifyProduct.variants,
+        options: shopifyProduct.options
+      }
+    };
+  }
   
   const variants = hasRealShopifyIds 
     ? product.shopify_variant_ids!.map((variantId, index) => ({

@@ -139,7 +139,29 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     return bestVar;
   }, [selectedVariant, selectedOptions, product.variants.edges]);
 
-  const currentPrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
+  // Calculate current price, including stitching option premium if applicable
+  const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
+  const stitchingPremium = useMemo(() => {
+    // Check if selected stitching option has a price premium
+    for (const [key, value] of Object.entries(selectedOptions)) {
+      if (key.toLowerCase().includes('stitch') && value) {
+        // Map stitching options to their premiums
+        const lowerValue = value.toLowerCase();
+        if (lowerValue.includes('blouse')) return 15; // Blouse Stitching +$15
+        if (lowerValue.includes('full')) return 25; // Full Stitching +$25
+        if (lowerValue.includes('semi')) return 10; // Semi-Stitched +$10
+      }
+    }
+    return 0;
+  }, [selectedOptions]);
+
+  const currentPrice = useMemo(() => {
+    const baseAmount = parseFloat(basePrice.amount);
+    return {
+      amount: (baseAmount + stitchingPremium).toString(),
+      currencyCode: basePrice.currencyCode,
+    };
+  }, [basePrice, stitchingPremium]);
   const isAvailable = selectedVariant?.node.availableForSale ?? true;
   const sku = selectedVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
@@ -164,6 +186,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       ...prev,
       [optionName]: value,
     }));
+    
+    // If this is a stitching option, show the size selector and trigger validation
+    if (optionName.toLowerCase().includes('stitch') && value.toLowerCase().includes('stitch')) {
+      setShowSizeValidation(true);
+    }
+    
     // Reset stitching size when switching to Unstitched or a non-stitch option
     if (
       value.toLowerCase().startsWith('unstitched') ||

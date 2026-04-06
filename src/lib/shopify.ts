@@ -290,21 +290,26 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     });
 
     if (!cartData) {
-      throw new Error('Failed to create cart');
+      throw new Error('Failed to create cart - no response from Shopify');
     }
 
-    if (cartData.data.cartCreate.userErrors.length > 0) {
-      throw new Error(`Cart creation failed: ${cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ')}`);
+    if (cartData.data?.cartCreate?.userErrors && cartData.data.cartCreate.userErrors.length > 0) {
+      const errorMessages = cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
+      console.error('Shopify cart creation errors:', errorMessages);
+      throw new Error(`Cart creation failed: ${errorMessages}`);
     }
 
-    const cart = cartData.data.cartCreate.cart;
+    const cart = cartData.data?.cartCreate?.cart;
     
-    if (!cart.checkoutUrl) {
+    if (!cart || !cart.checkoutUrl) {
+      console.error('Cart response:', cart);
       throw new Error('No checkout URL returned from Shopify');
     }
 
     const url = new URL(cart.checkoutUrl);
     url.searchParams.set('channel', 'online_store');
+    
+    console.log('Checkout URL created successfully:', url.toString());
     return url.toString();
   } catch (error) {
     console.error('Error creating storefront checkout:', error);

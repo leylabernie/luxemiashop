@@ -34,6 +34,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
   const handleEmailSubmitted = (email: string) => {
     setCapturedEmail(email);
+    setShowEmailCapture(false);
     proceedToCheckout();
   };
 
