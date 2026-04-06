@@ -172,53 +172,6 @@ const Lookbook = () => {
         ))}
       </main>
 
-      {/* Credits Section */}
-      <section className="py-24 lg:py-32 bg-card">
-        <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-xs tracking-luxury uppercase text-foreground/60 mb-6"
-          >
-            Credits
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-serif text-3xl lg:text-4xl mb-12"
-          >
-            Behind the Scenes
-          </motion.h2>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-sm"
-          >
-            <div>
-              <p className="text-foreground/40 uppercase tracking-editorial text-xs mb-2">Creative Direction</p>
-              <p className="font-light">Vasantam Studio</p>
-            </div>
-            <div>
-              <p className="text-foreground/40 uppercase tracking-editorial text-xs mb-2">Photography</p>
-              <p className="font-light">Aarav Sharma</p>
-            </div>
-            <div>
-              <p className="text-foreground/40 uppercase tracking-editorial text-xs mb-2">Styling</p>
-              <p className="font-light">Priya Mehta</p>
-            </div>
-            <div>
-              <p className="text-foreground/40 uppercase tracking-editorial text-xs mb-2">Location</p>
-              <p className="font-light">Jaipur, India</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       <Footer />
     </div>

@@ -48,7 +48,7 @@ const NewVisitorPopup = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    const hasSeenPopup = localStorage.getItem('vasantam_popup_seen');
+    const hasSeenPopup = localStorage.getItem('luxemia_popup_seen');
     if (!hasSeenPopup) {
       const timer = setTimeout(() => {
         setIsOpen(true);
@@ -59,7 +59,7 @@ const NewVisitorPopup = () => {
 
   const handleClose = () => {
     setIsOpen(false);
-    localStorage.setItem('vasantam_popup_seen', 'true');
+    localStorage.setItem('luxemia_popup_seen', 'true');
   };
 
   const validateEmail = (value: string): boolean => {

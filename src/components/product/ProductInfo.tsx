@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock, Star, Clock, BadgeCheck } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -113,15 +113,30 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
   // Find the best-matching variant for price display even when not all options are selected.
   // This ensures the price updates as soon as a stitching type is picked.
-  const bestMatchVariant = selectedVariant || product.variants.edges.reduce<{ variant: typeof product.variants.edges[0] | null; matchCount: number }>(
-    (best, variant) => {
-      const matchCount = variant.node.selectedOptions.filter(
-        (option) => selectedOptions[option.name] === option.value
-      ).length;
-      return matchCount > best.matchCount ? { variant, matchCount } : best;
-    },
-    { variant: null, matchCount: 0 }
-  ).variant;
+  const bestMatchVariant = useMemo(() => {
+    if (selectedVariant) return selectedVariant;
+
+    const selectedKeys = Object.keys(selectedOptions);
+    if (selectedKeys.length === 0) return null;
+
+    let bestVar: typeof product.variants.edges[0] | null = null;
+    let bestCount = 0;
+
+    for (const variant of product.variants.edges) {
+      let count = 0;
+      for (const opt of variant.node.selectedOptions) {
+        if (selectedOptions[opt.name] === opt.value) {
+          count++;
+        }
+      }
+      if (count > bestCount) {
+        bestCount = count;
+        bestVar = variant;
+      }
+    }
+
+    return bestVar;
+  }, [selectedVariant, selectedOptions, product.variants.edges]);
 
   const currentPrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
   const isAvailable = selectedVariant?.node.availableForSale ?? true;
@@ -132,10 +147,15 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
-    const allSelectedValues = Object.values(selectedOptions);
-    return allSelectedValues.some(
-      (val) => val.toLowerCase().includes('stitching') && !val.toLowerCase().startsWith('unstitched')
-    );
+    // Check both option names and values for stitching-related selections
+    return Object.entries(selectedOptions).some(([key, val]) => {
+      const lowerKey = key.toLowerCase();
+      const lowerVal = val.toLowerCase();
+      // Match option name "Stitching" or values containing "stitch" (e.g. "Semi-Stitched", "Blouse Stitching")
+      const isStitchingOption = lowerKey.includes('stitch') || lowerVal.includes('stitch');
+      const isUnstitched = lowerVal.startsWith('unstitched') || lowerVal === 'unstitched';
+      return isStitchingOption && !isUnstitched;
+    });
   }, [selectedOptions]);
 
   const handleOptionSelect = (optionName: string, value: string) => {
@@ -143,10 +163,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       ...prev,
       [optionName]: value,
     }));
-    // Reset stitching size when switching to Unstitched
+    // Reset stitching size when switching to Unstitched or a non-stitch option
     if (
       value.toLowerCase().startsWith('unstitched') ||
-      (!value.toLowerCase().includes('stitching'))
+      (!value.toLowerCase().includes('stitch'))
     ) {
       setStitchingSize(null);
       setShowSizeValidation(false);
@@ -407,21 +427,6 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </Button>
       </div>
 
-      {/* Customer Reviews Summary */}
-      <div className="flex items-center gap-3 pt-4 pb-2">
-        <div className="flex items-center gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <Star
-              key={star}
-              className={`h-4 w-4 ${star <= 4 ? 'fill-amber-400 text-amber-400' : 'fill-amber-400/30 text-amber-400/30'}`}
-            />
-          ))}
-        </div>
-        <span className="text-sm font-medium">4.8</span>
-        <span className="text-sm text-muted-foreground">(127 reviews)</span>
-        <BadgeCheck className="h-4 w-4 text-primary ml-auto" />
-        <span className="text-xs text-primary font-medium">Verified Seller</span>
-      </div>
 
       <Separator />
 

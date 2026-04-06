@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Expert Styling Tips</h2>
       <p>Trust your instincts when you find "the one." Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
     `,
-    author: 'Priya Sharma',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-05',
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
@@ -114,7 +114,7 @@ export const blogPosts: BlogPost[] = [
       <h2>How to Style Your Red Lehenga</h2>
       <p>Keep jewelry harmonious—kundan, polki, or temple gold work well with red. For makeup, go for nude lips and dramatic eyes, or classic red lips with subtle eye makeup. Never both dramatic.</p>
     `,
-    author: 'Anjali Mehta',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-04',
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
@@ -165,7 +165,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Our Top Picks Under $500</h2>
       <p>At LuxeMia, we've curated beautiful bridal options that balance quality, craftsmanship, and affordability. Browse our collection to find pieces that look like they cost twice the price.</p>
     `,
-    author: 'Priya Sharma',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-03',
     updatedAt: '2026-01-07',
     category: 'Shopping Guide',
@@ -231,7 +231,7 @@ export const blogPosts: BlogPost[] = [
         <li>Don't shy away from bright lips—they look amazing!</li>
       </ul>
     `,
-    author: 'Meera Patel',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-06',
     updatedAt: '2026-01-07',
     category: 'Styling Tips',
@@ -301,7 +301,7 @@ export const blogPosts: BlogPost[] = [
         <li>Consider family heirlooms for sentimental value</li>
       </ul>
     `,
-    author: 'Anjali Mehta',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-05',
     updatedAt: '2026-01-07',
     category: 'Wedding Guide',
@@ -366,7 +366,7 @@ export const blogPosts: BlogPost[] = [
         <li>Light layered necklaces or one statement piece</li>
       </ul>
     `,
-    author: 'Meera Patel',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-02',
     updatedAt: '2026-01-06',
     category: 'Styling Tips',
@@ -434,7 +434,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Final Tips</h2>
       <p>Trust your instincts – you'll know when you've found "the one." Take photos during trials to see how the lehenga looks in different lighting. And most importantly, choose something that makes you feel confident and beautiful on your special day.</p>
     `,
-    author: 'Priya Sharma',
+    author: 'LuxeMia Editorial',
     publishedAt: '2026-01-01',
     updatedAt: '2026-01-02',
     category: 'Bridal Guide',
@@ -496,7 +496,7 @@ export const blogPosts: BlogPost[] = [
         <li>Consider professional draping for special occasions</li>
       </ul>
     `,
-    author: 'Anjali Mehta',
+    author: 'LuxeMia Editorial',
     publishedAt: '2025-12-28',
     updatedAt: '2026-01-02',
     category: 'Styling Tips',
@@ -563,7 +563,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Sustainable Accessories</h2>
       <p>From biodegradable floral jewelry for mehendi to upcycled metal accessories, sustainable options are available for every wedding event. Brides are also choosing lab-grown diamonds and ethical gemstones.</p>
     `,
-    author: 'Rahul Khanna',
+    author: 'LuxeMia Editorial',
     publishedAt: '2025-12-20',
     updatedAt: '2026-01-02',
     category: 'Wedding Trends',
@@ -646,7 +646,7 @@ export const blogPosts: BlogPost[] = [
         <li>Embellished headbands for modern looks</li>
       </ul>
     `,
-    author: 'Meera Patel',
+    author: 'LuxeMia Editorial',
     publishedAt: '2025-12-15',
     updatedAt: '2025-12-28',
     category: 'Styling Tips',
@@ -760,7 +760,7 @@ export const blogPosts: BlogPost[] = [
         <li>Restoration of antique pieces</li>
       </ul>
     `,
-    author: 'Lakshmi Iyer',
+    author: 'LuxeMia Editorial',
     publishedAt: '2025-12-10',
     updatedAt: '2025-12-20',
     category: 'Care Guide',

@@ -142,7 +142,7 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-foreground/50 z-[60]"
-            onClick={onClose}
+            onClick={onSkip || onClose}
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -151,9 +151,9 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-background p-8 z-[60] shadow-2xl"
           >
             <button
-              onClick={onClose}
+              onClick={onSkip || onClose}
               className="absolute top-4 right-4 p-2 hover:bg-card rounded-full transition-colors"
-              aria-label="Close"
+              aria-label="Skip to checkout"
             >
               <X className="w-4 h-4" />
             </button>
@@ -205,9 +205,9 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
               <button
                 type="button"
                 onClick={onSkip || onClose}
-                className="w-full text-sm text-foreground/50 hover:text-foreground transition-colors"
+                className="w-full text-sm text-foreground/60 hover:text-foreground font-medium underline underline-offset-4 transition-colors"
               >
-                Skip for now
+                Skip, go to checkout
               </button>
             </form>
           </motion.div>

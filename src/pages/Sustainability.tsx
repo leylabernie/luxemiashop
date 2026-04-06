@@ -124,29 +124,18 @@ const Sustainability = () => {
           </div>
         </section>
 
-        {/* Impact Numbers */}
+        {/* Our Goals */}
         <section className="py-20">
           <div className="container mx-auto px-4">
             <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Our Impact So Far
+              Our Goals
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              <div className="text-center">
-                <p className="font-display text-4xl md:text-5xl text-green-600 dark:text-green-400 mb-2">85%</p>
-                <p className="text-muted-foreground text-sm">Sustainable Materials Used</p>
-              </div>
-              <div className="text-center">
-                <p className="font-display text-4xl md:text-5xl text-green-600 dark:text-green-400 mb-2">60%</p>
-                <p className="text-muted-foreground text-sm">Water Reduction</p>
-              </div>
-              <div className="text-center">
-                <p className="font-display text-4xl md:text-5xl text-green-600 dark:text-green-400 mb-2">100%</p>
-                <p className="text-muted-foreground text-sm">Plastic-Free Packaging</p>
-              </div>
-              <div className="text-center">
-                <p className="font-display text-4xl md:text-5xl text-green-600 dark:text-green-400 mb-2">5000+</p>
-                <p className="text-muted-foreground text-sm">Trees Planted</p>
-              </div>
+            <div className="max-w-3xl mx-auto text-center">
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                We are actively working to increase our use of sustainable materials, reduce water consumption
+                in our dyeing processes, maintain plastic-free packaging across all orders, and support
+                reforestation efforts in the communities where our artisans live and work.
+              </p>
             </div>
           </div>
         </section>
