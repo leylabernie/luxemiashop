@@ -80,6 +80,7 @@ const getDeliveryDates = () => {
   };
 };
 
+// Force rebuild 2026-04-06
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   // Auto-select options when there's only one value per option (e.g. "Default Title")
   const defaultOptions = useMemo(() => {
