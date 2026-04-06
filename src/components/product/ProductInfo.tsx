@@ -1,12 +1,14 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock, Clock } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
+import { DeliveryEstimate } from './DeliveryEstimate';
+import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 interface ProductInfoProps {
@@ -54,30 +56,19 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   return specs;
 };
 
-// Calculate estimated delivery dates (international shipping - 3-5 weeks)
-const getDeliveryDates = () => {
-  const today = new Date();
-  
-  // Standard delivery: 3-4 weeks (21-28 days)
-  const standardStart = new Date(today);
-  standardStart.setDate(today.getDate() + 21);
-  const standardEnd = new Date(today);
-  standardEnd.setDate(today.getDate() + 28);
-  
-  // Express delivery: 2-3 weeks (14-21 days)
-  const expressStart = new Date(today);
-  expressStart.setDate(today.getDate() + 14);
-  const expressEnd = new Date(today);
-  expressEnd.setDate(today.getDate() + 21);
-  
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-  };
-  
-  return {
-    standard: `${formatDate(standardStart)} - ${formatDate(standardEnd)}`,
-    express: `${formatDate(expressStart)} - ${formatDate(expressEnd)}`,
-  };
+// Product types that support blouse neckline selection
+const BLOUSE_PRODUCT_TYPES = ['lehenga choli', 'lehenga', 'saree', 'sarees'];
+
+const isBlouseProductType = (productType?: string, tags?: string[]): boolean => {
+  if (productType && BLOUSE_PRODUCT_TYPES.some((t) => productType.toLowerCase().includes(t)))
+    return true;
+  if (tags) {
+    const lower = tags.map((t) => t.toLowerCase());
+    return lower.some(
+      (t) => t.includes('lehenga') || t.includes('saree') || t.includes('choli')
+    );
+  }
+  return false;
 };
 
 // Force rebuild 2026-04-06
@@ -103,6 +94,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [isAdding, setIsAdding] = useState(false);
   const [stitchingSize, setStitchingSize] = useState<string | null>(null);
   const [showSizeValidation, setShowSizeValidation] = useState(false);
+  const [selectedNeckline, setSelectedNeckline] = useState<NecklineOption>('Round Neck');
   const addItem = useCartStore((state) => state.addItem);
 
   // Find the matching variant based on selected options
@@ -166,7 +158,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const sku = selectedVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
-  const deliveryDates = useMemo(() => getDeliveryDates(), []);
+
+  // Whether blouse neckline selector should show
+  const showNeckline = useMemo(() => {
+    if (!isBlouseProductType(product.productType, product.tags)) return false;
+    return needsStitchingSize; // only when a stitching option (not Unstitched) is selected
+  }, [product.productType, product.tags, needsStitchingSize]);
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -216,10 +213,13 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
     setIsAdding(true);
 
-    const customAttributes =
-      needsStitchingSize && stitchingSize
-        ? [{ key: 'Stitching Size', value: stitchingSize }]
-        : undefined;
+    const customAttributes: Array<{ key: string; value: string }> = [];
+    if (needsStitchingSize && stitchingSize) {
+      customAttributes.push({ key: 'Stitching Size', value: stitchingSize });
+    }
+    if (showNeckline) {
+      customAttributes.push({ key: 'Blouse Neckline', value: selectedNeckline });
+    }
 
     addItem({
       product: { node: product },
@@ -228,7 +228,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       price: selectedVariant.node.price,
       quantity,
       selectedOptions: selectedVariant.node.selectedOptions,
-      customAttributes,
+      customAttributes: customAttributes.length > 0 ? customAttributes : undefined,
     });
 
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -281,23 +281,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
       </div>
 
-      {/* Estimated Delivery */}
-      <div className="bg-card/50 border border-border/50 rounded-sm p-4 space-y-2">
-        <div className="flex items-center gap-2 text-sm">
-          <Truck className="h-4 w-4 text-primary" />
-          <span className="font-medium">Estimated Delivery</span>
-        </div>
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">Standard</p>
-            <p className="text-foreground">{deliveryDates.standard}</p>
-          </div>
-          <div>
-            <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">Express</p>
-            <p className="text-foreground">{deliveryDates.express}</p>
-          </div>
-        </div>
-      </div>
+      {/* Estimated Delivery — dynamic based on stitching selection */}
+      <DeliveryEstimate hasStitching={needsStitchingSize} />
 
       <Separator />
 
@@ -393,6 +378,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           onSizeChange={setStitchingSize}
           showValidation={showSizeValidation}
         />
+      )}
+
+      {/* Blouse Neckline Selector — only for Lehenga Choli / Saree with stitching */}
+      {showNeckline && (
+        <NecklineSelector selected={selectedNeckline} onChange={setSelectedNeckline} />
       )}
 
       {/* Quantity */}
@@ -501,10 +491,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       {/* Additional Trust Elements */}
       <div className="space-y-3 pt-4">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="h-4 w-4 text-primary" />
-          <span>Order within <span className="text-foreground font-medium">2 hrs 34 mins</span> for fastest delivery</span>
-        </div>
+        {/* Urgency info now shown in DeliveryEstimate component */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Shield className="h-4 w-4 text-primary" />
           <span>Quality checked by <span className="text-foreground font-medium">LuxeMia artisans</span></span>
