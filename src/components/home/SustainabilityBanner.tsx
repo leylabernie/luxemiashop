@@ -12,7 +12,7 @@ const values = [
   {
     icon: Users,
     title: 'Artisan Communities',
-    description: 'Supporting 500+ artisan families across India with fair wages and safe working conditions.',
+    description: 'Supporting artisan families across India with fair wages and safe working conditions.',
   },
   {
     icon: Heart,
@@ -90,24 +90,18 @@ const SustainabilityBanner = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-background rounded-sm p-8 lg:p-10 shadow-sm"
           >
-            <h3 className="font-serif text-2xl mb-8 text-center">Our Impact in Numbers</h3>
-            
-            <div className="grid grid-cols-2 gap-8">
+            <h3 className="font-serif text-2xl mb-8 text-center">Our Commitment</h3>
+
+            <div className="grid grid-cols-1 gap-6">
               <div className="text-center">
-                <p className="font-serif text-4xl lg:text-5xl text-primary mb-2">500+</p>
-                <p className="text-sm text-muted-foreground">Artisan Families Supported</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Our growing network of artisan families across multiple Indian states preserves diverse craft traditions through fair-trade partnerships.
+                </p>
               </div>
               <div className="text-center">
-                <p className="font-serif text-4xl lg:text-5xl text-primary mb-2">15+</p>
-                <p className="text-sm text-muted-foreground">Craft Traditions Preserved</p>
-              </div>
-              <div className="text-center">
-                <p className="font-serif text-4xl lg:text-5xl text-primary mb-2">80%</p>
-                <p className="text-sm text-muted-foreground">Sustainable Materials Used</p>
-              </div>
-              <div className="text-center">
-                <p className="font-serif text-4xl lg:text-5xl text-primary mb-2">100%</p>
-                <p className="text-sm text-muted-foreground">Plastic-Free Packaging</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  We are working toward using sustainable materials across our collections and have committed to plastic-free packaging for all orders.
+                </p>
               </div>
             </div>
 

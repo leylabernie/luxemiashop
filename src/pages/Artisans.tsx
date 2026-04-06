@@ -53,7 +53,7 @@ const Artisans = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Our Artisans — LuxeMia"
-        description="Meet the master artisans behind LuxeMia's luxury Indian ethnic wear. Over 200 artisan families preserving centuries-old craftsmanship across 12 Indian states."
+        description="Meet the master artisans behind LuxeMia's luxury Indian ethnic wear. Skilled artisan families preserving centuries-old craftsmanship across India."
         canonical="https://luxemia.shop/artisans"
       />
       <Header />
@@ -89,28 +89,10 @@ const Artisans = () => {
                 Preserving Heritage, Empowering Communities
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                We work directly with over 200 artisan families across India, ensuring fair wages, 
-                safe working conditions, and sustainable livelihoods. Our partnerships span generations, 
-                with many artisan families having worked with us for over two decades.
+                We work directly with artisan families across India, ensuring fair wages,
+                safe working conditions, and sustainable livelihoods. Our partnerships span generations,
+                preserving diverse craft traditions for the future.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div className="text-center">
-                  <p className="font-display text-4xl text-primary mb-2">200+</p>
-                  <p className="text-muted-foreground text-sm">Artisan Families</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-display text-4xl text-primary mb-2">12</p>
-                  <p className="text-muted-foreground text-sm">Indian States</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-display text-4xl text-primary mb-2">25+</p>
-                  <p className="text-muted-foreground text-sm">Craft Traditions</p>
-                </div>
-                <div className="text-center">
-                  <p className="font-display text-4xl text-primary mb-2">40%</p>
-                  <p className="text-muted-foreground text-sm">Women Artisans</p>
-                </div>
-              </div>
             </div>
           </div>
         </section>

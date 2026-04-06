@@ -30,7 +30,7 @@ const services = [
   {
     icon: Sparkles,
     title: 'New Styles Daily',
-    description: '1500+ designs added weekly',
+    description: 'Fresh collections regularly',
   },
 ];
 

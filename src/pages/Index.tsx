@@ -8,7 +8,6 @@ import LookbookTeaser from '@/components/home/LookbookTeaser';
 import NewVisitorPopup from '@/components/home/NewVisitorPopup';
 import SEOHead from '@/components/seo/SEOHead';
 import ServiceHighlights from '@/components/home/ServiceHighlights';
-import CustomerStories from '@/components/home/CustomerStories';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
 import FloatingSupport from '@/components/support/FloatingSupport';
@@ -79,12 +78,6 @@ const Index = () => {
         }
       ]
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "2847",
-      "bestRating": "5"
-    }
   };
 
   // Organization Schema
@@ -96,13 +89,6 @@ const Index = () => {
     "url": "https://luxemia.com",
     "logo": "https://luxemia.com/logo.png",
     "description": "India's premier destination for luxury ethnic wear, featuring handcrafted bridal lehengas, designer sarees, and wedding collections.",
-    "foundingDate": "2015",
-    "founders": [
-      {
-        "@type": "Person",
-        "name": "Priya Sharma"
-      }
-    ],
     "contactPoint": [
       {
         "@type": "ContactPoint",
@@ -147,7 +133,6 @@ const Index = () => {
         <ServiceHighlights />
         <CategoryShowcase />
         <ShopByCategory />
-        <CustomerStories />
         <SustainabilityBanner />
         <LookbookTeaser />
         <SEOFooterContent />

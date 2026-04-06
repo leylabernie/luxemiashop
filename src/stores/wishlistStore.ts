@@ -143,7 +143,7 @@ export const useWishlistStore = create<WishlistStore>()(
       }
     }),
     {
-      name: 'vasantam-wishlist',
+      name: 'luxemia-wishlist',
       storage: createJSONStorage(() => localStorage),
     }
   )

@@ -3,97 +3,119 @@ import { motion } from 'framer-motion';
 import { Plus, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { getAllLocalProducts } from '@/data/localProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { getOptimizedImage } from '@/lib/imageUtils';
-import { supabase } from '@/integrations/supabase/client';
-import { convertToShopifyFormat, type ScrapedProduct } from '@/hooks/useScrapedProducts';
-import type { ShopifyProduct } from '@/lib/shopify';
+import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { jewelryProducts } from '@/data/jewelryProducts';
 
 interface CompleteTheLookProps {
   currentProductId: string;
   productType?: string;
 }
 
-// Determine the complementary category for cross-selling
-const getComplementaryCategory = (productType: string): string | null => {
+// Determine if the current product is jewellery
+const isJewelleryProduct = (productType: string): boolean => {
   const type = productType.toLowerCase();
-  if (type.includes('lehenga') || type.includes('saree')) return 'menswear';
-  if (type.includes('sherwani') || type.includes('kurta') || type.includes('menswear')) return 'lehengas';
-  if (type.includes('suit')) return 'sarees';
-  return null;
+  return type.includes('jewel') || type.includes('necklace') || type.includes('earring') || type.includes('bangle') || type.includes('maang tikka') || type.includes('bridal set');
 };
+
+// Convert a jewelry product to ShopifyProduct format for display
+const convertJewelryToShopify = (product: typeof jewelryProducts[0]): ShopifyProduct => ({
+  node: {
+    id: product.id,
+    title: product.name,
+    description: product.description,
+    handle: product.id,
+    productType: `Jewellery - ${product.category}`,
+    tags: ['jewellery', product.category.toLowerCase()],
+    priceRange: {
+      minVariantPrice: {
+        amount: product.price.toString(),
+        currencyCode: 'USD',
+      },
+    },
+    images: {
+      edges: [
+        {
+          node: {
+            url: product.image,
+            altText: product.name,
+          },
+        },
+      ],
+    },
+    variants: {
+      edges: [
+        {
+          node: {
+            id: `${product.id}-default`,
+            title: 'Default',
+            price: {
+              amount: product.price.toString(),
+              currencyCode: 'USD',
+            },
+            availableForSale: true,
+            selectedOptions: [],
+          },
+        },
+      ],
+    },
+    options: [],
+  },
+});
 
 export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLookProps) => {
   const addItem = useCartStore((state) => state.addItem);
-  const [scrapedRecs, setScrapedRecs] = useState<ShopifyProduct[]>([]);
+  const [shopifyRecs, setShopifyRecs] = useState<ShopifyProduct[]>([]);
 
-  // Fetch recommendations from Supabase
+  const isJewellery = productType ? isJewelleryProduct(productType) : false;
+
+  // Fetch complementary products from Shopify
   useEffect(() => {
     const fetchRecs = async () => {
       try {
-        const complementary = productType ? getComplementaryCategory(productType) : null;
-
-        // Fetch products from a different category for variety
-        let query = supabase
-          .from('scraped_products')
-          .select('*')
-          .eq('is_active', true)
-          .limit(12);
-
-        if (complementary) {
-          query = query.eq('category', complementary);
-        }
-
-        const { data } = await query;
-
-        if (data && data.length > 0) {
-          const formatted = (data as ScrapedProduct[])
-            .filter(p => (p.shopify_product_id || p.id) !== currentProductId)
-            .map(convertToShopifyFormat);
-          setScrapedRecs(formatted);
+        if (isJewellery) {
+          // Current product is jewellery — show outfits (lehengas, sarees)
+          const products = await fetchProducts(12, 'tag:lehenga OR tag:saree');
+          const filtered = products.filter(
+            (p) => p.node.id !== currentProductId
+          );
+          setShopifyRecs(filtered);
+        } else {
+          // Current product is an outfit — show jewellery/accessories
+          const products = await fetchProducts(12, 'tag:jewellery OR tag:jewelry');
+          const filtered = products.filter(
+            (p) => p.node.id !== currentProductId
+          );
+          setShopifyRecs(filtered);
         }
       } catch {
-        // Silently fall back to local products
+        // Silently fall back to local jewellery products
       }
     };
 
     fetchRecs();
-  }, [currentProductId, productType]);
+  }, [currentProductId, isJewellery]);
 
-  // Use scraped products if available, otherwise fall back to local products
+  // Use Shopify products if available, otherwise fall back to local jewellery
   const recommendations = useMemo(() => {
-    let pool: ShopifyProduct[] = scrapedRecs;
+    let pool: ShopifyProduct[] = shopifyRecs;
 
-    if (pool.length === 0) {
-      // Fallback to local products
-      const allProducts = getAllLocalProducts();
-      const currentCategory = productType?.toLowerCase() || '';
-
-      pool = allProducts.filter(p => {
-        if (p.node.id === currentProductId) return false;
-        const prodType = p.node.productType?.toLowerCase() || '';
-
-        if (currentCategory.includes('lehenga') || currentCategory.includes('saree')) {
-          return prodType.includes('sherwani') || prodType.includes('kurta') || prodType.includes('suit');
-        }
-        if (currentCategory.includes('sherwani') || currentCategory.includes('kurta')) {
-          return prodType.includes('lehenga') || prodType.includes('saree');
-        }
-        return prodType !== currentCategory;
-      });
+    if (pool.length === 0 && !isJewellery) {
+      // Fallback: show local jewellery products as accessories
+      pool = jewelryProducts.map(convertJewelryToShopify);
     }
 
     // Shuffle and take first 4
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 4);
-  }, [currentProductId, productType, scrapedRecs]);
+  }, [shopifyRecs, isJewellery]);
 
-  const handleQuickAdd = (product: any, e: React.MouseEvent) => {
+  const handleQuickAdd = (product: ShopifyProduct, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const firstVariant = product.node.variants.edges[0]?.node;
     if (!firstVariant) return;
 
@@ -122,15 +144,20 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
     return null;
   }
 
+  const sectionTitle = isJewellery ? 'Pairs Well With' : 'Complete the Look';
+  const sectionSubtitle = isJewellery
+    ? 'Outfits that pair beautifully with this piece'
+    : 'Accessories to complement your outfit';
+
   return (
     <section className="py-16 border-t border-border">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-2xl lg:text-3xl font-serif mb-2">Complete the Look</h2>
-          <p className="text-muted-foreground">Curated pieces to complement your selection</p>
+          <h2 className="text-2xl lg:text-3xl font-serif mb-2">{sectionTitle}</h2>
+          <p className="text-muted-foreground">{sectionSubtitle}</p>
         </div>
         <Button variant="ghost" asChild className="hidden md:flex items-center gap-2 luxury-link">
-          <Link to="/collections">
+          <Link to={isJewellery ? '/collections' : '/jewelry'}>
             View All
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -159,7 +186,7 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
                     <span className="text-muted-foreground">No image</span>
                   </div>
                 )}
-                
+
                 {/* Quick Add Button */}
                 <button
                   onClick={(e) => handleQuickAdd(product, e)}

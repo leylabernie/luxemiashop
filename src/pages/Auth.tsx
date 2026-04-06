@@ -101,7 +101,7 @@ const Auth = () => {
           }
         } else {
           toast({
-            title: "Welcome to Vasantam!",
+            title: "Welcome to LuxeMia!",
             description: "Your account has been created successfully.",
           });
         }
@@ -141,7 +141,7 @@ const Auth = () => {
               <Sparkles className="w-8 h-8 text-primary" />
             </motion.div>
             <h1 className="font-display text-3xl md:text-4xl text-foreground mb-2">
-              {isLogin ? 'Welcome Back' : 'Join Vasantam'}
+              {isLogin ? 'Welcome Back' : 'Join LuxeMia'}
             </h1>
             <p className="text-muted-foreground">
               {isLogin 

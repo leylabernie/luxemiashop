@@ -176,26 +176,6 @@ const SEOHead = ({
             returnFees: 'https://schema.org/FreeReturn',
           },
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.8',
-          reviewCount: '127',
-          bestRating: '5',
-          worstRating: '1',
-        },
-        review: {
-          '@type': 'Review',
-          reviewRating: {
-            '@type': 'Rating',
-            ratingValue: '5',
-            bestRating: '5',
-          },
-          author: {
-            '@type': 'Person',
-            name: 'Priya M.',
-          },
-          reviewBody: 'Absolutely stunning craftsmanship! The fabric quality exceeded my expectations. Perfect for my wedding.',
-        },
       }
     : null;
 
