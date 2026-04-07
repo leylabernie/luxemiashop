@@ -111,9 +111,12 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
   
   // If we have a real Shopify product, use its variants and options directly
   if (shopifyProduct && shopifyProduct.variants && shopifyProduct.options) {
+    // Ensure we're using the real Shopify GID for the product ID as well
+    const shopifyId = shopifyProduct.id?.startsWith('gid://') ? shopifyProduct.id : (product.shopify_product_id?.startsWith('gid://') ? product.shopify_product_id : product.id);
+    
     return {
       node: {
-        id: shopifyProduct.id || product.shopify_product_id || product.id,
+        id: shopifyId,
         title: shopifyProduct.title || product.title || betterTitle,
         description: shopifyProduct.description || product.description,
         handle: shopifyProduct.handle || product.source_id,
@@ -156,7 +159,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
   const variants = hasRealShopifyIds 
     ? product.shopify_variant_ids!.map((variantId, index) => ({
         node: {
-          id: variantId,
+          id: variantId.startsWith('gid://') ? variantId : `gid://shopify/ProductVariant/${variantId}`,
           title: sizeOptions[index] || `Size ${index + 1}`,
           price: { amount: product.price_usd.toString(), currencyCode: 'USD' },
           availableForSale: true,
