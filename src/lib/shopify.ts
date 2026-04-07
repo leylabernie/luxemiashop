@@ -276,103 +276,82 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
 }
 
 export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string> {
-  try {
-    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
-    // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
-    const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
+  // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
+  // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
+  const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
 
-    if (hasFakeIds) {
-      console.log('Detected fake variant IDs, routing to Shopify product page instead of direct checkout');
-      // Redirect to the first product's page on the Shopify store so the customer can purchase from there
-      const firstHandle = items.find(item => item.handle)?.handle;
-      if (firstHandle) {
-        return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${firstHandle}`;
-      }
-      // If no handle available, redirect to the store homepage
-      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
-    }
-
-    const lines = items.map(item => ({
-      quantity: item.quantity,
-      merchandiseId: item.variantId,
-      ...(item.customAttributes?.length && {
-        attributes: item.customAttributes.map(attr => ({ key: attr.key, value: attr.value })),
-      }),
-    }));
-
-    const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
-      input: { lines },
-    });
-
-    if (!cartData) {
-      throw new Error('Failed to create cart - no response from Shopify');
-    }
-
-    if (cartData.data?.cartCreate?.userErrors && cartData.data.cartCreate.userErrors.length > 0) {
-      const errorMessages = cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
-      console.error('Shopify cart creation errors:', errorMessages);
-      
-      // Fallback for user errors (like invalid variant IDs that weren't caught by the prefix check)
-      if (items.length === 1 && items[0].handle) {
-        return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${items[0].handle}`;
-      }
-      throw new Error(`Cart creation failed: ${errorMessages}`);
-    }
-
-    const cart = cartData.data?.cartCreate?.cart;
-    
-    if (!cart || !cart.checkoutUrl) {
-      console.error('Cart response:', cart);
-      throw new Error('No checkout URL returned from Shopify');
-    }
-
-    // Ensure the checkout URL always points to the myshopify.com domain.
-    // Shopify may return URLs using a custom domain (luxemia.shop) or browsers
-    // may have cached the old Lovable domain — both will 404 since the site
-    // now runs on Vercel. Do a robust string replacement for any non-myshopify domain.
-    let checkoutUrl = cart.checkoutUrl as string;
-    try {
-      const url = new URL(checkoutUrl);
-      // Replace any hostname that isn't the myshopify domain
-      if (url.hostname !== SHOPIFY_STORE_PERMANENT_DOMAIN) {
-        url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
-      }
-      url.searchParams.set('channel', 'online_store');
-      checkoutUrl = url.toString();
-    } catch {
-      // URL parsing failed — do plain string replacements as fallback
-      checkoutUrl = checkoutUrl
-        .replace(/luxemia\.shop/g, SHOPIFY_STORE_PERMANENT_DOMAIN)
-        .replace(/luxemiashop\.lovable\.app/g, SHOPIFY_STORE_PERMANENT_DOMAIN);
-    }
-
-    // Final safety check: if the URL still doesn't point to myshopify.com,
-    // try to extract the cart token and construct the URL manually
-    if (!checkoutUrl.includes('myshopify.com')) {
-      const tokenMatch = checkoutUrl.match(/\/cart\/c\/([^?]+)/);
-      const keyMatch = checkoutUrl.match(/[?&]key=([^&]+)/);
-      if (tokenMatch) {
-        checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart/c/${tokenMatch[1]}`;
-        if (keyMatch) {
-          checkoutUrl += `?key=${keyMatch[1]}&channel=online_store`;
-        } else {
-          checkoutUrl += '?channel=online_store';
-        }
-      } else {
-        // Cannot salvage the URL — fall back to the store homepage
-        checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
-      }
-    }
-
-    console.log('Checkout URL created successfully:', checkoutUrl);
-    return checkoutUrl;
-  } catch (error) {
-    console.error('Error creating storefront checkout:', error);
-    // Final fallback: redirect to Shopify product page or store homepage
-    const firstHandle = items.find(item => item.handle)?.handle;
-    if (firstHandle) {
-      return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/products/${firstHandle}`;
-    }
-    return `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
+  if (hasFakeIds) {
+    console.warn('Detected fake variant IDs — cannot create Shopify cart');
+    throw new Error('Invalid product configuration. Please try again or contact support.');
   }
+
+  const lines = items.map(item => ({
+    quantity: item.quantity,
+    merchandiseId: item.variantId,
+    ...(item.customAttributes?.length && {
+      attributes: item.customAttributes.map(attr => ({ key: attr.key, value: attr.value })),
+    }),
+  }));
+
+  const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
+    input: { lines },
+  });
+
+  if (!cartData) {
+    throw new Error('Failed to create cart - no response from Shopify');
+  }
+
+  if (cartData.data?.cartCreate?.userErrors && cartData.data.cartCreate.userErrors.length > 0) {
+    const errorMessages = cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
+    console.error('Shopify cart creation errors:', errorMessages);
+    throw new Error(`Cart creation failed: ${errorMessages}`);
+  }
+
+  const cart = cartData.data?.cartCreate?.cart;
+
+  if (!cart || !cart.checkoutUrl) {
+    console.error('Cart response:', cart);
+    throw new Error('No checkout URL returned from Shopify');
+  }
+
+  // Ensure the checkout URL always points to the myshopify.com domain.
+  // Shopify may return URLs using a custom domain (luxemia.shop) or browsers
+  // may have cached the old Lovable domain — both will 404 since the site
+  // now runs on Vercel. Do a robust string replacement for any non-myshopify domain.
+  let checkoutUrl = cart.checkoutUrl as string;
+  try {
+    const url = new URL(checkoutUrl);
+    // Replace any hostname that isn't the myshopify domain
+    if (url.hostname !== SHOPIFY_STORE_PERMANENT_DOMAIN) {
+      url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
+    }
+    url.searchParams.set('channel', 'online_store');
+    checkoutUrl = url.toString();
+  } catch {
+    // URL parsing failed — do plain string replacements as fallback
+    checkoutUrl = checkoutUrl
+      .replace(/luxemia\.shop/g, SHOPIFY_STORE_PERMANENT_DOMAIN)
+      .replace(/luxemiashop\.lovable\.app/g, SHOPIFY_STORE_PERMANENT_DOMAIN);
+  }
+
+  // Final safety check: if the URL still doesn't point to myshopify.com,
+  // try to extract the cart token and construct the URL manually
+  if (!checkoutUrl.includes('myshopify.com')) {
+    const tokenMatch = checkoutUrl.match(/\/cart\/c\/([^?]+)/);
+    const keyMatch = checkoutUrl.match(/[?&]key=([^&]+)/);
+    if (tokenMatch) {
+      checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart/c/${tokenMatch[1]}`;
+      if (keyMatch) {
+        checkoutUrl += `?key=${keyMatch[1]}&channel=online_store`;
+      } else {
+        checkoutUrl += '?channel=online_store';
+      }
+    } else {
+      // Cannot salvage the URL — fall back to the store homepage
+      checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
+    }
+  }
+
+  console.log('Checkout URL created successfully:', checkoutUrl);
+  return checkoutUrl;
 }

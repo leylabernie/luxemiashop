@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { trackAddToCart, trackBeginCheckout } from '@/hooks/useAnalytics';
+import { toast } from 'sonner';
+
+const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -131,7 +134,10 @@ export const useCartStore = create<CartStore>()(
           return checkoutUrl;
         } catch (error) {
           console.error('Failed to create checkout:', error);
-          return null;
+          toast.error('Checkout is temporarily unavailable. Redirecting to our store...');
+          // Always redirect to Shopify store so the customer can still purchase
+          const fallbackUrl = `https://${SHOPIFY_STORE_DOMAIN}`;
+          return fallbackUrl;
         } finally {
           setLoading(false);
         }
