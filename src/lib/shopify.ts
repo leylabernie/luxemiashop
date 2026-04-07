@@ -326,16 +326,46 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
       throw new Error('No checkout URL returned from Shopify');
     }
 
-    const url = new URL(cart.checkoutUrl);
-    // Shopify may return checkout URLs using the custom domain (luxemia.shop),
-    // which now points to Vercel and will 404. Replace with the myshopify.com domain.
-    if (url.hostname !== SHOPIFY_STORE_PERMANENT_DOMAIN) {
-      url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
+    // Ensure the checkout URL always points to the myshopify.com domain.
+    // Shopify may return URLs using a custom domain (luxemia.shop) or browsers
+    // may have cached the old Lovable domain — both will 404 since the site
+    // now runs on Vercel. Do a robust string replacement for any non-myshopify domain.
+    let checkoutUrl = cart.checkoutUrl as string;
+    try {
+      const url = new URL(checkoutUrl);
+      // Replace any hostname that isn't the myshopify domain
+      if (url.hostname !== SHOPIFY_STORE_PERMANENT_DOMAIN) {
+        url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
+      }
+      url.searchParams.set('channel', 'online_store');
+      checkoutUrl = url.toString();
+    } catch {
+      // URL parsing failed — do plain string replacements as fallback
+      checkoutUrl = checkoutUrl
+        .replace(/luxemia\.shop/g, SHOPIFY_STORE_PERMANENT_DOMAIN)
+        .replace(/luxemiashop\.lovable\.app/g, SHOPIFY_STORE_PERMANENT_DOMAIN);
     }
-    url.searchParams.set('channel', 'online_store');
 
-    console.log('Checkout URL created successfully:', url.toString());
-    return url.toString();
+    // Final safety check: if the URL still doesn't point to myshopify.com,
+    // try to extract the cart token and construct the URL manually
+    if (!checkoutUrl.includes('myshopify.com')) {
+      const tokenMatch = checkoutUrl.match(/\/cart\/c\/([^?]+)/);
+      const keyMatch = checkoutUrl.match(/[?&]key=([^&]+)/);
+      if (tokenMatch) {
+        checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart/c/${tokenMatch[1]}`;
+        if (keyMatch) {
+          checkoutUrl += `?key=${keyMatch[1]}&channel=online_store`;
+        } else {
+          checkoutUrl += '?channel=online_store';
+        }
+      } else {
+        // Cannot salvage the URL — fall back to the store homepage
+        checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
+      }
+    }
+
+    console.log('Checkout URL created successfully:', checkoutUrl);
+    return checkoutUrl;
   } catch (error) {
     console.error('Error creating storefront checkout:', error);
     // Final fallback: redirect to Shopify product page or store homepage
