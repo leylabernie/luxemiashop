@@ -148,7 +148,7 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-md max-h-[calc(100vh-4rem)] overflow-y-auto bg-background p-6 sm:p-8 z-[60] shadow-2xl rounded-sm"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-md max-h-[90vh] overflow-y-auto bg-background p-6 sm:p-8 z-[60] shadow-2xl rounded-sm"
           >
             <button
               onClick={(e) => {
