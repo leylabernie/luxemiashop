@@ -327,8 +327,13 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     }
 
     const url = new URL(cart.checkoutUrl);
+    // Shopify may return checkout URLs using the custom domain (luxemia.shop),
+    // which now points to Vercel and will 404. Replace with the myshopify.com domain.
+    if (url.hostname !== SHOPIFY_STORE_PERMANENT_DOMAIN) {
+      url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
+    }
     url.searchParams.set('channel', 'online_store');
-    
+
     console.log('Checkout URL created successfully:', url.toString());
     return url.toString();
   } catch (error) {
