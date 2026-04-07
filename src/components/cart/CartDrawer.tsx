@@ -198,7 +198,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
           {/* Email Capture Modal */}
           <EmailCaptureModal
             isOpen={showEmailCapture}
-            onClose={() => setShowEmailCapture(false)}
+            onClose={() => {
+              setShowEmailCapture(false);
+              // Ensure we don't proceed to checkout when just closing
+            }}
             onEmailSubmitted={handleEmailSubmitted}
             onSkip={handleEmailSkipped}
           />

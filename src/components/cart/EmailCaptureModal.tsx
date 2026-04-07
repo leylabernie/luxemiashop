@@ -148,11 +148,15 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md max-h-[90vh] overflow-y-auto bg-background p-8 z-[60] shadow-2xl"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-md max-h-[calc(100vh-4rem)] overflow-y-auto bg-background p-6 sm:p-8 z-[60] shadow-2xl rounded-sm"
           >
             <button
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2 hover:bg-card rounded-full transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+              }}
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 p-2 hover:bg-card rounded-full transition-colors"
               aria-label="Close modal"
             >
               <X className="w-4 h-4" />

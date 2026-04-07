@@ -276,13 +276,14 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
 }
 
 export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string> {
-  // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
+   // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
   // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
   const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
-
+  
   if (hasFakeIds) {
-    console.warn('Detected fake variant IDs — cannot create Shopify cart');
-    throw new Error('Invalid product configuration. Please try again or contact support.');
+    console.warn('Detected fake variant IDs — redirecting to store fallback');
+    // Instead of throwing, we'll return null to trigger the fallback in the store
+    return null;
   }
 
   const lines = items.map(item => ({
@@ -293,12 +294,12 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     }),
   }));
 
-  const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
+   const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
     input: { lines },
   });
-
-  if (!cartData) {
-    throw new Error('Failed to create cart - no response from Shopify');
+  if (!cartData || !cartData.data) {
+    console.error('Failed to create cart - no data from Shopify', cartData);
+    return null;
   }
 
   if (cartData.data?.cartCreate?.userErrors && cartData.data.cartCreate.userErrors.length > 0) {

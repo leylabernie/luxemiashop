@@ -130,8 +130,21 @@ export const useCartStore = create<CartStore>()(
               customAttributes: item.customAttributes,
             }))
           );
-          setCheckoutUrl(checkoutUrl);
-          return checkoutUrl;
+          
+          if (checkoutUrl) {
+            setCheckoutUrl(checkoutUrl);
+            return checkoutUrl;
+          }
+          
+          // If checkoutUrl is null, it means we have fake IDs or Shopify failed
+          console.warn('No checkout URL returned, falling back to product page');
+          const firstItem = items[0];
+          if (firstItem && firstItem.product.node.handle) {
+            toast.info('Redirecting to product page for checkout...');
+            return `https://${SHOPIFY_STORE_DOMAIN}/products/${firstItem.product.node.handle}`;
+          }
+          
+          return `https://${SHOPIFY_STORE_DOMAIN}`;
         } catch (error) {
           console.error('Failed to create checkout:', error);
           toast.error('Checkout is temporarily unavailable. Redirecting to our store...');
