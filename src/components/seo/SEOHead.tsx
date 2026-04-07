@@ -48,7 +48,7 @@ const SEOHead = ({
   title = 'LuxeMia | Luxury Indian Ethnic Wear - Sarees, Lehengas & Bridal Couture',
   description = 'Discover exquisite handcrafted Indian ethnic wear at LuxeMia. Shop designer sarees, bridal lehengas, anarkali suits, and wedding collections. Worldwide shipping. Premium quality assured.',
   canonical,
-  image = 'https://lovable.dev/opengraph-image-p98pqg.png',
+  image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
   product,
   collection,
