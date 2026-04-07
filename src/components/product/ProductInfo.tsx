@@ -10,6 +10,7 @@ import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { isValidShopifyVariantId } from '@/lib/utils';
 
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
@@ -202,6 +203,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const handleAddToCart = async () => {
     if (!selectedVariant) {
       toast.error('Please select all options');
+      return;
+    }
+
+    if (!isValidShopifyVariantId(selectedVariant.node.id)) {
+      toast.error('This product is currently unavailable for purchase. Please try again later.');
       return;
     }
 

@@ -9,6 +9,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from '@/hooks/use-toast';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { isValidShopifyVariantId } from '@/lib/utils';
 
 type TabType = 'new' | 'bestsellers' | 'ready';
 
@@ -43,10 +44,20 @@ const ShopByCategory = () => {
   const handleQuickAdd = (product: ShopifyProduct) => {
     const node = product.node;
     const defaultVariant = node.variants?.edges[0]?.node;
-    
+    const variantId = defaultVariant?.id || node.id;
+
+    if (!isValidShopifyVariantId(variantId)) {
+      toast({
+        title: "Unable to quick-add",
+        description: "Please visit the product page to add this item to your bag.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     addToCart({
       product,
-      variantId: defaultVariant?.id || node.id,
+      variantId,
       variantTitle: defaultVariant?.title || 'Standard',
       price: {
         amount: node.priceRange.minVariantPrice.amount,

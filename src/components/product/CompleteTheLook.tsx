@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
 import { jewelryProducts } from '@/data/jewelryProducts';
+import { isValidShopifyVariantId } from '@/lib/utils';
 
 interface CompleteTheLookProps {
   currentProductId: string;
@@ -118,6 +119,11 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
 
     const firstVariant = product.node.variants.edges[0]?.node;
     if (!firstVariant) return;
+
+    if (!isValidShopifyVariantId(firstVariant.id)) {
+      toast.error('Please visit the product page to add this item to your bag.');
+      return;
+    }
 
     addItem({
       product,

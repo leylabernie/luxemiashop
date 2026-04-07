@@ -7,6 +7,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { isValidShopifyVariantId } from '@/lib/utils';
 
 const TrendingNow = () => {
   const { products, isLoading } = useShopifyProducts('lehengas');
@@ -27,9 +28,14 @@ const TrendingNow = () => {
     e.preventDefault();
     e.stopPropagation();
     const variant = product.node.variants.edges[0]?.node;
+    const variantId = variant?.id || product.node.id;
+    if (!isValidShopifyVariantId(variantId)) {
+      toast.error('Please visit the product page to add this item to your bag.');
+      return;
+    }
     addItem({
       product: product,
-      variantId: variant?.id || product.node.id,
+      variantId,
       variantTitle: variant?.title || 'Default',
       price: product.node.priceRange.minVariantPrice,
       quantity: 1,

@@ -9,7 +9,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
-import { cn } from '@/lib/utils';
+import { cn, isValidShopifyVariantId } from '@/lib/utils';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -126,6 +126,11 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
     e.stopPropagation();
     const firstVariant = product.node.variants.edges[0]?.node;
     if (!firstVariant) return;
+
+    if (!isValidShopifyVariantId(firstVariant.id)) {
+      toast.error('Please visit the product page to add this item to your bag.');
+      return;
+    }
 
     addItem({
       product,

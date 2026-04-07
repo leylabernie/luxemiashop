@@ -9,6 +9,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore, type CartItem } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { toast } from 'sonner';
+import { isValidShopifyVariantId } from '@/lib/utils';
 
 const Wishlist = () => {
   const { items, removeItem, clearWishlist } = useWishlistStore();
@@ -17,6 +18,11 @@ const Wishlist = () => {
   const handleAddToCart = (product: typeof items[0]) => {
     const firstVariant = product.node.variants.edges[0]?.node;
     if (!firstVariant) return;
+
+    if (!isValidShopifyVariantId(firstVariant.id)) {
+      toast.error('This product cannot be added to cart. Please visit the product page to purchase.');
+      return;
+    }
 
     const cartItem: CartItem = {
       product,
