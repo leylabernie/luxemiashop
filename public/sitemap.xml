@@ -29,6 +29,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://luxemia.shop/our-story</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- ===== SHOP CATEGORIES ===== -->
   <url>
     <loc>https://luxemia.shop/lehengas</loc>
@@ -227,6 +234,37 @@
     <priority>0.7</priority>
   </url>
   
+  <url>
+    <loc>https://luxemia.shop/blog/sharara-suit-guide-2026-styles-fabrics</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/pakistani-suits-anarkali-shopping-guide</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/style-lehenga-choli-every-wedding-event</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/indian-wedding-season-2026-outfit-guide</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- ===== BRIDAL LEHENGAS ===== -->
   <url>
     <loc>https://luxemia.shop/product/ethereal-pastel-pink-bridal-lehenga</loc>

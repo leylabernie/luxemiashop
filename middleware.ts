@@ -1,0 +1,98 @@
+import { rewrite, next } from '@vercel/functions';
+
+/**
+ * Vercel Edge Middleware (non-Next.js / Vite)
+ *
+ * Detects search engine bot user agents and rewrites requests to serve
+ * pre-rendered HTML files with proper SEO content. Regular users get
+ * the normal SPA experience.
+ */
+
+const BOT_USER_AGENTS = [
+  'googlebot',
+  'bingbot',
+  'yandexbot',
+  'duckduckbot',
+  'baiduspider',
+  'slurp',
+  'sogou',
+  'facebookexternalhit',
+  'facebot',
+  'twitterbot',
+  'linkedinbot',
+  'whatsapp',
+  'telegrambot',
+  'applebot',
+  'pinterestbot',
+  'redditbot',
+  'oai-searchbot',
+  'perplexitybot',
+  'claudebot',
+  'gptbot',
+  'ia_archiver',
+  'semrushbot',
+  'ahrefsbot',
+  'mj12bot',
+  'dotbot',
+  'petalbot',
+  'bytespider',
+];
+
+const PRERENDERED_ROUTES = new Set([
+  '/',
+  '/suits',
+  '/lehengas',
+  '/sarees',
+  '/menswear',
+  '/jewelry',
+  '/blog',
+  '/blog/sharara-suit-guide-2026-styles-fabrics',
+  '/blog/pakistani-suits-anarkali-shopping-guide',
+  '/blog/style-lehenga-choli-every-wedding-event',
+  '/blog/indian-wedding-season-2026-outfit-guide',
+  '/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
+  '/blog/indian-wedding-dress-complete-guide',
+  '/blog/red-bridal-lehenga-trends-2026',
+  '/collections',
+  '/collections/bridal-lehengas',
+  '/collections/wedding-sarees',
+  '/collections/reception-outfits',
+  '/collections/festive-wear',
+  '/our-story',
+  '/size-guide',
+  '/care-guide',
+  '/faq',
+  '/shipping',
+  '/returns',
+  '/contact',
+]);
+
+function isBot(userAgent: string): boolean {
+  const ua = userAgent.toLowerCase();
+  return BOT_USER_AGENTS.some((bot) => ua.includes(bot));
+}
+
+export default function middleware(request: Request) {
+  const userAgent = request.headers.get('user-agent') || '';
+  const url = new URL(request.url);
+  const { pathname } = url;
+
+  // Only rewrite for bots requesting pre-rendered routes
+  if (!isBot(userAgent) || !PRERENDERED_ROUTES.has(pathname)) {
+    return next();
+  }
+
+  // Map route path to pre-rendered file
+  const prerenderPath =
+    pathname === '/'
+      ? '/_prerender/index.html'
+      : `/_prerender${pathname}.html`;
+
+  return rewrite(new URL(prerenderPath, request.url));
+}
+
+export const config = {
+  matcher: [
+    '/((?!_prerender|assets|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)).*)',
+  ],
+};
