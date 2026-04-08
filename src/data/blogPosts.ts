@@ -134,7 +134,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '9',
     slug: 'designer-wedding-dress-under-500',
-    title: 'Designer Wedding Dress Under $500: Budget-Friendly Bridal Options — Shop <a href="/suits">Suits</a> &amp; <a href="/lehengas">Lehengas</a>',
+    title: 'Designer Wedding Dress Under $500: Budget-Friendly Bridal Options',
     excerpt: 'Beautiful bridal lehengas and wedding sarees that look expensive without the designer price tag. Smart shopping tips for budget-conscious brides.',
     content: `
       <h2>Luxury Look Without the Luxury Price</h2>
@@ -185,7 +185,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '11',
     slug: 'lehenga-color-for-dark-skin',
-    title: 'Best Lehenga Colors for Dark Skin Tone: Expert Color Guide 2026 | <a href="/lehengas">Shop Lehengas</a>',
+    title: 'Best Lehenga Colors for Dark Skin Tone: Expert Color Guide 2026',
     excerpt: 'Find the most flattering lehenga colors for dusky and dark skin tones. From jewel tones to pastels, discover shades that make your complexion glow.',
     content: `
       <h2>Embrace Your Beautiful Dark Skin</h2>
@@ -249,7 +249,7 @@ export const blogPosts: BlogPost[] = [
     readTime: 7
   },
   {
-    id: '12',
+    id: '6',
     slug: 'wedding-saree-for-mother-of-bride',
     title: 'How to Choose Wedding Saree for Mother of Bride: Complete Guide',
     excerpt: 'Help your mother look elegant at your wedding. Expert tips on choosing the perfect saree color, fabric, and style for mothers of brides in 2026.',
@@ -450,68 +450,6 @@ export const blogPosts: BlogPost[] = [
     tags: ['bridal lehenga', 'wedding shopping', 'bridal fashion', 'lehenga guide'],
     image: '/og/og-lehengas.jpg',
     readTime: 8
-  },
-  {
-    id: '2',
-    slug: 'saree-draping-styles-every-occasion',
-    title: '12 Elegant Saree Draping Styles for Every Occasion',
-    excerpt: 'Master the art of saree draping with these stunning styles that range from traditional Nivi to contemporary pre-stitched options.',
-    content: `
-      <h2>The Classic Nivi Style</h2>
-      <p>The Nivi drape, originating from Andhra Pradesh, is the most popular saree draping style in India. It's elegant, versatile, and suitable for almost any occasion. The pleats are tucked at the front, and the pallu flows gracefully over the shoulder.</p>
-      
-      <h3>How to Achieve the Perfect Nivi Drape</h3>
-      <p>Start by tucking the plain end of the saree into your petticoat at the right hip. Wrap it around once, then make 5-7 pleats and tuck them at the center front. Take the remaining fabric, drape it over your left shoulder, and pin it in place.</p>
-      
-      <h2>Gujarati Style</h2>
-      <p>This beautiful draping style brings the pallu to the front, showcasing the intricate work. It's perfect for festive occasions and creates a stunning silhouette.</p>
-      
-      <h2>Bengali Style</h2>
-      <p>Known for its distinctive pleated drape without pins, the Bengali style is ideal for red and white traditional sarees. The pallu is brought over both shoulders for a royal appearance.</p>
-      
-      <h2>Maharashtrian Nauvari</h2>
-      <p>This nine-yard saree style is draped like a dhoti, perfect for traditional ceremonies. It allows for easy movement and represents Marathi heritage beautifully.</p>
-      
-      <h2>Seedha Pallu (Front Pallu)</h2>
-      <p>Popular in Rajasthan and Gujarat, this style places the pallu in front, creating a distinctive look that shows off elaborate borders and embroidery.</p>
-      
-      <h2>Modern Mermaid Style</h2>
-      <p>For contemporary events, the mermaid drape creates a fitted silhouette. The pleats are smaller and tucked tightly, with the pallu pinned to fall gracefully.</p>
-      
-      <h2>Butterfly Style</h2>
-      <p>This style creates a dramatic effect by pleating the pallu like butterfly wings. It's perfect for cocktail parties and modern events.</p>
-      
-      <h2>Lehenga Style</h2>
-      <p>Drape your saree to look like a lehenga by creating elaborate pleats and spreading them in a circular fashion. Ideal for wedding receptions.</p>
-      
-      <h2>Pant Style</h2>
-      <p>A fusion approach where the saree is draped over pants instead of a petticoat. Modern, chic, and perfect for professional settings.</p>
-      
-      <h2>Belted Style</h2>
-      <p>Add a statement belt over your traditionally draped saree for a contemporary twist. Choose metallic or embroidered belts for maximum impact.</p>
-      
-      <h2>Cape Style</h2>
-      <p>Create a cape effect with your pallu for red carpet-worthy looks. This style works beautifully with lightweight georgette and chiffon sarees.</p>
-      
-      <h2>One-Shoulder Style</h2>
-      <p>Pin your pallu to create an asymmetric, one-shoulder look. Perfect for cocktail parties and modern celebrations.</p>
-      
-      <h2>Tips for Perfect Draping</h2>
-      <ul>
-        <li>Always iron your saree before draping</li>
-        <li>Use a well-fitted petticoat with a strong drawstring</li>
-        <li>Keep safety pins and saree pins handy</li>
-        <li>Practice before the event</li>
-        <li>Consider professional draping for special occasions</li>
-      </ul>
-    `,
-    author: 'LuxeMia Editorial',
-    publishedAt: '2025-12-28',
-    updatedAt: '2026-01-02',
-    category: 'Styling Tips',
-    tags: ['saree draping', 'styling tips', 'saree fashion', 'traditional wear'],
-    image: '/og/og-sarees.jpg',
-    readTime: 6
   },
   {
     id: '3',

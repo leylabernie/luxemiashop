@@ -135,7 +135,7 @@ const CareGuide = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              Your Shringaar pieces are heirloom-quality garments meant to last generations. 
+              Your LuxeMia pieces are heirloom-quality garments meant to last generations. 
               Follow these care instructions to preserve their beauty and craftsmanship.
             </motion.p>
           </div>
@@ -181,11 +181,11 @@ const CareGuide = () => {
               Fabric-Specific Care
             </h2>
             <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-4">
+              <Accordion type="multiple" className="w-full space-y-4">
                 {fabricCare.map((item, index) => (
-                  <AccordionItem 
-                    key={item.fabric} 
-                    value={`item-${index}`}
+                  <AccordionItem
+                    key={item.fabric}
+                    value={`fabric-${index}`}
                     className="bg-card rounded-lg border border-border px-6"
                   >
                     <AccordionTrigger className="hover:no-underline">
@@ -272,8 +272,8 @@ const CareGuide = () => {
         <section className="py-12 bg-secondary/30">
           <div className="container mx-auto px-4 text-center">
             <p className="text-muted-foreground">
-              Have questions about caring for your Shringaar garment? Contact our care specialists at{" "}
-              <span className="text-primary">care@shringaar.com</span>
+              Have questions about caring for your LuxeMia garment? Contact our care specialists at{" "}
+              <span className="text-primary">hello@luxemia.shop</span>
             </p>
           </div>
         </section>

@@ -181,8 +181,8 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" />
                 <span className="text-sm text-foreground/60 font-light leading-relaxed">
-                  Mon - Sat: 10am - 7pm<br />
-                  Sun: 11am - 5pm
+                  Mon - Sat: 10am - 7pm EST<br />
+                  Sun: 11am - 5pm EST
                 </span>
               </li>
             </ul>

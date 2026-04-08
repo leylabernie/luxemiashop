@@ -384,7 +384,7 @@ const Shipping = () => {
                 <AccordionItem value="item-6">
                   <AccordionTrigger>How is my order packaged?</AccordionTrigger>
                   <AccordionContent>
-                    Each piece is carefully wrapped in acid-free tissue paper, placed in a signature Shringaar garment 
+                    Each piece is carefully wrapped in acid-free tissue paper, placed in a signature LuxeMia garment 
                     bag, and packed in a sturdy branded box. We ensure your purchase arrives ready to wear or gift.
                   </AccordionContent>
                 </AccordionItem>
@@ -398,7 +398,7 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <p className="text-muted-foreground">
               Questions about shipping? Contact us at{" "}
-              <span className="text-primary font-medium">shipping@shringaar.com</span>
+              <span className="text-primary font-medium">hello@luxemia.shop</span>
               {" "}or call <span className="text-primary font-medium">+91 98765 43210</span>
             </p>
           </div>
