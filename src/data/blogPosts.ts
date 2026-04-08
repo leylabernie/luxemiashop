@@ -767,7 +767,451 @@ export const blogPosts: BlogPost[] = [
     tags: ['silk care', 'saree maintenance', 'fabric care', 'storage tips'],
     image: '/og/og-sarees.jpg',
     readTime: 6
-  }
+  },
+  {
+    id: '12',
+    slug: 'sharara-suit-guide-2026-styles-fabrics',
+    title: 'Ultimate Sharara Suit Guide 2026: Styles, Fabrics & How to Choose the Perfect Set',
+    excerpt: 'Everything you need to know about sharara suits — from georgette to silk, Eid to wedding, styling tips to sizing. Your complete sharara dress shopping guide for 2026.',
+    content: `
+      <article>
+      <h2>What Is a Sharara Suit and Why Is It Trending in 2026?</h2>
+      <p>The <strong>sharara suit</strong> is one of the most glamorous silhouettes in Indian ethnic fashion. Originating from the Mughal era, a sharara set features a short or long kameez paired with dramatically flared pants that widen from the knee, creating a stunning, floor-sweeping effect. In 2026, the <strong>designer sharara suit</strong> has made a powerful comeback, blending traditional elegance with contemporary styling that appeals to women across the US, UK, and Canada.</p>
+      <p>Whether you are shopping for an <strong>Eid sharara outfit</strong>, a <strong>wedding sharara dress</strong>, or a versatile <strong>party wear sharara set</strong>, this guide covers every style, fabric, and occasion to help you make the perfect choice. At <a href="/suits">LuxeMia's Suits Collection</a>, we curate the finest sharara designs from top South Asian designers.</p>
+
+      <h2>Types of Sharara Suits: Find Your Perfect Silhouette</h2>
+
+      <h3>Traditional Floor-Length Sharara</h3>
+      <p>The classic <strong>heavy sharara suit</strong> features a full-length kameez with wide-legged, heavily flared bottoms. This is the go-to choice for <strong>wedding sharara suits</strong> and formal celebrations. The farshi (floor-sweeping) style creates a regal, princess-like appearance that photographs beautifully.</p>
+
+      <h3>Crop Top Sharara Set</h3>
+      <p>The modern <strong>crop top sharara set</strong> pairs a shorter, fitted top with flared sharara pants. This contemporary take is perfect for <strong>sangeet night outfits</strong> and cocktail parties. Younger women love this style for its fusion appeal — it is one of the <strong>latest sharara designs 2026</strong> dominating social media.</p>
+
+      <h3>Peplum Sharara Suit</h3>
+      <p>A peplum top with sharara bottoms creates a flattering hourglass silhouette. This <strong>designer sharara dress</strong> style works beautifully for <strong>engagement ceremony outfits</strong> and pre-wedding functions where you want to look stylish without going overly traditional.</p>
+
+      <h3>Sharara with Long Kameez</h3>
+      <p>The <strong>sharara suit with long kameez</strong> offers maximum coverage and elegance. The knee-length or longer kurta paired with flared bottoms is ideal for <strong>Eid outfit 2026</strong> celebrations, religious gatherings, and formal <strong>Indian festive wear</strong> occasions where modest yet fashionable dressing is preferred.</p>
+
+      <h3>Ankle-Length Sharara</h3>
+      <p>Not everyone wants a floor-sweeping hemline. The ankle-length sharara offers the same dramatic flare but with added practicality. This style is trending for <strong>outdoor wedding ethnic wear</strong> and <strong>destination wedding Indian dresses</strong> where ease of movement matters.</p>
+
+      <h2>Best Fabrics for Sharara Suits</h2>
+
+      <h3>Georgette Sharara Suit</h3>
+      <p>The <strong>georgette sharara suit</strong> is the most popular choice for its beautiful drape and lightweight feel. Faux georgette and pure georgette both create that signature flowing movement that makes sharara pants so mesmerizing. Georgette works across seasons, making it ideal for <strong>summer wedding Indian outfits</strong> and indoor celebrations alike. Browse our <a href="/suits">georgette sharara collection</a> for the latest styles.</p>
+
+      <h3>Silk Sharara Suit</h3>
+      <p>For grand occasions, a <strong>silk sharara suit</strong> — particularly in Chinon silk or art silk — offers unmatched richness. The natural sheen of silk elevates any <strong>embroidered sharara</strong> design, making it the fabric of choice for <strong>wedding season 2026</strong> celebrations. Fendy silk and Chanderi silk variants are particularly trending this year.</p>
+
+      <h3>Net Sharara Suit</h3>
+      <p>The <strong>net sharara suit</strong> creates an ethereal, layered look perfect for evening events. Usually lined with silk or satin, net shararas feature delicate <strong>sequin Indian outfit</strong> embellishments and <strong>embroidered Indian dress</strong> details that catch the light beautifully. These are stunning choices for <strong>reception gown Indian</strong> alternatives.</p>
+
+      <h3>Chinon Silk Sharara</h3>
+      <p>Chinon silk combines the best of both worlds — the luxe feel of silk with the lightweight drape of chiffon. A <strong>Chinon silk embroidered sharara</strong> is particularly popular for <strong>festival wear</strong> and <strong>Pakistani sharara suit</strong> styles. The fabric takes embroidery beautifully and moves gracefully.</p>
+
+      <h2>Sharara Suits by Occasion</h2>
+
+      <h3>Sharara for Eid</h3>
+      <p>Eid is the biggest occasion for sharara shopping. An <strong>Eid sharara 2026</strong> in pastel georgette with subtle <strong>thread work embroidery</strong> strikes the perfect balance between festive and refined. Cream, mint green, powder blue, and blush pink are the top <strong>Eid outfit</strong> colors this year. Pair with a statement dupatta and delicate jewelry for a polished look.</p>
+
+      <h3>Sharara for Wedding</h3>
+      <p>A <strong>sharara suit for wedding</strong> demands heavier embellishment. Look for designs with <strong>zari work</strong>, <strong>kundan work dress</strong> detailing, and rich fabrics like velvet or silk. Deep reds, emerald greens, and royal blues are classic choices. For the bride, a heavily embroidered sharara in red or maroon is a stunning alternative to the traditional <a href="/lehengas">bridal lehenga</a>.</p>
+
+      <h3>Sharara for Party</h3>
+      <p>Keep it modern with a <strong>sequined sharara</strong> or a <strong>mirror work suit</strong> in a trendy color. Metallic tones, black, and jewel shades work perfectly for <strong>cocktail party Indian dress</strong> events. A crop top sharara in sequin fabric is the ultimate statement piece.</p>
+
+      <h2>How to Choose the Right Sharara Suit Online</h2>
+
+      <h3>Sizing and Fit</h3>
+      <p>When you <strong>buy sharara suit online USA</strong>, accurate measurements are crucial. Use our <a href="/size-guide">size guide</a> for Indian salwar kameez to determine your perfect fit. Most <strong>readymade sharara suits</strong> come in standard sizes (36-44), but at LuxeMia we also offer <strong>custom size Indian dresses</strong> for the perfect fit.</p>
+
+      <h3>Sharara vs Palazzo Suit: Key Differences</h3>
+      <p>The <strong>sharara vs palazzo suit difference</strong> is simple: sharara pants flare from the knee, creating a bell shape, while <strong>palazzo suits</strong> have straight, wide legs from waist to hem. Shararas are more dramatic and traditional, while <strong>wide leg palazzo suits</strong> offer a more modern, minimalist look. Both are available in our <a href="/suits">suits collection</a>.</p>
+
+      <h3>Budget Guide</h3>
+      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia offers <strong>premium sharara suits online</strong> starting from just $50, with designer-quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. Our <strong>free shipping Indian clothes USA</strong> policy means no hidden costs.</p>
+
+      <h2>Styling Your Sharara Suit</h2>
+      <p>Complete your look with the right accessories. Heavy <a href="/jewelry">kundan jewelry sets</a> pair beautifully with formal shararas, while delicate pieces suit casual styles. Match your dupatta draping style to the occasion — a front drape for formal events, a one-shoulder style for modern appeal. Add juttis or embellished heels to finish the look.</p>
+
+      <h2>Shop Sharara Suits at LuxeMia</h2>
+      <p>Ready to find your perfect sharara? Browse our complete <a href="/suits">sharara suit collection</a> featuring the <strong>latest sharara collection 2026</strong> with <strong>stitched sharara suits</strong> and <strong>free shipping</strong> across the USA. Every piece is quality-checked and ships within 48 hours. Use code <strong>LUXE2026</strong> for 30% off your first order.</p>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-08',
+    updatedAt: '2026-04-08',
+    category: 'Shopping Guide',
+    tags: ['sharara suit', 'sharara dress', 'designer sharara', 'eid sharara', 'wedding sharara', 'georgette sharara', 'silk sharara', 'sharara online USA', 'sharara styling', 'Indian ethnic wear'],
+    image: '/og/og-suits.jpg',
+    readTime: 9
+  },
+  {
+    id: '13',
+    slug: 'pakistani-suits-anarkali-shopping-guide',
+    title: 'Pakistani Suits & Anarkali Dresses 2026: Complete Online Shopping Guide for USA',
+    excerpt: 'From classic Pakistani salwar kameez to floor-length anarkali gowns — everything you need to know about buying Pakistani suits online in the USA with confidence.',
+    content: `
+      <article>
+      <h2>Why Pakistani Suits Are the Most Versatile Indian Ethnic Wear</h2>
+      <p>The <strong>Pakistani suit</strong> has earned its place as one of the most beloved silhouettes in South Asian fashion. Known for its elegant cuts, beautiful embroidery, and comfortable fit, <strong>Pakistani salwar kameez</strong> suits every body type and every occasion — from daily wear to grand celebrations. If you are looking to <strong>buy Pakistani clothes online</strong> in the USA, this guide covers everything from styles and fabrics to sizing and care.</p>
+      <p>At <a href="/suits">LuxeMia</a>, we carry an extensive collection of <strong>designer Pakistani suits</strong>, <strong>anarkali dresses</strong>, and <strong>palazzo suits</strong> shipped directly to your door with free US shipping.</p>
+
+      <h2>Understanding Pakistani Suit Styles</h2>
+
+      <h3>Classic Pakistani Salwar Kameez</h3>
+      <p>The traditional <strong>Pakistani salwar kameez</strong> consists of a long, flowing kameez (tunic) paired with either a straight-cut churidar or a comfortable salwar. What sets <strong>Pakistani dress</strong> styles apart from Indian suits is the typically longer kameez length, higher side slits, and more structured embroidery patterns. This style is the cornerstone of <strong>Pakistani festive wear</strong> and everyday elegance.</p>
+
+      <h3>Anarkali Suit: The Showstopper</h3>
+      <p>The <strong>anarkali suit</strong> is named after the legendary Mughal courtesan and features a fitted bodice that flares dramatically from the waist. A <strong>long anarkali dress</strong> or <strong>floor length anarkali</strong> creates one of the most photogenic silhouettes in ethnic fashion. The <strong>umbrella cut anarkali suit</strong> is particularly popular for its full, swirling skirt that moves beautifully — perfect for dance floors at sangeets and receptions.</p>
+
+      <h3>Designer Anarkali Gown</h3>
+      <p>The <strong>designer anarkali gown</strong> takes the traditional anarkali to new heights with gown-like construction, trail dupattas, and couture-level embellishment. A <strong>frock style anarkali</strong> blends Western gown aesthetics with Indian craftsmanship, making it ideal for <strong>Indian wedding guest outfits</strong> and formal <strong>Indian party wear</strong> events.</p>
+
+      <h3>Palazzo Suit</h3>
+      <p>The <strong>palazzo suit</strong> or <strong>palazzo salwar kameez</strong> pairs a kameez with wide, flowing <strong>wide leg palazzo</strong> pants instead of traditional salwar. This modern silhouette is one of the <strong>latest Pakistani suit trends 2026</strong>, offering supreme comfort with sophisticated style. It is a top choice for <strong>Indian occasion wear</strong> that requires long hours of standing or socializing.</p>
+
+      <h3>Straight Cut Suit</h3>
+      <p>Clean lines, minimal flare, and structured elegance define the straight cut <strong>Pakistani suit</strong>. This style works brilliantly for office wear, daytime events, and situations where understated luxury is the goal. Pair with <strong>churidar</strong> or cigarette pants for a contemporary finish.</p>
+
+      <h2>Fabrics That Define Pakistani Suits</h2>
+
+      <h3>Chiffon Pakistani Suit</h3>
+      <p>A <strong>Pakistani chiffon suit</strong> is the ultimate luxury choice. Pure chiffon creates a weightless, flowing drape that is especially beautiful in <strong>Pakistani suits for Eid</strong>. The fabric takes embroidery gorgeously and is ideal for warm-weather celebrations. <strong>Chiffon salwar kameez</strong> in pastel shades are among our bestsellers at LuxeMia.</p>
+
+      <h3>Georgette Pakistani Suit</h3>
+      <p>Similar to chiffon but slightly heavier, <strong>Pakistani georgette suit</strong> offers better structure while maintaining an elegant drape. Faux georgette is a budget-friendly option that looks nearly identical to pure georgette. This fabric dominates <strong>embroidered Indian dress</strong> collections for its versatility.</p>
+
+      <h3>Lawn Suit</h3>
+      <p>The <strong>Pakistani lawn suit</strong> is a summer staple — lightweight cotton lawn fabric with vibrant prints. While not heavily embellished, lawn suits are perfect for casual gatherings, brunch events, and everyday ethnic wear. They are among the most <strong>affordable Pakistani suits</strong> available.</p>
+
+      <h3>Net and Organza</h3>
+      <p>For special occasions, net and organza <strong>heavy Pakistani suits for wedding</strong> wear create an ethereal, layered look. These fabrics are typically used for overlay layers with heavier base fabrics underneath, resulting in a dimensional, textured appearance that photographs beautifully.</p>
+
+      <h2>Anarkali Suits: Deep Dive into Every Style</h2>
+
+      <h3>Floor-Length Anarkali for Wedding</h3>
+      <p>An <strong>anarkali suit for wedding</strong> in rich fabrics like silk or velvet with heavy <strong>zari work</strong> and <strong>kundan work</strong> embellishment is a bride's dream. Deep jewel tones — royal blue, emerald, wine — create a regal presence. These pieces rival <a href="/lehengas">bridal lehengas</a> in their grandeur while offering more comfort and ease of movement.</p>
+
+      <h3>Festive Anarkali</h3>
+      <p>For <strong>Diwali dress 2026</strong>, <strong>Navratri outfit</strong>, or <strong>Eid outfit women</strong> shopping, a mid-weight anarkali in georgette or silk with moderate embroidery hits the sweet spot. Colors like mustard, teal, coral, and ivory are trending for festive 2026.</p>
+
+      <h3>Casual Anarkali Kurta</h3>
+      <p>Not every anarkali needs to be a showstopper. Simple cotton or rayon anarkalis with minimal embroidery work beautifully as elevated everyday wear. Pair with jeans or leggings for a fusion look that transitions from office to evening effortlessly.</p>
+
+      <h2>How to Buy Pakistani Suits Online in the USA</h2>
+
+      <h3>Getting Your Size Right</h3>
+      <p>The number one concern when you <strong>buy Pakistani suit online USA</strong> is sizing. South Asian sizes differ from Western sizing. Use our detailed <a href="/size-guide">size guide for Indian salwar kameez</a> — you will need bust, waist, hip, and kameez length measurements. At LuxeMia, we offer <strong>readymade Indian clothes</strong> in sizes 36-46, plus <strong>custom size Indian dress</strong> options.</p>
+
+      <h3>Understanding Stitching Options</h3>
+      <p>When shopping for <strong>stitched salwar kameez USA</strong>, check whether the suit is fully stitched (ready to wear), semi-stitched (requires minor tailoring), or unstitched (fabric only). LuxeMia specializes in <strong>readymade Pakistani suits</strong> so you can wear them right out of the box.</p>
+
+      <h3>What to Look for in Product Photos</h3>
+      <p>Always check fabric closeups, embroidery detail shots, and size charts. Reputable <strong>Indian boutiques online USA</strong> like LuxeMia provide multiple angles and detailed descriptions for every piece. Look for information about lining, dupatta fabric, and bottom style.</p>
+
+      <h2>Styling Pakistani Suits and Anarkalis</h2>
+      <p>Accessorize your <strong>Pakistani festive wear</strong> with matching <a href="/jewelry">kundan jewelry</a> or polki sets. For anarkalis, statement earrings and a delicate maang tikka create a stunning bridal or festive look. Keep footwear elegant — embroidered juttis for traditional occasions, stilettos for modern events.</p>
+      <p>The dupatta offers endless styling possibilities: classic front drape for formal events, one-shoulder for a modern twist, or wrapped as a hijab for modest styling. Each method transforms the same outfit into a completely different look.</p>
+
+      <h2>Shop Pakistani Suits at LuxeMia</h2>
+      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With <strong>free shipping Indian clothes USA</strong>, easy returns, and <strong>designer Indian clothes</strong> at affordable prices, we make ethnic shopping effortless. Use code <strong>LUXE2026</strong> for 30% off your first purchase.</p>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-08',
+    updatedAt: '2026-04-08',
+    category: 'Shopping Guide',
+    tags: ['Pakistani suit', 'anarkali suit', 'salwar kameez', 'Pakistani dress online USA', 'anarkali gown', 'palazzo suit', 'designer Pakistani suit', 'Indian ethnic wear', 'Pakistani festive wear', 'stitched salwar kameez'],
+    image: '/og/og-suits.jpg',
+    readTime: 10
+  },
+  {
+    id: '14',
+    slug: 'style-lehenga-choli-every-wedding-event',
+    title: 'How to Style Lehenga Choli for Every Wedding Event in 2026: Sangeet to Reception',
+    excerpt: 'Master the art of lehenga styling for every wedding function — from sangeet night to reception. Expert tips on blouse designs, dupatta draping, colors, and accessories.',
+    content: `
+      <article>
+      <h2>The Lehenga Choli: Your Wedding Season Power Outfit</h2>
+      <p>No outfit commands attention at an Indian wedding quite like a <strong>lehenga choli</strong>. Whether you are the bride, a bridesmaid, or a guest, the right <strong>designer lehenga</strong> paired with the perfect blouse and styling can make you the best-dressed person at every function. This guide breaks down exactly how to style your <strong>wedding lehenga</strong> for every event — from the <strong>mehndi ceremony dress</strong> to the grand <strong>reception lehenga</strong>.</p>
+      <p>Browse our complete <a href="/lehengas">lehenga choli collection</a> at LuxeMia for the latest 2026 designs.</p>
+
+      <h2>Lehenga for Mehndi Ceremony</h2>
+      <h3>The Look: Fun, Colorful, Easy to Move In</h3>
+      <p>The mehndi is all about color, dance, and joy. Your <strong>lehenga for mehndi ceremony</strong> should be vibrant yet comfortable. Think bright yellows, greens, oranges, and multi-color patterns. A lightweight <strong>embroidery lehenga choli</strong> in cotton silk or georgette keeps you comfortable during the long ceremony while your hands are being decorated.</p>
+      <h3>Styling Tips</h3>
+      <p>Choose a shorter, easier-to-manage dupatta — or skip it entirely and go with a statement <strong>lehenga blouse design</strong> that stands on its own. Floral jewelry (real or artificial) is traditional for mehndi. Keep your outfit light enough for sitting cross-legged during the actual mehndi application.</p>
+      <p>Colors to try: turmeric yellow, parrot green, coral orange, hot pink. Fabrics: cotton silk, light georgette, printed <strong>jacquard lehenga</strong>.</p>
+
+      <h2>Lehenga for Sangeet Night</h2>
+      <h3>The Look: Glamorous, Dance-Ready, Statement-Making</h3>
+      <p>The sangeet is your night to shine on the dance floor. A <strong>sequence lehenga</strong> or <strong>sequin Indian outfit</strong> in a jewel tone creates a dazzling effect under event lighting. This is where you go bold — think <strong>designer lehenga</strong> with heavy embellishment, metallic accents, and dramatic blouse designs.</p>
+      <h3>Styling Tips</h3>
+      <p>For the <strong>sangeet night outfit</strong>, prioritize a lehenga that moves well. <strong>A-line lehenga</strong> silhouettes are easier to dance in than <strong>fishcut lehenga</strong> styles. Choose a fitted or crop-top style blouse to balance the volume of the skirt. Pin your dupatta securely — a one-shoulder drape pinned at the waist is both stylish and practical for dancing.</p>
+      <p>Try our <a href="/lehengas">Luxe Sequence Lehenga</a> collection for sangeet-ready pieces that catch every light.</p>
+
+      <h2>Lehenga for the Wedding Ceremony</h2>
+      <h3>For the Bride: The Ultimate Bridal Lehenga</h3>
+      <p>The <strong>bridal lehenga</strong> is the centerpiece of the entire wedding. Traditionally, brides choose a <strong>red bridal lehenga</strong>, but 2026 brides are embracing pastels, wines, and even ivory. A <strong>semi-stitched lehenga</strong> that is custom fitted ensures the perfect silhouette for your body type.</p>
+      <p>Invest in heavy <strong>zari work</strong>, <strong>kundan work</strong>, and hand embroidery for the bridal piece. Silk, velvet, and heavy georgette are the preferred <strong>bridal lehenga</strong> fabrics. The <strong>lehenga dupatta styling</strong> for brides typically involves draping over the head for the ceremony, then shifting to a shoulder drape for photos.</p>
+
+      <h3>For Wedding Guests</h3>
+      <p>As a guest, you want to look stunning without overshadowing the bride. Choose an <strong>engagement lehenga</strong> weight piece — moderate embellishment, beautiful fabric, elegant color. Avoid red (traditionally reserved for the bride) and pure white. Rich teals, dusty pinks, lavenders, and emeralds are safe, sophisticated choices for <strong>Indian wedding guest outfits</strong>.</p>
+
+      <h2>Lehenga for Reception</h2>
+      <h3>The Look: Elegant, Modern, Photogenic</h3>
+      <p>The <strong>reception lehenga</strong> can be more contemporary than the ceremony outfit. This is where trends like <strong>pastel lehenga</strong> designs, <strong>pink lehenga</strong> shades, and fusion silhouettes really shine. A <strong>flared lehenga</strong> in organza or tulle with delicate embroidery creates a dreamy, editorial look perfect for professional photography.</p>
+      <h3>Styling Tips</h3>
+      <p>For the reception, think cocktail-ready glamour. A statement blouse — deep back, halter neck, or off-shoulder — paired with a <strong>designer lehenga</strong> skirt creates a gown-like effect. This is the event to try bold <strong>lehenga blouse designs</strong> like corsets, cape sleeves, or one-shoulder styles.</p>
+
+      <h2>Lehenga for Engagement</h2>
+      <p>The <strong>engagement lehenga</strong> sits between casual and bridal. A mid-weight <strong>embroidery lehenga choli</strong> in a soft color — think rose gold, sage green, powder blue — is perfect. Pair with delicate <a href="/jewelry">kundan jewelry</a> and subtle makeup for an effortlessly elegant look.</p>
+
+      <h2>Lehenga Blouse Designs That Transform Your Look</h2>
+      <p>The blouse makes or breaks a lehenga outfit. Here are the trending <strong>lehenga blouse designs</strong> for 2026:</p>
+      <ul>
+        <li><strong>Corset blouse:</strong> Creates a defined waist and modern silhouette — perfect for <strong>fishcut lehenga</strong> styles</li>
+        <li><strong>Cape blouse:</strong> Adds drama without a dupatta — ideal for <strong>cocktail party Indian dress</strong> events</li>
+        <li><strong>Deep V-back:</strong> Elegant from every angle, great for photography</li>
+        <li><strong>Off-shoulder:</strong> Contemporary and romantic, perfect for <strong>reception lehenga</strong> looks</li>
+        <li><strong>Full-sleeve:</strong> Traditional and regal, ideal for winter weddings and ceremonies</li>
+      </ul>
+
+      <h2>Dupatta Draping Styles for Lehenga</h2>
+      <p>Your <strong>lehenga dupatta styling</strong> completely changes the outfit's vibe:</p>
+      <ul>
+        <li><strong>Classic drape:</strong> Over one shoulder, pinned at the waist — timeless elegance</li>
+        <li><strong>Double dupatta:</strong> One draped, one on the head — bridal grandeur</li>
+        <li><strong>Front pallu:</strong> Draped from front of skirt over one arm — formal and traditional</li>
+        <li><strong>No dupatta:</strong> Let a statement blouse do the talking — modern and bold</li>
+        <li><strong>Jacket dupatta:</strong> Structured like a cape or jacket — the hottest 2026 trend</li>
+      </ul>
+
+      <h2>Choosing the Right Lehenga Silhouette</h2>
+      <p>Your body type should guide your silhouette choice:</p>
+      <ul>
+        <li><strong><a href="/lehengas">A-line lehenga</a>:</strong> Universally flattering, gentle flare from waist — works for everyone</li>
+        <li><strong>Flared lehenga:</strong> Maximum volume, dramatic effect — best for tall or slim frames</li>
+        <li><strong>Fishcut lehenga:</strong> Fitted to knee, flares below — accentuates curves beautifully</li>
+        <li><strong>Circular lehenga:</strong> Even, full flare all around — creates a balanced, flowing look</li>
+      </ul>
+
+      <h2>Budget Guide: Lehenga Choli Online USA</h2>
+      <p>Looking to <strong>buy lehenga online</strong> without breaking the bank? Here is what to expect:</p>
+      <ul>
+        <li><strong>Affordable lehenga under $300:</strong> Beautiful georgette or silk with machine embroidery — perfect for guests and smaller functions</li>
+        <li><strong>Mid-range $300-$600:</strong> Designer-quality fabrics with detailed hand embroidery — great for bridesmaids and engagement</li>
+        <li><strong>Premium $600+:</strong> Heavy bridal pieces with couture-level craftsmanship — for the bride</li>
+      </ul>
+      <p>At LuxeMia, our <strong>lehenga choli online USA</strong> collection starts at just $80 with <strong>free shipping</strong>. Browse our <a href="/lehengas">complete lehenga collection</a> and use code <strong>LUXE2026</strong> for 30% off.</p>
+
+      <h2>Complete Your Lehenga Look</h2>
+      <p>The right accessories elevate your lehenga from beautiful to breathtaking. Match heavy lehengas with statement <a href="/jewelry">kundan necklace sets</a>, maang tikka, and jhumka earrings. For lighter lehengas, choose delicate polki or pearl pieces. Potli bags and embroidered clutches are the perfect finishing touch.</p>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-08',
+    updatedAt: '2026-04-08',
+    category: 'Styling Tips',
+    tags: ['lehenga choli', 'bridal lehenga', 'wedding lehenga', 'reception lehenga', 'sangeet outfit', 'lehenga styling', 'lehenga blouse designs', 'dupatta draping', 'sequence lehenga', 'buy lehenga online USA'],
+    image: '/og/og-lehengas.jpg',
+    readTime: 10
+  },
+  {
+    id: '15',
+    slug: 'indian-wedding-season-2026-outfit-guide',
+    title: 'Indian Wedding Season 2026: Complete Outfit Guide for Every Ceremony',
+    excerpt: 'What to wear to every Indian wedding function — from haldi to reception. Outfit ideas for brides, grooms, family, and guests with expert styling tips.',
+    content: `
+      <article>
+      <h2>Your Complete Indian Wedding Wardrobe 2026</h2>
+      <p>An <strong>Indian wedding</strong> is not one event — it is a multi-day celebration with distinct ceremonies, each requiring a different outfit. Whether you are the bride, groom, or guest, planning your <strong>Indian wedding outfits</strong> in advance ensures you look stunning at every function. This guide covers the complete <strong>Indian wedding season 2026</strong> wardrobe, from intimate haldi ceremonies to grand receptions.</p>
+      <p>Shop the complete wedding wardrobe at LuxeMia: <a href="/suits">Suits</a>, <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/menswear">Menswear</a>.</p>
+
+      <h2>Haldi Ceremony Outfit</h2>
+      <h3>For the Bride</h3>
+      <p>The <strong>haldi ceremony dress</strong> should be in yellow — it is tradition. A lightweight <strong>salwar kameez</strong> in bright yellow or marigold is the most practical choice since turmeric paste will inevitably stain your clothes. Choose cotton or light georgette that you do not mind getting messy. Some modern brides opt for a yellow <strong>sharara set</strong> or even a yellow <a href="/sarees">saree</a> for a more dressed-up haldi look.</p>
+      <h3>For Guests</h3>
+      <p>Stick to the yellow, orange, and warm color palette. A simple <strong>palazzo suit</strong> or kurti set in sunshine shades keeps you on theme. This is one of the more casual <strong>Indian wedding</strong> events, so comfort is key.</p>
+
+      <h2>Mehndi Function Outfit</h2>
+      <h3>For the Bride</h3>
+      <p>The <strong>mehndi function dress</strong> calls for vibrant greens and multi-color outfits. A <strong>sharara suit</strong> or <strong>anarkali suit</strong> in green with colorful embroidery is traditional. Since you will be sitting for hours during mehndi application, choose a comfortable silhouette with a shorter kameez and easy-to-manage dupatta.</p>
+      <h3>For Guests</h3>
+      <p>This is the most fun and colorful event. Think bright pinks, oranges, teals, and greens. A printed or embroidered <strong>palazzo suit</strong> or a cheerful <a href="/lehengas">lehenga choli</a> keeps the mood festive. Floral <a href="/jewelry">jewelry</a> and gota patti accessories add to the mehndi vibe.</p>
+
+      <h2>Sangeet Night Outfit</h2>
+      <h3>For the Bride</h3>
+      <p>The sangeet is the party night — dress to impress. A <strong>designer lehenga</strong> or <strong>designer anarkali gown</strong> in a statement color (think midnight blue, emerald, or champagne gold) sets the tone. <strong>Sequin Indian outfits</strong> and <strong>mirror work suits</strong> catch the light beautifully on the dance floor. Choose a <a href="/lehengas">sequence lehenga</a> that moves well for dance performances.</p>
+      <h3>For the Groom</h3>
+      <p>A <strong>designer kurta pajama</strong> in a complementary color to the bride works perfectly. For a more formal sangeet, an <strong>Indo western sherwani</strong> or a <strong>Jodhpuri suit</strong> makes a strong impression. Browse our <a href="/menswear">mens ethnic wear</a> collection for the latest styles.</p>
+      <h3>For Guests</h3>
+      <p>This is your chance to go glamorous. Women: a <strong>cocktail party Indian dress</strong>, <strong>designer sharara suit</strong>, or a statement <a href="/sarees">saree</a> in a bold color. Men: a stylish <strong>kurta pajama</strong> or Nehru jacket. The <strong>sangeet night outfit</strong> should be fun, festive, and dance-floor ready.</p>
+
+      <h2>Wedding Ceremony Outfit</h2>
+      <h3>For the Bride</h3>
+      <p>The main event calls for the most magnificent outfit. The <strong>bridal lehenga</strong> remains the top choice — in traditional red, wine, or for the modern bride, rose pink or ivory. Alternatively, a <strong>heavy Pakistani suit for wedding</strong> or a stunning <a href="/sarees">wedding saree</a> in Banarasi silk or Kanchipuram silk makes an equally regal statement. This is where you invest in the finest <strong>hand embroidered</strong> piece with <strong>zari work</strong> and heirloom-quality craftsmanship.</p>
+      <h3>For the Groom</h3>
+      <p>The <strong>wedding sherwani</strong> or <strong>groom sherwani</strong> is the cornerstone of the <strong>baraat outfit</strong>. Classic ivory with gold embroidery is timeless, while modern grooms are experimenting with pastels, deep navy, and even black. A matching <strong>mens sherwani</strong> with the bride's color palette creates beautiful couple photos. Our <a href="/menswear">groom collection</a> features everything from classic to contemporary.</p>
+      <h3>For Family and Guests</h3>
+      <p>The <strong>mother of bride Indian outfit</strong> should be elegant and refined — a heavy <a href="/sarees">silk saree</a> or a sophisticated <a href="/suits">anarkali suit</a> in a rich color works beautifully. For other family members and guests, the <strong>Indian wedding guest outfit</strong> should be formal but not overshadow the couple. Women: heavy <strong>salwar kameez</strong>, <strong>lehenga choli</strong>, or saree. Men: <strong>kurta pajama</strong> or sherwani.</p>
+
+      <h2>Reception Outfit</h2>
+      <h3>For the Couple</h3>
+      <p>The reception is where contemporary style takes center stage. Brides often switch to a <strong>reception lehenga</strong> or <strong>reception gown Indian</strong> style in softer colors — think <strong>pastel lehenga</strong>, champagne gold, or ice blue. Grooms may opt for a sleek <strong>Indo western</strong> look or a <strong>reception outfit</strong> that is more relaxed than the ceremony sherwani.</p>
+      <h3>For Guests</h3>
+      <p>The reception is typically the most modern and glamorous event. A <strong>designer anarkali gown</strong>, a sleek <a href="/sarees">saree</a>, or a chic <strong>sharara dress</strong> all work perfectly. This is the event where <strong>Indo-Western</strong> fusion outfits are most appropriate.</p>
+
+      <h2>Building Your Wedding Season Capsule Wardrobe</h2>
+      <p>Attending multiple Indian weddings in 2026? Here is how to build a versatile <strong>Indian wedding</strong> capsule wardrobe without buying a new outfit for every event:</p>
+      <ul>
+        <li><strong>One statement lehenga</strong> — works for sangeet and reception with different styling</li>
+        <li><strong>One versatile saree</strong> — dress it up or down with different blouses and accessories</li>
+        <li><strong>One designer suit</strong> — <a href="/suits">sharara or anarkali</a> for ceremonies and formal functions</li>
+        <li><strong>Interchangeable accessories</strong> — different <a href="/jewelry">jewelry sets</a> transform the same outfit</li>
+      </ul>
+
+      <h2>Where to Shop Indian Wedding Outfits Online</h2>
+      <p>Skip the overwhelming in-store experience. <strong>Buy Indian wedding dresses online</strong> from trusted <strong>Indian boutiques online USA</strong> like LuxeMia. We offer:</p>
+      <ul>
+        <li>Curated collections for every ceremony and budget</li>
+        <li><strong>Free shipping Indian clothes USA</strong> on all orders</li>
+        <li>Detailed size guides for <strong>Indian ethnic wear</strong></li>
+        <li><strong>Readymade Indian clothes</strong> that ship within 48 hours</li>
+        <li>Easy returns and exchanges</li>
+      </ul>
+      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia</a>. Use code <strong>LUXE2026</strong> for 30% off your first order.</p>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-08',
+    updatedAt: '2026-04-08',
+    category: 'Wedding Guide',
+    tags: ['Indian wedding outfit', 'wedding ceremony dress', 'sangeet outfit', 'mehndi dress', 'haldi ceremony', 'reception lehenga', 'wedding sherwani', 'Indian wedding guest', 'bridal lehenga', 'wedding season 2026', 'baraat outfit'],
+    image: '/og/og-lehengas.jpg',
+    readTime: 10
+  },
+  {
+    id: '16',
+    slug: 'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
+    title: 'Fabric Guide for Indian Ethnic Wear: Georgette vs Silk vs Chiffon — Which Is Best?',
+    excerpt: 'Not sure which fabric to choose for your salwar kameez or lehenga? Our expert fabric guide compares georgette, silk, chiffon, net, and more with care tips for each.',
+    content: `
+      <article>
+      <h2>Why Fabric Choice Makes or Breaks Your Ethnic Outfit</h2>
+      <p>When you <strong>buy Indian dresses online</strong>, the fabric is everything. The same design in georgette versus silk can look and feel completely different. Understanding fabrics helps you choose the right <strong>Indian ethnic wear</strong> for the occasion, season, and your personal comfort. This comprehensive fabric guide covers every major textile used in <strong>salwar kameez</strong>, <strong>lehenga choli</strong>, <strong>sarees</strong>, and <strong>sharara suits</strong> — so you can shop with confidence.</p>
+
+      <h2>Georgette: The Versatile Favorite</h2>
+      <h3>What Is Georgette?</h3>
+      <p>Georgette is a lightweight, slightly crinkled fabric with a beautiful matte finish and subtle texture. Available as pure georgette (silk-based) and faux georgette (polyester-based), it is the most popular fabric for <strong>Indian ethnic wear online</strong>. A <strong>georgette suit</strong> drapes beautifully, takes embroidery well, and works across seasons.</p>
+      <h3>Best For</h3>
+      <ul>
+        <li><strong>Sharara suits</strong> — the fabric creates that signature flowing movement in flared pants</li>
+        <li><strong>Anarkali dresses</strong> — gorgeous for the full, swirling skirt</li>
+        <li><strong>Summer wedding Indian outfits</strong> — breathable yet elegant</li>
+        <li><strong>Embroidered Indian dresses</strong> — holds thread work, <strong>sequin</strong>, and <strong>zari work</strong> beautifully</li>
+      </ul>
+      <h3>Pros and Cons</h3>
+      <p>Pros: Lightweight, excellent drape, wrinkle-resistant, affordable, works for all seasons. Cons: Can snag easily, faux georgette may feel synthetic in extreme heat. Browse our <a href="/suits">georgette suit collection</a> to see this fabric at its best.</p>
+
+      <h2>Silk: The Luxury Standard</h2>
+      <h3>Types of Silk in Ethnic Wear</h3>
+      <p><strong>Silk ethnic wear</strong> comes in many varieties, each with distinct characteristics:</p>
+      <ul>
+        <li><strong>Art silk (artificial silk):</strong> Budget-friendly with a silk-like sheen — great for <strong>affordable Indian ethnic wear</strong></li>
+        <li><strong>Chinon silk:</strong> Lightweight with beautiful fluidity — popular for <strong>Pakistani suits</strong> and <strong>sharara sets</strong></li>
+        <li><strong>Banarasi silk:</strong> Heavy, intricately woven with gold/silver zari — the gold standard for bridal wear</li>
+        <li><strong>Chanderi silk:</strong> Lightweight with a golden sheen — perfect for festive <strong>salwar kameez</strong></li>
+        <li><strong>Raw silk:</strong> Textured, slightly rough — creates structured, regal silhouettes</li>
+        <li><strong>Tussar silk:</strong> Natural golden tone with a rich texture — ideal for earthy, elegant looks</li>
+      </ul>
+      <h3>Best For</h3>
+      <ul>
+        <li><strong>Bridal lehengas</strong> — the weight and sheen create a grand, royal look</li>
+        <li><strong>Wedding ceremony</strong> outfits — pure silk is the traditional choice for auspicious occasions</li>
+        <li><strong>Winter weddings</strong> — heavier silks provide warmth and structure</li>
+        <li><strong>Heirloom pieces</strong> — silk ethnic wear lasts generations with proper care</li>
+      </ul>
+      <h3>Pros and Cons</h3>
+      <p>Pros: Luxurious feel, natural sheen, excellent for embroidery, temperature-regulating, ages beautifully. Cons: More expensive, requires careful cleaning (most need dry cleaning), heavier to wear. Explore our <a href="/lehengas">silk lehenga collection</a> for premium bridal options.</p>
+
+      <h2>Chiffon: The Ethereal Choice</h2>
+      <h3>What Is Chiffon?</h3>
+      <p>Chiffon is an ultra-lightweight, sheer fabric with a soft, romantic drape. <strong>Chiffon salwar kameez</strong> and chiffon sarees are prized for their effortless elegance. The fabric practically floats on the body, creating an ethereal silhouette.</p>
+      <h3>Best For</h3>
+      <ul>
+        <li><strong>Sarees</strong> — chiffon is the most popular saree fabric for its easy draping</li>
+        <li><strong>Pakistani chiffon suits</strong> — creates the flowing, elegant look Pakistani fashion is known for</li>
+        <li><strong>Summer and destination wedding</strong> outfits — extremely lightweight and breathable</li>
+        <li><strong>Dupatta fabric</strong> — chiffon dupattas drape beautifully over any outfit</li>
+      </ul>
+      <h3>Pros and Cons</h3>
+      <p>Pros: Feather-light, gorgeous drape, perfect for warm weather, takes dye beautifully. Cons: Very sheer (always needs lining), fragile, can be tricky to handle, wrinkles easily.</p>
+
+      <h2>Net: The Glamour Fabric</h2>
+      <h3>When to Choose Net</h3>
+      <p>A <strong>net sharara suit</strong> or net lehenga creates a dimensional, layered look that is pure glamour. Net fabric is typically used as an overlay — embroidered or embellished net layered over a solid silk or satin lining. The result is a textured, rich appearance that catches light beautifully at evening events.</p>
+      <h3>Best For</h3>
+      <ul>
+        <li><strong>Evening and party wear</strong> — the texture catches event lighting</li>
+        <li><strong>Engagement lehengas</strong> — romantic and dreamy</li>
+        <li><strong>Reception outfits</strong> — modern and glamorous</li>
+        <li><strong>Overlay dupattas</strong> — adds dimension to any outfit</li>
+      </ul>
+
+      <h2>Velvet: The Winter Wedding Star</h2>
+      <p>Velvet brings unmatched richness to <strong>Indian festive wear</strong> and winter wedding outfits. A velvet <strong>bridal lehenga</strong> or velvet <strong>anarkali suit</strong> exudes old-world luxury. The fabric has a natural depth of color that photographs beautifully, making it a favorite for winter <strong>Indian wedding dresses</strong>.</p>
+      <p>Best for: Winter weddings, evening events, bridal wear, statement pieces. Avoid for: Summer events, outdoor daytime functions.</p>
+
+      <h2>Cotton and Cotton Blends</h2>
+      <p>Do not overlook cotton for <strong>Indian ethnic wear</strong>. Cotton <strong>salwar kameez</strong>, cotton kurtis, and <strong>Pakistani lawn suits</strong> are perfect for everyday wear, casual gatherings, and hot-weather events. Cotton blends (cotton-silk, cotton-georgette) offer the best of both worlds — comfort plus structure.</p>
+
+      <h2>Fabric Comparison Chart</h2>
+      <table>
+        <tr><th>Fabric</th><th>Weight</th><th>Best Season</th><th>Occasions</th><th>Care Level</th><th>Price Range</th></tr>
+        <tr><td>Georgette</td><td>Light-Medium</td><td>All seasons</td><td>Wedding, festive, party</td><td>Easy</td><td>$$</td></tr>
+        <tr><td>Silk</td><td>Medium-Heavy</td><td>Winter/All</td><td>Wedding, bridal, ceremony</td><td>High</td><td>$$$</td></tr>
+        <tr><td>Chiffon</td><td>Very Light</td><td>Summer/Spring</td><td>Casual, festive, daily</td><td>Medium</td><td>$$</td></tr>
+        <tr><td>Net</td><td>Light</td><td>All seasons</td><td>Party, reception, evening</td><td>Medium</td><td>$$</td></tr>
+        <tr><td>Velvet</td><td>Heavy</td><td>Winter</td><td>Wedding, bridal, formal</td><td>High</td><td>$$$</td></tr>
+        <tr><td>Cotton</td><td>Light-Medium</td><td>Summer/Spring</td><td>Daily, casual, daytime</td><td>Easy</td><td>$</td></tr>
+      </table>
+
+      <h2>How to Care for Each Fabric</h2>
+      <h3>Georgette Care</h3>
+      <p>Hand wash in cold water with mild detergent or dry clean. Air dry flat — never wring. Steam to remove wrinkles. Store hanging to maintain shape.</p>
+      <h3>Silk Care</h3>
+      <p>Always dry clean pure silk. Store in muslin cloth (never plastic). Keep away from direct sunlight to prevent color fading. Air out periodically.</p>
+      <h3>Chiffon Care</h3>
+      <p>Hand wash gently or dry clean. Roll in a towel to remove excess water — never wring or twist. Iron on low heat with a cloth barrier.</p>
+      <h3>Net Care</h3>
+      <p>Dry clean to protect embellishments. Store flat to prevent snagging. Keep away from sharp jewelry or velcro.</p>
+
+      <h2>Choosing the Right Fabric When Shopping Online</h2>
+      <p>When you <strong>buy Indian clothes online USA</strong>, you cannot feel the fabric. Here is how to make the right choice:</p>
+      <ul>
+        <li>Read fabric descriptions carefully — reputable stores like LuxeMia specify exact fabric types</li>
+        <li>Check the weight (GSM) if listed — lighter GSM means more fluid drape</li>
+        <li>Look at video content showing how the fabric moves</li>
+        <li>Consider the season and venue — outdoor summer events need breathable fabrics</li>
+        <li>Check lining details — good quality <strong>Indian ethnic wear</strong> always has proper lining</li>
+      </ul>
+
+      <h2>Shop by Fabric at LuxeMia</h2>
+      <p>At LuxeMia, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With <strong>free shipping across the USA</strong> and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier. Use code <strong>LUXE2026</strong> for 30% off your first order.</p>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-08',
+    updatedAt: '2026-04-08',
+    category: 'Shopping Guide',
+    tags: ['georgette suit', 'silk ethnic wear', 'chiffon salwar kameez', 'fabric guide', 'Indian dress fabric', 'net sharara suit', 'velvet lehenga', 'cotton salwar kameez', 'Indian clothes online', 'ethnic wear care tips'],
+    image: '/og/og-suits.jpg',
+    readTime: 11
+  },
+
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {
