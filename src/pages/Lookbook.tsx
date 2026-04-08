@@ -1,95 +1,33 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Loader2, ArrowDown } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import LookbookSection from '@/components/lookbook/LookbookSection';
 import LazyImage from '@/components/ui/LazyImage';
-import { ArrowDown } from 'lucide-react';
+import { useLookbookProducts, LOOKBOOK_COLLECTIONS } from '@/hooks/useLookbookProducts';
 
-// Import generated lookbook images
 import heroMain from '@/assets/lookbook/hero-main.jpg';
-import chapter1Dawn from '@/assets/lookbook/chapter-1-dawn.jpg';
-import chapter2GoldenHour from '@/assets/lookbook/chapter-2-golden-hour.jpg';
-import chapter3Monsoon from '@/assets/lookbook/chapter-3-monsoon.jpg';
-import chapter4Midnight from '@/assets/lookbook/chapter-4-midnight.jpg';
-import chapter5Eternal from '@/assets/lookbook/chapter-5-eternal.jpg';
-
-const lookbookData = [
-  {
-    title: 'Whispers of Dawn',
-    subtitle: 'Chapter I',
-    description: 'As morning light cascades through ancient jharokhas, silk unfurls like petals awakening to the sun. Each thread carries stories of master artisans who have perfected their craft across generations.',
-    imagePosition: 'left' as const,
-    image: chapter1Dawn,
-    hotspots: [
-      { x: 35, y: 40, productName: 'Mint Green Kanchipuram Saree', productPrice: '$365', productHandle: 'mint-green-kanchipuram-silk-wedding-saree', image: chapter1Dawn },
-      { x: 60, y: 65, productName: 'Pearl Maang Tikka', productPrice: '$89', productHandle: 'pearl-kamarbandh' },
-    ]
-  },
-  {
-    title: 'The Golden Hour',
-    subtitle: 'Chapter II',
-    description: 'When evening paints the sky in hues of amber and rose, our lehengas catch the light like liquid gold. Zardozi work that has adorned royalty for centuries now graces the modern bride.',
-    imagePosition: 'full' as const,
-    image: chapter2GoldenHour,
-    hotspots: [
-      { x: 45, y: 35, productName: 'Royal Rani Pink Bridal Lehenga', productPrice: '$729', productHandle: 'royal-rani-pink-silk-bridal-lehenga', image: chapter2GoldenHour },
-      { x: 70, y: 55, productName: 'Kundan Maang Tikka', productPrice: '$125', productHandle: 'heritage-maang-tikka' },
-    ]
-  },
-  {
-    title: 'Monsoon Reverie',
-    subtitle: 'Chapter III',
-    description: "The rhythm of rain against marble courtyards. Indigo and emerald dance together in our handwoven collection, each piece a meditation on nature's infinite palette.",
-    imagePosition: 'right' as const,
-    image: chapter3Monsoon,
-    hotspots: [
-      { x: 40, y: 50, productName: 'Emerald Wedding Lehenga', productPrice: '$285', productHandle: 'emerald-forest-wedding-lehenga', image: chapter3Monsoon },
-      { x: 25, y: 70, productName: 'Jadau Chandbali', productPrice: '$450', productHandle: 'jadau-chandbali' },
-    ]
-  },
-  {
-    title: 'Midnight Bloom',
-    subtitle: 'Chapter IV',
-    description: 'Under starlit canopies, velvet meets vintage. Our evening collection speaks of quiet opulence—pieces that command attention through whispers, not shouts.',
-    imagePosition: 'left' as const,
-    image: chapter4Midnight,
-    hotspots: [
-      { x: 50, y: 45, productName: 'Burgundy Velvet Lehenga', productPrice: '$270', productHandle: 'burgundy-velvet-wedding-lehenga', image: chapter4Midnight },
-      { x: 30, y: 75, productName: 'Polki Choker Set', productPrice: '$950', productHandle: 'polki-choker' },
-    ]
-  },
-  {
-    title: 'Eternal Grace',
-    subtitle: 'Chapter V',
-    description: "The finale—where tradition embraces tomorrow. Our bridal collection represents the culmination of a journey through India's textile heritage, reimagined for the contemporary woman.",
-    imagePosition: 'full' as const,
-    image: chapter5Eternal,
-    hotspots: [
-      { x: 50, y: 40, productName: 'Ethereal Pastel Pink Bridal Lehenga', productPrice: '$477', productHandle: 'ethereal-pastel-pink-bridal-lehenga', image: chapter5Eternal },
-      { x: 65, y: 60, productName: 'Kundan Rani Haar', productPrice: '$1,450', productHandle: 'kundan-rani-haar' },
-      { x: 35, y: 70, productName: 'Bridal Haath Phool', productPrice: '$280', productHandle: 'bridal-haath-phool' },
-    ]
-  }
-];
 
 const Lookbook = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
-    offset: ['start start', 'end start']
+    offset: ['start start', 'end start'],
   });
 
   const heroY = useTransform(heroScroll, [0, 1], ['0%', '50%']);
   const heroOpacity = useTransform(heroScroll, [0, 0.5], [1, 0]);
   const heroScale = useTransform(heroScroll, [0, 1], [1, 1.1]);
 
+  const { products, isLoading, error } = useLookbookProducts();
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Lookbook — LuxeMia"
-        description="Explore the LuxeMia lookbook. Curated styling inspiration for Indian ethnic wear, bridal outfits and festive collections."
+        description="Explore the LuxeMia lookbook. Curated styling inspiration featuring real products — wedding lehengas, sherwanis, sharara suits, and festive ethnic wear."
         canonical="https://luxemia.shop/lookbook"
       />
       <Header />
@@ -99,16 +37,9 @@ const Lookbook = () => {
         ref={heroRef}
         className="relative h-screen flex items-center justify-center overflow-hidden"
       >
-        <motion.div
-          style={{ y: heroY, scale: heroScale }}
-          className="absolute inset-0"
-        >
+        <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-foreground/50 z-10" />
-          <LazyImage 
-            src={heroMain}
-            alt="Lookbook 2026"
-            className="w-full h-full"
-          />
+          <LazyImage src={heroMain} alt="LuxeMia Lookbook 2026" className="w-full h-full" />
         </motion.div>
 
         <motion.div
@@ -129,8 +60,8 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="font-serif text-5xl lg:text-8xl mb-6"
           >
-            Ethereal <br />
-            <span className="italic">Narratives</span>
+            Curated <br />
+            <span className="italic">Collections</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -138,8 +69,7 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-sm lg:text-base font-light max-w-md mx-auto text-background/90"
           >
-            A visual journey through India's textile heritage, 
-            reimagined for the modern woman
+            Styled looks featuring our latest ethnic wear — shop directly from the lookbook
           </motion.p>
         </motion.div>
 
@@ -163,15 +93,36 @@ const Lookbook = () => {
 
       {/* Lookbook Sections */}
       <main>
-        {lookbookData.map((section, index) => (
-          <LookbookSection
-            key={index}
-            {...section}
-            index={index}
-          />
-        ))}
-      </main>
+        {isLoading && (
+          <div className="flex items-center justify-center py-32">
+            <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+          </div>
+        )}
 
+        {error && (
+          <div className="text-center py-32">
+            <p className="text-muted-foreground">{error}</p>
+          </div>
+        )}
+
+        {!isLoading &&
+          !error &&
+          LOOKBOOK_COLLECTIONS.map((collection, index) => {
+            const sectionProducts = products[collection.id] || [];
+            if (sectionProducts.length === 0) return null;
+            return (
+              <LookbookSection
+                key={collection.id}
+                title={collection.title}
+                subtitle={collection.subtitle}
+                description={collection.description}
+                products={sectionProducts}
+                index={index}
+                layout={index % 2 === 0 ? 'left' : 'right'}
+              />
+            );
+          })}
+      </main>
 
       <Footer />
     </div>
