@@ -162,13 +162,12 @@ const Jewelry = () => {
         {/* Category Highlights */}
         <section className="py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: Crown, title: 'Necklaces', count: '30+ designs' },
-                { icon: Gem, title: 'Earrings', count: '15+ styles' },
+                { icon: Gem, title: 'Earrings', count: '22+ styles' },
                 { icon: CircleDot, title: 'Bangles', count: '10+ sets' },
                 { icon: Sparkles, title: 'Bridal Sets', count: '12+ pieces' },
-                { icon: Crown, title: 'Maang Tikka', count: '8+ designs' },
               ].map((item, index) => (
                 <motion.div
                   key={item.title}

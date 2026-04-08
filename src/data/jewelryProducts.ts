@@ -1,7 +1,7 @@
 export interface JewelryProduct {
   id: string;
   name: string;
-  category: 'Necklaces' | 'Earrings' | 'Bangles' | 'Bridal Sets' | 'Maang Tikka';
+  category: 'Necklaces' | 'Earrings' | 'Bangles' | 'Bridal Sets';
   price: number;
   originalPrice?: number;
   image: string;
@@ -556,7 +556,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-052',
     name: 'Sky Blue Kundan Festival Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 23, // (945 × 2) / 83
     originalPrice: 29, // (1196 × 2) / 83
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59483/Sky-Blue--Festival-Wear-Kundan-Beautiful-Earrings-FNKDE144SBLU(1).jpg',
@@ -567,7 +567,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-053',
     name: 'Black Kundan Festival Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 23,
     originalPrice: 29,
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59483/Black--Festival-Wear-Kundan-Beautiful-Earrings-FNKDE144BLK(1).jpg',
@@ -577,7 +577,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-054',
     name: 'Dark Green Kundan Festival Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 18, // (745 × 2) / 83
     originalPrice: 23, // (943 × 2) / 83
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59483/Dark-Green--Festival-Wear-Kundan-Beautiful-Earrings-FNKDE143GRN(1).jpg',
@@ -588,7 +588,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-055',
     name: 'Green Kundan Shining Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 28, // (1145 × 2) / 83
     originalPrice: 35, // (1449 × 2) / 83
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59482/Green--Festival-Wear-Kundan-Shining-Earrings-FNKDE140GRN(1).jpg',
@@ -598,7 +598,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-056',
     name: 'Golden Party Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 30, // (1245 × 2) / 83
     originalPrice: 38, // (1576 × 2) / 83
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59485/Golden--Party-Wear-Kundan-Stylish-Earrings-FNKE111PCH(1).jpg',
@@ -608,7 +608,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-057',
     name: 'White Party Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 26, // (1095 × 2) / 83
     originalPrice: 33, // (1386 × 2) / 83
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59485/White--Party-Wear-Kundan-Stylish-Earrings-FNKE110WHT(1).jpg',
@@ -618,7 +618,7 @@ export const jewelryProducts: JewelryProduct[] = [
   {
     id: 'jwl-058',
     name: 'Pink Party Maang Tikka',
-    category: 'Maang Tikka',
+    category: 'Earrings',
     price: 26,
     originalPrice: 33,
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59485/Pink--Party-Wear-Kundan-Stylish-Earrings-FNKE110PNK(1).jpg',
@@ -627,4 +627,4 @@ export const jewelryProducts: JewelryProduct[] = [
   },
 ];
 
-export const jewelryCategories = ['All', 'Necklaces', 'Earrings', 'Bangles', 'Bridal Sets', 'Maang Tikka'];
+export const jewelryCategories = ['All', 'Necklaces', 'Earrings', 'Bangles', 'Bridal Sets'];

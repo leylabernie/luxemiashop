@@ -37,28 +37,24 @@ const sortOptions = [
 
 const suitFilterSections = [
   {
-    name: 'Size',
-    options: ['S', 'M', 'L', 'XL', 'XXL', 'Custom'],
-  },
-  {
-    name: 'Availability',
-    options: ['Ready to Ship', 'Made to Order'],
+    name: 'Category',
+    options: ['Anarkali', 'Sharara', 'Plazzo', 'Pakistani'],
   },
   {
     name: 'Occasion',
-    options: ['Bridal', 'Wedding', 'Party', 'Festive', 'Occasional'],
+    options: ['Wedding', 'Eid', 'Festive', 'Party', 'Occasional'],
   },
   {
     name: 'Fabric',
-    options: ['Georgette', 'Chinnon', 'Silk', 'Viscose', 'Jacquard', 'Velvet', 'Organza'],
+    options: ['Georgette', 'Chinon', 'Silk', 'Shimmer', 'Net', 'Cotton', 'Chanderi', 'Velvet'],
   },
   {
     name: 'Work',
-    options: ['Heavy Work', 'Sequins', 'Zari', 'Embroidery', 'Print'],
+    options: ['Embroidery', 'Sequins', 'Mirror', 'Beads', 'Thread'],
   },
   {
     name: 'Color',
-    options: ['Pink', 'Red', 'Green', 'Blue', 'Coral', 'Sage', 'Purple', 'Beige'],
+    options: ['Pink', 'Red', 'Green', 'Blue', 'Purple', 'Maroon', 'Black', 'Cream'],
   },
 ];
 
