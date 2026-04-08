@@ -21,9 +21,10 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Confused between bridal lehenga and wedding saree? Our expert guide covers everything from fabric selection to budget planning for your dream Indian wedding dress.',
     content: `
       <h2>Choosing the Perfect Indian Wedding Dress</h2>
-      <p>Your wedding dress is the most important outfit you'll ever wear. For Indian brides, the choice typically comes down to two stunning options: the regal bridal lehenga or the timeless wedding saree. This comprehensive guide will help you make the perfect choice for your special day.</p>
+      <p>Your wedding dress is the most important outfit you'll ever wear. For Indian brides, the choice typically comes down to two stunning options: the regal <a href="/collections/bridal-lehengas">bridal lehenga</a> or the timeless <a href="/collections/wedding-sarees">wedding saree</a>. This comprehensive guide will help you make the perfect choice for your special day.</p>
       
       <h2>Bridal Lehenga: The Royal Choice</h2>
+      <p>Explore our curated <a href="/lehengas">lehenga choli collection</a> for stunning bridal options.</p>
       <p>The bridal lehenga has become the most popular choice for Indian weddings, especially for the main ceremony. Its grand silhouette, heavy embroidery, and dramatic dupatta create a picture-perfect bridal look.</p>
       
       <h3>When to Choose a Bridal Lehenga</h3>
@@ -35,7 +36,8 @@ export const blogPosts: BlogPost[] = [
       </ul>
       
       <h2>Wedding Saree: Timeless Elegance</h2>
-      <p>For brides who appreciate tradition, a wedding saree offers unmatched grace. Whether it's a Kanchipuram silk or Banarasi brocade, sarees exude sophistication that never goes out of style.</p>
+      <p>Browse our <a href="/sarees">saree collection</a> for Kanchipuram, Banarasi, and designer wedding sarees.</p>
+      <p>For brides who appreciate tradition, a wedding saree offers unmatched grace. Whether it's a <a href="/collections/wedding-sarees">Kanchipuram silk or Banarasi brocade from our wedding saree collection</a>, sarees exude sophistication that never goes out of style.</p>
       
       <h3>When to Choose a Wedding Saree</h3>
       <ul>
@@ -48,7 +50,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Budget Planning for Your Wedding Dress</h2>
       <p>Indian wedding dresses range from ₹50,000 to ₹50 lakhs. Here's how to allocate your budget wisely:</p>
       <ul>
-        <li><strong>Fabric quality:</strong> Invest in pure silk or quality georgette</li>
+        <li><strong>Fabric quality:</strong> Invest in pure silk or quality georgette — see our <a href="/lehengas">lehenga collection</a> for options at every price point</li>
         <li><strong>Handwork:</strong> Hand embroidery costs more but lasts forever</li>
         <li><strong>Customization:</strong> Custom fitting adds 10-20% to cost</li>
         <li><strong>Accessories:</strong> Keep 15% of budget for jewelry and footwear</li>
@@ -64,7 +66,14 @@ export const blogPosts: BlogPost[] = [
       </ul>
       
       <h2>Expert Styling Tips</h2>
-      <p>Trust your instincts when you find "the one." Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
+      <p>Trust your instincts when you find "the one." Start your search at <a href="/collections/bridal-lehengas">LuxeMia Bridal Lehengas</a>.
+      
+      <h2>Continue Reading</h2>
+      <ul>
+        <li><a href="/blog/style-lehenga-choli-every-wedding-event">How to Style Lehenga Choli for Every Wedding Event</a></li>
+        <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Georgette vs Silk vs Chiffon</a></li>
+        <li><a href="/blog/indian-wedding-season-2026-outfit-guide">Indian Wedding Season 2026: Complete Outfit Guide</a></li>
+      </ul> Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-01-05',
@@ -81,7 +90,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Explore the latest red bridal lehenga designs from top designers. From classic crimson to modern maroon, find your perfect shade with our expert guide.',
     content: `
       <h2>Why Red Remains the Queen of Bridal Colors</h2>
-      <p>Red has been the traditional bridal color in Indian weddings for centuries. It symbolizes prosperity, fertility, and the auspicious beginnings of married life. In 2026, red bridal lehengas continue to dominate, but with modern twists that appeal to contemporary brides.</p>
+      <p>Red has been the traditional bridal color in Indian weddings for centuries. It symbolizes prosperity, fertility, and the auspicious beginnings of married life. In 2026, red bridal lehengas continue to dominate — explore our <a href="/collections/bridal-lehengas">bridal lehenga collection</a>, but with modern twists that appeal to contemporary brides.</p>
       
       <h2>Trending Shades of Red for 2026</h2>
       <h3>Classic Crimson</h3>
@@ -91,7 +100,7 @@ export const blogPosts: BlogPost[] = [
       <p>Deeper and more sophisticated, maroon lehengas are perfect for winter weddings. They photograph exceptionally well and complement both gold and silver jewelry.</p>
       
       <h3>Wine Wonder</h3>
-      <p>A modern alternative to traditional red, wine-colored lehengas offer depth and contemporary appeal. Ideal for evening ceremonies and receptions.</p>
+      <p>A modern alternative to traditional red. Shop <a href="/lehengas">wine lehengas at LuxeMia</a>. A contemporary choice, wine-colored lehengas offer depth and contemporary appeal. Ideal for evening ceremonies and receptions.</p>
       
       <h3>Coral Crush</h3>
       <p>For summer brides, coral offers a fresh take on red. It's lighter, more playful, and perfect for destination weddings.</p>
@@ -125,7 +134,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '9',
     slug: 'designer-wedding-dress-under-500',
-    title: 'Designer Wedding Dress Under $500: Budget-Friendly Bridal Options',
+    title: 'Designer Wedding Dress Under $500: Budget-Friendly Bridal Options — Shop <a href="/suits">Suits</a> &amp; <a href="/lehengas">Lehengas</a>',
     excerpt: 'Beautiful bridal lehengas and wedding sarees that look expensive without the designer price tag. Smart shopping tips for budget-conscious brides.',
     content: `
       <h2>Luxury Look Without the Luxury Price</h2>
@@ -176,7 +185,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '11',
     slug: 'lehenga-color-for-dark-skin',
-    title: 'Best Lehenga Colors for Dark Skin Tone: Expert Color Guide 2026',
+    title: 'Best Lehenga Colors for Dark Skin Tone: Expert Color Guide 2026 | <a href="/lehengas">Shop Lehengas</a>',
     excerpt: 'Find the most flattering lehenga colors for dusky and dark skin tones. From jewel tones to pastels, discover shades that make your complexion glow.',
     content: `
       <h2>Embrace Your Beautiful Dark Skin</h2>
@@ -816,7 +825,7 @@ export const blogPosts: BlogPost[] = [
       <p>Eid is the biggest occasion for sharara shopping. An <strong>Eid sharara 2026</strong> in pastel georgette with subtle <strong>thread work embroidery</strong> strikes the perfect balance between festive and refined. Cream, mint green, powder blue, and blush pink are the top <strong>Eid outfit</strong> colors this year. Pair with a statement dupatta and delicate jewelry for a polished look.</p>
 
       <h3>Sharara for Wedding</h3>
-      <p>A <strong>sharara suit for wedding</strong> demands heavier embellishment. Look for designs with <strong>zari work</strong>, <strong>kundan work dress</strong> detailing, and rich fabrics like velvet or silk. Deep reds, emerald greens, and royal blues are classic choices. For the bride, a heavily embroidered sharara in red or maroon is a stunning alternative to the traditional <a href="/lehengas">bridal lehenga</a>.</p>
+      <p>A <strong>sharara suit for wedding</strong> demands heavier embellishment. Look for designs with <strong>zari work</strong>, <strong>kundan work dress</strong> detailing, and rich fabrics like velvet or silk. Deep reds, emerald greens, and royal blues are classic choices. For the bride, a heavily embroidered sharara in red or maroon is a stunning alternative to the traditional <a href="/collections/bridal-lehengas">bridal lehenga</a>.</p>
 
       <h3>Sharara for Party</h3>
       <p>Keep it modern with a <strong>sequined sharara</strong> or a <strong>mirror work suit</strong> in a trendy color. Metallic tones, black, and jewel shades work perfectly for <strong>cocktail party Indian dress</strong> events. A crop top sharara in sequin fabric is the ultimate statement piece.</p>
@@ -895,7 +904,7 @@ export const blogPosts: BlogPost[] = [
       <p>An <strong>anarkali suit for wedding</strong> in rich fabrics like silk or velvet with heavy <strong>zari work</strong> and <strong>kundan work</strong> embellishment is a bride's dream. Deep jewel tones — royal blue, emerald, wine — create a regal presence. These pieces rival <a href="/lehengas">bridal lehengas</a> in their grandeur while offering more comfort and ease of movement.</p>
 
       <h3>Festive Anarkali</h3>
-      <p>For <strong>Diwali dress 2026</strong>, <strong>Navratri outfit</strong>, or <strong>Eid outfit women</strong> shopping, a mid-weight anarkali in georgette or silk with moderate embroidery hits the sweet spot. Colors like mustard, teal, coral, and ivory are trending for festive 2026.</p>
+      <p>For <strong>Diwali dress 2026</strong>, <strong>Navratri outfit</strong>, or <strong>Eid outfit women</strong> shopping, a mid-weight anarkali in georgette or silk with moderate embroidery hits the sweet spot. Colors like mustard, teal, coral, and ivory are trending for <a href="/collections/festive-wear">festive 2026</a>.</p>
 
       <h3>Casual Anarkali Kurta</h3>
       <p>Not every anarkali needs to be a showstopper. Simple cotton or rayon anarkalis with minimal embroidery work beautifully as elevated everyday wear. Pair with jeans or leggings for a fusion look that transitions from office to evening effortlessly.</p>
@@ -954,7 +963,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Lehenga for the Wedding Ceremony</h2>
       <h3>For the Bride: The Ultimate Bridal Lehenga</h3>
-      <p>The <strong>bridal lehenga</strong> is the centerpiece of the entire wedding. Traditionally, brides choose a <strong>red bridal lehenga</strong>, but 2026 brides are embracing pastels, wines, and even ivory. A <strong>semi-stitched lehenga</strong> that is custom fitted ensures the perfect silhouette for your body type.</p>
+      <p>The <strong><a href="/collections/bridal-lehengas">bridal lehenga</a></strong> is the centerpiece of the entire wedding. Traditionally, brides choose a <strong>red bridal lehenga</strong>, but 2026 brides are embracing pastels, wines, and even ivory. A <strong>semi-stitched lehenga</strong> that is custom fitted ensures the perfect silhouette for your body type.</p>
       <p>Invest in heavy <strong>zari work</strong>, <strong>kundan work</strong>, and hand embroidery for the bridal piece. Silk, velvet, and heavy georgette are the preferred <strong>bridal lehenga</strong> fabrics. The <strong>lehenga dupatta styling</strong> for brides typically involves draping over the head for the ceremony, then shifting to a shoulder drape for photos.</p>
 
       <h3>For Wedding Guests</h3>
@@ -962,7 +971,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Lehenga for Reception</h2>
       <h3>The Look: Elegant, Modern, Photogenic</h3>
-      <p>The <strong>reception lehenga</strong> can be more contemporary than the ceremony outfit. This is where trends like <strong>pastel lehenga</strong> designs, <strong>pink lehenga</strong> shades, and fusion silhouettes really shine. A <strong>flared lehenga</strong> in organza or tulle with delicate embroidery creates a dreamy, editorial look perfect for professional photography.</p>
+      <p>The <strong><a href="/collections/reception-outfits">reception lehenga</a></strong> can be more contemporary than the ceremony outfit. This is where trends like <strong>pastel lehenga</strong> designs, <strong>pink lehenga</strong> shades, and fusion silhouettes really shine. A <strong>flared lehenga</strong> in organza or tulle with delicate embroidery creates a dreamy, editorial look perfect for professional photography.</p>
       <h3>Styling Tips</h3>
       <p>For the reception, think cocktail-ready glamour. A statement blouse — deep back, halter neck, or off-shoulder — paired with a <strong>designer lehenga</strong> skirt creates a gown-like effect. This is the event to try bold <strong>lehenga blouse designs</strong> like corsets, cape sleeves, or one-shoulder styles.</p>
 
@@ -1044,7 +1053,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Sangeet Night Outfit</h2>
       <h3>For the Bride</h3>
-      <p>The sangeet is the party night — dress to impress. A <strong>designer lehenga</strong> or <strong>designer anarkali gown</strong> in a statement color (think midnight blue, emerald, or champagne gold) sets the tone. <strong>Sequin Indian outfits</strong> and <strong>mirror work suits</strong> catch the light beautifully on the dance floor. Choose a <a href="/lehengas">sequence lehenga</a> that moves well for dance performances.</p>
+      <p>The sangeet is the party night — dress to impress. A <strong><a href="/lehengas">designer lehenga</a></strong> or <strong><a href="/suits">designer anarkali gown</a></strong> in a statement color (think midnight blue, emerald, or champagne gold) sets the tone. <strong>Sequin Indian outfits</strong> and <strong>mirror work suits</strong> catch the light beautifully on the dance floor. Choose a <a href="/lehengas">sequence lehenga</a> that moves well for dance performances.</p>
       <h3>For the Groom</h3>
       <p>A <strong>designer kurta pajama</strong> in a complementary color to the bride works perfectly. For a more formal sangeet, an <strong>Indo western sherwani</strong> or a <strong>Jodhpuri suit</strong> makes a strong impression. Browse our <a href="/menswear">mens ethnic wear</a> collection for the latest styles.</p>
       <h3>For Guests</h3>
@@ -1052,7 +1061,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Wedding Ceremony Outfit</h2>
       <h3>For the Bride</h3>
-      <p>The main event calls for the most magnificent outfit. The <strong>bridal lehenga</strong> remains the top choice — in traditional red, wine, or for the modern bride, rose pink or ivory. Alternatively, a <strong>heavy Pakistani suit for wedding</strong> or a stunning <a href="/sarees">wedding saree</a> in Banarasi silk or Kanchipuram silk makes an equally regal statement. This is where you invest in the finest <strong>hand embroidered</strong> piece with <strong>zari work</strong> and heirloom-quality craftsmanship.</p>
+      <p>The main event calls for the most magnificent outfit. The <strong>bridal lehenga</strong> remains the top choice — in traditional red, wine, or for the modern bride, rose pink or ivory. Alternatively, a <strong>heavy Pakistani suit for wedding</strong> or a stunning <a href="/collections/wedding-sarees">wedding saree</a> in Banarasi silk or Kanchipuram silk makes an equally regal statement. This is where you invest in the finest <strong>hand embroidered</strong> piece with <strong>zari work</strong> and heirloom-quality craftsmanship.</p>
       <h3>For the Groom</h3>
       <p>The <strong>wedding sherwani</strong> or <strong>groom sherwani</strong> is the cornerstone of the <strong>baraat outfit</strong>. Classic ivory with gold embroidery is timeless, while modern grooms are experimenting with pastels, deep navy, and even black. A matching <strong>mens sherwani</strong> with the bride's color palette creates beautiful couple photos. Our <a href="/menswear">groom collection</a> features everything from classic to contemporary.</p>
       <h3>For Family and Guests</h3>
@@ -1162,7 +1171,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Velvet: The Winter Wedding Star</h2>
-      <p>Velvet brings unmatched richness to <strong>Indian festive wear</strong> and winter wedding outfits. A velvet <strong>bridal lehenga</strong> or velvet <strong>anarkali suit</strong> exudes old-world luxury. The fabric has a natural depth of color that photographs beautifully, making it a favorite for winter <strong>Indian wedding dresses</strong>.</p>
+      <p>Velvet brings unmatched richness to <strong><a href="/collections/festive-wear">Indian festive wear</a></strong> and winter wedding outfits. A velvet <strong>bridal lehenga</strong> or velvet <strong>anarkali suit</strong> exudes old-world luxury. The fabric has a natural depth of color that photographs beautifully, making it a favorite for winter <strong>Indian wedding dresses</strong>.</p>
       <p>Best for: Winter weddings, evening events, bridal wear, statement pieces. Avoid for: Summer events, outdoor daytime functions.</p>
 
       <h2>Cotton and Cotton Blends</h2>
