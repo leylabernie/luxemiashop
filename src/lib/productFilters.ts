@@ -1,8 +1,20 @@
 import type { ShopifyProduct } from '@/lib/shopify';
 
 /**
- * Apply product filters based on active filter selections
- * Filters work with AND logic across categories (e.g., Bridal + Silk = bridal silk products)
+ * Build a searchable string from a product's tags, title, and description.
+ */
+const getSearchableText = (p: ShopifyProduct): string => {
+  const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+  const title = p.node.title.toLowerCase();
+  const description = (p.node.description ?? '').toLowerCase();
+  const productType = (p.node.productType ?? '').toLowerCase();
+  return [...tags, title, description, productType].join(' ');
+};
+
+/**
+ * Apply product filters based on active filter selections.
+ * Filters match against Shopify tags, title, description, and productType
+ * since metadata/metafields are not available via Storefront API.
  */
 export const applyProductFilters = (
   products: ShopifyProduct[],
@@ -16,30 +28,28 @@ export const applyProductFilters = (
     if (values.length === 0) return;
 
     const normalizedCategory = category.toLowerCase();
-    
-    filtered = filtered.filter(p => {
-      const metadata = p.node.metadata;
-      const variants = p.node.variants?.edges || [];
 
-      // Handle Size filter - check variant options
+    filtered = filtered.filter(p => {
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+      const variants = p.node.variants?.edges || [];
+      const searchable = getSearchableText(p);
+
+      // Handle Size filter - check variant options and tags
       if (normalizedCategory === 'size') {
         return values.some(filterValue => {
           const filterLower = filterValue.toLowerCase();
-          
-          // Check variant selectedOptions for size
-          return variants.some(v => 
-            v.node.selectedOptions?.some(opt => 
-              opt.name.toLowerCase() === 'size' && 
+
+          return variants.some(v =>
+            v.node.selectedOptions?.some(opt =>
+              opt.name.toLowerCase() === 'size' &&
               opt.value.toLowerCase().includes(filterLower)
             )
-          ) || 
-          // Also check product options
-          p.node.options?.some(opt => 
-            opt.name.toLowerCase() === 'size' && 
+          ) ||
+          p.node.options?.some(opt =>
+            opt.name.toLowerCase() === 'size' &&
             opt.values.some(val => val.toLowerCase().includes(filterLower))
           ) ||
-          // Check tags for size info
-          metadata?.tags?.some(tag => tag.toLowerCase().includes(filterLower));
+          tags.some(tag => tag === `size ${filterLower}` || tag === filterLower);
         });
       }
 
@@ -47,78 +57,29 @@ export const applyProductFilters = (
       if (normalizedCategory === 'availability') {
         return values.some(filterValue => {
           const filterLower = filterValue.toLowerCase();
-          
+
           if (filterLower.includes('ready')) {
-            // Check if any variant is available for sale
             const hasAvailable = variants.some(v => v.node.availableForSale);
-            // Or check tags for "ready to ship"
-            const hasReadyTag = metadata?.tags?.some(tag => 
-              tag.toLowerCase().includes('ready') || tag.toLowerCase().includes('in stock')
+            const hasReadyTag = tags.some(tag =>
+              tag.includes('ready') || tag.includes('in stock') || tag.includes('readymade')
             );
             return hasAvailable || hasReadyTag;
           }
-          
+
           if (filterLower.includes('made to order') || filterLower.includes('custom')) {
-            // Check tags for made to order
-            return metadata?.tags?.some(tag => 
-              tag.toLowerCase().includes('made to order') || 
-              tag.toLowerCase().includes('custom') ||
-              tag.toLowerCase().includes('pre-order')
+            return tags.some(tag =>
+              tag.includes('made to order') || tag.includes('custom') || tag.includes('pre-order')
             );
           }
-          
+
           return true;
         });
       }
 
-      if (!metadata) return false;
-
-      // Map filter category to metadata field
-      let productValue: string | null | undefined;
-      let productTags: string[] | null | undefined;
-
-      switch (normalizedCategory) {
-        case 'occasion':
-          productValue = metadata.occasion;
-          break;
-        case 'fabric':
-          productValue = metadata.fabric;
-          break;
-        case 'color':
-          productValue = metadata.color;
-          break;
-        case 'work':
-          productValue = metadata.work;
-          break;
-        case 'category':
-          // For category filter, check tags and title
-          productTags = metadata.tags;
-          productValue = p.node.title;
-          break;
-        default:
-          return true; // Unknown filter category, don't filter
-      }
-
-      // Check if any selected filter value matches
+      // For all other filters, search tags + title + description
       return values.some(filterValue => {
         const filterLower = filterValue.toLowerCase();
-        
-        // Check main product value
-        if (productValue && productValue.toLowerCase().includes(filterLower)) {
-          return true;
-        }
-        
-        // Check tags
-        if (productTags && productTags.some(tag => tag.toLowerCase().includes(filterLower))) {
-          return true;
-        }
-        
-        // For category, also check product title
-        if (normalizedCategory === 'category' && p.node.title.toLowerCase().includes(filterLower)) {
-          return true;
-        }
-
-        return false;
+        return searchable.includes(filterLower);
       });
     });
   });

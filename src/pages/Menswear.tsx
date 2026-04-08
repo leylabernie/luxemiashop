@@ -37,28 +37,20 @@ const sortOptions = [
 
 const menswearFilterSections = [
   {
-    name: 'Size',
-    options: ['S', 'M', 'L', 'XL', 'XXL', '3XL', 'Custom'],
-  },
-  {
-    name: 'Availability',
-    options: ['Ready to Ship', 'Made to Order'],
+    name: 'Category',
+    options: ['Sherwani', 'Kurta', 'Jodhpuri'],
   },
   {
     name: 'Occasion',
-    options: ['Wedding', 'Occasional', 'Festival', 'Party'],
+    options: ['Wedding', 'Party'],
   },
   {
     name: 'Fabric',
-    options: ['Art Silk', 'Banarasi Jacquard', 'Velvet', 'Cotton', 'Viscose', 'Silk'],
-  },
-  {
-    name: 'Category',
-    options: ['Sherwani', 'Kurta', 'Indo-Western', 'Nehru Jacket'],
+    options: ['Art Silk', 'Jacquard', 'Velvet'],
   },
   {
     name: 'Color',
-    options: ['Maroon', 'Navy', 'Gold', 'Cream', 'Black', 'White'],
+    options: ['Black', 'Navy Blue', 'Grey', 'Cream', 'Beige', 'Pink'],
   },
 ];
 

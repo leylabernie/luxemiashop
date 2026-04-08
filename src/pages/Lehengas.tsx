@@ -37,28 +37,20 @@ const sortOptions = [
 
 const lehengaFilterSections = [
   {
-    name: 'Size',
-    options: ['S', 'M', 'L', 'XL', 'XXL', 'Custom'],
-  },
-  {
-    name: 'Availability',
-    options: ['Ready to Ship', 'Made to Order'],
-  },
-  {
     name: 'Occasion',
-    options: ['Bridal', 'Wedding', 'Party', 'Festive', 'Occasional'],
+    options: ['Bridal', 'Wedding', 'Festive', 'Occasional'],
   },
   {
     name: 'Fabric',
-    options: ['Net', 'Silk', 'Velvet', 'Georgette', 'Chinnon', 'Roman Silk', 'Organza'],
+    options: ['Net', 'Silk', 'Georgette', 'Organza'],
   },
   {
     name: 'Work',
-    options: ['Heavy Work', 'Sequins', 'Zari', 'Embroidery', 'Thread Work'],
+    options: ['Embroidery', 'Sequins', 'Print'],
   },
   {
     name: 'Color',
-    options: ['Red', 'Pink', 'Maroon', 'Green', 'Blue', 'Gold', 'Wine', 'Purple', 'Lavender'],
+    options: ['Red', 'Pink', 'Maroon', 'Green', 'Gold', 'Purple', 'Orange'],
   },
 ];
 
