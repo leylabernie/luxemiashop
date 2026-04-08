@@ -182,9 +182,11 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
       title: product.title || betterTitle,
       description: product.description,
       handle: product.source_id,
-      productType: product.category === 'lehengas' ? 'Bridal Lehengas' : 
+      productType: product.category === 'lehengas' ? 'Bridal Lehengas' :
                    product.category === 'sarees' ? 'Designer Sarees' :
-                   product.category === 'suits' ? 'Designer Suits' : 'Menswear',
+                   product.category === 'suits' ? 'Designer Suits' :
+                   product.category === 'menswear' ? "Men's Ethnic Wear" :
+                   product.category === 'jewelry' ? 'Jewelry' : product.category,
       // Include metadata for filtering
       metadata: {
         occasion: product.occasion,

@@ -67,11 +67,22 @@ const Suits = () => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['Occasion', 'Fabric']);
   const [occasionFilter, setOccasionFilter] = useState('All');
 
+  // Filter out menswear products that may appear due to overlapping tags
+  const womenOnlyProducts = useMemo(() => {
+    const menswearKeywords = ['sherwani', 'kurta pajama', 'jodhpuri', 'kurta set', 'indo western'];
+    return products.filter(p => {
+      const title = p.node.title.toLowerCase();
+      const productType = (p.node.productType ?? '').toLowerCase();
+      if (productType.includes("men") || productType.includes("menswear")) return false;
+      return !menswearKeywords.some(kw => title.includes(kw));
+    });
+  }, [products]);
+
   // Apply filters and sorting using the reusable utility
   const filteredProducts = useMemo(() => {
-    const sorted = filterAndSortProducts(products, activeFilters, priceRange, sortBy);
+    const sorted = filterAndSortProducts(womenOnlyProducts, activeFilters, priceRange, sortBy);
     return filterByOccasion(sorted, occasionFilter);
-  }, [products, activeFilters, priceRange, sortBy, occasionFilter]);
+  }, [womenOnlyProducts, activeFilters, priceRange, sortBy, occasionFilter]);
 
   // Generate pagination numbers
   const getPageNumbers = () => {

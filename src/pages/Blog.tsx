@@ -8,6 +8,8 @@ import { Calendar, Clock, User, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
+const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
+
 const Blog = () => {
   const featuredPost = blogPosts[0];
   const recentPosts = blogPosts.slice(1);
@@ -106,10 +108,10 @@ const Blog = () => {
                   <CardContent className="p-6 lg:p-10 flex flex-col justify-center">
                     <Badge className="w-fit mb-4">{featuredPost.category}</Badge>
                     <h3 className="text-2xl lg:text-3xl font-display font-semibold text-foreground mb-4 group-hover:text-primary transition-colors">
-                      {featuredPost.title}
+                      {stripHtml(featuredPost.title)}
                     </h3>
                     <p className="text-muted-foreground mb-6 line-clamp-3">
-                      {featuredPost.excerpt}
+                      {stripHtml(featuredPost.excerpt)}
                     </p>
                     <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
                       <span className="flex items-center gap-1">
@@ -157,10 +159,10 @@ const Blog = () => {
                     <CardContent className="p-5">
                       <Badge variant="secondary" className="mb-3">{post.category}</Badge>
                       <h3 className="text-lg font-display font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                        {post.title}
+                        {stripHtml(post.title)}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                        {post.excerpt}
+                        {stripHtml(post.excerpt)}
                       </p>
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">

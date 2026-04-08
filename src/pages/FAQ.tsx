@@ -182,7 +182,7 @@ const FAQ = () => {
         },
         {
           question: 'How can I contact customer service?',
-          answer: 'Email us at hello@luxemia.com, call +1-215-341-9990 (Mon-Fri 9AM-6PM PST), or use the contact form on our Contact page. We aim to respond to all inquiries within 24-48 hours.',
+          answer: 'Email us at hello@luxemia.com, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. We aim to respond to all inquiries within 24-48 hours.',
         },
       ],
     },
