@@ -95,6 +95,54 @@ const fixImageUrl = (url: string): string => {
   return url + '.jpg';
 };
 
+// Women's product keywords - if title contains any of these, it's NOT menswear
+const WOMENS_KEYWORDS = [
+  'salwar', 'plazzo', 'palazzo', 'sharara', 'anarkali', 'pakistani',
+  'lehenga', 'saree', 'dupatta', 'kurti', 'churidar', 'ghagra',
+];
+
+// Determine the correct product type by analyzing title and tags, not just the category field.
+// Some products in the database have category='menswear' but are actually women's products
+// (e.g. Salwar Suits, Palazzo Suits mislabeled as Men's Ethnic Wear).
+const getCorrectProductType = (product: ScrapedProduct): string => {
+  const title = (product.title || '').toLowerCase();
+  const sourceUrl = (product.source_url || '').toLowerCase();
+  const sourceId = (product.source_id || '').toLowerCase();
+  const searchText = `${title} ${sourceUrl} ${sourceId}`;
+
+  // Check for women's suit keywords
+  if (/salwar|plazzo|palazzo|sharara|anarkali|pakistani/.test(searchText)) {
+    return 'Designer Suits';
+  }
+  // Check for lehenga
+  if (/lehenga/.test(searchText)) {
+    return 'Bridal Lehengas';
+  }
+  // Check for saree
+  if (/saree/.test(searchText)) {
+    return 'Designer Sarees';
+  }
+
+  // Only assign Men's Ethnic Wear if it has menswear keywords and NO women's keywords
+  if (product.category === 'menswear') {
+    const hasWomensKeyword = WOMENS_KEYWORDS.some(kw => searchText.includes(kw));
+    if (!hasWomensKeyword) {
+      return "Men's Ethnic Wear";
+    }
+    // Fallback for ambiguous menswear-categorized products
+    return 'Designer Suits';
+  }
+
+  // Default mapping for other categories
+  switch (product.category) {
+    case 'lehengas': return 'Bridal Lehengas';
+    case 'sarees': return 'Designer Sarees';
+    case 'suits': return 'Designer Suits';
+    case 'jewelry': return 'Jewelry';
+    default: return product.category;
+  }
+};
+
 // Convert scraped product to Shopify format for display
 export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?: any): ShopifyProduct => {
   const betterTitle = generateBetterTitle(
@@ -120,7 +168,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
         title: shopifyProduct.title || product.title || betterTitle,
         description: shopifyProduct.description || product.description,
         handle: shopifyProduct.handle || product.source_id,
-        productType: shopifyProduct.productType || product.category,
+        productType: getCorrectProductType(product),
         vendor: shopifyProduct.vendor,
         metadata: {
           occasion: product.occasion,
@@ -182,11 +230,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
       title: product.title || betterTitle,
       description: product.description,
       handle: product.source_id,
-      productType: product.category === 'lehengas' ? 'Bridal Lehengas' :
-                   product.category === 'sarees' ? 'Designer Sarees' :
-                   product.category === 'suits' ? 'Designer Suits' :
-                   product.category === 'menswear' ? "Men's Ethnic Wear" :
-                   product.category === 'jewelry' ? 'Jewelry' : product.category,
+      productType: getCorrectProductType(product),
       // Include metadata for filtering
       metadata: {
         occasion: product.occasion,
