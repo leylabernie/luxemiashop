@@ -18,19 +18,44 @@ const ShopByCategory = () => {
   const addToCart = useCartStore((state) => state.addItem);
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
 
+  // Build a balanced mix of products prioritizing women's categories
+  const getBalancedMix = (source: ShopifyProduct[], count: number): ShopifyProduct[] => {
+    const suits = source.filter(p => p.node.productType === 'Designer Suits');
+    const lehengas = source.filter(p => p.node.productType === 'Bridal Lehengas');
+    const sarees = source.filter(p => p.node.productType === 'Designer Sarees');
+    const menswear = source.filter(p => p.node.productType === "Men's Ethnic Wear");
+
+    // Target mix: 3 suits, 2 lehengas, 2 sarees, 1 menswear (total 8)
+    const picks: ShopifyProduct[] = [
+      ...suits.slice(0, 3),
+      ...lehengas.slice(0, 2),
+      ...sarees.slice(0, 2),
+      ...menswear.slice(0, 1),
+    ];
+
+    // If we don't have enough from a category, fill from others
+    if (picks.length < count) {
+      const usedIds = new Set(picks.map(p => p.node.id));
+      const remaining = source.filter(p => !usedIds.has(p.node.id));
+      picks.push(...remaining.slice(0, count - picks.length));
+    }
+
+    return picks.slice(0, count);
+  };
+
   // Get products based on active tab
   const getProductsForTab = () => {
     if (!products) return [];
-    
+
     switch (activeTab) {
       case 'new':
-        return products.slice(0, 8);
+        return getBalancedMix(products, 8);
       case 'bestsellers':
-        return products.slice(4, 12);
+        return getBalancedMix(products.slice(4), 8);
       case 'ready':
         return products.filter(p => p.node.productType === 'Bridal Lehengas').slice(0, 8);
       default:
-        return products.slice(0, 8);
+        return getBalancedMix(products, 8);
     }
   };
 
