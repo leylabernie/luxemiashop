@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from '@/hooks/use-toast';
@@ -14,7 +14,7 @@ type TabType = 'new' | 'bestsellers' | 'ready';
 
 const ShopByCategory = () => {
   const [activeTab, setActiveTab] = useState<TabType>('new');
-  const { products, isLoading } = useScrapedProducts();
+  const { products, isLoading } = useShopifyProducts();
   const addToCart = useCartStore((state) => state.addItem);
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
 
@@ -157,7 +157,7 @@ const ShopByCategory = () => {
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   className="group"
                 >
-                  <Link to={`/product/${node.id}`} className="block">
+                  <Link to={`/product/${node.handle}`} className="block">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-secondary mb-3">
                       <img
                         src={imageUrl}

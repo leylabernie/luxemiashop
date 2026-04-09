@@ -26,6 +26,7 @@ export interface ShopifyProduct {
     vendor?: string;
     productType?: string;
     tags?: string[];
+    availableForSale?: boolean;
     metadata?: ProductMetadata;
     priceRange: {
       minVariantPrice: {
@@ -67,8 +68,12 @@ export interface ShopifyProduct {
 }
 
 const STOREFRONT_QUERY = `
-  query GetProducts($first: Int!, $query: String) {
-    products(first: $first, query: $query) {
+  query GetProducts($first: Int!, $query: String, $after: String) {
+    products(first: $first, query: $query, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       edges {
         node {
           id
@@ -79,6 +84,7 @@ const STOREFRONT_QUERY = `
           vendor
           productType
           tags
+          availableForSale
           priceRange {
             minVariantPrice {
               amount
@@ -262,6 +268,33 @@ export async function fetchProducts(first: number = 12, query?: string): Promise
     console.error('Error fetching products:', error);
     return [];
   }
+}
+
+export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]> {
+  const allProducts: ShopifyProduct[] = [];
+  let cursor: string | null = null;
+  let hasNextPage = true;
+
+  try {
+    while (hasNextPage) {
+      const variables: Record<string, unknown> = { first: 250, query };
+      if (cursor) variables.after = cursor;
+
+      const data = await storefrontApiRequest(STOREFRONT_QUERY, variables);
+      if (!data) break;
+
+      const edges = data.data.products.edges || [];
+      allProducts.push(...edges);
+
+      const pageInfo = data.data.products.pageInfo;
+      hasNextPage = pageInfo?.hasNextPage ?? false;
+      cursor = pageInfo?.endCursor ?? null;
+    }
+  } catch (error) {
+    console.error('Error fetching all products:', error);
+  }
+
+  return allProducts;
 }
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct['node'] | null> {
