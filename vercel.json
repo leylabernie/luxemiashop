@@ -4,6 +4,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/_prerender/(.*)", "destination": "/_prerender/$1" },
+    { "source": "/google4e3f332d00afc8ba.html", "destination": "/google4e3f332d00afc8ba.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
