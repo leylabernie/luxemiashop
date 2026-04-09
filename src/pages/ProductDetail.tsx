@@ -11,7 +11,6 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { RecentlyViewed } from '@/components/product/RecentlyViewed';
-import { useScrapedProductByHandle } from '@/hooks/useScrapedProducts';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -21,27 +20,13 @@ import { trackViewItem } from '@/hooks/useAnalytics';
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
-  const { product: scrapedProduct, isLoading: scrapedLoading } = useScrapedProductByHandle(handle);
   const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
-  // Fallback chain: scraped products (with Shopify data if available) -> Shopify API -> local products
+  // Fallback chain: Shopify API -> local products
   const localProduct = handle ? getLocalProductByHandle(handle)?.node : null;
-  
-  // If we have both scraped and Shopify product, merge them (use Shopify variants/options with scraped metadata)
-  let product = scrapedProduct;
-  if (scrapedProduct && shopifyProduct) {
-    // Merge Shopify data into scraped product for better variant/option support
-    product = {
-      ...scrapedProduct,
-      variants: shopifyProduct.variants,
-      options: shopifyProduct.options,
-      priceRange: shopifyProduct.priceRange,
-    };
-  }
-  
-  product = product || shopifyProduct || localProduct;
-  const isLoading = scrapedLoading || (shopifyLoading && !scrapedProduct);
+  const product = shopifyProduct || localProduct;
+  const isLoading = shopifyLoading;
   const error = !product && !isLoading ? 'Product not found' : null;
 
   // Track recently viewed and analytics

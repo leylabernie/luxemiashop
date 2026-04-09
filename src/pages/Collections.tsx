@@ -21,7 +21,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -32,7 +32,7 @@ const sortOptions = [
 ];
 
 const Collections = () => {
-  const { products, isLoading, isLoadingMore, hasMore, loadMore } = useScrapedProducts();
+  const { products, isLoading, isLoadingMore, hasMore, loadMore } = useShopifyProducts();
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState('featured');

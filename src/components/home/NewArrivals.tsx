@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Heart, ShoppingBag, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useScrapedProducts } from '@/hooks/useScrapedProducts';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 export const NewArrivals = () => {
-  const { products, isLoading } = useScrapedProducts();
+  const { products, isLoading } = useShopifyProducts();
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
