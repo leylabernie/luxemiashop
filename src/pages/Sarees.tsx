@@ -117,7 +117,7 @@ const Sarees = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Timeless Elegance
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Sarees</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Luxury Designer Sarees</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Exquisite handwoven sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
             </p>

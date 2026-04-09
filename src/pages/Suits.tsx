@@ -307,7 +307,7 @@ const Suits = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Contemporary Classics
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Suits & Kurtas</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Designer Indian Suits</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Elegant Anarkalis, flowing Shararas, and graceful Salwar Suits for every celebration.
             </p>

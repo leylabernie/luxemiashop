@@ -443,10 +443,38 @@
     </image:image>
   </url>
   
-  <!-- 
+  <!-- ===== NRI LANDING PAGES ===== -->
+  <url>
+    <loc>https://luxemia.shop/indian-ethnic-wear-usa</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/indian-ethnic-wear-uk</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/indian-ethnic-wear-canada</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== STYLE CONSULTATION ===== -->
+  <url>
+    <loc>https://luxemia.shop/style-consultation</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!--
     For the complete sitemap with all 230+ products and images,
     Google will fetch the dynamic version via the generate-sitemap edge function.
     This static file contains the most important high-priority pages.
   -->
-  
+
 </urlset>

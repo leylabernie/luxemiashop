@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Truck, Clock, Globe, Package, AlertTriangle, FileText, DollarSign } from 'lucide-react';
+import { Truck, Clock, Globe, Package, AlertTriangle, FileText, DollarSign, RotateCcw } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -332,8 +333,51 @@ const Shipping = () => {
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* Returns Policy */}
         <section className="py-16 bg-secondary/30">
+          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <RotateCcw className="h-6 w-6 text-primary" />
+                <h2 className="text-2xl font-serif">Returns & Exchanges</h2>
+              </div>
+              <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto text-sm">
+                We want you to love your purchase. If something isn't right, here's how returns work.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card border border-border rounded-lg p-6">
+                  <h3 className="font-semibold mb-3">Return Eligibility</h3>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    <li>• 14-day return window from delivery date</li>
+                    <li>• Items must be unworn, unwashed, tags intact</li>
+                    <li>• Original packaging must be included</li>
+                    <li>• Custom/stitched items are non-returnable</li>
+                    <li>• Jewelry and accessories are final sale</li>
+                  </ul>
+                </div>
+
+                <div className="bg-card border border-border rounded-lg p-6">
+                  <h3 className="font-semibold mb-3">How to Return</h3>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    <li>• WhatsApp us at <span className="text-primary">+1-215-341-9990</span></li>
+                    <li>• Or email <span className="text-primary">returns@luxemia.com</span></li>
+                    <li>• Include order number and reason for return</li>
+                    <li>• We'll send a prepaid return label</li>
+                    <li>• Refund processed within 5-7 business days after receipt</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-16">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -384,8 +428,24 @@ const Shipping = () => {
                 <AccordionItem value="item-6">
                   <AccordionTrigger>How is my order packaged?</AccordionTrigger>
                   <AccordionContent>
-                    Each piece is carefully wrapped in acid-free tissue paper, placed in a signature LuxeMia garment 
+                    Each piece is carefully wrapped in acid-free tissue paper, placed in a signature LuxeMia garment
                     bag, and packed in a sturdy branded box. We ensure your purchase arrives ready to wear or gift.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-7">
+                  <AccordionTrigger>Can I exchange for a different size?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes, size exchanges are available within 14 days of delivery for ready-to-ship items.
+                    Contact us via WhatsApp or email with your order number and the preferred size.
+                    We'll arrange a seamless exchange once the original item is returned.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-8">
+                  <AccordionTrigger>Do you offer custom sizing?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes! We offer complimentary custom sizing on all outfits. Simply provide your bust, waist, hip,
+                    and height measurements during checkout. Our expert tailors will craft a perfect fit. Custom-sized
+                    items require an additional 2-3 weeks for production and are non-returnable.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

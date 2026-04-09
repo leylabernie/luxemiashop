@@ -26,9 +26,9 @@ const footerLinks = {
   help: [
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
-    { name: 'Shipping', href: '/shipping' },
-    { name: 'Returns', href: '/returns' },
+    { name: 'Shipping & Returns', href: '/shipping' },
     { name: 'Size Guide', href: '/size-guide' },
+    { name: 'Style Consultation', href: '/style-consultation' },
   ],
 };
 

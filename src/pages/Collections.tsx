@@ -22,6 +22,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
+import { filterAndSortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -39,32 +40,8 @@ const Collections = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filteredProducts = useMemo(() => {
-    let filtered = [...products];
-    
-    // Apply price filter
-    filtered = filtered.filter(p => {
-      const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
-      return price >= priceRange[0] && price <= priceRange[1];
-    });
-
-    // Apply sorting
-    switch (sortBy) {
-      case 'price-asc':
-        filtered.sort((a, b) => 
-          parseFloat(a.node.priceRange.minVariantPrice.amount) - 
-          parseFloat(b.node.priceRange.minVariantPrice.amount)
-        );
-        break;
-      case 'price-desc':
-        filtered.sort((a, b) => 
-          parseFloat(b.node.priceRange.minVariantPrice.amount) - 
-          parseFloat(a.node.priceRange.minVariantPrice.amount)
-        );
-        break;
-    }
-
-    return filtered;
-  }, [products, priceRange, sortBy]);
+    return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
+  }, [products, activeFilters, priceRange, sortBy]);
 
   const handleFilterChange = (filters: Record<string, string[]>) => {
     setActiveFilters(filters);
@@ -102,7 +79,7 @@ const Collections = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Explore Our
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Collections</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Explore Our Collections</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Discover our curated selection of handcrafted ethnic wear, each piece telling a story of tradition and artistry.
             </p>

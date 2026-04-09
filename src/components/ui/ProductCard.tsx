@@ -244,7 +244,7 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
             <div className="w-full h-full overflow-hidden">
               <img
                 src={getOptimizedImage(imageUrl, 'card')}
-                alt={product.node.images.edges[0]?.node.altText || product.node.title}
+                alt={product.node.images.edges[0]?.node.altText || `${product.node.title} - Buy ${product.node.productType || 'Ethnic Wear'} Online | LuxeMia`}
                 loading="lazy"
                 draggable={false}
                 onLoad={() => setIsLoaded(true)}
