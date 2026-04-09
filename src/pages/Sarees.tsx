@@ -87,8 +87,8 @@ const Sarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Designer Sarees Online — LuxeMia"
-        description="Shop designer sarees online at LuxeMia. Banarasi silk, Kanjivaram, wedding sarees and more with free US shipping."
+        title="Buy Indian Sarees Online | Silk, Designer & Wedding Sarees for NRI - LuxeMia"
+        description="Explore LuxeMia's collection of authentic Indian sarees online. Discover handwoven silk sarees, designer drapes, and wedding sarees with global shipping for NRIs."
         canonical="https://luxemia.shop/sarees"
         type="collection"
         image="/og/og-sarees.jpg"
@@ -117,7 +117,7 @@ const Sarees = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Timeless Elegance
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Luxury Designer Sarees</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Authentic Indian Sarees: Silk, Designer & Wedding Collections</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Exquisite handwoven sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
             </p>

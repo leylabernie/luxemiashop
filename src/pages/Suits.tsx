@@ -277,8 +277,8 @@ const Suits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Salwar Suits & Sharara Sets — LuxeMia"
-        description="Shop salwar suits, Anarkali suits, and sharara sets at LuxeMia. Premium fabrics and intricate embroidery with free US shipping."
+        title="Designer Salwar Suits Online | Anarkali, Palazzo & Sharara Suits for NRI - LuxeMia"
+        description="Shop LuxeMia for elegant Indian salwar suits online. Discover designer Anarkali, Palazzo, and Sharara suits with worldwide shipping, perfect for NRI festive wear & occasions."
         canonical="https://luxemia.shop/suits"
         type="collection"
         image="/og/og-suits.jpg"
@@ -307,7 +307,7 @@ const Suits = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Contemporary Classics
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Designer Indian Suits</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Elegant Indian Salwar Suits: Anarkali, Palazzo & Sharara Styles</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Elegant Anarkalis, flowing Shararas, and graceful Salwar Suits for every celebration.
             </p>

@@ -262,8 +262,8 @@ const Lehengas = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Bridal & Designer Lehengas — LuxeMia"
-        description="Shop bridal and designer lehengas at LuxeMia. Heavy embroidery, custom sizing, and free US shipping on all wedding lehengas."
+        title="Designer Lehengas Online | Bridal, Wedding & Festive Lehengas for NRI - LuxeMia"
+        description="Shop LuxeMia's exquisite collection of designer lehengas online. Find bridal lehengas, wedding lehengas, and festive lehenga cholis with worldwide shipping. Perfect for NRI weddings & celebrations."
         canonical="https://luxemia.shop/lehengas"
         type="collection"
         image="/og/og-lehengas.jpg"
@@ -293,7 +293,7 @@ const Lehengas = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Explore Our
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Designer Bridal Lehengas</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Shop Designer Lehengas: Bridal, Wedding & Festive Styles</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Exquisite bridal and festive lehengas crafted with intricate embroidery and premium fabrics.
             </p>

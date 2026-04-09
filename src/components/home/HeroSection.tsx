@@ -126,7 +126,7 @@ const HeroSection = () => {
                     transition={{ delay: 0.4, duration: 0.7 }}
                     className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-8 leading-tight"
                   >
-                    LuxeMia — Luxury Indian Ethnic Wear
+                    LuxeMia: Your Destination for Luxury Indian Ethnic Wear & Bridal Attire
                   </motion.h1>
                 ) : (
                   <motion.h2

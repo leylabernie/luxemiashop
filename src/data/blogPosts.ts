@@ -1159,6 +1159,317 @@ export const blogPosts: BlogPost[] = [
     readTime: 11
   },
 
+  {
+    id: '17',
+    slug: 'nri-wedding-ethnic-wear-trends-2026',
+    title: 'Top Indian Ethnic Wear Trends for NRI Weddings in 2026',
+    excerpt: 'Discover the latest NRI wedding ethnic wear trends for 2026 — from pastel bridal lehengas to Indo-Western fusion. Expert styling tips for Indian weddings in the USA, UK & Canada.',
+    content: `
+      <article>
+      <p>Indian weddings abroad have evolved into magnificent celebrations that beautifully blend traditional roots with contemporary global aesthetics. For <strong>NRI brides and wedding guests in 2026</strong>, the fashion landscape is more exciting than ever — offering styles that honor cultural heritage while embracing modern sensibilities. Whether you are planning a grand wedding in New Jersey, a boutique celebration in London, or an intimate gathering in Toronto, staying ahead of <strong>NRI wedding ethnic wear trends</strong> is essential for looking and feeling your absolute best.</p>
+
+      <p>At <a href="/">LuxeMia</a>, we have curated this comprehensive guide to the top <strong>Indian bridal fashion NRI</strong> trends shaping wedding wardrobes in 2026. From dreamy pastels to sustainable handcrafted pieces, here is everything you need to know.</p>
+
+      <h2>1. The Rise of Pastel and Muted Tones</h2>
+      <p>Gone are the days when Indian bridal wear was exclusively about bold reds and heavy golds. In 2026, <strong>pastel bridal lehengas</strong> have taken center stage, with NRI brides gravitating toward softer, more romantic hues. Think blush pinks, sage greens, powder blues, lavender, and champagne golds. These muted tones photograph beautifully in both indoor and outdoor settings — a practical consideration for weddings held in venues across the USA and UK.</p>
+
+      <p>Pastels also lend themselves to a more versatile wardrobe. A soft pink <a href="/lehengas">bridal lehenga</a> pairs effortlessly with both traditional gold jewelry and contemporary diamond pieces. Designers are incorporating delicate thread work, pearl embellishments, and subtle sequin patterns on pastel bases, creating pieces that feel both regal and refreshingly modern.</p>
+
+      <h3>Styling Tips for Pastel Bridal Wear</h3>
+      <ul>
+        <li><strong>Contrast your dupatta:</strong> Pair a mint lehenga with a deeper emerald or gold dupatta for visual depth</li>
+        <li><strong>Go bold with jewelry:</strong> Polki and kundan sets create stunning contrast against pastel fabrics</li>
+        <li><strong>Choose the right undertone:</strong> Warm skin tones suit peach and champagne; cooler undertones shine in lilac and icy pink</li>
+        <li><strong>Consider your venue:</strong> Pastels look ethereal in garden settings and well-lit ballrooms</li>
+      </ul>
+
+      <h2>2. Indo-Western Fusion for Sangeet and Reception</h2>
+      <p>The <strong>Sangeet night</strong> has become the canvas for NRI brides and guests to experiment with <strong>Indo-Western fusion outfits</strong>. In 2026, this means cape-style lehengas, concept sarees with structured blouses, pre-draped sarees with modern silhouettes, and lehenga gowns that merge the drama of Indian craftsmanship with Western tailoring.</p>
+
+      <p>For NRI wedding guests, fusion styling offers the perfect balance between cultural authenticity and personal comfort. Many guests at overseas Indian weddings feel most confident in silhouettes they are accustomed to wearing, and Indo-Western pieces bridge that gap beautifully. Explore our <a href="/suits">designer suit collection</a> for Anarkali gowns and sharara sets that deliver this fusion aesthetic effortlessly.</p>
+
+      <h3>Top Fusion Silhouettes for 2026</h3>
+      <ul>
+        <li><strong>Cape lehengas:</strong> A dramatic cape over a fitted choli adds modern flair without compromising tradition</li>
+        <li><strong>Pre-draped sarees:</strong> Perfect for NRI guests who love the saree look but prefer ease of wearing — browse our <a href="/sarees">saree collection</a></li>
+        <li><strong>Sharara sets with modern cuts:</strong> Flared bottoms paired with short kurtas and statement dupattas</li>
+        <li><strong>Jacket-style blouses:</strong> Pair with a lehenga skirt for a contemporary reception look</li>
+      </ul>
+
+      <h2>3. Sustainable and Handcrafted Choices</h2>
+      <p>Sustainability is no longer a trend — it is a value that NRI shoppers are actively seeking in their wedding wardrobes. In 2026, there is a significant shift toward <strong>ethically sourced and handcrafted Indian ethnic wear</strong>. Brides and guests alike are choosing pieces made by skilled artisans, with transparent sourcing and minimal environmental impact.</p>
+
+      <p>Handloom weaves like Banarasi brocade, Kanchipuram silk, and Chanderi are experiencing a renaissance. These fabrics carry centuries of tradition in every thread and support the livelihoods of artisan communities across India. At LuxeMia, every piece is sourced directly from master craftsmen, ensuring you receive authentic, heritage-quality garments. Our commitment to <a href="/lehengas">handcrafted bridal lehengas</a> and <a href="/sarees">artisan-woven sarees</a> reflects this ethos.</p>
+
+      <h3>Why Sustainable Choices Matter</h3>
+      <ul>
+        <li><strong>Heritage preservation:</strong> Buying handcrafted supports dying art forms like zardozi, chikankari, and Phulkari</li>
+        <li><strong>Quality over quantity:</strong> Handmade pieces are investment garments that last for generations</li>
+        <li><strong>Meaningful connection:</strong> Wearing a garment made by an artisan's hands adds emotional depth to your wedding outfit</li>
+        <li><strong>Reduced carbon footprint:</strong> Traditional techniques use less energy than mass factory production</li>
+      </ul>
+
+      <h2>4. Accessorizing for the Global Desi</h2>
+      <p>Accessorizing an Indian wedding outfit when living abroad requires a thoughtful approach. In 2026, NRI brides and guests are mastering the art of blending traditional Indian jewelry with modern, internationally influenced accessories. The key is creating a cohesive look that feels neither costume-like nor disconnected from the outfit.</p>
+
+      <h3>Accessory Trends for NRI Wedding Season</h3>
+      <ul>
+        <li><strong>Layered minimalism:</strong> Instead of one heavy statement necklace, layer multiple delicate pieces for a modern look</li>
+        <li><strong>Mixed metals:</strong> Rose gold and traditional gold together create a contemporary feel</li>
+        <li><strong>Modern matha patti:</strong> Updated headpiece designs work beautifully with both traditional and fusion outfits</li>
+        <li><strong>Embellished footwear:</strong> Block heels with traditional juttis-inspired detailing offer comfort and style</li>
+        <li><strong>Designer clutches:</strong> A statement potli or structured clutch ties the entire look together</li>
+      </ul>
+
+      <p>For brides, consider booking a <a href="/style-consultation">style consultation</a> with our team. We can help you match jewelry and accessories to your chosen outfit, ensuring every detail is perfect for your special day.</p>
+
+      <h2>Make Your NRI Wedding Wardrobe Unforgettable</h2>
+      <p>The beauty of Indian wedding fashion in 2026 lies in its diversity. Whether you choose a traditional red bridal lehenga, a pastel-toned reception saree, or a fusion sharara set for the Sangeet, the key is finding pieces that reflect your personal style while honoring cultural traditions. As an NRI, you have the unique advantage of drawing inspiration from both Indian and global fashion sensibilities.</p>
+
+      <p>At LuxeMia, we offer <strong>free worldwide shipping</strong> to the USA, UK, Canada, and beyond — making it effortless to access premium Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Designer Lehengas</a>, <a href="/sarees">Luxury Sarees</a>, and <a href="/suits">Elegant Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
+
+      <h2>Continue Reading</h2>
+      <ul>
+        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree</a></li>
+        <li><a href="/blog/red-bridal-lehenga-trends-2026">Red Bridal Lehenga Designs 2026: 50+ Stunning Ideas</a></li>
+        <li><a href="/blog/style-lehenga-choli-every-wedding-event">How to Style Lehenga Choli for Every Wedding Event</a></li>
+      </ul>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-09',
+    updatedAt: '2026-04-09',
+    category: 'NRI Fashion',
+    tags: ['NRI wedding ethnic wear trends 2026', 'Indian bridal fashion NRI', 'latest lehenga designs USA', 'NRI wedding outfits', 'pastel bridal lehenga', 'Indo-Western fusion', 'sustainable Indian fashion'],
+    image: '/og/og-lehengas.jpg',
+    readTime: 10
+  },
+  {
+    id: '18',
+    slug: 'buy-authentic-indian-sarees-online-usa-uk',
+    title: 'Your Guide to Shopping Authentic Indian Sarees Online from the USA/UK',
+    excerpt: 'A comprehensive guide for NRIs on how to buy authentic Indian sarees online from the USA and UK. Learn what defines authenticity, how to navigate online shopping, and why LuxeMia is the trusted choice.',
+    content: `
+      <article>
+      <p>For many NRIs living in the USA and UK, the saree holds a special place in the heart. It is more than a garment — it is a connection to heritage, a reminder of home, and a celebration of Indian craftsmanship that transcends borders. But <strong>buying authentic Indian sarees online</strong> from thousands of miles away comes with its own set of challenges. How do you know the silk is genuine? Will the colors match what you see on screen? Can you trust the quality without touching the fabric?</p>
+
+      <p>This guide answers all those questions and more, giving you the confidence to <strong>shop for Indian sarees online from the USA and UK</strong> with the same assurance as if you were browsing through a boutique in Varanasi or Kanchipuram.</p>
+
+      <h2>What Defines an Authentic Indian Saree?</h2>
+      <p>Before you start shopping, understanding what makes a saree truly authentic is crucial. India is home to hundreds of regional weaving traditions, each with distinctive characteristics that set them apart from mass-produced imitations.</p>
+
+      <h3>Banarasi Silk Sarees</h3>
+      <p>Originating from Varanasi (Banaras), these sarees are woven on traditional handlooms using fine silk thread and real gold or silver zari. An authentic Banarasi saree has a slightly rough texture on the reverse side where the zari work creates tiny knots. The motifs — typically floral or Mughal-inspired — are woven into the fabric, not printed or embroidered on top.</p>
+
+      <h3>Kanchipuram (Kanjivaram) Silk Sarees</h3>
+      <p>These South Indian treasures are known for their heavy silk body and contrasting borders. A genuine Kanchipuram saree uses mulberry silk thread and pure gold zari. The hallmark is the way the border is woven separately and then interlocked with the body — you can see the joining point if you look closely. These sarees are built to last generations.</p>
+
+      <h3>Chanderi Sarees</h3>
+      <p>Lightweight and elegant, Chanderi sarees from Madhya Pradesh are known for their sheer texture and gold or silver brocade patterns. They are perfect for daytime events and lighter occasions. Authentic Chanderi has a distinct shimmer and a buttery-soft hand feel.</p>
+
+      <h3>Other Regional Weaves</h3>
+      <ul>
+        <li><strong>Patola (Gujarat):</strong> Double ikat weave — identical on both sides</li>
+        <li><strong>Tussar Silk (Bihar/Jharkhand):</strong> Wild silk with a natural gold sheen</li>
+        <li><strong>Jamdani (West Bengal):</strong> Muslin base with supplementary weft patterns</li>
+        <li><strong>Paithani (Maharashtra):</strong> Peacock and lotus motifs on silk, with a handwoven pallu</li>
+      </ul>
+
+      <h2>The LuxeMia Difference: Sourcing and Quality</h2>
+      <p>At <a href="/">LuxeMia</a>, authenticity is not a marketing claim — it is the foundation of our business. Every saree in our <a href="/sarees">curated collection</a> is sourced directly from artisan workshops and verified weaver cooperatives across India. Here is what sets us apart:</p>
+
+      <h3>Direct Artisan Sourcing</h3>
+      <p>We work directly with weaving communities in Varanasi, Kanchipuram, Chanderi, and beyond. This eliminates middlemen, ensuring fair compensation for artisans and authentic products for our customers. When you purchase from LuxeMia, you are directly supporting the livelihood of Indian craftspeople.</p>
+
+      <h3>Quality Verification</h3>
+      <p>Every piece undergoes a multi-step quality check before it reaches our warehouse. We verify fabric authenticity, check for consistent weave quality, inspect zari work, and ensure color fastness. Our detailed product descriptions specify exact fabric composition, weave type, and care instructions — so you always know precisely what you are purchasing.</p>
+
+      <h3>Transparent Product Information</h3>
+      <p>Our product listings include high-resolution photographs taken in natural lighting, close-up shots of embroidery and weave details, accurate fabric descriptions, and exact dimensions. We believe transparency builds trust, especially for customers shopping from abroad.</p>
+
+      <h2>Navigating Online Saree Shopping: Tips for NRIs</h2>
+      <p>Shopping for a saree online requires a slightly different approach than browsing in a physical store. Here are expert tips to help you make the right choice when you <strong>buy Indian sarees online from the USA or UK</strong>:</p>
+
+      <h3>Evaluate Product Photography</h3>
+      <ul>
+        <li><strong>Look for natural lighting:</strong> Sarees photographed in natural light show true colors more accurately</li>
+        <li><strong>Check for close-ups:</strong> Detailed shots of the pallu, border, and blouse piece reveal quality of work</li>
+        <li><strong>Multiple angles:</strong> Reputable stores show the saree draped, folded, and with detail shots</li>
+        <li><strong>Video content:</strong> If available, video gives the best sense of fabric movement and sheen</li>
+      </ul>
+
+      <h3>Read Product Descriptions Carefully</h3>
+      <p>A trustworthy seller will specify the exact fabric type (e.g., pure mulberry silk vs. art silk), the type of work (hand-embroidered vs. machine), the saree length and width, blouse piece details, and care instructions. Be wary of vague descriptions that use terms like "rich fabric" or "premium quality" without specifics.</p>
+
+      <h3>Understand Fabric Terminology</h3>
+      <ul>
+        <li><strong>Pure silk:</strong> 100% natural silk — look for this specific phrase</li>
+        <li><strong>Art silk:</strong> Synthetic silk — looks similar but feels different and is more affordable</li>
+        <li><strong>Tissue silk:</strong> A blend that creates a shimmery, lightweight fabric</li>
+        <li><strong>Organza:</strong> Sheer, lightweight fabric often used for modern draping styles</li>
+      </ul>
+
+      <h3>Check Customer Reviews</h3>
+      <p>Real customer reviews are your best friend when shopping online. Look for reviews that mention fabric quality, color accuracy, and shipping experience. Verified purchase reviews are especially valuable. At LuxeMia, we encourage all customers to share their honest feedback.</p>
+
+      <h2>Shipping, Returns, and Customer Support for International Buyers</h2>
+      <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia addresses every concern:</p>
+
+      <h3>Free Worldwide Shipping</h3>
+      <p>We offer <strong>free shipping to the USA, UK, Canada</strong>, and many other countries. Standard delivery typically takes 7-12 business days, with express options available at checkout for those urgent last-minute occasions. Every package is carefully packed to ensure your saree arrives in perfect condition.</p>
+
+      <h3>Hassle-Free Returns</h3>
+      <p>We understand that sometimes a saree may not match expectations when you see it in person. That is why we offer a straightforward return policy for most items. Visit our <a href="/returns">Returns Policy</a> page for full details on the process.</p>
+
+      <h3>Personalized Styling Support</h3>
+      <p>Not sure which saree to choose for a specific occasion? Our dedicated styling team is available via WhatsApp for personalized recommendations. Whether you need help selecting the right fabric for a summer wedding in Texas or choosing between a Banarasi and Kanchipuram for a London reception, our <a href="/style-consultation">style consultation service</a> has you covered.</p>
+
+      <h3>Customs and Duties</h3>
+      <p>While LuxeMia covers shipping costs, please note that customers are responsible for any customs duties, taxes, or import fees levied by their country. We recommend checking with your local customs office for specifics. Most orders under the de minimis value ship duty-free.</p>
+
+      <h2>Start Your Saree Shopping Journey</h2>
+      <p>Shopping for authentic Indian sarees online does not have to be daunting. With the right knowledge and a trusted store, you can find the perfect saree from anywhere in the world. Browse our <a href="/sarees">complete saree collection</a> today — from handwoven Kanchipuram silks to contemporary designer drapes, every piece is selected for its authenticity, quality, and timeless appeal.</p>
+
+      <p>Have questions? Our team is here to help. Reach out via our <a href="/contact">Contact page</a> or message us on WhatsApp for instant support. Because at LuxeMia, we believe that distance should never stand between you and beautiful Indian ethnic wear.</p>
+
+      <h2>Continue Reading</h2>
+      <ul>
+        <li><a href="/blog/saree-draping-styles-every-occasion">Saree Draping Styles for Every Occasion</a></li>
+        <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Georgette vs Silk vs Chiffon</a></li>
+        <li><a href="/blog/wedding-saree-for-mother-of-bride">The Perfect Wedding Saree for Mother of the Bride</a></li>
+      </ul>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-09',
+    updatedAt: '2026-04-09',
+    category: 'Shopping Guide',
+    tags: ['buy authentic Indian sarees online USA', 'Indian saree shopping UK NRI', 'how to choose silk saree online', 'Kanchipuram saree online', 'Banarasi saree USA', 'NRI saree shopping', 'authentic Indian ethnic wear'],
+    image: '/og/og-sarees.jpg',
+    readTime: 11
+  },
+  {
+    id: '19',
+    slug: 'styling-indian-ethnic-wear-festive-occasions-abroad',
+    title: 'Styling Indian Ethnic Wear for Festive Occasions Abroad: Diwali, Eid & More',
+    excerpt: 'NRI styling guide for festive Indian outfits — Diwali lehengas, Eid suits, and more. Expert tips on accessorizing and choosing the perfect ethnic wear for celebrations in the USA, UK & beyond.',
+    content: `
+      <article>
+      <p>Living abroad does not mean leaving behind the joy of dressing up for festivals. For millions of NRIs across the USA, UK, Canada, and beyond, <strong>festive occasions like Diwali, Eid, Navratri, and Pongal</strong> are cherished opportunities to reconnect with cultural roots, celebrate with community, and — yes — wear stunning Indian ethnic wear that makes you feel truly special.</p>
+
+      <p>But styling Indian outfits for festive gatherings abroad comes with its own unique considerations. The venue might be a community hall in Houston rather than a haveli in Jaipur. The weather could be London drizzle instead of Delhi sunshine. And your audience is often a beautiful mix of people who know every embroidery technique by name and friends discovering Indian fashion for the first time.</p>
+
+      <p>This guide is your complete resource for styling <strong>festive Indian outfits as an NRI</strong> — covering everything from Diwali glamour to Eid elegance, with practical tips for accessorizing and looking your best no matter where in the world you celebrate.</p>
+
+      <h2>1. Diwali Glam: Lehengas and Anarkalis</h2>
+      <p>Diwali is the festival of lights, and your outfit should shine just as brightly. For NRIs, Diwali celebrations often include community events, office Diwali parties, intimate family dinners, and grand Diwali galas. Each calls for a slightly different approach to styling.</p>
+
+      <h3>For Grand Diwali Galas and Community Events</h3>
+      <p>This is your moment to go all out. A <a href="/lehengas">designer lehenga</a> in rich jewel tones — deep emerald, royal blue, or classic maroon — creates a show-stopping entrance. Look for pieces with heavy embroidery, sequin work, or mirror embellishments that catch the light beautifully. Pair with a statement kundan or polki necklace set and metallic heels.</p>
+
+      <h3>For Office Diwali Celebrations</h3>
+      <p>An Anarkali suit is the perfect choice — elegant, comfortable, and unmistakably festive without being over the top. Choose a rich color like wine, teal, or mustard in a flowing fabric like georgette or silk. Browse our <a href="/suits">Anarkali suit collection</a> for pieces that transition effortlessly from desk to celebration. Keep jewelry minimal — statement earrings and a delicate bracelet are enough.</p>
+
+      <h3>For Intimate Family Dinners</h3>
+      <p>A beautiful saree in a warm tone — think burnt orange, dusty rose, or champagne gold — is ideal for smaller gatherings. These tones create a festive mood without feeling overdressed. Check out our <a href="/sarees">saree collection</a> for options in lightweight silks and georgettes that are comfortable for an evening of cooking, hosting, and celebrating together.</p>
+
+      <h3>Diwali Styling Tips</h3>
+      <ul>
+        <li><strong>Metallics are your friend:</strong> Gold, rose gold, and copper accents in fabric and accessories scream Diwali</li>
+        <li><strong>Layer your lighting:</strong> If your outfit has sequins or mirror work, it will look even more spectacular under warm, ambient lighting</li>
+        <li><strong>Comfortable footwear:</strong> Embellished juttis or block heels — you will likely be on your feet for rangoli and puja</li>
+        <li><strong>Weather-proof your look:</strong> In colder climates, a velvet or silk shawl doubles as warmth and style</li>
+      </ul>
+
+      <h2>2. Eid Elegance: Sharara and Palazzo Suits</h2>
+      <p>Eid celebrations call for outfits that balance elegance with comfort — after all, you want to look stunning for family gatherings and Eid prayers while feeling at ease throughout the day. <strong>Sharara suits and palazzo sets</strong> are the top choice for <strong>Eid salwar suit styling</strong> in 2026, offering a modern twist on traditional silhouettes.</p>
+
+      <h3>Sharara Sets for Eid</h3>
+      <p>The sharara — with its wide-flared bottoms and fitted kurta — is inherently graceful and photograph-ready. For Eid, choose lighter fabrics like georgette, chiffon, or chinon in soft pastels or classic whites and ivories. Delicate thread work, pearl detailing, or subtle sequin borders add festive sparkle without overwhelming the look. Explore our <a href="/suits">sharara and palazzo suit collection</a>.</p>
+
+      <h3>Palazzo Suits for Comfort and Style</h3>
+      <p>Palazzo suits offer maximum comfort with their relaxed, wide-leg silhouette. They are particularly popular among NRIs for their versatility — dress them up with heavy dupattas and statement jewelry for main Eid celebrations, or keep them simple with light accessories for casual gatherings. Fabrics like cotton silk and chanderi work beautifully for daytime Eid events.</p>
+
+      <h3>Eid Color Palette 2026</h3>
+      <ul>
+        <li><strong>Classic whites and ivories:</strong> Timeless, clean, and always appropriate</li>
+        <li><strong>Soft pastels:</strong> Mint green, powder blue, and blush pink feel fresh and festive</li>
+        <li><strong>Muted jewel tones:</strong> Dusty teal, sage green, and mauve for evening celebrations</li>
+        <li><strong>Rich emerald:</strong> A standout choice that photographs beautifully</li>
+      </ul>
+
+      <h2>3. Beyond the Big Festivals: Other Celebrations</h2>
+      <p>NRI life is filled with smaller but equally meaningful celebrations — Karva Chauth, Lohri, Pongal, Onam, Baisakhi, Raksha Bandhan, and cultural programs at community centers. These events often call for outfits that are festive but not overly formal.</p>
+
+      <h3>Community Cultural Programs</h3>
+      <p>A well-chosen <a href="/suits">designer suit</a> in a vibrant print or solid color with embroidered details is versatile enough for dance performances, cultural presentations, and social gatherings. Opt for ready-to-wear options that do not require extensive draping or fitting.</p>
+
+      <h3>Smaller Family Celebrations</h3>
+      <p>Pre-draped sarees and ready-to-wear <a href="/lehengas">lehenga sets</a> are game-changers for quick, effortless styling. These pieces give you the traditional look without the time investment of draping from scratch — perfect for busy NRI lifestyles.</p>
+
+      <h3>Kids' School Cultural Events</h3>
+      <p>When representing Indian culture at your children's school events, choose pieces that are easy to explain and visually striking. A well-draped saree or a colorful Anarkali creates a beautiful visual impression while sparking conversations about Indian textile traditions.</p>
+
+      <h2>4. Accessorizing and Personal Touches</h2>
+      <p>The right accessories can transform a simple outfit into a festive masterpiece. Here is how to accessorize your Indian ethnic wear for celebrations abroad:</p>
+
+      <h3>Jewelry</h3>
+      <ul>
+        <li><strong>Statement earrings:</strong> The single most impactful accessory — jhumkas, chandbalis, or contemporary studs</li>
+        <li><strong>Layered bangles:</strong> Mix gold, glass, and thread bangles for texture</li>
+        <li><strong>Minimalist maang tikka:</strong> A subtle headpiece adds festive elegance without feeling costume-like</li>
+        <li><strong>Versatile pendant necklace:</strong> Choose one that works with both Indian and Western outfits</li>
+      </ul>
+
+      <h3>Hair and Makeup</h3>
+      <ul>
+        <li><strong>Fresh flowers:</strong> Gajra (jasmine strings) for a traditional touch — many NRI cities have Indian grocery stores that stock them</li>
+        <li><strong>Soft glam makeup:</strong> Dewy skin, kohl-lined eyes, and a bold lip work with every outfit</li>
+        <li><strong>Braided hairstyles:</strong> Side braids with accessories look beautiful and are practical for active celebrations</li>
+      </ul>
+
+      <h3>Footwear</h3>
+      <ul>
+        <li><strong>Embellished juttis:</strong> Traditional Punjabi juttis with modern embroidery</li>
+        <li><strong>Block heels:</strong> Comfortable for standing, walking, and dancing</li>
+        <li><strong>Kolhapuri chappals:</strong> Casual elegance for daytime events</li>
+      </ul>
+
+      <h2>5. Ready-to-Ship and Express Options for Last-Minute Plans</h2>
+      <p>We get it — NRI life is busy, and sometimes festival dates sneak up on you. LuxeMia has you covered with a curated selection of <strong>ready-to-ship Indian ethnic wear</strong> that arrives at your doorstep quickly, wherever you are in the world.</p>
+
+      <h3>What We Offer</h3>
+      <ul>
+        <li><strong>Free worldwide shipping:</strong> Standard delivery to the USA, UK, and Canada in 7-12 business days</li>
+        <li><strong>Express shipping:</strong> 3-5 business day delivery available at checkout</li>
+        <li><strong>Ready-to-wear options:</strong> No alterations needed — just open, wear, and celebrate</li>
+        <li><strong>Last-minute styling support:</strong> Chat with our team on WhatsApp for quick outfit recommendations</li>
+      </ul>
+
+      <p>Browse our <a href="/collections">complete collections</a> — from <a href="/lehengas">festive lehengas</a> and <a href="/suits">designer suits</a> to <a href="/sarees">beautiful sarees</a> — and find the perfect outfit for your next celebration. For NRI-specific collections, check out our dedicated pages for <a href="/indian-ethnic-wear-usa">Indian ethnic wear in the USA</a>.</p>
+
+      <h2>Celebrate in Style, Wherever You Are</h2>
+      <p>Festivals abroad are more than celebrations — they are acts of cultural preservation, moments of connection, and opportunities to share the beauty of Indian heritage with the world around you. Whether you are lighting diyas in Dallas, breaking fast in Birmingham, or performing Garba in Mississauga, the right outfit makes every moment more meaningful.</p>
+
+      <p>At LuxeMia, we are honored to be part of your festive journey. Explore our full range of <strong>festive Indian outfits for NRIs</strong>, and let us help you celebrate in style. Need help choosing? Book a <a href="/style-consultation">style consultation</a> — our team understands the unique needs of NRI customers and will help you find exactly what you need.</p>
+
+      <h2>Continue Reading</h2>
+      <ul>
+        <li><a href="/blog/nri-wedding-ethnic-wear-trends-2026">Top Indian Ethnic Wear Trends for NRI Weddings in 2026</a></li>
+        <li><a href="/blog/buy-authentic-indian-sarees-online-usa-uk">Your Guide to Shopping Authentic Indian Sarees Online from the USA/UK</a></li>
+        <li><a href="/blog/indian-wedding-season-2026-outfit-guide">Indian Wedding Season 2026: Complete Outfit Guide</a></li>
+      </ul>
+      </article>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-04-09',
+    updatedAt: '2026-04-09',
+    category: 'NRI Fashion',
+    tags: ['festive Indian outfits NRI', 'Diwali ethnic wear ideas USA', 'Eid salwar suit styling UK', 'NRI festive fashion', 'Indian outfit abroad', 'Diwali lehenga', 'sharara suit Eid', 'festival dressing NRI'],
+    image: '/og/og-suits.jpg',
+    readTime: 12
+  },
+
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {

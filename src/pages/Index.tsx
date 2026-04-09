@@ -17,20 +17,32 @@ import FloatingSupport from '@/components/support/FloatingSupport';
 
 const homepageFaqs = [
   {
-    question: "Do you ship to the USA?",
-    answer: "Yes, we offer free shipping to the USA on orders over $99. Standard delivery takes 7-12 business days. Express shipping (3-5 business days) is also available at checkout."
+    question: "Do you offer international shipping for Indian ethnic wear?",
+    answer: "Yes, LuxeMia offers free worldwide shipping, including to the USA, UK, Canada, and many other countries. You can find more details on our Shipping Policy page."
   },
   {
-    question: "Can I get custom sizing?",
-    answer: "Yes, we offer custom sizing on all outfits. Simply provide your bust, waist, hip, and height measurements during checkout, and our expert tailors will create a perfect fit."
+    question: "What is your return policy for international orders?",
+    answer: "We offer a hassle-free 7-day return policy for most items. Please refer to our Returns Policy page for full details on international returns and exchanges."
   },
   {
-    question: "What is your return policy?",
-    answer: "We accept returns within 14 days of delivery. Items must be unworn, unwashed, and with tags intact. Custom/stitched items are non-returnable. Contact us via WhatsApp or email to initiate a return."
+    question: "Are your products authentic Indian ethnic wear?",
+    answer: "Absolutely. At LuxeMia, we are committed to preserving Indian textile heritage. Every piece is sourced directly from master craftsmen across India, ensuring authentic designs and high-quality materials."
   },
   {
-    question: "How long does delivery take?",
-    answer: "International orders typically take 7-14 business days depending on the destination. USA and UK orders arrive in 7-12 business days. Express shipping is available for faster delivery."
+    question: "Can I get custom sizing or alterations for my outfit?",
+    answer: "We understand the importance of a perfect fit. While many of our items are ready-to-wear, we do offer custom alteration services for select products. Please contact our styling assistance team for more information."
+  },
+  {
+    question: "How can I ensure the color of the outfit is accurate when viewing online?",
+    answer: "We strive for accurate color representation in our product photography. However, slight color variations may occur due to screen settings and lighting. We recommend reviewing all available product images and descriptions."
+  },
+  {
+    question: "Do I need to pay customs duties or taxes on international orders?",
+    answer: "While LuxeMia offers free shipping, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
+  },
+  {
+    question: "How can I get styling advice for a specific occasion?",
+    answer: "Our dedicated styling assistance team is here to help! You can chat with us directly via WhatsApp for personalized recommendations and expert advice."
   },
 ];
 
@@ -138,8 +150,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia — Luxury Indian Ethnic Wear | Designer Sarees, Lehengas & Suits"
-        description="Shop luxury Indian ethnic wear at LuxeMia. Designer lehengas, silk sarees, salwar suits. Free shipping to USA & UK on orders over $99."
+        title="LuxeMia: Luxury Indian Ethnic Wear Online | Sarees, Lehengas, Suits for NRI"
+        description="Discover LuxeMia for luxury Indian ethnic wear online. Shop designer sarees, bridal lehengas, and elegant salwar suits with free worldwide shipping for NRIs in USA, UK & Canada. Authentic craftsmanship."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
       />
