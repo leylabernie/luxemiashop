@@ -119,14 +119,25 @@ const HeroSection = () => {
                 >
                   {heroSlides[currentSlide].subtitle}
                 </motion.p>
-                <motion.h2
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.7 }}
-                  className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-8 leading-tight"
-                >
-                  {heroSlides[currentSlide].title}
-                </motion.h2>
+                {currentSlide === 0 ? (
+                  <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.7 }}
+                    className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-8 leading-tight"
+                  >
+                    LuxeMia — Luxury Indian Ethnic Wear
+                  </motion.h1>
+                ) : (
+                  <motion.h2
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.7 }}
+                    className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-8 leading-tight"
+                  >
+                    {heroSlides[currentSlide].title}
+                  </motion.h2>
+                )}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

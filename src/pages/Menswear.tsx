@@ -278,7 +278,7 @@ const Menswear = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Groom & Wedding Guest
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Menswear</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Indian Men's Ethnic Wear</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Regal sherwanis and elegant kurta pajamas for grooms and distinguished wedding guests.
             </p>

@@ -293,7 +293,7 @@ const Lehengas = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Explore Our
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Lehengas</h1>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">Designer Bridal Lehengas</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Exquisite bridal and festive lehengas crafted with intricate embroidery and premium fabrics.
             </p>

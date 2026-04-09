@@ -43,6 +43,10 @@ import FestiveWear from "./pages/collections/FestiveWear";
 import Sitemap from "./pages/Sitemap";
 import VirtualTryOn from "./pages/VirtualTryOn";
 import AdminDashboard from "./pages/AdminDashboard";
+import StyleConsultation from "./pages/StyleConsultation";
+import USA from "./pages/nri/USA";
+import UK from "./pages/nri/UK";
+import Canada from "./pages/nri/Canada";
 
 const queryClient = new QueryClient();
 
@@ -95,6 +99,11 @@ const App = () => (
                 <Route path="/collections/reception-outfits" element={<ReceptionOutfits />} />
                 <Route path="/collections/festive-wear" element={<FestiveWear />} />
                 <Route path="/sitemap" element={<Sitemap />} />
+                <Route path="/style-consultation" element={<StyleConsultation />} />
+                {/* NRI Landing Pages for SEO */}
+                <Route path="/indian-ethnic-wear-usa" element={<USA />} />
+                <Route path="/indian-ethnic-wear-uk" element={<UK />} />
+                <Route path="/indian-ethnic-wear-canada" element={<Canada />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 {/* Blog */}
                 <Route path="/blog" element={<Blog />} />
