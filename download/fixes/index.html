@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-D1NN0TC3Y0');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+      ============================================================
+      FIX #1: Removed duplicate meta tags
+      ============================================================
+      BEFORE: The static HTML had duplicate title, description,
+      keywords, OG, Twitter, canonical, AND structured data tags
+      that CONFLICTED with React Helmet's dynamic ones.
+
+      NOW: Only minimal static tags remain as SSR-safe defaults.
+      React Helmet (data-rh="true") controls ALL SEO meta tags.
+      ============================================================
+    -->
+
+    <!-- FIX #2: Removed Cache-Control: no-store -->
+    <!-- BEFORE: <meta http-equiv="Cache-Control" content="no-store"> -->
+    <!-- This prevented ALL browser caching, hurting: -->
+    <!--   - Back-button navigation (pages reload from scratch) -->
+    <!--   - Page load speed (no cache on revisit) -->
+    <!--   - Google Page Experience signals (Core Web Vitals) -->
+    <!-- If you need to prevent caching of API responses, do it -->
+    <!-- on the API/server level, NOT via HTML meta tag. -->
+
+    <!-- FIX #3: Removed duplicate static title, description, keywords -->
+    <!-- React Helmet sets these dynamically per page with data-rh="true" -->
+    <!-- Having duplicates causes search engines to sometimes pick the wrong one -->
+
+    <!-- FIX #4: Removed static canonical pointing to homepage -->
+    <!-- BEFORE: <link rel="canonical" href="https://luxemia.shop/"> -->
+    <!-- This was on EVERY page, telling Google all pages = homepage -->
+    <!-- React Helmet now handles canonicals correctly per page -->
+
+    <!-- FIX #5: Removed duplicate OG and Twitter meta tags -->
+    <!-- React Helmet sets these correctly per page -->
+
+    <!-- FIX #6: Removed duplicate static structured data -->
+    <!-- BEFORE: Static HTML had Organization+WebSite+FAQPage schema -->
+    <!-- AND React Helmet added ANOTHER Organization+WebSite+ClothingStore -->
+    <!-- This caused 2 Organization schemas + conflicting sameAs URLs -->
+    <!-- Now only React Helmet manages structured data (single source of truth) -->
+
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Fonts (preconnect stays in static HTML for performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+    <!--
+      FIX #7: Added hreflang tags for international targeting
+      Since LuxeMia targets USA, UK, Canada (NRI diaspora),
+      hreflang tells Google which language/region variant to serve.
+    -->
+    <link rel="alternate" hreflang="en-US" href="https://luxemia.shop/">
+    <link rel="alternate" hreflang="en-GB" href="https://luxemia.shop/">
+    <link rel="alternate" hreflang="en-CA" href="https://luxemia.shop/">
+    <link rel="alternate" hreflang="x-default" href="https://luxemia.shop/">
+
+    <!--
+      FIX #8: Single static Organization + WebSite schema
+      Page-specific schemas (Article, Product, FAQPage, BreadcrumbList)
+      are handled by React Helmet per route. NO duplicates.
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://luxemia.shop/#org",
+          "name": "LuxeMia",
+          "alternateName": "LuxeMia Fashion",
+          "url": "https://luxemia.shop",
+          "logo": "https://luxemia.shop/logo.png",
+          "description": "Luxury Indian ethnic wear online store featuring handcrafted bridal lehengas, designer sarees, salwar suits and kurtas shipped worldwide to USA, UK, and Canada.",
+          "sameAs": [
+            "https://www.instagram.com/luxemiashop",
+            "https://www.facebook.com/luxemiashop",
+            "https://www.pinterest.com/luxemiashop",
+            "https://www.youtube.com/@luxemiashop"
+          ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+1-215-341-9990",
+              "contactType": "customer service",
+              "areaServed": "Worldwide",
+              "availableLanguage": ["English", "Hindi"]
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://luxemia.shop/#website",
+          "name": "LuxeMia",
+          "url": "https://luxemia.shop",
+          "publisher": { "@id": "https://luxemia.shop/#org" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://luxemia.shop/collections?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!--
+      FIX #9: Added Bing Webmaster verification meta tag
+      Replace YOUR_BING_VERIFICATION_CODE with actual code from
+      Bing Webmaster Tools (https://www.bing.com/webmasters)
+    -->
+    <!-- <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE" /> -->
+
+    <script type="module" crossorigin src="/assets/index-zQsu3l69.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-CbMOpwtj.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-query-E09cmuYF.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-supabase-MEHSyf2E.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-ui-Bl5YnMb5.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-motion-DzddaCb0.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-Ccw6EAh-.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

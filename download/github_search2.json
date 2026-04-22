@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://github.com/vercel/shop",
+    "name": "vercel/shop",
+    "snippet": "5 days ago — A Next.js storefront template and reference architecture for Shopify, built with Next.js 16, React 19, Tailwind CSS 4, and the Shopify ...",
+    "host_name": "github.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/vercel/vercel",
+    "name": "vercel/vercel: Develop. Preview. Ship.",
+    "snippet": "This project uses pnpm to install dependencies and run scripts. You can use the vercel script to run local changes as if you were invoking Vercel CLI.\nVercel Vercel’s AI Cloud is a unified platform for building modern applications, giving teams the tools to be flexible, move fast, and stay secure while focusing on their products instead of infrastructure.",
+    "host_name": "github.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.linkedin.com/posts/paulbakaus_if-youre-using-ai-agents-with-browser-automation-activity-7420601150233604096-W58y",
+    "name": "Boost AI Agent Productivity with Dev Auth Shortcuts",
+    "snippet": "It figures out your auth system (Supabase, NextAuth, Django, Rails, whatever), finds your test credentials, and creates the right shortcuts.",
+    "host_name": "www.linkedin.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.researchgate.net/publication/380072053_ACP-DRL_an_anticancer_peptides_recognition_method_based_on_deep_representation_learning",
+    "name": "ACP-DRL: an anticancer peptides recognition method",
+    "snippet": "Apr 9, 2024 — The source code and the datasets are available on the author's GitHub ... vercel .app/. View. Show abstract. Bridging machine learning and ...",
+    "host_name": "www.researchgate.net",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/forbes/posts/for-labs-at-universities-biotech-firms-and-big-pharma-companies-alike-ai-models-/1314538790536108",
+    "name": "For labs at universities, biotech firms and big pharma",
+    "snippet": "For labs at universities, biotech firms and big pharma companies alike, AI models are offering new possibilities for drug discovery.",
+    "host_name": "www.facebook.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  }
+]
