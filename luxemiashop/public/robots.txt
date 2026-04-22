@@ -1,0 +1,49 @@
+# Robots.txt for luxemia.shop
+# Allow all major search engines and AI crawlers to index public content
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /account
+Disallow: /wishlist
+Disallow: /admin
+Disallow: /_prerender/
+Disallow: /virtual-try-on
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /account
+Disallow: /wishlist
+Disallow: /admin
+Disallow: /_prerender/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /account
+Disallow: /wishlist
+Disallow: /admin
+Disallow: /_prerender/
+
+# AI Search Crawlers — explicitly allowed for AI search optimization
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Crawl-delay for non-Google crawlers to reduce server load
+User-agent: *
+Crawl-delay: 1
+
+Sitemap: https://luxemia.shop/sitemap.xml
