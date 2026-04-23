@@ -1,0 +1,40 @@
+project_id = "mxrvlizhrofsroydenti"
+
+[functions.get-order]
+verify_jwt = false
+
+[functions.order-webhook]
+verify_jwt = false
+
+[functions.send-tracking-notification]
+verify_jwt = false
+
+[functions.sync-products]
+verify_jwt = false
+
+[functions.sync-to-shopify]
+verify_jwt = false
+
+[functions.virtual-tryon]
+verify_jwt = true
+
+[functions.image-proxy]
+verify_jwt = false
+
+[functions.generate-sitemap]
+verify_jwt = false
+
+[functions.regenerate-sitemap]
+verify_jwt = false
+
+[functions.cleanup-shopify-duplicates]
+verify_jwt = false
+
+[functions.abandoned-cart-reminder]
+verify_jwt = false
+
+[functions.submit-email]
+verify_jwt = false
+
+[functions.validate-images]
+verify_jwt = false

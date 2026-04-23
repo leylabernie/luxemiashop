@@ -33,10 +33,9 @@ const Indowestern = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indo-Western Fusion Wear Online | Contemporary Indian Fashion — LuxeMia"
-        description="Shop Indo-Western fusion wear at LuxeMia. Contemporary Indian dresses, fusion gowns, and modern ethnic outfits blending Eastern tradition with Western silhouettes. Free worldwide shipping."
+        title="Indo-Western Wear | LuxeMia — Fusion Indian Fashion"
+        description="Explore LuxeMia's Indo-Western fusion collection. Contemporary cuts meet traditional embroidery — the perfect blend of East and West for modern occasions."
         canonical="https://luxemia.shop/indowestern"
-        keywords="indo western dress online, fusion wear indian, contemporary indian fashion, indo western gown, modern ethnic wear, indo western dresses USA"
       />
       <Header />
       <main className="pt-[88px] lg:pt-[130px]">
@@ -44,7 +43,7 @@ const Indowestern = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Fusion Fashion</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-3">Indo-Western Fusion Wear</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-3">Indo-Western</h1>
             <p className="text-muted-foreground font-light max-w-md mx-auto text-sm lg:text-base">
               Where Indian heritage meets Western silhouettes. Versatile styles for the modern woman.
             </p>

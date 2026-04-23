@@ -14,6 +14,11 @@ interface CollectionItem {
   currency: string;
 }
 
+interface HreflangAlternate {
+  lang: string;
+  href: string;
+}
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
@@ -42,12 +47,21 @@ interface SEOHeadProps {
   breadcrumbs?: Array<{ name: string; url: string }>;
   faqs?: FAQItem[];
   noIndex?: boolean;
-  keywords?: string;
+  localBusiness?: Record<string, any>;
+  hreflang?: HreflangAlternate[];
 }
 
+// Unified social media links — single source of truth
+const SOCIAL_LINKS = {
+  instagram: 'https://www.instagram.com/luxemiashop',
+  facebook: 'https://www.facebook.com/luxemiashop',
+  pinterest: 'https://www.pinterest.com/luxemiashop',
+  youtube: 'https://www.youtube.com/@luxemiashop',
+};
+
 const SEOHead = ({
-  title = 'LuxeMia | Luxury Indian Ethnic Wear — Sarees, Lehengas & Bridal Couture',
-  description = 'Discover exquisite handcrafted Indian ethnic wear at LuxeMia. Shop designer sarees, bridal lehengas, anarkali suits, and wedding collections. Free worldwide shipping to USA, UK & Canada. Premium quality assured.',
+  title = 'LuxeMia | Luxury Indian Ethnic Wear - Sarees, Lehengas & Bridal Couture',
+  description = 'Discover exquisite handcrafted Indian ethnic wear at LuxeMia. Shop designer sarees, bridal lehengas, anarkali suits, and wedding collections. Worldwide shipping. Premium quality assured.',
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
@@ -56,16 +70,16 @@ const SEOHead = ({
   breadcrumbs,
   faqs,
   noIndex = false,
-  keywords = 'indian ethnic wear, luxury indian fashion, designer lehengas, bridal lehenga online, wedding sarees, anarkali suits, banarasi silk, buy sarees online, indian wedding dress, salwar kameez, luxury ethnic wear USA, free worldwide shipping',
+  localBusiness,
+  hreflang,
 }: SEOHeadProps) => {
   const siteUrl = 'https://luxemia.shop';
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : siteUrl;
-  const canonicalUrl = canonical || currentUrl;
-
+  const canonicalUrl = canonical || (typeof window !== 'undefined' ? `${siteUrl}${window.location.pathname}` : siteUrl);
+  
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
-  // Product Schema for Google Rich Results
+  // Enhanced Product Schema for Google Rich Results
   const productSchema = product
     ? {
         '@context': 'https://schema.org',
@@ -127,7 +141,7 @@ const SEOHead = ({
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'IN',
             returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-            merchantReturnDays: 14,
+            merchantReturnDays: 7,
             returnMethod: 'https://schema.org/ReturnByMail',
             returnFees: 'https://schema.org/FreeReturn',
           },
@@ -195,24 +209,19 @@ const SEOHead = ({
 
   return (
     <Helmet>
-      {/* Primary Meta Tags — single source of truth via React Helmet */}
+      {/* Primary Meta Tags */}
       <title>{title}</title>
+      <meta name="title" content={title} />
       <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="author" content="LuxeMia" />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
-      {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
-      <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
-      <meta name="bingbot" content="index, follow" />
 
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
 
-      {/* Hreflang Tags for International Targeting */}
-      <link rel="alternate" hrefLang="en-US" href={`${siteUrl}/indian-ethnic-wear-usa`} />
-      <link rel="alternate" hrefLang="en-GB" href={`${siteUrl}/indian-ethnic-wear-uk`} />
-      <link rel="alternate" hrefLang="en-CA" href={`${siteUrl}/indian-ethnic-wear-canada`} />
-      <link rel="alternate" hrefLang="x-default" href={siteUrl} />
+      {/* Hreflang tags for international pages */}
+      {hreflang && hreflang.map((alt) => (
+        <link key={alt.lang} rel="alternate" hrefLang={alt.lang} href={alt.href} />
+      ))}
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
@@ -220,9 +229,6 @@ const SEOHead = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={absoluteImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={title} />
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
@@ -240,18 +246,26 @@ const SEOHead = ({
         </>
       )}
 
-      {/* Twitter Card */}
+      {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={absoluteImage} />
-      <meta name="twitter:image:alt" content={title} />
       <meta name="twitter:site" content="@LuxeMia" />
       {product && <meta name="twitter:label1" content="Price" />}
       {product && <meta name="twitter:data1" content={`${product.currency} ${product.price}`} />}
 
-      {/* Structured Data — only page-specific schemas; Organization + WebSite are in index.html */}
+      {/* Additional Meta */}
+      <meta name="author" content="LuxeMia" />
+      <meta name="keywords" content="indian ethnic wear, sarees online, designer lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, luxury ethnic wear, indian wedding dress" />
+
+      {/* Structured Data — only page-specific schemas (Organization & WebSite are in index.html) */}
+      {localBusiness && (
+        <script type="application/ld+json">
+          {JSON.stringify(localBusiness)}
+        </script>
+      )}
       {productSchema && (
         <script type="application/ld+json">
           {JSON.stringify(productSchema)}
@@ -277,3 +291,4 @@ const SEOHead = ({
 };
 
 export default SEOHead;
+export { SOCIAL_LINKS };

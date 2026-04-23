@@ -251,10 +251,9 @@ const Lehengas = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Designer Bridal & Wedding Lehengas Online | Luxury Indian Lehenga — LuxeMia"
-        description="Shop designer bridal lehengas and wedding lehenga cholis at LuxeMia. Handcrafted red, pink & pastel lehengas with zardozi embroidery. Free worldwide shipping to USA, UK & Canada. Custom sizing available."
+        title="Lehengas: Designer Bridal & Wedding Lehengas Online | LuxeMia"
+        description="Shop LuxeMia's exquisite collection of designer lehengas online. Find bridal lehengas, wedding lehengas, and festive lehenga cholis with worldwide shipping."
         canonical="https://luxemia.shop/lehengas"
-        keywords="bridal lehenga online, designer lehenga, wedding lehenga, luxury indian lehenga, lehenga choli online, buy bridal lehenga USA, designer bridal lehenga, custom stitched lehenga"
         type="collection"
         image="/og/og-lehengas.jpg"
         breadcrumbs={[
@@ -283,7 +282,7 @@ const Lehengas = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Explore Our
             </p>
-                      <h1 className="text-3xl md:text-4xl font-serif mb-4">Designer Bridal & Wedding Lehengas</h1>
+                      <h1 className="text-3xl md:text-4xl font-serif mb-4">Lehengas</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Exquisite bridal lehengas, festive lehenga cholis, and contemporary designs for your special moments.
             </p>

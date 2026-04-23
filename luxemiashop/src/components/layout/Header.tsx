@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 import ProductSearch from '../search/ProductSearch';
@@ -27,16 +27,15 @@ const navLinks = [
   { name: 'Sarees', href: '/sarees' },
   { name: 'Salwar Kameez', href: '/suits' },
   { name: 'Menswear', href: '/menswear' },
-  { name: 'Jewelry', href: '/jewelry' },
   { name: 'Indo-Western', href: '/indowestern' },
 ];
 
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bestsellers', href: '/bestsellers' },
-  { name: 'Bridal', href: '/collections/bridal-lehengas' },
-  { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
-  { name: 'Festive Wear', href: '/collections/festive-wear' },
+  { name: 'Bridal', href: '/lehengas' },
+  { name: 'Wedding Sarees', href: '/sarees' },
+  { name: 'Festive Wear', href: '/collections' },
 ];
 
 const Header = () => {
@@ -52,6 +51,8 @@ const Header = () => {
 
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     if (user) loadFromDatabase(user.id);
@@ -119,15 +120,18 @@ const Header = () => {
             </nav>
 
             {/* Center Logo */}
-            <Link to="/" className="flex-shrink-0 mx-6 lg:mx-8" aria-label="LuxeMia Home">
-              <motion.span
+            <Link to="/" className="flex-shrink-0 mx-6 lg:mx-8">
+              <motion.div
                 className="font-serif text-2xl lg:text-3xl tracking-wide"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                LuxeMia
-              </motion.span>
+                {isHomePage ? (
+                  <h1 className="sr-only">LuxeMia — Luxury Indian Ethnic Wear</h1>
+                ) : null}
+                <span aria-hidden="true">LuxeMia</span>
+              </motion.div>
             </Link>
 
             {/* Right Navigation - Desktop */}

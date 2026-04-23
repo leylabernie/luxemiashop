@@ -13,7 +13,7 @@ const SEOFooterContent = () => {
             <p className="mb-6">
               Welcome to <strong className="text-foreground">LuxeMia</strong>, your premier destination for luxury Indian ethnic wear. 
               We bring you an exquisite collection of handcrafted <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">designer sarees</Link>, 
-              <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
+              <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
               and <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">anarkali suits</Link> that 
               blend timeless tradition with contemporary elegance.
             </p>
@@ -22,10 +22,10 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Wedding Sarees Collection</h3>
                 <p>
-                  Explore our curated range of <Link to="/collections/wedding-sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees</Link> including 
+                  Explore our curated range of <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees</Link> including 
                   <strong className="text-foreground"> Banarasi silk sarees</strong>, 
                   Kanjivaram silk, and <strong className="text-foreground">Organza sarees with gota patti work</strong>. Each piece is crafted by skilled 
-                  artisans using traditional weaving techniques. Perfect for <Link to="/nri/usa" className="text-foreground hover:text-primary transition-colors underline">NRIs in USA</Link> looking for authentic 
+                  artisans using traditional weaving techniques. Perfect for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">NRIs in USA</Link> looking for authentic 
                   Indian wedding attire with <strong className="text-foreground">ready-to-ship</strong> convenience.
                 </p>
               </div>
@@ -33,11 +33,11 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Bridal Lehengas & Wedding Wear</h3>
                 <p>
-                  Find your dream <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga</Link> in our extensive collection. 
+                  Find your dream <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga</Link> in our extensive collection. 
                   From <strong className="text-foreground">traditional red bridal lehengas</strong> to <strong className="text-foreground">minimalist pastel lehengas</strong>, we offer 
                   <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> designer lehenga choli</Link> sets 
-                  with heavy embroidery and genuine zardozi. Ideal for <Link to="/nri/uk" className="text-foreground hover:text-primary transition-colors underline">UK weddings</Link> and 
-                  <Link to="/nri/canada" className="text-foreground hover:text-primary transition-colors underline">Canadian celebrations</Link>.
+                  with heavy embroidery and genuine zardozi. Ideal for <Link to="/indian-ethnic-wear-uk" className="text-foreground hover:text-primary transition-colors underline">UK weddings</Link> and 
+                  <Link to="/indian-ethnic-wear-canada" className="text-foreground hover:text-primary transition-colors underline">Canadian celebrations</Link>.
                 </p>
               </div>
             </div>
@@ -46,7 +46,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Reception & Party Wear</h3>
                 <p>
-                  Discover glamorous <Link to="/collections/reception-outfits" className="text-foreground hover:text-primary transition-colors underline">reception outfits</Link> and 
+                  Discover glamorous <Link to="/collections" className="text-foreground hover:text-primary transition-colors underline">reception outfits</Link> and 
                   <strong className="text-foreground"> Indo-western reception gowns</strong>. Our collection features sequined ensembles and 
                   <strong className="text-foreground">cocktail sarees</strong> perfect for wedding receptions and sangeet nights. 
                   Stand out with <strong className="text-foreground">minimalist bridesmaid dresses</strong> and statement pieces.
@@ -56,7 +56,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Festive & Occasion Wear</h3>
                 <p>
-                  Celebrate in style with our <Link to="/collections/festive-wear" className="text-foreground hover:text-primary transition-colors underline">festive wear</Link> collection. 
+                  Celebrate in style with our <Link to="/collections" className="text-foreground hover:text-primary transition-colors underline">festive wear</Link> collection. 
                   Shop <strong className="text-foreground">Haldi outfits for NRI guests</strong> and vibrant ensembles for 
                   <strong className="text-foreground">Diwali, Navratri, and Karwa Chauth</strong>. From playful yellows to auspicious reds, 
                   find the perfect look for every Indian celebration.

@@ -34,7 +34,7 @@ const categories = [
     name: 'Jewelry',
     subtitle: 'Exquisite Adornments',
     description: 'Kundan, polki and bridal jewellery sets for every occasion',
-    href: '/jewelry',
+    href: '/collections?category=jewelry',
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59471/Yellow--Wedding-Wear-Kundan-Ethnic-Design-Necklace-Set-FNKN102YLW(1).jpg',
     tag: 'New Arrivals',
   },

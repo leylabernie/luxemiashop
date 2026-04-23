@@ -24,7 +24,7 @@ const homepageFaqs = [
   },
   {
     question: "What is your return policy for international orders?",
-    answer: "We offer a hassle-free 7-day return policy for most items. Please refer to our Returns Policy page for full details on international returns and exchanges."
+    answer: "We offer a hassle-free 7-day return policy for most items. Standard-sized items can be returned within 7 days of delivery if unworn with tags attached. Custom-sized items are final sale. Please refer to our Returns Policy page for full details."
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
@@ -51,17 +51,92 @@ const homepageFaqs = [
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  // LocalBusiness Schema for Local SEO
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "ClothingStore",
+    "name": "LuxeMia",
+    "description": "Premium Indian ethnic wear boutique specializing in handcrafted bridal lehengas, designer sarees, anarkali suits, and wedding collections. Worldwide shipping available.",
+    "url": "https://luxemia.shop",
+    "logo": "https://luxemia.shop/logo.png",
+    "image": "https://luxemia.shop/og/og-lehengas.jpg",
+    "telephone": "+1-215-341-9990",
+    "email": "hello@luxemia.shop",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1234 Fashion Avenue",
+      "addressLocality": "Philadelphia",
+      "addressRegion": "PA",
+      "postalCode": "19103",
+      "addressCountry": "US"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "39.9526",
+      "longitude": "-75.1652"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "10:00",
+        "closes": "19:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Sunday",
+        "opens": "11:00",
+        "closes": "17:00"
+      }
+    ],
+    "priceRange": "$$$",
+    "currenciesAccepted": "INR, USD, GBP, CAD",
+    "paymentAccepted": "Credit Card, Debit Card, UPI, Net Banking, PayPal",
+    "sameAs": [
+      "https://www.instagram.com/luxemiashop",
+      "https://www.facebook.com/luxemiashop",
+      "https://www.youtube.com/@luxemiashop",
+      "https://www.pinterest.com/luxemiashop"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "LuxeMia Collections",
+      "itemListElement": [
+        {
+          "@type": "OfferCatalog",
+          "name": "Bridal Lehengas"
+        },
+        {
+          "@type": "OfferCatalog",
+          "name": "Silk Sarees"
+        },
+        {
+          "@type": "OfferCatalog",
+          "name": "Anarkali Suits"
+        },
+        {
+          "@type": "OfferCatalog",
+          "name": "Menswear"
+        },
+        {
+          "@type": "OfferCatalog",
+          "name": "Indo-Western"
+        }
+      ]
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia: Luxury Indian Ethnic Wear Online | Free Worldwide Shipping"
-        description="Shop luxury Indian ethnic wear at LuxeMia. Handcrafted bridal lehengas, designer sarees, anarkali suits & menswear. Free worldwide shipping to USA, UK & Canada. Authentic Indian craftsmanship for the modern NRI."
+        title="LuxeMia: Luxury Indian Ethnic Wear Online | Shop Bridal Lehengas & Wedding Sarees"
+        description="Shop luxury Indian ethnic wear at LuxeMia. Handcrafted bridal lehengas, designer sarees, and anarkali suits with free worldwide shipping to USA, UK & Canada. Authentic craftsmanship for the modern NRI."
         canonical="https://luxemia.shop/"
-        keywords="luxury indian ethnic wear, bridal lehenga online, designer sarees, anarkali suits, indian wedding dress, buy indian clothes online, free worldwide shipping, NRI wedding wear, banarasi silk saree, designer salwar kameez"
         faqs={homepageFaqs}
+        localBusiness={localBusinessSchema}
       />
       <Header />
-
+      
       <main className="pt-[88px] lg:pt-[130px]">
         <FlashSaleBanner />
         <HeroSection />
@@ -140,7 +215,7 @@ const Index = () => {
 
         <SEOFooterContent />
       </main>
-
+      
       <Footer />
       <NewVisitorPopup />
 

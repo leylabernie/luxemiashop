@@ -9,65 +9,70 @@
       gtag('js', new Date());
       gtag('config', 'G-D1NN0TC3Y0');
     </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--
-      IMPORTANT: Static meta tags removed — React Helmet (SEOHead component)
-      now manages ALL meta tags to prevent duplicates.
-      Only charset, viewport, and GSC verification remain here.
-    -->
-
+    <title>LuxeMia — Luxury Indian Ethnic Wear | Sarees, Lehengas & Suits</title>
+    <meta name="description" content="Shop luxury Indian ethnic wear at LuxeMia. Designer lehengas, silk sarees, salwar suits & more. Free shipping to USA & UK. Authentic Indian craftsmanship." />
+    <meta name="author" content="LuxeMia" />
+    <meta name="keywords" content="indian ethnic wear, sarees online, designer lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, luxury ethnic wear, indian wedding dress, buy sarees online, designer salwar kameez" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="bingbot" content="index, follow" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <link rel="canonical" href="https://luxemia.shop/" />
+    
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY" />
 
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://luxemia.shop/" />
+    <meta property="og:title" content="LuxeMia — Luxury Indian Ethnic Wear | Sarees, Lehengas & Suits" />
+    <meta property="og:description" content="Shop luxury Indian ethnic wear at LuxeMia. Designer lehengas, silk sarees, salwar suits & more. Free shipping to USA & UK. Authentic Indian craftsmanship." />
+    <meta property="og:image" content="https://luxemia.shop/og-image.jpg" />
+    <meta property="og:site_name" content="LuxeMia" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Preconnect for performance -->
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@LuxeMia" />
+    <meta name="twitter:title" content="LuxeMia — Luxury Indian Ethnic Wear | Sarees, Lehengas & Suits" />
+    <meta name="twitter:description" content="Shop luxury Indian ethnic wear at LuxeMia. Designer lehengas, silk sarees, salwar suits & more. Free shipping to USA & UK." />
+    <meta name="twitter:image" content="https://luxemia.shop/og-image.jpg" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 
-    <!-- Consolidated Structured Data: Organization + WebSite + FAQPage -->
+    <!-- Structured Data: Organization, WebSite, FAQPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "Organization",
-          "@id": "https://luxemia.shop/#organization",
+          "@id": "https://luxemia.shop/#org",
           "name": "LuxeMia",
-          "alternateName": "LuxeMia Fashion",
           "url": "https://luxemia.shop",
-          "logo": "https://luxemia.shop/og-image.jpg",
-          "description": "Luxury Indian ethnic wear online store. Handcrafted designer sarees, bridal lehengas, salwar suits and kurtas shipped worldwide to USA, UK, and Canada.",
+          "logo": "https://luxemia.shop/logo.png",
+          "description": "Luxury Indian ethnic wear online store. Designer sarees, lehengas, salwar suits and kurtas shipped worldwide.",
           "sameAs": [
-            "https://www.instagram.com/luxemia",
-            "https://www.facebook.com/luxemia",
-            "https://www.pinterest.com/luxemia",
-            "https://www.youtube.com/@luxemia"
-          ],
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+1-215-341-9990",
-            "contactType": "customer service",
-            "areaServed": "Worldwide",
-            "availableLanguage": ["English"]
-          }
+            "https://www.instagram.com/luxemiashop",
+            "https://www.facebook.com/luxemiashop",
+            "https://www.pinterest.com/luxemiashop",
+            "https://www.youtube.com/@luxemiashop"
+          ]
         },
         {
           "@type": "WebSite",
           "@id": "https://luxemia.shop/#website",
           "name": "LuxeMia",
           "url": "https://luxemia.shop",
-          "publisher": { "@id": "https://luxemia.shop/#organization" },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://luxemia.shop/collections?search={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
+          "publisher": { "@id": "https://luxemia.shop/#org" }
         },
         {
           "@type": "FAQPage",
@@ -85,7 +90,7 @@
               "name": "What is your return policy for international orders?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "We offer a hassle-free 7-day return policy for most items. Please refer to our Returns Policy page for full details on international returns and exchanges."
+                "text": "We offer a hassle-free 7-day return policy for most items. Standard-sized items can be returned within 7 days of delivery if unworn with tags attached. Custom-sized items are final sale. Please refer to our Returns Policy page for full details."
               }
             },
             {
@@ -138,13 +143,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Noscript fallback for accessibility and search engines -->
-    <noscript>
-      <div style="padding:2rem;text-align:center;font-family:sans-serif">
-        <h1>LuxeMia — Luxury Indian Ethnic Wear Online</h1>
-        <p>Shop handcrafted bridal lehengas, designer sarees, anarkali suits and more. Free worldwide shipping to USA, UK &amp; Canada.</p>
-        <p>Please enable JavaScript for the full shopping experience, or contact us at hello@luxemia.shop</p>
-      </div>
-    </noscript>
   </body>
 </html>

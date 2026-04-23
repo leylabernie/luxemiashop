@@ -39,36 +39,11 @@ const BOT_USER_AGENTS = [
 ];
 
 const PRERENDERED_ROUTES = new Set([
-  // Main pages
   '/',
-  '/collections',
-  '/brand-story',
-  '/new-arrivals',
-  '/bestsellers',
-  '/lookbook',
-  '/style-quiz',
-  '/press',
-  // Shop categories
+  '/suits',
   '/lehengas',
   '/sarees',
-  '/suits',
   '/menswear',
-  '/indowestern',
-  // About & info
-  '/artisans',
-  '/sustainability',
-  '/style-consultation',
-  // Customer service
-  '/contact',
-  '/faq',
-  '/shipping',
-  '/returns',
-  '/size-guide',
-  '/care-guide',
-  // Legal
-  '/privacy',
-  '/terms',
-  // Blog index + posts
   '/blog',
   '/blog/sharara-suit-guide-2026-styles-fabrics',
   '/blog/pakistani-suits-anarkali-shopping-guide',
@@ -87,18 +62,23 @@ const PRERENDERED_ROUTES = new Set([
   '/blog/nri-wedding-ethnic-wear-trends-2026',
   '/blog/buy-authentic-indian-sarees-online-usa-uk',
   '/blog/styling-indian-ethnic-wear-festive-occasions-abroad',
-  // Collection redirects (prerendered for SEO equity)
-  '/collections/bridal-lehengas',
-  '/collections/wedding-sarees',
-  '/collections/reception-outfits',
-  '/collections/festive-wear',
-  // NRI / geo-targeted landing pages
+  '/collections',
+  '/brand-story',
+  '/new-arrivals',
+  '/bestsellers',
+  '/indowestern',
+  '/nri',
   '/indian-ethnic-wear-usa',
   '/indian-ethnic-wear-uk',
   '/indian-ethnic-wear-canada',
-  '/nri',
-  // Legacy redirects
-  '/our-story',
+  '/style-consultation',
+  '/style-quiz',
+  '/size-guide',
+  '/care-guide',
+  '/faq',
+  '/shipping',
+  '/returns',
+  '/contact',
 ]);
 
 function isBot(userAgent: string): boolean {

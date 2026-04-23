@@ -1,0 +1,15 @@
+export const sizeChart = [
+  { size: '28"', bust: 28, waist: 24, hip: 31, shoulder: 13.5 },
+  { size: '30"', bust: 30, waist: 26, hip: 33, shoulder: 14 },
+  { size: '32"', bust: 32, waist: 28, hip: 35, shoulder: 14.5 },
+  { size: '34"', bust: 34, waist: 30, hip: 37, shoulder: 15 },
+  { size: '36"', bust: 36, waist: 32, hip: 39, shoulder: 15.5 },
+  { size: '38"', bust: 38, waist: 34, hip: 41, shoulder: 16 },
+  { size: '40"', bust: 40, waist: 36, hip: 43, shoulder: 16.5 },
+  { size: '42"', bust: 42, waist: 38, hip: 45, shoulder: 17 },
+  { size: '44"', bust: 44, waist: 40, hip: 47, shoulder: 17.5 },
+  { size: '46"', bust: 46, waist: 42, hip: 49, shoulder: 18 },
+  { size: '48"', bust: 48, waist: 44, hip: 51, shoulder: 18.5 },
+  { size: '50"', bust: 50, waist: 46, hip: 53, shoulder: 19 },
+  { size: '52"', bust: 52, waist: 48, hip: 55, shoulder: 19.5 },
+];

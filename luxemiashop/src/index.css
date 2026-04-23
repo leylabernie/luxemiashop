@@ -1,0 +1,297 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Vasantam - Luxury Indian Ethnic Wear Design System
+   Inspired by editorial luxury with soft pastel elegance */
+
+@layer base {
+  :root {
+    /* Base Background - Warm off-white with subtle pink undertone */
+    --background: 0 33% 98%;
+    --foreground: 0 10% 15%;
+
+    /* Card & Surface Colors */
+    --card: 0 60% 96%;
+    --card-foreground: 0 10% 15%;
+
+    --popover: 0 33% 98%;
+    --popover-foreground: 0 10% 15%;
+
+    /* Primary - Deep rose accent */
+    --primary: 0 73% 82%;
+    --primary-foreground: 0 10% 15%;
+
+    /* Secondary - Soft blush */
+    --secondary: 0 68% 93%;
+    --secondary-foreground: 0 10% 25%;
+
+    /* Muted - Sage green neutral */
+    --muted: 73 18% 82%;
+    --muted-foreground: 160 13% 40%;
+
+    /* Accent - Golden cream */
+    --accent: 46 78% 91%;
+    --accent-foreground: 35 60% 25%;
+
+    /* Neutral sage for subtle elements */
+    --sage: 160 13% 64%;
+    --sage-foreground: 160 13% 20%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border & Input */
+    --border: 0 20% 90%;
+    --input: 0 20% 92%;
+    --ring: 0 73% 75%;
+
+    --radius: 0.25rem;
+
+    /* Luxury specific tokens */
+    --blush-light: 0 60% 96%;
+    --blush-medium: 0 68% 93%;
+    --rose: 0 73% 82%;
+    --cream: 46 78% 91%;
+    --sage-soft: 73 18% 82%;
+    --sage-deep: 160 13% 64%;
+
+    /* Sidebar */
+    --sidebar-background: 0 33% 98%;
+    --sidebar-foreground: 0 10% 15%;
+    --sidebar-primary: 0 73% 82%;
+    --sidebar-primary-foreground: 0 10% 15%;
+    --sidebar-accent: 0 60% 96%;
+    --sidebar-accent-foreground: 0 10% 15%;
+    --sidebar-border: 0 20% 90%;
+    --sidebar-ring: 0 73% 75%;
+  }
+
+  .dark {
+    --background: 0 10% 8%;
+    --foreground: 0 20% 95%;
+
+    --card: 0 10% 12%;
+    --card-foreground: 0 20% 95%;
+
+    --popover: 0 10% 10%;
+    --popover-foreground: 0 20% 95%;
+
+    --primary: 0 60% 75%;
+    --primary-foreground: 0 10% 10%;
+
+    --secondary: 0 30% 20%;
+    --secondary-foreground: 0 20% 90%;
+
+    --muted: 0 10% 20%;
+    --muted-foreground: 0 15% 65%;
+
+    --accent: 46 40% 25%;
+    --accent-foreground: 46 50% 90%;
+
+    --sage: 160 10% 30%;
+    --sage-foreground: 160 10% 85%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 10% 20%;
+    --input: 0 10% 18%;
+    --ring: 0 50% 60%;
+
+    --sidebar-background: 0 10% 8%;
+    --sidebar-foreground: 0 20% 95%;
+    --sidebar-primary: 0 60% 75%;
+    --sidebar-primary-foreground: 0 10% 10%;
+    --sidebar-accent: 0 10% 15%;
+    --sidebar-accent-foreground: 0 20% 95%;
+    --sidebar-border: 0 10% 18%;
+    --sidebar-ring: 0 50% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Lora', serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  /* Luxury Link Underline Animation */
+  .luxury-link {
+    @apply relative inline-block;
+  }
+
+  .luxury-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-px bg-foreground origin-left scale-x-0 transition-transform duration-500 ease-out;
+  }
+
+  .luxury-link:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Editorial Image Reveal */
+  .image-reveal {
+    @apply overflow-hidden;
+  }
+
+  .image-reveal img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .image-reveal:hover img {
+    @apply scale-105;
+  }
+
+  /* Soft Fade Container */
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  /* Parallax Section */
+  .parallax-section {
+    @apply relative overflow-hidden;
+  }
+}
+
+@layer utilities {
+  /* Letter spacing for luxury typography */
+  .tracking-luxury {
+    letter-spacing: 0.2em;
+  }
+
+  .tracking-editorial {
+    letter-spacing: 0.05em;
+  }
+
+  /* Smooth scroll behavior */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* Mobile touch-friendly sizing */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Reduced motion preference support */
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Hide scrollbar on mobile for horizontal scrolls */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mobile-optimized grid gaps */
+  .gap-mobile-optimized {
+    @apply gap-2 sm:gap-4 lg:gap-6;
+  }
+
+  /* Prevent text selection on interactive elements for mobile */
+  .select-none-mobile {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--sage));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--sage-deep));
+}
+
+/* Safe area support for iOS devices with notches */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Add bottom padding to main content on mobile to prevent overlap with bottom nav */
+@media (max-width: 767px) {
+  main {
+    padding-bottom: 5rem;
+  }
+}

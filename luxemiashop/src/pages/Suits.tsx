@@ -266,10 +266,9 @@ const Suits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Designer Salwar Kameez & Anarkali Suits Online | Luxury Indian Suits — LuxeMia"
-        description="Shop designer salwar kameez and anarkali suits at LuxeMia. Handcrafted sharara sets, palazzo suits & Punjabi suits with embroidery work. Free worldwide shipping to USA, UK & Canada. Custom stitching available."
+        title="Salwar Kameez & Designer Suits Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
+        description="Shop LuxeMia for elegant Salwar Kameez online. Discover designer Anarkali, Palazzo, and Sharara suits with worldwide shipping, perfect for festive wear & occasions."
         canonical="https://luxemia.shop/suits"
-        keywords="salwar kameez online, designer anarkali suits, sharara suit, palazzo suit online, buy salwar kameez USA, punjabi suit online, indian suits online shopping"
         type="collection"
         image="/og/og-suits.jpg"
         breadcrumbs={[
@@ -297,7 +296,7 @@ const Suits = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Contemporary Classics
             </p>
-            <h1 className="text-3xl md:text-4xl font-serif mb-4">Designer Salwar Kameez & Anarkali Suits</h1>
+            <h1 className="text-3xl md:text-4xl font-serif mb-4">Salwar Kameez</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Elegant Anarkalis, flowing Shararas, and graceful Salwar Kameez for every celebration.
             </p>

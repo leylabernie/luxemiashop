@@ -1,0 +1,16 @@
+{
+  "name": "LuxeMia — Luxury Indian Ethnic Wear",
+  "short_name": "LuxeMia",
+  "description": "Shop luxury Indian ethnic wear. Designer lehengas, silk sarees, salwar suits & more. Free worldwide shipping.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

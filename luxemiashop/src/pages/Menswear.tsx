@@ -237,10 +237,9 @@ const Menswear = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Luxury Indian Menswear Online | Designer Sherwanis & Kurtas — LuxeMia"
-        description="Shop luxury Indian menswear at LuxeMia. Designer sherwanis for grooms, kurta pajama sets, and Nehru jackets for weddings & celebrations. Free worldwide shipping. Custom sizing available."
+        title="Menswear: Indian Ethnic Wear for Men | LuxeMia"
+        description="Shop the latest Menswear collection at LuxeMia. Designer sherwanis, kurta pajamas, and Nehru jackets for weddings and celebrations."
         canonical="https://luxemia.shop/menswear"
-        keywords="indian menswear online, designer sherwani, groom sherwani online, kurta pajama, nehru jacket, luxury indian menswear, buy sherwani USA, wedding outfit for men"
         type="collection"
         image="/og/og-menswear.jpg"
         breadcrumbs={[
@@ -268,7 +267,7 @@ const Menswear = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Royal Heritage
             </p>
-            <h1 className="text-3xl md:text-4xl font-serif mb-4">Luxury Indian Menswear</h1>
+            <h1 className="text-3xl md:text-4xl font-serif mb-4">Menswear</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Premium sherwanis, kurta pajamas, and Indo-Western outfits for men.
             </p>

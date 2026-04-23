@@ -87,10 +87,9 @@ const Sarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Wedding & Silk Sarees Online | Designer Saree Collection — LuxeMia"
-        description="Buy authentic Indian sarees online at LuxeMia. Handwoven Banarasi silk, Kanchipuram, and designer wedding sarees. Free worldwide shipping to USA, UK & Canada. Custom blouse stitching included."
+        title="Sarees: Buy Indian Silk & Designer Sarees Online | LuxeMia"
+        description="Explore LuxeMia's collection of authentic Indian sarees online. Discover handwoven silk sarees, designer drapes, and wedding sarees with global shipping."
         canonical="https://luxemia.shop/sarees"
-        keywords="indian sarees online, buy sarees online, wedding sarees, banarasi silk saree, kanchipuram saree, designer saree, silk saree online shopping, indian wedding saree USA"
         type="collection"
         image="/og/og-sarees.jpg"
         breadcrumbs={[
@@ -118,7 +117,7 @@ const Sarees = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
               Timeless Elegance
             </p>
-            <h1 className="text-3xl md:text-4xl font-serif mb-4">Indian Wedding & Designer Sarees</h1>
+            <h1 className="text-3xl md:text-4xl font-serif mb-4">Sarees</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               Exquisite handwoven sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
             </p>
