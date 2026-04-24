@@ -1,31 +1,48 @@
-# Dependencies
-node_modules/
-
-# Build output
-dist/
-dist-ssr/
-
-# Environment files
-.env
-.env.*
-!.env.example
-
-# Download directory
-download/
-
-# Skills directory
-skills/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-
-# Worklog
-worklog.md
-
 # Logs
+logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables — NEVER commit real secrets
+.env
+.env.production
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Lock files — keep only package-lock.json for npm (used by Vercel)
+bun.lock
+yarn.lock
+pnpm-lock.yaml
+
+# Replit-specific files
+.replit
+replit.md
+.local/
+
+# Agent workspace files (not part of the app)
+download/
+skills/
+upload/
+worklog.md
+attached_assets/
+AUDIT_IMPLEMENTATION_GUIDE.md
+CHANGES_SUMMARY.md
+IMPLEMENTATION_ROADMAP.md
