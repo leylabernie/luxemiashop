@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Download directory
+download/
+
+# Skills directory
+skills/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Worklog
+worklog.md
+
+# Logs
+*.log
+npm-debug.log*
