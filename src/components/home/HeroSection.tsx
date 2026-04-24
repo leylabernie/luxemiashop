@@ -67,23 +67,29 @@ const AUTOPLAY_MS = 5000;
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Autoplay: clear and restart timer on every slide change or pause toggle
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-  }, []);
-
+  // Autoplay using setInterval for more reliable auto-advancing
   useEffect(() => {
-    resetTimer();
-    if (isPaused) return;
+    if (isPaused) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+      return;
+    }
 
-    timerRef.current = setTimeout(() => {
+    intervalRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, AUTOPLAY_MS);
 
-    return () => resetTimer();
-  }, [currentSlide, isPaused, resetTimer]);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [isPaused]);
 
   const goToSlide = useCallback((index: number) => {
     setCurrentSlide(index);
@@ -101,17 +107,15 @@ const HeroSection = () => {
 
   return (
     <section
-      className={`relative overflow-hidden transition-colors duration-700 ${slide.bg}`}
+      className={`relative transition-colors duration-700 ${slide.bg}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={() => setIsPaused(true)}
-      onTouchEnd={() => setIsPaused(false)}
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex flex-col-reverse lg:flex-row items-center min-h-[70vh] sm:min-h-[75vh] lg:min-h-screen max-h-[900px]">
+        <div className="flex flex-col-reverse lg:flex-row items-center min-h-[70vh] sm:min-h-[80vh] lg:min-h-[85vh]">
           
           {/* Left: Text Content */}
-          <div className="w-full lg:w-[45%] pt-6 pb-8 lg:py-0 flex flex-col justify-center z-10">
+          <div className="w-full lg:w-[42%] pt-6 pb-8 lg:py-12 flex flex-col justify-center z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -183,7 +187,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right: Product Image - shows full product without cropping */}
-          <div className="w-full lg:w-[55%] h-[45vh] sm:h-[50vh] lg:h-screen max-h-[900px] flex items-center justify-center relative">
+          <div className="w-full lg:w-[58%] flex items-center justify-center py-4 lg:py-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -191,12 +195,12 @@ const HeroSection = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                className="h-full w-full flex items-center justify-center"
+                className="w-full flex items-center justify-center"
               >
                 <img
                   src={slide.image}
                   alt={slide.title}
-                  className="h-full w-auto max-w-full object-contain object-center drop-shadow-xl"
+                  className="w-full max-h-[70vh] sm:max-h-[75vh] lg:max-h-[82vh] object-contain object-center drop-shadow-2xl"
                   fetchPriority="high"
                   decoding="async"
                   loading="eager"
