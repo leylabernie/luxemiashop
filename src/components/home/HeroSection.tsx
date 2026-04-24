@@ -17,7 +17,9 @@ const heroSlides = [
     cta: 'Shop Bridal Lehengas',
     link: '/lehengas',
     image: heroLehengaImg,
-    accent: 'from-rose-900/60 via-rose-900/30 to-transparent',
+    bg: 'bg-gradient-to-br from-rose-50 via-rose-100/50 to-white',
+    accent: 'text-rose-800',
+    accentBg: 'bg-rose-800',
   },
   {
     id: 2,
@@ -26,7 +28,9 @@ const heroSlides = [
     cta: 'Explore Sarees',
     link: '/sarees',
     image: heroSareeImg,
-    accent: 'from-purple-900/60 via-purple-900/30 to-transparent',
+    bg: 'bg-gradient-to-br from-purple-50 via-purple-100/50 to-white',
+    accent: 'text-purple-800',
+    accentBg: 'bg-purple-800',
   },
   {
     id: 3,
@@ -35,7 +39,9 @@ const heroSlides = [
     cta: 'View Suits',
     link: '/suits',
     image: heroSuitImg,
-    accent: 'from-emerald-900/60 via-emerald-900/30 to-transparent',
+    bg: 'bg-gradient-to-br from-emerald-50 via-emerald-100/50 to-white',
+    accent: 'text-emerald-800',
+    accentBg: 'bg-emerald-800',
   },
   {
     id: 4,
@@ -44,7 +50,9 @@ const heroSlides = [
     cta: 'Shop Menswear',
     link: '/menswear',
     image: heroMenswearImg,
-    accent: 'from-amber-900/60 via-amber-900/30 to-transparent',
+    bg: 'bg-gradient-to-br from-amber-50 via-amber-100/50 to-white',
+    accent: 'text-amber-800',
+    accentBg: 'bg-amber-800',
   },
   {
     id: 5,
@@ -53,219 +61,206 @@ const heroSlides = [
     cta: 'Shop Festive',
     link: '/collections',
     image: heroFestiveImg,
-    accent: 'from-pink-900/60 via-pink-900/30 to-transparent',
+    bg: 'bg-gradient-to-br from-pink-50 via-pink-100/50 to-white',
+    accent: 'text-pink-800',
+    accentBg: 'bg-pink-800',
   },
 ];
 
-const AUTOPLAY_INTERVAL = 5000;
+const AUTOPLAY_INTERVAL = 6000;
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
 
-  // Autoplay with progress tracking
   useEffect(() => {
     if (isPaused) return;
-
-    const startTime = Date.now();
-    const tick = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const pct = Math.min((elapsed / AUTOPLAY_INTERVAL) * 100, 100);
-      setProgress(pct);
-    }, 50);
-
     const timer = setTimeout(() => {
-      setDirection(1);
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-      setProgress(0);
     }, AUTOPLAY_INTERVAL);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(tick);
-    };
+    return () => clearTimeout(timer);
   }, [currentSlide, isPaused]);
 
   const goToSlide = useCallback((index: number) => {
-    setDirection(index > currentSlide ? 1 : -1);
     setCurrentSlide(index);
-    setProgress(0);
-  }, [currentSlide]);
+  }, []);
 
   const nextSlide = useCallback(() => {
-    setDirection(1);
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    setProgress(0);
   }, []);
 
   const prevSlide = useCallback(() => {
-    setDirection(-1);
     setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-    setProgress(0);
   }, []);
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? '100%' : '-100%',
-      opacity: 0,
-      scale: 1.05,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? '100%' : '-100%',
-      opacity: 0,
-      scale: 0.95,
-    }),
-  };
+  const slide = heroSlides[currentSlide];
 
   return (
     <section
-      className="relative h-[70vh] sm:h-[75vh] lg:h-screen overflow-hidden bg-background"
+      className={`relative overflow-hidden transition-colors duration-700 ${slide.bg}`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Slides */}
-      <AnimatePresence initial={false} custom={direction} mode="wait">
-        <motion.div
-          key={currentSlide}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-          className="absolute inset-0"
-        >
-          {/* Background Image - Full bleed */}
-          <div className="w-full h-full">
-            <img
-              src={heroSlides[currentSlide].image}
-              alt={heroSlides[currentSlide].title}
-              className="w-full h-full object-cover object-center"
-              fetchPriority="high"
-              decoding="async"
-              loading="eager"
-              sizes="100vw"
-            />
+      {/* Split Layout: Text Left | Image Right */}
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-center min-h-[70vh] sm:min-h-[75vh] lg:min-h-screen max-h-[900px]">
+          
+          {/* Left: Text Content */}
+          <div className="w-full lg:w-1/2 pt-16 pb-8 lg:py-0 flex flex-col justify-center z-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Small label */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                  className={`inline-block px-3 py-1 ${slide.accentBg} text-white text-xs tracking-[0.15em] uppercase mb-5 rounded-sm`}
+                >
+                  New Collection
+                </motion.div>
+
+                {/* Subtitle */}
+                <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
+                  className="text-sm sm:text-base tracking-[0.1em] uppercase text-muted-foreground mb-3 font-light"
+                >
+                  {slide.subtitle}
+                </motion.p>
+
+                {/* Title */}
+                {currentSlide === 0 ? (
+                  <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] mb-6 leading-tight text-foreground"
+                  >
+                    LuxeMia: Your Destination for Luxury Indian Ethnic Wear
+                  </motion.h1>
+                ) : (
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] mb-6 leading-tight text-foreground"
+                  >
+                    {slide.title}
+                  </motion.h2>
+                )}
+
+                {/* CTA */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.4 }}
+                  className="flex items-center gap-4"
+                >
+                  <Button
+                    asChild
+                    size="lg"
+                    className={`${slide.accentBg} hover:opacity-90 text-white font-medium tracking-wide px-8 py-6 text-sm sm:text-base rounded-sm`}
+                  >
+                    <Link to={slide.link}>
+                      {slide.cta}
+                    </Link>
+                  </Button>
+                  <Link
+                    to="/collections"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+                  >
+                    View All Collections
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Slide Navigation - Below text */}
+            <div className="flex items-center gap-4 mt-10">
+              <button
+                onClick={prevSlide}
+                className="w-10 h-10 rounded-full border border-foreground/20 hover:border-foreground/50 flex items-center justify-center transition-all duration-300 group"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="w-10 h-10 rounded-full border border-foreground/20 hover:border-foreground/50 flex items-center justify-center transition-all duration-300 group"
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+              <span className="text-xs text-muted-foreground tracking-widest ml-2">
+                {String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
+              </span>
+            </div>
           </div>
 
-          {/* Gradient Overlay - category-colored */}
-          <div className={`absolute inset-0 bg-gradient-to-r ${heroSlides[currentSlide].accent}`} />
-          {/* Dark bottom gradient for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Content Overlay - positioned at bottom-left like wholesalesalwar */}
-      <div className="absolute inset-0 flex items-end pointer-events-none">
-        <div className="container mx-auto px-4 lg:px-8 pb-20 lg:pb-28 pointer-events-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="max-w-xl"
-            >
-              <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="text-xs sm:text-sm tracking-[0.2em] uppercase mb-3 text-white/80 font-light"
-              >
-                {heroSlides[currentSlide].subtitle}
-              </motion.p>
-              {currentSlide === 0 ? (
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white drop-shadow-lg"
-                >
-                  LuxeMia: Your Destination for Luxury Indian Ethnic Wear & Bridal Attire
-                </motion.h1>
-              ) : (
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white drop-shadow-lg"
-                >
-                  {heroSlides[currentSlide].title}
-                </motion.h2>
-              )}
+          {/* Right: Product Image - Full height, no cropping */}
+          <div className="w-full lg:w-1/2 h-[50vh] sm:h-[55vh] lg:h-screen max-h-[900px] flex items-end justify-center lg:justify-start relative">
+            <AnimatePresence mode="wait">
               <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
+                key={currentSlide}
+                initial={{ opacity: 0, x: 60, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: -60, scale: 0.95 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                className="h-full w-full flex items-end justify-center"
               >
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-white text-foreground hover:bg-white/90 font-medium tracking-wide px-8 py-6 text-sm sm:text-base rounded-sm"
-                >
-                  <Link to={heroSlides[currentSlide].link}>
-                    {heroSlides[currentSlide].cta}
-                  </Link>
-                </Button>
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="h-full w-auto max-w-full object-contain object-bottom"
+                  fetchPriority="high"
+                  decoding="async"
+                  loading="eager"
+                />
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
-      {/* Navigation Arrows */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-3 lg:left-6 right-3 lg:right-6 flex justify-between pointer-events-none">
-        <button
-          onClick={prevSlide}
-          className="pointer-events-auto w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-white group-hover:-translate-x-0.5 transition-transform" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="pointer-events-auto w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-white group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </div>
-
-      {/* Slide Indicators with Progress Bar */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 items-center">
+      {/* Dot Indicators at bottom */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 items-center lg:hidden">
         {heroSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className="relative h-1 rounded-full transition-all duration-300 overflow-hidden"
-            style={{
-              width: index === currentSlide ? '48px' : '24px',
-              backgroundColor: index === currentSlide ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.25)',
-            }}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide
+                ? 'w-8 bg-foreground'
+                : 'w-2 bg-foreground/25 hover:bg-foreground/40'
+            }`}
             aria-label={`Go to slide ${index + 1}`}
-          >
-            {/* Progress fill inside active indicator */}
-            {index === currentSlide && (
-              <div
-                className="absolute inset-0 bg-white rounded-full"
-                style={{ width: `${progress}%` }}
-              />
-            )}
-          </button>
+          />
         ))}
       </div>
 
-      {/* Slide Counter */}
-      <div className="absolute bottom-6 right-4 lg:right-8 text-white/60 text-xs tracking-widest font-light">
-        {String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
+      {/* Desktop Dot Indicators - left side */}
+      <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col gap-3">
+        {heroSlides.map((s, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`group flex items-center gap-3 transition-all duration-300`}
+            aria-label={`Go to slide ${index + 1}`}
+          >
+            <div className={`h-0.5 rounded-full transition-all duration-300 ${
+              index === currentSlide
+                ? 'w-10 bg-foreground'
+                : 'w-5 bg-foreground/25 group-hover:bg-foreground/40 group-hover:w-7'
+            }`} />
+          </button>
+        ))}
       </div>
     </section>
   );
