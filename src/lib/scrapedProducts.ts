@@ -44,9 +44,17 @@ const convertToShopifyFormat = (product: ScrapedProduct): { node: ShopifyProduct
       minVariantPrice: {
         amount: product.original_price_usd.toString(),
         currencyCode: 'USD'
+      },
+      maxVariantPrice: {
+        amount: product.original_price_usd.toString(),
+        currencyCode: 'USD'
       }
     } : {
       minVariantPrice: {
+        amount: product.price_usd.toString(),
+        currencyCode: 'USD'
+      },
+      maxVariantPrice: {
         amount: product.price_usd.toString(),
         currencyCode: 'USD'
       }

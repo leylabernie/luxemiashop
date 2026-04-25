@@ -25,8 +25,8 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
   const firstVariant = product.variants.edges[0]?.node;
   const isAvailable = firstVariant?.availableForSale !== false;
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
-  const compareAtPrice = (product as any).compareAtPriceRange?.minVariantPrice?.amount
-    ? parseFloat((product as any).compareAtPriceRange.minVariantPrice.amount)
+  const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount
+    ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount)
     : null;
   const imageUrl = product.images.edges[0]?.node.url;
 

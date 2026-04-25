@@ -172,6 +172,18 @@ const FeaturedProducts = () => {
                         <span className="text-sm font-medium">
                           {formatPrice(price.amount, price.currencyCode)}
                         </span>
+                        {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                          parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(price.amount) && (
+                          <span className="text-xs text-muted-foreground line-through">
+                            {formatPrice(product.node.compareAtPriceRange.minVariantPrice.amount, product.node.compareAtPriceRange.minVariantPrice.currencyCode)}
+                          </span>
+                        )}
+                        {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                          parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(price.amount) && (
+                          <span className="text-xs text-primary font-medium">
+                            {Math.round((1 - parseFloat(price.amount) / parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
+                          </span>
+                        )}
                       </div>
                     </div>
                   </Link>

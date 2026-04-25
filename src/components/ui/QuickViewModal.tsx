@@ -111,9 +111,23 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
                 {product.node.productType || 'Designer Wear'}
               </p>
               <h2 className="font-serif text-xl lg:text-2xl mb-2 leading-snug">{title}</h2>
-              <p className="text-lg font-medium mb-4">
-                ${price.toFixed(2)}
-              </p>
+              <div className="flex items-baseline gap-2 mb-4">
+                <p className="text-lg font-medium">
+                  ${price.toFixed(2)}
+                </p>
+                {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                  parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > price && (
+                  <p className="text-sm text-muted-foreground line-through">
+                    ${parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount).toFixed(2)}
+                  </p>
+                )}
+                {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                  parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > price && (
+                  <p className="text-xs text-primary font-medium">
+                    {Math.round((1 - price / parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
+                  </p>
+                )}
+              </div>
 
               {/* Variant selector */}
               {hasMultipleVariants && (

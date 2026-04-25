@@ -40,6 +40,10 @@ export interface ShopifyProduct {
         amount: string;
         currencyCode: string;
       };
+      maxVariantPrice: {
+        amount: string;
+        currencyCode: string;
+      };
     };
     images: {
       edges: Array<{
@@ -108,6 +112,10 @@ const STOREFRONT_QUERY = `
               amount
               currencyCode
             }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
           }
           images(first: 3) {
             edges {
@@ -168,6 +176,10 @@ const PRODUCT_BY_HANDLE_QUERY = `
       }
       compareAtPriceRange {
         minVariantPrice {
+          amount
+          currencyCode
+        }
+        maxVariantPrice {
           amount
           currencyCode
         }

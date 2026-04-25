@@ -275,22 +275,22 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <p className="text-2xl font-medium text-foreground">
             {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
           </p>
-          {(product as any).compareAtPriceRange?.maxVariantPrice?.amount &&
-            parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
+          {product.compareAtPriceRange?.maxVariantPrice?.amount &&
+            parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
             <p className="text-lg text-muted-foreground line-through">
               {formatPrice(
-                (product as any).compareAtPriceRange.maxVariantPrice.amount,
-                (product as any).compareAtPriceRange.maxVariantPrice.currencyCode
+                product.compareAtPriceRange.maxVariantPrice.amount,
+                product.compareAtPriceRange.maxVariantPrice.currencyCode
               )}
             </p>
           )}
         </div>
-        {(product as any).compareAtPriceRange?.maxVariantPrice?.amount &&
-          parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
+        {product.compareAtPriceRange?.maxVariantPrice?.amount &&
+          parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
           <p className="text-sm text-primary font-medium">
             {Math.round((1 - parseFloat(currentPrice.amount) /
-              parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount)) * 100)}% off — You save {formatPrice(
-              (parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
+              parseFloat(product.compareAtPriceRange.maxVariantPrice.amount)) * 100)}% off — You save {formatPrice(
+              (parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
               currentPrice.currencyCode
             )}
           </p>

@@ -185,6 +185,18 @@ const TrendingNow = () => {
                     <span className="text-sm font-medium">
                       {formatPrice(product.node.priceRange.minVariantPrice.amount)}
                     </span>
+                    {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                      parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.node.priceRange.minVariantPrice.amount) && (
+                      <span className="text-xs text-muted-foreground line-through">
+                        {formatPrice(product.node.compareAtPriceRange.minVariantPrice.amount)}
+                      </span>
+                    )}
+                    {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                      parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.node.priceRange.minVariantPrice.amount) && (
+                      <span className="text-xs text-primary font-medium">
+                        {Math.round((1 - parseFloat(product.node.priceRange.minVariantPrice.amount) / parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
+                      </span>
+                    )}
                   </div>
                 </div>
               </Link>

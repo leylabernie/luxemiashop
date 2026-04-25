@@ -957,6 +957,10 @@ export type ShopifyProductNode = {
       amount: string;
       currencyCode: string;
     };
+    maxVariantPrice: {
+      amount: string;
+      currencyCode: string;
+    };
   };
   images: {
     edges: Array<{
@@ -1008,6 +1012,10 @@ const convertToShopifyFormat = (product: LocalProduct | SareeProduct | MenswearP
     },
     compareAtPriceRange: ('originalPrice' in product && product.originalPrice) ? {
       minVariantPrice: {
+        amount: product.originalPrice,
+        currencyCode: product.currency
+      },
+      maxVariantPrice: {
         amount: product.originalPrice,
         currencyCode: product.currency
       }
