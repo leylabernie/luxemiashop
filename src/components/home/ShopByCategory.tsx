@@ -20,10 +20,10 @@ const ShopByCategory = () => {
 
   // Build a balanced mix of products prioritizing women's categories
   const getBalancedMix = (source: ShopifyProduct[], count: number): ShopifyProduct[] => {
-    const suits = source.filter(p => p.node.productType === 'Designer Suits');
-    const lehengas = source.filter(p => p.node.productType === 'Bridal Lehengas');
-    const sarees = source.filter(p => p.node.productType === 'Designer Sarees');
-    const menswear = source.filter(p => p.node.productType === "Men's Ethnic Wear");
+    const suits = source.filter(p => p.node.productType === 'Salwar Kameez');
+    const lehengas = source.filter(p => p.node.productType === 'Lehengas');
+    const sarees = source.filter(p => p.node.productType === 'Sarees');
+    const menswear = source.filter(p => p.node.productType === 'Menswear');
 
     // Target mix: 3 suits, 2 lehengas, 2 sarees, 1 menswear (total 8)
     const picks: ShopifyProduct[] = [
@@ -49,11 +49,18 @@ const ShopByCategory = () => {
 
     switch (activeTab) {
       case 'new':
-        return getBalancedMix(products, 8);
+        // Newest products — sort by createdAt (most recent first) and pick 8
+        return [...products]
+          .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
+          .slice(0, 8);
       case 'bestsellers':
-        return getBalancedMix(products.slice(4), 8);
+        // Bestsellers — balanced mix across categories, offset from "new" to show different products
+        return getBalancedMix(products, 8);
       case 'ready':
-        return products.filter(p => p.node.productType === 'Bridal Lehengas').slice(0, 8);
+        // Ready to Ship — products that are in stock and can ship quickly (sarees & suits)
+        return products
+          .filter(p => p.node.productType === 'Sarees' || p.node.productType === 'Salwar Kameez')
+          .slice(0, 8);
       default:
         return getBalancedMix(products, 8);
     }
@@ -220,9 +227,23 @@ const ShopByCategory = () => {
                     <h3 className="font-medium text-sm line-clamp-2 leading-snug">
                       {node.title}
                     </h3>
-                    <p className="text-sm font-semibold">
-                      {formatPrice(node.priceRange.minVariantPrice.amount)}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-semibold">
+                        {formatPrice(node.priceRange.minVariantPrice.amount)}
+                      </p>
+                      {node.compareAtPriceRange?.minVariantPrice?.amount &&
+                        parseFloat(node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(node.priceRange.minVariantPrice.amount) && (
+                        <span className="text-xs text-muted-foreground line-through">
+                          {formatPrice(node.compareAtPriceRange.minVariantPrice.amount)}
+                        </span>
+                      )}
+                      {node.compareAtPriceRange?.minVariantPrice?.amount &&
+                        parseFloat(node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(node.priceRange.minVariantPrice.amount) && (
+                        <span className="text-xs text-primary font-medium">
+                          {Math.round((1 - parseFloat(node.priceRange.minVariantPrice.amount) / parseFloat(node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               );

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Heart, ShoppingBag, Sparkles } from 'lucide-react';
@@ -13,8 +14,12 @@ export const NewArrivals = () => {
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
-  // Get latest 8 products
-  const newArrivals = products.slice(0, 8);
+  // Get latest 8 products sorted by creation date
+  const newArrivals = useMemo(() => 
+    [...products]
+      .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
+      .slice(0, 8)
+  , [products]);
 
   const formatPrice = (amount: string) => {
     return new Intl.NumberFormat('en-US', {

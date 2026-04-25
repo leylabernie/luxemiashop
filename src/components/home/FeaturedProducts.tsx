@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -13,8 +14,18 @@ const FeaturedProducts = () => {
   const addItem = useCartStore(state => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  // Get first 8 products for featured section
-  const featuredProducts = products.slice(0, 8);
+  // Get a curated mix: 2 sarees, 2 suits, 2 lehengas, 2 menswear
+  const featuredProducts = useMemo(() => {
+    const sarees = products.filter(p => p.node.productType === 'Sarees').slice(0, 2);
+    const suits = products.filter(p => p.node.productType === 'Salwar Kameez').slice(0, 2);
+    const lehengas = products.filter(p => p.node.productType === 'Lehengas').slice(0, 2);
+    const menswear = products.filter(p => p.node.productType === 'Menswear').slice(0, 2);
+    const mixed = [...sarees, ...suits, ...lehengas, ...menswear];
+    if (mixed.length >= 8) return mixed.slice(0, 8);
+    // Fallback: fill with remaining products
+    const usedIds = new Set(mixed.map(p => p.node.id));
+    return [...mixed, ...products.filter(p => !usedIds.has(p.node.id))].slice(0, 8);
+  }, [products]);
 
   const handleAddToCart = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();

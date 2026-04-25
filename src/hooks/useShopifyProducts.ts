@@ -3,10 +3,10 @@ import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 
 // Shopify productType values mapped to category page routes
 const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
-  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Wedding Suit', 'Sharara Suit', 'Pakistani Readymade Suit', 'Indian Ethnic Set', 'Co-Ords', 'Dresses'],
-  sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree'],
+  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Wedding Suit', 'Sharara Suit', 'Pakistani Readymade Suit', 'Indian Ethnic Set', 'Co-Ords', 'Dresses', 'Salwar Kameez'],
+  sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees'],
   lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli'],
-  menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama'],
+  menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Dhoti Pants', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set'],
 };
 
@@ -18,7 +18,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
   if (/pakistani|salwar|sharara|anarkali|plazzo|palazzo|wedding suit|indian ethnic set|co-ords|dresses/.test(pt)) return 'Salwar Kameez';
   if (/lehenga/.test(pt)) return 'Lehengas';
   if (/saree/.test(pt)) return 'Sarees';
-  if (/kurta|sherwani|jodhpuri|indo.?western|men.*ethnic|men.*indian|modi jacket/.test(pt)) return "Menswear";
+  if (/kurta|sherwani|jodhpuri|indo.?western|men.*ethnic|men.*indian|modi jacket|menswear/.test(pt)) return 'Menswear';
 
   return productType;
 };

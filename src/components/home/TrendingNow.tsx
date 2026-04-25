@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TrendingUp, ArrowRight, Heart, ShoppingBag } from 'lucide-react';
@@ -9,12 +10,16 @@ import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 const TrendingNow = () => {
-  const { products, isLoading } = useShopifyProducts('lehengas');
+  const { products, isLoading } = useShopifyProducts();
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
-  // Get 4 featured lehengas as trending
-  const trendingProducts = products.slice(0, 4);
+  // Trending = highest-priced products (premium/bestseller positioning)
+  const trendingProducts = useMemo(() =>
+    [...products]
+      .sort((a, b) => parseFloat(b.node.priceRange.minVariantPrice.amount) - parseFloat(a.node.priceRange.minVariantPrice.amount))
+      .slice(0, 4)
+  , [products]);
 
   const formatPrice = (amount: string) => {
     return new Intl.NumberFormat('en-US', {
@@ -106,7 +111,7 @@ const TrendingNow = () => {
               Bestsellers This Season
             </motion.h2>
           </div>
-          <Link to="/lehengas" className="hidden md:block">
+          <Link to="/collections" className="hidden md:block">
             <Button variant="outline" className="group">
               View All
               <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -206,7 +211,7 @@ const TrendingNow = () => {
 
         {/* Mobile View All */}
         <div className="mt-8 text-center md:hidden">
-          <Link to="/lehengas">
+          <Link to="/collections">
             <Button variant="outline" className="w-full">
               View All Trending
             </Button>
