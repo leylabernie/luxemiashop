@@ -25,6 +25,9 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
   const firstVariant = product.variants.edges[0]?.node;
   const isAvailable = firstVariant?.availableForSale !== false;
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
+  const compareAtPrice = (product as any).compareAtPriceRange?.minVariantPrice?.amount
+    ? parseFloat((product as any).compareAtPriceRange.minVariantPrice.amount)
+    : null;
   const imageUrl = product.images.edges[0]?.node.url;
 
   const handleAdd = () => {
@@ -63,6 +66,11 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
               <p className="text-xs font-medium line-clamp-1">{product.title}</p>
               <p className="text-sm font-semibold">
                 ${price.toFixed(2)}
+                {compareAtPrice && compareAtPrice > price && (
+                  <span className="text-xs text-muted-foreground line-through ml-1 font-normal">
+                    ${compareAtPrice.toFixed(2)}
+                  </span>
+                )}
               </p>
             </div>
             <Button

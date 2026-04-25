@@ -356,18 +356,38 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
             {product.node.title}
           </h3>
           <div className="flex items-center justify-between gap-2">
-            <p className="text-sm text-muted-foreground">
-              {formatPrice(
-                product.node.priceRange.minVariantPrice.amount,
-                product.node.priceRange.minVariantPrice.currencyCode
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-foreground font-medium">
+                {formatPrice(
+                  product.node.priceRange.minVariantPrice.amount,
+                  product.node.priceRange.minVariantPrice.currencyCode
+                )}
+              </p>
+              {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) >
+                parseFloat(product.node.priceRange.minVariantPrice.amount) && (
+                <p className="text-sm text-muted-foreground line-through">
+                  {formatPrice(
+                    product.node.compareAtPriceRange.minVariantPrice.amount,
+                    product.node.compareAtPriceRange.minVariantPrice.currencyCode
+                  )}
+                </p>
               )}
-            </p>
+            </div>
             {isAvailable && savedCount > 15 && (
               <p className="text-[10px] text-muted-foreground/70 flex-shrink-0">
                 ♥ {savedCount} saved
               </p>
             )}
           </div>
+          {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+            parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) >
+            parseFloat(product.node.priceRange.minVariantPrice.amount) && (
+            <p className="text-xs text-primary font-medium">
+              {Math.round((1 - parseFloat(product.node.priceRange.minVariantPrice.amount) /
+                parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
+            </p>
+          )}
         </div>
       </Link>
       {/* Quick View Modal */}

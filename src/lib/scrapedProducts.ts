@@ -32,8 +32,20 @@ const convertToShopifyFormat = (product: ScrapedProduct): { node: ShopifyProduct
     handle: product.source_id,
     productType: product.category === 'lehengas' ? 'Bridal Lehengas' : 
                  product.category === 'sarees' ? 'Designer Sarees' :
-                 product.category === 'suits' ? 'Designer Suits' : 'Menswear',
+                 product.category === 'suits' ? 'Designer Suits' :
+                 product.category === 'indowestern' ? 'Indo Western' : 'Menswear',
     priceRange: {
+      minVariantPrice: {
+        amount: product.price_usd.toString(),
+        currencyCode: 'USD'
+      }
+    },
+    compareAtPriceRange: product.original_price_usd ? {
+      minVariantPrice: {
+        amount: product.original_price_usd.toString(),
+        currencyCode: 'USD'
+      }
+    } : {
       minVariantPrice: {
         amount: product.price_usd.toString(),
         currencyCode: 'USD'
@@ -49,10 +61,10 @@ const convertToShopifyFormat = (product: ScrapedProduct): { node: ShopifyProduct
     },
     variants: {
       edges: [
-        { node: { id: `${product.id}-s`, title: 'S', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'S' }] } },
-        { node: { id: `${product.id}-m`, title: 'M', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'M' }] } },
-        { node: { id: `${product.id}-l`, title: 'L', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'L' }] } },
-        { node: { id: `${product.id}-xl`, title: 'XL', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'XL' }] } }
+        { node: { id: `${product.id}-s`, title: 'S', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, compareAtPrice: product.original_price_usd ? { amount: product.original_price_usd.toString(), currencyCode: 'USD' } : null, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'S' }] } },
+        { node: { id: `${product.id}-m`, title: 'M', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, compareAtPrice: product.original_price_usd ? { amount: product.original_price_usd.toString(), currencyCode: 'USD' } : null, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'M' }] } },
+        { node: { id: `${product.id}-l`, title: 'L', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, compareAtPrice: product.original_price_usd ? { amount: product.original_price_usd.toString(), currencyCode: 'USD' } : null, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'L' }] } },
+        { node: { id: `${product.id}-xl`, title: 'XL', price: { amount: product.price_usd.toString(), currencyCode: 'USD' }, compareAtPrice: product.original_price_usd ? { amount: product.original_price_usd.toString(), currencyCode: 'USD' } : null, availableForSale: true, selectedOptions: [{ name: 'Size', value: 'XL' }] } }
       ]
     },
     options: [{ name: 'Size', values: ['S', 'M', 'L', 'XL'] }]

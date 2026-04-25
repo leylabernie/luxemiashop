@@ -11,6 +11,7 @@ interface ScrapedProduct {
   title: string;
   description: string;
   price_usd: number;
+  original_price_usd: number | null;
   image_url: string;
   image_urls: string[] | null;
   category: string;
@@ -141,7 +142,8 @@ function generateSEOTitle(product: ScrapedProduct): string {
     lehengas: 'Bridal Lehenga',
     sarees: 'Designer Saree',
     suits: 'Embroidered Suit',
-    menswear: 'Mens Kurta Pyjama'
+    menswear: 'Mens Kurta Pyjama',
+    indowestern: 'Indo Western'
   };
   parts.push(categoryNames[product.category] || 'Designer Wear');
   
@@ -163,7 +165,8 @@ function generateSEODescription(product: ScrapedProduct): string {
     lehengas: ['wedding', 'bridal', 'sangeet', 'reception', 'engagement'],
     sarees: ['wedding', 'party', 'festive', 'puja', 'celebration'],
     suits: ['party', 'festive', 'casual', 'office', 'celebration'],
-    menswear: ['wedding', 'festive', 'puja', 'celebration', 'party']
+    menswear: ['wedding', 'festive', 'puja', 'celebration', 'party'],
+    indowestern: ['party', 'festive', 'cocktail', 'reception', 'celebration']
   };
   
   const occasions = occasionMap[category] || ['special occasion'];
@@ -201,7 +204,8 @@ function generateSEOTags(product: ScrapedProduct): string[] {
     lehengas: ['lehenga', 'bridal lehenga', 'wedding lehenga', 'indian bridal wear', 'lehenga choli'],
     sarees: ['saree', 'designer saree', 'indian saree', 'wedding saree', 'party wear saree'],
     suits: ['salwar suit', 'salwar kameez', 'indian suit', 'designer suit', 'party wear suit'],
-    menswear: ['kurta', 'kurta pyjama', 'mens indian wear', 'wedding kurta', 'ethnic wear men']
+    menswear: ['kurta', 'kurta pyjama', 'mens indian wear', 'wedding kurta', 'ethnic wear men'],
+    indowestern: ['indo western', 'fusion wear', 'western wear', 'party wear', 'contemporary']
   };
   
   tags.push(...(categoryTags[product.category] || []));
@@ -242,7 +246,8 @@ async function createShopifyProduct(
 ): Promise<ShopifyProductResponse | null> {
   const productType = product.category === 'lehengas' ? 'Bridal Lehengas' :
                       product.category === 'sarees' ? 'Designer Sarees' :
-                      product.category === 'suits' ? 'Designer Suits' : 'Menswear';
+                      product.category === 'suits' ? 'Designer Suits' :
+                      product.category === 'indowestern' ? 'Indo Western' : 'Menswear';
 
   // Generate SEO-optimized content
   const seoTitle = generateSEOTitle(product);
@@ -279,12 +284,12 @@ async function createShopifyProduct(
       images,
       options: [{ name: 'Size', values: ['S', 'M', 'L', 'XL', 'XXL', 'Custom'] }],
       variants: [
-        { option1: 'S', price: product.price_usd.toFixed(2), sku: `${product.source_id}-S`, inventory_management: null },
-        { option1: 'M', price: product.price_usd.toFixed(2), sku: `${product.source_id}-M`, inventory_management: null },
-        { option1: 'L', price: product.price_usd.toFixed(2), sku: `${product.source_id}-L`, inventory_management: null },
-        { option1: 'XL', price: product.price_usd.toFixed(2), sku: `${product.source_id}-XL`, inventory_management: null },
-        { option1: 'XXL', price: product.price_usd.toFixed(2), sku: `${product.source_id}-XXL`, inventory_management: null },
-        { option1: 'Custom', price: product.price_usd.toFixed(2), sku: `${product.source_id}-Custom`, inventory_management: null },
+        { option1: 'S', price: product.price_usd.toFixed(2), compare_at_price: product.original_price_usd?.toFixed(2) || undefined, sku: `${product.source_id}-S`, inventory_management: null },
+        { option1: 'M', price: product.price_usd.toFixed(2), compare_at_price: product.original_price_usd?.toFixed(2) || undefined, sku: `${product.source_id}-M`, inventory_management: null },
+        { option1: 'L', price: product.price_usd.toFixed(2), compare_at_price: product.original_price_usd?.toFixed(2) || undefined, sku: `${product.source_id}-L`, inventory_management: null },
+        { option1: 'XL', price: product.price_usd.toFixed(2), compare_at_price: product.original_price_usd?.toFixed(2) || undefined, sku: `${product.source_id}-XL`, inventory_management: null },
+        { option1: 'XXL', price: product.price_usd.toFixed(2), compare_at_price: product.original_price_usd?.toFixed(2) || undefined, sku: `${product.source_id}-XXL`, inventory_management: null },
+        { option1: 'Custom', price: product.price_usd.toFixed(2), compare_at_price: product.original_price_usd?.toFixed(2) || undefined, sku: `${product.source_id}-Custom`, inventory_management: null },
       ],
     },
   };

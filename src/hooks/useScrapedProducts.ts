@@ -204,12 +204,17 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
     };
   }
   
+  const compareAtPrice = product.original_price_usd 
+    ? { amount: product.original_price_usd.toString(), currencyCode: 'USD' } 
+    : null;
+
   const variants = hasRealShopifyIds 
     ? product.shopify_variant_ids!.map((variantId, index) => ({
         node: {
           id: variantId.startsWith('gid://') ? variantId : `gid://shopify/ProductVariant/${variantId}`,
           title: sizeOptions[index] || `Size ${index + 1}`,
           price: { amount: product.price_usd.toString(), currencyCode: 'USD' },
+          compareAtPrice,
           availableForSale: true,
           selectedOptions: [{ name: 'Size', value: sizeOptions[index] || `Size ${index + 1}` }]
         }
@@ -219,6 +224,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
           id: `${product.id}-${size.toLowerCase()}`,
           title: size,
           price: { amount: product.price_usd.toString(), currencyCode: 'USD' },
+          compareAtPrice,
           availableForSale: true,
           selectedOptions: [{ name: 'Size', value: size }]
         }
@@ -241,6 +247,17 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
         priceInr: product.price_inr,
       },
       priceRange: {
+        minVariantPrice: {
+          amount: product.price_usd.toString(),
+          currencyCode: 'USD'
+        }
+      },
+      compareAtPriceRange: product.original_price_usd ? {
+        minVariantPrice: {
+          amount: product.original_price_usd.toString(),
+          currencyCode: 'USD'
+        }
+      } : {
         minVariantPrice: {
           amount: product.price_usd.toString(),
           currencyCode: 'USD'

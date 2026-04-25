@@ -275,7 +275,26 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <p className="text-2xl font-medium text-foreground">
             {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
           </p>
+          {(product as any).compareAtPriceRange?.maxVariantPrice?.amount &&
+            parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
+            <p className="text-lg text-muted-foreground line-through">
+              {formatPrice(
+                (product as any).compareAtPriceRange.maxVariantPrice.amount,
+                (product as any).compareAtPriceRange.maxVariantPrice.currencyCode
+              )}
+            </p>
+          )}
         </div>
+        {(product as any).compareAtPriceRange?.maxVariantPrice?.amount &&
+          parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
+          <p className="text-sm text-primary font-medium">
+            {Math.round((1 - parseFloat(currentPrice.amount) /
+              parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount)) * 100)}% off — You save {formatPrice(
+              (parseFloat((product as any).compareAtPriceRange.maxVariantPrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
+              currentPrice.currencyCode
+            )}
+          </p>
+        )}
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
             <Tag className="h-3 w-3" />

@@ -952,6 +952,12 @@ export type ShopifyProductNode = {
       currencyCode: string;
     };
   };
+  compareAtPriceRange?: {
+    minVariantPrice: {
+      amount: string;
+      currencyCode: string;
+    };
+  };
   images: {
     edges: Array<{
       node: {
@@ -969,6 +975,10 @@ export type ShopifyProductNode = {
           amount: string;
           currencyCode: string;
         };
+        compareAtPrice?: {
+          amount: string;
+          currencyCode: string;
+        } | null;
         availableForSale: boolean;
         selectedOptions: Array<{
           name: string;
@@ -996,6 +1006,12 @@ const convertToShopifyFormat = (product: LocalProduct | SareeProduct | MenswearP
         currencyCode: product.currency
       }
     },
+    compareAtPriceRange: ('originalPrice' in product && product.originalPrice) ? {
+      minVariantPrice: {
+        amount: product.originalPrice,
+        currencyCode: product.currency
+      }
+    } : undefined,
     images: {
       edges: product.images.map((url, index) => ({
         node: {

@@ -4,27 +4,24 @@ These fixes must be done in the **Shopify Admin** (not in code) to resolve remai
 
 ---
 
-## 1. Compare-at Prices Not Showing (Strikethrough/Sale Display)
+## 1. Compare-at Prices — Now Fully Fixed in Code
 
-The CSV already has `Compare-at price` populated for every product (1.43x the selling price = ~30% off display). If strikethrough prices are not showing on the live store:
+The compare-at price issue had **5 root causes** — all have been fixed in code:
 
-### Fix A: Re-import the CSV
-1. Go to **Shopify Admin > Products**
-2. Click **Import** (top right)
-3. Upload `public/luxemia_shopify_import.csv`
-4. Check "Overwrite any current products that have the same handle"
-5. After import, verify products show both Price and Compare-at price
+| Layer | Issue | Fix |
+|-------|-------|-----|
+| Storefront API queries | `compareAtPriceRange` not fetched | Added to both queries in `src/lib/shopify.ts` |
+| ShopifyProduct interface | Missing `compareAtPriceRange` field | Added to type definition |
+| sync-to-shopify | Variants created without `compare_at_price` | Added `compare_at_price` using `original_price_usd` |
+| ProductCard / ProductInfo | No rendering of strikethrough prices | Added strikethrough + % off display |
+| convertToShopifyFormat | `original_price_usd` dropped | Mapped to `compareAtPriceRange` and variant `compareAtPrice` |
 
-### Fix B: Check Theme Settings
-1. Go to **Online Store > Themes > Customize**
-2. Navigate to a product page
-3. Ensure the product price block is configured to show "Compare at" price
-4. Some themes require the **Compare at price** to be higher than **Price** AND the product must NOT be in a sale collection for it to display
+### What you still need to do in Shopify Admin:
 
-### Fix C: Bulk Edit (if re-import doesn't work)
-1. Go to **Products** > select all > **Bulk edit**
-2. Add the "Compare at price" column
-3. Verify values are present and higher than the selling price
+1. **Re-import the CSV** or **re-sync products** to ensure `compare_at_price` is set on existing Shopify variants
+   - Go to **Products** → **Import** → Upload `public/luxemia_shopify_import.csv`
+   - Check "Overwrite any current products that have the same handle"
+2. **Or trigger the sync-to-shopify edge function** with `resetSync: true` to re-push all products with compare-at prices
 
 ---
 
@@ -32,71 +29,44 @@ The CSV already has `Compare-at price` populated for every product (1.43x the se
 
 Products are tagged with collection-friendly tags. Create **Smart Collections** in Shopify Admin:
 
-### Collection 1: Sarees
-- **Type**: Smart Collection
-- **Condition**: Product tag = `Sarees` OR Product type = `Sarees`
-- **Handle**: `sarees`
-
-### Collection 2: Salwar Kameez
-- **Type**: Smart Collection
-- **Condition**: Product tag = `Salwar Kameez` OR Product type = `Salwar Kameez`
-- **Handle**: `salwar-kameez`
-
-### Collection 3: Menswear
-- **Type**: Smart Collection
-- **Condition**: Product tag = `Menswear` OR Product type = `Men's Indian Wear`
-- **Handle**: `menswear`
-
-### Collection 4: Lehengas
-- **Type**: Smart Collection
-- **Condition**: Product tag = `Lehenga` (if/when lehenga products are added)
-- **Handle**: `lehengas`
-
-### Collection 5: Indo-Western
-- **Type**: Smart Collection
-- **Condition**: Product tag = `Indo-Western`
-- **Handle**: `indo-western`
+| Collection | Condition | Handle |
+|---|---|---|
+| Sarees | Product tag = `Sarees` OR Product type = `Sarees` | `sarees` |
+| Salwar Kameez | Product tag = `Salwar Kameez` OR Product type = `Salwar Kameez` | `salwar-kameez` |
+| Menswear | Product tag = `Menswear` OR Product type = `Men's Indian Wear` | `menswear` |
+| Lehengas | Product tag = `Lehenga` OR Product type = `Lehengas` | `lehengas` |
+| Indo-Western | Product tag = `Indo-Western` OR Product type = `Indo Western` | `indo-western` |
 
 ---
 
 ## 3. Verify Navigation Menu
 
-After creating collections, update the Shopify navigation menu:
+After creating collections, update the Shopify navigation menu at **Online Store > Navigation**:
 
-1. Go to **Online Store > Navigation**
-2. Edit the main menu
-3. Ensure these links point to the correct Shopify collections:
-   - **Sarees** → `/collections/sarees`
-   - **Salwar Kameez** → `/collections/salwar-kameez`
-   - **Menswear** → `/collections/menswear`
-   - **Lehengas** → `/collections/lehengas`
-   - **Indo-Western** → `/collections/indo-western`
-
-> **Note**: The React frontend uses flat routes (`/sarees`, `/suits`, etc.) with redirects from `/collections/*`. These are separate from Shopify's native collection URLs.
+| Menu Item | Link To |
+|---|---|
+| Sarees | `/collections/sarees` |
+| Salwar Kameez | `/collections/salwar-kameez` |
+| Menswear | `/collections/menswear` |
+| Lehengas | `/collections/lehengas` |
+| Indo-Western | `/collections/indo-western` |
 
 ---
 
-## 4. Price Verification
+## Code Changes Summary
 
-All prices use the formula: **INR selling price x 2 / 90 = USD price (rounded to .99)**
+### Files Modified (commit: April 2026)
 
-Example verification:
-| Product | INR Price | USD Formula | USD CSV | Compare-at |
-|---------|-----------|-------------|---------|------------|
-| Lycra Mauve Saree | 4,445 | 4445x2/90 = 98.78 → $98.99 | $98.99 | $141.56 |
-| Silk Blue Saree | 13,095 | 13095x2/90 = 291 → $291.99 | $291.99 | $417.55 |
-| Art Silk Grey Sherwani | 7,595 | 7595x2/90 = 168.78 → $168.99 | $168.99 | $241.66 |
-
----
-
-## Quick Summary
-
-| Issue | Status | Where to Fix |
-|-------|--------|-------------|
-| Compare-at prices in CSV | Fixed (populated) | Re-import CSV in Shopify Admin |
-| Strikethrough display | Needs Shopify theme check | Shopify Admin > Themes |
-| Collection pages 404 | Fixed (redirects added) | Code pushed to GitHub |
-| Broken nav links | Fixed | Code pushed to GitHub |
-| Duplicate product names | Fixed (unique IDs added) | Code pushed to GitHub |
-| Per-product pricing | Fixed (INR x 2 / 90) | Code pushed to GitHub |
-| Shopify collections | Need to create | Shopify Admin > Products > Collections |
+| File | Change |
+|---|---|
+| `src/lib/shopify.ts` | Added `compareAtPriceRange` to ShopifyProduct type + both GraphQL queries |
+| `src/components/ui/ProductCard.tsx` | Added strikethrough price + % off badge |
+| `src/components/product/ProductInfo.tsx` | Added strikethrough + savings display on product detail |
+| `src/components/product/StickyAddToBag.tsx` | Added compare-at price in mobile sticky bar |
+| `src/hooks/useScrapedProducts.ts` | Map `original_price_usd` to `compareAtPriceRange` and variant `compareAtPrice` |
+| `src/lib/scrapedProducts.ts` | Same mapping for legacy converter |
+| `src/data/localProducts.ts` | Added `compareAtPriceRange` + `compareAtPrice` to ShopifyProductNode type |
+| `supabase/functions/sync-to-shopify/index.ts` | Added `compare_at_price` to variants + `indowestern` category + `original_price_usd` to interface |
+| `src/App.tsx` | Added redirects for `/collections/sarees`, `/collections/indo-western`, etc. |
+| `src/components/home/ShopByOccasion.tsx` | Fixed broken `/collections/bridesmaid-dresses` link |
+| `build_csv.py` | Already uses per-product INR×2÷90 pricing with compare-at at 1.43x |

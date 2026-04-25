@@ -35,6 +35,12 @@ export interface ShopifyProduct {
         currencyCode: string;
       };
     };
+    compareAtPriceRange: {
+      minVariantPrice: {
+        amount: string;
+        currencyCode: string;
+      };
+    };
     images: {
       edges: Array<{
         node: {
@@ -53,6 +59,10 @@ export interface ShopifyProduct {
             amount: string;
             currencyCode: string;
           };
+          compareAtPrice: {
+            amount: string;
+            currencyCode: string;
+          } | null;
           availableForSale: boolean;
           selectedOptions: Array<{
             name: string;
@@ -93,6 +103,12 @@ const STOREFRONT_QUERY = `
               currencyCode
             }
           }
+          compareAtPriceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
           images(first: 3) {
             edges {
               node {
@@ -108,6 +124,10 @@ const STOREFRONT_QUERY = `
                 title
                 sku
                 price {
+                  amount
+                  currencyCode
+                }
+                compareAtPrice {
                   amount
                   currencyCode
                 }
@@ -146,6 +166,12 @@ const PRODUCT_BY_HANDLE_QUERY = `
           currencyCode
         }
       }
+      compareAtPriceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
       images(first: 10) {
         edges {
           node {
@@ -161,6 +187,10 @@ const PRODUCT_BY_HANDLE_QUERY = `
             title
             sku
             price {
+              amount
+              currencyCode
+            }
+            compareAtPrice {
               amount
               currencyCode
             }
