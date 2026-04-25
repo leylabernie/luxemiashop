@@ -12,7 +12,7 @@ const occasions = [
   {
     label: 'Bridesmaids',
     sublabel: 'The perfect squad look',
-    href: '/collections/bridesmaid-dresses',
+    href: '/sarees',
     color: 'bg-purple-50 dark:bg-purple-950/30',
     accent: 'text-purple-700 dark:text-purple-300',
   },

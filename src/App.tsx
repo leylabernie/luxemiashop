@@ -93,11 +93,19 @@ const App = () => (
                 <Route path="/jewelry" element={<Navigate to="/collections" replace />} />
                 <Route path="/virtual-try-on" element={<VirtualTryOn />} />
                 <Route path="/faq" element={<FAQ />} />
-                {/* Redirects for removed collection pages — keeps SEO equity */}
+                {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/wedding-sarees" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/bridal-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/reception-outfits" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/festive-wear" element={<Navigate to="/collections" replace />} />
+                <Route path="/collections/sarees" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/salwar-kameez" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/menswear" element={<Navigate to="/menswear" replace />} />
+                <Route path="/collections/lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/indo-western" element={<Navigate to="/indowestern" replace />} />
+                <Route path="/collections/bridesmaid-dresses" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/groomsman-outfits" element={<Navigate to="/menswear" replace />} />
 
                 <Route path="/sitemap" element={<Sitemap />} />
                 <Route path="/style-consultation" element={<StyleConsultation />} />
