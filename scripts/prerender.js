@@ -180,6 +180,13 @@ const routes = [
     `,
   },
   {
+    path: '/products',
+    title: 'All Products — Shop Indian Ethnic Wear Online | LuxeMia',
+    description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free shipping to USA, UK & Canada.',
+    h1: 'All Products',
+    content: '<p>Explore our complete collection of luxury Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free worldwide shipping.</p>',
+  },
+  {
     path: '/collections/bridal-lehengas',
     title: 'Bridal Lehenga Collection — Designer Wedding Lehengas | LuxeMia',
     description: 'Shop bridal lehengas at LuxeMia. Designer bridal lehenga choli in silk, velvet & net. Handcrafted embroidery, luxurious fabrics. Free shipping.',
@@ -342,7 +349,7 @@ const routes = [
     content: '<p>We believe luxury and responsibility go hand in hand. Learn about our fair trade practices, eco-friendly packaging, and commitment to artisan communities.</p>',
   },
   {
-    path: '/virtual-tryon',
+    path: '/virtual-try-on',
     title: 'Virtual Try-On — See How You Look in Indian Ethnic Wear | LuxeMia',
     description: 'Try on Indian ethnic wear virtually at LuxeMia. See how lehengas, sarees & suits look on you before you buy. Free virtual fitting room.',
     h1: 'Virtual Try-On',

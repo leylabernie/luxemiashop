@@ -430,6 +430,6 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     }
   }
 
-  console.log('Checkout URL created successfully:', checkoutUrl);
+  // Checkout URL created successfully
   return checkoutUrl;
 }

@@ -119,7 +119,7 @@ const Jewelry = () => {
       <SEOHead
         title="Indian Bridal Jewelry — LuxeMia"
         description="Shop stunning Indian bridal jewelry at LuxeMia. Kundan, polki, temple jewelry and more. Perfect for weddings and festive occasions."
-        canonical="https://luxemia.shop/jewelry"
+        canonical="https://luxemia.shop/collections"
       />
       <Header />
       

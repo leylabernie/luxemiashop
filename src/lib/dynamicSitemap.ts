@@ -26,6 +26,7 @@ interface ScrapedProductRow {
 export const staticPages = [
   { loc: '/', changefreq: 'daily', priority: '1.0', title: 'Home' },
   { loc: '/collections', changefreq: 'daily', priority: '0.9', title: 'Collections' },
+  { loc: '/products', changefreq: 'daily', priority: '0.9', title: 'All Products' },
   { loc: '/brand-story', changefreq: 'monthly', priority: '0.6', title: 'Brand Story' },
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9', title: 'Lehengas' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9', title: 'Sarees' },
@@ -34,7 +35,7 @@ export const staticPages = [
   { loc: '/new-arrivals', changefreq: 'daily', priority: '0.8', title: 'New Arrivals' },
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6', title: 'Artisans' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6', title: 'Sustainability' },
-  { loc: '/virtual-tryon', changefreq: 'monthly', priority: '0.7', title: 'Virtual Try-On' },
+  { loc: '/virtual-try-on', changefreq: 'monthly', priority: '0.7', title: 'Virtual Try-On' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5', title: 'Contact' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5', title: 'FAQ' },
   { loc: '/shipping', changefreq: 'monthly', priority: '0.4', title: 'Shipping' },

@@ -89,7 +89,7 @@ const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {product && (
+      {product ? (
         <SEOHead
           title={`${product.title} | ${categoryName} | LuxeMia`}
           description={product.description?.slice(0, 155) + '...' || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`}
@@ -115,6 +115,12 @@ const ProductDetail = () => {
             { name: product.title, url: `/product/${product.handle}` },
           ]}
           faqs={productFaqs}
+        />
+      ) : (
+        <SEOHead
+          title="Product Not Found | LuxeMia"
+          description="This product could not be found."
+          noIndex={true}
         />
       )}
 
