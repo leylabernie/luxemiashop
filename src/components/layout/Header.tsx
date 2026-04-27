@@ -18,8 +18,8 @@ import {
 const announcements = [
   'Free shipping on orders over $300 · Worldwide delivery',
   'New arrivals just landed — shop the latest styles',
-  'Custom sizing on all orders · Made to your measurements',
-  'Duty-free delivery to USA, UK & Canada',
+  'Quality Indian ethnic wear at fair prices',
+  '7-day returns · Trackable worldwide shipping',
 ];
 
 const navLinks = [
@@ -128,7 +128,7 @@ const Header = () => {
                 transition={{ duration: 0.6 }}
               >
                 {isHomePage ? (
-                  <h1 className="sr-only">LuxeMia — Luxury Indian Ethnic Wear</h1>
+                  <h1 className="sr-only">LuxeMia — Indian Ethnic Wear Online</h1>
                 ) : null}
                 <span aria-hidden="true">LuxeMia</span>
               </motion.div>

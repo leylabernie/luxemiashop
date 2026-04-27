@@ -4,23 +4,23 @@ import { Gem, Leaf, Heart, Award } from 'lucide-react';
 const values = [
   {
     icon: Gem,
-    title: 'Artisan Crafted',
-    description: 'Each piece handcrafted by master weavers preserving centuries-old techniques.',
+    title: 'Curated Selection',
+    description: 'Each piece is carefully selected from India\'s textile hubs for quality and style.',
   },
   {
     icon: Leaf,
-    title: 'Sustainable',
-    description: 'Ethically sourced materials and eco-conscious production methods.',
+    title: 'Honest Value',
+    description: 'Quality Indian ethnic wear at fair prices, with no misleading claims.',
   },
   {
     icon: Heart,
-    title: 'Made with Love',
-    description: 'Attention to every detail, from thread selection to final finishing.',
+    title: 'Customer First',
+    description: 'Real support, real photos, and accurate descriptions so you know what you get.',
   },
   {
     icon: Award,
-    title: 'Premium Quality',
-    description: 'Only the finest fabrics and embellishments for lasting elegance.',
+    title: 'Quality Checked',
+    description: 'Every item is inspected before shipping to ensure it meets our standards.',
   },
 ];
 

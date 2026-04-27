@@ -33,7 +33,7 @@ const categories = [
   },
   {
     name: 'Menswear',
-    subtitle: 'Regal Attire',
+    subtitle: 'Classic Style',
     description: 'Sherwanis, kurta sets and Indo-western outfits for grooms',
     href: '/menswear',
     image: categoryMenswearImg,

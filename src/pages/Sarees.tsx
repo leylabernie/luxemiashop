@@ -54,7 +54,7 @@ const Sarees = () => {
   const sareeFaqs = [
     {
       question: "What types of sarees are available at LuxeMia?",
-      answer: "LuxeMia offers a curated collection of premium sarees including Kanchipuram silk, Banarasi silk, Tissue silk, Georgette, and handwoven sarees. Our collection spans wedding sarees, festive wear, casual sarees, and occasion wear suitable for every celebration."
+      answer: "LuxeMia offers a curated collection of sarees including Kanchipuram silk, Banarasi silk, Tissue silk, Georgette, and more. Our collection spans wedding sarees, festive wear, casual sarees, and occasion wear suitable for every celebration."
     },
     {
       question: "How do I choose the right saree fabric?",
@@ -62,7 +62,7 @@ const Sarees = () => {
     },
     {
       question: "Do you offer custom blouse stitching with sarees?",
-      answer: "Yes, we offer complimentary blouse stitching with every saree purchase. You can provide your measurements and preferred style (padded, princess cut, etc.), and our master tailors will create a perfectly fitted blouse."
+      answer: "Yes, we offer blouse stitching with every saree purchase. You can provide your measurements and preferred style (padded, princess cut, etc.), and our tailors will prepare a fitted blouse for you."
     },
     {
       question: "What is the delivery time for sarees?",
@@ -87,8 +87,8 @@ const Sarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Sarees: Buy Indian Silk & Designer Sarees Online | LuxeMia"
-        description="Explore LuxeMia's collection of authentic Indian sarees online. Discover handwoven silk sarees, designer drapes, and wedding sarees with global shipping."
+        title="Sarees: Buy Indian Silk Sarees Online | LuxeMia"
+        description="Explore LuxeMia's collection of Indian sarees online. Discover silk sarees, elegant drapes, and wedding sarees with global shipping."
         canonical="https://luxemia.shop/sarees"
         type="collection"
         image="/og/og-sarees.jpg"
@@ -99,7 +99,7 @@ const Sarees = () => {
         ]}
         collection={{
           name: 'Sarees Collection',
-          description: 'Handwoven silk sarees and designer drapes for weddings and celebrations.',
+          description: 'Silk sarees and elegant drapes for weddings and celebrations.',
           items: collectionItems,
         }}
         faqs={sareeFaqs}
@@ -119,7 +119,7 @@ const Sarees = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">Sarees</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Exquisite handwoven sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
+              Beautiful sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
             </p>
           </motion.div>
         </section>
@@ -183,7 +183,7 @@ const Sarees = () => {
                   <h3 className="font-serif text-2xl mb-4">Coming Soon</h3>
                   <p className="text-muted-foreground mb-6">
                     Our saree collection featuring Kanchipuram silks, Banarasi weaves, and contemporary
-                    designs is being curated. Check back soon for exquisite handwoven drapes.
+                    designs is being curated. Check back soon for beautiful new additions.
                   </p>
                   <Button asChild variant="outline">
                     <Link to="/lehengas">Explore Lehengas</Link>

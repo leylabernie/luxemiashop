@@ -44,7 +44,7 @@ const UK = () => (
       ],
       benefits: [
         { icon: Truck, title: 'Free UK Delivery', description: 'Free on orders over $99 — 7-12 day delivery' },
-        { icon: Shield, title: 'Secure Packaging', description: 'Premium gift-ready packaging on every order' },
+        { icon: Shield, title: 'Secure Packaging', description: 'Quality gift-ready packaging on every order' },
         { icon: Clock, title: 'Express Available', description: '3-5 day express delivery at checkout' },
       ],
     }}

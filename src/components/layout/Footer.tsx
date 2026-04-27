@@ -21,8 +21,7 @@ const footerLinks = {
   about: [
     { name: 'Our Story', href: '/brand-story' },
     { name: 'Style Quiz', href: '/style-quiz' },
-    { name: 'Artisans', href: '/artisans' },
-    { name: 'Sustainability', href: '/sustainability' },
+    { name: 'Our Regions', href: '/artisans' },
     { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
   ],
@@ -76,7 +75,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
               LuxeMia
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed">
-              Celebrating the artistry of Indian craftsmanship through timeless ethnic wear.
+              Beautiful Indian ethnic wear at fair prices — shipped worldwide.
             </p>
             <div className="flex gap-3 mt-6">
               <a href="https://www.instagram.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Instagram">

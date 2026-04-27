@@ -218,11 +218,11 @@ const Lehengas = () => {
   const lehengaFaqs = [
     {
       question: "What types of lehengas are available at LuxeMia?",
-      answer: "LuxeMia offers bridal lehengas, reception lehengas, festive lehengas, and party wear in various fabrics including Net, Silk, Velvet, Georgette, Chinnon, and Roman Silk. Each piece features exquisite embroidery, sequins, zari, or mirror work."
+      answer: "LuxeMia offers bridal lehengas, reception lehengas, festive lehengas, and party wear in various fabrics including Net, Silk, Velvet, Georgette, Chinnon, and Roman Silk. Each piece features embroidery, sequins, zari, or mirror work."
     },
     {
       question: "How do I find the right lehenga size?",
-      answer: "We offer sizes S, M, L, XL, XXL, and Custom sizing. For bridal lehengas, we highly recommend custom sizing for a perfect fit. Provide your bust, waist, hip, and height measurements, and our tailors will create your dream lehenga."
+      answer: "We offer sizes S, M, L, XL, XXL, and Custom sizing. For bridal lehengas, we highly recommend custom sizing for a perfect fit. Provide your bust, waist, hip, and height measurements, and our team will prepare your lehenga to your measurements."
     },
     {
       question: "What is included in a lehenga set?",
@@ -230,7 +230,7 @@ const Lehengas = () => {
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
-      answer: "Ready-to-ship lehengas arrive in 7-12 business days (standard) or 3-5 days (express). Custom-sized bridal lehengas require 3-4 weeks for handcrafting. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
+      answer: "Ready-to-ship lehengas arrive in 7-12 business days (standard) or 3-5 days (express). Custom-sized bridal lehengas require 3-4 weeks for preparation. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
     },
     {
       question: "Can I customize the color of my lehenga?",
@@ -251,8 +251,8 @@ const Lehengas = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Lehengas: Designer Bridal & Wedding Lehengas Online | LuxeMia"
-        description="Shop LuxeMia's exquisite collection of designer lehengas online. Find bridal lehengas, wedding lehengas, and festive lehenga cholis with worldwide shipping."
+        title="Lehengas: Bridal & Wedding Lehengas Online | LuxeMia"
+        description="Shop LuxeMia's collection of lehengas online. Find bridal lehengas, wedding lehengas, and festive lehenga cholis at fair prices with worldwide shipping."
         canonical="https://luxemia.shop/lehengas"
         type="collection"
         image="/og/og-lehengas.jpg"
@@ -263,7 +263,7 @@ const Lehengas = () => {
         ]}
         collection={{
           name: 'Lehengas Collection',
-          description: 'Exquisite bridal and festive lehengas crafted with intricate embroidery and premium fabrics.',
+          description: 'Bridal and festive lehengas with beautiful embroidery and quality fabrics at affordable prices.',
           items: collectionItems,
         }}
         faqs={lehengaFaqs}
@@ -284,7 +284,7 @@ const Lehengas = () => {
             </p>
                       <h1 className="text-3xl md:text-4xl font-serif mb-4">Lehengas</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Exquisite bridal lehengas, festive lehenga cholis, and contemporary designs for your special moments.
+              Beautiful bridal lehengas, festive lehenga cholis, and contemporary designs for your special moments.
             </p>
           </motion.div>
         </section>

@@ -53,7 +53,7 @@ const NewArrivals = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
             <p className="text-muted-foreground font-light max-w-md mx-auto text-sm lg:text-base">
-              Discover our latest pieces — handcrafted with care, arriving fresh every week.
+              Discover our latest pieces — made with care, arriving fresh every week.
             </p>
           </div>
         </div>

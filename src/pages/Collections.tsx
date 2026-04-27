@@ -58,8 +58,8 @@ const Collections = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Shop All Collections | Designer Ethnic Wear - LuxeMia"
-        description="Explore our complete collection of designer lehengas, sarees, suits, and menswear. Handcrafted ethnic wear with worldwide shipping."
+        title="Shop All Collections | Indian Ethnic Wear - LuxeMia"
+        description="Explore our complete collection of lehengas, sarees, suits, and menswear. Quality ethnic wear with worldwide shipping."
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -81,7 +81,7 @@ const Collections = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">Collections</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Discover our curated selection of handcrafted ethnic wear, each piece telling a story of tradition and artistry.
+              Discover our curated selection of quality ethnic wear, each piece selected for its style and value.
             </p>
           </motion.div>
         </section>

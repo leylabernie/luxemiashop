@@ -7,7 +7,7 @@ const quickLinks = [
   { label: 'Wedding Sarees', href: '/sarees', featured: false },
   { label: 'Indo-Western', href: '/indowestern', featured: false },
   { label: 'Festive Wear', href: '/collections', featured: false },
-  { label: 'Designer Suits', href: '/suits', featured: false },
+  { label: 'Salwar Kameez', href: '/suits', featured: false },
   { label: 'Menswear', href: '/menswear', featured: false },
 ];
 

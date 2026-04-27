@@ -270,7 +270,7 @@ const BlogPost = () => {
               Explore Our Collections
             </h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-              Discover handcrafted pieces inspired by these fashion trends
+              Discover beautiful pieces inspired by these fashion trends
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild>

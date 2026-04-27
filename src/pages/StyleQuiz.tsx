@@ -180,7 +180,7 @@ const getProfile = (answers: Answers): Profile => {
     return {
       name: 'The Timeless Draper',
       tagline: 'Grace, poise, and six yards of perfection',
-      description: 'The saree is your language. Whether Kanchipuram silk, Banarasi brocade, or designer georgette — you carry yourself with effortless grace and quiet confidence.',
+      description: 'The saree is your language. Whether Kanchipuram silk, Banarasi brocade, or elegant georgette — you carry yourself with effortless grace and quiet confidence.',
       emoji: '🌸',
       gradient: 'from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-950/30 dark:via-teal-950/30 dark:to-cyan-950/30',
       primaryHref: '/sarees',

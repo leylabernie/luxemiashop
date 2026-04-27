@@ -1,27 +1,34 @@
-import { Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Shield, Truck, RefreshCcw, Headphones } from 'lucide-react';
 
-const testimonials = [
+const reasons = [
   {
-    name: 'Priya Sharma',
-    location: 'New York, USA',
-    quote: 'The bridal lehenga exceeded all my expectations. The craftsmanship is impeccable and I felt like royalty on my wedding day.',
-    rating: 5,
-    product: 'Bridal Lehenga',
+    icon: Shield,
+    title: 'Quality Checked',
+    description: 'Every item is inspected before it ships to you. We catch issues so you don\'t have to.',
   },
   {
-    name: 'Ananya Patel',
-    location: 'London, UK',
-    quote: 'Absolutely stunning sarees! The quality of silk and the attention to detail in the embroidery is remarkable.',
-    rating: 5,
-    product: 'Banarasi Silk Saree',
+    icon: Truck,
+    title: 'Worldwide Delivery',
+    description: 'Trackable shipping to the US, UK, Canada, and more with standard and express options.',
   },
   {
-    name: 'Meera Kapoor',
-    location: 'Dubai, UAE',
-    quote: 'LuxeMia has become my go-to for all occasions. Their collection is unique and the customer service is exceptional.',
-    rating: 5,
-    product: 'Designer Anarkali',
+    icon: RefreshCcw,
+    title: 'Easy Returns',
+    description: '7-day return policy on eligible items. We want you to be happy with your purchase.',
+  },
+  {
+    icon: Headphones,
+    title: 'Real Support',
+    description: 'Have a question about sizing, fabric, or your order? Our team actually responds.',
+  },
+  {
+    title: 'Accurate Descriptions',
+    description: 'We tell you exactly what you\'re getting — real fabric info, real measurements, real photos.',
+  },
+  {
+    title: 'Fair Prices',
+    description: 'No inflated "original" prices or fake sales. What you see is what things actually cost.',
   },
 ];
 
@@ -38,7 +45,7 @@ const CustomerStories = () => {
             viewport={{ once: true }}
             className="text-xs tracking-luxury uppercase text-muted-foreground mb-3 block"
           >
-            Customer Stories
+            Why Shop With Us
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -47,48 +54,36 @@ const CustomerStories = () => {
             viewport={{ once: true }}
             className="font-serif text-3xl lg:text-4xl"
           >
-            Loved by Brides Worldwide
+            Built on Honesty
           </motion.h2>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {testimonials.map((testimonial, index) => (
+        {/* Reasons Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {reasons.map((reason, index) => (
             <motion.div
-              key={testimonial.name}
+              key={reason.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="bg-card p-6 lg:p-8 border border-border/50"
             >
-              {/* Stars */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 fill-accent text-accent"
-                  />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <blockquote className="text-sm lg:text-base text-foreground/80 mb-6 font-light leading-relaxed italic">
-                "{testimonial.quote}"
-              </blockquote>
-
-              {/* Author */}
-              <div className="border-t border-border/50 pt-4">
-                <p className="font-medium text-foreground">
-                  {testimonial.name}
-                </p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {testimonial.location}
-                </p>
-                <p className="text-xs text-primary mt-2">
-                  Purchased: {testimonial.product}
-                </p>
-              </div>
+              {'icon' in reason && reason.icon ? (
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                  <reason.icon className="w-5 h-5 text-primary" />
+                </div>
+              ) : (
+                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                  <span className="text-primary font-serif text-lg">✓</span>
+                </div>
+              )}
+              <h3 className="font-medium text-foreground mb-2">
+                {reason.title}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {reason.description}
+              </p>
             </motion.div>
           ))}
         </div>

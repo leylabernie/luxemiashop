@@ -421,7 +421,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           className="w-full min-h-[80px] p-3 text-sm bg-background border border-border rounded-sm focus:border-primary outline-none transition-colors resize-none"
         />
         <p className="text-[11px] text-muted-foreground italic">
-          * Our master tailors will review your requests. Some complex alterations may incur additional charges.
+          * Our tailors will review your requests. Some complex alterations may incur additional charges.
         </p>
       </div>
 

@@ -54,7 +54,7 @@ const FestiveWear = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Festive Wear Collection | Diwali, Navratri & Karwa Chauth Outfits - LuxeMia"
-        description="Shop festive wear for Diwali, Navratri, Karwa Chauth & celebrations at LuxeMia. Discover designer lehengas, sarees & suits for Haldi, Mehendi, Sangeet ceremonies. Free styling consultation."
+        description="Shop festive wear for Diwali, Navratri, Karwa Chauth & celebrations at LuxeMia. Discover lehengas, sarees & suits for Haldi, Mehendi, Sangeet ceremonies. Free styling consultation."
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },

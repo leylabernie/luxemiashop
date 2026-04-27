@@ -1197,15 +1197,15 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>3. Sustainable and Handcrafted Choices</h2>
-      <p>Sustainability is no longer a trend — it is a value that NRI shoppers are actively seeking in their wedding wardrobes. In 2026, there is a significant shift toward <strong>ethically sourced and handcrafted Indian ethnic wear</strong>. Brides and guests alike are choosing pieces made by skilled artisans, with transparent sourcing and minimal environmental impact.</p>
+      <p>Sustainability is no longer a trend — it is a value that NRI shoppers are actively seeking in their wedding wardrobes. In 2026, there is a significant shift toward <strong>quality Indian ethnic wear sourced from established suppliers</strong>. Brides and guests alike are choosing pieces made by skilled artisans, with transparent sourcing and minimal environmental impact.</p>
 
-      <p>Handloom weaves like Banarasi brocade, Kanchipuram silk, and Chanderi are experiencing a renaissance. These fabrics carry centuries of tradition in every thread and support the livelihoods of artisan communities across India. At LuxeMia, every piece is sourced directly from master craftsmen, ensuring you receive authentic, heritage-quality garments. Our commitment to <a href="/lehengas">handcrafted bridal lehengas</a> and <a href="/sarees">artisan-woven sarees</a> reflects this ethos.</p>
+      <p>Traditional weaves like Banarasi brocade, Kanchipuram silk, and Chanderi are experiencing a renaissance. These fabrics carry centuries of tradition in every thread. At LuxeMia, every piece is sourced from experienced manufacturers, ensuring you receive quality garments. Our commitment to <a href="/lehengas">bridal lehengas</a> and <a href="/sarees">beautiful sarees</a> reflects this ethos.</p>
 
       <h3>Why Sustainable Choices Matter</h3>
       <ul>
-        <li><strong>Heritage preservation:</strong> Buying handcrafted supports dying art forms like zardozi, chikankari, and Phulkari</li>
+        <li><strong>Heritage preservation:</strong> Traditional techniques like zardozi, chikankari, and Phulkari are beautiful art forms</li>
         <li><strong>Quality over quantity:</strong> Handmade pieces are investment garments that last for generations</li>
-        <li><strong>Meaningful connection:</strong> Wearing a garment made by an artisan's hands adds emotional depth to your wedding outfit</li>
+        <li><strong>Meaningful connection:</strong> Wearing a beautifully made outfit adds to the joy of your celebration</li>
         <li><strong>Reduced carbon footprint:</strong> Traditional techniques use less energy than mass factory production</li>
       </ul>
 
@@ -1226,7 +1226,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Make Your NRI Wedding Wardrobe Unforgettable</h2>
       <p>The beauty of Indian wedding fashion in 2026 lies in its diversity. Whether you choose a traditional red bridal lehenga, a pastel-toned reception saree, or a fusion sharara set for the Sangeet, the key is finding pieces that reflect your personal style while honoring cultural traditions. As an NRI, you have the unique advantage of drawing inspiration from both Indian and global fashion sensibilities.</p>
 
-      <p>At LuxeMia, we offer <strong>free worldwide shipping</strong> to the USA, UK, Canada, and beyond — making it effortless to access premium Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Designer Lehengas</a>, <a href="/sarees">Luxury Sarees</a>, and <a href="/suits">Elegant Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
+      <p>At LuxeMia, we offer <strong>free worldwide shipping</strong> to the USA, UK, Canada, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -1276,10 +1276,10 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>The LuxeMia Difference: Sourcing and Quality</h2>
-      <p>At <a href="/">LuxeMia</a>, authenticity is not a marketing claim — it is the foundation of our business. Every saree in our <a href="/sarees">curated collection</a> is sourced directly from artisan workshops and verified weaver cooperatives across India. Here is what sets us apart:</p>
+      <p>At <a href="/">LuxeMia</a>, authenticity is not a marketing claim — it is the foundation of our business. Every saree in our <a href="/sarees">curated collection</a> is sourced from established suppliers and manufacturers across India. Here is what sets us apart:</p>
 
-      <h3>Direct Artisan Sourcing</h3>
-      <p>We work directly with weaving communities in Varanasi, Kanchipuram, Chanderi, and beyond. This eliminates middlemen, ensuring fair compensation for artisans and authentic products for our customers. When you purchase from LuxeMia, you are directly supporting the livelihood of Indian craftspeople.</p>
+      <h3>Our Sourcing</h3>
+      <p>We source from established suppliers in India's textile hubs, including Varanasi, Kanchipuram, and other renowned regions. This allows us to offer quality products at fair prices to our customers.</p>
 
       <h3>Quality Verification</h3>
       <p>Every piece undergoes a multi-step quality check before it reaches our warehouse. We verify fabric authenticity, check for consistent weave quality, inspect zari work, and ensure color fastness. Our detailed product descriptions specify exact fabric composition, weave type, and care instructions — so you always know precisely what you are purchasing.</p>

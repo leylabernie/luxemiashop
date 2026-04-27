@@ -138,8 +138,8 @@ const GroomsmanOutfits = () => {
             </div>
             <div className="flex flex-col items-center text-center p-6 bg-secondary/30 rounded-sm border border-border/50">
               <ShieldCheck className="h-8 w-8 text-primary mb-4" />
-              <h3 className="font-medium mb-2 uppercase tracking-wide text-sm">Premium Quality</h3>
-              <p className="text-xs text-muted-foreground">Handcrafted from the finest silks and fabrics for a look that commands respect.</p>
+              <h3 className="font-medium mb-2 uppercase tracking-wide text-sm">Quality Fabrics</h3>
+              <p className="text-xs text-muted-foreground">Made from quality silks and fabrics for a look that commands respect.</p>
             </div>
           </div>
 

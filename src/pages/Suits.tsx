@@ -259,7 +259,7 @@ const Suits = () => {
   const suitFaqs = [
     {
       question: "What styles of suits are available at LuxeMia?",
-      answer: "LuxeMia offers Anarkali suits, Sharara sets, Gharara suits, Palazzo suits, Designer ensembles, and Gowns. Our collection features premium fabrics like Silk, Georgette, Chinnon, Velvet, and Organza with intricate embroidery and zari work."
+      answer: "LuxeMia offers Anarkali suits, Sharara sets, Gharara suits, Palazzo suits, and Gowns. Our collection features fabrics like Silk, Georgette, Chinnon, Velvet, and Organza with embroidery and zari work."
     },
     {
       question: "What sizes are available for suits?",
@@ -292,8 +292,8 @@ const Suits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Salwar Kameez & Designer Suits Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
-        description="Shop LuxeMia for elegant Salwar Kameez online. Discover designer Anarkali, Palazzo, and Sharara suits with worldwide shipping, perfect for festive wear & occasions."
+        title="Salwar Kameez & Suits Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
+        description="Shop LuxeMia for elegant Salwar Kameez online. Discover Anarkali, Palazzo, and Sharara suits with worldwide shipping, perfect for festive wear & occasions."
         canonical="https://luxemia.shop/suits"
         type="collection"
         image="/og/og-suits.jpg"
@@ -304,7 +304,7 @@ const Suits = () => {
         ]}
         collection={{
           name: 'Salwar Kameez Collection',
-          description: 'Elegant Anarkali suits, Sharara sets, and designer salwar kameez.',
+          description: 'Elegant Anarkali suits, Sharara sets, and salwar kameez.',
           items: collectionItems,
         }}
         faqs={suitFaqs}

@@ -18,7 +18,7 @@ const USA = () => (
         name: 'Priya M.',
         location: 'New Jersey, USA',
         rating: 5,
-        body: 'The lehenga arrived beautifully packaged. The fabric quality exceeded my expectations and the embroidery work is exquisite. Wore it to my cousin\'s wedding and received so many compliments!',
+        body: 'The lehenga arrived beautifully packaged. The fabric quality exceeded my expectations and the embroidery work is beautiful. Wore it to my cousin\'s wedding and received so many compliments!',
       },
       faqs: [
         {

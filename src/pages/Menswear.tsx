@@ -204,7 +204,7 @@ const Menswear = () => {
   const menswearFaqs = [
     {
       question: "What types of men's ethnic wear are available at LuxeMia?",
-      answer: "LuxeMia offers Groom Sherwanis, Kurta Pajama sets, Velvet Sherwanis, Indo-Western outfits, and Nehru Jackets. Our collection features premium fabrics like Art Silk, Banarasi Jacquard, Velvet, and Cotton with exquisite embroidery."
+      answer: "LuxeMia offers Groom Sherwanis, Kurta Pajama sets, Velvet Sherwanis, Indo-Western outfits, and Nehru Jackets. Our collection features fabrics like Art Silk, Banarasi Jacquard, Velvet, and Cotton with embroidery."
     },
     {
       question: "How do I find the right size for a sherwani?",
@@ -238,7 +238,7 @@ const Menswear = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Menswear: Indian Ethnic Wear for Men | LuxeMia"
-        description="Shop the latest Menswear collection at LuxeMia. Designer sherwanis, kurta pajamas, and Nehru jackets for weddings and celebrations."
+        description="Shop the latest Menswear collection at LuxeMia. Sherwanis, kurta pajamas, and Nehru jackets for weddings and celebrations."
         canonical="https://luxemia.shop/menswear"
         type="collection"
         image="/og/og-menswear.jpg"
@@ -249,7 +249,7 @@ const Menswear = () => {
         ]}
         collection={{
           name: 'Menswear Collection',
-          description: 'Premium sherwanis, kurta pajamas, and Indo-Western outfits for men.',
+          description: 'Sherwanis, kurta pajamas, and Indo-Western outfits for men.',
           items: collectionItems,
         }}
         faqs={menswearFaqs}
@@ -269,7 +269,7 @@ const Menswear = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">Menswear</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Premium sherwanis, kurta pajamas, and Indo-Western outfits for men.
+              Sherwanis, kurta pajamas, and Indo-Western outfits for men.
             </p>
           </motion.div>
         </section>
@@ -356,7 +356,7 @@ const Menswear = () => {
                   <div className="max-w-md mx-auto">
                     <h3 className="font-serif text-2xl mb-4">Coming Soon</h3>
                     <p className="text-muted-foreground mb-6">
-                      Our menswear collection featuring designer sherwanis, kurta pajamas, and Indo-western outfits is being curated. Check back soon for regal wedding attire for grooms and guests.
+                      Our menswear collection featuring sherwanis, kurta pajamas, and Indo-western outfits is being curated. Check back soon for wedding attire for grooms and guests.
                     </p>
                     <Button asChild variant="outline">
                       <Link to="/lehengas">Explore Bridal Collection</Link>

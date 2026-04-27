@@ -1,28 +1,28 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Leaf, Heart, Users, Recycle, ArrowRight } from 'lucide-react';
+import { Package, Headphones, Shield, Truck, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const values = [
   {
-    icon: Leaf,
-    title: 'Sustainable Materials',
-    description: 'We use eco-friendly fabrics and natural dyes to minimize environmental impact.',
+    icon: Package,
+    title: 'Quality Packaging',
+    description: 'Every order is carefully packed to ensure your outfit arrives in perfect condition.',
   },
   {
-    icon: Users,
-    title: 'Artisan Communities',
-    description: 'Supporting artisan families across India with fair wages and safe working conditions.',
+    icon: Headphones,
+    title: 'Real Customer Support',
+    description: 'Our team responds to your questions and helps with sizing, returns, and orders.',
   },
   {
-    icon: Heart,
-    title: 'Ethical Sourcing',
-    description: 'Every material is traced to ensure ethical sourcing and transparent supply chains.',
+    icon: Shield,
+    title: 'What You See Is What You Get',
+    description: 'We provide accurate descriptions and real photos so there are no surprises.',
   },
   {
-    icon: Recycle,
-    title: 'Plastic-Free Packaging',
-    description: 'All orders ship in biodegradable packaging made from recycled materials.',
+    icon: Truck,
+    title: 'Reliable Shipping',
+    description: 'Trackable worldwide delivery with standard and express options available.',
   },
 ];
 
@@ -39,15 +39,15 @@ const SustainabilityBanner = () => {
             transition={{ duration: 0.6 }}
           >
             <p className="text-xs tracking-luxury uppercase text-muted-foreground mb-3">
-              Our Commitment
+              Our Promise
             </p>
             <h2 className="font-serif text-3xl lg:text-4xl mb-6">
-              Crafted with Care for People & Planet
+              Honest Service, Real Value
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              At LuxeMia, sustainability isn't just a buzzword—it's woven into every thread of our story. 
-              We partner directly with artisan communities across India, ensuring fair wages and preserving 
-              traditional craftsmanship for generations to come.
+              At LuxeMia, we keep it straightforward. We source beautiful Indian ethnic wear 
+              from established suppliers and manufacturers, and we sell it at fair prices. No 
+              inflated claims, no fake stories — just good products and honest service.
             </p>
 
             {/* Values Grid */}
@@ -75,14 +75,14 @@ const SustainabilityBanner = () => {
             </div>
 
             <Button asChild variant="outline" className="group">
-              <Link to="/sustainability" className="flex items-center gap-2">
-                Learn About Our Impact
+              <Link to="/brand-story" className="flex items-center gap-2">
+                Read Our Story
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
           </motion.div>
 
-          {/* Stats Card */}
+          {/* Info Card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -90,24 +90,26 @@ const SustainabilityBanner = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-background rounded-sm p-8 lg:p-10 shadow-sm"
           >
-            <h3 className="font-serif text-2xl mb-8 text-center">Our Commitment</h3>
+            <h3 className="font-serif text-2xl mb-8 text-center">What We Stand For</h3>
 
             <div className="grid grid-cols-1 gap-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Our growing network of artisan families across multiple Indian states preserves diverse craft traditions through fair-trade partnerships.
+                  We source from India's well-known textile regions and established manufacturers. 
+                  Our focus is on offering well-made ethnic wear at prices that work for everyday customers.
                 </p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  We are working toward using sustainable materials across our collections and have committed to plastic-free packaging for all orders.
+                  We are committed to being upfront about what we sell. If something is machine-made, 
+                  we say so. If it is art silk, not pure silk, we say that too.
                 </p>
               </div>
             </div>
 
             <div className="mt-8 pt-8 border-t border-border">
               <p className="text-center text-sm text-muted-foreground italic">
-                "Every purchase directly supports the livelihoods of skilled artisans and their families."
+                "Good clothes, honest prices, and a team that actually answers your questions."
               </p>
             </div>
           </motion.div>

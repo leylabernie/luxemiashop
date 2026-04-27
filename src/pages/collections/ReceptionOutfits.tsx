@@ -111,7 +111,7 @@ const ReceptionOutfits = () => {
             <h1 className="font-serif text-4xl lg:text-5xl mb-4">Reception Outfits</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Make a grand entrance at your wedding reception with our collection of glamorous 
-              party wear lehengas, designer sarees, and statement pieces designed to dazzle.
+              party wear lehengas, stylish sarees, and statement pieces designed to dazzle.
             </p>
           </motion.div>
 
@@ -121,7 +121,7 @@ const ReceptionOutfits = () => {
               The wedding reception is your moment to shine in a different light. While traditional 
               ceremonies call for classic attire, the reception is your opportunity to embrace 
               contemporary glamour. Our reception collection features sequined lehengas that catch 
-              every light, designer sarees with modern drapes, and statement pieces that photograph 
+              every light, stylish sarees with modern drapes, and statement pieces that photograph 
               beautifully. From metallic accents to bold silhouettes, find the perfect outfit to 
               celebrate your new beginning in style.
             </p>
