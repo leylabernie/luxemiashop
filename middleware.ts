@@ -7,12 +7,13 @@ import { rewrite, next } from '@vercel/functions';
  * pre-rendered HTML files with proper SEO content. Regular users get
  * the normal SPA experience.
  *
- * For unknown routes (not in PRERENDERED_ROUTES), bots get a 404 page
- * to prevent soft-404 errors in Google Search Console.
+ * For unknown routes (not in PRERENDERED_ROUTES), bots get a proper
+ * HTTP 404 response to prevent soft-404 errors in Google Search Console.
  */
 
 const BOT_USER_AGENTS = [
   'googlebot',
+  'google-InspectionTool',
   'bingbot',
   'yandexbot',
   'duckduckbot',
@@ -222,12 +223,38 @@ function isBot(userAgent: string): boolean {
   return BOT_USER_AGENTS.some((bot) => ua.includes(bot));
 }
 
-export default function middleware(request: Request) {
+// Cached 404 HTML - will be populated on first request
+let cached404Html: string | null = null;
+
+/**
+ * Return a proper HTTP 404 response with the 404 page content.
+ * This is critical: Google requires HTTP 404 status code, not 200 with
+ * "not found" content (which causes "soft 404" errors).
+ */
+async function return404(request: Request): Promise<Response> {
+  if (!cached404Html) {
+    try {
+      const resp = await fetch(new URL('/_prerender/404.html', request.url).toString());
+      cached404Html = await resp.text();
+    } catch {
+      cached404Html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page Not Found | LuxeMia</title><meta name="robots" content="noindex,nofollow"></head><body><h1>Page Not Found</h1><p>The page you are looking for could not be found.</p></body></html>`;
+    }
+  }
+  return new Response(cached404Html, {
+    status: 404,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=300',
+    },
+  });
+}
+
+export default async function middleware(request: Request) {
   const userAgent = request.headers.get('user-agent') || '';
   const url = new URL(request.url);
   const { pathname } = url;
 
-  // Skip non-page requests (static files, etc.)
+  // Skip non-page requests (static files, API, etc.)
   if (
     pathname.startsWith('/_prerender') ||
     pathname.startsWith('/assets') ||
@@ -263,9 +290,10 @@ export default function middleware(request: Request) {
       return next();
     }
 
-    // Unknown route that's not a redirect → serve 404 page to prevent soft-404
+    // Unknown route that's not a redirect → return proper HTTP 404
+    // This is the KEY FIX: return 404 status code instead of 200 with 404 content
     if (!REDIRECT_ROUTES.has(pathname)) {
-      return rewrite(new URL('/_prerender/404.html', request.url));
+      return return404(request);
     }
   }
 
@@ -275,6 +303,6 @@ export default function middleware(request: Request) {
 
 export const config = {
   matcher: [
-    '/((?!_prerender|assets|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml)).*)',
+    '/((?!_prerender|assets|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|merchant-feed\\.xml|merchant-feed\\.tsv|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)).*)',
   ],
 };

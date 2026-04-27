@@ -17,7 +17,12 @@
     { "source": "/collections/groomsman-outfits", "destination": "/menswear", "permanent": true },
     { "source": "/our-story", "destination": "/brand-story", "permanent": true },
     { "source": "/lookbook", "destination": "/collections", "permanent": true },
-    { "source": "/jewelry", "destination": "/collections", "permanent": true }
+    { "source": "/jewelry", "destination": "/collections", "permanent": true },
+    { "source": "/feed.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/shopping-feed.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/products.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/google-shopping.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/feed.tsv", "destination": "/merchant-feed.tsv", "permanent": true }
   ],
   "headers": [
     {
