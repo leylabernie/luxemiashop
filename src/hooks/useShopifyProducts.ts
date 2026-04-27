@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 
 // Shopify productType values mapped to category page routes
-// NOTE: Removed overly broad types like 'Dresses', 'Indian Ethnic Set', 'Co-Ords'
-// from suits — these were matching men's products on Shopify
+// Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
+// which are women's suit products on Shopify (NOT men's suits)
 const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
-  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Pakistani Readymade Suit', 'Salwar Kameez', 'Sharara Suit'],
+  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Pakistani Readymade Suit', 'Salwar Kameez', 'Sharara Suit', 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'],
   sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees'],
   lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli'],
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit"],
@@ -18,13 +18,15 @@ export const getDisplayCategory = (productType: string | undefined): string => {
   const pt = productType.toLowerCase();
 
   // Menswear check MUST come first to prevent men's items appearing in women's categories
-  if (/kurta|sherwani|jodhpuri|men.*ethnic|men.*indian|men.*suit|modi jacket|menswear|bandi|pathani|achkan/.test(pt)) return 'Menswear';
+  // NOTE: 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
+  // are WOMEN's products on Shopify — do NOT match them as menswear
+  if (/kurta pajama|sherwani|jodhpuri|men.*ethnic|men.*indian|men.*suit|modi jacket|menswear|bandi|pathani|achkan/.test(pt)) return 'Menswear';
   if (/\bmen\b/.test(pt)) return 'Menswear';
 
-  // Women's categories
-  if (/pakistani|salwar|sharara|anarkali|plazzo|palazzo/.test(pt)) return 'Salwar Kameez';
+  // Women's categories — order matters (most specific first)
   if (/lehenga/.test(pt)) return 'Lehengas';
   if (/saree/.test(pt)) return 'Sarees';
+  if (/pakistani|salwar|sharara|anarkali|plazzo|palazzo|wedding suit|designer suit|gharara|gown/.test(pt)) return 'Salwar Kameez';
   if (/indo.?western|fusion|jumpsuit|cape set|coord set/.test(pt)) return 'Indo Western';
 
   return productType;
@@ -110,7 +112,30 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     });
   }
 
-  // For suits, lehengas, sarees: match by product type (already menswear-excluded)
+  // For suits: match by product type OR relevant tags (already menswear-excluded)
+  if (category === 'suits') {
+    const suitTags = ['salwar kameez', 'salwar-kameez', 'sharara suit', 'plazzo suit', 'pakistani suit',
+      'anarkali suit', 'gharara suit', 'designer suit', 'wedding suit', 'boutique salwar suit'];
+    return filtered.filter(p => {
+      const pt = (p.node.productType ?? '').toLowerCase();
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+      const title = (p.node.title ?? '').toLowerCase();
+
+      // Extra safety: skip any product with men's-related tags even after isMenswear filter
+      if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom')) return false;
+      if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
+
+      // Match by exact productType
+      if (types.some(t => t.toLowerCase() === pt)) return true;
+
+      // Also match by suit-related tags (catches "Wedding Suit" products with "salwar kameez" tag, etc.)
+      if (suitTags.some(st => tags.some(t => t === st || t.includes(st)))) return true;
+
+      return false;
+    });
+  }
+
+  // For lehengas, sarees: match by product type (already menswear-excluded)
   return filtered.filter(p => {
     const pt = (p.node.productType ?? '').toLowerCase();
     const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
