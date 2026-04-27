@@ -57,14 +57,19 @@ const Suits = () => {
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Style', 'Fabric']);
-  // Filter out menswear products that may appear due to overlapping tags
+  // Extra safety: filter out any menswear products that slip through
+  // The hook already filters, but this catches edge cases (e.g. title contains "sherwani")
   const womenOnlyProducts = useMemo(() => {
-    const menswearKeywords = ['sherwani', 'kurta pajama', 'jodhpuri', 'kurta set', 'indo western'];
+    const menswearKeywords = [
+      'sherwani', 'kurta pajama', 'jodhpuri', 'kurta set', 'indo western',
+      'modi jacket', 'nehru jacket', 'dhoti', 'groom',
+    ];
     return products.filter(p => {
       const title = p.node.title.toLowerCase();
       const productType = (p.node.productType ?? '').toLowerCase();
       if (productType.includes("men") || productType.includes("menswear")) return false;
-      return !menswearKeywords.some(kw => title.includes(kw));
+      if (menswearKeywords.some(kw => title.includes(kw))) return false;
+      return true;
     });
   }, [products]);
 

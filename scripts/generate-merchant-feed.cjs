@@ -58,6 +58,38 @@ function getProductType(category) {
   return category;
 }
 
+// Category-to-occasion mapping for enriched descriptions
+const CATEGORY_OCCASIONS = {
+  'bridal lehengas': 'weddings, engagement ceremonies',
+  'wedding lehengas': 'wedding receptions, sangeet ceremonies',
+  'party lehengas': 'cocktail parties, festive celebrations',
+  'festive lehengas': 'Diwali, Navratri, Eid celebrations',
+  'designer lehengas': 'red carpet events, luxury celebrations',
+  'wedding sarees': 'wedding ceremonies, reception',
+  'party sarees': 'cocktail parties, evening events',
+  'festive sarees': 'Diwali, Navratri, religious ceremonies',
+  'casual sarees': 'daily wear, casual gatherings',
+  'occasional sarees': 'housewarmings, pooja ceremonies',
+  'groom sherwanis': "groom's wedding day, baraat",
+  'sherwanis': 'wedding reception, engagement',
+  'kurta pajamas': 'haldi, mehndi, casual festive gatherings',
+  'anarkali': 'festive celebrations, wedding guest',
+  'sharara': 'sangeet, mehndi ceremonies',
+  'palazzo': 'casual festive, daily elegance',
+};
+
+// Enrich description with customer-relevant details Google wants
+function enrichDescription(desc, category, fabric, work) {
+  const cat = (category || '').toLowerCase();
+  let occasion = 'special occasions';
+  for (const [key, val] of Object.entries(CATEGORY_OCCASIONS)) {
+    if (cat.includes(key)) { occasion = val; break; }
+  }
+  const fabricStr = fabric || 'Premium';
+  const workStr = work || 'handcrafted';
+  return `${desc} Product Details: ${fabricStr} fabric with ${workStr} detailing, perfect for ${occasion}. Available in sizes S-XXL with custom tailoring options. Care: Dry clean only. Ships worldwide from India in 7-12 business days. Free shipping on orders over $200.`;
+}
+
 // All products from the site data files
 const products = [
   // ── BRIDAL LEHENGAS ──
@@ -185,10 +217,11 @@ function generateXML() {
     const salePriceUSD = p.originalPrice > p.price ? `${p.price} USD` : '';
     const originalPriceUSD = p.originalPrice > p.price ? `${p.originalPrice} USD` : priceUSD;
 
+    const enrichedDesc = enrichDescription(p.description, p.category, p.fabric, p.work);
     return `  <item>
     <g:id>${escapeXml(p.id)}</g:id>
     <g:title>${escapeXml(p.title)}</g:title>
-    <g:description>${escapeXml(p.description)}</g:description>
+    <g:description>${escapeXml(enrichedDesc)}</g:description>
     <g:link>${escapeXml(link)}</g:link>
     <g:image_link>${escapeXml(p.image)}</g:image_link>
     <g:availability>in_stock</g:availability>
@@ -244,10 +277,11 @@ function generateTSV() {
     const originalPriceUSD = p.originalPrice > p.price ? `${p.originalPrice} USD` : `${p.price} USD`;
     const salePriceUSD = p.originalPrice > p.price ? `${p.price} USD` : '';
 
+    const enrichedDesc = enrichDescription(p.description, p.category, p.fabric, p.work);
     return [
       tsvEscape(p.id),
       tsvEscape(p.title),
-      tsvEscape(p.description),
+      tsvEscape(enrichedDesc),
       tsvEscape(link),
       tsvEscape(p.image),
       'in_stock',

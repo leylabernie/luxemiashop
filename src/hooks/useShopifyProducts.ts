@@ -40,6 +40,31 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
   return cachePromise;
 };
 
+// Keywords that identify menswear products — used to exclude from women's pages
+const MENSWEAR_KEYWORDS = [
+  'sherwani', 'kurta pajama', 'kurta set', 'jodhpuri', 'modi jacket',
+  'nehru jacket', 'groom', 'menswear', "men's", ' indo western', 'dhoti',
+];
+const MENSWEAR_TAGS = ['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear'];
+
+function isMenswear(product: ShopifyProduct): boolean {
+  const pt = (product.node.productType ?? '').toLowerCase();
+  const title = (product.node.title ?? '').toLowerCase();
+  const tags = (product.node.tags ?? []).map(t => t.toLowerCase());
+
+  // Check product type against menswear types
+  const menswearTypes = CATEGORY_PRODUCT_TYPES['menswear'].map(t => t.toLowerCase());
+  if (menswearTypes.some(t => pt === t || pt.includes(t))) return true;
+
+  // Check title for menswear keywords
+  if (MENSWEAR_KEYWORDS.some(kw => title.includes(kw))) return true;
+
+  // Check tags
+  if (MENSWEAR_TAGS.some(tag => tags.some(t => t === tag || t === `${tag}wear` || t.includes(tag)))) return true;
+
+  return false;
+}
+
 // Filter products by category client-side
 const filterByCategory = (products: ShopifyProduct[], category: string): ShopifyProduct[] => {
   if (category === 'all') return products;
@@ -47,29 +72,30 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   const types = CATEGORY_PRODUCT_TYPES[category];
   if (!types) return products;
 
-  // For indowestern, show women's fusion styles and exclude menswear product types
+  // For menswear: include only men's products
+  if (category === 'menswear') {
+    return products.filter(p => isMenswear(p));
+  }
+
+  // For all women's categories: exclude menswear first
+  const filtered = products.filter(p => !isMenswear(p));
+
+  // For indowestern, show women's fusion styles
   if (category === 'indowestern') {
-    const menswearTypesLower = CATEGORY_PRODUCT_TYPES['menswear'].map(t => t.toLowerCase());
-    // Women's fusion-adjacent types that belong on the Indo-Western page
     const womensFusionTypes = [
       ...types.map(t => t.toLowerCase()),
       'sharara', 'anarkali', 'co-ords', 'coord set', 'jumpsuit', 'cape set', 'plazzo suit',
     ];
-    return products.filter(p => {
+    return filtered.filter(p => {
       const pt = (p.node.productType ?? '').toLowerCase();
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
-      // Exclude menswear product types first
-      if (menswearTypesLower.some(t => pt === t || pt.includes(t))) return false;
-      // Exclude if tagged as menswear
-      const MENS_TAGS = ['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male'];
-      if (MENS_TAGS.some(ind => tags.some(tag => tag === ind || tag === `${ind}wear`))) return false;
-      // Match against indo-western + women's fusion types
       return womensFusionTypes.some(t => pt.includes(t)) ||
         tags.some(t => t.includes('indo') || t.includes('fusion') || t === 'contemporary' || t === 'western');
     });
   }
 
-  return products.filter(p => {
+  // For suits, lehengas, sarees: match by product type (already menswear-excluded)
+  return filtered.filter(p => {
     const pt = (p.node.productType ?? '').toLowerCase();
     return types.some(t => t.toLowerCase() === pt);
   });
