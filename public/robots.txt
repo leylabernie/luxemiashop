@@ -34,3 +34,7 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://luxemia.shop/sitemap.xml
+
+# Google Merchant Center Feed
+# XML: https://luxemia.shop/merchant-feed.xml
+# TSV: https://luxemia.shop/merchant-feed.tsv
