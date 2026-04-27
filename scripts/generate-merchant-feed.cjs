@@ -270,6 +270,17 @@ const products = [
   { id: "chinnon-black-001", handle: "black-chinnon-silk-sharara-set", title: "Black Chinnon Silk Sharara Set", description: "Make a dramatic statement with this stunning black Chinnon Silk sharara set featuring intricate rose gold embroidery.", price: convertPrice(3499), originalPrice: convertPrice(4999), image: "https://kesimg.b-cdn.net/images/650/2025y/December/59743/Peach-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-D(1).jpg", category: "Sharara Suits", fabric: "Chinnon Silk", color: "Black", work: "Embroidery" },
 ];
 
+// ─── Image URL Fixing ────────────────────────────────────────────────────
+// Fix image URLs for Google Merchant Center compatibility
+// 1. URL-encode parentheses (causes Google crawler fetch failures → "unsupported image type")
+function fixImageUrl(url) {
+  if (!url) return '';
+  let fixed = url;
+  // URL-encode parentheses — Google's crawler can't handle raw () in URLs
+  fixed = fixed.replace(/\(/g, '%28').replace(/\)/g, '%29');
+  return fixed;
+}
+
 // ─── XML Escaping ────────────────────────────────────────────────────────
 function escapeXml(str) {
   if (!str) return '';
@@ -298,7 +309,7 @@ function generateXML() {
     <g:title>${escapeXml(p.title)}</g:title>
     <g:description>${escapeXml(enrichedDesc)}</g:description>
     <g:link>${escapeXml(link)}</g:link>
-    <g:image_link>${escapeXml(p.image)}</g:image_link>
+    <g:image_link>${escapeXml(fixImageUrl(p.image))}</g:image_link>
     <g:availability>in_stock</g:availability>
     <g:price>${escapeXml(originalPriceUSD)}</g:price>
     ${salePriceUSD ? `<g:sale_price>${escapeXml(salePriceUSD)}</g:sale_price>` : ''}
@@ -358,7 +369,7 @@ function generateTSV() {
       tsvEscape(p.title),
       tsvEscape(enrichedDesc),
       tsvEscape(link),
-      tsvEscape(p.image),
+      tsvEscape(fixImageUrl(p.image)),
       'in_stock',
       tsvEscape(originalPriceUSD),
       tsvEscape(salePriceUSD),

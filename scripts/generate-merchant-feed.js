@@ -180,6 +180,21 @@ function getGoogleCategory(productType, isMenswear) {
   return { googleCategory: 'Apparel & Accessories > Clothing > Dresses', productTypePath: 'Salwar Kameez' };
 }
 
+// Fix image URLs for Google Merchant Center compatibility
+// 1. URL-encode parentheses (causes Google crawler fetch failures → "unsupported image type")
+// 2. Force JPEG format on Shopify CDN URLs to prevent WebP/AVIF via content negotiation
+function fixImageUrl(url) {
+  if (!url) return '';
+  let fixed = url;
+  // URL-encode parentheses — Google's crawler can't handle raw () in URLs
+  fixed = fixed.replace(/\(/g, '%28').replace(/\)/g, '%29');
+  // Force JPEG on Shopify CDN URLs (supports &format=jpg parameter)
+  if (fixed.includes('cdn.shopify.com') && !fixed.includes('format=')) {
+    fixed += (fixed.includes('?') ? '&' : '?') + 'format=jpg';
+  }
+  return fixed;
+}
+
 // Escape XML special characters
 function xmlEscape(str) {
   if (!str) return '';
@@ -208,7 +223,7 @@ function generateXMLItem(product) {
   const compareAtUSD = p.compareAtPriceRange?.minVariantPrice?.amount ? 
     convertToUSD(p.compareAtPriceRange.minVariantPrice.amount) : Math.round(priceUSD * 1.43);
   
-  const image = p.images?.edges?.[0]?.node?.url || '';
+  const image = fixImageUrl(p.images?.edges?.[0]?.node?.url || '');
   const gender = isMenswear ? 'male' : 'female';
   
   // Extract color from tags if not found in title
@@ -258,6 +273,16 @@ function generateXMLItem(product) {
   </item>`;
 }
 
+async function validateImageUrl(url) {
+  try {
+    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
+    const ct = res.headers.get('content-type') || '';
+    return res.ok && ct.startsWith('image/');
+  } catch {
+    return false;
+  }
+}
+
 async function main() {
   console.log('Fetching all Shopify products...');
   const shopifyProducts = await fetchAllShopifyProducts();
@@ -271,27 +296,36 @@ async function main() {
   }
   console.log('Product types:', typeCount);
   
-  // Generate XML items for all Shopify products
+  // Generate XML items for all Shopify products (these have stable cdn.shopify.com images)
   const xmlItems = shopifyProducts.map(p => generateXMLItem(p));
   
-  // Now read existing local products from the current feed
-  // We'll preserve the local products (bridal, wedding, party, festive, designer lehengas + menswear + suits + sarees)
+  // Also include local products that have working images from kesimg.b-cdn.net
+  // Note: Many kesimg.b-cdn.net images have expired (415 errors), so we only
+  // include local products whose images are NOT in known broken CDN directories.
   const fs = await import('fs');
-  const existingFeed = fs.readFileSync('/home/z/my-project/luxemiashop/public/merchant-feed.xml', 'utf8');
-  
-  // Extract existing local product items (they have IDs like bridal-001, wedding-001, etc.)
-  const localItemRegex = /<item>[\s\S]*?<\/item>/g;
-  const localItems = [];
-  let match;
-  while ((match = localItemRegex.exec(existingFeed)) !== null) {
-    const item = match[0];
-    // Check if this is a local product (IDs like bridal-001, wedding-001, party-001, festive-001, designer-001, mens-001, suit-001, saree-001)
-    const idMatch = item.match(/<g:id>([^<]+)<\/g:id>/);
-    if (idMatch && !idMatch[1].startsWith('gid://')) {
-      localItems.push(item);
+  let localItems = [];
+  try {
+    const existingFeed = fs.readFileSync('/home/z/my-project/luxemiashop/public/merchant-feed.xml', 'utf8');
+    const localItemRegex = /<item>[\s\S]*?<\/item>/g;
+    let match;
+    while ((match = localItemRegex.exec(existingFeed)) !== null) {
+      const item = match[0];
+      // Identify local products by their image domain (kesimg.b-cdn.net, NOT cdn.shopify.com)
+      const imgMatch = item.match(/<g:image_link>([^<]+)<\/g:image_link>/);
+      const imgUrl = imgMatch ? imgMatch[1] : '';
+      if (imgUrl.includes('kesimg.b-cdn.net')) {
+        // Skip local products from broken CDN directories
+        const brokenDirs = ['59625', '59622', '59616', '59728', '59720', '59708'];
+        const isBroken = brokenDirs.some(d => imgUrl.includes(`/${d}/`));
+        if (!isBroken) {
+          localItems.push(item);
+        }
+      }
     }
+  } catch (e) {
+    console.log('No existing feed to preserve local products from');
   }
-  console.log(`Preserved ${localItems.length} local product items from existing feed`);
+  console.log(`Preserved ${localItems.length} local product items with working images`);
   
   // Combine: local products first, then Shopify products
   const allItems = [...localItems, ...xmlItems];
