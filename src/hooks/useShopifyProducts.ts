@@ -129,7 +129,13 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
       if (types.some(t => t.toLowerCase() === pt)) return true;
 
       // Also match by suit-related tags (catches "Wedding Suit" products with "salwar kameez" tag, etc.)
-      if (suitTags.some(st => tags.some(t => t === st || t.includes(st)))) return true;
+      // But only if the product has women's-indicative tags or title
+      if (suitTags.some(st => tags.some(t => t === st || t.includes(st)))) {
+        // Extra safety: if tag matches but product looks like men's wear, exclude
+        const hasMensSignals = tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom' || t === 'gender:male');
+        const titleLooksMens = title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men');
+        if (!hasMensSignals && !titleLooksMens) return true;
+      }
 
       return false;
     });
@@ -149,11 +155,12 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   });
 };
 
-// Enrich products with display category
+// Enrich products with display category — preserve original productType for filtering
 const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
   products.map(p => ({
     node: {
       ...p.node,
+      _originalProductType: p.node.productType, // keep original for menswear detection
       productType: getDisplayCategory(p.node.productType),
     },
   }));

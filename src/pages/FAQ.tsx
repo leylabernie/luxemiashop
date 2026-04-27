@@ -162,7 +162,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Do I need an account to order?',
-          answer: 'No, you can checkout as a guest. However, creating an account allows you to track orders, save your wishlist, store multiple addresses, and access exclusive member benefits.',
+          answer: 'No, you can checkout as a guest. However, creating an account allows you to track orders, save your wishlist, store multiple addresses, and access member benefits.',
         },
         {
           question: 'How do I reset my password?',
@@ -174,7 +174,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you have a loyalty program?',
-          answer: 'Yes! Join LuxeMia Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy exclusive member-only offers. Sign up is free!',
+          answer: 'Yes! Join LuxeMia Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy member-only offers. Sign up is free!',
         },
         {
           question: 'Can I save items to buy later?',

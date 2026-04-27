@@ -10,7 +10,7 @@ const categories = [
   {
     name: 'Lehengas',
     subtitle: 'Bridal & Festive',
-    description: 'Designer lehengas handcrafted with intricate embroidery on premium fabrics',
+    description: 'Lehengas with beautiful embroidery on quality fabrics',
     href: '/lehengas',
     image: categoryLehengasImg,
     tag: 'Most Popular',
@@ -18,7 +18,7 @@ const categories = [
   {
     name: 'Sarees',
     subtitle: 'Timeless Elegance',
-    description: 'Handpicked silk and designer drape sarees for every occasion',
+    description: 'Handpicked silk and elegant drape sarees for every occasion',
     href: '/sarees',
     image: categorySareesImg,
     tag: 'New Collection',
@@ -26,7 +26,7 @@ const categories = [
   {
     name: 'Salwar Kameez',
     subtitle: 'Classic Grace',
-    description: 'Elegant salwar kameez and anarkali sets in premium organza silk',
+    description: 'Elegant salwar kameez and anarkali sets in quality organza silk',
     href: '/suits',
     image: categorySuitsImg,
     tag: 'Trending Now',

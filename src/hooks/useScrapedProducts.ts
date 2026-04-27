@@ -51,16 +51,16 @@ const generateBetterTitle = (imageUrl: string, category: string, color: string |
   
   // Fallback: generate from available data
   const colorPart = color && color !== 'Multi' ? color : '';
-  const fabricPart = fabric && fabric !== 'Premium Fabric' ? fabric : '';
+  const fabricPart = fabric && fabric !== 'Quality Fabric' ? fabric : '';
   
   const categoryTitles: Record<string, string> = {
-    lehengas: 'Designer Lehenga',
-    sarees: 'Handcrafted Saree',
+    lehengas: 'Lehenga',
+    sarees: 'Saree',
     suits: 'Elegant Suit Set',
     menswear: 'Royal Sherwani'
   };
   
-  const base = categoryTitles[category] || 'Designer Outfit';
+  const base = categoryTitles[category] || 'Outfit';
   const parts = [colorPart, fabricPart, base].filter(Boolean);
   
   return parts.join(' ') || base;

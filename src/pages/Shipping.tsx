@@ -183,7 +183,7 @@ const Shipping = () => {
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Shipping Policy</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                We ship our handcrafted ethnic wear worldwide from India at a simple flat rate —
+                We ship our Indian ethnic wear worldwide from India at a simple flat rate —
                 no weight calculations, no hidden fees. Every piece is carefully packaged to arrive in perfect condition.
               </p>
             </motion.div>
@@ -216,7 +216,7 @@ const Shipping = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: Globe, title: 'Ships Worldwide', desc: '100+ countries from India' },
-                { icon: Package, title: 'Premium Packaging', desc: 'Luxury gift-ready presentation' },
+                { icon: Package, title: 'Quality Packaging', desc: 'Gift-ready presentation' },
                 { icon: Truck, title: 'Full Tracking', desc: 'DHL Express & FedEx International' },
                 { icon: Clock, title: 'Processing Time', desc: '3–5 business days' },
               ].map((item, index) => (

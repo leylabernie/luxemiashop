@@ -104,7 +104,7 @@ export const NewArrivals = () => {
             New Arrivals
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover our latest collection of handcrafted ethnic wear, fresh from our artisan partners.
+            Discover our latest collection of Indian ethnic wear, fresh from India's textile hubs.
           </p>
         </motion.div>
 

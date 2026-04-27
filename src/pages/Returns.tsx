@@ -25,8 +25,8 @@ const Returns = () => {
               <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">Policy & Customer Care</p>
               <h1 className="text-4xl md:text-5xl font-serif mb-5">Returns, Refunds & Cancellations</h1>
               <p className="text-muted-foreground leading-relaxed">
-                Please read this policy carefully before placing your order. Our products are handcrafted and
-                shipped internationally, which means our policies are different from typical retail stores.
+                Please read this policy carefully before placing your order. Our products are shipped from India
+                and require international shipping, which means our policies are different from typical retail stores.
               </p>
             </motion.div>
           </div>
@@ -44,7 +44,7 @@ const Returns = () => {
               <div>
                 <h2 className="font-bold text-foreground text-lg mb-2 uppercase tracking-wide">⚠ All Sales Are Final — No Returns</h2>
                 <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                  Due to the handcrafted, made-to-order nature of our garments and the complexities of international
+                  Due to the international nature of our shipments and the complexities of international
                   shipping, <strong className="text-foreground">LuxeMia does not accept returns or issue refunds</strong> for
                   any reason — including sizing issues, colour variations, change of mind, or delayed events.
                 </p>
@@ -186,7 +186,7 @@ const Returns = () => {
                       <ul className="text-muted-foreground space-y-1">
                         <li>• Size does not fit or wrong size ordered</li>
                         <li>• Colour looks different from screen</li>
-                        <li>• Minor variations in handwork (expected)</li>
+                        <li>• Minor variations in embroidery (expected)</li>
                         <li>• Change of mind or event cancelled</li>
                         <li>• Customs delays or fees</li>
                       </ul>
@@ -205,12 +205,12 @@ const Returns = () => {
               <h2 className="text-2xl font-serif mb-6">Why We Have a No-Returns Policy</h2>
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="p-6 bg-card border border-border rounded-lg">
-                  <h3 className="font-semibold mb-4">Handcrafted & Made-to-Order</h3>
+                  <h3 className="font-semibold mb-4">Custom & Made-to-Order Items</h3>
                   <ul className="text-sm text-muted-foreground space-y-3">
-                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Each piece is handcrafted by skilled artisans specifically for your order — it cannot be resold</span></li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Custom-sized items are made to your measurements and cannot be resold</span></li>
                     <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Custom sizing means the garment is unique to your measurements</span></li>
                     <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Production begins within hours of order — materials are cut and work begins immediately</span></li>
-                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Traditional handwork techniques require significant artisan time and skill</span></li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Embroidered and embellished items require significant production time and care</span></li>
                   </ul>
                 </div>
                 <div className="p-6 bg-card border border-border rounded-lg">
@@ -219,7 +219,7 @@ const Returns = () => {
                     <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Products ship from India — return shipping costs often exceed the product value</span></li>
                     <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>International customs and re-importation duties make returns impractical</span></li>
                     <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>Delicate embroidered fabrics risk damage during multiple transits</span></li>
-                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>This policy allows us to keep prices competitive and support artisan livelihoods</span></li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-0.5">•</span><span>This policy allows us to keep prices competitive for our customers</span></li>
                   </ul>
                 </div>
               </div>
@@ -317,7 +317,7 @@ const Returns = () => {
                   <AccordionContent>
                     We're sorry to hear that, but unfortunately we cannot accept returns for this reason. All sales are
                     final. We recommend gifting the outfit, saving it for another occasion, or selling it locally. Beautiful
-                    handcrafted ethnic wear holds its value well.
+                    Indian ethnic wear holds its value well and can be worn for many occasions.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="q6">
@@ -325,8 +325,8 @@ const Returns = () => {
                   <AccordionContent>
                     Manufacturing defects include: significant stitching failures, fabric tears present before wearing,
                     incorrect item shipped (entirely different product), or missing components of a set (e.g. dupatta
-                    missing from a 3-piece lehenga set). This does <strong>not</strong> include: minor handwork variations
-                    (natural in artisanal pieces), colour variations from screen, fit issues, or any issue not supported
+                    missing from a 3-piece lehenga set). This does <strong>not</strong> include: minor embroidery variations
+                    (common in embroidered items), colour variations from screen, fit issues, or any issue not supported
                     by an unboxing video.
                   </AccordionContent>
                 </AccordionItem>

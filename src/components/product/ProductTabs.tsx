@@ -40,13 +40,12 @@ export const ProductTabs = ({ description, productType }: ProductTabsProps) => {
         <div className="prose prose-sm max-w-none text-muted-foreground">
           <p className="leading-relaxed">
             {description || 
-              `This exquisite piece is a testament to India's rich textile heritage. Crafted by skilled artisans using traditional techniques passed down through generations, each garment tells a story of cultural excellence and artistic mastery.`
-            }
+              `This piece showcases India's rich textile traditions. Made with care using time-honored techniques, each garment brings together cultural design and modern styling for a look that stands out.\n            }
           </p>
           <ul className="mt-4 space-y-2">
-            <li>Handcrafted with precision and care</li>
-            <li>Traditional weaving techniques</li>
-            <li>Intricate embroidery details</li>
+            <li>Made with care and attention to detail</li>
+            <li>Traditional weaving and embroidery techniques</li>
+            <li>Beautiful design details</li>
             <li>Comfortable and elegant silhouette</li>
           </ul>
         </div>
@@ -61,8 +60,8 @@ export const ProductTabs = ({ description, productType }: ProductTabsProps) => {
                 <h4 className="font-medium mb-1">Fabric Composition</h4>
                 <p className="text-sm text-muted-foreground">
                   {productType === 'Saree' 
-                    ? 'Pure Silk with Zari work (100% Silk)' 
-                    : 'Premium quality fabric blend crafted for comfort and elegance'
+                    ? 'Silk with Zari work' 
+                    : 'Quality fabric blend designed for comfort and elegance'
                   }
                 </p>
               </div>

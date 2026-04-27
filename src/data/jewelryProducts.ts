@@ -193,7 +193,7 @@ export const jewelryProducts: JewelryProduct[] = [
     price: 70,
     originalPrice: 92,
     image: 'https://kesimg.b-cdn.net/images/650/2025y/December/59473/Maroon--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN107MRN(1).jpg',
-    description: 'Opulent maroon kundan grand necklace set for royal weddings.',
+    description: 'Maroon kundan grand necklace set for royal weddings.',
     material: 'Kundan, Maroon stones, Pearl, Gold-plated',
     isBestseller: true,
   },

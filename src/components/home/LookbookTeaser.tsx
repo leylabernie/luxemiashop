@@ -10,9 +10,9 @@ import lookbook3 from '@/assets/lookbook-3.jpg';
 import lookbook4 from '@/assets/lookbook-4.jpg';
 
 const lookbookImages = [
-  { src: lookbook1, alt: 'Elegant Designer Saree' },
+  { src: lookbook1, alt: 'Elegant Saree' },
   { src: lookbook2, alt: 'Bridal Lehenga Collection' },
-  { src: lookbook3, alt: 'Wedding Couture' },
+  { src: lookbook3, alt: 'Wedding Collection' },
   { src: lookbook4, alt: 'Festive Ensemble' },
 ];
 
@@ -84,9 +84,9 @@ const LookbookTeaser = () => {
               <span className="italic">Ethereal Grace</span>
             </h2>
             <p className="text-foreground/60 font-light leading-relaxed mb-8 max-w-md">
-              Discover our latest editorial featuring exquisite pieces that blend traditional 
-              craftsmanship with contemporary silhouettes. Each garment tells a story of 
-              heritage and artistry.
+              Discover our latest editorial featuring beautiful pieces that blend traditional 
+              design with contemporary silhouettes. Each garment brings together heritage
+              and style for every occasion.
             </p>
             <Button variant="outline" size="lg" asChild>
               <Link to="/lookbook" className="group">

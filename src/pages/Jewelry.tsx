@@ -153,7 +153,7 @@ const Jewelry = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              From statement necklaces to elegant earrings, discover exquisite handcrafted jewelry 
+              From statement necklaces to elegant earrings, discover beautiful Indian jewelry 
               to complement your ethnic ensemble.
             </motion.p>
           </div>

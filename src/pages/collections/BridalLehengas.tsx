@@ -41,8 +41,8 @@ const BridalLehengas = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Bridal Lehengas Online | Designer Wedding Lehenga Choli, Heavy Work Bridal Wear - LuxeMia"
-        description="Shop stunning bridal lehengas online at LuxeMia. Explore designer wedding lehenga choli, heavy embroidery bridal lehengas, silk & velvet bridal wear. Custom sizing available. Worldwide delivery."
+        title="Bridal Lehengas Online | Wedding Lehenga Choli, Heavy Work Bridal Wear - LuxeMia"
+        description="Shop stunning bridal lehengas online at LuxeMia. Explore wedding lehenga choli, heavy embroidery bridal lehengas, silk & velvet bridal wear. Custom sizing available. Worldwide delivery."
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -71,18 +71,17 @@ const BridalLehengas = () => {
           >
             <h1 className="font-serif text-4xl lg:text-5xl mb-4">Bridal Lehengas</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Your dream bridal lehenga awaits. Discover our exquisite collection of handcrafted
-              bridal lehengas featuring heavy embroidery, luxurious fabrics, and timeless designs.
+              Your dream bridal lehenga awaits. Discover our beautiful collection of
+              bridal lehengas featuring heavy embroidery, quality fabrics, and timeless designs.
             </p>
           </motion.div>
 
           {/* SEO Content Block */}
           <div className="prose prose-sm max-w-none mb-12 text-muted-foreground">
             <p>
-              Every bride deserves to feel like royalty on her wedding day. Our bridal lehenga collection
-              brings together the finest craftsmanship from India's master artisans—from the intricate
-              zardozi work of Lucknow to the rich silk weaving traditions of Benares. Each bridal lehenga
-              is a labor of love, taking hundreds of hours to create. Whether you envision yourself in
+              Every bride deserves to feel special on her wedding day. Our bridal lehenga collection
+              brings together beautiful designs from India's renowned textile regions—from the intricate
+              zardozi work of Lucknow to the rich silk weaving traditions of Benares. Whether you envision yourself in
               classic bridal red, romantic pastels, or contemporary metallics, find your perfect match at LuxeMia.
             </p>
           </div>

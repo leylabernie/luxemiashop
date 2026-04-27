@@ -90,7 +90,7 @@ const STEPS = [
     subtitle: 'Choose the aesthetic that feels most like you',
     options: [
       { value: 'traditional', icon: Diamond, label: 'Traditional & Regal', desc: 'Rich embroidery, classic silhouettes, timeless elegance' },
-      { value: 'modern', icon: Feather, label: 'Modern & Minimalist', desc: 'Clean lines, understated luxury, contemporary details' },
+      { value: 'modern', icon: Feather, label: 'Modern & Minimalist', desc: 'Clean lines, understated elegance, contemporary details' },
       { value: 'bold', icon: Zap, label: 'Bold & Glamorous', desc: 'Statement pieces, maximum drama, showstopping presence' },
       { value: 'fusion', icon: Palette, label: 'Fusion & Indo-Western', desc: 'East meets West, modern silhouettes with Indian craft' },
     ],
@@ -113,8 +113,8 @@ const STEPS = [
     options: [
       { value: 'low', label: 'Under $200', desc: 'Elegant everyday pieces and casual festive wear' },
       { value: 'mid', label: '$200 – $500', desc: 'Semi-formal embroidered outfits and occasion wear' },
-      { value: 'high', label: '$500 – $1,000', desc: 'Designer pieces and semi-bridal collections' },
-      { value: 'luxury', label: '$1,000+', desc: 'Bridal and couture-level handcrafted pieces' },
+      { value: 'high', label: '$500 – $1,000', desc: 'Stylish pieces and semi-bridal collections' },
+      { value: 'luxury', label: '$1,000+', desc: 'Bridal and beautifully made pieces' },
     ],
   },
   {

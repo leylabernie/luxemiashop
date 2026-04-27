@@ -56,7 +56,7 @@ const Contact = () => {
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Contact Us</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Have questions about an order, need styling advice, or want to learn more about our artisans? We're here to help.
+                Have questions about an order, need styling advice, or want to learn more about our sourcing? We're here to help.
               </p>
             </motion.div>
           </div>

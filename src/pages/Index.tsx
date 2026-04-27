@@ -28,7 +28,7 @@ const homepageFaqs = [
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
-    answer: "Absolutely. At LuxeMia, we are committed to preserving Indian textile heritage. Every piece is sourced directly from master craftsmen across India, ensuring authentic designs and high-quality materials."
+    answer: "Absolutely. At LuxeMia, we source our products directly from India's established textile hubs and suppliers, ensuring authentic designs and quality materials at fair prices."
   },
   {
     question: "Can I get custom sizing or alterations for my outfit?",
@@ -56,7 +56,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Premium Indian ethnic wear boutique specializing in handcrafted bridal lehengas, designer sarees, anarkali suits, and wedding collections. Worldwide shipping available.",
+    "description": "Indian ethnic wear store specializing in bridal lehengas, sarees, anarkali suits, and wedding collections at affordable prices. Worldwide shipping available.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -89,7 +89,7 @@ const Index = () => {
         "closes": "17:00"
       }
     ],
-    "priceRange": "$$$",
+    "priceRange": "$$",
     "currenciesAccepted": "INR, USD, GBP, CAD",
     "paymentAccepted": "Credit Card, Debit Card, UPI, Net Banking, PayPal",
     "sameAs": [
@@ -129,8 +129,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia: Luxury Indian Ethnic Wear Online | Shop Bridal Lehengas & Wedding Sarees"
-        description="Shop luxury Indian ethnic wear at LuxeMia. Handcrafted bridal lehengas, designer sarees, and anarkali suits with free worldwide shipping to USA, UK & Canada. Authentic craftsmanship for the modern NRI."
+        title="LuxeMia: Affordable Indian Ethnic Wear Online | Shop Bridal Lehengas & Wedding Sarees"
+        description="Shop Indian ethnic wear at LuxeMia. Beautiful bridal lehengas, sarees, and anarkali suits with free worldwide shipping to USA, UK & Canada. Quality fabrics at affordable prices."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}

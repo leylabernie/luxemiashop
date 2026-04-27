@@ -11,8 +11,8 @@ const SEOFooterContent = () => {
           
           <div className="prose prose-sm max-w-none text-muted-foreground font-light leading-relaxed">
             <p className="mb-6">
-              Welcome to <strong className="text-foreground">LuxeMia</strong>, your premier destination for luxury Indian ethnic wear. 
-              We bring you an exquisite collection of handcrafted <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">designer sarees</Link>, 
+              Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for affordable Indian ethnic wear. 
+              We bring you a beautiful collection of <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
               <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
               and <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">anarkali suits</Link> that 
               blend timeless tradition with contemporary elegance.
@@ -24,8 +24,7 @@ const SEOFooterContent = () => {
                 <p>
                   Explore our curated range of <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees</Link> including 
                   <strong className="text-foreground"> Banarasi silk sarees</strong>, 
-                  Kanjivaram silk, and <strong className="text-foreground">Organza sarees with gota patti work</strong>. Each piece is crafted by skilled 
-                  artisans using traditional weaving techniques. Perfect for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">NRIs in USA</Link> looking for authentic 
+                  Kanjivaram silk, and <strong className="text-foreground">Organza sarees with gota patti work</strong>. Sourced from India's renowned textile hubs. Perfect for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">NRIs in USA</Link> looking for authentic 
                   Indian wedding attire with <strong className="text-foreground">ready-to-ship</strong> convenience.
                 </p>
               </div>
@@ -35,8 +34,8 @@ const SEOFooterContent = () => {
                 <p>
                   Find your dream <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga</Link> in our extensive collection. 
                   From <strong className="text-foreground">traditional red bridal lehengas</strong> to <strong className="text-foreground">minimalist pastel lehengas</strong>, we offer 
-                  <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> designer lehenga choli</Link> sets 
-                  with heavy embroidery and genuine zardozi. Ideal for <Link to="/indian-ethnic-wear-uk" className="text-foreground hover:text-primary transition-colors underline">UK weddings</Link> and 
+                  <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> lehenga choli</Link> sets 
+                  with beautiful embroidery and zardozi work. Ideal for <Link to="/indian-ethnic-wear-uk" className="text-foreground hover:text-primary transition-colors underline">UK weddings</Link> and 
                   <Link to="/indian-ethnic-wear-canada" className="text-foreground hover:text-primary transition-colors underline">Canadian celebrations</Link>.
                 </p>
               </div>
@@ -79,8 +78,8 @@ const SEOFooterContent = () => {
                 <h3 className="font-serif text-lg text-foreground mb-3">Menswear Collection</h3>
                 <p>
                   Complete your family's ethnic look with our <Link to="/menswear" className="text-foreground hover:text-primary transition-colors underline">men's ethnic wear</Link> collection. 
-                  Shop <strong className="text-foreground">designer sherwanis</strong>, Indo-western kurtas, and Nehru jackets 
-                  crafted from premium silk and cotton blends. Perfect for weddings, festivals, and celebrations.
+                  Shop <strong className="text-foreground">sherwanis</strong>, Indo-western kurtas, and Nehru jackets 
+                  in quality silk and cotton blends. Perfect for weddings, festivals, and celebrations.
                 </p>
               </div>
             </div>
@@ -88,12 +87,12 @@ const SEOFooterContent = () => {
             <div className="text-center mt-8 pt-6 border-t border-border/50">
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
-                At LuxeMia, we are committed to preserving Indian textile heritage while delivering modern luxury. 
-                Every piece in our collection is sourced directly from master craftsmen across India—from the silk weavers 
-                of Varanasi to the embroidery artisans of Lucknow. We offer <strong className="text-foreground">worldwide shipping</strong>, 
+                At LuxeMia, we are committed to bringing you authentic Indian ethnic wear at affordable prices. 
+                Every piece in our collection is sourced from India's renowned textile regions—from the silk weavers 
+                of Varanasi to the embroidery workshops of Lucknow. We offer <strong className="text-foreground">worldwide shipping</strong>, 
                 custom alterations, and dedicated styling assistance to ensure you find the perfect ensemble for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
-                the artisans behind our collections.
+                the regions behind our collections.
               </p>
             </div>
           </div>

@@ -21,11 +21,11 @@ const SITE_URL = 'https://luxemia.shop';
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia: Luxury Indian Ethnic Wear Online | Bridal Lehengas, Sarees, Salwar Kameez & Menswear',
-    description: 'Discover LuxeMia for luxury Indian ethnic wear online. Shop designer bridal lehengas, wedding sarees, salwar kameez & menswear with free worldwide shipping to USA, UK & Canada. Authentic craftsmanship & 2026 trends.',
-    h1: 'LuxeMia — Luxury Indian Ethnic Wear',
+    title: 'LuxeMia: Indian Ethnic Wear Online | Bridal Lehengas, Sarees, Salwar Kameez & Menswear',
+    description: 'Discover LuxeMia for Indian ethnic wear online. Shop bridal lehengas, wedding sarees, salwar kameez & menswear with free worldwide shipping to USA, UK & Canada. Authentic craftsmanship & 2026 trends.',
+    h1: 'LuxeMia — Indian Ethnic Wear Online',
     content: `
-      <p>Discover exquisite handcrafted Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with worldwide shipping.</p>
+      <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with worldwide shipping.</p>
       <h2>Shop by Category</h2>
       <nav>
         <ul>
@@ -51,7 +51,7 @@ const routes = [
     description: 'Shop elegant Salwar Kameez, designer suits, sharara sets, anarkali & palazzo suits online at LuxeMia. Premium fabrics, handcrafted embroidery. Free shipping to USA, UK & Canada. Latest 2026 trends.',
     h1: 'Salwar Kameez & Designer Suits Collection',
     content: `
-      <p>Explore our curated collection of Salwar Kameez and anarkali ensembles. From elegant sharara sets to flowing palazzo suits, each piece features exquisite handcrafted embroidery on premium fabrics like georgette, silk, and chiffon.</p>
+      <p>Explore our curated collection of Salwar Kameez and anarkali ensembles. From elegant sharara sets to flowing palazzo suits, each piece features beautiful embroidery on premium fabrics like georgette, silk, and chiffon.</p>
       <h2>Our Salwar Kameez Collection</h2>
       <p>Browse anarkali suits, sharara suits, palazzo sets, and straight-cut salwar kameez. Perfect for weddings, festive occasions, and celebrations.</p>
     `,
@@ -62,10 +62,10 @@ const routes = [
     description: 'Shop designer lehengas & bridal lehenga choli at LuxeMia. Handcrafted wedding & party wear lehengas. Premium silk, net & velvet. Free worldwide shipping to USA, UK & Canada. Latest 2026 trends.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
     content: `
-      <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a masterpiece of Indian craftsmanship.</p>
+      <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
       <h2>Lehenga Categories</h2>
       <ul>
-        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Luxurious bridal lehenga choli for your special day</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Bridal lehenga choli for your special day</li>
         <li>Wedding Lehengas — Elegant designs for wedding celebrations</li>
         <li>Party Wear Lehengas — Stunning lehengas for festive occasions</li>
       </ul>
@@ -77,7 +77,7 @@ const routes = [
     description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with worldwide shipping to USA, UK & Canada. Authentic Indian handloom sarees & 2026 trends.',
     h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
     content: `
-      <p>Explore our exquisite collection of designer sarees. From luxurious Banarasi silk to elegant Kanjeevaram, each saree is handcrafted by skilled Indian artisans. Perfect for weddings, festivals, and special occasions.</p>
+      <p>Explore our beautiful collection of designer sarees. From Banarasi silk to elegant Kanjeevaram, each saree is made with care by skilled Indian makers. Perfect for weddings, festivals, and special occasions.</p>
       <h2>Saree Categories</h2>
       <ul>
         <li><a href="/collections/wedding-sarees">Wedding Sarees</a> — Traditional & contemporary wedding sarees</li>
@@ -172,7 +172,7 @@ const routes = [
     content: `
       <p>Browse our curated collections of Indian ethnic wear, thoughtfully organized for every occasion.</p>
       <ul>
-        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Luxurious bridal wear for your special day</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Bridal wear for your special day</li>
         <li><a href="/collections/wedding-sarees">Wedding Sarees</a> — Elegant sarees for wedding celebrations</li>
         <li><a href="/collections/reception-outfits">Reception Outfits</a> — Stunning looks for your reception</li>
         <li><a href="/collections/festive-wear">Festive Wear</a> — Beautiful outfits for festivals & celebrations</li>
@@ -184,7 +184,7 @@ const routes = [
     title: 'All Products — Shop Indian Ethnic Wear Online | LuxeMia',
     description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free shipping to USA, UK & Canada.',
     h1: 'All Products',
-    content: '<p>Explore our complete collection of luxury Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free worldwide shipping.</p>',
+    content: '<p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free worldwide shipping.</p>',
   },
   {
     path: '/collections/bridal-lehengas',
@@ -216,10 +216,10 @@ const routes = [
   },
   {
     path: '/our-story',
-    title: 'Our Story — LuxeMia | Luxury Indian Ethnic Wear',
-    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled artisans.',
+    title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
+    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',
     h1: 'Our Story',
-    content: '<p>LuxeMia was born from a passion for preserving India\'s rich textile heritage while making luxury ethnic wear accessible worldwide. We work directly with skilled artisans across India to bring you authentic, handcrafted pieces.</p>',
+    content: '<p>LuxeMia was born from a passion for preserving India\'s rich textile heritage while making Indian ethnic wear accessible worldwide. We work directly with skilled makers across India to bring you authentic, beautifully made pieces.</p>',
   },
   {
     path: '/size-guide',
@@ -266,10 +266,10 @@ const routes = [
   // --- Additional routes previously missing from prerender ---
   {
     path: '/brand-story',
-    title: 'Our Story — LuxeMia | Luxury Indian Ethnic Wear',
-    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled artisans.',
+    title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
+    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',
     h1: 'Our Story',
-    content: '<p>LuxeMia was born from a passion for preserving India\'s rich textile heritage while making luxury ethnic wear accessible worldwide. We work directly with skilled artisans across India to bring you authentic, handcrafted pieces.</p>',
+    content: '<p>LuxeMia was born from a passion for preserving India\'s rich textile heritage while making Indian ethnic wear accessible worldwide. We work directly with skilled makers across India to bring you authentic, beautifully made pieces.</p>',
   },
   {
     path: '/new-arrivals',
@@ -346,7 +346,7 @@ const routes = [
     title: 'Sustainability — Ethical Indian Ethnic Wear | LuxeMia',
     description: 'LuxeMia\'s commitment to sustainable & ethical fashion. Fair trade practices, eco-friendly packaging, and supporting artisan communities.',
     h1: 'Sustainability',
-    content: '<p>We believe luxury and responsibility go hand in hand. Learn about our fair trade practices, eco-friendly packaging, and commitment to artisan communities.</p>',
+    content: '<p>We believe quality and responsibility go hand in hand. Learn about our fair trade practices, eco-friendly packaging, and commitment to artisan communities.</p>',
   },
   {
     path: '/virtual-try-on',
@@ -371,10 +371,10 @@ const routes = [
   },
   {
     path: '/press',
-    title: 'Press — LuxeMia in the Media | Luxury Indian Ethnic Wear',
-    description: 'LuxeMia in the media. Press coverage, brand mentions, and news features about our luxury Indian ethnic wear collection.',
+    title: 'Press — LuxeMia in the Media | Indian Ethnic Wear Online',
+    description: 'LuxeMia in the media. Press coverage, brand mentions, and news features about our Indian ethnic wear collection.',
     h1: 'Press',
-    content: '<p>See what the media is saying about LuxeMia. Press coverage, brand mentions, and news features about our luxury Indian ethnic wear collection.</p>',
+    content: '<p>See what the media is saying about LuxeMia. Press coverage, brand mentions, and news features about our Indian ethnic wear collection.</p>',
   },
   // --- Missing blog posts ---
   {
@@ -382,7 +382,7 @@ const routes = [
     title: 'Designer Wedding Dress Under 50000 — Best Bridal Options | LuxeMia',
     description: 'Find stunning designer wedding dresses under 50000. Best bridal lehengas, sarees & suits for budget-conscious brides without compromising on style.',
     h1: 'Designer Wedding Dress Under 50000',
-    content: '<p>Looking for a designer wedding dress under 50000? Discover our curated selection of bridal lehengas and sarees that deliver luxury at an accessible price point.</p>',
+    content: '<p>Looking for a designer wedding dress under 50000? Discover our curated selection of bridal lehengas and sarees that deliver quality at an accessible price point.</p>',
   },
   {
     path: '/blog/wedding-guest-outfit-ideas',
@@ -421,10 +421,10 @@ const routes = [
   },
   {
     path: '/blog/designer-wedding-dress-under-500',
-    title: 'Designer Wedding Dress Under $500 — Affordable Luxury | LuxeMia',
+    title: 'Wedding Dress Under $500 — Affordable Elegance | LuxeMia',
     description: 'Find a designer wedding dress under $500. Affordable bridal lehengas, sarees & suits that look expensive without breaking the bank.',
     h1: 'Designer Wedding Dress Under $500',
-    content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver luxury for less.</p>',
+    content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver elegance for less.</p>',
   },
   {
     path: '/blog/nri-wedding-ethnic-wear-trends-2026',
@@ -460,7 +460,7 @@ const routes = [
     title: 'Royal Rani Pink Silk Bridal Lehenga | LuxeMia',
     description: 'Shop the Royal Rani Pink Silk Bridal Lehenga at LuxeMia. Premium silk with zari embroidery. Free worldwide shipping.',
     h1: 'Royal Rani Pink Silk Bridal Lehenga',
-    content: '<p>A regal rani pink bridal lehenga crafted from premium silk with exquisite zari embroidery. Make a royal statement on your wedding day.</p>',
+    content: '<p>A regal rani pink bridal lehenga crafted from premium silk with beautiful zari embroidery. Make a royal statement on your wedding day.</p>',
   },
   {
     path: '/product/classic-bridal-red-silk-lehenga',
@@ -493,9 +493,9 @@ const routes = [
   {
     path: '/product/burgundy-velvet-wedding-lehenga',
     title: 'Burgundy Velvet Wedding Lehenga | LuxeMia',
-    description: 'Shop the Burgundy Velvet Wedding Lehenga at LuxeMia. Luxurious velvet with embroidery. Free worldwide shipping.',
+    description: 'Shop the Burgundy Velvet Wedding Lehenga at LuxeMia. Velvet with embroidery. Free worldwide shipping.',
     h1: 'Burgundy Velvet Wedding Lehenga',
-    content: '<p>A rich burgundy wedding lehenga in luxurious velvet with exquisite embroidery. Bold, elegant, and unforgettable.</p>',
+    content: '<p>A rich burgundy wedding lehenga in velvet with beautiful embroidery. Bold, elegant, and unforgettable.</p>',
   },
   {
     path: '/product/wine-romance-net-lehenga',
@@ -537,7 +537,7 @@ const routes = [
     title: 'Purple Art Silk Groom Sherwani | LuxeMia',
     description: 'Shop the Purple Art Silk Groom Sherwani at LuxeMia. Royal purple sherwani for grooms. Free worldwide shipping.',
     h1: 'Purple Art Silk Groom Sherwani',
-    content: '<p>A royal purple sherwani in art silk with exquisite detailing. Make a regal impression on your wedding day.</p>',
+    content: '<p>A royal purple sherwani in art silk with beautiful detailing. Make a regal impression on your wedding day.</p>',
   },
   {
     path: '/product/teal-green-chinnon-silk-sharara-set',

@@ -4,56 +4,44 @@ import SEOHead from "@/components/seo/SEOHead";
 import { motion } from "framer-motion";
 
 const Artisans = () => {
-  const artisans = [
+  const regions = [
     {
-      name: "Master Zardozi Craftsmen",
-      location: "Lucknow, Uttar Pradesh",
-      specialty: "Gold & Silver Thread Embroidery",
-      experience: "40+ years",
-      description: "Our Lucknowi artisans preserve the 500-year-old tradition of Zardozi, meticulously hand-embroidering each piece with gold and silver threads, creating intricate floral and geometric patterns that have adorned royalty for centuries."
+      name: "Lucknow, Uttar Pradesh",
+      specialty: "Zardozi & Chikankari Embroidery",
+      description: "Known for its refined embroidery traditions, Lucknow produces some of India's most sought-after zardozi and chikankari work, featuring intricate thread patterns that add elegance to any outfit."
     },
     {
-      name: "Banarasi Weaving Masters",
-      location: "Varanasi, Uttar Pradesh",
+      name: "Varanasi, Uttar Pradesh",
       specialty: "Silk Brocade Weaving",
-      experience: "5 generations",
-      description: "Working on traditional handlooms, our Banarasi weavers create the legendary silk brocades using techniques passed down through five generations, weaving stories of heritage into every thread."
+      description: "Varanasi is famous for its silk brocades and Banarasi sarees. The city's weaving tradition produces beautiful silk fabrics with rich zari patterns that are popular across India and abroad."
     },
     {
-      name: "Chikankari Artisans",
-      location: "Lucknow, Uttar Pradesh",
-      specialty: "White-on-White Embroidery",
-      experience: "35+ years",
-      description: "The delicate art of Chikankari comes alive through our skilled embroiderers who create shadow work and intricate patterns using 36 different stitches, each piece taking weeks to complete."
-    },
-    {
-      name: "Kanjeevaram Weavers",
-      location: "Kanchipuram, Tamil Nadu",
+      name: "Kanchipuram, Tamil Nadu",
       specialty: "Temple Border Silk Sarees",
-      experience: "4 generations",
-      description: "Our Kanjeevaram master weavers use pure mulberry silk and real gold zari, creating sarees with distinctive temple borders that are treasured as heirlooms across generations."
+      description: "Kanchipuram is renowned for its distinctive silk sarees with bold temple borders. These sarees are a staple of South Indian weddings and celebrations, known for their durability and rich colors."
     },
     {
-      name: "Gota Patti Specialists",
-      location: "Jaipur, Rajasthan",
-      specialty: "Appliqué Work",
-      experience: "25+ years",
-      description: "Rajasthani artisans bring the vibrant spirit of the desert to life through Gota Patti work, hand-applying gold and silver ribbons in traditional motifs that shimmer with every movement."
+      name: "Jaipur, Rajasthan",
+      specialty: "Gota Patti & Block Printing",
+      description: "Jaipur is a hub for vibrant gota patti appliqué and block printing. The city's colorful aesthetic brings a festive, eye-catching quality to ethnic wear that's perfect for celebrations."
     },
     {
-      name: "Block Printing Craftsmen",
-      location: "Sanganer, Rajasthan",
-      specialty: "Hand Block Printing",
-      experience: "6 generations",
-      description: "Using hand-carved wooden blocks that have been in their families for generations, our Sanganeri printers create stunning patterns using natural dyes and age-old techniques."
+      name: "Surat, Gujarat",
+      specialty: "Synthetic & Art Silk Fabrics",
+      description: "Surat is India's textile capital, producing a wide range of affordable fabrics from art silk to georgette. The city's mills supply quality materials that make beautiful ethnic wear accessible to everyone."
+    },
+    {
+      name: "Sanganer, Rajasthan",
+      specialty: "Textile Printing & Dyeing",
+      description: "Sanganer is known for its fine textile printing and dyeing traditions. The town produces colorful printed fabrics used in kurtas, suits, and home textiles, blending traditional motifs with modern designs."
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Our Artisans — LuxeMia"
-        description="Meet the master artisans behind LuxeMia's luxury Indian ethnic wear. Skilled artisan families preserving centuries-old craftsmanship across India."
+        title="Our Sourcing Regions — LuxeMia"
+        description="Discover the regions across India where LuxeMia sources its Indian ethnic wear. From Lucknow embroidery to Banarasi silk, learn about the textile traditions behind our collections."
         canonical="https://luxemia.shop/artisans"
       />
       <Header />
@@ -67,7 +55,7 @@ const Artisans = () => {
               animate={{ opacity: 1, y: 0 }}
               className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
             >
-              Our Master Artisans
+              Where Our Products Come From
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -75,8 +63,8 @@ const Artisans = () => {
               transition={{ delay: 0.1 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              Behind every LuxeMia creation are the skilled hands of India's finest craftsmen, 
-              preserving centuries-old traditions while creating timeless pieces of wearable art.
+              Our collections are sourced from India's most renowned textile regions, 
+              bringing you authentic designs and quality fabrics at affordable prices.
             </motion.p>
           </div>
         </section>
@@ -86,12 +74,12 @@ const Artisans = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="font-display text-3xl md:text-4xl text-foreground mb-6">
-                Preserving Heritage, Empowering Communities
+                Sourced from India's Best Textile Regions
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                We work directly with artisan families across India, ensuring fair wages,
-                safe working conditions, and sustainable livelihoods. Our partnerships span generations,
-                preserving diverse craft traditions for the future.
+                We source our products from established suppliers and manufacturers across India's 
+                famous textile hubs. Our goal is to bring you beautiful, well-made Indian ethnic wear 
+                at prices that work for everyone.
               </p>
             </div>
           </div>
@@ -101,12 +89,12 @@ const Artisans = () => {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Meet Our Craftsmen
+              Textile Regions We Source From
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {artisans.map((artisan, index) => (
+              {regions.map((region, index) => (
                 <motion.div
-                  key={artisan.name}
+                  key={region.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -116,11 +104,9 @@ const Artisans = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                     <span className="text-2xl">🧵</span>
                   </div>
-                  <h3 className="font-display text-xl text-foreground mb-2">{artisan.name}</h3>
-                  <p className="text-primary text-sm mb-1">{artisan.specialty}</p>
-                  <p className="text-muted-foreground text-sm mb-1">{artisan.location}</p>
-                  <p className="text-muted-foreground text-sm mb-4">{artisan.experience} experience</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{artisan.description}</p>
+                  <h3 className="font-display text-xl text-foreground mb-2">{region.name}</h3>
+                  <p className="text-primary text-sm mb-3">{region.specialty}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{region.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -131,11 +117,11 @@ const Artisans = () => {
         <section className="py-16 bg-primary/5">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-2xl md:text-3xl text-foreground mb-4">
-              Experience the Art of Handcraft
+              Explore Our Collections
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Each LuxeMia piece carries the soul of its maker. Discover our collections
-              and wear a piece of India's rich artisanal heritage.
+              Browse our curated selection of Indian ethnic wear sourced from the country's best textile regions. 
+              Beautiful designs, quality fabrics, and affordable prices.
             </p>
           </div>
         </section>

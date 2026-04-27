@@ -77,7 +77,7 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
                 {config.heroTitle}
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Shop designer sarees, bridal lehengas, salwar suits, and men's ethnic wear from India's finest artisans.
+                Shop designer sarees, bridal lehengas, salwar suits, and men's ethnic wear from India's renowned textile regions.
                 Delivered to your door in {config.country}.
               </p>
               <Button asChild size="lg" className="px-8">

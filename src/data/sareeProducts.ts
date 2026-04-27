@@ -1,5 +1,5 @@
-// Boutique-style saree product data scraped from wholesalesalwar.com
-// SEO-optimized titles and descriptions for luxury ethnic wear boutique
+// Curated saree product data scraped from wholesalesalwar.com
+// SEO-optimized titles and descriptions for Indian ethnic wear
 // UPDATED: Single image per product (model shots only, no flat-lay images)
 
 export interface SareeProduct {
@@ -41,7 +41,7 @@ export const sareeProducts: SareeProduct[] = [
     id: "saree-026",
     handle: "silk-yellow-occasional-embroidery-saree",
     title: "Silk Yellow Occasional Wear Embroidery Saree",
-    description: "Radiate sunshine elegance with this stunning yellow Silk saree featuring exquisite embroidery work. The vibrant yellow shade represents prosperity and joy, making it perfect for haldi ceremonies, pujas, and festive celebrations.",
+    description: "Radiate sunshine elegance with this stunning yellow Silk saree featuring beautiful embroidery work. The vibrant yellow shade represents prosperity and joy, making it perfect for haldi ceremonies, pujas, and festive celebrations.",
     price: convertPrice(4045),
     originalPrice: convertPrice(5186),
     currency: "USD",
@@ -185,7 +185,7 @@ export const sareeProducts: SareeProduct[] = [
     id: "saree-034",
     handle: "banarasi-silk-mint-green-festival-weaving-saree",
     title: "Banarasi Silk Mint Green Festival Wear Weaving Saree",
-    description: "Embrace fresh elegance with this beautiful mint green Banarasi Silk saree featuring exquisite weaving work. The refreshing mint shade offers a contemporary take on traditional Banarasi artistry.",
+    description: "Embrace fresh elegance with this beautiful mint green Banarasi Silk saree featuring beautiful weaving work. The refreshing mint shade offers a contemporary take on traditional Banarasi artistry.",
     price: convertPrice(1695),
     originalPrice: convertPrice(2201),
     currency: "USD",

@@ -60,8 +60,8 @@ const SOCIAL_LINKS = {
 };
 
 const SEOHead = ({
-  title = 'LuxeMia | Luxury Indian Ethnic Wear - Sarees, Lehengas & Bridal Couture',
-  description = 'Discover exquisite handcrafted Indian ethnic wear at LuxeMia. Shop designer sarees, bridal lehengas, anarkali suits, and wedding collections. Worldwide shipping. Premium quality assured.',
+  title = 'LuxeMia | Indian Ethnic Wear Online - Sarees, Lehengas & Suits',
+  description = 'Shop Indian ethnic wear at LuxeMia. Beautiful sarees, bridal lehengas, anarkali suits, and wedding collections at affordable prices. Worldwide shipping. Quality assured.',
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
@@ -258,7 +258,7 @@ const SEOHead = ({
 
       {/* Additional Meta */}
       <meta name="author" content="LuxeMia" />
-      <meta name="keywords" content="indian ethnic wear, sarees online, designer lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, luxury ethnic wear, indian wedding dress" />
+      <meta name="keywords" content="indian ethnic wear, sarees online, lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, affordable ethnic wear, indian wedding dress" />
 
       {/* Structured Data — only page-specific schemas (Organization & WebSite are in index.html) */}
       {localBusiness && (

@@ -17,8 +17,8 @@ const WeddingSarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Wedding Sarees Online | Bridal Silk Sarees, Banarasi & Designer Wedding Sarees - LuxeMia"
-        description="Shop exquisite wedding sarees online at LuxeMia. Discover handcrafted bridal silk sarees, Banarasi wedding sarees, Kanjeevaram, and designer sarees for your special day. Worldwide shipping."
+        title="Wedding Sarees Online | Bridal Silk Sarees, Banarasi & Wedding Sarees - LuxeMia"
+        description="Shop beautiful wedding sarees online at LuxeMia. Discover bridal silk sarees, Banarasi wedding sarees, Kanjeevaram, and elegant sarees for your special day. Worldwide shipping."
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -47,8 +47,8 @@ const WeddingSarees = () => {
           >
             <h1 className="font-serif text-4xl lg:text-5xl mb-4">Wedding Sarees</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Discover our curated collection of wedding sarees, featuring exquisite Banarasi silks, 
-              Kanjeevaram masterpieces, and designer bridal sarees perfect for your special day.
+              Discover our curated collection of wedding sarees, featuring beautiful Banarasi silks, 
+              Kanjeevaram sarees, and bridal sarees perfect for your special day.
             </p>
           </motion.div>
 
@@ -56,9 +56,9 @@ const WeddingSarees = () => {
           <div className="prose prose-sm max-w-none mb-12 text-muted-foreground">
             <p>
               A wedding saree is more than just attire—it's a symbol of tradition, elegance, and new beginnings. 
-              At LuxeMia, we curate the finest wedding sarees that honor centuries-old craftsmanship while 
+              At LuxeMia, we curate a beautiful selection of wedding sarees that honor traditional design while 
               embracing contemporary aesthetics. From the rich brocades of Banarasi silk to the lustrous drapes 
-              of Kanjeevaram, each piece in our collection tells a story of artisanal excellence.
+              of Kanjeevaram, each piece in our collection represents the best of India's textile traditions.
             </p>
           </div>
 

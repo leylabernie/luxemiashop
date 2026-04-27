@@ -13,7 +13,7 @@ const heroSlides = [
   {
     id: 1,
     title: 'Bridal Lehenga Collection',
-    subtitle: 'Handcrafted Elegance for Your Special Day',
+    subtitle: 'Beautiful Styles for Your Special Day',
     cta: 'Shop Bridal Lehengas',
     link: '/lehengas',
     image: heroLehengaImg,
@@ -22,7 +22,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    title: 'Designer Drape Sarees',
+    title: 'Elegant Drape Sarees',
     subtitle: 'Where Tradition Meets Modern Glamour',
     cta: 'Explore Sarees',
     link: '/sarees',
@@ -33,7 +33,7 @@ const heroSlides = [
   {
     id: 3,
     title: 'Embroidered Salwar Suits',
-    subtitle: 'Graceful Silhouettes in Premium Fabrics',
+    subtitle: 'Graceful Silhouettes in Quality Fabrics',
     cta: 'View Suits',
     link: '/suits',
     image: heroSuitImg,
@@ -52,8 +52,8 @@ const heroSlides = [
   },
   {
     id: 5,
-    title: 'Festive Designer Edit',
-    subtitle: 'Premium Sarees for Celebrations & Beyond',
+    title: 'Festive Collection',
+    subtitle: 'Beautiful Sarees for Celebrations & Beyond',
     cta: 'Shop Festive',
     link: '/collections',
     image: heroFestiveImg,
@@ -137,7 +137,7 @@ const HeroSection = () => {
                 {/* Title */}
                 {currentSlide === 0 ? (
                   <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] mb-6 leading-tight text-foreground">
-                    LuxeMia: Your destination for luxury Indian ethnic wear
+                    LuxeMia: Your destination for affordable Indian ethnic wear
                   </h1>
                 ) : (
                   <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] mb-6 leading-tight text-foreground">

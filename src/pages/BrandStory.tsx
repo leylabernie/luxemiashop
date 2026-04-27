@@ -19,7 +19,7 @@ const BrandStory = () => {
     <div ref={containerRef} className="min-h-screen bg-background">
       <SEOHead
         title="Our Story — LuxeMia"
-        description="Discover the LuxeMia story. Learn about our mission to bring authentic Indian ethnic wear and artisanal craftsmanship to the world."
+        description="Discover the LuxeMia story. Learn about our mission to bring authentic Indian ethnic wear at affordable prices to the world."
         canonical="https://luxemia.shop/brand-story"
       />
       <Header />

@@ -234,6 +234,13 @@ function generateSEOTags(product: ScrapedProduct): string[] {
     tags.push('bridal', 'wedding', 'sangeet', 'reception');
   }
   
+  // Gender tag — critical for filtering menswear from women's collections
+  if (product.category === 'menswear') {
+    tags.push('men', 'menswear', 'gender:male');
+  } else {
+    tags.push('women', 'womenswear', 'gender:female');
+  }
+  
   // New arrival tag
   tags.push('new arrival', 'trending');
   
@@ -244,10 +251,10 @@ async function createShopifyProduct(
   product: ScrapedProduct,
   accessToken: string
 ): Promise<ShopifyProductResponse | null> {
-  const productType = product.category === 'lehengas' ? 'Bridal Lehengas' :
-                      product.category === 'sarees' ? 'Designer Sarees' :
-                      product.category === 'suits' ? 'Designer Suits' :
-                      product.category === 'indowestern' ? 'Indo Western' : 'Menswear';
+  const productType = product.category === 'lehengas' ? 'Bridal Lehenga Choli' :
+                      product.category === 'sarees' ? 'Saree' :
+                      product.category === 'suits' ? 'Salwar Kameez' :
+                      product.category === 'indowestern' ? 'Indo Western' : "Men's Ethnic Wear";
 
   // Generate SEO-optimized content
   const seoTitle = generateSEOTitle(product);

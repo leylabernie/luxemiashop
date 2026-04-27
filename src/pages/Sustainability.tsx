@@ -29,7 +29,7 @@ const Sustainability = () => {
     {
       icon: Heart,
       title: "Fair Trade Practices",
-      description: "We ensure fair wages, safe conditions, and healthcare benefits for all artisans in our supply chain."
+      description: "We ensure fair wages and safe working conditions for all workers in our supply chain."
     },
     {
       icon: Shield,
@@ -42,7 +42,7 @@ const Sustainability = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Sustainability — LuxeMia"
-        description="LuxeMia's commitment to sustainable luxury fashion. Discover our eco-friendly practices, fair trade partnerships, and goal of carbon neutrality by 2030."
+        description="LuxeMia's commitment to sustainable and responsible fashion. Discover our eco-friendly practices, fair trade partnerships, and responsible sourcing."
         canonical="https://luxemia.shop/sustainability"
       />
       <Header />
@@ -65,7 +65,7 @@ const Sustainability = () => {
               transition={{ delay: 0.1 }}
               className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
             >
-              Sustainable Luxury
+              Sustainable Fashion
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -73,8 +73,8 @@ const Sustainability = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              At LuxeMia, we believe that true luxury respects both people and planet. 
-              Our commitment to sustainability is woven into every thread of our creations.
+              At LuxeMia, we believe that great fashion should respect both people and planet. 
+              Our commitment to sustainability is part of everything we do.
             </motion.p>
           </div>
         </section>
@@ -88,9 +88,9 @@ const Sustainability = () => {
                   Our Sustainability Promise
                 </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed text-center">
-                  By 2030, we pledge to achieve carbon neutrality across our entire supply chain, 
-                  use 100% sustainable materials, and ensure that every artisan family we work with 
-                  has access to education, healthcare, and financial security.
+                  By 2030, we pledge to increase our use of sustainable materials across our supply chain, 
+                  reduce our environmental footprint, and ensure that every supplier we work with 
+                  meets our standards for fair wages and safe working conditions.
                 </p>
               </div>
             </div>
@@ -134,7 +134,7 @@ const Sustainability = () => {
               <p className="text-muted-foreground text-lg leading-relaxed">
                 We are actively working to increase our use of sustainable materials, reduce water consumption
                 in our dyeing processes, maintain plastic-free packaging across all orders, and support
-                reforestation efforts in the communities where our artisans live and work.
+                reforestation efforts in the communities where our products are sourced.
               </p>
             </div>
           </div>

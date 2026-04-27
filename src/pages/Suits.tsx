@@ -59,6 +59,7 @@ const Suits = () => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['Style', 'Fabric']);
   // Extra safety: filter out any menswear products that slip through
   // The hook already filters, but this catches edge cases
+  // Use _originalProductType if available (before enrichment) for accurate menswear detection
   const womenOnlyProducts = useMemo(() => {
     const menswearKeywords = [
       'sherwani', 'kurta pajama', 'jodhpuri', 'kurta set', 'indo western',
@@ -69,16 +70,25 @@ const Suits = () => {
     return products.filter(p => {
       const title = p.node.title.toLowerCase();
       const productType = (p.node.productType ?? '').toLowerCase();
+      const originalType = ((p.node as any)._originalProductType ?? p.node.productType ?? '').toLowerCase();
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
 
-      // Hard-exclude by product type
-      if (productType.includes("men") || productType.includes("menswear") || productType.includes("male")) return false;
+      // Hard-exclude by original product type (before enrichment)
+      if (originalType.includes("men") || originalType.includes("menswear") || originalType.includes("male") ||
+          /\bmen\b/.test(originalType) || /men's/.test(originalType)) return false;
+
+      // Hard-exclude by enriched product type
+      if (productType === 'menswear') return false;
 
       // Hard-exclude by tags
-      if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom')) return false;
+      if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom' || t === 'gender:male')) return false;
 
       // Hard-exclude by title keywords
       if (menswearKeywords.some(kw => title.includes(kw))) return false;
+
+      // Hard-exclude products that look like men's suits (not women's salwar kameez)
+      // Men's suits typically have 'suit' in productType but NOT women's keywords
+      if (originalType.includes('suit') && !/salwar|anarkali|sharara|pakistani|plazzo|palazzo|gharara|wedding suit|designer suit|women/.test(originalType)) return false;
 
       return true;
     });

@@ -71,7 +71,7 @@ function extractProductDetails(title, productType, tags) {
   const fabrics = ['silk', 'georgette', 'chinon', 'chinnon', 'net', 'velvet', 'cotton', 'organza',
     'chiffon', 'shimmer', 'crepe', 'viscose', 'faux georgette', 'fendy silk', 'chinon silk',
     'shimmer silk', 'dola silk', 'chanderi', 'crepe silk', 'art silk', 'banarasi jacquard'];
-  let fabric = 'Premium';
+  let fabric = 'Quality';
   for (const f of fabrics) {
     if (t.includes(f)) { fabric = f.charAt(0).toUpperCase() + f.slice(1); break; }
   }
@@ -137,13 +137,13 @@ function enrichDescription(title, originalDesc, productType, tags) {
     const isKurta = title.toLowerCase().includes('kurta');
     const garmentType = isSherwani ? 'Sherwani' : isKurta ? 'Kurta Pajama Set' : 'Ethnic Ensemble';
     
-    let desc = `Make a distinguished statement with this ${title} from LuxeMia's premium menswear collection. `;
-    desc += `Crafted from ${fabric} fabric with exquisite ${work} detailing, this ${garmentType.toLowerCase()} combines traditional Indian craftsmanship with contemporary sophistication. `;
+    let desc = `Make a distinguished statement with this ${title} from LuxeMia's quality menswear collection. `;
+    desc += `Crafted from ${fabric} fabric with beautiful ${work} detailing, this ${garmentType.toLowerCase()} combines traditional Indian quality workmanship with contemporary sophistication. `;
     if (color) desc += `The ${color} shade adds a refined touch that photographs beautifully for wedding ceremonies and celebrations. `;
     desc += `This readymade ensemble includes the ${isSherwani ? 'sherwani with matching churidar and dupatta' : 'kurta with matching pajama bottoms'}. `;
     desc += `Available in sizes 36-44 with custom tailoring available on request. `;
-    desc += `Fabric Details: ${fabric} fabric with premium finish and comfortable fit for extended wear. `;
-    desc += `Work & Craftsmanship: ${work} technique executed by skilled artisans with attention to detail. `;
+    desc += `Fabric Details: ${fabric} fabric with quality finish and comfortable fit for extended wear. `;
+    desc += `Work & Craftsmanship: ${work} technique made with attention to detail. `;
     desc += `Care Instructions: Dry clean only. Store in a cool, dry place. `;
     desc += `Perfect for: weddings, receptions, engagement ceremonies, and festive celebrations. `;
     desc += `Shipping: Free worldwide shipping on orders over $200. Delivery within 7-12 business days to USA, UK, and Canada.`;
@@ -151,12 +151,12 @@ function enrichDescription(title, originalDesc, productType, tags) {
   }
   
   // Women's suits enrichment
-  let desc = `Elevate your ethnic wardrobe with this exquisite ${title} from LuxeMia's curated collection. `;
-  desc += `Crafted from premium ${fabric} fabric, this ${suitStyle.toLowerCase()} features beautiful ${work} that adds dimension and artistry to every silhouette. `;
+  let desc = `Elevate your ethnic wardrobe with this beautiful ${title} from LuxeMia's curated collection. `;
+  desc += `Crafted from quality ${fabric} fabric, this ${suitStyle.toLowerCase()} features beautiful ${work} that adds dimension and artistry to every silhouette. `;
   if (color) desc += `The stunning ${color} shade complements all skin tones and photographs beautifully in any lighting. `;
   desc += `This readymade ensemble includes a perfectly tailored kurta/top, matching bottom (palazzo/sharara/churidar as per style), and a complementary dupatta. `;
   desc += `Fabric Details: ${fabric} fabric with elegant drape and comfortable fit for extended celebrations. `;
-  desc += `Work & Craftsmanship: ${work} technique executed by skilled artisans. `;
+  desc += `Work & Craftsmanship: ${work} technique made with attention to detail. `;
   if (color) desc += `Color: ${color}. `;
   desc += `Sizing: Available in sizes S, M, L, XL, XXL. Custom tailoring available on request. `;
   desc += `Fit: Flattering silhouette suitable for all body types. `;
@@ -225,7 +225,7 @@ function generateXMLItem(product) {
   const fabricTags = (p.tags || []).filter(t => 
     ['silk', 'georgette', 'net', 'velvet', 'cotton', 'chinon', 'chinnon', 'organza', 'chiffon', 'shimmer', 'crepe'].some(f => t.toLowerCase().includes(f))
   );
-  if (fabricTags.length > 0 && material === 'Premium') {
+  if (fabricTags.length > 0 && material === 'Quality') {
     material = fabricTags[0].charAt(0).toUpperCase() + fabricTags[0].slice(1);
   }
 
@@ -245,7 +245,7 @@ function generateXMLItem(product) {
     <g:gender>${gender}</g:gender>
     <g:age_group>adult</g:age_group>
     ${color ? `<g:color>${xmlEscape(color)}</g:color>` : ''}
-    ${material && material !== 'Premium' ? `<g:material>${xmlEscape(material)}</g:material>` : ''}
+    ${material && material !== 'Quality' ? `<g:material>${xmlEscape(material)}</g:material>` : ''}
     ${extractedWork && extractedWork !== 'Embroidery' ? `<g:pattern>${xmlEscape(extractedWork)}</g:pattern>` : `<g:pattern>Embroidery</g:pattern>`}
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>
@@ -303,7 +303,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>https://luxemia.shop</link>
-  <description>Shop premium Indian ethnic wear - bridal lehengas, wedding lehengas, sarees, sherwanis, salwar kameez, and suits at LuxeMia. Free worldwide shipping.</description>
+  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding lehengas, sarees, sherwanis, salwar kameez, and suits at LuxeMia. Free worldwide shipping.</description>
 ${allItems.join('\n')}
 </channel>
 </rss>`;

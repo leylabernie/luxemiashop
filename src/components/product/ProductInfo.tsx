@@ -350,7 +350,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="space-y-2">
         <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
         <p className="text-muted-foreground leading-relaxed text-sm">
-          {product.description || 'Exquisitely crafted with attention to every detail, this piece embodies the essence of traditional Indian artistry. Perfect for ceremonies, weddings, and special occasions.'}
+          {product.description || 'Beautifully made with attention to every detail, this piece features traditional Indian design elements. Perfect for ceremonies, weddings, and special occasions.'}
         </p>
       </div>
 
@@ -497,7 +497,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">100% Authentic</p>
-            <p className="text-xs text-muted-foreground">Certified handcrafted</p>
+            <p className="text-xs text-muted-foreground">Quality assured</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
@@ -534,7 +534,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         {/* Urgency info now shown in DeliveryEstimate component */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Shield className="h-4 w-4 text-primary" />
-          <span>Quality checked by <span className="text-foreground font-medium">LuxeMia artisans</span></span>
+          <span>Quality checked by <span className="text-foreground font-medium">LuxeMia team</span></span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Package className="h-4 w-4 text-primary" />

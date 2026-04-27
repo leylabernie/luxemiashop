@@ -129,8 +129,8 @@ const Terms = () => {
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">3.2 Product Accuracy</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>Product images are for illustration purposes only. Actual colors, textures, and embroidery patterns may vary slightly due to photography, monitor settings, and the handcrafted nature of our products.</li>
-                        <li>Minor variations in handwork are characteristic of artisanal products and are not considered defects.</li>
+                        <li>Product images are for illustration purposes only. Actual colors, textures, and embroidery patterns may vary slightly due to photography, monitor settings, and the nature of our products.</li>
+                        <li>Minor variations in handwork are characteristic of these products and are not considered defects.</li>
                         <li>We make every effort to display accurate product descriptions but do not warrant that descriptions are error-free.</li>
                       </ul>
                     </div>
@@ -272,7 +272,7 @@ const Terms = () => {
                     <li>All products are inspected for quality before shipment.</li>
                     <li>We guarantee against manufacturing defects for 30 days from delivery date.</li>
                     <li>Normal wear and tear, damage from misuse, or improper care are not covered.</li>
-                    <li>Handcrafted items may have minor variations which are characteristic of artisan work and not defects.</li>
+                    <li>Embroidered items may have minor variations which are characteristic of this type of work and not defects.</li>
                     <li>Please follow care instructions to maintain product quality.</li>
                   </ul>
                 </section>
