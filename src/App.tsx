@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./hooks/useAuth";
-import { usePageTracking } from "./hooks/useAnalytics";
+import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Index from "./pages/Index";
@@ -53,6 +54,12 @@ const queryClient = new QueryClient();
 // Component to handle page tracking inside router context
 const PageTracker = ({ children }: { children: React.ReactNode }) => {
   usePageTracking();
+
+  // Check for Shopify order confirmation in URL (conversion tracking)
+  useEffect(() => {
+    trackShopifyOrderFromURL();
+  }, []);
+
   return <>{children}</>;
 };
 

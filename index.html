@@ -1,13 +1,24 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) - GA4 + Google Ads -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-D1NN0TC3Y0');
+
+      // GA4 configuration with enhanced ecommerce
+      gtag('config', 'G-D1NN0TC3Y0', {
+        send_page_view: true,
+        allow_google_signals: true,
+        linked_domains: ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com']
+      });
+
+      // Google Ads conversion tracking
+      // REPLACE AW-XXXXXXXXX WITH YOUR ACTUAL GOOGLE ADS CONVERSION ID
+      // Get it from: Google Ads → Tools → Conversions → Setup → Tag
+      // gtag('config', 'AW-XXXXXXXXX');
     </script>
 
     <meta charset="UTF-8" />

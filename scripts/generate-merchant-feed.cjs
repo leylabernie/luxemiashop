@@ -78,16 +78,91 @@ const CATEGORY_OCCASIONS = {
   'palazzo': 'casual festive, daily elegance',
 };
 
+// Category-to-included-items mapping
+const CATEGORY_ITEMS = {
+  'bridal lehengas': 'Includes: Lehenga (skirt), Choli (blouse), and Dupatta. Can-can attached for volume.',
+  'wedding lehengas': 'Includes: Lehenga (skirt), Choli (blouse), and Dupatta.',
+  'party lehengas': 'Includes: Lehenga (skirt), Choli (blouse), and Dupatta.',
+  'festive lehengas': 'Includes: Lehenga (skirt), Choli (blouse), and Dupatta.',
+  'designer lehengas': 'Includes: Lehenga (skirt), Choli (blouse), and Dupatta. Can-can attached for volume.',
+  'wedding sarees': 'Includes: Saree (5.5 meters) with Blouse piece (0.8 meters) attached. Petticoat not included.',
+  'party sarees': 'Includes: Saree (5.5 meters) with Blouse piece (0.8 meters) attached. Petticoat not included.',
+  'festive sarees': 'Includes: Saree (5.5 meters) with Blouse piece (0.8 meters) attached. Petticoat not included.',
+  'casual sarees': 'Includes: Saree (5.5 meters) with Blouse piece (0.8 meters) attached. Petticoat not included.',
+  'occasional sarees': 'Includes: Saree (5.5 meters) with Blouse piece (0.8 meters) attached. Petticoat not included.',
+  'groom sherwanis': 'Includes: Sherwani, Churidar (pants), and Dupatta/Stole.',
+  'sherwanis': 'Includes: Sherwani, Churidar (pants), and Dupatta/Stole.',
+  'kurta pajamas': 'Includes: Kurta (top) and Pajama (bottom). Dupatta available separately.',
+  'anarkali': 'Includes: Anarkali Kurta (top), Bottom (churidar/palazzo/sharara as per style), and Dupatta.',
+  'sharara': 'Includes: Kurta (top), Sharara Pants (flared), and Dupatta.',
+  'palazzo': 'Includes: Kurta (top), Palazzo Pants (wide-leg), and Dupatta.',
+};
+
+// Category-to-fabric-details mapping
+const FABRIC_DETAILS = {
+  'Pure Net': 'Lightweight, sheer fabric with a beautiful drape. 100% polyester net with embroidery overlay.',
+  'Silk': 'Luxurious silk fabric with natural sheen and rich texture. Comfortable for extended wear.',
+  'Heavy Silk': 'Premium heavyweight silk with substantial body and elegant fall. 100% silk.',
+  'Viscose Silk': 'Silk-blend viscose fabric combining the sheen of silk with the comfort of viscose. Easy to drape.',
+  'Banarasi Silk': 'Heritage Banarasi weave with traditional motifs. Rich texture and lasting quality.',
+  'Georgette': 'Lightweight, slightly sheer fabric with a crinkled texture. Excellent drape and movement.',
+  'Chinnon': 'Premium Chinnon fabric with smooth finish and elegant sheen. Lightweight and comfortable.',
+  'Art Silk': 'Artificial silk (polyester) mimicking the look and feel of natural silk at an accessible price point.',
+  'Heavy Net': 'Structured net fabric with more body than regular net. Holds shape beautifully.',
+  'Organza': 'Crisp, lightweight fabric with a subtle sheen. Creates voluminous silhouettes.',
+  'Velvet': 'Premium velvet with soft pile and luxurious hand-feel. Perfect for winter celebrations.',
+  'Net': 'Lightweight net fabric with beautiful translucency and elegant drape.',
+  'Fendy Silk': 'Premium Fendy Silk with unique texture combining silk sheen with subtle body.',
+  'Fendy Satin': 'Smooth satin fabric with glossy finish and elegant drape.',
+  'Tissue Silk': 'Lightweight tissue silk with metallic sheen. Creates a luminous, regal appearance.',
+  'Roman Silk': 'Premium Roman Silk with distinctive texture and beautiful fall.',
+  'Chanderi Cotton': 'Traditional Chanderi cotton-silk blend. Lightweight, breathable, with subtle sheen.',
+  'Chanderi Silk': 'Chanderi silk-cotton blend with traditional weaving patterns. Lightweight with natural sheen.',
+  'Cotton': 'Pure cotton fabric that is breathable, comfortable, and easy to maintain.',
+  'PV Tissue Silk': 'PV (Polyester Viscose) Tissue Silk with metallic sheen. Lightweight and elegant.',
+};
+
 // Enrich description with customer-relevant details Google wants
-function enrichDescription(desc, category, fabric, work) {
+function enrichDescription(desc, category, fabric, work, color) {
   const cat = (category || '').toLowerCase();
   let occasion = 'special occasions';
   for (const [key, val] of Object.entries(CATEGORY_OCCASIONS)) {
     if (cat.includes(key)) { occasion = val; break; }
   }
+
   const fabricStr = fabric || 'Premium';
   const workStr = work || 'handcrafted';
-  return `${desc} Product Details: ${fabricStr} fabric with ${workStr} detailing, perfect for ${occasion}. Available in sizes S-XXL with custom tailoring options. Care: Dry clean only. Ships worldwide from India in 7-12 business days. Free shipping on orders over $200.`;
+  const colorStr = color || '';
+
+  // Get included items for this category
+  let includedItems = '';
+  for (const [key, val] of Object.entries(CATEGORY_ITEMS)) {
+    if (cat.includes(key)) { includedItems = val; break; }
+  }
+
+  // Get fabric details
+  const fabricDetail = FABRIC_DETAILS[fabricStr] || `Premium ${fabricStr} fabric with quality craftsmanship.`;
+
+  // Determine sizing
+  const isMenswear = cat.includes('sherwani') || cat.includes('kurta');
+  const sizeInfo = isMenswear
+    ? 'Available in chest sizes 36-44 inches. Refer to our size guide for detailed measurements.'
+    : 'Available in sizes S, M, L, XL, XXL. Free Size (up to 42 inches) also available. Custom tailoring available on request.';
+
+  // Build comprehensive description
+  let enriched = `${desc} `;
+
+  enriched += `Fabric Details: ${fabricDetail} `;
+  enriched += `Work & Craftsmanship: ${workStr} technique executed by skilled artisans. `;
+  if (colorStr) enriched += `Color: ${colorStr}. `;
+  if (includedItems) enriched += `${includedItems} `;
+  enriched += `Sizing: ${sizeInfo} `;
+  enriched += `Fit: ${isMenswear ? 'Regular fit with structured shoulders' : 'Flattering fit-and-flare silhouette suitable for all body types'}. `;
+  enriched += `Care Instructions: Dry clean only. Store in a cool, dry place. Avoid direct sunlight to preserve color and embroidery. `;
+  enriched += `Perfect for: ${occasion}. `;
+  enriched += `Shipping: Free worldwide shipping on orders over $200. Delivery within 7-12 business days to USA, UK, and Canada. `;
+
+  return enriched.trim();
 }
 
 // All products from the site data files
@@ -217,7 +292,7 @@ function generateXML() {
     const salePriceUSD = p.originalPrice > p.price ? `${p.price} USD` : '';
     const originalPriceUSD = p.originalPrice > p.price ? `${p.originalPrice} USD` : priceUSD;
 
-    const enrichedDesc = enrichDescription(p.description, p.category, p.fabric, p.work);
+    const enrichedDesc = enrichDescription(p.description, p.category, p.fabric, p.work, p.color);
     return `  <item>
     <g:id>${escapeXml(p.id)}</g:id>
     <g:title>${escapeXml(p.title)}</g:title>
@@ -277,7 +352,7 @@ function generateTSV() {
     const originalPriceUSD = p.originalPrice > p.price ? `${p.originalPrice} USD` : `${p.price} USD`;
     const salePriceUSD = p.originalPrice > p.price ? `${p.price} USD` : '';
 
-    const enrichedDesc = enrichDescription(p.description, p.category, p.fabric, p.work);
+    const enrichedDesc = enrichDescription(p.description, p.category, p.fabric, p.work, p.color);
     return [
       tsvEscape(p.id),
       tsvEscape(p.title),

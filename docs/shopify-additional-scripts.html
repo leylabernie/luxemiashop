@@ -1,0 +1,46 @@
+<!--
+  ADD THIS CODE TO SHOPIFY ADMIN → Settings → Checkout → Additional scripts → Order status page
+
+  This tracks purchases in GA4 when customers complete checkout on Shopify's domain.
+  Without this, Google Ads and Merchant Center cannot track conversions.
+
+  STEPS:
+  1. Go to Shopify Admin → Settings → Checkout
+  2. Scroll to "Additional scripts" → "Order status page"
+  3. Paste the code below
+  4. Save
+-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-D1NN0TC3Y0');
+
+  // Track the purchase event
+  gtag('event', 'purchase', {
+    transaction_id: '{{ order.order_number }}',
+    currency: '{{ order.currency }}',
+    value: {{ order.total_price | money_without_currency }},
+    items: [
+      {% for line_item in order.line_items %}
+      {
+        item_id: '{{ line_item.product_id }}',
+        item_name: '{{ line_item.title | escape }}',
+        price: {{ line_item.price | money_without_currency }},
+        quantity: {{ line_item.quantity }},
+        item_category: '{{ line_item.product.type | escape }}'
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  });
+
+  // Google Ads conversion tracking
+  // UNCOMMENT AND REPLACE WITH YOUR ACTUAL CONVERSION ID AND LABEL:
+  // gtag('event', 'conversion', {
+  //   send_to: 'AW-XXXXXXXXX/PURCHASE_CONVERSION_LABEL',
+  //   value: {{ order.total_price | money_without_currency }},
+  //   currency: '{{ order.currency }}',
+  //   transaction_id: '{{ order.order_number }}'
+  // });
+</script>

@@ -58,17 +58,28 @@ const Suits = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>(['Style', 'Fabric']);
   // Extra safety: filter out any menswear products that slip through
-  // The hook already filters, but this catches edge cases (e.g. title contains "sherwani")
+  // The hook already filters, but this catches edge cases
   const womenOnlyProducts = useMemo(() => {
     const menswearKeywords = [
       'sherwani', 'kurta pajama', 'jodhpuri', 'kurta set', 'indo western',
-      'modi jacket', 'nehru jacket', 'dhoti', 'groom',
+      'modi jacket', 'nehru jacket', 'dhoti', 'groom', 'bandi', 'pathani',
+      'achkan', 'men suit', 'men kurta', 'men shirt', 'men trouser',
+      'for men', 'menswear', "men's", ' male ',
     ];
     return products.filter(p => {
       const title = p.node.title.toLowerCase();
       const productType = (p.node.productType ?? '').toLowerCase();
-      if (productType.includes("men") || productType.includes("menswear")) return false;
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+
+      // Hard-exclude by product type
+      if (productType.includes("men") || productType.includes("menswear") || productType.includes("male")) return false;
+
+      // Hard-exclude by tags
+      if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom')) return false;
+
+      // Hard-exclude by title keywords
       if (menswearKeywords.some(kw => title.includes(kw))) return false;
+
       return true;
     });
   }, [products]);
