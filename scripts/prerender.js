@@ -553,6 +553,14 @@ const routes = [
     h1: 'Dusty Rose Silk Party Anarkali',
     content: '<p>An elegant dusty rose anarkali in premium silk. Flowing silhouette with delicate embroidery — perfect for parties and celebrations.</p>',
   },
+  {
+    path: '/404',
+    title: 'Page Not Found | LuxeMia',
+    description: 'The page you are looking for could not be found.',
+    h1: 'Page Not Found',
+    content: '<p>The page you are looking for may have been removed, had its name changed, or is temporarily unavailable. Please visit our <a href="/">homepage</a> to browse our collection.</p>',
+    noIndex: true,
+  },
 ];
 
 /**
@@ -574,18 +582,33 @@ function generateHtml(template, route) {
     `<meta name="description" content="${escapeHtml(route.description)}" />`
   );
 
-  // Replace canonical URL
-  const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
-  html = html.replace(
-    /<link rel="canonical" href="[^"]*" \/>/,
-    `<link rel="canonical" href="${canonical}" />`
-  );
+  // Handle noIndex for 404 pages
+  if (route.noIndex) {
+    html = html.replace(
+      /<meta name="robots" content="[^"]*" \/>/,
+      `<meta name="robots" content="noindex, nofollow" />`
+    );
+    // Also remove canonical for noIndex pages
+    html = html.replace(
+      /<link rel="canonical" href="[^"]*" \/>/,
+      ''
+    );
+  } else {
+    // Replace canonical URL
+    const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
+    html = html.replace(
+      /<link rel="canonical" href="[^"]*" \/>/,
+      `<link rel="canonical" href="${canonical}" />`
+    );
 
-  // Replace OG tags
-  html = html.replace(
-    /<meta property="og:url" content="[^"]*" \/>/,
-    `<meta property="og:url" content="${canonical}" />`
-  );
+    // Replace OG tags
+    html = html.replace(
+      /<meta property="og:url" content="[^"]*" \/>/,
+      `<meta property="og:url" content="${canonical}" />`
+    );
+  }
+
+  // Replace OG title and description
   html = html.replace(
     /<meta property="og:title" content="[^"]*" \/>/,
     `<meta property="og:title" content="${escapeHtml(route.title)}" />`
@@ -617,7 +640,6 @@ function generateHtml(template, route) {
         <a href="/sarees">Sarees</a> |
         <a href="/suits">Suits</a> |
         <a href="/menswear">Menswear</a> |
-        <a href="/jewelry">Jewelry</a> |
         <a href="/blog">Blog</a> |
         <a href="/collections">Collections</a> |
         <a href="/contact">Contact</a>
