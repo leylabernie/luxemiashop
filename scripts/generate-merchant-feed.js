@@ -9,6 +9,12 @@
  * 4. Generates a Google Shopping-compatible XML feed
  */
 
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import fs from 'fs';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const SHOPIFY_API_VERSION = '2025-07';
 const SHOPIFY_STORE = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_TOKEN = 'c98d10d5abd95e6a8d6ddbed223ef4b4';
@@ -302,10 +308,10 @@ async function main() {
   // Also include local products that have working images from kesimg.b-cdn.net
   // Note: Many kesimg.b-cdn.net images have expired (415 errors), so we only
   // include local products whose images are NOT in known broken CDN directories.
-  const fs = await import('fs');
+  const fs_module = fs;
   let localItems = [];
   try {
-    const existingFeed = fs.readFileSync('/home/z/my-project/luxemiashop/public/merchant-feed.xml', 'utf8');
+    const existingFeed = fs.readFileSync(join(__dirname, '..', 'public', 'merchant-feed.xml'), 'utf8');
     const localItemRegex = /<item>[\s\S]*?<\/item>/g;
     let match;
     while ((match = localItemRegex.exec(existingFeed)) !== null) {
@@ -342,7 +348,8 @@ ${allItems.join('\n')}
 </channel>
 </rss>`;
   
-  fs.writeFileSync('/home/z/my-project/luxemiashop/public/merchant-feed.xml', xml);
+  const publicDir = join(__dirname, '..', 'public');
+  fs.writeFileSync(join(publicDir, 'merchant-feed.xml'), xml);
   console.log(`\nGenerated merchant-feed.xml with ${allItems.length} products!`);
   console.log(`File size: ${(Buffer.byteLength(xml) / 1024).toFixed(1)} KB`);
 }
