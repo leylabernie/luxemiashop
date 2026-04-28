@@ -134,7 +134,7 @@ function extractProductDetails(title, productType, tags) {
 }
 
 // Enrich a short/generic description with detailed product information
-function enrichDescription(title, originalDesc, productType, tags) {
+function enrichDescription(title, originalDesc, productType, tags, variants) {
   const { fabric, color, work, occasion, suitStyle, isMenswear } = extractProductDetails(title, productType, tags);
   
   if (isMenswear) {
@@ -147,7 +147,7 @@ function enrichDescription(title, originalDesc, productType, tags) {
     desc += `Crafted from ${fabric} fabric with beautiful ${work} detailing, this ${garmentType.toLowerCase()} combines traditional Indian quality workmanship with contemporary sophistication. `;
     if (color) desc += `The ${color} shade adds a refined touch that photographs beautifully for wedding ceremonies and celebrations. `;
     desc += `This readymade ensemble includes the ${isSherwani ? 'sherwani with matching churidar and dupatta' : 'kurta with matching pajama bottoms'}. `;
-    desc += `Available in sizes 36-44 with custom tailoring available on request. `;
+    desc += `Available in ${getSizesFromVariants(variants)} with custom tailoring available on request. `;
     desc += `Fabric Details: ${fabric} fabric with quality finish and comfortable fit for extended wear. `;
     desc += `Work & Craftsmanship: ${work} technique made with attention to detail. `;
     desc += `Care Instructions: Dry clean only. Store in a cool, dry place. `;
@@ -164,12 +164,26 @@ function enrichDescription(title, originalDesc, productType, tags) {
   desc += `Fabric Details: ${fabric} fabric with elegant drape and comfortable fit for extended celebrations. `;
   desc += `Work & Craftsmanship: ${work} technique made with attention to detail. `;
   if (color) desc += `Color: ${color}. `;
-  desc += `Sizing: Available in sizes S, M, L, XL, XXL. Custom tailoring available on request. `;
+  desc += `Sizing: Available in ${getSizesFromVariants(variants)}. Custom tailoring available on request. `;
   desc += `Fit: Flattering silhouette suitable for all body types. `;
   desc += `Care Instructions: Dry clean only. Store in a cool, dry place. Avoid direct sunlight to preserve color and embroidery. `;
   desc += `Perfect for: ${occasion.toLowerCase()}, weddings, festive celebrations, and special events. `;
   desc += `Shipping: Free worldwide shipping on orders over $200. Delivery within 7-12 business days to USA, UK, and Canada.`;
   return desc;
+}
+
+// Extract available sizes from product variants
+function getSizesFromVariants(variants) {
+  if (!variants || variants.length === 0) return 'standard sizing';
+  const sizeOption = variants[0]?.node?.title || '';
+  // If only one variant named "Free Size" or "Default Title"
+  if (variants.length === 1 && /^(free size|default|one size)/i.test(sizeOption)) {
+    return 'Free Size (one size fits most)';
+  }
+  // Collect all variant titles (size names)
+  const sizes = variants.map(v => v.node?.title).filter(Boolean);
+  if (sizes.length > 0) return `sizes ${sizes.join(', ')}`;
+  return 'standard sizing';
 }
 
 // Map productType to Google product category and custom label
@@ -215,11 +229,17 @@ function xmlEscape(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
-// Convert Shopify price (INR) to USD
-// Using the same formula as the frontend: INR * 0.012 * 2.5, but for Shopify products
-// which are already in INR
-function convertToUSD(inrAmount) {
-  return Math.round(parseFloat(inrAmount) * 0.012 * 2.5);
+// Convert Shopify price to USD
+// Shopify products are already priced in USD, so no conversion needed.
+// The old formula (INR * 0.012 * 2.5) was incorrect — Shopify store prices are USD.
+function convertToUSD(amount, currencyCode) {
+  const num = parseFloat(amount);
+  if (currencyCode && currencyCode.toUpperCase() === 'INR') {
+    // Fallback: if somehow a product is in INR, convert using approximate rate
+    return Math.round(num * 0.012);
+  }
+  // Products are already in USD — use the price as-is, rounded to whole dollars
+  return Math.round(num);
 }
 
 function generateXMLItem(product) {
@@ -229,12 +249,14 @@ function generateXMLItem(product) {
   const { googleCategory, productTypePath } = getGoogleCategory(p.productType, isMenswear);
   
   // Enrich the description
-  const enrichedDesc = enrichDescription(p.title, p.description, p.productType, p.tags);
+  const enrichedDesc = enrichDescription(p.title, p.description, p.productType, p.tags, p.variants?.edges);
   
-  // Pricing - Shopify products are in INR, convert to USD
-  const priceUSD = convertToUSD(p.priceRange.minVariantPrice.amount);
-  const compareAtUSD = p.compareAtPriceRange?.minVariantPrice?.amount ? 
-    convertToUSD(p.compareAtPriceRange.minVariantPrice.amount) : Math.round(priceUSD * 1.43);
+  // Pricing - Shopify products are already in USD
+  const currencyCode = p.priceRange?.minVariantPrice?.currencyCode || 'USD';
+  const priceUSD = convertToUSD(p.priceRange.minVariantPrice.amount, currencyCode);
+  const compareAtAmount = p.compareAtPriceRange?.minVariantPrice?.amount;
+  const compareAtUSD = compareAtAmount && parseFloat(compareAtAmount) > 0 ? 
+    convertToUSD(compareAtAmount, currencyCode) : Math.round(priceUSD * 1.43);
   
   const image = fixImageUrl(p.images?.edges?.[0]?.node?.url || '');
   const gender = isMenswear ? 'male' : 'female';
