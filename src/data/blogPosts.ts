@@ -1168,7 +1168,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <p>Indian weddings abroad have evolved into magnificent celebrations that beautifully blend traditional roots with contemporary global aesthetics. For <strong>NRI brides and wedding guests in 2026</strong>, the fashion landscape is more exciting than ever — offering styles that honor cultural heritage while embracing modern sensibilities. Whether you are planning a grand wedding in New Jersey, a boutique celebration in London, or an intimate gathering in Toronto, staying ahead of <strong>NRI wedding ethnic wear trends</strong> is essential for looking and feeling your absolute best.</p>
 
-      <p>At <a href="/">LuxeMia</a>, we have curated this comprehensive guide to the top <strong>Indian bridal fashion NRI</strong> trends shaping wedding wardrobes in 2026. From dreamy pastels to sustainable handcrafted pieces, here is everything you need to know.</p>
+      <p>At <a href="/">LuxeMia</a>, we have curated this comprehensive guide to the top <strong>Indian bridal fashion NRI</strong> trends shaping wedding wardrobes in 2026. From dreamy pastels to sustainable quality pieces, here is everything you need to know.</p>
 
       <h2>1. The Rise of Pastel and Muted Tones</h2>
       <p>Gone are the days when Indian bridal wear was exclusively about bold reds and heavy golds. In 2026, <strong>pastel bridal lehengas</strong> have taken center stage, with NRI brides gravitating toward softer, more romantic hues. Think blush pinks, sage greens, powder blues, lavender, and champagne golds. These muted tones photograph beautifully in both indoor and outdoor settings — a practical consideration for weddings held in venues across the USA and UK.</p>
@@ -1196,8 +1196,8 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Jacket-style blouses:</strong> Pair with a lehenga skirt for a contemporary reception look</li>
       </ul>
 
-      <h2>3. Sustainable and Handcrafted Choices</h2>
-      <p>Sustainability is no longer a trend — it is a value that NRI shoppers are actively seeking in their wedding wardrobes. In 2026, there is a significant shift toward <strong>quality Indian ethnic wear sourced from established suppliers</strong>. Brides and guests alike are choosing pieces made by skilled artisans, with transparent sourcing and minimal environmental impact.</p>
+      <h2>3. Sustainable and Quality Choices</h2>
+      <p>Sustainability is no longer a trend — it is a value that NRI shoppers are actively seeking in their wedding wardrobes. In 2026, there is a significant shift toward <strong>quality Indian ethnic wear sourced from established suppliers</strong>. Brides and guests alike are choosing pieces made with transparent sourcing and minimal environmental impact.</p>
 
       <p>Traditional weaves like Banarasi brocade, Kanchipuram silk, and Chanderi are experiencing a renaissance. These fabrics carry centuries of tradition in every thread. At LuxeMia, every piece is sourced from experienced manufacturers, ensuring you receive quality garments. Our commitment to <a href="/lehengas">bridal lehengas</a> and <a href="/sarees">beautiful sarees</a> reflects this ethos.</p>
 
@@ -1758,7 +1758,7 @@ export const blogPosts: BlogPost[] = [
     id: '23',
     slug: 'nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada',
     title: 'NRI Guide: How to Buy Indian Ethnic Wear Online from USA, UK & Canada',
-    excerpt: 'A practical guide for NRI shoppers — from understanding sizing and duty-free limits to what questions to ask before ordering handcrafted Indian ethnic wear online.',
+    excerpt: 'A practical guide for NRI shoppers — from understanding sizing and duty-free limits to what questions to ask before ordering quality Indian ethnic wear online.',
     content: `
       <h2>Shopping Indian Ethnic Wear from Abroad: What You Need to Know</h2>
       <p>If you're part of the Indian diaspora in the USA, UK, or Canada, buying ethnic wear online is a different experience from shopping in a local store in India. You can't feel the fabric, you can't try it on, and you're often working across time zones with retailers. But it doesn't have to be stressful.</p>
@@ -1856,9 +1856,9 @@ export const blogPosts: BlogPost[] = [
     id: '24',
     slug: 'care-guide-washing-storing-indian-ethnic-wear',
     title: 'How to Care for Indian Ethnic Wear: Washing, Storing & Preserving Embroidery',
-    excerpt: 'Handcrafted Indian garments with zardozi, mirror work, and silk embroidery require special care. Follow this guide to keep your lehenga, saree, and salwar kameez looking new for years.',
+    excerpt: 'Indian garments with zardozi, mirror work, and silk embroidery require special care. Follow this guide to keep your lehenga, saree, and salwar kameez looking new for years.',
     content: `
-      <h2>Why Proper Care Matters for Handcrafted Indian Wear</h2>
+      <h2>Why Proper Care Matters for Indian Wear</h2>
       <p>A hand-embroidered lehenga or silk saree is not like a machine-made garment. The materials used — raw silk, georgette, velvet, zari thread, mirror work, sequins, and stone embellishments — each have their own care requirements. Treat them correctly and they'll last decades. A single washing mistake can cause irreversible damage.</p>
 
       <p>This guide covers everything from first-wear preparation to long-term storage — so your LuxeMia pieces stay as beautiful as the day you received them.</p>

@@ -895,7 +895,7 @@ export const localProducts: LocalProduct[] = [
     id: "bridal-new-005",
     handle: "auspicious-red-gadhwal-silk-bridal-lehenga",
     title: "Auspicious Red Gadhwal Silk Bridal Lehenga",
-    description: "Embrace timeless bridal tradition with this magnificent red Gadhwal Silk lehenga that embodies the essence of Indian matrimony. The auspicious vermillion red has adorned brides for millennia, symbolizing prosperity, fertility, and love. This stunning design is woven using centuries-old techniques by artisans from the Gadhwal region, famed for producing the most lustrous silk textiles. Intricate zari embroidery in gold threads creates elaborate paisley and floral patterns that will become more beautiful with each generation.",
+    description: "Embrace timeless bridal tradition with this magnificent red Gadhwal Silk lehenga that embodies the essence of Indian matrimony. The auspicious vermillion red has adorned brides for millennia, symbolizing prosperity, fertility, and love. This stunning design features beautiful Gadhwal silk fabric, known for its lustrous finish and elegant drape. Intricate zari embroidery in gold threads creates elaborate paisley and floral patterns that make this lehenga a beautiful choice for your special day.",
     price: convertPrice(24195),
     originalPrice: convertPrice(34077),
     currency: "USD",
