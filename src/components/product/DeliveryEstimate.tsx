@@ -3,6 +3,7 @@ import { Truck, Zap, Clock } from 'lucide-react';
 
 interface DeliveryEstimateProps {
   hasStitching: boolean;
+  extraTailoringDays?: number;
 }
 
 /** Skip weekends and return the date that is `businessDays` working days from `start`. */
@@ -22,14 +23,14 @@ const formatDate = (d: Date) =>
 
 const EST_CUTOFF_HOUR = 18; // 6 PM EST
 
-export const DeliveryEstimate = ({ hasStitching }: DeliveryEstimateProps) => {
+export const DeliveryEstimate = ({ hasStitching, extraTailoringDays = 0 }: DeliveryEstimateProps) => {
   const { standardDate, expressDate, urgencyHours } = useMemo(() => {
     const now = new Date();
 
-    // Standard: 7 business days (+3 if stitching)
-    const standardBizDays = hasStitching ? 10 : 7;
-    // Express: 3 business days (+3 if stitching)
-    const expressBizDays = hasStitching ? 6 : 3;
+    // Standard: 7 business days (+3 if stitching + extra tailoring days)
+    const standardBizDays = hasStitching ? 10 + extraTailoringDays : 7;
+    // Express: 3 business days (+3 if stitching + extra tailoring days)
+    const expressBizDays = hasStitching ? 6 + extraTailoringDays : 3;
 
     const std = addBusinessDays(now, standardBizDays);
     const exp = addBusinessDays(now, expressBizDays);

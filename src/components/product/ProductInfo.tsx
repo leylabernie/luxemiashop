@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock } from 'lucide-react';
+import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Tag, Shield, Award, RefreshCcw, Lock, Info, Scissors, Ruler } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -10,6 +10,43 @@ import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
+
+// Utsav-style Stitching Type options with price modifiers
+interface StitchingTypeOption {
+  id: string;
+  label: string;
+  description: string;
+  priceModifier: number;
+  requiresMeasurement: boolean;
+  deliveryExtraDays: number;
+}
+
+const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
+  {
+    id: 'semi-stitched',
+    label: 'Semi Stitched',
+    description: 'Pre-constructed with adjustable side seams — select your size for a near-perfect fit',
+    priceModifier: 0,
+    requiresMeasurement: false,
+    deliveryExtraDays: 0,
+  },
+  {
+    id: 'ready-to-wear',
+    label: 'Ready to Wear',
+    description: 'Fully stitched to your measurements — select size and provide details',
+    priceModifier: 15,
+    requiresMeasurement: true,
+    deliveryExtraDays: 3,
+  },
+  {
+    id: 'made-to-measure',
+    label: 'Made to Measure',
+    description: 'Bespoke tailoring — submit measurements after ordering for a perfect custom fit',
+    priceModifier: 25,
+    requiresMeasurement: true,
+    deliveryExtraDays: 5,
+  },
+];
 
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
@@ -71,8 +108,30 @@ const isBlouseProductType = (productType?: string, tags?: string[]): boolean => 
   return false;
 };
 
+// Determine if a product type supports stitching options (salwar, lehenga, saree, etc.)
+const STITCHABLE_PRODUCT_TYPES = [
+  'salwar kameez', 'salwar kameez suit', 'lehenga', 'lehenga choli', 'saree', 'sarees',
+  'anarkali', 'sharara suit', 'pakistani suit', 'palazzo suit', 'gharara suit',
+];
+
+const isStitchableProduct = (productType?: string, tags?: string[]): boolean => {
+  if (!productType) return false;
+  const lower = productType.toLowerCase();
+  if (STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t))) return true;
+  // Also check tags for suit/salwar indicators
+  if (tags) {
+    const lowerTags = tags.map(t => t.toLowerCase());
+    return lowerTags.some(t =>
+      t.includes('salwar') || t.includes('suit') || t.includes('lehenga') || t.includes('saree') || t.includes('anarkali')
+    );
+  }
+  return false;
+};
+
 // Force rebuild 2026-04-06
 export const ProductInfo = ({ product }: ProductInfoProps) => {
+  const isStitchable = isStitchableProduct(product.productType, product.tags);
+
   // Auto-select options when there's only one value per option (e.g. "Default Title")
   const defaultOptions = useMemo(() => {
     const defaults: Record<string, string> = {};
@@ -96,6 +155,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [showSizeValidation, setShowSizeValidation] = useState(false);
   const [selectedNeckline, setSelectedNeckline] = useState<NecklineOption>('Round Neck');
   const [customAlteration, setCustomAlteration] = useState('');
+  const [selectedStitchingType, setSelectedStitchingType] = useState<string | null>(
+    isStitchable ? 'semi-stitched' : null
+  );
+  const [showStitchingInfo, setShowStitchingInfo] = useState<string | null>(null);
   const addItem = useCartStore((state) => state.addItem);
 
   // Find the matching variant based on selected options
@@ -135,18 +198,22 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   // Calculate current price, including stitching option premium if applicable
   const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
   const stitchingPremium = useMemo(() => {
-    // Check if selected stitching option has a price premium
+    // Use the Utsav-style stitching type selector for stitchable products
+    if (isStitchable && selectedStitchingType) {
+      const option = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
+      return option?.priceModifier || 0;
+    }
+    // Fallback for non-stitchable products that still have stitching in variant names
     for (const [key, value] of Object.entries(selectedOptions)) {
       if (key.toLowerCase().includes('stitch') && value) {
-        // Map stitching options to their premiums
         const lowerValue = value.toLowerCase();
-        if (lowerValue.includes('blouse')) return 15; // Blouse Stitching +$15
-        if (lowerValue.includes('full')) return 25; // Full Stitching +$25
-        if (lowerValue.includes('semi')) return 10; // Semi-Stitched +$10
+        if (lowerValue.includes('blouse')) return 15;
+        if (lowerValue.includes('full')) return 25;
+        if (lowerValue.includes('semi')) return 0;
       }
     }
     return 0;
-  }, [selectedOptions]);
+  }, [selectedOptions, selectedStitchingType, isStitchable]);
 
   const currentPrice = useMemo(() => {
     const baseAmount = parseFloat(basePrice.amount);
@@ -162,16 +229,20 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
-    // Check both option names and values for stitching-related selections
+    // For stitchable products, check the Utsav-style selector
+    if (isStitchable) {
+      const selectedOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
+      return selectedOption?.requiresMeasurement || false;
+    }
+    // Fallback for products with stitching in variant names
     return Object.entries(selectedOptions).some(([key, val]) => {
       const lowerKey = key.toLowerCase();
       const lowerVal = val.toLowerCase();
-      // Match option name "Stitching" or values containing "stitch" (e.g. "Semi-Stitched", "Blouse Stitching")
       const isStitchingOption = lowerKey.includes('stitch') || lowerVal.includes('stitch');
       const isUnstitched = lowerVal.startsWith('unstitched') || lowerVal === 'unstitched';
       return isStitchingOption && !isUnstitched;
     });
-  }, [selectedOptions]);
+  }, [selectedOptions, selectedStitchingType, isStitchable]);
 
   // Whether blouse neckline selector should show
   const showNeckline = useMemo(() => {
@@ -200,6 +271,17 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     }
   };
 
+  const handleStitchingTypeSelect = (typeId: string) => {
+    setSelectedStitchingType(typeId);
+    const option = STITCHING_TYPE_OPTIONS.find(o => o.id === typeId);
+    if (option?.requiresMeasurement) {
+      setShowSizeValidation(true);
+    } else {
+      setStitchingSize(null);
+      setShowSizeValidation(false);
+    }
+  };
+
   const handleAddToCart = async () => {
     if (!selectedVariant) {
       toast.error('Please select all options');
@@ -208,13 +290,24 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
     if (needsStitchingSize && !stitchingSize) {
       setShowSizeValidation(true);
-      toast.error('Please select a stitching size');
+      toast.error('Please select a size for stitching');
+      return;
+    }
+    if (isStitchable && !selectedStitchingType) {
+      toast.error('Please select a stitching type');
       return;
     }
 
     setIsAdding(true);
 
     const customAttributes: Array<{ key: string; value: string }> = [];
+    if (isStitchable && selectedStitchingType) {
+      const stitchingOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
+      customAttributes.push({ key: 'Stitching Type', value: stitchingOption?.label || selectedStitchingType });
+      if (stitchingOption?.priceModifier && stitchingOption.priceModifier > 0) {
+        customAttributes.push({ key: 'Stitching Charge', value: `+$${stitchingOption.priceModifier}.00` });
+      }
+    }
     if (needsStitchingSize && stitchingSize) {
       customAttributes.push({ key: 'Stitching Size', value: stitchingSize });
     }
@@ -305,7 +398,13 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </div>
 
       {/* Estimated Delivery — dynamic based on stitching selection */}
-      <DeliveryEstimate hasStitching={needsStitchingSize} />
+      <DeliveryEstimate
+        hasStitching={needsStitchingSize}
+        extraTailoringDays={selectedStitchingType
+          ? (STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType)?.deliveryExtraDays || 0)
+          : 0
+        }
+      />
 
       <Separator />
 
@@ -356,10 +455,101 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       <Separator />
 
+      {/* Utsav-style Stitching Type Selector — shown for stitchable products */}
+      {isStitchable && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Scissors className="h-4 w-4 text-primary" />
+              <label className="text-sm font-medium uppercase tracking-wide">
+                Stitching Type
+              </label>
+            </div>
+            <button
+              onClick={() => setShowStitchingInfo(showStitchingInfo ? null : 'main')}
+              className="text-xs text-primary hover:text-primary/80 underline underline-offset-4"
+            >
+              What's this?
+            </button>
+          </div>
+
+          {/* Stitching Info Popover */}
+          {showStitchingInfo && (
+            <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
+              <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed outfit with adjustable side seams. Select your standard size for a near-perfect fit. Alterations can be done locally if needed.</p>
+              <p><strong className="text-foreground">Ready to Wear:</strong> Fully stitched to your selected size. Choose your bust size and we'll tailor it completely — ready to wear right out of the box.</p>
+              <p><strong className="text-foreground">Made to Measure:</strong> Our bespoke tailoring service. Submit your exact measurements after placing the order for a perfect custom fit. You can customize the fit, styling, and add adornments.</p>
+            </div>
+          )}
+
+          <div className="space-y-3">
+            {STITCHING_TYPE_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => handleStitchingTypeSelect(option.id)}
+                className={`w-full text-left p-4 border rounded-sm transition-all duration-300 ${
+                  selectedStitchingType === option.id
+                    ? 'border-primary bg-primary/5 ring-1 ring-primary'
+                    : 'border-border hover:border-foreground/30'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm font-medium ${
+                      selectedStitchingType === option.id ? 'text-primary' : 'text-foreground'
+                    }`}>
+                      {option.label}
+                    </span>
+                    {option.id === 'semi-stitched' && (
+                      <span className="text-[10px] font-medium uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded">Popular</span>
+                    )}
+                  </div>
+                  <span className={`text-sm font-medium ${
+                    option.priceModifier === 0
+                      ? 'text-green-600 dark:text-green-400'
+                      : 'text-foreground'
+                  }`}>
+                    {option.priceModifier === 0
+                      ? 'Included'
+                      : `+$${option.priceModifier}.00`
+                    }
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {option.description}
+                  {option.deliveryExtraDays > 0 && (
+                    <span className="text-amber-600 dark:text-amber-400 ml-1">
+                      (+{option.deliveryExtraDays} days for tailoring)
+                    </span>
+                  )}
+                </p>
+              </button>
+            ))}
+          </div>
+
+          {/* Made to Measure — post-order measurement note */}
+          {selectedStitchingType === 'made-to-measure' && (
+            <div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-sm">
+              <Info className="h-4 w-4 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+                You can submit your measurements after placing the order. Select "Made to Measure", add to bag, complete your order, then go to <strong>My Account → My Orders</strong> to submit your measurements at your convenience.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Options — hide sections with only a "Default Title" value */}
       <div className="space-y-5">
         {product.options
-          .filter((option) => !(option.values.length === 1 && option.values[0] === 'Default Title'))
+          .filter((option) => {
+            // Hide "Default Title" single-value options
+            if (option.values.length === 1 && option.values[0] === 'Default Title') return false;
+            // For stitchable products, hide the "Stitching" option from Shopify variants
+            // since we use our custom Utsav-style selector above instead
+            if (isStitchable && option.name.toLowerCase().includes('stitch')) return false;
+            return true;
+          })
           .map((option) => (
           <div key={option.name} className="space-y-3">
             <div className="flex items-center justify-between">
