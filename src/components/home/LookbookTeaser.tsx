@@ -85,8 +85,8 @@ const LookbookTeaser = () => {
             </h2>
             <p className="text-foreground/60 font-light leading-relaxed mb-8 max-w-md">
               Discover our latest editorial featuring beautiful pieces that blend traditional 
-              design with contemporary silhouettes. Each garment brings together heritage
-              and style for every occasion.
+              design with contemporary silhouettes. Each garment brings together traditional style
+              and modern design for every occasion.
             </p>
             <Button variant="outline" size="lg" asChild>
               <Link to="/lookbook" className="group">

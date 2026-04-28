@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Shield, Clock, ChevronDown, Star, MapPin, CheckCircle } from 'lucide-react';
+import { Truck, Shield, Clock, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -20,12 +20,6 @@ interface CountryConfig {
   shippingTime: string;
   shippingCost: string;
   customsNote: string;
-  testimonial: {
-    name: string;
-    location: string;
-    rating: number;
-    body: string;
-  };
   faqs: { question: string; answer: string }[];
   benefits: { icon: typeof Truck; title: string; description: string }[];
 }
@@ -77,7 +71,7 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
                 {config.heroTitle}
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Shop stylish sarees, bridal lehengas, salwar suits, and men's ethnic wear from India's renowned textile regions.
+                Shop stylish sarees, bridal lehengas, salwar suits, jewelry, indo-western outfits, and men's ethnic wear from India's renowned textile regions.
                 Delivered to your door in {config.country}.
               </p>
               <Button asChild size="lg" className="px-8">
@@ -146,28 +140,16 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
           </section>
         )}
 
-        {/* Testimonial */}
+        {/* Shipping Guarantee */}
         <section className="py-16">
           <div className="container mx-auto px-4 lg:px-8 max-w-2xl text-center">
-            <div className="flex justify-center gap-0.5 mb-4">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`h-5 w-5 ${star <= config.testimonial.rating ? 'fill-yellow-400 text-yellow-400' : 'text-border'}`}
-                />
-              ))}
-            </div>
-            <blockquote className="text-lg font-serif italic mb-4 leading-relaxed">
-              "{config.testimonial.body}"
-            </blockquote>
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <span className="font-medium text-foreground">{config.testimonial.name}</span>
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                {config.testimonial.location}
-              </span>
-              <CheckCircle className="h-3 w-3 text-green-500" />
-              <span className="text-xs">Verified Purchase</span>
+            <div className="bg-card rounded-lg p-8 border border-border">
+              <h3 className="font-serif text-xl text-foreground mb-3">Shop With Confidence</h3>
+              <p className="text-muted-foreground">
+                Every order is carefully packaged and shipped with tracking. We offer free shipping on qualifying orders 
+                to {config.country} with delivery in {config.shippingTime.toLowerCase()}. 
+                {config.customsNote && ` ${config.customsNote}`}
+              </p>
             </div>
           </div>
         </section>

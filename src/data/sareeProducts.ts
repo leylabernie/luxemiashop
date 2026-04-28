@@ -259,7 +259,7 @@ export const sareeProducts: SareeProduct[] = [
     id: "saree-003",
     handle: "ivory-beige-kanchipuram-silk-wedding-saree",
     title: "Ivory Beige Kanchipuram Silk Wedding Saree",
-    description: "Understated elegance meets heritage craftsmanship in this sophisticated ivory beige Viscose Silk saree. The neutral beige palette offers versatile styling possibilities while maintaining wedding grandeur.",
+    description: "Understated elegance meets quality construction in this sophisticated ivory beige Viscose Silk saree. The neutral beige palette offers versatile styling possibilities while maintaining wedding grandeur.",
     price: convertPrice(11545),
     originalPrice: convertPrice(16035),
     currency: "USD",

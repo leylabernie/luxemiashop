@@ -38,8 +38,8 @@ const NewArrivals = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="New Arrivals | LuxeMia — Latest Indian Ethnic Wear"
-        description="Shop the latest Indian ethnic wear at LuxeMia. Fresh arrivals in bridal lehengas, designer sarees, salwar kameez and more. New styles added regularly."
+        title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
+        description="Shop the latest Indian ethnic wear online at LuxeMia. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free shipping."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />

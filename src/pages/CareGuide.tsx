@@ -104,7 +104,7 @@ const CareGuide = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Garment Care Guide — LuxeMia"
-        description="Expert care instructions for your luxury Indian ethnic wear. Learn how to preserve silk sarees, lehengas, and embroidered garments for generations."
+        description="Care instructions for Indian ethnic wear. Learn how to preserve silk sarees, lehengas, and embroidered garments so they stay beautiful for years."
         canonical="https://luxemia.shop/care-guide"
       />
       <Header />
@@ -119,7 +119,7 @@ const CareGuide = () => {
               className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6"
             >
               <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">Preserve Your Treasures</span>
+              <span className="text-sm font-medium">Care for Your Pieces</span>
             </motion.div>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -135,8 +135,8 @@ const CareGuide = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              Your LuxeMia pieces are heirloom-quality garments meant to last generations. 
-              Follow these care instructions to preserve their beauty and craftsmanship.
+              Your LuxeMia pieces deserve proper care to look beautiful for years to come. 
+              Follow these care instructions to preserve their beauty and quality.
             </motion.p>
           </div>
         </section>

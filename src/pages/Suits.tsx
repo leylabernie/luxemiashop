@@ -90,6 +90,13 @@ const Suits = () => {
       // Men's suits typically have 'suit' in productType but NOT women's keywords
       if (originalType.includes('suit') && !/salwar|anarkali|sharara|pakistani|plazzo|palazzo|gharara|wedding suit|designer suit|women/.test(originalType)) return false;
 
+      // Inclusionary filter: for ambiguous types (Wedding Suit, Designer Suit, Suit),
+      // require at least one women's indicator in title or product type
+      const womensIndicators = /salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani|lehenga|dupatta|churidar|women|ladies|female/i;
+      if (['wedding suit', 'designer suit', 'suit'].includes(originalType)) {
+        if (!womensIndicators.test(title) && !womensIndicators.test(originalType)) return false;
+      }
+
       return true;
     });
   }, [products]);
@@ -292,8 +299,8 @@ const Suits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Salwar Kameez & Suits Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
-        description="Shop LuxeMia for elegant Salwar Kameez online. Discover Anarkali, Palazzo, and Sharara suits with worldwide shipping, perfect for festive wear & occasions."
+        title="Buy Salwar Kameez Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
+        description="Buy salwar kameez online at LuxeMia. Shop Anarkali suits, Palazzo sets, Sharara suits & Pakistani suits. Free worldwide shipping. Affordable prices for USA, UK & Canada."
         canonical="https://luxemia.shop/suits"
         type="collection"
         image="/og/og-suits.jpg"

@@ -777,7 +777,7 @@ export const blogPosts: BlogPost[] = [
       <p>The <strong>sharara vs palazzo suit difference</strong> is simple: sharara pants flare from the knee, creating a bell shape, while <strong>palazzo suits</strong> have straight, wide legs from waist to hem. Shararas are more dramatic and traditional, while <strong>wide leg palazzo suits</strong> offer a more modern, minimalist look. Both are available in our <a href="/suits">suits collection</a>.</p>
 
       <h3>Budget Guide</h3>
-      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia offers <strong>premium sharara suits online</strong> starting from just $50, with designer-quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. Our <strong>free shipping Indian clothes USA</strong> policy means no hidden costs.</p>
+      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia offers <strong>sharara suits online</strong> starting from just $50, with quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. Our <strong>free shipping Indian clothes USA</strong> policy means no hidden costs.</p>
 
       <h2>Styling Your Sharara Suit</h2>
       <p>Complete your look with the right accessories. Heavy <a href="/collections?category=jewelry">kundan jewelry sets</a> pair beautifully with formal shararas, while delicate pieces suit casual styles. Match your dupatta draping style to the occasion — a front drape for formal events, a one-shoulder style for modern appeal. Add juttis or embellished heels to finish the look.</p>
@@ -863,7 +863,7 @@ export const blogPosts: BlogPost[] = [
       <p>The dupatta offers endless styling possibilities: classic front drape for formal events, one-shoulder for a modern twist, or wrapped as a hijab for modest styling. Each method transforms the same outfit into a completely different look.</p>
 
       <h2>Shop Pakistani Suits at LuxeMia</h2>
-      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With <strong>free shipping Indian clothes USA</strong>, easy returns, and <strong>designer Indian clothes</strong> at affordable prices, we make ethnic shopping effortless. Use code <strong>LUXE2026</strong> for 30% off your first purchase.</p>
+      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With <strong>free shipping Indian clothes USA</strong>, easy returns, and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless. Use code <strong>LUXE2026</strong> for 30% off your first purchase.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -999,7 +999,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Wedding Ceremony Outfit</h2>
       <h3>For the Bride</h3>
-      <p>The main event calls for the most magnificent outfit. The <strong>bridal lehenga</strong> remains the top choice — in traditional red, wine, or for the modern bride, rose pink or ivory. Alternatively, a <strong>heavy Pakistani suit for wedding</strong> or a stunning <a href="/sarees">wedding saree</a> in Banarasi silk or Kanchipuram silk makes an equally regal statement. This is where you invest in the finest <strong>hand embroidered</strong> piece with <strong>zari work</strong> and heirloom-quality craftsmanship.</p>
+      <p>The main event calls for the most magnificent outfit. The <strong>bridal lehenga</strong> remains the top choice — in traditional red, wine, or for the modern bride, rose pink or ivory. Alternatively, a <strong>heavy Pakistani suit for wedding</strong> or a stunning <a href="/sarees">wedding saree</a> in Banarasi silk or Kanchipuram silk makes an equally regal statement. This is where you invest in the finest <strong>hand embroidered</strong> piece with <strong>zari work</strong> and quality craftsmanship.</p>
       <h3>For the Groom</h3>
       <p>The <strong>wedding sherwani</strong> or <strong>groom sherwani</strong> is the cornerstone of the <strong>baraat outfit</strong>. Classic ivory with gold embroidery is timeless, while modern grooms are experimenting with pastels, deep navy, and even black. A matching <strong>mens sherwani</strong> with the bride's color palette creates beautiful couple photos. Our <a href="/menswear">groom collection</a> features everything from classic to contemporary.</p>
       <h3>For Family and Guests</h3>
@@ -1079,7 +1079,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Bridal lehengas</strong> — the weight and sheen create a grand, royal look</li>
         <li><strong>Wedding ceremony</strong> outfits — pure silk is the traditional choice for auspicious occasions</li>
         <li><strong>Winter weddings</strong> — heavier silks provide warmth and structure</li>
-        <li><strong>Heirloom pieces</strong> — silk ethnic wear lasts generations with proper care</li>
+        <li><strong>Quality pieces</strong> — silk ethnic wear lasts years with proper care</li>
       </ul>
       <h3>Pros and Cons</h3>
       <p>Pros: Luxurious feel, natural sheen, excellent for embroidery, temperature-regulating, ages beautifully. Cons: More expensive, requires careful cleaning (most need dry cleaning), heavier to wear. Explore our <a href="/lehengas">silk lehenga collection</a> for premium bridal options.</p>
@@ -1204,7 +1204,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Why Sustainable Choices Matter</h3>
       <ul>
         <li><strong>Heritage preservation:</strong> Traditional techniques like zardozi, chikankari, and Phulkari are beautiful art forms</li>
-        <li><strong>Quality over quantity:</strong> Handmade pieces are investment garments that last for generations</li>
+        <li><strong>Quality over quantity:</strong> Quality pieces are wardrobe staples that last for years</li>
         <li><strong>Meaningful connection:</strong> Wearing a beautifully made outfit adds to the joy of your celebration</li>
         <li><strong>Reduced carbon footprint:</strong> Traditional techniques use less energy than mass factory production</li>
       </ul>
@@ -1251,7 +1251,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'A comprehensive guide for NRIs on how to buy authentic Indian sarees online from the USA and UK. Learn what defines authenticity, how to navigate online shopping, and why LuxeMia is the trusted choice.',
     content: `
       <article>
-      <p>For many NRIs living in the USA and UK, the saree holds a special place in the heart. It is more than a garment — it is a connection to heritage, a reminder of home, and a celebration of Indian craftsmanship that transcends borders. But <strong>buying authentic Indian sarees online</strong> from thousands of miles away comes with its own set of challenges. How do you know the silk is genuine? Will the colors match what you see on screen? Can you trust the quality without touching the fabric?</p>
+      <p>For many NRIs living in the USA and UK, the saree holds a special place in the heart. It is more than a garment — it is a connection to heritage, a reminder of home, and a celebration of Indian style that transcends borders. But <strong>buying authentic Indian sarees online</strong> from thousands of miles away comes with its own set of challenges. How do you know the silk is genuine? Will the colors match what you see on screen? Can you trust the quality without touching the fabric?</p>
 
       <p>This guide answers all those questions and more, giving you the confidence to <strong>shop for Indian sarees online from the USA and UK</strong> with the same assurance as if you were browsing through a boutique in Varanasi or Kanchipuram.</p>
 

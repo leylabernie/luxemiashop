@@ -251,8 +251,8 @@ const Lehengas = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Lehengas: Bridal & Wedding Lehengas Online | LuxeMia"
-        description="Shop LuxeMia's collection of lehengas online. Find bridal lehengas, wedding lehengas, and festive lehenga cholis at fair prices with worldwide shipping."
+        title="Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia"
+        description="Buy bridal lehengas online at LuxeMia. Shop wedding lehenga choli, festive lehengas & party wear in silk, net & velvet. Custom sizing available. Free shipping to USA, UK & Canada."
         canonical="https://luxemia.shop/lehengas"
         type="collection"
         image="/og/og-lehengas.jpg"

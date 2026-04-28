@@ -14,12 +14,6 @@ const USA = () => (
       shippingTime: '7-12 business days',
       shippingCost: 'Free on orders over $99',
       customsNote: 'Most orders under $800 are duty-free under the US de minimis threshold.',
-      testimonial: {
-        name: 'Priya M.',
-        location: 'New Jersey, USA',
-        rating: 5,
-        body: 'The lehenga arrived beautifully packaged. The fabric quality exceeded my expectations and the embroidery work is beautiful. Wore it to my cousin\'s wedding and received so many compliments!',
-      },
       faqs: [
         {
           question: 'How long does shipping to the USA take?',

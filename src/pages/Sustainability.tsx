@@ -8,41 +8,41 @@ const Sustainability = () => {
   const initiatives = [
     {
       icon: Leaf,
-      title: "Natural & Organic Fabrics",
-      description: "We prioritize organic cotton, natural silk, and handwoven textiles sourced from certified sustainable farms across India."
+      title: "Natural Fabrics",
+      description: "We offer a selection of natural fiber fabrics including cotton and silk from established Indian textile suppliers."
     },
     {
       icon: Droplets,
-      title: "Water Conservation",
-      description: "Our dyeing processes use 60% less water than industry standards, with closed-loop systems that recycle and purify water."
+      title: "Learning & Improving",
+      description: "We are learning about the environmental impact of textile production and encourage our suppliers to adopt water-efficient practices."
     },
     {
       icon: Recycle,
-      title: "Zero-Waste Production",
-      description: "Fabric scraps are repurposed into accessories, and we've eliminated single-use plastics from our packaging."
+      title: "Minimal Packaging",
+      description: "We use minimal packaging and are working toward reducing waste wherever we can. Each order is packaged with care using recyclable materials where possible."
     },
     {
       icon: Sun,
-      title: "Solar-Powered Workshops",
-      description: "Many of our partner workshops operate on renewable energy, reducing our carbon footprint significantly."
+      title: "Reducing Our Footprint",
+      description: "We are exploring ways to reduce our environmental footprint as we grow, from shipping efficiency to material choices."
     },
     {
       icon: Heart,
-      title: "Fair Trade Practices",
-      description: "We ensure fair wages and safe working conditions for all workers in our supply chain."
+      title: "Responsible Sourcing",
+      description: "We choose to work with established suppliers and manufacturers and aim to build long-term, responsible relationships."
     },
     {
       icon: Shield,
-      title: "Chemical-Free Dyes",
-      description: "We use natural dyes derived from plants, minerals, and insects, avoiding harmful chemicals that damage ecosystems."
+      title: "Honest Standards",
+      description: "We believe in being upfront about where we are. We don't claim certifications we don't have, and we're committed to earning trust through transparency."
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Sustainability — LuxeMia"
-        description="LuxeMia's commitment to sustainable and responsible fashion. Discover our eco-friendly practices, fair trade partnerships, and responsible sourcing."
+        title="Our Approach to Responsibility — LuxeMia"
+        description="Learn about LuxeMia's approach to responsible business and our goals for doing better as we grow. Honest, transparent, and committed to improvement."
         canonical="https://luxemia.shop/sustainability"
       />
       <Header />
@@ -57,7 +57,7 @@ const Sustainability = () => {
               className="inline-flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-full mb-6"
             >
               <Leaf className="w-4 h-4" />
-              <span className="text-sm font-medium">Our Commitment to the Planet</span>
+              <span className="text-sm font-medium">Doing Better, Honestly</span>
             </motion.div>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
@@ -65,7 +65,7 @@ const Sustainability = () => {
               transition={{ delay: 0.1 }}
               className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
             >
-              Sustainable Fashion
+              Our Approach to Responsibility
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -73,8 +73,8 @@ const Sustainability = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              At LuxeMia, we believe that great fashion should respect both people and planet. 
-              Our commitment to sustainability is part of everything we do.
+              At LuxeMia, we're honest about where we are. We're a growing business and we have a long way to go, 
+              but we're committed to learning and improving every step of the way.
             </motion.p>
           </div>
         </section>
@@ -85,12 +85,12 @@ const Sustainability = () => {
             <div className="max-w-4xl mx-auto">
               <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">
                 <h2 className="font-display text-2xl md:text-3xl text-foreground mb-6 text-center">
-                  Our Sustainability Promise
+                  What We're Working Toward
                 </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed text-center">
-                  By 2030, we pledge to increase our use of sustainable materials across our supply chain, 
-                  reduce our environmental footprint, and ensure that every supplier we work with 
-                  meets our standards for fair wages and safe working conditions.
+                  We are a young company, and we know we have a lot to learn. Our goals include understanding our supply 
+                  chain better, reducing waste where we can, and being transparent about what we can and cannot verify. 
+                  We'd rather under-promise and over-deliver than make claims we can't back up.
                 </p>
               </div>
             </div>
@@ -101,7 +101,7 @@ const Sustainability = () => {
         <section className="py-16 bg-secondary/30">
           <div className="container mx-auto px-4">
             <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Our Initiatives
+              Where We Stand
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {initiatives.map((initiative, index) => (
@@ -128,41 +128,30 @@ const Sustainability = () => {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Our Goals
+              Looking Ahead
             </h2>
             <div className="max-w-3xl mx-auto text-center">
               <p className="text-muted-foreground text-lg leading-relaxed">
-                We are actively working to increase our use of sustainable materials, reduce water consumption
-                in our dyeing processes, maintain plastic-free packaging across all orders, and support
-                reforestation efforts in the communities where our products are sourced.
+                We are a small team doing our best. Right now that means careful packaging, choosing quality over quantity, 
+                and being honest about our limitations. As we grow, we'll share real progress — not just promises. 
+                We believe that transparency is more valuable than certifications we haven't earned.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Certifications */}
+        {/* Transparency Note */}
         <section className="py-16 bg-primary/5">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-2xl md:text-3xl text-foreground mb-8">
-              Certifications & Partnerships
+              Our Promise to You
             </h2>
-            <div className="flex flex-wrap justify-center gap-8 text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                <span>GOTS Certified</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                <span>Fair Trade</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                <span>OEKO-TEX Standard</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                <span>B Corp Pending</span>
-              </div>
+            <div className="max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-lg">
+                We won't claim certifications we don't hold or make promises we can't verify. 
+                What we can promise is that we'll keep learning, keep improving, and always be honest with you about 
+                where we stand. If you have questions about our practices, reach out — we're happy to talk.
+              </p>
             </div>
           </div>
         </section>

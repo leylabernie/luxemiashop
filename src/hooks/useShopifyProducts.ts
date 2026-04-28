@@ -116,6 +116,7 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   if (category === 'suits') {
     const suitTags = ['salwar kameez', 'salwar-kameez', 'sharara suit', 'plazzo suit', 'pakistani suit',
       'anarkali suit', 'gharara suit', 'designer suit', 'wedding suit', 'boutique salwar suit'];
+    const womensIndicators = /salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani|lehenga|dupatta|churidar|women|ladies|female/i;
     return filtered.filter(p => {
       const pt = (p.node.productType ?? '').toLowerCase();
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
@@ -126,10 +127,15 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
       if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
 
       // Match by exact productType
-      if (types.some(t => t.toLowerCase() === pt)) return true;
+      if (types.some(t => t.toLowerCase() === pt)) {
+        // For ambiguous types like 'Wedding Suit' or 'Designer Suit', require women's indicator
+        if (pt === 'wedding suit' || pt === 'designer suit' || pt === 'suit') {
+          if (!womensIndicators.test(title) && !womensIndicators.test(pt)) return false;
+        }
+        return true;
+      }
 
       // Also match by suit-related tags (catches "Wedding Suit" products with "salwar kameez" tag, etc.)
-      // But only if the product has women's-indicative tags or title
       if (suitTags.some(st => tags.some(t => t === st || t.includes(st)))) {
         // Extra safety: if tag matches but product looks like men's wear, exclude
         const hasMensSignals = tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom' || t === 'gender:male');

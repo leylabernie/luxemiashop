@@ -129,8 +129,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia: Affordable Indian Ethnic Wear Online | Shop Bridal Lehengas & Wedding Sarees"
-        description="Shop Indian ethnic wear at LuxeMia. Beautiful bridal lehengas, sarees, and anarkali suits with free worldwide shipping to USA, UK & Canada. Quality fabrics at affordable prices."
+        title="LuxeMia: Buy Indian Ethnic Wear Online | Sarees, Lehengas, Salwar Kameez & Suits"
+        description="Buy Indian ethnic wear online at LuxeMia. Shop bridal lehengas, designer sarees, salwar kameez, anarkali suits & wedding collections. Free shipping to USA, UK & Canada. Affordable prices."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}

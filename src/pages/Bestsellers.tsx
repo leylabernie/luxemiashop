@@ -33,8 +33,8 @@ const Bestsellers = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Bestsellers | LuxeMia — Most-Loved Indian Ethnic Wear"
-        description="Shop LuxeMia's most-loved Indian ethnic wear. Our bestselling bridal lehengas, sarees, salwar kameez and jewelry — loved by thousands of customers worldwide."
+        title="Bestsellers: Most-Loved Indian Ethnic Wear Online | LuxeMia"
+        description="Shop LuxeMia's bestselling Indian ethnic wear online. Most-loved bridal lehengas, sarees, salwar kameez & jewelry — trusted by customers worldwide. Free shipping."
         canonical="https://luxemia.shop/bestsellers"
       />
       <Header />

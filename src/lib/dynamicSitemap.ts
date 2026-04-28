@@ -3,6 +3,7 @@ import { localProducts } from "@/data/localProducts";
 import { sareeProducts } from "@/data/sareeProducts";
 import { menswearProducts } from "@/data/menswearProducts";
 import { suitProducts } from "@/data/suitProducts";
+import { jewelryProducts } from "@/data/jewelryProducts";
 
 interface SitemapProduct {
   handle: string;
@@ -48,6 +49,13 @@ export const staticPages = [
   { loc: '/press', changefreq: 'monthly', priority: '0.5', title: 'Press' },
   { loc: '/bestsellers', changefreq: 'weekly', priority: '0.7', title: 'Bestsellers' },
   { loc: '/indowestern', changefreq: 'weekly', priority: '0.8', title: 'Indo-Western' },
+  { loc: '/jewelry', changefreq: 'daily', priority: '0.9', title: 'Jewelry' },
+  { loc: '/bridal-lehengas', changefreq: 'weekly', priority: '0.8', title: 'Bridal Lehengas' },
+  { loc: '/wedding-sarees', changefreq: 'weekly', priority: '0.8', title: 'Wedding Sarees' },
+  { loc: '/reception-outfits', changefreq: 'weekly', priority: '0.8', title: 'Reception Outfits' },
+  { loc: '/festive-wear', changefreq: 'weekly', priority: '0.8', title: 'Festive Wear' },
+  { loc: '/bridesmaid-dresses', changefreq: 'weekly', priority: '0.7', title: 'Bridesmaid Dresses' },
+  { loc: '/groomsman-outfits', changefreq: 'weekly', priority: '0.7', title: 'Groomsman Outfits' },
   { loc: '/style-consultation', changefreq: 'monthly', priority: '0.6', title: 'Style Consultation' },
   { loc: '/style-quiz', changefreq: 'monthly', priority: '0.6', title: 'Style Quiz' },
   { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'NRI' },
@@ -97,6 +105,16 @@ export const fetchAllSitemapProducts = async (): Promise<SitemapProduct[]> => {
       title: p.title,
       category: 'Suits',
       images: p.images,
+    });
+  });
+
+  // Add jewelry products
+  jewelryProducts.forEach(p => {
+    products.push({
+      handle: p.id,
+      title: p.name,
+      category: 'Jewelry',
+      images: [p.image],
     });
   });
 

@@ -90,7 +90,7 @@ export const localProducts: LocalProduct[] = [
     occasion: "Bridal",
     color: "Rani Pink",
     work: "Heavy Work",
-    tags: ["bridal", "silk", "rani-pink", "traditional", "heritage", "kundan", "banarasi"],
+    tags: ["bridal", "silk", "rani-pink", "traditional", "kundan", "banarasi"],
     variants: [
       { id: "bridal-002-s", title: "S", price: convertPrice(24295), options: { Size: "S" } },
       { id: "bridal-002-m", title: "M", price: convertPrice(24295), options: { Size: "M" } },
@@ -566,7 +566,7 @@ export const localProducts: LocalProduct[] = [
     options: [{ name: "Size", values: ["S", "M", "L", "XL"] }]
   },
 
-  // === DESIGNER COLLECTION ===
+  // === MIRROR WORK COLLECTION ===
   {
     id: "designer-001",
     handle: "heavy-silk-yellow-mirror-work-lehenga",
@@ -581,7 +581,7 @@ export const localProducts: LocalProduct[] = [
     occasion: "Party",
     color: "Yellow",
     work: "Mirror Work",
-    tags: ["designer", "silk", "yellow", "mirror-work", "party", "mehendi", "premium"],
+    tags: ["designer", "silk", "yellow", "mirror-work", "party", "mehendi"],
     variants: [
       { id: "designer-001-s", title: "S", price: convertPrice(10995 * 3), options: { Size: "S" } },
       { id: "designer-001-m", title: "M", price: convertPrice(10995 * 3), options: { Size: "M" } },
@@ -594,7 +594,7 @@ export const localProducts: LocalProduct[] = [
     id: "designer-002",
     handle: "heavy-silk-beige-mirror-work-lehenga",
     title: "Heavy Silk Beige Mirror Work Lehenga",
-    description: "Understated elegance meets quality construction in this sophisticated beige Heavy Silk lehenga. The neutral palette serves as the perfect canvas for the intricate mirror work embellishments that dance with reflected light. Ideal for destination weddings and intimate celebrations where refined luxury speaks louder than bold statements.",
+    description: "Understated elegance meets quality construction in this sophisticated beige Heavy Silk lehenga. The neutral palette serves as the perfect canvas for the intricate mirror work embellishments that dance with reflected light. Ideal for destination weddings and intimate celebrations where refined elegance speaks louder than bold statements.",
     price: convertPrice(10995 * 3),
     originalPrice: convertPrice(15062 * 3),
     currency: "USD",
@@ -673,7 +673,7 @@ export const localProducts: LocalProduct[] = [
     occasion: "Bridal",
     color: "Lavender",
     work: "Heavy Work",
-    tags: ["designer", "organza", "lavender", "bridal", "heavy-work", "contemporary", "premium"],
+    tags: ["designer", "organza", "lavender", "bridal", "heavy-work", "contemporary"],
     variants: [
       { id: "designer-005-s", title: "S", price: convertPrice(11295 * 3), options: { Size: "S" } },
       { id: "designer-005-m", title: "M", price: convertPrice(11295 * 3), options: { Size: "M" } },
@@ -870,9 +870,9 @@ export const localProducts: LocalProduct[] = [
   },
   {
     id: "bridal-new-004",
-    handle: "heritage-pink-gadhwal-silk-bridal-lehenga",
-    title: "Heritage Pink Gadhwal Silk Bridal Lehenga",
-    description: "Experience the magnificent legacy of Gadhwal weaving tradition in this breathtaking pink bridal lehenga. Woven from authentic Gadhwal Silk renowned for its exceptional luster and durability, this heirloom piece features elaborate zari embroidery in pure gold and silver threads. The delicate pink shade represents love, compassion, and new beginnings—perfect symbolism for your wedding day. The traditional motifs have been passed down through generations of weavers, each pattern carrying centuries of cultural significance.",
+    handle: "pink-gadhwal-silk-bridal-lehenga",
+    title: "Pink Gadhwal Silk Bridal Lehenga",
+    description: "Experience the magnificent legacy of Gadhwal weaving tradition in this breathtaking pink bridal lehenga. Woven from authentic Gadhwal Silk renowned for its exceptional luster and durability, this beautiful piece features elaborate zari embroidery in gold and silver toned threads. The delicate pink shade represents love, compassion, and new beginnings—perfect symbolism for your wedding day. The traditional motifs reflect classic Indian design with cultural significance.",
     price: convertPrice(24195),
     originalPrice: convertPrice(34077),
     currency: "USD",
@@ -882,7 +882,7 @@ export const localProducts: LocalProduct[] = [
     occasion: "Bridal",
     color: "Pink",
     work: "Zari Embroidery",
-    tags: ["bridal", "wedding", "pink", "silk", "gadhwal", "zari", "embroidery", "heritage", "new-arrival"],
+    tags: ["bridal", "wedding", "pink", "silk", "gadhwal", "zari", "embroidery", "new-arrival"],
     variants: [
       { id: "bridal-new-004-s", title: "S", price: convertPrice(24195), options: { Size: "S" } },
       { id: "bridal-new-004-m", title: "M", price: convertPrice(24195), options: { Size: "M" } },

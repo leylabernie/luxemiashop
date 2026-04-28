@@ -194,9 +194,16 @@ function fixImageUrl(url) {
   let fixed = url;
   // URL-encode parentheses — Google's crawler can't handle raw () in URLs
   fixed = fixed.replace(/\(/g, '%28').replace(/\)/g, '%29');
-  // Force JPEG on Shopify CDN URLs (supports &format=jpg parameter)
-  if (fixed.includes('cdn.shopify.com') && !fixed.includes('format=')) {
-    fixed += (fixed.includes('?') ? '&' : '?') + 'format=jpg';
+  // Force JPEG on Shopify CDN URLs — must include width to activate image transformation pipeline
+  if (fixed.includes('cdn.shopify.com')) {
+    if (!fixed.includes('width=')) {
+      fixed += (fixed.includes('?') ? '&' : '?') + 'width=1200';
+    }
+    if (!fixed.includes('format=')) {
+      fixed += '&format=jpg';
+    } else {
+      fixed = fixed.replace(/format=\w+/, 'format=jpg');
+    }
   }
   return fixed;
 }

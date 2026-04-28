@@ -87,8 +87,8 @@ const Sarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Sarees: Buy Indian Silk Sarees Online | LuxeMia"
-        description="Explore LuxeMia's collection of Indian sarees online. Discover silk sarees, elegant drapes, and wedding sarees with global shipping."
+        title="Buy Sarees Online | Indian Silk, Wedding & Banarasi Sarees - LuxeMia"
+        description="Buy Indian sarees online at LuxeMia. Shop silk sarees, Banarasi, Kanchipuram wedding sarees, party wear & festive sarees. Free shipping to USA, UK & Canada. Affordable prices."
         canonical="https://luxemia.shop/sarees"
         type="collection"
         image="/og/og-sarees.jpg"

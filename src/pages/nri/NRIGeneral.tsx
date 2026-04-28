@@ -14,12 +14,6 @@ const NRIGeneral = () => (
       shippingTime: '3-12 business days',
       shippingCost: 'Free on orders over $300',
       customsNote: 'We ship DHL Express worldwide. Import duties vary by country.',
-      testimonial: {
-        name: 'Meera S.',
-        location: 'NRI Customer',
-        rating: 5,
-        body: 'As an NRI, finding authentic Indian ethnic wear was always a challenge. LuxeMia makes it so easy — beautiful pieces, safe packaging, and arrived right on time for our festival celebration.',
-      },
       faqs: [
         {
           question: 'Do you ship internationally?',

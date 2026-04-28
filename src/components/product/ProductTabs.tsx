@@ -40,12 +40,12 @@ export const ProductTabs = ({ description, productType }: ProductTabsProps) => {
         <div className="prose prose-sm max-w-none text-muted-foreground">
           <p className="leading-relaxed">
             {description || 
-              "This piece showcases India's rich textile traditions. Made with care using time-honored techniques, each garment brings together cultural design and modern styling for a look that stands out."
+              "This piece showcases India's rich textile traditions. Each garment brings together classic design and modern styling for a look that stands out."
             }
           </p>
           <ul className="mt-4 space-y-2">
             <li>Made with care and attention to detail</li>
-            <li>Traditional weaving and embroidery techniques</li>
+            <li>Quality construction and attention to detail</li>
             <li>Beautiful design details</li>
             <li>Comfortable and elegant silhouette</li>
           </ul>
@@ -72,7 +72,7 @@ export const ProductTabs = ({ description, productType }: ProductTabsProps) => {
               <div>
                 <h4 className="font-medium mb-1">Embellishments</h4>
                 <p className="text-sm text-muted-foreground">
-                  Hand-embroidered with thread work, sequins, and traditional motifs
+                  Decorated with thread work, sequins, and traditional motifs
                 </p>
               </div>
             </div>
@@ -152,7 +152,7 @@ export const ProductTabs = ({ description, productType }: ProductTabsProps) => {
             </table>
           </div>
           <p className="text-sm text-muted-foreground">
-            Need help? Contact our styling experts for personalized size recommendations.
+            Need help? Contact our team for personalized size recommendations.
           </p>
         </div>
       </TabsContent>

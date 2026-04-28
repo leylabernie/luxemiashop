@@ -214,6 +214,7 @@ const SEOHead = ({
       <meta name="title" content={title} />
       <meta name="description" content={description} />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
+      {!noIndex && <meta name="robots" content="index, follow" />}
 
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />
@@ -258,7 +259,7 @@ const SEOHead = ({
 
       {/* Additional Meta */}
       <meta name="author" content="LuxeMia" />
-      <meta name="keywords" content="indian ethnic wear, sarees online, lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, affordable ethnic wear, indian wedding dress" />
+      <meta name="keywords" content="indian ethnic wear, sarees online, buy sarees online, indian sarees online, sarees online USA, bridal lehengas online, wedding lehenga, lehenga online, salwar kameez online, buy salwar kameez online USA, anarkali suits online, banarasi silk sarees, kanchipuram silk sarees, affordable indian ethnic wear, indian wedding outfits online, indian jewelry online, kundan jewelry online, indo western dresses, indo western outfits, indian clothing online, indian clothes USA, indian ethnic wear UK, indian clothing Canada, sherwani online, kurta pajama online, buy indian ethnic wear online, best indian ethnic wear store, NRI indian clothing, indian wedding dress online, party wear lehenga online" />
 
       {/* Structured Data — only page-specific schemas (Organization & WebSite are in index.html) */}
       {localBusiness && (

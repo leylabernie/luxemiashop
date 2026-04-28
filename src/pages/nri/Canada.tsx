@@ -7,19 +7,13 @@ const Canada = () => (
       country: 'Canada',
       countryCode: 'CA',
       slug: 'indian-ethnic-wear-canada',
-      seoTitle: 'Indian Ethnic Wear Canada | Sarees, Lehengas & Suits | LuxeMia',
-      seoDescription: 'Shop Indian ethnic wear in Canada. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $99. 10-14 day delivery to Canada.',
+      seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia',
+      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $99. 10-14 day delivery to Canada.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Canada',
       heroSubtitle: 'Free Shipping Coast to Coast',
       shippingTime: '10-14 business days',
       shippingCost: 'Free on orders over $99',
       customsNote: 'Canadian orders may be subject to GST/HST (5-15%) on imported goods.',
-      testimonial: {
-        name: 'Sunita K.',
-        location: 'Toronto, Canada',
-        rating: 5,
-        body: 'Ordered the saree for my daughter\'s reception ceremony. The colors are vibrant and exactly as shown. Shipping to Canada was faster than expected — arrived in 10 days.',
-      },
       faqs: [
         {
           question: 'How long does shipping to Canada take?',

@@ -58,8 +58,8 @@ const Collections = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Shop All Collections | Indian Ethnic Wear - LuxeMia"
-        description="Explore our complete collection of lehengas, sarees, suits, and menswear. Quality ethnic wear with worldwide shipping."
+        title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia"
+        description="Buy Indian ethnic wear online at LuxeMia. Shop our complete collection of bridal lehengas, sarees, salwar kameez, jewelry, menswear & indo-western outfits. Free worldwide shipping."
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },

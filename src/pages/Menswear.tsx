@@ -237,8 +237,8 @@ const Menswear = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Menswear: Indian Ethnic Wear for Men | LuxeMia"
-        description="Shop the latest Menswear collection at LuxeMia. Sherwanis, kurta pajamas, and Nehru jackets for weddings and celebrations."
+        title="Buy Sherwani Online | Indian Ethnic Wear for Men - Groom & Wedding - LuxeMia"
+        description="Buy Indian ethnic wear for men online at LuxeMia. Shop groom sherwanis, kurta pajama sets, velvet sherwanis & Nehru jackets. Custom sizing available. Free shipping worldwide."
         canonical="https://luxemia.shop/menswear"
         type="collection"
         image="/og/og-menswear.jpg"
@@ -265,7 +265,7 @@ const Menswear = () => {
             className="text-center px-4"
           >
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
-              Royal Heritage
+              Traditional Menswear
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">Menswear</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
