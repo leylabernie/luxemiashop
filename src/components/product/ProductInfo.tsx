@@ -7,8 +7,11 @@ import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
+import type { SizeMode } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
+import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
+import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 // Utsav-style Stitching Type options with price modifiers
@@ -25,7 +28,7 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
   {
     id: 'semi-stitched',
     label: 'Semi Stitched',
-    description: 'Pre-constructed with adjustable side seams — select your size for a near-perfect fit',
+    description: 'Pre-constructed with adjustable side seams. Select your standard size for a near-perfect fit.',
     priceModifier: 0,
     requiresMeasurement: false,
     deliveryExtraDays: 0,
@@ -33,15 +36,15 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
   {
     id: 'ready-to-wear',
     label: 'Ready to Wear',
-    description: 'Fully stitched to your measurements — select size and provide details',
+    description: 'Fully stitched to standard measurements matching the product image. Select your bust size.',
     priceModifier: 15,
     requiresMeasurement: true,
     deliveryExtraDays: 3,
   },
   {
     id: 'made-to-measure',
-    label: 'Made to Measure',
-    description: 'Bespoke tailoring — submit measurements after ordering for a perfect custom fit',
+    label: 'Made to Measure (UDesign)',
+    description: 'Bespoke tailoring with 200+ style combinations. Customize neckline, sleeves, and bottom style. Submit measurements after ordering.',
     priceModifier: 25,
     requiresMeasurement: true,
     deliveryExtraDays: 5,
@@ -93,7 +96,7 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   return specs;
 };
 
-// Product types that support blouse neckline selection
+// Product types that support blouse neckline selection (lehenga, saree)
 const BLOUSE_PRODUCT_TYPES = ['lehenga choli', 'lehenga', 'saree', 'sarees'];
 
 const isBlouseProductType = (productType?: string, tags?: string[]): boolean => {
@@ -112,6 +115,7 @@ const isBlouseProductType = (productType?: string, tags?: string[]): boolean => 
 const STITCHABLE_PRODUCT_TYPES = [
   'salwar kameez', 'salwar kameez suit', 'lehenga', 'lehenga choli', 'saree', 'sarees',
   'anarkali', 'sharara suit', 'pakistani suit', 'palazzo suit', 'gharara suit',
+  'wedding suit',
 ];
 
 const isStitchableProduct = (productType?: string, tags?: string[]): boolean => {
@@ -128,9 +132,54 @@ const isStitchableProduct = (productType?: string, tags?: string[]): boolean => 
   return false;
 };
 
-// Force rebuild 2026-04-06
+// Product types that should show a bottom/lower style selector
+const BOTTOM_STYLE_PRODUCT_TYPES = [
+  'salwar', 'suit', 'anarkali', 'pakistani', 'sharara',
+];
+
+const shouldShowBottomStyle = (productType?: string, tags?: string[]): boolean => {
+  if (!productType) return false;
+  const lower = productType.toLowerCase();
+  if (BOTTOM_STYLE_PRODUCT_TYPES.some(t => lower.includes(t))) return true;
+  if (tags) {
+    const lowerTags = tags.map(t => t.toLowerCase());
+    return lowerTags.some(t =>
+      t.includes('salwar') || t.includes('suit') || t.includes('anarkali') || t.includes('pakistani') || t.includes('sharara')
+    );
+  }
+  return false;
+};
+
+// Menswear check
+const MENSWEAR_PRODUCT_TYPES = ['sherwani', 'kurta', 'menswear', 'men'];
+
+const isMenswearProduct = (productType?: string, tags?: string[]): boolean => {
+  if (!productType) return false;
+  const lower = productType.toLowerCase();
+  if (MENSWEAR_PRODUCT_TYPES.some(t => lower.includes(t))) return true;
+  if (tags) {
+    const lowerTags = tags.map(t => t.toLowerCase());
+    return lowerTags.some(t => t.includes('sherwani') || t.includes('kurta') || t.includes('menswear'));
+  }
+  return false;
+};
+
+// Check if a product already has numeric size variants from Shopify (28-62)
+const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
+  const sizeOption = product.options.find(
+    (opt) => opt.name.toLowerCase() === 'size'
+  );
+  if (!sizeOption) return false;
+  // Check if any size values look like numeric bust sizes (e.g. "28", "30", "32")
+  const numericValues = sizeOption.values.filter(v => /^\d{2}$/.test(v.trim()));
+  return numericValues.length >= 3;
+};
+
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   const isStitchable = isStitchableProduct(product.productType, product.tags);
+  const isMenswear = isMenswearProduct(product.productType, product.tags);
+  const showBottomStyleOption = shouldShowBottomStyle(product.productType, product.tags);
+  const productHasNumericSizes = hasNumericSizeVariants(product);
 
   // Auto-select options when there's only one value per option (e.g. "Default Title")
   const defaultOptions = useMemo(() => {
@@ -154,6 +203,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [stitchingSize, setStitchingSize] = useState<string | null>(null);
   const [showSizeValidation, setShowSizeValidation] = useState(false);
   const [selectedNeckline, setSelectedNeckline] = useState<NecklineOption>('Round Neck');
+  const [selectedBottomStyle, setSelectedBottomStyle] = useState<BottomStyleOption | null>(null);
+  const [selectedSleeveStyle, setSelectedSleeveStyle] = useState<SleeveStyleOption | null>(null);
   const [customAlteration, setCustomAlteration] = useState('');
   const [selectedStitchingType, setSelectedStitchingType] = useState<string | null>(
     isStitchable ? 'semi-stitched' : null
@@ -169,7 +220,6 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   });
 
   // Find the best-matching variant for price display even when not all options are selected.
-  // This ensures the price updates as soon as a stitching type is picked.
   const bestMatchVariant = useMemo(() => {
     if (selectedVariant) return selectedVariant;
 
@@ -244,11 +294,60 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     });
   }, [selectedOptions, selectedStitchingType, isStitchable]);
 
+  // Determine the size mode based on stitching type
+  const sizeMode: SizeMode = useMemo(() => {
+    if (isMenswear) return 'menswear';
+    if (selectedStitchingType === 'semi-stitched') return 'letter';
+    return 'numeric'; // ready-to-wear or made-to-measure
+  }, [selectedStitchingType, isMenswear]);
+
+  // Size label and hint based on stitching type
+  const sizeLabel = useMemo(() => {
+    if (isMenswear) return 'Select Size';
+    if (selectedStitchingType === 'semi-stitched') return 'Standard Size';
+    if (selectedStitchingType === 'ready-to-wear') return 'Bust Size';
+    if (selectedStitchingType === 'made-to-measure') return 'Bust Size';
+    return 'Stitching Size';
+  }, [selectedStitchingType, isMenswear]);
+
+  const sizeHint = useMemo(() => {
+    if (isMenswear) return undefined;
+    if (selectedStitchingType === 'semi-stitched') return 'Standard sizes';
+    if (selectedStitchingType === 'ready-to-wear' || selectedStitchingType === 'made-to-measure') return 'Bust size in inches';
+    return undefined;
+  }, [selectedStitchingType, isMenswear]);
+
   // Whether blouse neckline selector should show
   const showNeckline = useMemo(() => {
-    if (!isBlouseProductType(product.productType, product.tags)) return false;
-    return needsStitchingSize; // only when a stitching option (not Unstitched) is selected
-  }, [product.productType, product.tags, needsStitchingSize]);
+    // Always show for blouse products (lehenga/saree) when stitching is selected
+    if (isBlouseProductType(product.productType, product.tags) && needsStitchingSize) {
+      return true;
+    }
+    // Show for salwar/suit products when Made to Measure is selected
+    if (
+      !isBlouseProductType(product.productType, product.tags) &&
+      selectedStitchingType === 'made-to-measure' &&
+      showBottomStyleOption
+    ) {
+      return true;
+    }
+    return false;
+  }, [product.productType, product.tags, needsStitchingSize, selectedStitchingType, showBottomStyleOption]);
+
+  // Whether sleeve style selector should show (only for Made to Measure)
+  const showSleeveStyle = useMemo(() => {
+    return isStitchable && selectedStitchingType === 'made-to-measure';
+  }, [isStitchable, selectedStitchingType]);
+
+  // Whether to show the StitchingSizeSelector (only when the product doesn't have numeric sizes from Shopify)
+  const showStitchingSizeSelector = useMemo(() => {
+    if (isMenswear) return true; // Menswear always needs a size selector
+    if (productHasNumericSizes) return false; // Product already has size variants in Shopify
+    return needsStitchingSize;
+  }, [needsStitchingSize, productHasNumericSizes, isMenswear]);
+
+  // Whether to show the Customize header (all stitchable products + menswear)
+  const showCustomizeHeader = isStitchable || isMenswear;
 
   const handleOptionSelect = (optionName: string, value: string) => {
     setSelectedOptions((prev) => ({
@@ -277,9 +376,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     if (option?.requiresMeasurement) {
       setShowSizeValidation(true);
     } else {
-      setStitchingSize(null);
+      // Semi Stitched doesn't require a numeric size but we still show letter sizes
       setShowSizeValidation(false);
     }
+    // Reset size when changing stitching type since size mode changes
+    setStitchingSize(null);
   };
 
   const handleAddToCart = async () => {
@@ -288,13 +389,23 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       return;
     }
 
-    if (needsStitchingSize && !stitchingSize) {
+    // For stitchable products, require stitching type
+    if (isStitchable && !selectedStitchingType) {
+      toast.error('Please select a stitching type');
+      return;
+    }
+
+    // Require stitching size when needed and not already provided by Shopify variants
+    if (needsStitchingSize && !productHasNumericSizes && !stitchingSize) {
       setShowSizeValidation(true);
       toast.error('Please select a size for stitching');
       return;
     }
-    if (isStitchable && !selectedStitchingType) {
-      toast.error('Please select a stitching type');
+
+    // For menswear, require size
+    if (isMenswear && !stitchingSize && !productHasNumericSizes) {
+      setShowSizeValidation(true);
+      toast.error('Please select a size');
       return;
     }
 
@@ -313,6 +424,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     }
     if (showNeckline) {
       customAttributes.push({ key: 'Blouse Neckline', value: selectedNeckline });
+    }
+    if (showBottomStyleOption && selectedBottomStyle) {
+      customAttributes.push({ key: 'Bottom Style', value: selectedBottomStyle });
+    }
+    if (showSleeveStyle && selectedSleeveStyle) {
+      customAttributes.push({ key: 'Sleeve Style', value: selectedSleeveStyle });
     }
     if (customAlteration.trim()) {
       customAttributes.push({ key: 'Custom Alteration Instructions', value: customAlteration.trim() });
@@ -408,54 +525,30 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       <Separator />
 
-      {/* Product Specifications */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium uppercase tracking-wide">Product Details</h3>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-          {productSpecs.color && (
-            <>
-              <span className="text-muted-foreground">Color</span>
-              <span className="text-foreground">{productSpecs.color}</span>
-            </>
-          )}
-          {productSpecs.fabric && (
-            <>
-              <span className="text-muted-foreground">Fabric</span>
-              <span className="text-foreground">{productSpecs.fabric}</span>
-            </>
-          )}
-          {productSpecs.work && (
-            <>
-              <span className="text-muted-foreground">Work</span>
-              <span className="text-foreground">{productSpecs.work}</span>
-            </>
-          )}
-          {productSpecs.type && (
-            <>
-              <span className="text-muted-foreground">Type</span>
-              <span className="text-foreground">{productSpecs.type}</span>
-            </>
-          )}
-          <span className="text-muted-foreground">Closure</span>
-          <span className="text-foreground">Back Hook-Eye / Zip</span>
-          <span className="text-muted-foreground">Manufacturer</span>
-          <span className="text-foreground">LuxeMia Fashion Pvt Ltd</span>
+      {/* ─── Utsav-style "Customize" Section ─── */}
+      {showCustomizeHeader && (
+        <div className="space-y-4">
+          {/* Customize Header */}
+          <div className="space-y-2">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+              Customize: {product.title}
+            </h3>
+            <div className="border-b border-border" />
+            {/* Base product line item */}
+            <div className="flex items-center justify-between py-1">
+              <div className="flex items-center gap-2">
+                <span className="text-primary text-sm">☑</span>
+                <span className="text-sm text-foreground font-medium">{product.title}</span>
+              </div>
+              <span className="text-sm text-foreground font-medium">
+                {formatPrice(basePrice.amount, basePrice.currencyCode)}
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <Separator />
-
-      {/* Description */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
-        <p className="text-muted-foreground leading-relaxed text-sm">
-          {product.description || 'Beautifully made with attention to every detail, this piece features traditional Indian design elements. Perfect for ceremonies, weddings, and special occasions.'}
-        </p>
-      </div>
-
-      <Separator />
-
-      {/* Utsav-style Stitching Type Selector — shown for stitchable products */}
+      {/* ─── Stitching Type Selector (for stitchable products) ─── */}
       {isStitchable && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -478,7 +571,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
               <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed outfit with adjustable side seams. Select your standard size for a near-perfect fit. Alterations can be done locally if needed.</p>
               <p><strong className="text-foreground">Ready to Wear:</strong> Fully stitched to your selected size. Choose your bust size and we'll tailor it completely — ready to wear right out of the box.</p>
-              <p><strong className="text-foreground">Made to Measure:</strong> Our bespoke tailoring service. Submit your exact measurements after placing the order for a perfect custom fit. You can customize the fit, styling, and add adornments.</p>
+              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> Our bespoke tailoring service with 200+ style combinations. Submit your exact measurements after placing the order for a perfect custom fit. You can customize the neckline, sleeves, and bottom style.</p>
             </div>
           )}
 
@@ -502,6 +595,9 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
                     </span>
                     {option.id === 'semi-stitched' && (
                       <span className="text-[10px] font-medium uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded">Popular</span>
+                    )}
+                    {option.id === 'made-to-measure' && (
+                      <span className="text-[10px] font-medium uppercase tracking-wider bg-[#D4AF37]/15 text-[#D4AF37] px-2 py-0.5 rounded">UDesign</span>
                     )}
                   </div>
                   <span className={`text-sm font-medium ${
@@ -527,19 +623,30 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             ))}
           </div>
 
-          {/* Made to Measure — post-order measurement note */}
+          {/* Made to Measure — post-order measurement info box */}
           {selectedStitchingType === 'made-to-measure' && (
-            <div className="flex items-start gap-2 p-3 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-sm">
-              <Info className="h-4 w-4 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
-                You can submit your measurements after placing the order. Select "Made to Measure", add to bag, complete your order, then go to <strong>My Account → My Orders</strong> to submit your measurements at your convenience.
+            <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm">
+              <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
+                You can submit your measurements after placing the order. Select Made to Measure, add to bag, complete your order, then go to <strong>My Account → My Orders</strong> to submit your measurements at your convenience.
               </p>
             </div>
           )}
         </div>
       )}
 
-      {/* Options — hide sections with only a "Default Title" value */}
+      {/* ─── Menswear Size Selector ─── */}
+      {isMenswear && !productHasNumericSizes && (
+        <StitchingSizeSelector
+          selectedSize={stitchingSize}
+          onSizeChange={setStitchingSize}
+          showValidation={showSizeValidation}
+          sizeMode="menswear"
+          label="Select Size"
+        />
+      )}
+
+      {/* ─── Product Options (Color, Size from Shopify) ─── */}
       <div className="space-y-5">
         {product.options
           .filter((option) => {
@@ -548,6 +655,9 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             // For stitchable products, hide the "Stitching" option from Shopify variants
             // since we use our custom Utsav-style selector above instead
             if (isStitchable && option.name.toLowerCase().includes('stitch')) return false;
+            // If product already has numeric sizes and we're showing stitching, 
+            // don't duplicate the size selector — the StitchingSizeSelector handles it
+            if (productHasNumericSizes && option.name.toLowerCase() === 'size') return false;
             return true;
           })
           .map((option) => (
@@ -584,21 +694,40 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         ))}
       </div>
 
-      {/* Stitching Size Selector */}
-      {needsStitchingSize && (
+      {/* ─── Stitching Size Selector (when product doesn't have Shopify size variants) ─── */}
+      {showStitchingSizeSelector && !isMenswear && (
         <StitchingSizeSelector
           selectedSize={stitchingSize}
           onSizeChange={setStitchingSize}
           showValidation={showSizeValidation}
+          sizeMode={sizeMode}
+          label={sizeLabel}
+          hint={sizeHint}
         />
       )}
 
-      {/* Blouse Neckline Selector — only for Lehenga Choli / Saree with stitching */}
+      {/* ─── Bottom / Lower Style Selector ─── */}
+      {showBottomStyleOption && needsStitchingSize && (
+        <BottomStyleSelector
+          selected={selectedBottomStyle}
+          onChange={setSelectedBottomStyle}
+        />
+      )}
+
+      {/* ─── Blouse Neckline Selector ─── */}
       {showNeckline && (
         <NecklineSelector selected={selectedNeckline} onChange={setSelectedNeckline} />
       )}
 
-      {/* Custom Alteration Option */}
+      {/* ─── Sleeve Style Selector (Made to Measure only) ─── */}
+      {showSleeveStyle && (
+        <SleeveStyleSelector
+          selected={selectedSleeveStyle}
+          onChange={setSelectedSleeveStyle}
+        />
+      )}
+
+      {/* ─── Custom Alteration Option ─── */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium uppercase tracking-wide">Custom Alterations</label>
@@ -676,6 +805,52 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </Button>
       </div>
 
+      <Separator />
+
+      {/* Product Specifications */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium uppercase tracking-wide">Product Details</h3>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+          {productSpecs.color && (
+            <>
+              <span className="text-muted-foreground">Color</span>
+              <span className="text-foreground">{productSpecs.color}</span>
+            </>
+          )}
+          {productSpecs.fabric && (
+            <>
+              <span className="text-muted-foreground">Fabric</span>
+              <span className="text-foreground">{productSpecs.fabric}</span>
+            </>
+          )}
+          {productSpecs.work && (
+            <>
+              <span className="text-muted-foreground">Work</span>
+              <span className="text-foreground">{productSpecs.work}</span>
+            </>
+          )}
+          {productSpecs.type && (
+            <>
+              <span className="text-muted-foreground">Type</span>
+              <span className="text-foreground">{productSpecs.type}</span>
+            </>
+          )}
+          <span className="text-muted-foreground">Closure</span>
+          <span className="text-foreground">Back Hook-Eye / Zip</span>
+          <span className="text-muted-foreground">Manufacturer</span>
+          <span className="text-foreground">LuxeMia Fashion Pvt Ltd</span>
+        </div>
+      </div>
+
+      <Separator />
+
+      {/* Description */}
+      <div className="space-y-2">
+        <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
+        <p className="text-muted-foreground leading-relaxed text-sm">
+          {product.description || 'Beautifully made with attention to every detail, this piece features traditional Indian design elements. Perfect for ceremonies, weddings, and special occasions.'}
+        </p>
+      </div>
 
       <Separator />
 

@@ -19,6 +19,19 @@ import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
 import StickyAddToBag from '@/components/product/StickyAddToBag';
 
+// Determine if a product type supports stitching options
+const STITCHABLE_PRODUCT_TYPES = [
+  'salwar kameez', 'salwar kameez suit', 'lehenga', 'lehenga choli', 'saree', 'sarees',
+  'anarkali', 'sharara suit', 'pakistani suit', 'palazzo suit', 'gharara suit',
+  'wedding suit',
+];
+
+const isStitchableProductType = (productType?: string): boolean => {
+  if (!productType) return false;
+  const lower = productType.toLowerCase();
+  return STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t));
+};
+
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
@@ -175,6 +188,7 @@ const ProductDetail = () => {
                 <ProductTabs 
                   description={product.description}
                   productType={product.productType}
+                  isStitchable={isStitchableProductType(product.productType)}
                 />
               </div>
 
