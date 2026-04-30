@@ -121,13 +121,13 @@ const HeroSection = () => {
     >
       {isFullWidth ? (
         /* ====== FULLWIDTH LAYOUT — 1600×600 wide banner images ====== */
-        <div className="relative w-full overflow-hidden" style={{ aspectRatio: '1600/600' }}>
+        <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '8/3' }}>
           <AnimatePresence mode="wait">
             <motion.img
               key={currentSlide}
               src={slide.image}
               alt={slide.title}
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className="absolute inset-0 w-full h-full object-contain object-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
