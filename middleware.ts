@@ -72,6 +72,9 @@ const PRERENDERED_ROUTES = new Set([
   '/bestsellers',
   '/indowestern',
   '/nri',
+  '/nri/usa',
+  '/nri/uk',
+  '/nri/canada',
   '/indian-ethnic-wear-usa',
   '/indian-ethnic-wear-uk',
   '/indian-ethnic-wear-canada',
@@ -321,7 +324,6 @@ export default async function middleware(request: Request) {
     pathname.startsWith('/_prerender') ||
     pathname.startsWith('/assets') ||
     pathname.startsWith('/api') ||
-    pathname.startsWith('/admin') ||
     pathname.startsWith('/catalogs') ||
     pathname.includes('.')
   ) {
@@ -352,8 +354,21 @@ export default async function middleware(request: Request) {
     }
 
     // Collection/category pages that aren't prerendered — let through to SPA
-    if (pathname.startsWith('/collections/') || pathname.startsWith('/nri/')) {
+    // Note: /nri/usa, /nri/uk, /nri/canada are in PRERENDERED_ROUTES so handled above
+    // Any other /nri/* paths should 404 for bots to prevent soft-404
+    if (pathname.startsWith('/collections/')) {
       return next();
+    }
+
+    // /admin should return noindex to bots even though it's disallowed in robots.txt
+    if (pathname.startsWith('/admin')) {
+      return new Response(
+        `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Admin | LuxeMia</title></head><body><p>Admin panel — not indexed.</p></body></html>`,
+        {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        }
+      );
     }
 
     // Unknown route that's not a redirect → return proper HTTP 404

@@ -60,6 +60,50 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ===== NRI LANDING PAGES ===== -->
+  <url>
+    <loc>https://luxemia.shop/nri</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/nri/usa</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/nri/uk</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/nri/canada</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/indian-ethnic-wear-usa</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/indian-ethnic-wear-uk</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/indian-ethnic-wear-canada</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- ===== ABOUT & INFO PAGES ===== -->
   <url>
     <loc>https://luxemia.shop/artisans</loc>

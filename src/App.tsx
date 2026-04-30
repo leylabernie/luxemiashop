@@ -119,6 +119,9 @@ const App = () => (
                 <Route path="/style-quiz" element={<StyleQuiz />} />
                 {/* NRI Landing Pages for SEO */}
                 <Route path="/nri" element={<NRIGeneral />} />
+                <Route path="/nri/usa" element={<USA />} />
+                <Route path="/nri/uk" element={<UK />} />
+                <Route path="/nri/canada" element={<Canada />} />
                 <Route path="/indian-ethnic-wear-usa" element={<USA />} />
                 <Route path="/indian-ethnic-wear-uk" element={<UK />} />
                 <Route path="/indian-ethnic-wear-canada" element={<Canada />} />
