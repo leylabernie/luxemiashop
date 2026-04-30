@@ -269,7 +269,7 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
                 onLoad={() => setIsLoaded(true)}
                 onError={() => setImageError(true)}
                 className={cn(
-                  'w-full h-full object-cover select-none',
+                  'w-full h-full object-cover object-top select-none',
                   isLoaded ? 'opacity-100' : 'opacity-0',
                   isPinching ? '' : 'transition-all duration-300'
                 )}

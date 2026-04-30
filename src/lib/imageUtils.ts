@@ -74,14 +74,28 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
   let optimizedUrl = fixMalformedUrl(url);
   
   const sizeMap = {
-    thumbnail: 650,  // Small thumbnails, lists
-    card: 650,       // Product cards - use 650 for faster loading
+    thumbnail: 400,  // Small thumbnails, lists
+    card: 1000,       // Product cards - high-res for Retina displays
     gallery: 1200,   // Product gallery, detail pages
     hero: 1920,      // Hero banners, full-width images
   };
   
   const size = sizeMap[context];
+  
+  // Handle CDN images from kesimg.b-cdn.net
   optimizedUrl = optimizedUrl.replace('/images/650/', `/images/${size}/`);
+  
+  // Handle Shopify CDN images — add width parameter for proper sizing
+  // Shopify URLs look like: https://cdn.shopify.com/s/files/.../filename.jpg?...
+  if (optimizedUrl.includes('cdn.shopify.com') || optimizedUrl.includes('myshopify.com')) {
+    // Remove any existing width/height/crop params
+    optimizedUrl = optimizedUrl.replace(/[&?]width=\d+/g, '');
+    optimizedUrl = optimizedUrl.replace(/[&?]height=\d+/g, '');
+    optimizedUrl = optimizedUrl.replace(/[&?]crop=[^&]+/g, '');
+    // Add width parameter for Shopify CDN image resizing
+    const separator = optimizedUrl.includes('?') ? '&' : '?';
+    optimizedUrl = `${optimizedUrl}${separator}width=${size}&crop=center`;
+  }
   
   // For external images, proxy them to bypass hotlink protection
   if (isExternalImage(optimizedUrl)) {

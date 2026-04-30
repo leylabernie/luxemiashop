@@ -4,6 +4,7 @@ import { X, Minus, Plus, Trash2, Loader2, ExternalLink, ShieldCheck, RefreshCw, 
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
+import { getOptimizedImage } from '@/lib/imageUtils';
 import EmailCaptureModal from './EmailCaptureModal';
 
 const FREE_SHIPPING_THRESHOLD = 300;
@@ -108,9 +109,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       <div className="w-20 h-24 bg-card overflow-hidden flex-shrink-0">
                         {image ? (
                           <img
-                            src={image.url}
+                            src={getOptimizedImage(image.url, 'thumbnail')}
                             alt={image.altText || item.product.node.title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover object-top"
                           />
                         ) : (
                           <ProductPlaceholder className="w-full h-full" />

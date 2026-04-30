@@ -7,6 +7,7 @@ import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface QuickViewModalProps {
   product: ShopifyProduct | null;
@@ -94,9 +95,9 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
             <div className="w-full sm:w-5/12 aspect-[3/4] sm:aspect-auto sm:h-auto flex-shrink-0 bg-muted overflow-hidden">
               {imageUrl ? (
                 <img
-                  src={imageUrl}
+                  src={getOptimizedImage(imageUrl, 'gallery')}
                   alt={title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-muted-foreground">

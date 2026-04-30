@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
+import { getOptimizedImage } from '@/lib/imageUtils';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 
@@ -57,7 +58,7 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
           <div className="flex items-center gap-3 p-3 max-w-screen-sm mx-auto">
             {imageUrl && (
               <img
-                src={imageUrl}
+                src={getOptimizedImage(imageUrl, 'thumbnail')}
                 alt={product.title}
                 className="w-12 h-14 object-cover rounded-sm flex-shrink-0"
               />

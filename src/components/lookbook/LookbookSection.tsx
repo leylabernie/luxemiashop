@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ProductCard from '@/components/ui/ProductCard';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getOptimizedImage } from '@/lib/imageUtils';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -101,7 +102,7 @@ const LookbookSection = ({
                 >
                   <Link to={`/product/${product.node.handle}`}>
                     <img 
-                      src={product.node.images.edges[0]?.node.url} 
+                      src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')} 
                       alt={product.node.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />

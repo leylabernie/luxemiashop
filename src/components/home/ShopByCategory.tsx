@@ -9,6 +9,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from '@/hooks/use-toast';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 type TabType = 'new' | 'bestsellers' | 'ready';
 
@@ -167,9 +168,9 @@ const ShopByCategory = () => {
                   <Link to={`/product/${node.handle}`} className="block">
                     <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-secondary mb-3">
                       <img
-                        src={imageUrl}
+                        src={getOptimizedImage(imageUrl, 'card')}
                         alt={node.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />
                       

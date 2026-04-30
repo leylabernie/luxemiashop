@@ -8,6 +8,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 const TrendingNow = () => {
   const { products, isLoading } = useShopifyProducts();
@@ -136,9 +137,9 @@ const TrendingNow = () => {
                 {/* Image Container */}
                 <div className="relative aspect-[3/4] overflow-hidden bg-secondary/30 mb-4">
                   <img
-                    src={product.node.images.edges[0]?.node.url}
+                    src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')}
                     alt={product.node.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;

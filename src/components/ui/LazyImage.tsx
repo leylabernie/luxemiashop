@@ -75,7 +75,7 @@ const LazyImage = ({
           loading="lazy"
           onLoad={() => setIsLoaded(true)}
           className={cn(
-            'w-full h-full object-cover transition-opacity duration-500',
+            'w-full h-full object-cover object-top transition-opacity duration-500',
             isLoaded ? 'opacity-100' : 'opacity-0'
           )}
           {...props}

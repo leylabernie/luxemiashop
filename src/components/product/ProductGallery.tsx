@@ -290,7 +290,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               <img
                 src={getOptimizedImage(image.node.url, 'thumbnail')}
                 alt={image.node.altText || `${productTitle} - View ${index + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
                 loading="lazy"
                 draggable={false}
               />
@@ -326,7 +326,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                 transition={{ duration: 0.3 }}
                 src={getOptimizedImage(currentImage.url, 'gallery')}
                 alt={currentImage.altText || productTitle}
-                className="w-full h-full object-cover pointer-events-none"
+                className="w-full h-full object-cover object-top pointer-events-none"
                 draggable={false}
               />
             </motion.div>
@@ -586,7 +586,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                       <img
                         src={getOptimizedImage(image.node.url, 'thumbnail')}
                         alt={image.node.altText || `${productTitle} - View ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover object-top"
                         draggable={false}
                       />
                     </motion.button>

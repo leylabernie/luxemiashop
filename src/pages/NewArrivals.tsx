@@ -49,7 +49,7 @@ const NewArrivals = () => {
           <img
             src="/images/banners/new-arrivals-banner.jpg"
             alt="New Arrivals Collection"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"
             decoding="async"
           />

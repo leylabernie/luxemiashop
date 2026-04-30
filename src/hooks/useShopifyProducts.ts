@@ -50,13 +50,9 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
 };
 
 // Keywords that identify menswear products — used to exclude from women's pages
-const MENSWEAR_KEYWORDS = [
-  'sherwani', 'kurta pajama', 'kurta set', 'jodhpuri', 'modi jacket',
-  'nehru jacket', 'groom', 'menswear', "men's", ' indo western', 'dhoti',
-  ' bandi', 'pathani', 'achkan', 'angarakha', 'men suit', 'men kurta',
-  'men shirt', 'men trouser', 'men jacket', 'male', 'for men', 'boys',
-];
-const MENSWEAR_TAGS = ['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear', 'men', 'man'];
+// IMPORTANT: Use word-boundary matching (not includes()) to prevent 'male' matching 'female'
+const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|indo\s?western|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
+const MENSWEAR_TAGS_EXACT = new Set(['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear', 'men', 'man', 'gender:male', 'gender:men']);
 
 function isMenswear(product: ShopifyProduct): boolean {
   const pt = (product.node.productType ?? '').toLowerCase();
@@ -68,17 +64,18 @@ function isMenswear(product: ShopifyProduct): boolean {
   if (menswearTypes.some(t => pt === t || pt.includes(t))) return true;
 
   // Check if product type explicitly contains "men" — catch-all for men's categories
-  if (/\bmen\b/.test(pt) || pt.includes("men's") || pt.includes('menswear') || pt.includes('male')) return true;
+  // Use word boundary to avoid matching 'women' or 'female'
+  if (/\bmen\b/.test(pt) || /\bmen's\b/.test(pt) || /\bmenswear\b/.test(pt) || /\bmale\b/.test(pt)) return true;
 
-  // Check title for menswear keywords
-  if (MENSWEAR_KEYWORDS.some(kw => title.includes(kw))) return true;
+  // Check title for menswear keywords using regex with word boundaries
+  // This prevents 'male' from matching 'female', 'men' from matching 'women', etc.
+  if (MENSWEAR_KEYWORDS_REGEX.test(title)) return true;
 
-  // Check tags
-  if (MENSWEAR_TAGS.some(tag => tags.some(t => t === tag || t === `${tag}wear` || t.includes(tag)))) return true;
+  // Check tags — use exact matching to prevent 'men' matching inside other words
+  if (tags.some(t => MENSWEAR_TAGS_EXACT.has(t) || t === `${t.replace(/wear$/, '')}wear`)) return true;
 
   // If the product has a gender tag that says male/men, exclude it
-  const genderTag = tags.find(t => t === 'gender:male' || t === 'gender:men' || t === 'male' || t === 'men');
-  if (genderTag) return true;
+  if (tags.some(t => t === 'gender:male' || t === 'gender:men' || t === 'male' || t === 'men')) return true;
 
   return false;
 }
@@ -90,9 +87,18 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   const types = CATEGORY_PRODUCT_TYPES[category];
   if (!types) return products;
 
-  // For menswear: include only men's products
+  // For menswear: include only men's products, but also exclude any that look like women's wear
   if (category === 'menswear') {
-    return products.filter(p => isMenswear(p));
+    const womensKeywords = /\b(saree|sari|lehenga|lehenga|anarkali|salwar|palazzo|plazzo|sharara|gharara|gown|dupatta|blouse|petticoat|choli|women|women's|female|ladies|bridal|pakistani suit)\b/i;
+    return products.filter(p => {
+      if (!isMenswear(p)) return false;
+      // Extra safety: if title or tags strongly indicate women's wear, exclude from menswear
+      const title = (p.node.title ?? '').toLowerCase();
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+      if (womensKeywords.test(title)) return false;
+      if (tags.some(t => t === 'women' || t === 'womens' || t === 'female' || t === 'ladies' || t === 'gender:female' || t === 'gender:women')) return false;
+      return true;
+    });
   }
 
   // For all women's categories: exclude menswear first

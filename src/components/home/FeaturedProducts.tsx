@@ -8,6 +8,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 const FeaturedProducts = () => {
   const { products, isLoading } = useShopifyProducts();
@@ -137,9 +138,9 @@ const FeaturedProducts = () => {
                     <div className="relative aspect-[3/4] mb-4 overflow-hidden bg-card">
                       {image ? (
                         <img
-                          src={image.url}
+                          src={getOptimizedImage(image.url, 'card')}
                           alt={image.altText || product.node.title}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;

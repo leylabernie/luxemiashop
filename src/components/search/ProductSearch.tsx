@@ -4,6 +4,7 @@ import { Search, X, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAllLocalProducts } from '@/data/localProducts';
 import { Button } from '@/components/ui/button';
+import { getOptimizedImage } from '@/lib/imageUtils';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 
@@ -321,7 +322,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                         >
                           <div className="aspect-[3/4] w-full overflow-hidden rounded-md mb-2">
                             <img
-                              src={product.image}
+                              src={getOptimizedImage(product.image, 'card')}
                               alt={product.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />

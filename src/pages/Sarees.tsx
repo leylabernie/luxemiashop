@@ -111,7 +111,7 @@ const Sarees = () => {
           <img
             src="/images/banners/saree-banner.jpg"
             alt="Saree Collection"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"
             decoding="async"
           />

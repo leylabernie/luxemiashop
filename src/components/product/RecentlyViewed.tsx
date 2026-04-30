@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface RecentlyViewedProps {
   currentProductId?: string;
@@ -43,7 +44,7 @@ export const RecentlyViewed = ({ currentProductId }: RecentlyViewedProps) => {
             >
               <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-2 rounded-sm">
                 <img
-                  src={product.imageUrl}
+                  src={getOptimizedImage(product.imageUrl, 'card')}
                   alt={product.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />

@@ -276,7 +276,7 @@ const Lehengas = () => {
           <img
             src="/images/banners/festival-banner.jpg"
             alt="Lehenga Collection"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"
             decoding="async"
           />
