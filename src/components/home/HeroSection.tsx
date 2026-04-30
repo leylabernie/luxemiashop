@@ -4,8 +4,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
-type SlideLayout = 'fullwidth' | 'split';
-
 interface HeroSlide {
   id: number;
   title: string;
@@ -14,29 +12,32 @@ interface HeroSlide {
   link: string;
   image: string;
   accentBg: string;
-  layout: SlideLayout;
+  accentFrom: string;
+  accentTo: string;
 }
 
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    title: 'LuxeMia: Your destination for affordable Indian ethnic wear',
-    subtitle: 'Beautiful Styles for Your Special Day',
+    title: 'Bridal Lehenga Collection',
+    subtitle: 'Handcrafted Elegance for Your Special Day',
     cta: 'Shop Bridal Lehengas',
     link: '/lehengas',
     image: '/images/banners/hero-banner.jpg',
-    accentBg: 'bg-rose-800',
-    layout: 'fullwidth',
+    accentBg: 'bg-rose-900',
+    accentFrom: 'from-rose-950',
+    accentTo: 'to-rose-800',
   },
   {
     id: 2,
-    title: 'Elegant Drape Sarees',
+    title: 'Designer Silk Sarees',
     subtitle: 'Where Tradition Meets Modern Glamour',
     cta: 'Explore Sarees',
     link: '/sarees',
     image: '/images/banners/saree-banner.jpg',
-    accentBg: 'bg-purple-900',
-    layout: 'split',
+    accentBg: 'bg-amber-900',
+    accentFrom: 'from-amber-950',
+    accentTo: 'to-amber-800',
   },
   {
     id: 3,
@@ -45,32 +46,35 @@ const heroSlides: HeroSlide[] = [
     cta: 'View Suits',
     link: '/suits',
     image: '/images/banners/salwar-banner.jpg',
-    accentBg: 'bg-emerald-900',
-    layout: 'fullwidth',
+    accentBg: 'bg-pink-900',
+    accentFrom: 'from-pink-950',
+    accentTo: 'to-pink-800',
   },
   {
     id: 4,
-    title: 'Menswear Indo-Western',
-    subtitle: 'Regal Sherwanis & Modern Indo-Western',
-    cta: 'Shop Menswear',
-    link: '/menswear',
+    title: 'Wedding Lehenga Choli',
+    subtitle: 'Regal Designs for the Modern Bride',
+    cta: 'Shop Lehengas',
+    link: '/lehengas',
     image: '/images/banners/festival-banner.jpg',
-    accentBg: 'bg-amber-900',
-    layout: 'split',
+    accentBg: 'bg-fuchsia-900',
+    accentFrom: 'from-fuchsia-950',
+    accentTo: 'to-fuchsia-800',
   },
   {
     id: 5,
-    title: 'Festive Collection',
-    subtitle: 'Beautiful Outfits for Celebrations & Beyond',
+    title: 'Festive Ready-to-Wear',
+    subtitle: 'Stunning Outfits for Celebrations',
     cta: 'Shop Festive',
     link: '/collections',
     image: '/images/banners/new-arrivals-banner.jpg',
-    accentBg: 'bg-pink-900',
-    layout: 'split',
+    accentBg: 'bg-emerald-900',
+    accentFrom: 'from-emerald-950',
+    accentTo: 'to-emerald-800',
   },
 ];
 
-const AUTOPLAY_MS = 4000;
+const AUTOPLAY_MS = 5000;
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -111,7 +115,6 @@ const HeroSection = () => {
   }, []);
 
   const slide = heroSlides[currentSlide];
-  const isFullWidth = slide.layout === 'fullwidth';
 
   return (
     <section
@@ -119,131 +122,77 @@ const HeroSection = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {isFullWidth ? (
-        /* ====== FULLWIDTH LAYOUT — 1600×600 wide banner images ====== */
-        <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: '8/3' }}>
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={currentSlide}
-              src={slide.image}
-              alt={slide.title}
-              className="absolute inset-0 w-full h-full object-contain object-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              fetchPriority="high"
-              decoding="async"
-              loading="eager"
-            />
-          </AnimatePresence>
+      {/* ====== SPLIT LAYOUT — product showcase with gradient background ====== */}
+      <div className={`relative w-full overflow-hidden bg-gradient-to-br ${slide.accentFrom} ${slide.accentTo}`}>
+        {/* Decorative background pattern */}
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
 
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent lg:from-black/60 lg:via-black/25 lg:to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-
-          {/* Text Content */}
-          <div className="relative z-10 container mx-auto px-4 lg:px-8 h-full flex items-center">
-            <div className="w-full lg:w-[50%] py-4 lg:py-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <span className={`inline-block px-3 py-1 ${slide.accentBg} text-white text-[10px] sm:text-xs tracking-[0.15em] uppercase mb-3 rounded-sm`}>
-                    New Collection
-                  </span>
-                  <p className="text-xs sm:text-sm tracking-[0.1em] uppercase text-white/70 mb-2 font-light">
-                    {slide.subtitle}
-                  </p>
-                  {currentSlide === 0 ? (
-                    <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl xl:text-5xl mb-4 leading-tight text-white">
-                      {slide.title}
-                    </h1>
-                  ) : (
-                    <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl xl:text-5xl mb-4 leading-tight text-white">
-                      {slide.title}
-                    </h2>
-                  )}
-                  <div className="flex items-center gap-4 flex-wrap">
-                    <Button asChild size="lg" className={`${slide.accentBg} hover:opacity-90 text-white font-medium tracking-wide px-6 py-5 text-xs sm:text-sm rounded-sm`}>
-                      <Link to={slide.link}>{slide.cta}</Link>
-                    </Button>
-                    <Link to="/collections" className="text-xs sm:text-sm text-white/80 hover:text-white transition-colors underline underline-offset-4">
-                      View All Collections
-                    </Link>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* ====== SPLIT LAYOUT — portrait/square product images ====== */
-        /* Text on left, product image on right — no cropping, no blur */
-        <div className={`relative w-full overflow-hidden bg-gradient-to-br ${slide.accentBg}`}>
-          <div className="container mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center min-h-[50vh] sm:min-h-[55vh] lg:min-h-[60vh]">
-            {/* Text Side */}
-            <div className="w-full md:w-[55%] py-8 md:py-12 lg:py-16 z-10">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-[10px] sm:text-xs tracking-[0.15em] uppercase mb-3 rounded-sm">
-                    New Collection
-                  </span>
-                  <p className="text-xs sm:text-sm tracking-[0.1em] uppercase text-white/70 mb-2 font-light">
-                    {slide.subtitle}
-                  </p>
-                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl xl:text-5xl mb-4 leading-tight text-white">
+        <div className="container mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center min-h-[55vh] sm:min-h-[60vh] lg:min-h-[70vh]">
+          {/* Text Side */}
+          <div className="w-full md:w-[50%] py-10 md:py-14 lg:py-20 z-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="inline-block px-4 py-1.5 bg-white/15 backdrop-blur-sm text-white text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4 rounded-sm border border-white/10">
+                  New Collection
+                </span>
+                <p className="text-xs sm:text-sm tracking-[0.15em] uppercase text-white/60 mb-3 font-light">
+                  {slide.subtitle}
+                </p>
+                {currentSlide === 0 ? (
+                  <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white">
+                    {slide.title}
+                  </h1>
+                ) : (
+                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white">
                     {slide.title}
                   </h2>
-                  <div className="flex items-center gap-4 flex-wrap">
-                    <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 font-medium tracking-wide px-6 py-5 text-xs sm:text-sm rounded-sm">
-                      <Link to={slide.link}>{slide.cta}</Link>
-                    </Button>
-                    <Link to="/collections" className="text-xs sm:text-sm text-white/80 hover:text-white transition-colors underline underline-offset-4">
-                      View All Collections
-                    </Link>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
+                )}
+                <div className="flex items-center gap-5 flex-wrap">
+                  <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 font-medium tracking-wider px-8 py-6 text-xs sm:text-sm rounded-sm shadow-lg">
+                    <Link to={slide.link}>{slide.cta}</Link>
+                  </Button>
+                  <Link to="/collections" className="text-xs sm:text-sm text-white/70 hover:text-white transition-colors underline underline-offset-4 tracking-wide">
+                    View All Collections
+                  </Link>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-            {/* Image Side — object-contain so portrait images show COMPLETELY without cropping */}
-            <div className="w-full md:w-[45%] flex items-center justify-center py-4 md:py-8 lg:py-12">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentSlide}
-                  src={slide.image}
-                  alt={slide.title}
-                  className="max-h-[50vh] md:max-h-[55vh] lg:max-h-[60vh] w-auto max-w-full object-contain drop-shadow-2xl"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  fetchPriority="high"
-                  decoding="async"
-                  loading="eager"
-                />
-              </AnimatePresence>
-            </div>
+          {/* Image Side — product image displayed fully without any cropping */}
+          <div className="w-full md:w-[50%] flex items-center justify-center py-6 md:py-10 lg:py-16">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentSlide}
+                src={slide.image}
+                alt={slide.title}
+                className="max-h-[55vh] md:max-h-[60vh] lg:max-h-[70vh] w-auto max-w-full object-contain drop-shadow-2xl rounded-sm"
+                initial={{ opacity: 0, scale: 0.92, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                fetchPriority="high"
+                decoding="async"
+                loading="eager"
+              />
+            </AnimatePresence>
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Navigation — arrows + counter */}
+      {/* Navigation arrows */}
       <div className="absolute top-1/2 -translate-y-1/2 left-3 lg:left-6 z-20">
         <button
           onClick={prevSlide}
-          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
+          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/25 hover:border-white/60 bg-black/25 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-4 h-4 text-white group-hover:-translate-x-0.5 transition-transform" />
@@ -252,7 +201,7 @@ const HeroSection = () => {
       <div className="absolute top-1/2 -translate-y-1/2 right-3 lg:right-6 z-20">
         <button
           onClick={nextSlide}
-          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
+          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/25 hover:border-white/60 bg-black/25 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
           aria-label="Next slide"
         >
           <ChevronRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
