@@ -21,7 +21,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://luxemia.shop/products</loc>
     <lastmod>2026-04-27</lastmod>
@@ -255,60 +254,36 @@
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59570/Pastel-Pink-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10243(1).jpg</image:loc>
-      <image:title>Ethereal Pastel Pink Bridal Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/royal-rani-pink-silk-bridal-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59645/Rani-Pink-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-A(1).jpg</image:loc>
-      <image:title>Royal Rani Pink Silk Bridal Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/classic-bridal-red-silk-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59645/Red-Silk-Bridal-Wear-Heavy-Work-Bridal-Lehenga-Choli-2946-2946-B(1).jpg</image:loc>
-      <image:title>Classic Bridal Red Silk Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/ivory-dreamscape-net-bridal-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59644/White-Heavy-Net-Bridal-Wear-Sequins-Embroidery-Work-Bridal-Lehenga-Choli-2941-2941(1).jpg</image:loc>
-      <image:title>Ivory Dreamscape Net Bridal Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/lavender-mist-bridal-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59570/Lavender-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10242(1).jpg</image:loc>
-      <image:title>Lavender Mist Bridal Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/metallic-silver-celebration-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59570/Metalic-Silver-Pure-Net-Bridal-Wear-Heavy-Work-Readymade-Bridal-Lehenga-Choli-RIYAASAT-10245(1).jpg</image:loc>
-      <image:title>Metallic Silver Celebration Lehenga</image:title>
-    </image:image>
   </url>
 
   <!-- ===== WEDDING LEHENGAS ===== -->
@@ -317,79 +292,499 @@
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Burgundy-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-A(1).jpg</image:loc>
-      <image:title>Burgundy Velvet Wedding Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/wine-romance-net-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Wine-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-B(1).jpg</image:loc>
-      <image:title>Wine Romance Net Lehenga</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/emerald-forest-wedding-lehenga</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/December/59625/Green-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-C(1).jpg</image:loc>
-      <image:title>Emerald Forest Wedding Lehenga</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-blue-celebration-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/coral-sunset-net-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/powder-pink-wedding-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/blush-georgette-party-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/mint-sequin-party-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/champagne-gold-party-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-party-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
-  <!-- ===== SAREES ===== -->
+  <!-- ===== FESTIVE LEHENGAS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/marigold-yellow-festive-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/saffron-orange-festive-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peacock-green-festive-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/ruby-red-festive-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/dusty-rose-festive-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-purple-festive-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== MIRROR WORK LEHENGAS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/heavy-silk-yellow-mirror-work-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/heavy-silk-beige-mirror-work-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/heavy-silk-sky-blue-mirror-work-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/heavy-silk-dusty-pink-mirror-work-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== ORGANZA BRIDAL LEHENGAS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/organza-lavender-bridal-heavy-work-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/organza-red-bridal-heavy-work-lehenga</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== KANCHIPURAM SILK WEDDING SAREES ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/mint-green-kanchipuram-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-pink-kanchipuram-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/ivory-beige-kanchipuram-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-kanchipuram-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/antique-gold-kanchipuram-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== TISSUE SILK WEDDING SAREES ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/beige-gold-tissue-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/pink-tissue-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/sea-green-tissue-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/sunset-orange-tissue-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/lavender-tissue-silk-wedding-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== GEORGETTE PARTY SAREES ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/royal-blue-georgette-party-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/wine-georgette-party-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/emerald-green-georgette-party-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/dusty-rose-georgette-party-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-georgette-party-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== ART SILK FESTIVE SAREES ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/magenta-art-silk-festive-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/teal-green-art-silk-festive-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/maroon-art-silk-festive-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/mustard-yellow-art-silk-festive-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-purple-art-silk-festive-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== OCCASIONAL & CASUAL SAREES ===== -->
   <url>
     <loc>https://luxemia.shop/product/silk-yellow-occasional-embroidery-saree</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59800/Yellow-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-D(1).jpg</image:loc>
-      <image:title>Silk Yellow Occasional Wear Embroidery Saree</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/silk-light-pink-occasional-embroidery-saree</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59800/Light-Pink-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-C(1).jpg</image:loc>
-      <image:title>Silk Light Pink Occasional Wear Embroidery Saree</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-green-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-sea-green-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-rani-pink-casual-sequins-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-rust-orange-casual-sequins-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-blue-casual-sequins-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
-  <!-- ===== MENSWEAR ===== -->
+  <!-- ===== BANARASI & FENDY SATIN SAREES ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/banarasi-silk-mustard-festival-weaving-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/banarasi-silk-mint-green-festival-weaving-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/fendy-satin-teal-green-occasional-embroidery-saree</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== ART SILK GROOM SHERWANIS ===== -->
   <url>
     <loc>https://luxemia.shop/product/grey-art-silk-groom-sherwani</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Grey-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4032(1).jpg</image:loc>
-      <image:title>Grey Art Silk Groom Sherwani</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/purple-art-silk-groom-sherwani</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2025y/October/59064/Purple-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4031(1).jpg</image:loc>
-      <image:title>Purple Art Silk Groom Sherwani</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/off-white-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/light-pink-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/white-art-silk-groom-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
-  <!-- ===== SUITS ===== -->
+  <!-- ===== BANARASI JACQUARD SHERWANIS ===== -->
   <url>
-    <loc>https://luxemia.shop/product/teal-green-chinnon-silk-sharara-set</loc>
+    <loc>https://luxemia.shop/product/black-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/blue-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/maroon-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/mustard-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peach-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/pink-banarasi-jacquard-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== VELVET & ART SILK SHERWANIS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-velvet-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/magenta-velvet-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-velvet-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/wine-art-silk-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-art-silk-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-silk-sherwani</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== KURTA PAJAMA ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/baby-pink-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/blue-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/white-viscose-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/beige-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/yellow-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/teal-blue-cotton-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/brown-silk-kurta-pajama</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== ANARKALI SUITS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/red-silk-eid-anarkali-suit</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/green-silk-eid-anarkali-suit</loc>
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -399,10 +794,456 @@
     <lastmod>2026-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kesimg.b-cdn.net/images/650/2026y/January/59793/Dusty-Rose-Silk-Party-Wear-Sequins-Work--Readymade-Anarkali-Suit-5964(1).jpg</image:loc>
-      <image:title>Dusty Rose Silk Party Anarkali Suit</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/baby-pink-roman-silk-festival-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-chanderi-cotton-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/champagne-beige-chanderi-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peach-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/grey-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/green-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/dusty-pink-fendy-silk-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/purple-chanderi-silk-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/pista-viscose-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/lavender-viscose-casual-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/sky-blue-georgette-anarkali-gown</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/yellow-georgette-anarkali-gown</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-roman-silk-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/maroon-roman-silk-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-chinon-party-anarkali</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== SHARARA SETS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/teal-green-chinnon-silk-sharara-set</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/rust-orange-chinnon-silk-sharara-set</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-chinnon-silk-sharara-set</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/wine-georgette-sharara-suit</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/teal-georgette-palazzo-suit</loc>
+    <lastmod>2026-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== SHOPIFY PALAZZO SUITS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/crepe-silk-multi-color-party-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/crepe-silk-multi-color-party-wear-embroidery-work-readymade-plazzo-suit-2</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/crepe-silk-multi-color-party-wear-embroidery-work-readymade-plazzo-suit-3</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-silk-wine-party-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-silk-lime-yellow-party-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-silk-rani-pink-party-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/shimmer-silk-light-green-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/shimmer-silk-pink-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/shimmer-silk-turquoise-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-silk-orange-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-silk-navy-blue-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/fendy-silk-maroon-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/fendy-silk-black-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/fendy-silk-navy-blue-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-navy-blue-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-hot-pink-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-green-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-violet-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/georgette-pink-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/georgette-wine-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/georgette-green-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/georgette-purple-occasional-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/fendy-silk-teal-blue-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/fendy-silk-rani-pink-festival-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chinon-silk-orange-party-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/hot-pink-chinon-party-wear-embroidery-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== SHOPIFY PATIALA SUITS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/silk-black-occasional-wear-mirror-work-readymade-patiyala-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-light-pink-occasional-wear-mirror-work-readymade-patiyala-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-green-occasional-wear-mirror-work-readymade-patiyala-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-maroon-occasional-wear-mirror-work-readymade-patiyala-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-rani-pink-occasional-wear-mirror-work-readymade-patiyala-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/silk-purple-occasional-wear-mirror-work-readymade-patiyala-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== SHOPIFY COTTON SALWAR SUITS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/teal-green-cotton-party-wear-salwar-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/dusty-pink-cotton-eid-wear-salwar-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/cream-cotton-eid-wear-salwar-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/olive-green-cotton-party-wear-salwar-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/warm-beige-cotton-festival-salwar-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/olive-green-cotton-festive-salwar-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== SHOPIFY WEDDING PALAZZO SUITS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/georgette-purple-wedding-wear-embroidery-work-readywar-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/georgette-black-wedding-wear-embroidery-work-readywar-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/georgette-cherry-wedding-wear-beads-work-readymade-plazzo-suit</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ===== SHOPIFY SHERWANIS ===== -->
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-off-white-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-pista-green-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-light-pink-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-cream-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-beige-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-onion-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-firozi-green-groom-wear-thread-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-light-pink-wedding-wear-embroidery-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-beige-wedding-wear-embroidery-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-pista-green-wedding-wear-embroidery-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-teal-blue-wedding-wear-embroidery-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/art-silk-black-wedding-wear-embroidery-work-readymade-sherwani</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- ===== NRI LANDING PAGES ===== -->
