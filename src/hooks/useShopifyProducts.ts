@@ -51,8 +51,10 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
 
 // Keywords that identify menswear products — used to exclude from women's pages
 // IMPORTANT: Use word-boundary matching (not includes()) to prevent 'male' matching 'female'
-const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|indo\s?western|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
-const MENSWEAR_TAGS_EXACT = new Set(['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear', 'men', 'man', 'gender:male', 'gender:men']);
+// NOTE: 'indo western' is NOT included here because it's also a WOMEN's category.
+// Women's Indo Western products have this in their title and should NOT be flagged as menswear.
+const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
+const MENSWEAR_TAGS_EXACT = new Set(['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear', 'indian-menswear', 'men', 'man', 'gender:male', 'gender:men']);
 
 function isMenswear(product: ShopifyProduct): boolean {
   const pt = (product.node.productType ?? '').toLowerCase();
@@ -72,7 +74,11 @@ function isMenswear(product: ShopifyProduct): boolean {
   if (MENSWEAR_KEYWORDS_REGEX.test(title)) return true;
 
   // Check tags — use exact matching to prevent 'men' matching inside other words
-  if (tags.some(t => MENSWEAR_TAGS_EXACT.has(t) || t === `${t.replace(/wear$/, '')}wear`)) return true;
+  // Also check tag with 'wear' suffix stripped (e.g., 'menswear' → 'mens')
+  // FIX: Previous condition `t === \`${t.replace(/wear$/, '')}wear\`` was a tautology
+  // that matched ANY tag ending in 'wear' (e.g., 'indian-ethnic-wear', 'party-wear'),
+  // causing ALL products to be incorrectly classified as menswear.
+  if (tags.some(t => MENSWEAR_TAGS_EXACT.has(t) || MENSWEAR_TAGS_EXACT.has(t.replace(/wear$/, '')))) return true;
 
   // If the product has a gender tag that says male/men, exclude it
   if (tags.some(t => t === 'gender:male' || t === 'gender:men' || t === 'male' || t === 'men')) return true;
