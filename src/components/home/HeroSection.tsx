@@ -49,7 +49,7 @@ const heroSlides: HeroSlide[] = [
     cta: 'Shop Menswear',
     link: '/menswear',
     image: '/images/banners/menswear-banner.jpg',
-    accentColor: 'bg-slate-700',
+    accentColor: 'bg-slate-600',
   },
   {
     id: 5,
@@ -119,32 +119,16 @@ const HeroSection = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Full-width banner with dark overlay on left, product image on right */}
-      <div className="relative w-full overflow-hidden bg-black min-h-[60vh] sm:min-h-[65vh] lg:min-h-[75vh]">
-        {/* Background: product image positioned on the right side */}
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentSlide}
-            src={slide.image}
-            alt={slide.title}
-            className="absolute inset-0 w-full h-full object-cover object-center md:object-right lg:object-center"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            fetchPriority="high"
-            decoding="async"
-            loading="eager"
-          />
-        </AnimatePresence>
+      {/*
+        Split layout: Dark background left (text) + Product image right
+        Product images are portrait (800x1100) — displayed COMPLETELY with object-contain
+        No cropping, no half-images, white text always readable on dark bg
+      */}
+      <div className="relative w-full bg-black min-h-[60vh] sm:min-h-[65vh] lg:min-h-[75vh]">
+        <div className="container mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-stretch min-h-[60vh] sm:min-h-[65vh] lg:min-h-[75vh]">
 
-        {/* Dark gradient overlay — ensures white text is always readable */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/20 lg:from-black/80 lg:via-black/50 lg:to-black/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
-
-        {/* Text Content — left aligned */}
-        <div className="relative z-10 container mx-auto px-4 lg:px-8 h-full flex items-center min-h-[60vh] sm:min-h-[65vh] lg:min-h-[75vh]">
-          <div className="w-full lg:w-[55%] py-8 md:py-12 lg:py-16">
+          {/* LEFT: Text on dark background */}
+          <div className="w-full md:w-1/2 flex flex-col justify-center py-10 md:py-14 lg:py-20">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -160,11 +144,11 @@ const HeroSection = () => {
                   {slide.subtitle}
                 </p>
                 {currentSlide === 0 ? (
-                  <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white drop-shadow-lg">
+                  <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white">
                     {slide.title}
                   </h1>
                 ) : (
-                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white drop-shadow-lg">
+                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white">
                     {slide.title}
                   </h2>
                 )}
@@ -172,11 +156,30 @@ const HeroSection = () => {
                   <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 font-medium tracking-wider px-8 py-6 text-xs sm:text-sm rounded-sm shadow-lg">
                     <Link to={slide.link}>{slide.cta}</Link>
                   </Button>
-                  <Link to="/collections" className="text-xs sm:text-sm text-white/80 hover:text-white transition-colors underline underline-offset-4 tracking-wide drop-shadow">
+                  <Link to="/collections" className="text-xs sm:text-sm text-white/70 hover:text-white transition-colors underline underline-offset-4 tracking-wide">
                     View All Collections
                   </Link>
                 </div>
               </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* RIGHT: Full product image — object-contain so NO cropping */}
+          <div className="w-full md:w-1/2 flex items-center justify-center py-6 md:py-8 lg:py-12">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentSlide}
+                src={slide.image}
+                alt={slide.title}
+                className="h-full max-h-[60vh] sm:max-h-[65vh] lg:max-h-[75vh] w-auto object-contain drop-shadow-2xl"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                fetchPriority="high"
+                decoding="async"
+                loading="eager"
+              />
             </AnimatePresence>
           </div>
         </div>
@@ -186,7 +189,7 @@ const HeroSection = () => {
       <div className="absolute top-1/2 -translate-y-1/2 left-3 lg:left-6 z-20">
         <button
           onClick={prevSlide}
-          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
+          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-4 h-4 text-white group-hover:-translate-x-0.5 transition-transform" />
@@ -195,7 +198,7 @@ const HeroSection = () => {
       <div className="absolute top-1/2 -translate-y-1/2 right-3 lg:right-6 z-20">
         <button
           onClick={nextSlide}
-          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
+          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
           aria-label="Next slide"
         >
           <ChevronRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
