@@ -49,6 +49,9 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
   return cachePromise;
 };
 
+// Title keywords for products to ALWAYS exclude from the site (not ethnic wear)
+const EXCLUDED_TITLE_KEYWORDS = /\b(rurban|sunglasses?)\b/i;
+
 // Keywords that identify menswear products — used to exclude from women's pages
 // IMPORTANT: Use word-boundary matching (not includes()) to prevent 'male' matching 'female'
 // NOTE: 'indo western' is NOT included here because it's also a WOMEN's category.
@@ -88,16 +91,21 @@ function isMenswear(product: ShopifyProduct): boolean {
 
 // Filter products by category client-side
 const filterByCategory = (products: ShopifyProduct[], category: string): ShopifyProduct[] => {
-  if (category === 'all') return products;
+  // First, globally exclude products by title (rurban, sunglasses, etc.)
+  const allowed = products.filter(p => !EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? ''));
+
+  if (category === 'all') return allowed;
 
   const types = CATEGORY_PRODUCT_TYPES[category];
-  if (!types) return products;
+  if (!types) return allowed;
 
   // For menswear: include only men's products, but also exclude any that look like women's wear
   if (category === 'menswear') {
     const womensKeywords = /\b(saree|sari|lehenga|lehenga|anarkali|salwar|palazzo|plazzo|sharara|gharara|gown|dupatta|blouse|petticoat|choli|women|women's|female|ladies|bridal|pakistani suit)\b/i;
-    return products.filter(p => {
+    return allowed.filter(p => {
       if (!isMenswear(p)) return false;
+      // Also exclude rurban/sunglasses from menswear
+      if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
       // Extra safety: if title or tags strongly indicate women's wear, exclude from menswear
       const title = (p.node.title ?? '').toLowerCase();
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
@@ -107,8 +115,8 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     });
   }
 
-  // For all women's categories: exclude menswear first
-  const filtered = products.filter(p => !isMenswear(p));
+  // For all women's categories: exclude menswear + excluded titles first
+  const filtered = allowed.filter(p => !isMenswear(p));
 
   // For indowestern, show women's fusion styles
   if (category === 'indowestern') {
