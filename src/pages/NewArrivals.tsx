@@ -45,14 +45,22 @@ const NewArrivals = () => {
       <Header />
       <main className="pt-[88px] lg:pt-[130px]">
         {/* Hero Banner */}
-        <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
+        <div className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
+          <img
+            src="/images/banners/new-arrivals-banner.jpg"
+            alt="New Arrivals Collection"
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
+          <div className="relative z-10 text-center px-4 text-white">
             <div className="flex items-center justify-center gap-2 mb-3">
-              <Sparkles className="w-5 h-5 text-primary" />
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Just Landed</span>
+              <Sparkles className="w-5 h-5 text-white" />
+              <span className="text-xs uppercase tracking-widest text-white/70">Just Landed</span>
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
-            <p className="text-muted-foreground font-light max-w-md mx-auto text-sm lg:text-base">
+            <p className="text-white/80 font-light max-w-md mx-auto text-sm lg:text-base">
               Discover our latest pieces — made with care, arriving fresh every week.
             </p>
           </div>

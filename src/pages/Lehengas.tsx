@@ -272,18 +272,26 @@ const Lehengas = () => {
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         {/* Hero Banner */}
-        <section className="relative h-64 md:h-80 flex items-center justify-center bg-gradient-to-b from-secondary to-background overflow-hidden">
+        <section className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
+          <img
+            src="/images/banners/festival-banner.jpg"
+            alt="Lehenga Collection"
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center px-4"
+            className="relative z-10 text-center px-4 text-white"
           >
-            <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
+            <p className="text-sm tracking-luxury uppercase text-white/70 mb-4">
               Explore Our
             </p>
-                      <h1 className="text-3xl md:text-4xl font-serif mb-4">Lehengas</h1>
-            <p className="text-muted-foreground max-w-lg mx-auto">
+            <h1 className="text-3xl md:text-4xl font-serif mb-4">Lehengas</h1>
+            <p className="text-white/80 max-w-lg mx-auto">
               Beautiful bridal lehengas, festive lehenga cholis, and contemporary designs for your special moments.
             </p>
           </motion.div>
