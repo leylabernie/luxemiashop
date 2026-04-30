@@ -11,9 +11,7 @@ interface HeroSlide {
   cta: string;
   link: string;
   image: string;
-  accentBg: string;
-  accentFrom: string;
-  accentTo: string;
+  accentColor: string;
 }
 
 const heroSlides: HeroSlide[] = [
@@ -21,12 +19,10 @@ const heroSlides: HeroSlide[] = [
     id: 1,
     title: 'Bridal Lehenga Collection',
     subtitle: 'Handcrafted Elegance for Your Special Day',
-    cta: 'Shop Bridal Lehengas',
+    cta: 'Shop Lehengas',
     link: '/lehengas',
     image: '/images/banners/hero-banner.jpg',
-    accentBg: 'bg-rose-900',
-    accentFrom: 'from-rose-950',
-    accentTo: 'to-rose-800',
+    accentColor: 'bg-rose-700',
   },
   {
     id: 2,
@@ -35,9 +31,7 @@ const heroSlides: HeroSlide[] = [
     cta: 'Explore Sarees',
     link: '/sarees',
     image: '/images/banners/saree-banner.jpg',
-    accentBg: 'bg-amber-900',
-    accentFrom: 'from-amber-950',
-    accentTo: 'to-amber-800',
+    accentColor: 'bg-amber-700',
   },
   {
     id: 3,
@@ -46,31 +40,34 @@ const heroSlides: HeroSlide[] = [
     cta: 'View Suits',
     link: '/suits',
     image: '/images/banners/salwar-banner.jpg',
-    accentBg: 'bg-pink-900',
-    accentFrom: 'from-pink-950',
-    accentTo: 'to-pink-800',
+    accentColor: 'bg-emerald-700',
   },
   {
     id: 4,
-    title: 'Wedding Lehenga Choli',
-    subtitle: 'Regal Designs for the Modern Bride',
-    cta: 'Shop Lehengas',
-    link: '/lehengas',
-    image: '/images/banners/festival-banner.jpg',
-    accentBg: 'bg-fuchsia-900',
-    accentFrom: 'from-fuchsia-950',
-    accentTo: 'to-fuchsia-800',
+    title: 'Menswear Indo-Western',
+    subtitle: 'Regal Sherwanis & Modern Indo-Western',
+    cta: 'Shop Menswear',
+    link: '/menswear',
+    image: '/images/banners/menswear-banner.jpg',
+    accentColor: 'bg-slate-700',
   },
   {
     id: 5,
-    title: 'Festive Ready-to-Wear',
-    subtitle: 'Stunning Outfits for Celebrations',
-    cta: 'Shop Festive',
-    link: '/collections',
+    title: 'Golden Lehenga Choli',
+    subtitle: 'Opulent Designs for the Modern Bride',
+    cta: 'Shop Lehengas',
+    link: '/lehengas',
     image: '/images/banners/new-arrivals-banner.jpg',
-    accentBg: 'bg-emerald-900',
-    accentFrom: 'from-emerald-950',
-    accentTo: 'to-emerald-800',
+    accentColor: 'bg-yellow-700',
+  },
+  {
+    id: 6,
+    title: 'Wedding Collection',
+    subtitle: 'Celebrate in Style with Premium Ethnic Wear',
+    cta: 'Shop Wedding',
+    link: '/collections',
+    image: '/images/banners/festival-banner.jpg',
+    accentColor: 'bg-fuchsia-700',
   },
 ];
 
@@ -122,36 +119,52 @@ const HeroSection = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* ====== SPLIT LAYOUT — product showcase with gradient background ====== */}
-      <div className={`relative w-full overflow-hidden bg-gradient-to-br ${slide.accentFrom} ${slide.accentTo}`}>
-        {/* Decorative background pattern */}
-        <div className="absolute inset-0 opacity-[0.04]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
+      {/* Full-width banner with dark overlay on left, product image on right */}
+      <div className="relative w-full overflow-hidden bg-black min-h-[60vh] sm:min-h-[65vh] lg:min-h-[75vh]">
+        {/* Background: product image positioned on the right side */}
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentSlide}
+            src={slide.image}
+            alt={slide.title}
+            className="absolute inset-0 w-full h-full object-cover object-center md:object-right lg:object-center"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            fetchPriority="high"
+            decoding="async"
+            loading="eager"
+          />
+        </AnimatePresence>
 
-        <div className="container mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center min-h-[55vh] sm:min-h-[60vh] lg:min-h-[70vh]">
-          {/* Text Side */}
-          <div className="w-full md:w-[50%] py-10 md:py-14 lg:py-20 z-10">
+        {/* Dark gradient overlay — ensures white text is always readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/20 lg:from-black/80 lg:via-black/50 lg:to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+
+        {/* Text Content — left aligned */}
+        <div className="relative z-10 container mx-auto px-4 lg:px-8 h-full flex items-center min-h-[60vh] sm:min-h-[65vh] lg:min-h-[75vh]">
+          <div className="w-full lg:w-[55%] py-8 md:py-12 lg:py-16">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <span className="inline-block px-4 py-1.5 bg-white/15 backdrop-blur-sm text-white text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4 rounded-sm border border-white/10">
+                <span className={`inline-block px-4 py-1.5 ${slide.accentColor} text-white text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-4 rounded-sm`}>
                   New Collection
                 </span>
                 <p className="text-xs sm:text-sm tracking-[0.15em] uppercase text-white/60 mb-3 font-light">
                   {slide.subtitle}
                 </p>
                 {currentSlide === 0 ? (
-                  <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white">
+                  <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white drop-shadow-lg">
                     {slide.title}
                   </h1>
                 ) : (
-                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white">
+                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight text-white drop-shadow-lg">
                     {slide.title}
                   </h2>
                 )}
@@ -159,30 +172,11 @@ const HeroSection = () => {
                   <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 font-medium tracking-wider px-8 py-6 text-xs sm:text-sm rounded-sm shadow-lg">
                     <Link to={slide.link}>{slide.cta}</Link>
                   </Button>
-                  <Link to="/collections" className="text-xs sm:text-sm text-white/70 hover:text-white transition-colors underline underline-offset-4 tracking-wide">
+                  <Link to="/collections" className="text-xs sm:text-sm text-white/80 hover:text-white transition-colors underline underline-offset-4 tracking-wide drop-shadow">
                     View All Collections
                   </Link>
                 </div>
               </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Image Side — product image displayed fully without any cropping */}
-          <div className="w-full md:w-[50%] flex items-center justify-center py-6 md:py-10 lg:py-16">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={currentSlide}
-                src={slide.image}
-                alt={slide.title}
-                className="max-h-[55vh] md:max-h-[60vh] lg:max-h-[70vh] w-auto max-w-full object-contain drop-shadow-2xl rounded-sm"
-                initial={{ opacity: 0, scale: 0.92, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                fetchPriority="high"
-                decoding="async"
-                loading="eager"
-              />
             </AnimatePresence>
           </div>
         </div>
@@ -192,7 +186,7 @@ const HeroSection = () => {
       <div className="absolute top-1/2 -translate-y-1/2 left-3 lg:left-6 z-20">
         <button
           onClick={prevSlide}
-          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/25 hover:border-white/60 bg-black/25 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
+          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-4 h-4 text-white group-hover:-translate-x-0.5 transition-transform" />
@@ -201,7 +195,7 @@ const HeroSection = () => {
       <div className="absolute top-1/2 -translate-y-1/2 right-3 lg:right-6 z-20">
         <button
           onClick={nextSlide}
-          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/25 hover:border-white/60 bg-black/25 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
+          className="w-9 h-9 lg:w-11 lg:h-11 rounded-full border border-white/30 hover:border-white/60 bg-black/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group"
           aria-label="Next slide"
         >
           <ChevronRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
