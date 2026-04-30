@@ -47,7 +47,7 @@ const NewArrivals = () => {
         {/* Hero Banner */}
         <div className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
           <img
-            src="/images/banners/new-arrivals-banner.jpg"
+            src="/images/banners/saree-banner.jpg"
             alt="New Arrivals Collection"
             className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"

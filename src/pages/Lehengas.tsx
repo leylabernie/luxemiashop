@@ -274,7 +274,7 @@ const Lehengas = () => {
         {/* Hero Banner */}
         <section className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
           <img
-            src="/images/banners/festival-banner.jpg"
+            src="/images/banners/lehenga-banner.jpg"
             alt="Lehenga Collection"
             className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"
