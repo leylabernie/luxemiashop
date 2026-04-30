@@ -199,6 +199,71 @@ const PRERENDERED_ROUTES = new Set([
   '/product/teal-georgette-palazzo-suit',
 ]);
 
+// Additional Shopify product handles that are NOT in PRERENDERED_ROUTES
+// but are valid products from Shopify Storefront API.
+// For bot requests to /product/*, if the handle isn't in PRERENDERED_ROUTES
+// or this set, return 404 to prevent soft-404 penalties.
+const SHOPIFY_PRODUCT_HANDLES = new Set([
+  // Salwar / Plazzo suits
+  'crepe-silk-multi-color-party-wear-embroidery-work-readymade-plazzo-suit',
+  'crepe-silk-multi-color-party-wear-embroidery-work-readymade-plazzo-suit-2',
+  'crepe-silk-multi-color-party-wear-embroidery-work-readymade-plazzo-suit-3',
+  'chinon-silk-wine-party-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-silk-lime-yellow-party-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-silk-rani-pink-party-wear-embroidery-work-readymade-plazzo-suit',
+  'shimmer-silk-light-green-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'shimmer-silk-pink-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'shimmer-silk-turquoise-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-silk-orange-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-silk-navy-blue-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'fendy-silk-maroon-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'fendy-silk-black-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'fendy-silk-navy-blue-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-navy-blue-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-hot-pink-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-green-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'chinon-violet-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'georgette-pink-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'georgette-wine-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'georgette-green-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'georgette-purple-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  'fendy-silk-teal-blue-festival-wear-embroidery-work-readymade-plazzo-suit',
+  'fendy-silk-rani-pink-festival-wear-embroidery-work-readymade-plazzo-suit',
+  // Patiala suits
+  'silk-black-occasional-wear-mirror-work-readymade-patiyala-suit',
+  'silk-light-pink-occasional-wear-mirror-work-readymade-patiyala-suit',
+  'silk-green-occasional-wear-mirror-work-readymade-patiyala-suit',
+  'silk-maroon-occasional-wear-mirror-work-readymade-patiyala-suit',
+  'silk-rani-pink-occasional-wear-mirror-work-readymade-patiyala-suit',
+  'silk-purple-occasional-wear-mirror-work-readymade-patiyala-suit',
+  // Cotton salwar suits
+  'teal-green-cotton-party-wear-salwar-suit',
+  'dusty-pink-cotton-eid-wear-salwar-suit',
+  'cream-cotton-eid-wear-salwar-suit',
+  'olive-green-cotton-party-wear-salwar-suit',
+  // Wedding suits / Sharara suits / Pakistani Readymade suits (from Shopify)
+  'georgette-purple-wedding-wear-embroidery-work-readywar-plazzo-suit',
+  'georgette-black-wedding-wear-embroidery-work-readywar-plazzo-suit',
+  'georgette-cherry-wedding-wear-beads-work-readymade-plazzo-suit',
+  'chinon-silk-orange-party-wear-embroidery-work-readymade-plazzo-suit',
+  'hot-pink-chinon-party-wear-embroidery-work-readymade-plazzo-suit',
+  // Additional Shopify sherwanis
+  'art-silk-off-white-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-pista-green-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-light-pink-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-cream-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-beige-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-onion-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-firozi-green-groom-wear-thread-work-readymade-sherwani',
+  'art-silk-light-pink-wedding-wear-embroidery-work-readymade-sherwani',
+  'art-silk-beige-wedding-wear-embroidery-work-readymade-sherwani',
+  'art-silk-pista-green-wedding-wear-embroidery-work-readymade-sherwani',
+  'art-silk-teal-blue-wedding-wear-embroidery-work-readymade-sherwani',
+  'art-silk-black-wedding-wear-embroidery-work-readymade-sherwani',
+  'warm-beige-cotton-festival-salwar-suit',
+  'olive-green-cotton-festive-salwar-suit',
+]);
+
 // Routes that redirect elsewhere (should not be treated as 404)
 const REDIRECT_ROUTES = new Set([
   '/our-story',
@@ -278,11 +343,15 @@ export default async function middleware(request: Request) {
       return rewrite(new URL(prerenderPath, request.url));
     }
 
-    // Product URLs that aren't prerendered (e.g. new Shopify products)
-    // Let them through to the SPA — Google will see the client-rendered content
-    // The ProductDetail component adds noIndex for missing products
+    // Product URLs — validate handle against known products
     if (pathname.startsWith('/product/')) {
-      return next();
+      const handle = pathname.slice('/product/'.length);
+      // If handle is in SHOPIFY_PRODUCT_HANDLES, let through to SPA
+      if (SHOPIFY_PRODUCT_HANDLES.has(handle)) {
+        return next();
+      }
+      // Unknown product handle → return 404 to prevent soft-404 penalty
+      return return404(request);
     }
 
     // Collection/category pages that aren't prerendered — let through to SPA

@@ -229,6 +229,17 @@ function xmlEscape(str) {
     .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
+// Fix common typos in Shopify product titles
+// These come from the upstream supplier data and need correction for
+// Google Merchant Center compliance and professional appearance
+function fixTitleTypos(title) {
+  return title
+    .replace(/\bPlazzo\b/g, 'Palazzo')
+    .replace(/\bPatiyala\b/g, 'Patiala')
+    .replace(/\bReadywar\b/g, 'Readymade')
+    .replace(/\bReadywar\b/g, 'Readymade'); // catch any remaining
+}
+
 // Convert Shopify price to USD
 // Shopify products are already priced in USD, so no conversion needed.
 // The old formula (INR * 0.012 * 2.5) was incorrect — Shopify store prices are USD.
@@ -244,12 +255,14 @@ function convertToUSD(amount, currencyCode) {
 
 function generateXMLItem(product) {
   const p = product.node;
+  // Fix typos in the title from upstream supplier data
+  const fixedTitle = fixTitleTypos(p.title);
   const { isMenswear, color: extractedColor, fabric: extractedFabric, work: extractedWork, suitStyle } = 
-    extractProductDetails(p.title, p.productType, p.tags);
+    extractProductDetails(fixedTitle, p.productType, p.tags);
   const { googleCategory, productTypePath } = getGoogleCategory(p.productType, isMenswear);
   
-  // Enrich the description
-  const enrichedDesc = enrichDescription(p.title, p.description, p.productType, p.tags, p.variants?.edges);
+  // Enrich the description (using fixed title)
+  const enrichedDesc = enrichDescription(fixedTitle, p.description, p.productType, p.tags, p.variants?.edges);
   
   // Pricing - Shopify products are already in USD
   const currencyCode = p.priceRange?.minVariantPrice?.currencyCode || 'USD';
@@ -281,7 +294,7 @@ function generateXMLItem(product) {
 
   return `  <item>
     <g:id>${xmlEscape(p.id.split('/').pop())}</g:id>
-    <g:title>${xmlEscape(p.title)}</g:title>
+    <g:title>${xmlEscape(fixedTitle)}</g:title>
     <g:description>${xmlEscape(enrichedDesc)}</g:description>
     <g:link>https://luxemia.shop/product/${xmlEscape(p.handle)}</g:link>
     <g:image_link>${xmlEscape(image)}</g:image_link>

@@ -628,6 +628,68 @@ function generateHtml(template, route) {
     `<meta name="twitter:description" content="${escapeHtml(route.description)}" />`
   );
 
+  // Inject structured data (JSON-LD) for product pages
+  if (route.path.startsWith('/product/')) {
+    const canonical = SITE_URL + route.path;
+    const handle = route.path.slice('/product/'.length);
+
+    // Product schema
+    const productSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: route.h1,
+      description: route.description,
+      url: canonical,
+      brand: { '@type': 'Brand', name: 'LuxeMia' },
+      category: 'Clothing > Traditional & Ethnic Wear',
+      itemCondition: 'https://schema.org/NewCondition',
+      offers: {
+        '@type': 'Offer',
+        url: canonical,
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@type': 'Organization', name: 'LuxeMia' },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'USD' },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: ['IN', 'US', 'GB', 'AE', 'CA', 'AU'] },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 3, unitCode: 'DAY' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 14, unitCode: 'DAY' },
+          },
+        },
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'IN',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 7,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn',
+        },
+      },
+    };
+
+    // Breadcrumb schema for product pages
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Products', item: SITE_URL + '/products' },
+        { '@type': 'ListItem', position: 3, name: route.h1, item: canonical },
+      ],
+    };
+
+    const structuredDataScripts = `
+    <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
+    <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`;
+
+    // Inject before </head>
+    html = html.replace('</head>', `${structuredDataScripts}\n</head>`);
+  }
+
   // Inject SEO content into the body (visible to bots, hidden with CSS for SPA users)
   // The React app mounts over this once JS loads
   const seoContent = `
