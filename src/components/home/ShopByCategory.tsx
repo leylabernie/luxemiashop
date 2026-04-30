@@ -19,25 +19,25 @@ const ShopByCategory = () => {
   const addToCart = useCartStore((state) => state.addItem);
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
 
-  // Build a balanced mix of products prioritizing women's categories
+  // Build a balanced mix of products from women's categories only
   const getBalancedMix = (source: ShopifyProduct[], count: number): ShopifyProduct[] => {
     const suits = source.filter(p => p.node.productType === 'Salwar Kameez');
     const lehengas = source.filter(p => p.node.productType === 'Lehengas');
     const sarees = source.filter(p => p.node.productType === 'Sarees');
-    const menswear = source.filter(p => p.node.productType === 'Menswear');
+    const indowestern = source.filter(p => p.node.productType === 'Indo Western');
 
-    // Target mix: 3 suits, 2 lehengas, 2 sarees, 1 menswear (total 8)
+    // Target mix: 3 suits, 2 lehengas, 2 sarees, 1 indo western (total 8)
     const picks: ShopifyProduct[] = [
       ...suits.slice(0, 3),
       ...lehengas.slice(0, 2),
       ...sarees.slice(0, 2),
-      ...menswear.slice(0, 1),
+      ...indowestern.slice(0, 1),
     ];
 
     // If we don't have enough from a category, fill from others
     if (picks.length < count) {
       const usedIds = new Set(picks.map(p => p.node.id));
-      const remaining = source.filter(p => !usedIds.has(p.node.id));
+      const remaining = source.filter(p => !usedIds.has(p.node.id) && p.node.productType !== 'Menswear');
       picks.push(...remaining.slice(0, count - picks.length));
     }
 
@@ -45,25 +45,29 @@ const ShopByCategory = () => {
   };
 
   // Get products based on active tab
+  // IMPORTANT: Only show women's products here — menswear has its own dedicated section
   const getProductsForTab = () => {
     if (!products) return [];
 
+    // Exclude menswear from all tabs to avoid confusion
+    const womensProducts = products.filter(p => p.node.productType !== 'Menswear');
+
     switch (activeTab) {
       case 'new':
-        // Newest products — sort by createdAt (most recent first) and pick 8
-        return [...products]
+        // Newest women's products — sort by createdAt (most recent first) and pick 8
+        return [...womensProducts]
           .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
           .slice(0, 8);
       case 'bestsellers':
-        // Bestsellers — balanced mix across categories, offset from "new" to show different products
-        return getBalancedMix(products, 8);
+        // Bestsellers — balanced mix across women's categories, offset from "new" to show different products
+        return getBalancedMix(womensProducts, 8);
       case 'ready':
         // Ready to Ship — products that are in stock and can ship quickly (sarees & suits)
-        return products
+        return womensProducts
           .filter(p => p.node.productType === 'Sarees' || p.node.productType === 'Salwar Kameez')
           .slice(0, 8);
       default:
-        return getBalancedMix(products, 8);
+        return getBalancedMix(womensProducts, 8);
     }
   };
 
