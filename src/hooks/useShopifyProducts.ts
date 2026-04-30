@@ -50,7 +50,7 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
 };
 
 // Title keywords for products to ALWAYS exclude from the site (not ethnic wear)
-const EXCLUDED_TITLE_KEYWORDS = /\b(rurban|sunglasses?)\b/i;
+const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
 
 // Keywords that identify menswear products — used to exclude from women's pages
 // IMPORTANT: Use word-boundary matching (not includes()) to prevent 'male' matching 'female'
