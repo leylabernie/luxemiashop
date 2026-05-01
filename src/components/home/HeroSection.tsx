@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface HeroSlide {
   id: number;
@@ -147,7 +148,7 @@ const HeroSection = () => {
               {/* RIGHT: Full product image — no cropping */}
               <div className="w-full md:w-[52%] flex items-center justify-center py-6 md:py-8 lg:py-10">
                 <motion.img
-                  src={slide.image}
+                  src={getOptimizedImage(slide.image, 'hero')}
                   alt={slide.title}
                   className="max-h-[55vh] sm:max-h-[60vh] lg:max-h-[70vh] w-auto object-contain rounded-lg drop-shadow-2xl"
                   initial={{ opacity: 0, y: 20 }}

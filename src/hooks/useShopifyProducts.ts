@@ -49,6 +49,30 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
   return cachePromise;
 };
 
+// =============================================================================
+// OLD PRODUCT BATCH HIDING (May 7th 2026)
+// =============================================================================
+// 160 products were created on April 8, 2026 (old batch) and should be hidden
+// from the storefront after May 7th. They remain in Shopify but are invisible.
+// The recent batch of 90 products was created on April 24, 2026 and must be kept.
+//
+// HOW IT WORKS:
+//   - Products with createdAt BEFORE HIDE_PRODUCTS_BEFORE_DATE are filtered out
+//   - Set HIDE_OLD_PRODUCTS = true to activate (flip to true around May 7)
+//   - Set HIDE_OLD_PRODUCTS = false to disable (shows all products again)
+// =============================================================================
+const HIDE_OLD_PRODUCTS = true; // ← Flip to true to hide April 8 batch
+const HIDE_PRODUCTS_BEFORE_DATE = new Date('2026-04-09T00:00:00Z'); // April 9 = cutoff
+// Anything created before April 9 2026 = April 8 batch (hide)
+// Anything created on/after April 9 2026 = April 24+ batch (keep)
+
+function isOldBatchProduct(product: ShopifyProduct): boolean {
+  if (!HIDE_OLD_PRODUCTS) return false;
+  const createdAt = product.node.createdAt;
+  if (!createdAt) return false; // If no date, don't hide
+  return new Date(createdAt) < HIDE_PRODUCTS_BEFORE_DATE;
+}
+
 // Title keywords for products to ALWAYS exclude from the site (not ethnic wear)
 const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
 
@@ -91,8 +115,13 @@ function isMenswear(product: ShopifyProduct): boolean {
 
 // Filter products by category client-side
 const filterByCategory = (products: ShopifyProduct[], category: string): ShopifyProduct[] => {
-  // First, globally exclude products by title (rurban, sunglasses, etc.)
-  const allowed = products.filter(p => !EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? ''));
+  // First, globally exclude old batch products (April 8 batch — hidden after May 7)
+  // Then exclude products by title (turban, sunglasses, etc.)
+  const allowed = products.filter(p => {
+    if (isOldBatchProduct(p)) return false;
+    if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
+    return true;
+  });
 
   if (category === 'all') return allowed;
 
@@ -204,7 +233,13 @@ export const useShopifyProducts = (category?: string) => {
       try {
         // Always fetch all products (cached after first call), then filter client-side
         const allProducts = await getAllProducts();
-        const filtered = category ? filterByCategory(allProducts, category) : allProducts;
+        // Apply global filters (old batch exclusion + excluded titles) even when no category
+        const globallyFiltered = allProducts.filter(p => {
+          if (isOldBatchProduct(p)) return false;
+          if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
+          return true;
+        });
+        const filtered = category ? filterByCategory(allProducts, category) : globallyFiltered;
         setProducts(enrichProducts(filtered));
       } catch (err) {
         console.error('Error fetching Shopify products:', err);

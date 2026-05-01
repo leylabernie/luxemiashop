@@ -26,6 +26,7 @@ import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { filterAndSortProducts } from '@/lib/productFilters';
 import { PaginationWithInput } from '@/components/ui/pagination-with-input';
+import { getOptimizedImage } from '@/lib/imageUtils';
 // Removed OccasionFilter import
 
 const sortOptions = [
@@ -321,7 +322,7 @@ const Suits = () => {
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         <section className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
           <img
-            src="/images/banners/suit-banner.jpg"
+            src={getOptimizedImage("/images/banners/suit-banner.jpg", 'hero')}
             alt="Salwar Kameez Collection"
             className="absolute inset-0 w-full h-full object-cover object-center"
             loading="lazy"
