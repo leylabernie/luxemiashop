@@ -7,13 +7,13 @@ const USA = () => (
       country: 'USA',
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
-      seoTitle: 'Buy Indian Ethnic Wear Online USA | Free Shipping | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $99. 7-12 day delivery.',
+      seoTitle: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
+      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-12 day delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the USA',
-      heroSubtitle: 'Free Shipping Across America',
+      heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-12 business days',
-      shippingCost: 'Free on orders over $99',
-      customsNote: 'Most orders under $800 are duty-free under the US de minimis threshold.',
+      shippingCost: '$14.95/item, free on orders over $300',
+      customsNote: 'US imports from India may be subject to tariffs and duties. As of 2025, an additional 50% tariff applies to many goods from India. Customers are responsible for all customs fees.',
       faqs: [
         {
           question: 'How long does shipping to the USA take?',
@@ -21,15 +21,15 @@ const USA = () => (
         },
         {
           question: 'Is shipping free to the USA?',
-          answer: 'Yes! We offer free standard shipping on all orders over $99 to the contiguous United States. Alaska and Hawaii may have additional shipping charges.',
+          answer: 'We offer a flat shipping rate of $14.95 per item, with free shipping on all orders over $300. No coupon code needed — free shipping is applied automatically at checkout.',
         },
         {
           question: 'Will I have to pay customs duties?',
-          answer: 'Most individual orders under $800 enter the US duty-free under the de minimis threshold. Orders over $800 may be subject to import duties of 0-32% depending on the item classification.',
+          answer: 'Possibly. As of 2025, goods imported from India to the United States may be subject to an additional 50% tariff on top of standard duty rates. These charges are determined by US Customs and are the customer\'s responsibility. We recommend checking with your local customs office for the most current rates.',
         },
         {
           question: 'Can I return items from the USA?',
-          answer: 'Yes, we accept returns within 7 days of delivery. Standard-sized items must be unworn with tags intact. Custom-sized items are final sale. Contact us via WhatsApp or email to initiate a return. We provide prepaid return labels for US customers.',
+          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you offer custom sizing for US customers?',
@@ -37,8 +37,8 @@ const USA = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Free US Shipping', description: 'Free on orders over $99 — 7-12 day delivery' },
-        { icon: Shield, title: 'Duty-Free Under $800', description: 'Most orders enter the US without customs duties' },
+        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
+        { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day express shipping at checkout' },
       ],
     }}

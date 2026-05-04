@@ -33,13 +33,13 @@ const NRIGeneral = () => (
         },
         {
           question: 'What if my item arrives damaged?',
-          answer: 'In the rare case of shipping damage, please record an unboxing video and contact us within 48 hours. We will resolve the issue promptly.',
+          answer: 'In the rare case of shipping damage, please record an unboxing video and contact us within 7 days of delivery. We will resolve the issue promptly.',
         },
       ],
       benefits: [
         { icon: Truck, title: 'Worldwide Delivery', description: 'Free shipping on orders over $300 — delivered to 50+ countries' },
         { icon: Shield, title: 'Secure Packaging', description: 'Every piece carefully wrapped to arrive in perfect condition' },
-        { icon: Clock, title: 'Fast Dispatch', description: 'Orders dispatched within 24-48 hours via DHL Express' },
+        { icon: Clock, title: 'Fast Dispatch', description: 'Orders dispatched within 1-3 business days via DHL Express' },
       ],
     }}
   />

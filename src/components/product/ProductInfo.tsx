@@ -505,13 +505,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             )}
           </p>
         )}
-        <div className="flex items-center gap-3">
-          <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
-            <Tag className="h-3 w-3" />
-            Save 30% with code LUXE2026
-          </span>
-        </div>
-        <span className="text-sm text-muted-foreground">Inclusive of all taxes</span>
+        <span className="text-sm text-muted-foreground">Import duties and local taxes may apply</span>
       </div>
 
       {/* Estimated Delivery — dynamic based on stitching selection */}
@@ -861,17 +855,17 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             <Award className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">100% Authentic</p>
-            <p className="text-xs text-muted-foreground">Quality assured</p>
+            <p className="text-sm font-medium">Quality Inspected</p>
+            <p className="text-xs text-muted-foreground">Every item checked before shipping</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <RefreshCcw className="h-5 w-5 text-primary" />
+            <Truck className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Quality Inspected</p>
-            <p className="text-xs text-muted-foreground">Every item checked before shipping</p>
+            <p className="text-sm font-medium">Ships from India</p>
+            <p className="text-xs text-muted-foreground">Insured international delivery</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
@@ -880,16 +874,16 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Secure Checkout</p>
-            <p className="text-xs text-muted-foreground">SSL encrypted</p>
+            <p className="text-xs text-muted-foreground">Shopify PCI-DSS encrypted</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <Truck className="h-5 w-5 text-primary" />
+            <RefreshCcw className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Global Shipping</p>
-            <p className="text-xs text-muted-foreground">Trackable delivery</p>
+            <p className="text-sm font-medium">Damage Protection</p>
+            <p className="text-xs text-muted-foreground">Claims handled within 7 days</p>
           </div>
         </div>
       </div>

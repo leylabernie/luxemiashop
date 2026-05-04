@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: '24-Hour Dispatch',
-    description: 'Quick processing on all orders',
+    title: 'Fast Dispatch',
+    description: 'Orders processed within 1-3 business days',
   },
   {
     icon: RefreshCw,

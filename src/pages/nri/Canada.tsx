@@ -8,12 +8,12 @@ const Canada = () => (
       countryCode: 'CA',
       slug: 'indian-ethnic-wear-canada',
       seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $99. 10-14 day delivery to Canada.',
+      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 10-14 day delivery to Canada.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Canada',
-      heroSubtitle: 'Free Shipping Coast to Coast',
+      heroSubtitle: 'Shipped from India with Care',
       shippingTime: '10-14 business days',
-      shippingCost: 'Free on orders over $99',
-      customsNote: 'Canadian orders may be subject to GST/HST (5-15%) on imported goods.',
+      shippingCost: '$14.95/item, free on orders over $300',
+      customsNote: 'Canadian orders may be subject to GST/HST (5-15%) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery.',
       faqs: [
         {
           question: 'How long does shipping to Canada take?',
@@ -21,15 +21,15 @@ const Canada = () => (
         },
         {
           question: 'Is shipping free to Canada?',
-          answer: 'Yes! We offer free standard shipping on all orders over $99 to anywhere in Canada.',
+          answer: 'We offer a flat shipping rate of $14.95 per item, with free shipping on all orders over $300. No coupon code needed — free shipping is applied automatically at checkout.',
         },
         {
           question: 'Will I have to pay customs duties in Canada?',
-          answer: 'Canadian customs may charge GST/HST (5-15% depending on your province) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery.',
+          answer: 'Canadian customs may charge GST/HST (5-15% depending on your province) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery and are the customer\'s responsibility.',
         },
         {
           question: 'Can I return items from Canada?',
-          answer: 'Yes, we accept returns within 7 days of delivery. Standard-sized items must be unworn with tags intact. Custom-sized items are final sale. Contact us via WhatsApp or email to initiate a return.',
+          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you ship to all Canadian provinces?',
@@ -37,7 +37,7 @@ const Canada = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Free Canadian Shipping', description: 'Free on orders over $99 — 10-14 day delivery' },
+        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '5-7 day express shipping at checkout' },
       ],

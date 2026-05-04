@@ -8,12 +8,12 @@ const UK = () => (
       countryCode: 'GB',
       slug: 'indian-ethnic-wear-uk',
       seoTitle: 'Buy Indian Ethnic Wear Online UK | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in the UK. Shop sarees, bridal lehengas, salwar suits & menswear. Free delivery on orders over $99. 7-12 day shipping to United Kingdom.',
+      seoDescription: 'Buy Indian ethnic wear online in the UK. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-12 day delivery to United Kingdom.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the UK',
-      heroSubtitle: 'Free Delivery Across the United Kingdom',
+      heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-12 business days',
-      shippingCost: 'Free on orders over $99',
-      customsNote: 'UK orders over £135 may be subject to 20% import VAT.',
+      shippingCost: '$14.95/item, free on orders over $300',
+      customsNote: 'UK orders over £135 may be subject to 20% import VAT. These charges are collected by the carrier at delivery.',
       faqs: [
         {
           question: 'How long does delivery to the UK take?',
@@ -21,15 +21,15 @@ const UK = () => (
         },
         {
           question: 'Is delivery free to the UK?',
-          answer: 'Yes! We offer free standard delivery on all orders over $99 to anywhere in the United Kingdom.',
+          answer: 'We offer a flat shipping rate of $14.95 per item, with free shipping on all orders over $300. No coupon code needed — free shipping is applied automatically at checkout.',
         },
         {
           question: 'Will I have to pay import VAT?',
-          answer: 'Orders over £135 in value may be subject to UK import VAT at 20%. This is collected by the carrier at delivery. Orders under £135 are typically VAT-free.',
+          answer: 'Orders over £135 in value may be subject to UK import VAT at 20%. This is collected by the carrier at delivery and is the customer\'s responsibility. Orders under £135 are typically VAT-free.',
         },
         {
           question: 'Can I return items from the UK?',
-          answer: 'Yes, we accept returns within 7 days of delivery. Standard-sized items must be unworn with tags intact. Custom-sized items are final sale. Contact us via WhatsApp or email to arrange a return.',
+          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you ship to Northern Ireland and Scottish Highlands?',
@@ -37,8 +37,8 @@ const UK = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Free UK Delivery', description: 'Free on orders over $99 — 7-12 day delivery' },
-        { icon: Shield, title: 'Secure Packaging', description: 'Quality gift-ready packaging on every order' },
+        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
+        { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day express delivery at checkout' },
       ],
     }}

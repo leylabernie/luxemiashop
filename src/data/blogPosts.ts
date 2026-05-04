@@ -777,13 +777,13 @@ export const blogPosts: BlogPost[] = [
       <p>The <strong>sharara vs palazzo suit difference</strong> is simple: sharara pants flare from the knee, creating a bell shape, while <strong>palazzo suits</strong> have straight, wide legs from waist to hem. Shararas are more dramatic and traditional, while <strong>wide leg palazzo suits</strong> offer a more modern, minimalist look. Both are available in our <a href="/suits">suits collection</a>.</p>
 
       <h3>Budget Guide</h3>
-      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia offers <strong>sharara suits online</strong> starting from just $50, with quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. Our <strong>free shipping Indian clothes USA</strong> policy means no hidden costs.</p>
+      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia offers <strong>sharara suits online</strong> starting from just $50, with quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. We ship worldwide with flat rate shipping.</p>
 
       <h2>Styling Your Sharara Suit</h2>
       <p>Complete your look with the right accessories. Heavy <a href="/collections?category=jewelry">kundan jewelry sets</a> pair beautifully with formal shararas, while delicate pieces suit casual styles. Match your dupatta draping style to the occasion — a front drape for formal events, a one-shoulder style for modern appeal. Add juttis or embellished heels to finish the look.</p>
 
       <h2>Shop Sharara Suits at LuxeMia</h2>
-      <p>Ready to find your perfect sharara? Browse our complete <a href="/suits">sharara suit collection</a> featuring the <strong>latest sharara collection 2026</strong> with <strong>stitched sharara suits</strong> and <strong>free shipping</strong> across the USA. Every piece is quality-checked and ships within 48 hours. Use code <strong>LUXE2026</strong> for 30% off your first order.</p>
+      <p>Ready to find your perfect sharara? Browse our complete <a href="/suits">sharara suit collection</a> featuring the <strong>latest sharara collection 2026</strong> with <strong>stitched sharara suits</strong>. Free shipping on orders over $300. Every piece is quality-checked before shipping from India.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -863,7 +863,7 @@ export const blogPosts: BlogPost[] = [
       <p>The dupatta offers endless styling possibilities: classic front drape for formal events, one-shoulder for a modern twist, or wrapped as a hijab for modest styling. Each method transforms the same outfit into a completely different look.</p>
 
       <h2>Shop Pakistani Suits at LuxeMia</h2>
-      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With <strong>free shipping Indian clothes USA</strong>, easy returns, and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless. Use code <strong>LUXE2026</strong> for 30% off your first purchase.</p>
+      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With flat rate shipping worldwide (free on orders over $300) and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -952,7 +952,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Mid-range $300-$600:</strong> Designer-quality fabrics with detailed hand embroidery — great for bridesmaids and engagement</li>
         <li><strong>Premium $600+:</strong> Heavy bridal pieces with couture-level craftsmanship — for the bride</li>
       </ul>
-      <p>At LuxeMia, our <strong>lehenga choli online USA</strong> collection starts at just $80 with <strong>free shipping</strong>. Browse our <a href="/lehengas">complete lehenga collection</a> and use code <strong>LUXE2026</strong> for 30% off.</p>
+      <p>At LuxeMia, our <strong>lehenga choli online USA</strong> collection starts at just $80, with free shipping on orders over $300. Browse our <a href="/lehengas">complete lehenga collection</a>.</p>
 
       <h2>Complete Your Lehenga Look</h2>
       <p>The right accessories elevate your lehenga from beautiful to breathtaking. Match heavy lehengas with statement <a href="/collections?category=jewelry">kundan necklace sets</a>, maang tikka, and jhumka earrings. For lighter lehengas, choose delicate polki or pearl pieces. Potli bags and embroidered clutches are the perfect finishing touch.</p>
@@ -1024,12 +1024,12 @@ export const blogPosts: BlogPost[] = [
       <p>Skip the overwhelming in-store experience. <strong>Buy Indian wedding dresses online</strong> from trusted <strong>Indian boutiques online USA</strong> like LuxeMia. We offer:</p>
       <ul>
         <li>Curated collections for every ceremony and budget</li>
-        <li><strong>Free shipping Indian clothes USA</strong> on all orders</li>
+        <li>Free shipping on orders over $300 worldwide</li>
         <li>Detailed size guides for <strong>Indian ethnic wear</strong></li>
-        <li><strong>Readymade Indian clothes</strong> that ship within 48 hours</li>
-        <li>Easy returns and exchanges</li>
+        <li><strong>Readymade Indian clothes</strong> with worldwide tracked delivery</li>
+        <li>Quality inspected before shipping from India</li>
       </ul>
-      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia</a>. Use code <strong>LUXE2026</strong> for 30% off your first order.</p>
+      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia</a>. Free shipping on orders over $300.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -1147,7 +1147,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Shop by Fabric at LuxeMia</h2>
-      <p>At LuxeMia, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With <strong>free shipping across the USA</strong> and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier. Use code <strong>LUXE2026</strong> for 30% off your first order.</p>
+      <p>At LuxeMia, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With flat rate shipping worldwide (free on orders over $300) and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -1315,11 +1315,11 @@ export const blogPosts: BlogPost[] = [
       <h2>Shipping, Returns, and Customer Support for International Buyers</h2>
       <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia addresses every concern:</p>
 
-      <h3>Free Worldwide Shipping</h3>
-      <p>We offer <strong>free shipping to the USA, UK, Canada</strong>, and many other countries. Standard delivery typically takes 7-12 business days, with express options available at checkout for those urgent last-minute occasions. Every package is carefully packed to ensure your saree arrives in perfect condition.</p>
+      <h3>Worldwide Shipping</h3>
+      <p>We ship worldwide at a flat rate of $14.95 per item, with <strong>free shipping on orders over $300</strong> to the USA, UK, Canada, and many other countries. Standard delivery typically takes 7-12 business days, with express options available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
 
-      <h3>Hassle-Free Returns</h3>
-      <p>We understand that sometimes a saree may not match expectations when you see it in person. That is why we offer a straightforward return policy for most items. Visit our <a href="/returns">Returns Policy</a> page for full details on the process.</p>
+      <h3>Our Return Policy</h3>
+      <p>All sales are final due to the international nature of our shipments. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. We recommend reviewing all product details and using our <a href="/size-guide">Size Guide</a> before ordering. Visit our <a href="/returns">Returns Policy</a> page for full details.</p>
 
       <h3>Personalized Styling Support</h3>
       <p>Not sure which saree to choose for a specific occasion? Our dedicated styling team is available via WhatsApp for personalized recommendations. Whether you need help selecting the right fabric for a summer wedding in Texas or choosing between a Banarasi and Kanchipuram for a London reception, our <a href="/style-consultation">style consultation service</a> has you covered.</p>

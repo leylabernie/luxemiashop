@@ -59,7 +59,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="Luxemia was born from a genuine frustration: finding quality Indian ethnic wear online meant navigating confusing sizing, questionable quality, and impersonal service. We're building something different—a curated collection with honest descriptions, real sizing guidance, and customer service that actually responds."
+        content="Luxemia was born from a genuine frustration: finding quality Indian ethnic wear online meant navigating confusing sizing, questionable quality, and impersonal service. We're building something different — a curated collection sourced directly from India's established textile hubs, with honest descriptions, real sizing guidance, and customer service that actually responds. All our products are shipped from India via DHL Express or FedEx International, ensuring reliable tracked delivery to your door."
         imagePosition="right"
         bgColor="bg-card"
       />
@@ -68,7 +68,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Our Approach"
         subtitle="Quality Over Quantity"
-        content="We're not claiming decades of heritage—we're a new team learning and growing every day. What we can promise is careful curation, quality checks on every piece, and a commitment to partnering with skilled craftspeople. We're transparent about our journey and welcome your feedback as we build this together."
+        content="We're not claiming decades of heritage — we're a new team learning and growing every day. What we can promise is careful curation, quality checks on every piece before it ships from our facility in India, and a commitment to partnering with skilled craftspeople. We're transparent about our journey: our products are sourced from and shipped from India, which allows us to offer authentic ethnic wear at fair prices. We welcome your feedback as we build this together."
         imagePosition="left"
         bgColor="bg-background"
       />
@@ -172,6 +172,59 @@ const BrandStory = () => {
             — The Luxemia Team
           </cite>
         </motion.div>
+      </section>
+
+      {/* Business Transparency Section */}
+      <section className="py-20 px-4 bg-card">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
+              Who We Are
+            </p>
+            <h2 className="text-3xl md:text-4xl font-serif mb-6">Our Business</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              We believe in full transparency about how we operate. Here's what you should know about LuxeMia.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="p-6 bg-background border border-border/50 rounded-lg">
+              <h3 className="font-serif text-lg mb-3">Business Model</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                LuxeMia is an online-only retailer of Indian ethnic wear. We source our products directly from manufacturers and textile hubs in India, which allows us to offer authentic craftsmanship at fair prices. All orders are shipped from India via DHL Express or FedEx International with full tracking and insurance.
+              </p>
+            </div>
+            <div className="p-6 bg-background border border-border/50 rounded-lg">
+              <h3 className="font-serif text-lg mb-3">Shipping & Delivery</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                We charge a flat rate of $14.95 per item for international shipping, with free shipping on orders over $300. Standard delivery to the US, UK, and Canada takes 7-14 business days. Express options are available at checkout. Import duties and local taxes are the customer's responsibility.
+              </p>
+            </div>
+            <div className="p-6 bg-background border border-border/50 rounded-lg">
+              <h3 className="font-serif text-lg mb-3">Return Policy</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Due to the international nature of our shipments, all sales are final. We do not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery.
+              </p>
+            </div>
+            <div className="p-6 bg-background border border-border/50 rounded-lg">
+              <h3 className="font-serif text-lg mb-3">Contact Us</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                LuxeMia Fashion Inc.<br />
+                2208 Michener St, Philadelphia, PA 19115<br />
+                Email: hello@luxemia.com<br />
+                Phone: +1-215-341-9990<br />
+                WhatsApp: Available on our website<br />
+                Hours: Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <Footer />

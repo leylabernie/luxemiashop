@@ -320,7 +320,7 @@ function generateXML() {
     <g:gender>${gender}</g:gender>
     <g:age_group>adult</g:age_group>
     <g:color>${escapeXml(p.color)}</g:color>
-    <g:material>${escapeXml(p.fabric)}</g:material>
+    <g:material>${escapeXml(p.fabric === 'Art Silk' ? 'Art Silk (Polyester)' : p.fabric)}</g:material>
     <g:pattern>${escapeXml(p.work)}</g:pattern>
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>

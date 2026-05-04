@@ -182,5 +182,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Google Customer Reviews badge (shows seller ratings) -->
+    <script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
+    <script>
+      window.renderBadge = function() {
+        var ratingBadgeContainer = document.createElement("div");
+        document.body.appendChild(ratingBadgeContainer);
+        window.gapi.load('ratingbadge', function() {
+          window.gapi.ratingbadge.render(ratingBadgeContainer, {
+            "merchant_id": 8086107,
+            "position": "BOTTOM_LEFT"
+          });
+        });
+      };
+    </script>
   </body>
 </html>
