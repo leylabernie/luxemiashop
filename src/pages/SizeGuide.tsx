@@ -256,7 +256,7 @@ const SizeGuide = () => {
               </p>
               <p className="text-muted-foreground text-sm">
                 Email: <span className="text-primary">customfitting@luxemia.com</span> | 
-                Phone: <span className="text-primary">+1 (213) 555-1234</span>
+                Phone: <span className="text-primary">+1-215-341-9990</span>
               </p>
             </div>
           </div>

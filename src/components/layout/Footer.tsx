@@ -189,6 +189,12 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
                   Sun: 11am - 5pm EST
                 </span>
               </li>
+              <li className="flex items-start gap-3">
+                <svg className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span className="text-sm text-foreground/60 font-light leading-relaxed">
+                  LuxeMia Fashion Inc.<br />Philadelphia, PA 19103<br />United States
+                </span>
+              </li>
             </ul>
           </div>
         </div>

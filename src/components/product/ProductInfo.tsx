@@ -870,8 +870,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             <RefreshCcw className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Easy Returns</p>
-            <p className="text-xs text-muted-foreground">7-day return policy</p>
+            <p className="text-sm font-medium">Quality Inspected</p>
+            <p className="text-xs text-muted-foreground">Every item checked before shipping</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">

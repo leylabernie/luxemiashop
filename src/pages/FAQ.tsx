@@ -62,7 +62,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer free shipping?',
-          answer: 'Yes! We offer free standard shipping on orders over $500 for US customers. International free shipping thresholds vary by country—check our shipping page for details.',
+          answer: 'Yes! We offer free standard shipping on orders over $300 worldwide. No coupon code needed — free shipping is applied automatically at checkout when your order exceeds $300.',
         },
       ],
     },
@@ -102,11 +102,11 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of many products, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during opening the package.',
+          answer: 'All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of many products, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which should be documented with photos or an unboxing video recorded before and during opening the package. Claims must be filed within 7 days of delivery.',
         },
         {
           question: 'Why do I need an unboxing video?',
-          answer: 'The unboxing video is the only way we can process a damage or missing-item claim. Without video evidence of the package condition on arrival and the moment of opening, we have no way to distinguish transit damage from post-delivery damage. We strongly recommend recording the unboxing of every order.',
+          answer: 'An unboxing video is the strongest evidence for a damage or missing-item claim. Without video evidence of the package condition on arrival and the moment of opening, it can be difficult to distinguish transit damage from post-delivery damage. While we also accept detailed photo evidence, we strongly recommend recording the unboxing of every order as it significantly speeds up the claims process.',
         },
         {
           question: 'What items cannot be returned?',
@@ -114,7 +114,7 @@ const FAQ = () => {
         },
         {
           question: 'What qualifies as shipping damage?',
-          answer: 'Valid damage claims include torn or cut fabric caused by transit, a visibly crushed or destroyed package, water-damaged items from transit, or a completely wrong item shipped. Colour variations, sizing issues, minor embroidery variations, and change of mind do not qualify. Claims must be reported within 48 hours of delivery with a valid unboxing video.',
+          answer: 'Valid damage claims include torn or cut fabric caused by transit, a visibly crushed or destroyed package, water-damaged items from transit, or a completely wrong item shipped. Colour variations, sizing issues, minor embroidery variations, and change of mind do not qualify. Claims must be reported within 7 days of delivery with supporting evidence (photos or unboxing video).',
         },
         {
           question: 'Can I exchange for a different size or color?',
@@ -170,7 +170,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you have a loyalty program?',
-          answer: 'Yes! Join LuxeMia Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy member-only offers. Sign up is free!',
+          answer: 'We do not currently have a loyalty program, but sign up for our newsletter to receive exclusive offers, early access to new collections, and special discounts delivered to your inbox.',
         },
         {
           question: 'Can I save items to buy later?',

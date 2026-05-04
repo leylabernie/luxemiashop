@@ -144,11 +144,12 @@ const SEOHead = ({
           },
           hasMerchantReturnPolicy: {
             '@type': 'MerchantReturnPolicy',
-            applicableCountry: 'IN',
-            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-            merchantReturnDays: 0,
+            applicableCountry: 'US',
+            returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+            merchantReturnDays: 7,
             returnMethod: 'https://schema.org/ReturnByMail',
             returnFees: 'https://schema.org/FreeReturn',
+            itemDefectReturnFees: 'https://schema.org/FreeReturn',
           },
         },
       }

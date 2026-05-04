@@ -14,8 +14,8 @@ const reasons = [
   },
   {
     icon: RefreshCcw,
-    title: 'Easy Returns',
-    description: '7-day return policy on eligible items. We want you to be happy with your purchase.',
+    title: 'Quality Guarantee',
+    description: 'Every item inspected before shipping. Damage claims supported with evidence.',
   },
   {
     icon: Headphones,

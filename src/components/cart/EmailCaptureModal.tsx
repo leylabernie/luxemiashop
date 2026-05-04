@@ -209,9 +209,9 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
               <button
                 type="button"
                 onClick={onSkip || onClose}
-                className="w-full text-sm text-foreground/60 hover:text-foreground font-medium underline underline-offset-4 transition-colors"
+                className="w-full text-sm text-foreground/70 hover:text-foreground font-medium py-2 transition-colors"
               >
-                Skip, go to checkout
+                Skip, continue to checkout as guest
               </button>
             </form>
           </motion.div>

@@ -11,7 +11,7 @@ const Returns = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Returns, Refunds & Cancellation Policy — LuxeMia"
-        description="LuxeMia return, refund, and cancellation policy. All sales final. Damage claims require mandatory unboxing video. Cancellations accepted within 24 hours only."
+        description="LuxeMia return, refund, and cancellation policy. All sales final. Damage claims require supporting evidence (photos or video) within 7 days of delivery. Cancellations accepted within 24 hours only."
         canonical="https://luxemia.shop/returns"
       />
       <Header />
@@ -72,8 +72,8 @@ const Returns = () => {
                 },
                 {
                   icon: Video,
-                  title: 'Damage Claims Require Video',
-                  desc: 'Any damage claim MUST be supported by an unboxing video recorded before you open the package.',
+                  title: 'Damage Claims Require Evidence',
+                  desc: 'Damage claims must be supported by photos or video showing the condition of the package and item upon arrival. Unboxing video is strongly recommended.',
                   color: 'text-amber-600',
                   bg: 'border-amber-500/30',
                 },
@@ -143,12 +143,12 @@ const Returns = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
               <h2 className="text-2xl font-serif mb-6 flex items-center gap-3">
                 <Video className="h-6 w-6 text-amber-600" />
-                Mandatory Unboxing Video Requirement
+                Unboxing Video & Evidence for Damage Claims
               </h2>
               <div className="bg-card border border-amber-500/30 rounded-lg p-6 space-y-5">
                 <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-md">
-                  <p className="text-sm font-bold text-foreground mb-2">⚠ We strongly recommend recording an unboxing video for EVERY order.</p>
-                  <p className="text-sm text-muted-foreground">No unboxing video = no damage claim. Without video evidence of the package condition on arrival and the item condition when first opened, we are unable to process any complaint related to shipping damage or missing items.</p>
+                  <p className="text-sm font-bold text-foreground mb-2">We strongly recommend recording an unboxing video for EVERY order.</p>
+                  <p className="text-sm text-muted-foreground">An unboxing video is the strongest form of evidence for a damage claim. While we accept photo evidence as well, a continuous unboxing video provides the most compelling proof of transit damage and significantly speeds up the claims process. Claims supported by unboxing video are processed faster and have a higher approval rate.</p>
                 </div>
 
                 <div>
@@ -195,7 +195,7 @@ const Returns = () => {
                 </div>
 
                 <div className="border-t border-border/50 pt-4 text-sm text-muted-foreground">
-                  <strong className="text-foreground">Reporting window:</strong> Valid damage claims with unboxing video must be reported within <strong className="text-foreground">48 hours of delivery</strong>. Claims submitted after 48 hours will not be accepted.
+                  <strong className="text-foreground">Reporting window:</strong> Valid damage claims with supporting evidence must be reported within <strong className="text-foreground">7 days of delivery</strong>. Claims submitted after 7 days will not be accepted.
                 </div>
               </div>
             </motion.div>
@@ -288,9 +288,9 @@ const Returns = () => {
                 <AccordionItem value="q2">
                   <AccordionTrigger>My item arrived damaged — what do I do?</AccordionTrigger>
                   <AccordionContent>
-                    Email us at hello@luxemia.com within <strong>48 hours of delivery</strong> with: (1) your order number,
-                    (2) your unboxing video showing the sealed package and the damage visible when opened, and (3) photos of
-                    the damage. Claims without a valid unboxing video cannot be processed. Our team will review and respond
+                    Email us at hello@luxemia.com within <strong>7 days of delivery</strong> with: (1) your order number,
+                    (2) your unboxing video or clear photos showing the sealed package and the damage visible when opened, and (3) photos of
+                    the damage. Our team will review claims with supporting evidence (unboxing video or clear photos) and respond
                     within 2–3 business days.
                   </AccordionContent>
                 </AccordionItem>

@@ -61,10 +61,10 @@ const Index = () => {
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
     "telephone": "+1-215-341-9990",
-    "email": "hello@luxemia.shop",
+    "email": "hello@luxemia.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "1234 Fashion Avenue",
+      "streetAddress": "",
       "addressLocality": "Philadelphia",
       "addressRegion": "PA",
       "postalCode": "19103",

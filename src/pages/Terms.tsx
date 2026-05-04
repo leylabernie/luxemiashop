@@ -93,7 +93,7 @@ const Terms = () => {
                 <section id="acceptance">
                   <h2 className="text-xl font-serif text-foreground mb-4">1. Acceptance of Terms</h2>
                   <p className="mb-4">
-                    By accessing, browsing, or using LuxeMia's website (www.luxemia.com), mobile applications, 
+                    By accessing, browsing, or using LuxeMia's website (luxemia.shop), mobile applications, 
                     or any of our services, you acknowledge that you have read, understood, and agree to be 
                     bound by these Terms of Service ("Terms") and our Privacy Policy.
                   </p>
@@ -352,7 +352,7 @@ const Terms = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">15.2 Arbitration</h3>
-                      <p>Any disputes that cannot be resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in Los Angeles County, California.</p>
+                      <p>Any disputes that cannot be resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in Philadelphia, Pennsylvania.</p>
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">15.3 Class Action Waiver</h3>
@@ -364,9 +364,9 @@ const Terms = () => {
                 <section id="governing">
                   <h2 className="text-xl font-serif text-foreground mb-4">16. Governing Law</h2>
                   <p>
-                    These Terms shall be governed by and construed in accordance with the laws of the State of California, 
+                    These Terms shall be governed by and construed in accordance with the laws of the Commonwealth of Pennsylvania, 
                     United States, without regard to its conflict of law provisions. Any legal action or proceeding 
-                    shall be brought exclusively in the state or federal courts located in Los Angeles County, California, 
+                    shall be brought exclusively in the state or federal courts located in Philadelphia, Pennsylvania, 
                     and you hereby consent to the personal jurisdiction of such courts.
                   </p>
                 </section>
@@ -387,13 +387,13 @@ const Terms = () => {
                   <div className="space-y-2">
                     <p><strong>LuxeMia Fashion Inc.</strong></p>
                     <p>Legal Department</p>
-                    <p>123 Fashion District, Suite 500</p>
-                    <p>Los Angeles, CA 90001, USA</p>
+                    <p>Philadelphia, PA 19103</p>
+                    <p>United States</p>
                     <p className="mt-4">
                       Email: <a href="mailto:legal@luxemia.com" className="text-primary hover:underline">legal@luxemia.com</a>
                     </p>
                     <p>
-                      Phone: <a href="tel:+12135551234" className="text-primary hover:underline">+1 (213) 555-1234</a>
+                      Phone: <a href="tel:+1-215-341-9990" className="text-primary hover:underline">+1-215-341-9990</a>
                     </p>
                   </div>
                 </section>

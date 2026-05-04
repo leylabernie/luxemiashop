@@ -571,7 +571,7 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <p className="text-muted-foreground">
               Questions about shipping? Contact us at{" "}
-              <span className="text-primary font-medium">hello@luxemia.shop</span>
+              <span className="text-primary font-medium">hello@luxemia.com</span>
               {" "}or WhatsApp <span className="text-primary font-medium">+1-215-341-9990</span>
             </p>
           </div>

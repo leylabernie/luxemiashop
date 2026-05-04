@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Clock, Send } from 'lucide-react';
+import { Mail, Phone, Clock, Send, MapPin } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,17 +21,45 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
+      toast.error('Please fill in all fields.');
+      return;
+    }
+    
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast.success('Message sent!', {
-      description: "We'll get back to you within 24-48 hours.",
-    });
-    
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    setIsSubmitting(false);
+    try {
+      // Send contact form via Supabase edge function
+      const { error } = await supabase.functions.invoke('submit-email', {
+        body: {
+          email: formData.email.trim(),
+          type: 'contact',
+          name: formData.name.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        },
+      });
+      
+      if (error) throw error;
+      
+      toast.success('Message sent!', {
+        description: "We'll get back to you within 24-48 hours.",
+      });
+      
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('Contact form error:', err);
+      // Fallback: open mailto link so the customer can still reach us
+      const mailtoSubject = encodeURIComponent(formData.subject);
+      const mailtoBody = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
+      window.open(`mailto:hello@luxemia.com?subject=${mailtoSubject}&body=${mailtoBody}`, '_blank');
+      toast.success('Opening your email client', {
+        description: 'Please send the email to complete your message.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -113,6 +142,20 @@ const Contact = () => {
                       <p className="text-muted-foreground">
                         Monday - Saturday: 10AM - 7PM EST<br />
                         Sunday: 11AM - 5PM EST
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-secondary rounded-sm">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium mb-1">Business Address</h3>
+                      <p className="text-muted-foreground">
+                        LuxeMia Fashion Inc.<br />
+                        Philadelphia, PA 19103<br />
+                        United States
                       </p>
                     </div>
                   </div>

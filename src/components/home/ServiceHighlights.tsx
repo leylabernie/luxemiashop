@@ -9,8 +9,8 @@ const services = [
   },
   {
     icon: RefreshCw,
-    title: 'Easy Returns',
-    description: '30-day hassle-free returns',
+    title: 'Pre-Purchase Support',
+    description: 'WhatsApp & email support for sizing & fabric questions before you buy',
   },
   {
     icon: Ruler,

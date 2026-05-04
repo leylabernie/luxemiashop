@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, Trash2, Loader2, ExternalLink, ShieldCheck, RefreshCw, Award, Truck } from 'lucide-react';
+import { X, Minus, Plus, Trash2, Loader2, ExternalLink, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
@@ -242,8 +242,8 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     Secure Checkout
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    Easy Returns
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    Quality Checked
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                     <Award className="w-3.5 h-3.5" />
