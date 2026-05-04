@@ -575,6 +575,8 @@ export default async function middleware(request: Request) {
     // The SPA itself handles "product not found" with noIndex meta tag
     // Previously, unknown handles returned 404 which caused Google Merchant Center
     // "product page unavailable" errors for products in the feed
+    // CRITICAL: Product pages MUST be accessible to Googlebot for GMC compliance
+    // Note: Products in PRERENDERED_ROUTES are already handled by the block above
     if (pathname.startsWith('/product/')) {
       return next();
     }

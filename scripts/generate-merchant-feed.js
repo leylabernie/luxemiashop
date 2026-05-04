@@ -202,14 +202,27 @@ function getGoogleCategory(productType, isMenswear) {
 
 // Fix image URLs for Google Merchant Center compatibility
 // 1. URL-encode parentheses (causes Google crawler fetch failures → "unsupported image type")
-// 2. Force JPEG format on Shopify CDN URLs to prevent WebP/AVIF via content negotiation
+// 2. Force JPEG format on CDN URLs to prevent WebP/AVIF via content negotiation
+// 3. Upgrade image resolution from 650px to 1200px for GMC requirements
 function fixImageUrl(url) {
   if (!url) return '';
   let fixed = url;
   // URL-encode parentheses — Google's crawler can't handle raw () in URLs
   fixed = fixed.replace(/\(/g, '%28').replace(/\)/g, '%29');
+
+  // Upgrade kesimg.b-cdn.net images from /images/650/ to /images/1200/ for better resolution
+  // GMC requires images at least 800x800 pixels; 650px is too small
+  fixed = fixed.replace('/images/650/', '/images/1200/');
+
+  // Force JPEG format on kesimg.b-cdn.net URLs
+  // The CDN may serve WebP/AVIF via content negotiation which GMC doesn't accept
+  if (fixed.includes('kesimg.b-cdn.net')) {
+    const separator = fixed.includes('?') ? '&' : '?';
+    fixed = `${fixed}${separator}format=jpg`;
+  }
+
   // Force JPEG on Shopify CDN URLs — must include width to activate image transformation pipeline
-  if (fixed.includes('cdn.shopify.com')) {
+  if (fixed.includes('cdn.shopify.com') || fixed.includes('myshopify.com')) {
     if (!fixed.includes('width=')) {
       fixed += (fixed.includes('?') ? '&' : '?') + 'width=1200';
     }
