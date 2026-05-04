@@ -14,6 +14,11 @@ Disallow: /admin
 Disallow: /account
 Disallow: /auth
 
+User-agent: Googlebot-Image
+Allow: /
+Allow: /cdn.shopify.com/
+Allow: /kesimg.b-cdn.net/
+
 User-agent: Bingbot
 Allow: /
 Disallow: /admin
@@ -36,5 +41,4 @@ Allow: /
 Sitemap: https://luxemia.shop/sitemap.xml
 
 # Google Merchant Center Feed
-# XML: https://luxemia.shop/merchant-feed.xml
-# TSV: https://luxemia.shop/merchant-feed.tsv
+Sitemap: https://luxemia.shop/merchant-feed.xml

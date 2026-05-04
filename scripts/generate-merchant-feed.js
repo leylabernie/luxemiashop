@@ -152,7 +152,7 @@ function enrichDescription(title, originalDesc, productType, tags, variants) {
     desc += `Work & Craftsmanship: ${work} technique made with attention to detail. `;
     desc += `Care Instructions: Dry clean only. Store in a cool, dry place. `;
     desc += `Perfect for: weddings, receptions, engagement ceremonies, and festive celebrations. `;
-    desc += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Delivery within 7-12 business days to USA, UK, and Canada.`;
+    desc += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Dispatch in 3-5 business days (readymade) or 5-7 business days (custom/alterations). Standard delivery 7-10 business days via USPS/UPS. Express delivery 3-5 business days via DHL.`;
     return desc;
   }
   
@@ -168,7 +168,7 @@ function enrichDescription(title, originalDesc, productType, tags, variants) {
   desc += `Fit: Flattering silhouette suitable for all body types. `;
   desc += `Care Instructions: Dry clean only. Store in a cool, dry place. Avoid direct sunlight to preserve color and embroidery. `;
   desc += `Perfect for: ${occasion.toLowerCase()}, weddings, festive celebrations, and special events. `;
-  desc += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Delivery within 7-12 business days to USA, UK, and Canada.`;
+  desc += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Dispatch in 3-5 business days (readymade) or 5-7 business days (custom/alterations). Standard delivery 7-10 business days via USPS/UPS. Express delivery 3-5 business days via DHL.`;
   return desc;
 }
 
@@ -317,26 +317,91 @@ function generateXMLItem(product) {
       <g:country>US</g:country>
       <g:service>Standard</g:service>
       <g:price>14.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>US</g:country>
+      <g:service>Express</g:service>
+      <g:price>39.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
     </g:shipping>
     <g:shipping>
       <g:country>CA</g:country>
       <g:service>Standard</g:service>
       <g:price>14.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>CA</g:country>
+      <g:service>Express</g:service>
+      <g:price>39.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
     </g:shipping>
     <g:shipping>
       <g:country>GB</g:country>
       <g:service>Standard</g:service>
       <g:price>14.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>GB</g:country>
+      <g:service>Express</g:service>
+      <g:price>44.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
     </g:shipping>
     <g:shipping>
       <g:country>AE</g:country>
       <g:service>Standard</g:service>
       <g:price>14.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AE</g:country>
+      <g:service>Express</g:service>
+      <g:price>39.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
     </g:shipping>
     <g:shipping>
       <g:country>AU</g:country>
       <g:service>Standard</g:service>
       <g:price>14.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AU</g:country>
+      <g:service>Express</g:service>
+      <g:price>49.95 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
     </g:shipping>
   </item>`;
 }

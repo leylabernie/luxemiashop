@@ -131,14 +131,16 @@ const SEOHead = ({
               handlingTime: {
                 '@type': 'QuantitativeValue',
                 minValue: 3,
-                maxValue: 5,
+                maxValue: 7,
                 unitCode: 'DAY',
+                description: '3-5 business days for readymade; 5-7 business days for custom/alterations',
               },
               transitTime: {
                 '@type': 'QuantitativeValue',
                 minValue: 3,
                 maxValue: 10,
                 unitCode: 'DAY',
+                description: '3-5 business days via DHL Express; 7-10 business days via USPS/UPS Standard',
               },
             },
           },

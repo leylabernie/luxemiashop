@@ -114,7 +114,7 @@ const ProductDetail = () => {
             currency: product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
             description: product.description || '',
-            availability: 'InStock',
+            availability: product.availableForSale !== false ? 'InStock' : 'OutOfStock',
             sku: product.id,
             originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
             category: product.productType || 'Ethnic Wear',
