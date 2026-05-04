@@ -4,6 +4,7 @@ import { Truck, Clock, Globe, Package, AlertTriangle, FileText, DollarSign, Rota
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const RATE_PER_ITEM = 14.95;
@@ -451,7 +452,7 @@ const Shipping = () => {
           </div>
         </section>
 
-        {/* Returns Policy */}
+        {/* Returns Policy — Reference */}
         <section className="py-16">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <motion.div
@@ -463,32 +464,19 @@ const Shipping = () => {
                 <RotateCcw className="h-6 w-6 text-primary" />
                 <h2 className="text-2xl font-serif">Returns &amp; Exchanges</h2>
               </div>
-              <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto text-sm">
-                We want you to love your purchase. If something isn't right, here's how returns work.
-              </p>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-3">Return Eligibility</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• 14-day return window from delivery date</li>
-                    <li>• Items must be unworn, unwashed, tags intact</li>
-                    <li>• Original packaging must be included</li>
-                    <li>• Custom/stitched items are non-returnable</li>
-                    <li>• Jewelry and accessories are final sale</li>
-                  </ul>
-                </div>
-
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-3">How to Return</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• WhatsApp us at <span className="text-primary">+1-215-341-9990</span></li>
-                    <li>• Or email <span className="text-primary">returns@luxemia.com</span></li>
-                    <li>• Include order number and reason for return</li>
-                    <li>• We'll send a prepaid return label</li>
-                    <li>• Refund processed within 5–7 business days after receipt</li>
-                  </ul>
-                </div>
+              <div className="bg-card border border-destructive/30 rounded-lg p-6 text-center">
+                <p className="text-sm text-muted-foreground mb-4">
+                  All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of our products, LuxeMia does not accept returns or exchanges.
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video.
+                </p>
+                <Link
+                  to="/returns"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors text-sm"
+                >
+                  Read Full Return Policy
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -567,9 +555,10 @@ const Shipping = () => {
                 <AccordionItem value="item-9">
                   <AccordionTrigger>Can I exchange for a different size?</AccordionTrigger>
                   <AccordionContent>
-                    Yes, size exchanges are available within 14 days of delivery for ready-to-ship items.
-                    Contact us via WhatsApp or email with your order number and the preferred size.
-                    We'll arrange a seamless exchange once the original item is returned.
+                    Unfortunately, all sales are final and we do not accept exchanges. We strongly recommend using
+                    our <a href="/size-guide" className="text-primary underline">Size Guide</a> and contacting us
+                    before ordering if you have any sizing questions. For minor fit adjustments, we recommend visiting
+                    a local tailor — alterations to Indian ethnic wear are common and straightforward.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

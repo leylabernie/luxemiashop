@@ -84,7 +84,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'For standard sizes, items can be returned within 7 days if unworn and with tags attached. However, garments made to customer-provided measurements cannot be returned or exchanged due to fit issues. You are responsible for providing accurate measurements.',
+          answer: 'Unfortunately, all sales are final and we do not accept returns for sizing issues. We strongly recommend using our detailed Size Guide and contacting us before ordering if you have any questions about fit. For minor adjustments, we recommend visiting a local tailor — alterations to Indian ethnic wear are common and straightforward.',
         },
         {
           question: 'What measurements do I need to provide?',
@@ -102,27 +102,23 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'We accept returns for manufacturing defects or errors on our part within 7 days of delivery. Items must be unworn, unwashed, and in original condition with all tags attached. A mandatory unboxing video is required for all claims.',
+          answer: 'All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of many products, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during opening the package.',
         },
         {
           question: 'Why do I need an unboxing video?',
-          answer: 'The unboxing video protects both you and us by providing clear evidence of the package condition upon arrival. It helps us quickly verify and process legitimate claims. Claims without video evidence cannot be processed.',
+          answer: 'The unboxing video is the only way we can process a damage or missing-item claim. Without video evidence of the package condition on arrival and the moment of opening, we have no way to distinguish transit damage from post-delivery damage. We strongly recommend recording the unboxing of every order.',
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'Custom/made-to-order pieces, items with incorrect customer-provided measurements, intimate wear (blouses, petticoats), items marked "Final Sale", worn/altered items, and returns requested after 7 days are not eligible.',
+          answer: 'All items are final sale — this includes custom/made-to-order pieces, standard-size items, intimate wear, and accessories. Sizing issues, colour variations from screen display, and change of mind are not eligible for claims.',
         },
         {
-          question: 'How long does the refund process take?',
-          answer: 'Once we receive and inspect your return (3-5 business days), refunds are processed to the original payment method. Credit card refunds take 5-10 business days to appear; PayPal refunds take 3-5 business days.',
-        },
-        {
-          question: 'Who pays for return shipping?',
-          answer: 'For defective items or our errors, we cover return shipping costs. For other approved returns, the customer is responsible for return shipping and the original shipping cost may be deducted from the refund.',
+          question: 'What qualifies as shipping damage?',
+          answer: 'Valid damage claims include torn or cut fabric caused by transit, a visibly crushed or destroyed package, water-damaged items from transit, or a completely wrong item shipped. Colour variations, sizing issues, minor embroidery variations, and change of mind do not qualify. Claims must be reported within 48 hours of delivery with a valid unboxing video.',
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'Exchanges are only available for manufacturing defects. If you need a different size or color, please return the original item for a refund and place a new order.',
+          answer: 'Unfortunately, no. All sales are final and we do not accept exchanges. We strongly recommend using our Size Guide and contacting us before ordering if you have any questions about sizing, fabric, or colour.',
         },
       ],
     },

@@ -152,7 +152,7 @@ function enrichDescription(title, originalDesc, productType, tags, variants) {
     desc += `Work & Craftsmanship: ${work} technique made with attention to detail. `;
     desc += `Care Instructions: Dry clean only. Store in a cool, dry place. `;
     desc += `Perfect for: weddings, receptions, engagement ceremonies, and festive celebrations. `;
-    desc += `Shipping: Free worldwide shipping on orders over $200. Delivery within 7-12 business days to USA, UK, and Canada.`;
+    desc += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Delivery within 7-12 business days to USA, UK, and Canada.`;
     return desc;
   }
   
@@ -168,7 +168,7 @@ function enrichDescription(title, originalDesc, productType, tags, variants) {
   desc += `Fit: Flattering silhouette suitable for all body types. `;
   desc += `Care Instructions: Dry clean only. Store in a cool, dry place. Avoid direct sunlight to preserve color and embroidery. `;
   desc += `Perfect for: ${occasion.toLowerCase()}, weddings, festive celebrations, and special events. `;
-  desc += `Shipping: Free worldwide shipping on orders over $200. Delivery within 7-12 business days to USA, UK, and Canada.`;
+  desc += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Delivery within 7-12 business days to USA, UK, and Canada.`;
   return desc;
 }
 
@@ -316,7 +316,27 @@ function generateXMLItem(product) {
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>0.00 USD</g:price>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>CA</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>GB</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AE</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AU</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
     </g:shipping>
   </item>`;
 }
@@ -385,7 +405,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>https://luxemia.shop</link>
-  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding lehengas, sarees, sherwanis, salwar kameez, and suits at LuxeMia. Free worldwide shipping.</description>
+  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding lehengas, sarees, sherwanis, salwar kameez, and suits at LuxeMia. Flat rate shipping $14.95 per item, free on orders over $300.</description>
 ${allItems.join('\n')}
 </channel>
 </rss>`;

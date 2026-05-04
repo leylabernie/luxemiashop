@@ -114,7 +114,12 @@ const SEOHead = ({
             '@type': 'OfferShippingDetails',
             shippingRate: {
               '@type': 'MonetaryAmount',
-              value: '0',
+              value: '14.95',
+              currency: product.currency,
+            },
+            freeShippingThreshold: {
+              '@type': 'MonetaryAmount',
+              value: '300',
               currency: product.currency,
             },
             shippingDestination: {
@@ -131,7 +136,7 @@ const SEOHead = ({
               },
               transitTime: {
                 '@type': 'QuantitativeValue',
-                minValue: 5,
+                minValue: 7,
                 maxValue: 14,
                 unitCode: 'DAY',
               },
@@ -140,8 +145,8 @@ const SEOHead = ({
           hasMerchantReturnPolicy: {
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'IN',
-            returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-            merchantReturnDays: 7,
+            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+            merchantReturnDays: 0,
             returnMethod: 'https://schema.org/ReturnByMail',
             returnFees: 'https://schema.org/FreeReturn',
           },

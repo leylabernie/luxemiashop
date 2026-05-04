@@ -160,7 +160,7 @@ function enrichDescription(desc, category, fabric, work, color) {
   enriched += `Fit: ${isMenswear ? 'Regular fit with structured shoulders' : 'Flattering fit-and-flare silhouette suitable for all body types'}. `;
   enriched += `Care Instructions: Dry clean only. Store in a cool, dry place. Avoid direct sunlight to preserve color and embroidery. `;
   enriched += `Perfect for: ${occasion}. `;
-  enriched += `Shipping: Free worldwide shipping on orders over $200. Delivery within 7-12 business days to USA, UK, and Canada. `;
+  enriched += `Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Delivery within 7-12 business days to USA, UK, and Canada. `;
 
   return enriched.trim();
 }
@@ -328,7 +328,27 @@ function generateXML() {
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>0.00 USD</g:price>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>CA</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>GB</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AE</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AU</g:country>
+      <g:service>Standard</g:service>
+      <g:price>14.95 USD</g:price>
     </g:shipping>
   </item>`;
   }).join('\n');
@@ -338,7 +358,7 @@ function generateXML() {
 <channel>
   <title>${escapeXml(BRAND)} - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop premium Indian ethnic wear - bridal lehengas, wedding lehengas, sarees, sherwanis, and suits at ${BRAND}</description>
+  <description>Shop premium Indian ethnic wear - bridal lehengas, wedding lehengas, sarees, sherwanis, and suits at ${BRAND}. Flat rate shipping $14.95 per item, free on orders over $300.</description>
 ${items}
 </channel>
 </rss>`;
