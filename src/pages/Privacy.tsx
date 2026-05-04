@@ -185,7 +185,7 @@ const Privacy = () => {
                   <p className="mt-4">
                     Email: <a href="mailto:privacy@luxemia.com" className="text-primary hover:underline">privacy@luxemia.com</a><br />
                     Phone: <a href="tel:+1-215-341-9990" className="text-primary hover:underline">+1-215-341-9990</a><br />
-                    Address: LuxeMia Fashion Inc., Philadelphia, PA 19103, United States
+                    Address: LuxeMia Fashion Inc., 2208 Michener St, Philadelphia, PA 19115, United States
                   </p>
                   <p className="mt-4">
                     For GDPR-related inquiries, you may also contact our Data Protection Officer at <a href="mailto:privacy@luxemia.com" className="text-primary hover:underline">privacy@luxemia.com</a>.

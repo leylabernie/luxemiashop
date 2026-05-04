@@ -253,7 +253,7 @@ const Shipping = () => {
                   your order enters our production and fulfillment process and cannot be cancelled or modified.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• To cancel, email <span className="text-primary">orders@luxemia.com</span> with your order number immediately</li>
+                  <li>• To cancel, email <span className="text-primary">hello@luxemia.com</span> with your order number immediately</li>
                   <li>• Cancellations received after 24 hours will not be processed</li>
                   <li>• Custom/made-to-order pieces cannot be cancelled once production begins</li>
                   <li>• Refunds for cancelled orders are processed within 5–7 business days</li>
@@ -542,7 +542,7 @@ const Shipping = () => {
                   <AccordionTrigger>Can I change my shipping address after ordering?</AccordionTrigger>
                   <AccordionContent>
                     Address changes can only be made within the first 24 hours of placing your order, before it enters
-                    processing. Contact us immediately at orders@luxemia.com if you need to update your address.
+                    processing. Contact us immediately at hello@luxemia.com if you need to update your address.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-8">

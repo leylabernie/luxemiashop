@@ -124,7 +124,7 @@ const SEOHead = ({
             },
             shippingDestination: {
               '@type': 'DefinedRegion',
-              addressCountry: ['IN', 'US', 'GB', 'AE', 'CA', 'AU'],
+              addressCountry: ['US', 'GB', 'AE', 'CA', 'AU'],
             },
             deliveryTime: {
               '@type': 'ShippingDeliveryTime',
@@ -145,9 +145,8 @@ const SEOHead = ({
           hasMerchantReturnPolicy: {
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'US',
-            returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-            merchantReturnDays: 7,
-            returnMethod: 'https://schema.org/ReturnByMail',
+            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+            merchantReturnDays: 0,
             returnFees: 'https://schema.org/FreeReturn',
             itemDefectReturnFees: 'https://schema.org/FreeReturn',
           },

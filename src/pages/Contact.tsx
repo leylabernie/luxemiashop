@@ -154,7 +154,8 @@ const Contact = () => {
                       <h3 className="font-medium mb-1">Business Address</h3>
                       <p className="text-muted-foreground">
                         LuxeMia Fashion Inc.<br />
-                        Philadelphia, PA 19103<br />
+                        2208 Michener St<br />
+                        Philadelphia, PA 19115<br />
                         United States
                       </p>
                     </div>

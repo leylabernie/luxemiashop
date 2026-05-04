@@ -208,7 +208,7 @@ const Terms = () => {
                   </div>
                   <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Orders may only be cancelled within 24 hours of placement.</strong></li>
-                    <li>To cancel, you must contact our customer service team immediately at orders@luxemia.com with your order number.</li>
+                    <li>To cancel, you must contact our customer service team immediately at hello@luxemia.com with your order number.</li>
                     <li>After the 24-hour window, cancellation requests will not be accepted as production may have already begun.</li>
                     <li>If cancellation is approved within the window, a full refund will be processed within 5-7 business days.</li>
                     <li>Custom orders that have entered production cannot be cancelled under any circumstances.</li>
@@ -248,7 +248,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">8.2 Manufacturing Defects</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Manufacturing defects are reviewed on a case-by-case basis with photo evidence.</li>
-                        <li>Contact us within 48 hours of delivery with clear photos of any defects.</li>
+                        <li>Contact us within 7 days of delivery with clear photos of any defects.</li>
                         <li>Size/fit issues due to customer-provided measurements are NOT considered defects.</li>
                       </ul>
                     </div>
@@ -257,7 +257,7 @@ const Terms = () => {
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Order cancellations may be possible within 24 hours of placing your order.</li>
                         <li>After production begins, cancellations are not possible.</li>
-                        <li>Contact support@luxemia.com immediately if you need to cancel.</li>
+                        <li>Contact hello@luxemia.com immediately if you need to cancel.</li>
                       </ul>
                     </div>
                     <p className="text-sm">
@@ -387,7 +387,8 @@ const Terms = () => {
                   <div className="space-y-2">
                     <p><strong>LuxeMia Fashion Inc.</strong></p>
                     <p>Legal Department</p>
-                    <p>Philadelphia, PA 19103</p>
+                    <p>2208 Michener St</p>
+                    <p>Philadelphia, PA 19115</p>
                     <p>United States</p>
                     <p className="mt-4">
                       Email: <a href="mailto:legal@luxemia.com" className="text-primary hover:underline">legal@luxemia.com</a>

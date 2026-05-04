@@ -92,7 +92,7 @@ const ProductDetail = () => {
     },
     {
       question: `Can I return the ${product.title} if it doesn't fit?`,
-      answer: `Standard-sized items can be returned within 7 days if unworn with tags attached. Custom-sized items are final sale. A mandatory unboxing video is required for all return claims.`
+      answer: `All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns for sizing issues or change of mind. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video. We strongly recommend using our Size Guide before ordering.`
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,

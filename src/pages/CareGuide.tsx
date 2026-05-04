@@ -273,7 +273,7 @@ const CareGuide = () => {
           <div className="container mx-auto px-4 text-center">
             <p className="text-muted-foreground">
               Have questions about caring for your LuxeMia garment? Contact our care specialists at{" "}
-              <span className="text-primary">hello@luxemia.shop</span>
+              <span className="text-primary">hello@luxemia.com</span>
             </p>
           </div>
         </section>

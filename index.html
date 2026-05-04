@@ -71,6 +71,29 @@
           "url": "https://luxemia.shop",
           "logo": "https://luxemia.shop/logo.png",
           "description": "Indian ethnic wear online store. Sarees, lehengas, salwar suits and kurtas at affordable prices, shipped worldwide.",
+          "telephone": "+1-215-341-9990",
+          "email": "hello@luxemia.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2208 Michener St",
+            "addressLocality": "Philadelphia",
+            "addressRegion": "PA",
+            "postalCode": "19115",
+            "addressCountry": "US"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+1-215-341-9990",
+            "contactType": "customer service",
+            "email": "hello@luxemia.com",
+            "availableLanguage": ["English"],
+            "hoursAvailable": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+              "opens": "10:00",
+              "closes": "19:00"
+            }
+          },
           "sameAs": [
             "https://www.instagram.com/luxemiashop",
             "https://www.facebook.com/luxemiashop",
@@ -83,7 +106,12 @@
           "@id": "https://luxemia.shop/#website",
           "name": "LuxeMia",
           "url": "https://luxemia.shop",
-          "publisher": { "@id": "https://luxemia.shop/#org" }
+          "publisher": { "@id": "https://luxemia.shop/#org" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://luxemia.shop/collections?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
         },
         {
           "@type": "FAQPage",

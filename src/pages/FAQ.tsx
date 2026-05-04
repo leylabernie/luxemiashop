@@ -24,7 +24,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
-          answer: 'Orders can only be modified or cancelled within 24 hours of placement. After this window, your order enters production and cannot be changed. To request a cancellation, email orders@luxemia.com immediately with your order number.',
+          answer: 'Orders can only be modified or cancelled within 24 hours of placement. After this window, your order enters production and cannot be changed. To request a cancellation, email hello@luxemia.com immediately with your order number.',
         },
         {
           question: 'How do I apply a discount code?',

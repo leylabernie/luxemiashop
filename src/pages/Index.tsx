@@ -20,11 +20,11 @@ import CustomerStories from '@/components/home/CustomerStories';
 const homepageFaqs = [
   {
     question: "Do you offer international shipping for Indian ethnic wear?",
-    answer: "Yes, LuxeMia offers free worldwide shipping, including to the USA, UK, Canada, and many other countries. You can find more details on our Shipping Policy page."
+    answer: "Yes, LuxeMia ships worldwide at a flat rate of $14.95 per item, with free shipping on orders over $300. Delivery takes 7-12 business days to the USA, UK, and Canada. You can find more details on our Shipping Policy page."
   },
   {
     question: "What is your return policy for international orders?",
-    answer: "We offer a hassle-free 7-day return policy for most items. Standard-sized items can be returned within 7 days of delivery if unworn with tags attached. Custom-sized items are final sale. Please refer to our Returns Policy page for full details."
+    answer: "All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of many products, LuxeMia does not accept returns. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video. Please refer to our Returns Policy page for full details."
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
@@ -40,7 +40,7 @@ const homepageFaqs = [
   },
   {
     question: "Do I need to pay customs duties or taxes on international orders?",
-    answer: "While LuxeMia offers free shipping, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
+    answer: "While LuxeMia offers free shipping on orders over $300, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
@@ -64,16 +64,16 @@ const Index = () => {
     "email": "hello@luxemia.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "",
+      "streetAddress": "2208 Michener St",
       "addressLocality": "Philadelphia",
       "addressRegion": "PA",
-      "postalCode": "19103",
+      "postalCode": "19115",
       "addressCountry": "US"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "39.9526",
-      "longitude": "-75.1652"
+      "latitude": "40.0758",
+      "longitude": "-75.0493"
     },
     "openingHoursSpecification": [
       {
@@ -90,8 +90,8 @@ const Index = () => {
       }
     ],
     "priceRange": "$$",
-    "currenciesAccepted": "INR, USD, GBP, CAD",
-    "paymentAccepted": "Credit Card, Debit Card, UPI, Net Banking, PayPal",
+    "currenciesAccepted": "USD",
+    "paymentAccepted": "Credit Card, Debit Card, PayPal, Apple Pay, Google Pay",
     "sameAs": [
       "https://www.instagram.com/luxemiashop",
       "https://www.facebook.com/luxemiashop",
