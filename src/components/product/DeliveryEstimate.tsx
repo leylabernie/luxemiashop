@@ -27,10 +27,19 @@ export const DeliveryEstimate = ({ hasStitching, extraTailoringDays = 0 }: Deliv
   const { standardDate, expressDate, urgencyHours } = useMemo(() => {
     const now = new Date();
 
-    // Standard: 7 business days (+3 if stitching + extra tailoring days)
-    const standardBizDays = hasStitching ? 10 + extraTailoringDays : 7;
-    // Express: 3 business days (+3 if stitching + extra tailoring days)
-    const expressBizDays = hasStitching ? 6 + extraTailoringDays : 3;
+    // Dispatch: ready-made 3-5 biz days, custom/alterations 5-7 biz days
+    // Use the max of dispatch + transit for the estimate
+    // Standard transit: 7-10 biz days | Express transit: 3-5 biz days
+    // Total = dispatch + transit
+
+    // Standard: dispatch (3-5) + transit (7-10) = 10-15 biz days for ready-made
+    // With stitching: dispatch (5-7) + transit (7-10) + extra tailoring = 12-17+ biz days
+    const dispatchDays = hasStitching ? 7 : 5; // max dispatch days
+    const standardTransitDays = 10; // max standard transit days
+    const expressTransitDays = 5; // max express transit days
+
+    const standardBizDays = dispatchDays + standardTransitDays + extraTailoringDays;
+    const expressBizDays = dispatchDays + expressTransitDays + extraTailoringDays;
 
     const std = addBusinessDays(now, standardBizDays);
     const exp = addBusinessDays(now, expressBizDays);

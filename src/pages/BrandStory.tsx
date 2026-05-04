@@ -59,7 +59,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="Luxemia was born from a genuine frustration: finding quality Indian ethnic wear online meant navigating confusing sizing, questionable quality, and impersonal service. We're building something different — a curated collection sourced directly from India's established textile hubs, with honest descriptions, real sizing guidance, and customer service that actually responds. All our products are shipped from India via DHL Express or FedEx International, ensuring reliable tracked delivery to your door."
+        content="Luxemia was born from a genuine frustration: finding quality Indian ethnic wear online meant navigating confusing sizing, questionable quality, and impersonal service. We're building something different — a curated collection sourced directly from India's established textile hubs, with honest descriptions, real sizing guidance, and customer service that actually responds. All our products are shipped from India via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door."
         imagePosition="right"
         bgColor="bg-card"
       />
@@ -197,13 +197,13 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Business Model</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                LuxeMia is an online-only retailer of Indian ethnic wear. We source our products directly from manufacturers and textile hubs in India, which allows us to offer authentic craftsmanship at fair prices. All orders are shipped from India via DHL Express or FedEx International with full tracking and insurance.
+                LuxeMia is an online-only retailer of Indian ethnic wear. We source our products directly from manufacturers and textile hubs in India, which allows us to offer authentic craftsmanship at fair prices. All orders are shipped from India via DHL Express, USPS, or UPS with full tracking and insurance.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Shipping & Delivery</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We charge a flat rate of $14.95 per item for international shipping, with free shipping on orders over $300. Standard delivery to the US, UK, and Canada takes 7-14 business days. Express options are available at checkout. Import duties and local taxes are the customer's responsibility.
+                We charge a flat rate of $14.95 per item for international shipping, with free shipping on orders over $300. Ready-made orders dispatch in 3-5 business days; custom/alterations in 5-7 business days. Standard delivery (USPS/UPS) takes 7-10 business days transit; express (DHL) takes 3-5 business days transit. Import duties and local taxes are the customer's responsibility.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">

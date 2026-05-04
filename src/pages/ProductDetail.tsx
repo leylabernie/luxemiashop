@@ -88,7 +88,7 @@ const ProductDetail = () => {
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: `Standard shipping to the US takes 7-12 business days. Express shipping (3-5 business days) is available at checkout. Custom-sized orders require an additional 3-4 weeks for production.`
+      answer: `Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.`
     },
     {
       question: `Can I return the ${product.title} if it doesn't fit?`,

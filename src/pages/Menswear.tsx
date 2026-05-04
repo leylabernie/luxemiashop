@@ -217,7 +217,7 @@ const Menswear = () => {
     },
     {
       question: "How long does it take to receive a groom sherwani?",
-      answer: "Ready-to-ship sherwanis arrive in 7-12 business days. Custom-tailored groom sherwanis require 3-4 weeks. For weddings, we recommend ordering 8-10 weeks in advance to allow time for fittings and alterations."
+      answer: "Ready-to-ship sherwanis dispatch in 3-5 business days, with standard delivery (USPS/UPS) taking 7-10 business days transit or express (DHL) taking 3-5 business days transit. Custom-tailored sherwanis dispatch in 5-7 business days. For weddings, we recommend ordering 8-10 weeks in advance to allow time for fittings and alterations."
     },
     {
       question: "Can I get matching outfits for the groom and groomsmen?",

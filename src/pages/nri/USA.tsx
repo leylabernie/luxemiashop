@@ -8,16 +8,16 @@ const USA = () => (
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
       seoTitle: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-12 day delivery.',
+      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-10 day standard delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the USA',
       heroSubtitle: 'Shipped from India with Care',
-      shippingTime: '7-12 business days',
+      shippingTime: '7-10 business days',
       shippingCost: '$14.95/item, free on orders over $300',
       customsNote: 'US imports from India may be subject to tariffs and duties. As of 2025, an additional 50% tariff applies to many goods from India. Customers are responsible for all customs fees.',
       faqs: [
         {
           question: 'How long does shipping to the USA take?',
-          answer: 'Standard shipping to the USA takes 7-12 business days. Express shipping (3-5 business days) is available at checkout for an additional fee.',
+          answer: 'Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.',
         },
         {
           question: 'Is shipping free to the USA?',

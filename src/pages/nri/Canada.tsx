@@ -8,16 +8,16 @@ const Canada = () => (
       countryCode: 'CA',
       slug: 'indian-ethnic-wear-canada',
       seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 10-14 day delivery to Canada.',
+      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-10 day standard delivery to Canada.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Canada',
       heroSubtitle: 'Shipped from India with Care',
-      shippingTime: '10-14 business days',
+      shippingTime: '7-10 business days',
       shippingCost: '$14.95/item, free on orders over $300',
       customsNote: 'Canadian orders may be subject to GST/HST (5-15%) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery.',
       faqs: [
         {
           question: 'How long does shipping to Canada take?',
-          answer: 'Standard shipping to Canada takes 10-14 business days. Express shipping (5-7 business days) is available at checkout.',
+          answer: 'Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.',
         },
         {
           question: 'Is shipping free to Canada?',
@@ -39,7 +39,7 @@ const Canada = () => (
       benefits: [
         { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
-        { icon: Clock, title: 'Express Available', description: '5-7 day express shipping at checkout' },
+        { icon: Clock, title: 'Express Available', description: '3-5 day DHL express shipping at checkout' },
       ],
     }}
   />

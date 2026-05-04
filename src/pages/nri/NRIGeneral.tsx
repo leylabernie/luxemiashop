@@ -8,16 +8,16 @@ const NRIGeneral = () => (
       countryCode: 'WW',
       slug: 'nri',
       seoTitle: 'Buy Indian Ethnic Wear Online | NRI Shopping | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered worldwide. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $300. 3-12 day delivery.',
+      seoDescription: 'Shop authentic Indian ethnic wear delivered worldwide. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $300. 3-10 day express delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Your Door',
       heroSubtitle: 'Shopping From Abroad? We\'ve Got You Covered',
-      shippingTime: '3-12 business days',
+      shippingTime: '3-10 business days',
       shippingCost: 'Free on orders over $300',
       customsNote: 'We ship DHL Express worldwide. Import duties vary by country.',
       faqs: [
         {
           question: 'Do you ship internationally?',
-          answer: 'Yes! We ship to over 50 countries worldwide via DHL Express. Standard delivery takes 3-12 business days depending on your location.',
+          answer: 'Yes! We ship to over 100 countries worldwide via DHL Express, USPS, or UPS. Express delivery takes 3-5 business days transit; standard takes 7-10 business days transit. Ready-made orders dispatch in 3-5 business days.',
         },
         {
           question: 'When does shipping become free?',
@@ -37,9 +37,9 @@ const NRIGeneral = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Delivery', description: 'Free shipping on orders over $300 — delivered to 50+ countries' },
+        { icon: Truck, title: 'Worldwide Delivery', description: 'Free shipping on orders over $300 — delivered to 100+ countries' },
         { icon: Shield, title: 'Secure Packaging', description: 'Every piece carefully wrapped to arrive in perfect condition' },
-        { icon: Clock, title: 'Fast Dispatch', description: 'Orders dispatched within 1-3 business days via DHL Express' },
+        { icon: Clock, title: 'Fast Dispatch', description: 'Ready-made orders dispatched within 3-5 business days' },
       ],
     }}
   />

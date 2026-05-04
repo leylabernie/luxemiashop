@@ -88,7 +88,7 @@ const Privacy = () => {
                     <li><strong>Shopify Inc.</strong> — E-commerce platform for product catalog, checkout, and payment processing. Shopify processes payment card data under PCI-DSS compliance. <a href="https://www.shopify.com/legal/privacy" className="text-primary hover:underline">Shopify Privacy Policy</a></li>
                     <li><strong>Supabase Inc.</strong> — Database and backend services for account management and email capture. <a href="https://supabase.com/privacy" className="text-primary hover:underline">Supabase Privacy Policy</a></li>
                     <li><strong>Google LLC</strong> — Google Analytics for website traffic analysis and Google Ads for remarketing. <a href="https://policies.google.com/privacy" className="text-primary hover:underline">Google Privacy Policy</a></li>
-                    <li><strong>DHL Express / FedEx International</strong> — Shipping carriers for order delivery. Tracking numbers and shipping addresses are shared to fulfill your orders</li>
+                    <li><strong>DHL Express / USPS / UPS</strong> — Shipping carriers for order delivery. Tracking numbers and shipping addresses are shared to fulfill your orders</li>
                     <li><strong>Vercel Inc.</strong> — Web hosting and content delivery. <a href="https://vercel.com/legal/privacy-policy" className="text-primary hover:underline">Vercel Privacy Policy</a></li>
                   </ul>
                   <p className="mb-4">We may also disclose your information when required by law, to protect our rights, or to respond to legal processes.</p>

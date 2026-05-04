@@ -46,7 +46,7 @@ const FAQ = () => {
         },
         {
           question: 'How long does shipping take?',
-          answer: 'Standard shipping to the US takes 7-12 business days, Express shipping takes 3-5 business days. International orders typically take 10-21 business days depending on the destination. Custom orders require additional 3-4 weeks for production.',
+          answer: 'Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders are dispatched in 3-5 business days; custom/alteration orders in 5-7 business days. Total delivery time includes dispatch + transit.',
         },
         {
           question: 'How can I track my order?',

@@ -1316,7 +1316,7 @@ export const blogPosts: BlogPost[] = [
       <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia addresses every concern:</p>
 
       <h3>Worldwide Shipping</h3>
-      <p>We ship worldwide at a flat rate of $14.95 per item, with <strong>free shipping on orders over $300</strong> to the USA, UK, Canada, and many other countries. Standard delivery typically takes 7-12 business days, with express options available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
+      <p>We ship worldwide at a flat rate of $14.95 per item, with <strong>free shipping on orders over $300</strong> to the USA, UK, Canada, and 100+ countries. Standard delivery (USPS/UPS) takes 7-10 business days transit, with express (DHL) at 3-5 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
 
       <h3>Our Return Policy</h3>
       <p>All sales are final due to the international nature of our shipments. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. We recommend reviewing all product details and using our <a href="/size-guide">Size Guide</a> before ordering. Visit our <a href="/returns">Returns Policy</a> page for full details.</p>
@@ -1440,7 +1440,7 @@ export const blogPosts: BlogPost[] = [
 
       <h3>What We Offer</h3>
       <ul>
-        <li><strong>Free worldwide shipping:</strong> Standard delivery to the USA, UK, and Canada in 7-12 business days</li>
+        <li><strong>Free worldwide shipping:</strong> Standard delivery (USPS/UPS) in 7-10 business days transit to the USA, UK, and Canada</li>
         <li><strong>Express shipping:</strong> 3-5 business day delivery available at checkout</li>
         <li><strong>Ready-to-wear options:</strong> No alterations needed — just open, wear, and celebrate</li>
         <li><strong>Last-minute styling support:</strong> Chat with our team on WhatsApp for quick outfit recommendations</li>
@@ -1779,11 +1779,11 @@ export const blogPosts: BlogPost[] = [
       <p>International shipping takes time — plan ahead, especially for weddings or events.</p>
 
       <ul>
-        <li><strong>Standard delivery to USA:</strong> 7–12 business days</li>
-        <li><strong>Standard delivery to UK:</strong> 7–10 business days</li>
-        <li><strong>Standard delivery to Canada:</strong> 10–14 business days</li>
-        <li><strong>Express shipping:</strong> 3–5 business days (available at checkout)</li>
-        <li><strong>Custom-sized orders:</strong> Add 3–4 weeks for production before shipping</li>
+        <li><strong>Standard delivery to USA:</strong> 7–10 business days transit (USPS/UPS)</li>
+        <li><strong>Standard delivery to UK:</strong> 7–10 business days transit (USPS/UPS)</li>
+        <li><strong>Standard delivery to Canada:</strong> 7–10 business days transit (USPS/UPS)</li>
+        <li><strong>Express shipping:</strong> 3–5 business days transit (DHL, available at checkout)</li>
+        <li><strong>Dispatch time:</strong> Ready-made 3–5 business days, custom/alterations 5–7 business days</li>
       </ul>
 
       <p><strong>Rule of thumb:</strong> Order at least 6–8 weeks before your event. For big wedding seasons (November–February), order earlier.</p>

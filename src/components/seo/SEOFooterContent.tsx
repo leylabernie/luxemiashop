@@ -113,7 +113,7 @@ const SEOFooterContent = () => {
               <p>
                 LuxeMia is the best Indian ethnic wear store online for affordable, stylish ethnic clothing. 
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-                We offer <strong className="text-foreground">flat rate shipping ($14.95/item, free over $300)</strong> to USA, UK, Canada, and 50+ countries, 
+                We offer <strong className="text-foreground">flat rate shipping ($14.95/item, free over $300)</strong> to USA, UK, Canada, and 100+ countries, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
                 why thousands of customers trust LuxeMia for their Indian ethnic wear needs.

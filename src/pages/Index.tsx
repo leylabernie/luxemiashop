@@ -20,7 +20,7 @@ import CustomerStories from '@/components/home/CustomerStories';
 const homepageFaqs = [
   {
     question: "Do you offer international shipping for Indian ethnic wear?",
-    answer: "Yes, LuxeMia ships worldwide at a flat rate of $14.95 per item, with free shipping on orders over $300. Delivery takes 7-12 business days to the USA, UK, and Canada. You can find more details on our Shipping Policy page."
+    answer: "Yes, LuxeMia ships worldwide at a flat rate of $14.95 per item, with free shipping on orders over $300. Standard delivery (USPS/UPS) takes 7-10 business days transit; express (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days. Visit our Shipping Policy page for details."
   },
   {
     question: "What is your return policy for international orders?",

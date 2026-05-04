@@ -67,7 +67,7 @@ const Sarees = () => {
     },
     {
       question: "What is the delivery time for sarees?",
-      answer: "Standard shipping to the US takes 7-12 business days. Express shipping (3-5 days) is available at checkout. For custom blouse stitching orders, please allow an additional 5-7 days for tailoring."
+      answer: "Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom blouse stitching orders dispatch in 5-7 business days."
     },
     {
       question: "How should I care for my silk saree?",

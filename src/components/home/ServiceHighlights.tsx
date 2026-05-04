@@ -5,7 +5,7 @@ const services = [
   {
     icon: Truck,
     title: 'Fast Dispatch',
-    description: 'Orders processed within 1-3 business days',
+    description: 'Ready-made orders dispatched in 3-5 business days',
   },
   {
     icon: RefreshCw,

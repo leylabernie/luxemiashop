@@ -231,7 +231,7 @@ const Lehengas = () => {
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
-      answer: "Ready-to-ship lehengas arrive in 7-12 business days (standard) or 3-5 days (express). Custom-sized bridal lehengas require 3-4 weeks for preparation. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
+      answer: "Ready-to-ship lehengas dispatch in 3-5 business days, with standard delivery (USPS/UPS) taking 7-10 business days transit or express (DHL) taking 3-5 business days transit. Custom/alteration orders dispatch in 5-7 business days. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
     },
     {
       question: "Can I customize the color of my lehenga?",

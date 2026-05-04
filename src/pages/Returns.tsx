@@ -257,7 +257,7 @@ const Returns = () => {
                   { step: '1', title: 'Measure Carefully Before Ordering', desc: 'Use our detailed Size Guide. Have someone else measure you — self-measurements are often inaccurate. When between sizes, go up and plan for a local tailor to take in.' },
                   { step: '2', title: 'Ask Us Before You Buy', desc: 'Not sure about sizing, fabric weight, or colour? WhatsApp or email us first. We reply within a few hours during business hours.' },
                   { step: '3', title: 'Check All Product Details', desc: 'Read the full product description including fabric, what\'s included (dupatta, stitched/unstitched blouse), and embroidery notes before placing your order.' },
-                  { step: '4', title: 'Order Well in Advance of Your Event', desc: 'Standard items take 7–12 business days to deliver. Custom-sized pieces require an additional 3–4 weeks for production. Order 6–8 weeks ahead for major events.' },
+                  { step: '4', title: 'Order Well in Advance of Your Event', desc: 'Ready-made items dispatch in 3–5 business days with standard delivery (7–10 business days transit). Custom/alteration orders dispatch in 5–7 business days. Order 6–8 weeks ahead for major events.' },
                   { step: '5', title: 'Record Your Unboxing', desc: 'Make it a habit to record the unboxing of every order as a continuous video from sealed package to opened item. This is your protection if anything goes wrong in transit.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-4 p-5 bg-card border border-border/50 rounded-lg">

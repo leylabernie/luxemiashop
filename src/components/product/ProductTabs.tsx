@@ -310,28 +310,36 @@ export const ProductTabs = ({ description, productType, isStitchable }: ProductT
         <div className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-4 bg-card rounded-sm">
-              <h4 className="font-medium mb-2">Domestic Shipping (India)</h4>
+              <h4 className="font-medium mb-2">Express Shipping (DHL)</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Free shipping on orders above ₹5,000</li>
-                <li>• Standard delivery: 5-7 business days</li>
-                <li>• Express delivery: 2-3 business days</li>
-                <li>• Cash on Delivery available</li>
+                <li>• Transit: 3–5 business days</li>
+                <li>• Full tracking included</li>
+                <li>• Insured delivery</li>
+                <li>• $14.95/item or free over $300</li>
               </ul>
             </div>
             <div className="p-4 bg-card rounded-sm">
-              <h4 className="font-medium mb-2">International Shipping</h4>
+              <h4 className="font-medium mb-2">Standard Shipping (USPS/UPS)</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Available to 50+ countries</li>
-                <li>• Delivery: 10-15 business days</li>
+                <li>• Transit: 7–10 business days</li>
+                <li>• Available to 100+ countries</li>
                 <li>• Customs duties may apply</li>
                 <li>• Tracking provided</li>
               </ul>
             </div>
           </div>
+          <div className="p-4 bg-card rounded-sm">
+            <h4 className="font-medium mb-2">Dispatch Times</h4>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              <li>• Ready-made sizes: 3–5 business days</li>
+              <li>• Custom / alterations: 5–7 business days</li>
+            </ul>
+          </div>
           <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
             <p className="text-sm">
               <strong>Note:</strong> All items are carefully packaged to ensure they reach you in perfect condition. 
               Each piece is wrapped in tissue paper and placed in our signature gift box.
+              Import duties and local taxes are the customer's responsibility.
             </p>
           </div>
         </div>

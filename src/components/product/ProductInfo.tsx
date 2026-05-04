@@ -865,7 +865,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Ships from India</p>
-            <p className="text-xs text-muted-foreground">Insured international delivery</p>
+            <p className="text-xs text-muted-foreground">DHL Express, USPS & UPS</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
@@ -909,7 +909,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Mastercard</div>
           <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Amex</div>
           <div className="px-2 py-1 bg-muted rounded text-xs font-medium">PayPal</div>
-          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">UPI</div>
+          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Apple Pay</div>
         </div>
       </div>
     </div>

@@ -8,16 +8,16 @@ const UK = () => (
       countryCode: 'GB',
       slug: 'indian-ethnic-wear-uk',
       seoTitle: 'Buy Indian Ethnic Wear Online UK | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in the UK. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-12 day delivery to United Kingdom.',
+      seoDescription: 'Buy Indian ethnic wear online in the UK. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-10 day standard delivery to United Kingdom.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the UK',
       heroSubtitle: 'Shipped from India with Care',
-      shippingTime: '7-12 business days',
+      shippingTime: '7-10 business days',
       shippingCost: '$14.95/item, free on orders over $300',
       customsNote: 'UK orders over £135 may be subject to 20% import VAT. These charges are collected by the carrier at delivery.',
       faqs: [
         {
           question: 'How long does delivery to the UK take?',
-          answer: 'Standard delivery to the UK takes 7-12 business days. Express delivery (3-5 business days) is also available at checkout.',
+          answer: 'Standard delivery (USPS/UPS) takes 7-10 business days transit. Express delivery (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.',
         },
         {
           question: 'Is delivery free to the UK?',
