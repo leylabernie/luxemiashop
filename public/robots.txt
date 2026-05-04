@@ -10,6 +10,7 @@ Disallow: /api/
 
 User-agent: Googlebot
 Allow: /
+Allow: /product/
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
@@ -18,6 +19,11 @@ User-agent: Googlebot-Image
 Allow: /
 Allow: /cdn.shopify.com/
 Allow: /kesimg.b-cdn.net/
+# Ensure Google can crawl all product images for Merchant Center
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.gif
 
 User-agent: Bingbot
 Allow: /

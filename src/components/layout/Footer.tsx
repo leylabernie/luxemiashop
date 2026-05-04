@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Linkedin } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Linkedin, ShieldCheck, Truck, Award, Lock, MapPin } from 'lucide-react';
 
 const footerLinks = {
   shop: [
@@ -200,11 +200,55 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
         </div>
       </div>
 
+      {/* Trust Signals Bar — Critical for Google Merchant Center Misrepresentation compliance */}
+      <div className="border-t border-border/50 bg-background/50">
+        <div className="container mx-auto px-4 lg:px-8 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+            <div className="flex flex-col items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-green-600" />
+              <span className="text-xs font-medium">Secure Checkout</span>
+              <span className="text-[10px] text-foreground/50">Shopify PCI-DSS Encrypted</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Truck className="w-6 h-6 text-blue-600" />
+              <span className="text-xs font-medium">Insured Shipping</span>
+              <span className="text-[10px] text-foreground/50">DHL Express, USPS & UPS</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Award className="w-6 h-6 text-amber-600" />
+              <span className="text-xs font-medium">Quality Inspected</span>
+              <span className="text-[10px] text-foreground/50">Checked Before Dispatch</span>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Lock className="w-6 h-6 text-purple-600" />
+              <span className="text-xs font-medium">Verified Business</span>
+              <span className="text-[10px] text-foreground/50">Philadelphia, PA, USA</span>
+            </div>
+            <div className="flex flex-col items-center gap-2 col-span-2 md:col-span-1">
+              <MapPin className="w-6 h-6 text-red-600" />
+              <span className="text-xs font-medium">Real Store, Real People</span>
+              <span className="text-[10px] text-foreground/50">2208 Michener St, Philadelphia</span>
+            </div>
+          </div>
+          {/* Payment Methods */}
+          <div className="flex items-center justify-center gap-4 mt-6 pt-4 border-t border-border/30">
+            <span className="text-[10px] text-foreground/40 uppercase tracking-wider">Accepted Payments</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">VISA</span>
+              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">MC</span>
+              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">AMEX</span>
+              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">PayPal</span>
+              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">Apple Pay</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Bar */}
       <div className="border-t border-border/50">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-foreground/50">
-            <p>© 2026 LuxeMia. All rights reserved.</p>
+            <p>© 2026 LuxeMia Fashion Inc. All rights reserved.</p>
             <div className="flex flex-wrap gap-5">
               <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>

@@ -13,6 +13,7 @@ import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { getLocalProductByHandle } from '@/data/localProducts';
+import { forceJpegFormat } from '@/lib/imageUtils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
@@ -107,12 +108,12 @@ const ProductDetail = () => {
           title={`${product.title} | ${categoryName} | LuxeMia`}
           description={product.description?.slice(0, 155) + '...' || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`}
           type="product"
-          image={product.images.edges[0]?.node.url}
+          image={forceJpegFormat(product.images.edges[0]?.node.url || '')}
           product={{
             name: product.title,
             price: product.priceRange.minVariantPrice.amount,
             currency: product.priceRange.minVariantPrice.currencyCode,
-            image: product.images.edges[0]?.node.url || '',
+            image: forceJpegFormat(product.images.edges[0]?.node.url || ''),
             description: product.description || '',
             availability: product.availableForSale !== false ? 'InStock' : 'OutOfStock',
             sku: product.id,

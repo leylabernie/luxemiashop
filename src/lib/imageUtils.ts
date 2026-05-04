@@ -1,4 +1,11 @@
-// Image resolution utilities for the boutique
+/**
+ * Image resolution utilities for the boutique
+ *
+ * IMPORTANT: Google Merchant Center (GMC) only accepts JPEG, PNG, and GIF images.
+ * WebP and AVIF are REJECTED with "unsupported image type [image_link]" error.
+ * All image URLs served to Google (og:image, schema.org, merchant feed) MUST
+ * be forced to JPEG format using the Shopify CDN format=jpg parameter.
+ */
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -67,6 +74,29 @@ const fixMalformedUrl = (url: string): string => {
   return url;
 };
 
+/**
+ * Force an image URL to return JPEG format for Google Merchant Center compliance.
+ * GMC only accepts JPEG, PNG, and GIF — WebP and AVIF are rejected.
+ *
+ * For Shopify CDN: uses format=jpg parameter
+ * For kesimg CDN: appends &format=jpg
+ * For other URLs: no transformation (assumed compatible)
+ */
+export const forceJpegFormat = (url: string): string => {
+  if (!url) return url;
+  if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
+    // Remove existing format param and re-add as jpg
+    let clean = url.replace(/[&?]format=\w+/g, '');
+    const sep = clean.includes('?') ? '&' : '?';
+    return `${clean}${sep}format=jpg`;
+  }
+  if (url.includes('kesimg.b-cdn.net')) {
+    const sep = url.includes('?') ? '&' : '?';
+    return `${url}${sep}format=jpg`;
+  }
+  return url;
+};
+
 export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | 'gallery' | 'hero' = 'card'): string => {
   if (!url) return url;
   
@@ -99,6 +129,12 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
     // quality=90 ensures sharp images without excessive file size
     const separator = optimizedUrl.includes('?') ? '&' : '?';
     optimizedUrl = `${optimizedUrl}${separator}width=${size}&quality=90&crop=center&format=jpg`;
+  }
+  
+  // For kesimg CDN images, force JPEG format too
+  if (optimizedUrl.includes('kesimg.b-cdn.net') && !optimizedUrl.includes('format=')) {
+    const separator = optimizedUrl.includes('?') ? '&' : '?';
+    optimizedUrl = `${optimizedUrl}${separator}format=jpg`;
   }
   
   // For external images, proxy them to bypass hotlink protection
