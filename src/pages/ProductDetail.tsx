@@ -33,27 +33,26 @@ const isStitchableProductType = (productType?: string): boolean => {
 };
 
 /**
- * Get Google Product Category numeric ID for structured data.
- * Uses the same mapping as the merchant feed generator.
- * - 5598 = Men's Suits (sherwanis)
- * - 5600 = Men's Shirts & Tops (kurtas)
- * - 5006 = Men's Clothing
- * - 2275 = Dresses (lehengas, suits)
- * - 2271 = Clothing (sarees)
+ * Get Google Product Category in FULL TEXT PATH format.
+ * Google Merchant Center requires text paths (not numeric IDs) to avoid
+ * "Invalid product category [google_product_category]" errors.
+ * See: https://support.google.com/merchants/answer/6324436
  */
-const getGoogleProductCategoryId = (productType?: string, title?: string): string => {
+const getGoogleProductCategory = (productType?: string, title?: string): string => {
   const t = (title || '').toLowerCase();
   const pt = (productType || '').toLowerCase();
   const isMenswear = pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear');
 
   if (isMenswear) {
-    if (t.includes('sherwani')) return '5598';
-    if (t.includes('kurta')) return '5600';
-    return '5006';
+    if (t.includes('sherwani')) return 'Apparel & Accessories > Clothing > Men\'s Clothing > Men\'s Suits';
+    if (t.includes('kurta')) return 'Apparel & Accessories > Clothing > Men\'s Clothing > Men\'s Shirts & Tops';
+    return 'Apparel & Accessories > Clothing > Men\'s Clothing';
   }
-  if (pt.includes('lehenga')) return '2275';
-  if (pt.includes('saree')) return '2271';
-  return '2275';
+  if (pt.includes('lehenga') || pt.includes('dress')) return 'Apparel & Accessories > Clothing > Dresses';
+  if (pt.includes('saree')) return 'Apparel & Accessories > Clothing';
+  if (pt.includes('jewel') || pt.includes('necklace') || pt.includes('earring') || pt.includes('bangle')) return 'Apparel & Accessories > Jewelry';
+  if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar')) return 'Apparel & Accessories > Clothing > Dresses';
+  return 'Apparel & Accessories > Clothing';
 };
 
 const ProductDetail = () => {
@@ -146,7 +145,7 @@ const ProductDetail = () => {
             color: (product as any).options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0],
             material: product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0],
             sizes: product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size')?.values || [],
-            googleProductCategory: getGoogleProductCategoryId(product.productType, product.title),
+            googleProductCategory: getGoogleProductCategory(product.productType, product.title),
           }}
           breadcrumbs={[
             { name: 'Home', url: '/' },
