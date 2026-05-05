@@ -24,7 +24,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
-          answer: 'Orders can only be modified or cancelled within 24 hours of placement. After this window, your order enters production and cannot be changed. To request a cancellation, email hello@luxemia.com immediately with your order number.',
+          answer: 'Orders can only be modified or cancelled within 24 hours of placement. After this window, your order enters production and cannot be changed. To request a cancellation, email hello@luxemia.shop immediately with your order number.',
         },
         {
           question: 'How do I apply a discount code?',
@@ -46,7 +46,7 @@ const FAQ = () => {
         },
         {
           question: 'How long does shipping take?',
-          answer: 'Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders are dispatched in 3-5 business days; custom/alteration orders in 5-7 business days. Total delivery time includes dispatch + transit.',
+          answer: 'Readymade items are dispatched within 3-5 business days, and custom/alteration orders within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping. Delivery times vary by destination.',
         },
         {
           question: 'How can I track my order?',
@@ -62,7 +62,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer free shipping?',
-          answer: 'Yes! We offer free standard shipping on orders over $300 worldwide. No coupon code needed — free shipping is applied automatically at checkout when your order exceeds $300.',
+          answer: 'Yes! We offer free shipping on orders over $300 USD to anywhere in the world. Standard flat rate is $14.95 per item otherwise.',
         },
       ],
     },
@@ -84,7 +84,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'Unfortunately, all sales are final and we do not accept returns for sizing issues. We strongly recommend using our detailed Size Guide and contacting us before ordering if you have any questions about fit. For minor adjustments, we recommend visiting a local tailor — alterations to Indian ethnic wear are common and straightforward.',
+          answer: 'No. All sales are final and we do not accept returns or exchanges for sizing issues. We strongly recommend using our Size Guide and contacting us before ordering to ensure the correct size. For minor fit adjustments, a local tailor can often help.',
         },
         {
           question: 'What measurements do I need to provide?',
@@ -102,23 +102,27 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of many products, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which should be documented with photos or an unboxing video recorded before and during opening the package. Claims must be filed within 7 days of delivery.',
+          answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during package opening.',
         },
         {
           question: 'Why do I need an unboxing video?',
-          answer: 'An unboxing video is the strongest evidence for a damage or missing-item claim. Without video evidence of the package condition on arrival and the moment of opening, it can be difficult to distinguish transit damage from post-delivery damage. While we also accept detailed photo evidence, we strongly recommend recording the unboxing of every order as it significantly speeds up the claims process.',
+          answer: 'The unboxing video is the only way we can process a damage or missing-item claim. Without video evidence of the package condition on arrival and the moment of opening, we have no way to verify transit damage. Claims without a valid unboxing video cannot be processed.',
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'All items are final sale — this includes custom/made-to-order pieces, standard-size items, intimate wear, and accessories. Sizing issues, colour variations from screen display, and change of mind are not eligible for claims.',
+          answer: 'All items are final sale with no exceptions other than genuine shipping damage supported by an unboxing video. This includes sizing issues, colour variations, change of mind, and event cancellations.',
         },
         {
-          question: 'What qualifies as shipping damage?',
-          answer: 'Valid damage claims include torn or cut fabric caused by transit, a visibly crushed or destroyed package, water-damaged items from transit, or a completely wrong item shipped. Colour variations, sizing issues, minor embroidery variations, and change of mind do not qualify. Claims must be reported within 7 days of delivery with supporting evidence (photos or unboxing video).',
+          question: 'What if my item arrives damaged?',
+          answer: 'Email us at hello@luxemia.shop within 48 hours of delivery with your order number, unboxing video, and photos of the damage. Claims without video evidence or submitted after 48 hours cannot be processed. Our team will review and respond within 2-3 business days.',
+        },
+        {
+          question: 'Can I cancel my order?',
+          answer: 'Orders can be cancelled within 24 hours of placement only. After 24 hours, production begins and the order cannot be cancelled. Contact us immediately at hello@luxemia.shop or WhatsApp +1-215-341-9990.',
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'Unfortunately, no. All sales are final and we do not accept exchanges. We strongly recommend using our Size Guide and contacting us before ordering if you have any questions about sizing, fabric, or colour.',
+          answer: 'No. All sales are final and we do not accept exchanges. We recommend using our detailed Size Guide and contacting us before ordering with any questions about sizing, fit, or colour.',
         },
       ],
     },
@@ -170,7 +174,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you have a loyalty program?',
-          answer: 'We do not currently have a loyalty program, but sign up for our newsletter to receive exclusive offers, early access to new collections, and special discounts delivered to your inbox.',
+          answer: 'Yes! Join LuxeMia Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy member-only offers. Sign up is free!',
         },
         {
           question: 'Can I save items to buy later?',
@@ -178,7 +182,7 @@ const FAQ = () => {
         },
         {
           question: 'How can I contact customer service?',
-          answer: 'Email us at hello@luxemia.com, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. We aim to respond to all inquiries within 24-48 hours.',
+          answer: 'Email us at hello@luxemia.shop, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. We aim to respond to all inquiries within 24-48 hours.',
         },
       ],
     },
@@ -348,10 +352,10 @@ const FAQ = () => {
                 <Link to="/contact">
                   <Button size="lg">Contact Us</Button>
                 </Link>
-                <a href="mailto:hello@luxemia.com">
+                <a href="mailto:hello@luxemia.shop">
                   <Button variant="outline" size="lg">
                     <Mail className="w-4 h-4 mr-2" />
-                    hello@luxemia.com
+                    hello@luxemia.shop
                   </Button>
                 </a>
               </div>

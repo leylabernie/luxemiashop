@@ -255,8 +255,8 @@ const SizeGuide = () => {
                 weeks additional production time.
               </p>
               <p className="text-muted-foreground text-sm">
-                Email: <span className="text-primary">customfitting@luxemia.com</span> | 
-                Phone: <span className="text-primary">+1-215-341-9990</span>
+                Email: <span className="text-primary">hello@luxemia.shop</span> | 
+                Phone: <span className="text-primary">+1 (213) 555-1234</span>
               </p>
             </div>
           </div>

@@ -208,7 +208,7 @@ const Terms = () => {
                   </div>
                   <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Orders may only be cancelled within 24 hours of placement.</strong></li>
-                    <li>To cancel, you must contact our customer service team immediately at hello@luxemia.com with your order number.</li>
+                    <li>To cancel, you must contact our customer service team immediately at hello@luxemia.shop with your order number.</li>
                     <li>After the 24-hour window, cancellation requests will not be accepted as production may have already begun.</li>
                     <li>If cancellation is approved within the window, a full refund will be processed within 5-7 business days.</li>
                     <li>Custom orders that have entered production cannot be cancelled under any circumstances.</li>
@@ -248,7 +248,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">8.2 Manufacturing Defects</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Manufacturing defects are reviewed on a case-by-case basis with photo evidence.</li>
-                        <li>Contact us within 7 days of delivery with clear photos of any defects.</li>
+                        <li>Contact us within 48 hours of delivery with clear photos of any defects.</li>
                         <li>Size/fit issues due to customer-provided measurements are NOT considered defects.</li>
                       </ul>
                     </div>
@@ -257,7 +257,7 @@ const Terms = () => {
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Order cancellations may be possible within 24 hours of placing your order.</li>
                         <li>After production begins, cancellations are not possible.</li>
-                        <li>Contact hello@luxemia.com immediately if you need to cancel.</li>
+                        <li>Contact hello@luxemia.shop immediately if you need to cancel.</li>
                       </ul>
                     </div>
                     <p className="text-sm">
@@ -352,7 +352,7 @@ const Terms = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">15.2 Arbitration</h3>
-                      <p>Any disputes that cannot be resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in Philadelphia, Pennsylvania.</p>
+                      <p>Any disputes that cannot be resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in Los Angeles County, California.</p>
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">15.3 Class Action Waiver</h3>
@@ -364,9 +364,9 @@ const Terms = () => {
                 <section id="governing">
                   <h2 className="text-xl font-serif text-foreground mb-4">16. Governing Law</h2>
                   <p>
-                    These Terms shall be governed by and construed in accordance with the laws of the Commonwealth of Pennsylvania, 
+                    These Terms shall be governed by and construed in accordance with the laws of the State of California, 
                     United States, without regard to its conflict of law provisions. Any legal action or proceeding 
-                    shall be brought exclusively in the state or federal courts located in Philadelphia, Pennsylvania, 
+                    shall be brought exclusively in the state or federal courts located in Los Angeles County, California, 
                     and you hereby consent to the personal jurisdiction of such courts.
                   </p>
                 </section>
@@ -387,14 +387,13 @@ const Terms = () => {
                   <div className="space-y-2">
                     <p><strong>LuxeMia Fashion Inc.</strong></p>
                     <p>Legal Department</p>
-                    <p>2208 Michener St</p>
-                    <p>Philadelphia, PA 19115</p>
-                    <p>United States</p>
+                    <p>123 Fashion District, Suite 500</p>
+                    <p>Los Angeles, CA 90001, USA</p>
                     <p className="mt-4">
-                      Email: <a href="mailto:legal@luxemia.com" className="text-primary hover:underline">legal@luxemia.com</a>
+                      Email: <a href="mailto:hello@luxemia.shop" className="text-primary hover:underline">hello@luxemia.shop</a>
                     </p>
                     <p>
-                      Phone: <a href="tel:+1-215-341-9990" className="text-primary hover:underline">+1-215-341-9990</a>
+                      Phone: <a href="tel:+12135551234" className="text-primary hover:underline">+1 (213) 555-1234</a>
                     </p>
                   </div>
                 </section>

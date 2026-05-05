@@ -114,12 +114,7 @@ const SEOHead = ({
             '@type': 'OfferShippingDetails',
             shippingRate: {
               '@type': 'MonetaryAmount',
-              value: '14.95',
-              currency: product.currency,
-            },
-            freeShippingThreshold: {
-              '@type': 'MonetaryAmount',
-              value: '300',
+              value: '0',
               currency: product.currency,
             },
             shippingDestination: {
@@ -131,27 +126,22 @@ const SEOHead = ({
               handlingTime: {
                 '@type': 'QuantitativeValue',
                 minValue: 3,
-                maxValue: 7,
+                maxValue: 5,
                 unitCode: 'DAY',
-                description: '3-5 business days for readymade; 5-7 business days for custom/alterations',
               },
               transitTime: {
                 '@type': 'QuantitativeValue',
                 minValue: 3,
                 maxValue: 10,
                 unitCode: 'DAY',
-                description: '3-5 business days via DHL Express; 7-10 business days via USPS/UPS Standard',
               },
             },
           },
           hasMerchantReturnPolicy: {
             '@type': 'MerchantReturnPolicy',
-            applicableCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
+            applicableCountry: 'US',
             returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-            merchantReturnDays: 0,
             returnFees: 'https://schema.org/FreeReturn',
-            itemDefectReturnFees: 'https://schema.org/FreeReturn',
-            description: 'All sales are final. Returns are not accepted. Only genuine shipping damage claims are handled within 7 days of delivery with photo/video evidence.',
           },
         },
       }

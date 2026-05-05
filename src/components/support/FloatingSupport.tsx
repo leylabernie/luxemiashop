@@ -111,8 +111,8 @@ const FloatingSupport = () => {
     {
       icon: Mail,
       label: 'Email',
-      description: 'hello@luxemia.com',
-      href: 'mailto:hello@luxemia.com?subject=Customer%20Inquiry',
+      description: 'hello@luxemia.shop',
+      href: 'mailto:hello@luxemia.shop?subject=Customer%20Inquiry',
       color: 'bg-foreground hover:bg-foreground/90',
       external: false,
     },

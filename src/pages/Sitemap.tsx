@@ -16,7 +16,7 @@ interface SitemapProduct {
 const Sitemap = () => {
   const [products, setProducts] = useState<SitemapProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.com';
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.shop';
   const currentDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {

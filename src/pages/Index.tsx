@@ -20,11 +20,11 @@ import CustomerStories from '@/components/home/CustomerStories';
 const homepageFaqs = [
   {
     question: "Do you offer international shipping for Indian ethnic wear?",
-    answer: "Yes, LuxeMia ships worldwide at a flat rate of $14.95 per item, with free shipping on orders over $300. Standard delivery (USPS/UPS) takes 7-10 business days transit; express (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days. Visit our Shipping Policy page for details."
+    answer: "Yes, LuxeMia offers free worldwide shipping, including to the USA, UK, Canada, and many other countries. You can find more details on our Shipping Policy page."
   },
   {
-    question: "What is your return policy for international orders?",
-    answer: "All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of many products, LuxeMia does not accept returns. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video. Please refer to our Returns Policy page for full details."
+    question: "What is your return policy?",
+    answer: "All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video. Please refer to our Returns Policy page for full details."
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
@@ -40,7 +40,7 @@ const homepageFaqs = [
   },
   {
     question: "Do I need to pay customs duties or taxes on international orders?",
-    answer: "While LuxeMia offers free shipping on orders over $300, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
+    answer: "While LuxeMia offers free shipping, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
@@ -61,7 +61,7 @@ const Index = () => {
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
     "telephone": "+1-215-341-9990",
-    "email": "hello@luxemia.com",
+    "email": "hello@luxemia.shop",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "2208 Michener St",
@@ -72,8 +72,8 @@ const Index = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "40.0758",
-      "longitude": "-75.0493"
+      "latitude": "40.0722",
+      "longitude": "-75.0409"
     },
     "openingHoursSpecification": [
       {
@@ -90,8 +90,8 @@ const Index = () => {
       }
     ],
     "priceRange": "$$",
-    "currenciesAccepted": "USD",
-    "paymentAccepted": "Credit Card, Debit Card, PayPal, Apple Pay, Google Pay",
+    "currenciesAccepted": "USD, GBP, CAD",
+    "paymentAccepted": "Credit Card, Debit Card, UPI, Net Banking, PayPal",
     "sameAs": [
       "https://www.instagram.com/luxemiashop",
       "https://www.facebook.com/luxemiashop",

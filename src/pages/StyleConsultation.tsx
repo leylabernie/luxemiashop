@@ -173,7 +173,7 @@ const StyleConsultation = () => {
       `Budget: ${formData.budget}\n` +
       `Requirements: ${formData.requirements}`
     );
-    window.location.href = `mailto:hello@luxemia.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:hello@luxemia.shop?subject=${subject}&body=${body}`;
   };
 
   const updateField = (field: string, value: string) => {

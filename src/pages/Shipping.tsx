@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Truck, Clock, Globe, Package, AlertTriangle, FileText, DollarSign, RotateCcw, ShoppingBag } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const RATE_PER_ITEM = 14.95;
@@ -13,50 +13,50 @@ const FREE_SHIPPING_THRESHOLD = 300;
 const regionRates = [
   {
     region: 'United States',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$25.00 per order',
     freeNote: 'Free on orders over $300',
   },
   {
     region: 'Canada',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$25.00 per order',
     freeNote: 'Free on orders over $300',
   },
   {
     region: 'United Kingdom',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$30.00 per order',
     freeNote: 'Free on orders over $300',
   },
   {
     region: 'Europe (EU)',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$30.00 per order',
     freeNote: 'Free on orders over $300',
   },
   {
     region: 'Australia & New Zealand',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$35.00 per order',
     freeNote: 'Free on orders over $300',
   },
   {
     region: 'UAE & Gulf Countries',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$25.00 per order',
     freeNote: 'Free on orders over $300',
   },
   {
     region: 'Rest of World',
-    standard: '7–10 business days',
-    express: '3–5 business days',
+    standard: '7–10 business days (USPS/UPS)',
+    express: '3–5 business days (DHL Express)',
     expressFee: '+$40.00 per order',
     freeNote: 'Free on orders over $300',
   },
@@ -153,7 +153,7 @@ const ShippingCalculator = () => {
       </div>
 
       <p className="text-xs text-muted-foreground mt-4">
-        Flat rate ${RATE_PER_ITEM} per item — no weight calculation, no surprises. Shipped via DHL Express, USPS, or UPS from India.
+        Flat rate ${RATE_PER_ITEM} per item — no weight calculation, no surprises. Shipped via DHL Express or FedEx International from India.
         Express upgrade available at checkout for faster delivery.
       </p>
     </div>
@@ -161,13 +161,61 @@ const ShippingCalculator = () => {
 };
 
 const Shipping = () => {
+  // MerchantReturnPolicy + OfferShippingDetails schemas for GMC compliance
+  const shippingSchemas = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'MerchantReturnPolicy',
+        '@id': 'https://luxemia.shop/#returnPolicy',
+        name: 'LuxeMia Return Policy',
+        applicableCountry: 'US',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+        returnFees: 'https://schema.org/FreeReturn',
+      },
+      {
+        '@type': 'OfferShippingDetails',
+        '@id': 'https://luxemia.shop/#shippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'USD',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 5,
+            unitCode: 'DAY',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 10,
+            unitCode: 'DAY',
+          },
+        },
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Shipping Information — LuxeMia"
-        description="LuxeMia ships worldwide from India at a flat rate of $14.95 per item. Free shipping on orders over $300. DHL Express, USPS, and UPS."
+        description="LuxeMia ships worldwide from India at a flat rate of $14.95 per item. Free shipping on orders over $300. DHL Express and USPS/UPS."
         canonical="https://luxemia.shop/shipping"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(shippingSchemas)}
+        </script>
+      </Helmet>
       <Header />
       
       <main className="pt-[90px] lg:pt-[132px] pb-16">
@@ -218,8 +266,8 @@ const Shipping = () => {
               {[
                 { icon: Globe, title: 'Ships Worldwide', desc: '100+ countries from India' },
                 { icon: Package, title: 'Quality Packaging', desc: 'Gift-ready presentation' },
-                { icon: Truck, title: 'Full Tracking', desc: 'DHL Express, USPS & UPS' },
-                { icon: Clock, title: 'Dispatch Time', desc: '3–5 biz days (ready-made)' },
+                { icon: Truck, title: 'Full Tracking', desc: 'DHL Express & FedEx International' },
+                { icon: Clock, title: 'Dispatch Time', desc: 'Readymade 3–5 days, Custom 5–7 days' },
               ].map((item, index) => (
                 <motion.div
                   key={item.title}
@@ -253,7 +301,7 @@ const Shipping = () => {
                   your order enters our production and fulfillment process and cannot be cancelled or modified.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• To cancel, email <span className="text-primary">hello@luxemia.com</span> with your order number immediately</li>
+                  <li>• To cancel, email <span className="text-primary">hello@luxemia.shop</span> with your order number immediately</li>
                   <li>• Cancellations received after 24 hours will not be processed</li>
                   <li>• Custom/made-to-order pieces cannot be cancelled once production begins</li>
                   <li>• Refunds for cancelled orders are processed within 5–7 business days</li>
@@ -324,7 +372,8 @@ const Shipping = () => {
                 </table>
               </div>
               <p className="text-xs text-muted-foreground text-center mt-4">
-                Delivery times shown are transit times from date of dispatch. Ready-made orders are dispatched in 3–5 business days; custom/alteration orders in 5–7 business days.
+                Delivery times are from date of dispatch. Readymade items are dispatched within 3–5 business days.
+                Custom/alteration orders are dispatched within 5–7 business days.
               </p>
             </motion.div>
           </div>
@@ -410,13 +459,13 @@ const Shipping = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-2xl font-serif mb-8 text-center">Order Processing</h2>
+              <h2 className="text-2xl font-serif mb-8 text-center">Order Processing &amp; Dispatch</h2>
               
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-3">Ready-Made Sizes</h3>
+                  <h3 className="font-semibold mb-3">Readymade / Standard Size</h3>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Dispatch time: 3–5 business days</li>
+                    <li>• Dispatch: 3–5 business days</li>
                     <li>• Quality inspection before dispatch</li>
                     <li>• Professional pressing and folding</li>
                     <li>• Tracking number sent via email</li>
@@ -424,11 +473,11 @@ const Shipping = () => {
                 </div>
                 
                 <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-3">Custom &amp; Alterations</h3>
+                  <h3 className="font-semibold mb-3">Custom / Alterations</h3>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Dispatch time: 5–7 business days</li>
-                    <li>• Progress updates provided</li>
+                    <li>• Dispatch: 5–7 business days</li>
                     <li>• Custom sizing and modifications</li>
+                    <li>• Progress updates provided</li>
                     <li>• Cannot be cancelled once started</li>
                   </ul>
                 </div>
@@ -437,22 +486,21 @@ const Shipping = () => {
               <div className="bg-card border border-border rounded-lg p-6">
                 <h3 className="font-semibold mb-4">Shipping Partners &amp; Carriers</h3>
                 <p className="text-muted-foreground text-sm mb-3">
-                  We partner with trusted carriers for safe, trackable, insured delivery:
+                  We partner with trusted international carriers for safe, trackable, insured delivery:
                 </p>
                 <div className="flex flex-wrap gap-4 text-sm">
                   <span className="px-3 py-1 bg-secondary rounded-full">DHL Express</span>
                   <span className="px-3 py-1 bg-secondary rounded-full">USPS</span>
                   <span className="px-3 py-1 bg-secondary rounded-full">UPS</span>
+                  <span className="px-3 py-1 bg-secondary rounded-full">FedEx International</span>
+                  <span className="px-3 py-1 bg-secondary rounded-full">Aramex</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-3">
-                  Express orders ship via DHL Express (3–5 business days transit). Standard orders ship via USPS or UPS (7–10 business days transit).
-                </p>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Returns Policy — Reference */}
+        {/* Returns Policy */}
         <section className="py-16">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <motion.div
@@ -464,19 +512,40 @@ const Shipping = () => {
                 <RotateCcw className="h-6 w-6 text-primary" />
                 <h2 className="text-2xl font-serif">Returns &amp; Exchanges</h2>
               </div>
-              <div className="bg-card border border-destructive/30 rounded-lg p-6 text-center">
-                <p className="text-sm text-muted-foreground mb-4">
-                  All sales are final. Due to the international nature of our shipments and the custom/made-to-order nature of our products, LuxeMia does not accept returns or exchanges.
+              <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto text-sm">
+                Please read our returns policy carefully before placing your order.
+              </p>
+
+              <div className="bg-destructive/5 border border-destructive/30 rounded-lg p-6 mb-6">
+                <h3 className="font-bold text-foreground text-lg mb-2">All Sales Are Final</h3>
+                <p className="text-muted-foreground text-sm">
+                  Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges for any reason, 
+                  including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, 
+                  which must be supported by a mandatory unboxing video. Please use our Size Guide and contact us before ordering 
+                  if you have any questions. See our <a href="/returns" className="text-primary underline">full Returns Policy</a> for details.
                 </p>
-                <p className="text-sm text-muted-foreground mb-4">
-                  The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video.
-                </p>
-                <Link
-                  to="/returns"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors text-sm"
-                >
-                  Read Full Return Policy
-                </Link>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-card border border-border rounded-lg p-6">
+                  <h3 className="font-semibold mb-3">Before You Order</h3>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    <li>• Use our detailed Size Guide for accurate measurements</li>
+                    <li>• Contact us with sizing or fabric questions before ordering</li>
+                    <li>• Read the full product description carefully</li>
+                    <li>• Record an unboxing video for every delivery</li>
+                  </ul>
+                </div>
+
+                <div className="bg-card border border-border rounded-lg p-6">
+                  <h3 className="font-semibold mb-3">Damage Claims</h3>
+                  <ul className="text-sm text-muted-foreground space-y-2">
+                    <li>• Only exception to our no-returns policy</li>
+                    <li>• Mandatory unboxing video required</li>
+                    <li>• Report within 48 hours of delivery</li>
+                    <li>• Email <span className="text-primary">hello@luxemia.shop</span> with video and photos</li>
+                  </ul>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -498,7 +567,7 @@ const Shipping = () => {
                   <AccordionContent>
                     We use a simple flat rate of ${RATE_PER_ITEM} per item — no weight calculations, no size surcharges.
                     The same rate applies whether you're ordering to the USA, Canada, UK, Australia, or anywhere else in the world.
-                    Orders over ${FREE_SHIPPING_THRESHOLD} automatically qualify for free shipping.
+                    Orders over ${FREE_SHIPPING_THRESHOLD} automatically qualify for free shipping. Delivery is 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
@@ -513,7 +582,7 @@ const Shipping = () => {
                   <AccordionTrigger>How can I track my order?</AccordionTrigger>
                   <AccordionContent>
                     Once your order ships, you'll receive an email with your tracking number and a link to track your package
-                    on the carrier's website. You can also reach us via WhatsApp or email for a status update at any time.
+                    on the DHL or FedEx website. You can also reach us via WhatsApp or email for a status update at any time.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
@@ -527,7 +596,7 @@ const Shipping = () => {
                 <AccordionItem value="item-5">
                   <AccordionTrigger>Do you ship to PO Boxes?</AccordionTrigger>
                   <AccordionContent>
-                    Our carriers do not deliver to PO Boxes. Please provide a full physical street address at checkout.
+                    DHL and FedEx do not deliver to PO Boxes. Please provide a full physical street address at checkout.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-6">
@@ -542,7 +611,7 @@ const Shipping = () => {
                   <AccordionTrigger>Can I change my shipping address after ordering?</AccordionTrigger>
                   <AccordionContent>
                     Address changes can only be made within the first 24 hours of placing your order, before it enters
-                    processing. Contact us immediately at hello@luxemia.com if you need to update your address.
+                    processing. Contact us immediately at hello@luxemia.shop if you need to update your address.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-8">
@@ -555,10 +624,7 @@ const Shipping = () => {
                 <AccordionItem value="item-9">
                   <AccordionTrigger>Can I exchange for a different size?</AccordionTrigger>
                   <AccordionContent>
-                    Unfortunately, all sales are final and we do not accept exchanges. We strongly recommend using
-                    our <a href="/size-guide" className="text-primary underline">Size Guide</a> and contacting us
-                    before ordering if you have any sizing questions. For minor fit adjustments, we recommend visiting
-                    a local tailor — alterations to Indian ethnic wear are common and straightforward.
+                    Unfortunately, no. All sales are final and we do not accept returns or exchanges for sizing issues. We strongly recommend using our Size Guide and contacting us before ordering to ensure the right fit. For minor fit adjustments, a local tailor can often help.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -571,7 +637,7 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <p className="text-muted-foreground">
               Questions about shipping? Contact us at{" "}
-              <span className="text-primary font-medium">hello@luxemia.com</span>
+              <span className="text-primary font-medium">hello@luxemia.shop</span>
               {" "}or WhatsApp <span className="text-primary font-medium">+1-215-341-9990</span>
             </p>
           </div>

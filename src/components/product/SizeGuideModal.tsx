@@ -241,8 +241,8 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
         <div className="mt-6 p-4 bg-secondary/30 rounded-sm">
           <p className="text-sm text-center text-muted-foreground">
             Need help with sizing? Contact us at{' '}
-            <a href="mailto:hello@luxemia.com" className="text-primary underline underline-offset-2">
-              hello@luxemia.com
+            <a href="mailto:hello@luxemia.shop" className="text-primary underline underline-offset-2">
+              hello@luxemia.shop
             </a>
           </p>
         </div>

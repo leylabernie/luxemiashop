@@ -13,7 +13,6 @@ import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { getLocalProductByHandle } from '@/data/localProducts';
-import { forceJpegFormat } from '@/lib/imageUtils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
@@ -89,11 +88,11 @@ const ProductDetail = () => {
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: `Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.`
+      answer: `Readymade items are dispatched within 3-5 business days. Custom/alteration orders are dispatched within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping.`
     },
     {
       question: `Can I return the ${product.title} if it doesn't fit?`,
-      answer: `All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns for sizing issues or change of mind. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video. We strongly recommend using our Size Guide before ordering.`
+      answer: `All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video.`
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
@@ -108,14 +107,14 @@ const ProductDetail = () => {
           title={`${product.title} | ${categoryName} | LuxeMia`}
           description={product.description?.slice(0, 155) + '...' || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`}
           type="product"
-          image={forceJpegFormat(product.images.edges[0]?.node.url || '')}
+          image={product.images.edges[0]?.node.url}
           product={{
             name: product.title,
             price: product.priceRange.minVariantPrice.amount,
             currency: product.priceRange.minVariantPrice.currencyCode,
-            image: forceJpegFormat(product.images.edges[0]?.node.url || ''),
+            image: product.images.edges[0]?.node.url || '',
             description: product.description || '',
-            availability: product.availableForSale !== false ? 'InStock' : 'OutOfStock',
+            availability: 'InStock',
             sku: product.id,
             originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
             category: product.productType || 'Ethnic Wear',

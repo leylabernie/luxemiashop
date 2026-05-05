@@ -1,19 +1,34 @@
 import { motion } from 'framer-motion';
 import { XCircle, AlertTriangle, Video, Ruler, Clock, Shield, CheckCircle, Ban, PackageX, Phone, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+const returnPolicySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'MerchantReturnPolicy',
+  name: 'LuxeMia Return Policy',
+  applicableCountry: 'US',
+  returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+  returnFees: 'https://schema.org/FreeReturn',
+};
 
 const Returns = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Returns, Refunds & Cancellation Policy — LuxeMia"
-        description="LuxeMia return, refund, and cancellation policy. All sales final. Damage claims require supporting evidence (photos or video) within 7 days of delivery. Cancellations accepted within 24 hours only."
+        description="LuxeMia return, refund, and cancellation policy. All sales final. Damage claims require mandatory unboxing video. Cancellations accepted within 24 hours only."
         canonical="https://luxemia.shop/returns"
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify(returnPolicySchema)}
+        </script>
+      </Helmet>
       <Header />
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
@@ -72,8 +87,8 @@ const Returns = () => {
                 },
                 {
                   icon: Video,
-                  title: 'Damage Claims Require Evidence',
-                  desc: 'Damage claims must be supported by photos or video showing the condition of the package and item upon arrival. Unboxing video is strongly recommended.',
+                  title: 'Damage Claims Require Video',
+                  desc: 'Any damage claim MUST be supported by an unboxing video recorded before you open the package.',
                   color: 'text-amber-600',
                   bg: 'border-amber-500/30',
                 },
@@ -118,7 +133,7 @@ const Returns = () => {
                 <ul className="text-sm text-muted-foreground space-y-3">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Email <strong className="text-foreground">hello@luxemia.com</strong> with your order number immediately to request cancellation</span>
+                    <span>Email <strong className="text-foreground">hello@luxemia.shop</strong> with your order number immediately to request cancellation</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
@@ -143,12 +158,12 @@ const Returns = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
               <h2 className="text-2xl font-serif mb-6 flex items-center gap-3">
                 <Video className="h-6 w-6 text-amber-600" />
-                Unboxing Video & Evidence for Damage Claims
+                Mandatory Unboxing Video Requirement
               </h2>
               <div className="bg-card border border-amber-500/30 rounded-lg p-6 space-y-5">
                 <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-md">
-                  <p className="text-sm font-bold text-foreground mb-2">We strongly recommend recording an unboxing video for EVERY order.</p>
-                  <p className="text-sm text-muted-foreground">An unboxing video is the strongest form of evidence for a damage claim. While we accept photo evidence as well, a continuous unboxing video provides the most compelling proof of transit damage and significantly speeds up the claims process. Claims supported by unboxing video are processed faster and have a higher approval rate.</p>
+                  <p className="text-sm font-bold text-foreground mb-2">⚠ We strongly recommend recording an unboxing video for EVERY order.</p>
+                  <p className="text-sm text-muted-foreground">No unboxing video = no damage claim. Without video evidence of the package condition on arrival and the item condition when first opened, we are unable to process any complaint related to shipping damage or missing items.</p>
                 </div>
 
                 <div>
@@ -195,7 +210,7 @@ const Returns = () => {
                 </div>
 
                 <div className="border-t border-border/50 pt-4 text-sm text-muted-foreground">
-                  <strong className="text-foreground">Reporting window:</strong> Valid damage claims with supporting evidence must be reported within <strong className="text-foreground">7 days of delivery</strong>. Claims submitted after 7 days will not be accepted.
+                  <strong className="text-foreground">Reporting window:</strong> Valid damage claims with unboxing video must be reported within <strong className="text-foreground">48 hours of delivery</strong>. Claims submitted after 48 hours will not be accepted.
                 </div>
               </div>
             </motion.div>
@@ -237,7 +252,7 @@ const Returns = () => {
                     { label: 'Rigorous Quality Checks', text: 'Every piece is inspected before packaging — stitching, embellishments, and finish are reviewed.' },
                     { label: 'Accurate Product Representation', text: 'Our photos and descriptions accurately show what you will receive. We note colour variations where relevant.' },
                     { label: 'Premium Secure Packaging', text: 'Garments are packed in tissue, garment bags, and sturdy outer boxes designed for international transit.' },
-                    { label: 'Pre-Purchase Support', text: 'Our team answers sizing, fabric, and styling questions before you order — WhatsApp +1-215-341-9990 or email hello@luxemia.com.' },
+                    { label: 'Pre-Purchase Support', text: 'Our team answers sizing, fabric, and styling questions before you order — WhatsApp +1-215-341-9990 or email hello@luxemia.shop.' },
                     { label: 'Damage Resolution', text: 'Genuine shipping damage supported by an unboxing video will be reviewed and resolved at our discretion — replacement part, store credit, or partial refund depending on the case.' },
                   ].map((item) => (
                     <li key={item.label} className="flex items-start gap-3">
@@ -257,7 +272,7 @@ const Returns = () => {
                   { step: '1', title: 'Measure Carefully Before Ordering', desc: 'Use our detailed Size Guide. Have someone else measure you — self-measurements are often inaccurate. When between sizes, go up and plan for a local tailor to take in.' },
                   { step: '2', title: 'Ask Us Before You Buy', desc: 'Not sure about sizing, fabric weight, or colour? WhatsApp or email us first. We reply within a few hours during business hours.' },
                   { step: '3', title: 'Check All Product Details', desc: 'Read the full product description including fabric, what\'s included (dupatta, stitched/unstitched blouse), and embroidery notes before placing your order.' },
-                  { step: '4', title: 'Order Well in Advance of Your Event', desc: 'Ready-made items dispatch in 3–5 business days with standard delivery (7–10 business days transit). Custom/alteration orders dispatch in 5–7 business days. Order 6–8 weeks ahead for major events.' },
+                  { step: '4', title: 'Order Well in Advance of Your Event', desc: 'Standard items take 7–12 business days to deliver. Custom-sized pieces require an additional 3–4 weeks for production. Order 6–8 weeks ahead for major events.' },
                   { step: '5', title: 'Record Your Unboxing', desc: 'Make it a habit to record the unboxing of every order as a continuous video from sealed package to opened item. This is your protection if anything goes wrong in transit.' },
                 ].map((item) => (
                   <div key={item.step} className="flex gap-4 p-5 bg-card border border-border/50 rounded-lg">
@@ -281,16 +296,16 @@ const Returns = () => {
                   <AccordionTrigger>Can I cancel my order?</AccordionTrigger>
                   <AccordionContent>
                     Yes — but only within <strong>24 hours</strong> of placing your order. Contact us immediately at
-                    hello@luxemia.com or WhatsApp +1-215-341-9990. Once production begins (which can be within hours),
+                    hello@luxemia.shop or WhatsApp +1-215-341-9990. Once production begins (which can be within hours),
                     cancellations are not possible. Approved cancellations receive a full refund within 5–7 business days.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="q2">
                   <AccordionTrigger>My item arrived damaged — what do I do?</AccordionTrigger>
                   <AccordionContent>
-                    Email us at hello@luxemia.com within <strong>7 days of delivery</strong> with: (1) your order number,
-                    (2) your unboxing video or clear photos showing the sealed package and the damage visible when opened, and (3) photos of
-                    the damage. Our team will review claims with supporting evidence (unboxing video or clear photos) and respond
+                    Email us at hello@luxemia.shop within <strong>48 hours of delivery</strong> with: (1) your order number,
+                    (2) your unboxing video showing the sealed package and the damage visible when opened, and (3) photos of
+                    the damage. Claims without a valid unboxing video cannot be processed. Our team will review and respond
                     within 2–3 business days.
                   </AccordionContent>
                 </AccordionItem>
@@ -366,11 +381,11 @@ const Returns = () => {
                 WhatsApp Us
               </a>
               <a
-                href="mailto:hello@luxemia.com"
+                href="mailto:hello@luxemia.shop"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors"
               >
                 <Mail className="h-4 w-4" />
-                Email hello@luxemia.com
+                Email hello@luxemia.shop
               </a>
               <Link
                 to="/contact"

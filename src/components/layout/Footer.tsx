@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Linkedin, ShieldCheck, Truck, Award, Lock, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Linkedin, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
 
 const footerLinks = {
   shop: [
@@ -178,8 +178,8 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-foreground/60 flex-shrink-0" />
-                <a href="mailto:hello@luxemia.com" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
-                  hello@luxemia.com
+                <a href="mailto:hello@luxemia.shop" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
+                  hello@luxemia.shop
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -189,56 +189,34 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
                   Sun: 11am - 5pm EST
                 </span>
               </li>
-              <li className="flex items-start gap-3">
-                <svg className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span className="text-sm text-foreground/60 font-light leading-relaxed">
-                  LuxeMia Fashion Inc.<br />2208 Michener St, Philadelphia, PA 19115<br />United States
-                </span>
-              </li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Trust Signals Bar — Critical for Google Merchant Center Misrepresentation compliance */}
-      <div className="border-t border-border/50 bg-background/50">
+      {/* Trust Signals */}
+      <div className="border-t border-border/50 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="flex flex-col items-center gap-2">
-              <ShieldCheck className="w-6 h-6 text-green-600" />
-              <span className="text-xs font-medium">Secure Checkout</span>
-              <span className="text-[10px] text-foreground/50">Shopify PCI-DSS Encrypted</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <Truck className="w-6 h-6 text-blue-600" />
-              <span className="text-xs font-medium">Insured Shipping</span>
-              <span className="text-[10px] text-foreground/50">DHL Express, USPS & UPS</span>
+              <Lock className="h-6 w-6 text-green-600" />
+              <span className="text-xs font-medium">SSL Secure Checkout</span>
+              <span className="text-xs text-muted-foreground">256-bit encryption</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Award className="w-6 h-6 text-amber-600" />
-              <span className="text-xs font-medium">Quality Inspected</span>
-              <span className="text-[10px] text-foreground/50">Checked Before Dispatch</span>
+              <Shield className="h-6 w-6 text-green-600" />
+              <span className="text-xs font-medium">Quality Guaranteed</span>
+              <span className="text-xs text-muted-foreground">Inspected before shipping</span>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Lock className="w-6 h-6 text-purple-600" />
-              <span className="text-xs font-medium">Verified Business</span>
-              <span className="text-[10px] text-foreground/50">Philadelphia, PA, USA</span>
+              <Truck className="h-6 w-6 text-green-600" />
+              <span className="text-xs font-medium">Tracked Shipping</span>
+              <span className="text-xs text-muted-foreground">DHL Express &amp; USPS/UPS</span>
             </div>
-            <div className="flex flex-col items-center gap-2 col-span-2 md:col-span-1">
-              <MapPin className="w-6 h-6 text-red-600" />
-              <span className="text-xs font-medium">Real Store, Real People</span>
-              <span className="text-[10px] text-foreground/50">2208 Michener St, Philadelphia</span>
-            </div>
-          </div>
-          {/* Payment Methods */}
-          <div className="flex items-center justify-center gap-4 mt-6 pt-4 border-t border-border/30">
-            <span className="text-[10px] text-foreground/40 uppercase tracking-wider">Accepted Payments</span>
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">VISA</span>
-              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">MC</span>
-              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">AMEX</span>
-              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">PayPal</span>
-              <span className="text-xs font-bold text-foreground/60 border border-foreground/20 rounded px-1.5 py-0.5">Apple Pay</span>
+            <div className="flex flex-col items-center gap-2">
+              <CreditCard className="h-6 w-6 text-green-600" />
+              <span className="text-xs font-medium">Safe Payments</span>
+              <span className="text-xs text-muted-foreground">Shopify Secure</span>
             </div>
           </div>
         </div>
@@ -248,7 +226,14 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
       <div className="border-t border-border/50">
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-foreground/50">
-            <p>© 2026 LuxeMia Fashion Inc. All rights reserved.</p>
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+              <p>© 2026 LuxeMia. All rights reserved.</p>
+              <span className="hidden sm:inline text-foreground/30">|</span>
+              <span className="flex items-center gap-1">
+                <MapPin className="h-3 w-3" />
+                2208 Michener St, Philadelphia, PA 19115, USA
+              </span>
+            </div>
             <div className="flex flex-wrap gap-5">
               <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
               <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>

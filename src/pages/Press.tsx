@@ -48,7 +48,7 @@ const Press = () => {
               <div className="flex gap-4">
                 <Button variant="outline" className="gap-2">
                   <Mail className="w-4 h-4" />
-                  press@luxemia.com
+                  hello@luxemia.shop
                 </Button>
                 <Button className="gap-2">
                   <Download className="w-4 h-4" />
