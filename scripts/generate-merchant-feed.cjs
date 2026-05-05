@@ -20,15 +20,16 @@ const BRAND = 'LuxeMia';
 
 const convertPrice = (inrPrice) => Math.round(inrPrice * 0.012 * 2.5);
 
-// Google product category mapping
+// Google product category mapping — using numeric taxonomy IDs
+// Numeric IDs are more reliable than text paths for Google Merchant Center
 function getGoogleCategory(category) {
   const cat = category.toLowerCase();
-  if (cat.includes('sherwani')) return 'Apparel & Accessories > Clothing > Suits';
-  if (cat.includes('kurta')) return 'Apparel & Accessories > Clothing > Shirts & Tops';
-  if (cat.includes('saree')) return 'Apparel & Accessories > Clothing';
-  if (cat.includes('lehenga') || cat.includes('dress')) return 'Apparel & Accessories > Clothing > Dresses';
-  if (cat.includes('suit') || cat.includes('anarkali') || cat.includes('sharara') || cat.includes('palazzo')) return 'Apparel & Accessories > Clothing > Dresses';
-  return 'Apparel & Accessories > Clothing';
+  if (cat.includes('sherwani')) return '5598'; // Men's Suits
+  if (cat.includes('kurta')) return '5600'; // Men's Shirts & Tops
+  if (cat.includes('saree')) return '2271'; // Clothing
+  if (cat.includes('lehenga') || cat.includes('dress')) return '2275'; // Dresses
+  if (cat.includes('suit') || cat.includes('anarkali') || cat.includes('sharara') || cat.includes('palazzo')) return '2275'; // Dresses
+  return '2271'; // Clothing
 }
 
 function getGender(category) {

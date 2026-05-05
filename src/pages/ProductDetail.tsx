@@ -32,6 +32,30 @@ const isStitchableProductType = (productType?: string): boolean => {
   return STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t));
 };
 
+/**
+ * Get Google Product Category numeric ID for structured data.
+ * Uses the same mapping as the merchant feed generator.
+ * - 5598 = Men's Suits (sherwanis)
+ * - 5600 = Men's Shirts & Tops (kurtas)
+ * - 5006 = Men's Clothing
+ * - 2275 = Dresses (lehengas, suits)
+ * - 2271 = Clothing (sarees)
+ */
+const getGoogleProductCategoryId = (productType?: string, title?: string): string => {
+  const t = (title || '').toLowerCase();
+  const pt = (productType || '').toLowerCase();
+  const isMenswear = pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear');
+
+  if (isMenswear) {
+    if (t.includes('sherwani')) return '5598';
+    if (t.includes('kurta')) return '5600';
+    return '5006';
+  }
+  if (pt.includes('lehenga')) return '2275';
+  if (pt.includes('saree')) return '2271';
+  return '2275';
+};
+
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
@@ -121,6 +145,8 @@ const ProductDetail = () => {
             brand: (product as any).vendor || 'LuxeMia',
             color: (product as any).options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0],
             material: product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0],
+            sizes: product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size')?.values || [],
+            googleProductCategory: getGoogleProductCategoryId(product.productType, product.title),
           }}
           breadcrumbs={[
             { name: 'Home', url: '/' },

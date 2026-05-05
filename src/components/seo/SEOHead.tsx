@@ -38,6 +38,8 @@ interface SEOHeadProps {
     brand?: string;
     color?: string;
     material?: string;
+    sizes?: string[];
+    googleProductCategory?: string;
   };
   collection?: {
     name: string;
@@ -128,6 +130,9 @@ const SEOHead = ({
         category: product.category || 'Clothing > Traditional & Ethnic Wear',
         ...(product.color && { color: product.color }),
         ...(product.material && { material: product.material }),
+        ...(product.sizes && product.sizes.length > 0 && {
+          size: product.sizes.length === 1 ? product.sizes[0] : product.sizes.join('/')
+        }),
         itemCondition: 'https://schema.org/NewCondition',
         offers: {
           '@type': 'Offer',
