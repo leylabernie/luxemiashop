@@ -21,9 +21,9 @@ const SITE_URL = 'https://luxemia.shop';
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia: Indian Ethnic Wear Online | Bridal Lehengas, Sarees, Salwar Kameez & Menswear',
-    description: 'Discover LuxeMia for Indian ethnic wear online. Shop bridal lehengas, wedding sarees, salwar kameez & menswear with free worldwide shipping to USA, UK & Canada. Authentic craftsmanship & 2026 trends.',
-    h1: 'LuxeMia — Indian Ethnic Wear Online',
+    title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices.',
+    h1: 'LuxeMia',
     content: `
       <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with worldwide shipping.</p>
       <h2>Shop by Category</h2>
@@ -192,7 +192,7 @@ const routes = [
       <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free worldwide shipping.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Every piece is handcrafted by skilled Indian artisans and ships worldwide with full tracking. Free shipping on orders over $99 to USA, UK, and Canada.</p>
+      <p>Every piece is handcrafted by skilled Indian artisans and ships worldwide with full tracking. Free shipping on orders over $300 to USA, UK, and Canada.</p>
     `,
   },
   {
@@ -260,10 +260,10 @@ const routes = [
   },
   {
     path: '/returns',
-    title: 'Returns & Exchanges Policy | LuxeMia',
-    description: 'LuxeMia returns policy. Hassle-free returns and exchanges within 14 days. Free returns on all orders.',
-    h1: 'Returns & Exchanges',
-    content: '<p>We offer hassle-free returns and exchanges within 14 days of delivery for all unworn items in original condition. Free returns on all orders.</p>',
+    title: 'Returns, Refunds & Cancellations | LuxeMia',
+    description: 'LuxeMia returns policy. All sales are final. No returns or exchanges except for genuine shipping damage with mandatory unboxing video.',
+    h1: 'Returns, Refunds & Cancellations',
+    content: '<p>All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues or colour variations. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video reported within 48 hours. Orders can be cancelled within 24 hours of placement.</p>',
   },
   {
     path: '/contact',
@@ -307,7 +307,7 @@ const routes = [
       <p>Browse our most-loved pieces — the lehengas, sarees, and suits that our customers can't stop buying. Tried, tested, and loved worldwide.</p>
       <h2>Customer Favorites</h2>
       <p>Our bestsellers are curated based on real customer purchases and reviews. From bridal lehengas that steal the show to everyday silk sarees that never go out of style, these are the pieces our community recommends most.</p>
-      <p>Every bestseller comes with free worldwide shipping and our hassle-free 14-day return policy. Join thousands of happy customers across 50+ countries.</p>
+      <p>Every bestseller comes with free worldwide shipping on orders over $300. Flat rate $14.95 per item otherwise. All sales final — damage claims accepted within 48h with unboxing video.</p>
     `,
   },
   {
@@ -347,7 +347,7 @@ const routes = [
     content: `
       <p>Shopping for Indian ethnic wear in the USA? LuxeMia offers authentic bridal lehengas, silk sarees, and designer suits with free shipping across America.</p>
       <h2>Free Shipping to the USA</h2>
-      <p>Enjoy free standard shipping on all orders over $99 to the contiguous United States. Most orders arrive within 7-12 business days via DHL Express with full tracking. Express shipping (3-5 days) also available.</p>
+      <p>Enjoy free standard shipping on all orders over $300 to the contiguous United States. Most orders arrive within 7-12 business days via DHL Express with full tracking. Express shipping (3-5 days) also available.</p>
       <h2>Duty-Free Under $800</h2>
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery.</p>
       <h2>Shop Our USA Collection</h2>
@@ -362,7 +362,7 @@ const routes = [
     content: `
       <p>Shopping for Indian ethnic wear in the UK? LuxeMia delivers authentic bridal lehengas, silk sarees, and designer suits with free shipping across Britain.</p>
       <h2>Free Delivery Across the UK</h2>
-      <p>We offer free standard delivery on all orders over $99 to anywhere in the United Kingdom, including Northern Ireland and Scottish Highlands. Standard delivery takes 7-12 business days with full tracking.</p>
+      <p>We offer free standard delivery on all orders over $300 to anywhere in the United Kingdom, including Northern Ireland and Scottish Highlands. Standard delivery takes 7-12 business days with full tracking.</p>
       <h2>UK Customs Information</h2>
       <p>Orders under £135 are typically VAT-free. Orders over £135 may be subject to 20% import VAT, collected by the carrier at delivery. We always declare accurate values.</p>
       <h2>Shop Our UK Collection</h2>
@@ -377,7 +377,7 @@ const routes = [
     content: `
       <p>Shopping for Indian ethnic wear in Canada? LuxeMia delivers authentic bridal lehengas, silk sarees, and designer suits with free shipping across Canada.</p>
       <h2>Free Shipping Coast to Coast</h2>
-      <p>Enjoy free standard shipping on all orders over $99 to every Canadian province and territory. Standard delivery takes 10-14 business days with full tracking. Express shipping (5-7 days) also available.</p>
+      <p>Enjoy free standard shipping on all orders over $300 to every Canadian province and territory. Standard delivery takes 10-14 business days with full tracking. Express shipping (5-7 days) also available.</p>
       <h2>Canadian Customs Information</h2>
       <p>Canadian customs may charge GST/HST (5-15% depending on province) and import duties on textile imports. These charges are collected by the carrier at delivery.</p>
       <h2>Shop Our Canada Collection</h2>
@@ -391,9 +391,9 @@ const routes = [
     description: 'Shop Indian ethnic wear online in the USA. Bridal lehengas, silk sarees, salwar suits with free shipping across America. Duty-free under $800. Authentic Indian craftsmanship.',
     h1: 'Indian Ethnic Wear for USA',
     content: `
-      <p>LuxeMia delivers authentic Indian ethnic wear straight to your doorstep in the USA. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free shipping on orders over $99.</p>
+      <p>LuxeMia delivers authentic Indian ethnic wear straight to your doorstep in the USA. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free shipping on orders over $300.</p>
       <h2>Free Shipping Across America</h2>
-      <p>Standard shipping takes 7-12 business days via DHL Express with full tracking. Express shipping (3-5 business days) is also available at checkout. Free standard shipping on all orders over $99 to the contiguous United States.</p>
+      <p>Standard shipping takes 7-12 business days via DHL Express with full tracking. Express shipping (3-5 business days) is also available at checkout. Free standard shipping on all orders over $300 to the contiguous United States.</p>
       <h2>Duty-Free Under $800</h2>
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery. Orders over $800 may be subject to import duties.</p>
       <h2>Shop by Category</h2>
@@ -403,7 +403,7 @@ const routes = [
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
       </ul>
-      <p>Custom sizing available on all outfits. Returns accepted within 7 days of delivery.</p>
+      <p>Custom sizing available on all outfits. Returns not accepted — all sales final. Damage claims within 48h with unboxing video.</p>
     `,
   },
   {
@@ -412,7 +412,7 @@ const routes = [
     description: 'Shop Indian ethnic wear online in the UK. Bridal lehengas, silk sarees, salwar suits with free delivery across Britain. 7-12 day shipping. Authentic Indian craftsmanship.',
     h1: 'Indian Ethnic Wear for UK',
     content: `
-      <p>LuxeMia delivers authentic Indian ethnic wear to the United Kingdom. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free delivery on orders over $99.</p>
+      <p>LuxeMia delivers authentic Indian ethnic wear to the United Kingdom. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free delivery on orders over $300.</p>
       <h2>Free Delivery Across Britain</h2>
       <p>Standard delivery takes 7-12 business days with full tracking. We deliver to all UK addresses including Northern Ireland, Scottish Highlands, and Channel Islands. Express delivery (3-5 days) also available.</p>
       <h2>UK Customs Information</h2>
@@ -424,7 +424,7 @@ const routes = [
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
       </ul>
-      <p>Custom sizing available on all outfits. Returns accepted within 7 days of delivery.</p>
+      <p>Custom sizing available on all outfits. Returns not accepted — all sales final. Damage claims within 48h with unboxing video.</p>
     `,
   },
   {
@@ -433,7 +433,7 @@ const routes = [
     description: 'Shop Indian ethnic wear online in Canada. Bridal lehengas, silk sarees, salwar suits with free shipping coast to coast. 10-14 day delivery. Authentic Indian craftsmanship.',
     h1: 'Indian Ethnic Wear for Canada',
     content: `
-      <p>LuxeMia delivers authentic Indian ethnic wear to Canada. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free shipping on orders over $99.</p>
+      <p>LuxeMia delivers authentic Indian ethnic wear to Canada. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free shipping on orders over $300.</p>
       <h2>Free Shipping Coast to Coast</h2>
       <p>Standard shipping takes 10-14 business days with full tracking. We deliver to all Canadian provinces and territories including British Columbia, Alberta, Ontario, and Quebec. Express shipping (5-7 days) also available.</p>
       <h2>Canadian Customs Information</h2>
@@ -445,7 +445,7 @@ const routes = [
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
       </ul>
-      <p>Custom sizing available on all outfits. Returns accepted within 7 days of delivery.</p>
+      <p>Custom sizing available on all outfits. Returns not accepted — all sales final. Damage claims within 48h with unboxing video.</p>
     `,
   },
   {
