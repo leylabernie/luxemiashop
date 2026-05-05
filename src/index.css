@@ -116,14 +116,41 @@
     @apply border-border;
   }
 
+  /* CLS Fix: Ensure images have explicit aspect ratios to prevent layout shift */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Font fallback with size-adjust to reduce CLS from font swap */
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Lora', serif;
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+    /* Fallback font metrics: Georgia has similar metrics to Lora */
+    font-display: swap;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
     @apply tracking-tight;
+    font-display: swap;
+  }
+
+  /* CLS Fix: Reserve space for product gallery images */
+  .aspect-\[3\/4\] {
+    aspect-ratio: 3 / 4;
+  }
+
+  /* CLS Fix: Reserve space for product card images */
+  .product-card-image {
+    aspect-ratio: 3 / 4;
+    background: hsl(var(--card));
+  }
+
+  /* CLS Fix: Reserve space for hero section */
+  [class*="hero"] img,
+  [class*="Hero"] img {
+    aspect-ratio: auto;
   }
 }
 

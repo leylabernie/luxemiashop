@@ -24,6 +24,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    // Target modern browsers for smaller/faster builds
+    target: 'es2020',
+    // Enable CSS code splitting for smaller initial load
+    cssCodeSplit: true,
+    // Smaller chunk size warning threshold
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -31,15 +37,18 @@ export default defineConfig(({ mode }) => ({
           "vendor-supabase": ["@supabase/supabase-js"],
           "vendor-query": ["@tanstack/react-query"],
           "vendor-motion": ["framer-motion"],
-          "vendor-ui": [
+          "vendor-ui-core": [
             "@radix-ui/react-dialog",
             "@radix-ui/react-dropdown-menu",
             "@radix-ui/react-select",
             "@radix-ui/react-toast",
+          ],
+          "vendor-ui-extra": [
             "@radix-ui/react-tooltip",
             "@radix-ui/react-popover",
             "@radix-ui/react-accordion",
           ],
+          "vendor-helmet": ["react-helmet-async"],
         },
       },
     },
