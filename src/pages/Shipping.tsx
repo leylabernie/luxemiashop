@@ -172,11 +172,12 @@ const Shipping = () => {
         applicableCountry: 'US',
         returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
         returnFees: 'https://schema.org/FreeReturn',
+        description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
       },
       {
         '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsExpress',
-        name: 'DHL Express Shipping',
+        '@id': 'https://luxemia.shop/#shippingDetailsExpressReadymade',
+        name: 'DHL Express Shipping (Readymade)',
         shippingRate: {
           '@type': 'MonetaryAmount',
           value: '0',
@@ -193,7 +194,7 @@ const Shipping = () => {
             minValue: 3,
             maxValue: 5,
             unitCode: 'DAY',
-            description: 'Readymade dispatch time',
+            description: 'Readymade/standard size dispatch time',
           },
           transitTime: {
             '@type': 'QuantitativeValue',
@@ -206,8 +207,39 @@ const Shipping = () => {
       },
       {
         '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsStandard',
-        name: 'USPS/UPS Standard Shipping',
+        '@id': 'https://luxemia.shop/#shippingDetailsExpressCustom',
+        name: 'DHL Express Shipping (Custom/Alterations)',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: 'USD',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 5,
+            maxValue: 7,
+            unitCode: 'DAY',
+            description: 'Custom/alteration dispatch time',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 5,
+            unitCode: 'DAY',
+            description: 'DHL Express delivery',
+          },
+        },
+      },
+      {
+        '@type': 'OfferShippingDetails',
+        '@id': 'https://luxemia.shop/#shippingDetailsStandardReadymade',
+        name: 'USPS/UPS Standard Shipping (Readymade)',
         shippingRate: {
           '@type': 'MonetaryAmount',
           value: '14.95',
@@ -224,7 +256,38 @@ const Shipping = () => {
             minValue: 3,
             maxValue: 5,
             unitCode: 'DAY',
-            description: 'Readymade dispatch time',
+            description: 'Readymade/standard size dispatch time',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 7,
+            maxValue: 10,
+            unitCode: 'DAY',
+            description: 'USPS/UPS standard delivery',
+          },
+        },
+      },
+      {
+        '@type': 'OfferShippingDetails',
+        '@id': 'https://luxemia.shop/#shippingDetailsStandardCustom',
+        name: 'USPS/UPS Standard Shipping (Custom/Alterations)',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '14.95',
+          currency: 'USD',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 5,
+            maxValue: 7,
+            unitCode: 'DAY',
+            description: 'Custom/alteration dispatch time',
           },
           transitTime: {
             '@type': 'QuantitativeValue',

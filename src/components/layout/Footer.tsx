@@ -194,7 +194,7 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
         </div>
       </div>
 
-      {/* Trust Signals */}
+      {/* Trust Signals & Business Transparency — Critical for GMC Misrepresentation compliance */}
       <div className="border-t border-border/50 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
@@ -218,6 +218,24 @@ const Footer = forwardRef<HTMLElement>((props, ref) => {
               <span className="text-xs font-medium">Safe Payments</span>
               <span className="text-xs text-muted-foreground">Shopify Secure</span>
             </div>
+          </div>
+          {/* Business Transparency Info — Required by Google Merchant Center */}
+          <div className="mt-6 pt-6 border-t border-border/30 text-center text-xs text-muted-foreground">
+            <p className="mb-1">
+              <strong className="text-foreground">LuxeMia</strong> — Indian Ethnic Wear Online Store
+            </p>
+            <p className="mb-1">
+              <MapPin className="h-3 w-3 inline-block mr-1" />
+              2208 Michener St, Philadelphia, PA 19115, USA
+            </p>
+            <p className="mb-1">
+              <Phone className="h-3 w-3 inline-block mr-1" />
+              <a href="tel:+1-215-341-9990" className="hover:text-foreground transition-colors">+1-215-341-9990</a>
+              {' '}&bull;{' '}
+              <Mail className="h-3 w-3 inline-block mr-1" />
+              <a href="mailto:hello@luxemia.shop" className="hover:text-foreground transition-colors">hello@luxemia.shop</a>
+            </p>
+            <p>Mon-Sat 10am-7pm EST &bull; Sun 11am-5pm EST</p>
           </div>
         </div>
       </div>

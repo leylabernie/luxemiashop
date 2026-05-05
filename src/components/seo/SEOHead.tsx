@@ -79,14 +79,31 @@ const SEOHead = ({
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
-  // Ensure product images are JPEG for Google Merchant Center compliance
-  // Shopify CDN may serve WebP unless format=jpg is explicitly requested
+  // Ensure ALL images are JPEG for Google Merchant Center compliance.
+  // GMC only accepts JPEG, PNG, and GIF — WebP/AVIF are REJECTED.
+  // This function forces format=jpg on all CDN URLs that support it,
+  // and ensures no image URL can serve WebP to Google's crawlers.
   const ensureJpegForGmc = (url: string): string => {
     if (!url) return url;
-    // If it's a Shopify CDN URL without format param, add format=jpg
-    if ((url.includes('cdn.shopify.com') || url.includes('myshopify.com')) && !url.includes('format=')) {
-      const separator = url.includes('?') ? '&' : '?';
-      return `${url}${separator}format=jpg`;
+    // Shopify CDN — force format=jpg (remove existing format param first)
+    if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
+      const clean = url.replace(/[&?]format=\w+/g, '');
+      const sep = clean.includes('?') ? '&' : '?';
+      return `${clean}${sep}format=jpg`;
+    }
+    // kesimg CDN — force format=jpg
+    if (url.includes('kesimg.b-cdn.net')) {
+      if (!url.includes('format=')) {
+        const sep = url.includes('?') ? '&' : '?';
+        return `${url}${sep}format=jpg`;
+      }
+      // Replace existing non-jpg format
+      return url.replace(/format=\w+/, 'format=jpg');
+    }
+    // For other URLs without image extension — try format=jpg
+    if (!url.match(/\.(jpg|jpeg|png|gif)(\?|$)/i) && !url.includes('format=')) {
+      const sep = url.includes('?') ? '&' : '?';
+      return `${url}${sep}format=jpg`;
     }
     return url;
   };
@@ -127,6 +144,7 @@ const SEOHead = ({
           shippingDetails: [
             {
               '@type': 'OfferShippingDetails',
+              name: 'DHL Express (Readymade)',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '0',
@@ -134,7 +152,7 @@ const SEOHead = ({
               },
               shippingDestination: {
                 '@type': 'DefinedRegion',
-                addressCountry: 'US',
+                addressCountry: ['US', 'GB', 'CA'],
               },
               deliveryTime: {
                 '@type': 'ShippingDeliveryTime',
@@ -143,17 +161,50 @@ const SEOHead = ({
                   minValue: 3,
                   maxValue: 5,
                   unitCode: 'DAY',
+                  description: 'Readymade dispatch time',
                 },
                 transitTime: {
                   '@type': 'QuantitativeValue',
                   minValue: 3,
                   maxValue: 5,
                   unitCode: 'DAY',
+                  description: 'DHL Express delivery',
                 },
               },
             },
             {
               '@type': 'OfferShippingDetails',
+              name: 'DHL Express (Custom/Alterations)',
+              shippingRate: {
+                '@type': 'MonetaryAmount',
+                value: '0',
+                currency: product.currency,
+              },
+              shippingDestination: {
+                '@type': 'DefinedRegion',
+                addressCountry: ['US', 'GB', 'CA'],
+              },
+              deliveryTime: {
+                '@type': 'ShippingDeliveryTime',
+                handlingTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 5,
+                  maxValue: 7,
+                  unitCode: 'DAY',
+                  description: 'Custom/alteration dispatch time',
+                },
+                transitTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 3,
+                  maxValue: 5,
+                  unitCode: 'DAY',
+                  description: 'DHL Express delivery',
+                },
+              },
+            },
+            {
+              '@type': 'OfferShippingDetails',
+              name: 'USPS/UPS Standard (Readymade)',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '14.95',
@@ -161,7 +212,7 @@ const SEOHead = ({
               },
               shippingDestination: {
                 '@type': 'DefinedRegion',
-                addressCountry: 'US',
+                addressCountry: ['US', 'GB', 'CA'],
               },
               deliveryTime: {
                 '@type': 'ShippingDeliveryTime',
@@ -170,12 +221,14 @@ const SEOHead = ({
                   minValue: 3,
                   maxValue: 5,
                   unitCode: 'DAY',
+                  description: 'Readymade dispatch time',
                 },
                 transitTime: {
                   '@type': 'QuantitativeValue',
                   minValue: 7,
                   maxValue: 10,
                   unitCode: 'DAY',
+                  description: 'USPS/UPS standard delivery',
                 },
               },
             },
