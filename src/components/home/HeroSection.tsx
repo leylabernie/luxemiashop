@@ -126,15 +126,9 @@ const HeroSection = () => {
                 <span className="inline-block px-3 py-1 bg-white/15 backdrop-blur-sm text-white/90 text-[10px] sm:text-xs tracking-[0.25em] uppercase mb-5 rounded border border-white/10">
                   {slide.tag}
                 </span>
-                {currentSlide === 0 ? (
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl mb-4 leading-[1.1] text-white">
-                    {slide.title}
-                  </h1>
-                ) : (
-                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl mb-4 leading-[1.1] text-white">
-                    {slide.title}
-                  </h2>
-                )}
+                <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl mb-4 leading-[1.1] text-white">
+                  {slide.title}
+                </h2>
                 <p className="text-sm sm:text-base tracking-[0.08em] text-white/60 mb-8 font-light max-w-md">
                   {slide.subtitle}
                 </p>

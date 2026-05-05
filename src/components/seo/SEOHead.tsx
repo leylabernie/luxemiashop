@@ -62,8 +62,8 @@ const SOCIAL_LINKS = {
 };
 
 const SEOHead = ({
-  title = 'LuxeMia | Indian Ethnic Wear Online - Sarees, Lehengas & Suits',
-  description = 'Shop Indian ethnic wear at LuxeMia. Beautiful sarees, bridal lehengas, anarkali suits, and wedding collections at affordable prices. Worldwide shipping. Quality assured.',
+  title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
+  description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices.',
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
