@@ -33,26 +33,47 @@ const isStitchableProductType = (productType?: string): boolean => {
 };
 
 /**
- * Get Google Product Category in FULL TEXT PATH format.
- * Google Merchant Center requires text paths (not numeric IDs) to avoid
- * "Invalid product category [google_product_category]" errors.
+ * Get Google Product Category using NUMERIC TAXONOMY IDs.
+ * GMC accepts both numeric IDs and text paths, but numeric IDs are
+ * unambiguous and avoid "Invalid product category" errors from
+ * apostrophe mismatches or path typos.
  * See: https://support.google.com/merchants/answer/6324436
+ *
+ * Google Product Taxonomy IDs:
+ *   1604 = Apparel & Accessories > Clothing
+ *   2271 = Apparel & Accessories > Clothing > Dresses
+ *   5424 = Apparel & Accessories > Clothing > Sarees & Blouses
+ *   2104 = Apparel & Accessories > Clothing > Men's Clothing
+ *   2195 = Apparel & Accessories > Clothing > Men's Clothing > Men's Suits
+ *   2197 = Apparel & Accessories > Clothing > Men's Clothing > Men's Shirts & Tops
+ *   188  = Apparel & Accessories > Jewelry
+ *   193  = Apparel & Accessories > Jewelry > Necklaces
+ *   194  = Apparel & Accessories > Jewelry > Earrings
+ *   200  = Apparel & Accessories > Jewelry > Bracelets
  */
 const getGoogleProductCategory = (productType?: string, title?: string): string => {
   const t = (title || '').toLowerCase();
   const pt = (productType || '').toLowerCase();
-  const isMenswear = pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear');
 
-  if (isMenswear) {
-    if (t.includes('sherwani')) return 'Apparel & Accessories > Clothing > Men\'s Clothing > Men\'s Suits';
-    if (t.includes('kurta')) return 'Apparel & Accessories > Clothing > Men\'s Clothing > Men\'s Shirts & Tops';
-    return 'Apparel & Accessories > Clothing > Men\'s Clothing';
+  // Men's categories
+  if (pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear')) {
+    if (t.includes('sherwani')) return '2195'; // Men's Suits
+    if (t.includes('kurta')) return '2197'; // Men's Shirts & Tops
+    return '2104'; // Men's Clothing
   }
-  if (pt.includes('lehenga') || pt.includes('dress')) return 'Apparel & Accessories > Clothing > Dresses';
-  if (pt.includes('saree')) return 'Apparel & Accessories > Clothing';
-  if (pt.includes('jewel') || pt.includes('necklace') || pt.includes('earring') || pt.includes('bangle')) return 'Apparel & Accessories > Jewelry';
-  if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar')) return 'Apparel & Accessories > Clothing > Dresses';
-  return 'Apparel & Accessories > Clothing';
+  // Lehengas and Dresses
+  if (pt.includes('lehenga') || pt.includes('dress')) return '2271';
+  // Sarees
+  if (pt.includes('saree')) return '5424';
+  // Jewelry subcategories
+  if (pt.includes('necklace')) return '193';
+  if (pt.includes('earring')) return '194';
+  if (pt.includes('bangle') || pt.includes('bracelet')) return '200';
+  if (pt.includes('jewel')) return '188';
+  // Suits, Anarkalis, Sharara, Palazzo, Salwar
+  if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar')) return '2271';
+  // Default: Clothing
+  return '1604';
 };
 
 const ProductDetail = () => {

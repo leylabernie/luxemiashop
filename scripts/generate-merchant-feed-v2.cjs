@@ -1,8 +1,20 @@
 #!/usr/bin/env node
 /**
- * Generate Google Merchant Center XML feed v2
- * Fixes: Invalid google_product_category (use full text paths), Missing size (S/M/L/XL/XXL for apparel)
+ * Generate Google Merchant Center XML feed v3
+ * Fixes: Invalid google_product_category (use NUMERIC taxonomy IDs), Missing size (S/M/L/XL/XXL for apparel)
  * Run: node scripts/generate-merchant-feed-v2.cjs
+ *
+ * Google Product Taxonomy IDs (numeric - unambiguous, avoids apostrophe/encoding issues):
+ *   1604 = Apparel & Accessories > Clothing
+ *   2271 = Apparel & Accessories > Clothing > Dresses
+ *   5424 = Apparel & Accessories > Clothing > Sarees & Blouses
+ *   2104 = Apparel & Accessories > Clothing > Men's Clothing
+ *   2195 = Apparel & Accessories > Clothing > Men's Clothing > Men's Suits
+ *   2197 = Apparel & Accessories > Clothing > Men's Clothing > Men's Shirts & Tops
+ *   188  = Apparel & Accessories > Jewelry
+ *   193  = Apparel & Accessories > Jewelry > Necklaces
+ *   194  = Apparel & Accessories > Jewelry > Earrings
+ *   200  = Apparel & Accessories > Jewelry > Bracelets
  */
 const fs = require('fs');
 const path = require('path');
@@ -14,20 +26,20 @@ const convertPrice = (inrPrice) => Math.round(inrPrice * 0.012 * 2.5);
 function getGoogleCategory(category, title) {
   const t = (title || '').toLowerCase();
   const cat = (category || '').toLowerCase();
+  // Men's categories - use numeric IDs to avoid apostrophe mismatches
   if (cat.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear')) {
-    if (t.includes('sherwani')) return 'Apparel & Accessories > Clothing > Mens Clothing > Mens Suits';
-    if (t.includes('kurta')) return 'Apparel & Accessories > Clothing > Mens Clothing > Mens Shirts & Tops';
-    return 'Apparel & Accessories > Clothing > Mens Clothing';
+    if (t.includes('sherwani')) return '2195'; // Men's Suits
+    if (t.includes('kurta')) return '2197'; // Men's Shirts & Tops
+    return '2104'; // Men's Clothing
   }
-  if (cat.includes('lehenga')) return 'Apparel & Accessories > Clothing > Dresses';
-  if (cat.includes('saree')) return 'Apparel & Accessories > Clothing';
-  if (cat.includes('necklace')) return 'Apparel & Accessories > Jewelry > Necklaces';
-  if (cat.includes('earring')) return 'Apparel & Accessories > Jewelry > Earrings';
-  if (cat.includes('bangle')) return 'Apparel & Accessories > Jewelry > Bracelets';
-  if (cat.includes('bridal set')) return 'Apparel & Accessories > Jewelry';
-  if (cat.includes('jewel')) return 'Apparel & Accessories > Jewelry';
-  if (cat.includes('anarkali') || cat.includes('sharara') || cat.includes('palazzo') || cat.includes('salwar') || cat.includes('suit')) return 'Apparel & Accessories > Clothing > Dresses';
-  return 'Apparel & Accessories > Clothing';
+  if (cat.includes('lehenga')) return '2271'; // Dresses
+  if (cat.includes('saree')) return '5424'; // Sarees & Blouses
+  if (cat.includes('necklace')) return '193'; // Necklaces
+  if (cat.includes('earring')) return '194'; // Earrings
+  if (cat.includes('bangle') || cat.includes('bracelet')) return '200'; // Bracelets
+  if (cat.includes('bridal set') || cat.includes('jewel')) return '188'; // Jewelry
+  if (cat.includes('anarkali') || cat.includes('sharara') || cat.includes('palazzo') || cat.includes('salwar') || cat.includes('suit')) return '2271'; // Dresses
+  return '1604'; // Clothing
 }
 
 function getGender(category, title) {

@@ -128,6 +128,9 @@ const SEOHead = ({
           name: product.brand || 'LuxeMia',
         },
         category: product.category || 'Clothing > Traditional & Ethnic Wear',
+        ...(product.googleProductCategory && { 
+          googleProductCategory: product.googleProductCategory 
+        }),
         ...(product.color && { color: product.color }),
         ...(product.material && { material: product.material }),
         ...(product.sizes && product.sizes.length > 0 && {

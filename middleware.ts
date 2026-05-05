@@ -235,11 +235,38 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
   // Get color and material from options
   const colorOption = product.options?.find(o => o.name?.toLowerCase() === 'color');
   const materialOption = product.options?.find(o => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
+  const sizeOption = product.options?.find(o => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
   const color = colorOption?.values?.[0];
   const material = materialOption?.values?.[0];
+  const sizes = sizeOption?.values || [];
 
   // Get SKU from first variant
   const sku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
+
+  // Determine Google Product Category using numeric taxonomy IDs
+  const getGoogleProductCategory = (productType?: string, title?: string): string => {
+    const t = (title || '').toLowerCase();
+    const pt = (productType || '').toLowerCase();
+    if (pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear')) {
+      if (t.includes('sherwani')) return '2195';
+      if (t.includes('kurta')) return '2197';
+      return '2104';
+    }
+    if (pt.includes('lehenga')) return '2271';
+    if (pt.includes('saree')) return '5424';
+    if (pt.includes('necklace')) return '193';
+    if (pt.includes('earring')) return '194';
+    if (pt.includes('bangle') || pt.includes('bracelet')) return '200';
+    if (pt.includes('jewel')) return '188';
+    if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar')) return '2271';
+    return '1604';
+  };
+
+  const googleProductCategory = getGoogleProductCategory(product.productType, product.title);
+
+  // Determine gender
+  const isMenswear = (product.productType || '').toLowerCase().includes('men') || (product.title || '').toLowerCase().includes('sherwani') || (product.title || '').toLowerCase().includes('kurta pajama');
+  const gender = isMenswear ? 'male' : 'female';
 
   // Price display
   const priceNum = parseFloat(price);
@@ -259,8 +286,10 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
     url: canonicalUrl,
     brand: { '@type': 'Brand', name: vendor },
     category: product.productType || 'Clothing > Traditional & Ethnic Wear',
+    googleProductCategory: googleProductCategory,
     ...(color && { color }),
     ...(material && { material }),
+    ...(sizes.length > 0 && { size: sizes.join('/') }),
     itemCondition: 'https://schema.org/NewCondition',
     offers: {
       '@type': 'Offer',
@@ -465,6 +494,8 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
           ${vendor ? `<div><dt>Brand:</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
           ${color ? `<div><dt>Color:</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
           ${material ? `<div><dt>Fabric:</dt><dd>${escapeHtml(material)}</dd></div>` : ''}
+          ${sizes.length > 0 ? `<div><dt>Available Sizes:</dt><dd>${escapeHtml(sizes.join(', '))}</dd></div>` : ''}
+          <div><dt>Gender:</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>
           <div><dt>Condition:</dt><dd>New</dd></div>
           <div><dt>Availability:</dt><dd>${availability === 'InStock' ? 'In Stock' : 'Out of Stock'}</dd></div>
         </dl>
