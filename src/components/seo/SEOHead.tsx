@@ -79,13 +79,27 @@ const SEOHead = ({
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
+  // Ensure product images are JPEG for Google Merchant Center compliance
+  // Shopify CDN may serve WebP unless format=jpg is explicitly requested
+  const ensureJpegForGmc = (url: string): string => {
+    if (!url) return url;
+    // If it's a Shopify CDN URL without format param, add format=jpg
+    if ((url.includes('cdn.shopify.com') || url.includes('myshopify.com')) && !url.includes('format=')) {
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}format=jpg`;
+    }
+    return url;
+  };
+
+  const gmcSafeImage = ensureJpegForGmc(absoluteImage);
+
   // Enhanced Product Schema for Google Rich Results
   const productSchema = product
     ? {
         '@context': 'https://schema.org',
         '@type': 'Product',
         name: product.name,
-        image: [product.image],
+        image: [ensureJpegForGmc(product.image)],
         description: product.description,
         sku: product.sku,
         mpn: product.sku,
@@ -110,33 +124,62 @@ const SEOHead = ({
             '@type': 'Organization',
             name: 'LuxeMia',
           },
-          shippingDetails: {
-            '@type': 'OfferShippingDetails',
-            shippingRate: {
-              '@type': 'MonetaryAmount',
-              value: '0',
-              currency: product.currency,
-            },
-            shippingDestination: {
-              '@type': 'DefinedRegion',
-              addressCountry: ['US', 'GB', 'AE', 'CA', 'AU'],
-            },
-            deliveryTime: {
-              '@type': 'ShippingDeliveryTime',
-              handlingTime: {
-                '@type': 'QuantitativeValue',
-                minValue: 3,
-                maxValue: 5,
-                unitCode: 'DAY',
+          shippingDetails: [
+            {
+              '@type': 'OfferShippingDetails',
+              shippingRate: {
+                '@type': 'MonetaryAmount',
+                value: '0',
+                currency: product.currency,
               },
-              transitTime: {
-                '@type': 'QuantitativeValue',
-                minValue: 3,
-                maxValue: 10,
-                unitCode: 'DAY',
+              shippingDestination: {
+                '@type': 'DefinedRegion',
+                addressCountry: 'US',
+              },
+              deliveryTime: {
+                '@type': 'ShippingDeliveryTime',
+                handlingTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 3,
+                  maxValue: 5,
+                  unitCode: 'DAY',
+                },
+                transitTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 3,
+                  maxValue: 5,
+                  unitCode: 'DAY',
+                },
               },
             },
-          },
+            {
+              '@type': 'OfferShippingDetails',
+              shippingRate: {
+                '@type': 'MonetaryAmount',
+                value: '14.95',
+                currency: product.currency,
+              },
+              shippingDestination: {
+                '@type': 'DefinedRegion',
+                addressCountry: 'US',
+              },
+              deliveryTime: {
+                '@type': 'ShippingDeliveryTime',
+                handlingTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 3,
+                  maxValue: 5,
+                  unitCode: 'DAY',
+                },
+                transitTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 7,
+                  maxValue: 10,
+                  unitCode: 'DAY',
+                },
+              },
+            },
+          ],
           hasMerchantReturnPolicy: {
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'US',
@@ -192,7 +235,7 @@ const SEOHead = ({
             '@type': 'Product',
             '@id': `${siteUrl}/product/${item.url}`,
             name: item.name,
-            image: item.image,
+            image: ensureJpegForGmc(item.image),
             url: `${siteUrl}/product/${item.url}`,
             offers: {
               '@type': 'Offer',
@@ -227,7 +270,7 @@ const SEOHead = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={absoluteImage} />
+      <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
@@ -250,7 +293,7 @@ const SEOHead = ({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={absoluteImage} />
+      <meta name="twitter:image" content={product ? gmcSafeImage : absoluteImage} />
       <meta name="twitter:site" content="@LuxeMia" />
       {product && <meta name="twitter:label1" content="Price" />}
       {product && <meta name="twitter:data1" content={`${product.currency} ${product.price}`} />}
