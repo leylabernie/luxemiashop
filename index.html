@@ -14,11 +14,6 @@
         allow_google_signals: true,
         linked_domains: ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com']
       });
-
-      // Google Ads conversion tracking
-      // REPLACE AW-XXXXXXXXX WITH YOUR ACTUAL GOOGLE ADS CONVERSION ID
-      // Get it from: Google Ads → Tools → Conversions → Setup → Tag
-      // gtag('config', 'AW-XXXXXXXXX');
     </script>
 
     <meta charset="UTF-8" />
@@ -54,15 +49,26 @@
     <meta name="twitter:description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices." />
     <meta name="twitter:image" content="https://luxemia.shop/og-image.jpg" />
 
-    <!-- Fonts — async loaded to avoid render-blocking. font-display:swap ensures text visible immediately -->
+    <!-- Fonts — non-render-blocking using font-display:swap + media trick -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Preload LCP hero banner image to improve LCP -->
+    <!-- Preload LCP hero banner image -->
     <link rel="preload" as="image" href="/images/banners/lehenga-banner.jpg" fetchpriority="high">
+
+    <!-- Critical CSS: Reserve space for header + hero to prevent CLS -->
+    <style>
+      /* Reserve header height to prevent CLS from 0→130px jump */
+      #root { min-height: 100vh; }
+      /* Font fallback sizing to reduce CLS during font load */
+      .font-serif { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+      body { font-family: 'Lora', Georgia, serif; }
+      /* Reserve hero image aspect ratio space */
+      .hero-banner-placeholder { aspect-ratio: 16/9; max-height: 70vh; }
+    </style>
 
     <!-- Structured Data: Organization, LocalBusiness, WebSite, FAQPage -->
     <script type="application/ld+json">

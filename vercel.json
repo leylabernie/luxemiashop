@@ -2,6 +2,12 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "functions": {
+    "api/merchant-feed.ts": {
+      "runtime": "@vercel/node@5",
+      "maxDuration": 30
+    }
+  },
   "redirects": [
     { "source": "/collections/wedding-sarees", "destination": "/sarees", "permanent": true },
     { "source": "/collections/bridal-lehengas", "destination": "/lehengas", "permanent": true },
@@ -74,8 +80,7 @@
     { "source": "/_prerender/(.*)", "destination": "/_prerender/$1" },
     { "source": "/google4e3f332d00afc8ba.html", "destination": "/google4e3f332d00afc8ba.html" },
     { "source": "/merchant-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/api/merchant-feed", "destination": "/api/merchant-feed" },
     { "source": "/google-shopping-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!api/|_prerender/|assets/).*)", "destination": "/index.html" }
   ]
 }

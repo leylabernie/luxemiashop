@@ -420,6 +420,27 @@ function generateProductItemXml(product: ShopifyProductNode): string {
 // ─── Main Handler ─────────────────────────────────────────────────────────────
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // CORS & caching headers — must be set on ALL responses (including errors)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+  res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+
+  // Only allow GET and HEAD
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    res.status(405).setHeader('Allow', 'GET, HEAD, OPTIONS');
+    res.send('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Method Not Allowed</title></channel></rss>');
+    return;
+  }
+
   try {
     const products = await fetchAllProducts();
 
@@ -436,11 +457,9 @@ ${itemsXml}
 </channel>
 </rss>`;
 
-    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     res.status(200).send(feed);
   } catch (error) {
     console.error('Merchant feed generation failed:', error);
-    res.status(500).send('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Error</title></channel></rss>');
+    res.status(500).send('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Error generating feed</title><description>Temporary error. Please try again later.</description></channel></rss>');
   }
 }
