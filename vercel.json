@@ -18,11 +18,11 @@
     { "source": "/our-story", "destination": "/brand-story", "permanent": true },
     { "source": "/lookbook", "destination": "/collections", "permanent": true },
     { "source": "/jewelry", "destination": "/collections", "permanent": true },
-    { "source": "/feed.xml", "destination": "/merchant-feed.xml", "permanent": true },
-    { "source": "/shopping-feed.xml", "destination": "/merchant-feed.xml", "permanent": true },
-    { "source": "/products.xml", "destination": "/merchant-feed.xml", "permanent": true },
-    { "source": "/google-shopping.xml", "destination": "/merchant-feed.xml", "permanent": true },
-    { "source": "/feed.tsv", "destination": "/merchant-feed.tsv", "permanent": true }
+    { "source": "/feed.xml", "destination": "/api/merchant-feed", "permanent": true },
+    { "source": "/shopping-feed.xml", "destination": "/api/merchant-feed", "permanent": true },
+    { "source": "/products.xml", "destination": "/api/merchant-feed", "permanent": true },
+    { "source": "/google-shopping.xml", "destination": "/api/merchant-feed", "permanent": true },
+    { "source": "/feed.tsv", "destination": "/api/merchant-feed", "permanent": true }
   ],
   "headers": [
     {
@@ -38,16 +38,9 @@
       ]
     },
     {
-      "source": "/merchant-feed.xml",
+      "source": "/api/merchant-feed",
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=3600, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/merchant-feed.tsv",
-      "headers": [
-        { "key": "Content-Type", "value": "text/tab-separated-values; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=3600, must-revalidate" }
       ]
     },

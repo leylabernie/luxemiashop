@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /api/merchant-feed
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
@@ -11,6 +12,7 @@ Disallow: /api/
 User-agent: Googlebot
 Allow: /
 Allow: /product/
+Allow: /api/merchant-feed
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
@@ -47,4 +49,4 @@ Allow: /
 Sitemap: https://luxemia.shop/sitemap.xml
 
 # Google Merchant Center Feed
-Sitemap: https://luxemia.shop/merchant-feed.xml
+Sitemap: https://luxemia.shop/api/merchant-feed

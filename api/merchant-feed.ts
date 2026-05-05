@@ -307,8 +307,9 @@ function generateProductItemXml(product: ShopifyProductNode): string {
   const color = colorOption?.values?.[0] || '';
   const material = materialOption?.values?.[0] || '';
 
-  // Get SKU from first variant
-  const sku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
+  // Get SKU from first variant — sanitize for GMC (no spaces/special chars)
+  const rawSku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
+  const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
 
   // Get pattern from tags
   const patternTag = product.tags?.find(t =>
@@ -329,7 +330,8 @@ function generateProductItemXml(product: ShopifyProductNode): string {
     // Create one feed item per size
     for (let i = 0; i < sizes.length; i++) {
       const size = sizes[i];
-      const itemId = sku ? `${sku}-${size.toLowerCase()}` : `${handle}-${size.toLowerCase()}`;
+      const sizeSlug = size.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      const itemId = sku ? `${sku}-${sizeSlug}` : `${handle}-${sizeSlug}`;
       const itemGroupId = handle;
 
       // Try to find matching variant for this size

@@ -128,9 +128,10 @@ const Header = () => {
                 transition={{ duration: 0.6 }}
               >
                 {isHomePage ? (
-                  <h1 className="sr-only">LuxeMia — Indian Ethnic Wear Online</h1>
-                ) : null}
-                <span aria-hidden="true">LuxeMia</span>
+                  <h1>LuxeMia</h1>
+                ) : (
+                  <span>LuxeMia</span>
+                )}
               </motion.div>
             </Link>
 
