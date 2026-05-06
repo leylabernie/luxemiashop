@@ -169,7 +169,17 @@ function generateShippingXml(currency) {
   for (const country of countries) {
     const standardPrice = '14.95';
     const expressPrice = country === 'AU' ? '49.95' : country === 'AE' ? '39.95' : '39.95';
+    // Free DHL Express on orders over $300 (matches site's shipping policy)
     lines.push(`
+    <g:shipping>
+      <g:country>${country}</g:country>
+      <g:service>DHL Express Free over $300</g:service>
+      <g:price>0.00 ${currency}</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
+    </g:shipping>
     <g:shipping>
       <g:country>${country}</g:country>
       <g:service>Standard</g:service>
@@ -288,6 +298,12 @@ function generateProductItemXml(product) {
       const variantCompare = matchingVariant?.node?.compareAtPrice?.amount || compareAtPrice;
       const variantHasDiscount = variantCompare ? parseFloat(variantCompare) > parseFloat(variantPrice) : false;
 
+      // GMC CRITICAL: When discount exists, g:price MUST be the ORIGINAL (higher) price
+      // and g:sale_price MUST be the DISCOUNTED (lower) price.
+      // Having both set to the same value causes GMC policy violations.
+      const displayPrice = variantHasDiscount ? variantCompare : variantPrice;
+      const displaySalePrice = variantHasDiscount ? variantPrice : '';
+
       variantEntries.push(`
   <item>
     <g:id>${escapeXml(itemId)}</g:id>
@@ -298,8 +314,8 @@ function generateProductItemXml(product) {
     <g:image_link>${escapeXml(imageUrl)}</g:image_link>
     ${additionalImages.map(img => `<g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`).join('\n    ')}
     <g:availability>in_stock</g:availability>
-    <g:price>${variantPrice} ${currency}</g:price>
-    ${variantHasDiscount ? `<g:sale_price>${variantPrice} ${currency}</g:sale_price>` : ''}
+    <g:price>${displayPrice} ${currency}</g:price>
+    ${displaySalePrice ? `<g:sale_price>${displaySalePrice} ${currency}</g:sale_price>` : ''}
     ${variantHasDiscount && variantCompare ? `<g:sale_price_effective_date>2026-01-01T00:00:00+00:00/2027-01-01T00:00:00+00:00</g:sale_price_effective_date>` : ''}
     <g:condition>new</g:condition>
     <g:brand>${escapeXml(product.vendor || 'LuxeMia')}</g:brand>
@@ -325,6 +341,11 @@ function generateProductItemXml(product) {
     }
   } else {
     const itemId = sku || handle;
+    // GMC CRITICAL: When discount exists, g:price MUST be the ORIGINAL (higher) price
+    // and g:sale_price MUST be the DISCOUNTED (lower) price.
+    const noSizeDisplayPrice = hasDiscount ? compareAtPrice : price;
+    const noSizeSalePrice = hasDiscount ? price : '';
+
     variantEntries.push(`
   <item>
     <g:id>${escapeXml(itemId)}</g:id>
@@ -334,8 +355,8 @@ function generateProductItemXml(product) {
     <g:image_link>${escapeXml(imageUrl)}</g:image_link>
     ${additionalImages.map(img => `<g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`).join('\n    ')}
     <g:availability>in_stock</g:availability>
-    <g:price>${price} ${currency}</g:price>
-    ${hasDiscount ? `<g:sale_price>${price} ${currency}</g:sale_price>` : ''}
+    <g:price>${noSizeDisplayPrice} ${currency}</g:price>
+    ${noSizeSalePrice ? `<g:sale_price>${noSizeSalePrice} ${currency}</g:sale_price>` : ''}
     <g:condition>new</g:condition>
     <g:brand>${escapeXml(product.vendor || 'LuxeMia')}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
