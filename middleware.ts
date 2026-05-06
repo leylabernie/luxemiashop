@@ -52,6 +52,11 @@ const BOT_USER_AGENTS = [
   'google-sitemaps',     // Google Sitemaps crawler
   'adsbot-google',       // Google Ads bot (used for landing page quality)
   'feedfetcher-google',  // Google Feedfetcher
+  // GMC-specific page checker user agents
+  'adsbot-google-mobile',  // Google Ads mobile bot (GMC mobile landing page checks)
+  'mediapartners-google',  // Google AdSense / AdWords bot
+  'google-produce',        // Google Product Search bot (legacy)
+  'google-shopping',       // Google Shopping quality checker
 ];
 
 // ─── Shopify Storefront API ──────────────────────────────────────────────────
@@ -274,7 +279,17 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
   const hasDiscount = compareNum > priceNum;
   const discountPercent = hasDiscount ? Math.round((1 - priceNum / compareNum) * 100) : 0;
 
+  // GMC CRITICAL: Price handling for schema.org
+  // When a product has a sale, the schema offers.price must be the ORIGINAL (higher) price
+  // and we add a sale price via priceSpecification. This matches GMC's expectation that
+  // g:price = original, g:sale_price = discounted, and the landing page must be consistent.
+  const schemaPrice = hasDiscount ? compareAtPrice! : price; // Original/higher price
+  const schemaSalePrice = hasDiscount ? price : undefined;   // Discounted/lower price
+
   // Product schema with shipping details and return policy
+  // All shipping countries match the merchant feed (US, CA, GB, AE, AU)
+  const allShippingCountries = ['US', 'CA', 'GB', 'AE', 'AU'];
+
   const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -294,17 +309,28 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
     offers: {
       '@type': 'Offer',
       url: canonicalUrl,
-      price: price,
+      price: schemaPrice,
       priceCurrency: currency,
-      priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      ...(schemaSalePrice && {
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          priceType: 'https://schema.org/SalePrice',
+          price: schemaSalePrice,
+          priceCurrency: currency,
+          validFrom: new Date().toISOString().split('T')[0],
+          priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        },
+      }),
+      priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: `https://schema.org/${availability}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: 'LuxeMia' },
       shippingDetails: [
         {
           '@type': 'OfferShippingDetails',
+          name: 'DHL Express Free (orders over $300)',
           shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: currency },
-          shippingDestination: { '@type': 'DefinedRegion', addressCountry: ['US', 'GB', 'CA'] },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
             handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
@@ -313,20 +339,34 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
         },
         {
           '@type': 'OfferShippingDetails',
+          name: 'USPS/UPS Standard',
           shippingRate: { '@type': 'MonetaryAmount', value: '14.95', currency: currency },
-          shippingDestination: { '@type': 'DefinedRegion', addressCountry: ['US', 'GB', 'CA'] },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
             handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
             transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
           },
         },
+        {
+          '@type': 'OfferShippingDetails',
+          name: 'DHL Express (paid)',
+          shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: currency },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+          },
+        },
       ],
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
+        name: 'LuxeMia Return Policy',
         applicableCountry: 'US',
         returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
         returnFees: 'https://schema.org/FreeReturn',
+        description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
       },
     },
   };
@@ -407,8 +447,12 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
   <meta property="og:image" content="${escapeHtml(gmcSafeImage)}">
   <meta property="og:site_name" content="LuxeMia">
   <meta property="og:locale" content="en_US">
-  <meta property="product:price:amount" content="${escapeHtml(price)}">
+  <meta property="product:price:amount" content="${escapeHtml(schemaPrice)}">
   <meta property="product:price:currency" content="${escapeHtml(currency)}">
+  ${schemaSalePrice ? `<meta property="product:sale_price:amount" content="${escapeHtml(schemaSalePrice)}">` : ''}
+  ${schemaSalePrice ? `<meta property="product:sale_price:currency" content="${escapeHtml(currency)}">` : ''}
+  <meta property="product:original_price:amount" content="${escapeHtml(hasDiscount ? compareAtPrice! : price)}">
+  <meta property="product:original_price:currency" content="${escapeHtml(currency)}">
   <meta property="product:availability" content="${availability === 'InStock' ? 'in stock' : 'out of stock'}">
   <meta property="product:brand" content="${escapeHtml(vendor)}">
   <meta property="product:condition" content="new">

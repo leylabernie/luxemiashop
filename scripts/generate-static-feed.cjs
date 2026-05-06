@@ -147,13 +147,18 @@ function getSizes(product) {
          o.name?.toLowerCase() === 'bust size' ||
          o.name?.toLowerCase() === 'chest size'
   );
-  if (sizeOption && sizeOption.values.length > 0) return sizeOption.values;
+  if (sizeOption && sizeOption.values.length > 0) {
+    // GMC: Normalize 'Free Size' to 'One Size' (GMC standard)
+    return sizeOption.values.map(v => v.toLowerCase() === 'free size' ? 'One Size' : v);
+  }
   const pt = (product.productType || '').toLowerCase();
   const isApparel = pt.includes('lehenga') || pt.includes('saree') || pt.includes('suit') ||
     pt.includes('salwar') || pt.includes('anarkali') || pt.includes('men') ||
     pt.includes('sherwani') || pt.includes('kurta') || pt.includes('dress') ||
     pt.includes('indo western') || pt.includes('sharara') || pt.includes('palazzo');
-  return isApparel ? ['S', 'M', 'L', 'XL', 'XXL'] : [];
+  // GMC: 'Free Size' is not a standard size. Use 'One Size' instead.
+  const normalizedSizes = isApparel ? ['S', 'M', 'L', 'XL', 'XXL'] : [];
+  return normalizedSizes;
 }
 
 function getGender(productType, title) {
@@ -316,7 +321,7 @@ function generateProductItemXml(product) {
     <g:availability>in_stock</g:availability>
     <g:price>${displayPrice} ${currency}</g:price>
     ${displaySalePrice ? `<g:sale_price>${displaySalePrice} ${currency}</g:sale_price>` : ''}
-    ${variantHasDiscount && variantCompare ? `<g:sale_price_effective_date>2026-01-01T00:00:00+00:00/2027-01-01T00:00:00+00:00</g:sale_price_effective_date>` : ''}
+    ${variantHasDiscount && variantCompare ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
     <g:condition>new</g:condition>
     <g:brand>${escapeXml(product.vendor || 'LuxeMia')}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>

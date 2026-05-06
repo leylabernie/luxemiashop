@@ -140,9 +140,19 @@ const SEOHead = ({
         offers: {
           '@type': 'Offer',
           url: canonicalUrl,
-          price: product.price,
+          price: product.originalPrice || product.price,
           priceCurrency: product.currency,
-          priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          ...(product.originalPrice && product.originalPrice !== product.price && {
+            priceSpecification: {
+              '@type': 'UnitPriceSpecification',
+              priceType: 'https://schema.org/SalePrice',
+              price: product.price,
+              priceCurrency: product.currency,
+              validFrom: new Date().toISOString().split('T')[0],
+              priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            },
+          }),
+          priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           availability: `https://schema.org/${product.availability || 'InStock'}`,
           itemCondition: 'https://schema.org/NewCondition',
           seller: {
@@ -160,7 +170,7 @@ const SEOHead = ({
               },
               shippingDestination: {
                 '@type': 'DefinedRegion',
-                addressCountry: ['US', 'GB', 'CA'],
+                addressCountry: ['US', 'CA', 'GB', 'AE', 'AU'],
               },
               deliveryTime: {
                 '@type': 'ShippingDeliveryTime',
@@ -190,7 +200,7 @@ const SEOHead = ({
               },
               shippingDestination: {
                 '@type': 'DefinedRegion',
-                addressCountry: ['US', 'GB', 'CA'],
+                addressCountry: ['US', 'CA', 'GB', 'AE', 'AU'],
               },
               deliveryTime: {
                 '@type': 'ShippingDeliveryTime',
@@ -220,7 +230,7 @@ const SEOHead = ({
               },
               shippingDestination: {
                 '@type': 'DefinedRegion',
-                addressCountry: ['US', 'GB', 'CA'],
+                addressCountry: ['US', 'CA', 'GB', 'AE', 'AU'],
               },
               deliveryTime: {
                 '@type': 'ShippingDeliveryTime',
@@ -338,8 +348,16 @@ const SEOHead = ({
       {/* Product-specific Open Graph */}
       {product && (
         <>
-          <meta property="product:price:amount" content={product.price} />
+          <meta property="product:price:amount" content={product.originalPrice || product.price} />
           <meta property="product:price:currency" content={product.currency} />
+          {product.originalPrice && product.originalPrice !== product.price && (
+            <meta property="product:sale_price:amount" content={product.price} />
+          )}
+          {product.originalPrice && product.originalPrice !== product.price && (
+            <meta property="product:sale_price:currency" content={product.currency} />
+          )}
+          <meta property="product:original_price:amount" content={product.originalPrice || product.price} />
+          <meta property="product:original_price:currency" content={product.currency} />
           <meta property="product:availability" content={product.availability === 'InStock' ? 'in stock' : 'out of stock'} />
           <meta property="product:brand" content={product.brand || 'LuxeMia'} />
           <meta property="product:condition" content="new" />
