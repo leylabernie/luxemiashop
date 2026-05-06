@@ -49,8 +49,14 @@ export default defineConfig(({ mode }) => ({
             "@radix-ui/react-accordion",
           ],
           "vendor-helmet": ["react-helmet-async"],
+          "vendor-charts": ["recharts"],
+          "vendor-forms": ["react-hook-form", "@hookform/resolvers", "zod"],
         },
       },
     },
+    // Enable minification for production
+    minify: 'esbuild',
+    // Set a reasonable sourcemap for debugging without bloating build
+    sourcemap: false,
   },
 }));

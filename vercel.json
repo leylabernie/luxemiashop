@@ -24,11 +24,11 @@
     { "source": "/our-story", "destination": "/brand-story", "permanent": true },
     { "source": "/lookbook", "destination": "/collections", "permanent": true },
     { "source": "/jewelry", "destination": "/collections", "permanent": true },
-    { "source": "/feed.xml", "destination": "/api/merchant-feed", "permanent": true },
-    { "source": "/shopping-feed.xml", "destination": "/api/merchant-feed", "permanent": true },
-    { "source": "/products.xml", "destination": "/api/merchant-feed", "permanent": true },
-    { "source": "/google-shopping.xml", "destination": "/api/merchant-feed", "permanent": true },
-    { "source": "/feed.tsv", "destination": "/api/merchant-feed", "permanent": true }
+    { "source": "/feed.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/shopping-feed.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/products.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/google-shopping.xml", "destination": "/merchant-feed.xml", "permanent": true },
+    { "source": "/feed.tsv", "destination": "/merchant-feed.xml", "permanent": true }
   ],
   "headers": [
     {
@@ -48,6 +48,15 @@
       "headers": [
         { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/merchant-feed.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=3600, must-revalidate" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "X-Robots-Tag", "value": "noindex" }
       ]
     },
     {
@@ -79,8 +88,7 @@
   "rewrites": [
     { "source": "/_prerender/(.*)", "destination": "/_prerender/$1" },
     { "source": "/google4e3f332d00afc8ba.html", "destination": "/google4e3f332d00afc8ba.html" },
-    { "source": "/merchant-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/google-shopping-feed.xml", "destination": "/api/merchant-feed" },
-    { "source": "/((?!api/|_prerender/|assets/).*)", "destination": "/index.html" }
+    { "source": "/google-shopping-feed.xml", "destination": "/merchant-feed.xml" },
+    { "source": "/((?!api/|_prerender/|assets/|merchant-feed\.xml).*)", "destination": "/index.html" }
   ]
 }

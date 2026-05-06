@@ -4,33 +4,33 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Fast Dispatch',
-    description: 'Ready-made orders dispatched in 3-5 business days',
+    title: 'Free Shipping over $300',
+    description: 'Worldwide DHL Express — 3-5 business days',
   },
   {
-    icon: RefreshCw,
-    title: 'Pre-Purchase Support',
-    description: 'WhatsApp & email support for sizing & fabric questions before you buy',
+    icon: ShieldCheck,
+    title: 'SSL Secure Checkout',
+    description: '256-bit encryption & Shopify Pay',
   },
   {
     icon: Ruler,
     title: 'Custom Fitting',
-    description: 'Tailored to your measurements',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Free Shipping',
-    description: 'On orders over $300',
+    description: 'Tailored to your measurements — dispatch 5-7 days',
   },
   {
     icon: Clock,
-    title: 'Express Delivery',
-    description: 'Priority shipping available',
+    title: 'Fast Dispatch',
+    description: 'Readymade orders dispatched in 3-5 business days',
+  },
+  {
+    icon: RefreshCw,
+    title: 'Pre-Purchase Support',
+    description: 'WhatsApp & email support before you buy',
   },
   {
     icon: Sparkles,
-    title: 'New Styles Daily',
-    description: 'Fresh collections regularly',
+    title: 'Quality Inspected',
+    description: 'Every piece checked before shipping',
   },
 ];
 
