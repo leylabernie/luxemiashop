@@ -124,10 +124,13 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Business Address</h3>
                       <p className="text-muted-foreground">
-                        LuxeMia<br />
+                        Glamour Indian Wear<br />
                         2208 Michener St<br />
                         Philadelphia, PA 19115<br />
                         United States
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        luxemia.shop is owned and operated by Glamour Indian Wear
                       </p>
                     </div>
                   </div>

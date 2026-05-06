@@ -215,9 +215,9 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Contact Us</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                LuxeMia Fashion Inc.<br />
+                Glamour Indian Wear<br />
                 2208 Michener St, Philadelphia, PA 19115<br />
-                Email: hello@luxemia.com<br />
+                Email: hello@luxemia.shop<br />
                 Phone: +1-215-341-9990<br />
                 WhatsApp: Available on our website<br />
                 Hours: Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST

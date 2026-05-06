@@ -157,7 +157,8 @@ const SEOHead = ({
           itemCondition: 'https://schema.org/NewCondition',
           seller: {
             '@type': 'Organization',
-            name: 'LuxeMia',
+            name: 'Glamour Indian Wear',
+            alternateName: 'LuxeMia',
           },
           shippingDetails: [
             {

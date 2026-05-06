@@ -385,15 +385,13 @@ const Terms = () => {
                   <h2 className="text-xl font-serif text-foreground mb-4">18. Contact Information</h2>
                   <p className="mb-4">For questions about these Terms of Service, please contact us:</p>
                   <div className="space-y-2">
-                    <p><strong>LuxeMia Fashion Inc.</strong></p>
-                    <p>Legal Department</p>
-                    <p>123 Fashion District, Suite 500</p>
-                    <p>Los Angeles, CA 90001, USA</p>
+                    <p><strong>Glamour Indian Wear</strong></p>
+                    <p>2208 Michener St, Philadelphia, PA 19115, USA</p>
                     <p className="mt-4">
                       Email: <a href="mailto:hello@luxemia.shop" className="text-primary hover:underline">hello@luxemia.shop</a>
                     </p>
                     <p>
-                      Phone: <a href="tel:+12135551234" className="text-primary hover:underline">+1 (213) 555-1234</a>
+                      Phone: <a href="tel:+12153419990" className="text-primary hover:underline">+1-215-341-9990</a>
                     </p>
                   </div>
                 </section>

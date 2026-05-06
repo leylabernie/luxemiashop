@@ -37,7 +37,7 @@ const Privacy = () => {
             >
               <div className="space-y-8 text-muted-foreground">
                 <p className="text-foreground font-medium">
-                  LuxeMia Fashion Inc. ("LuxeMia," "we," "us," or "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website luxemia.shop (the "Site"), make a purchase, or interact with us in any way. Please read this policy carefully. By using our Site, you consent to the practices described herein.
+                  Glamour Indian Wear ("LuxeMia," "we," "us," or "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website luxemia.shop (the "Site"), make a purchase, or interact with us in any way. luxemia.shop is owned and operated by Glamour Indian Wear. Please read this policy carefully. By using our Site, you consent to the practices described herein.
                 </p>
 
                 <section>
@@ -234,7 +234,7 @@ const Privacy = () => {
                   <h2 className="text-xl font-serif text-foreground mb-4">15. Contact Us</h2>
                   <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
                   <div className="mt-4 p-6 bg-card border border-border rounded-lg space-y-2">
-                    <p><strong className="text-foreground">LuxeMia Fashion Inc.</strong></p>
+                    <p><strong className="text-foreground">Glamour Indian Wear</strong></p>
                     <p>2208 Michener St, Philadelphia, PA 19115, USA</p>
                     <p>Email: <a href="mailto:hello@luxemia.shop" className="text-primary hover:underline">hello@luxemia.shop</a></p>
                     <p>Phone: <a href="tel:+12153419990" className="text-primary hover:underline">+1-215-341-9990</a></p>

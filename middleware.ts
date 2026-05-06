@@ -324,7 +324,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
       priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: `https://schema.org/${availability}`,
       itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@type': 'Organization', name: 'LuxeMia' },
+      seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
       shippingDetails: [
         {
           '@type': 'OfferShippingDetails',
@@ -573,7 +573,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
     </div>
 
     <footer>
-      <p>&copy; 2026 LuxeMia. All rights reserved. | 2208 Michener St, Philadelphia, PA 19115, USA</p>
+      <p>&copy; 2026 LuxeMia. All rights reserved. | luxemia.shop is owned and operated by Glamour Indian Wear | 2208 Michener St, Philadelphia, PA 19115, USA</p>
       <p>
         <a href="${siteUrl}/shipping">Shipping Policy</a> |
         <a href="${siteUrl}/returns">Returns &amp; Cancellations</a> |
