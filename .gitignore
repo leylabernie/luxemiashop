@@ -47,3 +47,6 @@ AUDIT_IMPLEMENTATION_GUIDE.md
 CHANGES_SUMMARY.md
 IMPLEMENTATION_ROADMAP.md
 
+# Generated merchant feed (12MB+ — generated at build time, not committed)
+public/merchant-feed.xml
+
