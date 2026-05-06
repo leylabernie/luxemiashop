@@ -638,7 +638,9 @@ const PRERENDERED_ROUTES = new Set([
   '/virtual-try-on',
   '/products',
   '/privacy',
+  '/privacy-policy',
   '/terms',
+  '/terms-of-service',
   '/press',
   // NOTE: /product/* routes are NOT listed here on purpose.
   // ALL product pages are handled by the dynamic SSR path below

@@ -102,7 +102,9 @@ const App = () => (
                 <Route path="/shipping" element={<Suspense fallback={<PageLoader />}><Shipping /></Suspense>} />
                 <Route path="/returns" element={<Suspense fallback={<PageLoader />}><Returns /></Suspense>} />
                 <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
+                <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />
                 <Route path="/terms" element={<Suspense fallback={<PageLoader />}><Terms /></Suspense>} />
+                <Route path="/terms-of-service" element={<Navigate to="/terms" replace />} />
                 
                 <Route path="/artisans" element={<Suspense fallback={<PageLoader />}><Artisans /></Suspense>} />
                 <Route path="/sustainability" element={<Suspense fallback={<PageLoader />}><Sustainability /></Suspense>} />

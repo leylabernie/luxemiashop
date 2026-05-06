@@ -23,7 +23,9 @@
     { "source": "/products.xml", "destination": "/merchant-feed.xml", "permanent": true },
     { "source": "/google-shopping.xml", "destination": "/merchant-feed.xml", "permanent": true },
     { "source": "/feed.tsv", "destination": "/merchant-feed.xml", "permanent": true },
-    { "source": "/api/merchant-feed", "destination": "/merchant-feed.xml", "permanent": false }
+    { "source": "/api/merchant-feed", "destination": "/merchant-feed.xml", "permanent": false },
+    { "source": "/privacy-policy", "destination": "/privacy", "permanent": true },
+    { "source": "/terms-of-service", "destination": "/terms", "permanent": true }
   ],
   "headers": [
     {
