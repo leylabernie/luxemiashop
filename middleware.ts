@@ -384,7 +384,6 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
         name: 'LuxeMia Return Policy',
         applicableCountry: 'US',
         returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-        returnFees: 'https://schema.org/FreeReturn',
         description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
       },
     },

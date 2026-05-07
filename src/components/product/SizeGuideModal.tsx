@@ -104,7 +104,7 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
                 <ul className="text-sm text-muted-foreground space-y-2">
                   <li>• For a perfect fit, measure over undergarments you plan to wear</li>
                   <li>• If between sizes, we recommend ordering the larger size</li>
-                  <li>• Bridal lehengas: Order 4-6 weeks in advance for any alterations</li>
+                  <li>• Bridal lehengas: Order 4-6 weeks in advance to allow for custom sizing and shipping</li>
                   <li>• Choli typically comes semi-stitched for custom fitting</li>
                 </ul>
               </div>

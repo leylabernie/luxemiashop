@@ -191,7 +191,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">5.3 Custom Order Terms</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Custom and made-to-measure orders are final sale.</li>
-                        <li>Production time for custom orders is typically 4-6 weeks plus shipping time.</li>
+                        <li>Production time for custom orders is typically 5–7 business days plus shipping time.</li>
                         <li>Custom orders require full payment upfront before production begins.</li>
                         <li>Customization requests (color changes, design modifications) must be specified at order placement and may incur additional charges.</li>
                       </ul>
