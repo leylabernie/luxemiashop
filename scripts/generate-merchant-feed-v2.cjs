@@ -68,32 +68,27 @@ function escapeXml(str) {
 }
 
 function getShippingBlocks() {
-  const countries = [
-    { code: 'US', stdPrice: '14.95', expPrice: '39.95' },
-    { code: 'CA', stdPrice: '14.95', expPrice: '39.95' },
-    { code: 'GB', stdPrice: '14.95', expPrice: '44.95' },
-    { code: 'AE', stdPrice: '14.95', expPrice: '39.95' },
-    { code: 'AU', stdPrice: '14.95', expPrice: '49.95' },
-  ];
-  return countries.map(c => `
+  // GMC FIX: Target ONLY the US market. This store is US-registered and charges in USD.
+  // Targeting non-USD countries causes "unsupported currency" violations.
+  return `
     <g:shipping>
-      <g:country>${c.code}</g:country>
+      <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>${c.stdPrice} USD</g:price>
+      <g:price>14.95 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
       <g:min_transit_time>7</g:min_transit_time>
       <g:max_transit_time>10</g:max_transit_time>
     </g:shipping>
     <g:shipping>
-      <g:country>${c.code}</g:country>
+      <g:country>US</g:country>
       <g:service>Express</g:service>
-      <g:price>${c.expPrice} USD</g:price>
+      <g:price>39.95 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
       <g:min_transit_time>3</g:min_transit_time>
       <g:max_transit_time>5</g:max_transit_time>
-    </g:shipping>`).join('\n');
+    </g:shipping>`;
 }
 
 function enrichDescription(desc, category, fabric, work, color) {
@@ -270,13 +265,14 @@ for (const p of validProducts) {
     <g:product_type>${escapeXml(p.category)}</g:product_type>
     <g:gender>${gender}</g:gender>
     <g:age_group>adult</g:age_group>
-    <g:color>${escapeXml(p.color)}</g:color>
+    <g:color>${escapeXml(p.color || 'Multi-Color')}</g:color>
     <g:material>${escapeXml(p.fabric)}</g:material>
     <g:pattern>${escapeXml(p.work)}</g:pattern>
     <g:size>${escapeXml(allSizes)}</g:size>
     <g:size_type>regular</g:size_type>
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>
+    <g:target_country>US</g:target_country>
     <g:custom_label_0>${escapeXml(p.category)}</g:custom_label_0>
 ${shippingXml}
     <g:tax>

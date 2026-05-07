@@ -168,43 +168,39 @@ function getGender(productType, title) {
   return 'female';
 }
 
-function generateShippingXml(currency) {
-  const countries = ['US', 'CA', 'GB', 'AE', 'AU'];
-  const lines = [];
-  for (const country of countries) {
-    const standardPrice = '14.95';
-    const expressPrice = country === 'AU' ? '49.95' : country === 'GB' ? '44.95' : '39.95';
-    // Free DHL Express on orders over $300 (matches site's shipping policy)
-    lines.push(`
+function generateShippingXml() {
+  // GMC FIX: Target ONLY the US market. This store is US-registered and charges in USD.
+  // Targeting non-USD countries (UK/CA/AU/AE) causes "unsupported currency" violations
+  // and "missing shipping" errors because we don't have GBP/CAD/AUD/AED prices.
+  // Products can still ship worldwide — this just controls which Google Shopping market we appear in.
+  return `
     <g:shipping>
-      <g:country>${country}</g:country>
-      <g:service>DHL Express Free over $300</g:service>
-      <g:price>0.00 ${currency}</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>3</g:min_transit_time>
-      <g:max_transit_time>5</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>${country}</g:country>
+      <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>${standardPrice} ${currency}</g:price>
+      <g:price>14.95 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
       <g:min_transit_time>7</g:min_transit_time>
       <g:max_transit_time>10</g:max_transit_time>
     </g:shipping>
     <g:shipping>
-      <g:country>${country}</g:country>
+      <g:country>US</g:country>
       <g:service>Express</g:service>
-      <g:price>${expressPrice} ${currency}</g:price>
+      <g:price>39.95 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
       <g:min_transit_time>3</g:min_transit_time>
       <g:max_transit_time>5</g:max_transit_time>
-    </g:shipping>`);
-  }
-  return lines.join('');
+    </g:shipping>
+    <g:shipping>
+      <g:country>US</g:country>
+      <g:service>Free over $300</g:service>
+      <g:price>0.00 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>5</g:max_transit_time>
+    </g:shipping>`;
 }
 
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
@@ -270,7 +266,26 @@ function generateProductItemXml(product) {
 
   const colorOption = product.options?.find(o => o.name?.toLowerCase() === 'color');
   const materialOption = product.options?.find(o => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
-  const color = colorOption?.values?.[0] || '';
+  let color = colorOption?.values?.[0] || '';
+
+  // GMC FIX: Extract color from title if no color option exists in Shopify data
+  // Many products have color in the title (e.g. "Rani Pink Embroidery Lehenga")
+  if (!color) {
+    const colorKeywords = ['Red', 'Maroon', 'Rani Pink', 'Pink', 'Burgundy', 'Wine', 'Orange', 'Rust',
+      'Yellow', 'Mustard', 'Green', 'Emerald', 'Teal', 'Mint', 'Peacock',
+      'Blue', 'Navy', 'Sky Blue', 'Royal Blue', 'Purple', 'Lavender',
+      'Black', 'White', 'Off White', 'Ivory', 'Beige', 'Gold', 'Silver',
+      'Grey', 'Peach', 'Coral', 'Dusty Rose', 'Dusty Pink', 'Magenta',
+      'Champagne', 'Multi Color', 'Multicolor', 'Pista Green', 'Marigold',
+      'Saffron', 'Ruby', 'Sea Green', 'Baby Pink', 'Light Pink'];
+    const titleLower = product.title.toLowerCase();
+    for (const c of colorKeywords) {
+      if (titleLower.includes(c.toLowerCase())) {
+        color = c;
+        break;
+      }
+    }
+  }
   const material = materialOption?.values?.[0] || '';
 
   const rawSku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
@@ -325,15 +340,16 @@ function generateProductItemXml(product) {
     <g:product_type>${escapeXml(productType)}</g:product_type>
     <g:gender>${gender}</g:gender>
     <g:age_group>adult</g:age_group>
-    ${color ? `<g:color>${escapeXml(color)}</g:color>` : ''}
+    <g:color>${escapeXml(color || 'Multi-Color')}</g:color>
     ${material ? `<g:material>${escapeXml(material)}</g:material>` : ''}
     ${patternTag ? `<g:pattern>${escapeXml(patternTag)}</g:pattern>` : ''}
     ${allSizes ? `<g:size>${escapeXml(allSizes)}</g:size>` : ''}
     <g:size_type>regular</g:size_type>
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>
+    <g:target_country>US</g:target_country>
     <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
-    ${generateShippingXml(currency)}
+    ${generateShippingXml()}
     <g:tax>
       <g:country>US</g:country>
       <g:rate>0</g:rate>
