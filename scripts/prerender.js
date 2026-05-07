@@ -253,10 +253,10 @@ const routes = [
   },
   {
     path: '/shipping',
-    title: 'Shipping Information — Worldwide Delivery | LuxeMia',
-    description: 'LuxeMia shipping information. Free shipping to USA & UK. Worldwide delivery with full tracking. Express options available.',
+    title: 'Shipping Information — USA, Canada & Australia | LuxeMia',
+    description: 'LuxeMia ships to USA, Canada, and Australia. Flat rate $25 per order. Free shipping on orders over $350. Delivery 7-10 business days.',
     h1: 'Shipping Information',
-    content: '<p>LuxeMia offers worldwide shipping with full tracking. Free standard shipping to USA and UK. Express shipping options available at checkout. Standard delivery takes 7-12 business days.</p>',
+    content: '<p>LuxeMia ships to the USA, Canada, and Australia with full tracking. Flat rate $25 per order. Free shipping on orders over $350. Standard delivery takes 7-10 business days.</p>',
   },
   {
     path: '/returns',
@@ -1157,20 +1157,26 @@ function generateHtml(template, route) {
         shippingDetails: [
           {
             '@type': 'OfferShippingDetails',
-            name: 'USPS/UPS Standard Shipping',
-            shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency: 'USD' },
-            shippingDestination: { '@type': 'DefinedRegion', addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'] },
+            name: 'Free Shipping on Orders Over $350',
+            shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'USD' },
+            shippingDestination: { '@type': 'DefinedRegion', addressCountry: ['US', 'CA', 'AU'] },
             deliveryTime: {
               '@type': 'ShippingDeliveryTime',
               handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
               transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
             },
           },
-          { '@type': 'OfferShippingDetails', name: 'DHL Express (US)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-          { '@type': 'OfferShippingDetails', name: 'DHL Express (CA)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-          { '@type': 'OfferShippingDetails', name: 'DHL Express (GB)', shippingRate: { '@type': 'MonetaryAmount', value: '44.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-          { '@type': 'OfferShippingDetails', name: 'DHL Express (AE)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-          { '@type': 'OfferShippingDetails', name: 'DHL Express (AU)', shippingRate: { '@type': 'MonetaryAmount', value: '49.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AU' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+          {
+            '@type': 'OfferShippingDetails',
+            name: 'Flat Rate Shipping $25',
+            shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency: 'USD' },
+            shippingDestination: { '@type': 'DefinedRegion', addressCountry: ['US', 'CA', 'AU'] },
+            deliveryTime: {
+              '@type': 'ShippingDeliveryTime',
+              handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+              transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
+            },
+          },
         ],
         hasMerchantReturnPolicy: {
           '@type': 'MerchantReturnPolicy',

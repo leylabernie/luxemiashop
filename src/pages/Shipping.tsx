@@ -13,51 +13,17 @@ const FREE_SHIPPING_THRESHOLD = 350;
 const regionRates = [
   {
     region: 'United States',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$39.95 per order',
+    standard: '7–10 business days (USPS/UPS/DHL)',
     freeNote: 'Free on orders over $350',
   },
   {
     region: 'Canada',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$39.95 per order',
+    standard: '7–10 business days (USPS/UPS/DHL)',
     freeNote: 'Free on orders over $350',
   },
   {
-    region: 'United Kingdom',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$44.95 per order',
-    freeNote: 'Free on orders over $350',
-  },
-  {
-    region: 'Europe (EU)',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$44.95 per order',
-    freeNote: 'Free on orders over $350',
-  },
-  {
-    region: 'Australia & New Zealand',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$49.95 per order',
-    freeNote: 'Free on orders over $350',
-  },
-  {
-    region: 'UAE & Gulf Countries',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$39.95 per order',
-    freeNote: 'Free on orders over $350',
-  },
-  {
-    region: 'Rest of World',
-    standard: '7–10 business days (USPS/UPS)',
-    express: '3–5 business days (DHL Express)',
-    expressFee: '$49.95 per order',
+    region: 'Australia',
+    standard: '7–10 business days (USPS/UPS/DHL)',
     freeNote: 'Free on orders over $350',
   },
 ];
@@ -65,10 +31,7 @@ const regionRates = [
 const importDutyRates = [
   { country: 'United States', dutyRate: '0–32%', additionalTariff: '50%*', notes: '*Additional 50% tariff on goods from India (effective Aug 2025)' },
   { country: 'Canada', dutyRate: '0–18%', additionalTariff: 'None', notes: 'GST/HST applies (5–15%)' },
-  { country: 'United Kingdom', dutyRate: '0–12%', additionalTariff: 'None', notes: 'VAT 20% applies on goods over £135' },
-  { country: 'European Union', dutyRate: '0–12%', additionalTariff: 'None', notes: 'VAT 19–27% varies by country' },
   { country: 'Australia', dutyRate: '0–10%', additionalTariff: 'None', notes: 'GST 10% on goods over AUD 1000' },
-  { country: 'UAE', dutyRate: '5%', additionalTariff: 'None', notes: 'VAT 5% applies' },
 ];
 
 const ShippingCalculator = () => {
@@ -110,7 +73,7 @@ const ShippingCalculator = () => {
         {isFreeShipping ? (
           <div className="text-center">
             <p className="text-green-600 dark:text-green-400 font-semibold text-lg mb-1">Your order qualifies for FREE shipping!</p>
-            <p className="text-sm text-muted-foreground">Orders over ${FREE_SHIPPING_THRESHOLD} ship free to anywhere in the world.</p>
+            <p className="text-sm text-muted-foreground">Orders over ${FREE_SHIPPING_THRESHOLD} ship free to USA, Canada, and Australia.</p>
           </div>
         ) : (
           <div className="flex items-center justify-between">
@@ -132,7 +95,6 @@ const ShippingCalculator = () => {
 
       <p className="text-xs text-muted-foreground mt-4">
         Flat rate ${FLAT_SHIPPING_RATE} per order — no weight calculation, no surprises. Shipped via DHL Express or FedEx International from India.
-        Express upgrade available at checkout for faster delivery.
       </p>
     </div>
   );
@@ -153,8 +115,8 @@ const Shipping = () => {
       },
       {
         '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsExpressReadymade',
-        name: 'DHL Express Shipping (Readymade)',
+        '@id': 'https://luxemia.shop/#shippingDetailsFreeReadymade',
+        name: 'Free Shipping on Orders Over $350 (Readymade)',
         shippingRate: {
           '@type': 'MonetaryAmount',
           value: '0',
@@ -162,69 +124,7 @@ const Shipping = () => {
         },
         shippingDestination: {
           '@type': 'DefinedRegion',
-          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
-        },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 5,
-            unitCode: 'DAY',
-            description: 'Readymade/standard size dispatch time',
-          },
-          transitTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 5,
-            unitCode: 'DAY',
-            description: 'DHL Express delivery',
-          },
-        },
-      },
-      {
-        '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsExpressCustom',
-        name: 'DHL Express Shipping (Custom/Alterations)',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
-          currency: 'USD',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
-        },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 5,
-            maxValue: 7,
-            unitCode: 'DAY',
-            description: 'Custom/alteration dispatch time',
-          },
-          transitTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 5,
-            unitCode: 'DAY',
-            description: 'DHL Express delivery',
-          },
-        },
-      },
-      {
-        '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsStandardReadymade',
-        name: 'USPS/UPS Standard Shipping (Readymade)',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '25.00',
-          currency: 'USD',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
+          addressCountry: ['US', 'CA', 'AU'],
         },
         deliveryTime: {
           '@type': 'ShippingDeliveryTime',
@@ -240,22 +140,22 @@ const Shipping = () => {
             minValue: 7,
             maxValue: 10,
             unitCode: 'DAY',
-            description: 'USPS/UPS standard delivery',
+            description: 'USPS/UPS/DHL delivery',
           },
         },
       },
       {
         '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsStandardCustom',
-        name: 'USPS/UPS Standard Shipping (Custom/Alterations)',
+        '@id': 'https://luxemia.shop/#shippingDetailsFreeCustom',
+        name: 'Free Shipping on Orders Over $350 (Custom/Alterations)',
         shippingRate: {
           '@type': 'MonetaryAmount',
-          value: '25.00',
+          value: '0',
           currency: 'USD',
         },
         shippingDestination: {
           '@type': 'DefinedRegion',
-          addressCountry: ['US', 'GB', 'CA', 'AU', 'AE'],
+          addressCountry: ['US', 'CA', 'AU'],
         },
         deliveryTime: {
           '@type': 'ShippingDeliveryTime',
@@ -271,16 +171,72 @@ const Shipping = () => {
             minValue: 7,
             maxValue: 10,
             unitCode: 'DAY',
-            description: 'USPS/UPS standard delivery',
+            description: 'USPS/UPS/DHL delivery',
           },
         },
       },
-      // DHL Express (paid) — per-country rates matching GMC feed
-      { '@type': 'OfferShippingDetails', '@id': 'https://luxemia.shop/#shippingDetailsExpressUS', name: 'DHL Express (US)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-      { '@type': 'OfferShippingDetails', '@id': 'https://luxemia.shop/#shippingDetailsExpressCA', name: 'DHL Express (CA)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-      { '@type': 'OfferShippingDetails', '@id': 'https://luxemia.shop/#shippingDetailsExpressGB', name: 'DHL Express (GB)', shippingRate: { '@type': 'MonetaryAmount', value: '44.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-      { '@type': 'OfferShippingDetails', '@id': 'https://luxemia.shop/#shippingDetailsExpressAE', name: 'DHL Express (AE)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
-      { '@type': 'OfferShippingDetails', '@id': 'https://luxemia.shop/#shippingDetailsExpressAU', name: 'DHL Express (AU)', shippingRate: { '@type': 'MonetaryAmount', value: '49.95', currency: 'USD' }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AU' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+      {
+        '@type': 'OfferShippingDetails',
+        '@id': 'https://luxemia.shop/#shippingDetailsFlatReadymade',
+        name: 'Flat Rate Shipping $25 (Readymade)',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '25.00',
+          currency: 'USD',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: ['US', 'CA', 'AU'],
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 5,
+            unitCode: 'DAY',
+            description: 'Readymade/standard size dispatch time',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 7,
+            maxValue: 10,
+            unitCode: 'DAY',
+            description: 'USPS/UPS/DHL delivery',
+          },
+        },
+      },
+      {
+        '@type': 'OfferShippingDetails',
+        '@id': 'https://luxemia.shop/#shippingDetailsFlatCustom',
+        name: 'Flat Rate Shipping $25 (Custom/Alterations)',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '25.00',
+          currency: 'USD',
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: ['US', 'CA', 'AU'],
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 5,
+            maxValue: 7,
+            unitCode: 'DAY',
+            description: 'Custom/alteration dispatch time',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 7,
+            maxValue: 10,
+            unitCode: 'DAY',
+            description: 'USPS/UPS/DHL delivery',
+          },
+        },
+      },
     ],
   };
 
@@ -288,7 +244,7 @@ const Shipping = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Shipping Information — LuxeMia"
-        description="LuxeMia ships worldwide from India at a flat rate of $25 per order. Free shipping on orders over $350. DHL Express and USPS/UPS."
+        description="LuxeMia ships to USA, Canada, and Australia at a flat rate of $25 per order. Free shipping on orders over $350. USPS/UPS/DHL delivery."
         canonical="https://luxemia.shop/shipping"
       />
       <Helmet>
@@ -308,11 +264,11 @@ const Shipping = () => {
               transition={{ duration: 0.6 }}
             >
               <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
-                Worldwide Delivery
+                Delivery to USA, Canada & Australia
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Shipping Policy</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                We ship our Indian ethnic wear worldwide from India at a simple flat rate of $25 per order —
+                We ship our Indian ethnic wear to the USA, Canada, and Australia at a simple flat rate of $25 per order —
                 no weight calculations, no hidden fees. Orders over $350 qualify for free shipping. Every piece is carefully packaged to arrive in perfect condition.
               </p>
             </motion.div>
@@ -325,14 +281,14 @@ const Shipping = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center max-w-3xl mx-auto">
               <div>
                 <p className="text-3xl font-serif font-semibold text-primary">${FLAT_SHIPPING_RATE}</p>
-                <p className="text-sm text-muted-foreground mt-1">per order, worldwide</p>
+                <p className="text-sm text-muted-foreground mt-1">per order (US, CA, AU)</p>
               </div>
               <div>
                 <p className="text-3xl font-serif font-semibold text-green-600 dark:text-green-400">FREE</p>
                 <p className="text-sm text-muted-foreground mt-1">on orders over ${FREE_SHIPPING_THRESHOLD}</p>
               </div>
               <div>
-                <p className="text-3xl font-serif font-semibold text-primary">3–10</p>
+                <p className="text-3xl font-serif font-semibold text-primary">7–10</p>
                 <p className="text-sm text-muted-foreground mt-1">business days delivery</p>
               </div>
             </div>
@@ -344,9 +300,9 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: Globe, title: 'Ships Worldwide', desc: '100+ countries from India' },
+                { icon: Globe, title: 'Ships to US, CA & AU', desc: 'USA, Canada, Australia' },
                 { icon: Package, title: 'Quality Packaging', desc: 'Gift-ready presentation' },
-                { icon: Truck, title: 'Full Tracking', desc: 'DHL Express & FedEx International' },
+                { icon: Truck, title: 'Full Tracking', desc: 'USPS/UPS/DHL with tracking' },
                 { icon: Clock, title: 'Dispatch Time', desc: 'Readymade 3–5 days, Custom 5–7 days' },
               ].map((item, index) => (
                 <motion.div
@@ -401,7 +357,7 @@ const Shipping = () => {
             >
               <h2 className="text-2xl font-serif mb-2 text-center">Estimate Your Shipping</h2>
               <p className="text-muted-foreground text-center mb-8 text-sm">
-                Simple flat-rate pricing — the same rate applies whether you're in New York, Toronto, Sydney, or Dubai.
+                Simple flat-rate pricing — the same $25 rate applies whether you're in New York, Toronto, or Sydney.
               </p>
               <ShippingCalculator />
             </motion.div>
@@ -416,9 +372,9 @@ const Shipping = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-2xl font-serif mb-2 text-center">Delivery Times by Region</h2>
+              <h2 className="text-2xl font-serif mb-2 text-center">Delivery Times by Country</h2>
               <p className="text-muted-foreground text-center mb-8 text-sm">
-                Flat rate ${FLAT_SHIPPING_RATE} per order applies to all regions. Express upgrade available at checkout.
+                Flat rate ${FLAT_SHIPPING_RATE} per order applies to all countries. Free shipping on orders over $350.
               </p>
 
               <div className="overflow-x-auto">
@@ -426,8 +382,8 @@ const Shipping = () => {
                   <thead>
                     <tr className="border-b border-border bg-card">
                       <th className="text-left py-4 px-4 font-medium">Destination</th>
-                      <th className="text-left py-4 px-4 font-medium">Standard Delivery</th>
-                      <th className="text-left py-4 px-4 font-medium">Express Delivery</th>
+                      <th className="text-left py-4 px-4 font-medium">Delivery Time</th>
+                      <th className="text-left py-4 px-4 font-medium">Shipping Rate</th>
                       <th className="text-left py-4 px-4 font-medium">Free Shipping</th>
                     </tr>
                   </thead>
@@ -437,11 +393,9 @@ const Shipping = () => {
                         <td className="py-4 px-4 font-medium">{row.region}</td>
                         <td className="py-4 px-4">
                           <span className="block text-muted-foreground">{row.standard}</span>
-                          <span className="font-semibold text-primary">${FLAT_SHIPPING_RATE}/order</span>
                         </td>
                         <td className="py-4 px-4">
-                          <span className="block text-muted-foreground">{row.express}</span>
-                          <span className="text-sm text-muted-foreground">{row.expressFee}</span>
+                          <span className="font-semibold text-primary">${FLAT_SHIPPING_RATE}/order</span>
                         </td>
                         <td className="py-4 px-4">
                           <span className="text-green-600 dark:text-green-400 font-medium">{row.freeNote}</span>
@@ -481,7 +435,7 @@ const Shipping = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border bg-card">
-                      <th className="text-left py-4 px-4 font-medium">Country/Region</th>
+                      <th className="text-left py-4 px-4 font-medium">Country</th>
                       <th className="text-left py-4 px-4 font-medium">Base Duty Rate</th>
                       <th className="text-left py-4 px-4 font-medium">Additional Tariffs</th>
                       <th className="text-left py-4 px-4 font-medium">Notes</th>
@@ -573,7 +527,6 @@ const Shipping = () => {
                   <span className="px-3 py-1 bg-secondary rounded-full">USPS</span>
                   <span className="px-3 py-1 bg-secondary rounded-full">UPS</span>
                   <span className="px-3 py-1 bg-secondary rounded-full">FedEx International</span>
-                  <span className="px-3 py-1 bg-secondary rounded-full">Aramex</span>
                 </div>
               </div>
             </motion.div>
@@ -646,8 +599,8 @@ const Shipping = () => {
                   <AccordionTrigger>How is shipping calculated?</AccordionTrigger>
                   <AccordionContent>
                     We use a simple flat rate of ${FLAT_SHIPPING_RATE} per order — no weight calculations, no size surcharges.
-                    The same rate applies whether you're ordering to the USA, Canada, UK, Australia, or anywhere else in the world.
-                    Orders over ${FREE_SHIPPING_THRESHOLD} automatically qualify for free shipping. Delivery is 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard.
+                    The same rate applies whether you're ordering to the USA, Canada, or Australia.
+                    Orders over ${FREE_SHIPPING_THRESHOLD} automatically qualify for free shipping. Delivery is 7-10 business days via USPS/UPS/DHL.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">

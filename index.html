@@ -108,7 +108,7 @@
             "telephone": "+1-215-341-9990",
             "contactType": "customer service",
             "email": "hello@luxemia.shop",
-            "areaServed": ["US", "GB", "CA", "AU", "AE"],
+            "areaServed": ["US", "CA", "AU"],
             "availableLanguage": ["English"]
           },
           "sameAs": [
@@ -218,8 +218,8 @@
         },
         {
           "@type": "OfferShippingDetails",
-          "@id": "https://luxemia.shop/#shippingDetailsExpress",
-          "name": "DHL Express Shipping (free on orders over $350)",
+          "@id": "https://luxemia.shop/#shippingDetailsFree",
+          "name": "Free Shipping on Orders Over $350",
           "shippingRate": {
             "@type": "MonetaryAmount",
             "value": "0",
@@ -227,7 +227,7 @@
           },
           "shippingDestination": {
             "@type": "DefinedRegion",
-            "addressCountry": ["US", "CA", "GB", "AE", "AU"]
+            "addressCountry": ["US", "CA", "AU"]
           },
           "deliveryTime": {
             "@type": "ShippingDeliveryTime",
@@ -239,16 +239,16 @@
             },
             "transitTime": {
               "@type": "QuantitativeValue",
-              "minValue": 3,
-              "maxValue": 5,
+              "minValue": 7,
+              "maxValue": 10,
               "unitCode": "DAY"
             }
           }
         },
         {
           "@type": "OfferShippingDetails",
-          "@id": "https://luxemia.shop/#shippingDetailsStandard",
-          "name": "USPS/UPS Standard Shipping",
+          "@id": "https://luxemia.shop/#shippingDetailsFlat",
+          "name": "Flat Rate Shipping $25",
           "shippingRate": {
             "@type": "MonetaryAmount",
             "value": "25.00",
@@ -256,7 +256,7 @@
           },
           "shippingDestination": {
             "@type": "DefinedRegion",
-            "addressCountry": ["US", "CA", "GB", "AE", "AU"]
+            "addressCountry": ["US", "CA", "AU"]
           },
           "deliveryTime": {
             "@type": "ShippingDeliveryTime",
@@ -282,7 +282,7 @@
               "name": "Do you offer international shipping for Indian ethnic wear?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, LuxeMia ships worldwide, including to the USA, UK, Canada, and many other countries. Free shipping on orders over $350. Flat rate $25 per order for orders under $300. You can find more details on our Shipping Policy page."
+                "text": "Yes, LuxeMia ships to the USA, Canada, and Australia. Free shipping on orders over $350. Flat rate $25 per order for orders under $350. You can find more details on our Shipping Policy page."
               }
             },
             {
@@ -322,7 +322,7 @@
               "name": "Do I need to pay customs duties or taxes on international orders?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "While LuxeMia offers free shipping on orders over $350 (flat rate $25 per order for orders under $300), customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
+                "text": "While LuxeMia offers free shipping on orders over $350 (flat rate $25 per order for orders under $350) to USA, Canada, and Australia, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
               }
             },
             {

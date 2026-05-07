@@ -68,8 +68,8 @@ function escapeXml(str) {
 }
 
 function getShippingBlocks() {
-  // GMC FIX: Target ONLY the US market. This store is US-registered and charges in USD.
-  // Targeting non-USD countries causes "unsupported currency" violations.
+  // GMC: Shipping for US, CA, AU markets. All prices in USD.
+  // Free shipping on orders over $350, flat rate $25 for orders under $350.
   return `
     <g:shipping>
       <g:country>US</g:country>
@@ -82,12 +82,48 @@ function getShippingBlocks() {
     </g:shipping>
     <g:shipping>
       <g:country>US</g:country>
-      <g:service>Express</g:service>
-      <g:price>39.95 USD</g:price>
+      <g:service>Free over $350</g:service>
+      <g:price>0.00 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>3</g:min_transit_time>
-      <g:max_transit_time>5</g:max_transit_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>CA</g:country>
+      <g:service>Standard</g:service>
+      <g:price>25.00 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>CA</g:country>
+      <g:service>Free over $350</g:service>
+      <g:price>0.00 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AU</g:country>
+      <g:service>Standard</g:service>
+      <g:price>25.00 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
+    </g:shipping>
+    <g:shipping>
+      <g:country>AU</g:country>
+      <g:service>Free over $350</g:service>
+      <g:price>0.00 USD</g:price>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>5</g:max_handling_time>
+      <g:min_transit_time>7</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
     </g:shipping>`;
 }
 
