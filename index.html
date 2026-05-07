@@ -220,7 +220,7 @@
         {
           "@type": "OfferShippingDetails",
           "@id": "https://luxemia.shop/#shippingDetailsExpress",
-          "name": "DHL Express Shipping",
+          "name": "DHL Express Shipping (free on orders over $300)",
           "shippingRate": {
             "@type": "MonetaryAmount",
             "value": "0",
@@ -247,6 +247,35 @@
           }
         },
         {
+          "@type": "OfferShippingDetails",
+          "@id": "https://luxemia.shop/#shippingDetailsStandard",
+          "name": "USPS/UPS Standard Shipping",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "14.95",
+            "currency": "USD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": ["US", "CA", "GB", "AE", "AU"]
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 5,
+              "unitCode": "DAY"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 7,
+              "maxValue": 10,
+              "unitCode": "DAY"
+            }
+          }
+        },
+        {
           "@type": "FAQPage",
           "mainEntity": [
             {
@@ -254,7 +283,7 @@
               "name": "Do you offer international shipping for Indian ethnic wear?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, LuxeMia offers free worldwide shipping, including to the USA, UK, Canada, and many other countries. You can find more details on our Shipping Policy page."
+                "text": "Yes, LuxeMia ships worldwide, including to the USA, UK, Canada, and many other countries. Free shipping on orders over $300. Flat rate $14.95 per item for orders under $300. You can find more details on our Shipping Policy page."
               }
             },
             {
@@ -294,7 +323,7 @@
               "name": "Do I need to pay customs duties or taxes on international orders?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "While LuxeMia offers free shipping, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
+                "text": "While LuxeMia offers free shipping on orders over $300 (flat rate $14.95 per item for orders under $300), customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
               }
             },
             {

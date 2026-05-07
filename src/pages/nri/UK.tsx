@@ -29,7 +29,7 @@ const UK = () => (
         },
         {
           question: 'Can I return items from the UK?',
-          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. Please review our Returns Policy for full details.',
+          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you ship to Northern Ireland and Scottish Highlands?',

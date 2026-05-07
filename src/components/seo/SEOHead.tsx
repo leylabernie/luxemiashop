@@ -161,9 +161,10 @@ const SEOHead = ({
             alternateName: 'LuxeMia',
           },
           shippingDetails: [
+            // Free DHL Express on orders over $300
             {
               '@type': 'OfferShippingDetails',
-              name: 'DHL Express (Readymade)',
+              name: 'DHL Express Free (orders over $300) — Readymade',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '0',
@@ -193,7 +194,7 @@ const SEOHead = ({
             },
             {
               '@type': 'OfferShippingDetails',
-              name: 'DHL Express (Custom/Alterations)',
+              name: 'DHL Express Free (orders over $300) — Custom/Alterations',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '0',
@@ -221,9 +222,10 @@ const SEOHead = ({
                 },
               },
             },
+            // USPS/UPS Standard
             {
               '@type': 'OfferShippingDetails',
-              name: 'USPS/UPS Standard (Readymade)',
+              name: 'USPS/UPS Standard — Readymade',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '14.95',
@@ -251,12 +253,49 @@ const SEOHead = ({
                 },
               },
             },
+            {
+              '@type': 'OfferShippingDetails',
+              name: 'USPS/UPS Standard — Custom/Alterations',
+              shippingRate: {
+                '@type': 'MonetaryAmount',
+                value: '14.95',
+                currency: product.currency,
+              },
+              shippingDestination: {
+                '@type': 'DefinedRegion',
+                addressCountry: ['US', 'CA', 'GB', 'AE', 'AU'],
+              },
+              deliveryTime: {
+                '@type': 'ShippingDeliveryTime',
+                handlingTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 5,
+                  maxValue: 7,
+                  unitCode: 'DAY',
+                  description: 'Custom/alteration dispatch time',
+                },
+                transitTime: {
+                  '@type': 'QuantitativeValue',
+                  minValue: 7,
+                  maxValue: 10,
+                  unitCode: 'DAY',
+                  description: 'USPS/UPS standard delivery',
+                },
+              },
+            },
+            // DHL Express (paid) — per-country rates matching GMC feed
+            { '@type': 'OfferShippingDetails', name: 'DHL Express (US)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: product.currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+            { '@type': 'OfferShippingDetails', name: 'DHL Express (CA)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: product.currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+            { '@type': 'OfferShippingDetails', name: 'DHL Express (GB)', shippingRate: { '@type': 'MonetaryAmount', value: '44.95', currency: product.currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+            { '@type': 'OfferShippingDetails', name: 'DHL Express (AE)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: product.currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+            { '@type': 'OfferShippingDetails', name: 'DHL Express (AU)', shippingRate: { '@type': 'MonetaryAmount', value: '49.95', currency: product.currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AU' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
           ],
           hasMerchantReturnPolicy: {
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'US',
             returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
             returnFees: 'https://schema.org/FreeReturn',
+            description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
           },
         },
       }

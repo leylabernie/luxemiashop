@@ -257,6 +257,7 @@ function getSizesDescription(variants, productOptions) {
  * Google Product Category Taxonomy Reference:
  * - 166  = Apparel & Accessories
  * - 2271 = Apparel & Accessories > Clothing
+ * - 5424 = Apparel & Accessories > Clothing > Sarees & Blouses
  * - 2275 = Apparel & Accessories > Clothing > Dresses
  * - 5006 = Apparel & Accessories > Clothing > Men's Clothing
  * - 5598 = Apparel & Accessories > Clothing > Men's Clothing > Suits
@@ -283,9 +284,9 @@ function getGoogleCategory(productType, isMenswear, title) {
   if (pt.includes('lehenga')) {
     return { googleCategory: '2275', productTypePath: 'Lehengas' };
   }
-  // Sarees → Clothing (2271) — no specific saree subcategory in Google taxonomy
+  // Sarees → Sarees & Blouses (5424) — most specific match
   if (pt.includes('saree')) {
-    return { googleCategory: '2271', productTypePath: 'Sarees' };
+    return { googleCategory: '5424', productTypePath: 'Sarees' };
   }
   // Salwar Kameez / Anarkali / Suits → Dresses (2275) — closest match
   return { googleCategory: '2275', productTypePath: 'Salwar Kameez' };
@@ -672,8 +673,8 @@ async function main() {
               if (decoded.includes("Men's Clothing > Shirts") || decoded.includes('Kurta')) return '<g:google_product_category>5600</g:google_product_category>';
               if (decoded.includes("Men's Clothing")) return '<g:google_product_category>5006</g:google_product_category>';
               if (decoded.includes('Dresses')) return '<g:google_product_category>2275</g:google_product_category>';
-              if (decoded.includes('Clothing')) return '<g:google_product_category>2271</g:google_product_category>';
-              return '<g:google_product_category>2271</g:google_product_category>';
+              if (decoded.includes('Saree')) return '<g:google_product_category>5424</g:google_product_category>';
+              return '<g:google_product_category>5424</g:google_product_category>';
             }
           );
 

@@ -326,39 +326,58 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
       shippingDetails: [
+        // Free DHL Express on orders over $300
         {
           '@type': 'OfferShippingDetails',
-          name: 'DHL Express Free (orders over $300)',
+          name: 'DHL Express Free (orders over $300) — Readymade',
           shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
-            handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY', description: 'Readymade dispatch' },
             transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
           },
         },
         {
           '@type': 'OfferShippingDetails',
-          name: 'USPS/UPS Standard',
+          name: 'DHL Express Free (orders over $300) — Custom/Alterations',
+          shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: currency },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 7, unitCode: 'DAY', description: 'Custom/alteration dispatch' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+          },
+        },
+        // USPS/UPS Standard
+        {
+          '@type': 'OfferShippingDetails',
+          name: 'USPS/UPS Standard — Readymade',
           shippingRate: { '@type': 'MonetaryAmount', value: '14.95', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
-            handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY', description: 'Readymade dispatch' },
             transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
           },
         },
         {
           '@type': 'OfferShippingDetails',
-          name: 'DHL Express (paid)',
-          shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: currency },
+          name: 'USPS/UPS Standard — Custom/Alterations',
+          shippingRate: { '@type': 'MonetaryAmount', value: '14.95', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
-            handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
-            transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+            handlingTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 7, unitCode: 'DAY', description: 'Custom/alteration dispatch' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
           },
         },
+        // DHL Express (paid) — per-country rates matching GMC feed
+        { '@type': 'OfferShippingDetails', name: 'DHL Express (US)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+        { '@type': 'OfferShippingDetails', name: 'DHL Express (CA)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CA' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+        { '@type': 'OfferShippingDetails', name: 'DHL Express (GB)', shippingRate: { '@type': 'MonetaryAmount', value: '44.95', currency: currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+        { '@type': 'OfferShippingDetails', name: 'DHL Express (AE)', shippingRate: { '@type': 'MonetaryAmount', value: '39.95', currency: currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AE' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
+        { '@type': 'OfferShippingDetails', name: 'DHL Express (AU)', shippingRate: { '@type': 'MonetaryAmount', value: '49.95', currency: currency }, shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'AU' }, deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' }, transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' } } },
       ],
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',

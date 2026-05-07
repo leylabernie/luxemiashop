@@ -200,11 +200,11 @@ function getGoogleCategory(productType: string, title: string): number {
     t.includes("sherwani") ||
     t.includes("kurta pajama")
   ) {
-    if (t.includes("sherwani")) return 2195;
-    if (t.includes("kurta")) return 2197;
-    return 2104;
+    if (t.includes("sherwani")) return 5598;
+    if (t.includes("kurta")) return 5600;
+    return 5006;
   }
-  if (pt.includes("lehenga")) return 2271;
+  if (pt.includes("lehenga")) return 2275;
   if (pt.includes("saree")) return 5424;
   if (pt.includes("necklace")) return 193;
   if (pt.includes("earring")) return 194;
@@ -217,7 +217,7 @@ function getGoogleCategory(productType: string, title: string): number {
     pt.includes("palazzo") ||
     pt.includes("salwar")
   ) {
-    return 2271;
+    return 2275;
   }
   return 1604;
 }

@@ -29,11 +29,11 @@ const NRIGeneral = () => (
         },
         {
           question: 'Can I get custom sizing?',
-          answer: 'Absolutely! All our outfits are available in custom sizing. Provide your measurements during checkout and our tailors will create a perfect fit. Custom orders take an additional 2-3 weeks.',
+          answer: 'Absolutely! All our outfits are available in custom sizing. Provide your measurements during checkout and our tailors will create a perfect fit. Custom orders take an additional 3-4 weeks for production.',
         },
         {
           question: 'What if my item arrives damaged?',
-          answer: 'In the rare case of shipping damage, please record an unboxing video and contact us within 7 days of delivery. We will resolve the issue promptly.',
+          answer: 'In the rare case of shipping damage, please record an unboxing video and contact us within 48 hours of delivery. We will resolve the issue promptly.',
         },
       ],
       benefits: [
