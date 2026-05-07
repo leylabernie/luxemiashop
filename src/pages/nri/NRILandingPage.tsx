@@ -146,7 +146,7 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
             <div className="bg-card rounded-lg p-8 border border-border">
               <h3 className="font-serif text-xl text-foreground mb-3">Shop With Confidence</h3>
               <p className="text-muted-foreground">
-                Every order is carefully packaged and shipped with tracking. We offer a flat rate of $14.95 per item for shipping, with free shipping on orders over $300 
+                Every order is carefully packaged and shipped with tracking. We offer a flat rate of $25 per order for shipping, with free shipping on orders over $350 
                 to {config.country} with delivery in {config.shippingTime.toLowerCase()}. 
                 {config.customsNote && ` ${config.customsNote}`}
               </p>

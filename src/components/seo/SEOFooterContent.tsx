@@ -60,7 +60,7 @@ const SEOFooterContent = () => {
                   Shop <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry online</Link> at LuxeMia. 
                   Discover <strong className="text-foreground">kundan necklace sets</strong>, bridal jewelry, 
                   <strong className="text-foreground"> jhumka earrings</strong>, bangles, and maang tikka. 
-                  Perfect for weddings, festivals, and celebrations. Flat rate shipping $14.95/item, free on orders over $300.
+                  Perfect for weddings, festivals, and celebrations. Flat rate shipping $25/order, free on orders over $350.
                 </p>
               </div>
             </div>
@@ -113,7 +113,7 @@ const SEOFooterContent = () => {
               <p>
                 LuxeMia is the best Indian ethnic wear store online for affordable, stylish ethnic clothing. 
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-                We offer <strong className="text-foreground">flat rate shipping ($14.95/item, free over $300)</strong> to USA, UK, Canada, and 100+ countries, 
+                We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to USA, UK, Canada, and 100+ countries, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
                 why thousands of customers trust LuxeMia for their Indian ethnic wear needs.

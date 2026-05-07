@@ -7,7 +7,8 @@ import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import EmailCaptureModal from './EmailCaptureModal';
 
-const FREE_SHIPPING_THRESHOLD = 300;
+const FREE_SHIPPING_THRESHOLD = 350;
+const FLAT_SHIPPING_RATE = 25;
 
 interface CartDrawerProps {
   isOpen: boolean;

@@ -8,11 +8,11 @@ const USA = () => (
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
       seoTitle: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-10 day standard delivery.',
+      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $25/order, free on orders over $350. 7-10 day standard delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the USA',
       heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-10 business days',
-      shippingCost: '$14.95/item, free on orders over $300',
+      shippingCost: '$25/order, free on orders over $350',
       customsNote: 'US imports from India may be subject to tariffs and duties. As of 2025, an additional 50% tariff applies to many goods from India. Customers are responsible for all customs fees.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const USA = () => (
         },
         {
           question: 'Is shipping free to the USA?',
-          answer: 'We offer a flat shipping rate of $14.95 per item, with free shipping on all orders over $300. No coupon code needed — free shipping is applied automatically at checkout.',
+          answer: 'We offer a flat shipping rate of $25 per order, with free shipping on all orders over $350. No coupon code needed — free shipping is applied automatically at checkout.',
         },
         {
           question: 'Will I have to pay customs duties?',
@@ -37,7 +37,7 @@ const USA = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
+        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $25/order, free over $350' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day express shipping at checkout' },
       ],

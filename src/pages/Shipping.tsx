@@ -7,58 +7,58 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-const RATE_PER_ITEM = 14.95;
-const FREE_SHIPPING_THRESHOLD = 300;
+const FLAT_SHIPPING_RATE = 25;
+const FREE_SHIPPING_THRESHOLD = 350;
 
 const regionRates = [
   {
     region: 'United States',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$39.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$39.95 per order',
+    freeNote: 'Free on orders over $350',
   },
   {
     region: 'Canada',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$39.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$39.95 per order',
+    freeNote: 'Free on orders over $350',
   },
   {
     region: 'United Kingdom',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$44.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$44.95 per order',
+    freeNote: 'Free on orders over $350',
   },
   {
     region: 'Europe (EU)',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$44.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$44.95 per order',
+    freeNote: 'Free on orders over $350',
   },
   {
     region: 'Australia & New Zealand',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$49.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$49.95 per order',
+    freeNote: 'Free on orders over $350',
   },
   {
     region: 'UAE & Gulf Countries',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$39.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$39.95 per order',
+    freeNote: 'Free on orders over $350',
   },
   {
     region: 'Rest of World',
     standard: '7–10 business days (USPS/UPS)',
     express: '3–5 business days (DHL Express)',
-    expressFee: '$49.95 per item',
-    freeNote: 'Free on orders over $300',
+    expressFee: '$49.95 per order',
+    freeNote: 'Free on orders over $350',
   },
 ];
 
@@ -72,11 +72,10 @@ const importDutyRates = [
 ];
 
 const ShippingCalculator = () => {
-  const [items, setItems] = useState(1);
   const [orderValue, setOrderValue] = useState(0);
 
   const isFreeShipping = orderValue >= FREE_SHIPPING_THRESHOLD;
-  const shippingCost = isFreeShipping ? 0 : items * RATE_PER_ITEM;
+  const shippingCost = isFreeShipping ? 0 : FLAT_SHIPPING_RATE;
   const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - orderValue;
 
   return (
@@ -86,44 +85,23 @@ const ShippingCalculator = () => {
         <h3 className="font-semibold text-lg">Shipping Cost Estimator</h3>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-6 mb-6">
-        <div>
-          <label className="block text-sm font-medium mb-2" htmlFor="item-count">
-            Number of Items
-          </label>
-          <div className="flex items-center gap-3">
-            <button
-              data-testid="button-decrease-items"
-              onClick={() => setItems(Math.max(1, items - 1))}
-              className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-lg hover:bg-secondary transition-colors"
-            >–</button>
-            <span data-testid="text-item-count" className="text-2xl font-serif w-8 text-center">{items}</span>
-            <button
-              data-testid="button-increase-items"
-              onClick={() => setItems(items + 1)}
-              className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-lg hover:bg-secondary transition-colors"
-            >+</button>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2" htmlFor="order-value">
-            Estimated Order Value (USD)
-          </label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
-            <input
-              id="order-value"
-              data-testid="input-order-value"
-              type="number"
-              min="0"
-              step="10"
-              value={orderValue || ''}
-              placeholder="0"
-              onChange={e => setOrderValue(parseFloat(e.target.value) || 0)}
-              className="w-full border border-border rounded-md pl-7 pr-3 py-2 text-sm bg-background focus:outline-none focus:ring-1 focus:ring-primary"
-            />
-          </div>
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-2" htmlFor="order-value">
+          Estimated Order Value (USD)
+        </label>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+          <input
+            id="order-value"
+            data-testid="input-order-value"
+            type="number"
+            min="0"
+            step="10"
+            value={orderValue || ''}
+            placeholder="0"
+            onChange={e => setOrderValue(parseFloat(e.target.value) || 0)}
+            className="w-full border border-border rounded-md pl-7 pr-3 py-2 text-sm bg-background focus:outline-none focus:ring-1 focus:ring-primary"
+          />
         </div>
       </div>
 
@@ -137,9 +115,9 @@ const ShippingCalculator = () => {
         ) : (
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground mb-1">Estimated shipping for {items} item{items > 1 ? 's' : ''}</p>
+              <p className="text-sm text-muted-foreground mb-1">Flat shipping rate</p>
               <p className="text-3xl font-serif font-semibold text-primary">${shippingCost.toFixed(2)}</p>
-              <p className="text-xs text-muted-foreground mt-1">${RATE_PER_ITEM} × {items} item{items > 1 ? 's' : ''}</p>
+              <p className="text-xs text-muted-foreground mt-1">Flat rate per order</p>
             </div>
             {amountToFreeShipping > 0 && (
               <div className="text-right">
@@ -153,7 +131,7 @@ const ShippingCalculator = () => {
       </div>
 
       <p className="text-xs text-muted-foreground mt-4">
-        Flat rate ${RATE_PER_ITEM} per item — no weight calculation, no surprises. Shipped via DHL Express or FedEx International from India.
+        Flat rate ${FLAT_SHIPPING_RATE} per order — no weight calculation, no surprises. Shipped via DHL Express or FedEx International from India.
         Express upgrade available at checkout for faster delivery.
       </p>
     </div>
@@ -241,7 +219,7 @@ const Shipping = () => {
         name: 'USPS/UPS Standard Shipping (Readymade)',
         shippingRate: {
           '@type': 'MonetaryAmount',
-          value: '14.95',
+          value: '25.00',
           currency: 'USD',
         },
         shippingDestination: {
@@ -272,7 +250,7 @@ const Shipping = () => {
         name: 'USPS/UPS Standard Shipping (Custom/Alterations)',
         shippingRate: {
           '@type': 'MonetaryAmount',
-          value: '14.95',
+          value: '25.00',
           currency: 'USD',
         },
         shippingDestination: {
@@ -310,7 +288,7 @@ const Shipping = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Shipping Information — LuxeMia"
-        description="LuxeMia ships worldwide from India at a flat rate of $14.95 per item. Free shipping on orders over $300. DHL Express and USPS/UPS."
+        description="LuxeMia ships worldwide from India at a flat rate of $25 per order. Free shipping on orders over $350. DHL Express and USPS/UPS."
         canonical="https://luxemia.shop/shipping"
       />
       <Helmet>
@@ -334,8 +312,8 @@ const Shipping = () => {
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Shipping Policy</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                We ship our Indian ethnic wear worldwide from India at a simple flat rate —
-                no weight calculations, no hidden fees. Every piece is carefully packaged to arrive in perfect condition.
+                We ship our Indian ethnic wear worldwide from India at a simple flat rate of $25 per order —
+                no weight calculations, no hidden fees. Orders over $350 qualify for free shipping. Every piece is carefully packaged to arrive in perfect condition.
               </p>
             </motion.div>
           </div>
@@ -346,8 +324,8 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center max-w-3xl mx-auto">
               <div>
-                <p className="text-3xl font-serif font-semibold text-primary">${RATE_PER_ITEM}</p>
-                <p className="text-sm text-muted-foreground mt-1">per item, worldwide</p>
+                <p className="text-3xl font-serif font-semibold text-primary">${FLAT_SHIPPING_RATE}</p>
+                <p className="text-sm text-muted-foreground mt-1">per order, worldwide</p>
               </div>
               <div>
                 <p className="text-3xl font-serif font-semibold text-green-600 dark:text-green-400">FREE</p>
@@ -440,7 +418,7 @@ const Shipping = () => {
             >
               <h2 className="text-2xl font-serif mb-2 text-center">Delivery Times by Region</h2>
               <p className="text-muted-foreground text-center mb-8 text-sm">
-                Flat rate ${RATE_PER_ITEM} per item applies to all regions. Express upgrade available at checkout.
+                Flat rate ${FLAT_SHIPPING_RATE} per order applies to all regions. Express upgrade available at checkout.
               </p>
 
               <div className="overflow-x-auto">
@@ -459,7 +437,7 @@ const Shipping = () => {
                         <td className="py-4 px-4 font-medium">{row.region}</td>
                         <td className="py-4 px-4">
                           <span className="block text-muted-foreground">{row.standard}</span>
-                          <span className="font-semibold text-primary">${RATE_PER_ITEM}/item</span>
+                          <span className="font-semibold text-primary">${FLAT_SHIPPING_RATE}/order</span>
                         </td>
                         <td className="py-4 px-4">
                           <span className="block text-muted-foreground">{row.express}</span>
@@ -667,7 +645,7 @@ const Shipping = () => {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>How is shipping calculated?</AccordionTrigger>
                   <AccordionContent>
-                    We use a simple flat rate of ${RATE_PER_ITEM} per item — no weight calculations, no size surcharges.
+                    We use a simple flat rate of ${FLAT_SHIPPING_RATE} per order — no weight calculations, no size surcharges.
                     The same rate applies whether you're ordering to the USA, Canada, UK, Australia, or anywhere else in the world.
                     Orders over ${FREE_SHIPPING_THRESHOLD} automatically qualify for free shipping. Delivery is 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard.
                   </AccordionContent>
@@ -677,7 +655,7 @@ const Shipping = () => {
                   <AccordionContent>
                     Your order qualifies for free shipping when the order total exceeds ${FREE_SHIPPING_THRESHOLD} USD.
                     This is applied automatically at checkout — no coupon code needed. The threshold is based on
-                    the subtotal before taxes and shipping.
+                    the subtotal before taxes and shipping. Orders under ${FREE_SHIPPING_THRESHOLD} are charged a flat rate of ${FLAT_SHIPPING_RATE}.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">

@@ -161,10 +161,10 @@ const SEOHead = ({
             alternateName: 'LuxeMia',
           },
           shippingDetails: [
-            // Free DHL Express on orders over $300
+            // Free DHL Express on orders over $350
             {
               '@type': 'OfferShippingDetails',
-              name: 'DHL Express Free (orders over $300) — Readymade',
+              name: 'DHL Express Free (orders over $350) — Readymade',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '0',
@@ -194,7 +194,7 @@ const SEOHead = ({
             },
             {
               '@type': 'OfferShippingDetails',
-              name: 'DHL Express Free (orders over $300) — Custom/Alterations',
+              name: 'DHL Express Free (orders over $350) — Custom/Alterations',
               shippingRate: {
                 '@type': 'MonetaryAmount',
                 value: '0',
@@ -228,7 +228,7 @@ const SEOHead = ({
               name: 'USPS/UPS Standard — Readymade',
               shippingRate: {
                 '@type': 'MonetaryAmount',
-                value: '14.95',
+                value: '25.00',
                 currency: product.currency,
               },
               shippingDestination: {
@@ -258,7 +258,7 @@ const SEOHead = ({
               name: 'USPS/UPS Standard — Custom/Alterations',
               shippingRate: {
                 '@type': 'MonetaryAmount',
-                value: '14.95',
+                value: '25.00',
                 currency: product.currency,
               },
               shippingDestination: {

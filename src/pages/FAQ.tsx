@@ -62,7 +62,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer free shipping?',
-          answer: 'Yes! We offer free shipping on orders over $300 USD to anywhere in the world. Standard flat rate is $14.95 per item otherwise.',
+          answer: 'Yes! We offer free shipping on orders over $350 USD to anywhere in the world. Flat rate is $25 per order otherwise.',
         },
       ],
     },

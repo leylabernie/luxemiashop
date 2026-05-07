@@ -8,11 +8,11 @@ const UK = () => (
       countryCode: 'GB',
       slug: 'indian-ethnic-wear-uk',
       seoTitle: 'Buy Indian Ethnic Wear Online UK | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in the UK. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-10 day standard delivery to United Kingdom.',
+      seoDescription: 'Buy Indian ethnic wear online in the UK. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $25/order, free on orders over $350. 7-10 day standard delivery to United Kingdom.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the UK',
       heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-10 business days',
-      shippingCost: '$14.95/item, free on orders over $300',
+      shippingCost: '$25/order, free on orders over $350',
       customsNote: 'UK orders over £135 may be subject to 20% import VAT. These charges are collected by the carrier at delivery.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const UK = () => (
         },
         {
           question: 'Is delivery free to the UK?',
-          answer: 'We offer a flat shipping rate of $14.95 per item, with free shipping on all orders over $300. No coupon code needed — free shipping is applied automatically at checkout.',
+          answer: 'We offer a flat shipping rate of $25 per order, with free shipping on all orders over $350. No coupon code needed — free shipping is applied automatically at checkout.',
         },
         {
           question: 'Will I have to pay import VAT?',
@@ -37,7 +37,7 @@ const UK = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
+        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $25/order, free over $350' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day express delivery at checkout' },
       ],

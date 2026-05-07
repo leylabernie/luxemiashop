@@ -146,10 +146,10 @@ const Index = () => {
           <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-sm flex-wrap">
             <span className="flex items-center gap-1.5">
               <Truck className="h-4 w-4 flex-shrink-0" />
-              <span className="font-medium">Free shipping on orders over $300</span>
+              <span className="font-medium">Free shipping on orders over $350</span>
             </span>
             <span className="hidden sm:inline text-background/40">·</span>
-            <span className="hidden sm:inline text-background/80">$14.95 flat rate per item worldwide</span>
+            <span className="hidden sm:inline text-background/80">$25 flat rate per order worldwide</span>
             <span className="hidden sm:inline text-background/40">·</span>
             <Link to="/shipping" className="hidden sm:inline underline underline-offset-2 hover:text-background/80 transition-colors">
               Delivery info

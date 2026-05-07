@@ -203,7 +203,7 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Shipping & Delivery</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We charge a flat rate of $14.95 per item for international shipping, with free shipping on orders over $300. Ready-made orders dispatch in 3-5 business days; custom/alterations in 5-7 business days. Standard delivery (USPS/UPS) takes 7-10 business days transit; express (DHL) takes 3-5 business days transit. Import duties and local taxes are the customer's responsibility.
+                We charge a flat rate of $25 per order for international shipping, with free shipping on orders over $350. Ready-made orders dispatch in 3-5 business days; custom/alterations in 5-7 business days. Standard delivery (USPS/UPS) takes 7-10 business days transit; express (DHL) takes 3-5 business days transit. Import duties and local taxes are the customer's responsibility.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">

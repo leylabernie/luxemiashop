@@ -16,10 +16,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const announcements = [
-  'Free shipping on orders over $300 · Worldwide delivery',
+  'Free shipping on orders over $350 · Worldwide delivery',
   'New arrivals just landed — shop the latest styles',
   'Quality Indian ethnic wear at fair prices',
-  '7-day returns · Trackable worldwide shipping',
+  'Flat $25 shipping · Trackable worldwide delivery',
 ];
 
 const navLinks = [

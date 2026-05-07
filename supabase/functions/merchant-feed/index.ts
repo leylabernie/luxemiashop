@@ -427,7 +427,7 @@ function enrichDescription(
   }
 
   enriched +=
-    " Care: Dry clean only. Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Dispatch: 3-5 business days (readymade), 5-7 business days (custom). Delivery: 3-5 business days via DHL Express, 7-10 business days via USPS/UPS.";
+    " Care: Dry clean only. Shipping: Flat rate $25 per order worldwide. Free shipping on orders over $350. Dispatch: 3-5 business days (readymade), 5-7 business days (custom). Delivery: 3-5 business days via DHL Express, 7-10 business days via USPS/UPS.";
 
   return enriched.trim();
 }
@@ -436,11 +436,11 @@ function enrichDescription(
 
 function getShippingBlocks(): string {
   const countries = [
-    { code: "US", stdPrice: "14.95", expPrice: "39.95" },
-    { code: "CA", stdPrice: "14.95", expPrice: "39.95" },
-    { code: "GB", stdPrice: "14.95", expPrice: "44.95" },
-    { code: "AE", stdPrice: "14.95", expPrice: "39.95" },
-    { code: "AU", stdPrice: "14.95", expPrice: "49.95" },
+    { code: "US", stdPrice: "25.00", expPrice: "39.95" },
+    { code: "CA", stdPrice: "25.00", expPrice: "39.95" },
+    { code: "GB", stdPrice: "25.00", expPrice: "44.95" },
+    { code: "AE", stdPrice: "25.00", expPrice: "39.95" },
+    { code: "AU", stdPrice: "25.00", expPrice: "49.95" },
   ];
 
   return countries
@@ -627,7 +627,7 @@ Deno.serve(async (req: Request) => {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop quality Indian ethnic wear at LuxeMia. Bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry. Flat rate shipping $14.95, free over $300.</description>
+  <description>Shop quality Indian ethnic wear at LuxeMia. Bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry. Flat rate shipping $25, free over $350.</description>
   <g:google_product_category>1604</g:google_product_category>${items.join("\n")}
 </channel>
 </rss>`;

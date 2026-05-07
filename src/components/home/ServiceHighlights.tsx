@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Free Shipping over $300',
+    title: 'Free Shipping over $350',
     description: 'Worldwide DHL Express — 3-5 business days',
   },
   {

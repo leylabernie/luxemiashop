@@ -8,11 +8,11 @@ const NRIGeneral = () => (
       countryCode: 'WW',
       slug: 'nri',
       seoTitle: 'Buy Indian Ethnic Wear Online | NRI Shopping | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered worldwide. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $300. 3-10 day express delivery.',
+      seoDescription: 'Shop authentic Indian ethnic wear delivered worldwide. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $350. 3-10 day express delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Your Door',
       heroSubtitle: 'Shopping From Abroad? We\'ve Got You Covered',
       shippingTime: '3-10 business days',
-      shippingCost: 'Free on orders over $300',
+      shippingCost: 'Free on orders over $350',
       customsNote: 'We ship DHL Express worldwide. Import duties vary by country.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'When does shipping become free?',
-          answer: 'Orders over $300 qualify for free worldwide shipping. Orders below $300 are charged $14.95 flat per item — no weight calculations or hidden fees.',
+          answer: 'Orders over $350 qualify for free worldwide shipping. Orders below $350 are charged $25 flat per order — no weight calculations or hidden fees.',
         },
         {
           question: 'Will I have to pay customs duties?',
@@ -37,7 +37,7 @@ const NRIGeneral = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Delivery', description: 'Free shipping on orders over $300 — delivered to 100+ countries' },
+        { icon: Truck, title: 'Worldwide Delivery', description: 'Free shipping on orders over $350 — delivered to 100+ countries' },
         { icon: Shield, title: 'Secure Packaging', description: 'Every piece carefully wrapped to arrive in perfect condition' },
         { icon: Clock, title: 'Fast Dispatch', description: 'Ready-made orders dispatched within 3-5 business days' },
       ],

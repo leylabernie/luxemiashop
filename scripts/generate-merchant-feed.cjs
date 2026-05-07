@@ -336,7 +336,7 @@ function generateXML() {
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Standard USPS/UPS</g:service>
-      <g:price>14.95 USD</g:price>
+      <g:price>25.00 USD</g:price>
       <g:handling_time>3-5 business days</g:handling_time>
       <g:transit_time>7-10 business days</g:transit_time>
     </g:shipping>
@@ -409,7 +409,7 @@ function generateTSV() {
       'US',
       'no',
       tsvEscape(p.category),
-      'US:DHL Express:0.00 USD,US:Standard USPS/UPS:14.95 USD,GB:DHL Express:0.00 USD,CA:DHL Express:0.00 USD'
+      'US:DHL Express:0.00 USD,US:Standard USPS/UPS:25.00 USD,GB:DHL Express:0.00 USD,CA:DHL Express:0.00 USD'
     ].join('\t');
   });
 

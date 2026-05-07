@@ -315,7 +315,7 @@ export const ProductTabs = ({ description, productType, isStitchable }: ProductT
                 <li>• Transit: 3–5 business days</li>
                 <li>• Full tracking included</li>
                 <li>• Insured delivery</li>
-                <li>• $14.95/item or free over $300</li>
+                <li>• $25/order or free over $350</li>
               </ul>
             </div>
             <div className="p-4 bg-card rounded-sm">

@@ -43,7 +43,7 @@ const ReviewsSection = () => {
           <Truck className="h-6 w-6 text-green-600 flex-shrink-0" />
           <div>
             <p className="text-xs font-semibold text-green-700 dark:text-green-400">Free Shipping</p>
-            <p className="text-xs text-muted-foreground">Orders over $300</p>
+            <p className="text-xs text-muted-foreground">Orders over $350</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-800 rounded-lg">

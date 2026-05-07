@@ -177,7 +177,7 @@ function generateShippingXml() {
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>14.95 USD</g:price>
+      <g:price>25.00 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
       <g:min_transit_time>7</g:min_transit_time>
@@ -194,7 +194,7 @@ function generateShippingXml() {
     </g:shipping>
     <g:shipping>
       <g:country>US</g:country>
-      <g:service>Free over $300</g:service>
+      <g:service>Free over $350</g:service>
       <g:price>0.00 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
@@ -391,7 +391,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Flat rate shipping $14.95 per item, free on orders over $300.</description>
+  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Flat rate shipping $25 per order, free on orders over $350.</description>
   <last_build_date>${new Date().toISOString()}</last_build_date>
 ${itemsXml}
 </channel>

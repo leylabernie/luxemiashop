@@ -8,11 +8,11 @@ const Canada = () => (
       countryCode: 'CA',
       slug: 'indian-ethnic-wear-canada',
       seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $14.95/item, free on orders over $300. 7-10 day standard delivery to Canada.',
+      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $25/order, free on orders over $350. 7-10 day standard delivery to Canada.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Canada',
       heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-10 business days',
-      shippingCost: '$14.95/item, free on orders over $300',
+      shippingCost: '$25/order, free on orders over $350',
       customsNote: 'Canadian orders may be subject to GST/HST (5-15%) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const Canada = () => (
         },
         {
           question: 'Is shipping free to Canada?',
-          answer: 'We offer a flat shipping rate of $14.95 per item, with free shipping on all orders over $300. No coupon code needed — free shipping is applied automatically at checkout.',
+          answer: 'We offer a flat shipping rate of $25 per order, with free shipping on all orders over $350. No coupon code needed — free shipping is applied automatically at checkout.',
         },
         {
           question: 'Will I have to pay customs duties in Canada?',
@@ -37,7 +37,7 @@ const Canada = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $14.95/item, free over $300' },
+        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $25/order, free over $350' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day DHL express shipping at checkout' },
       ],

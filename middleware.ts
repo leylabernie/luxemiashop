@@ -326,10 +326,10 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
       shippingDetails: [
-        // Free DHL Express on orders over $300
+        // Free DHL Express on orders over $350
         {
           '@type': 'OfferShippingDetails',
-          name: 'DHL Express Free (orders over $300) — Readymade',
+          name: 'DHL Express Free (orders over $350) — Readymade',
           shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
@@ -340,7 +340,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
         },
         {
           '@type': 'OfferShippingDetails',
-          name: 'DHL Express Free (orders over $300) — Custom/Alterations',
+          name: 'DHL Express Free (orders over $350) — Custom/Alterations',
           shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
@@ -353,7 +353,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
         {
           '@type': 'OfferShippingDetails',
           name: 'USPS/UPS Standard — Readymade',
-          shippingRate: { '@type': 'MonetaryAmount', value: '14.95', currency: currency },
+          shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
@@ -364,7 +364,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
         {
           '@type': 'OfferShippingDetails',
           name: 'USPS/UPS Standard — Custom/Alterations',
-          shippingRate: { '@type': 'MonetaryAmount', value: '14.95', currency: currency },
+          shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency: currency },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: allShippingCountries },
           deliveryTime: {
             '@type': 'ShippingDeliveryTime',
@@ -569,7 +569,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
           </div>
           <div class="trust-badge">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 18.5a1.5 1.5 0 0 1-1.5-1.5 1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5M19.5 9.5L21 12h-3l1.5-2.5M6 18.5A1.5 1.5 0 0 1 4.5 17 1.5 1.5 0 0 1 6 15.5 1.5 1.5 0 0 1 7.5 17 1.5 1.5 0 0 1 6 18.5M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>
-            Free Shipping over $300
+            Free Shipping over $350
           </div>
           <div class="trust-badge">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
@@ -582,7 +582,7 @@ function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): str
         </div>
 
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free DHL Express (3-5 days) on orders over $300. Standard USPS/UPS (7-10 days) at $14.95/item.<br>
+          <strong>Shipping:</strong> Free DHL Express (3-5 days) on orders over $350. Standard USPS/UPS (7-10 days) at $25/order.<br>
           <strong>Dispatch:</strong> Readymade 3-5 business days | Custom/Alterations 5-7 business days<br>
           <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990

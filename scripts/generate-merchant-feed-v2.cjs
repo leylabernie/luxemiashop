@@ -74,7 +74,7 @@ function getShippingBlocks() {
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>14.95 USD</g:price>
+      <g:price>25.00 USD</g:price>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>5</g:max_handling_time>
       <g:min_transit_time>7</g:min_transit_time>
@@ -100,7 +100,7 @@ function enrichDescription(desc, category, fabric, work, color) {
   let e = desc + ' Fabric: ' + (fabric||'Quality') + '. Work: ' + (work||'Handcrafted') + '.';
   if (color) e += ' Color: ' + color + '.';
   e += ' ' + sizeInfo;
-  e += ' Care: Dry clean only. Shipping: Flat rate $14.95 per item worldwide. Free shipping on orders over $300. Dispatch: 3-5 business days (readymade), 5-7 business days (custom). Delivery: 3-5 business days via DHL Express, 7-10 business days via USPS/UPS.';
+  e += ' Care: Dry clean only. Shipping: Flat rate $25 per order worldwide. Free shipping on orders over $350. Dispatch: 3-5 business days (readymade), 5-7 business days (custom). Delivery: 3-5 business days via DHL Express, 7-10 business days via USPS/UPS.';
   return e.trim();
 }
 
@@ -289,7 +289,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Flat rate shipping $14.95 per item, free on orders over $300.</description>
+  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Flat rate shipping $25 per order, free on orders over $350.</description>
 ${items}
 </channel>
 </rss>`;
