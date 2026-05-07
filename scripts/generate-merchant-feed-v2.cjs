@@ -252,13 +252,11 @@ for (const p of validProducts) {
   const gender = getGender(p.category, p.title);
   const imageUrl = forceJpeg(p.image);
   const desc = enrichDescription(p.description, p.category, p.fabric, p.work, p.color);
+  const allSizes = p.sizes.join(',');
+  const hasSale = p.originalPrice && p.originalPrice > p.price;
 
-  for (const size of p.sizes) {
-    const itemId = p.id + '-' + size.toLowerCase().replace(/\s+/g, '');
-    const hasSale = p.originalPrice && p.originalPrice > p.price;
-    items += `  <item>
-    <g:id>${escapeXml(itemId)}</g:id>
-    <g:item_group_id>${escapeXml(p.id)}</g:item_group_id>
+  items += `  <item>
+    <g:id>${escapeXml(p.id)}</g:id>
     <g:title>${escapeXml(p.title)}</g:title>
     <g:description>${escapeXml(desc)}</g:description>
     <g:link>${SITE_URL}/product/${escapeXml(p.handle)}</g:link>
@@ -275,7 +273,7 @@ for (const p of validProducts) {
     <g:color>${escapeXml(p.color)}</g:color>
     <g:material>${escapeXml(p.fabric)}</g:material>
     <g:pattern>${escapeXml(p.work)}</g:pattern>
-    <g:size>${escapeXml(size)}</g:size>
+    <g:size>${escapeXml(allSizes)}</g:size>
     <g:size_type>regular</g:size_type>
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>
@@ -288,7 +286,6 @@ ${shippingXml}
     </g:tax>
   </item>
 `;
-  }
 }
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>

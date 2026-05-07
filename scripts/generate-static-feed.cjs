@@ -173,7 +173,7 @@ function generateShippingXml(currency) {
   const lines = [];
   for (const country of countries) {
     const standardPrice = '14.95';
-    const expressPrice = country === 'AU' ? '49.95' : country === 'AE' ? '39.95' : '39.95';
+    const expressPrice = country === 'AU' ? '49.95' : country === 'GB' ? '44.95' : '39.95';
     // Free DHL Express on orders over $300 (matches site's shipping policy)
     lines.push(`
     <g:shipping>
@@ -286,33 +286,30 @@ function generateProductItemXml(product) {
   const description = (product.description || `Shop ${product.title} at LuxeMia. Premium Indian ethnic wear with worldwide shipping.`).slice(0, 5000);
   const productType = product.productType || 'Ethnic Wear';
 
-  const variantEntries = [];
+  // GMC BEST PRACTICE: One feed item per product with ALL sizes listed in a single <g:size> field.
+  // Creating one item per size variant inflates the feed (92 products → 1,647 items) and causes
+  // duplicate content issues in GMC. Instead, use one item per product with comma-separated sizes.
+  const itemId = sku || handle;
+  const allSizes = sizes.length > 0 ? sizes.join(',') : '';
 
-  if (sizes.length > 0) {
-    for (const size of sizes) {
-      const sizeSlug = size.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-      const itemId = sku ? `${sku}-${sizeSlug}` : `${handle}-${sizeSlug}`;
-      const itemGroupId = handle;
+  // Use the lowest price across variants as the product price
+  const variantPrices = product.variants.edges.map(v => parseFloat(v.node.price.amount));
+  const minPrice = variantPrices.length > 0 ? Math.min(...variantPrices).toFixed(2) : price;
+  const maxCompare = product.variants.edges
+    .map(v => v.node.compareAtPrice?.amount)
+    .filter(Boolean)
+    .map(Number);
+  const bestCompare = maxCompare.length > 0 ? Math.max(...maxCompare).toFixed(2) : compareAtPrice;
+  const hasAnyDiscount = bestCompare && parseFloat(bestCompare) > parseFloat(minPrice);
 
-      const matchingVariant = product.variants.edges.find(v =>
-        v.node.selectedOptions?.some(o =>
-          (o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size') && o.value === size
-        )
-      );
-      const variantPrice = matchingVariant?.node?.price?.amount || price;
-      const variantCompare = matchingVariant?.node?.compareAtPrice?.amount || compareAtPrice;
-      const variantHasDiscount = variantCompare ? parseFloat(variantCompare) > parseFloat(variantPrice) : false;
+  // GMC CRITICAL: When discount exists, g:price MUST be the ORIGINAL (higher) price
+  // and g:sale_price MUST be the DISCOUNTED (lower) price.
+  const displayPrice = hasAnyDiscount ? bestCompare : minPrice;
+  const displaySalePrice = hasAnyDiscount ? minPrice : '';
 
-      // GMC CRITICAL: When discount exists, g:price MUST be the ORIGINAL (higher) price
-      // and g:sale_price MUST be the DISCOUNTED (lower) price.
-      // Having both set to the same value causes GMC policy violations.
-      const displayPrice = variantHasDiscount ? variantCompare : variantPrice;
-      const displaySalePrice = variantHasDiscount ? variantPrice : '';
-
-      variantEntries.push(`
+  return `
   <item>
     <g:id>${escapeXml(itemId)}</g:id>
-    <g:item_group_id>${escapeXml(itemGroupId)}</g:item_group_id>
     <g:title>${escapeXml(product.title)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
     <g:link>${escapeXml(link)}</g:link>
@@ -321,7 +318,7 @@ function generateProductItemXml(product) {
     <g:availability>in_stock</g:availability>
     <g:price>${displayPrice} ${currency}</g:price>
     ${displaySalePrice ? `<g:sale_price>${displaySalePrice} ${currency}</g:sale_price>` : ''}
-    ${variantHasDiscount && variantCompare ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
+    ${hasAnyDiscount ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
     <g:condition>new</g:condition>
     <g:brand>${escapeXml(product.vendor || 'LuxeMia')}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
@@ -331,7 +328,7 @@ function generateProductItemXml(product) {
     ${color ? `<g:color>${escapeXml(color)}</g:color>` : ''}
     ${material ? `<g:material>${escapeXml(material)}</g:material>` : ''}
     ${patternTag ? `<g:pattern>${escapeXml(patternTag)}</g:pattern>` : ''}
-    <g:size>${escapeXml(size)}</g:size>
+    ${allSizes ? `<g:size>${escapeXml(allSizes)}</g:size>` : ''}
     <g:size_type>regular</g:size_type>
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>
@@ -342,47 +339,7 @@ function generateProductItemXml(product) {
       <g:rate>0</g:rate>
       <g:tax_ship>no</g:tax_ship>
     </g:tax>
-  </item>`);
-    }
-  } else {
-    const itemId = sku || handle;
-    // GMC CRITICAL: When discount exists, g:price MUST be the ORIGINAL (higher) price
-    // and g:sale_price MUST be the DISCOUNTED (lower) price.
-    const noSizeDisplayPrice = hasDiscount ? compareAtPrice : price;
-    const noSizeSalePrice = hasDiscount ? price : '';
-
-    variantEntries.push(`
-  <item>
-    <g:id>${escapeXml(itemId)}</g:id>
-    <g:title>${escapeXml(product.title)}</g:title>
-    <g:description>${escapeXml(description)}</g:description>
-    <g:link>${escapeXml(link)}</g:link>
-    <g:image_link>${escapeXml(imageUrl)}</g:image_link>
-    ${additionalImages.map(img => `<g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`).join('\n    ')}
-    <g:availability>in_stock</g:availability>
-    <g:price>${noSizeDisplayPrice} ${currency}</g:price>
-    ${noSizeSalePrice ? `<g:sale_price>${noSizeSalePrice} ${currency}</g:sale_price>` : ''}
-    <g:condition>new</g:condition>
-    <g:brand>${escapeXml(product.vendor || 'LuxeMia')}</g:brand>
-    <g:google_product_category>${googleProductCategory}</g:google_product_category>
-    <g:product_type>${escapeXml(productType)}</g:product_type>
-    <g:gender>${gender}</g:gender>
-    <g:age_group>adult</g:age_group>
-    ${color ? `<g:color>${escapeXml(color)}</g:color>` : ''}
-    ${material ? `<g:material>${escapeXml(material)}</g:material>` : ''}
-    ${patternTag ? `<g:pattern>${escapeXml(patternTag)}</g:pattern>` : ''}
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
-    ${generateShippingXml(currency)}
-    <g:tax>
-      <g:country>US</g:country>
-      <g:rate>0</g:rate>
-      <g:tax_ship>no</g:tax_ship>
-    </g:tax>
-  </item>`);
-  }
-
-  return variantEntries.join('\n');
+  </item>`;
 }
 
 // ─── Main ───────────────────────────────────────────────────────────────────
