@@ -22,10 +22,10 @@ const routes = [
   {
     path: '/',
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices.',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
     h1: 'LuxeMia',
     content: `
-      <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with worldwide shipping.</p>
+      <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with shipping to USA, Canada, and Australia.</p>
       <h2>Shop by Category</h2>
       <nav>
         <ul>
@@ -42,13 +42,13 @@ const routes = [
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
-      <p>Free shipping on all orders to USA and UK. Handcrafted with love by Indian artisans.</p>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Handcrafted with love by Indian artisans.</p>
     `,
   },
   {
        path: '/suits',
     title: 'Salwar Kameez & Designer Suits Online | Sharara, Anarkali, Palazzo for Women - LuxeMia',
-    description: 'Shop elegant Salwar Kameez, designer suits, sharara sets, anarkali & palazzo suits online at LuxeMia. Premium fabrics, handcrafted embroidery. Free shipping to USA, UK & Canada. Latest 2026 trends.',
+    description: 'Shop elegant Salwar Kameez, designer suits, sharara sets, anarkali & palazzo suits online at LuxeMia. Premium fabrics, handcrafted embroidery. Free shipping to USA, Canada & Australia. Latest 2026 trends.',
     h1: 'Salwar Kameez & Designer Suits Collection',
     content: `
       <p>Explore our curated collection of Salwar Kameez and anarkali ensembles. From elegant sharara sets to flowing palazzo suits, each piece features beautiful embroidery on premium fabrics like georgette, silk, and chiffon.</p>
@@ -59,7 +59,7 @@ const routes = [
   {
     path: '/lehengas',
     title: 'Designer Lehengas & Bridal Lehenga Choli Online | Wedding Lehengas for NRI - LuxeMia',
-    description: 'Shop designer lehengas & bridal lehenga choli at LuxeMia. Handcrafted wedding & party wear lehengas. Premium silk, net & velvet. Free worldwide shipping to USA, UK & Canada. Latest 2026 trends.',
+    description: 'Shop designer lehengas & bridal lehenga choli at LuxeMia. Handcrafted wedding & party wear lehengas. Premium silk, net & velvet. Free shipping on orders over $350 to USA, Canada & Australia. Latest 2026 trends.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
     content: `
       <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
@@ -74,7 +74,7 @@ const routes = [
   {
     path: '/sarees',
     title: 'Designer Sarees Online — Silk, Banarasi, Wedding & Pre-Draped Sarees | LuxeMia',
-    description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with worldwide shipping to USA, UK & Canada. Authentic Indian handloom sarees & 2026 trends.',
+    description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with shipping to USA, Canada & Australia. Authentic Indian handloom sarees & 2026 trends.',
     h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
     content: `
       <p>Explore our beautiful collection of designer sarees. From Banarasi silk to elegant Kanjeevaram, each saree is made with care by skilled Indian makers. Perfect for weddings, festivals, and special occasions.</p>
@@ -90,7 +90,7 @@ const routes = [
   {
     path: '/menswear',
     title: 'Indian Menswear — Sherwanis, Kurta Sets, Indo-Western & Modi Jackets | LuxeMia',
-    description: 'Shop Indian menswear at LuxeMia. Designer sherwanis, kurta sets, Indo-western wear & Modi jackets for grooms & weddings. Premium fabrics, expert tailoring. Free worldwide shipping to USA, UK & Canada.',
+    description: 'Shop Indian menswear at LuxeMia. Designer sherwanis, kurta sets, Indo-western wear & Modi jackets for grooms & weddings. Premium fabrics, expert tailoring. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
     content: `
       <p>Discover our premium collection of Indian menswear. From regal sherwanis for grooms to elegant kurta sets and modern Indo-western outfits, crafted with premium fabrics and expert tailoring.</p>
@@ -186,13 +186,13 @@ const routes = [
   {
     path: '/products',
     title: 'All Products — Shop Indian Ethnic Wear Online | LuxeMia',
-    description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free shipping to USA, UK & Canada.',
+    description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free shipping to USA, Canada & Australia.',
     h1: 'All Products',
     content: `
-      <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free worldwide shipping.</p>
+      <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free shipping on orders over $350.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Every piece is handcrafted by skilled Indian artisans and ships worldwide with full tracking. Free shipping on orders over $350 to USA, UK, and Canada.</p>
+      <p>Every piece is handcrafted by skilled Indian artisans and ships worldwide with full tracking. Free shipping on orders over $350 to USA, Canada, and Australia.</p>
     `,
   },
   {
@@ -233,9 +233,9 @@ const routes = [
   {
     path: '/size-guide',
     title: 'Size Guide — Indian Ethnic Wear Measurements | LuxeMia',
-    description: 'LuxeMia size guide for Indian ethnic wear. Find your perfect fit with our detailed measurement charts for sarees, lehengas, suits & menswear. US & UK size conversions.',
+    description: 'LuxeMia size guide for Indian ethnic wear. Find your perfect fit with our detailed measurement charts for sarees, lehengas, suits & menswear. US & international size conversions.',
     h1: 'Size Guide',
-    content: '<p>Find your perfect fit with our detailed measurement charts. Includes bust, waist, and hip measurements with US and UK size conversions for all garments including lehengas, sarees, and salwar suits.</p>',
+    content: '<p>Find your perfect fit with our detailed measurement charts. Includes bust, waist, and hip measurements with US and international size conversions for all garments including lehengas, sarees, and salwar suits.</p>',
   },
   {
     path: '/care-guide',
@@ -283,56 +283,55 @@ const routes = [
       <h2>Our Mission</h2>
       <p>We believe every Indian — no matter where they live — deserves access to authentic, handcrafted ethnic wear. Our mission is to bridge the gap between India's master artisans and the global Indian diaspora, delivering museum-quality craftsmanship to your doorstep.</p>
       <h2>Why LuxeMia?</h2>
-      <p>Unlike mass-produced fast fashion, each LuxeMia piece supports real artisans and preserves centuries-old techniques. We offer custom sizing, free worldwide shipping, and a curated selection that honors tradition while embracing modern design.</p>
+      <p>Unlike mass-produced fast fashion, each LuxeMia piece supports real artisans and preserves centuries-old techniques. We offer custom sizing, free shipping on orders over $350, and a curated selection that honors tradition while embracing modern design.</p>
     `,
   },
   {
     path: '/new-arrivals',
     title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
-    description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees, suits & more. Fresh styles added weekly. Free worldwide shipping.',
+    description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees, suits & more. Fresh styles added weekly. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'New Arrivals',
     content: `
       <p>Discover the newest additions to our collection. Fresh styles of designer lehengas, silk sarees, and anarkali suits — handcrafted and shipped worldwide.</p>
       <h2>What's New</h2>
       <p>We add new styles every week, from bridal lehengas and Banarasi silk sarees to trendy palazzo suits and groom sherwanis. Each new arrival features the latest embroidery techniques, color palettes, and fabric innovations for 2026.</p>
-      <p>Sign up for our newsletter to be the first to know when new collections drop. Free shipping on all new arrivals to USA, UK, and Canada.</p>
+      <p>Sign up for our newsletter to be the first to know when new collections drop. Free shipping on all new arrivals to USA, Canada, and Australia.</p>
     `,
   },
   {
     path: '/bestsellers',
     title: 'Bestsellers — Most Loved Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia bestsellers. Our most popular lehengas, sarees, suits & menswear chosen by customers worldwide. Free shipping to USA & UK.',
+    description: 'Shop LuxeMia bestsellers. Our most popular lehengas, sarees, suits & menswear chosen by customers worldwide. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Bestsellers',
     content: `
       <p>Browse our most-loved pieces — the lehengas, sarees, and suits that our customers can't stop buying. Tried, tested, and loved worldwide.</p>
       <h2>Customer Favorites</h2>
       <p>Our bestsellers are curated based on real customer purchases and reviews. From bridal lehengas that steal the show to everyday silk sarees that never go out of style, these are the pieces our community recommends most.</p>
-      <p>Every bestseller comes with free worldwide shipping on orders over $350. Flat rate $25 per order otherwise. All sales final — damage claims accepted within 48h with unboxing video.</p>
+      <p>Every bestseller comes with free shipping on orders over $350. Flat rate $25 per order otherwise. All sales final — damage claims accepted within 48h with unboxing video.</p>
     `,
   },
   {
     path: '/indowestern',
     title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
-    description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free worldwide shipping.',
+    description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Indo-Western Collection',
     content: `
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>
       <h2>Fusion Style</h2>
       <p>Our Indo-Western collection blends the elegance of Indian craftsmanship with contemporary global fashion. Think asymmetrical hemlines, cape-style dupattas, dhoti pants paired with crop tops, and jacket-style anarkalis.</p>
-      <p>Perfect for sangeet nights, cocktail parties, and modern wedding celebrations where you want to stand out with a unique fusion look. Free worldwide shipping on all orders.</p>
+      <p>Perfect for sangeet nights, cocktail parties, and modern wedding celebrations where you want to stand out with a unique fusion look. Free shipping on orders over $350 to USA, Canada & Australia.</p>
     `,
   },
   {
     path: '/nri',
     title: 'NRI Indian Ethnic Wear — Shop Indian Clothes Abroad | LuxeMia',
-    description: 'Indian ethnic wear for NRIs. Shop bridal lehengas, wedding sarees & festive outfits from abroad. Free shipping to USA, UK & Canada.',
+    description: 'Indian ethnic wear for NRIs. Shop bridal lehengas, wedding sarees & festive outfits from abroad. Free shipping to USA, Canada & Australia.',
     h1: 'NRI Collection',
     content: `
-      <p>Curated for the global Indian. Shop authentic ethnic wear from anywhere in the world with free shipping to USA, UK, and Canada. No compromises on quality or authenticity.</p>
+      <p>Curated for the global Indian. Shop authentic ethnic wear from anywhere in the world with free shipping to USA, Canada, and Australia. No compromises on quality or authenticity.</p>
       <h2>Shop by Region</h2>
       <ul>
         <li><a href="/nri/usa">Indian Ethnic Wear for USA</a> — Free shipping across America</li>
-        <li><a href="/nri/uk">Indian Ethnic Wear for UK</a> — Free delivery across Britain</li>
         <li><a href="/nri/canada">Indian Ethnic Wear for Canada</a> — Free shipping coast to coast</li>
       </ul>
       <h2>Why NRIs Love LuxeMia</h2>
@@ -352,21 +351,6 @@ const routes = [
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery.</p>
       <h2>Shop Our USA Collection</h2>
       <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — all handcrafted in India and shipped directly to your US address.</p>
-    `,
-  },
-  {
-    path: '/indian-ethnic-wear-uk',
-    title: 'Indian Ethnic Wear UK — Buy Indian Clothes Online in Britain | LuxeMia',
-    description: 'Shop Indian ethnic wear online in the UK. Bridal lehengas, silk sarees, salwar suits with free shipping across Britain. Authentic Indian craftsmanship.',
-    h1: 'Indian Ethnic Wear UK',
-    content: `
-      <p>Shopping for Indian ethnic wear in the UK? LuxeMia delivers authentic bridal lehengas, silk sarees, and designer suits with free shipping across Britain.</p>
-      <h2>Free Delivery Across the UK</h2>
-      <p>We offer free standard delivery on all orders over $350 to anywhere in the United Kingdom, including Northern Ireland and Scottish Highlands. Standard delivery takes 7-12 business days with full tracking.</p>
-      <h2>UK Customs Information</h2>
-      <p>Orders under £135 are typically VAT-free. Orders over £135 may be subject to 20% import VAT, collected by the carrier at delivery. We always declare accurate values.</p>
-      <h2>Shop Our UK Collection</h2>
-      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — handcrafted in India and delivered to your UK door.</p>
     `,
   },
   {
@@ -396,27 +380,6 @@ const routes = [
       <p>Standard shipping takes 7-12 business days via DHL Express with full tracking. Express shipping (3-5 business days) is also available at checkout. Free standard shipping on all orders over $350 to the contiguous United States.</p>
       <h2>Duty-Free Under $800</h2>
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery. Orders over $800 may be subject to import duties.</p>
-      <h2>Shop by Category</h2>
-      <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
-        <li><a href="/sarees">Silk Sarees</a> — Banarasi, Kanjeevaram & designer sarees</li>
-        <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
-        <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
-      </ul>
-      <p>Custom sizing available on all outfits. Returns not accepted — all sales final. Damage claims within 48h with unboxing video.</p>
-    `,
-  },
-  {
-    path: '/nri/uk',
-    title: 'Indian Ethnic Wear UK — Free Shipping to Britain | LuxeMia',
-    description: 'Shop Indian ethnic wear online in the UK. Bridal lehengas, silk sarees, salwar suits with free delivery across Britain. 7-12 day shipping. Authentic Indian craftsmanship.',
-    h1: 'Indian Ethnic Wear for UK',
-    content: `
-      <p>LuxeMia delivers authentic Indian ethnic wear to the United Kingdom. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free delivery on orders over $350.</p>
-      <h2>Free Delivery Across Britain</h2>
-      <p>Standard delivery takes 7-12 business days with full tracking. We deliver to all UK addresses including Northern Ireland, Scottish Highlands, and Channel Islands. Express delivery (3-5 days) also available.</p>
-      <h2>UK Customs Information</h2>
-      <p>Orders under £135 are typically VAT-free. Orders over £135 may be subject to 20% import VAT, collected by the carrier at delivery. We always declare accurate values on all shipments.</p>
       <h2>Shop by Category</h2>
       <ul>
         <li><a href="/lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
@@ -562,11 +525,11 @@ const routes = [
     content: '<p>Planning a wedding abroad? Discover the latest ethnic wear trends for NRIs in 2026 — from fusion silhouettes to destination wedding outfits.</p>',
   },
   {
-    path: '/blog/buy-authentic-indian-sarees-online-usa-uk',
-    title: 'How to Buy Authentic Indian Sarees Online in USA & UK | LuxeMia',
-    description: 'Guide to buying authentic Indian sarees online in USA & UK. Tips for spotting fakes, choosing the right fabric, and finding trusted sellers.',
+    path: '/blog/buy-authentic-indian-sarees-online-international',
+    title: 'How to Buy Authentic Indian Sarees Online Internationally | LuxeMia',
+    description: 'Guide to buying authentic Indian sarees online internationally. Tips for spotting fakes, choosing the right fabric, and finding trusted sellers.',
     h1: 'How to Buy Authentic Indian Sarees Online',
-    content: '<p>Buying Indian sarees online from abroad? Learn how to spot authentic handloom, choose the right fabric, and find trusted sellers who ship to USA and UK.</p>',
+    content: '<p>Buying Indian sarees online from abroad? Learn how to spot authentic handloom, choose the right fabric, and find trusted sellers who ship to USA, Canada, and Australia.</p>',
   },
   {
     path: '/blog/styling-indian-ethnic-wear-festive-occasions-abroad',
@@ -1063,6 +1026,14 @@ const routes = [
     description: 'The page you are looking for could not be found.',
     h1: 'Page Not Found',
     content: '<p>The page you are looking for may have been removed, had its name changed, or is temporarily unavailable. Please visit our <a href="/">homepage</a> to browse our collection.</p>',
+    noIndex: true,
+  },
+  {
+    path: '/order-confirmation',
+    title: 'Order Confirmed — Thank You | LuxeMia',
+    description: 'Your order has been confirmed. Thank you for shopping at LuxeMia.',
+    h1: 'Order Confirmed!',
+    content: '<p>Thank you for shopping with LuxeMia. Your order has been confirmed and you will receive a confirmation email shortly. Your order will be prepared within 3-5 business days and delivered within 7-10 business days after dispatch.</p>',
     noIndex: true,
   },
 ];

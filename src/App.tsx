@@ -47,8 +47,8 @@ const VirtualTryOn = lazy(() => import("./pages/VirtualTryOn"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const StyleConsultation = lazy(() => import("./pages/StyleConsultation"));
 const StyleQuiz = lazy(() => import("./pages/StyleQuiz"));
+const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
 const USA = lazy(() => import("./pages/nri/USA"));
-const UK = lazy(() => import("./pages/nri/UK"));
 const Canada = lazy(() => import("./pages/nri/Canada"));
 const NRIGeneral = lazy(() => import("./pages/nri/NRIGeneral"));
 
@@ -131,13 +131,13 @@ const App = () => (
                 <Route path="/sitemap" element={<Suspense fallback={<PageLoader />}><Sitemap /></Suspense>} />
                 <Route path="/style-consultation" element={<Suspense fallback={<PageLoader />}><StyleConsultation /></Suspense>} />
                 <Route path="/style-quiz" element={<Suspense fallback={<PageLoader />}><StyleQuiz /></Suspense>} />
+                {/* Order Confirmation — Google Customer Reviews opt-in */}
+                <Route path="/order-confirmation" element={<Suspense fallback={<PageLoader />}><OrderConfirmation /></Suspense>} />
                 {/* NRI Landing Pages for SEO */}
                 <Route path="/nri" element={<Suspense fallback={<PageLoader />}><NRIGeneral /></Suspense>} />
                 <Route path="/nri/usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
-                <Route path="/nri/uk" element={<Suspense fallback={<PageLoader />}><UK /></Suspense>} />
                 <Route path="/nri/canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
                 <Route path="/indian-ethnic-wear-usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
-                <Route path="/indian-ethnic-wear-uk" element={<Suspense fallback={<PageLoader />}><UK /></Suspense>} />
                 <Route path="/indian-ethnic-wear-canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
                 <Route path="/admin" element={<Suspense fallback={<PageLoader />}><AdminDashboard /></Suspense>} />
                 {/* Blog */}

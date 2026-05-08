@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) - GA4 + Google Ads — DEFERRED to avoid render-blocking -->
@@ -19,7 +19,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LuxeMia | Indian Ethnic Wear — Sarees & Lehengas</title>
-    <meta name="description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices." />
+    <meta name="description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices." />
     <meta name="author" content="LuxeMia" />
     <meta name="keywords" content="indian ethnic wear, sarees online, lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, affordable ethnic wear, indian wedding dress, buy sarees online, salwar kameez" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -37,7 +37,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://luxemia.shop/" />
     <meta property="og:title" content="LuxeMia | Indian Ethnic Wear — Sarees & Lehengas" />
-    <meta property="og:description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices." />
+    <meta property="og:description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia." />
     <meta property="og:image" content="https://luxemia.shop/og-image.jpg" />
     <meta property="og:site_name" content="LuxeMia" />
     <meta property="og:locale" content="en_US" />
@@ -46,7 +46,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@LuxeMia" />
     <meta name="twitter:title" content="LuxeMia | Indian Ethnic Wear — Sarees & Lehengas" />
-    <meta name="twitter:description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices." />
+    <meta name="twitter:description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia." />
     <meta name="twitter:image" content="https://luxemia.shop/og-image.jpg" />
 
     <!-- Fonts — non-render-blocking using font-display:swap + media trick -->
@@ -337,6 +337,26 @@
         }
       ]
     }
+    </script>
+    <!-- Google Customer Reviews opt-in script -->
+    <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+    <script>
+      window.renderOptIn = function() {
+        window.gapi.load('surveyoptin', function() {
+          window.gapi.surveyoptin.render(
+            {
+              // REQUIRED FIELDS — populated dynamically by OrderConfirmation page
+              "merchant_id": 5773333098,
+              "order_id": "ORDER_ID",
+              "email": "CUSTOMER_EMAIL",
+              "delivery_country": "COUNTRY_CODE",
+              "estimated_delivery_date": "YYYY-MM-DD",
+
+              // OPTIONAL FIELDS
+              "products": [{"gtin":"GTIN1"}, {"gtin":"GTIN2"}]
+            });
+        });
+      }
     </script>
   </head>
 

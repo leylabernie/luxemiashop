@@ -1,0 +1,49 @@
+<!-- Google Customer Reviews — Shopify Order Status Page Additional Script -->
+<!--
+  HOW TO INSTALL:
+  1. Go to Shopify Admin → Settings → Checkout
+  2. Scroll to "Order status page" section
+  3. Paste this entire script into the "Additional scripts" box
+  4. Click Save
+
+  This script:
+  - Shows the Google Customer Reviews opt-in survey after checkout
+  - Passes real order data (order ID, customer email, country, estimated delivery)
+  - Works with your GMC merchant ID: 5773333098
+-->
+
+<script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+<script>
+  window.renderOptIn = function() {
+    window.gapi.load('surveyoptin', function() {
+      window.gapi.surveyoptin.render(
+        {
+          // REQUIRED
+          "merchant_id": 5773333098,
+          "order_id": "{{ order.order_number }}",
+          "email": "{{ order.email }}",
+          "delivery_country": "{{ order.shipping_address.country_code }}",
+          "estimated_delivery_date": "{{ order.created_at | date: '%s' | plus: 1209600 | date: '%Y-%m-%d' }}",
+
+          // OPTIONAL — product GTINs if available
+          "products": [{% for line_item in order.line_items %}{% if line_item.sku != blank %}{"gtin":"{{ line_item.sku }}"}{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %}]
+        });
+    });
+  }
+</script>
+
+<!-- Google Customer Reviews Badge (optional — shows rating on order confirmation) -->
+<script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
+<script>
+  window.renderBadge = function() {
+    var ratingBadgeContainer = document.createElement("div");
+    document.body.appendChild(ratingBadgeContainer);
+    window.gapi.load('ratingbadge', function() {
+      window.gapi.ratingbadge.render(
+        ratingBadgeContainer, {
+          "merchant_id": 5773333098,
+          "position": "BOTTOM_LEFT"
+        });
+    });
+  }
+</script>
