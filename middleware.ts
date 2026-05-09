@@ -735,6 +735,32 @@ export default async function middleware(request: Request) {
     return next();
   }
 
+  // Product pages are prerendered for EVERY Shopify product at build time
+  // (see scripts/prerender.js — fetches all products from the Storefront API
+  // and emits one HTML file per /product/<handle>). Serve that prerendered
+  // HTML to ALL clients — bots and humans — so the initial HTML always
+  // contains valid Product JSON-LD with image, description, offers.price,
+  // offers.priceCurrency, offers.availability, canonical url, and brand.
+  // React hydrates over the same <div id="root"> after JS loads.
+  //
+  // For bots that hit a handle missing from the build (e.g. a product added
+  // to Shopify between deploys), we still fall through to the dynamic SSR
+  // path further below, which fetches live product data from Shopify.
+  if (pathname.startsWith('/product/')) {
+    const handle = pathname.replace('/product/', '');
+    if (handle && !handle.includes('/')) {
+      const prerenderUrl = new URL(`/_prerender/product/${handle}.html`, request.url);
+      try {
+        const head = await fetch(prerenderUrl.toString(), { method: 'HEAD' });
+        if (head.ok) {
+          return rewrite(prerenderUrl);
+        }
+      } catch {
+        // fall through to bot SSR / SPA shell
+      }
+    }
+  }
+
   // For bots: serve prerendered or dynamically-rendered content
   if (isBot(userAgent)) {
     // 1. Prerendered static routes → serve prerendered HTML
