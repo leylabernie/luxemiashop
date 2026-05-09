@@ -116,6 +116,11 @@ const routes = [
         <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Indian Ethnic Wear — Georgette, Silk & Chiffon</a></li>
         <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Complete Guide</a></li>
         <li><a href="/blog/red-bridal-lehenga-trends-2026">Red Bridal Lehenga Trends 2026</a></li>
+        <li><a href="/blog/how-to-choose-perfect-lehenga-wedding-2026">How to Choose the Perfect Lehenga for Your 2026 Wedding</a></li>
+        <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali: Complete Comparison</a></li>
+        <li><a href="/blog/best-lehenga-colors-for-indian-skin-tone">Best Lehenga Colors for Every Indian Skin Tone</a></li>
+        <li><a href="/blog/shipping-indian-clothes-usa-uk-canada-nri-guide">Shipping Indian Clothes to USA, UK & Canada: NRI Guide</a></li>
+        <li><a href="/blog/unstitched-vs-ready-to-wear-vs-made-to-measure">Unstitched vs Ready to Wear vs Made to Measure</a></li>
       </ul>
     `,
   },
@@ -537,6 +542,42 @@ const routes = [
     description: 'How to style Indian ethnic wear for festive occasions abroad. Diwali, Eid, Navratri & wedding outfit ideas for Indians living overseas.',
     h1: 'Styling Indian Ethnic Wear Abroad',
     content: '<p>Celebrating festivals abroad? Get styling ideas for Diwali, Eid, Navratri and more — outfit combinations that work for both traditional and modern settings.</p>',
+  },
+  // --- New 2026 SEO blog posts ---
+  {
+    path: '/blog/how-to-choose-perfect-lehenga-wedding-2026',
+    title: 'How to Choose the Perfect Lehenga for Your 2026 Wedding | LuxeMia',
+    description: 'Step-by-step guide to choosing the perfect bridal lehenga for your 2026 wedding. Body type, fabric, color, embroidery & budget tips from LuxeMia stylists.',
+    h1: 'How to Choose the Perfect Lehenga for Your 2026 Wedding',
+    content: '<p>The complete bridal guide to choosing your dream lehenga in 2026. Learn how to pick the right silhouette for your body type, the best fabric for your wedding season, color choices for every skin tone, and how to plan your budget — from a stylist who has dressed hundreds of brides.</p>',
+  },
+  {
+    path: '/blog/lehenga-vs-sharara-vs-anarkali-comparison',
+    title: 'Lehenga vs Sharara vs Anarkali: Which One Is Right for You? | LuxeMia',
+    description: 'Lehenga vs Sharara vs Anarkali — a complete comparison of silhouettes, occasions, body types & price. Find out which Indian outfit is right for you.',
+    h1: 'Lehenga vs Sharara vs Anarkali: Complete Comparison',
+    content: '<p>Confused between a lehenga, sharara, and anarkali? Compare silhouettes, occasions, comfort, body-type fit, and price — so you pick the perfect Indian outfit for your next wedding, festival, or celebration.</p>',
+  },
+  {
+    path: '/blog/best-lehenga-colors-for-indian-skin-tone',
+    title: 'Best Lehenga Colors for Every Indian Skin Tone | LuxeMia',
+    description: 'The best lehenga colors for fair, wheatish, dusky & dark Indian skin tones. Discover what suits you with stylist-curated color recommendations.',
+    h1: 'Best Lehenga Colors for Every Indian Skin Tone',
+    content: '<p>Find the most flattering lehenga colors for your skin tone. Whether you are fair, wheatish, dusky, or deep — our stylists break down the shades that make Indian skin glow, and the colors to skip.</p>',
+  },
+  {
+    path: '/blog/shipping-indian-clothes-usa-uk-canada-nri-guide',
+    title: 'Shipping Indian Clothes to USA, UK & Canada: NRI Guide | LuxeMia',
+    description: 'Complete NRI guide to shipping Indian clothes to USA, UK & Canada. Customs, duties, delivery times & how to avoid common shipping problems.',
+    h1: 'Shipping Indian Clothes to USA, UK & Canada: NRI Guide',
+    content: '<p>The complete NRI guide to ordering Indian ethnic wear online and shipping it to the USA, UK, or Canada. Customs duties, delivery timelines, country-specific rules, and how LuxeMia handles worldwide shipping with no surprises.</p>',
+  },
+  {
+    path: '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
+    title: 'Unstitched vs Ready to Wear vs Made to Measure: Which to Choose? | LuxeMia',
+    description: 'Unstitched vs Ready to Wear vs Made to Measure — pros, cons, pricing & timelines for Indian ethnic wear. A complete shopping guide.',
+    h1: 'Unstitched vs Ready to Wear vs Made to Measure',
+    content: '<p>Should you order unstitched fabric, a ready-to-wear outfit, or made-to-measure stitching? Compare pricing, timelines, fit, and flexibility so you choose the right option for your next lehenga, saree, or suit.</p>',
   },
   // --- Product pages ---
   {
