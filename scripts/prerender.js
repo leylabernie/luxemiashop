@@ -1395,13 +1395,37 @@ async function main() {
   // Pre-fetch live Shopify product data so /product/* prerendered HTML
   // emits valid Product JSON-LD with image, description, and offers.price.
   const productMap = await fetchAllShopifyProducts();
+  const hardcodedProductHandles = new Set();
   for (const route of routes) {
     if (route.path.startsWith('/product/')) {
       const handle = route.path.slice('/product/'.length);
+      hardcodedProductHandles.add(handle);
       const live = productMap.get(handle);
       if (live) route.product = live;
     }
   }
+
+  // Auto-generate a route entry for every Shopify product NOT already in the
+  // hardcoded list. This guarantees a prerendered HTML file with valid Product
+  // JSON-LD exists for every /product/<handle> on the live site (was previously
+  // only ~73 of 360 products — the rest fell through to the empty SPA shell
+  // with no Product schema, breaking GMC validation).
+  for (const [handle, p] of productMap.entries()) {
+    if (hardcodedProductHandles.has(handle)) continue;
+    const title = p.title || handle;
+    const desc = (p.description || '').trim();
+    const fallbackDesc = `Shop the ${title} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics and intricate detailing. Free shipping to USA, Canada & Australia on orders over $350.`;
+    const description = (desc.length >= 60 ? desc : fallbackDesc).slice(0, 320);
+    routes.push({
+      path: `/product/${handle}`,
+      title: `${title} | LuxeMia`,
+      description,
+      h1: title,
+      content: `<p>${escapeHtml(desc || fallbackDesc).slice(0, 1200)}</p>`,
+      product: p,
+    });
+  }
+  console.log(`[prerender] Total /product/* routes after Shopify merge: ${routes.filter(r => r.path.startsWith('/product/')).length}`);
 
   let count = 0;
   for (const route of routes) {
