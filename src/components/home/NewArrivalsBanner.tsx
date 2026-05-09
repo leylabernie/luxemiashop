@@ -13,9 +13,8 @@ interface FeaturedSlide {
   cta: string;
   link: string;
   image: string;
-  bg: string; // background color for the image panel + text panel theme
-  textPanelBg: string;
-  textPanelText: string;
+  imagePanelClass: string; // Tailwind class for image panel bg
+  textPanelClass: string;  // Tailwind class for text panel bg + text color
   accentChip: string;
 }
 
@@ -33,9 +32,8 @@ const slides: FeaturedSlide[] = [
     link: '/product/beige-net-embroidery-festive-lehenga-choli-designer-indian-lehenga-5',
     image:
       'https://images.wholesalesalwar.com/2026y/May/61379/Beige-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-TITLI-1067(1).jpg',
-    bg: '#f5ede2', // soft beige cream
-    textPanelBg: '#3a1f2c', // deep wine
-    textPanelText: '#fdf6ef',
+    imagePanelClass: 'bg-[#f5ede2]',
+    textPanelClass: 'bg-[#3a1f2c] text-[#fdf6ef]',
     accentChip: 'bg-rose-100 text-rose-900 border-rose-200',
   },
   {
@@ -50,9 +48,8 @@ const slides: FeaturedSlide[] = [
     link: '/product/green-satin-silk-sequins-festive-saree-designer-indian-saree-sar-36',
     image:
       'https://images.wholesalesalwar.com/2026y/April/61217/Green-Satin-Silk-Festival-Wear-Sequins-Work--Readymade-Saree-BELLE-26809(1).jpg',
-    bg: '#eaf3ee', // soft mint cream
-    textPanelBg: '#0f3a2c', // deep emerald
-    textPanelText: '#f5fbf7',
+    imagePanelClass: 'bg-[#eaf3ee]',
+    textPanelClass: 'bg-[#0f3a2c] text-[#f5fbf7]',
     accentChip: 'bg-emerald-100 text-emerald-900 border-emerald-200',
   },
   {
@@ -67,9 +64,8 @@ const slides: FeaturedSlide[] = [
     link: '/product/sky-blue-chinon-embroidered-occasion-salwar-suit-designer-indian-sui-16',
     image:
       'https://images.wholesalesalwar.com/2026y/May/61270/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001(1).jpg',
-    bg: '#eaf2f7', // soft sky cream
-    textPanelBg: '#0d2a3d', // deep navy
-    textPanelText: '#f0f7fb',
+    imagePanelClass: 'bg-[#eaf2f7]',
+    textPanelClass: 'bg-[#0d2a3d] text-[#f0f7fb]',
     accentChip: 'bg-sky-100 text-sky-900 border-sky-200',
   },
 ];
@@ -140,14 +136,12 @@ const NewArrivalsBanner = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full"
-          style={{ backgroundColor: slide.bg }}
+          className={`relative w-full ${slide.imagePanelClass}`}
         >
           <div className="grid w-full grid-cols-1 lg:grid-cols-2">
             {/* Text panel */}
             <div
-              className="order-2 flex items-center px-6 py-10 sm:px-10 sm:py-14 lg:order-1 lg:min-h-[560px] lg:px-16 lg:py-20"
-              style={{ backgroundColor: slide.textPanelBg, color: slide.textPanelText }}
+              className={`order-2 flex items-center px-6 py-10 sm:px-10 sm:py-14 lg:order-1 lg:min-h-[560px] lg:px-16 lg:py-20 ${slide.textPanelClass}`}
             >
               <div className="mx-auto w-full max-w-xl">
                 <motion.span
@@ -212,8 +206,7 @@ const NewArrivalsBanner = () => {
 
             {/* Image panel — full image, no crop, no overlay */}
             <div
-              className="relative order-1 flex items-center justify-center overflow-hidden lg:order-2 lg:min-h-[560px]"
-              style={{ backgroundColor: slide.bg }}
+              className={`relative order-1 flex items-center justify-center overflow-hidden lg:order-2 lg:min-h-[560px] ${slide.imagePanelClass}`}
             >
               <motion.img
                 key={`img-${slide.id}`}
