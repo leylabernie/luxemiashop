@@ -140,19 +140,27 @@ const HeroSection = () => {
               </div>
 
               {/* RIGHT: Full product image — no cropping */}
-              <div className="w-full md:w-[52%] flex items-center justify-center py-6 md:py-8 lg:py-10">
-                <motion.img
-                  src={getOptimizedImage(slide.image, 'hero')}
-                  alt={slide.title}
-                  className="max-h-[55vh] sm:max-h-[60vh] lg:max-h-[70vh] w-auto object-contain rounded-lg drop-shadow-2xl"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  fetchPriority="high"
-                  decoding="async"
-                  loading="eager"
-                />
-              </div>
+              <motion.div
+                className="w-full md:w-[52%] flex items-center justify-center py-6 md:py-8 lg:py-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <picture>
+                  <source
+                    srcSet={getOptimizedImage(slide.image, 'hero').replace(/\.jpe?g(\?|$)/i, '.webp$1')}
+                    type="image/webp"
+                  />
+                  <img
+                    src={getOptimizedImage(slide.image, 'hero')}
+                    alt={slide.title}
+                    className="max-h-[55vh] sm:max-h-[60vh] lg:max-h-[70vh] w-auto object-contain rounded-lg drop-shadow-2xl"
+                    fetchPriority="high"
+                    decoding="async"
+                    loading="eager"
+                  />
+                </picture>
+              </motion.div>
             </div>
           </div>
         </motion.div>

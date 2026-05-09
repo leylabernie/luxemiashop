@@ -46,13 +46,16 @@ const NewArrivals = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         {/* Hero Banner */}
         <div className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
-          <img
-            src="/images/banners/saree-banner.jpg"
-            alt="New Arrivals Collection"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            loading="lazy"
-            decoding="async"
-          />
+          <picture className="absolute inset-0 w-full h-full">
+            <source srcSet="/images/banners/saree-banner.webp" type="image/webp" />
+            <img
+              src="/images/banners/saree-banner.jpg"
+              alt="New Arrivals Collection"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
           <div className="relative z-10 text-center px-4 text-white">
             <div className="flex items-center justify-center gap-2 mb-3">

@@ -259,13 +259,16 @@ const Menswear = () => {
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         <section className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
-          <img
-            src={getOptimizedImage("/images/banners/menswear-banner.jpg", 'hero')}
-            alt="Menswear Collection"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-            loading="lazy"
-            decoding="async"
-          />
+          <picture className="absolute inset-0 w-full h-full">
+            <source srcSet="/images/banners/menswear-banner.webp" type="image/webp" />
+            <img
+              src={getOptimizedImage("/images/banners/menswear-banner.jpg", 'hero')}
+              alt="Menswear Collection"
+              className="absolute inset-0 w-full h-full object-cover object-top"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
