@@ -112,14 +112,23 @@ const SEOHead = ({
 
   const gmcSafeImage = ensureJpegForGmc(absoluteImage);
 
-  // Enhanced Product Schema for Google Rich Results
+  // Enhanced Product Schema for Google Rich Results.
+  // Fallbacks ensure required Merchant Listings fields (image, description,
+  // offers.price) are always present even when Shopify data is incomplete.
+  const productImageForSchema = ensureJpegForGmc(product?.image || absoluteImage);
+  const productDescriptionForSchema =
+    (product?.description && product.description.trim().length > 0)
+      ? product.description
+      : `Shop the ${product?.name || 'product'} at LuxeMia — handcrafted Indian ethnic wear with worldwide shipping to USA, Canada, and Australia.`;
+  const productPriceForSchema = product?.originalPrice || product?.price || '0.00';
+  const productCurrencyForSchema = product?.currency || 'USD';
   const productSchema = product
     ? {
         '@context': 'https://schema.org',
         '@type': 'Product',
         name: product.name,
-        image: [ensureJpegForGmc(product.image)],
-        description: product.description,
+        image: [productImageForSchema],
+        description: productDescriptionForSchema,
         sku: product.sku,
         mpn: product.sku,
         url: canonicalUrl,
@@ -140,8 +149,8 @@ const SEOHead = ({
         offers: {
           '@type': 'Offer',
           url: canonicalUrl,
-          price: product.originalPrice || product.price,
-          priceCurrency: product.currency,
+          price: productPriceForSchema,
+          priceCurrency: productCurrencyForSchema,
           ...(product.originalPrice && product.originalPrice !== product.price && {
             priceSpecification: {
               '@type': 'UnitPriceSpecification',

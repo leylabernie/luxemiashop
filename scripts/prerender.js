@@ -16,6 +16,89 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
+const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+const FALLBACK_PRICE = '299.00';
+const FALLBACK_CURRENCY = 'USD';
+
+// ─── Shopify Storefront API (build-time product fetch) ──────────────────────
+// Pulls live product data so prerendered HTML emits valid Product schema with
+// image, description, offers.price, etc. — required by Google Merchant
+// Listings / Rich Results validation.
+const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
+const SHOPIFY_STOREFRONT_TOKEN = 'c98d10d5abd95e6a8d6ddbed223ef4b4';
+
+const ALL_PRODUCTS_QUERY = `
+  query GetAllProducts($first: Int!, $after: String) {
+    products(first: $first, after: $after) {
+      pageInfo { hasNextPage endCursor }
+      edges {
+        node {
+          id title description handle vendor productType availableForSale
+          priceRange { minVariantPrice { amount currencyCode } }
+          compareAtPriceRange { maxVariantPrice { amount currencyCode } }
+          images(first: 5) { edges { node { url altText } } }
+          variants(first: 5) { edges { node { sku } } }
+        }
+      }
+    }
+  }
+`;
+
+function forceJpegForGmc(url) {
+  if (!url) return url;
+  if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
+    const clean = url.replace(/[&?]format=\w+/g, '');
+    const sep = clean.includes('?') ? '&' : '?';
+    return `${clean}${sep}format=jpg&width=1200`;
+  }
+  if (url.includes('kesimg.b-cdn.net')) {
+    const clean = url.replace(/[&?]format=\w+/g, '');
+    const sep = clean.includes('?') ? '&' : '?';
+    return `${clean}${sep}format=jpg`;
+  }
+  if (!url.match(/\.(jpg|jpeg|png|gif)(\?|$)/i) && !url.includes('format=')) {
+    const sep = url.includes('?') ? '&' : '?';
+    return `${url}${sep}format=jpg`;
+  }
+  return url;
+}
+
+async function fetchAllShopifyProducts() {
+  const map = new Map();
+  let cursor = null;
+  try {
+    for (let i = 0; i < 20; i++) {
+      const resp = await fetch(SHOPIFY_STOREFRONT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+        },
+        body: JSON.stringify({
+          query: ALL_PRODUCTS_QUERY,
+          variables: { first: 100, after: cursor },
+        }),
+      });
+      if (!resp.ok) {
+        console.warn(`[prerender] Shopify fetch returned ${resp.status} — using fallbacks`);
+        break;
+      }
+      const json = await resp.json();
+      const data = json?.data?.products;
+      if (!data) break;
+      for (const edge of data.edges || []) {
+        const p = edge.node;
+        if (p?.handle) map.set(p.handle, p);
+      }
+      if (!data.pageInfo?.hasNextPage) break;
+      cursor = data.pageInfo.endCursor;
+    }
+  } catch (err) {
+    console.warn(`[prerender] Shopify fetch failed: ${err.message} — using fallbacks`);
+  }
+  console.log(`[prerender] Loaded ${map.size} products from Shopify Storefront API`);
+  return map;
+}
 
 // Route definitions with SEO metadata
 const routes = [
@@ -1166,23 +1249,46 @@ function generateHtml(template, route) {
     const canonical = SITE_URL + route.path;
     const handle = route.path.slice('/product/'.length);
 
-    // Product schema
+    // Look up live product data (image, price, description) from Shopify map.
+    // Fall back to the route's own metadata when Shopify lookup misses, so the
+    // emitted Product schema is ALWAYS valid (Google Merchant Listings rejects
+    // products missing image / offers.price / description).
+    const live = route.product || null;
+    const liveImages = live?.images?.edges?.map(e => forceJpegForGmc(e.node.url)).filter(Boolean) || [];
+    const productImages = liveImages.length > 0 ? liveImages : [FALLBACK_OG_IMAGE];
+    const productDescription = (live?.description?.trim() || route.description || '').slice(0, 5000);
+    const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
+    const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
+    const productSku = live?.variants?.edges?.[0]?.node?.sku || (live?.id || '').split('/').pop() || handle;
+    const productAvailability = live?.availableForSale === false ? 'OutOfStock' : 'InStock';
+    const productBrand = (() => {
+      const v = (live?.vendor || '').trim();
+      return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
+    })();
+
+    // Product schema — must include image, description, offers.price/priceCurrency
+    // for Google Merchant Listings validation.
     const productSchema = {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: route.h1,
-      description: route.description,
+      image: productImages,
+      description: productDescription,
+      sku: productSku,
+      mpn: productSku,
       url: canonical,
-      brand: { '@type': 'Brand', name: 'LuxeMia' },
+      brand: { '@type': 'Brand', name: productBrand },
       category: 'Clothing > Traditional & Ethnic Wear',
       itemCondition: 'https://schema.org/NewCondition',
       offers: {
         '@type': 'Offer',
         url: canonical,
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
+        price: productPrice,
+        priceCurrency: productCurrency,
+        priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        availability: `https://schema.org/${productAvailability}`,
         itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@type': 'Organization', name: 'LuxeMia' },
+        seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
         shippingDetails: [
           {
             '@type': 'OfferShippingDetails',
@@ -1269,7 +1375,7 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
-function main() {
+async function main() {
   const indexPath = path.join(DIST_DIR, 'index.html');
 
   if (!fs.existsSync(indexPath)) {
@@ -1285,6 +1391,17 @@ function main() {
     fs.rmSync(prerenderDir, { recursive: true });
   }
   fs.mkdirSync(prerenderDir, { recursive: true });
+
+  // Pre-fetch live Shopify product data so /product/* prerendered HTML
+  // emits valid Product JSON-LD with image, description, and offers.price.
+  const productMap = await fetchAllShopifyProducts();
+  for (const route of routes) {
+    if (route.path.startsWith('/product/')) {
+      const handle = route.path.slice('/product/'.length);
+      const live = productMap.get(handle);
+      if (live) route.product = live;
+    }
+  }
 
   let count = 0;
   for (const route of routes) {
@@ -1311,4 +1428,7 @@ function main() {
   console.log(`Pre-rendered ${count} routes to ${prerenderDir}/`);
 }
 
-main();
+main().catch(err => {
+  console.error('[prerender] Fatal error:', err);
+  process.exit(1);
+});
