@@ -21,6 +21,11 @@ const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = 'c98d10d5abd95e6a8d6ddbed223ef4b4';
 
+// Canonical brand name. Shopify vendor field can drift in casing
+// (e.g. "Luxemia" vs "LuxeMia") which trips Google Merchant Center
+// brand-consistency checks. Always emit this exact string.
+const BRAND_NAME = 'LuxeMia';
+
 const ALL_PRODUCTS_QUERY = `
   query GetAllProducts($first: Int!, $after: String) {
     products(first: $first, after: $after, sortKey: CREATED_AT, reverse: true) {
@@ -168,6 +173,61 @@ function getGender(productType, title) {
   return 'female';
 }
 
+// Always return the canonical brand string. Shopify's `vendor` field is
+// merchant-supplied and can be empty or have wrong casing; normalize anything
+// that looks like our own brand and fall back to BRAND_NAME otherwise.
+function normalizeBrand(vendor) {
+  const raw = (vendor || '').trim();
+  if (!raw) return BRAND_NAME;
+  if (raw.toLowerCase() === BRAND_NAME.toLowerCase()) return BRAND_NAME;
+  return raw;
+}
+
+// Build a deterministic, GMC-friendly description (>=150 chars) from product
+// attributes when Shopify's description is missing or too short. Avoids the
+// previous fallback that produced ~110-char strings and triggered GMC
+// "description too short" warnings on hundreds of items.
+function buildDescription(product, color, material, productType) {
+  const original = (product.description || '').trim();
+  if (original.length >= 150) return original.slice(0, 5000);
+
+  const title = product.title || 'Indian ethnic wear';
+  const parts = [];
+
+  // Lead sentence: prefer keeping any short Shopify description, otherwise
+  // open with a descriptive sentence built from product attributes.
+  if (original) {
+    parts.push(original.replace(/\s+$/, '').replace(/[.!?]$/, '') + '.');
+  } else {
+    const colorPhrase = color ? `${color} ` : '';
+    const materialPhrase = material ? `${material.toLowerCase()} ` : '';
+    parts.push(`Shop the ${colorPhrase}${materialPhrase}${title} at LuxeMia.`);
+  }
+
+  // Attribute sentence — material, color, category context.
+  const noun = productType ? productType.toLowerCase() : 'piece';
+  const attrPhrases = [];
+  if (material) attrPhrases.push(`crafted in ${material.toLowerCase()}`);
+  if (color) attrPhrases.push(`finished in ${color.toLowerCase()}`);
+  if (attrPhrases.length) {
+    parts.push(`This ${noun}, ${attrPhrases.join(' and ')}, is hand-finished by Indian artisans for a refined drape and lasting wear.`);
+  } else {
+    parts.push(`Hand-finished by Indian artisans for a refined drape and lasting wear.`);
+  }
+
+  // Occasion + shipping sentence — adds genuine shopper-relevant detail
+  // and keeps every fallback description well above the 150-char floor.
+  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships worldwide from LuxeMia with a $25 flat rate (free over $350) to the USA, Canada and Australia.');
+
+  let out = parts.join(' ').trim();
+  // Tight safety net: if attributes were sparse and we still landed under
+  // 150 chars, append a closing line so GMC never sees a sub-150 description.
+  if (out.length < 150) {
+    out += ` Discover more authentic Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia — affordable luxury, worldwide delivery.`;
+  }
+  return out.slice(0, 5000);
+}
+
 function generateShippingXml() {
   // GMC: Shipping for US, CA, AU markets. All prices in USD.
   // Free shipping on orders over $350, flat rate $25 for orders under $350.
@@ -270,7 +330,7 @@ async function fetchAllProducts() {
 
 // ─── XML Item Generation ────────────────────────────────────────────────────
 
-function generateProductItemXml(product) {
+function generateProductItemXml(product, titleCounts) {
   const handle = product.handle;
   const link = `${SITE_URL}/product/${handle}`;
   const imageUrl = product.images.edges[0]?.node.url
@@ -323,8 +383,8 @@ function generateProductItemXml(product) {
     t.toLowerCase().includes('woven')
   ) || '';
 
-  const description = (product.description || `Shop ${product.title} at LuxeMia. Premium Indian ethnic wear with worldwide shipping.`).slice(0, 5000);
   const productType = product.productType || 'Ethnic Wear';
+  const description = buildDescription(product, color, material, productType);
 
   // GMC BEST PRACTICE: One feed item per product with ALL sizes listed in a single <g:size> field.
   // Creating one item per size variant inflates the feed (92 products → 1,647 items) and causes
@@ -347,10 +407,29 @@ function generateProductItemXml(product) {
   const displayPrice = hasAnyDiscount ? bestCompare : minPrice;
   const displaySalePrice = hasAnyDiscount ? minPrice : '';
 
+  // Title de-duplication: when Shopify has multiple products sharing the same
+  // title (different colorways or fabric variants), append a deterministic
+  // disambiguator so each feed item has a unique <g:title>. GMC flags duplicate
+  // titles as "limited performance" and they hurt CTR in shopping ads.
+  // We disambiguate with the full normalized SKU/handle (already unique per
+  // product in Shopify) prefixed with the color when available.
+  const baseTitle = product.title || '';
+  let displayTitle = baseTitle;
+  if (titleCounts && titleCounts.get(baseTitle) > 1) {
+    const uniqueTail = (sku || handle || '').toString();
+    if (color && uniqueTail) {
+      displayTitle = `${baseTitle} — ${color} (${uniqueTail})`;
+    } else if (uniqueTail) {
+      displayTitle = `${baseTitle} (${uniqueTail})`;
+    } else if (color) {
+      displayTitle = `${baseTitle} — ${color}`;
+    }
+  }
+
   return `
   <item>
     <g:id>${escapeXml(itemId)}</g:id>
-    <g:title>${escapeXml(product.title)}</g:title>
+    <g:title>${escapeXml(displayTitle)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
     <g:link>${escapeXml(link)}</g:link>
     <g:image_link>${escapeXml(imageUrl)}</g:image_link>
@@ -360,7 +439,7 @@ function generateProductItemXml(product) {
     ${displaySalePrice ? `<g:sale_price>${displaySalePrice} ${currency}</g:sale_price>` : ''}
     ${hasAnyDiscount ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
     <g:condition>new</g:condition>
-    <g:brand>${escapeXml(product.vendor || 'LuxeMia')}</g:brand>
+    <g:brand>${escapeXml(normalizeBrand(product.vendor))}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
     <g:product_type>${escapeXml(productType)}</g:product_type>
     <g:gender>${gender}</g:gender>
@@ -409,7 +488,15 @@ async function main() {
     products = [];
   }
 
-  const itemsXml = products.map(p => generateProductItemXml(p)).join('\n');
+  // Pre-compute title occurrence counts so duplicates can be disambiguated
+  // deterministically with a color + SKU-tail suffix in generateProductItemXml.
+  const titleCounts = new Map();
+  for (const p of products) {
+    const t = p.title || '';
+    titleCounts.set(t, (titleCounts.get(t) || 0) + 1);
+  }
+
+  const itemsXml = products.map(p => generateProductItemXml(p, titleCounts)).join('\n');
 
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">

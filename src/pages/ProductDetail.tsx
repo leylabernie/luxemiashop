@@ -149,7 +149,14 @@ const ProductDetail = () => {
       {product ? (
         <SEOHead
           title={`${product.title} | ${categoryName} | LuxeMia`}
-          description={product.description?.slice(0, 155) + '...' || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`}
+          description={(() => {
+            const d = (product.description || '').trim();
+            if (d.length >= 70) {
+              return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
+            }
+            const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
+            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Worldwide shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
+          })()}
           type="product"
           image={product.images.edges[0]?.node.url}
           product={{
@@ -162,7 +169,10 @@ const ProductDetail = () => {
             sku: product.id,
             originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
             category: product.productType || 'Ethnic Wear',
-            brand: (product as any).vendor || 'LuxeMia',
+            brand: (() => {
+              const v = ((product as any).vendor || '').trim();
+              return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
+            })(),
             color: (product as any).options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0],
             material: product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0],
             sizes: product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size')?.values || [],
