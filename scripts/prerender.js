@@ -279,6 +279,23 @@ const routes = [
   },
   // --- Additional routes previously missing from prerender ---
   {
+    path: '/lookbook',
+    title: 'Lookbook 2026 — LuxeMia | Editorial Indian Ethnic Wear',
+    description: 'Explore the LuxeMia 2026 Lookbook — curated styling stories featuring wedding lehengas, sherwanis, sharara suits, and festive ethnic wear. Editorial inspiration for the modern Indian wardrobe.',
+    h1: 'Lookbook 2026',
+    content: `
+      <p>The LuxeMia 2026 Lookbook is a series of styling chapters that celebrate the modern Indian wardrobe — from intimate haldi mornings to grand reception nights.</p>
+      <h2>Wedding Season</h2>
+      <p>From the bride's grand lehenga to the groom's regal sherwani — curated ensembles for every wedding ceremony, from mehendi to reception.</p>
+      <h2>Eid Collection</h2>
+      <p>Celebrate in style with flowing shararas and elegant palazzo suits — graceful silhouettes in luxurious georgette, chinon, and net fabrics.</p>
+      <h2>Festive Favorites</h2>
+      <p>A curated mix of our most-loved pieces across categories — versatile outfits that transition effortlessly from festive gatherings to celebrations.</p>
+      <h2>His & Hers</h2>
+      <p>Perfectly paired looks for couples — elegant kurta pajamas and jodhpuri suits alongside complementing lehengas and sharara sets.</p>
+    `,
+  },
+  {
     path: '/brand-story',
     title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
     description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',

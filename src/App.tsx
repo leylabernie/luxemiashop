@@ -43,6 +43,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
+const Lookbook = lazy(() => import("./pages/Lookbook"));
 const VirtualTryOn = lazy(() => import("./pages/VirtualTryOn"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const StyleConsultation = lazy(() => import("./pages/StyleConsultation"));
@@ -94,7 +95,7 @@ const App = () => (
                 <Route path="/about-us" element={<Navigate to="/brand-story" replace />} />
                 <Route path="/about" element={<Navigate to="/brand-story" replace />} />
                 <Route path="/brand-story" element={<Suspense fallback={<PageLoader />}><BrandStory /></Suspense>} />
-                <Route path="/lookbook" element={<Navigate to="/collections" replace />} />
+                <Route path="/lookbook" element={<Suspense fallback={<PageLoader />}><Lookbook /></Suspense>} />
                 <Route path="/wishlist" element={<Suspense fallback={<PageLoader />}><Wishlist /></Suspense>} />
                 <Route path="/auth" element={<Suspense fallback={<PageLoader />}><Auth /></Suspense>} />
                 <Route path="/account" element={<Suspense fallback={<PageLoader />}><Account /></Suspense>} />

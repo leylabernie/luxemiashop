@@ -26,6 +26,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://luxemia.shop/lookbook</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://luxemia.shop/lehengas</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>daily</changefreq>
@@ -354,17 +360,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/sky-blue-georgette-embroidered-festive-salwar-suit-29</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Georgette-Festival-Wear-Embroidery-Work-Readymade-Anarkali-Suit-ROYAL-001_1.jpg?v=1778285495&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Sky Blue Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
-      <image:caption>Sky Blue Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/pista-green-georgette-embroidered-festive-salwar-suit-28</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -376,14 +371,14 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/rani-pink-chinon-embroidered-occasion-salwar-suit-25</loc>
+    <loc>https://luxemia.shop/product/sky-blue-georgette-embroidered-festive-salwar-suit-29</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-CROWN-GOLD-003_1.jpg?v=1778285485&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Rani Pink Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
-      <image:caption>Rani Pink Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Georgette-Festival-Wear-Embroidery-Work-Readymade-Anarkali-Suit-ROYAL-001_1.jpg?v=1778285495&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Sky Blue Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
+      <image:caption>Sky Blue Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -409,14 +404,14 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/rani-pink-chinon-embroidered-festive-salwar-suit-23</loc>
+    <loc>https://luxemia.shop/product/rani-pink-chinon-embroidered-occasion-salwar-suit-25</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Chinon-Festival-Wear-Embroidery-Work-Readymade-Salwar-Suit-HARLEY-7652-A_1.jpg?v=1778285477&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Rani Pink Chinon Embroidered Festive Salwar Suit - LuxeMia</image:title>
-      <image:caption>Rani Pink Chinon Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-CROWN-GOLD-003_1.jpg?v=1778285485&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Rani Pink Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
+      <image:caption>Rani Pink Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -428,6 +423,28 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Turquise--Chinon-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-CROWN-GOLD-004_1.jpg?v=1778285482&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Turquoise Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
       <image:caption>Turquoise Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/rani-pink-chinon-embroidered-festive-salwar-suit-23</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Chinon-Festival-Wear-Embroidery-Work-Readymade-Salwar-Suit-HARLEY-7652-A_1.jpg?v=1778285477&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Rani Pink Chinon Embroidered Festive Salwar Suit - LuxeMia</image:title>
+      <image:caption>Rani Pink Chinon Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/turquoise-chinon-embroidered-festive-salwar-suit-22</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Turquise--Chinon-Festival-Wear-Embroidery-Work-Readymade-Salwar-Suit-HARLEY-7652-B_1.jpg?v=1778285472&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Turquoise Chinon Embroidered Festive Salwar Suit - LuxeMia</image:title>
+      <image:caption>Turquoise Chinon Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -450,17 +467,6 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rust-Orange-Chinon-Festival-Wear-Embroidery-Work-Readymade-Salwar-Suit-HARLEY-7652-D_1.jpg?v=1778285466&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Rust Orange Chinon Embroidered Festive Salwar Suit - LuxeMia</image:title>
       <image:caption>Rust Orange Chinon Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/turquoise-chinon-embroidered-festive-salwar-suit-22</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Turquise--Chinon-Festival-Wear-Embroidery-Work-Readymade-Salwar-Suit-HARLEY-7652-B_1.jpg?v=1778285472&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Turquoise Chinon Embroidered Festive Salwar Suit - LuxeMia</image:title>
-      <image:caption>Turquoise Chinon Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -497,6 +503,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/cream-georgette-embroidered-festive-salwar-suit-13</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Cream-Georgette-Festival-Wear-Embroidery-Work-Readymade-Gown-With-Dupatta-AMBIKA-967_1.jpg?v=1778285448&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Cream Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
+      <image:caption>Cream Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/sky-blue-chinon-embroidered-occasion-salwar-suit-16</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -505,6 +522,17 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001_1.jpg?v=1778285456&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Sky Blue Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
       <image:caption>Sky Blue Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/beige-georgette-embroidered-festive-salwar-suit-12</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Georgette-Festival-Wear-Embroidery-Work-Readymade-Gown-With-Dupatta-AMBIKA-968_1.jpg?v=1778285446&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Beige Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
+      <image:caption>Beige Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -527,28 +555,6 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Jimmy-Choo-Silk-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-6104-8062-D_1.jpg?v=1778285451&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Purple Jimmy Choo Silk Embroidered Occasion Salwar Suit - LuxeMia</image:title>
       <image:caption>Purple Jimmy Choo Silk Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/cream-georgette-embroidered-festive-salwar-suit-13</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Cream-Georgette-Festival-Wear-Embroidery-Work-Readymade-Gown-With-Dupatta-AMBIKA-967_1.jpg?v=1778285448&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Cream Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
-      <image:caption>Cream Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/beige-georgette-embroidered-festive-salwar-suit-12</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Georgette-Festival-Wear-Embroidery-Work-Readymade-Gown-With-Dupatta-AMBIKA-968_1.jpg?v=1778285446&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Beige Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
-      <image:caption>Beige Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -607,28 +613,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/purple-chinon-embroidered-occasion-salwar-suit-6</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-6112-10200-F_1.jpg?v=1778285431&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Purple Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
-      <image:caption>Purple Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/light-pink-chinon-embroidered-occasion-salwar-suit-5</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Light-Pink-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-ROOHAA-1401_1.jpg?v=1778285429&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Light Pink Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
-      <image:caption>Light Pink Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/off-white-chinon-silk-embroidered-festive-salwar-suit-4</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -640,6 +624,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/purple-chinon-embroidered-occasion-salwar-suit-6</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-6112-10200-F_1.jpg?v=1778285431&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Purple Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
+      <image:caption>Purple Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/black-chinon-silk-embroidered-festive-salwar-suit-3</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -648,6 +643,17 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Black-Chinon-Silk-Festival-Wear-Embroidery-Work-Readymade-Plazzo-Suit-HOF-437_1.jpg?v=1778285424&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Black Chinon Silk Embroidered Festive Salwar Suit - LuxeMia</image:title>
       <image:caption>Black Chinon Silk Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/light-pink-chinon-embroidered-occasion-salwar-suit-5</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Light-Pink-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-ROOHAA-1401_1.jpg?v=1778285429&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Light Pink Chinon Embroidered Occasion Salwar Suit - LuxeMia</image:title>
+      <image:caption>Light Pink Chinon Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -685,7 +691,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/sky-blue-georgette-sequins-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -696,7 +702,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/pink-georgette-sequins-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -707,7 +713,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/light-blue-georgette-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -717,19 +723,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/blue-silk-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Blue-Silk-Festival-Wear-Embroidery-Work-Lehenga-Choli-4251-12650_1.jpg?v=1778282530&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Blue Silk Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Blue Silk Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/sea-green-slub-silk-sequins-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -740,7 +735,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/grey-slub-silk-sequins-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -750,19 +745,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/green-taby-silk-printed-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Taby-Silk-Occasional-Wear-Printed-Work-Lehenga-Choli-4250-13091_1.jpg?v=1778282508&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Green Taby Silk Printed Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Green Taby Silk Printed Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/red-taby-silk-printed-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -772,19 +756,19 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/red-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <loc>https://luxemia.shop/product/green-taby-silk-printed-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Red-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4246-1569-A_1.jpg?v=1778282505&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Red Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Red Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Taby-Silk-Occasional-Wear-Printed-Work-Lehenga-Choli-4250-13091_1.jpg?v=1778282508&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Green Taby Silk Printed Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Green Taby Silk Printed Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/grey-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -794,19 +778,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/pink-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Pink-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4246-1571-A_1.jpg?v=1778282491&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Pink Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Pink Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/multi-color-net-sequins-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -817,7 +790,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/multi-color-net-sequins-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -828,7 +801,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/green-georgette-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -838,30 +811,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/red-georgette-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Red--Georgette-Festival-Wear-Embroidery-Work-Lehenga-Choli-4252-12647_1.jpg?v=1778282464&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Red Georgette Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Red Georgette Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/teal-blue-georgette-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Teal-Blue-Georgette-Festival-Wear-Embroidery-Work-Lehenga-Choli-4252-12646_1.jpg?v=1778282469&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Teal Blue Georgette Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Teal Blue Georgette Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/lavender-georgette-printed-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -871,8 +822,30 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/teal-blue-georgette-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Teal-Blue-Georgette-Festival-Wear-Embroidery-Work-Lehenga-Choli-4252-12646_1.jpg?v=1778282469&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Teal Blue Georgette Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Teal Blue Georgette Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-georgette-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Red--Georgette-Festival-Wear-Embroidery-Work-Lehenga-Choli-4252-12647_1.jpg?v=1778282464&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red Georgette Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Red Georgette Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/white-satin-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -882,19 +855,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/orange-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Orange--Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7081-Orange-_1.jpg?v=1778282457&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Orange Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Orange Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/peach-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -904,19 +866,19 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/olive-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <loc>https://luxemia.shop/product/orange-georgette-embroidery-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Olive--Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7084-Olive-_1.jpg?v=1778282446&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Olive Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Olive Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Orange--Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7081-Orange-_1.jpg?v=1778282457&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Orange Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Orange Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/yellow-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -926,8 +888,41 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/olive-georgette-embroidery-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Olive--Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7084-Olive-_1.jpg?v=1778282446&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Olive Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Olive Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/pink-georgette-embroidery-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Pink-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4246-1571-A_1.jpg?v=1778282491&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Pink Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Pink Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-georgette-embroidery-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Red-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4246-1569-A_1.jpg?v=1778282505&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Red Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/blue-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -937,30 +932,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/bottle-green-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Bottle-Green-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-MRUDANGI-1064_1.jpg?v=1778282419&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Bottle Green Net Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Bottle Green Net Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/green-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7093-Green_1.jpg?v=1778282426&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Green Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Green Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/cream-silk-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -970,8 +943,19 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/bottle-green-net-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Bottle-Green-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-MRUDANGI-1064_1.jpg?v=1778282419&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Bottle Green Net Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Bottle Green Net Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/golden-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -982,7 +966,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/maroon-silk-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -993,7 +977,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/wine-silk-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1003,8 +987,19 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/green-georgette-embroidery-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7093-Green_1.jpg?v=1778282426&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Green Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Green Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/purple-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1015,7 +1010,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/turquoise-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1025,30 +1020,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/dark-blue-pure-vichitra-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Dark-Blue-pure-Vichitra--Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-4263-177-A_1.jpg?v=1778282389&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dark Blue Pure Vichitra Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Dark Blue Pure Vichitra Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/wine-pure-vichitra-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-pure-Vichitra--Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-4263-177-B_1.jpg?v=1778282385&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Wine Pure Vichitra Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Wine Pure Vichitra Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/rust-orange-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1058,19 +1031,19 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/beige-net-beads-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <loc>https://luxemia.shop/product/dark-blue-pure-vichitra-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Net-Festival-Wear-Beads-Work-Readymade-Lehenga-Choli-Indri-1079_1.jpg?v=1778282380&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Beige Net Beads Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Beige Net Beads Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Dark-Blue-pure-Vichitra--Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-4263-177-A_1.jpg?v=1778282389&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Dark Blue Pure Vichitra Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Dark Blue Pure Vichitra Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/blue-net-sequins-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1080,8 +1053,30 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/wine-pure-vichitra-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-pure-Vichitra--Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-4263-177-B_1.jpg?v=1778282385&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Wine Pure Vichitra Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Wine Pure Vichitra Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/beige-net-beads-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Net-Festival-Wear-Beads-Work-Readymade-Lehenga-Choli-Indri-1079_1.jpg?v=1778282380&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Beige Net Beads Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Beige Net Beads Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/light-pink-net-beads-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1092,7 +1087,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/rani-pink-net-sequins-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1103,7 +1098,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/green-net-sequins-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1113,8 +1108,19 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/blue-silk-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Blue-Silk-Festival-Wear-Embroidery-Work-Lehenga-Choli-4251-12650_1.jpg?v=1778282530&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Blue Silk Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Blue Silk Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/green-silk-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1125,7 +1131,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/teal-green-net-sequins-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1136,7 +1142,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/pink-silk-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1147,7 +1153,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/purple-silk-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1158,7 +1164,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/wine-georgette-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1168,19 +1174,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/teal-blue-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Teal-Blue-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-MORNI-1073_1.jpg?v=1778282340&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Teal Blue Net Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Teal Blue Net Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/cream-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1190,8 +1185,19 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/teal-blue-net-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Teal-Blue-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-MORNI-1073_1.jpg?v=1778282340&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Teal Blue Net Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Teal Blue Net Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/rani-pink-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1201,19 +1207,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/beige-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-MORNI-1075_1.jpg?v=1778282329&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Beige Net Embroidery Festive Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Beige Net Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/blue-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1224,7 +1219,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/dusty-pink-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1234,19 +1229,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/sky-blue-net-thread-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Net-Occasional-Wear-Thread-Work-Lehenga-Choli-5126-Blue_1.jpg?v=1778282305&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Sky Blue Net Thread Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Sky Blue Net Thread Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/wine-net-embroidery-festive-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1256,8 +1240,30 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/beige-net-embroidery-festive-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-MORNI-1075_1.jpg?v=1778282329&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Beige Net Embroidery Festive Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Beige Net Embroidery Festive Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/sky-blue-net-thread-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Net-Occasional-Wear-Thread-Work-Lehenga-Choli-5126-Blue_1.jpg?v=1778282305&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Sky Blue Net Thread Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Sky Blue Net Thread Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/lavender-net-thread-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1268,7 +1274,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/pink-net-thread-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1279,7 +1285,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/yellow-net-thread-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
