@@ -10,24 +10,33 @@ interface CtaChip {
 
 interface FeaturedSlide {
   id: number;
+  category: string; // small overline label, e.g. "01 — LEHENGA"
   headline: string; // big bold campaign headline
   headlineLine2?: string;
   image: string;
-  imagePosition: string; // CSS object-position for crop control
-  textColor: 'light' | 'dark';
+  // Hex colors tuned to each product so the panel feels editorial, not generic
+  panelBg: string;
+  panelText: string;
+  imageBg: string; // soft cream/neutral that complements the product
+  ctaBorder: string; // border color for CTA chips on the colored panel
   ctas: CtaChip[];
 }
 
-// Editorial campaign slides — one for each top-priced new arrival
+// Editorial campaign slides — split-panel layout, uncropped product imagery
+// Colors picked to match each product so the design reads couture, not stock.
 const slides: FeaturedSlide[] = [
   {
     id: 1,
+    category: '01 — BRIDAL LEHENGA',
     headline: 'BRIDAL EDIT',
     headlineLine2: '2026',
     image:
       'https://images.wholesalesalwar.com/2026y/May/61379/Beige-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-TITLI-1067(1).jpg',
-    imagePosition: 'center 25%',
-    textColor: 'light',
+    // Deep mahogany / cocoa to complement the brown-gold lehenga
+    panelBg: '#3a2418',
+    panelText: '#f7ebd9',
+    imageBg: '#f5ead8',
+    ctaBorder: 'rgba(247,235,217,0.45)',
     ctas: [
       { label: 'LEHENGAS', link: '/lehengas' },
       { label: 'BRIDAL', link: '/lehengas?occasion=bridal' },
@@ -36,12 +45,16 @@ const slides: FeaturedSlide[] = [
   },
   {
     id: 2,
+    category: '02 — DESIGNER SAREE',
     headline: 'FESTIVE EDIT',
     headlineLine2: 'NEW ARRIVALS',
     image:
       'https://images.wholesalesalwar.com/2026y/April/61217/Green-Satin-Silk-Festival-Wear-Sequins-Work--Readymade-Saree-BELLE-26809(1).jpg',
-    imagePosition: 'center 20%',
-    textColor: 'light',
+    // Deep forest emerald to echo the green saree
+    panelBg: '#1f3a2c',
+    panelText: '#f1f5ec',
+    imageBg: '#f4efe4',
+    ctaBorder: 'rgba(241,245,236,0.45)',
     ctas: [
       { label: 'SAREES', link: '/sarees' },
       { label: 'DESIGNER', link: '/sarees?style=designer' },
@@ -50,12 +63,16 @@ const slides: FeaturedSlide[] = [
   },
   {
     id: 3,
+    category: '03 — ANARKALI SUIT',
     headline: 'ANARKALI',
     headlineLine2: 'COLLECTION',
     image:
       'https://images.wholesalesalwar.com/2026y/May/61270/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001(1).jpg',
-    imagePosition: 'center 25%',
-    textColor: 'light',
+    // Twilight navy to lift the sky-blue anarkali
+    panelBg: '#1d2a44',
+    panelText: '#eef2fb',
+    imageBg: '#eef3f8',
+    ctaBorder: 'rgba(238,242,251,0.45)',
     ctas: [
       { label: 'SALWAR SUITS', link: '/suits' },
       { label: 'ANARKALI', link: '/suits?style=anarkali' },
@@ -112,19 +129,18 @@ const NewArrivalsBanner = () => {
   };
 
   const slide = slides[index];
-  const isLight = slide.textColor === 'light';
 
   return (
     <section
       aria-roledescription="carousel"
       aria-label="Featured collections"
-      className="relative w-full overflow-hidden bg-neutral-900"
+      className="relative w-full overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <div className="relative h-[420px] sm:h-[500px] md:h-[560px] lg:h-[620px] w-full">
+      <div className="relative w-full">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
@@ -132,74 +148,93 @@ const NewArrivalsBanner = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
+            className="grid grid-cols-1 lg:grid-cols-2"
           >
-            {/* Full-bleed image */}
-            <img
-              src={slide.image}
-              alt={slide.headline}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{ objectPosition: slide.imagePosition }}
-            />
-
-            {/* Subtle vignette for headline legibility — light only on left side */}
+            {/* TEXT PANEL — editorial campaign copy */}
             <div
-              className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent"
-              aria-hidden="true"
-            />
-            {/* Subtle bottom darken for CTA chips */}
-            <div
-              className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent"
-              aria-hidden="true"
-            />
+              className="order-2 flex items-center px-6 py-12 sm:px-10 sm:py-16 lg:order-1 lg:px-16 lg:py-20"
+              style={{ backgroundColor: slide.panelBg, color: slide.panelText }}
+            >
+              <div className="w-full max-w-xl">
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                  className="text-[11px] font-medium uppercase tracking-[0.32em] opacity-70"
+                >
+                  {slide.category}
+                </motion.p>
 
-            {/* Content */}
-            <div className="relative z-10 h-full">
-              <div className="container mx-auto h-full px-4 sm:px-6 lg:px-12">
-                <div className="flex h-full flex-col justify-center">
-                  <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15, duration: 0.7 }}
-                    className={`font-serif leading-[0.95] tracking-tight ${
-                      isLight ? 'text-white' : 'text-neutral-900'
-                    }`}
-                    style={{
-                      textShadow: isLight ? '0 2px 24px rgba(0,0,0,0.35)' : 'none',
-                    }}
-                  >
-                    <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-                      {slide.headline}
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.18, duration: 0.7 }}
+                  className="mt-5 font-serif leading-[0.95] tracking-tight"
+                >
+                  <span className="block text-5xl sm:text-6xl md:text-7xl">
+                    {slide.headline}
+                  </span>
+                  {slide.headlineLine2 && (
+                    <span className="mt-2 block text-3xl font-light italic opacity-90 sm:text-4xl md:text-5xl">
+                      {slide.headlineLine2}
                     </span>
-                    {slide.headlineLine2 && (
-                      <span className="mt-1 block text-4xl font-light italic sm:text-5xl md:text-6xl lg:text-7xl">
-                        {slide.headlineLine2}
-                      </span>
-                    )}
-                  </motion.h2>
+                  )}
+                </motion.h2>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.7 }}
-                    className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4"
-                  >
-                    {slide.ctas.map((cta) => (
-                      <Link
-                        key={cta.label}
-                        to={cta.link}
-                        className={`inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] backdrop-blur-sm transition-all hover:scale-[1.03] sm:px-6 sm:py-3 sm:text-sm ${
-                          isLight
-                            ? 'border-white/40 bg-white/15 text-white hover:bg-white hover:text-neutral-900'
-                            : 'border-neutral-900/30 bg-white/70 text-neutral-900 hover:bg-neutral-900 hover:text-white'
-                        }`}
-                      >
-                        {cta.label}
-                      </Link>
-                    ))}
-                  </motion.div>
-                </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.32, duration: 0.7 }}
+                  className="mt-8 h-px w-16"
+                  style={{ backgroundColor: slide.panelText, opacity: 0.4 }}
+                />
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.42, duration: 0.7 }}
+                  className="mt-8 flex flex-wrap items-center gap-3"
+                >
+                  {slide.ctas.map((cta) => (
+                    <Link
+                      key={cta.label}
+                      to={cta.link}
+                      className="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-all hover:scale-[1.03] sm:text-xs"
+                      style={{
+                        borderColor: slide.ctaBorder,
+                        color: slide.panelText,
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = slide.panelText;
+                        e.currentTarget.style.color = slide.panelBg;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = 'transparent';
+                        e.currentTarget.style.color = slide.panelText;
+                      }}
+                    >
+                      {cta.label}
+                    </Link>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+
+            {/* IMAGE PANEL — object-contain, no cropping ever */}
+            <div
+              className="order-1 flex items-center justify-center lg:order-2"
+              style={{ backgroundColor: slide.imageBg }}
+            >
+              <div className="flex h-[360px] w-full items-center justify-center px-4 py-6 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
+                <motion.img
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  src={slide.image}
+                  alt={slide.headline}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  className="max-h-full max-w-full object-contain"
+                />
               </div>
             </div>
           </motion.div>
@@ -210,7 +245,7 @@ const NewArrivalsBanner = () => {
           type="button"
           onClick={prev}
           aria-label="Previous slide"
-          className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 p-2.5 text-white backdrop-blur-sm transition hover:bg-black/50 sm:flex md:left-5 md:p-3"
+          className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-neutral-900/15 bg-white/85 p-2.5 text-neutral-900 backdrop-blur-sm transition hover:bg-white sm:flex md:left-5 md:p-3"
         >
           <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
         </button>
@@ -218,13 +253,13 @@ const NewArrivalsBanner = () => {
           type="button"
           onClick={next}
           aria-label="Next slide"
-          className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/30 p-2.5 text-white backdrop-blur-sm transition hover:bg-black/50 sm:flex md:right-5 md:p-3"
+          className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-neutral-900/15 bg-white/85 p-2.5 text-neutral-900 backdrop-blur-sm transition hover:bg-white sm:flex md:right-5 md:p-3"
         >
           <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
         </button>
 
         {/* Dots */}
-        <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5">
+        <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5 lg:bottom-6">
           {slides.map((s, i) => (
             <button
               key={s.id}
@@ -233,7 +268,9 @@ const NewArrivalsBanner = () => {
               aria-label={`Go to slide ${i + 1}`}
               aria-current={i === index ? 'true' : 'false'}
               className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === index ? 'w-10 bg-white' : 'w-2.5 bg-white/45 hover:bg-white/70'
+                i === index
+                  ? 'w-10 bg-neutral-900'
+                  : 'w-2.5 bg-neutral-900/30 hover:bg-neutral-900/60'
               }`}
             />
           ))}
