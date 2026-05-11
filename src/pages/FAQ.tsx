@@ -190,6 +190,66 @@ const FAQ = () => {
         },
       ],
     },
+    {
+      icon: Sparkles,
+      title: 'Indian Ethnic Wear & Fabric',
+      faqs: [
+        {
+          question: 'What is the difference between Banarasi silk and Kanchipuram silk sarees?',
+          answer: 'Banarasi silk sarees originate from Varanasi and are known for their intricate Mughal-inspired motifs, heavy zari work, and brocade weaving. Kanchipuram (Kanjivaram) silk sarees come from Tamil Nadu and feature bold, temple-inspired designs with thick silk and contrast borders. Both are premium choices for weddings — Banarasi for North Indian ceremonies and Kanchipuram for South Indian traditions. Both are available in our saree collection.',
+        },
+        {
+          question: 'What does semi-stitched mean for lehengas and suits?',
+          answer: 'Semi-stitched means the garment is partially stitched with standard sizing (usually at the waist or bust) but allows room for further customization. You can have it tailored to your exact measurements by a local tailor or use our custom stitching service. This offers a balance between the convenience of readymade and the fit of fully custom.',
+        },
+        {
+          question: 'How do I choose the right fabric for my Indian wedding outfit?',
+          answer: 'For winter weddings, choose velvet, raw silk, or Banarasi silk for warmth and richness. For summer weddings, opt for georgette, chiffon, organza, or lightweight cotton silk for comfort. For versatile year-round options, crepe and satin work beautifully. Our fabric guide blog post covers this in detail.',
+        },
+        {
+          question: 'Are your products authentic Indian ethnic wear?',
+          answer: 'Yes. All our products are sourced directly from India\'s renowned textile hubs including Surat, Varanasi, Jaipur, and Lucknow. We work with established manufacturers and artisan communities. Every piece undergoes a quality inspection at our India facility before shipping to verify authenticity, stitching quality, and embellishment security.',
+        },
+        {
+          question: 'What is zardozi embroidery?',
+          answer: 'Zardozi is a traditional Indian embroidery technique that uses metallic threads (usually gold or silver), beads, pearls, and precious stones to create elaborate, raised designs on fabric. It originated in Persia and was popularized during the Mughal era. Zardozi work is commonly found on bridal lehengas, wedding sarees, and sherwanis. It adds significant value and grandeur to any garment.',
+        },
+        {
+          question: 'Do you sell unstitched fabric or only ready-made outfits?',
+          answer: 'We offer both. Many of our suits and lehengas come as semi-stitched or unstitched fabric sets, allowing you to have them custom-tailored to your exact measurements. Product listings clearly state whether an item is readymade, semi-stitched, or unstitched. You can also opt for our custom tailoring service during checkout for select styles.',
+        },
+      ],
+    },
+    {
+      icon: Truck,
+      title: 'Shopping from USA, Canada & Australia',
+      faqs: [
+        {
+          question: 'Can I buy Indian ethnic wear online from the USA?',
+          answer: 'Yes! LuxeMia specializes in shipping authentic Indian ethnic wear directly to customers in the USA. We offer free shipping on orders over $350 and a flat $25 shipping fee on orders under $350. All shipments are sent via DHL Express, USPS, or UPS with full tracking and insurance. Typical delivery is 6-15 business days for readymade items.',
+        },
+        {
+          question: 'Will I have to pay customs duties on my order in the USA?',
+          answer: 'Yes, import duties and local taxes are the responsibility of the customer and are not included in our prices. For US customers, please note that goods from India may be subject to additional tariffs (currently 50% on certain textile categories). Customs fees are collected by your country\'s customs authority upon delivery. Check with your local customs office for current rates.',
+        },
+        {
+          question: 'Do you ship to Canada and Australia?',
+          answer: 'Yes! We ship to Canada and Australia with the same shipping rates: free on orders over $350 USD, flat $25 USD on orders under $350. Canadian and Australian customers may also be responsible for import duties and local taxes (GST/HST/PST in Canada, GST in Australia). Delivery times are similar: 6-15 business days for readymade items.',
+        },
+        {
+          question: 'How do Indian clothing sizes compare to US sizes?',
+          answer: 'Indian ethnic wear sizing differs from Western sizing. Our Size Guide page provides detailed measurement charts in inches that map to our S, M, L, XL, and XXL sizes. We strongly recommend measuring yourself and comparing to our charts rather than guessing. When in doubt, size up — it\'s easier to take in a garment than to let it out. Custom tailoring is also available for a perfect fit.',
+        },
+        {
+          question: 'What if the color looks different in person than on screen?',
+          answer: 'We strive for accurate color representation in our product photography, but slight variations can occur due to screen settings, lighting conditions, and the nature of handcrafted textiles. Many Indian fabrics also appear different in natural vs. artificial light. We recommend reviewing all available product images and reading the fabric description carefully before purchasing.',
+        },
+        {
+          question: 'How long does delivery take to the USA, Canada, or Australia?',
+          answer: 'Readymade items are dispatched within 3-5 business days, and custom/alteration orders within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping. Total estimated delivery: 6-15 business days (readymade) or 8-17 business days (custom). All shipments include full tracking and insurance.',
+        },
+      ],
+    },
   ];
 
   // Generate FAQ Schema for structured data

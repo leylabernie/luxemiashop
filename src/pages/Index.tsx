@@ -21,7 +21,7 @@ import CustomerStories from '@/components/home/CustomerStories';
 const homepageFaqs = [
   {
     question: "Do you offer international shipping for Indian ethnic wear?",
-    answer: "Yes, LuxeMia offers free worldwide shipping, including to the USA, UK, Canada, and many other countries. You can find more details on our Shipping Policy page."
+    answer: "Yes, LuxeMia ships to the USA, Canada, and Australia. Free shipping on orders over $350 USD, and a flat rate of $25 USD for orders under $350. All shipments include full tracking and insurance. You can find more details on our Shipping Policy page."
   },
   {
     question: "What is your return policy?",
@@ -57,7 +57,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Indian ethnic wear store specializing in bridal lehengas, sarees, anarkali suits, and wedding collections at affordable prices. Worldwide shipping available.",
+    "description": "Indian ethnic wear store specializing in bridal lehengas, sarees, anarkali suits, and wedding collections at affordable prices. Free shipping on orders over $350 to the USA, Canada, and Australia.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -91,8 +91,8 @@ const Index = () => {
       }
     ],
     "priceRange": "$$",
-    "currenciesAccepted": "USD, GBP, CAD",
-    "paymentAccepted": "Credit Card, Debit Card, UPI, Net Banking, PayPal",
+    "currenciesAccepted": "USD, CAD, AUD",
+    "paymentAccepted": "Credit Card, Debit Card, PayPal, Apple Pay, Google Pay",
     "sameAs": [
       "https://www.instagram.com/luxemiashop",
       "https://www.facebook.com/luxemiashop",
@@ -131,7 +131,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="LuxeMia | Indian Ethnic Wear — Sarees & Lehengas"
-        description="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping USA & UK. Affordable prices."
+        description="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
@@ -151,7 +151,7 @@ const Index = () => {
               <span className="font-medium">Free shipping on orders over $350</span>
             </span>
             <span className="hidden sm:inline text-background/40">·</span>
-            <span className="hidden sm:inline text-background/80">$25 flat rate per order worldwide</span>
+            <span className="hidden sm:inline text-background/80">$25 flat rate per order to USA, Canada & Australia</span>
             <span className="hidden sm:inline text-background/40">·</span>
             <Link to="/shipping" className="hidden sm:inline underline underline-offset-2 hover:text-background/80 transition-colors">
               Delivery info

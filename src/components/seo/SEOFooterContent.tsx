@@ -36,7 +36,7 @@ const SEOFooterContent = () => {
                   Find your dream <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga online</Link> in our extensive collection. 
                   From <strong className="text-foreground">traditional red bridal lehengas</strong> to <strong className="text-foreground">minimalist pastel lehengas</strong>, we offer 
                   <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> lehenga choli</Link> sets 
-                  with beautiful embroidery and zardozi work. Ideal for <Link to="/indian-ethnic-wear-uk" className="text-foreground hover:text-primary transition-colors underline">UK weddings</Link> and 
+                  with beautiful embroidery and zardozi work. Ideal for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">weddings in the USA</Link> and
                   <Link to="/indian-ethnic-wear-canada" className="text-foreground hover:text-primary transition-colors underline">Canadian celebrations</Link>.
                 </p>
               </div>
@@ -113,7 +113,7 @@ const SEOFooterContent = () => {
               <p>
                 LuxeMia is the best Indian ethnic wear store online for affordable, stylish ethnic clothing. 
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-                We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to USA, UK, Canada, and 100+ countries, 
+We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to the USA, Canada, and Australia, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
                 why thousands of customers trust LuxeMia for their Indian ethnic wear needs.

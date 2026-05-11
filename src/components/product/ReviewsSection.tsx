@@ -1,45 +1,84 @@
-import { useState } from 'react';
-import { Star, MessageCircle, Shield, Truck, Lock, CreditCard, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Star, MessageCircle, Shield, Truck, Lock, CreditCard, CheckCircle, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
-// AGGREGATE RATING SCHEMA — Uncomment and populate once Google Customer Reviews
-// provides verified rating data. DO NOT use fabricated values.
-// const aggregateRatingSchema = {
-//   '@type': 'AggregateRating',
-//   ratingValue: 'X.X',  // From Google Customer Reviews
-//   reviewCount: 'X',     // From Google Customer Reviews
-//   bestRating: '5',
-//   worstRating: '1',
-// };
+interface ReviewsSectionProps {
+  productName?: string;
+  productUrl?: string;
+  aggregateRating?: {
+    ratingValue: string;
+    reviewCount: string;
+    bestRating?: string;
+  };
+  reviews?: Array<{
+    author: string;
+    datePublished: string;
+    reviewBody: string;
+    ratingValue: string;
+  }>;
+}
 
-// REVIEW SCHEMA TEMPLATE — Uncomment and populate once real reviews are
-// available from Google Customer Reviews or another verified platform.
-// DO NOT fabricate review content.
-// const reviewSchemaTemplate = {
-//   '@type': 'Review',
-//   author: {
-//     '@type': 'Person',
-//     name: 'Customer Name', // Real customer name from verified review
-//   },
-//   datePublished: 'YYYY-MM-DD', // Date the review was published
-//   reviewBody: 'Customer review text here', // Actual review text from verified platform
-//   reviewRating: {
-//     '@type': 'Rating',
-//     ratingValue: 'X', // Actual rating from verified review
-//     bestRating: '5',
-//     worstRating: '1',
-//   },
-//   publisher: {
-//     '@type': 'Organization',
-//     name: 'Google Customer Reviews',
-//   },
-// };
+// AGGREGATE RATING SCHEMA — This schema is only rendered when real verified
+// data is passed via the `aggregateRating` prop. DO NOT fabricate values.
+// Google Merchant Center penalizes stores with unverifiable review counts
+// or fabricated testimonials that cannot be verified by an independent
+// review platform (Google Customer Reviews, Trustpilot, etc.).
+// Real reviews must come from an accredited third party.
 
-const ReviewsSection = () => {
+const ReviewsSection = ({
+  productName,
+  productUrl,
+  aggregateRating,
+  reviews,
+}: ReviewsSectionProps) => {
   const [selectedRating, setSelectedRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
+
+  // Load Google Customer Reviews badge script
+  useEffect(() => {
+    if (!document.getElementById('gcr-badge-script')) {
+      const script = document.createElement('script');
+      script.id = 'gcr-badge-script';
+      script.src = 'https://apis.google.com/js/platform.js?onload=renderBadge';
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+  }, []);
+
+  // Only output review schema when real verified data is available
+  const reviewSchema = aggregateRating ? {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: productName,
+    url: productUrl,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: aggregateRating.ratingValue,
+      reviewCount: aggregateRating.reviewCount,
+      bestRating: aggregateRating.bestRating || '5',
+    },
+    ...(reviews && reviews.length > 0 && {
+      review: reviews.map(r => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: r.author },
+        datePublished: r.datePublished,
+        reviewBody: r.reviewBody,
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: r.ratingValue,
+          bestRating: '5',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Google Customer Reviews',
+        },
+      }))
+    })
+  } : null;
 
   // NOTE: We do NOT add fabricated AggregateRating schema or fake review
   // testimonials here. Google Merchant Center penalizes stores with
@@ -51,6 +90,15 @@ const ReviewsSection = () => {
 
   return (
     <section className="py-12 border-t border-border">
+      {/* AggregateRating + Review Schema — only rendered with real verified data */}
+      {reviewSchema && (
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(reviewSchema)}
+          </script>
+        </Helmet>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h2 className="text-2xl font-serif mb-2">Customer Reviews</h2>
@@ -91,16 +139,13 @@ const ReviewsSection = () => {
               </p>
             </div>
           </div>
-          {/* Google Customer Reviews Badge Placeholder
-              To activate, add this script to your HTML <head>:
-              <script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
-              Then uncomment the badge div below. */}
-          {/* <div
+          {/* Google Customer Reviews Badge — activated with merchant ID */}
+          <div
             id="gcr-badge"
             data-merchant-id="5773333098"
             data-badge-class="gcr__badge"
             data-badge-position="INLINE"
-          ></div> */}
+          ></div>
           <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
             <CheckCircle className="w-4 h-4 text-green-600" />
             <span className="text-xs font-medium text-muted-foreground">
@@ -109,6 +154,25 @@ const ReviewsSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Reviews Coming Soon — shown when no verified review data is available yet */}
+      {!aggregateRating && (
+        <div className="mb-8 p-6 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-lg text-center">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            <h3 className="text-lg font-serif text-amber-700 dark:text-amber-300">Reviews Coming Soon</h3>
+          </div>
+          <p className="text-sm text-amber-700/80 dark:text-amber-300/80 max-w-lg mx-auto">
+            We're a growing store, and verified customer reviews are on their way! 
+            Reviews are collected automatically through <strong>Google Customer Reviews</strong> after 
+            purchase — this means every review you see will be from a real, verified buyer. 
+            No fake reviews, ever.
+          </p>
+          <p className="text-xs text-amber-600/60 dark:text-amber-400/60 mt-3">
+            After your purchase, you'll receive a survey invitation from Google to share your experience.
+          </p>
+        </div>
+      )}
 
       {/* Trust Badges - Critical for GMC Misrepresentation compliance */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">

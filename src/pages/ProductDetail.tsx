@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
@@ -14,6 +14,7 @@ import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { getLocalProductByHandle } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
+import { enrichProductDescription, generateMetaDescription } from '@/lib/productDescriptionEnrichment';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
@@ -124,6 +125,31 @@ const ProductDetail = () => {
   const categoryUrl = getCategoryUrl(product?.productType);
   const categoryName = product?.productType || 'Collections';
 
+  // Enrich thin product descriptions with SEO-rich content
+  const productColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];
+  const productMaterial = product?.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0];
+
+  const enrichedDescription = useMemo(() => {
+    if (!product) return '';
+    return enrichProductDescription(
+      product.description || '',
+      product.productType || '',
+      product.title,
+      productMaterial,
+      productColor,
+    );
+  }, [product, productMaterial, productColor]);
+
+  const seoMetaDescription = useMemo(() => {
+    if (!product) return '';
+    return generateMetaDescription(
+      product.description || '',
+      product.productType || '',
+      product.title,
+      product?.priceRange?.minVariantPrice?.amount,
+    );
+  }, [product]);
+
   // Product-specific FAQs for rich snippets
   const productFaqs = product ? [
     {
@@ -149,13 +175,13 @@ const ProductDetail = () => {
       {product ? (
         <SEOHead
           title={`${product.title} | ${categoryName} | LuxeMia`}
-          description={(() => {
+          description={seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
             }
             const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
-            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Worldwide shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
+            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
           })()}
           type="product"
           image={product.images.edges[0]?.node.url}
@@ -164,7 +190,7 @@ const ProductDetail = () => {
             price: product.priceRange.minVariantPrice.amount,
             currency: product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
-            description: product.description || '',
+            description: enrichedDescription || product.description || '',
             availability: 'InStock',
             sku: product.id,
             originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
@@ -173,8 +199,8 @@ const ProductDetail = () => {
               const v = ((product as any).vendor || '').trim();
               return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
             })(),
-            color: (product as any).options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0],
-            material: product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0],
+            color: productColor,
+            material: productMaterial,
             sizes: product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size')?.values || [],
             googleProductCategory: getGoogleProductCategory(product.productType, product.title),
           }}
@@ -242,14 +268,17 @@ const ProductDetail = () => {
               {/* Product Tabs */}
               <div className="mb-16">
                 <ProductTabs 
-                  description={product.description}
+                  description={enrichedDescription || product.description}
                   productType={product.productType}
                   isStitchable={isStitchableProductType(product.productType)}
                 />
               </div>
 
               {/* Customer Reviews */}
-              <ReviewsSection />
+              <ReviewsSection
+                productName={product.title}
+                productUrl={`https://luxemia.shop/product/${product.handle}`}
+              />
 
               {/* WhatsApp Stylist CTA */}
               <div className="mb-16 p-6 bg-secondary/30 border border-border rounded-lg text-center">
