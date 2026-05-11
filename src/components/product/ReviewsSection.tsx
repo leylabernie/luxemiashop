@@ -1,7 +1,46 @@
+import { useState } from 'react';
 import { Star, MessageCircle, Shield, Truck, Lock, CreditCard, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+
+// AGGREGATE RATING SCHEMA — Uncomment and populate once Google Customer Reviews
+// provides verified rating data. DO NOT use fabricated values.
+// const aggregateRatingSchema = {
+//   '@type': 'AggregateRating',
+//   ratingValue: 'X.X',  // From Google Customer Reviews
+//   reviewCount: 'X',     // From Google Customer Reviews
+//   bestRating: '5',
+//   worstRating: '1',
+// };
+
+// REVIEW SCHEMA TEMPLATE — Uncomment and populate once real reviews are
+// available from Google Customer Reviews or another verified platform.
+// DO NOT fabricate review content.
+// const reviewSchemaTemplate = {
+//   '@type': 'Review',
+//   author: {
+//     '@type': 'Person',
+//     name: 'Customer Name', // Real customer name from verified review
+//   },
+//   datePublished: 'YYYY-MM-DD', // Date the review was published
+//   reviewBody: 'Customer review text here', // Actual review text from verified platform
+//   reviewRating: {
+//     '@type': 'Rating',
+//     ratingValue: 'X', // Actual rating from verified review
+//     bestRating: '5',
+//     worstRating: '1',
+//   },
+//   publisher: {
+//     '@type': 'Organization',
+//     name: 'Google Customer Reviews',
+//   },
+// };
 
 const ReviewsSection = () => {
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [reviewText, setReviewText] = useState('');
+
   // NOTE: We do NOT add fabricated AggregateRating schema or fake review
   // testimonials here. Google Merchant Center penalizes stores with
   // unverifiable review counts or fabricated testimonials that cannot be
@@ -23,15 +62,56 @@ const ReviewsSection = () => {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => window.location.href = 'mailto:hello@luxemia.shop?subject=Product Review'}
+          onClick={() => {
+            const reviewSection = document.getElementById('write-review');
+            reviewSection?.scrollIntoView({ behavior: 'smooth' });
+          }}
         >
           <MessageCircle className="h-4 w-4 mr-2" />
           Write a Review
         </Button>
       </div>
 
+      {/* Google Customer Reviews Badge */}
+      <div className="mb-8 p-6 bg-card border border-border rounded-lg">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-semibold">Google Customer Reviews</p>
+              <p className="text-xs text-muted-foreground">
+                Reviews collected through Google's verified post-purchase program
+              </p>
+            </div>
+          </div>
+          {/* Google Customer Reviews Badge Placeholder
+              To activate, add this script to your HTML <head>:
+              <script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
+              Then uncomment the badge div below. */}
+          {/* <div
+            id="gcr-badge"
+            data-merchant-id="5773333098"
+            data-badge-class="gcr__badge"
+            data-badge-position="INLINE"
+          ></div> */}
+          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
+            <CheckCircle className="w-4 h-4 text-green-600" />
+            <span className="text-xs font-medium text-muted-foreground">
+              Merchant ID: 5773333098
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* Trust Badges - Critical for GMC Misrepresentation compliance */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-800 rounded-lg">
           <Shield className="h-6 w-6 text-green-600 flex-shrink-0" />
           <div>
@@ -60,31 +140,94 @@ const ReviewsSection = () => {
             <p className="text-xs text-muted-foreground">Secure payments</p>
           </div>
         </div>
+        <div className="flex items-center gap-3 p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <CheckCircle className="h-6 w-6 text-blue-600 flex-shrink-0" />
+          <div>
+            <p className="text-xs font-semibold text-blue-700 dark:text-blue-400">Google Verified Reviews</p>
+            <p className="text-xs text-muted-foreground">Post-purchase verified</p>
+          </div>
+        </div>
       </div>
 
-      {/* Review CTA — honest, no fake testimonials */}
-      <div className="bg-secondary/30 rounded-lg p-8 text-center border border-border">
-        <div className="flex justify-center gap-1 mb-4">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <Star
-              key={star}
-              className="h-6 w-6 text-border"
-            />
-          ))}
-        </div>
-        <h3 className="font-serif text-lg text-foreground mb-2">Share Your Experience</h3>
-        <p className="text-muted-foreground max-w-md mx-auto">
+      {/* Write a Review Section */}
+      <div id="write-review" className="bg-secondary/30 rounded-lg p-6 sm:p-8 border border-border">
+        <h3 className="font-serif text-lg text-foreground mb-1">Share Your Experience</h3>
+        <p className="text-sm text-muted-foreground mb-6">
           We'd love to hear about your experience with LuxeMia. Your honest feedback helps other shoppers
-          and helps us improve. Share your thoughts after receiving your order!
+          and helps us improve.
         </p>
-        <Button
-          variant="default"
-          size="sm"
-          className="mt-4"
-          onClick={() => window.location.href = 'mailto:hello@luxemia.shop?subject=Product Review'}
-        >
-          Share Your Experience
-        </Button>
+
+        {/* Star Rating Selector (visual only — for future integration) */}
+        <div className="mb-4">
+          <label className="text-sm font-medium text-foreground block mb-2">Your Rating</label>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => setSelectedRating(star)}
+                onMouseEnter={() => setHoverRating(star)}
+                onMouseLeave={() => setHoverRating(0)}
+                className="p-0.5 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary rounded"
+                aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
+              >
+                <Star
+                  className={`h-7 w-7 transition-colors ${
+                    (hoverRating || selectedRating) >= star
+                      ? 'text-yellow-400 fill-yellow-400'
+                      : 'text-border'
+                  }`}
+                />
+              </button>
+            ))}
+            {selectedRating > 0 && (
+              <span className="ml-2 text-sm text-muted-foreground self-center">
+                {selectedRating} of 5
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Review Text Area */}
+        <div className="mb-4">
+          <label className="text-sm font-medium text-foreground block mb-2">Your Review</label>
+          <Textarea
+            placeholder="Tell us about your experience with your LuxeMia purchase..."
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+            rows={4}
+            className="resize-none"
+          />
+        </div>
+
+        {/* Verified program note */}
+        <div className="flex items-start gap-2 mb-6 p-3 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <CheckCircle className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-muted-foreground">
+            Reviews are collected through our verified post-purchase program. 
+            This form is for feedback purposes — to submit an official verified review, 
+            please respond to the Google Customer Reviews survey sent after your purchase.
+          </p>
+        </div>
+
+        {/* Submit / Email fallback */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button
+            variant="default"
+            size="sm"
+            onClick={() => {
+              const subject = encodeURIComponent('Product Review' + (selectedRating > 0 ? ` — ${selectedRating}/5 Stars` : ''));
+              const body = encodeURIComponent(reviewText || '');
+              window.location.href = `mailto:hello@luxemia.shop?subject=${subject}&body=${body}`;
+            }}
+          >
+            <MessageCircle className="h-4 w-4 mr-2" />
+            Share Your Experience
+          </Button>
+          <p className="text-xs text-muted-foreground self-center">
+            Your review will be sent to our team via email.
+          </p>
+        </div>
       </div>
     </section>
   );
