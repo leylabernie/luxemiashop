@@ -1,10 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { blogPosts } from '@/data/blogPosts';
+import type { BlogPost } from '@/data/blogPosts';
 import { Calendar, Clock, User, ArrowRight, BookOpen, Sparkles, ChevronRight, Home, Layers, Compass, GraduationCap, Palette, Globe } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -109,6 +109,16 @@ const popularTopics = [
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeCluster, setActiveCluster] = useState<string | null>(null);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    import('@/data/blogPosts').then(m => {
+      setBlogPosts(m.blogPosts);
+      setIsLoading(false);
+    });
+  }, []);
+
   const featuredPost = blogPosts[0];
   const categories = [...new Set(blogPosts.map(post => post.category))];
 
@@ -232,6 +242,12 @@ const Blog = () => {
       <Header />
 
       <main className="pt-[88px] lg:pt-[130px]">
+        {isLoading ? (
+          <div className="flex items-center justify-center py-32">
+            <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+          </div>
+        ) : (
+        <>
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className="bg-muted/30 py-3 border-b border-border">
           <div className="container mx-auto px-4">
@@ -582,6 +598,8 @@ const Blog = () => {
             </Link>
           </div>
         </section>
+        </>
+        )}
       </main>
 
       <Footer />

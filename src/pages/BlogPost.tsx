@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { getPostBySlug, getRelatedPosts } from '@/data/blogPosts';
+import type { BlogPost as BlogPostType } from '@/data/blogPosts';
 import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Facebook, Twitter, BookOpen, List, ChevronRight, RefreshCw } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -74,9 +74,24 @@ const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : undefined;
+  const [post, setPost] = useState<BlogPostType | undefined>(undefined);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
+  const [isDataLoading, setIsDataLoading] = useState(true);
   const [readingProgress, setReadingProgress] = useState(0);
   const [tocOpen, setTocOpen] = useState(true);
+
+  useEffect(() => {
+    import('@/data/blogPosts').then(m => {
+      if (slug) {
+        const found = m.getPostBySlug(slug);
+        setPost(found);
+        if (found) {
+          setRelatedPosts(m.getRelatedPosts(found));
+        }
+      }
+      setIsDataLoading(false);
+    });
+  }, [slug]);
 
   const handleScroll = useCallback(() => {
     const articleEl = document.getElementById('article-content');
@@ -93,11 +108,21 @@ const BlogPost = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
+  if (isDataLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="flex items-center justify-center py-32">
+          <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
-
-  const relatedPosts = getRelatedPosts(post);
 
   // Sanitize blog HTML content to prevent XSS attacks.
   // Even though our blog content is authored internally, this protects against

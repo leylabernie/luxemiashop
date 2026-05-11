@@ -7,7 +7,7 @@ import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
-import { jewelryProducts } from '@/data/jewelryProducts';
+import type { JewelryProduct } from '@/data/jewelryProducts';
 
 interface CompleteTheLookProps {
   currentProductId: string;
@@ -21,7 +21,7 @@ const isJewelleryProduct = (productType: string): boolean => {
 };
 
 // Convert a jewelry product to ShopifyProduct format for display
-const convertJewelryToShopify = (product: typeof jewelryProducts[0]): ShopifyProduct => ({
+const convertJewelryToShopify = (product: JewelryProduct): ShopifyProduct => ({
   node: {
     id: product.id,
     title: product.name,
@@ -68,8 +68,14 @@ const convertJewelryToShopify = (product: typeof jewelryProducts[0]): ShopifyPro
 export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLookProps) => {
   const addItem = useCartStore((state) => state.addItem);
   const [shopifyRecs, setShopifyRecs] = useState<ShopifyProduct[]>([]);
+  const [jewelryProducts, setJewelryProducts] = useState<JewelryProduct[]>([]);
 
   const isJewellery = productType ? isJewelleryProduct(productType) : false;
+
+  // Lazy-load jewelry data
+  useEffect(() => {
+    import('@/data/jewelryProducts').then(m => setJewelryProducts(m.jewelryProducts));
+  }, []);
 
   // Fetch complementary products from Shopify
   useEffect(() => {

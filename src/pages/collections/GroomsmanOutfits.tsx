@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ProductGrid } from '@/components/collections/ProductGrid';
 import { ProductFilters } from '@/components/collections/ProductFilters';
-import { menswearProducts } from '@/data/menswearProducts';
+import type { MenswearProduct } from '@/data/menswearProducts';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Users, Sparkles, ShieldCheck } from 'lucide-react';
 
@@ -55,6 +55,11 @@ const convertToShopifyFormat = (product: any) => ({
 const GroomsmanOutfits = () => {
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
+  const [menswearProducts, setMenswearProducts] = useState<MenswearProduct[]>([]);
+
+  useEffect(() => {
+    import('@/data/menswearProducts').then(m => setMenswearProducts(m.menswearProducts));
+  }, []);
 
   // Filter for groomsman-appropriate outfits (kurta pajamas, jodhpuri suits, etc.)
   const groomsmanProducts = useMemo(() => {

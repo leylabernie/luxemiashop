@@ -1,13 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ProductGrid } from '@/components/collections/ProductGrid';
 import { ProductFilters } from '@/components/collections/ProductFilters';
-import { localProducts } from '@/data/localProducts';
-import { sareeProducts } from '@/data/sareeProducts';
-import { suitProducts } from '@/data/suitProducts';
+import type { LocalProduct } from '@/data/localProducts';
+import type { SareeProduct } from '@/data/sareeProducts';
+import type { SuitProduct } from '@/data/suitProducts';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Users, Sparkles, Heart } from 'lucide-react';
 
@@ -57,6 +57,21 @@ const convertToShopifyFormat = (product: any) => ({
 const BridesmaidDresses = () => {
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
+  const [localProducts, setLocalProducts] = useState<LocalProduct[]>([]);
+  const [sareeProducts, setSareeProducts] = useState<SareeProduct[]>([]);
+  const [suitProducts, setSuitProducts] = useState<SuitProduct[]>([]);
+
+  useEffect(() => {
+    Promise.all([
+      import('@/data/localProducts').then(m => m.localProducts),
+      import('@/data/sareeProducts').then(m => m.sareeProducts),
+      import('@/data/suitProducts').then(m => m.suitProducts),
+    ]).then(([locals, sarees, suits]) => {
+      setLocalProducts(locals);
+      setSareeProducts(sarees);
+      setSuitProducts(suits);
+    });
+  }, []);
 
   // Filter for bridesmaid-appropriate outfits (lighter lehengas, sarees, suits)
   const bridesmaidProducts = useMemo(() => {

@@ -877,16 +877,20 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
   let ogType = 'website';
   let ogImage = 'https://luxemia.shop/og-image.jpg';
 
-  // Check if it's a product page — fetch data from Shopify for accurate meta
+  // For product pages: DO NOT call Shopify API for regular users.
+  // The React app handles meta tags client-side via react-helmet-async.
+  // Calling Shopify here adds 200-800ms TTFB for every product page hit.
+  // Bots get full SSR HTML via the bot path above; regular users get
+  // correct meta tags once React hydrates. Social media scrapers that
+  // don't execute JS are caught by the isBot() check above.
   if (pathname.startsWith('/product/')) {
     const handle = pathname.replace('/product/', '');
-    const product = await fetchProductByHandle(handle);
-    if (product) {
-      title = `${product.title} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
-      description = (product.description || `Shop ${product.title} at LuxeMia.`).slice(0, 160);
-      ogType = 'product';
-      ogImage = forceJpegForGmc(product.images.edges[0]?.node.url || ogImage);
-    }
+    // Use a generic product meta tag — React will replace with real data on hydration
+    const productName = handle.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    title = `${productName} | Indian Ethnic Wear | LuxeMia`;
+    description = `Shop ${productName} at LuxeMia. Premium quality Indian ethnic wear with free shipping on orders over $350 to USA, Canada & Australia.`.slice(0, 160);
+    ogType = 'product';
+    // Keep default ogImage — the React app will update it on hydration
   } else if (pathname.startsWith('/blog/')) {
     // Blog posts
     const slug = pathname.replace('/blog/', '');
@@ -967,7 +971,7 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
     status: 200,
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'public, max-age=60, s-maxage=300, stale-while-revalidate=3600',
+      'Cache-Control': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400',
     },
   });
 }

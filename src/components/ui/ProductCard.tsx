@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, forwardRef } from 'react';
+import { useState, useRef, useEffect, useCallback, forwardRef, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Plus, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,16 @@ interface ProductCardProps {
   className?: string;
 }
 
-export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({ 
+const priceFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
+const formatPrice = (amount: string, currency: string) => {
+  return priceFormatter.format(parseFloat(amount));
+};
+
+export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({ 
   product, 
   index = 0, 
   showQuickAdd = true,
@@ -190,12 +199,7 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
     lastTapRef.current = now;
   }, [pinchScale]);
 
-  const formatPrice = (amount: string, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(parseFloat(amount));
-  };
+
 
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isAvailable = product.node.variants.edges[0]?.node.availableForSale !== false;
@@ -218,7 +222,7 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
   const savedCount = isAvailable ? ((_hash % 47) + 8) : 0; // 8–54
 
   // Reduce animation delay on mobile for faster perceived loading
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useMemo(() => typeof window !== 'undefined' && window.innerWidth < 768, []);
   const animationDelay = isMobile ? Math.min(index * 0.02, 0.1) : Math.min(index * 0.05, 0.3);
 
   return (
@@ -396,7 +400,7 @@ export const ProductCard = forwardRef<HTMLDivElement, ProductCardProps>(({
       )}
     </motion.div>
   );
-});
+}));
 
 ProductCard.displayName = 'ProductCard';
 

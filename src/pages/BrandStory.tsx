@@ -258,13 +258,19 @@ const ParallaxSection = ({
               imagePosition === 'left' ? 'md:order-1' : 'md:order-2'
             }`}
           >
-            <img
-              src={imageUrl}
-              alt={imageAlt}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            <picture>
+              <source
+                srcSet={imageUrl.replace(/\.jpg$/, '.webp')}
+                type="image/webp"
+              />
+              <img
+                src={imageUrl}
+                alt={imageAlt}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </motion.div>
 

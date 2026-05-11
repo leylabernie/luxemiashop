@@ -45,7 +45,6 @@ export default defineConfig(({ mode }) => ({
           ],
           "vendor-ui-extra": [
             "@radix-ui/react-tooltip",
-            "@radix-ui/react-popover",
             "@radix-ui/react-accordion",
           ],
           "vendor-helmet": ["react-helmet-async"],

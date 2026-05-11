@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -9,7 +9,7 @@ import { Heart, ShoppingBag, Sparkles, Crown, Gem, CircleDot } from 'lucide-reac
 import { PaginationWithInput } from '@/components/ui/pagination-with-input';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
-import { jewelryProducts, jewelryCategories, type JewelryProduct } from '@/data/jewelryProducts';
+import type { JewelryProduct } from '@/data/jewelryProducts';
 
 const PRODUCTS_PER_PAGE = 24;
 
@@ -18,6 +18,15 @@ const Jewelry = () => {
   const selectedCategory = searchParams.get('category') || 'All';
   const currentPage = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
   const addItem = useCartStore((state) => state.addItem);
+  const [jewelryProducts, setJewelryProducts] = useState<JewelryProduct[]>([]);
+  const [jewelryCategories, setJewelryCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    import('@/data/jewelryProducts').then(m => {
+      setJewelryProducts(m.jewelryProducts);
+      setJewelryCategories(m.jewelryCategories);
+    });
+  }, []);
 
   const filteredProducts = useMemo(() => 
     selectedCategory === 'All' 

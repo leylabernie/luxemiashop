@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAllLocalProducts } from '@/data/localProducts';
+import type { LocalProduct } from '@/data/localProducts';
 import { Button } from '@/components/ui/button';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { Slider } from '@/components/ui/slider';
@@ -35,39 +35,41 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedFabrics, setSelectedFabrics] = useState<string[]>([]);
+  const [allProducts, setAllProducts] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  // Get all products and memoize with extracted metadata
-  const allProducts = useMemo(() => {
-    return getAllLocalProducts().map(product => {
-      const desc = product.node.description.toLowerCase();
-      const title = product.node.title.toLowerCase();
-      
-      // Determine category
-      let category = 'Suits';
-      if (desc.includes('saree') || title.includes('saree')) category = 'Sarees';
-      else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
-      else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
-      
-      
-      // Extract fabric
-      let fabric = 'Silk';
-      if (desc.includes('velvet')) fabric = 'Velvet';
-      else if (desc.includes('georgette')) fabric = 'Georgette';
-      else if (desc.includes('cotton')) fabric = 'Cotton';
-      else if (desc.includes('chiffon')) fabric = 'Chiffon';
-      
-      return {
-        id: product.node.id,
-        handle: product.node.handle,
-        title: product.node.title,
-        category,
-        price: product.node.priceRange.minVariantPrice.amount,
-        image: product.node.images.edges[0]?.node.url || '',
-
-        fabric,
-      };
+  // Lazy-load all products
+  useEffect(() => {
+    import('@/data/localProducts').then(m => {
+      const products = m.getAllLocalProducts().map(product => {
+        const desc = product.node.description.toLowerCase();
+        const title = product.node.title.toLowerCase();
+        
+        // Determine category
+        let category = 'Suits';
+        if (desc.includes('saree') || title.includes('saree')) category = 'Sarees';
+        else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
+        else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
+        
+        // Extract fabric
+        let fabric = 'Silk';
+        if (desc.includes('velvet')) fabric = 'Velvet';
+        else if (desc.includes('georgette')) fabric = 'Georgette';
+        else if (desc.includes('cotton')) fabric = 'Cotton';
+        else if (desc.includes('chiffon')) fabric = 'Chiffon';
+        
+        return {
+          id: product.node.id,
+          handle: product.node.handle,
+          title: product.node.title,
+          category,
+          price: product.node.priceRange.minVariantPrice.amount,
+          image: product.node.images.edges[0]?.node.url || '',
+          fabric,
+        };
+      });
+      setAllProducts(products);
     });
   }, []);
 

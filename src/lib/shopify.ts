@@ -157,6 +157,80 @@ const STOREFRONT_QUERY = `
   }
 `;
 
+const STOREFRONT_LISTING_QUERY = `
+  query GetProductsListing($first: Int!, $query: String, $after: String) {
+    products(first: $first, query: $query, after: $after, sortKey: CREATED_AT, reverse: true) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          title
+          createdAt
+          description
+          handle
+          vendor
+          productType
+          tags
+          availableForSale
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          compareAtPriceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          images(first: 1) {
+            edges {
+              node {
+                url
+                altText
+              }
+            }
+          }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+                title
+                sku
+                price {
+                  amount
+                  currencyCode
+                }
+                compareAtPrice {
+                  amount
+                  currencyCode
+                }
+                availableForSale
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
+          options {
+            name
+            values
+          }
+        }
+      }
+    }
+  }
+`;
+
 const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
     productByHandle(handle: $handle) {
@@ -270,7 +344,7 @@ const CART_CREATE_MUTATION = `
   }
 `;
 
-export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
+export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal) {
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: 'POST',
     headers: {
@@ -281,6 +355,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
       query,
       variables,
     }),
+    ...(signal ? { signal } : {}),
   });
 
   if (response.status === 402) {
@@ -305,7 +380,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 
 export async function fetchProducts(first: number = 12, query?: string): Promise<ShopifyProduct[]> {
   try {
-    const data = await storefrontApiRequest(STOREFRONT_QUERY, { first, query });
+    const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query });
     if (!data) return [];
     return data.data.products.edges || [];
   } catch (error) {
@@ -324,7 +399,7 @@ export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]
       const variables: Record<string, unknown> = { first: 250, query };
       if (cursor) variables.after = cursor;
 
-      const data = await storefrontApiRequest(STOREFRONT_QUERY, variables);
+      const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, variables);
       if (!data) break;
 
       const edges = data.data.products.edges || [];

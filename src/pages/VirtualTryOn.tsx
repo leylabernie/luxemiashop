@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Camera, X, Sparkles, ChevronLeft, ChevronRight, Download, RefreshCw, Share2, Copy, Check } from "lucide-react";
 import Header from "@/components/layout/Header";
@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { sareeProducts } from "@/data/sareeProducts";
-import { localProducts } from "@/data/localProducts";
-import { suitProducts } from "@/data/suitProducts";
+import type { SareeProduct } from "@/data/sareeProducts";
+import type { LocalProduct } from "@/data/localProducts";
+import type { SuitProduct } from "@/data/suitProducts";
 import { getOptimizedImage } from "@/lib/imageUtils";
 import LazyImage from "@/components/ui/LazyImage";
 
@@ -41,11 +41,28 @@ const VirtualTryOn = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [category, setCategory] = useState<ProductCategory>("sarees");
   const [copied, setCopied] = useState(false);
+  const [sareeProducts, setSareeProducts] = useState<SareeProduct[]>([]);
+  const [localProductsData, setLocalProductsData] = useState<LocalProduct[]>([]);
+  const [suitProductsData, setSuitProductsData] = useState<SuitProduct[]>([]);
+  const [isDataLoading, setIsDataLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    Promise.all([
+      import("@/data/sareeProducts").then(m => m.sareeProducts),
+      import("@/data/localProducts").then(m => m.localProducts),
+      import("@/data/suitProducts").then(m => m.suitProducts),
+    ]).then(([sarees, locals, suits]) => {
+      setSareeProducts(sarees);
+      setLocalProductsData(locals);
+      setSuitProductsData(suits);
+      setIsDataLoading(false);
+    });
+  }, []);
 
   // Get lehengas from localProducts (filter by category)
   const lehengaProducts: Product[] = useMemo(() => 
-    localProducts.filter(p => 
+    localProductsData.filter(p => 
       p.category.toLowerCase().includes('lehenga')
     ).map(p => ({
       id: p.id,
@@ -55,10 +72,10 @@ const VirtualTryOn = () => {
       images: p.images,
       fabric: p.fabric,
       color: p.color
-    })), []);
+    })), [localProductsData]);
 
   const suitProductsList: Product[] = useMemo(() => 
-    suitProducts.map(p => ({
+    suitProductsData.map(p => ({
       id: p.id,
       handle: p.handle,
       title: p.title,
@@ -66,7 +83,7 @@ const VirtualTryOn = () => {
       images: p.images,
       fabric: p.fabric,
       color: p.color
-    })), []);
+    })), [suitProductsData]);
 
   const sareeProductsList: Product[] = useMemo(() => 
     sareeProducts.map(p => ({
@@ -77,7 +94,7 @@ const VirtualTryOn = () => {
       images: p.images,
       fabric: p.fabric,
       color: p.color
-    })), []);
+    })), [sareeProducts]);
 
   const currentProducts = useMemo(() => {
     switch (category) {

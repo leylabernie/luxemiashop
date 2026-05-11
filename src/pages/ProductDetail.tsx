@@ -12,7 +12,7 @@ import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
-import { getLocalProductByHandle } from '@/data/localProducts';
+import type { LocalProduct } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { enrichProductDescription, generateMetaDescription } from '@/lib/productDescriptionEnrichment';
 import { Button } from '@/components/ui/button';
@@ -81,12 +81,20 @@ const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
+  const [localProduct, setLocalProduct] = useState<{ node: LocalProduct } | null>(null);
 
-  // Fallback chain: Shopify API -> local products
-  const localProduct = handle ? getLocalProductByHandle(handle)?.node : null;
+  // Lazy-load local product data
+  useEffect(() => {
+    if (handle) {
+      import('@/data/localProducts').then(m => {
+        const found = m.getLocalProductByHandle(handle);
+        setLocalProduct(found ?? null);
+      });
+    }
+  }, [handle]);
   const product = shopifyProduct || localProduct;
-  const isLoading = shopifyLoading;
-  const error = !product && !isLoading ? 'Product not found' : null;
+  const isLoading = shopifyLoading || (!shopifyProduct && !localProduct);
+  const error = !product && !shopifyLoading && localProduct !== undefined ? 'Product not found' : null;
 
   // Track recently viewed and analytics
   useEffect(() => {

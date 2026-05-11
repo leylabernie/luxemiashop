@@ -1,17 +1,17 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ProductGrid } from '@/components/collections/ProductGrid';
 import { ProductFilters } from '@/components/collections/ProductFilters';
-import { localProducts } from '@/data/localProducts';
-import { sareeProducts } from '@/data/sareeProducts';
+import type { LocalProduct } from '@/data/localProducts';
+import type { SareeProduct } from '@/data/sareeProducts';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 
 // Helper to convert to Shopify format
-const convertToShopifyFormat = (product: typeof localProducts[0] | typeof sareeProducts[0]) => ({
+const convertToShopifyFormat = (product: LocalProduct | SareeProduct) => ({
   node: {
     id: product.id,
     title: product.title,
@@ -56,10 +56,22 @@ const convertToShopifyFormat = (product: typeof localProducts[0] | typeof sareeP
 const ReceptionOutfits = () => {
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  const [localProducts, setLocalProducts] = useState<LocalProduct[]>([]);
+  const [sareeProducts, setSareeProducts] = useState<SareeProduct[]>([]);
+
+  useEffect(() => {
+    Promise.all([
+      import('@/data/localProducts').then(m => m.localProducts),
+      import('@/data/sareeProducts').then(m => m.sareeProducts),
+    ]).then(([locals, sarees]) => {
+      setLocalProducts(locals);
+      setSareeProducts(sarees);
+    });
+  }, []);
 
   // Filter for reception outfits from raw data
   const receptionOutfits = useMemo(() => {
-    const filterReception = (products: typeof localProducts) => {
+    const filterReception = (products: LocalProduct[] | SareeProduct[]) => {
       return products.filter(product => {
         const tags = product.tags || [];
         return tags.some(t => 

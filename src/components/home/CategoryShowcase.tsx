@@ -76,11 +76,17 @@ const CategoryShowcase = () => {
               >
                 {/* Category Image */}
                 <div className="absolute inset-0 overflow-hidden">
-                  <img 
-                    src={category.image}
-                    alt={`${category.name} collection - ${category.description}`}
-                    className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110"
-                  />
+                  <picture>
+                    <source
+                      srcSet={category.image.replace(/\.jpg$/, '.webp')}
+                      type="image/webp"
+                    />
+                    <img 
+                      src={category.image}
+                      alt={`${category.name} collection - ${category.description}`}
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110"
+                    />
+                  </picture>
                 </div>
 
                 {/* Gradient Overlay */}
