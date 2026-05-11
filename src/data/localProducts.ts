@@ -6,14 +6,6 @@ import { sareeProducts, type SareeProduct } from './sareeProducts';
 import { menswearProducts, type MenswearProduct } from './menswearProducts';
 import { suitProducts, type SuitProduct } from './suitProducts';
 
-// Import bridal lehenga images
-import bridalNavyBlueNetLehenga from '@/assets/products/bridal-navy-blue-net-lehenga.jpg';
-import bridalWineNetLehenga from '@/assets/products/bridal-wine-net-lehenga.jpg';
-import bridalBlackNetLehenga from '@/assets/products/bridal-black-net-lehenga.jpg';
-import bridalPinkGadhwalSilkLehenga from '@/assets/products/bridal-pink-gadhwal-silk-lehenga.jpg';
-import bridalRedGadhwalSilkLehenga from '@/assets/products/bridal-red-gadhwal-silk-lehenga.jpg';
-import bridalPinkCrepeSilkLehenga from '@/assets/products/bridal-pink-crepe-silk-lehenga.jpg';
-
 export interface LocalProduct {
   id: string;
   handle: string;
@@ -807,7 +799,7 @@ export const localProducts: LocalProduct[] = [
     price: convertPrice(12895),
     originalPrice: convertPrice(17910),
     currency: "USD",
-    images: [bridalNavyBlueNetLehenga],
+    images: ['/images/products/bridal-navy-blue-net-lehenga.jpg'],
     category: "Bridal Lehengas",
     fabric: "Heavy Net",
     occasion: "Bridal",
@@ -830,7 +822,7 @@ export const localProducts: LocalProduct[] = [
     price: convertPrice(12895),
     originalPrice: convertPrice(17910),
     currency: "USD",
-    images: [bridalWineNetLehenga],
+    images: ['/images/products/bridal-wine-net-lehenga.jpg'],
     category: "Bridal Lehengas",
     fabric: "Heavy Net",
     occasion: "Bridal",
@@ -853,7 +845,7 @@ export const localProducts: LocalProduct[] = [
     price: convertPrice(12895),
     originalPrice: convertPrice(17910),
     currency: "USD",
-    images: [bridalBlackNetLehenga],
+    images: ['/images/products/bridal-black-net-lehenga.jpg'],
     category: "Bridal Lehengas",
     fabric: "Heavy Net",
     occasion: "Bridal",
@@ -876,7 +868,7 @@ export const localProducts: LocalProduct[] = [
     price: convertPrice(24195),
     originalPrice: convertPrice(34077),
     currency: "USD",
-    images: [bridalPinkGadhwalSilkLehenga],
+    images: ['/images/products/bridal-pink-gadhwal-silk-lehenga.jpg'],
     category: "Bridal Lehengas",
     fabric: "Gadhwal Silk",
     occasion: "Bridal",
@@ -899,7 +891,7 @@ export const localProducts: LocalProduct[] = [
     price: convertPrice(24195),
     originalPrice: convertPrice(34077),
     currency: "USD",
-    images: [bridalRedGadhwalSilkLehenga],
+    images: ['/images/products/bridal-red-gadhwal-silk-lehenga.jpg'],
     category: "Bridal Lehengas",
     fabric: "Gadhwal Silk",
     occasion: "Bridal",
@@ -922,7 +914,7 @@ export const localProducts: LocalProduct[] = [
     price: convertPrice(3895),
     originalPrice: convertPrice(5264),
     currency: "USD",
-    images: [bridalPinkCrepeSilkLehenga],
+    images: ['/images/products/bridal-pink-crepe-silk-lehenga.jpg'],
     category: "Bridal Lehengas",
     fabric: "Crepe Silk",
     occasion: "Wedding",

@@ -3,17 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Use local assets for reliability
-import lookbook1 from '@/assets/lookbook-1.jpg';
-import lookbook2 from '@/assets/lookbook-2.jpg';
-import lookbook3 from '@/assets/lookbook-3.jpg';
-import lookbook4 from '@/assets/lookbook-4.jpg';
-
 const lookbookImages = [
-  { src: lookbook1, alt: 'Elegant Saree' },
-  { src: lookbook2, alt: 'Bridal Lehenga Collection' },
-  { src: lookbook3, alt: 'Wedding Collection' },
-  { src: lookbook4, alt: 'Festive Ensemble' },
+  { src: '/images/lookbook/lookbook-1.jpg', alt: 'Elegant Saree' },
+  { src: '/images/lookbook/lookbook-2.jpg', alt: 'Bridal Lehenga Collection' },
+  { src: '/images/lookbook/lookbook-3.jpg', alt: 'Wedding Collection' },
+  { src: '/images/lookbook/lookbook-4.jpg', alt: 'Festive Ensemble' },
 ];
 
 const LookbookTeaser = () => {

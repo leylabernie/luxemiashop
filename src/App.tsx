@@ -140,6 +140,11 @@ const App = () => (
                 <Route path="/nri/canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
                 <Route path="/indian-ethnic-wear-usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
                 <Route path="/indian-ethnic-wear-canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
+                {/* UK pages redirect to /nri (no longer targeted) */}
+                <Route path="/nri/uk" element={<Navigate to="/nri" replace />} />
+                <Route path="/indian-ethnic-wear-uk" element={<Navigate to="/nri" replace />} />
+                <Route path="/uk-indian-clothing" element={<Navigate to="/nri" replace />} />
+                <Route path="/uk-designer-sarees" element={<Navigate to="/nri" replace />} />
                 <Route path="/admin" element={<Suspense fallback={<PageLoader />}><AdminDashboard /></Suspense>} />
                 {/* Blog */}
                 <Route path="/blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />

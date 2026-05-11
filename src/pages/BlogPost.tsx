@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import DOMPurify from 'dompurify';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -19,6 +21,27 @@ const BlogPost = () => {
   }
 
   const relatedPosts = getRelatedPosts(post);
+
+  // Sanitize blog HTML content to prevent XSS attacks.
+  // Even though our blog content is authored internally, this protects against
+  // supply-chain attacks if the content source is ever compromised.
+  const sanitizedContent = useMemo(
+    () => DOMPurify.sanitize(post.content, {
+      ALLOWED_TAGS: [
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr',
+        'ul', 'ol', 'li', 'a', 'strong', 'em', 'b', 'i', 'u',
+        'blockquote', 'pre', 'code', 'img', 'figure', 'figcaption',
+        'table', 'thead', 'tbody', 'tr', 'th', 'td',
+        'span', 'div', 'sub', 'sup',
+      ],
+      ALLOWED_ATTR: [
+        'href', 'target', 'rel', 'src', 'alt', 'title', 'class',
+        'id', 'width', 'height', 'loading', 'decoding',
+      ],
+      ADD_ATTR: ['target'], // Allow target="_blank" for external links
+    }),
+    [post.content]
+  );
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -158,6 +181,8 @@ const BlogPost = () => {
                 <img 
                   src={post.image} 
                   alt={post.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -165,7 +190,7 @@ const BlogPost = () => {
               {/* Content */}
               <div 
                 className="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-h2:text-2xl prose-h3:text-xl prose-p:text-muted-foreground prose-li:text-muted-foreground prose-a:text-primary prose-strong:text-foreground"
-                dangerouslySetInnerHTML={{ __html: post.content }}
+                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
               />
 
               {/* Tags */}
@@ -240,6 +265,8 @@ const BlogPost = () => {
                         <img 
                           src={relatedPost.image} 
                           alt={relatedPost.title}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>

@@ -26,7 +26,7 @@ const __dirname = dirname(__filename);
 
 const SHOPIFY_API_VERSION = '2025-07';
 const SHOPIFY_STORE = 'lovable-project-zlh0w.myshopify.com';
-const SHOPIFY_TOKEN = 'c98d10d5abd95e6a8d6ddbed223ef4b4';
+const SHOPIFY_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const STOREFRONT_URL = `https://${SHOPIFY_STORE}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 const STOREFRONT_QUERY = `

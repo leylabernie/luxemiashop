@@ -1,10 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import categorySareesImg from '@/assets/category-sarees.jpg';
-import categoryLehengasImg from '@/assets/category-lehengas.jpg';
-import categorySuitsImg from '@/assets/category-suits.jpg';
-import categoryMenswearImg from '@/assets/category-menswear.jpg';
 
 const categories = [
   {
@@ -12,7 +8,7 @@ const categories = [
     subtitle: 'Bridal & Festive',
     description: 'Lehengas with beautiful embroidery on quality fabrics',
     href: '/lehengas',
-    image: categoryLehengasImg,
+    image: '/images/categories/category-lehengas.jpg',
     tag: 'Most Popular',
   },
   {
@@ -20,7 +16,7 @@ const categories = [
     subtitle: 'Timeless Elegance',
     description: 'Handpicked silk and elegant drape sarees for every occasion',
     href: '/sarees',
-    image: categorySareesImg,
+    image: '/images/categories/category-sarees.jpg',
     tag: 'New Collection',
   },
   {
@@ -28,7 +24,7 @@ const categories = [
     subtitle: 'Classic Grace',
     description: 'Elegant salwar kameez and anarkali sets in quality organza silk',
     href: '/suits',
-    image: categorySuitsImg,
+    image: '/images/categories/category-suits.jpg',
     tag: 'Trending Now',
   },
   {
@@ -36,7 +32,7 @@ const categories = [
     subtitle: 'Classic Style',
     description: 'Sherwanis, kurta sets and Indo-western outfits for grooms',
     href: '/menswear',
-    image: categoryMenswearImg,
+    image: '/images/categories/category-menswear.jpg',
     tag: 'New Arrivals',
   },
 ];

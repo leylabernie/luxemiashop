@@ -3,339 +3,325 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://luxemia.shop/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/products</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/brand-story</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/lookbook</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://luxemia.shop/lehengas</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sarees</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/suits</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/menswear</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indowestern</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/new-arrivals</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/bestsellers</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/nri</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/nri/usa</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/nri/uk</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/nri/canada</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indian-ethnic-wear-usa</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indian-ethnic-wear-uk</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indian-ethnic-wear-canada</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/artisans</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sustainability</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/virtual-try-on</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/style-consultation</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/style-quiz</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/contact</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/faq</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/shipping</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/returns</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/size-guide</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/care-guide</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/privacy</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/terms</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/press</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/sharara-suit-guide-2026-styles-fabrics</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/pakistani-suits-anarkali-shopping-guide</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/style-lehenga-choli-every-wedding-event</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-season-2026-outfit-guide</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-dress-complete-guide</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/red-bridal-lehenga-trends-2026</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/designer-wedding-dress-under-50000</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/wedding-guest-outfit-ideas</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/saree-draping-styles-every-occasion</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-trends-2026</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/lehenga-color-for-dark-skin</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/wedding-saree-for-mother-of-bride</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/designer-wedding-dress-under-500</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/nri-wedding-ethnic-wear-trends-2026</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/buy-authentic-indian-sarees-online-usa-uk</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/styling-indian-ethnic-wear-festive-occasions-abroad</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/blog/how-to-choose-perfect-lehenga-wedding-2026</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://luxemia.shop/product/orange-jimmy-choo-silk-embroidered-occasion-salwar-suit-15</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Orange--Jimmy-Choo-Silk-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-6104-8062-C_1.jpg?v=1778285454&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Orange Jimmy Choo Silk Embroidered Occasion Salwar Suit - LuxeMia</image:title>
+      <image:caption>Orange Jimmy Choo Silk Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/blog/lehenga-vs-sharara-vs-anarkali-comparison</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://luxemia.shop/product/blue-georgette-embroidery-occasion-lehenga-choli</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/best-lehenga-colors-for-indian-skin-tone</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/shipping-indian-clothes-usa-uk-canada-nri-guide</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/unstitched-vs-ready-to-wear-vs-made-to-measure</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Blue-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7093-Blue_1.jpg?v=1778282430&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Blue Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
+      <image:caption>Blue Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/yellow-net-thread-occasion-lehenga-choli-designer-indian-lehenga-1</loc>
@@ -533,17 +519,6 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Beige-Georgette-Festival-Wear-Embroidery-Work-Readymade-Gown-With-Dupatta-AMBIKA-968_1.jpg?v=1778285446&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Beige Georgette Embroidered Festive Salwar Suit - LuxeMia</image:title>
       <image:caption>Beige Georgette Embroidered Festive Salwar Suit - Salwar Suit | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/orange-jimmy-choo-silk-embroidered-occasion-salwar-suit-15</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Orange--Jimmy-Choo-Silk-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-6104-8062-C_1.jpg?v=1778285454&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Orange Jimmy Choo Silk Embroidered Occasion Salwar Suit - LuxeMia</image:title>
-      <image:caption>Orange Jimmy Choo Silk Embroidered Occasion Salwar Suit - Salwar Suit | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -918,17 +893,6 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Red-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4246-1569-A_1.jpg?v=1778282505&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Red Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
       <image:caption>Red Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/blue-georgette-embroidery-occasion-lehenga-choli</loc>
-    <lastmod>2026-05-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Blue-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4255-7093-Blue_1.jpg?v=1778282430&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Blue Georgette Embroidery Occasion Lehenga Choli - LuxeMia</image:title>
-      <image:caption>Blue Georgette Embroidery Occasion Lehenga Choli - Lehenga | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>

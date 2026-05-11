@@ -3,6 +3,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
+    { "source": "/nri/uk", "destination": "/nri", "statusCode": 308 },
+    { "source": "/indian-ethnic-wear-uk", "destination": "/nri", "statusCode": 308 },
+    { "source": "/uk-indian-clothing", "destination": "/nri", "statusCode": 308 },
+    { "source": "/uk-designer-sarees", "destination": "/nri", "statusCode": 308 },
     { "source": "/collections/wedding-sarees", "destination": "/sarees", "permanent": true },
     { "source": "/collections/bridal-lehengas", "destination": "/lehengas", "permanent": true },
     { "source": "/collections/reception-outfits", "destination": "/collections", "permanent": true },
@@ -59,7 +63,7 @@
       "headers": [
         { "key": "X-Robots-Tag", "value": "index, follow" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com;" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com;" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
@@ -68,9 +72,11 @@
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com;" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com;" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" }
       ]
     }
   ],
