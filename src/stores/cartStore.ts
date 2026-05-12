@@ -173,9 +173,8 @@ export const useCartStore = create<CartStore>()(
       name: 'shopify-cart',
       storage: createJSONStorage(() => localStorage),
       onRehydrateStorage: () => (state) => {
-        // One-time cleanup: clear cart data that references the old Lovable domain.
-        // After migration to Vercel, cached cart items may contain stale URLs
-        // pointing to luxemiashop.lovable.app which break checkout.
+        // Clear persisted cart data if it contains stale checkout URLs from
+        // a previous hosting provider. Broken URLs would prevent checkout.
         if (state) {
           const serialized = JSON.stringify(state.items) + (state.checkoutUrl || '');
           if (serialized.includes('lovable.app')) {

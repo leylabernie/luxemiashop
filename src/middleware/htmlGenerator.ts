@@ -8,7 +8,7 @@
 import { fetchProductByHandle, ShopifyProduct } from './shopifyProxy';
 import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema';
 
-function escapeHtml(str: string): string {
+export function escapeHtml(str: string): string {
   return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -150,7 +150,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true, linked_domains: ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com'] });
+    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true, linked_domains: ['luxemia.shop'] });
   </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
