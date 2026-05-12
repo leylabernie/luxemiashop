@@ -204,7 +204,7 @@ const BlogPost = () => {
       "name": "LuxeMia",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://luxemia.shop/logo.png"
+        "url": "https://luxemia.shop/favicon.ico"
       }
     },
     "mainEntityOfPage": {

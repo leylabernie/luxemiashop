@@ -15,6 +15,7 @@ const organizationSchema = {
   alternateName: 'LuxeMia',
   url: 'https://luxemia.shop',
   logo: 'https://luxemia.shop/favicon.ico',
+  email: 'hello@luxemia.shop',
   description:
     'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free shipping on orders over $350.',
   address: {
@@ -28,7 +29,6 @@ const organizationSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+1-215-341-9990',
-    email: 'hello@luxemia.shop',
     contactType: 'customer service',
     availableLanguage: ['English', 'Hindi'],
     hoursAvailable: {
