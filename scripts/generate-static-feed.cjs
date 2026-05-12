@@ -183,6 +183,285 @@ function normalizeBrand(vendor) {
   return raw;
 }
 
+// ─── Salwar Suit Description Enrichment ──────────────────────────────────
+//
+// GMC RECOMMENDATION FIX: "Update descriptions for Salwar Suits — Add missing
+// details to 194 products to help customers find exactly what they need."
+//
+// GMC flagged 194 salwar suit products as having thin descriptions missing
+// key details that shoppers search for: outfit components (kameez + bottom +
+// dupatta), bottom style, dupatta details, work/embellishment specifics,
+// silhouette/fit, and care instructions.
+//
+// This module extracts attributes from product titles and Shopify data, then
+// generates rich multi-paragraph descriptions that include every detail GMC
+// and shoppers expect.
+
+/** Check if a product type is a salwar/suit variant that needs enrichment. */
+function isSalwarSuitType(productType) {
+  const pt = (productType || '').toLowerCase();
+  return pt.includes('salwar') || pt.includes('suit') || pt.includes('kameez')
+    || pt.includes('palazzo') || pt.includes('anarkali') || pt.includes('sharara')
+    || pt.includes('readymade suit') || pt.includes('pakistani');
+}
+
+/**
+ * Extract salwar-suit-specific attributes from title, description, and options.
+ * Returns a structured object with all details needed for a rich description.
+ */
+function extractSalwarAttributes(product, color, material, productType) {
+  const title = (product.title || '').toLowerCase();
+  const desc = (product.description || '').toLowerCase();
+  const searchable = `${title} ${desc}`;
+  const rawTitle = product.title || '';
+
+  // ── Bottom style ──
+  let bottomStyle = '';
+  if (searchable.includes('palazzo')) bottomStyle = 'palazzo';
+  else if (searchable.includes('churidar')) bottomStyle = 'churidar';
+  else if (searchable.includes('patiyala') || searchable.includes('patiala')) bottomStyle = 'patiala';
+  else if (searchable.includes('sharara') || searchable.includes('garara')) bottomStyle = 'sharara';
+  else if (searchable.includes('straight')) bottomStyle = 'straight-cut';
+  else if (productType.toLowerCase().includes('salwar')) bottomStyle = 'salwar';
+  else if (searchable.includes('salwar')) bottomStyle = 'salwar';
+
+  // ── Work/embellishment type ──
+  let workType = '';
+  const workPatterns = [
+    { keywords: ['mirror work', 'mirror-work', 'mirrorwork'], label: 'mirror work' },
+    { keywords: ['sequins embroidery', 'sequin embroidery', 'sequins work'], label: 'sequins embroidery' },
+    { keywords: ['sequin', 'sequins'], label: 'sequin work' },
+    { keywords: ['zardozi', 'zardosi'], label: 'zardozi embroidery' },
+    { keywords: ['zari'], label: 'zari threadwork' },
+    { keywords: ['gota patti', 'gota-patti', 'gotapatti'], label: 'gota patti work' },
+    { keywords: ['chikankari'], label: 'chikankari embroidery' },
+    { keywords: ['kundan'], label: 'kundan stone work' },
+    { keywords: ['thread work', 'threadwork'], label: 'thread work' },
+    { keywords: ['resham'], label: 'resham embroidery' },
+    { keywords: ['stone work', 'stonework'], label: 'stone work' },
+    { keywords: ['beads work', 'bead work', 'beadwork'], label: 'bead work' },
+    { keywords: ['embroidered', 'embroidery'], label: 'embroidery' },
+    { keywords: ['printed', 'print'], label: 'print' },
+  ];
+  for (const wp of workPatterns) {
+    if (wp.keywords.some(k => searchable.includes(k))) {
+      workType = wp.label;
+      break;
+    }
+  }
+
+  // ── Occasion ──
+  let occasion = '';
+  const occasionPatterns = [
+    { keywords: ['bridal'], label: 'bridal celebrations' },
+    { keywords: ['wedding wear', 'wedding suit'], label: 'weddings and receptions' },
+    { keywords: ['eid wear'], label: 'Eid and festive celebrations' },
+    { keywords: ['festive', 'festival'], label: 'festive celebrations' },
+    { keywords: ['party wear', 'party suit'], label: 'parties and celebrations' },
+    { keywords: ['casual'], label: 'casual and everyday occasions' },
+    { keywords: ['occasion', 'occasional'], label: 'special occasions' },
+  ];
+  for (const op of occasionPatterns) {
+    if (op.keywords.some(k => searchable.includes(k))) {
+      occasion = op.label;
+      break;
+    }
+  }
+  if (!occasion) occasion = 'festive celebrations and special occasions';
+
+  // ── Stitching type ──
+  let stitchType = '';
+  if (searchable.includes('readymade') || searchable.includes('ready-made') || searchable.includes('ready to wear')) {
+    stitchType = 'readymade';
+  } else if (searchable.includes('semi-stitched') || searchable.includes('semi stitched')) {
+    stitchType = 'semi-stitched';
+  } else if (searchable.includes('unstitched') || searchable.includes('un-stitched')) {
+    stitchType = 'unstitched';
+  }
+  // If title contains "Readymade" specifically
+  if (!stitchType && rawTitle.includes('Readymade')) stitchType = 'readymade';
+  if (!stitchType && rawTitle.includes('Unstitched')) stitchType = 'unstitched';
+
+  // ── Silhouette ──
+  let silhouette = '';
+  if (searchable.includes('a-line') || searchable.includes('aline')) silhouette = 'A-line';
+  else if (searchable.includes('straight cut') || searchable.includes('straight-cut') || searchable.includes('straight kameez')) silhouette = 'straight-cut';
+  else if (bottomStyle === 'palazzo') silhouette = 'relaxed palazzo';
+  else if (bottomStyle === 'sharara') silhouette = 'flared sharara';
+  else if (bottomStyle === 'churidar') silhouette = 'classic churidar';
+  else if (searchable.includes('anarkali')) silhouette = 'flared anarkali';
+  else if (bottomStyle === 'patiala') silhouette = 'traditional patiala';
+
+  // ── Fabric (refined from title context) ──
+  let fabric = material || '';
+  if (!fabric) {
+    const fabricPatterns = [
+      { keywords: ['faux georgette'], label: 'Faux Georgette' },
+      { keywords: ['shimmer silk'], label: 'Shimmer Silk' },
+      { keywords: ['raw silk'], label: 'Raw Silk' },
+      { keywords: ['banarasi silk'], label: 'Banarasi Silk' },
+      { keywords: ['silk'], label: 'Silk' },
+      { keywords: ['georgette'], label: 'Georgette' },
+      { keywords: ['chinon', 'chinnon'], label: 'Chinon' },
+      { keywords: ['chiffon'], label: 'Chiffon' },
+      { keywords: ['velvet'], label: 'Velvet' },
+      { keywords: ['cotton'], label: 'Cotton' },
+      { keywords: ['crepe'], label: 'Crepe' },
+      { keywords: ['net'], label: 'Net' },
+      { keywords: ['satin'], label: 'Satin' },
+      { keywords: ['organza'], label: 'Organza' },
+      { keywords: ['linen'], label: 'Linen' },
+      { keywords: ['jacquard'], label: 'Jacquard' },
+      { keywords: ['brocade'], label: 'Brocade' },
+      { keywords: ['shimmer'], label: 'Shimmer' },
+    ];
+    for (const fp of fabricPatterns) {
+      if (fp.keywords.some(k => title.includes(k))) {
+        fabric = fp.label;
+        break;
+      }
+    }
+  }
+
+  // ── Suit sub-type label ──
+  let suitLabel = 'salwar suit';
+  const pt = productType.toLowerCase();
+  if (pt.includes('pakistani') || title.includes('pakistani')) suitLabel = 'Pakistani suit';
+  else if (pt.includes('wedding') || title.includes('wedding')) suitLabel = 'wedding suit';
+  else if (title.includes('anarkali')) suitLabel = 'anarkali suit';
+  else if (title.includes('palazzo')) suitLabel = 'palazzo suit';
+  else if (title.includes('sharara')) suitLabel = 'sharara set';
+  else if (pt.includes('salwar kameez')) suitLabel = 'salwar kameez';
+
+  return { bottomStyle, workType, occasion, stitchType, silhouette, fabric, suitLabel };
+}
+
+/**
+ * Build a rich, multi-paragraph description specifically for salwar suit products.
+ * Addresses GMC recommendation: "Add missing details to 194 products."
+ *
+ * Structure:
+ * 1. Opening — product name, fabric, work type, design highlights
+ * 2. Components — kameez, bottom style, dupatta details
+ * 3. Occasion & styling — when to wear, how to accessorize
+ * 4. Stitching & sizing — readymade/unstitched options, sizes
+ * 5. Care — dry cleaning instructions
+ * 6. Details line — Color | Fabric | Work | Occasion
+ * 7. Shipping — free over $350, flat $25, USA/CA/AU
+ */
+function buildSalwarSuitDescription(product, color, material, productType) {
+  const attrs = extractSalwarAttributes(product, color, material, productType);
+  const rawTitle = product.title || 'Indian Ethnic Suit';
+  const original = (product.description || '').trim();
+
+  const parts = [];
+
+  // ── 1. Opening paragraph ──
+  const colorPhrase = color ? `${color} ` : '';
+  const fabricPhrase = attrs.fabric ? ` in ${attrs.fabric}` : '';
+  const workPhrase = attrs.workType ? ` with ${attrs.workType}` : '';
+  parts.push(
+    `Shop the ${rawTitle} at LuxeMia — a ${colorPhrase}${attrs.suitLabel}${fabricPhrase}${workPhrase}. ` +
+    `Every detail reflects the skill of Indian artisans, blending traditional craftsmanship with contemporary design ` +
+    `for a garment that stands out at any occasion.`
+  );
+
+  // ── 2. Components paragraph (THE KEY MISSING DETAIL) ──
+  const bottomPhrase = attrs.bottomStyle
+    ? `The set includes a beautifully crafted kameez paired with ${attrs.bottomStyle} bottoms`
+    : `The set includes a beautifully crafted kameez with coordinated bottoms`;
+  const dupattaWork = attrs.workType
+    ? ` embellished with ${attrs.workType}`
+    : '';
+  parts.push(
+    `${bottomPhrase}, and a matching dupatta${dupattaWork} to complete the ensemble. ` +
+    `The kameez features ${attrs.workType || 'fine detailing'} on the neckline, sleeves, and yoke, ` +
+    `while the ${attrs.bottomStyle || 'coordinated bottom'} provides a comfortable and flattering fit. ` +
+    `The dupatta adds the finishing touch — drape it over one shoulder for classic elegance, ` +
+    `or style it across both arms for a more structured look.`
+  );
+
+  // ── 3. Occasion & styling ──
+  const stylingAccessories = [
+    'jhumka earrings and a stack of bangles',
+    'a statement necklace and kolhapuri sandals',
+    'a maang tikka and embroidered juttis',
+  ];
+  const accessoryPick = stylingAccessories[
+    Math.abs(hashCode(rawTitle + '-acc')) % stylingAccessories.length
+  ];
+  parts.push(
+    `Perfect for ${attrs.occasion}, this ${attrs.suitLabel} ensures you make a memorable impression wherever you go. ` +
+    `Pair with ${accessoryPick} for a head-to-toe curated look ` +
+    `that transitions effortlessly from intimate family gatherings to grand celebrations.`
+  );
+
+  // ── 4. Stitching & sizing ──
+  let stitchPara = '';
+  if (attrs.stitchType === 'readymade') {
+    stitchPara = `This is a readymade suit — pre-stitched and ready to wear straight out of the box. ` +
+      `Available in sizes S to XXL (bust 32-48), simply pick your size and go.`;
+  } else if (attrs.stitchType === 'unstitched') {
+    stitchPara = `This is an unstitched suit set — you receive the fabric and trims to have it tailored to your exact measurements. ` +
+      `We also offer Made to Measure stitching: we will email you a measurement form after checkout ` +
+      `and stitch the suit to your body. Alternatively, choose Ready to Wear for standard sizes S-XXL (bust 32-48).`;
+  } else if (attrs.stitchType === 'semi-stitched') {
+    stitchPara = `This is a semi-stitched suit — partially tailored with adjustable seams for a customized fit. ` +
+      `Minor alterations can be made by your local tailor for the perfect silhouette. ` +
+      `Available in sizes S to XXL (bust 32-48).`;
+  } else {
+    stitchPara = `Available in sizes S to XXL (bust 32-48) with custom tailoring options. ` +
+      `Choose Unstitched (fabric and trims for your own tailor), Ready to Wear (pre-stitched to standard sizes), ` +
+      `or Made to Measure (stitched to your exact body measurements — we will email a measurement form after checkout).`;
+  }
+  parts.push(stitchPara);
+
+  // ── 5. Care instructions ──
+  const fabricLower = (attrs.fabric || '').toLowerCase();
+  let carePara;
+  if (fabricLower.includes('cotton') && !fabricLower.includes('silk')) {
+    carePara = `Care: Gentle machine wash in cold water on a delicate cycle for cotton suits. ` +
+      `Iron on medium heat with steam. For embellished areas, use a pressing cloth.`;
+  } else {
+    carePara = `Care: Professional dry cleaning is recommended to preserve the embroidery and fabric integrity. ` +
+      `Avoid wringing or machine washing. Iron on low heat with a pressing cloth over embellished areas. ` +
+      `Store in a muslin garment bag — avoid plastic covers which can trap moisture and damage embroidery.`;
+  }
+  parts.push(carePara);
+
+  // ── 6. Structured details line ──
+  const detailsParts = [];
+  if (color) detailsParts.push(`Color: ${color}`);
+  if (attrs.fabric) detailsParts.push(`Fabric: ${attrs.fabric}`);
+  if (attrs.workType) detailsParts.push(`Work: ${capitalize(attrs.workType)}`);
+  if (attrs.bottomStyle) detailsParts.push(`Bottom: ${capitalize(attrs.bottomStyle)}`);
+  detailsParts.push(`Occasion: ${capitalize(attrs.occasion)}`);
+  parts.push(detailsParts.join(' | '));
+
+  // ── 7. Shipping ──
+  parts.push(
+    `Free shipping on orders over $350 to the USA, Canada, and Australia. ` +
+    `Flat $25 shipping on orders under $350.`
+  );
+
+  return parts.join(' ').slice(0, 5000);
+}
+
+/** Simple string hash for deterministic picking. */
+function hashCode(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+  }
+  return hash;
+}
+
+/** Capitalize the first letter of a string. */
+function capitalize(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 // Build a deterministic, GMC-friendly description (>=150 chars) from product
 // attributes when Shopify's description is missing or too short. Avoids the
 // previous fallback that produced ~110-char strings and triggered GMC
@@ -192,8 +471,22 @@ function normalizeBrand(vendor) {
 // Google Merchant Center flagged 193 products as needing color details in
 // descriptions. Even when color appears in the title or g:color attribute,
 // GMC wants it explicitly stated in the description text as well.
+//
+// GMC RECOMMENDATION FIX (Round 2): "Update descriptions for Salwar Suits —
+// Add missing details to 194 products." For salwar suit types, we now generate
+// rich multi-paragraph descriptions that include outfit components (kameez +
+// bottom + dupatta), bottom style, work details, stitching options, and care.
 function buildDescription(product, color, material, productType) {
   const original = (product.description || '').trim();
+
+  // ── Salwar/Suit enrichment path ──
+  // If this is a salwar suit type, ALWAYS generate a rich description from
+  // extracted attributes — even if the Shopify description is ≥150 chars.
+  // The Shopify descriptions for these products lack components, dupatta,
+  // bottom style, and care details that GMC and shoppers expect.
+  if (isSalwarSuitType(productType)) {
+    return buildSalwarSuitDescription(product, color, material, productType);
+  }
 
   // For rich descriptions (>=150 chars), append a structured details line
   // with Color if the description doesn't already contain an explicit "Color:" mention.
