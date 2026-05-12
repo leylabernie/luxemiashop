@@ -187,9 +187,28 @@ function normalizeBrand(vendor) {
 // attributes when Shopify's description is missing or too short. Avoids the
 // previous fallback that produced ~110-char strings and triggered GMC
 // "description too short" warnings on hundreds of items.
+//
+// GMC RECOMMENDATION FIX: Always include explicit "Color: X" in descriptions.
+// Google Merchant Center flagged 193 products as needing color details in
+// descriptions. Even when color appears in the title or g:color attribute,
+// GMC wants it explicitly stated in the description text as well.
 function buildDescription(product, color, material, productType) {
   const original = (product.description || '').trim();
-  if (original.length >= 150) return original.slice(0, 5000);
+
+  // For rich descriptions (>=150 chars), append a structured details line
+  // with Color if the description doesn't already contain an explicit "Color:" mention.
+  if (original.length >= 150) {
+    // Check if description already has explicit Color: mention
+    const hasExplicitColor = /\bColor\s*:/i.test(original);
+    if (!hasExplicitColor && color) {
+      // Append structured product details line
+      const detailsParts = [];
+      detailsParts.push(`Color: ${color}`);
+      if (material) detailsParts.push(`Fabric: ${material}`);
+      return (original + ' ' + detailsParts.join(' | ')).slice(0, 5000);
+    }
+    return original.slice(0, 5000);
+  }
 
   const title = product.title || 'Indian ethnic wear';
   const parts = [];
@@ -202,6 +221,15 @@ function buildDescription(product, color, material, productType) {
     const colorPhrase = color ? `${color} ` : '';
     const materialPhrase = material ? `${material.toLowerCase()} ` : '';
     parts.push(`Shop the ${colorPhrase}${materialPhrase}${title} at LuxeMia.`);
+  }
+
+  // GMC FIX: Add structured details line with Color, Fabric
+  // This directly addresses the GMC recommendation to include color details
+  const detailsParts = [];
+  if (color) detailsParts.push(`Color: ${color}`);
+  if (material) detailsParts.push(`Fabric: ${material}`);
+  if (detailsParts.length > 0) {
+    parts.push(detailsParts.join(' | '));
   }
 
   // Attribute sentence — material, color, category context.
@@ -356,13 +384,16 @@ function generateProductItemXml(product, titleCounts) {
   // GMC FIX: Extract color from title if no color option exists in Shopify data
   // Many products have color in the title (e.g. "Rani Pink Embroidery Lehenga")
   if (!color) {
-    const colorKeywords = ['Red', 'Maroon', 'Rani Pink', 'Pink', 'Burgundy', 'Wine', 'Orange', 'Rust',
-      'Yellow', 'Mustard', 'Green', 'Emerald', 'Teal', 'Mint', 'Peacock',
-      'Blue', 'Navy', 'Sky Blue', 'Royal Blue', 'Purple', 'Lavender',
-      'Black', 'White', 'Off White', 'Ivory', 'Beige', 'Gold', 'Silver',
-      'Grey', 'Peach', 'Coral', 'Dusty Rose', 'Dusty Pink', 'Magenta',
-      'Champagne', 'Multi Color', 'Multicolor', 'Pista Green', 'Marigold',
-      'Saffron', 'Ruby', 'Sea Green', 'Baby Pink', 'Light Pink'];
+    const colorKeywords = ['Rani Pink', 'Sky Blue', 'Baby Pink', 'Dusty Pink', 'Dusty Rose', 'Royal Blue', 'Off White', 'Multi Color',
+      'Red', 'Maroon', 'Burgundy', 'Wine', 'Pink', 'Rose', 'Fuchsia', 'Magenta',
+      'Blue', 'Navy', 'Teal', 'Peacock', 'Purple', 'Lavender',
+      'Green', 'Emerald', 'Olive', 'Mint', 'Pista Green', 'Sea Green', 'Sage',
+      'Yellow', 'Gold', 'Mustard', 'Amber', 'Saffron', 'Marigold',
+      'Orange', 'Peach', 'Coral', 'Rust', 'Ruby',
+      'Black', 'White', 'Ivory', 'Beige', 'Cream', 'Champagne',
+      'Grey', 'Charcoal', 'Silver',
+      'Mauve', 'Lilac', 'Plum',
+      'Copper', 'Bronze', 'Tan', 'Camel', 'Onion'];
     const titleLower = product.title.toLowerCase();
     for (const c of colorKeywords) {
       if (titleLower.includes(c.toLowerCase())) {

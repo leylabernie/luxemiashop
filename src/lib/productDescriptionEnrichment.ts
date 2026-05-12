@@ -797,14 +797,18 @@ function inferColor(title: string, color?: string, description?: string): string
   const searchable = `${title} ${description ?? ''}`.toLowerCase();
 
   const colorKeywords = [
+    // Multi-word colors first (must match before their single-word components)
+    'rani pink', 'sky blue', 'baby pink', 'dusty rose', 'royal blue', 'off-white',
+    // Single-word colors
     'red', 'maroon', 'wine', 'burgundy', 'pink', 'rose', 'fuchsia', 'magenta',
-    'blue', 'navy', 'teal', 'cyan', 'indigo', 'royal blue',
+    'blue', 'navy', 'teal', 'cyan', 'indigo',
     'green', 'emerald', 'olive', 'mint', 'sage',
     'yellow', 'gold', 'mustard', 'amber',
     'orange', 'peach', 'coral', 'rust',
     'purple', 'lavender', 'plum', 'mauve', 'lilac',
-    'white', 'ivory', 'cream', 'beige', 'off-white',
+    'white', 'ivory', 'cream', 'beige',
     'black', 'grey', 'gray', 'charcoal',
+    'champagne', 'copper', 'bronze', 'tan', 'camel', 'onion',
   ];
 
   for (const c of colorKeywords) {
@@ -953,8 +957,22 @@ export function enrichProductDescription(
   material?: string,
   color?: string,
 ): string {
-  // If the description is already rich, return as-is
+  // If the description is already rich, still append Color/Fabric details
+  // if they're missing — GMC requires explicit "Color: X" in descriptions.
+  // This addresses the GMC recommendation: "Update product descriptions to
+  // include details customers are looking for" (193 products flagged).
   if (isDescriptionRich(description)) {
+    const hasExplicitColor = /\bColor\s*:/i.test(description);
+    if (!hasExplicitColor) {
+      const inferredColorForRich = inferColor(title, color, description);
+      const inferredMaterialForRich = inferMaterial(title, material, description);
+      const richDetails: string[] = [];
+      if (inferredColorForRich) richDetails.push(`Color: ${inferredColorForRich.charAt(0).toUpperCase() + inferredColorForRich.slice(1)}`);
+      if (inferredMaterialForRich && inferredMaterialForRich !== 'premium fabric') richDetails.push(`Fabric: ${inferredMaterialForRich.charAt(0).toUpperCase() + inferredMaterialForRich.slice(1)}`);
+      if (richDetails.length > 0) {
+        return description + '\n\n' + richDetails.join(' | ');
+      }
+    }
     return description;
   }
 
@@ -968,9 +986,20 @@ export function enrichProductDescription(
   const styling = buildStylingParagraph(categoryKey, seed);
   const care = buildCareParagraph(categoryKey, inferredMaterial, seed);
 
+  // Build a product details line — GMC requires explicit Color mention in descriptions
+  // This addresses the GMC recommendation: "Update product descriptions to include details customers are looking for"
+  const detailsParts: string[] = [];
+  if (inferredColor) detailsParts.push(`Color: ${inferredColor.charAt(0).toUpperCase() + inferredColor.slice(1)}`);
+  if (inferredMaterial && inferredMaterial !== 'premium fabric') detailsParts.push(`Fabric: ${inferredMaterial.charAt(0).toUpperCase() + inferredMaterial.slice(1)}`);
+  const template = CATEGORY_TEMPLATES[categoryKey] ?? CATEGORY_TEMPLATES['suit'];
+  if (template.sizes) detailsParts.push(`Sizes: ${template.sizes}`);
+  const detailsLine = detailsParts.length > 0 ? detailsParts.join(' | ') : '';
+
   // Assemble the full enriched description
   const enriched = [
     opening,
+    '',
+    detailsLine,
     '',
     occasion,
     '',
@@ -979,7 +1008,7 @@ export function enrichProductDescription(
     care,
     '',
     SHIPPING_PARAGRAPH,
-  ].join('\n\n');
+  ].filter(Boolean).join('\n\n');
 
   return enriched;
 }
