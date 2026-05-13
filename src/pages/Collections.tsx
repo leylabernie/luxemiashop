@@ -60,6 +60,7 @@ const Collections = () => {
       <SEOHead
         title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia"
         description="Buy Indian ethnic wear online at LuxeMia. Shop our complete collection of bridal lehengas, sarees, salwar kameez, jewelry, menswear & indo-western outfits. Free worldwide shipping."
+        canonical="https://luxemia.shop/collections"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },

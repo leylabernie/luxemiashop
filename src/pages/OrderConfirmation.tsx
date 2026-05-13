@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 
 declare global {
   interface Window {
@@ -112,12 +112,12 @@ const OrderConfirmation = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Order Confirmed — Thank You | LuxeMia"
+        description="Your order has been confirmed. Thank you for shopping at LuxeMia."
+        noIndex={true}
+      />
       <Header />
-      <Helmet>
-        <title>Order Confirmed — Thank You | LuxeMia</title>
-        <meta name="description" content="Your order has been confirmed. Thank you for shopping at LuxeMia." />
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
 
       <main className="pt-[90px] lg:pt-[132px]">
       <div className="min-h-[60vh] flex items-center justify-center px-4 py-16">

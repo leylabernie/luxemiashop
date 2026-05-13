@@ -301,7 +301,7 @@ const Suits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Salwar Kameez Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
-        description="Buy salwar kameez online at LuxeMia. Shop Anarkali suits, Palazzo sets, Sharara suits & Pakistani suits. Free worldwide shipping. Affordable prices for USA, UK & Canada."
+        description="Buy salwar kameez online at LuxeMia. Shop Anarkali suits, Palazzo sets, Sharara suits & Pakistani suits. Free worldwide shipping. Affordable prices for USA & Canada."
         canonical="https://luxemia.shop/suits"
         type="collection"
         image="/og/og-suits.jpg"

@@ -26,7 +26,7 @@ const Lookbook = () => {
       <SEOHead
         title="Lookbook — LuxeMia"
         description="Explore the LuxeMia lookbook. Curated styling inspiration featuring real products — wedding lehengas, sherwanis, sharara suits, and festive ethnic wear."
-        canonical="https://luxemia.shop/collections"
+        canonical="https://luxemia.shop/lookbook"
       />
       <Header />
 

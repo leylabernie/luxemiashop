@@ -275,6 +275,7 @@ const BlogPost = () => {
         title={`${post.title} | LuxeMia Blog`}
         description={post.excerpt}
         image={post.image}
+        canonical={`https://luxemia.shop/blog/${post.slug}`}
       />
       <Helmet>
         <script type="application/ld+json">
