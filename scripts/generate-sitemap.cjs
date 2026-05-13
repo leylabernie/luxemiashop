@@ -17,11 +17,8 @@ const path = require('path');
 
 const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
-const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
+const SHOPIFY_STOREFRONT_TOKEN = 'c98d10d5abd95e6a8d6ddbed223ef4b4';
 
-if (!SHOPIFY_STOREFRONT_TOKEN) {
-  console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN not set — Shopify product fetch will be skipped. Set it in your environment or .env file.');
-}
 // Minimal query — we only need handle, title, image, and updatedAt for sitemap
 const ALL_PRODUCTS_QUERY = `
   query GetAllProducts($first: Int!, $after: String) {
