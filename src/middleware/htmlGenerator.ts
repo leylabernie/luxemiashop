@@ -5,8 +5,8 @@
  * Used by middleware.ts for product page SSR and 404 responses.
  */
 
-import { fetchProductByHandle, ShopifyProduct } from './shopifyProxy';
-import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema';
+import type { ShopifyProduct } from './shopifyProxy.js';
+import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
 
 export function escapeHtml(str: string): string {
   return str
@@ -40,9 +40,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const availability = product.availableForSale !== false ? 'InStock' : 'OutOfStock';
   const vendor = product.vendor || 'LuxeMia';
 
-  const colorOption = product.options?.find(o => o.name?.toLowerCase() === 'color');
-  const materialOption = product.options?.find(o => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
-  const sizeOption = product.options?.find(o => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
+  const colorOption = product.options?.find((o: { name?: string }) => o.name?.toLowerCase() === 'color');
+  const materialOption = product.options?.find((o: { name?: string }) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
+  const sizeOption = product.options?.find((o: { name?: string }) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
   const color = colorOption?.values?.[0];
   const material = materialOption?.values?.[0];
   const sizes = sizeOption?.values || [];
@@ -99,12 +99,12 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     },
   ]);
 
-  const allImages = product.images.edges.map((edge, i) => {
+  const allImages = product.images.edges.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
     const imgSrc = forceJpegForGmc(edge.node.url);
     return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || product.title)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
   });
 
-  const variantOptions = product.variants.edges.slice(0, 5).map(v => {
+  const variantOptions = product.variants.edges.slice(0, 5).map((v: { node: { title: string } }) => {
     const vTitle = v.node.title !== 'Default Title' ? v.node.title : '';
     return vTitle ? `<span style="display:inline-block;padding:4px 12px;margin:2px;border:1px solid #ccc;border-radius:4px;font-size:13px;">${escapeHtml(vTitle)}</span>` : '';
   }).filter(Boolean).join('');

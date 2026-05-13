@@ -1,9 +1,9 @@
 import { rewrite, next } from '@vercel/functions';
-import { isBot } from './src/middleware/botDetection';
-import { fetchProductByHandle } from './src/middleware/shopifyProxy';
-import { generateProductHtml, return404, escapeHtml } from './src/middleware/htmlGenerator';
-import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache';
-import { PRERENDERED_ROUTES } from './src/lib/autoRoutes';
+import { isBot } from './src/middleware/botDetection.js';
+import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
+import { generateProductHtml, return404, escapeHtml } from './src/middleware/htmlGenerator.js';
+import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
+import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
