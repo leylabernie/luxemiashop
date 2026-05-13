@@ -24,7 +24,7 @@ const priceFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-const formatPrice = (amount: string, currency: string) => {
+const formatPrice = (amount: string, _currency: string) => {
   return priceFormatter.format(parseFloat(amount));
 };
 
@@ -35,8 +35,6 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   className = '' 
 }, ref) => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [pinchScale, setPinchScale] = useState(1);

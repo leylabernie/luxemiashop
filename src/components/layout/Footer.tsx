@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Linkedin, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
 
 const footerLinks = {
   shop: [
@@ -36,7 +36,7 @@ const footerLinks = {
   ],
 };
 
-const Footer = forwardRef<HTMLElement>((props, ref) => {
+const Footer = forwardRef<HTMLElement>((_props, ref) => {
   return (
     <footer ref={ref} className="bg-card border-t border-border/50">
       {/* Newsletter Section */}

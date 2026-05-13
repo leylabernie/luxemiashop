@@ -1,5 +1,3 @@
-import { MessageCircle } from 'lucide-react';
-
 const WHATSAPP_URL =
   'https://wa.me/12153419990?text=Hi%2C%20I%20need%20help%20with%20styling%20and%20sizing';
 

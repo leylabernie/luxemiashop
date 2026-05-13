@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export type NecklineOption = 'Round Neck' | 'Deep U-Neck' | 'Square Neck' | 'Sweetheart';
 
 interface NecklineSelectorProps {

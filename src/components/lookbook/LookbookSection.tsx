@@ -11,7 +11,6 @@ interface LookbookSectionProps {
   subtitle: string;
   description: string;
   products: ShopifyProduct[];
-  index: number;
   layout: 'left' | 'right';
 }
 
@@ -20,7 +19,6 @@ const LookbookSection = ({
   subtitle,
   description,
   products,
-  index,
   layout,
 }: LookbookSectionProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);

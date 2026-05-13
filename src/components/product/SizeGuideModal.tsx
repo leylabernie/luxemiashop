@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Ruler, X } from 'lucide-react';
+import { Ruler } from 'lucide-react';
 import {
   Dialog,
   DialogContent,

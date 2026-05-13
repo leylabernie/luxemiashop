@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Maximize2, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';

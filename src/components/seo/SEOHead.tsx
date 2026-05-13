@@ -1,9 +1,15 @@
 import { Helmet } from 'react-helmet-async';
+import {
+  generateProductSchema,
+  generateBreadcrumbSchema,
+  generateFaqSchema,
+  forceJpegForGmc,
+  SITE_URL,
+} from '@/lib/schema';
+import type { FAQItem as SchemaFAQItem } from '@/lib/schema';
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+// Re-export FAQItem for consumers that import it from this module
+export type FAQItem = SchemaFAQItem;
 
 interface CollectionItem {
   id: string;
@@ -75,262 +81,49 @@ const SEOHead = ({
   localBusiness,
   hreflang,
 }: SEOHeadProps) => {
-  const siteUrl = 'https://luxemia.shop';
+  const siteUrl = SITE_URL;
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? `${siteUrl}${window.location.pathname}` : siteUrl);
   
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
-  // Ensure ALL images are JPEG for Google Merchant Center compliance.
-  // GMC only accepts JPEG, PNG, and GIF — WebP/AVIF are REJECTED.
-  // This function forces format=jpg on all CDN URLs that support it,
-  // and ensures no image URL can serve WebP to Google's crawlers.
-  const ensureJpegForGmc = (url: string): string => {
-    if (!url) return url;
-    // Shopify CDN — force format=jpg (remove existing format param first)
-    if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
-      const clean = url.replace(/[&?]format=\w+/g, '');
-      const sep = clean.includes('?') ? '&' : '?';
-      return `${clean}${sep}format=jpg`;
-    }
-    // kesimg CDN — force format=jpg
-    if (url.includes('kesimg.b-cdn.net')) {
-      if (!url.includes('format=')) {
-        const sep = url.includes('?') ? '&' : '?';
-        return `${url}${sep}format=jpg`;
-      }
-      // Replace existing non-jpg format
-      return url.replace(/format=\w+/, 'format=jpg');
-    }
-    // For other URLs without image extension — try format=jpg
-    if (!url.match(/\.(jpg|jpeg|png|gif)(\?|$)/i) && !url.includes('format=')) {
-      const sep = url.includes('?') ? '&' : '?';
-      return `${url}${sep}format=jpg`;
-    }
-    return url;
-  };
+  // Use shared forceJpegForGmc from schema.ts for GMC-safe image URLs
+  const gmcSafeImage = forceJpegForGmc(absoluteImage);
 
-  const gmcSafeImage = ensureJpegForGmc(absoluteImage);
-
-  // Enhanced Product Schema for Google Rich Results.
+  // Product Schema — uses shared generateProductSchema from schema.ts
   // Fallbacks ensure required Merchant Listings fields (image, description,
   // offers.price) are always present even when Shopify data is incomplete.
-  const productImageForSchema = ensureJpegForGmc(product?.image || absoluteImage);
-  const productDescriptionForSchema =
-    (product?.description && product.description.trim().length > 0)
-      ? product.description
-      : `Shop the ${product?.name || 'product'} at LuxeMia — handcrafted Indian ethnic wear with worldwide shipping to USA, Canada, and Australia.`;
-  const productPriceForSchema = product?.originalPrice || product?.price || '0.00';
-  const productCurrencyForSchema = product?.currency || 'USD';
   const productSchema = product
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'Product',
+    ? generateProductSchema({
         name: product.name,
-        image: [productImageForSchema],
-        description: productDescriptionForSchema,
-        sku: product.sku,
-        mpn: product.sku,
+        image: [forceJpegForGmc(product.image || absoluteImage)],
+        description:
+          (product.description && product.description.trim().length > 0)
+            ? product.description
+            : `Shop the ${product.name} at LuxeMia — handcrafted Indian ethnic wear with worldwide shipping to USA, Canada, and Australia.`,
+        sku: product.sku || '',
         url: canonicalUrl,
-        brand: {
-          '@type': 'Brand',
-          name: product.brand || 'LuxeMia',
-        },
-        category: product.category || 'Clothing > Traditional & Ethnic Wear',
-        ...(product.googleProductCategory && { 
-          googleProductCategory: product.googleProductCategory 
-        }),
-        ...(product.color && { color: product.color }),
-        ...(product.material && { material: product.material }),
-        ...(product.sizes && product.sizes.length > 0 && {
-          size: product.sizes.length === 1 ? product.sizes[0] : product.sizes.join('/')
-        }),
-        itemCondition: 'https://schema.org/NewCondition',
-        offers: {
-          '@type': 'Offer',
-          url: canonicalUrl,
-          price: productPriceForSchema,
-          priceCurrency: productCurrencyForSchema,
-          ...(product.originalPrice && product.originalPrice !== product.price && {
-            priceSpecification: {
-              '@type': 'UnitPriceSpecification',
-              priceType: 'https://schema.org/SalePrice',
-              price: product.price,
-              priceCurrency: product.currency,
-              validFrom: new Date().toISOString().split('T')[0],
-              priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            },
-          }),
-          priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          availability: `https://schema.org/${product.availability || 'InStock'}`,
-          itemCondition: 'https://schema.org/NewCondition',
-          seller: {
-            '@type': 'Organization',
-            name: 'Glamour Indian Wear',
-            alternateName: 'LuxeMia',
-          },
-          shippingDetails: [
-            // Free shipping on orders over $350
-            {
-              '@type': 'OfferShippingDetails',
-              name: 'Free Shipping on Orders Over $350 — Readymade',
-              shippingRate: {
-                '@type': 'MonetaryAmount',
-                value: '0',
-                currency: product.currency,
-              },
-              shippingDestination: {
-                '@type': 'DefinedRegion',
-                addressCountry: ['US', 'CA', 'AU'],
-              },
-              deliveryTime: {
-                '@type': 'ShippingDeliveryTime',
-                handlingTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 3,
-                  maxValue: 5,
-                  unitCode: 'DAY',
-                  description: 'Readymade dispatch time',
-                },
-                transitTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 7,
-                  maxValue: 10,
-                  unitCode: 'DAY',
-                  description: 'USPS/UPS/DHL delivery',
-                },
-              },
-            },
-            {
-              '@type': 'OfferShippingDetails',
-              name: 'Free Shipping on Orders Over $350 — Custom/Alterations',
-              shippingRate: {
-                '@type': 'MonetaryAmount',
-                value: '0',
-                currency: product.currency,
-              },
-              shippingDestination: {
-                '@type': 'DefinedRegion',
-                addressCountry: ['US', 'CA', 'AU'],
-              },
-              deliveryTime: {
-                '@type': 'ShippingDeliveryTime',
-                handlingTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 5,
-                  maxValue: 7,
-                  unitCode: 'DAY',
-                  description: 'Custom/alteration dispatch time',
-                },
-                transitTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 7,
-                  maxValue: 10,
-                  unitCode: 'DAY',
-                  description: 'USPS/UPS/DHL delivery',
-                },
-              },
-            },
-            // Flat rate $25 shipping
-            {
-              '@type': 'OfferShippingDetails',
-              name: 'Flat Rate Shipping $25 — Readymade',
-              shippingRate: {
-                '@type': 'MonetaryAmount',
-                value: '25.00',
-                currency: product.currency,
-              },
-              shippingDestination: {
-                '@type': 'DefinedRegion',
-                addressCountry: ['US', 'CA', 'AU'],
-              },
-              deliveryTime: {
-                '@type': 'ShippingDeliveryTime',
-                handlingTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 3,
-                  maxValue: 5,
-                  unitCode: 'DAY',
-                  description: 'Readymade dispatch time',
-                },
-                transitTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 7,
-                  maxValue: 10,
-                  unitCode: 'DAY',
-                  description: 'USPS/UPS/DHL delivery',
-                },
-              },
-            },
-            {
-              '@type': 'OfferShippingDetails',
-              name: 'Flat Rate Shipping $25 — Custom/Alterations',
-              shippingRate: {
-                '@type': 'MonetaryAmount',
-                value: '25.00',
-                currency: product.currency,
-              },
-              shippingDestination: {
-                '@type': 'DefinedRegion',
-                addressCountry: ['US', 'CA', 'AU'],
-              },
-              deliveryTime: {
-                '@type': 'ShippingDeliveryTime',
-                handlingTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 5,
-                  maxValue: 7,
-                  unitCode: 'DAY',
-                  description: 'Custom/alteration dispatch time',
-                },
-                transitTime: {
-                  '@type': 'QuantitativeValue',
-                  minValue: 7,
-                  maxValue: 10,
-                  unitCode: 'DAY',
-                  description: 'USPS/UPS/DHL delivery',
-                },
-              },
-            },
-          ],
-          hasMerchantReturnPolicy: {
-            '@type': 'MerchantReturnPolicy',
-            applicableCountry: 'US',
-            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-            description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
-          },
-        },
-      }
+        brand: product.brand,
+        category: product.category,
+        googleProductCategory: product.googleProductCategory,
+        color: product.color,
+        material: product.material,
+        sizes: product.sizes,
+        price: product.price,
+        compareAtPrice: product.originalPrice || null,
+        currency: product.currency || 'USD',
+        availability: product.availability === 'OutOfStock' ? 'OutOfStock' : 'InStock',
+      })
     : null;
 
-  // Breadcrumb Schema
+  // Breadcrumb Schema — uses shared generateBreadcrumbSchema from schema.ts
   const breadcrumbSchema = breadcrumbs
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: breadcrumbs.map((crumb, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          name: crumb.name,
-          item: `${siteUrl}${crumb.url}`,
-        })),
-      }
+    ? generateBreadcrumbSchema(breadcrumbs)
     : null;
 
-  // FAQ Schema for rich snippets
+  // FAQ Schema — uses shared generateFaqSchema from schema.ts
   const faqSchema = faqs && faqs.length > 0
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqs.map(faq => ({
-          '@type': 'Question',
-          name: faq.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.answer,
-          },
-        })),
-      }
+    ? generateFaqSchema(faqs)
     : null;
 
   // ItemList Schema for collection/category pages (Google Rich Results)
@@ -348,7 +141,7 @@ const SEOHead = ({
             '@type': 'Product',
             '@id': `${siteUrl}/product/${item.url}`,
             name: item.name,
-            image: ensureJpegForGmc(item.image),
+            image: forceJpegForGmc(item.image),
             url: `${siteUrl}/product/${item.url}`,
             offers: {
               '@type': 'Offer',

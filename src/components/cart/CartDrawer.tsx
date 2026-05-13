@@ -8,7 +8,6 @@ import { getOptimizedImage } from '@/lib/imageUtils';
 import EmailCaptureModal from './EmailCaptureModal';
 
 const FREE_SHIPPING_THRESHOLD = 350;
-const FLAT_SHIPPING_RATE = 25;
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -23,7 +22,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
 
-  const formatPrice = (amount: number, currency: string) => {
+  const formatPrice = (amount: number, _currency: string) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
 

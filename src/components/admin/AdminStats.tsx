@@ -11,7 +11,7 @@ const AdminStats = () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated');
 
-      const response = await supabase.functions.invoke('admin-stats', {
+      await supabase.functions.invoke('admin-stats', {
         body: null,
         headers: {
           Authorization: `Bearer ${session.access_token}`,

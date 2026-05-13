@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Truck, ShieldCheck, Scissors, Headphones, Globe, Palette } from 'lucide-react';
+import { ArrowDown, Truck, ShieldCheck, Scissors, Headphones, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';

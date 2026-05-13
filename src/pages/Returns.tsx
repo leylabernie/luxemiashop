@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { XCircle, AlertTriangle, Video, Ruler, Clock, Shield, CheckCircle, Ban, PackageX, Phone, Mail } from 'lucide-react';
+import { XCircle, AlertTriangle, Video, Clock, Shield, CheckCircle, Ban, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';

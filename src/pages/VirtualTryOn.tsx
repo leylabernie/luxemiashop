@@ -44,7 +44,7 @@ const VirtualTryOn = () => {
   const [sareeProducts, setSareeProducts] = useState<SareeProduct[]>([]);
   const [localProductsData, setLocalProductsData] = useState<LocalProduct[]>([]);
   const [suitProductsData, setSuitProductsData] = useState<SuitProduct[]>([]);
-  const [isDataLoading, setIsDataLoading] = useState(true);
+  const [_isDataLoading, setIsDataLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

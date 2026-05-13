@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import type { LocalProduct } from '@/data/localProducts';
 import { Button } from '@/components/ui/button';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
 
 interface SearchResult {
   id: string;

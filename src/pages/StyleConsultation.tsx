@@ -70,7 +70,7 @@ const StyleConsultation = () => {
       setIsSubmitting(true);
       
       // Call the edge function to save the lead
-      const { data, error } = await supabase.functions.invoke('submit-consultation', {
+      const { data: _data, error } = await supabase.functions.invoke('submit-consultation', {
         body: {
           name: formData.name,
           email: formData.email,

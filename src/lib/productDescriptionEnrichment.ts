@@ -898,7 +898,7 @@ function buildStylingParagraph(
  */
 function buildCareParagraph(
   categoryKey: string,
-  material: string,
+  _material: string,
   seed: string,
 ): string {
   const template = CATEGORY_TEMPLATES[categoryKey] ?? CATEGORY_TEMPLATES['suit'];
