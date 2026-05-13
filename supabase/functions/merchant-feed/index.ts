@@ -3,7 +3,11 @@
 // and generates a compliant GMC XML feed with numeric taxonomy IDs
 
 const SHOPIFY_DOMAIN = "lovable-project-zlh0w.myshopify.com";
-const SHOPIFY_STOREFRONT_TOKEN = "c98d10d5abd95e6a8d6ddbed223ef4b4";
+const SHOPIFY_STOREFRONT_TOKEN = Deno.env.get("SHOPIFY_STOREFRONT_TOKEN") || "";
+
+if (!SHOPIFY_STOREFRONT_TOKEN) {
+  console.error("FATAL: SHOPIFY_STOREFRONT_TOKEN environment variable is not set. Set it in Supabase Dashboard > Edge Functions > Secrets.");
+}
 const SHOPIFY_API_VERSION = "2025-07";
 const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
