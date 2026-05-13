@@ -160,8 +160,11 @@ const BlogPost = () => {
   }, [sanitizedContent]);
 
   // Inject IDs into h2 elements of sanitized content
+  // Also inject loading="lazy" and decoding="async" on all inline images
+  // for performance. The featured image (above the fold) is handled
+  // separately with fetchPriority="high", so these inline images are
+  // all below the fold and safe to lazy-load.
   const contentWithIds = useMemo(() => {
-    if (tocItems.length === 0) return sanitizedContent;
     let html = sanitizedContent;
     let h2Index = 0;
     html = html.replace(/<h2([^>]*)>/g, (_match, attrs) => {
@@ -171,8 +174,10 @@ const BlogPost = () => {
       h2Index++;
       return `<h2 id="${id}"${attrs}>`;
     });
+    // Inject lazy loading on inline <img> tags that don't already have it
+    html = html.replace(/<img\s+(?![^>]*loading=)/g, '<img loading="lazy" decoding="async" ');
     return html;
-  }, [sanitizedContent, tocItems]);
+  }, [sanitizedContent]);
 
   // Estimate word count from stripped content
   const plainTextContent = stripHtml(post.content);
