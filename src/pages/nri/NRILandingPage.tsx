@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, Shield, Clock, ChevronDown } from 'lucide-react';
+import { Truck, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -48,7 +48,7 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
         faqs={config.faqs}
         hreflang={[
           { lang: 'en-US', href: 'https://luxemia.shop/indian-ethnic-wear-usa' },
-          { lang: 'en-GB', href: 'https://luxemia.shop/indian-ethnic-wear-uk' },
+          { lang: 'en-GB', href: 'https://luxemia.shop/nri' },
           { lang: 'en-CA', href: 'https://luxemia.shop/indian-ethnic-wear-canada' },
           { lang: 'x-default', href: 'https://luxemia.shop/' },
         ]}

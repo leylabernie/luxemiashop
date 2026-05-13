@@ -60,7 +60,6 @@ export const staticPages = [
   { loc: '/style-quiz', changefreq: 'monthly', priority: '0.6', title: 'Style Quiz' },
   { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'NRI' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
-  { loc: '/indian-ethnic-wear-uk', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear UK' },
   { loc: '/indian-ethnic-wear-canada', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear Canada' },
 ];
 
