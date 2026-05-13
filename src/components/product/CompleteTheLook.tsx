@@ -185,6 +185,8 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
                   <img
                     src={getOptimizedImage(product.node.images.edges[0].node.url, 'card')}
                     alt={product.node.images.edges[0].node.altText || product.node.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 ) : (

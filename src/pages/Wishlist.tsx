@@ -182,6 +182,8 @@ const Wishlist = () => {
                             <img
                               src={firstImage.url}
                               alt={firstImage.altText || product.node.title}
+                              loading="lazy"
+                              decoding="async"
                               className="w-full h-full object-cover"
                             />
                           ) : (

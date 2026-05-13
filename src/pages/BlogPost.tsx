@@ -377,10 +377,10 @@ const BlogPost = () => {
 
               {/* Featured Image */}
               <div className="aspect-[16/9] rounded-lg overflow-hidden mb-6">
-                <img 
-                  src={post.image} 
+                <img
+                  src={post.image}
                   alt={post.title}
-                  loading="lazy"
+                  fetchPriority="high"
                   decoding="async"
                   className="w-full h-full object-cover"
                 />

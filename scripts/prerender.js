@@ -134,7 +134,7 @@ const routes = [
   },
   {
        path: '/suits',
-    title: 'Salwar Kameez & Designer Suits Online | Sharara, Anarkali, Palazzo for Women - LuxeMia',
+    title: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
     description: 'Shop elegant Salwar Kameez, designer suits, sharara sets, anarkali & palazzo suits online at LuxeMia. Premium fabrics, handcrafted embroidery. Free shipping to USA, Canada & Australia. Latest 2026 trends.',
     h1: 'Salwar Kameez & Designer Suits Collection',
     content: `
@@ -145,7 +145,7 @@ const routes = [
   },
   {
     path: '/lehengas',
-    title: 'Designer Lehengas & Bridal Lehenga Choli Online | Wedding Lehengas for NRI - LuxeMia',
+    title: 'Lehengas Collection | Bridal & Wedding Lehengas Online | LuxeMia',
     description: 'Shop designer lehengas & bridal lehenga choli at LuxeMia. Handcrafted wedding & party wear lehengas. Premium silk, net & velvet. Free shipping on orders over $350 to USA, Canada & Australia. Latest 2026 trends.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
     content: `
@@ -160,7 +160,7 @@ const routes = [
   },
   {
     path: '/sarees',
-    title: 'Designer Sarees Online — Silk, Banarasi, Wedding & Pre-Draped Sarees | LuxeMia',
+    title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
     description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with shipping to USA, Canada & Australia. Authentic Indian handloom sarees & 2026 trends.',
     h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
     content: `
@@ -176,7 +176,7 @@ const routes = [
   },
   {
     path: '/menswear',
-    title: 'Indian Menswear — Sherwanis, Kurta Sets, Indo-Western & Modi Jackets | LuxeMia',
+    title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
     description: 'Shop Indian menswear at LuxeMia. Designer sherwanis, kurta sets, Indo-western wear & Modi jackets for grooms & weddings. Premium fabrics, expert tailoring. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
     content: `
@@ -189,7 +189,7 @@ const routes = [
   },
   {
     path: '/blog',
-    title: 'Indian Wedding Dress Guide: Bridal Lehenga Tips & Trends 2026',
+    title: 'Blog | Indian Fashion Tips & Ethnic Wear Guides | LuxeMia',
     description: 'Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion. Get insider tips from top stylists. Read now!',
     h1: 'LuxeMia Blog — Indian Wedding & Ethnic Fashion Guide',
     content: `
@@ -248,21 +248,21 @@ const routes = [
   },
   {
     path: '/blog/indian-wedding-dress-complete-guide',
-    title: 'Indian Wedding Dress Complete Guide — Bridal Outfits for Every Ceremony | LuxeMia',
+    title: 'Indian Wedding Dress Complete Guide | LuxeMia Blog',
     description: 'The complete guide to Indian wedding dresses. Bridal lehengas, wedding sarees, reception outfits & guest attire. Everything you need to know.',
     h1: 'Indian Wedding Dress Complete Guide',
     content: '<p>The complete guide to Indian wedding dresses. From bridal lehengas to wedding sarees, reception outfits to guest attire — everything you need to plan your wedding wardrobe.</p>',
   },
   {
     path: '/blog/red-bridal-lehenga-trends-2026',
-    title: 'Red Bridal Lehenga Trends 2026 — Designer Styles & Inspiration | LuxeMia',
+    title: 'Red Bridal Lehenga Trends 2026 | LuxeMia Blog',
     description: 'Discover the hottest red bridal lehenga trends for 2026. From classic crimson to modern scarlet, find your dream wedding lehenga.',
     h1: 'Red Bridal Lehenga Trends 2026',
     content: '<p>Discover the hottest red bridal lehenga trends for 2026. From classic crimson to modern scarlet, explore designer styles and find inspiration for your dream wedding lehenga.</p>',
   },
   {
     path: '/collections',
-    title: 'All Collections — Curated Indian Ethnic Wear | LuxeMia',
+    title: 'All Collections | Indian Ethnic Wear | LuxeMia',
     description: 'Browse all LuxeMia collections. Bridal lehengas, wedding sarees, reception outfits, festive wear & more. Curated for every occasion.',
     h1: 'All Collections',
     content: `
@@ -277,7 +277,7 @@ const routes = [
   },
   {
     path: '/products',
-    title: 'All Products — Shop Indian Ethnic Wear Online | LuxeMia',
+    title: 'All Products | Shop Indian Ethnic Wear Online | LuxeMia',
     description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free shipping to USA, Canada & Australia.',
     h1: 'All Products',
     content: `
@@ -289,28 +289,28 @@ const routes = [
   },
   {
     path: '/collections/bridal-lehengas',
-    title: 'Bridal Lehenga Collection — Designer Wedding Lehengas | LuxeMia',
+    title: 'Bridal Lehenga Collection | Designer Wedding Lehengas | LuxeMia',
     description: 'Shop bridal lehengas at LuxeMia. Designer bridal lehenga choli in silk, velvet & net. Handcrafted embroidery, luxurious fabrics. Free shipping.',
     h1: 'Bridal Lehenga Collection',
     content: '<p>Discover our stunning bridal lehenga collection. Each piece is handcrafted with intricate embroidery on premium silk, velvet, and net fabrics. Find your dream bridal lehenga.</p>',
   },
   {
     path: '/collections/wedding-sarees',
-    title: 'Wedding Saree Collection — Silk & Designer Sarees | LuxeMia',
+    title: 'Wedding Saree Collection | Silk & Designer Sarees | LuxeMia',
     description: 'Shop wedding sarees at LuxeMia. Banarasi silk, Kanjeevaram & designer wedding sarees. Traditional craftsmanship, modern elegance. Free shipping.',
     h1: 'Wedding Saree Collection',
     content: '<p>Explore our curated wedding saree collection. From Banarasi silk to Kanjeevaram, each saree combines traditional craftsmanship with modern elegance for your special day.</p>',
   },
   {
     path: '/collections/reception-outfits',
-    title: 'Reception Outfits — Glamorous Party Wear | LuxeMia',
+    title: 'Reception Outfits | Glamorous Party Wear | LuxeMia',
     description: 'Shop reception outfits at LuxeMia. Glamorous gowns, designer lehengas & contemporary ethnic wear for wedding receptions. Stand out at every event.',
     h1: 'Reception Outfits Collection',
     content: '<p>Make a statement at wedding receptions with our glamorous collection. Designer lehengas, contemporary gowns, and elegant ethnic wear for the modern woman.</p>',
   },
   {
     path: '/collections/festive-wear',
-    title: 'Festive Wear Collection — Diwali, Eid & Celebration Outfits | LuxeMia',
+    title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
     h1: 'Festive Wear Collection',
     content: '<p>Celebrate every occasion in style with our festive wear collection. Beautiful sarees, lehengas, and suits perfect for Diwali, Eid, Navratri, and all your special celebrations.</p>',

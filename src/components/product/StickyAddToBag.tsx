@@ -60,6 +60,8 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
               <img
                 src={getOptimizedImage(imageUrl, 'thumbnail')}
                 alt={product.title}
+                loading="lazy"
+                decoding="async"
                 className="w-12 h-14 object-cover rounded-sm flex-shrink-0"
               />
             )}

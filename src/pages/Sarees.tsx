@@ -115,7 +115,7 @@ const Sarees = () => {
               src={getOptimizedImage("/images/banners/saree-banner.jpg", 'hero')}
               alt="Saree Collection"
               className="absolute inset-0 w-full h-full object-cover object-top"
-              loading="lazy"
+              fetchPriority="high"
               decoding="async"
             />
           </picture>

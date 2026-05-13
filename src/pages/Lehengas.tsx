@@ -280,7 +280,7 @@ const Lehengas = () => {
               src={getOptimizedImage("/images/banners/lehenga-banner.jpg", 'hero')}
               alt="Lehenga Collection"
               className="absolute inset-0 w-full h-full object-cover object-top"
-              loading="lazy"
+              fetchPriority="high"
               decoding="async"
             />
           </picture>

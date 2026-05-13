@@ -265,7 +265,7 @@ const Menswear = () => {
               src={getOptimizedImage("/images/banners/menswear-banner.jpg", 'hero')}
               alt="Menswear Collection"
               className="absolute inset-0 w-full h-full object-cover object-top"
-              loading="lazy"
+              fetchPriority="high"
               decoding="async"
             />
           </picture>

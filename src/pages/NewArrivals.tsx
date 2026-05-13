@@ -52,7 +52,7 @@ const NewArrivals = () => {
               src="/images/banners/saree-banner.jpg"
               alt="New Arrivals Collection"
               className="absolute inset-0 w-full h-full object-cover object-center"
-              loading="lazy"
+              fetchPriority="high"
               decoding="async"
             />
           </picture>

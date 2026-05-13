@@ -117,7 +117,8 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow, max-image-preview:large">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
   <meta name="author" content="LuxeMia">
   <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY">

@@ -327,7 +327,7 @@ const Suits = () => {
               src={getOptimizedImage("/images/banners/suit-banner.jpg", 'hero')}
               alt="Salwar Kameez Collection"
               className="absolute inset-0 w-full h-full object-cover object-top"
-              loading="lazy"
+              fetchPriority="high"
               decoding="async"
             />
           </picture>

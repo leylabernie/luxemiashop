@@ -67,6 +67,8 @@ const ShoppableHotspot = ({
                 <img
                   src={productImage}
                   alt={productName}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               ) : (
