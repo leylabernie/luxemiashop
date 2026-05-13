@@ -427,7 +427,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   }
 }
 
-export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string> {
+export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string | null> {
    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
   // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
   const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
