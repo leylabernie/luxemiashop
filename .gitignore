@@ -50,3 +50,6 @@ IMPLEMENTATION_ROADMAP.md
 # Generated merchant feed (12MB+ — generated at build time, not committed)
 public/merchant-feed.xml
 
+# CSV data files (not web assets — keep them out of public/)
+public/*.csv
+
