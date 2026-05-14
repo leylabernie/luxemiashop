@@ -19,14 +19,14 @@ const occasions = [
   {
     label: 'Reception',
     sublabel: 'Evening glamour',
-    href: '/collections',
+    href: '/collections/wedding-guest-outfits',
     color: 'bg-indigo-50 dark:bg-indigo-950/30',
     accent: 'text-indigo-700 dark:text-indigo-300',
   },
   {
     label: 'Haldi & Mehendi',
     sublabel: 'Vibrant ceremony wear',
-    href: '/collections',
+    href: '/collections/mehendi-outfits',
     color: 'bg-yellow-50 dark:bg-yellow-950/30',
     accent: 'text-yellow-700 dark:text-yellow-300',
   },
@@ -40,14 +40,14 @@ const occasions = [
   {
     label: 'Wedding Guest',
     sublabel: 'Stand out at every shaadi',
-    href: '/collections',
+    href: '/collections/wedding-guest-outfits',
     color: 'bg-amber-50 dark:bg-amber-950/30',
     accent: 'text-amber-700 dark:text-amber-300',
   },
   {
     label: 'Festive',
     sublabel: 'Diwali, Eid & more',
-    href: '/collections',
+    href: '/collections/diwali-outfits',
     color: 'bg-orange-50 dark:bg-orange-950/30',
     accent: 'text-orange-700 dark:text-orange-300',
   },
