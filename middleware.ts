@@ -58,6 +58,16 @@ export default async function middleware(request: Request) {
   const url = new URL(request.url);
   const { pathname } = url;
 
+  // ── Canonical domain: redirect www → non-www (308 permanent) ──────────────
+  // All canonical URLs in prerendered HTML and sitemap use https://luxemia.shop
+  // (non-www). Consolidating ensures GSC treats them as one property and avoids
+  // duplicate-content signals across the two versions.
+  if (url.hostname === 'www.luxemia.shop') {
+    const canonical = new URL(request.url);
+    canonical.hostname = 'luxemia.shop';
+    return Response.redirect(canonical.toString(), 308);
+  }
+
   // Skip non-page requests (static files, API, etc.)
   if (
     pathname.startsWith('/_prerender') ||
