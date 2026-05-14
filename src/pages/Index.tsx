@@ -141,6 +141,8 @@ const Index = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <NewArrivalsBanner />
         <FlashSaleBanner />
+        {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
+        <h1 className="sr-only">Indian Ethnic Wear Online — Bridal Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
         <HeroSection />
 
         {/* Shipping Info Banner */}

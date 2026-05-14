@@ -124,6 +124,22 @@ const NewArrivals = () => {
           )}
         </section>
       </main>
+
+      {/* SEO section — keyword content for Google crawlers */}
+      <section className="border-t border-border/50 bg-card/20 py-12">
+        <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
+          <h2 className="font-serif text-xl mb-4">Latest Indian Ethnic Wear — Freshly Arrived at LuxeMia</h2>
+          <div className="text-sm text-muted-foreground space-y-3 leading-relaxed">
+            <p>
+              Our new arrivals are curated weekly from India's leading fabric markets and artisan workshops. Each new drop includes <strong>bridal lehengas</strong>, <strong>embroidered sarees</strong>, <strong>designer salwar kameez sets</strong>, <strong>party wear anarkalis</strong>, and <strong>men's sherwanis</strong> for upcoming wedding and festive seasons. Pieces are sourced from Surat, Varanasi, Jaipur, and Lucknow — the heart of India's textile industry.
+            </p>
+            <p>
+              Whether you're shopping for a <strong>Diwali outfit</strong>, a <strong>wedding guest look</strong>, or the perfect <strong>bridal ensemble</strong> for a USA or Canada wedding, our new arrivals section is updated regularly with fresh styles at competitive prices. <strong>Free shipping on orders over $350</strong> to the USA, Canada, and Australia.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
