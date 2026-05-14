@@ -85,13 +85,15 @@ export default async function middleware(request: Request) {
   }
 
   // 308 Permanent Redirect for canonical URL aliases
-  // /privacy-policy → /privacy, /terms-of-service → /terms
-  // These were in PRERENDERED_ROUTES but have no prerendered HTML file.
   if (pathname === '/privacy-policy') {
     return Response.redirect(new URL('/privacy', request.url).toString(), 308);
   }
   if (pathname === '/terms-of-service') {
     return Response.redirect(new URL('/terms', request.url).toString(), 308);
+  }
+  // /products has no React route — redirect to /collections to prevent soft 404
+  if (pathname === '/products') {
+    return Response.redirect(new URL('/collections', request.url).toString(), 308);
   }
 
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
