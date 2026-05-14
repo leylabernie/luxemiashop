@@ -20,9 +20,11 @@ export interface ShopifyProduct {
   options: Array<{ name: string; values: string[] }>;
 }
 
+// productByHandle was deprecated in Shopify Storefront API 2022-04 and removed in 2024+.
+// Use product(handle:) instead.
 const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
-    productByHandle(handle: $handle) {
+    product(handle: $handle) {
       id title description handle vendor productType tags availableForSale
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount currencyCode } }
@@ -59,7 +61,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
     if (!response.ok) return null;
 
     const data = await response.json();
-    const product = data?.data?.productByHandle || null;
+    const product = data?.data?.product || null;
 
     productCache.set(handle, { data: product, timestamp: Date.now() });
     return product;
