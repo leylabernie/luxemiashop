@@ -30,7 +30,8 @@ interface CartStore {
   cartId: string | null;
   checkoutUrl: string | null;
   isLoading: boolean;
-  
+  isCartOpen: boolean;
+
   addItem: (item: CartItem) => void;
   updateQuantity: (variantId: string, quantity: number, customAttributes?: any[]) => void;
   removeItem: (variantId: string, customAttributes?: any[]) => void;
@@ -38,6 +39,8 @@ interface CartStore {
   setCartId: (cartId: string) => void;
   setCheckoutUrl: (url: string) => void;
   setLoading: (loading: boolean) => void;
+  openCart: () => void;
+  closeCart: () => void;
   createCheckout: () => Promise<string | null>;
 }
 
@@ -48,6 +51,7 @@ export const useCartStore = create<CartStore>()(
       cartId: null,
       checkoutUrl: null,
       isLoading: false,
+      isCartOpen: false,
 
       addItem: (item) => {
         const { items } = get();
@@ -115,6 +119,8 @@ export const useCartStore = create<CartStore>()(
       setCartId: (cartId) => set({ cartId }),
       setCheckoutUrl: (checkoutUrl) => set({ checkoutUrl }),
       setLoading: (isLoading) => set({ isLoading }),
+      openCart: () => set({ isCartOpen: true }),
+      closeCart: () => set({ isCartOpen: false }),
 
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();
@@ -172,6 +178,11 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'shopify-cart',
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        items: state.items,
+        cartId: state.cartId,
+        checkoutUrl: state.checkoutUrl,
+      }),
       onRehydrateStorage: () => (state) => {
         // Clear persisted cart data if it contains stale checkout URLs from
         // a previous hosting provider. Broken URLs would prevent checkout.
