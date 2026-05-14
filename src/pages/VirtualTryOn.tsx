@@ -247,6 +247,7 @@ const VirtualTryOn = () => {
         title="Virtual Try-On — LuxeMia"
         description="Try on LuxeMia's luxury Indian ethnic wear virtually. Upload your photo and preview sarees, lehengas, and suits with our AI-powered virtual try-on."
         canonical="https://luxemia.shop/virtual-try-on"
+        noIndex={true}
       />
       <Header />
       
