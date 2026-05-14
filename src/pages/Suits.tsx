@@ -8,6 +8,12 @@ import SEOHead from '@/components/seo/SEOHead';
 import { ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { Button } from '@/components/ui/button';
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -467,6 +473,24 @@ const Suits = () => {
           </div>
         </div>
       </main>
+
+      <section className="border-t border-border bg-card/30 py-14">
+        <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
+          <h2 className="font-serif text-2xl mb-8 text-center">Frequently Asked Questions — Indian Suits</h2>
+          <Accordion type="single" collapsible className="space-y-3">
+            {suitFaqs.map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-lg px-5">
+                <AccordionTrigger className="text-sm font-medium text-left hover:no-underline py-4">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground pb-4">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
 
       <Footer />
     </div>
