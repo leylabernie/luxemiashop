@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -211,6 +211,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   );
   const [showStitchingInfo, setShowStitchingInfo] = useState<string | null>(null);
   const addItem = useCartStore((state) => state.addItem);
+  const openCart = useCartStore((state) => state.openCart);
 
   // Find the matching variant based on selected options
   const selectedVariant = product.variants.edges.find((variant) => {
@@ -447,10 +448,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsAdding(false);
-
-    toast.success('Added to bag', {
-      description: `${product.title} has been added to your shopping bag.`,
-    });
+    openCart();
   };
 
   const formatPrice = (amount: string, currency: string) => {
@@ -758,6 +756,13 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
+        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free shipping over $350</span>
+        <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
+        <span className="flex items-center gap-1"><Award className="h-3.5 w-3.5" />Quality inspected</span>
       </div>
 
       {/* Add to Cart */}

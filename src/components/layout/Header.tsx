@@ -40,13 +40,15 @@ const secondaryLinks = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
 
   const wishlistItems = useWishlistStore(state => state.items);
   const loadFromDatabase = useWishlistStore(state => state.loadFromDatabase);
   const cartItems = useCartStore(state => state.items);
+  const isCartOpen = useCartStore(state => state.isCartOpen);
+  const openCart = useCartStore(state => state.openCart);
+  const closeCart = useCartStore(state => state.closeCart);
   const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const { user, signOut, loading } = useAuth();
@@ -205,7 +207,7 @@ const Header = () => {
               )}
 
               <button
-                onClick={() => setIsCartOpen(true)}
+                onClick={() => openCart()}
                 className="relative p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-card rounded-full transition-colors"
                 aria-label="Cart"
                 data-testid="cart-open"
@@ -345,7 +347,7 @@ const Header = () => {
       </AnimatePresence>
 
       {/* Cart Drawer */}
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
     </>
   );
 };

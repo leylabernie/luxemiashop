@@ -4,7 +4,6 @@ import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import { getOptimizedImage } from '@/lib/imageUtils';
-import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 interface StickyAddToBagProps {
@@ -14,10 +13,11 @@ interface StickyAddToBagProps {
 const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const addItem = useCartStore(state => state.addItem);
+  const openCart = useCartStore(state => state.openCart);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 500);
+      setIsVisible(window.scrollY > 300);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -41,7 +41,7 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
       quantity: 1,
       selectedOptions: firstVariant.selectedOptions,
     });
-    toast.success('Added to bag', { description: product.title });
+    openCart();
   };
 
   return (
