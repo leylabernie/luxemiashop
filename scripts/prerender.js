@@ -1345,10 +1345,11 @@ function generateHtml(template, route) {
     html = html.replace('</head>', `${structuredDataScripts}\n</head>`);
   }
 
-  // Inject SEO content into the body (visible to bots, hidden with CSS for SPA users)
-  // The React app mounts over this once JS loads
+  // Inject SEO content into the body. This content is visible to search engine crawlers
+  // and accessible to screen readers. JavaScript removes it once React has mounted
+  // so regular users see only the React-rendered UI (no duplicate content).
   const seoContent = `
-    <div id="seo-prerender" style="position:absolute;left:-9999px;overflow:hidden">
+    <div id="seo-prerender">
       <h1>${escapeHtml(route.h1)}</h1>
       ${route.content}
       <nav aria-label="Site navigation">
@@ -1361,7 +1362,27 @@ function generateHtml(template, route) {
         <a href="/collections">Collections</a> |
         <a href="/contact">Contact</a>
       </nav>
-    </div>`;
+    </div>
+    <script>
+      (function(){
+        var root = document.getElementById('root');
+        var seo = document.getElementById('seo-prerender');
+        if (!root || !seo) return;
+        // Remove once React has populated #root (MutationObserver fires on first child added)
+        var obs = new MutationObserver(function() {
+          obs.disconnect();
+          var p = document.getElementById('seo-prerender');
+          if (p) p.remove();
+        });
+        obs.observe(root, { childList: true });
+        // Safety fallback in case observer misses the mutation
+        setTimeout(function() {
+          obs.disconnect();
+          var p = document.getElementById('seo-prerender');
+          if (p) p.remove();
+        }, 5000);
+      })();
+    </script>`;
 
   html = html.replace(
     '<div id="root"></div>',
@@ -1432,6 +1453,7 @@ async function main() {
   console.log(`[prerender] Total /product/* routes after Shopify merge: ${routes.filter(r => r.path.startsWith('/product/')).length}`);
 
   let count = 0;
+  let productCount = 0;
   for (const route of routes) {
     const html = generateHtml(template, route);
 
@@ -1451,9 +1473,33 @@ async function main() {
 
     fs.writeFileSync(outFile, html);
     count++;
+    if (route.path.startsWith('/product/')) productCount++;
   }
 
-  console.log(`Pre-rendered ${count} routes to ${prerenderDir}/`);
+  console.log(`[prerender] Pre-rendered ${count} total routes to ${prerenderDir}/`);
+  console.log(`[prerender] Product pages: ${productCount}`);
+  console.log(`[prerender] Static/blog pages: ${count - productCount}`);
+
+  // Fail the build loudly if Shopify fetch returned no products.
+  // This prevents deploying a site where every product page returns an empty SPA shell.
+  if (SHOPIFY_STOREFRONT_TOKEN && productCount < 10) {
+    console.error(`\n[prerender] CRITICAL BUILD FAILURE`);
+    console.error(`[prerender] Only ${productCount} product HTML files generated but SHOPIFY_STOREFRONT_TOKEN is set.`);
+    console.error(`[prerender] This means the Shopify Storefront API returned 0 products.`);
+    console.error(`[prerender] Possible causes:`);
+    console.error(`[prerender]   - SHOPIFY_STOREFRONT_TOKEN is set but invalid or expired`);
+    console.error(`[prerender]   - Shopify store has no published products`);
+    console.error(`[prerender]   - Shopify API rate limit hit`);
+    console.error(`[prerender]   - Network error connecting to Shopify`);
+    console.error(`[prerender] Fix: verify the token at Vercel → Project → Settings → Environment Variables`);
+    process.exit(1);
+  }
+
+  if (!SHOPIFY_STOREFRONT_TOKEN) {
+    console.warn(`\n[prerender] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set.`);
+    console.warn(`[prerender] Only ${productCount} hardcoded product pages were generated.`);
+    console.warn(`[prerender] Set SHOPIFY_STOREFRONT_TOKEN in Vercel environment variables to prerender all products.`);
+  }
 }
 
 main().catch(err => {

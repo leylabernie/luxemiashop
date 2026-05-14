@@ -3,7 +3,7 @@ import { isBot } from './src/middleware/botDetection.js';
 import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
 import { generateProductHtml, return404, escapeHtml } from './src/middleware/htmlGenerator.js';
 import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
-import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
+import { PRERENDERED_ROUTES, PRERENDERED_PRODUCT_HANDLES } from './src/lib/autoRoutes.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -73,29 +73,17 @@ export default async function middleware(request: Request) {
     return Response.redirect(new URL('/nri', request.url).toString(), 308);
   }
 
-  // Product pages are prerendered for EVERY Shopify product at build time
-  // (see scripts/prerender.js — fetches all products from the Storefront API
-  // and emits one HTML file per /product/<handle>). Serve that prerendered
-  // HTML to ALL clients — bots and humans — so the initial HTML always
-  // contains valid Product JSON-LD with image, description, offers.price,
-  // offers.priceCurrency, offers.availability, canonical url, and brand.
-  // React hydrates over the same <div id="root"> after JS loads.
+  // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
+  // a prerendered file exists for this handle. PRERENDERED_PRODUCT_HANDLES is a
+  // Set compiled into the middleware bundle at build time by generate-routes.cjs,
+  // so we avoid any self-HTTP HEAD requests — zero extra latency, zero failure modes.
   //
-  // For bots that hit a handle missing from the build (e.g. a product added
-  // to Shopify between deploys), we still fall through to the dynamic SSR
-  // path further below, which fetches live product data from Shopify.
+  // Handles NOT in the set (products added to Shopify after the last deploy) fall
+  // through to the bot-SSR path (live Shopify fetch) or the SPA shell for humans.
   if (pathname.startsWith('/product/')) {
     const handle = pathname.replace('/product/', '');
-    if (handle && !handle.includes('/')) {
-      const prerenderUrl = new URL(`/_prerender/product/${handle}.html`, request.url);
-      try {
-        const head = await fetch(prerenderUrl.toString(), { method: 'HEAD' });
-        if (head.ok) {
-          return rewrite(prerenderUrl);
-        }
-      } catch {
-        // fall through to bot SSR / SPA shell
-      }
+    if (handle && !handle.includes('/') && PRERENDERED_PRODUCT_HANDLES.has(handle)) {
+      return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
     }
   }
 
