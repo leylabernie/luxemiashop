@@ -1348,10 +1348,77 @@ function generateHtml(template, route) {
   // Inject SEO content into the body. This content is visible to search engine crawlers
   // and accessible to screen readers. JavaScript removes it once React has mounted
   // so regular users see only the React-rendered UI (no duplicate content).
+
+  // For product pages with live Shopify data, generate rich visible content:
+  // price, image, full description, product details, shipping info.
+  // This is the key fix for Google's "thin content" / "crawled but not indexed" signal.
+  let mainBodyContent;
+  if (route.path.startsWith('/product/') && route.product) {
+    const p = route.product;
+    const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
+    const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
+    const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
+    const isAvailable = p.availableForSale !== false;
+    const images = p.images?.edges?.map(e => e.node) || [];
+    const description = (p.description || '').trim();
+    const productType = (p.productType || '').trim();
+    const vendor = (p.vendor || '').trim();
+    const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
+
+    let priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
+    if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
+      priceHtml += ` <s style="color:#888">${currency} ${parseFloat(comparePrice).toFixed(2)}</s>`;
+    }
+
+    // Category link based on product type
+    const typeLower = productType.toLowerCase();
+    let categoryLink = '/products';
+    let categoryLabel = 'All Products';
+    if (typeLower.includes('lehenga')) { categoryLink = '/lehengas'; categoryLabel = 'All Lehengas'; }
+    else if (typeLower.includes('saree') || typeLower.includes('sari')) { categoryLink = '/sarees'; categoryLabel = 'All Sarees'; }
+    else if (typeLower.includes('suit') || typeLower.includes('kameez') || typeLower.includes('palazzo') || typeLower.includes('sharara') || typeLower.includes('anarkali') || typeLower.includes('patiala')) { categoryLink = '/suits'; categoryLabel = 'All Suits'; }
+    else if (typeLower.includes('sherwani') || typeLower.includes('kurta') || typeLower.includes('menswear')) { categoryLink = '/menswear'; categoryLabel = 'All Menswear'; }
+
+    const firstImage = images[0];
+    const imgHtml = firstImage
+      ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || route.h1)}" width="600" loading="lazy" style="max-width:100%;height:auto;display:block;margin:12px 0">`
+      : '';
+
+    const descHtml = description
+      ? `<h2>Product Description</h2><p>${escapeHtml(description).slice(0, 2000)}</p>`
+      : '';
+
+    const detailRows = [
+      productType ? `<li><strong>Type:</strong> ${escapeHtml(productType)}</li>` : '',
+      `<li><strong>Brand:</strong> ${escapeHtml(brandName)}</li>`,
+      `<li><strong>Availability:</strong> ${isAvailable ? 'In Stock' : 'Currently Unavailable'}</li>`,
+      `<li><strong>Ships to:</strong> USA, Canada, Australia</li>`,
+      `<li><strong>Standard delivery:</strong> 7–10 business days</li>`,
+      `<li><strong>Express delivery:</strong> 3–5 business days</li>`,
+      `<li><strong>Custom sizing:</strong> Available on request</li>`,
+    ].filter(Boolean).join('\n        ');
+
+    mainBodyContent = `
+      <h1>${escapeHtml(route.h1)}</h1>
+      <p>Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p>
+      ${imgHtml}
+      ${descHtml}
+      <h2>Product Details</h2>
+      <ul>
+        ${detailRows}
+      </ul>
+      <h2>Shipping &amp; Delivery</h2>
+      <p>Free standard shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. All orders ship with full DHL Express tracking. Standard delivery: 7–10 business days. Express (3–5 days) available at checkout.</p>
+      <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/products">All Products</a> | <a href="/collections">Collections</a></p>`;
+  } else {
+    mainBodyContent = `
+      <h1>${escapeHtml(route.h1)}</h1>
+      ${route.content}`;
+  }
+
   const seoContent = `
     <div id="seo-prerender">
-      <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}
+      ${mainBodyContent}
       <nav aria-label="Site navigation">
         <a href="/">Home</a> |
         <a href="/lehengas">Lehengas</a> |

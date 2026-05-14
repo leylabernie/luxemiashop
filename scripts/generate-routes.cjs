@@ -56,6 +56,7 @@ const STATIC_ROUTES = [
   '/nri/usa',
   '/nri/canada',
   '/indian-ethnic-wear-usa',
+  '/indian-ethnic-wear-canada',
   '/style-consultation',
   '/style-quiz',
   '/size-guide',
@@ -69,9 +70,7 @@ const STATIC_ROUTES = [
   '/virtual-try-on',
   '/products',
   '/privacy',
-  '/privacy-policy',
   '/terms',
-  '/terms-of-service',
   '/press',
 ];
 

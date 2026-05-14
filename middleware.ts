@@ -74,6 +74,16 @@ export default async function middleware(request: Request) {
     return Response.redirect(new URL('/nri', request.url).toString(), 308);
   }
 
+  // 308 Permanent Redirect for canonical URL aliases
+  // /privacy-policy → /privacy, /terms-of-service → /terms
+  // These were in PRERENDERED_ROUTES but have no prerendered HTML file.
+  if (pathname === '/privacy-policy') {
+    return Response.redirect(new URL('/privacy', request.url).toString(), 308);
+  }
+  if (pathname === '/terms-of-service') {
+    return Response.redirect(new URL('/terms', request.url).toString(), 308);
+  }
+
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
   // a prerendered file exists for this handle. PRERENDERED_PRODUCT_HANDLES is a
   // Set compiled into the middleware bundle at build time by generate-routes.cjs,
