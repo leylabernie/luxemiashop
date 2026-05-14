@@ -3,7 +3,8 @@ import { isBot } from './src/middleware/botDetection.js';
 import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
 import { generateProductHtml, return404, escapeHtml } from './src/middleware/htmlGenerator.js';
 import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
-import { PRERENDERED_ROUTES, PRERENDERED_PRODUCT_HANDLES } from './src/lib/autoRoutes.js';
+import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
+import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
