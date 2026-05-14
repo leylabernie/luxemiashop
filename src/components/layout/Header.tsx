@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
+import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight, ChevronDown } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
@@ -35,7 +35,14 @@ const secondaryLinks = [
   { name: 'Bestsellers', href: '/bestsellers' },
   { name: 'Bridal', href: '/lehengas' },
   { name: 'Wedding Sarees', href: '/sarees' },
-  { name: 'Festive Wear', href: '/collections' },
+];
+
+const occasionLinks = [
+  { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },
+  { name: 'Wedding Guest', href: '/collections/wedding-guest-outfits' },
+  { name: 'Mehendi Ceremony', href: '/collections/mehendi-outfits' },
+  { name: 'Eid Outfits', href: '/collections/eid-outfits' },
+  { name: 'Navratri & Garba', href: '/collections/navratri-outfits' },
 ];
 
 const Header = () => {
@@ -236,6 +243,21 @@ const Header = () => {
                   {link.name}
                 </Link>
               ))}
+              {/* Occasions dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 text-[11px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap outline-none">
+                  Occasions <ChevronDown className="w-3 h-3" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="center" className="min-w-[180px]">
+                  {occasionLinks.map(link => (
+                    <DropdownMenuItem key={link.href} asChild>
+                      <Link to={link.href} className="cursor-pointer text-sm">
+                        {link.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
@@ -299,6 +321,27 @@ const Header = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: (navLinks.length + index) * 0.05 }}
+                    >
+                      <Link
+                        to={link.href}
+                        className="flex items-center justify-between py-2 text-sm font-light text-foreground/70 hover:text-foreground transition-colors"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Occasion links */}
+                <div className="pt-4 border-t border-border/30">
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Shop by Occasion</p>
+                  {occasionLinks.map((link, index) => (
+                    <motion.div
+                      key={link.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: (navLinks.length + secondaryLinks.length + index) * 0.05 }}
                     >
                       <Link
                         to={link.href}

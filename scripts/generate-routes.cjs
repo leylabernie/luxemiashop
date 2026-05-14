@@ -68,6 +68,12 @@ const STATIC_ROUTES = [
   '/privacy',
   '/terms',
   '/press',
+  // Occasion landing pages — high buyer-intent SEO pages
+  '/collections/diwali-outfits',
+  '/collections/wedding-guest-outfits',
+  '/collections/mehendi-outfits',
+  '/collections/eid-outfits',
+  '/collections/navratri-outfits',
 ];
 
 // ─── Shopify GraphQL ────────────────────────────────────────────────────────
