@@ -95,7 +95,7 @@ const Sarees = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Sarees Online | Indian Silk, Wedding & Banarasi Sarees - LuxeMia"
-        description="Buy Indian sarees online at LuxeMia. Shop silk sarees, Banarasi, Kanchipuram wedding sarees, party wear & festive sarees. Free shipping to USA & Canada. Affordable prices."
+        description="Buy Indian sarees online at LuxeMia. Shop Banarasi silk sarees, Kanchipuram wedding sarees, georgette & chiffon sarees. Free shipping to USA, Canada & Australia."
         canonical="https://luxemia.shop/sarees"
         type="collection"
         image="/og/og-sarees.jpg"

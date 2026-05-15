@@ -13,7 +13,7 @@
 export const SITE_URL = 'https://luxemia.shop';
 export const SITE_NAME = 'LuxeMia';
 export const DEFAULT_TITLE = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas';
-export const DEFAULT_DESCRIPTION = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.';
+export const DEFAULT_DESCRIPTION = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.';
 
 export interface PageMetadata {
   title: string;
@@ -30,7 +30,7 @@ export interface PageMetadata {
 export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/': {
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
     canonical: SITE_URL,
     image: `${SITE_URL}/og-image.jpg`,
   },

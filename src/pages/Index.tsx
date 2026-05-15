@@ -57,7 +57,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Indian ethnic wear store specializing in bridal lehengas, sarees, anarkali suits, and wedding collections at affordable prices. Free shipping on orders over $350 to the USA, Canada, and Australia.",
+    "description": "Indian ethnic wear store specializing in bridal lehengas, Banarasi silk sarees, anarkali suits, and wedding collections. Free shipping on orders over $350 to the USA, Canada, and Australia.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -131,7 +131,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="LuxeMia | Indian Ethnic Wear — Sarees & Lehengas"
-        description="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices."
+        description="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}

@@ -325,12 +325,38 @@ interface PageMeta {
 const STATIC_PAGE_META: Record<string, PageMeta> = {
   '/': {
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
     image: 'https://luxemia.shop/og-image.jpg',
+  },
+  // Occasion landing pages
+  '/collections/diwali-outfits': {
+    title: 'Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia',
+    description: 'Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free shipping to USA, Canada & Australia.',
+    image: 'https://luxemia.shop/og/og-lehengas.jpg',
+  },
+  '/collections/wedding-guest-outfits': {
+    title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
+    description: 'Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free shipping to USA, Canada & Australia.',
+    image: 'https://luxemia.shop/og/og-lehengas.jpg',
+  },
+  '/collections/mehendi-outfits': {
+    title: 'Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia',
+    description: 'Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free shipping to USA, Canada & Australia.',
+    image: 'https://luxemia.shop/og/og-suits.jpg',
+  },
+  '/collections/eid-outfits': {
+    title: 'Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia',
+    description: 'Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free shipping to USA, Canada & Australia.',
+    image: 'https://luxemia.shop/og/og-suits.jpg',
+  },
+  '/collections/navratri-outfits': {
+    title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
+    description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colours. Free shipping to USA, Canada & Australia.',
+    image: 'https://luxemia.shop/og/og-lehengas.jpg',
   },
   '/sarees': {
     title: 'Buy Sarees Online | Indian Silk, Wedding & Banarasi Sarees - LuxeMia',
-    description: 'Buy Indian sarees online at LuxeMia. Shop silk sarees, Banarasi, Kanchipuram wedding sarees, party wear & festive sarees. Free shipping to USA & Canada. Affordable prices.',
+    description: 'Buy Indian sarees online at LuxeMia. Shop silk sarees, Banarasi, Kanchipuram wedding sarees, party wear & festive sarees. Free shipping to USA & Canada.',
     image: 'https://luxemia.shop/og/og-sarees.jpg',
   },
   '/lehengas': {
@@ -340,7 +366,7 @@ const STATIC_PAGE_META: Record<string, PageMeta> = {
   },
   '/suits': {
     title: 'Buy Salwar Kameez Online | Anarkali, Palazzo & Sharara Suits - LuxeMia',
-    description: 'Buy salwar kameez online at LuxeMia. Shop Anarkali suits, Palazzo sets, Sharara suits & Pakistani suits. Free worldwide shipping. Affordable prices for USA & Canada.',
+    description: 'Buy salwar kameez online at LuxeMia. Shop Anarkali suits, Palazzo sets, Sharara suits & Pakistani suits. Free worldwide shipping to USA & Canada.',
     image: 'https://luxemia.shop/og/og-suits.jpg',
   },
   '/menswear': {

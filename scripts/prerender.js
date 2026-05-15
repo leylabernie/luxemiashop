@@ -109,7 +109,7 @@ const routes = [
   {
     path: '/',
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
     h1: 'LuxeMia',
     content: `
       <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with shipping to USA, Canada, and Australia.</p>
@@ -518,6 +518,104 @@ const routes = [
         <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
       </ul>
       <p>Custom sizing available on all outfits. Returns not accepted — all sales final. Damage claims within 48h with unboxing video.</p>
+    `,
+  },
+  // --- Occasion landing pages ---
+  {
+    path: '/collections/diwali-outfits',
+    title: 'Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia',
+    description: 'Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free shipping to USA, Canada & Australia.',
+    h1: 'Diwali Outfits 2026',
+    content: `
+      <p>Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration.</p>
+      <h2>What to Wear for Diwali</h2>
+      <p>Diwali calls for your most festive, vibrant ethnic wear. For the main Diwali day and Lakshmi Puja, traditional silk sarees in red, gold, or green are considered auspicious. For Diwali parties and evening celebrations, a heavily embellished lehenga with mirror work, zari embroidery, or sequin detailing photographs beautifully against the backdrop of diyas and fairy lights.</p>
+      <h2>Diwali Outfit Colors</h2>
+      <p>Gold is the quintessential Diwali color — representing prosperity and the blessing of Goddess Lakshmi. Red, deep green, royal purple, burnt orange, and navy blue are also widely worn. Fabrics with gold zari work, sequin embellishments, or mirror details catch the Diwali diyas beautifully.</p>
+      <h2>Shop Diwali Outfits</h2>
+      <ul>
+        <li><a href="/lehengas">Bridal Lehengas</a> — Embellished lehengas perfect for Diwali</li>
+        <li><a href="/sarees">Silk Sarees</a> — Banarasi and silk sarees for Diwali puja</li>
+        <li><a href="/suits">Anarkali Suits</a> — Festive anarkali suits for Diwali celebrations</li>
+        <li><a href="/indowestern">Indo-Western</a> — Modern Diwali party outfits</li>
+      </ul>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Standard delivery 7-10 business days.</p>
+    `,
+  },
+  {
+    path: '/collections/wedding-guest-outfits',
+    title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
+    description: 'Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free shipping to USA, Canada & Australia.',
+    h1: 'Indian Wedding Guest Outfits',
+    content: `
+      <p>Dress to impress at every Indian wedding ceremony — from the colourful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colours.</p>
+      <h2>What to Wear to Each Indian Wedding Ceremony</h2>
+      <p>The mehendi is a daytime ceremony calling for bright, cheerful outfits in yellow, lime green, orange, or floral prints. The sangeet is the most festive ceremony — wear your most glamorous embellished lehengas or sequin anarkalis. The main wedding ceremony is the most formal — avoid red (the bridal colour) and white. The reception is the most flexible — semi-formal to formal ethnic or indo-western outfits are appropriate.</p>
+      <h2>Shop by Ceremony</h2>
+      <ul>
+        <li><a href="/lehengas">Bridal Lehengas</a> — Wedding guest lehengas for the main ceremony</li>
+        <li><a href="/sarees">Silk Sarees</a> — Wedding guest sarees for formal ceremonies</li>
+        <li><a href="/suits">Anarkali Suits</a> — Versatile suits for multiple wedding ceremonies</li>
+        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Bright and festive mehendi ceremony wear</li>
+      </ul>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Standard delivery 7-10 business days.</p>
+    `,
+  },
+  {
+    path: '/collections/mehendi-outfits',
+    title: 'Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia',
+    description: 'Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free shipping to USA, Canada & Australia.',
+    h1: 'Mehendi Ceremony Outfits',
+    content: `
+      <p>Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colours traditionally associated with henna celebrations.</p>
+      <h2>Mehendi Ceremony Colours</h2>
+      <p>Yellow and green are the signature colours of mehendi ceremonies in most Indian cultures — yellow representing turmeric (haldi) and new beginnings, green representing the mehendi plant itself. Mustard, saffron orange, lime green, coral, and floral prints are all popular choices for mehendi guests.</p>
+      <h2>Fabric Guide for Mehendi</h2>
+      <p>Since mehendi ceremonies are often held outdoors, light breathable fabrics like georgette, chiffon, cotton, crepe, and rayon are ideal. Look for light embroidery, gota patti work, mirror detailing, and block print rather than heavy zari for a mehendi-appropriate outfit.</p>
+      <ul>
+        <li><a href="/lehengas">Yellow Lehengas</a> — Traditional bridal mehendi lehengas</li>
+        <li><a href="/suits">Floral Anarkali Suits</a> — Light anarkali suits for mehendi</li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — All wedding ceremony outfits</li>
+      </ul>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Standard delivery 7-10 business days.</p>
+    `,
+  },
+  {
+    path: '/collections/eid-outfits',
+    title: 'Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia',
+    description: 'Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free shipping to USA, Canada & Australia.',
+    h1: 'Eid Outfits 2026',
+    content: `
+      <p>Celebrate Eid in elegance with LuxeMia's curated collection of Indian ethnic wear for Eid festivities. From delicate chikankari salwar kameez and embroidered sharara sets to pastel lehengas and georgette anarkali suits, our Eid collection brings together the finest South Asian fashion traditions.</p>
+      <h2>What to Wear for Eid</h2>
+      <p>Eid is celebrated twice a year — Eid Ul-Fitr (marking the end of Ramadan) and Eid Ul-Adha. For Eid morning prayers, a modest and elegant salwar kameez or anarkali suit in white, cream, or pastel shades is most appropriate. For afternoon and evening celebrations, more embellished outfits are worn. Chikankari embroidery — the intricate shadow-work embroidery from Lucknow — is considered the quintessential Eid fabric.</p>
+      <h2>Eid Outfit Colors</h2>
+      <p>White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are classic Eid outfit colours. Gold and silver embellishments on any colour are considered festive and celebratory.</p>
+      <ul>
+        <li><a href="/suits">Chikankari Salwar Kameez</a> — Traditional Eid salwar kameez</li>
+        <li><a href="/lehengas">Pastel Lehengas</a> — Embroidered lehengas for Eid</li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — More festive occasion wear</li>
+      </ul>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Order 3-4 weeks before Eid for timely delivery.</p>
+    `,
+  },
+  {
+    path: '/collections/navratri-outfits',
+    title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
+    description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colours. Free shipping to USA, Canada & Australia.',
+    h1: 'Navratri Outfits — Chaniya Choli & Garba Dress Collection',
+    content: `
+      <p>Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor.</p>
+      <h2>What is a Chaniya Choli?</h2>
+      <p>The chaniya choli is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor.</p>
+      <h2>Nine Colors of Navratri 2026</h2>
+      <p>Each of the nine nights of Navratri 2026 is associated with a specific colour linked to the nine forms of Goddess Durga. The sequence typically follows: Royal Blue, Green, Grey, Orange, White, Red, Royal Blue, Pink, and Purple. Many participants plan nine separate Navratri outfits in each day's colour.</p>
+      <ul>
+        <li><a href="/lehengas">Navratri Lehengas</a> — Festive lehengas for Garba</li>
+        <li><a href="/suits">Anarkali Suits</a> — Flowing anarkalis for Navratri</li>
+        <li><a href="/collections/diwali-outfits">Diwali Outfits</a> — More festive occasion wear</li>
+      </ul>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Standard delivery 7-10 business days.</p>
     `,
   },
   {

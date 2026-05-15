@@ -23,44 +23,46 @@ interface ScrapedProductRow {
   updated_at: string;
 }
 
-// Static pages configuration
+// Static pages configuration — only real, indexable pages (no noIndex, no redirects)
 export const staticPages = [
+  // Core navigation
   { loc: '/', changefreq: 'daily', priority: '1.0', title: 'Home' },
-  { loc: '/collections', changefreq: 'daily', priority: '0.9', title: 'Collections' },
-  { loc: '/products', changefreq: 'daily', priority: '0.9', title: 'All Products' },
-  { loc: '/brand-story', changefreq: 'monthly', priority: '0.6', title: 'Brand Story' },
+  { loc: '/collections', changefreq: 'daily', priority: '0.9', title: 'All Collections' },
+  // Main category pages
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9', title: 'Lehengas' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9', title: 'Sarees' },
-  { loc: '/suits', changefreq: 'daily', priority: '0.9', title: 'Suits' },
+  { loc: '/suits', changefreq: 'daily', priority: '0.9', title: 'Salwar Kameez & Suits' },
   { loc: '/menswear', changefreq: 'daily', priority: '0.9', title: 'Menswear' },
+  { loc: '/indowestern', changefreq: 'daily', priority: '0.8', title: 'Indo-Western' },
   { loc: '/new-arrivals', changefreq: 'daily', priority: '0.8', title: 'New Arrivals' },
+  { loc: '/bestsellers', changefreq: 'weekly', priority: '0.8', title: 'Bestsellers' },
+  // Occasion landing pages — high buyer-intent SEO
+  { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9', title: 'Diwali Outfits 2026' },
+  { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Guest Outfits' },
+  { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Mehendi Ceremony Outfits' },
+  { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9', title: 'Eid Outfits 2026' },
+  { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9', title: 'Navratri Outfits — Chaniya Choli & Garba' },
+  // Brand & editorial
+  { loc: '/brand-story', changefreq: 'monthly', priority: '0.6', title: 'Brand Story' },
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6', title: 'Artisans' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6', title: 'Sustainability' },
-  { loc: '/virtual-try-on', changefreq: 'monthly', priority: '0.7', title: 'Virtual Try-On' },
-  { loc: '/contact', changefreq: 'monthly', priority: '0.5', title: 'Contact' },
-  { loc: '/faq', changefreq: 'monthly', priority: '0.5', title: 'FAQ' },
-  { loc: '/shipping', changefreq: 'monthly', priority: '0.4', title: 'Shipping' },
-  { loc: '/returns', changefreq: 'monthly', priority: '0.4', title: 'Returns' },
-  { loc: '/size-guide', changefreq: 'monthly', priority: '0.5', title: 'Size Guide' },
-  { loc: '/care-guide', changefreq: 'monthly', priority: '0.5', title: 'Care Guide' },
-  { loc: '/privacy', changefreq: 'yearly', priority: '0.3', title: 'Privacy Policy' },
-  { loc: '/terms', changefreq: 'yearly', priority: '0.3', title: 'Terms & Conditions' },
-  { loc: '/blog', changefreq: 'weekly', priority: '0.6', title: 'Blog' },
-  { loc: '/press', changefreq: 'monthly', priority: '0.5', title: 'Press' },
-  { loc: '/bestsellers', changefreq: 'weekly', priority: '0.7', title: 'Bestsellers' },
-  { loc: '/indowestern', changefreq: 'weekly', priority: '0.8', title: 'Indo-Western' },
-  { loc: '/jewelry', changefreq: 'daily', priority: '0.9', title: 'Jewelry' },
-  { loc: '/bridal-lehengas', changefreq: 'weekly', priority: '0.8', title: 'Bridal Lehengas' },
-  { loc: '/wedding-sarees', changefreq: 'weekly', priority: '0.8', title: 'Wedding Sarees' },
-  { loc: '/reception-outfits', changefreq: 'weekly', priority: '0.8', title: 'Reception Outfits' },
-  { loc: '/festive-wear', changefreq: 'weekly', priority: '0.8', title: 'Festive Wear' },
-  { loc: '/bridesmaid-dresses', changefreq: 'weekly', priority: '0.7', title: 'Bridesmaid Dresses' },
-  { loc: '/groomsman-outfits', changefreq: 'weekly', priority: '0.7', title: 'Groomsman Outfits' },
-  { loc: '/style-consultation', changefreq: 'monthly', priority: '0.6', title: 'Style Consultation' },
-  { loc: '/style-quiz', changefreq: 'monthly', priority: '0.6', title: 'Style Quiz' },
-  { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'NRI' },
+  { loc: '/blog', changefreq: 'weekly', priority: '0.7', title: 'Blog' },
+  // NRI landing pages
+  { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'Indian Ethnic Wear for NRIs' },
+  { loc: '/nri/usa', changefreq: 'monthly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
+  { loc: '/nri/canada', changefreq: 'monthly', priority: '0.8', title: 'Indian Ethnic Wear Canada' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
   { loc: '/indian-ethnic-wear-canada', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear Canada' },
+  // Customer service
+  { loc: '/contact', changefreq: 'monthly', priority: '0.5', title: 'Contact' },
+  { loc: '/faq', changefreq: 'monthly', priority: '0.5', title: 'FAQ' },
+  { loc: '/shipping', changefreq: 'monthly', priority: '0.5', title: 'Shipping Policy' },
+  { loc: '/returns', changefreq: 'monthly', priority: '0.4', title: 'Returns Policy' },
+  { loc: '/size-guide', changefreq: 'monthly', priority: '0.5', title: 'Size Guide' },
+  { loc: '/care-guide', changefreq: 'monthly', priority: '0.5', title: 'Care Guide' },
+  // Legal
+  { loc: '/privacy', changefreq: 'yearly', priority: '0.3', title: 'Privacy Policy' },
+  { loc: '/terms', changefreq: 'yearly', priority: '0.3', title: 'Terms & Conditions' },
 ];
 
 // Fetch all products for sitemap (local + scraped from database)
