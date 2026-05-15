@@ -5,11 +5,11 @@ import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
 // which are women's suit products on Shopify (NOT men's suits)
 const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
-  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Pakistani Readymade Suit', 'Salwar Kameez', 'Sharara Suit', 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'],
-  sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees'],
-  lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli'],
-  menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit"],
-  indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set'],
+  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Palazzo Suit', 'Pakistani Readymade Suit', 'Salwar Kameez', 'Sharara Suit', 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown', 'Salwar', 'Kurti', 'Kurti Set', 'Palazzo', 'Readymade Suit', 'Churidar Suit', 'Patiala Suit', 'Straight Suit', 'Suit'],
+  sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees', 'Silk Saree', 'Banarasi Saree', 'Cotton Saree', 'Georgette Saree', 'Bridal Saree', 'Designer Saree', 'Fancy Saree', 'Party Wear Saree', 'Kanjivaram Saree', 'Kanchipuram Saree', 'Tissue Saree', 'Net Saree', 'Sari'],
+  lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga'],
+  menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
+  indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
 };
 
 // Map Shopify productType to display category names
@@ -24,10 +24,10 @@ export const getDisplayCategory = (productType: string | undefined): string => {
   if (/\bmen\b/.test(pt)) return 'Menswear';
 
   // Women's categories — order matters (most specific first)
-  if (/lehenga/.test(pt)) return 'Lehengas';
-  if (/saree/.test(pt)) return 'Sarees';
-  if (/pakistani|salwar|sharara|anarkali|plazzo|palazzo|wedding suit|designer suit|gharara|gown/.test(pt)) return 'Salwar Kameez';
-  if (/indo.?western|fusion|jumpsuit|cape set|coord set/.test(pt)) return 'Indo Western';
+  if (/lehenga|lehnga|lehena/.test(pt)) return 'Lehengas';
+  if (/saree|sari/.test(pt)) return 'Sarees';
+  if (/pakistani|salwar|kameez|sharara|anarkali|plazzo|palazzo|gharara|gown|kurti|churidar|patiala/.test(pt)) return 'Salwar Kameez';
+  if (/indo.?western|fusion|jumpsuit|cape set|coord set|co.?ord/.test(pt)) return 'Indo Western';
 
   return productType;
 };
@@ -36,7 +36,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Two-tier cache: in-memory (instant within a session) + localStorage (persists
 // across page reloads and new tabs). TTL of 30 minutes prevents stale data.
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes.
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
@@ -251,6 +251,9 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
         if (!hasMensSignals && !titleLooksMens) return true;
       }
 
+      // Keyword fallback — catches unlisted variants like "Palazzo Suit", "Salwar", "Kurti", "Churidar Suit"
+      if (/salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani\s+suit|kurti|churidar|patiala/.test(pt)) return true;
+
       return false;
     });
   }
@@ -265,7 +268,15 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear')) return false;
     if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
 
-    return types.some(t => t.toLowerCase() === pt);
+    // 1. Exact match against known types (fastest, most precise)
+    if (types.some(t => t.toLowerCase() === pt)) return true;
+
+    // 2. Keyword fallback — catches misspellings and unlisted variants
+    //    e.g. "Lehnga Choli", "Silk Saree", "Party Wear Lehenga", "Bridal Sari"
+    if (category === 'lehengas') return /lehenga|lehnga|lehena/.test(pt);
+    if (category === 'sarees') return /saree|sari/.test(pt);
+
+    return false;
   });
 };
 
