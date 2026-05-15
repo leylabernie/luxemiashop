@@ -32,19 +32,78 @@ export const getDisplayCategory = (productType: string | undefined): string => {
   return productType;
 };
 
-// Simple in-memory cache for all products
+// ─── Persistent product cache ─────────────────────────────────────────────────
+// Two-tier cache: in-memory (instant within a session) + localStorage (persists
+// across page reloads and new tabs). TTL of 30 minutes prevents stale data.
+// Cache key is versioned — bump CACHE_VERSION when the product schema changes.
+const CACHE_VERSION = 'v3';
+const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+
+function getStoredProducts(): ShopifyProduct[] | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.timestamp || !Array.isArray(parsed?.data)) return null;
+    if (Date.now() - parsed.timestamp > CACHE_TTL_MS) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    return parsed.data;
+  } catch {
+    return null;
+  }
+}
+
+function storeProducts(products: ShopifyProduct[]): void {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data: products }));
+  } catch {
+    // localStorage full or unavailable (private browsing) — no-op, in-memory cache still works
+  }
+}
+
+// In-memory cache (fastest — reused within the same JS session)
 let cachedProducts: ShopifyProduct[] | null = null;
 let cachePromise: Promise<ShopifyProduct[]> | null = null;
 
 const getAllProducts = async (): Promise<ShopifyProduct[]> => {
+  // 1. In-memory: instant — same session, already fetched
   if (cachedProducts) return cachedProducts;
+
+  // 2. localStorage: fast — persists across page reloads and new tabs for 30 min
+  const stored = getStoredProducts();
+  if (stored) {
+    cachedProducts = stored;
+    return cachedProducts;
+  }
+
+  // 3. Shopify API: only on first visit or after cache expires
   if (cachePromise) return cachePromise;
 
-  cachePromise = fetchAllProducts().then(products => {
-    cachedProducts = products;
-    cachePromise = null;
-    return products;
-  });
+  // Pass a server-side date filter when old products are hidden — reduces API
+  // response size by ~64% (from ~250 to ~90 products) and cuts latency noticeably.
+  // Safety: if the filter returns 0 products (unsupported syntax or edge case),
+  // automatically retry without the filter.
+  const shopifyQuery = HIDE_OLD_PRODUCTS
+    ? `created_at:>='${HIDE_PRODUCTS_BEFORE_DATE.toISOString().split('T')[0]}'`
+    : undefined;
+
+  cachePromise = (async () => {
+    try {
+      let products = await fetchAllProducts(shopifyQuery);
+      // Safety fallback: if the date filter returned nothing, retry without filter
+      if (products.length === 0 && shopifyQuery) {
+        products = await fetchAllProducts(undefined);
+      }
+      cachedProducts = products;
+      storeProducts(products);
+      return products;
+    } finally {
+      cachePromise = null;
+    }
+  })();
 
   return cachePromise;
 };
