@@ -5,6 +5,7 @@ import { generateProductHtml, return404, escapeHtml } from './src/middleware/htm
 import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
+import { getCorrectedTitle, autoCorrectTitle } from './src/lib/titleCorrections.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -172,6 +173,17 @@ export default async function middleware(request: Request) {
       const product = await fetchProductByHandle(handle);
 
       if (product) {
+        // ── VISUAL TITLE CORRECTION ──
+        // Apply image-verified title corrections to ensure the product title
+        // accurately reflects the DOMINANT garment color (lehenga/skirt), 
+        // not the dupatta/choli accent color. This fixes the widespread issue
+        // where Shopify titles incorrectly prioritize dupatta colors.
+        // FASHION HIERARCHY: lehenga/skirt color > blouse/choli color > dupatta color
+        const correctedTitle = getCorrectedTitle(handle) || autoCorrectTitle(product.title, handle, product.productType);
+        if (correctedTitle && correctedTitle !== product.title) {
+          product.title = correctedTitle;
+        }
+
         const canonicalUrl = `https://luxemia.shop/product/${handle}`;
         const html = generateProductHtml(product, canonicalUrl);
 

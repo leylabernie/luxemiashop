@@ -15,6 +15,7 @@ import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import type { LocalProduct } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
 import { enrichProductDescription, generateMetaDescription } from '@/lib/productDescriptionEnrichment';
+import { getCorrectedTitle, autoCorrectTitle } from '@/lib/titleCorrections';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
@@ -96,13 +97,22 @@ const ProductDetail = () => {
   const isLoading = shopifyLoading || (!shopifyProduct && !localProduct);
   const error = !product && !shopifyLoading && localProduct !== undefined ? 'Product not found' : null;
 
+  // ── VISUAL TITLE CORRECTION ──
+  // Apply image-verified title corrections to ensure the visible product title
+  // accurately reflects the DOMINANT garment color (lehenga/skirt), not the
+  // dupatta/choli accent color. FASHION HIERARCHY: garment > blouse > dupatta
+  const correctedProductTitle = useMemo(() => {
+    if (!product) return '';
+    return getCorrectedTitle(product.handle) || autoCorrectTitle(product.title, product.handle, product.productType) || product.title;
+  }, [product]);
+
   // Track recently viewed and analytics
   useEffect(() => {
     if (product) {
       addToRecentlyViewed({
         id: product.id,
         handle: product.handle,
-        title: product.title,
+        title: correctedProductTitle,
         price: product.priceRange.minVariantPrice.amount,
         currency: product.priceRange.minVariantPrice.currencyCode,
         imageUrl: product.images.edges[0]?.node.url || '',
@@ -111,7 +121,7 @@ const ProductDetail = () => {
       // Track view_item event in GA4
       trackViewItem({
         id: product.id,
-        name: product.title,
+        name: correctedProductTitle,
         price: parseFloat(product.priceRange.minVariantPrice.amount),
         currency: product.priceRange.minVariantPrice.currencyCode,
         category: product.productType,
@@ -187,15 +197,15 @@ const ProductDetail = () => {
   // Product-specific FAQs for rich snippets
   const productFaqs = product ? [
     {
-      question: `What sizes are available for the ${product.title}?`,
-      answer: `The ${product.title} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit. Please refer to our Size Guide for detailed measurements.`
+      question: `What sizes are available for the ${correctedProductTitle}?`,
+      answer: `The ${correctedProductTitle} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit. Please refer to our Size Guide for detailed measurements.`
     },
     {
-      question: `What is the delivery time for the ${product.title}?`,
+      question: `What is the delivery time for the ${correctedProductTitle}?`,
       answer: `Readymade items are dispatched within 3-5 business days. Custom/alteration orders are dispatched within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping.`
     },
     {
-      question: `Can I return the ${product.title} if it doesn't fit?`,
+      question: `Can I return the ${correctedProductTitle} if it doesn't fit?`,
       answer: `All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video.`
     },
     {
@@ -208,7 +218,7 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       {product ? (
         <SEOHead
-          title={`${product.title.replace(/\s*[-–—]\s*LuxeMia\s*$/i, '')} | ${categoryName} | LuxeMia`}
+          title={`${correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia\s*$/i, '')} | ${categoryName} | LuxeMia`}
           description={seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
@@ -220,7 +230,7 @@ const ProductDetail = () => {
           type="product"
           image={product.images.edges[0]?.node.url}
           product={{
-            name: product.title,
+            name: correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia\s*$/i, ''),
             price: product.priceRange.minVariantPrice.amount,
             currency: product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
@@ -294,7 +304,7 @@ const ProductDetail = () => {
                 {/* Gallery */}
                 <ProductGallery 
                   images={product.images.edges} 
-                  productTitle={product.title} 
+                  productTitle={correctedProductTitle} 
                 />
                 
                 {/* Product Info */}
@@ -312,7 +322,7 @@ const ProductDetail = () => {
 
               {/* Customer Reviews */}
               <ReviewsSection
-                productName={product.title}
+                productName={correctedProductTitle}
                 productUrl={`https://luxemia.shop/product/${product.handle}`}
               />
 
