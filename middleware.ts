@@ -304,7 +304,7 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
   const escapedCanonical = escapeHtml(canonical);
   const escapedOgImage = escapeHtml(ogImage);
 
-  // Replace the title tag
+  // Replace the title tag — also strip any existing "— LuxeMia" to prevent duplication
   html = html.replace(
     /<title>[^<]*<\/title>/,
     `<title>${escapedTitle}</title>`
@@ -354,6 +354,138 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
       html = html.replace(regex, replacement);
     }
   }
+
+  // ── CRITICAL SEO FIX: Inject JSON-LD Schema into prerendered HTML ──
+  // Googlebot and AI search engines need structured data in the initial HTML.
+  // Client-side React Helmet schemas are NOT visible to crawlers that don't execute JS.
+  const schemas: Record<string, any>[] = [];
+
+  // 1. Organization Schema (always)
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Glamour Indian Wear',
+    alternateName: 'LuxeMia',
+    url: 'https://luxemia.shop',
+    logo: 'https://luxemia.shop/favicon.ico',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.',
+    sameAs: [
+      'https://www.instagram.com/luxemiashop',
+      'https://www.facebook.com/luxemiashop',
+      'https://www.pinterest.com/luxemiashop',
+      'https://www.youtube.com/@luxemiashop',
+    ],
+  });
+
+  // 2. WebSite Schema with SearchAction (always)
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    url: 'https://luxemia.shop',
+    name: 'LuxeMia',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: 'https://luxemia.shop/search?q={search_term_string}' },
+      'query-input': 'required name=search_term_string',
+    },
+  });
+
+  // 3. BreadcrumbList Schema (for all pages except homepage)
+  if (pathname !== '/' && pathname !== '') {
+    const breadcrumbItems: Array<{ name: string; url: string }> = [{ name: 'Home', url: 'https://luxemia.shop/' }];
+    
+    if (pathname.startsWith('/product/')) {
+      breadcrumbItems.push({ name: 'Collections', url: 'https://luxemia.shop/collections' });
+      breadcrumbItems.push({ name: escapedTitle.replace(/\s*\|\s*LuxeMia$/, ''), url: escapedCanonical });
+    } else if (pathname.startsWith('/blog/')) {
+      breadcrumbItems.push({ name: 'Blog', url: 'https://luxemia.shop/blog' });
+      breadcrumbItems.push({ name: escapedTitle.replace(/\s*\|\s*LuxeMia$/, ''), url: escapedCanonical });
+    } else if (pathname.startsWith('/sarees') || pathname.startsWith('/lehengas') || pathname.startsWith('/suits') || pathname.startsWith('/menswear') || pathname.startsWith('/indowestern')) {
+      breadcrumbItems.push({ name: escapedTitle.replace(/\s*\|\s*LuxeMia$/, ''), url: escapedCanonical });
+    } else {
+      breadcrumbItems.push({ name: escapedTitle.replace(/\s*\|\s*LuxeMia$/, ''), url: escapedCanonical });
+    }
+
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbItems.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    });
+  }
+
+  // 4. Basic Product Schema for product pages (inferred from URL)
+  // Note: This is a lightweight schema. Full product data schema is rendered client-side by SEOHead.
+  if (pathname.startsWith('/product/')) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: escapedTitle.replace(/\s*\|\s*LuxeMia$/, ''),
+      url: escapedCanonical,
+      description: escapedDesc,
+      image: escapedOgImage,
+      brand: { '@type': 'Brand', name: 'LuxeMia' },
+      category: 'Clothing > Traditional & Ethnic Wear',
+      offers: {
+        '@type': 'Offer',
+        url: escapedCanonical,
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
+      },
+    });
+  }
+
+  // 5. FAQPage Schema (for pages with FAQs — add generic global FAQs for product pages)
+  if (pathname.startsWith('/product/')) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Do you ship to USA and Canada?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, LuxeMia offers free shipping to the USA and Canada on orders over $350. A flat $25 shipping fee applies to orders below $350. We also ship to Australia.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What is custom stitching and how does it work?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'LuxeMia offers three stitching options: Semi-Stitched (sides left open for tailoring), Ready-to-Wear (standard sizes S-XXL), and Made-to-Measure (custom measurements for perfect fit). Contact us via WhatsApp at +1-215-341-9990 for styling help.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How long does delivery take?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Readymade items ship within 3-5 business days. Custom/alteration orders ship within 5-7 business days. Delivery takes 7-10 business days via USPS/UPS/DHL to USA, Canada, and Australia.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Are your products authentic Indian ethnic wear?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, all LuxeMia products are authentic Indian ethnic wear sourced directly from skilled artisans and reputable manufacturers in India. Each piece reflects traditional craftsmanship and contemporary design.',
+          },
+        },
+      ],
+    });
+  }
+
+  // Inject all schemas before </head>
+  const schemaScripts = schemas.map(s => `<script type="application/ld+json">${JSON.stringify(s)}</script>`).join('\n');
+  html = html.replace('</head>', `${schemaScripts}\n</head>`);
 
   return new Response(html, {
     status: 200,
