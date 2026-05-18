@@ -8,6 +8,7 @@
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
 import { getCorrectedTitle } from '../lib/titleCorrections.js';
+import { getCorrectedTitleFromSeo, getImageAltText, getQAPairs, getMetaDescription } from '../lib/productSeoData.js';
 
 export function escapeHtml(str: string): string {
   return str
@@ -33,11 +34,15 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   // to prevent brand duplication when we append our own "| LuxeMia"
   const rawCleanTitle = product.title.replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
 
-  // Apply visual title correction if available for this product handle
-  const correctedTitle = getCorrectedTitle(product.handle);
-  const cleanTitle = correctedTitle || rawCleanTitle;
+  // Apply visual title correction — lehenga handle corrections first, then SEO data
+  const handleCorrected = getCorrectedTitle(product.handle);
+  const seoCorrected = getCorrectedTitleFromSeo(product.title);
+  const cleanTitle = handleCorrected || seoCorrected || rawCleanTitle;
   const title = `${cleanTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
-  const description = (product.description || `Shop ${cleanTitle} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
+  // Use SEO-optimized meta description if available, otherwise fallback to generic
+  const seoMetaDesc = getMetaDescription(product.title);
+  const rawDescription = product.description || `Shop ${cleanTitle} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`;
+  const description = (seoMetaDesc || rawDescription).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
@@ -92,7 +97,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     { name: cleanTitle, url: canonicalUrl },
   ]);
 
-  const faqSchema = generateFaqSchema([
+  // Build FAQ schema — merge SEO Q&A pairs with generic fallback questions
+  const seoFaqs = getQAPairs(product.title);
+  const fallbackFaqs = [
     {
       question: `What sizes are available for the ${cleanTitle}?`,
       answer: `The ${cleanTitle} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit.`,
@@ -105,12 +112,19 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       question: `Can I return the ${cleanTitle} if it doesn't fit?`,
       answer: `All sales are final. LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which requires a mandatory unboxing video. Please use our Size Guide before ordering.`,
     },
-  ]);
+  ];
+  const mergedFaqs = seoFaqs.length > 0 ? seoFaqs : fallbackFaqs;
+  const faqSchema = generateFaqSchema(mergedFaqs);
 
-  // Generate SEO-optimized alt text using corrected title + product details
+  // Generate SEO-optimized alt text — use SEO data when available, fallback to generated
+  const seoAltText = getImageAltText(product.title);
   const generateAltText = (index: number, existingAlt: string | null): string => {
     if (existingAlt && existingAlt.length > 5 && !existingAlt.toLowerCase().includes('image')) {
       return existingAlt; // Use existing alt if it's meaningful
+    }
+    // Use SEO alt text for the main (first) image; generate for additional images
+    if (index === 0 && seoAltText) {
+      return seoAltText;
     }
     // Generate descriptive alt text with color and angle context
     const colorContext = color ? `${color} ` : '';

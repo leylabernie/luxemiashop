@@ -11,15 +11,19 @@
  * Format: { handle: corrected_title }
  * The corrected title should describe what the shopper actually SEEs in the image.
  *
- * Total corrections: 140+ products across all lehenga sub-categories
+ * SEARCHABLE FABRICS ONLY: silk, georgette, art silk, net, velvet, jacquard,
+ * banarasi, tissue silk, crepe, satin, cotton
+ * NEVER USE: vichitra, chinon, fendi, pure viscose, wholesaler jargon
+ *
+ * Total products mapped: 149 | Manual corrections: 48 | Auto-corrected: 101
  */
 
 export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 1: ORIGINAL 9 — Visually verified, manually corrected
+  // PHASE 1: SILK EMBROIDERY (9) — Pearl White base + colored embroidery
+  // Pattern: [AccentColor] Silk Embroidery → [AccentColor] is dupatta/choli color
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  // ── LEHENGAS — Visually verified: pearl white lehenga, maroon choli/dupatta ──
   'maroon-silk-embroidery-lehenga-choli-with-dupatta':
     'Pearl White Silk Lehenga Choli with Maroon Embroidered Dupatta',
 
@@ -29,7 +33,10 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
   'rani-pink-silk-embroidered-designer-lehenga-choli-dupatta':
     'Ivory Silk Lehenga Choli with Rani Pink Embroidered Dupatta',
 
-  // ── LEHENGAS — Pattern: likely white/cream base with colored dupatta ──
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // PHASE 2: GEORGETTE EMBROIDERY (6) — Ivory base + colored embroidery
+  // ═══════════════════════════════════════════════════════════════════════════════
+
   'green-georgette-embroidery-lehenga-choli-with-dupatta':
     'Ivory Georgette Lehenga Choli with Green Embroidered Dupatta',
 
@@ -42,6 +49,11 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
   'rust-orange-georgette-embroidery-lehenga-choli-with-dupatta':
     'Ivory Georgette Lehenga Choli with Rust Orange Embroidered Dupatta',
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // PHASE 3: ART SILK EMBROIDERY (2) — Ivory base + colored embroidery
+  // Vichitra → Art Silk (non-searchable → searchable)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
   'dark-blue-pure-vichitra-embroidery-lehenga-choli-with-dupatta':
     'Ivory Art Silk Lehenga Choli with Dark Blue Embroidered Dupatta',
 
@@ -49,9 +61,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Art Silk Lehenga Choli with Wine Embroidered Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 2: SILK EMBROIDERY — Pattern: Pearl White base + colored embroidery
-  // Price range: $50-$100 | All silk lehengas at this price point have pearl
-  // white base with colored embroidery work and matching dupatta
+  // PHASE 4: SILK EMBROIDERY FULL SET (9) — Pearl White base + colored embroidery
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'blue-silk-embroidery-lehenga-choli-with-dupatta':
@@ -66,7 +76,6 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
   'purple-silk-embroidery-lehenga-choli-with-dupatta':
     'Pearl White Silk Lehenga Choli with Purple Embroidered Dupatta',
 
-  // ── Silk Embroidery — Festive / Occasion variants ──
   'blue-silk-embroidery-festive-lehenga-choli':
     'Pearl White Silk Embroidery Festive Lehenga Choli with Blue Dupatta',
 
@@ -83,9 +92,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Pearl White Silk Embroidery Festive Lehenga Choli with Maroon Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 3: GEORGETTE EMBROIDERY — Pattern: Ivory base + colored embroidery
-  // Price range: $40-$78 | All georgette lehengas at this price point have
-  // ivory/cream base with colored embroidery work and matching dupatta
+  // PHASE 5: GEORGETTE EMBROIDERY EXTENDED (6) — Ivory base + colored embroidery
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'wine-georgette-embroidery-lehenga-choli-with-dupatta':
@@ -107,8 +114,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Cream Silk Embroidery Festive Lehenga Choli with Matching Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 4: PURE ART SILK — Pattern: Ivory base + colored embroidery
-  // Price range: $52-$103 | All Art Silk lehengas at this price point
+  // PHASE 6: ART SILK FESTIVE (4) — Ivory base + colored embroidery
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'off-white-pure-vichitra-embroidery-lehenga-choli-with-dupatta':
@@ -124,8 +130,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Art Silk Embroidery Festive Lehenga Choli with Wine Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 5: ART SILK SEQUINS — Pattern: Ivory base + colored sequins
-  // Price range: ~$49
+  // PHASE 7: ART SILK SEQUINS (2) — Ivory base + colored sequins
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'blue-vichitra-silk-sequins-lehenga-choli-with-dupatta':
@@ -135,8 +140,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Art Silk Sequins Lehenga Choli with Rust Orange Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 6: GEORGETTE THREAD — Pattern: Ivory base + colored thread work
-  // Price range: ~$50
+  // PHASE 8: GEORGETTE THREAD (3) — Ivory base + colored thread work
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'rama-blue-georgette-thread-lehenga-choli-with-dupatta':
@@ -149,16 +153,14 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Georgette Thread Lehenga Choli with Olive Green Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 7: CHINON EMBROIDERY — Pattern: Ivory base + colored embroidery
-  // Price range: ~$41
+  // PHASE 9: CHINON → GEORGETTE (1) — Chinon is non-searchable, use Georgette
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'wine-chinon-embroidery-lehenga-choli-with-dupatta':
-    'Ivory Chinon Embroidery Lehenga Choli with Wine Dupatta',
+    'Ivory Georgette Embroidery Lehenga Choli with Wine Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 8: NET THREAD LEHENGA — Pattern: White/Ivory net base + colored thread
-  // Price range: $111 | White/cream net base with colored thread embroidery
+  // PHASE 10: NET THREAD (4) — Ivory net base + colored thread embroidery
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'sky-blue-net-thread-lehenga-choli-with-dupatta':
@@ -174,8 +176,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Net Thread Lehenga Choli with Yellow Embroidered Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 9: NET SEQUINS (Lower price ~$55-$70) — Pattern: White net + sequins
-  // At lower price points, net sequins lehengas have white/cream net base
+  // PHASE 11: NET SEQUINS LOWER PRICE (2) — Ivory net base + colored sequins
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'pista-green-net-sequins-lehenga-choli-with-dupatta':
@@ -185,7 +186,7 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Net Sequins Festive Lehenga Choli with Teal Green Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 10: MEHENDI/OLIVE TONE LEHENGAS — Green variants analysis
+  // PHASE 12: MEHENDI/OLIVE TONE (2) — Ivory base + mehendi green accents
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'mehendi-net-embroidery-lehenga-choli-with-dupatta':
@@ -195,131 +196,21 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Net Embroidery Lehenga Choli with Mehendi Green Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 11: GEORGETTE SILK PARTY WEAR — Higher price, genuinely colored base
-  // Price range: ~$86 | These have colored georgette silk base fabric
-  // NOTE: These are NOT corrected — the color in title IS the lehenga base color
+  // PHASE 13: JACQUARD SILK (3) — Fendi → Jacquard, Ivory base + colored embroidery
+  // Non-partywear variants at lower price: color is dupatta accent, not base
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  // 'georgette-silk-maroon-party-wear-embroidery-work-lehenga-choli': KEEP ORIGINAL
-  // 'georgette-silk-blue-party-wear-embroidery-work-lehenga-choli': KEEP ORIGINAL
-  // 'georgette-silk-purple-party-wear-embroidery-work-lehenga-choli': KEEP ORIGINAL
-  // 'georgette-silk-rani-pink-party-wear-embroidery-work-lehenga-choli': KEEP ORIGINAL
+  'pink-fendi-silk-embroidery-lehenga-choli':
+    'Ivory Jacquard Silk Lehenga Choli with Pink Embroidered Dupatta',
+
+  'maroon-fendi-silk-embroidery-lehenga-choli':
+    'Ivory Jacquard Silk Lehenga Choli with Maroon Embroidered Dupatta',
+
+  'purple-fendi-silk-embroidery-lehenga-choli':
+    'Ivory Jacquard Silk Lehenga Choli with Purple Embroidered Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 12: JACQUARD SILK EMBROIDERY — Pattern analysis
-  // Price range: $67-$80 | Jacquard silk is a textured, searchable fabric with colored base
-  // NOTE: These are NOT corrected — Jacquard silk base IS the stated color
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'pink-jacquard-silk-embroidery-lehenga-choli': KEEP ORIGINAL
-  // 'maroon-jacquard-silk-embroidery-lehenga-choli': KEEP ORIGINAL
-  // 'purple-jacquard-silk-embroidery-lehenga-choli': KEEP ORIGINAL
-  // 'blue-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'maroon-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'purple-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'rani-pink-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 13: VELVET THREAD — Velvet IS the base fabric, color is accurate
-  // Price range: $121 | Velvet lehengas are genuinely the stated color
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'red-velvet-thread-lehenga-choli-with-dupatta': KEEP ORIGINAL
-  // 'maroon-velvet-thread-lehenga-choli-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 14: NET EMBROIDERY PARTYWEAR/BRIDAL — Genuinely colored net
-  // Price range: $133-$284 | The net fabric itself IS the stated color
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // These are genuinely colored — net fabric IS the base color:
-  // 'teal-blue-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'cream-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'beige-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'rani-pink-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'blue-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'dusty-pink-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'lilac-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'pista-green-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'peach-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'sky-blue-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'white-net-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'yellow-net-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'maroon-net-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'beige-net-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'golden-net-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'light-pink-net-beads-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'cream-net-beads-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'off-white-satin-beads-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'black-net-beads-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'wine-net-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'wine-net-embroidery-lehenga-choli-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 15: BANARASI / TISSUE SILK / CREPE BRIDAL — Genuinely colored
-  // Price range: $164-$297 | These are premium fabrics with colored bases
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'green-pure-banarasi-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'teal-green-tissue-silk-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'navy-blue-tissue-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'pink-pure-banarasi-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'sky-blue-tissue-silk-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'multicolor-tissue-silk-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'purple-crepe-embroidery-bridal-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'multicolor-crepe-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 16: BEADS WORK LEHENGA — Color stated IS the base material color
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'beads-work-lehenga-choli-in-net-beige': KEEP ORIGINAL
-  // 'beads-work-lehenga-choli-in-net-cream': KEEP ORIGINAL
-  // 'beads-work-lehenga-choli-in-satin-off-white': KEEP ORIGINAL
-  // 'beads-work-lehenga-choli-in-net-black': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 17: EMBROIDERY WORK LEHENGA — Color/material stated IS the base
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'embroidery-work-lehenga-choli-in-net-white': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-banarasi-silk-beige': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-tissue-silk-multicolor': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-pure-viscose-off-white': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-net-green': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-silk-beige': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-net-mehendi': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-net-rani-pink': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-tissue-silk-green': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-crepe-purple': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-crepe-multicolor': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-net-peach': KEEP ORIGINAL
-  // 'embroidery-work-lehenga-choli-in-tissue-silk-sky-blue': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 18: NET SEQUINS HIGHER PRICE ($111-$138) — Genuinely colored net
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'blue-net-sequins-lehenga-choli-with-dupatta': KEEP ORIGINAL — blue net IS the base
-  // 'rani-pink-net-sequins-lehenga-choli-with-dupatta': KEEP ORIGINAL
-  // 'green-net-sequins-lehenga-choli-with-dupatta': KEEP ORIGINAL
-  // 'purple-net-sequins-lehenga-choli-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 19: RANGOLI SILK — Genuinely colored base fabric
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'purple-rangoli-silk-embroidery-lehenga-choli-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 20: MULTICOLOR GEORGETTE SEQUINS — Multicolor IS accurate
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'multicolor-georgette-sequins-lehenga-choli-with-dupatta': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 21: FAUX GEORGETTE EMBROIDERY — Pattern: Ivory base + colored embroidery
-  // Price range: $67
+  // PHASE 14: FAUX GEORGETTE (2) — Ivory base + colored embroidery
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'pink-faux-georgette-embroidery-lehenga-choli-with-dupatta':
@@ -329,78 +220,163 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Faux Georgette Lehenga Choli with Red Embroidered Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 22: WHITE GEORGETTE PRINTED — White IS the base color
+  // PHASE 15: PURE VISCOSE → ART SILK (1) — Obscure term replacement
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  // 'white-georgette-printed-lehenga-choli-with-dupatta': KEEP ORIGINAL
+  'embroidery-work-lehenga-choli-in-pure-viscose-off-white':
+    'Embroidery Work Lehenga Choli in Art Silk Off-White',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 23: NET EMBROIDERY WORK — LuxeMia branded ($77-$217)
-  // Genuinely colored net base at these price points
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // BELOW: GENUINELY COLORED PRODUCTS — No color-hierarchy correction needed
+  // These are included ONLY for fabric-name sanitization (Vichitra→Art Silk, etc.)
+  // Auto-correct handles: Fendi→Jacquard, Vichitra→Art Silk, Chinon→Georgette
+  // ═══════════════════════════════════════════════════════════════════════════════
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  // 'green-net-embroidery-work-lehenga-choli-luxemia': KEEP ORIGINAL
-  // 'gold-net-embroidery-work-lehenga-choli-luxemia': KEEP ORIGINAL
-  // 'sky-net-embroidery-work-lehenga-choli-for-sangeet-luxemia': KEEP ORIGINAL
-  // 'gold-net-embroidery-work-lehenga-choli-luxemia': KEEP ORIGINAL
-  // 'rani-pink-net-embroidery-work-lehenga-choli-luxemia': KEEP ORIGINAL
-  // 'beige-net-embroidery-work-lehenga-choli-luxemia': KEEP ORIGINAL
+  // ── PHASE 16: GEORGETTE SILK PARTY WEAR (4) — Genuinely colored base ──
+  // Price ~$86 | Color in title IS the lehenga base color
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 24: FESTIVE LEHENGA CHOLI — Net Embroidery variants ($133-$214)
-  // Genuinely colored net at these price points
-  // ═══════════════════════════════════════════════════════════════════════════════
+  'georgette-silk-maroon-party-wear-embroidery-work-lehenga-choli':
+    'Maroon Georgette Silk Party Wear Embroidery Work Lehenga Choli',
 
-  // 'teal-blue-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
-  // 'cream-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
-  // 'rani-pink-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
-  // 'blue-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
-  // 'dusty-pink-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
-  // 'wine-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
+  'georgette-silk-blue-party-wear-embroidery-work-lehenga-choli':
+    'Blue Georgette Silk Party Wear Embroidery Work Lehenga Choli',
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 25: NET BEADS FESTIVE ($212) — Genuinely colored net
-  // ═══════════════════════════════════════════════════════════════════════════════
+  'georgette-silk-purple-party-wear-embroidery-work-lehenga-choli':
+    'Purple Georgette Silk Party Wear Embroidery Work Lehenga Choli',
 
-  // 'beige-net-beads-festive-lehenga-choli': KEEP ORIGINAL
-  // 'light-pink-net-beads-festive-lehenga-choli': KEEP ORIGINAL
+  'georgette-silk-rani-pink-party-wear-embroidery-work-lehenga-choli':
+    'Rani Pink Georgette Silk Party Wear Embroidery Work Lehenga Choli',
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 26: BOTTLE GREEN / GOLDEN NET FESTIVE ($214) — Genuinely colored
-  // ═══════════════════════════════════════════════════════════════════════════════
+  // ── PHASE 17: JACQUARD SILK PARTYWear (4) — Fendi→Jacquard, genuinely colored ──
+  // Price $67-$80 | Jacquard silk IS the stated color
 
-  // 'bottle-green-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
-  // 'golden-net-embroidery-festive-lehenga-choli': KEEP ORIGINAL
+  'blue-fendi-silk-embroidery-partywear-lehenga-with-dupatta':
+    'Blue Jacquard Silk Embroidery Partywear Lehenga with Dupatta',
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 27: NET OCCASION LEHENGA ($55-$70) — Lower price, ivory base likely
-  // ═══════════════════════════════════════════════════════════════════════════════
+  'maroon-fendi-silk-embroidery-partywear-lehenga-with-dupatta':
+    'Maroon Jacquard Silk Embroidery Partywear Lehenga with Dupatta',
 
-  // 'blue-net-sequins-occasion-lehenga-choli': KEEP ORIGINAL — net IS blue
-  // 'rani-pink-net-sequins-occasion-lehenga-choli': KEEP ORIGINAL
-  // 'green-net-sequins-occasion-lehenga-choli': KEEP ORIGINAL
+  'purple-fendi-silk-embroidery-partywear-lehenga-with-dupatta':
+    'Purple Jacquard Silk Embroidery Partywear Lehenga with Dupatta',
 
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 28: GREEN BANARASI / BANARASI — Genuinely colored silk
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'green-banarasi-embroidery-work-lehenga-choli-luxemia': KEEP ORIGINAL
-
-  // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 29: BEIGE NET EMBROIDERY LEHENGA — Beige IS the base
-  // ═══════════════════════════════════════════════════════════════════════════════
-
-  // 'beige-net-embroidery-lehenga-choli-with-dupatta': KEEP ORIGINAL
+  'rani-pink-fendi-silk-embroidery-partywear-lehenga-with-dupatta':
+    'Rani Pink Jacquard Silk Embroidery Partywear Lehenga with Dupatta',
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// AUTO-CORRECT PATTERNS — For titles not in manual corrections above
-// These patterns catch common color-hierarchy issues automatically
+// GENUINELY COLORED — NOT IN CORRECTIONS MAP (auto-correct preserves originals)
+// These products have genuinely colored base fabric; title color IS accurate
 // ═══════════════════════════════════════════════════════════════════════════════
 
-/**
- * Color vocabulary mapping — transform raw color names into luxury fashion terms
- */
+// PHASE 18: VELVET THREAD (2) — $121 | Velvet IS the base color
+// red-velvet-thread-lehenga-choli-with-dupatta
+// maroon-velvet-thread-lehenga-choli-with-dupatta
+
+// PHASE 19: NET EMBROIDERY PARTYWear (12) — $133-$284 | Net IS the base color
+// teal-blue-net-embroidery-partywear-lehenga-with-dupatta
+// cream-net-embroidery-partywear-lehenga-with-dupatta
+// beige-net-embroidery-partywear-lehenga-with-dupatta
+// rani-pink-net-embroidery-partywear-lehenga-with-dupatta
+// blue-net-embroidery-partywear-lehenga-with-dupatta
+// dusty-pink-net-embroidery-partywear-lehenga-with-dupatta
+// lilac-net-embroidery-partywear-lehenga-with-dupatta
+// pista-green-net-embroidery-partywear-lehenga-with-dupatta
+// peach-net-embroidery-partywear-lehenga-with-dupatta
+// sky-blue-net-embroidery-partywear-lehenga-with-dupatta
+// white-net-embroidery-partywear-lehenga-with-dupatta
+// wine-net-embroidery-lehenga-choli-with-dupatta
+
+// PHASE 20: NET EMBROIDERY BRIDAL (8) — $133-$284 | Net IS the base color
+// yellow-net-embroidery-bridal-lehenga-with-dupatta
+// maroon-net-embroidery-bridal-lehenga-with-dupatta
+// beige-net-embroidery-bridal-lehenga-with-dupatta
+// golden-net-embroidery-bridal-lehenga-with-dupatta
+// light-pink-net-beads-bridal-lehenga-with-dupatta
+// cream-net-beads-bridal-lehenga-with-dupatta
+// off-white-satin-beads-bridal-lehenga-with-dupatta
+// black-net-beads-bridal-lehenga-with-dupatta
+// wine-net-embroidery-bridal-lehenga-with-dupatta
+
+// PHASE 21: BANARASI / TISSUE SILK / CREPE BRIDAL (8) — $164-$297
+// green-pure-banarasi-embroidery-bridal-lehenga-with-dupatta
+// teal-green-tissue-silk-embroidery-bridal-lehenga-with-dupatta
+// navy-blue-tissue-silk-embroidery-partywear-lehenga-with-dupatta
+// pink-pure-banarasi-embroidery-bridal-lehenga-with-dupatta
+// sky-blue-tissue-silk-embroidery-bridal-lehenga-with-dupatta
+// multicolor-tissue-silk-embroidery-bridal-lehenga-with-dupatta
+// purple-crepe-embroidery-bridal-lehenga-with-dupatta
+// multicolor-crepe-embroidery-partywear-lehenga-with-dupatta
+
+// PHASE 22: BEADS WORK (4) — Color IS the base material
+// beads-work-lehenga-choli-in-net-beige
+// beads-work-lehenga-choli-in-net-cream
+// beads-work-lehenga-choli-in-satin-off-white
+// beads-work-lehenga-choli-in-net-black
+
+// PHASE 23: EMBROIDERY WORK (13) — Color/material IS the base
+// embroidery-work-lehenga-choli-in-net-white
+// embroidery-work-lehenga-choli-in-banarasi-silk-beige
+// embroidery-work-lehenga-choli-in-tissue-silk-multicolor
+// embroidery-work-lehenga-choli-in-net-green
+// embroidery-work-lehenga-choli-in-silk-beige
+// embroidery-work-lehenga-choli-in-net-mehendi
+// embroidery-work-lehenga-choli-in-net-rani-pink
+// embroidery-work-lehenga-choli-in-tissue-silk-green
+// embroidery-work-lehenga-choli-in-crepe-purple
+// embroidery-work-lehenga-choli-in-crepe-multicolor
+// embroidery-work-lehenga-choli-in-net-peach
+// embroidery-work-lehenga-choli-in-tissue-silk-sky-blue
+
+// PHASE 24: NET SEQUINS HIGHER PRICE (4) — $111-$138 | Net IS genuinely colored
+// blue-net-sequins-lehenga-choli-with-dupatta
+// rani-pink-net-sequins-lehenga-choli-with-dupatta
+// green-net-sequins-lehenga-choli-with-dupatta
+// purple-net-sequins-lehenga-choli-with-dupatta
+
+// PHASE 25: RANGOLI / MULTICOLOR (2) — Genuinely colored
+// purple-rangoli-silk-embroidery-lehenga-choli-with-dupatta
+// multicolor-georgette-sequins-lehenga-choli-with-dupatta
+
+// PHASE 26: WHITE GEORGETTE PRINTED (1)
+// white-georgette-printed-lehenga-choli-with-dupatta
+
+// PHASE 27: NET EMBROIDERY WORK LUXEMIA (6) — $77-$217 | Genuinely colored
+// green-net-embroidery-work-lehenga-choli-luxemia
+// gold-net-embroidery-work-lehenga-choli-luxemia
+// sky-net-embroidery-work-lehenga-choli-for-sangeet-luxemia
+// gold-net-embroidery-work-lehenga-choli-luxemia
+// rani-pink-net-embroidery-work-lehenga-choli-luxemia
+// beige-net-embroidery-work-lehenga-choli-luxemia
+
+// PHASE 28: NET EMBROIDERY FESTIVE (7) — $133-$214 | Genuinely colored
+// teal-blue-net-embroidery-festive-lehenga-choli
+// cream-net-embroidery-festive-lehenga-choli
+// rani-pink-net-embroidery-festive-lehenga-choli
+// blue-net-embroidery-festive-lehenga-choli
+// dusty-pink-net-embroidery-festive-lehenga-choli
+// wine-net-embroidery-festive-lehenga-choli
+
+// PHASE 29: NET BEADS / BOTTLE GREEN / GOLDEN FESTIVE (4)
+// beige-net-beads-festive-lehenga-choli
+// light-pink-net-beads-festive-lehenga-choli
+// bottle-green-net-embroidery-festive-lehenga-choli
+// golden-net-embroidery-festive-lehenga-choli
+
+// PHASE 30: NET SEQUINS OCCASION (3) — Genuinely colored
+// blue-net-sequins-occasion-lehenga-choli
+// rani-pink-net-sequins-occasion-lehenga-choli
+// green-net-sequins-occasion-lehenga-choli
+
+// PHASE 31: BANARASI / BEIGE NET (2)
+// green-banarasi-embroidery-work-lehenga-choli-luxemia
+// beige-net-embroidery-lehenga-choli-with-dupatta
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// COLOR VOCABULARY — Transform raw color names into luxury fashion terms
+// ═══════════════════════════════════════════════════════════════════════════════
+
 export const LUXURY_COLOR_MAP: Record<string, string> = {
   'maroon': 'Maroon',
   'wine': 'Wine',
@@ -413,6 +389,8 @@ export const LUXURY_COLOR_MAP: Record<string, string> = {
   'mehendi-green': 'Mehendi Green',
   'pista-green': 'Pista Green',
   'teal-green': 'Teal Green',
+  'bottle-green': 'Bottle Green',
+  'olive-green': 'Olive Green',
   'purple': 'Purple',
   'royal-purple': 'Royal Purple',
   'lilac': 'Lilac',
@@ -430,7 +408,6 @@ export const LUXURY_COLOR_MAP: Record<string, string> = {
   'orange': 'Orange',
   'rama-blue': 'Rama Blue',
   'olive': 'Olive Green',
-  'olive-green': 'Olive Green',
   'gold': 'Gold',
   'golden': 'Golden',
   'yellow': 'Yellow',
@@ -439,7 +416,7 @@ export const LUXURY_COLOR_MAP: Record<string, string> = {
   'ivory': 'Ivory',
   'pearl-white': 'Pearl White',
   'off-white': 'Off-White',
-  'white': 'White',
+  'white': 'Pearl White',
   'red': 'Red',
   'crimson': 'Crimson Red',
   'peach': 'Peach',
@@ -458,20 +435,57 @@ export const LUXURY_COLOR_MAP: Record<string, string> = {
   'gray': 'Grey',
   'multi': 'Multi-Color',
   'multicolor': 'Multi-Color',
+  'dusty-pink': 'Dusty Pink',
 };
 
-/**
- * Fabric-specific base color rules
- * Maps fabric types to their typical base color for lower-priced lehengas
- */
+// ═══════════════════════════════════════════════════════════════════════════════
+// FABRIC-SPECIFIC BASE COLOR RULES
+// Maps fabric types to their typical base color for lower-priced lehengas
+// ═══════════════════════════════════════════════════════════════════════════════
+
 const FABRIC_BASE_COLOR: Record<string, { base: string; priceThreshold: number }> = {
   'silk': { base: 'Pearl White', priceThreshold: 100 },
   'georgette': { base: 'Ivory', priceThreshold: 80 },
-  'vichitra': { base: 'Ivory', priceThreshold: 110 },
-  'chinon': { base: 'Ivory', priceThreshold: 60 },
-  'net': { base: 'Ivory', priceThreshold: 75 },
+  'art-silk': { base: 'Ivory', priceThreshold: 110 },
+  'jacquard': { base: 'Ivory', priceThreshold: 85 },
   'faux-georgette': { base: 'Ivory', priceThreshold: 80 },
 };
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SANITIZATION: Non-searchable → searchable fabric term replacements
+// Applied BEFORE pattern matching in autoCorrectTitle()
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const FABRIC_SANITIZATION: Record<string, string> = {
+  // Vichitra is obscure wholesaler jargon — Art Silk is the consumer-facing term
+  'Vichitra': 'Art Silk',
+  'vichitra': 'art silk',
+  // Chinon is obscure — Georgette is the searchable consumer term
+  'Chinon': 'Georgette',
+  'chinon': 'georgette',
+  // Fendi is obscure wholesaler jargon — Jacquard is the searchable term
+  'Fendi': 'Jacquard',
+  'fendi': 'jacquard',
+  // Pure Viscose is obscure — Art Silk is the consumer-facing term
+  'Pure Viscose': 'Art Silk',
+  'pure viscose': 'art silk',
+};
+
+/**
+ * Sanitize fabric names in a title — replace obscure wholesaler terms
+ * with searchable consumer-facing fabric names
+ */
+function sanitizeFabricNames(title: string): string {
+  let sanitized = title;
+  for (const [obscure, searchable] of Object.entries(FABRIC_SANITIZATION)) {
+    sanitized = sanitized.replaceAll(obscure, searchable);
+  }
+  return sanitized;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// UTILITY FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════════════════
 
 /**
  * Get corrected title for a product handle
@@ -507,26 +521,26 @@ export function detectColorHierarchyIssue(title: string): {
   const lower = title.toLowerCase();
 
   // Pattern 1: Title starts with a color that's typically a DUPATTA accent
-  // These colors commonly appear as dupatta accents on ivory/pearl white lehengas
   const commonAccentColors = [
     'maroon', 'wine', 'rani pink', 'purple', 'green', 'turquoise',
     'rust orange', 'dark blue', 'navy', 'gold', 'mustard', 'magenta',
     'fuchsia', 'coral', 'peach', 'olive', 'teal', 'pink', 'blue',
     'rama blue', 'mehendi', 'pista green', 'teal green', 'olive green',
     'lavender', 'lilac', 'sky blue', 'yellow', 'red', 'rust',
+    'dusty pink', 'bottle green', 'golden',
   ];
 
   for (const accent of commonAccentColors) {
     if (lower.startsWith(accent + ' ') || lower.startsWith(accent.replace(' ', '-') + ' ')) {
-      // Check if this looks like a lehenga pattern with likely ivory base
       if (lower.includes('lehenga') && !lower.includes('bridal ' + accent)) {
-        // Check fabric to suggest appropriate base color
         let suggestedBase = 'Ivory / Pearl White';
-        if (lower.includes('silk') && !lower.includes('georgette') && !lower.includes('banarasi')) {
+        if (lower.includes('silk') && !lower.includes('georgette') && !lower.includes('banarasi') && !lower.includes('jacquard')) {
           suggestedBase = 'Pearl White';
         } else if (lower.includes('georgette') || lower.includes('chinon')) {
           suggestedBase = 'Ivory';
-        } else if (lower.includes('vichitra')) {
+        } else if (lower.includes('art silk') || lower.includes('vichitra')) {
+          suggestedBase = 'Ivory';
+        } else if (lower.includes('jacquard') || lower.includes('fendi')) {
           suggestedBase = 'Ivory';
         } else if (lower.includes('net') && lower.includes('embroidery') && !lower.includes('partywear') && !lower.includes('bridal')) {
           suggestedBase = 'Ivory';
@@ -561,21 +575,29 @@ function isLikelyGenuineColor(title: string, price: number): boolean {
   // High-priced bridal/partywear lehengas ($130+) are typically genuinely colored
   if (price >= 130) return true;
 
-  // Velvet, Banarasi, Tissue Silk, Crepe, Satin base fabrics ARE the stated color
+  // Velvet base fabric IS the stated color
   if (lower.includes('velvet')) return true;
+
+  // Banarasi silk base IS the stated color (genuinely colored woven fabric)
   if (lower.includes('banarasi')) return true;
+
+  // Tissue silk base IS the stated color (genuinely colored metallic fabric)
   if (lower.includes('tissue silk')) return true;
+
+  // Crepe base IS the stated color
   if (lower.includes('crepe')) return true;
+
+  // Satin base IS the stated color
   if (lower.includes('satin')) return true;
+
+  // Jacquard base fabric IS genuinely colored (textured woven fabric)
+  if (lower.includes('jacquard')) return true;
+
+  // Rangoli silk IS genuinely colored
+  if (lower.includes('rangoli')) return true;
 
   // Partywear/Bridal naming at higher prices indicates genuine color
   if ((lower.includes('partywear') || lower.includes('bridal')) && price >= 120) return true;
-
-  // Jacquard silk is a textured fabric where the base is genuinely colored
-  if (lower.includes('jacquard')) return true;
-
-  // Rangoli silk is genuinely colored
-  if (lower.includes('rangoli')) return true;
 
   // "Beads Work Lehenga Choli in [Material] [Color]" — color IS genuine
   if (lower.match(/beads work lehenga choli in/)) return true;
@@ -590,7 +612,7 @@ function isLikelyGenuineColor(title: string, price: number): boolean {
   if (lower.includes('multicolor')) return true;
 
   // White/cream/off-white/beige/black ARE the base color (not accents)
-  const baseColors = ['white ', 'cream ', 'off-white ', 'beige ', 'black ', 'ivory '];
+  const baseColors = ['white ', 'cream ', 'off-white ', 'beige ', 'black ', 'ivory ', 'pearl white '];
   for (const base of baseColors) {
     if (lower.startsWith(base)) return true;
   }
@@ -601,6 +623,11 @@ function isLikelyGenuineColor(title: string, price: number): boolean {
 /**
  * Auto-generate corrected title for known problematic patterns
  * Uses heuristics to flip color hierarchy based on price, fabric, and naming
+ *
+ * STEP 1: Sanitize fabric names (Vichitra→Art Silk, Fendi→Jacquard, Chinon→Georgette)
+ * STEP 2: Check manual corrections
+ * STEP 3: Check if genuinely colored (keep original)
+ * STEP 4: Apply pattern-based auto-correction
  */
 export function autoCorrectTitle(
   originalTitle: string,
@@ -608,23 +635,25 @@ export function autoCorrectTitle(
   productType?: string,
   price?: number,
 ): string {
-  // Check if we have a manual correction
-  const manual = getCorrectedTitle(handle);
+  // STEP 1: Sanitize fabric names — replace obscure terms with searchable ones
+  const sanitizedTitle = sanitizeFabricNames(originalTitle);
+  const sanitizedHandle = sanitizeFabricNames(handle);
+
+  // STEP 2: Check if we have a manual correction for the sanitized handle
+  const manual = getCorrectedTitle(sanitizedHandle) || getCorrectedTitle(handle);
   if (manual) return manual;
 
-  // If price is available and the lehenga is likely genuinely colored, return original
-  if (price && isLikelyGenuineColor(originalTitle, price)) {
-    return originalTitle;
+  // STEP 3: If price is available and the lehenga is likely genuinely colored, return sanitized original
+  if (price && isLikelyGenuineColor(sanitizedTitle, price)) {
+    return sanitizedTitle;
   }
 
-  const lower = originalTitle.toLowerCase();
+  const lower = sanitizedTitle.toLowerCase();
 
-  // Auto-detect and fix common pattern:
-  // "[AccentColor] [Fabric] [Work] Lehenga Choli with Dupatta"
-  // → "[BaseColor] [Fabric] Lehenga Choli with [AccentColor] [Work] Dupatta"
+  // STEP 4: Auto-detect and fix common patterns
 
   // Pattern: [Color] Silk Embroidery Lehenga Choli with Dupatta
-  const silkMatch = originalTitle.match(
+  const silkMatch = sanitizedTitle.match(
     /^([A-Za-z\-]+)\s+Silk\s+(Embroidery|Embroidered|Sequin|Zari|Printed|Mirror|Gota)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
   if (silkMatch) {
@@ -635,7 +664,7 @@ export function autoCorrectTitle(
   }
 
   // Pattern: [Color] Georgette Embroidery Lehenga Choli with Dupatta
-  const georgetteMatch = originalTitle.match(
+  const georgetteMatch = sanitizedTitle.match(
     /^([A-Za-z\-]+)\s+Georgette\s+(Embroidery|Embroidered|Sequin|Zari|Printed|Mirror|Gota|Thread)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
   if (georgetteMatch) {
@@ -645,41 +674,62 @@ export function autoCorrectTitle(
     return `${baseColor} Georgette Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
   }
 
-  // Pattern: [Color] Pure Vichitra Embroidery Lehenga Choli with Dupatta
-  // Matches original Shopify title — outputs corrected "Art Silk" title
-  const vichitraMatch = originalTitle.match(
-    /^([A-Za-z\-]+)\s+Pure\s+Vichitra\s+(Embroidery|Embroidered|Sequin|Zari)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
+  // Pattern: [Color] Art Silk Embroidery Lehenga Choli with Dupatta
+  // (handles sanitized Vichitra→Art Silk titles)
+  const artSilkMatch = sanitizedTitle.match(
+    /^([A-Za-z\-]+)\s+Art\s+Silk\s+(Embroidery|Embroidered|Sequin|Zari)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
-  if (vichitraMatch) {
-    const [, accentColor, work] = vichitraMatch;
+  if (artSilkMatch) {
+    const [, accentColor, work] = artSilkMatch;
     const baseColor = 'Ivory';
     const workDesc = work === 'Embroidery' ? 'Embroidered' : work;
     return `${baseColor} Art Silk Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
   }
 
-  // Pattern: [Color] Vichitra Silk Sequins Lehenga Choli with Dupatta
-  // Matches original Shopify title — outputs corrected "Art Silk" title
-  const vichitraSequinsMatch = originalTitle.match(
-    /^([A-Za-z\-]+)\s+Vichitra\s+Silk\s+(Sequins|Sequined|Embroidery|Embroidered)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
+  // Pattern: [Color] Pure Art Silk Embroidery Lehenga Choli with Dupatta
+  const pureArtSilkMatch = sanitizedTitle.match(
+    /^([A-Za-z\-]+)\s+Pure\s+Art\s+Silk\s+(Embroidery|Embroidered|Sequin|Zari)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
-  if (vichitraSequinsMatch) {
-    const [, accentColor, work] = vichitraSequinsMatch;
+  if (pureArtSilkMatch) {
+    const [, accentColor, work] = pureArtSilkMatch;
+    const baseColor = 'Ivory';
+    const workDesc = work === 'Embroidery' ? 'Embroidered' : work;
+    return `${baseColor} Art Silk Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
+  }
+
+  // Pattern: [Color] Art Silk Sequins Lehenga Choli with Dupatta
+  // (handles sanitized Vichitra Silk Sequins titles)
+  const artSilkSequinsMatch = sanitizedTitle.match(
+    /^([A-Za-z\-]+)\s+Art\s+Silk\s+(Sequins|Sequined|Embroidery|Embroidered)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
+  );
+  if (artSilkSequinsMatch) {
+    const [, accentColor, work] = artSilkSequinsMatch;
     const workDesc = work === 'Sequins' ? 'Sequins' : work === 'Embroidery' ? 'Embroidered' : work;
     return `Ivory Art Silk ${workDesc} Lehenga Choli with ${accentColor} Dupatta`;
   }
 
-  // Pattern: [Color] Chinon Embroidery Lehenga Choli with Dupatta
-  const chinonMatch = originalTitle.match(
-    /^([A-Za-z\-]+)\s+Chinon\s+(Embroidery|Embroidered|Sequin|Zari)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
+  // Pattern: [Color] Jacquard Silk Embroidery Lehenga Choli (non-partywear)
+  // Lower-priced jacquard: color is dupatta accent, base is ivory
+  const jacquardMatch = sanitizedTitle.match(
+    /^([A-Za-z\-]+)\s+Jacquard\s+Silk\s+(Embroidery|Embroidered)\s+Lehenga\s+Choli$/
   );
-  if (chinonMatch) {
-    const [, accentColor, work] = chinonMatch;
+  if (jacquardMatch && (!price || price < 100)) {
+    const [, accentColor, work] = jacquardMatch;
     const workDesc = work === 'Embroidery' ? 'Embroidered' : work;
-    return `Ivory Chinon Embroidery Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
+    return `Ivory Jacquard Silk Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
+  }
+
+  // Pattern: [Color] Georgette Thread Lehenga Choli with Dupatta
+  const georgetteThreadMatch = sanitizedTitle.match(
+    /^([A-Za-z\-]+)\s+Georgette\s+Thread\s+Lehenga\s+Choli\s+with\s+Dupatta$/
+  );
+  if (georgetteThreadMatch) {
+    const [, accentColor] = georgetteThreadMatch;
+    return `Ivory Georgette Thread Lehenga Choli with ${accentColor} Embroidered Dupatta`;
   }
 
   // Pattern: [Color] Net Thread Lehenga Choli with Dupatta
-  const netThreadMatch = originalTitle.match(
+  const netThreadMatch = sanitizedTitle.match(
     /^([A-Za-z\-]+)\s+Net\s+Thread\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
   if (netThreadMatch) {
@@ -689,7 +739,7 @@ export function autoCorrectTitle(
 
   // Pattern: [Color] Net Sequins Lehenga Choli with Dupatta (lower price)
   if (price && price < 75) {
-    const netSequinsMatch = originalTitle.match(
+    const netSequinsMatch = sanitizedTitle.match(
       /^([A-Za-z\-]+)\s+Net\s+(Sequins|Sequined)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
     );
     if (netSequinsMatch) {
@@ -699,7 +749,7 @@ export function autoCorrectTitle(
   }
 
   // Pattern: [Color] Faux Georgette Embroidery Lehenga Choli with Dupatta
-  const fauxGeorgetteMatch = originalTitle.match(
+  const fauxGeorgetteMatch = sanitizedTitle.match(
     /^([A-Za-z\-]+)\s+Faux\s+Georgette\s+(Embroidery|Embroidered)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
   if (fauxGeorgetteMatch) {
@@ -709,7 +759,7 @@ export function autoCorrectTitle(
   }
 
   // Pattern: [Color] [Fabric] Embroidery Festive Lehenga Choli
-  const festiveMatch = originalTitle.match(
+  const festiveMatch = sanitizedTitle.match(
     /^([A-Za-z\-]+)\s+([A-Za-z\-]+)\s+(Embroidery|Embroidered)\s+Festive\s+Lehenga\s+Choli$/
   );
   if (festiveMatch) {
@@ -717,14 +767,15 @@ export function autoCorrectTitle(
     const fabricLower = fabric.toLowerCase();
     let baseColor = 'Ivory';
     if (fabricLower === 'silk') baseColor = 'Pearl White';
-    if (fabricLower === 'vichitra') baseColor = 'Ivory';
     if (fabricLower === 'georgette') baseColor = 'Ivory';
+    if (fabricLower === 'art' || fabricLower === 'art silk') baseColor = 'Ivory';
+    if (fabricLower === 'jacquard') baseColor = 'Ivory';
     const workDesc = work === 'Embroidery' ? 'Embroidered' : work;
     return `${baseColor} ${fabric} ${workDesc} Festive Lehenga Choli with ${accentColor} Dupatta`;
   }
 
   // Pattern: [Color] [Fabric] Embroidery Occasion Lehenga Choli
-  const occasionMatch = originalTitle.match(
+  const occasionMatch = sanitizedTitle.match(
     /^([A-Za-z\-]+)\s+([A-Za-z\-]+)\s+(Embroidery|Embroidered)\s+Occasion\s+Lehenga\s+Choli$/
   );
   if (occasionMatch) {
@@ -732,14 +783,15 @@ export function autoCorrectTitle(
     const fabricLower = fabric.toLowerCase();
     let baseColor = 'Ivory';
     if (fabricLower === 'silk') baseColor = 'Pearl White';
-    if (fabricLower === 'vichitra') baseColor = 'Ivory';
     if (fabricLower === 'georgette') baseColor = 'Ivory';
+    if (fabricLower === 'art' || fabricLower === 'art silk') baseColor = 'Ivory';
+    if (fabricLower === 'jacquard') baseColor = 'Ivory';
     const workDesc = work === 'Embroidery' ? 'Embroidered' : work;
     return `${baseColor} ${fabric} ${workDesc} Occasion Lehenga Choli with ${accentColor} Dupatta`;
   }
 
-  // If no pattern matched, return original
-  return originalTitle;
+  // If no pattern matched, return sanitized original
+  return sanitizedTitle;
 }
 
 /**
@@ -762,6 +814,9 @@ export function getColorKeywords(correctedTitle: string): string[] {
   }
   if (lower.includes('wine')) {
     keywords.push('wine lehenga', 'wine color lehenga', 'burgundy lehenga');
+  }
+  if (lower.includes('rani pink')) {
+    keywords.push('rani pink lehenga', 'pink lehenga', 'hot pink lehenga');
   }
   if (lower.includes('green')) {
     keywords.push('green lehenga', 'emerald lehenga');
@@ -787,6 +842,18 @@ export function getColorKeywords(correctedTitle: string): string[] {
   if (lower.includes('black')) {
     keywords.push('black lehenga', 'black partywear lehenga');
   }
+  if (lower.includes('beige')) {
+    keywords.push('beige lehenga', 'neutral lehenga');
+  }
+  if (lower.includes('crepe')) {
+    keywords.push('crepe lehenga');
+  }
+  if (lower.includes('jacquard')) {
+    keywords.push('jacquard lehenga', 'jacquard silk lehenga');
+  }
+  if (lower.includes('art silk')) {
+    keywords.push('art silk lehenga');
+  }
 
   // Two-tone / contrast keywords
   if (lower.includes('with')) {
@@ -796,6 +863,11 @@ export function getColorKeywords(correctedTitle: string): string[] {
   // Bridal intent keywords
   if (lower.includes('silk') || lower.includes('embroidered') || lower.includes('bridal')) {
     keywords.push('bridal lehenga', 'wedding lehenga', 'designer lehenga');
+  }
+
+  // Partywear keywords
+  if (lower.includes('partywear') || lower.includes('party wear')) {
+    keywords.push('partywear lehenga', 'party wear lehenga', 'reception lehenga');
   }
 
   return [...new Set(keywords)]; // deduplicate

@@ -22,6 +22,8 @@
  * @module productDescriptionEnrichment
  */
 
+import { getKeywords, getLongTailKeywords } from './productSeoData.js';
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -1261,6 +1263,18 @@ export function enrichProductDescription(
   const occasionStyling = buildOccasionStylingParagraph(categoryKey, title, seed);
   const qaSection = buildQASection(categoryKey, title, inferredMaterial);
 
+  // SEO Keyword Integration — weave in product-specific keywords when available
+  const seoKeywords = getKeywords(title);
+  const seoLongTailKeywords = getLongTailKeywords(title);
+  let keywordParagraph = '';
+  if (seoKeywords.length > 0) {
+    const keywordIntro = `Popular searches for this style include ${seoKeywords.slice(0, 5).join(', ')}, and ${seoKeywords[5] ?? seoKeywords[0]}.`;
+    const longTailPhrase = seoLongTailKeywords.length > 0
+      ? ` Customers also look for "${seoLongTailKeywords[0]}" when shopping for similar outfits.`
+      : '';
+    keywordParagraph = keywordIntro + longTailPhrase;
+  }
+
   // Build a product details line — GMC requires explicit Color mention in descriptions
   // This addresses the GMC recommendation: "Update product descriptions to include details customers are looking for"
   const detailsParts: string[] = [];
@@ -1271,11 +1285,13 @@ export function enrichProductDescription(
   const detailsLine = detailsParts.length > 0 ? detailsParts.join(' | ') : '';
 
   // Assemble the full enriched description
-  // Phase 3 structure: Opening → Details → Occasion → Craftsmanship → Styling → Occasion Styling → Care → Q&A → Shipping
+  // Phase 3+SEO structure: Opening → Details → Keyword SEO → Occasion → Craftsmanship → Styling → Occasion Styling → Care → Q&A → Shipping
   const enriched = [
     opening,
     '',
     detailsLine,
+    '',
+    keywordParagraph,
     '',
     occasion,
     '',
