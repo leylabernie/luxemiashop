@@ -182,7 +182,7 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       {product ? (
         <SEOHead
-          title={`${product.title} | ${categoryName} | LuxeMia`}
+          title={`${product.title.replace(/\s*[-–—]\s*LuxeMia\s*$/i, '')} | ${categoryName} | LuxeMia`}
           description={seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
