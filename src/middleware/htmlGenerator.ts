@@ -28,8 +28,11 @@ function getCategoryUrl(productType?: string): string {
 }
 
 export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): string {
-  const title = `${product.title} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
-  const description = (product.description || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
+  // Strip any trailing "— LuxeMia" or "| LuxeMia" from Shopify product titles
+  // to prevent brand duplication when we append our own "| LuxeMia"
+  const cleanTitle = product.title.replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
+  const title = `${cleanTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
+  const description = (product.description || `Shop ${cleanTitle} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
@@ -61,7 +64,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
 
   // Generate schema using shared module
   const productSchema = generateProductSchema({
-    name: product.title,
+    name: cleanTitle,
     description: description,
     url: canonicalUrl,
     image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))],
@@ -81,27 +84,27 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: SITE_URL },
     { name: categoryName, url: `${SITE_URL}${categoryUrl}` },
-    { name: product.title, url: canonicalUrl },
+    { name: cleanTitle, url: canonicalUrl },
   ]);
 
   const faqSchema = generateFaqSchema([
     {
-      question: `What sizes are available for the ${product.title}?`,
-      answer: `The ${product.title} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit.`,
+      question: `What sizes are available for the ${cleanTitle}?`,
+      answer: `The ${cleanTitle} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit.`,
     },
     {
-      question: `What is the delivery time for the ${product.title}?`,
+      question: `What is the delivery time for the ${cleanTitle}?`,
       answer: `Readymade items are dispatched within 3-5 business days. Custom/alteration orders are dispatched within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping.`,
     },
     {
-      question: `Can I return the ${product.title} if it doesn't fit?`,
+      question: `Can I return the ${cleanTitle} if it doesn't fit?`,
       answer: `All sales are final. LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which requires a mandatory unboxing video. Please use our Size Guide before ordering.`,
     },
   ]);
 
   const allImages = product.images.edges.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
     const imgSrc = forceJpegForGmc(edge.node.url);
-    return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || product.title)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
+    return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || cleanTitle)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
   });
 
   const variantOptions = product.variants.edges.slice(0, 5).map((v: { node: { title: string } }) => {
