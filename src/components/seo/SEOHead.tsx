@@ -44,6 +44,8 @@ interface SEOHeadProps {
     brand?: string;
     color?: string;
     material?: string;
+    pattern?: string;
+    audience?: string;
     sizes?: string[];
     googleProductCategory?: string;
   };
@@ -108,6 +110,8 @@ const SEOHead = ({
         googleProductCategory: product.googleProductCategory,
         color: product.color,
         material: product.material,
+        pattern: product.pattern,
+        audience: product.audience,
         sizes: product.sizes,
         price: product.price,
         compareAtPrice: product.originalPrice || null,

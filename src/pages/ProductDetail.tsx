@@ -137,6 +137,32 @@ const ProductDetail = () => {
   const productColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];
   const productMaterial = product?.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0];
 
+  // Infer pattern/embroidery style and audience from product title and type for richer schema
+  const productPattern = useMemo(() => {
+    if (!product) return undefined;
+    const title = product.title.toLowerCase();
+    if (title.includes('zardozi') || title.includes('zari')) return 'Zari/Zardozi Embroidered';
+    if (title.includes('sequin')) return 'Sequined';
+    if (title.includes('mirror') || title.includes('shisha')) return 'Mirror Work';
+    if (title.includes('gota') || title.includes('gota patti')) return 'Gota Patti';
+    if (title.includes('chikankari')) return 'Chikankari';
+    if (title.includes('banarasi') || title.includes('kanjivaram') || title.includes('kanchipuram')) return 'Woven/Brocade';
+    if (title.includes('embroid')) return 'Embroidered';
+    if (title.includes('printed')) return 'Printed';
+    if (title.includes('stone') || title.includes('crystal')) return 'Stone Work';
+    if (title.includes('bead') || title.includes('pearl')) return 'Beaded';
+    if (title.includes('patch')) return 'Patch Work';
+    return undefined;
+  }, [product]);
+
+  const productAudience = useMemo(() => {
+    if (!product) return undefined;
+    const type = (product.productType || '').toLowerCase();
+    if (type.includes('sherwani') || type.includes('kurta') || type.includes('men')) return 'Male';
+    if (type.includes('jewel')) return undefined;
+    return 'Female';
+  }, [product]);
+
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
     return enrichProductDescription(
@@ -209,6 +235,8 @@ const ProductDetail = () => {
             })(),
             color: productColor,
             material: productMaterial,
+            pattern: productPattern,
+            audience: productAudience,
             sizes: product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size')?.values || [],
             googleProductCategory: getGoogleProductCategory(product.productType, product.title),
           }}

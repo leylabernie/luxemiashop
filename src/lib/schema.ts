@@ -112,6 +112,8 @@ export interface ProductSchemaInput {
   googleProductCategory?: string;
   color?: string;
   material?: string;
+  pattern?: string;        // e.g., "Embroidered", "Zari", "Sequined"
+  audience?: string;       // e.g., "Women", "Men", "Bridal", "Festive"
   sizes?: string[];
   price: string;
   compareAtPrice?: string | null;
@@ -140,6 +142,13 @@ export function generateProductSchema(input: ProductSchemaInput) {
     ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
     ...(input.color && { color: input.color }),
     ...(input.material && { material: input.material }),
+    ...(input.pattern && { pattern: input.pattern }),
+    ...(input.audience && {
+      audience: {
+        '@type': 'PeopleAudience',
+        suggestedGender: input.audience,
+      },
+    }),
     ...(input.sizes && input.sizes.length > 0 && { size: input.sizes.length === 1 ? input.sizes[0] : input.sizes.join('/') }),
     itemCondition: 'https://schema.org/NewCondition',
     offers: {
