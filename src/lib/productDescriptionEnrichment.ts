@@ -1,9 +1,16 @@
 /**
- * Product Description Enrichment Utility — Phase 2 SEO Optimization
+ * Product Description Enrichment Utility — Phase 3 SEO Optimization
+ * Luxury Editorial Upgrade with AI-Search Q&A Format
  *
  * When the Shopify API returns thin or generic product descriptions (common with
  * wholesale/manufacturer feeds), this module generates SEO-rich, informative
  * descriptions that improve search rankings and customer conversion.
+ *
+ * Phase 3 Enhancements:
+ * - Fabric origin and craftsmanship storytelling
+ * - Occasion-specific styling guidance with detailed accessorizing
+ * - Semantic keyword integration for AI search engines
+ * - Structured Q&A format optimized for featured snippets and AI responses
  *
  * Business context:
  * - Site: luxemia.shop — Indian ethnic wear store
@@ -38,7 +45,19 @@ interface QualityAdjectives {
   secondary: string[];
 }
 
-/** Template data for a product category. */
+/** Fabric origin and craftsmanship story for luxury storytelling. */
+interface CraftsmanshipStory {
+  /** Region of origin for this fabric/craft. */
+  origin: string;
+  /** Artisan technique description. */
+  technique: string;
+  /** Hours of handwork typically involved. */
+  handworkHours: string;
+  /** Heritage/cultural significance. */
+  heritage: string;
+}
+
+/** Enhanced template data for a product category with Phase 3 luxury editorial. */
 interface CategoryTemplate {
   /** Display label for the product type. */
   label: string;
@@ -64,6 +83,12 @@ interface CategoryTemplate {
   keywords: string[];
   /** Category-level SEO description snippet. */
   categoryDescription: string;
+  /** Craftsmanship stories for fabric origin narratives. */
+  craftsmanship: CraftsmanshipStory;
+  /** Occasion-specific detailed styling guidance. */
+  occasionStyling: Record<string, string[]>;
+  /** AI-search optimized Q&A pairs. */
+  qaPairs: Array<{ question: string; answer: string }>;
 }
 
 // ---------------------------------------------------------------------------
@@ -193,9 +218,67 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'embroidered lehenga choli',
       'ethnic wear for weddings',
       'lehenga for reception',
+      'handcrafted lehenga online',
+      'traditional Indian lehenga',
+      'festive lehenga collection',
+      'luxury bridal lehenga',
     ],
     categoryDescription:
       'Explore LuxeMia\'s curated collection of designer lehengas — from bridal masterpieces to festive-ready silhouettes. Handcrafted with intricate embroidery, zari, and sequin work, each lehenga blends traditional Indian artistry with contemporary design. Shop bridal lehengas, wedding lehengas, and festive lehengas online with free shipping over $350 to the USA, Canada, and Australia.',
+    craftsmanship: {
+      origin: 'Crafted by master artisans in India\'s renowned textile regions of Gujarat and Rajasthan, where lehenga-making traditions span over 500 years.',
+      technique: 'Each piece features meticulous hand embroidery using traditional techniques including zardozi (gold threadwork), aari (hook needlework), and badla (metallic ribbon embroidery) passed down through generations of artisan families.',
+      handworkHours: 'Every lehenga requires 80 to 150 hours of intensive handwork, from the initial fabric dyeing and blocking to the final embellishment and quality inspection.',
+      heritage: 'These time-honored craftsmanship techniques have adorned Indian royalty for centuries and continue to define the gold standard in bridal ethnic wear worldwide.',
+    },
+    occasionStyling: {
+      wedding: [
+        'For the main wedding ceremony, drape the dupatta over your head and across both shoulders in the traditional pallu style for a reverent bridal look.',
+        'Choose heavy kundan or polki jewelry with a multi-layered rani haar and matching maang tikka for maximum impact.',
+        'Style your hair in a center-parted low bun decorated with fresh red roses or gajra for timeless bridal elegance.',
+      ],
+      reception: [
+        'For the reception, drape the dupatta loosely over one shoulder and let it flow behind you for effortless movement and modern sophistication.',
+        'Switch to diamond or American diamond jewelry for a contemporary sparkle that catches the candlelight beautifully.',
+        'A sleek high ponytail or soft cascading curls complement the reception look with a touch of red-carpet glamour.',
+      ],
+      sangeet: [
+        'For the sangeet night, pin the dupatta firmly across both arms to allow unrestricted dancing while showcasing the lehenga\'s flare.',
+        'Opt for lighter, statement pieces like chandelier earrings and a single statement cuff bracelet.',
+        'A braided updo with tiny floral accents keeps hair secure and stylish through hours of dancing.',
+      ],
+      engagement: [
+        'For your engagement, drape the dupatta like a cape over both shoulders for a modern, fashion-forward silhouette.',
+        'Delicate pearl jewelry with a matching tiara-style maang tikka creates an elegant, understated look.',
+        'Soft romantic waves or a half-up, half-down hairstyle perfectly complement the celebratory yet intimate atmosphere.',
+      ],
+    },
+    qaPairs: [
+      {
+        question: 'What is included in a lehenga choli set?',
+        answer: 'Each LuxeMia lehenga choli set includes three pieces: the flared lehenga skirt, a matching or complementing choli (blouse), and a decorative dupatta (scarf). All lehengas come with a cotton inner lining and can-can underskirt for volume. Custom tailoring is available to ensure a perfect fit for your measurements.',
+      },
+      {
+        question: 'How do I choose the right lehenga size?',
+        answer: 'LuxeMia lehengas are available in sizes S through XXL with complimentary custom tailoring. To find your perfect size, measure your bust, waist, and hips, then compare with our detailed Size Guide. For the best fit, we recommend opting for custom tailoring — simply provide your measurements at checkout and our artisans will craft your lehenga to your exact specifications.',
+      },
+      {
+        question: 'What fabric is best for a bridal lehenga?',
+        answer: 'For bridal lehengas, silk and Banarasi silk are the most popular choices due to their luxurious drape, natural sheen, and ability to hold intricate embroidery. Silk lehengas offer a regal, structured silhouette perfect for wedding ceremonies. For lighter festive occasions, georgette and net lehengas provide elegant movement with beautiful embellishment visibility.',
+      },
+      {
+        question: 'How far in advance should I order a bridal lehenga?',
+        answer: 'We recommend ordering your bridal lehenga at least 4 to 6 weeks before your wedding date. Readymade lehengas ship within 3-5 business days, while custom-tailored orders require 5-7 business days for crafting plus 7-10 business days for delivery to the USA, Canada, and Australia. Ordering early allows time for any minor alterations if needed.',
+      },
+      {
+        question: 'How do I care for my embroidered lehenga?',
+        answer: 'Professional dry cleaning is essential for preserving the embroidery and fabric integrity of your lehenga. Store it in a breathable muslin garment bag away from direct sunlight, and fold with acid-free tissue paper between layers to prevent embellishments from catching. Never machine wash or wring your lehenga, and always use a pressing cloth when ironing embellished areas on low heat.',
+      },
+      {
+        question: 'Can I wear a lehenga to a non-Indian wedding?',
+        answer: 'Absolutely — LuxeMia lehengas are designed with universal elegance that transcends cultural boundaries. For fusion weddings, choose lighter embroidery and contemporary drapes. Our indo-western styled lehengas with minimal embellishment pair beautifully with modern accessories for any formal celebration.',
+      },
+    ],
   },
 
   saree: {
@@ -245,9 +328,63 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'Banarasi saree',
       'ethnic saree for festive',
       'saree for Indian wedding',
+      'handwoven silk saree',
+      'bridal Banarasi saree',
+      'traditional Kanjivaram saree',
+      'designer silk saree online',
     ],
     categoryDescription:
       'Discover LuxeMia\'s handpicked saree collection — from lustrous Banarasi silks to lightweight georgettes. Each saree celebrates India\'s weaving heritage with intricate borders, rich pallus, and artisan craftsmanship. Shop silk sarees, bridal sarees, and festive sarees online with free shipping over $350 to the USA, Canada, and Australia.',
+    craftsmanship: {
+      origin: 'Woven by master weavers in Varanasi (Banaras), Kanchipuram, and Surat — the three great centers of Indian saree craftsmanship with combined histories spanning over 2,000 years.',
+      technique: 'Our silk sarees are crafted using the jacquard loom technique with hand-tied zari threads, while Banarasi sarees employ the kadwa (cutwork) method where each motif is individually woven into the fabric creating a raised texture.',
+      handworkHours: 'A single handwoven silk saree requires 15 to 30 days of meticulous labor, with master weavers tying up to 5,600 knots per square inch to create intricate patterns that tell stories of Indian heritage.',
+      heritage: 'These ancient weaving traditions have been recognized by UNESCO as Intangible Cultural Heritage, with techniques passed from father to son through countless generations in hereditary weaving communities.',
+    },
+    occasionStyling: {
+      wedding: [
+        'For a wedding ceremony, choose a Banarasi silk or Kanjivaram saree in rich red, maroon, or gold with heavy zari work.',
+        'Pair with traditional temple jewelry, heavy jhumkas, and a broad gold necklace set for authentic bridal grandeur.',
+        'Style your hair in a classic South Indian bun adorned with jasmine flowers (gajra) for traditional elegance.',
+      ],
+      reception: [
+        'For receptions, drape your saree in the modern seedha pallu style for a fresh, contemporary silhouette.',
+        'Opt for diamond or American diamond jewelry with a sleek clutch for sophisticated evening glamour.',
+        'Soft waves or a side-swept updo complement the reception setting with effortless grace.',
+      ],
+      'pooja ceremony': [
+        'For pooja ceremonies, choose a modest cotton silk or lightweight Banarasi in pastel or earthy tones.',
+        'Minimal gold jewelry with small jhumkas and a simple bindi create a respectful, elegant appearance.',
+        'A neatly braided ponytail or low bun keeps the look traditional and ceremony-appropriate.',
+      ],
+      festive: [
+        'For festive celebrations, experiment with contrasting blouses and creative draping styles like the butterfly drape.',
+        'Statement earrings and stacked bangles add festive sparkle without overwhelming your look.',
+        'A half-up hairstyle with decorative pins keeps you comfortable through hours of celebration.',
+      ],
+    },
+    qaPairs: [
+      {
+        question: 'What is a Banarasi silk saree?',
+        answer: 'A Banarasi silk saree is a luxurious handwoven saree from Varanasi (Banaras), India, renowned for its intricate zari (gold/silver thread) work, rich silk fabric, and elaborate motifs inspired by Mughal art. Each saree takes 15-30 days to craft and features distinctive characteristics including heavy pallus, fine borders, and detailed buti (small motif) work throughout the fabric. LuxeMia\'s Banarasi collection brings authentic, artisan-crafted pieces directly to the USA, Canada, and Australia.',
+      },
+      {
+        question: 'How do I drape a saree for a wedding?',
+        answer: 'For weddings, the classic Nivi drape is the most popular choice — tuck the saree into the petticoat at your right waist, wrap around once, make 5-7 front pleats, tuck them in, and drape the remaining length over your left shoulder as the pallu. Secure the pallu at your shoulder with a decorative pin. LuxeMia sarees come with a ready-to-stitch blouse piece, and our detailed draping guide is available with every purchase.',
+      },
+      {
+        question: 'What blouse designs work best with silk sarees?',
+        answer: 'For Banarasi and Kanjivaram silk sarees, elbow-length or full-sleeve blouses with high necklines and back cutouts create a regal silhouette. Contrast blouses in complementary colors add modern sophistication, while matching blouses maintain traditional elegance. Popular styles include boat neck, sweetheart neck, and keyhole back designs. LuxeMia provides customizable blouse pieces with every saree — simply provide your measurements for a tailored fit.',
+      },
+      {
+        question: 'How do I care for my silk saree?',
+        answer: 'Professional dry cleaning is essential for silk sarees, especially those with zari work. Store folded in muslin cloth with tissue paper between layers, and change the fold lines every 3 months to prevent creases. Never hang heavy silk sarees as this stretches the fabric. Iron on low heat with a cotton pressing cloth over zari sections. Avoid direct sunlight and moisture exposure to preserve color vibrancy.',
+      },
+      {
+        question: 'Which saree is best for a first-time buyer?',
+        answer: 'For first-time buyers, we recommend a lightweight Banarasi silk or georgette saree in a versatile color like navy blue, wine, or emerald green. These fabrics drape beautifully, suit most body types, and work across multiple occasions. LuxeMia\'s beginner-friendly collection features sarees with pre-stitched pleat options and detailed draping guides to make your first experience effortless.',
+      },
+    ],
   },
 
   suit: {
@@ -908,6 +1045,137 @@ function buildCareParagraph(
   return `${careTip} ${storageTip}`;
 }
 
+// ─── Phase 3: Luxury Editorial Enhancement ─────────────────────────────────
+
+/**
+ * Build the craftsmanship storytelling paragraph.
+ * Adds fabric origin, artisan technique, and heritage narrative for luxury appeal.
+ */
+function buildCraftsmanshipParagraph(
+  categoryKey: string,
+  material: string,
+  seed: string,
+): string {
+  const template = CATEGORY_TEMPLATES[categoryKey];
+  if (!template?.craftsmanship) return '';
+
+  const craft = template.craftsmanship;
+  const adj1 = pickSeeded(template.adjectives.primary, seed + '-craft1');
+
+  let paragraph = `This ${adj1} ${template.label} carries the soul of Indian craftsmanship. ${craft.origin} `;
+  paragraph += `${craft.technique} `;
+  paragraph += `${craft.handworkHours} `;
+  paragraph += `${craft.heritage}`;
+
+  // Add material-specific context if we inferred a specific fabric
+  if (material && material !== 'premium fabric') {
+    const materialLower = material.toLowerCase();
+    if (materialLower.includes('banarasi')) {
+      paragraph += ` The Banarasi silk used in this ${template.label} is sourced directly from the ancient weaving looms of Varanasi, where the art of zari weaving has been perfected over fifteen centuries.`;
+    } else if (materialLower.includes('kanjivaram') || materialLower.includes('kanchipuram')) {
+      paragraph += ` The Kanjivaram silk used here is renowned for its exceptional durability and lustrous sheen, with each thread dyed individually before weaving to create the distinctive color combinations that have made this fabric a bridal tradition for millennia.`;
+    } else if (materialLower.includes('georgette')) {
+      paragraph += ` The georgette fabric offers a beautiful balance of fluid drape and structural integrity, making it ideal for intricate embroidery while maintaining an effortlessly graceful silhouette.`;
+    } else if (materialLower.includes('silk') && !materialLower.includes('georgette')) {
+      paragraph += ` Pure silk provides a naturally luminous backdrop for elaborate embroidery, its inherent sheen amplifying the richness of every zari thread and sequin.`;
+    }
+  }
+
+  return paragraph;
+}
+
+/**
+ * Build occasion-specific detailed styling guidance.
+ * Provides comprehensive styling advice for the most relevant occasion.
+ */
+function buildOccasionStylingParagraph(
+  categoryKey: string,
+  title: string,
+  seed: string,
+): string {
+  const template = CATEGORY_TEMPLATES[categoryKey];
+  if (!template?.occasionStyling) return '';
+
+  // Detect the primary occasion from the title
+  const lower = title.toLowerCase();
+  let occasion = 'wedding'; // default
+
+  if (lower.includes('sangeet') || lower.includes('mehendi')) occasion = 'sangeet';
+  else if (lower.includes('engagement')) occasion = 'engagement';
+  else if (lower.includes('reception')) occasion = 'reception';
+  else if (lower.includes('pooja') || lower.includes('ceremony')) occasion = 'pooja ceremony';
+  else if (lower.includes('festive') || lower.includes('festival')) occasion = 'festive';
+  else if (lower.includes('party') || lower.includes('partywear')) occasion = 'reception';
+  else if (lower.includes('bridal')) occasion = 'wedding';
+
+  const stylingArray = template.occasionStyling[occasion];
+  if (!stylingArray || stylingArray.length === 0) return '';
+
+  const header = occasion === 'wedding'
+    ? 'Wedding Day Styling Guide'
+    : occasion === 'reception'
+      ? 'Reception Styling Guide'
+      : occasion === 'sangeet'
+        ? 'Sangeet Night Styling Guide'
+        : occasion === 'engagement'
+          ? 'Engagement Styling Guide'
+          : `${occasion.charAt(0).toUpperCase() + occasion.slice(1)} Styling Guide`;
+
+  let paragraph = `${header}: `;
+  paragraph += stylingArray.map((tip, i) => `${i + 1}. ${tip}`).join(' ');
+
+  return paragraph;
+}
+
+/**
+ * Build AI-search optimized Q&A section.
+ * Formats frequently asked questions in structured Q&A format for featured snippets.
+ */
+function buildQASection(
+  categoryKey: string,
+  title: string,
+  material: string,
+): string {
+  const template = CATEGORY_TEMPLATES[categoryKey];
+  if (!template?.qaPairs || template.qaPairs.length === 0) return '';
+
+  // Select 2-3 most relevant Q&A pairs based on title keywords
+  const lower = title.toLowerCase();
+  const selected: Array<{ question: string; answer: string }> = [];
+
+  for (const qa of template.qaPairs) {
+    const qaLower = qa.question.toLowerCase();
+    // Include if the question is broadly relevant to this product
+    if (selected.length < 3) {
+      // Prioritize questions about the specific fabric
+      if (material && material !== 'premium fabric' && qaLower.includes(material.toLowerCase())) {
+        selected.unshift(qa); // most relevant, goes first
+      } else if (lower.includes('bridal') && qaLower.includes('bridal')) {
+        selected.push(qa);
+      } else if (lower.includes('wedding') && qaLower.includes('wedding')) {
+        selected.push(qa);
+      } else if (selected.length < 2) {
+        selected.push(qa);
+      }
+    }
+  }
+
+  // If no specific matches, use the first 2 generic questions
+  if (selected.length === 0) {
+    selected.push(...template.qaPairs.slice(0, 2));
+  }
+
+  let qaSection = 'Frequently Asked Questions\\n';
+  qaSection += '─────────────────────────\\n';
+
+  for (const qa of selected) {
+    qaSection += `Q: ${qa.question}\\n`;
+    qaSection += `A: ${qa.answer}\\n\\n`;
+  }
+
+  return qaSection.trim();
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -986,6 +1254,11 @@ export function enrichProductDescription(
   const styling = buildStylingParagraph(categoryKey, seed);
   const care = buildCareParagraph(categoryKey, inferredMaterial, seed);
 
+  // Phase 3: Luxury Editorial Enhancement
+  const craftsmanship = buildCraftsmanshipParagraph(categoryKey, inferredMaterial, seed);
+  const occasionStyling = buildOccasionStylingParagraph(categoryKey, title, seed);
+  const qaSection = buildQASection(categoryKey, title, inferredMaterial);
+
   // Build a product details line — GMC requires explicit Color mention in descriptions
   // This addresses the GMC recommendation: "Update product descriptions to include details customers are looking for"
   const detailsParts: string[] = [];
@@ -996,6 +1269,7 @@ export function enrichProductDescription(
   const detailsLine = detailsParts.length > 0 ? detailsParts.join(' | ') : '';
 
   // Assemble the full enriched description
+  // Phase 3 structure: Opening → Details → Occasion → Craftsmanship → Styling → Occasion Styling → Care → Q&A → Shipping
   const enriched = [
     opening,
     '',
@@ -1003,9 +1277,15 @@ export function enrichProductDescription(
     '',
     occasion,
     '',
+    craftsmanship,
+    '',
     styling,
     '',
+    occasionStyling,
+    '',
     care,
+    '',
+    qaSection,
     '',
     SHIPPING_PARAGRAPH,
   ].filter(Boolean).join('\n\n');

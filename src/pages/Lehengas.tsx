@@ -269,8 +269,8 @@ const Lehengas = () => {
           { name: 'Lehengas', url: '/lehengas' },
         ]}
         collection={{
-          name: 'Lehengas Collection',
-          description: 'Bridal and festive lehengas with beautiful embroidery and quality fabrics at affordable prices.',
+          name: 'Bridal Lehengas Online — Wedding & Festive Collection',
+          description: 'Shop designer bridal lehengas online at LuxeMia. Handcrafted wedding lehenga cholis in silk, georgette, net & Banarasi with intricate embroidery. Custom sizing. Free shipping over $350.',
           items: collectionItems,
         }}
         faqs={lehengaFaqs}
@@ -298,23 +298,55 @@ const Lehengas = () => {
             className="relative z-10 text-center px-4 text-white"
           >
             <p className="text-sm tracking-luxury uppercase text-white/70 mb-4">
-              Explore Our
+              Explore Our Collection
             </p>
-            <h1 className="text-3xl md:text-4xl font-serif mb-4">Lehengas</h1>
-            <p className="text-white/80 max-w-lg mx-auto">
-              Beautiful bridal lehengas, festive lehenga cholis, and contemporary designs for your special moments.
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4 leading-tight">
+              Shop Bridal Lehengas Online
+            </h1>
+            <p className="text-white/80 max-w-xl mx-auto text-base md:text-lg leading-relaxed">
+              Discover handcrafted wedding lehengas, festive lehenga cholis, and designer bridal sets. 
+              From pearl white silk to vibrant Banarasi embroidery — each piece tells a story of 
+              Indian artistry. Free shipping over $350 to USA, Canada & Australia.
             </p>
           </motion.div>
         </section>
 
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6">
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <span>/</span>
             <Link to="/collections" className="hover:text-foreground transition-colors">Collections</Link>
             <span>/</span>
-            <span className="text-foreground">Lehengas</span>
+            <span className="text-foreground font-medium">Bridal Lehengas</span>
           </nav>
+
+          {/* SEO Editorial Content */}
+          <section className="mb-10 max-w-4xl" aria-label="About our lehenga collection">
+            <h2 className="text-xl md:text-2xl font-serif mb-4 text-foreground">
+              Designer Bridal Lehengas for Every Celebration
+            </h2>
+            <div className="prose prose-stone max-w-none text-muted-foreground leading-relaxed space-y-4">
+              <p>
+                LuxeMia&apos;s curated lehenga collection brings together centuries of Indian textile 
+                heritage and contemporary bridal fashion. Each <strong className="text-foreground">bridal lehenga</strong> in our 
+                collection is handcrafted by master artisans using time-honored techniques — from 
+                intricate zardozi gold threadwork to delicate aari embroidery — creating heirloom-quality 
+                pieces for your most cherished celebrations.
+              </p>
+              <p>
+                Whether you seek a <strong className="text-foreground">wedding lehenga</strong> for your big day, 
+                a <strong className="text-foreground">festive lehenga choli</strong> for sangeet night, or 
+                a <strong className="text-foreground">partywear lehenga</strong> for reception glamour, 
+                our collection spans silk, georgette, net, Banarasi, and velvet fabrics in a spectrum 
+                of colors from classic pearl white and ivory to rich maroon, wine, and royal purple.
+              </p>
+              <p>
+                Every lehenga ships with a matching choli blouse and dupatta. Custom tailoring is 
+                complimentary — simply provide your measurements at checkout. Enjoy free shipping on 
+                orders over $350 across the USA, Canada, and Australia.
+              </p>
+            </div>
+          </section>
         </div>
 
         {/* Main Content */}

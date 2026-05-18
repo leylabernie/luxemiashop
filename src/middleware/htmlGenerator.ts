@@ -7,6 +7,7 @@
 
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
+import { getCorrectedTitle } from '../lib/titleCorrections.js';
 
 export function escapeHtml(str: string): string {
   return str
@@ -30,7 +31,11 @@ function getCategoryUrl(productType?: string): string {
 export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): string {
   // Strip any trailing "— LuxeMia" or "| LuxeMia" from Shopify product titles
   // to prevent brand duplication when we append our own "| LuxeMia"
-  const cleanTitle = product.title.replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
+  const rawCleanTitle = product.title.replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
+
+  // Apply visual title correction if available for this product handle
+  const correctedTitle = getCorrectedTitle(product.handle);
+  const cleanTitle = correctedTitle || rawCleanTitle;
   const title = `${cleanTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
   const description = (product.description || `Shop ${cleanTitle} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
@@ -102,9 +107,28 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     },
   ]);
 
+  // Generate SEO-optimized alt text using corrected title + product details
+  const generateAltText = (index: number, existingAlt: string | null): string => {
+    if (existingAlt && existingAlt.length > 5 && !existingAlt.toLowerCase().includes('image')) {
+      return existingAlt; // Use existing alt if it's meaningful
+    }
+    // Generate descriptive alt text with color and angle context
+    const colorContext = color ? `${color} ` : '';
+    const materialContext = material ? `${material} ` : '';
+    if (index === 0) {
+      return `${cleanTitle} — ${colorContext}${materialContext}Indian ethnic wear front view`;
+    } else if (index === 1) {
+      return `${cleanTitle} — ${colorContext}detail embroidery and fabric closeup`;
+    } else if (index === 2) {
+      return `${cleanTitle} — ${colorContext}full outfit styling with dupatta`;
+    }
+    return `${cleanTitle} — ${colorContext}alternate view ${index + 1}`;
+  };
+
   const allImages = product.images.edges.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
     const imgSrc = forceJpegForGmc(edge.node.url);
-    return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || cleanTitle)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
+    const altText = generateAltText(i, edge.node.altText);
+    return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(altText)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} loading="${i === 0 ? 'eager' : 'lazy'}" />`;
   });
 
   const variantOptions = product.variants.edges.slice(0, 5).map((v: { node: { title: string } }) => {
