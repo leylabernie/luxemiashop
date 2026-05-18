@@ -43,10 +43,10 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Ivory Georgette Lehenga Choli with Rust Orange Embroidered Dupatta',
 
   'dark-blue-pure-vichitra-embroidery-lehenga-choli-with-dupatta':
-    'Ivory Vichitra Silk Lehenga Choli with Dark Blue Embroidered Dupatta',
+    'Ivory Art Silk Lehenga Choli with Dark Blue Embroidered Dupatta',
 
   'wine-pure-vichitra-embroidery-lehenga-choli-with-dupatta':
-    'Ivory Vichitra Silk Lehenga Choli with Wine Embroidered Dupatta',
+    'Ivory Art Silk Lehenga Choli with Wine Embroidered Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
   // PHASE 2: SILK EMBROIDERY — Pattern: Pearl White base + colored embroidery
@@ -107,32 +107,32 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
     'Cream Silk Embroidery Festive Lehenga Choli with Matching Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 4: PURE VICHITRA — Pattern: Ivory base + colored embroidery
-  // Price range: $52-$103 | All Vichitra silk lehengas at this price point
+  // PHASE 4: PURE ART SILK — Pattern: Ivory base + colored embroidery
+  // Price range: $52-$103 | All Art Silk lehengas at this price point
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'off-white-pure-vichitra-embroidery-lehenga-choli-with-dupatta':
-    'Off-White Vichitra Silk Lehenga Choli with Embroidered Dupatta',
+    'Off-White Art Silk Lehenga Choli with Embroidered Dupatta',
 
   'rani-pink-pure-vichitra-embroidery-lehenga-choli-with-dupatta':
-    'Ivory Vichitra Silk Lehenga Choli with Rani Pink Embroidered Dupatta',
+    'Ivory Art Silk Lehenga Choli with Rani Pink Embroidered Dupatta',
 
   'dark-blue-pure-vichitra-embroidery-festive-lehenga-choli':
-    'Ivory Vichitra Silk Embroidery Festive Lehenga Choli with Dark Blue Dupatta',
+    'Ivory Art Silk Embroidery Festive Lehenga Choli with Dark Blue Dupatta',
 
   'wine-pure-vichitra-embroidery-festive-lehenga-choli':
-    'Ivory Vichitra Silk Embroidery Festive Lehenga Choli with Wine Dupatta',
+    'Ivory Art Silk Embroidery Festive Lehenga Choli with Wine Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 5: VICHITRA SILK SEQUINS — Pattern: Ivory base + colored sequins
+  // PHASE 5: ART SILK SEQUINS — Pattern: Ivory base + colored sequins
   // Price range: ~$49
   // ═══════════════════════════════════════════════════════════════════════════════
 
   'blue-vichitra-silk-sequins-lehenga-choli-with-dupatta':
-    'Ivory Vichitra Silk Sequins Lehenga Choli with Blue Dupatta',
+    'Ivory Art Silk Sequins Lehenga Choli with Blue Dupatta',
 
   'rust-orange-vichitra-silk-sequins-lehenga-choli-with-dupatta':
-    'Ivory Vichitra Silk Sequins Lehenga Choli with Rust Orange Dupatta',
+    'Ivory Art Silk Sequins Lehenga Choli with Rust Orange Dupatta',
 
   // ═══════════════════════════════════════════════════════════════════════════════
   // PHASE 6: GEORGETTE THREAD — Pattern: Ivory base + colored thread work
@@ -206,18 +206,18 @@ export const PRODUCT_TITLE_CORRECTIONS: Record<string, string> = {
   // 'georgette-silk-rani-pink-party-wear-embroidery-work-lehenga-choli': KEEP ORIGINAL
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // PHASE 12: FENDI SILK EMBROIDERY — Pattern analysis
-  // Price range: $67-$80 | Fendi silk is a textured fabric with colored base
-  // NOTE: These are NOT corrected — Fendi silk base IS the stated color
+  // PHASE 12: JACQUARD SILK EMBROIDERY — Pattern analysis
+  // Price range: $67-$80 | Jacquard silk is a textured, searchable fabric with colored base
+  // NOTE: These are NOT corrected — Jacquard silk base IS the stated color
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  // 'pink-fendi-silk-embroidery-lehenga-choli': KEEP ORIGINAL
-  // 'maroon-fendi-silk-embroidery-lehenga-choli': KEEP ORIGINAL
-  // 'purple-fendi-silk-embroidery-lehenga-choli': KEEP ORIGINAL
-  // 'blue-fendi-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'maroon-fendi-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'purple-fendi-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
-  // 'rani-pink-fendi-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
+  // 'pink-jacquard-silk-embroidery-lehenga-choli': KEEP ORIGINAL
+  // 'maroon-jacquard-silk-embroidery-lehenga-choli': KEEP ORIGINAL
+  // 'purple-jacquard-silk-embroidery-lehenga-choli': KEEP ORIGINAL
+  // 'blue-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
+  // 'maroon-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
+  // 'purple-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
+  // 'rani-pink-jacquard-silk-embroidery-partywear-lehenga-with-dupatta': KEEP ORIGINAL
 
   // ═══════════════════════════════════════════════════════════════════════════════
   // PHASE 13: VELVET THREAD — Velvet IS the base fabric, color is accurate
@@ -571,8 +571,8 @@ function isLikelyGenuineColor(title: string, price: number): boolean {
   // Partywear/Bridal naming at higher prices indicates genuine color
   if ((lower.includes('partywear') || lower.includes('bridal')) && price >= 120) return true;
 
-  // Fendi silk is a textured fabric where the base is genuinely colored
-  if (lower.includes('fendi')) return true;
+  // Jacquard silk is a textured fabric where the base is genuinely colored
+  if (lower.includes('jacquard')) return true;
 
   // Rangoli silk is genuinely colored
   if (lower.includes('rangoli')) return true;
@@ -646,6 +646,7 @@ export function autoCorrectTitle(
   }
 
   // Pattern: [Color] Pure Vichitra Embroidery Lehenga Choli with Dupatta
+  // Matches original Shopify title — outputs corrected "Art Silk" title
   const vichitraMatch = originalTitle.match(
     /^([A-Za-z\-]+)\s+Pure\s+Vichitra\s+(Embroidery|Embroidered|Sequin|Zari)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
@@ -653,17 +654,18 @@ export function autoCorrectTitle(
     const [, accentColor, work] = vichitraMatch;
     const baseColor = 'Ivory';
     const workDesc = work === 'Embroidery' ? 'Embroidered' : work;
-    return `${baseColor} Vichitra Silk Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
+    return `${baseColor} Art Silk Lehenga Choli with ${accentColor} ${workDesc} Dupatta`;
   }
 
   // Pattern: [Color] Vichitra Silk Sequins Lehenga Choli with Dupatta
+  // Matches original Shopify title — outputs corrected "Art Silk" title
   const vichitraSequinsMatch = originalTitle.match(
     /^([A-Za-z\-]+)\s+Vichitra\s+Silk\s+(Sequins|Sequined|Embroidery|Embroidered)\s+Lehenga\s+Choli\s+with\s+Dupatta$/
   );
   if (vichitraSequinsMatch) {
     const [, accentColor, work] = vichitraSequinsMatch;
     const workDesc = work === 'Sequins' ? 'Sequins' : work === 'Embroidery' ? 'Embroidered' : work;
-    return `Ivory Vichitra Silk ${workDesc} Lehenga Choli with ${accentColor} Dupatta`;
+    return `Ivory Art Silk ${workDesc} Lehenga Choli with ${accentColor} Dupatta`;
   }
 
   // Pattern: [Color] Chinon Embroidery Lehenga Choli with Dupatta

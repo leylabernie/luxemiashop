@@ -901,6 +901,8 @@ function inferMaterial(title: string, material?: string, description?: string): 
     satin: 'satin',
     taffeta: 'taffeta',
     jacquard: 'jacquard',
+    'art silk': 'art silk',
+    vichitra: 'art silk',
     chinon: 'chinon',
     chinnon: 'chinon',
     chanderi: 'chanderi',
