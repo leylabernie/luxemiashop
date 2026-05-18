@@ -30,7 +30,7 @@ interface SEOHeadProps {
   description?: string;
   canonical?: string;
   image?: string;
-  type?: 'website' | 'product' | 'article' | 'collection';
+  type?: 'website' | 'product' | 'article' | 'collection' | 'product.group';
   product?: {
     name: string;
     price: string;
@@ -126,31 +126,40 @@ const SEOHead = ({
     ? generateFaqSchema(faqs)
     : null;
 
-  // ItemList Schema for collection/category pages (Google Rich Results)
+  // CollectionPage Schema with embedded ItemList for collection/category pages
+  // Uses @type: CollectionPage (not just ItemList) for proper Google Rich Results
   const collectionSchema = collection && collection.items.length > 0
     ? {
         '@context': 'https://schema.org',
-        '@type': 'ItemList',
+        '@type': 'CollectionPage',
         name: collection.name,
         description: collection.description,
+        url: canonicalUrl,
         numberOfItems: collection.items.length,
-        itemListElement: collection.items.slice(0, 30).map((item, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          item: {
-            '@type': 'Product',
-            '@id': `${siteUrl}/product/${item.url}`,
-            name: item.name,
-            image: forceJpegForGmc(item.image),
-            url: `${siteUrl}/product/${item.url}`,
-            offers: {
-              '@type': 'Offer',
-              price: item.price,
-              priceCurrency: item.currency,
-              availability: 'https://schema.org/InStock',
+        mainEntity: {
+          '@type': 'ItemList',
+          name: collection.name,
+          description: collection.description,
+          numberOfItems: collection.items.length,
+          itemListOrder: 'https://schema.org/ItemListOrderDescending',
+          itemListElement: collection.items.slice(0, 30).map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            item: {
+              '@type': 'Product',
+              '@id': `${siteUrl}/product/${item.url}`,
+              name: item.name,
+              image: forceJpegForGmc(item.image),
+              url: `${siteUrl}/product/${item.url}`,
+              offers: {
+                '@type': 'Offer',
+                price: item.price,
+                priceCurrency: item.currency,
+                availability: 'https://schema.org/InStock',
+              },
             },
-          },
-        })),
+          })),
+        },
       }
     : null;
 
