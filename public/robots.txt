@@ -1,6 +1,185 @@
+# ============================================================
+# LuxeMia.shop — Optimized robots.txt
+# Last updated: 2026-05-18
+# Purpose: Maximize crawl efficiency, eliminate duplicate content,
+#          block low-value pages, and optimize AI search bot access
+# ============================================================
+
+# --------------------------------------------------------------
+# 1. DEFAULT — All crawlers
+# --------------------------------------------------------------
 User-agent: *
 Allow: /
+Allow: /product/
+Allow: /sarees
+Allow: /lehengas
+Allow: /suits
+Allow: /menswear
+Allow: /indowestern
+Allow: /collections
+Allow: /collections/wedding-guest-outfits
+Allow: /collections/diwali-outfits
+Allow: /collections/mehendi-outfits
+Allow: /collections/eid-outfits
+Allow: /collections/navratri-outfits
+Allow: /blog
+Allow: /brand-story
+Allow: /new-arrivals
+Allow: /bestsellers
+Allow: /nri
+Allow: /nri/usa
+Allow: /nri/canada
+Allow: /indian-ethnic-wear-usa
+Allow: /indian-ethnic-wear-canada
+Allow: /faq
+Allow: /shipping
+Allow: /returns
+Allow: /privacy
+Allow: /terms
+Allow: /contact
+Allow: /size-guide
+Allow: /care-guide
+Allow: /artisans
+Allow: /sustainability
+Allow: /press
+Allow: /lookbook
+Allow: /style-consultation
+Allow: /style-quiz
+Allow: /sitemap.xml
 Allow: /merchant-feed.xml
+
+# ── CRITICAL: Block Shopify ghost product URLs (/products/X duplicates /product/X) ──
+Disallow: /products
+Disallow: /products/
+
+# ── Block thin-content tag pages ──
+Disallow: /blog/tag/
+Disallow: /blog/tags/
+Disallow: /tag/
+
+# ── Block broken pagination (creates infinite crawl trap) ──
+Disallow: /*?page=*
+
+# ── Block filter/sort parameters (creates near-duplicate content) ──
+Disallow: /*?sort_by=*
+Disallow: /*?constraint=*
+Disallow: /*?limit=*
+Disallow: /*?view=*
+Disallow: /*?occasion=*
+Disallow: /*?currency=*
+Disallow: /*?preview_theme_id=*
+Disallow: /*?preview_debug=*
+
+# ── Block utility pages (should never appear in search results) ──
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /order-confirmation
+Disallow: /api/
+
+# ── Block soft 404 pages (return 200 but have no content) ──
+Disallow: /collections/all
+Disallow: /blogs
+Disallow: /blogs/news
+Disallow: /pages/
+
+# ── Block virtual/empty pages ──
+Disallow: /virtual-try-on
+
+# ── Crawl-delay for non-Google bots ──
+Crawl-delay: 1
+
+# --------------------------------------------------------------
+# 2. GOOGLEBOT — Primary crawler, generous access
+# --------------------------------------------------------------
+User-agent: Googlebot
+Allow: /
+Allow: /product/
+Allow: /sarees
+Allow: /lehengas
+Allow: /suits
+Allow: /menswear
+Allow: /indowestern
+Allow: /blog
+Allow: /sitemap.xml
+Disallow: /products
+Disallow: /products/
+Disallow: /blog/tag/
+Disallow: /blog/tags/
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /order-confirmation
+Disallow: /api/
+Disallow: /*?page=*
+Disallow: /*?sort_by=*
+Disallow: /*?constraint=*
+Disallow: /*?preview_theme_id=*
+Disallow: /*?preview_debug=*
+Disallow: /collections/all
+Disallow: /blogs
+Disallow: /blogs/news
+Disallow: /pages/
+
+# --------------------------------------------------------------
+# 3. GOOGLEBOT-IMAGE — Full image access for Merchant Center & image search
+# --------------------------------------------------------------
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.png
+Allow: /*.gif
+Allow: /*.webp
+Allow: /*.avif
+Allow: /cdn.shopify.com/
+Allow: /kesimg.b-cdn.net/
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+
+# --------------------------------------------------------------
+# 4. GOOGLEBOT-SMARTPHONE — Mobile crawler
+# --------------------------------------------------------------
+User-agent: Googlebot-Smartphone
+Allow: /
+Allow: /product/
+Disallow: /products
+Disallow: /products/
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /*?page=*
+Disallow: /*?sort_by=*
+
+# --------------------------------------------------------------
+# 5. BINGBOT — Microsoft/Bing crawler
+# --------------------------------------------------------------
+User-agent: Bingbot
+Allow: /
+Allow: /product/
+Allow: /sarees
+Allow: /lehengas
+Allow: /suits
+Allow: /menswear
+Allow: /indowestern
+Allow: /blog
+Allow: /sitemap.xml
+Disallow: /products
+Disallow: /products/
+Disallow: /blog/tag/
+Disallow: /blog/tags/
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
@@ -8,45 +187,202 @@ Disallow: /wishlist
 Disallow: /cart
 Disallow: /checkout
 Disallow: /api/
+Disallow: /*?page=*
+Disallow: /*?sort_by=*
+Disallow: /*?constraint=*
+Disallow: /*?preview_theme_id=*
+Crawl-delay: 1
 
-User-agent: Googlebot
-Allow: /
-Allow: /product/
-Allow: /merchant-feed.xml
-Disallow: /admin
-Disallow: /account
-Disallow: /auth
-
-User-agent: Googlebot-Image
-Allow: /
-Allow: /cdn.shopify.com/
-Allow: /kesimg.b-cdn.net/
-# Ensure Google can crawl all product images for Merchant Center
-Allow: /*.jpg
-Allow: /*.jpeg
-Allow: /*.png
-Allow: /*.gif
-
-User-agent: Bingbot
+# --------------------------------------------------------------
+# 6. BINGBOT-IMAGE — Bing image search
+# --------------------------------------------------------------
+User-agent: BingPreview
 Allow: /
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
 
+# --------------------------------------------------------------
+# 7. AI SEARCH BOTS — OpenAI, Anthropic, Perplexity, Google AI
+# Allow full access for AI search visibility
+# --------------------------------------------------------------
 User-agent: OAI-SearchBot
 Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
 
 User-agent: GPTBot
 Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
 
-# Sitemaps
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+
+User-agent: Anthropic-ai
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+
+# --------------------------------------------------------------
+# 8. GOOGLE AI OVERVIEW / SGE BOT
+# --------------------------------------------------------------
+User-agent: Google-Extended
+Allow: /
+
+# --------------------------------------------------------------
+# 9. FACEBOOK / META CRAWLER
+# --------------------------------------------------------------
+User-agent: facebookexternalhit
+Allow: /product/
+Allow: /
+
+# --------------------------------------------------------------
+# 10. TWITTER / X CRAWLER
+# --------------------------------------------------------------
+User-agent: Twitterbot
+Allow: /product/
+Allow: /
+
+# --------------------------------------------------------------
+# 11. PINTEREST CRAWLER
+# --------------------------------------------------------------
+User-agent: Pinterestbot
+Allow: /product/
+Allow: /
+
+# --------------------------------------------------------------
+# 12. ADS-BOT (Google Ads)
+# --------------------------------------------------------------
+User-agent: AdsBot-Google
+Allow: /
+Disallow: /admin
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+Disallow: /admin
+
+# --------------------------------------------------------------
+# 13. SEMRUSH / AHREFS / MOZ (SEO tools)
+# --------------------------------------------------------------
+User-agent: SemrushBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Crawl-delay: 2
+
+User-agent: AhrefsBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Crawl-delay: 2
+
+User-agent: DotBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Crawl-delay: 5
+
+User-agent: MJ12bot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+Crawl-delay: 5
+
+# --------------------------------------------------------------
+# 14. ADTECH / ADVERTISING BOTS
+# --------------------------------------------------------------
+User-agent: Amazonbot
+Allow: /product/
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /checkout
+
+User-agent: Yandex
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+# --------------------------------------------------------------
+# 15. IMAGE-SPECIFIC ALLOW (must come after all Disallow rules)
+# --------------------------------------------------------------
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.webp$
+Allow: /*.avif$
+
+# --------------------------------------------------------------
+# SITEMAPS
+# --------------------------------------------------------------
 Sitemap: https://luxemia.shop/sitemap.xml
-
-# Google Merchant Center Feed (static XML file — no serverless function)
 Sitemap: https://luxemia.shop/merchant-feed.xml
