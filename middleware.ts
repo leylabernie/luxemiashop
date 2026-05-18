@@ -96,6 +96,35 @@ export default async function middleware(request: Request) {
     return Response.redirect(new URL('/collections', request.url).toString(), 308);
   }
 
+  // ── CRITICAL SEO FIX: Redirect /products/[handle] → /product/[handle] ──
+  // Shopify's default URL pattern is /products/X but our frontend uses /product/X.
+  // Both return HTTP 200 with the same content, creating 405 duplicate product pages.
+  // This 301 redirect consolidates all authority to the canonical /product/X URL.
+  if (pathname.startsWith('/products/')) {
+    const handle = pathname.replace('/products/', '');
+    if (handle && !handle.includes('/') && !handle.includes('?')) {
+      return Response.redirect(new URL(`/product/${handle}`, request.url).toString(), 301);
+    }
+  }
+
+  // ── CRITICAL SEO FIX: Trailing slash normalization ──
+  // /sarees/ and /sarees are treated as different URLs by Google.
+  // Redirect all trailing-slash URLs to their non-slash canonical version.
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    const withoutSlash = pathname.slice(0, -1);
+    return Response.redirect(new URL(withoutSlash + url.search, request.url).toString(), 301);
+  }
+
+  // ── CRITICAL SEO FIX: Noindex headers for utility pages ──
+  // These pages should never appear in search results.
+  // We inject X-Robots-Tag AND meta robots for defense in depth.
+  const UTILITY_PAGES = new Set([
+    '/auth', '/account', '/wishlist', '/cart', '/checkout', '/order-confirmation',
+  ]);
+  if (UTILITY_PAGES.has(pathname)) {
+    return injectMetaIntoSpa(request, pathname, { noIndex: true });
+  }
+
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
   // a prerendered file exists for this handle. PRERENDERED_PRODUCT_HANDLES is a
   // Set compiled into the middleware bundle at build time by generate-routes.cjs,
@@ -192,7 +221,7 @@ export default async function middleware(request: Request) {
  * to social media scrapers and browser previews because the SPA shell
  * had only the homepage's meta tags.
  */
-async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Response> {
+async function injectMetaIntoSpa(request: Request, pathname: string, options?: { noIndex?: boolean }): Promise<Response> {
   // Get the SPA HTML (cached)
   let spaHtml = getCachedSpaHtml();
   if (!spaHtml) {
@@ -207,6 +236,27 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
   }
 
   let html = spaHtml;
+  const noIndex = options?.noIndex ?? false;
+
+  // ── CRITICAL SEO FIX: Inject noindex for utility pages ──
+  // Utility pages (/auth, /account, /wishlist, /cart, /checkout) must never be indexed.
+  // We inject both the meta tag and X-Robots-Tag header for defense in depth.
+  if (noIndex) {
+    html = html.replace(
+      /<meta\s+name="robots"\s+content="[^"]*"/,
+      `<meta name="robots" content="noindex, nofollow, noarchive"`
+    );
+    // Also ensure canonical points to the page itself (not homepage) for noindex pages
+    // Google ignores canonical on noindex pages, but Bing may use it
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'X-Robots-Tag': 'noindex, nofollow, noarchive',
+        'Cache-Control': 'private, no-store',
+      },
+    });
+  }
 
   // Determine the correct meta tags for this page
   let title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas';
