@@ -20,6 +20,75 @@ const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
 const FALLBACK_CURRENCY = 'USD';
 
+// ─── Clean description generator (replaces bloated Shopify descriptions) ─────
+// Generates short structured descriptions from product metadata.
+// NEVER uses raw p.description which contains old AI-generated prose.
+function generateCleanDescription(title, productType, tags) {
+  const t = (title || '').toLowerCase();
+  const pt = (productType || '').toLowerCase();
+  const tagStr = (tags || []).join(' ').toLowerCase();
+  const combined = `${t} ${pt} ${tagStr}`;
+
+  // Extract color
+  const colors = ['burgundy', 'wine', 'maroon', 'royal blue', 'navy', 'cobalt', 'fuchsia',
+    'magenta', 'black', 'cream', 'beige', 'white', 'ivory', 'gold', 'antique gold',
+    'teal', 'emerald', 'green', 'olive', 'charcoal', 'grey', 'gray', 'coral', 'orange',
+    'saffron', 'yellow', 'rose', 'pink', 'plum', 'purple'];
+  let color = '';
+  for (const c of colors) {
+    if (combined.includes(c)) { color = c.charAt(0).toUpperCase() + c.slice(1); break; }
+  }
+
+  // Extract fabric
+  const fabrics = ['silk', 'georgette', 'satin', 'cotton', 'net', 'velvet', 'organza', 'chiffon'];
+  let fabric = '';
+  for (const f of fabrics) {
+    if (combined.includes(f)) { fabric = f.charAt(0).toUpperCase() + f.slice(1); break; }
+  }
+
+  // Extract work/embroidery
+  const works = ['zari', 'zardozi', 'sequin', 'embroidery', 'mirror work', 'thread work',
+    'bead work', 'resham', 'gota patti', 'stone work'];
+  let work = '';
+  for (const w of works) {
+    if (combined.includes(w)) { work = w.charAt(0).toUpperCase() + w.slice(1); break; }
+  }
+
+  // Determine product type label
+  let label = 'ethnic wear';
+  if (pt.includes('lehenga')) label = 'lehenga';
+  else if (pt.includes('saree')) label = 'saree';
+  else if (pt.includes('suit')) label = 'suit';
+
+  // Build short description
+  const parts = [];
+  if (color) parts.push(color);
+  if (fabric) parts.push(fabric);
+  parts.push(label);
+  if (work) parts.push(`with ${work.toLowerCase()}`);
+  const sentence1 = `${parts.join(' ')}.`.replace(/\s+/g, ' ');
+
+  // Occasion
+  const occasions = [];
+  if (combined.includes('wedding') || combined.includes('bridal')) occasions.push('wedding');
+  if (combined.includes('festive') || combined.includes('festival')) occasions.push('festive');
+  if (combined.includes('party')) occasions.push('party wear');
+  if (combined.includes('diwali')) occasions.push('Diwali');
+  if (combined.includes('eid')) occasions.push('Eid');
+  if (combined.includes('mehndi')) occasions.push('Mehndi');
+  if (combined.includes('sangeet')) occasions.push('Sangeet');
+  if (combined.includes('reception')) occasions.push('reception');
+
+  let sentence2 = '';
+  if (occasions.length > 0) {
+    sentence2 = ` Suited for ${occasions.join(', ')}.`;
+  } else if (combined.includes('festive') || combined.includes('casual')) {
+    sentence2 = ' Suited for festive and casual occasions.';
+  }
+
+  return (sentence1 + sentence2).trim();
+}
+
 // ─── Shopify Storefront API (build-time product fetch) ──────────────────────
 // Pulls live product data so prerendered HTML emits valid Product schema with
 // image, description, offers.price, etc. — required by Google Merchant
@@ -1358,7 +1427,8 @@ function generateHtml(template, route) {
     const live = route.product || null;
     const liveImages = live?.images?.edges?.map(e => forceJpegForGmc(e.node.url)).filter(Boolean) || [];
     const productImages = liveImages.length > 0 ? liveImages : [FALLBACK_OG_IMAGE];
-    const productDescription = (live?.description?.trim() || route.description || '').slice(0, 5000);
+    const cleanDesc = generateCleanDescription(live?.title, live?.productType, live?.tags || []);
+    const productDescription = (cleanDesc || route.description || '').slice(0, 5000);
     const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
     const productSku = live?.variants?.edges?.[0]?.node?.sku || (live?.id || '').split('/').pop() || handle;
@@ -1458,7 +1528,7 @@ function generateHtml(template, route) {
     const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
     const isAvailable = p.availableForSale !== false;
     const images = p.images?.edges?.map(e => e.node) || [];
-    const description = (p.description || '').trim();
+    const description = generateCleanDescription(p.title, p.productType, p.tags || []);
     const productType = (p.productType || '').trim();
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
@@ -1603,15 +1673,14 @@ async function main() {
   for (const [handle, p] of productMap.entries()) {
     if (hardcodedProductHandles.has(handle)) continue;
     const title = p.title || handle;
-    const desc = (p.description || '').trim();
-    const fallbackDesc = `Shop the ${title} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics and intricate detailing. Free shipping to USA, Canada & Australia on orders over $350.`;
-    const description = (desc.length >= 60 ? desc : fallbackDesc).slice(0, 320);
+    const cleanDesc = generateCleanDescription(p.title, p.productType, p.tags || []);
+    const description = (cleanDesc || `Shop the ${title} at LuxeMia. Free shipping on orders over $350.`).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,
       title: `${title} | LuxeMia`,
       description,
       h1: title,
-      content: `<p>${escapeHtml(desc || fallbackDesc).slice(0, 1200)}</p>`,
+      content: `<p>${escapeHtml(description).slice(0, 1200)}</p>`,
       product: p,
     });
   }
