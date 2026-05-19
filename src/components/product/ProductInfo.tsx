@@ -407,8 +407,7 @@ function parseDescription(
   }
 
   // Extract Fabric section
-  const fabricMatch = description.match(/Fabric:?
-?([\s\S]*?)(?=Work:|Lehenga|Blouse|Dupatta|Styling|Stitching|$)/i);
+  const fabricMatch = description.match(/Fabric:?\s*([\s\S]*?)(?=Work:|Lehenga|Blouse|Dupatta|Styling|Stitching|$)/i);
   if (fabricMatch) {
     result.fabricDetails = fabricMatch[1].trim();
   }
@@ -1143,4 +1142,4 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
     </div>
   );
 };
-// deployed: Tue May 19 09:42:53 CST 2026
+
