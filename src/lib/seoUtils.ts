@@ -133,13 +133,10 @@ export function generateAISearchDescription(product: AnyProduct): string {
     `multiple lighting conditions, ensuring stunning photography throughout your event.`
   );
   
-  // P3: Fabric care and craftsmanship
+  // P3: Care
   paragraphs.push(
-    `Handcrafted by skilled artisans using time-honored techniques, each piece is made to order ` +
-    `with meticulous attention to detail. The ${fabric.toLowerCase()} fabric offers comfortable drape ` +
-    `and breathability for extended wear. Dry clean only to preserve the intricate ${work.toLowerCase()}. ` +
-    `Each garment includes a matching dupatta and is available in custom sizing through our ` +
-    `WhatsApp styling consultation at +1-215-341-9990.`
+    `Crafted from ${fabric.toLowerCase()} with ${work.toLowerCase()}. Dry clean only. ` +
+    `Available in custom sizing. Contact +1-215-341-9990 for styling consultation.`
   );
   
   return paragraphs.join('\n\n');
@@ -219,7 +216,7 @@ export function generateProductFAQ(product: AnyProduct): Array<{question: string
     },
     {
       question: `What fabric is used in this ${category.toLowerCase()}?`,
-      answer: `This piece is crafted from premium ${fabric}, known for its elegant drape, breathability, and comfortable wear throughout extended celebrations. The ${work} is done by hand by skilled artisans.`
+      answer: `Crafted from ${fabric.toLowerCase()} with ${work.toLowerCase()}. Features comfortable drape suitable for extended wear.`
     },
     {
       question: `Is this suitable for ${occasion.toLowerCase()}?`,
