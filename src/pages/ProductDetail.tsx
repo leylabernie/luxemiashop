@@ -175,14 +175,16 @@ const ProductDetail = () => {
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
+    // Pass CORRECTED title to description enrichment so it uses
+    // "Pearl White" instead of "Maroon" in generated text
     return enrichProductDescription(
       product.description || '',
       product.productType || '',
-      product.title,
+      correctedProductTitle || product.title,
       productMaterial,
       productColor,
     );
-  }, [product, productMaterial, productColor]);
+  }, [product, productMaterial, productColor, correctedProductTitle]);
 
   const seoMetaDescription = useMemo(() => {
     if (!product) return '';

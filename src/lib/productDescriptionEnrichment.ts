@@ -938,9 +938,12 @@ function inferColor(title: string, color?: string, description?: string): string
   const searchable = `${title} ${description ?? ''}`.toLowerCase();
 
   const colorKeywords = [
-    // Multi-word colors first (must match before their single-word components)
-    'rani pink', 'sky blue', 'baby pink', 'dusty rose', 'royal blue', 'off-white',
-    // Single-word colors
+    // Multi-word base colors first (must match before single-word components)
+    // These are the MAIN/base colors that appear first in corrected titles
+    'pearl white', 'off white', 'off-white', 'rani pink', 'sky blue', 'baby pink',
+    'dusty rose', 'royal blue', 'rust orange', 'teal blue', 'navy blue',
+    'pista green', 'mehendi green', 'olive green', 'sea green', 'hot pink',
+    // Single-word colors (may be accent/dupatta colors)
     'red', 'maroon', 'wine', 'burgundy', 'pink', 'rose', 'fuchsia', 'magenta',
     'blue', 'navy', 'teal', 'cyan', 'indigo',
     'green', 'emerald', 'olive', 'mint', 'sage',
@@ -949,7 +952,7 @@ function inferColor(title: string, color?: string, description?: string): string
     'purple', 'lavender', 'plum', 'mauve', 'lilac',
     'white', 'ivory', 'cream', 'beige',
     'black', 'grey', 'gray', 'charcoal',
-    'champagne', 'copper', 'bronze', 'tan', 'camel', 'onion',
+    'champagne', 'copper', 'bronze', 'tan', 'camel',
   ];
 
   for (const c of colorKeywords) {
@@ -1222,6 +1225,30 @@ function buildQASection(
  * );
  * ```
  */
+
+/**
+ * Strip size-related wall-of-text from raw descriptions.
+ * Sizes display as clickable buttons in the UI — they should NOT be in description text.
+ * Matches patterns like: "Size Variants Available in sizes XS, S, M..." and "Size Chart..."
+ */
+function stripSizeText(description: string): string {
+  if (!description || description.length < 20) return description;
+
+  const patterns = [
+    /Size\s+Variants?[\s\S]*?(?=Design\s+Details|Fabric:|Work:|Styling|Care|Shipping|$)/i,
+    /Size\s+Chart[\s\S]*?(?=Design\s+Details|Fabric:|Work:|Styling|Care|Shipping|$)/i,
+    /Available\s+in\s+sizes\s+XS?[\s\S]*?(?=Design\s+Details|Fabric:|Work:|Styling|Care|Shipping|$)/i,
+    /Custom\s+sizing\s+is\s+available[\s\S]*?(?=Design\s+Details|Fabric:|Work:|Styling|Care|Shipping|$)/i,
+    /Plus[-\s]?size\s+friendly[\s\S]*?(?=Design\s+Details|Fabric:|Work:|Styling|Care|Shipping|$)/i,
+  ];
+
+  let cleaned = description;
+  for (const pattern of patterns) {
+    cleaned = cleaned.replace(pattern, '');
+  }
+  return cleaned.replace(/\n{3,}/g, '\n\n').trim();
+}
+
 export function enrichProductDescription(
   description: string,
   productType: string,
@@ -1229,6 +1256,9 @@ export function enrichProductDescription(
   material?: string,
   color?: string,
 ): string {
+  // Strip size wall-of-text before processing — sizes display as clickable buttons
+  description = stripSizeText(description);
+
   // If the description is already rich, still append Color/Fabric details
   // if they're missing — GMC requires explicit "Color: X" in descriptions.
   // This addresses the GMC recommendation: "Update product descriptions to
@@ -1242,10 +1272,10 @@ export function enrichProductDescription(
       if (inferredColorForRich) richDetails.push(`Color: ${inferredColorForRich.charAt(0).toUpperCase() + inferredColorForRich.slice(1)}`);
       if (inferredMaterialForRich && inferredMaterialForRich !== 'premium fabric') richDetails.push(`Fabric: ${inferredMaterialForRich.charAt(0).toUpperCase() + inferredMaterialForRich.slice(1)}`);
       if (richDetails.length > 0) {
-        return description + '\n\n' + richDetails.join(' | ');
+        return stripSizeText(description) + '\n\n' + richDetails.join(' | ');
       }
     }
-    return description;
+    return stripSizeText(description);
   }
 
   const categoryKey = normalizeProductType(productType);
