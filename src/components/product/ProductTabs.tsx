@@ -115,7 +115,9 @@ export const ProductTabs = ({
   const design = designDetails ?? DESIGN[cat];
   const careItems = care ?? CARE[cat];
   const style = STYLE[cat];
-  const intro = shortIntro ?? description ?? 'This piece showcases India\'s rich textile traditions, bringing together classic design and modern styling.';
+  const intro = (shortIntro && shortIntro.trim().length > 0)
+    ? shortIntro
+    : (description && description.length < 200 ? description : undefined);
 
   return (
     <Tabs defaultValue="details" className="w-full">
