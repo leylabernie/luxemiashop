@@ -23,7 +23,7 @@ const trustCards: TrustCard[] = [
     icon: <HandMetal className="h-6 w-6" />,
     title: 'Handcrafted in India',
     description:
-      'Each garment is lovingly crafted by skilled artisans using centuries-old techniques passed down through generations.',
+      'Each garment is crafted in India using traditional techniques.',
     highlight: 'Artisan Made',
   },
   {
