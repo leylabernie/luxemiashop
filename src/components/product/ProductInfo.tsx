@@ -420,12 +420,14 @@ function parseDescription(
     result.stylingTips = description.slice(stylingIdx, endIdx).replace(/styling tips[:\s]*/i, '').trim();
   }
 
-  // Extract Sizing section
-  const sizeIdx = lower.indexOf('size variants');
-  const chartIdx = lower.indexOf('size chart');
-  if (sizeIdx >= 0 || chartIdx >= 0) {
-    const start = sizeIdx >= 0 ? sizeIdx : chartIdx;
-    result.sizing = description.slice(start).replace(/size variants[:\s]*/i, '').replace(/size chart[:\s]*/i, '').trim();
+  // STRIP size-related text from description — sizes display as clickable buttons
+  // Cbazaar-style: sizes are NOT in description text, only as UI buttons
+  const sizeBlockIdx = lower.indexOf('size variants');
+  const chartBlockIdx = lower.indexOf('size chart');
+  const stitchingIdx = lower.indexOf('stitching options');
+  if (sizeBlockIdx >= 0 || chartBlockIdx >= 0 || stitchingIdx >= 0) {
+    // Don't add to any section — size info is shown via StitchingSizeSelector buttons
+    result.sizing = ''; // Intentionally empty — sizes are clickable buttons, not text
   }
 
   return result;
@@ -560,12 +562,13 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
   }, [selectedStitchingType, isMenswear]);
 
   // Size label and hint based on stitching type
+  // Cbazaar-style: "Select Bust Size" with "Size Chart | How to Measure" links
   const sizeLabel = useMemo(() => {
     if (isMenswear) return 'Select Size';
-    if (selectedStitchingType === 'semi-stitched') return 'Standard Size';
-    if (selectedStitchingType === 'ready-to-wear') return 'Bust Size';
-    if (selectedStitchingType === 'made-to-measure') return 'Bust Size';
-    return 'Stitching Size';
+    if (selectedStitchingType === 'semi-stitched') return 'Select Size';
+    if (selectedStitchingType === 'ready-to-wear') return 'Select Bust Size';
+    if (selectedStitchingType === 'made-to-measure') return 'Select Bust Size';
+    return 'Select Size';
   }, [selectedStitchingType, isMenswear]);
 
   const sizeHint = useMemo(() => {

@@ -49,6 +49,7 @@ export const StitchingSizeSelector = ({
 
   return (
     <div className="space-y-3">
+      {/* Cbazaar-style label row: "Select Bust Size: Size Chart | How to Measure" */}
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium uppercase tracking-wide">
           {label}
@@ -56,12 +57,27 @@ export const StitchingSizeSelector = ({
             <span className="font-normal text-muted-foreground ml-2">— {selectedSize}</span>
           )}
         </label>
-        {hint && (
-          <span className="text-[11px] text-muted-foreground">{hint}</span>
-        )}
+        <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+          {hint && <span>{hint}</span>}
+          <button
+            type="button"
+            onClick={() => setSizeChartOpen(true)}
+            className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+          >
+            Size Chart
+          </button>
+          <span>|</span>
+          <button
+            type="button"
+            onClick={() => setHowToMeasureOpen(true)}
+            className="text-primary hover:text-primary/80 underline underline-offset-2 transition-colors"
+          >
+            How to Measure
+          </button>
+        </div>
       </div>
 
-      {/* Size grid */}
+      {/* Size grid — Cbazaar-style clean bordered buttons */}
       <div className={`grid ${gridCols} gap-2`}>
         {sizes.map((size) => (
           <button
@@ -82,24 +98,6 @@ export const StitchingSizeSelector = ({
       {showValidation && !selectedSize && (
         <p className="text-sm text-red-500">Please select a size before adding to bag.</p>
       )}
-
-      {/* Size Chart & How to Measure links */}
-      <div className="flex items-center gap-4">
-        <button
-          type="button"
-          onClick={() => setSizeChartOpen(true)}
-          className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
-        >
-          Size Chart
-        </button>
-        <button
-          type="button"
-          onClick={() => setHowToMeasureOpen(true)}
-          className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
-        >
-          How to Measure
-        </button>
-      </div>
 
       <SizeChartModal open={sizeChartOpen} onOpenChange={setSizeChartOpen} />
       <HowToMeasureModal open={howToMeasureOpen} onOpenChange={setHowToMeasureOpen} />
