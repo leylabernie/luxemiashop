@@ -268,6 +268,100 @@ export function getGoogleProductCategory(productType?: string, title?: string): 
   return '1604';
 }
 
+// ─── ItemList Schema (Collection Pages) ────────────────────────────────────
+// Enables product carousel rich snippets in SERPs
+// KalkiFashion.com uses this on all collection pages
+
+export interface ItemListProduct {
+  name: string;
+  url: string;
+  image: string;
+  price: string;
+  currency: string;
+  availability: 'InStock' | 'OutOfStock';
+  position: number;
+}
+
+export function generateItemListSchema(
+  collectionName: string,
+  collectionUrl: string,
+  products: ItemListProduct[]
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: collectionName,
+    url: collectionUrl,
+    itemListElement: products.map(p => ({
+      '@type': 'ListItem',
+      position: p.position,
+      item: {
+        '@type': 'Product',
+        name: p.name,
+        url: p.url,
+        image: p.image,
+        offers: {
+          '@type': 'Offer',
+          price: p.price,
+          priceCurrency: p.currency,
+          availability: `https://schema.org/${p.availability}`,
+        },
+      },
+    })),
+  };
+}
+
+// ─── WebSite Schema with SearchAction ──────────────────────────────────────
+// Enables Google Sitelinks Search Box
+// Used on homepage and all pages
+
+export function generateWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: `${BUSINESS_NAME} — ${BRAND_NAME}`,
+    url: SITE_URL,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+// ─── Speakable Schema (Voice Search) ───────────────────────────────────────
+// Marks content sections for voice assistants
+// UtsavFashion.com uses this for voice search optimization
+
+export function generateSpeakableSchema(speakableSelectors: string[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: speakableSelectors,
+    },
+  };
+}
+
+// ─── AggregateRating Schema (for when reviews exist) ───────────────────────
+
+export function generateAggregateRatingSchema(
+  ratingValue: number,
+  reviewCount: number,
+  bestRating: number = 5
+) {
+  return {
+    '@type': 'AggregateRating',
+    ratingValue: String(ratingValue),
+    reviewCount: String(reviewCount),
+    bestRating: String(bestRating),
+  };
+}
+
 // ─── Image URL Helper ──────────────────────────────────────────────────────
 
 export function forceJpegForGmc(url: string): string {

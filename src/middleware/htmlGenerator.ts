@@ -6,7 +6,12 @@
  */
 
 import type { ShopifyProduct } from './shopifyProxy.js';
-import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
+import {
+  forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema,
+  generateFaqSchema, getGoogleProductCategory, SITE_URL,
+  generateWebSiteSchema, type ItemListProduct, generateItemListSchema,
+  generateOrganizationSchema,
+} from '../lib/schema.js';
 import { getCorrectedTitle } from '../lib/titleCorrections.js';
 import { getCorrectedTitleFromSeo, getImageAltText, getQAPairs, getMetaDescription } from '../lib/productSeoData.js';
 
@@ -38,7 +43,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const handleCorrected = getCorrectedTitle(product.handle);
   const seoCorrected = getCorrectedTitleFromSeo(product.title);
   const cleanTitle = handleCorrected || seoCorrected || rawCleanTitle;
-  const title = `${cleanTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
+  // Competitor-inspired title: "Buy [Product] Online | [Category] | LuxeMia"
+  // Kalki, Cbazaar, Utsav all use action verbs (Buy/Shop) + "Online" + brand
+  const title = `Buy ${cleanTitle} Online | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
   // Use SEO-optimized meta description if available, otherwise fallback to generic
   const seoMetaDesc = getMetaDescription(product.title);
   const rawDescription = product.description || `Shop ${cleanTitle} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`;
@@ -273,6 +280,86 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       <p>&copy; 2026 LuxeMia. All rights reserved. | luxemia.shop is owned and operated by Glamour Indian Wear | 2208 Michener St, Philadelphia, PA 19115, USA</p>
       <p><a href="${SITE_URL}/shipping">Shipping Policy</a> | <a href="${SITE_URL}/returns">Returns</a> | <a href="${SITE_URL}/privacy">Privacy</a> | <a href="${SITE_URL}/terms">Terms</a> | <a href="${SITE_URL}/contact">Contact</a></p>
     </footer>
+  </div>
+</body>
+</html>`;
+}
+
+// ─── Collection Page HTML with ItemList Schema ─────────────────────────────
+// Generates collection page HTML with ItemList schema for product carousel in SERPs
+// Inspired by KalkiFashion.com which uses ItemList on all collection pages
+
+export function generateCollectionHtml(
+  collectionName: string,
+  collectionUrl: string,
+  collectionDescription: string,
+  products: Array<{
+    name: string; url: string; image: string;
+    price: string; currency: string; availability: 'InStock' | 'OutOfStock';
+    position: number;
+  }>,
+  breadcrumbItems: Array<{ name: string; url: string }>
+): string {
+  const itemListSchema = generateItemListSchema(collectionName, collectionUrl, products);
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems);
+  const orgSchema = generateOrganizationSchema();
+  const websiteSchema = generateWebSiteSchema();
+
+  const productCards = products.map(p => `
+    <div itemscope itemtype="https://schema.org/Product" class="collection-product-card">
+      <a href="${p.url}" itemprop="url">
+        <img src="${forceJpegForGmc(p.image)}" alt="${escapeHtml(p.name)}" itemprop="image" loading="lazy" width="300" height="400" />
+        <h3 itemprop="name">${escapeHtml(p.name)}</h3>
+        <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+          <span itemprop="priceCurrency" content="${p.currency}">${p.currency}</span>
+          <span itemprop="price">${p.price}</span>
+          <link itemprop="availability" href="https://schema.org/${p.availability}" />
+        </div>
+      </a>
+    </div>
+  `).join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop ${escapeHtml(collectionName)} Online | Indian Ethnic Wear | LuxeMia</title>
+  <meta name="description" content="${escapeHtml(collectionDescription.slice(0, 160))}">
+  <link rel="canonical" href="${collectionUrl}">
+  <script type="application/ld+json">${JSON.stringify(itemListSchema)}</script>
+  <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
+  <script type="application/ld+json">${JSON.stringify(orgSchema)}</script>
+  <script type="application/ld+json">${JSON.stringify(websiteSchema)}</script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Playfair Display', Georgia, serif; line-height: 1.7; color: #2a2a2a; background: #fff; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+    .collection-header { text-align: center; margin-bottom: 48px; padding: 48px 24px; background: #faf9f7; }
+    .collection-header h1 { font-size: 2.5rem; margin-bottom: 16px; }
+    .collection-header p { max-width: 800px; margin: 0 auto; color: #666; font-size: 1.1rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; }
+    .collection-product-card { border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s; }
+    .collection-product-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .collection-product-card a { text-decoration: none; color: inherit; display: block; }
+    .collection-product-card img { width: 100%; height: 380px; object-fit: cover; }
+    .collection-product-card h3 { padding: 16px 16px 8px; font-size: 1rem; font-weight: 500; }
+    .collection-product-card [itemprop="offers"] { padding: 0 16px 16px; font-weight: 600; color: #1a3c34; }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="collection-header">
+      <h1>Shop ${escapeHtml(collectionName)} Online</h1>
+      <p>${escapeHtml(collectionDescription)}</p>
+    </div>
+    <div class="product-grid" itemscope itemtype="https://schema.org/ItemList">
+      <meta itemprop="name" content="${escapeHtml(collectionName)}">
+      <link itemprop="url" href="${collectionUrl}">
+      ${productCards}
+    </div>
   </div>
 </body>
 </html>`;
