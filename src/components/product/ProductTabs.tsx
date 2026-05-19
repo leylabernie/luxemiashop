@@ -46,7 +46,7 @@ const DESIGN: Record<Cat, string[]> = {
   saree: ['Traditional handloom weaving with intricate pallu work','Matching blouse piece included — ready for stitching','Lightweight fabric that pleats beautifully and stays in place','Versatile draping: Nivi, Bengali, Gujarati, or butterfly styles','Perfect for weddings, festivals, pooja, and formal gatherings'],
   suit: ['Coordinated salwar/kameez/dupatta set for a polished look','Available in semi-stitched, ready-to-wear, and made-to-measure','Comfortable fit with room for alteration — suits all body types','Intricate thread work, sequin detailing, or printed motifs','Versatile for casual outings, festivals, and formal occasions'],
   menswear: ['Premium fabrics: silk, jacquard, and brocade','Tailored or semi-stitched options for the perfect fit','Detailed embroidery and embellishments for ceremonial wear','Matching stole or dupatta included for a complete ensemble','Designed for weddings, engagements, and festive celebrations'],
-  other: ['Quality construction using time-honored textile traditions','Beautiful design details celebrating India\'s rich heritage','Comfortable and elegant silhouette for a flattering fit','Handcrafted with attention to detail'],
+  other: ['Quality textile construction','Beautiful design details','Comfortable and elegant silhouette','Crafted with attention to detail'],
 };
 
 const CARE: Record<Cat, string[]> = {
