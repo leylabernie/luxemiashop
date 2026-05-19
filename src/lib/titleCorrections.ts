@@ -439,19 +439,6 @@ export const LUXURY_COLOR_MAP: Record<string, string> = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// FABRIC-SPECIFIC BASE COLOR RULES
-// Maps fabric types to their typical base color for lower-priced lehengas
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const FABRIC_BASE_COLOR: Record<string, { base: string; priceThreshold: number }> = {
-  'silk': { base: 'Pearl White', priceThreshold: 100 },
-  'georgette': { base: 'Ivory', priceThreshold: 80 },
-  'art-silk': { base: 'Ivory', priceThreshold: 110 },
-  'jacquard': { base: 'Ivory', priceThreshold: 85 },
-  'faux-georgette': { base: 'Ivory', priceThreshold: 80 },
-};
-
-// ═══════════════════════════════════════════════════════════════════════════════
 // SANITIZATION: Non-searchable → searchable fabric term replacements
 // Applied BEFORE pattern matching in autoCorrectTitle()
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -634,7 +621,7 @@ function isLikelyGenuineColor(title: string, price: number): boolean {
 export function autoCorrectTitle(
   originalTitle: string,
   handle: string,
-  productType?: string,
+  _productType?: string,
   price?: number,
 ): string {
   // STEP 1: Sanitize fabric names — replace obscure terms with searchable ones
@@ -649,8 +636,6 @@ export function autoCorrectTitle(
   if (price && isLikelyGenuineColor(sanitizedTitle, price)) {
     return sanitizedTitle;
   }
-
-  const lower = sanitizedTitle.toLowerCase();
 
   // STEP 4: Auto-detect and fix common patterns
 
