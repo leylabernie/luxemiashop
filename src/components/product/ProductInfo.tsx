@@ -220,218 +220,34 @@ const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
   return numericValues.length >= 3;
 };
 
-// ─── Product Info Tabs Component (Kalki-style) ─────────────────────────────
-// Replaces the massive wall-of-text description with organized tabs:
-// Product Details | Description | Shipping & Returns
+// ─── Inline Key Details Grid ───────────────────────────────────────────────
+// Clean 2x2 label-value grid displayed right below price/delivery area
 
-interface ProductInfoTabsProps {
-  description: string;
+interface KeyDetailsGridProps {
   productSpecs: Record<string, string>;
-  displayTitle: string;
-  productType: string;
 }
 
-const ProductInfoTabs = ({ description, productSpecs, displayTitle, productType }: ProductInfoTabsProps) => {
-  const [activeTab, setActiveTab] = useState<'details' | 'description' | 'shipping'>('details');
+const KeyDetailsGrid = ({ productSpecs }: KeyDetailsGridProps) => {
+  const entries = [
+    { label: 'Color', value: productSpecs.color },
+    { label: 'Fabric', value: productSpecs.fabric },
+    { label: 'Work', value: productSpecs.work },
+    { label: 'Type', value: productSpecs.type },
+  ].filter((e) => e.value);
 
-  // Parse description into sections
-  const descSections = parseDescription(description, displayTitle, productType);
-
-  const tabs = [
-    { id: 'details' as const, label: 'Product Details' },
-    { id: 'description' as const, label: 'Description' },
-    { id: 'shipping' as const, label: 'Shipping & Returns' },
-  ];
+  if (entries.length === 0) return null;
 
   return (
-    <div className="border rounded-sm">
-      {/* Tab Headers */}
-      <div className="flex border-b">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-3 px-4 text-sm font-medium uppercase tracking-wide transition-colors ${
-              activeTab === tab.id
-                ? 'text-foreground border-b-2 border-foreground'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Tab Content */}
-      <div className="p-4">
-        {activeTab === 'details' && (
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-              {productSpecs.color && (
-                <>
-                  <span className="text-muted-foreground">Color</span>
-                  <span className="text-foreground font-medium">{productSpecs.color}</span>
-                </>
-              )}
-              {productSpecs.fabric && (
-                <>
-                  <span className="text-muted-foreground">Fabric</span>
-                  <span className="text-foreground font-medium">{productSpecs.fabric}</span>
-                </>
-              )}
-              {productSpecs.work && (
-                <>
-                  <span className="text-muted-foreground">Work</span>
-                  <span className="text-foreground font-medium">{productSpecs.work}</span>
-                </>
-              )}
-              {productSpecs.type && (
-                <>
-                  <span className="text-muted-foreground">Type</span>
-                  <span className="text-foreground font-medium">{productSpecs.type}</span>
-                </>
-              )}
-              <span className="text-muted-foreground">Closure</span>
-              <span className="text-foreground font-medium">Back Hook-Eye / Zip</span>
-              <span className="text-muted-foreground">Manufacturer</span>
-              <span className="text-foreground font-medium">Glamour Indian Wear</span>
-              <span className="text-muted-foreground">Pack Contains</span>
-              <span className="text-foreground font-medium">Lehenga, Choli (Blouse) & Dupatta</span>
-              <span className="text-muted-foreground">Lining</span>
-              <span className="text-foreground font-medium">Cotton/Satin Inner Lining</span>
-              <span className="text-muted-foreground">Care</span>
-              <span className="text-foreground font-medium">Dry Clean Only</span>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'description' && (
-          <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-            {descSections.overview && (
-              <p className="text-foreground font-medium">{descSections.overview}</p>
-            )}
-            {descSections.fabricDetails && (
-              <div>
-                <h4 className="font-medium text-foreground mb-1">Fabric & Craftsmanship</h4>
-                <p>{descSections.fabricDetails}</p>
-              </div>
-            )}
-            {descSections.stylingTips && (
-              <div>
-                <h4 className="font-medium text-foreground mb-1">Styling Tips</h4>
-                <p>{descSections.stylingTips}</p>
-              </div>
-            )}
-            {descSections.sizing && (
-              <div>
-                <h4 className="font-medium text-foreground mb-1">Sizing & Fit</h4>
-                <p>{descSections.sizing}</p>
-              </div>
-            )}
-            {!descSections.overview && !descSections.fabricDetails && (
-              <p>{description || `Beautifully crafted ${productSpecs.type || 'Indian ethnic wear'} featuring intricate ${productSpecs.work || 'handwork'} on premium ${productSpecs.fabric || 'fabric'}. Perfect for weddings, festivals, and special occasions. Each piece is quality inspected before shipping.`}</p>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'shipping' && (
-          <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-            <div>
-              <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                <Truck className="h-4 w-4" />
-                Shipping
-              </h4>
-              <ul className="space-y-2 list-disc list-inside">
-                <li><strong className="text-foreground">Free shipping</strong> on all orders over $350 (USA, Canada & Australia)</li>
-                <li><strong className="text-foreground">Flat rate $25</strong> on orders under $350</li>
-                <li><strong>Standard delivery:</strong> 10-15 business days via DHL/USPS</li>
-                <li><strong>Express delivery:</strong> 7-10 business days via DHL Express</li>
-                <li>All orders ship from India with tracking number</li>
-                <li>Readymade items ship within 3-5 business days</li>
-                <li>Custom stitched items ship within 5-7 business days</li>
-              </ul>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                <RefreshCcw className="h-4 w-4" />
-                Returns & Exchanges
-              </h4>
-              <ul className="space-y-2 list-disc list-inside">
-                <li><strong className="text-foreground">15-day easy returns</strong> — unworn items with tags attached</li>
-                <li>Defective/damaged items: Full refund or replacement</li>
-                <li>Custom stitched orders: Non-returnable (quality guaranteed)</li>
-                <li>Return shipping: Customer pays unless item is defective</li>
-                <li>Refunds processed within 7 business days of receipt</li>
-              </ul>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Purchase Protection
-              </h4>
-              <p>Every order is covered by our Purchase Protection policy. If your item arrives damaged, defective, or not as described, we will provide a full refund or replacement at no extra cost.</p>
-            </div>
-          </div>
-        )}
-      </div>
+    <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+      {entries.map(({ label, value }) => (
+        <div key={label} className="flex items-center gap-2">
+          <span className="text-muted-foreground text-xs uppercase tracking-wider">{label}</span>
+          <span className="text-foreground font-medium">{value}</span>
+        </div>
+      ))}
     </div>
   );
 };
-
-/**
- * Parse the massive description text into logical sections.
- * Extracts overview, fabric details, styling tips, and sizing info.
- */
-function parseDescription(
-  description: string,
-  displayTitle: string,
-  productType: string
-): { overview: string; fabricDetails: string; stylingTips: string; sizing: string } {
-  const result = { overview: '', fabricDetails: '', stylingTips: '', sizing: '' };
-  if (!description || description.length < 20) {
-    // Generate minimal description from corrected title
-    result.overview = `${displayTitle} — handcrafted Indian ethnic wear for weddings, festivals, and special celebrations.`;
-    return result;
-  }
-
-  const lower = description.toLowerCase();
-
-  // Extract Overview (first paragraph, before "Design Details" or "Fabric:")
-  const designDetailsIdx = lower.indexOf('design details');
-  const fabricIdx = lower.indexOf('fabric:');
-  const firstBreak = designDetailsIdx > 0 ? designDetailsIdx : fabricIdx > 0 ? fabricIdx : description.indexOf('.', 100) + 1;
-  if (firstBreak > 20) {
-    result.overview = description.slice(0, firstBreak).trim();
-  }
-
-  // Extract Fabric section
-  const fabricMatch = description.match(/Fabric:?\s*([\s\S]*?)(?=Work:|Lehenga|Blouse|Dupatta|Styling|Stitching|$)/i);
-  if (fabricMatch) {
-    result.fabricDetails = fabricMatch[1].trim();
-  }
-
-  // Extract Styling Tips section
-  const stylingIdx = lower.indexOf('styling tips');
-  const stitchIdx = lower.indexOf('stitching options');
-  if (stylingIdx >= 0) {
-    const endIdx = stitchIdx > stylingIdx ? stitchIdx : description.length;
-    result.stylingTips = description.slice(stylingIdx, endIdx).replace(/styling tips[:\s]*/i, '').trim();
-  }
-
-  // STRIP size-related text from description — sizes display as clickable buttons
-  // Cbazaar-style: sizes are NOT in description text, only as UI buttons
-  const sizeBlockIdx = lower.indexOf('size variants');
-  const chartBlockIdx = lower.indexOf('size chart');
-  const stitchingIdx = lower.indexOf('stitching options');
-  if (sizeBlockIdx >= 0 || chartBlockIdx >= 0 || stitchingIdx >= 0) {
-    // Don't add to any section — size info is shown via StitchingSizeSelector buttons
-    result.sizing = ''; // Intentionally empty — sizes are clickable buttons, not text
-  }
-
-  return result;
-}
 
 export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
   const displayTitle = correctedTitle || product.title;
@@ -775,6 +591,9 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
         }
       />
 
+      {/* ─── Inline Key Details Grid ─── */}
+      <KeyDetailsGrid productSpecs={productSpecs} />
+
       <Separator />
 
       {/* ─── Utsav-style "Customize" Section ─── */}
@@ -1066,16 +885,6 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
 
 
 
-      {/* ─── Product Info Tabs (Kalki-style) ─── */}
-      <div className="space-y-4">
-        <ProductInfoTabs
-          description={product.description || ''}
-          productSpecs={productSpecs}
-          displayTitle={displayTitle}
-          productType={product.productType || ''}
-        />
-      </div>
-
       <Separator />
 
       {/* Trust Badges - Enhanced */}
@@ -1146,3 +955,4 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
   );
 };
 
+                                                                                                                                                                                                                                                                                                                                      
