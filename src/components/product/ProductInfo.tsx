@@ -353,14 +353,16 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
   
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType, correctedTitle), [product.tags, product.productType, correctedTitle]);
 
-  // Determine if the currently selected variant requires stitching size
+  // Determine if the currently selected variant requires a size selection
+  // ALL stitching types (Semi Stitched, Ready to Wear, Made to Measure) need a size.
+  // The requiresMeasurement flag only controls post-order measurement submission.
   const needsStitchingSize = useMemo(() => {
-    // For stitchable products, check the Utsav-style selector
-    if (isStitchable) {
-      const selectedOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
-      return selectedOption?.requiresMeasurement || false;
+    // For stitchable products using the Utsav-style selector:
+    // if a stitching type is selected, a size is ALWAYS required
+    if (isStitchable && selectedStitchingType) {
+      return true;
     }
-    // Fallback for products with stitching in variant names
+    // Fallback for products with stitching embedded in Shopify variant names
     return Object.entries(selectedOptions).some(([key, val]) => {
       const lowerKey = key.toLowerCase();
       const lowerVal = val.toLowerCase();
