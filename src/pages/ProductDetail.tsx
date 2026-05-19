@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -11,6 +12,9 @@ import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import ReviewsSection from '@/components/product/ReviewsSection';
+import { ProductFAQBlock } from '@/components/product/ProductFAQBlock';
+import { ContextualRecommendations } from '@/components/product/ContextualRecommendations';
+import { SemanticProductMetadata } from '@/components/seo/SemanticProductMetadata';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import type { LocalProduct } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -300,7 +304,28 @@ const ProductDetail = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
+              data-ai-optimized="true"
             >
+              {/* AI-Search Semantic Metadata (invisible to users, consumed by LLMs) */}
+              <SemanticProductMetadata
+                productName={correctedProductTitle || product.title}
+                fabric={productMaterial}
+                color={productColor}
+                embroidery={productPattern}
+                occasion={product?.tags?.filter((t: string) => /wedding|bridal|festive|party|mehndi|sangeet|reception|diwali|eid|haldi/i.test(t))}
+                silhouette={product?.productType}
+                regionOfOrigin="India"
+              />
+              <Helmet>
+                <meta name="ai-optimized" content="true" />
+                <meta name="ai-content-type" content="product-detail" />
+                <meta name="ai-product-category" content={product.productType || 'Indian Ethnic Wear'} />
+                <meta name="ai-product-color" content={productColor || ''} />
+                <meta name="ai-product-material" content={productMaterial || ''} />
+                <meta name="ai-product-pattern" content={productPattern || ''} />
+                <meta name="ai-product-audience" content={productAudience || 'Female'} />
+                <meta name="ai-search-ready" content="true" />
+              </Helmet>
               {/* Product Grid */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
                 {/* Gallery */}
@@ -344,10 +369,24 @@ const ProductDetail = () => {
                 </a>
               </div>
 
-              {/* Complete the Look */}
+              {/* Contextual Recommendations — Complete the Look */}
+              <ContextualRecommendations
+                productType={product.productType}
+                productColor={productColor}
+                embroidery={productPattern}
+              />
+
+              {/* Complete the Look — Related Products */}
               <CompleteTheLook 
                 currentProductId={product.id}
                 productType={product.productType}
+              />
+
+              {/* Product FAQ Block — Category-specific FAQs with schema */}
+              <ProductFAQBlock
+                productName={correctedProductTitle || product.title}
+                productType={product.productType}
+                fabric={productMaterial}
               />
 
               {/* Recently Viewed */}
