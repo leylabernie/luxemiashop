@@ -57,39 +57,83 @@ interface ProductInfoProps {
 }
 
 // Helper to extract product specs from tags
-const extractProductSpecs = (tags?: string[], productType?: string) => {
+/**
+ * Extract product specs from corrected title (priority) and Shopify tags (fallback).
+ * The corrected title has the accurate base color (e.g. "Pearl White"), while
+ * Shopify tags may list accent colors (e.g. "Maroon" dupatta).
+ */
+const extractProductSpecs = (tags?: string[], productType?: string, correctedTitle?: string) => {
   const specs: Record<string, string> = {};
-  
-  if (!tags) return specs;
-  
-  // Common fabric patterns
-  const fabricKeywords = ['silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
-  // Common work patterns
-  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven', 'handcrafted'];
-  // Color patterns
-  const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
+
+  // ── Extract color from CORRECTED TITLE (priority) ──
+  // Corrected title: "Pearl White Silk Lehenga Choli with Maroon Embroidered Dupatta"
+  // Base color = first 1-2 words before the fabric name
+  if (correctedTitle) {
+    const titleLower = correctedTitle.toLowerCase();
+    const colorPatterns = [
+      'pearl white', 'off-white', 'off white', 'ivory', 'cream', 'beige', 'champagne',
+      'rani pink', 'hot pink', 'pastel pink', 'dusty pink', 'light pink', 'rose pink',
+      'royal blue', 'navy blue', 'teal blue', 'sky blue', 'turquoise',
+      'emerald green', 'pista green', 'mehendi green', 'olive green', 'sea green', 'teal green',
+      'wine', 'maroon', 'burgundy', 'rust', 'rust orange',
+      'mustard', 'golden', 'gold',
+      'purple', 'lavender', 'lilac', 'mauve',
+      'peach', 'coral', 'salmon',
+      'silver', 'grey', 'charcoal',
+    ];
+    for (const color of colorPatterns) {
+      if (titleLower.includes(color)) {
+        specs.color = color.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        break;
+      }
+    }
+  }
+
+  if (!tags) {
+    if (productType) specs.type = productType;
+    return specs;
+  }
 
   const lowerTags = tags.map(t => t.toLowerCase());
-  
-  // Extract fabric
-  const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
-  if (foundFabric) {
-    specs.fabric = foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+  // Common fabric patterns
+  const fabricKeywords = ['silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'art silk', 'banarasi', 'tissue silk'];
+  // Common work patterns
+  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven', 'handcrafted', 'gota work', 'cut dana', 'beads'];
+
+  // Extract fabric from corrected title first, then tags
+  if (correctedTitle) {
+    const titleLower = correctedTitle.toLowerCase();
+    for (const fabric of fabricKeywords) {
+      if (titleLower.includes(fabric)) {
+        specs.fabric = fabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        break;
+      }
+    }
   }
-  
+  if (!specs.fabric) {
+    const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
+    if (foundFabric) {
+      specs.fabric = foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    }
+  }
+
   // Extract work type
   const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
   if (foundWork.length > 0) {
     specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
   }
-  
-  // Extract colors
-  const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
-  if (foundColors.length > 0) {
-    specs.color = foundColors.slice(0, 2).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' & ');
+
+  // Fallback: extract color from tags if not found in corrected title
+  if (!specs.color) {
+    const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
+    const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
+    if (foundColors.length > 0) {
+      specs.color = foundColors.slice(0, 2).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' & ');
+    }
   }
 
-  // Product type as occasion
+  // Product type
   if (productType) {
     specs.type = productType;
   }
@@ -175,6 +219,218 @@ const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
   const numericValues = sizeOption.values.filter(v => /^\d{2}$/.test(v.trim()));
   return numericValues.length >= 3;
 };
+
+// ─── Product Info Tabs Component (Kalki-style) ─────────────────────────────
+// Replaces the massive wall-of-text description with organized tabs:
+// Product Details | Description | Shipping & Returns
+
+interface ProductInfoTabsProps {
+  description: string;
+  productSpecs: Record<string, string>;
+  displayTitle: string;
+  productType: string;
+}
+
+const ProductInfoTabs = ({ description, productSpecs, displayTitle, productType }: ProductInfoTabsProps) => {
+  const [activeTab, setActiveTab] = useState<'details' | 'description' | 'shipping'>('details');
+
+  // Parse description into sections
+  const descSections = parseDescription(description, displayTitle, productType);
+
+  const tabs = [
+    { id: 'details' as const, label: 'Product Details' },
+    { id: 'description' as const, label: 'Description' },
+    { id: 'shipping' as const, label: 'Shipping & Returns' },
+  ];
+
+  return (
+    <div className="border rounded-sm">
+      {/* Tab Headers */}
+      <div className="flex border-b">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex-1 py-3 px-4 text-sm font-medium uppercase tracking-wide transition-colors ${
+              activeTab === tab.id
+                ? 'text-foreground border-b-2 border-foreground'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      <div className="p-4">
+        {activeTab === 'details' && (
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+              {productSpecs.color && (
+                <>
+                  <span className="text-muted-foreground">Color</span>
+                  <span className="text-foreground font-medium">{productSpecs.color}</span>
+                </>
+              )}
+              {productSpecs.fabric && (
+                <>
+                  <span className="text-muted-foreground">Fabric</span>
+                  <span className="text-foreground font-medium">{productSpecs.fabric}</span>
+                </>
+              )}
+              {productSpecs.work && (
+                <>
+                  <span className="text-muted-foreground">Work</span>
+                  <span className="text-foreground font-medium">{productSpecs.work}</span>
+                </>
+              )}
+              {productSpecs.type && (
+                <>
+                  <span className="text-muted-foreground">Type</span>
+                  <span className="text-foreground font-medium">{productSpecs.type}</span>
+                </>
+              )}
+              <span className="text-muted-foreground">Closure</span>
+              <span className="text-foreground font-medium">Back Hook-Eye / Zip</span>
+              <span className="text-muted-foreground">Manufacturer</span>
+              <span className="text-foreground font-medium">Glamour Indian Wear</span>
+              <span className="text-muted-foreground">Pack Contains</span>
+              <span className="text-foreground font-medium">Lehenga, Choli (Blouse) & Dupatta</span>
+              <span className="text-muted-foreground">Lining</span>
+              <span className="text-foreground font-medium">Cotton/Satin Inner Lining</span>
+              <span className="text-muted-foreground">Care</span>
+              <span className="text-foreground font-medium">Dry Clean Only</span>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'description' && (
+          <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+            {descSections.overview && (
+              <p className="text-foreground font-medium">{descSections.overview}</p>
+            )}
+            {descSections.fabricDetails && (
+              <div>
+                <h4 className="font-medium text-foreground mb-1">Fabric & Craftsmanship</h4>
+                <p>{descSections.fabricDetails}</p>
+              </div>
+            )}
+            {descSections.stylingTips && (
+              <div>
+                <h4 className="font-medium text-foreground mb-1">Styling Tips</h4>
+                <p>{descSections.stylingTips}</p>
+              </div>
+            )}
+            {descSections.sizing && (
+              <div>
+                <h4 className="font-medium text-foreground mb-1">Sizing & Fit</h4>
+                <p>{descSections.sizing}</p>
+              </div>
+            )}
+            {!descSections.overview && !descSections.fabricDetails && (
+              <p>{description || `Beautifully crafted ${productSpecs.type || 'Indian ethnic wear'} featuring intricate ${productSpecs.work || 'handwork'} on premium ${productSpecs.fabric || 'fabric'}. Perfect for weddings, festivals, and special occasions. Each piece is quality inspected before shipping.`}</p>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'shipping' && (
+          <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+            <div>
+              <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                <Truck className="h-4 w-4" />
+                Shipping
+              </h4>
+              <ul className="space-y-2 list-disc list-inside">
+                <li><strong className="text-foreground">Free shipping</strong> on all orders over $350 (USA, Canada & Australia)</li>
+                <li><strong className="text-foreground">Flat rate $25</strong> on orders under $350</li>
+                <li><strong>Standard delivery:</strong> 10-15 business days via DHL/USPS</li>
+                <li><strong>Express delivery:</strong> 7-10 business days via DHL Express</li>
+                <li>All orders ship from India with tracking number</li>
+                <li>Readymade items ship within 3-5 business days</li>
+                <li>Custom stitched items ship within 5-7 business days</li>
+              </ul>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                <RefreshCcw className="h-4 w-4" />
+                Returns & Exchanges
+              </h4>
+              <ul className="space-y-2 list-disc list-inside">
+                <li><strong className="text-foreground">15-day easy returns</strong> — unworn items with tags attached</li>
+                <li>Defective/damaged items: Full refund or replacement</li>
+                <li>Custom stitched orders: Non-returnable (quality guaranteed)</li>
+                <li>Return shipping: Customer pays unless item is defective</li>
+                <li>Refunds processed within 7 business days of receipt</li>
+              </ul>
+            </div>
+            <Separator />
+            <div>
+              <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                Purchase Protection
+              </h4>
+              <p>Every order is covered by our Purchase Protection policy. If your item arrives damaged, defective, or not as described, we will provide a full refund or replacement at no extra cost.</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Parse the massive description text into logical sections.
+ * Extracts overview, fabric details, styling tips, and sizing info.
+ */
+function parseDescription(
+  description: string,
+  displayTitle: string,
+  productType: string
+): { overview: string; fabricDetails: string; stylingTips: string; sizing: string } {
+  const result = { overview: '', fabricDetails: '', stylingTips: '', sizing: '' };
+  if (!description || description.length < 20) {
+    // Generate minimal description from corrected title
+    result.overview = `${displayTitle} — handcrafted Indian ethnic wear for weddings, festivals, and special celebrations.`;
+    return result;
+  }
+
+  const lower = description.toLowerCase();
+
+  // Extract Overview (first paragraph, before "Design Details" or "Fabric:")
+  const designDetailsIdx = lower.indexOf('design details');
+  const fabricIdx = lower.indexOf('fabric:');
+  const firstBreak = designDetailsIdx > 0 ? designDetailsIdx : fabricIdx > 0 ? fabricIdx : description.indexOf('.', 100) + 1;
+  if (firstBreak > 20) {
+    result.overview = description.slice(0, firstBreak).trim();
+  }
+
+  // Extract Fabric section
+  const fabricMatch = description.match(/Fabric:?
+?([\s\S]*?)(?=Work:|Lehenga|Blouse|Dupatta|Styling|Stitching|$)/i);
+  if (fabricMatch) {
+    result.fabricDetails = fabricMatch[1].trim();
+  }
+
+  // Extract Styling Tips section
+  const stylingIdx = lower.indexOf('styling tips');
+  const stitchIdx = lower.indexOf('stitching options');
+  if (stylingIdx >= 0) {
+    const endIdx = stitchIdx > stylingIdx ? stitchIdx : description.length;
+    result.stylingTips = description.slice(stylingIdx, endIdx).replace(/styling tips[:\s]*/i, '').trim();
+  }
+
+  // Extract Sizing section
+  const sizeIdx = lower.indexOf('size variants');
+  const chartIdx = lower.indexOf('size chart');
+  if (sizeIdx >= 0 || chartIdx >= 0) {
+    const start = sizeIdx >= 0 ? sizeIdx : chartIdx;
+    result.sizing = description.slice(start).replace(/size variants[:\s]*/i, '').replace(/size chart[:\s]*/i, '').trim();
+  }
+
+  return result;
+}
 
 export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
   const displayTitle = correctedTitle || product.title;
@@ -278,7 +534,7 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
   const isAvailable = selectedVariant?.node.availableForSale ?? true;
   const sku = selectedVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
-  const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
+  const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType, correctedTitle), [product.tags, product.productType, correctedTitle]);
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -806,51 +1062,16 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
         </Button>
       </div>
 
-      <Separator />
 
-      {/* Product Specifications */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium uppercase tracking-wide">Product Details</h3>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-          {productSpecs.color && (
-            <>
-              <span className="text-muted-foreground">Color</span>
-              <span className="text-foreground">{productSpecs.color}</span>
-            </>
-          )}
-          {productSpecs.fabric && (
-            <>
-              <span className="text-muted-foreground">Fabric</span>
-              <span className="text-foreground">{productSpecs.fabric}</span>
-            </>
-          )}
-          {productSpecs.work && (
-            <>
-              <span className="text-muted-foreground">Work</span>
-              <span className="text-foreground">{productSpecs.work}</span>
-            </>
-          )}
-          {productSpecs.type && (
-            <>
-              <span className="text-muted-foreground">Type</span>
-              <span className="text-foreground">{productSpecs.type}</span>
-            </>
-          )}
-          <span className="text-muted-foreground">Closure</span>
-          <span className="text-foreground">Back Hook-Eye / Zip</span>
-          <span className="text-muted-foreground">Manufacturer</span>
-          <span className="text-foreground">Glamour Indian Wear</span>
-        </div>
-      </div>
 
-      <Separator />
-
-      {/* Description */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
-        <p className="text-muted-foreground leading-relaxed text-sm">
-          {product.description || 'Beautifully made with attention to every detail, this piece features traditional Indian design elements. Perfect for ceremonies, weddings, and special occasions.'}
-        </p>
+      {/* ─── Product Info Tabs (Kalki-style) ─── */}
+      <div className="space-y-4">
+        <ProductInfoTabs
+          description={product.description || ''}
+          productSpecs={productSpecs}
+          displayTitle={displayTitle}
+          productType={product.productType || ''}
+        />
       </div>
 
       <Separator />
