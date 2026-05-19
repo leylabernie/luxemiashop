@@ -478,7 +478,9 @@ const FABRIC_SANITIZATION: Record<string, string> = {
 function sanitizeFabricNames(title: string): string {
   let sanitized = title;
   for (const [obscure, searchable] of Object.entries(FABRIC_SANITIZATION)) {
-    sanitized = sanitized.replaceAll(obscure, searchable);
+    // Use RegExp with global flag for case-sensitive multi-replace
+    // (ES2020 compatible — avoids replaceAll which needs ES2021+)
+    sanitized = sanitized.replace(new RegExp(obscure.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), searchable);
   }
   return sanitized;
 }
