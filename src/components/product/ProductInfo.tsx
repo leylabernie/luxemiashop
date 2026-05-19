@@ -53,6 +53,7 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
 
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
+  correctedTitle?: string;
 }
 
 // Helper to extract product specs from tags
@@ -175,7 +176,8 @@ const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
   return numericValues.length >= 3;
 };
 
-export const ProductInfo = ({ product }: ProductInfoProps) => {
+export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
+  const displayTitle = correctedTitle || product.title;
   const isStitchable = isStitchableProduct(product.productType, product.tags);
   const isMenswear = isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = shouldShowBottomStyle(product.productType, product.tags);
@@ -475,7 +477,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       )}
 
       {/* Title */}
-      <h1 className="text-3xl lg:text-4xl font-serif leading-tight">{product.title}</h1>
+      <h1 className="text-3xl lg:text-4xl font-serif leading-tight">{displayTitle}</h1>
 
       {/* Price */}
       <div className="space-y-2">
@@ -523,14 +525,14 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           {/* Customize Header */}
           <div className="space-y-2">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-              Customize: {product.title}
+              Customize: {displayTitle}
             </h3>
             <div className="border-b border-border" />
             {/* Base product line item */}
             <div className="flex items-center justify-between py-1">
               <div className="flex items-center gap-2">
                 <span className="text-primary text-sm">☑</span>
-                <span className="text-sm text-foreground font-medium">{product.title}</span>
+                <span className="text-sm text-foreground font-medium">{displayTitle}</span>
               </div>
               <span className="text-sm text-foreground font-medium">
                 {formatPrice(basePrice.amount, basePrice.currencyCode)}

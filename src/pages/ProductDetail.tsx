@@ -253,7 +253,7 @@ const ProductDetail = () => {
           breadcrumbs={[
             { name: 'Home', url: '/' },
             { name: categoryName, url: categoryUrl },
-            { name: product.title, url: `/product/${product.handle}` },
+            { name: correctedProductTitle || product.title, url: `/product/${product.handle}` },
           ]}
           faqs={productFaqs}
         />
@@ -275,7 +275,7 @@ const ProductDetail = () => {
             <ChevronRight className="h-4 w-4" />
             <Link to={categoryUrl} className="hover:text-foreground transition-colors">{categoryName}</Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">{product?.title || 'Product'}</span>
+            <span className="text-foreground">{correctedProductTitle || product?.title || 'Product'}</span>
           </nav>
 
           {isLoading ? (
@@ -308,7 +308,7 @@ const ProductDetail = () => {
                 />
                 
                 {/* Product Info */}
-                <ProductInfo key={product.id} product={product} />
+                <ProductInfo key={product.id} product={product} correctedTitle={correctedProductTitle} />
               </div>
 
               {/* Product Tabs */}
