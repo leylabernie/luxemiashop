@@ -25,6 +25,58 @@ export function escapeHtml(str: string): string {
 }
 
 /**
+ * Generate a clean short description from product metadata.
+ * NEVER uses raw product.description which contains bloated old AI text.
+ */
+function generateCleanDescription(title: string, productType: string, tags: string[] = []): string {
+  const t = (title || '').toLowerCase();
+  const pt = (productType || '').toLowerCase();
+  const combined = `${t} ${pt} ${tags.join(' ').toLowerCase()}`;
+
+  // Extract color
+  const colors = ['burgundy','wine','maroon','royal blue','navy','cobalt','fuchsia','magenta','black','cream','beige','white','ivory','gold','antique gold','teal','emerald','green','olive','charcoal','grey','coral','orange','saffron','yellow','rose','pink','plum','purple'];
+  let color = '';
+  for (const c of colors) { if (combined.includes(c)) { color = c.charAt(0).toUpperCase() + c.slice(1); break; } }
+
+  // Extract fabric
+  const fabrics = ['silk','georgette','satin','cotton','net','velvet','organza','chiffon'];
+  let fabric = '';
+  for (const f of fabrics) { if (combined.includes(f)) { fabric = f.charAt(0).toUpperCase() + f.slice(1); break; } }
+
+  // Extract work
+  const works = ['zari','zardozi','sequin','embroidery','mirror work','thread work','bead work','resham'];
+  let work = '';
+  for (const w of works) { if (combined.includes(w)) { work = w.charAt(0).toUpperCase() + w.slice(1); break; } }
+
+  // Product type label
+  let label = 'ethnic wear';
+  if (pt.includes('lehenga')) label = 'lehenga';
+  else if (pt.includes('saree')) label = 'saree';
+  else if (pt.includes('suit')) label = 'suit';
+
+  const parts: string[] = [];
+  if (color) parts.push(color);
+  if (fabric) parts.push(fabric);
+  parts.push(label);
+  if (work) parts.push(`with ${work.toLowerCase()}`);
+  const s1 = `${parts.join(' ')}.`;
+
+  // Occasion
+  const occasions: string[] = [];
+  if (combined.includes('wedding') || combined.includes('bridal')) occasions.push('wedding');
+  if (combined.includes('festive') || combined.includes('festival')) occasions.push('festive');
+  if (combined.includes('party')) occasions.push('party wear');
+  if (combined.includes('diwali')) occasions.push('Diwali');
+  if (combined.includes('mehndi')) occasions.push('Mehndi');
+  if (combined.includes('sangeet')) occasions.push('Sangeet');
+
+  let s2 = '';
+  if (occasions.length > 0) s2 = ` Suited for ${occasions.join(', ')}.`;
+
+  return (s1 + s2).trim();
+}
+
+/**
  * Smart truncate: cuts text at the last complete sentence or word boundary
  * within the maxLength limit. Never cuts off mid-sentence.
  */
@@ -278,7 +330,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
             : `<span>${currency} ${price}</span>`
           }
         </div>
-        <p class="description">${escapeHtml(product.description?.slice(0, 500) || '')}</p>
+        <p class="description">${escapeHtml(generateCleanDescription(product.title, product.productType, product.tags || []).slice(0, 500))}</p>
         ${variantOptions ? `<div style="margin-bottom:16px;">${variantOptions}</div>` : ''}
         <dl class="details">
           ${vendor ? `<div><dt>Brand:</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
