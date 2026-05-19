@@ -24,6 +24,30 @@ export function escapeHtml(str: string): string {
     .replace(/'/g, '&#39;');
 }
 
+/**
+ * Smart truncate: cuts text at the last complete sentence or word boundary
+ * within the maxLength limit. Never cuts off mid-sentence.
+ */
+function smartTruncate(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  // Try to find the last sentence-ending punctuation within limit
+  const slice = text.slice(0, maxLength);
+  const lastSentenceEnd = Math.max(
+    slice.lastIndexOf('.'),
+    slice.lastIndexOf('!'),
+    slice.lastIndexOf('?')
+  );
+  if (lastSentenceEnd > maxLength * 0.7) {
+    return slice.slice(0, lastSentenceEnd + 1);
+  }
+  // Fallback: cut at last space (word boundary)
+  const lastSpace = slice.lastIndexOf(' ');
+  if (lastSpace > maxLength * 0.5) {
+    return slice.slice(0, lastSpace) + '...';
+  }
+  return slice + '...';
+}
+
 function getCategoryUrl(productType?: string): string {
   if (!productType) return '/collections';
   const type = productType.toLowerCase();
@@ -46,10 +70,13 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   // Competitor-inspired title: "Buy [Product] Online | [Category] | LuxeMia"
   // Kalki, Cbazaar, Utsav all use action verbs (Buy/Shop) + "Online" + brand
   const title = `Buy ${cleanTitle} Online | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
-  // Use SEO-optimized meta description if available, otherwise fallback to generic
+  // Generate a proper meta description (150-160 chars, doesn't cut off mid-sentence)
+  // Uses corrected title so description matches the page title
   const seoMetaDesc = getMetaDescription(product.title);
-  const rawDescription = product.description || `Shop ${cleanTitle} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`;
-  const description = (seoMetaDesc || rawDescription).slice(0, 160);
+  const rawDescFallback = `Buy ${cleanTitle} online at LuxeMia. Handcrafted Indian ethnic wear. Free shipping over $350 to USA, Canada & Australia. Shop now!`;
+  const fullDescription = seoMetaDesc || rawDescFallback;
+  // Smart truncate: cut at last complete sentence within 150-160 char limit
+  const description = smartTruncate(fullDescription, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
