@@ -18,7 +18,7 @@ import { SemanticProductMetadata } from '@/components/seo/SemanticProductMetadat
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import type { LocalProduct } from '@/data/localProducts';
 import { Skeleton } from '@/components/ui/skeleton';
-import { enrichProductDescription, generateMetaDescription } from '@/lib/productDescriptionEnrichment';
+import { generateProductContent } from '@/lib/productDescriptionEnrichment';
 import { getCorrectedTitle, autoCorrectTitle } from '@/lib/titleCorrections';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
@@ -177,28 +177,27 @@ const ProductDetail = () => {
     return 'Female';
   }, [product]);
 
-  const enrichedDescription = useMemo(() => {
-    if (!product) return '';
-    // Pass CORRECTED title to description enrichment so it uses
-    // "Pearl White" instead of "Maroon" in generated text
-    return enrichProductDescription(
-      product.description || '',
-      product.productType || '',
-      correctedProductTitle || product.title,
-      productMaterial,
-      productColor,
-    );
-  }, [product, productMaterial, productColor, correctedProductTitle]);
-
-  const seoMetaDescription = useMemo(() => {
-    if (!product) return '';
-    return generateMetaDescription(
-      product.description || '',
-      product.productType || '',
-      product.title,
-      product?.priceRange?.minVariantPrice?.amount,
-    );
-  }, [product]);
+  // ── Generate structured content for ProductTabs & SEO ──
+  const content = useMemo(() => {
+    if (!product) {
+      return {
+        shortIntro: '',
+        keyDetails: [] as Array<{ label: string; value: string }>,
+        designDetails: [] as string[],
+        stylingNote: '',
+        customization: [] as string[],
+        care: [] as string[],
+        seoMetaDescription: '',
+        aiSearchDescription: '',
+      };
+    }
+    return generateProductContent({
+      title: correctedProductTitle || product.title,
+      productType: product.productType || '',
+      tags: product.tags || [],
+      description: product.description || '',
+    });
+  }, [product, correctedProductTitle]);
 
   // Product-specific FAQs for rich snippets
   const productFaqs = product ? [
@@ -225,7 +224,7 @@ const ProductDetail = () => {
       {product ? (
         <SEOHead
           title={`${correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia\s*$/i, '')} | ${categoryName} | LuxeMia`}
-          description={seoMetaDescription || (() => {
+          description={content.seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
@@ -240,7 +239,7 @@ const ProductDetail = () => {
             price: product.priceRange.minVariantPrice.amount,
             currency: product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
-            description: enrichedDescription || product.description || '',
+            description: content.aiSearchDescription || content.shortIntro || product.description || '',
             availability: 'InStock',
             sku: product.id,
             originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
@@ -325,6 +324,9 @@ const ProductDetail = () => {
                 <meta name="ai-product-pattern" content={productPattern || ''} />
                 <meta name="ai-product-audience" content={productAudience || 'Female'} />
                 <meta name="ai-search-ready" content="true" />
+                {content.aiSearchDescription && (
+                  <meta name="ai-search-description" content={content.aiSearchDescription} />
+                )}
               </Helmet>
               {/* Product Grid */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
@@ -340,8 +342,13 @@ const ProductDetail = () => {
 
               {/* Product Tabs */}
               <div className="mb-16">
-                <ProductTabs 
-                  description={enrichedDescription || product.description}
+                <ProductTabs
+                  shortIntro={content.shortIntro}
+                  keyDetails={content.keyDetails}
+                  designDetails={content.designDetails}
+                  stylingNote={content.stylingNote}
+                  customization={content.customization}
+                  care={content.care}
                   productType={product.productType}
                   isStitchable={isStitchableProductType(product.productType)}
                 />
