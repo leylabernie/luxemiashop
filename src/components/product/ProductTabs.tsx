@@ -1,878 +1,254 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Ruler, Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import {
+  CheckCircle2, Ruler, Sparkles, Droplets, Clock, Palette, PenTool,
+  Truck, RotateCcw, Gem, Heart, Info,
+} from 'lucide-react';
+
+// ─── Types ───
+type Cat = 'lehenga' | 'saree' | 'suit' | 'menswear' | 'other';
+
+interface KeyDetailRow { label: string; value: string; }
 
 interface ProductTabsProps {
+  shortIntro?: string;
+  keyDetails?: KeyDetailRow[];
+  designDetails?: string[];
+  stylingNote?: string;
+  stylingBullets?: string[];
+  colorAdvice?: string;
+  customization?: string[];
+  care?: string[];
   description?: string;
   productType?: string;
-  /** Whether this product supports stitching (controls Tailoring Services tab visibility) */
   isStitchable?: boolean;
 }
 
-// Product types that support stitching
-const STITCHABLE_PRODUCT_TYPES = [
-  'salwar kameez', 'salwar kameez suit', 'lehenga', 'lehenga choli', 'saree', 'sarees',
-  'anarkali', 'sharara suit', 'pakistani suit', 'palazzo suit', 'gharara suit',
-  'wedding suit',
-];
+// ─── Helpers ───
+const STITCHABLE = ['salwar kameez','salwar kameez suit','lehenga','lehenga choli','saree','sarees','anarkali','sharara suit','pakistani suit','palazzo suit','gharara suit','wedding suit'];
+const isStitch = (pt?: string) => pt ? STITCHABLE.some(t => pt.toLowerCase().includes(t)) : false;
 
-const isStitchableType = (productType?: string): boolean => {
-  if (!productType) return false;
-  const lower = productType.toLowerCase();
-  return STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t));
-};
-
-// --- Product type classification helpers ---
-type ProductCategory = 'lehenga' | 'saree' | 'suit' | 'menswear' | 'other';
-
-const classifyProduct = (productType?: string): ProductCategory => {
-  if (!productType) return 'other';
-  const lower = productType.toLowerCase();
-  if (lower.includes('lehenga')) return 'lehenga';
-  if (lower.includes('saree') || lower.includes('sari')) return 'saree';
-  if (
-    lower.includes('salwar') ||
-    lower.includes('kameez') ||
-    lower.includes('anarkali') ||
-    lower.includes('sharara') ||
-    lower.includes('pakistani') ||
-    lower.includes('palazzo') ||
-    lower.includes('gharara') ||
-    lower.includes('suit') ||
-    lower.includes('kurta') ||
-    lower.includes('churidar')
-  ) {
-    // Exclude menswear suits
-    if (lower.includes('men') || lower.includes('sherwani') || lower.includes('achkan') || lower.includes('jodhpuri')) return 'menswear';
-    return 'suit';
-  }
-  if (lower.includes('men') || lower.includes('sherwani') || lower.includes('achkan') || lower.includes('jodhpuri') || lower.includes('bandhgala')) return 'menswear';
+const classify = (pt?: string): Cat => {
+  if (!pt) return 'other';
+  const l = pt.toLowerCase();
+  if (l.includes('lehenga')) return 'lehenga';
+  if (l.includes('saree') || l.includes('sari')) return 'saree';
+  const isSuit = l.includes('salwar')||l.includes('kameez')||l.includes('anarkali')||l.includes('sharara')||l.includes('pakistani')||l.includes('palazzo')||l.includes('gharara')||l.includes('suit')||l.includes('kurta')||l.includes('churidar');
+  const isMens = l.includes('men')||l.includes('sherwani')||l.includes('achkan')||l.includes('jodhpuri')||l.includes('bandhgala');
+  if (isSuit) return isMens ? 'menswear' : 'suit';
+  if (isMens) return 'menswear';
   return 'other';
 };
 
-// --- Product-type-specific detail bullet points ---
-const DETAIL_BULLETS: Record<ProductCategory, string[]> = {
-  lehenga: [
-    'Exquisite embroidery with zari, zardozi, or resham thread work handcrafted by artisans',
-    'Flared silhouette with structured can-can or canvas inner for that royal volume',
-    'Perfect for bridal ceremonies, mehndi, sangeet, and reception celebrations',
-    'Comes with matching choli (blouse) and dupatta — complete 3-piece ensemble',
-    'Drawstring or zip closure on lehenga waist for adjustable comfort',
-  ],
-  saree: [
-    'Traditional handloom weaving with intricate pallu work and decorative border',
-    'Blouse piece included with matching or contrast embroidery — ready for stitching',
-    'Drape it in Nivi, Bengali, Gujarati, or butterfly style for versatile looks',
-    'Lightweight yet rich fabric that pleats beautifully and stays in place',
-    'Ideal for weddings, festivals, pooja ceremonies, and formal gatherings',
-  ],
-  suit: [
-    'Versatile silhouette suitable for casual outings, festivals, and formal occasions',
-    'Available in semi-stitched, ready-to-wear, and made-to-measure options',
-    'Coordinated salwar/kameez/dupatta set for a polished, put-together look',
-    'Comfortable fit with room for alteration — perfect for all body types',
-    'Intricate thread work, sequin detailing, or printed motifs for every style preference',
-  ],
-  menswear: [
-    'Regal design crafted for wedding ceremonies, engagement, and festive celebrations',
-    'Premium fabric choices including silk, jacquard, and brocade for a distinguished look',
-    'Tailored or semi-stitched options for the perfect fit and comfort',
-    'Matching stole or dupatta included for a complete traditional ensemble',
-    'Detailed embroidery and embellishments befitting groom and groomsmen',
-  ],
-  other: [
-    'Handcrafted with care and attention to detail by skilled Indian artisans',
-    'Quality construction using time-honored textile traditions',
-    'Beautiful design details that celebrate India\'s rich heritage',
-    'Comfortable and elegant silhouette for a flattering fit',
-  ],
+// ─── Compact Defaults ───
+const DESIGN: Record<Cat, string[]> = {
+  lehenga: ['Intricate embroidery with zari, zardozi, or resham thread work','Flared silhouette with structured can-can for volume','Complete 3-piece: lehenga, choli (blouse), and dupatta','Drawstring or zip waist closure for adjustable fit','Suited for bridal ceremonies, mehndi, sangeet, and reception'],
+  saree: ['Traditional handloom weaving with intricate pallu work','Matching blouse piece included — ready for stitching','Lightweight fabric that pleats beautifully and stays in place','Versatile draping: Nivi, Bengali, Gujarati, or butterfly styles','Perfect for weddings, festivals, pooja, and formal gatherings'],
+  suit: ['Coordinated salwar/kameez/dupatta set for a polished look','Available in semi-stitched, ready-to-wear, and made-to-measure','Comfortable fit with room for alteration — suits all body types','Intricate thread work, sequin detailing, or printed motifs','Versatile for casual outings, festivals, and formal occasions'],
+  menswear: ['Premium fabrics: silk, jacquard, and brocade','Tailored or semi-stitched options for the perfect fit','Detailed embroidery and embellishments for ceremonial wear','Matching stole or dupatta included for a complete ensemble','Designed for weddings, engagements, and festive celebrations'],
+  other: ['Quality construction using time-honored textile traditions','Beautiful design details celebrating India\'s rich heritage','Comfortable and elegant silhouette for a flattering fit','Handcrafted with attention to detail'],
 };
 
-// --- Product-type-specific material content ---
-interface MaterialInfo {
-  fabrics: { name: string; description: string }[];
-  careInstructions: string[];
-}
-
-const MATERIAL_INFO: Record<ProductCategory, MaterialInfo> = {
-  lehenga: {
-    fabrics: [
-      { name: 'Velvet', description: 'Luxurious and regal — ideal for bridal and winter lehengas. Heavy drape with rich sheen that elevates embroidery.' },
-      { name: 'Silk', description: 'Timeless and opulent. Raw silk and pure silk lehengas offer a structured fall with natural luster.' },
-      { name: 'Georgette', description: 'Lightweight and flowy — perfect for destination weddings and dancing. Holds embroidery beautifully.' },
-      { name: 'Net', description: 'Sheer and ethereal. Net overlays create dreamy volume, often layered over satin or crepe.' },
-      { name: 'Raw Silk', description: 'Matte texture with a subtle sheen. A favorite for bridal lehengas with heavy zardozi or resham work.' },
-    ],
-    careInstructions: [
-      'Dry clean only — embroidery and zari are delicate',
-      'Store in a muslin or cotton bag; avoid plastic which traps moisture',
-      'Fold with tissue paper between layers to prevent embroidery snagging',
-      'Do not wring or twist — lay flat to dry if spot cleaning',
-      'Iron on low heat from the reverse side; place a cloth over embellishments',
-      'Air out after each wear to preserve fabric and prevent odor buildup',
-    ],
-  },
-  saree: {
-    fabrics: [
-      { name: 'Banarasi Silk', description: 'Handwoven in Varanasi with rich brocades and gold/silver zari. The quintessential wedding saree fabric.' },
-      { name: 'Kanchipuram Silk', description: 'South India\'s legendary temple silk — dense, durable, and opulent with contrasting borders.' },
-      { name: 'Georgette', description: 'Lightweight and easy to drape. Ideal for party wear and pre-wedding functions with sequin or thread work.' },
-      { name: 'Chiffon', description: 'Sheer, floaty, and effortlessly elegant. A go-to for cocktail parties and evening receptions.' },
-      { name: 'Cotton Silk', description: 'Breathable with a subtle sheen — perfect for daytime events, pooja, and festival wear.' },
-    ],
-    careInstructions: [
-      'Dry clean recommended for silk and embroidered sarees',
-      'For cotton silk: gentle hand wash in cold water with mild detergent',
-      'Never hang silk sarees — fold and store flat to maintain shape',
-      'Wrap in muslin cloth; refold every few months to prevent creasing',
-      'Iron on medium heat; always iron on the reverse side to protect zari',
-      'Keep away from direct sunlight to prevent color fading',
-    ],
-  },
-  suit: {
-    fabrics: [
-      { name: 'Cotton', description: 'Breathable and comfortable for everyday wear and casual occasions. Prints and embroidery both shine on cotton.' },
-      { name: 'Georgette', description: 'Flowy and elegant — perfect for anarkali suits and party wear. Drapes beautifully with minimal effort.' },
-      { name: 'Silk', description: 'Rich and festive. Silk suits make a statement at weddings, receptions, and Diwali celebrations.' },
-      { name: 'Chanderi', description: 'Lightweight with a sheer texture and subtle gloss. A heritage fabric from Madhya Pradesh for elegant occasions.' },
-      { name: 'Rayon / Crepe', description: 'Soft, drapy, and low-maintenance. Great for daily wear and office-appropriate ethnic looks.' },
-    ],
-    careInstructions: [
-      'Dry clean silk, chanderi, and heavily embroidered suits',
-      'Cotton and rayon suits: gentle machine wash or hand wash in cold water',
-      'Wash dark and light colors separately to prevent bleeding',
-      'Do not tumble dry — hang in shade to dry naturally',
-      'Iron on medium heat; use a pressing cloth over embroidery and sequins',
-      'Store embellished suits folded with tissue to protect thread work',
-    ],
-  },
-  menswear: {
-    fabrics: [
-      { name: 'Silk', description: 'The classic choice for sherwanis and wedding ensembles. Rich luster and natural drape command attention.' },
-      { name: 'Jacquard', description: 'Woven patterns that create a textured, regal look without heavy embellishment. Subtle yet sophisticated.' },
-      { name: 'Brocade', description: 'Heavy fabric with raised patterns in gold or silver zari. The hallmark of ceremonial and wedding wear.' },
-      { name: 'Art Silk', description: 'Affordable alternative to pure silk with similar sheen and drape. Great for pre-wedding events.' },
-      { name: 'Cotton Silk', description: 'Lighter than pure silk with a matte finish — comfortable for haldi, mehndi, and daytime ceremonies.' },
-    ],
-    careInstructions: [
-      'Dry clean only for silk, brocade, and jacquard fabrics',
-      'Cotton silk blends: gentle hand wash in cold water',
-      'Store sherwanis on a padded hanger to maintain structure',
-      'Keep in a garment bag to protect embroidery and zari from snagging',
-      'Iron on low heat from the reverse side; never iron directly on embellishments',
-      'Air out after wearing before storing to prevent moisture damage',
-    ],
-  },
-  other: {
-    fabrics: [
-      { name: 'Premium Blend', description: 'Quality fabric blend designed for comfort and elegance, sourced from India\'s finest textile hubs.' },
-    ],
-    careInstructions: [
-      'Dry clean recommended for embroidered or embellished items',
-      'Store in a cool, dry place away from direct sunlight',
-      'Iron on low heat; use a pressing cloth over decorative elements',
-      'Handle embroidery and zari work with care to maintain longevity',
-      'Fold with tissue paper between layers to prevent snagging',
-    ],
-  },
+const CARE: Record<Cat, string[]> = {
+  lehenga: ['Dry clean only — embroidery and zari are delicate','Store in a muslin or cotton bag; avoid plastic','Fold with tissue paper between layers to prevent snagging','Do not wring or twist — lay flat to dry if spot cleaning','Iron on low heat from the reverse side','Air out after each wear to preserve fabric'],
+  saree: ['Dry clean recommended for silk and embroidered sarees','Cotton silk: gentle hand wash in cold water with mild detergent','Never hang silk sarees — fold and store flat','Wrap in muslin cloth; refold every few months to prevent creasing','Iron on medium heat; always iron on the reverse side','Keep away from direct sunlight to prevent color fading'],
+  suit: ['Dry clean silk, chanderi, and heavily embroidered suits','Cotton and rayon: gentle machine wash or hand wash in cold water','Wash dark and light colors separately','Do not tumble dry — hang in shade to dry naturally','Iron on medium heat; use a pressing cloth over embroidery','Store embellished suits folded with tissue to protect thread work'],
+  menswear: ['Dry clean only for silk, brocade, and jacquard fabrics','Cotton silk blends: gentle hand wash in cold water','Store sherwanis on a padded hanger to maintain structure','Keep in a garment bag to protect embroidery from snagging','Iron on low heat from the reverse side','Air out after wearing before storing'],
+  other: ['Dry clean recommended for embroidered or embellished items','Store in a cool, dry place away from direct sunlight','Iron on low heat; use a pressing cloth over decorative elements','Handle embroidery and zari work with care','Fold with tissue paper between layers to prevent snagging'],
 };
 
-// --- Product-type-specific styling & occasions content ---
-interface OccasionInfo {
-  occasions: { name: string; description: string }[];
-  stylingTips: string[];
-  colorAdvice: string;
-}
-
-const OCCASION_INFO: Record<ProductCategory, OccasionInfo> = {
-  lehenga: {
-    occasions: [
-      { name: 'Bridal Wedding', description: 'The quintessential bridal outfit. Choose deep reds, maroons, or regal magentas for the main ceremony.' },
-      { name: 'Mehndi / Haldi', description: 'Go for bright yellows, greens, or pinks. Lighter fabrics like georgette keep you comfortable through the celebrations.' },
-      { name: 'Sangeet & Reception', description: 'Sequin or mirror-work lehengas in navy, emerald, or champagne make a dazzling statement on the dance floor.' },
-      { name: 'Engagement', description: 'Pastel lehengas with delicate embroidery strike the perfect balance between festive and elegant.' },
-      { name: 'Festival (Diwali, Navratri)', description: 'Vibrant colors with traditional embroidery. Perfect for garba nights and family celebrations.' },
-    ],
-    stylingTips: [
-      'Pair a heavy bridal lehenga with a maang tikka, nath, and chandelier jhumkas — let the dupatta rest over one shoulder',
-      'For a contemporary look, drape the dupatta like a cape or pinned on one side for freedom of movement',
-      'Match your footwear to the lehenga border — embroidered juttis or block heels work best',
-      'A kamarbandh (waist chain) adds definition and a royal touch to flared lehengas',
-      'Opt for a contrasting choli color to create a trendy color-block effect',
-    ],
-    colorAdvice: 'Red and maroon remain the timeless bridal choice, while pastels like mint, blush, and lavender are trending for modern receptions. Jewel tones — emerald, sapphire, and ruby — photograph beautifully under evening lighting.',
-  },
-  saree: {
-    occasions: [
-      { name: 'Wedding Ceremony', description: 'Banarasi or Kanchipuram silk sarees in rich reds and golds are the traditional choice for brides and wedding guests.' },
-      { name: 'Reception', description: 'Georgette or chiffon sarees with sequin work in navy, wine, or emerald create an effortlessly glamorous look.' },
-      { name: 'Festival (Diwali, Navratri, Pooja)', description: 'Silk or cotton silk sarees in vibrant hues — perfect for traditional celebrations and temple visits.' },
-      { name: 'Engagement Ceremony', description: 'Soft pastels or gold-toned sarees with delicate zari borders — elegant without overshadowing the bride.' },
-      { name: 'Cocktail Party', description: 'Sequin or ruffle sarees in bold colors drape modern sophistication into an evening out.' },
-    ],
-    stylingTips: [
-      'Style a Banarasi saree in the classic Nivi drape for a timeless look, or try the Bengali drape for a bold cultural statement',
-      'A statement blouse with elbow-length sleeves and a deep back transforms a simple saree into a showstopper',
-      'Pair heavy silk sarees with temple jewelry and jhumkas; lighter georgettes with diamond or polki sets',
-      'Pin the pallu neatly at the shoulder for a polished look, or let it flow for a relaxed, graceful effect',
-      'Wear comfortable block heels or embellished juttis — avoid stilettos for long events',
-    ],
-    colorAdvice: 'For weddings, reds and deep pinks never go out of style. For receptions and parties, jewel tones like emerald and navy are elegant and universally flattering. Pastels work beautifully for daytime ceremonies, while gold and champagne sarees transition effortlessly from day to night.',
-  },
-  suit: {
-    occasions: [
-      { name: 'Wedding Guest', description: 'Anarkali suits in silk or georgette with embroidery — graceful and wedding-appropriate without outshining the bride.' },
-      { name: 'Festival (Diwali, Eid, Navratri)', description: 'Bright cotton or chanderi suits with print or thread work. Comfortable for long celebrations and family gatherings.' },
-      { name: 'Engagement', description: 'Pastel anarkalis or straight-cut suits with delicate embellishments — understated elegance for the occasion.' },
-      { name: 'Party / Cocktail', description: 'Georgette suits with sequin or mirror work in bold colors. Pair with statement earrings for instant glam.' },
-      { name: 'Casual / Daily Wear', description: 'Cotton or rayon suits in prints and solids — effortlessly stylish for everyday ethnic dressing.' },
-    ],
-    stylingTips: [
-      'For anarkali suits, add a statement maang tikka and chandelier earrings — skip the necklace to keep it balanced',
-      'Straight-cut suits look best with pointed juttis or block heels; palazzo suits pair well with kolhapuris',
-      'Drape the dupatta over one shoulder for a sleek look, or pin it across the chest for a traditional feel',
-      'Belt your anarkali with a metallic kamarbandh for a modern, structured silhouette',
-      'Mix and match — pair a solid suit with a printed or contrast dupatta for an elevated look',
-    ],
-    colorAdvice: 'Pastel shades like blush, mint, and ivory are perfect for daytime and engagement events. For evening celebrations, deep jewel tones — wine, navy, and emerald — add instant drama. Bright yellows, oranges, and pinks are festive staples for Diwali and Navratri.',
-  },
-  menswear: {
-    occasions: [
-      { name: 'Groom — Wedding Day', description: 'A regal sherwani in deep maroon, navy, or ivory with gold embroidery — the centerpiece of the groom\'s look.' },
-      { name: 'Groomsmen / Baraat', description: 'Coordinated sherwanis or bandhgalas in complementary tones. Make a grand entrance with the baraat procession.' },
-      { name: 'Engagement / Ring Ceremony', description: 'A tailored bandhgala or Indo-western suit in black, navy, or wine — sophisticated and ceremony-appropriate.' },
-      { name: 'Mehndi / Haldi', description: 'Lighter kurta sets in yellow, mint, or ivory. Comfortable cotton silk for relaxed daytime celebrations.' },
-      { name: 'Reception', description: 'A structured Jodhpuri suit or Indo-western ensemble — sharp, modern, and perfect for evening photos.' },
-    ],
-    stylingTips: [
-      'Pair your sherwani with a matching stole draped over one shoulder — it adds ceremony and completes the look',
-      'Opt for mojaris or embroidered juttis in gold or matching tones — they\'re traditional and comfortable for long events',
-      'Add a brooch or pins on the sherwani lapel for a polished, regal touch',
-      'For a modern groom look, skip the churidar and choose tailored trousers with an Indo-western sherwani',
-      'A safa (turban) in matching or contrast fabric elevates the groom\'s ensemble to showstopping',
-    ],
-    colorAdvice: 'Ivory and gold sherwanis are the timeless groom\'s choice, while deep maroon and navy offer a bolder statement. For groomsmen, muted tones like sage, steel grey, or powder blue complement without competing. Black remains the failsafe for receptions and evening events.',
-  },
-  other: {
-    occasions: [
-      { name: 'Wedding & Receptions', description: 'Perfect for wedding celebrations — pair with traditional jewelry and footwear for a complete festive look.' },
-      { name: 'Festival', description: 'Celebrate Diwali, Navratri, Eid, and more in style with this versatile piece.' },
-      { name: 'Party & Social Events', description: 'Make a statement at cocktail parties, engagements, and formal gatherings.' },
-    ],
-    stylingTips: [
-      'Pair with matching or contrast accessories to elevate the overall look',
-      'Choose traditional juttis or mojaris to complete the ethnic ensemble',
-      'A well-draped dupatta or stole adds instant polish to any outfit',
-    ],
-    colorAdvice: 'Rich jewel tones work beautifully for evening events, while pastels are perfect for daytime celebrations. When in doubt, classic gold and ivory never fail.',
-  },
+const STYLE: Record<Cat, { note: string; bullets: string[]; colors: string }> = {
+  lehenga: { note: 'Pair heavy bridal lehengas with statement jewelry. For a modern look, drape the dupatta as a cape.', bullets: ['Maang tikka + chandelier jhumkas for bridal ceremonies','Dupatta draped over one shoulder for freedom of movement','Match footwear to lehenga border — embroidered juttis or block heels','A kamarbandh (waist chain) adds definition and a royal touch'], colors: 'Red and maroon are timeless bridal choices. Pastels (mint, blush, lavender) are trending for receptions. Jewel tones photograph beautifully under evening lighting.' },
+  saree: { note: 'The right drape and blouse transform your saree look. Keep jewelry proportional to the saree\'s weight.', bullets: ['Classic Nivi drape for timeless elegance; Bengali drape for bold statements','Statement blouse with elbow sleeves and deep back elevates any saree','Heavy silks → temple jewelry and jhumkas; georgettes → diamond or polki sets','Pin the pallu at the shoulder for polish; let it flow for grace'], colors: 'Reds and deep pinks for weddings. Jewel tones (emerald, navy) for receptions. Pastels for daytime. Gold and champagne transition day to night.' },
+  suit: { note: 'Balance your jewelry with the outfit\'s embellishment level. Let one element be the focal point.', bullets: ['Anarkalis: statement maang tikka + chandelier earrings, skip the necklace','Straight-cut suits: pointed juttis or block heels; palazzos: kolhapuris','Dupatta over one shoulder for sleek look; pinned across chest for tradition','Belt your anarkali with a metallic kamarbandh for structure'], colors: 'Pastels (blush, mint, ivory) for daytime and engagements. Jewel tones (wine, navy, emerald) for evening. Brights for festive occasions.' },
+  menswear: { note: 'A well-chosen stole and footwear complete the traditional ensemble. Less is more with men\'s accessories.', bullets: ['Sherwani: drape matching stole over one shoulder for ceremony','Mojaris or embroidered juttis in gold or matching tones','Add a brooch or pin on the sherwani lapel for polish','Safa (turban) in matching or contrast fabric for the groom'], colors: 'Ivory and gold are timeless for grooms. Deep maroon and navy for bold statements. Muted sage, grey, or powder blue for groomsmen. Black for evening receptions.' },
+  other: { note: 'Pair with matching accessories and traditional footwear for a complete ethnic look.', bullets: ['Coordinate accessories with outfit color and embellishment level','Traditional juttis or mojaris complete the ethnic ensemble','A well-draped dupatta or stole adds instant polish'], colors: 'Jewel tones for evening events. Pastels for daytime. Gold and ivory are always elegant.' },
 };
 
-export const ProductTabs = ({ description, productType, isStitchable }: ProductTabsProps) => {
-  const showTailoringTab = isStitchable ?? isStitchableType(productType);
-  const category = classifyProduct(productType);
-  const detailBullets = DETAIL_BULLETS[category];
-  const materialInfo = MATERIAL_INFO[category];
-  const occasionInfo = OCCASION_INFO[category];
+const EMB: Record<Cat, [string, string][]> = {
+  lehenga: [['Zardozi','Metallic thread embroidery for bridal opulence'],['Resham','Silk thread work in vibrant color patterns'],['Mirror Work','Shisha embroidery reflecting light beautifully'],['Sequin & Stone','Sparkling accents for reception and party wear']],
+  saree: [['Zari Border','Gold or silver woven border on pallu and edges'],['Brocade Weaving','Raised pattern weaving for a rich textured look'],['Thread Embroidery','Delicate resham or machine embroidery across the drape'],['Sequin & Bead','Embellishments for festive glamour']],
+  suit: [['Thread Work','Resham or machine embroidery in traditional motifs'],['Print & Block','Hand block or digital prints for everyday elegance'],['Mirror & Sequin','Festive embellishments for party and wedding suits'],['Gota Patti','Rajasthani lace appliqué for a heritage finish']],
+  menswear: [['Zari & Zardozi','Gold metallic thread work for regal ceremony wear'],['Jacquard Weave','Self-patterned weaving for subtle sophistication'],['Thread & Stone','Embroidery and stone accents on lapels and cuffs'],['Brocade Panels','Woven pattern panels on the front and sleeves']],
+  other: [['Thread Work','Decorated with thread work and traditional motifs'],['Sequin & Embellishment','Carefully applied accents for a refined finish']],
+};
+
+// ─── Sub-components ───
+const Bullets = ({ items, icon: I = CheckCircle2 }: { items: string[]; icon?: React.ElementType }) => (
+  <ul className="space-y-2">{items.map((item, i) => (
+    <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+      <I className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
+      <span>{item}</span>
+    </li>
+  ))}</ul>
+);
+
+const KVGrid = ({ rows }: { rows: KeyDetailRow[] }) => (
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+    {rows.map((r, i) => (
+      <div key={i} className="flex justify-between sm:block border-b border-border/50 pb-1.5 sm:border-0 sm:pb-0">
+        <span className="text-xs text-muted-foreground uppercase tracking-wider">{r.label}</span>
+        <span className="text-sm text-foreground font-medium sm:font-normal">{r.value}</span>
+      </div>
+    ))}
+  </div>
+);
+
+const TS = ({ id, icon: I, label, children }: { id: string; icon: React.ElementType; label: string; children: React.ReactNode }) => (
+  <AccordionItem value={id} className="border-b border-border/50">
+    <AccordionTrigger className="py-3 text-sm hover:no-underline">
+      <div className="flex items-center gap-2"><I className="h-4 w-4 text-primary" /><span className="font-medium">{label}</span></div>
+    </AccordionTrigger>
+    <AccordionContent>{children}</AccordionContent>
+  </AccordionItem>
+);
+
+const tabCls = "rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-4 sm:px-6 py-3 text-xs sm:text-sm uppercase tracking-wide whitespace-nowrap";
+
+// ─── Main ───
+export const ProductTabs = ({
+  shortIntro, keyDetails, designDetails, stylingNote, stylingBullets, colorAdvice, customization, care,
+  description, productType, isStitchable,
+}: ProductTabsProps) => {
+  const showTailoring = isStitchable ?? isStitch(productType);
+  const cat = classify(productType);
+  const design = designDetails ?? DESIGN[cat];
+  const careItems = care ?? CARE[cat];
+  const style = STYLE[cat];
+  const intro = shortIntro ?? description ?? 'This piece showcases India\'s rich textile traditions, bringing together classic design and modern styling.';
 
   return (
     <Tabs defaultValue="details" className="w-full">
-      <TabsList className="w-full justify-start h-auto p-0 bg-transparent border-b border-border rounded-none overflow-x-auto">
-        <TabsTrigger 
-          value="details" 
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-        >
-          Details
-        </TabsTrigger>
-        {showTailoringTab && (
-          <TabsTrigger 
-            value="tailoring" 
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-          >
-            Tailoring Services
-          </TabsTrigger>
-        )}
-        <TabsTrigger 
-          value="material" 
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-        >
-          Material & Care
-        </TabsTrigger>
-        <TabsTrigger 
-          value="styling" 
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-        >
-          Styling & Occasions
-        </TabsTrigger>
-        <TabsTrigger 
-          value="sizing" 
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-        >
-          Size Guide
-        </TabsTrigger>
-        <TabsTrigger 
-          value="shipping" 
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-        >
-          Shipping & Returns
-        </TabsTrigger>
+      <TabsList className="w-full justify-start h-auto p-0 bg-transparent border-b border-border rounded-none overflow-x-auto flex-nowrap">
+        <TabsTrigger value="details" className={tabCls}>Details</TabsTrigger>
+        {showTailoring && <TabsTrigger value="tailoring" className={tabCls}>Tailoring</TabsTrigger>}
+        <TabsTrigger value="material" className={tabCls}>Material</TabsTrigger>
+        <TabsTrigger value="styling" className={tabCls}>Styling</TabsTrigger>
+        <TabsTrigger value="sizing" className={tabCls}>Size</TabsTrigger>
+        <TabsTrigger value="shipping" className={tabCls}>Shipping</TabsTrigger>
       </TabsList>
 
-      {/* ─── Details Tab ─── */}
-      <TabsContent value="details" className="pt-6">
-        <div className="prose prose-sm max-w-none text-muted-foreground">
-          <p className="leading-relaxed">
-            {description || 
-              "This piece showcases India's rich textile traditions. Each garment brings together classic design and modern styling for a look that stands out."
-            }
-          </p>
-          <ul className="mt-4 space-y-2">
-            {detailBullets.map((bullet, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* ─── Details ─── */}
+      <TabsContent value="details" className="pt-5">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{intro}</p>
+        <Accordion type="multiple" defaultValue={['design']} className="w-full">
+          {keyDetails && keyDetails.length > 0 && <TS id="key" icon={Info} label="Key Details"><KVGrid rows={keyDetails} /></TS>}
+          <TS id="design" icon={Sparkles} label="Design Features"><Bullets items={design} /></TS>
+          {customization && customization.length > 0 && <TS id="custom" icon={Palette} label="Customization"><Bullets items={customization} /></TS>}
+        </Accordion>
       </TabsContent>
 
-      {/* ─── Tailoring Services Tab (unchanged) ─── */}
-      <TabsContent value="tailoring" className="pt-6">
-        <div className="space-y-8">
-          {/* Section Header */}
-          <div className="flex items-center gap-2 text-foreground">
-            <Scissors className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-serif font-medium">Tailoring Services</h3>
-          </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            At LuxeMia, we offer three tailoring options so you can choose the level of customization that's right for you. Every stitched garment is finished by our master tailors with decades of experience in Indian ethnic wear.
-          </p>
-
-          {/* Semi Stitched */}
-          <div className="border border-border rounded-sm p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                  <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-                </div>
-                <h4 className="font-medium text-foreground">Semi Stitched</h4>
+      {/* ─── Tailoring ─── */}
+      {showTailoring && (
+        <TabsContent value="tailoring" className="pt-5">
+          <Accordion type="multiple" defaultValue={['semi']} className="w-full">
+            <TS id="semi" icon={CheckCircle2} label="Semi Stitched — Included">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Pre-constructed with adjustable side seams. Select XS–XXL.</p>
+                <Bullets items={['Ready to wear with minimal adjustments','Side seams adjustable by any local tailor','Fastest delivery — no tailoring lead time']} />
               </div>
-              <span className="text-sm font-medium text-green-600 dark:text-green-400">Included — No extra charge</span>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Pre-constructed with adjustable side seams. The main body of the outfit is assembled, leaving the side seams open for easy alteration. Select your standard size (XS–XXL) for a near-perfect fit.
-            </p>
-            <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Ready to wear with minimal adjustments</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Side seams can be taken in or let out by any local tailor</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Fastest delivery — no tailoring lead time</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Ready to Wear */}
-          <div className="border border-border rounded-sm p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                  <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h4 className="font-medium text-foreground">Ready to Wear</h4>
+            </TS>
+            <TS id="rtw" icon={Clock} label="Ready to Wear — +$15">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Fully stitched to standard measurements. Select bust size (28&quot;–52&quot;).</p>
+                <Bullets items={['Complete stitching to selected measurements','Bottom: churidar, salwar, semi patiala, or straight/palazzo','Additional 3 business days']} />
               </div>
-              <span className="text-sm font-medium text-foreground">+$15.00</span>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Fully stitched to standard measurements matching the product image. Select your bust size (28"–52") and we'll tailor it completely — ready to wear right out of the box.
-            </p>
-            <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Complete stitching to your selected measurements</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Choose bottom style: Churidar, Salwar, Semi Patiala, or Straight Pant / Palazzo</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Additional 3 business days for tailoring</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Made to Measure */}
-          <div className="border border-[#D4AF37]/30 bg-[#D4AF37]/5 rounded-sm p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-full bg-[#D4AF37]/15 flex items-center justify-center">
-                  <PenTool className="h-4 w-4 text-[#D4AF37]" />
-                </div>
-                <h4 className="font-medium text-foreground">Made to Measure <span className="text-[#D4AF37] text-xs font-medium">(UDesign)</span></h4>
+            </TS>
+            <TS id="mtm" icon={PenTool} label="Made to Measure — +$25">
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">Bespoke with 200+ style combinations. Submit measurements after ordering.</p>
+                <Bullets icon={Palette} items={['Neckline: round, deep U, square, or sweetheart','Sleeve: full, 3/4, half, sleeveless, or cap','Bottom: churidar, salwar, semi patiala, or straight/palazzo','Submit via My Account → My Orders after purchase','Additional 5 business days']} />
               </div>
-              <span className="text-sm font-medium text-foreground">+$25.00</span>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Our bespoke tailoring service with 200+ style combinations. Customize the neckline, sleeve style, and bottom style. Submit your exact measurements after placing the order for a perfect custom fit.
-            </p>
-            <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
-              <li className="flex items-start gap-2">
-                <Palette className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span><strong className="text-foreground">Neckline:</strong> Round Neck, Deep U-Neck, Square Neck, or Sweetheart</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Palette className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span><strong className="text-foreground">Sleeve Style:</strong> Full Sleeve, 3/4 Sleeve, Half Sleeve, Sleeveless, or Cap Sleeve</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Palette className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span><strong className="text-foreground">Bottom Style:</strong> Churidar, Salwar, Semi Patiala, or Straight Pant / Palazzo</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span>Submit measurements after ordering via My Account → My Orders</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span>Additional 5 business days for bespoke tailoring</span>
-              </li>
-            </ul>
-            <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm mt-2">
-              <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                You can submit your measurements after placing the order. Select Made to Measure, add to bag, complete your order, then go to <strong>My Account → My Orders</strong> to submit your measurements at your convenience.
-              </p>
-            </div>
+            </TS>
+          </Accordion>
+          <div className="mt-4 p-3 border border-primary/30 bg-primary/5 rounded-sm">
+            <p className="text-xs text-muted-foreground"><span className="text-foreground font-medium">Note:</span> Stitched items are non-returnable unless defective. Opt for Semi Stitched if unsure about sizing.</p>
           </div>
+        </TabsContent>
+      )}
 
-          {/* General tailoring note */}
-          <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
-            <p className="text-sm text-foreground">
-              <strong>Note:</strong> All tailoring is done by our experienced in-house team in India. Stitched items are non-returnable unless there is a manufacturing defect. We recommend checking measurements carefully or opting for Semi Stitched if you're unsure about sizing.
-            </p>
-          </div>
-        </div>
-      </TabsContent>
-
-      {/* ─── Material & Care Tab ─── */}
-      <TabsContent value="material" className="pt-6">
-        <div className="space-y-8">
-          {/* Fabric Guide */}
-          <div>
-            <div className="flex items-center gap-2 mb-4 text-foreground">
-              <Shirt className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Fabric Guide</h4>
-            </div>
-            <div className="space-y-4">
-              {materialInfo.fabrics.map((fabric, i) => (
-                <div key={i} className="border border-border rounded-sm p-4">
-                  <h5 className="font-medium text-foreground mb-1">{fabric.name}</h5>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{fabric.description}</p>
+      {/* ─── Material ─── */}
+      <TabsContent value="material" className="pt-5">
+        <Accordion type="multiple" defaultValue={['care','embel']} className="w-full">
+          <TS id="care" icon={Droplets} label="Care Instructions"><Bullets items={careItems} /></TS>
+          <TS id="embel" icon={Sparkles} label="Embellishments & Work">
+            <div className="grid sm:grid-cols-2 gap-2">
+              {EMB[cat].map(([title, desc], i) => (
+                <div key={i} className="p-3 bg-card rounded-sm border border-border">
+                  <p className="text-sm"><span className="text-foreground font-medium">{title}</span><span className="text-muted-foreground"> — {desc}</span></p>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Embellishments */}
-          <div>
-            <div className="flex items-center gap-2 mb-3 text-foreground">
-              <Sparkles className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Embellishments & Work</h4>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {category === 'lehenga' && (
-                <>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Zardozi</strong> — Metallic thread embroidery for bridal opulence</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Resham</strong> — Silk thread work in vibrant color patterns</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Mirror Work</strong> — Shisha embroidery reflecting light beautifully</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Sequin & Stone</strong> — Sparkling accents for reception and party wear</p></div>
-                </>
-              )}
-              {category === 'saree' && (
-                <>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Zari Border</strong> — Gold or silver woven border on the pallu and edges</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Brocade Weaving</strong> — Raised pattern weaving for a rich textured look</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Thread Embroidery</strong> — Delicate resham or machine embroidery across the drape</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Sequin & Bead</strong> — Scattered or concentrated embellishments for festive glamour</p></div>
-                </>
-              )}
-              {category === 'suit' && (
-                <>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Thread Work</strong> — Resham or machine embroidery in traditional motifs</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Print & Block</strong> — Hand block or digital prints for everyday elegance</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Mirror & Sequin</strong> — Festive embellishments for party and wedding suits</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Gota Patti</strong> — Rajasthani lace appliqué for a heritage finish</p></div>
-                </>
-              )}
-              {category === 'menswear' && (
-                <>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Zari & Zardozi</strong> — Gold metallic thread work for regal ceremony wear</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Jacquard Weave</strong> — Self-patterned weaving for subtle sophistication</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Thread & Stone</strong> — Tasteful embroidery and stone accents on lapels and cuffs</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Brocade Panels</strong> — Woven pattern panels on the front and sleeves</p></div>
-                </>
-              )}
-              {category === 'other' && (
-                <>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Thread Work</strong> — Decorated with thread work and traditional motifs</p></div>
-                  <div className="p-3 bg-card rounded-sm"><p className="text-sm text-muted-foreground"><strong className="text-foreground">Sequin & Embellishment</strong> — Carefully applied accents for a refined finish</p></div>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Care Instructions */}
-          <div>
-            <div className="flex items-center gap-2 mb-3 text-foreground">
-              <Droplets className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Care Instructions</h4>
-            </div>
-            <ul className="text-sm text-muted-foreground space-y-2">
-              {materialInfo.careInstructions.map((instruction, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <Droplets className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                  <span>{instruction}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Source note */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <div className="flex items-start gap-2">
-              <Sparkle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-sm text-foreground font-medium">Sourced from India&apos;s Finest Textile Hubs</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Our garments are sourced directly from renowned textile centers — Surat (embroidery & synthetics), 
-                  Varanasi (Banarasi silk & brocade), and Jaipur (prints & gota patti). Each piece undergoes 
-                  thorough quality inspection before shipping to ensure you receive nothing but the best.
-                </p>
-              </div>
-            </div>
-          </div>
+          </TS>
+        </Accordion>
+        <div className="mt-4 p-3 bg-card rounded-sm border border-border flex items-start gap-2">
+          <Sparkles className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-muted-foreground"><span className="text-foreground font-medium">Sourced from India&apos;s finest textile hubs.</span> Each piece undergoes thorough quality inspection before shipping.</p>
         </div>
       </TabsContent>
 
-      {/* ─── Styling & Occasions Tab ─── */}
-      <TabsContent value="styling" className="pt-6">
-        <div className="space-y-8">
-          {/* Occasion Recommendations */}
-          <div>
-            <div className="flex items-center gap-2 mb-4 text-foreground">
-              <Crown className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Occasion Guide</h4>
-            </div>
+      {/* ─── Styling ─── */}
+      <TabsContent value="styling" className="pt-5">
+        <Accordion type="multiple" defaultValue={['tips','colors']} className="w-full">
+          <TS id="tips" icon={Gem} label="Styling Tips">
             <div className="space-y-3">
-              {occasionInfo.occasions.map((occasion, i) => (
-                <div key={i} className="border border-border rounded-sm p-4">
-                  <h5 className="font-medium text-foreground mb-1">{occasion.name}</h5>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{occasion.description}</p>
-                </div>
-              ))}
+              <p className="text-sm text-muted-foreground">{stylingNote ?? style.note}</p>
+              <Bullets items={stylingBullets ?? style.bullets} />
             </div>
-          </div>
-
-          {/* Styling Tips */}
-          <div>
-            <div className="flex items-center gap-2 mb-4 text-foreground">
-              <Gem className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Styling Tips</h4>
-            </div>
-            <ul className="space-y-3">
-              {occasionInfo.stylingTips.map((tip, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-medium text-primary">{i + 1}</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{tip}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Color Coordination */}
-          <div>
-            <div className="flex items-center gap-2 mb-3 text-foreground">
-              <Palette className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Color Coordination</h4>
-            </div>
-            <div className="p-4 bg-card rounded-sm border border-border">
-              <p className="text-sm text-muted-foreground leading-relaxed">{occasionInfo.colorAdvice}</p>
-            </div>
-          </div>
-
-          {/* Jewelry suggestion */}
-          <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
-            <div className="flex items-start gap-2">
-              <Heart className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-sm text-foreground font-medium">Complete the Look</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Every LuxeMia outfit deserves the right accessories. Pair heavier ensembles with statement jhumkas 
-                  and bangles, while lighter pieces shine with delicate chains and studs. When in doubt, 
-                  gold-toned jewelry complements warm palettes and silver or diamond accents elevate cool tones.
-                </p>
-              </div>
-            </div>
-          </div>
+          </TS>
+          <TS id="colors" icon={Palette} label="Color Coordination">
+            <p className="text-sm text-muted-foreground">{colorAdvice ?? style.colors}</p>
+          </TS>
+        </Accordion>
+        <div className="mt-4 p-3 border border-primary/30 bg-primary/5 rounded-sm flex items-start gap-2">
+          <Heart className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+          <p className="text-xs text-muted-foreground"><span className="text-foreground font-medium">Complete the look:</span> Gold jewelry complements warm palettes; silver and diamond accents elevate cool tones.</p>
         </div>
       </TabsContent>
 
-      {/* ─── Size Guide Tab (unchanged) ─── */}
-      <TabsContent value="sizing" className="pt-6">
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Ruler className="h-4 w-4" />
-            <span>All measurements are in inches</span>
-          </div>
+      {/* ─── Size Guide ─── */}
+      <TabsContent value="sizing" className="pt-5">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground"><Ruler className="h-4 w-4" /><span>All measurements are in inches</span></div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-3 px-4 font-medium">Size</th>
-                  <th className="text-left py-3 px-4 font-medium">Bust</th>
-                  <th className="text-left py-3 px-4 font-medium">Waist</th>
-                  <th className="text-left py-3 px-4 font-medium">Hip</th>
-                  <th className="text-left py-3 px-4 font-medium">Length</th>
-                </tr>
-              </thead>
+              <thead><tr className="border-b border-border">
+                <th className="text-left py-3 px-3 font-medium">Size</th><th className="text-left py-3 px-3 font-medium">Bust</th><th className="text-left py-3 px-3 font-medium">Waist</th><th className="text-left py-3 px-3 font-medium">Hip</th><th className="text-left py-3 px-3 font-medium">Length</th>
+              </tr></thead>
               <tbody className="text-muted-foreground">
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">XS</td>
-                  <td className="py-3 px-4">32</td>
-                  <td className="py-3 px-4">26</td>
-                  <td className="py-3 px-4">35</td>
-                  <td className="py-3 px-4">54</td>
-                </tr>
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">S</td>
-                  <td className="py-3 px-4">34</td>
-                  <td className="py-3 px-4">28</td>
-                  <td className="py-3 px-4">37</td>
-                  <td className="py-3 px-4">54</td>
-                </tr>
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">M</td>
-                  <td className="py-3 px-4">36</td>
-                  <td className="py-3 px-4">30</td>
-                  <td className="py-3 px-4">39</td>
-                  <td className="py-3 px-4">55</td>
-                </tr>
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">L</td>
-                  <td className="py-3 px-4">38</td>
-                  <td className="py-3 px-4">32</td>
-                  <td className="py-3 px-4">41</td>
-                  <td className="py-3 px-4">55</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">XL</td>
-                  <td className="py-3 px-4">40</td>
-                  <td className="py-3 px-4">34</td>
-                  <td className="py-3 px-4">43</td>
-                  <td className="py-3 px-4">56</td>
-                </tr>
+                {[{s:'XS',b:32,w:26,h:35,l:54},{s:'S',b:34,w:28,h:37,l:54},{s:'M',b:36,w:30,h:39,l:55},{s:'L',b:38,w:32,h:41,l:55},{s:'XL',b:40,w:34,h:43,l:56}].map(r => (
+                  <tr key={r.s} className="border-b border-border/50">
+                    <td className="py-3 px-3">{r.s}</td><td className="py-3 px-3">{r.b}</td><td className="py-3 px-3">{r.w}</td><td className="py-3 px-3">{r.h}</td><td className="py-3 px-3">{r.l}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Need help? Contact our team for personalized size recommendations.
-          </p>
+          <p className="text-xs text-muted-foreground">Need help? Contact our team for personalized size recommendations.</p>
         </div>
       </TabsContent>
 
-      {/* ─── Shipping & Returns Tab ─── */}
-      <TabsContent value="shipping" className="pt-6">
-        <div className="space-y-6">
-          {/* Shipping Info */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-4 bg-card rounded-sm border border-border">
-              <div className="flex items-center gap-2 mb-2">
-                <Truck className="h-4 w-4 text-primary" />
-                <h4 className="font-medium">Express Shipping (DHL)</h4>
+      {/* ─── Shipping ─── */}
+      <TabsContent value="shipping" className="pt-5">
+        <Accordion type="multiple" defaultValue={['express','dispatch']} className="w-full">
+          <TS id="express" icon={Truck} label="Express (DHL) — $25"><Bullets items={['Transit: 3–5 business days','Full tracking included','Insured delivery to your door','FREE on orders over $350']} /></TS>
+          <TS id="standard" icon={Truck} label="Standard — $25"><Bullets items={['Transit: 7–10 business days','Tracking provided','FREE on orders over $350']} /></TS>
+          <TS id="dispatch" icon={Clock} label="Dispatch Times"><Bullets items={['Ready-made / Semi Stitched: 3–5 business days','Ready to Wear: 5–7 business days','Made to Measure: 7–10 business days']} /></TS>
+          <TS id="returns" icon={RotateCcw} label="Returns & Guarantee">
+            <div className="space-y-3">
+              <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm">
+                <p className="text-xs text-amber-700 dark:text-amber-300"><span className="font-medium">All sales final.</span> Review sizing carefully before ordering. Contact us with any pre-purchase questions.</p>
               </div>
-              <ul className="text-sm text-muted-foreground space-y-1.5">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Transit: 3–5 business days</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Full tracking included</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Insured delivery to your door</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">$25 flat rate</strong> — <strong className="text-green-600 dark:text-green-400">FREE</strong> on orders over $350</span>
-                </li>
-              </ul>
+              <Bullets items={['Damage claims require an unboxing video','Submit claims within 48 hours of delivery','Include clear photos of damage with your claim']} />
             </div>
-            <div className="p-4 bg-card rounded-sm border border-border">
-              <div className="flex items-center gap-2 mb-2">
-                <Truck className="h-4 w-4 text-primary" />
-                <h4 className="font-medium">Standard Shipping</h4>
-              </div>
-              <ul className="text-sm text-muted-foreground space-y-1.5">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Transit: 7–10 business days</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Tracking provided</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">$25 flat rate</strong> — <strong className="text-green-600 dark:text-green-400">FREE</strong> on orders over $350</span>
-                </li>
-              </ul>
+          </TS>
+        </Accordion>
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {[{f:'🇺🇸',n:'United States',t:'3–10 days'},{f:'🇨🇦',n:'Canada',t:'5–10 days'},{f:'🇦🇺',n:'Australia',t:'5–12 days'}].map(d => (
+            <div key={d.n} className="p-2 bg-card rounded-sm border border-border text-center">
+              <p className="text-sm font-medium text-foreground">{d.f} {d.n}</p><p className="text-xs text-muted-foreground">{d.t}</p>
             </div>
-          </div>
-
-          {/* Shipping Destinations */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <h4 className="font-medium mb-2">Shipping Destinations</h4>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-              We currently ship to the following countries:
-            </p>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-background rounded-sm text-center border border-border">
-                <p className="text-sm font-medium text-foreground">🇺🇸 United States</p>
-                <p className="text-xs text-muted-foreground mt-1">3–10 business days</p>
-              </div>
-              <div className="p-3 bg-background rounded-sm text-center border border-border">
-                <p className="text-sm font-medium text-foreground">🇨🇦 Canada</p>
-                <p className="text-xs text-muted-foreground mt-1">5–10 business days</p>
-              </div>
-              <div className="p-3 bg-background rounded-sm text-center border border-border">
-                <p className="text-sm font-medium text-foreground">🇦🇺 Australia</p>
-                <p className="text-xs text-muted-foreground mt-1">5–12 business days</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Dispatch Times */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <h4 className="font-medium mb-2">Dispatch Times</h4>
-            <ul className="text-sm text-muted-foreground space-y-1.5">
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Ready-made / Semi Stitched sizes: 3–5 business days</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Ready to Wear (stitched): 5–7 business days</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Made to Measure (bespoke): 7–10 business days</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Packaging Note */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <h4 className="font-medium mb-2">Packaging & Quality</h4>
-            <ul className="text-sm text-muted-foreground space-y-1.5">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>All items are quality inspected before shipping from India</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Wrapped in tissue paper and placed in our signature gift box</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Import duties and local taxes are the customer&apos;s responsibility</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Returns & Guarantee */}
-          <div>
-            <div className="flex items-center gap-2 mb-4 text-foreground">
-              <RotateCcw className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Returns & Guarantee</h4>
-            </div>
-            <div className="space-y-4">
-              <div className="p-4 border border-border rounded-sm">
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
-                    <Info className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-foreground mb-1">All Sales Final</h5>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Due to the handcrafted and often custom nature of our garments, all sales are final. 
-                      We encourage you to carefully review sizing, measurements, and product details before placing your order.
-                      Our team is always available to answer any pre-purchase questions.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 border border-border rounded-sm">
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-4 w-4 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-foreground mb-1">Damage Protection</h5>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      If your item arrives damaged, we&apos;ve got you covered. To file a damage claim:
-                    </p>
-                    <ul className="text-sm text-muted-foreground mt-2 space-y-1.5">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span><strong className="text-foreground">Record an unboxing video</strong> — This is required for all damage claims</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span><strong className="text-foreground">Submit your claim within 48 hours</strong> of delivery — claims after 48 hours cannot be accepted</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>Include clear photos of the damage alongside your unboxing video</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>Contact our support team with your order number for prompt resolution</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-foreground mb-1">Quality Inspection Guarantee</h5>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Every single item is personally inspected by our quality team in India before it ships. 
-                      We check stitching, embroidery, fabric quality, and color accuracy to ensure your order 
-                      arrives in perfect condition. Our inspection process is your assurance that what you see 
-                      online is what you receive.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </TabsContent>
     </Tabs>
