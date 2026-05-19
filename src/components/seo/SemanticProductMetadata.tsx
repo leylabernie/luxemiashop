@@ -69,7 +69,7 @@ const CULTURAL_CONTEXT: Record<ProductCategory, string> = {
   menswear:
     'Indian menswear for formal and wedding occasions centers on the sherwani — a long coat-like garment worn over a churidar (fitted trousers). The sherwani traces its lineage to the 19th-century British frock coat, adapted into a distinctly Indian garment with embroidery, brocade fabrics, and traditional closures. The Jodhpuri suit (bandhgala) originated in the princely state of Rajasthan and represents a more structured, collar-stand alternative. These garments are worn by grooms, groomsmen, and male guests at Indian weddings, engagement ceremonies, and festive events.',
   other:
-    'Indian ethnic wear encompasses a rich diversity of regional garments, textile techniques, and craft traditions developed over millennia. From the handloom weaving traditions of Varanasi and Kanchipuram to the embroidery centers of Lucknow (chikankari) and Agra (zardozi), each piece carries the legacy of skilled artisans. Indian ethnic fashion continues to evolve, blending traditional craftsmanship with contemporary silhouettes for modern wearers worldwide.',
+    'Crafted in India using traditional textile techniques.',
 };
 
 // ─── Category-Specific Occasion Mappings ────────────────────────────────────
@@ -239,7 +239,17 @@ export const SemanticProductMetadata = ({
     <article
       itemScope
       itemType="https://schema.org/Product"
-      className="sr-only"
+      style={{
+        position: 'absolute',
+        width: '1px',
+        height: '1px',
+        padding: 0,
+        margin: '-1px',
+        overflow: 'hidden',
+        clip: 'rect(0, 0, 0, 0)',
+        whiteSpace: 'nowrap',
+        border: '0',
+      }}
       aria-hidden="true"
       data-ai-semantic="product-metadata"
     >
@@ -286,7 +296,7 @@ export const SemanticProductMetadata = ({
         {/* Embellishment Details */}
         {embroidery && (
           <p data-ai-context="embroidery-details">
-            Embellishment technique: {embroidery}. This traditional craft is applied by skilled artisans using time-honored methods passed down through generations.
+            Embellishment technique: {embroidery}. Traditional Indian craft technique.
           </p>
         )}
 
