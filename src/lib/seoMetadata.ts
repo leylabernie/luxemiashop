@@ -167,7 +167,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/artisans': {
     title: 'Our Artisans | Behind the Craftsmanship | LuxeMia',
-    description: 'Meet the skilled artisans behind LuxeMia\'s Indian ethnic wear. Learn about traditional embroidery, weaving, and craftsmanship techniques.',
+    description: 'Learn about the craft behind LuxeMia\'s Indian ethnic wear. Traditional embroidery, weaving, and textile techniques.'}>
     canonical: `${SITE_URL}/artisans`,
   },
   '/sustainability': {
