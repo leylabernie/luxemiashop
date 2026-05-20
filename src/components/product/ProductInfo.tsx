@@ -924,7 +924,7 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Damage Protection</p>
-            <p className="text-xs text-muted-foreground">Claims handled within 7 days</p>
+            <p className="text-xs text-muted-foreground">Report damage within 48 hours</p>
           </div>
         </div>
       </div>

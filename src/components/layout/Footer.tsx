@@ -15,8 +15,12 @@ const footerLinks = {
   collections: [
     { name: 'Bridal Lehengas', href: '/lehengas' },
     { name: 'Wedding Sarees', href: '/sarees' },
+    { name: 'Wedding Guest Outfits', href: '/collections/wedding-guest-outfits' },
     { name: 'Indo-Western', href: '/indowestern' },
-    { name: 'Festive Wear', href: '/collections' },
+    { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },
+    { name: 'Mehendi Outfits', href: '/collections/mehendi-outfits' },
+    { name: 'Eid Outfits', href: '/collections/eid-outfits' },
+    { name: 'Navratri & Garba', href: '/collections/navratri-outfits' },
   ],
   about: [
     { name: 'Our Story', href: '/brand-story' },

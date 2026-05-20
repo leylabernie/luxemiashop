@@ -259,7 +259,7 @@ const ShopByCategory = () => {
         {/* View All CTA */}
         <div className="text-center mt-12">
           <Button asChild variant="outline" size="lg" className="group">
-            <Link to="/lehengas" className="flex items-center gap-2">
+            <Link to="/collections" className="flex items-center gap-2">
               View All Collections
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
