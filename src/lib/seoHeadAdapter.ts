@@ -34,4 +34,3 @@ export function metadataToSEOHeadProps(metadata: SEOHeadMetadataInput): SEOHeadM
     noIndex: metadata.noIndex ?? isNoIndexMetadata(metadata),
   };
 }
-
