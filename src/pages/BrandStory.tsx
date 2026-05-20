@@ -666,8 +666,8 @@ const BrandStory = () => {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Due to the international nature of our shipments, all sales are
                 final. We do not accept returns or exchanges. The only exception
-                is genuine shipping damage, which must be documented with photos
-                or an unboxing video and reported within 7 days of delivery. We
+                is genuine shipping damage, which must be documented with an
+                unboxing video and reported within 48 hours of delivery. We
                 strongly recommend recording an unboxing video when you receive
                 your package &mdash; it protects both of us and makes resolving
                 any issues straightforward.

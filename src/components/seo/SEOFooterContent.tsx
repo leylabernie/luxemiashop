@@ -15,7 +15,7 @@ const SEOFooterContent = () => {
               Buy <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
               <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
               <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link>, and 
-              <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry</Link> that 
+              <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">Indian wedding guest outfits</Link> that
               blend timeless tradition with contemporary style at affordable prices.
             </p>
 
@@ -55,12 +55,11 @@ const SEOFooterContent = () => {
               </div>
 
               <div>
-                <h3 className="font-serif text-lg text-foreground mb-3">Buy Indian Jewelry Online</h3>
+                <h3 className="font-serif text-lg text-foreground mb-3">Wedding Guest & Occasion Styling</h3>
                 <p>
-                  Shop <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry online</Link> at LuxeMia. 
-                  Discover <strong className="text-foreground">kundan necklace sets</strong>, bridal jewelry, 
-                  <strong className="text-foreground"> jhumka earrings</strong>, bangles, and maang tikka. 
-                  Perfect for weddings, festivals, and celebrations. Flat rate shipping $25/order, free on orders over $350.
+                  Shop <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">Indian wedding guest outfits</Link> at LuxeMia.
+                  Discover polished sarees, salwar kameez, lehengas, and indo-western looks for ceremonies, receptions,
+                  festivals, and celebrations. Flat rate shipping $25/order, free on orders over $350.
                 </p>
               </div>
             </div>
@@ -79,7 +78,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Reception & Party Wear</h3>
                 <p>
-                  Discover glamorous <Link to="/collections" className="text-foreground hover:text-primary transition-colors underline">reception outfits</Link> and 
+                  Discover glamorous <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">reception and wedding guest outfits</Link> and
                   <strong className="text-foreground"> Indo-western reception gowns</strong>. Our collection features sequined ensembles and 
                   <strong className="text-foreground">cocktail sarees</strong> perfect for wedding receptions and sangeet nights. 
                   Stand out with <strong className="text-foreground">minimalist bridesmaid dresses</strong> and statement pieces.
@@ -100,9 +99,9 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Festive & Occasion Wear</h3>
                 <p>
-                  Celebrate in style with our <Link to="/collections" className="text-foreground hover:text-primary transition-colors underline">festive wear</Link> collection. 
-                  Shop <strong className="text-foreground">Haldi outfits for NRI guests</strong> and vibrant ensembles for 
-                  <strong className="text-foreground">Diwali, Navratri, and Karwa Chauth</strong>. From playful yellows to auspicious reds, 
+                  Celebrate in style with our <Link to="/collections/diwali-outfits" className="text-foreground hover:text-primary transition-colors underline">Diwali outfits</Link>,
+                  <Link to="/collections/mehendi-outfits" className="text-foreground hover:text-primary transition-colors underline"> Mehendi looks</Link>, and
+                  <Link to="/collections/navratri-outfits" className="text-foreground hover:text-primary transition-colors underline">Navratri & Garba outfits</Link>. From playful yellows to auspicious reds,
                   find the perfect look for every Indian celebration.
                 </p>
               </div>

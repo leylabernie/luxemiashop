@@ -49,10 +49,10 @@ const trustCards: TrustCard[] = [
   },
   {
     icon: <RefreshCcw className="h-6 w-6" />,
-    title: 'Easy Returns',
+    title: 'Damage Claim Support',
     description:
-      '15-day hassle-free returns on unstitched items. Defective or damaged? Full refund — no questions asked.',
-    highlight: '15-Day Returns',
+      'All sales are final. Genuine shipping damage claims are reviewed when reported within 48 hours with an unboxing video.',
+    highlight: '48-Hour Claims',
   },
   {
     icon: <MessageCircle className="h-6 w-6" />,
@@ -180,7 +180,7 @@ export const ProductTrustSignals = () => {
           </span>
           <span className="flex items-center gap-1.5">
             <RefreshCcw className="h-3.5 w-3.5 text-primary" />
-            Easy Returns
+            Damage Claim Support
           </span>
         </div>
       </motion.div>
