@@ -13,7 +13,7 @@ const SEOFooterContent = () => {
             <p className="mb-6">
               Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for affordable Indian ethnic wear online. 
               Buy <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
-              <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
+              <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>,
               <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link>, and 
               <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">Indian wedding guest outfits</Link> that
               blend timeless tradition with contemporary style at affordable prices.
@@ -33,7 +33,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Buy Bridal Lehengas Online</h3>
                 <p>
-                  Find your dream <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga online</Link> in our extensive collection. 
+                  Find your dream <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga online</Link> in our dedicated bridal collection.
                   From <strong className="text-foreground">traditional red bridal lehengas</strong> to <strong className="text-foreground">minimalist pastel lehengas</strong>, we offer 
                   <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> lehenga choli</Link> sets 
                   with beautiful embroidery and zardozi work. Ideal for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">weddings in the USA</Link> and

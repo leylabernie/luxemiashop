@@ -33,7 +33,7 @@ const navLinks = [
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bestsellers', href: '/bestsellers' },
-  { name: 'Bridal', href: '/lehengas' },
+  { name: 'Bridal', href: '/collections/bridal-lehengas' },
   { name: 'Wedding Sarees', href: '/sarees' },
 ];
 

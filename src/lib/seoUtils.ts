@@ -291,7 +291,7 @@ export function generateProductBreadcrumbs(product: AnyProduct): Array<{name: st
   
   // Map category to collection URL
   const categoryMap: Record<string, string> = {
-    'Bridal Lehengas': '/lehengas',
+    'Bridal Lehengas': '/collections/bridal-lehengas',
     'Festive Lehengas': '/lehengas',
     'Occasional Sarees': '/sarees',
     'Bridal Sarees': '/sarees',

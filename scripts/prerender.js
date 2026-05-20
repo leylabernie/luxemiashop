@@ -193,7 +193,7 @@ const routes = [
       </nav>
       <h2>Featured Collections</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a></li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a></li>
         <li><a href="/sarees">Wedding Sarees</a></li>
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections">Festive Wear</a></li>
@@ -221,7 +221,7 @@ const routes = [
       <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
       <h2>Lehenga Categories</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Bridal lehenga choli for your special day</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Bridal lehenga choli for your special day</li>
         <li>Wedding Lehengas — Elegant designs for wedding celebrations</li>
         <li>Party Wear Lehengas — Stunning lehengas for festive occasions</li>
       </ul>
@@ -337,7 +337,7 @@ const routes = [
     content: `
       <p>Browse our curated collections of Indian ethnic wear, thoughtfully organized for every occasion.</p>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Bridal wear for your special day</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Bridal wear for your special day</li>
         <li><a href="/sarees">Wedding Sarees</a> — Elegant sarees for wedding celebrations</li>
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
@@ -358,10 +358,10 @@ const routes = [
   },
   {
     path: '/collections/bridal-lehengas',
-    title: 'Bridal Lehenga Collection | Designer Wedding Lehengas | LuxeMia',
-    description: 'Shop bridal lehengas at LuxeMia. Designer bridal lehenga choli in silk, velvet & net. Handcrafted embroidery, luxurious fabrics. Free shipping.',
-    h1: 'Bridal Lehenga Collection',
-    content: '<p>Discover our stunning bridal lehenga collection. Each piece is handcrafted with intricate embroidery on premium silk, velvet, and net fabrics. Find your dream bridal lehenga.</p>',
+    title: 'Bridal Lehengas Online | Indian Wedding Lehenga for Brides - LuxeMia',
+    description: 'Shop bridal lehengas online at LuxeMia. Explore Indian bridal lehenga choli styles for weddings, engagement, reception, and ceremony looks with custom sizing support.',
+    h1: 'Bridal Lehengas for Indian Weddings',
+    content: '<p>Shop Indian bridal lehengas selected for brides planning wedding, engagement, reception, sangeet, and ceremony looks. This bride-focused collection highlights wedding lehenga choli styles with embroidery, rich fabrics, and sizing options for online bridal shopping.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader festive and partywear styles, or continue wedding shopping with <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> and <a href="/collections/mehendi-outfits">mehendi outfits</a>.</p>',
   },
   {
     path: '/collections/wedding-sarees',
@@ -528,7 +528,7 @@ const routes = [
       <h2>Duty-Free Under $800</h2>
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery.</p>
       <h2>Shop Our USA Collection</h2>
-      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — all handcrafted in India and shipped directly to your US address.</p>
+      <p>Browse <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — all handcrafted in India and shipped directly to your US address.</p>
     `,
   },
   {
@@ -543,7 +543,7 @@ const routes = [
       <h2>Canadian Customs Information</h2>
       <p>Canadian customs may charge GST/HST (5-15% depending on province) and import duties on textile imports. These charges are collected by the carrier at delivery.</p>
       <h2>Shop Our Canada Collection</h2>
-      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — handcrafted in India and delivered across Canada.</p>
+      <p>Browse <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — handcrafted in India and delivered across Canada.</p>
     `,
   },
   // --- NRI sub-pages ---
@@ -560,7 +560,7 @@ const routes = [
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery. Orders over $800 may be subject to import duties.</p>
       <h2>Shop by Category</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
         <li><a href="/sarees">Silk Sarees</a> — Banarasi, Kanjeevaram & designer sarees</li>
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
@@ -581,7 +581,7 @@ const routes = [
       <p>Canadian customs may charge GST/HST (5-15% depending on province) and import duties on textile imports. These charges are collected by the carrier at delivery. Every package is fully insured.</p>
       <h2>Shop by Category</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
         <li><a href="/sarees">Silk Sarees</a> — Banarasi, Kanjeevaram & designer sarees</li>
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Sherwanis</a> — Groom wear & kurta sets</li>
@@ -603,7 +603,7 @@ const routes = [
       <p>Gold is the quintessential Diwali color — representing prosperity and the blessing of Goddess Lakshmi. Red, deep green, royal purple, burnt orange, and navy blue are also widely worn. Fabrics with gold zari work, sequin embellishments, or mirror details catch the Diwali diyas beautifully.</p>
       <h2>Shop Diwali Outfits</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Embellished lehengas perfect for Diwali</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Embellished lehengas perfect for Diwali</li>
         <li><a href="/sarees">Silk Sarees</a> — Banarasi and silk sarees for Diwali puja</li>
         <li><a href="/suits">Anarkali Suits</a> — Festive anarkali suits for Diwali celebrations</li>
         <li><a href="/indowestern">Indo-Western</a> — Modern Diwali party outfits</li>
@@ -622,7 +622,7 @@ const routes = [
       <p>The mehendi is a daytime ceremony calling for bright, cheerful outfits in yellow, lime green, orange, or floral prints. The sangeet is the most festive ceremony — wear your most glamorous embellished lehengas or sequin anarkalis. The main wedding ceremony is the most formal — avoid red (the bridal colour) and white. The reception is the most flexible — semi-formal to formal ethnic or indo-western outfits are appropriate.</p>
       <h2>Shop by Ceremony</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Wedding guest lehengas for the main ceremony</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Wedding guest lehengas for the main ceremony</li>
         <li><a href="/sarees">Silk Sarees</a> — Wedding guest sarees for formal ceremonies</li>
         <li><a href="/suits">Anarkali Suits</a> — Versatile suits for multiple wedding ceremonies</li>
         <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Bright and festive mehendi ceremony wear</li>
