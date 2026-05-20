@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
+import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -18,6 +20,8 @@ const sortOptions = [
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
+
+const navratriSeo = metadataToSEOHeadProps(getStaticPageMetadata('/collections/navratri-outfits'));
 
 const navratriOutfitFaqs = [
   {
@@ -51,9 +55,7 @@ const NavratriOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia"
-        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colours. Free shipping to USA, Canada & Australia."
-        canonical="https://luxemia.shop/collections/navratri-outfits"
+        {...navratriSeo}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Occasions', url: '/collections' },

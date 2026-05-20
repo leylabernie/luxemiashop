@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
+import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { Button } from '@/components/ui/button';
 import {
@@ -41,6 +43,8 @@ const sortOptions = [
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
+
+const suitsSeo = metadataToSEOHeadProps(getStaticPageMetadata('/suits'));
 
 const suitFilterSections = [
   {
@@ -306,11 +310,7 @@ const Suits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Salwar Kameez Online | Anarkali, Palazzo & Sharara Suits - LuxeMia"
-        description="Buy salwar kameez online at LuxeMia. Shop anarkali suits, palazzo sets, sharara suits & Pakistani suits. Free worldwide shipping to USA, Canada & Australia."
-        canonical="https://luxemia.shop/suits"
-        type="collection"
-        image="/og/og-suits.jpg"
+        {...suitsSeo}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
