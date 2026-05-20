@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
+import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { Button } from '@/components/ui/button';
 import {
   Accordion,
@@ -30,6 +32,8 @@ const sortOptions = [
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
+
+const sareesSeo = metadataToSEOHeadProps(getStaticPageMetadata('/sarees'));
 
 const Sarees = () => {
   const { products, isLoading, currentPage, totalPages, totalCount, goToPage } = useShopifyPaginatedProducts('sarees');
@@ -94,11 +98,7 @@ const Sarees = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Sarees Online | Indian Silk, Wedding & Banarasi Sarees - LuxeMia"
-        description="Buy Indian sarees online at LuxeMia. Shop Banarasi silk sarees, Kanchipuram wedding sarees, georgette & chiffon sarees. Free shipping to USA, Canada & Australia."
-        canonical="https://luxemia.shop/sarees"
-        type="collection"
-        image="/og/og-sarees.jpg"
+        {...sareesSeo}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },

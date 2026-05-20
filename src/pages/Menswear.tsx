@@ -6,6 +6,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import SEOHead from '@/components/seo/SEOHead';
+import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
+import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,6 +37,8 @@ const sortOptions = [
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
+
+const menswearSeo = metadataToSEOHeadProps(getStaticPageMetadata('/menswear'));
 
 const menswearFilterSections = [
   {
@@ -239,11 +243,7 @@ const Menswear = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Sherwani Online | Indian Ethnic Wear for Men - Groom & Wedding - LuxeMia"
-        description="Buy Indian ethnic wear for men online at LuxeMia. Shop groom sherwanis, kurta pajama sets, velvet sherwanis & Nehru jackets. Custom sizing available. Free shipping worldwide."
-        canonical="https://luxemia.shop/menswear"
-        type="collection"
-        image="/og/og-menswear.jpg"
+        {...menswearSeo}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
