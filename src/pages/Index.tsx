@@ -16,7 +16,11 @@ import FlashSaleBanner from '@/components/home/FlashSaleBanner';
 import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
 import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
+import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
+import { getStaticPageMetadata } from '@/lib/seoMetadata';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
+
+const homepageMetadata = metadataToSEOHeadProps(getStaticPageMetadata('/'));
 
 const homepageFaqs = [
   {
@@ -130,9 +134,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia | Indian Ethnic Wear — Sarees & Lehengas"
-        description="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350."
-        canonical="https://luxemia.shop/"
+        {...homepageMetadata}
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
       />
