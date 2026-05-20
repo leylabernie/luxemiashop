@@ -17,6 +17,8 @@
  * Existing SEO emitters are intentionally not removed or rewired in this pass.
  */
 
+import { COLLECTION_SEO_CONFIG, type CollectionRoutePath } from './collectionSeoConfig';
+
 export const SITE_URL = 'https://luxemia.shop';
 export const PUBLIC_BRAND_NAME = 'LuxeMia';
 export const LEGAL_ENTITY_NAME = 'Glamour Indian Wear';
@@ -67,6 +69,18 @@ const withMetadataDefaults = (metadata: PageMetadataInput): PageMetadata => ({
   ...metadata,
 });
 
+const collectionMetadata = (path: CollectionRoutePath): PageMetadata => {
+  const collection = COLLECTION_SEO_CONFIG[path];
+
+  return withMetadataDefaults({
+    title: collection.title,
+    description: collection.description,
+    canonical: collection.canonical,
+    ogImage: collection.ogImage,
+    type: 'collection',
+  });
+};
+
 /**
  * Static page metadata mapping for routes that do not need live Shopify data.
  * Product pages and blog posts can still be resolved dynamically by delivery
@@ -78,34 +92,15 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     description: DEFAULT_DESCRIPTION,
     canonical: `${SITE_URL}/`,
   }),
-  '/sarees': withMetadataDefaults({
-    title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
-    description: 'Shop beautiful silk sarees, bridal sarees, and designer sarees at LuxeMia. Banarasi, Kanchipuram, and georgette sarees. Free shipping over $350 to USA, Canada & Australia.',
-    canonical: `${SITE_URL}/sarees`,
-    ogImage: `${SITE_URL}/og/og-sarees.jpg`,
-    type: 'collection',
-  }),
-  '/lehengas': withMetadataDefaults({
-    title: 'Lehengas Collection | Bridal & Wedding Lehengas Online | LuxeMia',
-    description: 'Shop stunning bridal lehengas, wedding lehengas, and festive lehengas at LuxeMia. Embroidered, silk, and designer lehengas. Free shipping over $350 to USA, Canada & Australia.',
-    canonical: `${SITE_URL}/lehengas`,
-    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
-    type: 'collection',
-  }),
-  '/suits': withMetadataDefaults({
-    title: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
-    description: 'Shop elegant salwar kameez, anarkali suits, palazzo suits, and sharara sets at LuxeMia. Pakistani suits and designer suits. Free shipping over $350 to USA, Canada & Australia.',
-    canonical: `${SITE_URL}/suits`,
-    ogImage: `${SITE_URL}/og/og-suits.jpg`,
-    type: 'collection',
-  }),
-  '/menswear': withMetadataDefaults({
-    title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
-    description: 'Shop premium sherwanis, kurta pajama sets, and indo-western menswear at LuxeMia. Wedding and festive collection. Free shipping over $350 to USA, Canada & Australia.',
-    canonical: `${SITE_URL}/menswear`,
-    ogImage: `${SITE_URL}/og/og-menswear.jpg`,
-    type: 'collection',
-  }),
+  '/sarees': collectionMetadata('/sarees'),
+  '/lehengas': collectionMetadata('/lehengas'),
+  '/suits': collectionMetadata('/suits'),
+  '/menswear': collectionMetadata('/menswear'),
+  '/collections/wedding-guest-outfits': collectionMetadata('/collections/wedding-guest-outfits'),
+  '/collections/diwali-outfits': collectionMetadata('/collections/diwali-outfits'),
+  '/collections/mehendi-outfits': collectionMetadata('/collections/mehendi-outfits'),
+  '/collections/eid-outfits': collectionMetadata('/collections/eid-outfits'),
+  '/collections/navratri-outfits': collectionMetadata('/collections/navratri-outfits'),
   '/collections': withMetadataDefaults({
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
     description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits, and menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
