@@ -372,7 +372,7 @@ const Menswear = () => {
                       Our menswear collection featuring sherwanis, kurta pajamas, and Indo-western outfits is being curated. Check back soon for wedding attire for grooms and guests.
                     </p>
                     <Button asChild variant="outline">
-                      <Link to="/lehengas">Explore Bridal Collection</Link>
+                      <Link to="/collections/bridal-lehengas">Explore Bridal Collection</Link>
                     </Button>
                   </div>
                 </div>

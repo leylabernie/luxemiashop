@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const quickLinks = [
   { label: 'Bestsellers', href: '/collections', featured: true },
-  { label: 'Bridal Lehengas', href: '/lehengas', featured: true },
+  { label: 'Bridal Lehengas', href: '/collections/bridal-lehengas', featured: true },
   { label: 'Wedding Sarees', href: '/sarees', featured: false },
   { label: 'Indo-Western', href: '/indowestern', featured: false },
   { label: 'Festive Wear', href: '/collections', featured: false },
