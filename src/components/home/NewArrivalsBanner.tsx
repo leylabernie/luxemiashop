@@ -39,7 +39,7 @@ const slides: FeaturedSlide[] = [
     ctaBorder: 'rgba(247,235,217,0.45)',
     ctas: [
       { label: 'LEHENGAS', link: '/lehengas' },
-      { label: 'BRIDAL', link: '/lehengas?occasion=bridal' },
+      { label: 'BRIDAL', link: '/collections/bridal-lehengas' },
       { label: 'WEDDING', link: '/wedding-sarees' },
     ],
   },

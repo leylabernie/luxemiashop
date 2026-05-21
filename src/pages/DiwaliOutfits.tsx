@@ -155,7 +155,7 @@ const DiwaliOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
             <h2 className="font-serif text-xl mb-6">More Festive Collections</h2>
             <div className="flex flex-wrap justify-center gap-3">
-              <Link to="/lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
+              <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
               <Link to="/sarees"><Button variant="outline" size="sm">Silk Sarees</Button></Link>
               <Link to="/suits"><Button variant="outline" size="sm">Anarkali Suits</Button></Link>
               <Link to="/indowestern"><Button variant="outline" size="sm">Indo-Western</Button></Link>

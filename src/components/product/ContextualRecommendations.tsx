@@ -609,7 +609,7 @@ interface CollectionLink {
 
 const RELATED_COLLECTIONS: Record<ProductCategory, CollectionLink[]> = {
   lehenga: [
-    { name: 'Bridal Lehengas', url: '/lehengas', description: 'Explore our full collection of bridal and wedding lehengas' },
+    { name: 'Bridal Lehengas', url: '/collections/bridal-lehengas', description: 'Explore our full collection of bridal and wedding lehengas' },
     { name: 'Wedding Jewelry', url: '/jewelry', description: 'Kundan, polki, and bridal jewelry sets' },
     { name: 'Mehndi Outfits', url: '/mehendi-outfits', description: 'Bright and festive outfits for the mehndi ceremony' },
     { name: 'Sangeet Collection', url: '/lehengas', description: 'Sequin and mirror-work lehengas for the sangeet night' },
