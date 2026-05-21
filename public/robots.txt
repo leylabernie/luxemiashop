@@ -18,6 +18,7 @@ Allow: /menswear
 Allow: /indowestern
 Allow: /collections
 Allow: /collections/wedding-guest-outfits
+Allow: /collections/bridal-lehengas
 Allow: /collections/diwali-outfits
 Allow: /collections/mehendi-outfits
 Allow: /collections/eid-outfits

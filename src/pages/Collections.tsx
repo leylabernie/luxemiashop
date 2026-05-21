@@ -227,7 +227,7 @@ const Collections = () => {
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">
-            <Link to="/lehengas" className="hover:text-foreground transition-colors underline underline-offset-2">Bridal Lehengas</Link>
+            <Link to="/collections/bridal-lehengas" className="hover:text-foreground transition-colors underline underline-offset-2">Bridal Lehengas</Link>
             <Link to="/sarees" className="hover:text-foreground transition-colors underline underline-offset-2">Designer Sarees</Link>
             <Link to="/suits" className="hover:text-foreground transition-colors underline underline-offset-2">Salwar Kameez</Link>
             <Link to="/menswear" className="hover:text-foreground transition-colors underline underline-offset-2">Men's Sherwanis</Link>

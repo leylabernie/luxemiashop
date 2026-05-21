@@ -5,7 +5,7 @@ const occasions = [
   {
     label: 'Bridal',
     sublabel: 'Make it unforgettable',
-    href: '/lehengas',
+    href: '/collections/bridal-lehengas',
     color: 'bg-rose-50 dark:bg-rose-950/30',
     accent: 'text-rose-700 dark:text-rose-300',
   },

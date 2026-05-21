@@ -13,6 +13,7 @@ export type CollectionRoutePath =
   | '/sarees'
   | '/suits'
   | '/menswear'
+  | '/collections/bridal-lehengas'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -40,6 +41,29 @@ export interface CollectionSeoConfig {
 }
 
 export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoConfig> = {
+  '/collections/bridal-lehengas': {
+    path: '/collections/bridal-lehengas',
+    title: 'Bridal Lehengas Online | Indian Wedding Lehenga for Brides - LuxeMia',
+    description: 'Shop bridal lehengas online at LuxeMia. Explore Indian bridal lehenga choli styles for weddings, engagement, reception, and ceremony looks with custom sizing support.',
+    canonical: `${SITE_URL}/collections/bridal-lehengas`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Bridal Lehengas for Indian Weddings',
+    semanticTitle: 'Indian bridal lehengas, wedding lehenga choli, and designer bridal lehengas online',
+    primaryEntity: 'Indian Bridal Lehengas',
+    secondaryEntities: ['Wedding lehenga for bride', 'Bridal lehenga choli', 'Embroidered bridal lehenga', 'Designer bridal lehengas online'],
+    intent: 'bridal',
+    relatedCollections: [
+      { label: 'All Lehengas', path: '/lehengas' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Mehendi Outfits', path: '/collections/mehendi-outfits' },
+      { label: 'Menswear', path: '/menswear' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Indian bridal lehengas online?',
+      'How do I choose a bridal lehenga for an Indian wedding?',
+      'Can bridal lehengas be worn for reception or engagement events?',
+    ],
+  },
   '/lehengas': {
     path: '/lehengas',
     title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia',
@@ -121,7 +145,7 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
     secondaryEntities: ['Sherwani', 'Groom sherwani', 'Kurta pajama', 'Nehru jackets'],
     intent: 'menswear',
     relatedCollections: [
-      { label: 'Bridal Lehengas', path: '/lehengas' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
       { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
       { label: 'Sarees', path: '/sarees' },
       { label: 'All Collections', path: '/collections' },
@@ -143,7 +167,7 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
     secondaryEntities: ['Wedding sarees', 'Anarkali suits', 'Lehengas', 'Salwar kameez'],
     intent: 'wedding-guest',
     relatedCollections: [
-      { label: 'Bridal Lehengas', path: '/lehengas' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
       { label: 'Silk Sarees', path: '/sarees' },
       { label: 'Anarkali Suits', path: '/suits' },
       { label: 'Mehendi Outfits', path: '/collections/mehendi-outfits' },
@@ -188,7 +212,7 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
     intent: 'ceremony',
     relatedCollections: [
       { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
-      { label: 'Bridal Lehengas', path: '/lehengas' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
       { label: 'Salwar Kameez', path: '/suits' },
       { label: 'Diwali Outfits', path: '/collections/diwali-outfits' },
     ],

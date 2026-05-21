@@ -22,6 +22,7 @@ const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Account = lazy(() => import("./pages/Account"));
 const Lehengas = lazy(() => import("./pages/Lehengas"));
+const BridalLehengas = lazy(() => import("./pages/BridalLehengas"));
 const Sarees = lazy(() => import("./pages/Sarees"));
 const Suits = lazy(() => import("./pages/Suits"));
 const Menswear = lazy(() => import("./pages/Menswear"));
@@ -123,7 +124,6 @@ const App = () => (
                 <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/wedding-sarees" element={<Navigate to="/sarees" replace />} />
-                <Route path="/collections/bridal-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/reception-outfits" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/festive-wear" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/sarees" element={<Navigate to="/sarees" replace />} />
@@ -135,6 +135,7 @@ const App = () => (
                 <Route path="/collections/bridesmaid-dresses" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/groomsman-outfits" element={<Navigate to="/menswear" replace />} />
                 {/* Occasion landing pages */}
+                <Route path="/collections/bridal-lehengas" element={<Suspense fallback={<PageLoader />}><BridalLehengas /></Suspense>} />
                 <Route path="/collections/diwali-outfits" element={<Suspense fallback={<PageLoader />}><DiwaliOutfits /></Suspense>} />
                 <Route path="/collections/wedding-guest-outfits" element={<Suspense fallback={<PageLoader />}><WeddingGuestOutfits /></Suspense>} />
                 <Route path="/collections/mehendi-outfits" element={<Suspense fallback={<PageLoader />}><MehendiOutfits /></Suspense>} />

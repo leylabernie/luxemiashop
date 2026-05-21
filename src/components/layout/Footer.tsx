@@ -13,7 +13,7 @@ const footerLinks = {
     { name: 'Menswear', href: '/menswear' },
   ],
   collections: [
-    { name: 'Bridal Lehengas', href: '/lehengas' },
+    { name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' },
     { name: 'Wedding Sarees', href: '/sarees' },
     { name: 'Wedding Guest Outfits', href: '/collections/wedding-guest-outfits' },
     { name: 'Indo-Western', href: '/indowestern' },
