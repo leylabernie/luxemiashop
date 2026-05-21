@@ -197,6 +197,7 @@ const routes = [
         <li><a href="/collections/wedding-sarees">Wedding Sarees</a></li>
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections/party-wear-lehengas">Party Wear Lehengas</a></li>
+        <li><a href="/collections/designer-sarees">Designer Sarees</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
       <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Handcrafted with love by Indian artisans.</p>
@@ -384,6 +385,13 @@ const routes = [
     description: 'Shop party wear lehengas online at LuxeMia. Explore Indian party lehengas, cocktail lehengas, sangeet lehengas, reception party lehengas, and wedding guest lehengas.',
     h1: 'Party Wear Lehengas for Indian Events',
     content: '<p>Shop party wear lehengas selected for sangeet nights, cocktail parties, wedding guest looks, festive celebrations, engagement events, and reception parties. This party-focused collection highlights party wear lehenga choli sets, Indian party lehengas, festive party lehengas, cocktail lehengas, sangeet lehengas, reception party lehengas, designer party lehengas, embroidered lehengas, sequins lehengas, and lightweight lehengas for event-ready shopping online.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader lehenga styles, or continue occasion shopping with <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/diwali-outfits">Diwali outfits</a>.</p>',
+  },
+  {
+    path: '/collections/designer-sarees',
+    title: 'Designer Sarees Online | Indian Designer Sarees - LuxeMia',
+    description: 'Shop designer sarees online at LuxeMia. Explore Indian designer sarees, party wear designer sarees, wedding guest sarees, festive sarees, and boutique sarees.',
+    h1: 'Designer Sarees',
+    content: '<p>Shop designer sarees selected for parties, wedding guest looks, receptions, festive celebrations, sangeet nights, and polished Indian event dressing. This designer-focused collection highlights Indian designer sarees online, party wear designer sarees, wedding guest sarees, festive designer sarees, embroidered sarees, silk sarees, georgette sarees, chiffon sarees, and boutique sarees for event-ready shopping.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader drape styles, or continue occasion shopping with <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
     path: '/collections/festive-wear',

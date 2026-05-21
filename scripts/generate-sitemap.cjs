@@ -89,6 +89,7 @@ const staticPages = [
   { loc: '/collections/wedding-sarees', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/designer-sarees', changefreq: 'weekly', priority: '0.9' },
 ];
 
 // Blog posts

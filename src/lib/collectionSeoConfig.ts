@@ -6,6 +6,7 @@ export type CollectionIntent =
   | 'wedding'
   | 'reception'
   | 'party'
+  | 'designer'
   | 'wedding-guest'
   | 'festival'
   | 'ceremony'
@@ -20,6 +21,7 @@ export type CollectionRoutePath =
   | '/collections/wedding-sarees'
   | '/collections/reception-outfits'
   | '/collections/party-wear-lehengas'
+  | '/collections/designer-sarees'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -137,6 +139,29 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy party wear lehengas online?',
       'Can I wear a party wear lehenga to a sangeet or reception?',
       'What is the difference between bridal lehengas and party wear lehengas?',
+    ],
+  },
+  '/collections/designer-sarees': {
+    path: '/collections/designer-sarees',
+    title: 'Designer Sarees Online | Indian Designer Sarees - LuxeMia',
+    description: 'Shop designer sarees online at LuxeMia. Explore Indian designer sarees, party wear designer sarees, wedding guest sarees, festive sarees, and boutique sarees.',
+    canonical: `${SITE_URL}/collections/designer-sarees`,
+    ogImage: `${SITE_URL}/og/og-sarees.jpg`,
+    h1: 'Designer Sarees',
+    semanticTitle: 'Designer sarees, Indian designer sarees online, party wear designer sarees, wedding guest sarees, and festive designer sarees',
+    primaryEntity: 'Designer Sarees',
+    secondaryEntities: ['Indian designer sarees', 'Party wear designer sarees', 'Wedding guest sarees', 'Festive designer sarees', 'Embroidered sarees', 'Silk sarees', 'Georgette sarees', 'Chiffon sarees', 'Boutique sarees'],
+    intent: 'designer',
+    relatedCollections: [
+      { label: 'All Sarees', path: '/sarees' },
+      { label: 'Wedding Sarees', path: '/collections/wedding-sarees' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy designer sarees online?',
+      'Which designer sarees are best for parties and weddings?',
+      'What fabrics should I choose for designer sarees?',
     ],
   },
   '/lehengas': {
