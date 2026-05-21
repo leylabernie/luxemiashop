@@ -4,6 +4,7 @@ export type CollectionIntent =
   | 'category'
   | 'bridal'
   | 'wedding'
+  | 'reception'
   | 'wedding-guest'
   | 'festival'
   | 'ceremony'
@@ -16,6 +17,7 @@ export type CollectionRoutePath =
   | '/menswear'
   | '/collections/bridal-lehengas'
   | '/collections/wedding-sarees'
+  | '/collections/reception-outfits'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -87,6 +89,29 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy wedding sarees online?',
       'What saree should I wear for an Indian wedding ceremony?',
       'What is the difference between Banarasi and Kanjivaram wedding sarees?',
+    ],
+  },
+  '/collections/reception-outfits': {
+    path: '/collections/reception-outfits',
+    title: 'Reception Outfits Online | Indian Wedding Reception Dresses - LuxeMia',
+    description: 'Shop reception outfits online at LuxeMia. Explore reception lehengas, sarees, gowns, Indo-western outfits, cocktail looks, and Indian party wear.',
+    canonical: `${SITE_URL}/collections/reception-outfits`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Reception Outfits for Indian Weddings',
+    semanticTitle: 'Indian reception outfits, reception lehengas, reception sarees, gowns, and Indo-western cocktail outfits',
+    primaryEntity: 'Indian Reception Outfits',
+    secondaryEntities: ['Reception lehengas', 'Reception sarees', 'Reception gowns', 'Indo-western reception outfits', 'Cocktail reception outfits'],
+    intent: 'reception',
+    relatedCollections: [
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Lehengas', path: '/lehengas' },
+      { label: 'Reception Sarees', path: '/sarees' },
+      { label: 'Indo-Western', path: '/indowestern' },
+    ],
+    aiSearchQuestions: [
+      'What should I wear to an Indian wedding reception?',
+      'Where can I buy reception lehengas and sarees online?',
+      'Are Indo-western outfits appropriate for Indian wedding receptions?',
     ],
   },
   '/lehengas': {

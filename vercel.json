@@ -9,7 +9,6 @@
     { "source": "/uk-designer-sarees", "destination": "/nri", "statusCode": 308 },
     { "source": "/collections/wedding-sarees", "destination": "/sarees", "permanent": true },
     { "source": "/collections/bridal-lehengas", "destination": "/lehengas", "permanent": true },
-    { "source": "/collections/reception-outfits", "destination": "/collections", "permanent": true },
     { "source": "/collections/festive-wear", "destination": "/collections", "permanent": true },
     { "source": "/collections/sarees", "destination": "/sarees", "permanent": true },
     { "source": "/collections/salwar-kameez", "destination": "/suits", "permanent": true },

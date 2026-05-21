@@ -39,6 +39,7 @@ export const staticPages = [
   // Occasion landing pages — high buyer-intent SEO
   { loc: '/collections/bridal-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Bridal Lehengas for Indian Weddings' },
   { loc: '/collections/wedding-sarees', changefreq: 'weekly', priority: '0.9', title: 'Wedding Sarees for Indian Ceremonies' },
+  { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9', title: 'Reception Outfits for Indian Weddings' },
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9', title: 'Diwali Outfits 2026' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Guest Outfits' },
   { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Mehendi Ceremony Outfits' },
