@@ -5,6 +5,7 @@ export type CollectionIntent =
   | 'bridal'
   | 'wedding'
   | 'reception'
+  | 'party'
   | 'wedding-guest'
   | 'festival'
   | 'ceremony'
@@ -18,6 +19,7 @@ export type CollectionRoutePath =
   | '/collections/bridal-lehengas'
   | '/collections/wedding-sarees'
   | '/collections/reception-outfits'
+  | '/collections/party-wear-lehengas'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -112,6 +114,29 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'What should I wear to an Indian wedding reception?',
       'Where can I buy reception lehengas and sarees online?',
       'Are Indo-western outfits appropriate for Indian wedding receptions?',
+    ],
+  },
+  '/collections/party-wear-lehengas': {
+    path: '/collections/party-wear-lehengas',
+    title: 'Party Wear Lehengas Online | Indian Party Lehenga Choli - LuxeMia',
+    description: 'Shop party wear lehengas online at LuxeMia. Explore Indian party lehengas, cocktail lehengas, sangeet lehengas, reception party lehengas, and wedding guest lehengas.',
+    canonical: `${SITE_URL}/collections/party-wear-lehengas`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Party Wear Lehengas for Indian Events',
+    semanticTitle: 'Party wear lehengas, Indian party lehengas, cocktail lehengas, sangeet lehengas, and wedding guest lehengas',
+    primaryEntity: 'Party Wear Lehengas',
+    secondaryEntities: ['Party wear lehenga choli', 'Indian party lehengas', 'Cocktail lehengas', 'Sangeet lehengas', 'Reception party lehengas', 'Wedding guest lehengas'],
+    intent: 'party',
+    relatedCollections: [
+      { label: 'All Lehengas', path: '/lehengas' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Diwali Outfits', path: '/collections/diwali-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy party wear lehengas online?',
+      'Can I wear a party wear lehenga to a sangeet or reception?',
+      'What is the difference between bridal lehengas and party wear lehengas?',
     ],
   },
   '/lehengas': {

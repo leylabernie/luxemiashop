@@ -32,6 +32,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/collections/bridal-lehengas',
   '/collections/wedding-sarees',
   '/collections/reception-outfits',
+  '/collections/party-wear-lehengas',
   '/collections/diwali-outfits',
   '/collections/wedding-guest-outfits',
   '/collections/mehendi-outfits',

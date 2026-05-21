@@ -196,6 +196,7 @@ const routes = [
         <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a></li>
         <li><a href="/collections/wedding-sarees">Wedding Sarees</a></li>
         <li><a href="/collections">Reception Outfits</a></li>
+        <li><a href="/collections/party-wear-lehengas">Party Wear Lehengas</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
       <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Handcrafted with love by Indian artisans.</p>
@@ -376,6 +377,13 @@ const routes = [
     description: 'Shop reception outfits online at LuxeMia. Explore reception lehengas, sarees, gowns, Indo-western outfits, cocktail looks, and Indian party wear.',
     h1: 'Reception Outfits for Indian Weddings',
     content: '<p>Shop Indian reception outfits selected for wedding receptions, cocktail events, engagement parties, sangeet nights, and formal evening celebrations. This reception-focused collection highlights reception lehengas, reception sarees, reception gowns, Indo-western reception outfits, cocktail reception outfits, and party wear Indian outfits for polished event shopping online.</p><p>Browse <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> for broader ceremony shopping, or explore <a href="/lehengas">reception lehengas</a>, <a href="/sarees">reception sarees</a>, <a href="/suits">anarkali suits</a>, and <a href="/indowestern">Indo-western outfits</a> for evening receptions and cocktail events.</p>',
+  },
+  {
+    path: '/collections/party-wear-lehengas',
+    title: 'Party Wear Lehengas Online | Indian Party Lehenga Choli - LuxeMia',
+    description: 'Shop party wear lehengas online at LuxeMia. Explore Indian party lehengas, cocktail lehengas, sangeet lehengas, reception party lehengas, and wedding guest lehengas.',
+    h1: 'Party Wear Lehengas for Indian Events',
+    content: '<p>Shop party wear lehengas selected for sangeet nights, cocktail parties, wedding guest looks, festive celebrations, engagement events, and reception parties. This party-focused collection highlights party wear lehenga choli sets, Indian party lehengas, festive party lehengas, cocktail lehengas, sangeet lehengas, reception party lehengas, designer party lehengas, embroidered lehengas, sequins lehengas, and lightweight lehengas for event-ready shopping online.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader lehenga styles, or continue occasion shopping with <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/diwali-outfits">Diwali outfits</a>.</p>',
   },
   {
     path: '/collections/festive-wear',
