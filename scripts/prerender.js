@@ -372,10 +372,10 @@ const routes = [
   },
   {
     path: '/collections/reception-outfits',
-    title: 'Reception Outfits | Glamorous Party Wear | LuxeMia',
-    description: 'Shop reception outfits at LuxeMia. Glamorous gowns, designer lehengas & contemporary ethnic wear for wedding receptions. Stand out at every event.',
-    h1: 'Reception Outfits Collection',
-    content: '<p>Make a statement at wedding receptions with our glamorous collection. Designer lehengas, contemporary gowns, and elegant ethnic wear for the modern woman.</p>',
+    title: 'Reception Outfits Online | Indian Wedding Reception Dresses - LuxeMia',
+    description: 'Shop reception outfits online at LuxeMia. Explore reception lehengas, sarees, gowns, Indo-western outfits, cocktail looks, and Indian party wear.',
+    h1: 'Reception Outfits for Indian Weddings',
+    content: '<p>Shop Indian reception outfits selected for wedding receptions, cocktail events, engagement parties, sangeet nights, and formal evening celebrations. This reception-focused collection highlights reception lehengas, reception sarees, reception gowns, Indo-western reception outfits, cocktail reception outfits, and party wear Indian outfits for polished event shopping online.</p><p>Browse <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> for broader ceremony shopping, or explore <a href="/lehengas">reception lehengas</a>, <a href="/sarees">reception sarees</a>, <a href="/suits">anarkali suits</a>, and <a href="/indowestern">Indo-western outfits</a> for evening receptions and cocktail events.</p>',
   },
   {
     path: '/collections/festive-wear',
