@@ -86,6 +86,7 @@ const staticPages = [
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
   { loc: '/press', changefreq: 'monthly', priority: '0.5' },
   { loc: '/collections/bridal-lehengas', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/wedding-sarees', changefreq: 'weekly', priority: '0.9' },
 ];
 
 // Blog posts

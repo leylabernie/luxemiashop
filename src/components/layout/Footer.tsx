@@ -14,7 +14,7 @@ const footerLinks = {
   ],
   collections: [
     { name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' },
-    { name: 'Wedding Sarees', href: '/sarees' },
+    { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
     { name: 'Wedding Guest Outfits', href: '/collections/wedding-guest-outfits' },
     { name: 'Indo-Western', href: '/indowestern' },
     { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },

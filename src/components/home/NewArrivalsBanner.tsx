@@ -40,7 +40,7 @@ const slides: FeaturedSlide[] = [
     ctas: [
       { label: 'LEHENGAS', link: '/lehengas' },
       { label: 'BRIDAL', link: '/collections/bridal-lehengas' },
-      { label: 'WEDDING', link: '/wedding-sarees' },
+      { label: 'WEDDING', link: '/collections/wedding-sarees' },
     ],
   },
   {

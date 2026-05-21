@@ -3,6 +3,7 @@ const SITE_URL = 'https://luxemia.shop';
 export type CollectionIntent =
   | 'category'
   | 'bridal'
+  | 'wedding'
   | 'wedding-guest'
   | 'festival'
   | 'ceremony'
@@ -14,6 +15,7 @@ export type CollectionRoutePath =
   | '/suits'
   | '/menswear'
   | '/collections/bridal-lehengas'
+  | '/collections/wedding-sarees'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -64,6 +66,29 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Can bridal lehengas be worn for reception or engagement events?',
     ],
   },
+  '/collections/wedding-sarees': {
+    path: '/collections/wedding-sarees',
+    title: 'Wedding Sarees Online | Indian Bridal & Silk Sarees - LuxeMia',
+    description: 'Shop wedding sarees online at LuxeMia. Explore Indian wedding sarees, Banarasi wedding sarees, Kanjivaram and Kanchipuram silk sarees for ceremonies.',
+    canonical: `${SITE_URL}/collections/wedding-sarees`,
+    ogImage: `${SITE_URL}/og/og-sarees.jpg`,
+    h1: 'Wedding Sarees for Indian Ceremonies',
+    semanticTitle: 'Indian wedding sarees, Banarasi wedding sarees, Kanjivaram sarees, and Kanchipuram silk wedding sarees',
+    primaryEntity: 'Indian Wedding Sarees',
+    secondaryEntities: ['Banarasi wedding sarees', 'Kanjivaram wedding sarees', 'Kanchipuram silk wedding sarees', 'Bridal wedding sarees'],
+    intent: 'wedding',
+    relatedCollections: [
+      { label: 'All Sarees', path: '/sarees' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Mehendi Outfits', path: '/collections/mehendi-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy wedding sarees online?',
+      'What saree should I wear for an Indian wedding ceremony?',
+      'What is the difference between Banarasi and Kanjivaram wedding sarees?',
+    ],
+  },
   '/lehengas': {
     path: '/lehengas',
     title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia',
@@ -89,24 +114,25 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
   },
   '/sarees': {
     path: '/sarees',
-    title: 'Buy Sarees Online | Indian Silk, Wedding & Banarasi Sarees - LuxeMia',
-    description: 'Buy Indian sarees online at LuxeMia. Shop Banarasi silk sarees, Kanchipuram wedding sarees, georgette & chiffon sarees. Free shipping to USA, Canada & Australia.',
+    title: 'Buy Sarees Online | Indian Silk, Banarasi & Designer Sarees - LuxeMia',
+    description: 'Buy Indian sarees online at LuxeMia. Shop Banarasi silk sarees, Kanchipuram sarees, georgette, chiffon, tissue, and designer sarees.',
     canonical: `${SITE_URL}/sarees`,
     ogImage: `${SITE_URL}/og/og-sarees.jpg`,
     h1: 'Sarees',
-    semanticTitle: 'Indian silk, wedding, Banarasi, and Kanchipuram sarees online',
+    semanticTitle: 'Indian silk, Banarasi, Kanchipuram, georgette, chiffon, and designer sarees online',
     primaryEntity: 'Indian Sarees',
-    secondaryEntities: ['Wedding sarees', 'Banarasi silk sarees', 'Kanchipuram sarees', 'Georgette sarees'],
+    secondaryEntities: ['Banarasi silk sarees', 'Kanchipuram sarees', 'Georgette sarees', 'Designer sarees'],
     intent: 'category',
     relatedCollections: [
       { label: 'Lehengas', path: '/lehengas' },
+      { label: 'Wedding Sarees', path: '/collections/wedding-sarees' },
       { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
       { label: 'Diwali Outfits', path: '/collections/diwali-outfits' },
       { label: 'Salwar Kameez', path: '/suits' },
     ],
     aiSearchQuestions: [
       'Where can I buy Indian sarees online?',
-      'What saree should I wear to an Indian wedding?',
+      'What saree should I choose for different occasions?',
       'Does LuxeMia ship sarees to the USA, Canada, and Australia?',
     ],
   },

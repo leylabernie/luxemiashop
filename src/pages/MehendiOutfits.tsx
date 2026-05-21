@@ -155,7 +155,7 @@ const MehendiOutfits = () => {
               <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
               <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
               <Link to="/suits"><Button variant="outline" size="sm">Anarkali Suits</Button></Link>
-              <Link to="/sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
+              <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
               <Link to="/collections/diwali-outfits"><Button variant="outline" size="sm">Diwali Outfits</Button></Link>
             </div>
           </div>
