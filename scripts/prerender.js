@@ -194,7 +194,7 @@ const routes = [
       <h2>Featured Collections</h2>
       <ul>
         <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a></li>
-        <li><a href="/sarees">Wedding Sarees</a></li>
+        <li><a href="/collections/wedding-sarees">Wedding Sarees</a></li>
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
@@ -229,14 +229,14 @@ const routes = [
   },
   {
     path: '/sarees',
-    title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
-    description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with shipping to USA, Canada & Australia. Authentic Indian handloom sarees & 2026 trends.',
-    h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
+    title: 'Sarees Collection | Silk, Banarasi & Designer Sarees Online | LuxeMia',
+    description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, chiffon, tissue, and pre-draped sarees with shipping to USA, Canada & Australia.',
+    h1: 'Designer Sarees - Silk, Banarasi & Occasion Collection',
     content: `
-      <p>Explore our beautiful collection of designer sarees. From Banarasi silk to elegant Kanjeevaram, each saree is made with care by skilled Indian makers. Perfect for weddings, festivals, and special occasions.</p>
+      <p>Explore our broad collection of designer sarees. From Banarasi silk to elegant Kanjeevaram, georgette, chiffon, tissue, and pre-draped styles, each saree is made with care by skilled Indian makers for festivals, parties, and special occasions.</p>
       <h2>Saree Categories</h2>
       <ul>
-        <li><a href="/sarees">Wedding Sarees</a> — Traditional & contemporary wedding sarees</li>
+        <li><a href="/collections/wedding-sarees">Wedding Sarees</a> — Traditional & contemporary wedding sarees</li>
         <li>Banarasi Silk Sarees — Handwoven in Varanasi</li>
         <li>Kanjeevaram Silk Sarees — Premium South Indian silk</li>
         <li>Georgette Sarees — Lightweight & elegant</li>
@@ -338,7 +338,7 @@ const routes = [
       <p>Browse our curated collections of Indian ethnic wear, thoughtfully organized for every occasion.</p>
       <ul>
         <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Bridal wear for your special day</li>
-        <li><a href="/sarees">Wedding Sarees</a> — Elegant sarees for wedding celebrations</li>
+        <li><a href="/collections/wedding-sarees">Wedding Sarees</a> — Elegant sarees for wedding celebrations</li>
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
       </ul>
@@ -365,10 +365,10 @@ const routes = [
   },
   {
     path: '/collections/wedding-sarees',
-    title: 'Wedding Saree Collection | Silk & Designer Sarees | LuxeMia',
-    description: 'Shop wedding sarees at LuxeMia. Banarasi silk, Kanjeevaram & designer wedding sarees. Traditional craftsmanship, modern elegance. Free shipping.',
-    h1: 'Wedding Saree Collection',
-    content: '<p>Explore our curated wedding saree collection. From Banarasi silk to Kanjeevaram, each saree combines traditional craftsmanship with modern elegance for your special day.</p>',
+    title: 'Wedding Sarees Online | Indian Bridal & Silk Sarees - LuxeMia',
+    description: 'Shop wedding sarees online at LuxeMia. Explore Indian wedding sarees, Banarasi wedding sarees, Kanjivaram and Kanchipuram silk sarees for ceremonies.',
+    h1: 'Wedding Sarees for Indian Ceremonies',
+    content: '<p>Shop Indian wedding sarees selected for brides, family members, and wedding guests planning ceremony, engagement, reception, and sangeet looks. Explore Banarasi wedding sarees, Kanjivaram sarees, Kanchipuram silk wedding sarees, tissue sarees, zari work, and designer sarees for Indian wedding shopping online.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader festive, casual, and everyday drape styles, or continue wedding shopping with <a href="/collections/bridal-lehengas">bridal lehengas</a> and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
     path: '/collections/reception-outfits',
@@ -623,7 +623,7 @@ const routes = [
       <h2>Shop by Ceremony</h2>
       <ul>
         <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Wedding guest lehengas for the main ceremony</li>
-        <li><a href="/sarees">Silk Sarees</a> — Wedding guest sarees for formal ceremonies</li>
+        <li><a href="/collections/wedding-sarees">Wedding Sarees</a> — Wedding guest sarees for formal ceremonies</li>
         <li><a href="/suits">Anarkali Suits</a> — Versatile suits for multiple wedding ceremonies</li>
         <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Bright and festive mehendi ceremony wear</li>
       </ul>

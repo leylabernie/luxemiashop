@@ -616,7 +616,7 @@ const RELATED_COLLECTIONS: Record<ProductCategory, CollectionLink[]> = {
   ],
   saree: [
     { name: 'Banarasi Sarees', url: '/sarees', description: 'Handwoven silk sarees from Varanasi' },
-    { name: 'Wedding Sarees', url: '/sarees', description: 'Bridal and wedding guest saree collection' },
+    { name: 'Wedding Sarees', url: '/collections/wedding-sarees', description: 'Bridal and wedding guest saree collection' },
     { name: 'Temple Jewelry', url: '/jewelry', description: 'Traditional jewelry for silk sarees' },
     { name: 'Reception Wear', url: '/sarees', description: 'Georgette and chiffon sarees for evening events' },
   ],

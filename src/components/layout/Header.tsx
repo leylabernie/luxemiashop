@@ -34,7 +34,7 @@ const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bestsellers', href: '/bestsellers' },
   { name: 'Bridal', href: '/collections/bridal-lehengas' },
-  { name: 'Wedding Sarees', href: '/sarees' },
+  { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
 ];
 
 const occasionLinks = [
