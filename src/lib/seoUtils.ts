@@ -299,7 +299,7 @@ export function generateProductBreadcrumbs(product: AnyProduct): Array<{name: st
     'Salwar Kameez': '/collections/salwar-kameez',
     'Anarkali Suits': '/collections/anarkali-suits',
     'Pakistani Suits': '/collections/pakistani-suits',
-    'Sharara Suits': '/suits',
+    'Sharara Suits': '/collections/sharara-suits',
     'Palazzo Suits': '/suits',
     'Groom Sherwanis': '/menswear',
     'Sherwanis': '/menswear',
