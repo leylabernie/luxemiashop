@@ -403,6 +403,13 @@ const routes = [
     content: '<p>Shop silk sarees selected for weddings, festivals, receptions, pujas, and heirloom-inspired Indian dressing. This silk-focused collection highlights Banarasi silk sarees, Kanjivaram silk sarees, Kanchipuram silk sarees, tissue silk sarees, pattu sarees, zari silk sarees, soft silk sarees, and wedding silk sarees for event-ready shopping online.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader drape styles, or continue occasion shopping with <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/designer-sarees">designer sarees</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
+    path: '/collections/pakistani-suits',
+    title: 'Pakistani Suits Online | Pakistani Salwar Suits - LuxeMia',
+    description: 'Shop Pakistani suits online at LuxeMia. Explore Pakistani salwar suits, designer suits, lawn suits, wedding suits, Eid suits, anarkali suits, and palazzo suits.',
+    h1: 'Pakistani Suits',
+    content: '<p>Shop Pakistani suits and Pakistani salwar suits online for Eid, weddings, receptions, parties, festive gatherings, and everyday occasion dressing. This collection highlights Pakistani designer suits, lawn suits, wedding suits, Eid suits, anarkali suits, palazzo suits, sharara suits, gharara suits, and embroidered salwar kameez styles for shoppers in the USA, Canada, Australia, and beyond.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/eid-outfits">Eid outfits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',

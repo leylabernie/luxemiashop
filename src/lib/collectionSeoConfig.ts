@@ -24,6 +24,7 @@ export type CollectionRoutePath =
   | '/collections/party-wear-lehengas'
   | '/collections/designer-sarees'
   | '/collections/silk-sarees'
+  | '/collections/pakistani-suits'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -187,6 +188,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy silk sarees online?',
       'Which silk sarees are best for Indian weddings?',
       'What is the difference between Banarasi and Kanjivaram silk sarees?',
+    ],
+  },
+  '/collections/pakistani-suits': {
+    path: '/collections/pakistani-suits',
+    title: 'Pakistani Suits Online | Pakistani Salwar Suits - LuxeMia',
+    description: 'Shop Pakistani suits online at LuxeMia. Explore Pakistani salwar suits, designer suits, lawn suits, wedding suits, Eid suits, anarkali suits, and palazzo suits.',
+    canonical: `${SITE_URL}/collections/pakistani-suits`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Pakistani Suits',
+    semanticTitle: 'Pakistani suits, Pakistani salwar suits, designer suits, lawn suits, wedding suits, Eid suits, anarkali suits, and palazzo suits',
+    primaryEntity: 'Pakistani Suits',
+    secondaryEntities: ['Pakistani salwar suits', 'Pakistani designer suits', 'Pakistani lawn suits', 'Pakistani wedding suits', 'Eid Pakistani suits', 'Pakistani party wear suits', 'Pakistani anarkali suits', 'Pakistani palazzo suits', 'Pakistani suits online USA'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Eid Outfits', path: '/collections/eid-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Mehendi Outfits', path: '/collections/mehendi-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Pakistani suits online in the USA?',
+      'What is the difference between Pakistani suits and regular salwar kameez?',
+      'Which Pakistani suits are best for Eid, weddings, and parties?',
     ],
   },
   '/lehengas': {
