@@ -25,6 +25,7 @@ Allow: /collections/designer-sarees
 Allow: /collections/silk-sarees
 Allow: /collections/pakistani-suits
 Allow: /collections/anarkali-suits
+Allow: /collections/salwar-kameez
 Allow: /collections/diwali-outfits
 Allow: /collections/mehendi-outfits
 Allow: /collections/eid-outfits

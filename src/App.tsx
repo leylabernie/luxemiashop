@@ -30,6 +30,7 @@ const DesignerSarees = lazy(() => import("./pages/DesignerSarees"));
 const SilkSarees = lazy(() => import("./pages/SilkSarees"));
 const PakistaniSuits = lazy(() => import("./pages/PakistaniSuits"));
 const AnarkaliSuits = lazy(() => import("./pages/AnarkaliSuits"));
+const SalwarKameez = lazy(() => import("./pages/SalwarKameez"));
 const Sarees = lazy(() => import("./pages/Sarees"));
 const Suits = lazy(() => import("./pages/Suits"));
 const Menswear = lazy(() => import("./pages/Menswear"));
@@ -132,7 +133,6 @@ const App = () => (
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/festive-wear" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/sarees" element={<Navigate to="/sarees" replace />} />
-                <Route path="/collections/salwar-kameez" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/suits" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/menswear" element={<Navigate to="/menswear" replace />} />
                 <Route path="/collections/lehengas" element={<Navigate to="/lehengas" replace />} />
@@ -148,6 +148,7 @@ const App = () => (
                 <Route path="/collections/silk-sarees" element={<Suspense fallback={<PageLoader />}><SilkSarees /></Suspense>} />
                 <Route path="/collections/pakistani-suits" element={<Suspense fallback={<PageLoader />}><PakistaniSuits /></Suspense>} />
                 <Route path="/collections/anarkali-suits" element={<Suspense fallback={<PageLoader />}><AnarkaliSuits /></Suspense>} />
+                <Route path="/collections/salwar-kameez" element={<Suspense fallback={<PageLoader />}><SalwarKameez /></Suspense>} />
                 <Route path="/collections/diwali-outfits" element={<Suspense fallback={<PageLoader />}><DiwaliOutfits /></Suspense>} />
                 <Route path="/collections/wedding-guest-outfits" element={<Suspense fallback={<PageLoader />}><WeddingGuestOutfits /></Suspense>} />
                 <Route path="/collections/mehendi-outfits" element={<Suspense fallback={<PageLoader />}><MehendiOutfits /></Suspense>} />

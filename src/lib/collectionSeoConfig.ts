@@ -26,6 +26,7 @@ export type CollectionRoutePath =
   | '/collections/silk-sarees'
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
+  | '/collections/salwar-kameez'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -237,6 +238,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Anarkali suits online?',
       'Are Anarkali suits good for weddings and parties?',
       'How do I choose between floor length and regular Anarkali suits?',
+    ],
+  },
+  '/collections/salwar-kameez': {
+    path: '/collections/salwar-kameez',
+    title: 'Salwar Kameez Online | Designer Indian Salwar Suits - LuxeMia',
+    description: 'Shop salwar kameez online at LuxeMia. Explore designer salwar kameez, Indian salwar suits, embroidered suits, festive salwar suits, party wear styles, and Pakistani style salwar kameez.',
+    canonical: `${SITE_URL}/collections/salwar-kameez`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Salwar Kameez',
+    semanticTitle: 'Salwar kameez, designer salwar kameez, Indian salwar suits, embroidered salwar kameez, festive salwar suits, and party wear salwar kameez',
+    primaryEntity: 'Salwar Kameez',
+    secondaryEntities: ['Designer salwar kameez', 'Indian salwar suits', 'Salwar suits online', 'Embroidered salwar kameez', 'Festive salwar suits', 'Party wear salwar kameez', 'Pakistani style salwar kameez', 'Ethnic suits for women'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Eid Outfits', path: '/collections/eid-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy salwar kameez online?',
+      'What is the difference between salwar kameez and Anarkali suits?',
+      'Which salwar suits are best for parties, Eid, and weddings?',
     ],
   },
   '/lehengas': {

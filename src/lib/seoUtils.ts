@@ -296,6 +296,7 @@ export function generateProductBreadcrumbs(product: AnyProduct): Array<{name: st
     'Occasional Sarees': '/sarees',
     'Bridal Sarees': '/sarees',
     'Silk Sarees': '/collections/silk-sarees',
+    'Salwar Kameez': '/collections/salwar-kameez',
     'Anarkali Suits': '/collections/anarkali-suits',
     'Pakistani Suits': '/collections/pakistani-suits',
     'Sharara Suits': '/suits',

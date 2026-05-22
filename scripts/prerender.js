@@ -417,6 +417,13 @@ const routes = [
     content: '<p>Shop Anarkali suits online for weddings, parties, Eid, festivals, receptions, sangeet nights, and polished Indian occasion dressing. This collection highlights designer Anarkali suits, wedding Anarkali suits, party wear Anarkali suits, floor length Anarkali suits, embroidered Anarkali suits, and festive Anarkali suits for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/pakistani-suits">Pakistani suits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
   },
   {
+    path: '/collections/salwar-kameez',
+    title: 'Salwar Kameez Online | Designer Indian Salwar Suits - LuxeMia',
+    description: 'Shop salwar kameez online at LuxeMia. Explore designer salwar kameez, Indian salwar suits, embroidered suits, festive salwar suits, party wear styles, and Pakistani style salwar kameez.',
+    h1: 'Salwar Kameez',
+    content: '<p>Shop salwar kameez and Indian salwar suits online for weddings, parties, Eid, festivals, receptions, and everyday occasion dressing. This collection highlights designer salwar kameez, embroidered salwar kameez, festive salwar suits, party wear salwar kameez, Pakistani style salwar kameez, and ethnic suits for women shopping from the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader suit styles, or continue occasion shopping with <a href="/collections/anarkali-suits">Anarkali suits</a>, <a href="/collections/pakistani-suits">Pakistani suits</a>, and <a href="/collections/eid-outfits">Eid outfits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
