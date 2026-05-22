@@ -25,6 +25,7 @@ export type CollectionRoutePath =
   | '/collections/designer-sarees'
   | '/collections/silk-sarees'
   | '/collections/pakistani-suits'
+  | '/collections/anarkali-suits'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -212,6 +213,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Pakistani suits online in the USA?',
       'What is the difference between Pakistani suits and regular salwar kameez?',
       'Which Pakistani suits are best for Eid, weddings, and parties?',
+    ],
+  },
+  '/collections/anarkali-suits': {
+    path: '/collections/anarkali-suits',
+    title: 'Anarkali Suits Online | Designer Anarkali Suits - LuxeMia',
+    description: 'Shop Anarkali suits online at LuxeMia. Explore designer Anarkali suits, wedding Anarkali suits, party wear Anarkali suits, floor length styles, and embroidered festive suits.',
+    canonical: `${SITE_URL}/collections/anarkali-suits`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Anarkali Suits',
+    semanticTitle: 'Anarkali suits, designer Anarkali suits, wedding Anarkali suits, party wear Anarkali suits, floor length Anarkali suits, and embroidered festive Anarkali suits',
+    primaryEntity: 'Anarkali Suits',
+    secondaryEntities: ['Designer Anarkali suits', 'Wedding Anarkali suits', 'Party wear Anarkali suits', 'Indian Anarkali suits online', 'Floor length Anarkali suits', 'Embroidered Anarkali suits', 'Festive Anarkali suits'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Eid Outfits', path: '/collections/eid-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Anarkali suits online?',
+      'Are Anarkali suits good for weddings and parties?',
+      'How do I choose between floor length and regular Anarkali suits?',
     ],
   },
   '/lehengas': {
