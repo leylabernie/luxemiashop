@@ -27,6 +27,7 @@ export type CollectionRoutePath =
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
   | '/collections/salwar-kameez'
+  | '/collections/sharara-suits'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -262,6 +263,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy salwar kameez online?',
       'What is the difference between salwar kameez and Anarkali suits?',
       'Which salwar suits are best for parties, Eid, and weddings?',
+    ],
+  },
+  '/collections/sharara-suits': {
+    path: '/collections/sharara-suits',
+    title: 'Sharara Suits Online | Designer Sharara Sets - LuxeMia',
+    description: 'Shop sharara suits online at LuxeMia. Explore designer sharara suits, sharara sets, wedding sharara suits, party wear sharara suits, Pakistani sharara suits, festive outfits, and embroidered styles.',
+    canonical: `${SITE_URL}/collections/sharara-suits`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Sharara Suits',
+    semanticTitle: 'Sharara suits, designer sharara suits, sharara sets, wedding sharara suits, party wear sharara suits, Pakistani sharara suits, and embroidered festive sharara outfits',
+    primaryEntity: 'Sharara Suits',
+    secondaryEntities: ['Designer sharara suits', 'Sharara sets', 'Wedding sharara suits', 'Party wear sharara suits', 'Pakistani sharara suits', 'Festive sharara outfits', 'Embroidered sharara suits', 'Sharara suits online'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Salwar Kameez', path: '/collections/salwar-kameez' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy sharara suits online?',
+      'Are sharara suits good for weddings, Eid, and parties?',
+      'What is the difference between sharara suits and gharara suits?',
     ],
   },
   '/lehengas': {

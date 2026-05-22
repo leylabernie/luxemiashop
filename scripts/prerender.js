@@ -424,6 +424,13 @@ const routes = [
     content: '<p>Shop salwar kameez and Indian salwar suits online for weddings, parties, Eid, festivals, receptions, and everyday occasion dressing. This collection highlights designer salwar kameez, embroidered salwar kameez, festive salwar suits, party wear salwar kameez, Pakistani style salwar kameez, and ethnic suits for women shopping from the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader suit styles, or continue occasion shopping with <a href="/collections/anarkali-suits">Anarkali suits</a>, <a href="/collections/pakistani-suits">Pakistani suits</a>, and <a href="/collections/eid-outfits">Eid outfits</a>.</p>',
   },
   {
+    path: '/collections/sharara-suits',
+    title: 'Sharara Suits Online | Designer Sharara Sets - LuxeMia',
+    description: 'Shop sharara suits online at LuxeMia. Explore designer sharara suits, sharara sets, wedding sharara suits, party wear sharara suits, Pakistani sharara suits, festive outfits, and embroidered styles.',
+    h1: 'Sharara Suits',
+    content: '<p>Shop sharara suits and sharara sets online for weddings, parties, Eid, festivals, mehendi, sangeet, nikah events, receptions, and polished Indian occasion dressing. This collection highlights designer sharara suits, wedding sharara suits, party wear sharara suits, Pakistani sharara suits, embroidered sharara suits, and festive sharara outfits for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, and <a href="/collections/pakistani-suits">Pakistani suits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
