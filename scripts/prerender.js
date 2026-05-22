@@ -198,6 +198,7 @@ const routes = [
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections/party-wear-lehengas">Party Wear Lehengas</a></li>
         <li><a href="/collections/designer-sarees">Designer Sarees</a></li>
+        <li><a href="/collections/silk-sarees">Silk Sarees</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
       <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Handcrafted with love by Indian artisans.</p>
@@ -239,6 +240,7 @@ const routes = [
       <h2>Saree Categories</h2>
       <ul>
         <li><a href="/collections/wedding-sarees">Wedding Sarees</a> — Traditional & contemporary wedding sarees</li>
+        <li><a href="/collections/silk-sarees">Silk Sarees</a> - Banarasi, Kanjivaram, and Kanchipuram silk sarees</li>
         <li>Banarasi Silk Sarees — Handwoven in Varanasi</li>
         <li>Kanjeevaram Silk Sarees — Premium South Indian silk</li>
         <li>Georgette Sarees — Lightweight & elegant</li>
@@ -392,6 +394,13 @@ const routes = [
     description: 'Shop designer sarees online at LuxeMia. Explore Indian designer sarees, party wear designer sarees, wedding guest sarees, festive sarees, and boutique sarees.',
     h1: 'Designer Sarees',
     content: '<p>Shop designer sarees selected for parties, wedding guest looks, receptions, festive celebrations, sangeet nights, and polished Indian event dressing. This designer-focused collection highlights Indian designer sarees online, party wear designer sarees, wedding guest sarees, festive designer sarees, embroidered sarees, silk sarees, georgette sarees, chiffon sarees, and boutique sarees for event-ready shopping.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader drape styles, or continue occasion shopping with <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
+  },
+  {
+    path: '/collections/silk-sarees',
+    title: 'Silk Sarees Online | Banarasi & Kanchipuram Silk Sarees - LuxeMia',
+    description: 'Shop silk sarees online at LuxeMia. Explore Banarasi silk sarees, Kanjivaram and Kanchipuram silk sarees, tissue silk, pattu sarees, and wedding silk sarees.',
+    h1: 'Silk Sarees',
+    content: '<p>Shop silk sarees selected for weddings, festivals, receptions, pujas, and heirloom-inspired Indian dressing. This silk-focused collection highlights Banarasi silk sarees, Kanjivaram silk sarees, Kanchipuram silk sarees, tissue silk sarees, pattu sarees, zari silk sarees, soft silk sarees, and wedding silk sarees for event-ready shopping online.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader drape styles, or continue occasion shopping with <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/designer-sarees">designer sarees</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
     path: '/collections/festive-wear',

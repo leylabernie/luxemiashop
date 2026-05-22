@@ -42,6 +42,7 @@ export const staticPages = [
   { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9', title: 'Reception Outfits for Indian Weddings' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Party Wear Lehengas for Indian Events' },
   { loc: '/collections/designer-sarees', changefreq: 'weekly', priority: '0.9', title: 'Designer Sarees' },
+  { loc: '/collections/silk-sarees', changefreq: 'weekly', priority: '0.9', title: 'Silk Sarees' },
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9', title: 'Diwali Outfits 2026' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Guest Outfits' },
   { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Mehendi Ceremony Outfits' },

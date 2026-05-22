@@ -22,6 +22,7 @@ Allow: /collections/bridal-lehengas
 Allow: /collections/wedding-sarees
 Allow: /collections/party-wear-lehengas
 Allow: /collections/designer-sarees
+Allow: /collections/silk-sarees
 Allow: /collections/diwali-outfits
 Allow: /collections/mehendi-outfits
 Allow: /collections/eid-outfits
