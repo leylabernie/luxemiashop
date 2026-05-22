@@ -7,6 +7,7 @@ export type CollectionIntent =
   | 'reception'
   | 'party'
   | 'designer'
+  | 'silk'
   | 'wedding-guest'
   | 'festival'
   | 'ceremony'
@@ -22,6 +23,7 @@ export type CollectionRoutePath =
   | '/collections/reception-outfits'
   | '/collections/party-wear-lehengas'
   | '/collections/designer-sarees'
+  | '/collections/silk-sarees'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -162,6 +164,29 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy designer sarees online?',
       'Which designer sarees are best for parties and weddings?',
       'What fabrics should I choose for designer sarees?',
+    ],
+  },
+  '/collections/silk-sarees': {
+    path: '/collections/silk-sarees',
+    title: 'Silk Sarees Online | Banarasi & Kanchipuram Silk Sarees - LuxeMia',
+    description: 'Shop silk sarees online at LuxeMia. Explore Banarasi silk sarees, Kanjivaram and Kanchipuram silk sarees, tissue silk, pattu sarees, and wedding silk sarees.',
+    canonical: `${SITE_URL}/collections/silk-sarees`,
+    ogImage: `${SITE_URL}/og/og-sarees.jpg`,
+    h1: 'Silk Sarees',
+    semanticTitle: 'Silk sarees, Banarasi silk sarees, Kanjivaram silk sarees, Kanchipuram silk sarees, tissue silk sarees, and wedding silk sarees',
+    primaryEntity: 'Silk Sarees',
+    secondaryEntities: ['Banarasi silk sarees', 'Kanjivaram silk sarees', 'Kanchipuram silk sarees', 'Tissue silk sarees', 'Pattu sarees', 'Zari silk sarees', 'Wedding silk sarees', 'Soft silk sarees'],
+    intent: 'silk',
+    relatedCollections: [
+      { label: 'All Sarees', path: '/sarees' },
+      { label: 'Wedding Sarees', path: '/collections/wedding-sarees' },
+      { label: 'Designer Sarees', path: '/collections/designer-sarees' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy silk sarees online?',
+      'Which silk sarees are best for Indian weddings?',
+      'What is the difference between Banarasi and Kanjivaram silk sarees?',
     ],
   },
   '/lehengas': {

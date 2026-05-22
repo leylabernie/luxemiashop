@@ -74,6 +74,7 @@ const STATIC_ROUTES = [
   '/collections/reception-outfits',
   '/collections/party-wear-lehengas',
   '/collections/designer-sarees',
+  '/collections/silk-sarees',
   '/collections/diwali-outfits',
   '/collections/wedding-guest-outfits',
   '/collections/mehendi-outfits',

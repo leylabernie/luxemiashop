@@ -295,7 +295,7 @@ export function generateProductBreadcrumbs(product: AnyProduct): Array<{name: st
     'Festive Lehengas': '/lehengas',
     'Occasional Sarees': '/sarees',
     'Bridal Sarees': '/sarees',
-    'Silk Sarees': '/sarees',
+    'Silk Sarees': '/collections/silk-sarees',
     'Anarkali Suits': '/suits',
     'Sharara Suits': '/suits',
     'Palazzo Suits': '/suits',
