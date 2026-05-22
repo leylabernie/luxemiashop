@@ -92,6 +92,7 @@ const staticPages = [
   { loc: '/collections/designer-sarees', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/silk-sarees', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9' },
 ];
 
 // Blog posts
