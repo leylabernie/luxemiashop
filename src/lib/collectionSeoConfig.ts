@@ -29,6 +29,7 @@ export type CollectionRoutePath =
   | '/collections/salwar-kameez'
   | '/collections/sharara-suits'
   | '/collections/gharara-suits'
+  | '/collections/indo-western-dresses'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -312,6 +313,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy gharara suits online?',
       'Are gharara suits good for weddings, Eid, and parties?',
       'What is the difference between gharara suits and sharara suits?',
+    ],
+  },
+  '/collections/indo-western-dresses': {
+    path: '/collections/indo-western-dresses',
+    title: 'Indo Western Dresses Online | Indian Fusion Wear - LuxeMia',
+    description: 'Shop Indo Western dresses online at LuxeMia. Explore Indian fusion dresses, party wear Indo Western outfits, wedding guest looks, modern ethnic dresses, and Indian cocktail outfits.',
+    canonical: `${SITE_URL}/collections/indo-western-dresses`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Indo Western Dresses',
+    semanticTitle: 'Indo Western dresses, Indian fusion dresses, party wear Indo Western outfits, wedding guest Indo Western dresses, and modern ethnic dresses',
+    primaryEntity: 'Indo Western Dresses',
+    secondaryEntities: ['Indian fusion dresses', 'Indo Western outfits for women', 'Wedding guest Indo Western dresses', 'Party wear Indo Western dresses', 'Modern ethnic dresses', 'Indian cocktail outfits', 'Festive fusion wear'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'Indo-Western', path: '/indowestern' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Party Wear Lehengas', path: '/collections/party-wear-lehengas' },
+      { label: 'All Suits', path: '/suits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Indo Western dresses online?',
+      'Are Indo Western dresses good for Indian wedding guests and cocktail parties?',
+      'What is the difference between Indo Western dresses and traditional Indian outfits?',
     ],
   },
   '/lehengas': {

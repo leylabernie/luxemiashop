@@ -438,6 +438,13 @@ const routes = [
     content: '<p>Shop gharara suits and gharara sets online for weddings, parties, Eid, festivals, mehendi, sangeet, nikah events, receptions, and polished Indian occasion dressing. This collection highlights designer gharara suits, wedding gharara suits, party wear gharara suits, Pakistani gharara suits, embroidered gharara suits, and festive gharara outfits for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/sharara-suits">Sharara suits</a>, and <a href="/collections/pakistani-suits">Pakistani suits</a>.</p>',
   },
   {
+    path: '/collections/indo-western-dresses',
+    title: 'Indo Western Dresses Online | Indian Fusion Wear - LuxeMia',
+    description: 'Shop Indo Western dresses online at LuxeMia. Explore Indian fusion dresses, party wear Indo Western outfits, wedding guest looks, modern ethnic dresses, and Indian cocktail outfits.',
+    h1: 'Indo Western Dresses',
+    content: '<p>Shop Indo Western dresses and Indian fusion dresses for receptions, sangeet nights, cocktail parties, festive dinners, and wedding guest occasions. This collection highlights Indo Western outfits for women, wedding guest Indo Western dresses, party wear Indo Western dresses, modern ethnic dresses, Indian cocktail outfits, and festive fusion wear.</p><p>Browse the full <a href="/indowestern">Indo-Western collection</a> for broader fusion styles, or continue occasion shopping with <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/party-wear-lehengas">party wear lehengas</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
