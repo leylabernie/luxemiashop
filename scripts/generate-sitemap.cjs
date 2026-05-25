@@ -96,6 +96,7 @@ const staticPages = [
   { loc: '/collections/salwar-kameez', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/sharara-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/gharara-suits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/indo-western-dresses', changefreq: 'weekly', priority: '0.9' },
 ];
 
 // Blog posts
