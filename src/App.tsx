@@ -32,6 +32,7 @@ const PakistaniSuits = lazy(() => import("./pages/PakistaniSuits"));
 const AnarkaliSuits = lazy(() => import("./pages/AnarkaliSuits"));
 const SalwarKameez = lazy(() => import("./pages/SalwarKameez"));
 const ShararaSuits = lazy(() => import("./pages/ShararaSuits"));
+const GhararaSuits = lazy(() => import("./pages/GhararaSuits"));
 const Sarees = lazy(() => import("./pages/Sarees"));
 const Suits = lazy(() => import("./pages/Suits"));
 const Menswear = lazy(() => import("./pages/Menswear"));
@@ -151,6 +152,7 @@ const App = () => (
                 <Route path="/collections/anarkali-suits" element={<Suspense fallback={<PageLoader />}><AnarkaliSuits /></Suspense>} />
                 <Route path="/collections/salwar-kameez" element={<Suspense fallback={<PageLoader />}><SalwarKameez /></Suspense>} />
                 <Route path="/collections/sharara-suits" element={<Suspense fallback={<PageLoader />}><ShararaSuits /></Suspense>} />
+                <Route path="/collections/gharara-suits" element={<Suspense fallback={<PageLoader />}><GhararaSuits /></Suspense>} />
                 <Route path="/collections/diwali-outfits" element={<Suspense fallback={<PageLoader />}><DiwaliOutfits /></Suspense>} />
                 <Route path="/collections/wedding-guest-outfits" element={<Suspense fallback={<PageLoader />}><WeddingGuestOutfits /></Suspense>} />
                 <Route path="/collections/mehendi-outfits" element={<Suspense fallback={<PageLoader />}><MehendiOutfits /></Suspense>} />

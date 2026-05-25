@@ -27,6 +27,7 @@ Allow: /collections/pakistani-suits
 Allow: /collections/anarkali-suits
 Allow: /collections/salwar-kameez
 Allow: /collections/sharara-suits
+Allow: /collections/gharara-suits
 Allow: /collections/diwali-outfits
 Allow: /collections/mehendi-outfits
 Allow: /collections/eid-outfits
