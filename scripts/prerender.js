@@ -431,6 +431,13 @@ const routes = [
     content: '<p>Shop sharara suits and sharara sets online for weddings, parties, Eid, festivals, mehendi, sangeet, nikah events, receptions, and polished Indian occasion dressing. This collection highlights designer sharara suits, wedding sharara suits, party wear sharara suits, Pakistani sharara suits, embroidered sharara suits, and festive sharara outfits for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, and <a href="/collections/pakistani-suits">Pakistani suits</a>.</p>',
   },
   {
+    path: '/collections/gharara-suits',
+    title: 'Gharara Suits Online | Designer Gharara Sets - LuxeMia',
+    description: 'Shop gharara suits online at LuxeMia. Explore designer gharara suits, gharara sets, wedding gharara suits, party wear gharara suits, Pakistani gharara suits, festive outfits, and embroidered styles.',
+    h1: 'Gharara Suits',
+    content: '<p>Shop gharara suits and gharara sets online for weddings, parties, Eid, festivals, mehendi, sangeet, nikah events, receptions, and polished Indian occasion dressing. This collection highlights designer gharara suits, wedding gharara suits, party wear gharara suits, Pakistani gharara suits, embroidered gharara suits, and festive gharara outfits for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/sharara-suits">Sharara suits</a>, and <a href="/collections/pakistani-suits">Pakistani suits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
