@@ -97,6 +97,7 @@ const staticPages = [
   { loc: '/collections/sharara-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/gharara-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/indo-western-dresses', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/kurta-sets', changefreq: 'weekly', priority: '0.9' },
 ];
 
 // Blog posts
