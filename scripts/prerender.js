@@ -445,6 +445,13 @@ const routes = [
     content: '<p>Shop Indo Western dresses and Indian fusion dresses for receptions, sangeet nights, cocktail parties, festive dinners, and wedding guest occasions. This collection highlights Indo Western outfits for women, wedding guest Indo Western dresses, party wear Indo Western dresses, modern ethnic dresses, Indian cocktail outfits, and festive fusion wear.</p><p>Browse the full <a href="/indowestern">Indo-Western collection</a> for broader fusion styles, or continue occasion shopping with <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/party-wear-lehengas">party wear lehengas</a>.</p>',
   },
   {
+    path: '/collections/kurta-sets',
+    title: 'Kurta Sets Online | Designer Indian Kurta Sets - LuxeMia',
+    description: 'Shop kurta sets online at LuxeMia. Explore designer kurta sets, Indian kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, and kurta dupatta sets.',
+    h1: 'Kurta Sets',
+    content: '<p>Shop kurta sets and Indian kurta sets for festive events, wedding guest looks, parties, Eid, Diwali, family celebrations, and polished everyday ethnic wear. This collection highlights designer kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, kurta dupatta sets, ethnic kurta sets for women, and Indian outfits for women.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',

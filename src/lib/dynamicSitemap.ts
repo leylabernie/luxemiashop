@@ -49,6 +49,7 @@ export const staticPages = [
   { loc: '/collections/sharara-suits', changefreq: 'weekly', priority: '0.9', title: 'Sharara Suits' },
   { loc: '/collections/gharara-suits', changefreq: 'weekly', priority: '0.9', title: 'Gharara Suits' },
   { loc: '/collections/indo-western-dresses', changefreq: 'weekly', priority: '0.9', title: 'Indo Western Dresses' },
+  { loc: '/collections/kurta-sets', changefreq: 'weekly', priority: '0.9', title: 'Kurta Sets' },
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9', title: 'Diwali Outfits 2026' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Guest Outfits' },
   { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Mehendi Ceremony Outfits' },

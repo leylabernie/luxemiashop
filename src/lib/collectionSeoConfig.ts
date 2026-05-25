@@ -30,6 +30,7 @@ export type CollectionRoutePath =
   | '/collections/sharara-suits'
   | '/collections/gharara-suits'
   | '/collections/indo-western-dresses'
+  | '/collections/kurta-sets'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -337,6 +338,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Indo Western dresses online?',
       'Are Indo Western dresses good for Indian wedding guests and cocktail parties?',
       'What is the difference between Indo Western dresses and traditional Indian outfits?',
+    ],
+  },
+  '/collections/kurta-sets': {
+    path: '/collections/kurta-sets',
+    title: 'Kurta Sets Online | Designer Indian Kurta Sets - LuxeMia',
+    description: 'Shop kurta sets online at LuxeMia. Explore designer kurta sets, Indian kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, and kurta dupatta sets.',
+    canonical: `${SITE_URL}/collections/kurta-sets`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Kurta Sets',
+    semanticTitle: 'Kurta sets, designer kurta sets, Indian kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, and kurta dupatta sets',
+    primaryEntity: 'Kurta Sets',
+    secondaryEntities: ['Designer kurta sets', 'Indian kurta sets', 'Festive kurta sets', 'Wedding guest kurta sets', 'Kurta pant sets', 'Kurta dupatta sets', 'Ethnic kurta sets for women', 'Indian outfits for women'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Salwar Kameez', path: '/collections/salwar-kameez' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy kurta sets online?',
+      'Are kurta sets good for festivals and Indian wedding guests?',
+      'What is the difference between kurta pant sets and kurta dupatta sets?',
     ],
   },
   '/lehengas': {
