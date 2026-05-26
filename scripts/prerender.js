@@ -417,6 +417,13 @@ const routes = [
     content: '<p>Shop Anarkali suits online for weddings, parties, Eid, festivals, receptions, sangeet nights, and polished Indian occasion dressing. This collection highlights designer Anarkali suits, wedding Anarkali suits, party wear Anarkali suits, floor length Anarkali suits, embroidered Anarkali suits, and festive Anarkali suits for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/pakistani-suits">Pakistani suits</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
   },
   {
+    path: '/collections/anarkali-gowns',
+    title: 'Anarkali Gowns Online | Designer Anarkali Gowns - LuxeMia',
+    description: 'Shop Anarkali gowns online at LuxeMia. Explore designer Anarkali gowns, Indian Anarkali gowns, wedding Anarkali gowns, party wear styles, and floor length gowns.',
+    h1: 'Anarkali Gowns',
+    content: '<p>Shop Anarkali gowns and Indian Anarkali gowns for weddings, receptions, parties, Eid, Diwali, sangeet nights, and polished festive dressing. This collection highlights designer Anarkali gowns, wedding Anarkali gowns, party wear Anarkali gowns, embroidered Anarkali gowns, floor length Anarkali gowns, festive Anarkali gowns, and Anarkali gown for women.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/anarkali-suits">Anarkali suits</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
+  },
+  {
     path: '/collections/salwar-kameez',
     title: 'Salwar Kameez Online | Designer Indian Salwar Suits - LuxeMia',
     description: 'Shop salwar kameez online at LuxeMia. Explore designer salwar kameez, Indian salwar suits, embroidered suits, festive salwar suits, party wear styles, and Pakistani style salwar kameez.',

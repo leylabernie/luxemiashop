@@ -105,6 +105,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/collections/saree-gowns': collectionMetadata('/collections/saree-gowns'),
   '/collections/pakistani-suits': collectionMetadata('/collections/pakistani-suits'),
   '/collections/anarkali-suits': collectionMetadata('/collections/anarkali-suits'),
+  '/collections/anarkali-gowns': collectionMetadata('/collections/anarkali-gowns'),
   '/collections/salwar-kameez': collectionMetadata('/collections/salwar-kameez'),
   '/collections/palazzo-suits': collectionMetadata('/collections/palazzo-suits'),
   '/collections/sharara-suits': collectionMetadata('/collections/sharara-suits'),
