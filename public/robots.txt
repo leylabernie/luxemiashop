@@ -27,6 +27,7 @@ Allow: /collections/saree-gowns
 Allow: /collections/pakistani-suits
 Allow: /collections/anarkali-suits
 Allow: /collections/salwar-kameez
+Allow: /collections/palazzo-suits
 Allow: /collections/sharara-suits
 Allow: /collections/gharara-suits
 Allow: /collections/indo-western-dresses

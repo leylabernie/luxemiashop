@@ -452,6 +452,13 @@ const routes = [
     content: '<p>Shop kurta sets and Indian kurta sets for festive events, wedding guest looks, parties, Eid, Diwali, family celebrations, and polished everyday ethnic wear. This collection highlights designer kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, kurta dupatta sets, ethnic kurta sets for women, and Indian outfits for women.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
+    path: '/collections/palazzo-suits',
+    title: 'Palazzo Suits Online | Designer Palazzo Suit Sets - LuxeMia',
+    description: 'Shop palazzo suits online at LuxeMia. Explore designer palazzo suits, Indian palazzo suits, festive palazzo suits, wedding guest palazzo suits, and kurta palazzo sets.',
+    h1: 'Palazzo Suits',
+    content: '<p>Shop palazzo suits and Indian palazzo suits for festive events, wedding guest looks, parties, Eid, Diwali, family celebrations, and polished ethnic wear. This collection highlights designer palazzo suits, festive palazzo suits, wedding guest palazzo suits, palazzo pant suits, kurta palazzo sets, party wear palazzo suits, and ethnic suits for women.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/kurta-sets">kurta sets</a>, and <a href="/collections/anarkali-suits">Anarkali suits</a>.</p>',
+  },
+  {
     path: '/collections/saree-gowns',
     title: 'Saree Gowns Online | Ready-to-Wear Saree Gowns - LuxeMia',
     description: 'Shop saree gowns online at LuxeMia. Explore ready-to-wear saree gowns, pre-draped saree gowns, designer saree gowns, party wear saree gowns, and wedding guest styles.',

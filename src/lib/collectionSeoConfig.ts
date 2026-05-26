@@ -28,6 +28,7 @@ export type CollectionRoutePath =
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
   | '/collections/salwar-kameez'
+  | '/collections/palazzo-suits'
   | '/collections/sharara-suits'
   | '/collections/gharara-suits'
   | '/collections/indo-western-dresses'
@@ -291,6 +292,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy salwar kameez online?',
       'What is the difference between salwar kameez and Anarkali suits?',
       'Which salwar suits are best for parties, Eid, and weddings?',
+    ],
+  },
+  '/collections/palazzo-suits': {
+    path: '/collections/palazzo-suits',
+    title: 'Palazzo Suits Online | Designer Palazzo Suit Sets - LuxeMia',
+    description: 'Shop palazzo suits online at LuxeMia. Explore designer palazzo suits, Indian palazzo suits, festive palazzo suits, wedding guest palazzo suits, and kurta palazzo sets.',
+    canonical: `${SITE_URL}/collections/palazzo-suits`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Palazzo Suits',
+    semanticTitle: 'Palazzo suits, designer palazzo suits, Indian palazzo suits, festive palazzo suits, wedding guest palazzo suits, and kurta palazzo sets',
+    primaryEntity: 'Palazzo Suits',
+    secondaryEntities: ['Designer palazzo suits', 'Indian palazzo suits', 'Festive palazzo suits', 'Wedding guest palazzo suits', 'Palazzo pant suits', 'Kurta palazzo sets', 'Party wear palazzo suits', 'Ethnic suits for women'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Salwar Kameez', path: '/collections/salwar-kameez' },
+      { label: 'Kurta Sets', path: '/collections/kurta-sets' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy palazzo suits online?',
+      'Are palazzo suits good for festivals and Indian wedding guests?',
+      'What is the difference between palazzo suits and salwar kameez?',
     ],
   },
   '/collections/sharara-suits': {
