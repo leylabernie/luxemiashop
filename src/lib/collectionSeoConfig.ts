@@ -24,6 +24,7 @@ export type CollectionRoutePath =
   | '/collections/party-wear-lehengas'
   | '/collections/designer-sarees'
   | '/collections/silk-sarees'
+  | '/collections/saree-gowns'
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
   | '/collections/salwar-kameez'
@@ -194,6 +195,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy silk sarees online?',
       'Which silk sarees are best for Indian weddings?',
       'What is the difference between Banarasi and Kanjivaram silk sarees?',
+    ],
+  },
+  '/collections/saree-gowns': {
+    path: '/collections/saree-gowns',
+    title: 'Saree Gowns Online | Ready-to-Wear Saree Gowns - LuxeMia',
+    description: 'Shop saree gowns online at LuxeMia. Explore ready-to-wear saree gowns, pre-draped saree gowns, designer saree gowns, party wear saree gowns, and wedding guest styles.',
+    canonical: `${SITE_URL}/collections/saree-gowns`,
+    ogImage: `${SITE_URL}/og/og-sarees.jpg`,
+    h1: 'Saree Gowns',
+    semanticTitle: 'Saree gowns, ready-to-wear saree gowns, pre-draped saree gowns, designer saree gowns, and party wear saree gowns',
+    primaryEntity: 'Saree Gowns',
+    secondaryEntities: ['Ready-to-wear saree gowns', 'Pre-draped saree gowns', 'Designer saree gowns', 'Wedding guest saree gowns', 'Party wear saree gowns', 'Reception saree gowns', 'Indian fusion saree dresses'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Sarees', path: '/sarees' },
+      { label: 'Designer Sarees', path: '/collections/designer-sarees' },
+      { label: 'Wedding Sarees', path: '/collections/wedding-sarees' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Indo Western Dresses', path: '/collections/indo-western-dresses' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy saree gowns online?',
+      'Are saree gowns good for Indian wedding guests and receptions?',
+      'What is the difference between saree gowns and regular sarees?',
     ],
   },
   '/collections/pakistani-suits': {

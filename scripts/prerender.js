@@ -452,6 +452,13 @@ const routes = [
     content: '<p>Shop kurta sets and Indian kurta sets for festive events, wedding guest looks, parties, Eid, Diwali, family celebrations, and polished everyday ethnic wear. This collection highlights designer kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, kurta dupatta sets, ethnic kurta sets for women, and Indian outfits for women.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
+    path: '/collections/saree-gowns',
+    title: 'Saree Gowns Online | Ready-to-Wear Saree Gowns - LuxeMia',
+    description: 'Shop saree gowns online at LuxeMia. Explore ready-to-wear saree gowns, pre-draped saree gowns, designer saree gowns, party wear saree gowns, and wedding guest styles.',
+    h1: 'Saree Gowns',
+    content: '<p>Shop saree gowns and ready-to-wear saree gowns for receptions, cocktail parties, sangeet nights, festive dinners, and Indian wedding guest occasions. This collection highlights pre-draped saree gowns, designer saree gowns, party wear saree gowns, reception saree gowns, and Indian fusion saree dresses for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader drape styles, or continue occasion shopping with <a href="/collections/designer-sarees">designer sarees</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/indo-western-dresses">Indo Western dresses</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
@@ -1457,10 +1464,18 @@ function generateHtml(template, route) {
   } else {
     // Replace canonical URL
     const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
-    html = html.replace(
-      /<link rel="canonical" href="[^"]*" \/>/,
-      `<link rel="canonical" href="${canonical}" />`
-    );
+    const canonicalTag = `<link rel="canonical" href="${canonical}" />`;
+    if (/<link rel="canonical" href="[^"]*" \/>/.test(html)) {
+      html = html.replace(
+        /<link rel="canonical" href="[^"]*" \/>/,
+        canonicalTag
+      );
+    } else {
+      html = html.replace(
+        '<!-- Open Graph / Facebook -->',
+        `${canonicalTag}\n\n    <!-- Open Graph / Facebook -->`
+      );
+    }
 
     // Replace OG tags
     html = html.replace(

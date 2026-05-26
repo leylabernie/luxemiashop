@@ -43,6 +43,7 @@ export const staticPages = [
   { loc: '/collections/party-wear-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Party Wear Lehengas for Indian Events' },
   { loc: '/collections/designer-sarees', changefreq: 'weekly', priority: '0.9', title: 'Designer Sarees' },
   { loc: '/collections/silk-sarees', changefreq: 'weekly', priority: '0.9', title: 'Silk Sarees' },
+  { loc: '/collections/saree-gowns', changefreq: 'weekly', priority: '0.9', title: 'Saree Gowns' },
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9', title: 'Pakistani Suits' },
   { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9', title: 'Anarkali Suits' },
   { loc: '/collections/salwar-kameez', changefreq: 'weekly', priority: '0.9', title: 'Salwar Kameez' },
