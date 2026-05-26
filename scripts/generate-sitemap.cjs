@@ -95,6 +95,7 @@ const staticPages = [
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/salwar-kameez', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/palazzo-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/sharara-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/gharara-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/indo-western-dresses', changefreq: 'weekly', priority: '0.9' },

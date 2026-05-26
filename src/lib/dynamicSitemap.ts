@@ -47,6 +47,7 @@ export const staticPages = [
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9', title: 'Pakistani Suits' },
   { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9', title: 'Anarkali Suits' },
   { loc: '/collections/salwar-kameez', changefreq: 'weekly', priority: '0.9', title: 'Salwar Kameez' },
+  { loc: '/collections/palazzo-suits', changefreq: 'weekly', priority: '0.9', title: 'Palazzo Suits' },
   { loc: '/collections/sharara-suits', changefreq: 'weekly', priority: '0.9', title: 'Sharara Suits' },
   { loc: '/collections/gharara-suits', changefreq: 'weekly', priority: '0.9', title: 'Gharara Suits' },
   { loc: '/collections/indo-western-dresses', changefreq: 'weekly', priority: '0.9', title: 'Indo Western Dresses' },
