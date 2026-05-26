@@ -26,6 +26,7 @@ Allow: /collections/silk-sarees
 Allow: /collections/saree-gowns
 Allow: /collections/pakistani-suits
 Allow: /collections/anarkali-suits
+Allow: /collections/anarkali-gowns
 Allow: /collections/salwar-kameez
 Allow: /collections/palazzo-suits
 Allow: /collections/sharara-suits

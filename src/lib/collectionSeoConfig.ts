@@ -27,6 +27,7 @@ export type CollectionRoutePath =
   | '/collections/saree-gowns'
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
+  | '/collections/anarkali-gowns'
   | '/collections/salwar-kameez'
   | '/collections/palazzo-suits'
   | '/collections/sharara-suits'
@@ -268,6 +269,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Anarkali suits online?',
       'Are Anarkali suits good for weddings and parties?',
       'How do I choose between floor length and regular Anarkali suits?',
+    ],
+  },
+  '/collections/anarkali-gowns': {
+    path: '/collections/anarkali-gowns',
+    title: 'Anarkali Gowns Online | Designer Anarkali Gowns - LuxeMia',
+    description: 'Shop Anarkali gowns online at LuxeMia. Explore designer Anarkali gowns, Indian Anarkali gowns, wedding Anarkali gowns, party wear styles, and floor length gowns.',
+    canonical: `${SITE_URL}/collections/anarkali-gowns`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Anarkali Gowns',
+    semanticTitle: 'Anarkali gowns, designer Anarkali gowns, Indian Anarkali gowns, wedding Anarkali gowns, party wear Anarkali gowns, and floor length Anarkali gowns',
+    primaryEntity: 'Anarkali Gowns',
+    secondaryEntities: ['Designer Anarkali gowns', 'Indian Anarkali gowns', 'Wedding Anarkali gowns', 'Party wear Anarkali gowns', 'Embroidered Anarkali gowns', 'Floor length Anarkali gowns', 'Festive Anarkali gowns', 'Anarkali gown for women'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Anarkali gowns online?',
+      'Are Anarkali gowns good for weddings, receptions, and parties?',
+      'What is the difference between Anarkali gowns and Anarkali suits?',
     ],
   },
   '/collections/salwar-kameez': {
