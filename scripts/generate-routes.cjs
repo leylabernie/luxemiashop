@@ -70,6 +70,7 @@ const STATIC_ROUTES = [
   '/press',
   // Occasion landing pages — high buyer-intent SEO pages
   '/collections/bridal-lehengas',
+  '/collections/lehenga-choli',
   '/collections/wedding-sarees',
   '/collections/reception-outfits',
   '/collections/party-wear-lehengas',
