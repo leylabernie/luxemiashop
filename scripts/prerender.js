@@ -1464,18 +1464,10 @@ function generateHtml(template, route) {
   } else {
     // Replace canonical URL
     const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
-    const canonicalTag = `<link rel="canonical" href="${canonical}" />`;
-    if (/<link rel="canonical" href="[^"]*" \/>/.test(html)) {
-      html = html.replace(
-        /<link rel="canonical" href="[^"]*" \/>/,
-        canonicalTag
-      );
-    } else {
-      html = html.replace(
-        '<!-- Open Graph / Facebook -->',
-        `${canonicalTag}\n\n    <!-- Open Graph / Facebook -->`
-      );
-    }
+    html = html.replace(
+      /<link rel="canonical" href="[^"]*" \/>/,
+      `<link rel="canonical" href="${canonical}" />`
+    );
 
     // Replace OG tags
     html = html.replace(
