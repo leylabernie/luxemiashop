@@ -19,6 +19,7 @@ export type CollectionRoutePath =
   | '/suits'
   | '/menswear'
   | '/collections/bridal-lehengas'
+  | '/collections/lehenga-choli'
   | '/collections/wedding-sarees'
   | '/collections/reception-outfits'
   | '/collections/party-wear-lehengas'
@@ -82,6 +83,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Indian bridal lehengas online?',
       'How do I choose a bridal lehenga for an Indian wedding?',
       'Can bridal lehengas be worn for reception or engagement events?',
+    ],
+  },
+  '/collections/lehenga-choli': {
+    path: '/collections/lehenga-choli',
+    title: 'Lehenga Choli Online | Designer Indian Lehenga Choli - LuxeMia',
+    description: 'Shop lehenga choli online at LuxeMia. Explore designer lehenga choli, bridal lehenga choli, wedding lehenga choli, party wear styles, silk, and embroidered lehengas.',
+    canonical: `${SITE_URL}/collections/lehenga-choli`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Lehenga Choli',
+    semanticTitle: 'Lehenga choli, designer lehenga choli, bridal lehenga choli, wedding lehenga choli, party wear lehenga choli, and embroidered Indian lehenga choli',
+    primaryEntity: 'Lehenga Choli',
+    secondaryEntities: ['Designer lehenga choli', 'Bridal lehenga choli', 'Wedding lehenga choli', 'Party wear lehenga choli', 'Embroidered lehenga choli', 'Silk lehenga choli', 'Indian lehenga choli', 'Lehenga choli for women', 'Festive lehenga choli'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Lehengas', path: '/lehengas' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
+      { label: 'Party Wear Lehengas', path: '/collections/party-wear-lehengas' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy lehenga choli online?',
+      'Which lehenga choli styles are best for weddings and parties?',
+      'What is included in a lehenga choli set?',
     ],
   },
   '/collections/wedding-sarees': {

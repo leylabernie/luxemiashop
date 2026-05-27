@@ -22,6 +22,7 @@ const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Account = lazy(() => import("./pages/Account"));
 const Lehengas = lazy(() => import("./pages/Lehengas"));
+const LehengaCholi = lazy(() => import("./pages/LehengaCholi"));
 const BridalLehengas = lazy(() => import("./pages/BridalLehengas"));
 const WeddingSarees = lazy(() => import("./pages/WeddingSarees"));
 const ReceptionOutfits = lazy(() => import("./pages/ReceptionOutfits"));
@@ -148,6 +149,7 @@ const App = () => (
                 <Route path="/collections/groomsman-outfits" element={<Navigate to="/menswear" replace />} />
                 {/* Occasion landing pages */}
                 <Route path="/collections/bridal-lehengas" element={<Suspense fallback={<PageLoader />}><BridalLehengas /></Suspense>} />
+                <Route path="/collections/lehenga-choli" element={<Suspense fallback={<PageLoader />}><LehengaCholi /></Suspense>} />
                 <Route path="/collections/wedding-sarees" element={<Suspense fallback={<PageLoader />}><WeddingSarees /></Suspense>} />
                 <Route path="/collections/reception-outfits" element={<Suspense fallback={<PageLoader />}><ReceptionOutfits /></Suspense>} />
                 <Route path="/collections/party-wear-lehengas" element={<Suspense fallback={<PageLoader />}><PartyWearLehengas /></Suspense>} />
