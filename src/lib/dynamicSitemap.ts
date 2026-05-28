@@ -40,6 +40,7 @@ export const staticPages = [
   { loc: '/collections/bridal-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Bridal Lehengas for Indian Weddings' },
   { loc: '/collections/wedding-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Wedding Lehengas' },
   { loc: '/collections/lehenga-choli', changefreq: 'weekly', priority: '0.9', title: 'Lehenga Choli' },
+  { loc: '/collections/designer-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Designer Lehengas' },
   { loc: '/collections/wedding-sarees', changefreq: 'weekly', priority: '0.9', title: 'Wedding Sarees for Indian Ceremonies' },
   { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9', title: 'Reception Outfits for Indian Weddings' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'weekly', priority: '0.9', title: 'Party Wear Lehengas for Indian Events' },

@@ -21,6 +21,7 @@ export type CollectionRoutePath =
   | '/collections/bridal-lehengas'
   | '/collections/wedding-lehengas'
   | '/collections/lehenga-choli'
+  | '/collections/designer-lehengas'
   | '/collections/wedding-sarees'
   | '/collections/reception-outfits'
   | '/collections/party-wear-lehengas'
@@ -132,6 +133,31 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy lehenga choli online?',
       'Which lehenga choli styles are best for weddings and parties?',
       'What is included in a lehenga choli set?',
+    ],
+  },
+  '/collections/designer-lehengas': {
+    path: '/collections/designer-lehengas',
+    title: 'Designer Lehengas Online | Indian Designer Lehenga Choli - LuxeMia',
+    description: 'Shop designer lehengas online at LuxeMia. Explore Indian designer lehengas, designer lehenga choli, embroidered lehengas, reception lehengas, and wedding guest styles.',
+    canonical: `${SITE_URL}/collections/designer-lehengas`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Designer Lehengas',
+    semanticTitle: 'Designer lehengas, designer lehenga choli, Indian designer lehengas, embroidered lehengas, luxury lehenga styles, and couture-inspired lehengas',
+    primaryEntity: 'Designer Lehengas',
+    secondaryEntities: ['Designer lehenga choli', 'Indian designer lehengas', 'Embroidered lehengas', 'Luxury lehenga styles', 'Bridal-adjacent designer lehengas', 'Reception lehengas', 'Wedding guest lehengas', 'Couture-inspired lehengas'],
+    intent: 'designer',
+    relatedCollections: [
+      { label: 'All Lehengas', path: '/lehengas' },
+      { label: 'Lehenga Choli', path: '/collections/lehenga-choli' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
+      { label: 'Wedding Lehengas', path: '/collections/wedding-lehengas' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy designer lehengas online?',
+      'Which designer lehenga choli styles are best for weddings and receptions?',
+      'Are designer lehengas good for wedding guests and bridal-adjacent events?',
     ],
   },
   '/collections/wedding-sarees': {

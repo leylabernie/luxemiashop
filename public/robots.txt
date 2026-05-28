@@ -21,6 +21,7 @@ Allow: /collections/wedding-guest-outfits
 Allow: /collections/bridal-lehengas
 Allow: /collections/wedding-lehengas
 Allow: /collections/lehenga-choli
+Allow: /collections/designer-lehengas
 Allow: /collections/wedding-sarees
 Allow: /collections/party-wear-lehengas
 Allow: /collections/designer-sarees
