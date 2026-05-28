@@ -18,6 +18,7 @@ Allow: /menswear
 Allow: /indowestern
 Allow: /collections
 Allow: /collections/wedding-guest-outfits
+Allow: /collections/wedding-guest-dresses
 Allow: /collections/bridal-lehengas
 Allow: /collections/wedding-lehengas
 Allow: /collections/lehenga-choli

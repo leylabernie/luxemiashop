@@ -79,6 +79,7 @@ const STATIC_ROUTES = [
   '/collections/designer-sarees',
   '/collections/silk-sarees',
   '/collections/saree-gowns',
+  '/collections/wedding-guest-dresses',
   '/collections/pakistani-suits',
   '/collections/anarkali-suits',
   '/collections/anarkali-gowns',

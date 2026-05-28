@@ -28,6 +28,7 @@ export type CollectionRoutePath =
   | '/collections/designer-sarees'
   | '/collections/silk-sarees'
   | '/collections/saree-gowns'
+  | '/collections/wedding-guest-dresses'
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
   | '/collections/anarkali-gowns'
@@ -297,6 +298,31 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy saree gowns online?',
       'Are saree gowns good for Indian wedding guests and receptions?',
       'What is the difference between saree gowns and regular sarees?',
+    ],
+  },
+  '/collections/wedding-guest-dresses': {
+    path: '/collections/wedding-guest-dresses',
+    title: 'Guest Wedding Dresses | Indian Wedding Guest Lehengas, Sarees & Gowns - LuxeMia',
+    description: 'Shop guest wedding dresses at LuxeMia. Explore Indian wedding guest outfits, wedding guest lehengas, sarees, gowns, and festive occasion wear.',
+    canonical: `${SITE_URL}/collections/wedding-guest-dresses`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Guest Wedding Dresses',
+    semanticTitle: 'Guest wedding dresses, Indian wedding guest outfits, wedding guest lehengas, sarees, gowns, and festive occasion wear',
+    primaryEntity: 'Guest Wedding Dresses',
+    secondaryEntities: ['Indian wedding guest outfits', 'Wedding guest lehengas', 'Wedding guest sarees', 'Saree gowns', 'Anarkali gowns', 'Indo Western dresses', 'Festive occasion wear'],
+    intent: 'wedding-guest',
+    relatedCollections: [
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Wedding Lehengas', path: '/collections/wedding-lehengas' },
+      { label: 'Party Wear Lehengas', path: '/collections/party-wear-lehengas' },
+      { label: 'Designer Sarees', path: '/collections/designer-sarees' },
+      { label: 'Saree Gowns', path: '/collections/saree-gowns' },
+      { label: 'Anarkali Gowns', path: '/collections/anarkali-gowns' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy guest wedding dresses for an Indian wedding?',
+      'Are lehengas, sarees, and gowns appropriate for Indian wedding guests?',
+      'How do I choose an Indian wedding guest outfit for sangeet, reception, or ceremony events?',
     ],
   },
   '/collections/pakistani-suits': {

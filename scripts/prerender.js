@@ -494,6 +494,13 @@ const routes = [
     content: '<p>Shop saree gowns and ready-to-wear saree gowns for receptions, cocktail parties, sangeet nights, festive dinners, and Indian wedding guest occasions. This collection highlights pre-draped saree gowns, designer saree gowns, party wear saree gowns, reception saree gowns, and Indian fusion saree dresses for shoppers in the USA, Canada, Australia, and worldwide.</p><p>Browse the full <a href="/sarees">saree collection</a> for broader drape styles, or continue occasion shopping with <a href="/collections/designer-sarees">designer sarees</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/indo-western-dresses">Indo Western dresses</a>.</p>',
   },
   {
+    path: '/collections/wedding-guest-dresses',
+    title: 'Guest Wedding Dresses | Indian Wedding Guest Lehengas, Sarees & Gowns - LuxeMia',
+    description: 'Shop guest wedding dresses at LuxeMia. Explore Indian wedding guest outfits, wedding guest lehengas, sarees, gowns, and festive occasion wear.',
+    h1: 'Guest Wedding Dresses',
+    content: '<p>Shop guest wedding dresses for Indian wedding ceremonies, sangeet nights, receptions, mehendi events, engagement parties, and festive family celebrations. This collection highlights Indian wedding guest outfits, wedding guest lehengas, wedding guest sarees, saree gowns, Anarkali gowns, Indo Western dresses, and festive occasion wear.</p><p>Browse <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> for broader ceremony shopping, or continue with <a href="/collections/wedding-lehengas">wedding lehengas</a>, <a href="/collections/designer-sarees">designer sarees</a>, <a href="/collections/saree-gowns">saree gowns</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
