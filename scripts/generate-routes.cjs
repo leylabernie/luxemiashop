@@ -72,6 +72,7 @@ const STATIC_ROUTES = [
   '/collections/bridal-lehengas',
   '/collections/wedding-lehengas',
   '/collections/lehenga-choli',
+  '/collections/designer-lehengas',
   '/collections/wedding-sarees',
   '/collections/reception-outfits',
   '/collections/party-wear-lehengas',

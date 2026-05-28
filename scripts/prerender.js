@@ -382,6 +382,13 @@ const routes = [
     content: '<p>Shop lehenga choli and Indian lehenga choli styles for weddings, receptions, sangeet nights, mehendi events, parties, Diwali, Navratri, and festive celebrations. This collection highlights designer lehenga choli, bridal lehenga choli, wedding lehenga choli, party wear lehenga choli, embroidered lehenga choli, silk lehenga choli, festive lehenga choli, and lehenga choli for women.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader skirt and dupatta styles, or continue occasion shopping with <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/party-wear-lehengas">party wear lehengas</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
   },
   {
+    path: '/collections/designer-lehengas',
+    title: 'Designer Lehengas Online | Indian Designer Lehenga Choli - LuxeMia',
+    description: 'Shop designer lehengas online at LuxeMia. Explore Indian designer lehengas, designer lehenga choli, embroidered lehengas, reception lehengas, and wedding guest styles.',
+    h1: 'Designer Lehengas',
+    content: '<p>Shop designer lehengas selected for Indian weddings, receptions, sangeet nights, engagement events, bridal-adjacent styling, and polished wedding guest looks. This designer-focused collection highlights designer lehenga choli, Indian designer lehengas, embroidered lehengas, luxury lehenga styles, bridal-adjacent designer lehengas, reception lehengas, wedding guest lehengas, and couture-inspired lehengas for event-ready shopping online.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader lehenga styles, or continue designer shopping with <a href="/collections/lehenga-choli">lehenga choli</a>, <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/wedding-lehengas">wedding lehengas</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
+  },
+  {
     path: '/collections/wedding-sarees',
     title: 'Wedding Sarees Online | Indian Bridal & Silk Sarees - LuxeMia',
     description: 'Shop wedding sarees online at LuxeMia. Explore Indian wedding sarees, Banarasi wedding sarees, Kanjivaram and Kanchipuram silk sarees for ceremonies.',
