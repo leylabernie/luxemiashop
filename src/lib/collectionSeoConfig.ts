@@ -19,6 +19,7 @@ export type CollectionRoutePath =
   | '/suits'
   | '/menswear'
   | '/collections/bridal-lehengas'
+  | '/collections/wedding-lehengas'
   | '/collections/lehenga-choli'
   | '/collections/wedding-sarees'
   | '/collections/reception-outfits'
@@ -83,6 +84,30 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Indian bridal lehengas online?',
       'How do I choose a bridal lehenga for an Indian wedding?',
       'Can bridal lehengas be worn for reception or engagement events?',
+    ],
+  },
+  '/collections/wedding-lehengas': {
+    path: '/collections/wedding-lehengas',
+    title: 'Wedding Lehengas Online | Indian Wedding Lehenga Choli - LuxeMia',
+    description: 'Shop wedding lehengas online at LuxeMia. Explore Indian wedding lehengas, bridal-adjacent lehenga choli, reception lehengas, and wedding guest styles.',
+    canonical: `${SITE_URL}/collections/wedding-lehengas`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Wedding Lehengas',
+    semanticTitle: 'Wedding lehengas, Indian wedding lehengas, bridal-adjacent lehenga choli, reception lehengas, and wedding guest lehenga styles',
+    primaryEntity: 'Wedding Lehengas',
+    secondaryEntities: ['Indian wedding lehengas', 'Wedding lehenga choli', 'Reception lehengas', 'Sangeet lehengas', 'Wedding guest lehengas', 'Bridal-adjacent lehenga choli', 'Embroidered wedding lehengas'],
+    intent: 'wedding',
+    relatedCollections: [
+      { label: 'All Lehengas', path: '/lehengas' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Party Wear Lehengas', path: '/collections/party-wear-lehengas' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy wedding lehengas online?',
+      'Are wedding lehengas only for brides?',
+      'Which lehengas are best for receptions, sangeet, and wedding guests?',
     ],
   },
   '/collections/lehenga-choli': {
