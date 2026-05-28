@@ -47,6 +47,7 @@ export const staticPages = [
   { loc: '/collections/designer-sarees', changefreq: 'weekly', priority: '0.9', title: 'Designer Sarees' },
   { loc: '/collections/silk-sarees', changefreq: 'weekly', priority: '0.9', title: 'Silk Sarees' },
   { loc: '/collections/saree-gowns', changefreq: 'weekly', priority: '0.9', title: 'Saree Gowns' },
+  { loc: '/collections/wedding-guest-dresses', changefreq: 'weekly', priority: '0.9', title: 'Guest Wedding Dresses' },
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9', title: 'Pakistani Suits' },
   { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9', title: 'Anarkali Suits' },
   { loc: '/collections/anarkali-gowns', changefreq: 'weekly', priority: '0.9', title: 'Anarkali Gowns' },
