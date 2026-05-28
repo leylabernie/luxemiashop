@@ -368,6 +368,13 @@ const routes = [
     content: '<p>Shop Indian bridal lehengas selected for brides planning wedding, engagement, reception, sangeet, and ceremony looks. This bride-focused collection highlights wedding lehenga choli styles with embroidery, rich fabrics, and sizing options for online bridal shopping.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader festive and partywear styles, or continue wedding shopping with <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> and <a href="/collections/mehendi-outfits">mehendi outfits</a>.</p>',
   },
   {
+    path: '/collections/wedding-lehengas',
+    title: 'Wedding Lehengas Online | Indian Wedding Lehenga Choli - LuxeMia',
+    description: 'Shop wedding lehengas online at LuxeMia. Explore Indian wedding lehengas, bridal-adjacent lehenga choli, reception lehengas, and wedding guest styles.',
+    h1: 'Wedding Lehengas',
+    content: '<p>Shop wedding lehengas for Indian wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia collection highlights Indian wedding lehengas, bridal-adjacent lehenga choli styles, reception lehengas, sangeet lehengas, wedding guest lehengas, embroidered wedding lehengas, silk lehengas, and event-ready wedding outfits.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader lehenga styles, or continue wedding shopping with <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
+  },
+  {
     path: '/collections/lehenga-choli',
     title: 'Lehenga Choli Online | Designer Indian Lehenga Choli - LuxeMia',
     description: 'Shop lehenga choli online at LuxeMia. Explore designer lehenga choli, bridal lehenga choli, wedding lehenga choli, party wear styles, silk, and embroidered lehengas.',
