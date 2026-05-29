@@ -16,6 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 const SITE_URL = 'https://luxemia.shop';
+const ROUTES_JSON_PATH = path.resolve(__dirname, 'routes.json');
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 if (!SHOPIFY_STOREFRONT_TOKEN) {
@@ -109,31 +110,20 @@ const staticPages = [
   { loc: '/collections/kurta-sets', changefreq: 'weekly', priority: '0.9' },
 ];
 
-// Blog posts
-const blogPosts = [
-  '/blog/sharara-suit-guide-2026-styles-fabrics',
-  '/blog/pakistani-suits-anarkali-shopping-guide',
-  '/blog/style-lehenga-choli-every-wedding-event',
-  '/blog/indian-wedding-season-2026-outfit-guide',
-  '/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
-  '/blog/indian-wedding-dress-complete-guide',
-  '/blog/red-bridal-lehenga-trends-2026',
-  '/blog/designer-wedding-dress-under-50000',
-  '/blog/wedding-guest-outfit-ideas',
-  '/blog/saree-draping-styles-every-occasion',
-  '/blog/indian-wedding-trends-2026',
-  '/blog/lehenga-color-for-dark-skin',
-  '/blog/wedding-saree-for-mother-of-bride',
-  '/blog/designer-wedding-dress-under-500',
-  '/blog/nri-wedding-ethnic-wear-trends-2026',
-  '/blog/buy-authentic-indian-sarees-online-usa-uk',
-  '/blog/styling-indian-ethnic-wear-festive-occasions-abroad',
-  '/blog/how-to-choose-perfect-lehenga-wedding-2026',
-  '/blog/lehenga-vs-sharara-vs-anarkali-comparison',
-  '/blog/best-lehenga-colors-for-indian-skin-tone',
-  '/blog/shipping-indian-clothes-usa-uk-canada-nri-guide',
-  '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
-];
+function loadCanonicalBlogPaths() {
+  const routePaths = JSON.parse(fs.readFileSync(ROUTES_JSON_PATH, 'utf8'));
+  if (!Array.isArray(routePaths)) {
+    throw new Error('[sitemap] scripts/routes.json must contain a route path array.');
+  }
+
+  return routePaths.filter((routePath) => (
+    typeof routePath === 'string'
+    && routePath.startsWith('/blog/')
+    && routePath.split('/').length === 3
+  ));
+}
+
+const blogPosts = loadCanonicalBlogPaths();
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
