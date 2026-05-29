@@ -20,6 +20,7 @@ Allow: /collections
 Allow: /collections/wedding-guest-outfits
 Allow: /collections/wedding-guest-dresses
 Allow: /collections/indian-wedding-dresses
+Allow: /collections/pakistani-wedding-dresses
 Allow: /collections/bridal-lehengas
 Allow: /collections/wedding-lehengas
 Allow: /collections/lehenga-choli

@@ -30,6 +30,7 @@ export type CollectionRoutePath =
   | '/collections/saree-gowns'
   | '/collections/wedding-guest-dresses'
   | '/collections/indian-wedding-dresses'
+  | '/collections/pakistani-wedding-dresses'
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
   | '/collections/anarkali-gowns'
@@ -351,6 +352,33 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy Indian wedding dresses online?',
       'What Indian wedding outfits work for brides, guests, sangeet, and reception events?',
       'How do I choose between a lehenga, saree, Anarkali, sharara, gown, or Indo Western wedding dress?',
+    ],
+  },
+  '/collections/pakistani-wedding-dresses': {
+    path: '/collections/pakistani-wedding-dresses',
+    title: 'Pakistani Wedding Dresses | Bridal, Nikah, Mehndi & Walima Outfits - LuxeMia',
+    description: 'Shop Pakistani wedding dresses at LuxeMia. Explore Pakistani bridal dresses, wedding outfits, guest dresses, reception dresses, mehndi outfits, nikah dresses, walima dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.',
+    canonical: `${SITE_URL}/collections/pakistani-wedding-dresses`,
+    ogImage: `${SITE_URL}/og/og-suits.jpg`,
+    h1: 'Pakistani Wedding Dresses',
+    semanticTitle: 'Pakistani wedding dresses, Pakistani bridal dresses, Pakistani wedding outfits, nikah dresses, mehndi outfits, walima dresses, reception dresses, and wedding guest dresses',
+    primaryEntity: 'Pakistani Wedding Dresses',
+    secondaryEntities: ['Pakistani bridal dresses', 'Pakistani wedding outfits', 'Pakistani wedding guest dresses', 'Pakistani formal dresses', 'Pakistani reception dresses', 'Pakistani mehndi outfits', 'Pakistani nikah dresses', 'Pakistani walima dresses', 'Sharara wedding styles', 'Gharara wedding styles', 'Anarkali wedding outfits', 'Salwar kameez wedding outfits', 'Lehenga wedding styles', 'Saree wedding styles', 'Gown wedding styles'],
+    intent: 'wedding',
+    relatedCollections: [
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Sharara Suits', path: '/collections/sharara-suits' },
+      { label: 'Gharara Suits', path: '/collections/gharara-suits' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Salwar Kameez', path: '/collections/salwar-kameez' },
+      { label: 'Guest Wedding Dresses', path: '/collections/wedding-guest-dresses' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Pakistani wedding dresses online?',
+      'What should I wear for a Pakistani nikah, mehndi, walima, or reception?',
+      'How do I choose between a sharara, gharara, Anarkali, salwar kameez, lehenga, saree, or gown for a Pakistani wedding?',
     ],
   },
   '/collections/pakistani-suits': {

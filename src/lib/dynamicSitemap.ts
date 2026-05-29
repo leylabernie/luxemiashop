@@ -49,6 +49,7 @@ export const staticPages = [
   { loc: '/collections/saree-gowns', changefreq: 'weekly', priority: '0.9', title: 'Saree Gowns' },
   { loc: '/collections/wedding-guest-dresses', changefreq: 'weekly', priority: '0.9', title: 'Guest Wedding Dresses' },
   { loc: '/collections/indian-wedding-dresses', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Dresses' },
+  { loc: '/collections/pakistani-wedding-dresses', changefreq: 'weekly', priority: '0.9', title: 'Pakistani Wedding Dresses' },
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9', title: 'Pakistani Suits' },
   { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9', title: 'Anarkali Suits' },
   { loc: '/collections/anarkali-gowns', changefreq: 'weekly', priority: '0.9', title: 'Anarkali Gowns' },

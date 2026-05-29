@@ -509,6 +509,13 @@ const routes = [
     content: '<p>Shop Indian wedding dresses for ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This collection highlights Indian wedding outfits, Indian bridal dresses, South Asian wedding dresses, Indian wedding guest dresses, Indian reception dresses, Indian sangeet outfits, Indian engagement outfits, lehengas, sarees, Anarkali suits, shararas, gowns, and Indo Western wedding styles.</p><p>Continue wedding shopping with <a href="/collections/wedding-lehengas">wedding lehengas</a>, <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/wedding-guest-dresses">guest wedding dresses</a>, <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/saree-gowns">saree gowns</a>, and <a href="/collections/indo-western-dresses">Indo Western dresses</a>.</p>',
   },
   {
+    path: '/collections/pakistani-wedding-dresses',
+    title: 'Pakistani Wedding Dresses | Bridal, Nikah, Mehndi & Walima Outfits - LuxeMia',
+    description: 'Shop Pakistani wedding dresses at LuxeMia. Explore Pakistani bridal dresses, wedding outfits, guest dresses, reception dresses, mehndi outfits, nikah dresses, walima dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.',
+    h1: 'Pakistani Wedding Dresses',
+    content: '<p>Shop Pakistani wedding dresses for nikah ceremonies, mehndi events, walima receptions, wedding guest looks, engagement parties, and formal family celebrations. This collection highlights Pakistani bridal dresses, Pakistani wedding outfits, Pakistani wedding guest dresses, Pakistani formal dresses, Pakistani reception dresses, Pakistani mehndi outfits, Pakistani nikah dresses, Pakistani walima dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.</p><p>Continue Pakistani wedding shopping with <a href="/collections/pakistani-suits">Pakistani suits</a>, <a href="/collections/sharara-suits">sharara suits</a>, <a href="/collections/gharara-suits">gharara suits</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, <a href="/collections/wedding-guest-dresses">guest wedding dresses</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/mehendi-outfits">mehendi outfits</a>.</p>',
+  },
+  {
     path: '/collections/festive-wear',
     title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
     description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
