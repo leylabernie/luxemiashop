@@ -19,6 +19,7 @@ const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
 const FALLBACK_CURRENCY = 'USD';
+const CANONICAL_COMMENT_PATTERN = /\s*<!-- NOTE: Canonical URL is injected dynamically by Vercel Edge Middleware -->\s*<!-- The middleware \(middleware\.ts\) injects the correct <link rel="canonical"> -->\s*<!-- for every page route, ensuring no duplicate canonical issues\. -->\s*<!-- Do NOT add a hardcoded canonical here [\s\S]*? -->/;
 
 // ─── Clean description generator (replaces bloated Shopify descriptions) ─────
 // Generates short structured descriptions from product metadata.
@@ -499,6 +500,13 @@ const routes = [
     description: 'Shop guest wedding dresses at LuxeMia. Explore Indian wedding guest outfits, wedding guest lehengas, sarees, gowns, and festive occasion wear.',
     h1: 'Guest Wedding Dresses',
     content: '<p>Shop guest wedding dresses for Indian wedding ceremonies, sangeet nights, receptions, mehendi events, engagement parties, and festive family celebrations. This collection highlights Indian wedding guest outfits, wedding guest lehengas, wedding guest sarees, saree gowns, Anarkali gowns, Indo Western dresses, and festive occasion wear.</p><p>Browse <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> for broader ceremony shopping, or continue with <a href="/collections/wedding-lehengas">wedding lehengas</a>, <a href="/collections/designer-sarees">designer sarees</a>, <a href="/collections/saree-gowns">saree gowns</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
+  },
+  {
+    path: '/collections/indian-wedding-dresses',
+    title: 'Indian Wedding Dresses | Bridal, Guest, Sangeet & Reception Outfits - LuxeMia',
+    description: 'Shop Indian wedding dresses at LuxeMia. Explore Indian wedding outfits, Indian bridal dresses, guest dresses, reception dresses, sangeet outfits, lehengas, sarees, shararas, gowns, and Indo Western styles.',
+    h1: 'Indian Wedding Dresses',
+    content: '<p>Shop Indian wedding dresses for ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This collection highlights Indian wedding outfits, Indian bridal dresses, South Asian wedding dresses, Indian wedding guest dresses, Indian reception dresses, Indian sangeet outfits, Indian engagement outfits, lehengas, sarees, Anarkali suits, shararas, gowns, and Indo Western wedding styles.</p><p>Continue wedding shopping with <a href="/collections/wedding-lehengas">wedding lehengas</a>, <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/wedding-guest-dresses">guest wedding dresses</a>, <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/saree-gowns">saree gowns</a>, and <a href="/collections/indo-western-dresses">Indo Western dresses</a>.</p>',
   },
   {
     path: '/collections/festive-wear',
@@ -1506,10 +1514,17 @@ function generateHtml(template, route) {
   } else {
     // Replace canonical URL
     const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
-    html = html.replace(
-      /<link rel="canonical" href="[^"]*" \/>/,
-      `<link rel="canonical" href="${canonical}" />`
-    );
+    const canonicalLink = `<link rel="canonical" href="${canonical}" />`;
+    if (/<link rel="canonical" href="[^"]*" \/>/.test(html)) {
+      html = html.replace(
+        /<link rel="canonical" href="[^"]*" \/>/,
+        canonicalLink
+      );
+    } else if (CANONICAL_COMMENT_PATTERN.test(html)) {
+      html = html.replace(CANONICAL_COMMENT_PATTERN, `\n    ${canonicalLink}`);
+    } else {
+      html = html.replace('<!-- Open Graph / Facebook -->', `${canonicalLink}\n\n    <!-- Open Graph / Facebook -->`);
+    }
 
     // Replace OG tags
     html = html.replace(

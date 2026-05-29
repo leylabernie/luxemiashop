@@ -29,6 +29,7 @@ export type CollectionRoutePath =
   | '/collections/silk-sarees'
   | '/collections/saree-gowns'
   | '/collections/wedding-guest-dresses'
+  | '/collections/indian-wedding-dresses'
   | '/collections/pakistani-suits'
   | '/collections/anarkali-suits'
   | '/collections/anarkali-gowns'
@@ -323,6 +324,33 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy guest wedding dresses for an Indian wedding?',
       'Are lehengas, sarees, and gowns appropriate for Indian wedding guests?',
       'How do I choose an Indian wedding guest outfit for sangeet, reception, or ceremony events?',
+    ],
+  },
+  '/collections/indian-wedding-dresses': {
+    path: '/collections/indian-wedding-dresses',
+    title: 'Indian Wedding Dresses | Bridal, Guest, Sangeet & Reception Outfits - LuxeMia',
+    description: 'Shop Indian wedding dresses at LuxeMia. Explore Indian wedding outfits, Indian bridal dresses, guest dresses, reception dresses, sangeet outfits, lehengas, sarees, shararas, gowns, and Indo Western styles.',
+    canonical: `${SITE_URL}/collections/indian-wedding-dresses`,
+    ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
+    h1: 'Indian Wedding Dresses',
+    semanticTitle: 'Indian wedding dresses, Indian bridal dresses, Indian wedding outfits, South Asian wedding dresses, reception dresses, sangeet outfits, and wedding guest dresses',
+    primaryEntity: 'Indian Wedding Dresses',
+    secondaryEntities: ['Indian wedding outfits', 'Indian bridal dresses', 'Indian wedding guest dresses', 'South Asian wedding dresses', 'Indian reception dresses', 'Indian sangeet outfits', 'Indian engagement outfits', 'Wedding lehengas', 'Wedding sarees', 'Anarkali wedding outfits', 'Sharara wedding outfits', 'Indo Western wedding styles'],
+    intent: 'wedding',
+    relatedCollections: [
+      { label: 'Wedding Lehengas', path: '/collections/wedding-lehengas' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
+      { label: 'Wedding Sarees', path: '/collections/wedding-sarees' },
+      { label: 'Guest Wedding Dresses', path: '/collections/wedding-guest-dresses' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Saree Gowns', path: '/collections/saree-gowns' },
+      { label: 'Indo Western Dresses', path: '/collections/indo-western-dresses' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Indian wedding dresses online?',
+      'What Indian wedding outfits work for brides, guests, sangeet, and reception events?',
+      'How do I choose between a lehenga, saree, Anarkali, sharara, gown, or Indo Western wedding dress?',
     ],
   },
   '/collections/pakistani-suits': {
