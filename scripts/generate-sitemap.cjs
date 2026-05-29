@@ -96,6 +96,7 @@ const staticPages = [
   { loc: '/collections/silk-sarees', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/saree-gowns', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/wedding-guest-dresses', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/indian-wedding-dresses', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/anarkali-gowns', changefreq: 'weekly', priority: '0.9' },
