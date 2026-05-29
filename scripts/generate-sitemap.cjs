@@ -86,43 +86,37 @@ const staticPages = [
   { loc: '/terms', changefreq: 'yearly', priority: '0.3' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
   { loc: '/press', changefreq: 'monthly', priority: '0.5' },
-  { loc: '/collections/bridal-lehengas', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/wedding-lehengas', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/lehenga-choli', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/designer-lehengas', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/wedding-sarees', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/party-wear-lehengas', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/designer-sarees', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/silk-sarees', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/saree-gowns', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/wedding-guest-dresses', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/indian-wedding-dresses', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/pakistani-wedding-dresses', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/pakistani-suits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/anarkali-suits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/anarkali-gowns', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/salwar-kameez', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/palazzo-suits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/sharara-suits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/gharara-suits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/indo-western-dresses', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/kurta-sets', changefreq: 'weekly', priority: '0.9' },
 ];
 
-function loadCanonicalBlogPaths() {
+function loadCanonicalRoutePaths() {
   const routePaths = JSON.parse(fs.readFileSync(ROUTES_JSON_PATH, 'utf8'));
   if (!Array.isArray(routePaths)) {
     throw new Error('[sitemap] scripts/routes.json must contain a route path array.');
   }
 
-  return routePaths.filter((routePath) => (
+  return routePaths;
+}
+
+const canonicalRoutePaths = loadCanonicalRoutePaths();
+
+function loadCanonicalCollectionPaths() {
+  return canonicalRoutePaths.filter((routePath) => (
+    typeof routePath === 'string'
+    && routePath.startsWith('/collections/')
+    && routePath.split('/').length === 3
+    && routePath !== '/collections/all'
+  ));
+}
+
+function loadCanonicalBlogPaths() {
+  return canonicalRoutePaths.filter((routePath) => (
     typeof routePath === 'string'
     && routePath.startsWith('/blog/')
     && routePath.split('/').length === 3
   ));
 }
 
+const collectionPages = loadCanonicalCollectionPaths();
 const blogPosts = loadCanonicalBlogPaths();
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -203,6 +197,16 @@ function generateSitemap(products) {
   </url>`);
   }
 
+  // Collection pages
+  for (const collectionPath of collectionPages) {
+    urls.push(`  <url>
+    <loc>${SITE_URL}${collectionPath}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>`);
+  }
+
   // Blog posts
   for (const blogPath of blogPosts) {
     urls.push(`  <url>
@@ -276,7 +280,7 @@ async function main() {
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
   const distPath = path.join(distDir, 'sitemap.xml');
   fs.writeFileSync(distPath, sitemap, 'utf8');
-  console.log(`[sitemap] Written sitemap to ${distPath} (${(sitemap.length / 1024).toFixed(1)} KB, ${products.length} products, ${staticPages.length + blogPosts.length} static/blog URLs)`);
+  console.log(`[sitemap] Written sitemap to ${distPath} (${(sitemap.length / 1024).toFixed(1)} KB, ${products.length} products, ${staticPages.length + collectionPages.length + blogPosts.length} static/collection/blog URLs)`);
 
   // Also write to public/ for dev and fallback
   const publicDir = path.resolve(__dirname, '../public');
