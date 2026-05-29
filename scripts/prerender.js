@@ -11,10 +11,13 @@
 
 import fs from 'fs';
 import path from 'path';
+import vm from 'vm';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST_DIR = path.resolve(__dirname, '../dist');
+const ROUTES_JSON_PATH = path.resolve(__dirname, 'routes.json');
+const BLOG_POSTS_PATH = path.resolve(__dirname, '../src/data/blogPosts.ts');
 const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
@@ -268,71 +271,8 @@ const routes = [
     h1: 'LuxeMia Blog — Indian Wedding & Ethnic Fashion Guide',
     content: `
       <p>Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends for 2026.</p>
-      <h2>Latest Articles</h2>
-      <ul>
-        <li><a href="/blog/sharara-suit-guide-2026-styles-fabrics">Sharara Suit Guide 2026: Styles & Fabrics</a></li>
-        <li><a href="/blog/pakistani-suits-anarkali-shopping-guide">Pakistani Suits & Anarkali Shopping Guide</a></li>
-        <li><a href="/blog/style-lehenga-choli-every-wedding-event">How to Style Lehenga Choli for Every Wedding Event</a></li>
-        <li><a href="/blog/indian-wedding-season-2026-outfit-guide">Indian Wedding Season 2026 Outfit Guide</a></li>
-        <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Indian Ethnic Wear — Georgette, Silk & Chiffon</a></li>
-        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Complete Guide</a></li>
-        <li><a href="/blog/red-bridal-lehenga-trends-2026">Red Bridal Lehenga Trends 2026</a></li>
-        <li><a href="/blog/how-to-choose-perfect-lehenga-wedding-2026">How to Choose the Perfect Lehenga for Your 2026 Wedding</a></li>
-        <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali: Complete Comparison</a></li>
-        <li><a href="/blog/best-lehenga-colors-for-indian-skin-tone">Best Lehenga Colors for Every Indian Skin Tone</a></li>
-        <li><a href="/blog/shipping-indian-clothes-usa-uk-canada-nri-guide">Shipping Indian Clothes to USA, UK & Canada: NRI Guide</a></li>
-        <li><a href="/blog/unstitched-vs-ready-to-wear-vs-made-to-measure">Unstitched vs Ready to Wear vs Made to Measure</a></li>
-      </ul>
+      <p>Browse the LuxeMia blog for current Indian ethnic wear advice, wedding outfit planning, styling guidance, fabric education, and shopping tips for customers worldwide.</p>
     `,
-  },
-  {
-    path: '/blog/sharara-suit-guide-2026-styles-fabrics',
-    title: 'Sharara Suit Guide 2026: Latest Styles, Fabrics & Buying Tips | LuxeMia',
-    description: 'Complete guide to sharara suits in 2026. Discover trending styles, best fabrics, and expert tips for choosing the perfect sharara set for weddings and festivals.',
-    h1: 'Sharara Suit Guide 2026: Styles, Fabrics & Buying Tips',
-    content: '<p>Everything you need to know about sharara suits — trending styles, fabric choices, and how to pick the perfect set for weddings and festive occasions in 2026.</p>',
-  },
-  {
-    path: '/blog/pakistani-suits-anarkali-shopping-guide',
-    title: 'Pakistani Suits & Anarkali Shopping Guide | LuxeMia',
-    description: 'Your complete guide to buying Pakistani suits and anarkali online. Learn about styles, fabrics, sizing, and where to find authentic designer pieces.',
-    h1: 'Pakistani Suits & Anarkali Shopping Guide',
-    content: '<p>Your complete guide to buying Pakistani suits and anarkali online. Learn about styles, fabrics, sizing, and where to find authentic designer pieces.</p>',
-  },
-  {
-    path: '/blog/style-lehenga-choli-every-wedding-event',
-    title: 'How to Style Lehenga Choli for Every Wedding Event | LuxeMia',
-    description: 'Expert styling tips for wearing lehenga choli at every wedding event — from engagement to reception. Accessories, draping styles & outfit ideas.',
-    h1: 'How to Style Lehenga Choli for Every Wedding Event',
-    content: '<p>Expert styling tips for wearing lehenga choli at every wedding event — from engagement to reception. Accessories, draping styles & outfit ideas.</p>',
-  },
-  {
-    path: '/blog/indian-wedding-season-2026-outfit-guide',
-    title: 'Indian Wedding Season 2026: Complete Outfit Guide | LuxeMia',
-    description: 'Plan your wardrobe for Indian wedding season 2026. Outfit ideas for every ceremony — sangeet, mehendi, haldi, wedding & reception.',
-    h1: 'Indian Wedding Season 2026: Complete Outfit Guide',
-    content: '<p>Plan your wardrobe for Indian wedding season 2026. Outfit ideas for every ceremony — sangeet, mehendi, haldi, wedding & reception.</p>',
-  },
-  {
-    path: '/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
-    title: 'Fabric Guide: Indian Ethnic Wear — Georgette, Silk & Chiffon | LuxeMia',
-    description: 'Understand Indian ethnic wear fabrics. Compare georgette, silk, chiffon, organza, and more. Learn which fabric suits which occasion.',
-    h1: 'Fabric Guide: Indian Ethnic Wear — Georgette, Silk & Chiffon',
-    content: '<p>Understand Indian ethnic wear fabrics. Compare georgette, silk, chiffon, organza, and more. Learn which fabric suits which occasion and body type.</p>',
-  },
-  {
-    path: '/blog/indian-wedding-dress-complete-guide',
-    title: 'Indian Wedding Dress Complete Guide | LuxeMia Blog',
-    description: 'The complete guide to Indian wedding dresses. Bridal lehengas, wedding sarees, reception outfits & guest attire. Everything you need to know.',
-    h1: 'Indian Wedding Dress Complete Guide',
-    content: '<p>The complete guide to Indian wedding dresses. From bridal lehengas to wedding sarees, reception outfits to guest attire — everything you need to plan your wedding wardrobe.</p>',
-  },
-  {
-    path: '/blog/red-bridal-lehenga-trends-2026',
-    title: 'Red Bridal Lehenga Trends 2026 | LuxeMia Blog',
-    description: 'Discover the hottest red bridal lehenga trends for 2026. From classic crimson to modern scarlet, find your dream wedding lehenga.',
-    h1: 'Red Bridal Lehenga Trends 2026',
-    content: '<p>Discover the hottest red bridal lehenga trends for 2026. From classic crimson to modern scarlet, explore designer styles and find inspiration for your dream wedding lehenga.</p>',
   },
   {
     path: '/collections',
@@ -880,113 +820,6 @@ const routes = [
     description: 'LuxeMia in the media. Press coverage, brand mentions, and news features about our Indian ethnic wear collection.',
     h1: 'Press',
     content: '<p>See what the media is saying about LuxeMia. Press coverage, brand mentions, and news features about our Indian ethnic wear collection.</p>',
-  },
-  // --- Missing blog posts ---
-  {
-    path: '/blog/designer-wedding-dress-under-50000',
-    title: 'Designer Wedding Dress Under 50000 — Best Bridal Options | LuxeMia',
-    description: 'Find stunning designer wedding dresses under 50000. Best bridal lehengas, sarees & suits for budget-conscious brides without compromising on style.',
-    h1: 'Designer Wedding Dress Under 50000',
-    content: '<p>Looking for a designer wedding dress under 50000? Discover our curated selection of bridal lehengas and sarees that deliver quality at an accessible price point.</p>',
-  },
-  {
-    path: '/blog/wedding-guest-outfit-ideas',
-    title: 'Wedding Guest Outfit Ideas — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Wedding guest outfit ideas for Indian weddings. Sarees, lehengas, suits & fusion wear for every ceremony. Style tips for guests.',
-    h1: 'Wedding Guest Outfit Ideas',
-    content: '<p>Not sure what to wear as a wedding guest? Get outfit ideas for every ceremony — from mehendi to reception. Sarees, lehengas, suits & fusion wear for every style.</p>',
-  },
-  {
-    path: '/blog/saree-draping-styles-every-occasion',
-    title: 'Saree Draping Styles for Every Occasion | LuxeMia',
-    description: 'Learn different saree draping styles for every occasion. Nivi, Bengali, Gujarati, & modern draping techniques with step-by-step guides.',
-    h1: 'Saree Draping Styles for Every Occasion',
-    content: '<p>Master the art of saree draping. From classic Nivi style to modern butterfly drape, learn step-by-step techniques for every occasion and body type.</p>',
-  },
-  {
-    path: '/blog/indian-wedding-trends-2026',
-    title: 'Indian Wedding Trends 2026 — Colors, Fabrics & Styles | LuxeMia',
-    description: 'Discover the top Indian wedding trends for 2026. Trending colors, fabrics, lehenga styles, and bridal fashion predictions for the upcoming season.',
-    h1: 'Indian Wedding Trends 2026',
-    content: '<p>Stay ahead of the curve with our guide to Indian wedding trends for 2026. From pastel lehengas to sustainable fabrics, discover what\'s hot this wedding season.</p>',
-  },
-  {
-    path: '/blog/lehenga-color-for-dark-skin',
-    title: 'Best Lehenga Colors for Dark Skin — Flattering Shades & Styling Tips | LuxeMia',
-    description: 'Find the best lehenga colors for dark skin tones. Expert-recommended shades, styling tips, and outfit ideas that flatter and enhance your natural glow.',
-    h1: 'Best Lehenga Colors for Dark Skin',
-    content: '<p>Discover lehenga colors that beautifully complement dark skin tones. From rich jewel tones to warm earthy shades, find your perfect match.</p>',
-  },
-  {
-    path: '/blog/wedding-saree-for-mother-of-bride',
-    title: 'Wedding Saree for Mother of the Bride — Elegant Options | LuxeMia',
-    description: 'Find the perfect wedding saree for the mother of the bride. Elegant silk, Banarasi & designer sarees for the most important guest at the wedding.',
-    h1: 'Wedding Saree for Mother of the Bride',
-    content: '<p>The mother of the bride deserves something special. Explore our curated selection of elegant silk and Banarasi sarees perfect for this honored role.</p>',
-  },
-  {
-    path: '/blog/designer-wedding-dress-under-500',
-    title: 'Wedding Dress Under $500 — Affordable Elegance | LuxeMia',
-    description: 'Find a designer wedding dress under $500. Affordable bridal lehengas, sarees & suits that look expensive without breaking the bank.',
-    h1: 'Designer Wedding Dress Under $500',
-    content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver elegance for less.</p>',
-  },
-  {
-    path: '/blog/nri-wedding-ethnic-wear-trends-2026',
-    title: 'NRI Wedding Ethnic Wear Trends 2026 | LuxeMia',
-    description: 'NRI wedding ethnic wear trends for 2026. Fusion styles, destination wedding outfits & practical tips for Indians abroad planning their wedding.',
-    h1: 'NRI Wedding Ethnic Wear Trends 2026',
-    content: '<p>Planning a wedding abroad? Discover the latest ethnic wear trends for NRIs in 2026 — from fusion silhouettes to destination wedding outfits.</p>',
-  },
-  {
-    path: '/blog/buy-authentic-indian-sarees-online-international',
-    title: 'How to Buy Authentic Indian Sarees Online Internationally | LuxeMia',
-    description: 'Guide to buying authentic Indian sarees online internationally. Tips for spotting fakes, choosing the right fabric, and finding trusted sellers.',
-    h1: 'How to Buy Authentic Indian Sarees Online',
-    content: '<p>Buying Indian sarees online from abroad? Learn how to spot authentic handloom, choose the right fabric, and find trusted sellers who ship to USA, Canada, and Australia.</p>',
-  },
-  {
-    path: '/blog/styling-indian-ethnic-wear-festive-occasions-abroad',
-    title: 'Styling Indian Ethnic Wear for Festive Occasions Abroad | LuxeMia',
-    description: 'How to style Indian ethnic wear for festive occasions abroad. Diwali, Eid, Navratri & wedding outfit ideas for Indians living overseas.',
-    h1: 'Styling Indian Ethnic Wear Abroad',
-    content: '<p>Celebrating festivals abroad? Get styling ideas for Diwali, Eid, Navratri and more — outfit combinations that work for both traditional and modern settings.</p>',
-  },
-  // --- New 2026 SEO blog posts ---
-  {
-    path: '/blog/how-to-choose-perfect-lehenga-wedding-2026',
-    title: 'How to Choose the Perfect Lehenga for Your 2026 Wedding | LuxeMia',
-    description: 'Step-by-step guide to choosing the perfect bridal lehenga for your 2026 wedding. Body type, fabric, color, embroidery & budget tips from LuxeMia stylists.',
-    h1: 'How to Choose the Perfect Lehenga for Your 2026 Wedding',
-    content: '<p>The complete bridal guide to choosing your dream lehenga in 2026. Learn how to pick the right silhouette for your body type, the best fabric for your wedding season, color choices for every skin tone, and how to plan your budget — from a stylist who has dressed hundreds of brides.</p>',
-  },
-  {
-    path: '/blog/lehenga-vs-sharara-vs-anarkali-comparison',
-    title: 'Lehenga vs Sharara vs Anarkali: Which One Is Right for You? | LuxeMia',
-    description: 'Lehenga vs Sharara vs Anarkali — a complete comparison of silhouettes, occasions, body types & price. Find out which Indian outfit is right for you.',
-    h1: 'Lehenga vs Sharara vs Anarkali: Complete Comparison',
-    content: '<p>Confused between a lehenga, sharara, and anarkali? Compare silhouettes, occasions, comfort, body-type fit, and price — so you pick the perfect Indian outfit for your next wedding, festival, or celebration.</p>',
-  },
-  {
-    path: '/blog/best-lehenga-colors-for-indian-skin-tone',
-    title: 'Best Lehenga Colors for Every Indian Skin Tone | LuxeMia',
-    description: 'The best lehenga colors for fair, wheatish, dusky & dark Indian skin tones. Discover what suits you with stylist-curated color recommendations.',
-    h1: 'Best Lehenga Colors for Every Indian Skin Tone',
-    content: '<p>Find the most flattering lehenga colors for your skin tone. Whether you are fair, wheatish, dusky, or deep — our stylists break down the shades that make Indian skin glow, and the colors to skip.</p>',
-  },
-  {
-    path: '/blog/shipping-indian-clothes-usa-uk-canada-nri-guide',
-    title: 'Shipping Indian Clothes to USA, UK & Canada: NRI Guide | LuxeMia',
-    description: 'Complete NRI guide to shipping Indian clothes to USA, UK & Canada. Customs, duties, delivery times & how to avoid common shipping problems.',
-    h1: 'Shipping Indian Clothes to USA, UK & Canada: NRI Guide',
-    content: '<p>The complete NRI guide to ordering Indian ethnic wear online and shipping it to the USA, UK, or Canada. Customs duties, delivery timelines, country-specific rules, and how LuxeMia handles worldwide shipping with no surprises.</p>',
-  },
-  {
-    path: '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
-    title: 'Unstitched vs Ready to Wear vs Made to Measure: Which to Choose? | LuxeMia',
-    description: 'Unstitched vs Ready to Wear vs Made to Measure — pros, cons, pricing & timelines for Indian ethnic wear. A complete shopping guide.',
-    h1: 'Unstitched vs Ready to Wear vs Made to Measure',
-    content: '<p>Should you order unstitched fabric, a ready-to-wear outfit, or made-to-measure stitching? Compare pricing, timelines, fit, and flexibility so you choose the right option for your next lehenga, saree, or suit.</p>',
   },
   // --- Product pages ---
   {
@@ -1780,6 +1613,81 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
+function loadCanonicalBlogPaths() {
+  const routePaths = JSON.parse(fs.readFileSync(ROUTES_JSON_PATH, 'utf-8'));
+  if (!Array.isArray(routePaths)) {
+    throw new Error('[prerender] scripts/routes.json must contain a route path array.');
+  }
+
+  return routePaths.filter((routePath) => (
+    typeof routePath === 'string'
+    && routePath.startsWith('/blog/')
+    && routePath.split('/').length === 3
+  ));
+}
+
+function loadBlogPostData() {
+  const source = fs.readFileSync(BLOG_POSTS_PATH, 'utf-8');
+  const blogPostsMatch = source.match(/export const blogPosts: BlogPost\[\]\s*=\s*(\[[\s\S]*?\n\]);/);
+  if (!blogPostsMatch) {
+    throw new Error('[prerender] Could not find blogPosts array in src/data/blogPosts.ts.');
+  }
+
+  const context = { globalThis: {} };
+  vm.runInNewContext(`const blogPosts = ${blogPostsMatch[1]}\nglobalThis.__blogPosts = blogPosts;`, context, {
+    filename: BLOG_POSTS_PATH,
+  });
+
+  if (!Array.isArray(context.globalThis.__blogPosts)) {
+    throw new Error('[prerender] src/data/blogPosts.ts did not export a blogPosts array.');
+  }
+
+  return context.globalThis.__blogPosts;
+}
+
+function syncBlogRoutesToCanonicalSource() {
+  const canonicalBlogPaths = loadCanonicalBlogPaths();
+  const blogPostsBySlug = new Map(loadBlogPostData().map((post) => [post.slug, post]));
+  const missingPosts = [];
+
+  const canonicalBlogRoutes = canonicalBlogPaths.map((blogPath) => {
+    const slug = blogPath.slice('/blog/'.length);
+    const post = blogPostsBySlug.get(slug);
+    if (!post) {
+      missingPosts.push(blogPath);
+      return null;
+    }
+
+    const title = post.title.includes('LuxeMia') ? post.title : `${post.title} | LuxeMia`;
+    return {
+      path: blogPath,
+      title,
+      description: post.excerpt,
+      h1: post.title,
+      content: post.content,
+    };
+  }).filter(Boolean);
+
+  if (missingPosts.length > 0) {
+    throw new Error(`[prerender] Missing blog post data for canonical routes: ${missingPosts.join(', ')}`);
+  }
+
+  for (let i = routes.length - 1; i >= 0; i--) {
+    if (routes[i].path.startsWith('/blog/')) {
+      routes.splice(i, 1);
+    }
+  }
+
+  const blogIndex = routes.findIndex((route) => route.path === '/blog');
+  if (blogIndex === -1) {
+    routes.push(...canonicalBlogRoutes);
+  } else {
+    routes.splice(blogIndex + 1, 0, ...canonicalBlogRoutes);
+  }
+
+  console.log(`[prerender] Synced ${canonicalBlogRoutes.length} /blog/* routes from scripts/routes.json and src/data/blogPosts.ts`);
+}
+
 async function main() {
   const indexPath = path.join(DIST_DIR, 'index.html');
 
@@ -1790,6 +1698,8 @@ async function main() {
 
   const template = fs.readFileSync(indexPath, 'utf-8');
   const prerenderDir = path.join(DIST_DIR, '_prerender');
+
+  syncBlogRoutesToCanonicalSource();
 
   // Clean previous prerender output
   if (fs.existsSync(prerenderDir)) {
