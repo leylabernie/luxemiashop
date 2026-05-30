@@ -177,6 +177,45 @@ async function fetchAllShopifyProducts() {
   return map;
 }
 
+function removeGeneratedDir(dir, label) {
+  const relative = path.relative(DIST_DIR, dir);
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    throw new Error(`[prerender] Refusing to clean ${label} outside dist: ${dir}`);
+  }
+
+  if (!fs.existsSync(dir)) return;
+
+  try {
+    fs.rmSync(dir, {
+      recursive: true,
+      force: true,
+      maxRetries: 5,
+      retryDelay: 250,
+    });
+  } catch (err) {
+    throw new Error(`[prerender] Failed to clean ${label} at ${dir}: ${err.message}`);
+  }
+
+  if (fs.existsSync(dir)) {
+    throw new Error(`[prerender] Failed to clean ${label}; stale files remain at ${dir}`);
+  }
+}
+
+function createShopifyProductRoute(handle, product) {
+  const title = product.title || handle;
+  const cleanDesc = generateCleanDescription(product.title, product.productType, product.tags || []);
+  const description = (cleanDesc || `Shop the ${title} at LuxeMia. Free shipping on orders over $350.`).slice(0, 320);
+
+  return {
+    path: `/product/${handle}`,
+    title: `${title} | LuxeMia`,
+    description,
+    h1: title,
+    content: `<p>${escapeHtml(description).slice(0, 1200)}</p>`,
+    product,
+  };
+}
+
 // Route definitions with SEO metadata
 const routes = [
   {
@@ -1698,52 +1737,29 @@ async function main() {
 
   const template = fs.readFileSync(indexPath, 'utf-8');
   const prerenderDir = path.join(DIST_DIR, '_prerender');
+  const productPrerenderDir = path.join(prerenderDir, 'product');
 
   syncBlogRoutesToCanonicalSource();
 
-  // Clean previous prerender output
-  if (fs.existsSync(prerenderDir)) {
-    fs.rmSync(prerenderDir, { recursive: true });
-  }
+  // Clean previous prerender output. Clean product output first so Windows /
+  // OneDrive delete failures cannot leave old product handles mixed into SEO checks.
+  removeGeneratedDir(productPrerenderDir, 'product prerender output');
+  removeGeneratedDir(prerenderDir, 'prerender output');
   fs.mkdirSync(prerenderDir, { recursive: true });
 
   // Pre-fetch live Shopify product data so /product/* prerendered HTML
   // emits valid Product JSON-LD with image, description, and offers.price.
   const productMap = await fetchAllShopifyProducts();
-  const hardcodedProductHandles = new Set();
-  for (const route of routes) {
-    if (route.path.startsWith('/product/')) {
-      const handle = route.path.slice('/product/'.length);
-      hardcodedProductHandles.add(handle);
-      const live = productMap.get(handle);
-      if (live) route.product = live;
-    }
-  }
-
-  // Auto-generate a route entry for every Shopify product NOT already in the
-  // hardcoded list. This guarantees a prerendered HTML file with valid Product
-  // JSON-LD exists for every /product/<handle> on the live site (was previously
-  // only ~73 of 360 products — the rest fell through to the empty SPA shell
-  // with no Product schema, breaking GMC validation).
-  for (const [handle, p] of productMap.entries()) {
-    if (hardcodedProductHandles.has(handle)) continue;
-    const title = p.title || handle;
-    const cleanDesc = generateCleanDescription(p.title, p.productType, p.tags || []);
-    const description = (cleanDesc || `Shop the ${title} at LuxeMia. Free shipping on orders over $350.`).slice(0, 320);
-    routes.push({
-      path: `/product/${handle}`,
-      title: `${title} | LuxeMia`,
-      description,
-      h1: title,
-      content: `<p>${escapeHtml(description).slice(0, 1200)}</p>`,
-      product: p,
-    });
-  }
-  console.log(`[prerender] Total /product/* routes after Shopify merge: ${routes.filter(r => r.path.startsWith('/product/')).length}`);
+  const nonProductRoutes = routes.filter(route => !route.path.startsWith('/product/'));
+  const liveProductRoutes = Array.from(productMap.entries()).map(([handle, product]) =>
+    createShopifyProductRoute(handle, product)
+  );
+  const finalRoutes = [...nonProductRoutes, ...liveProductRoutes];
+  console.log(`[prerender] Ignored ${routes.length - nonProductRoutes.length} hardcoded product routes; live Shopify product routes: ${liveProductRoutes.length}`);
 
   let count = 0;
   let productCount = 0;
-  for (const route of routes) {
+  for (const route of finalRoutes) {
     const html = generateHtml(template, route);
 
     // Create directory structure: / -> _prerender/index.html, /suits -> _prerender/suits.html
@@ -1793,7 +1809,7 @@ async function main() {
   // Write prerenderManifest.ts with the EXACT set of product handles that have
   // prerendered HTML files. Middleware imports this so it knows which handles to
   // rewrite without self-HTTP requests or mismatches with generate-routes output.
-  const prerenderedHandles = routes
+  const prerenderedHandles = finalRoutes
     .filter(r => r.path.startsWith('/product/'))
     .map(r => r.path.slice('/product/'.length));
 
