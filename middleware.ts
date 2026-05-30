@@ -4,7 +4,9 @@ import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
 import { generateProductHtml, return404, escapeHtml } from './src/middleware/htmlGenerator.js';
 import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
+import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { getCorrectedTitle, autoCorrectTitle } from './src/lib/titleCorrections.js';
+import { generateHomepageFaqSchema } from './src/lib/homepageFaqs.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -118,6 +120,14 @@ export default async function middleware(request: Request) {
   // ── CRITICAL SEO FIX: Noindex headers for utility pages ──
   // These pages should never appear in search results.
   // We inject X-Robots-Tag AND meta robots for defense in depth.
+  // Product routes must map to prerendered Shopify handles before SPA fallback.
+  if (pathname.startsWith('/product/')) {
+    const handle = pathname.replace('/product/', '');
+    if (!handle || handle.includes('/') || !PRERENDERED_PRODUCT_HANDLES.has(handle)) {
+      return return404(request);
+    }
+  }
+
   const UTILITY_PAGES = new Set([
     '/auth', '/account', '/wishlist', '/cart', '/checkout', '/order-confirmation',
   ]);
@@ -459,6 +469,10 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
         seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
       },
     });
+  }
+
+  if (pathname === '/' || pathname === '') {
+    schemas.push(generateHomepageFaqSchema());
   }
 
   // 5. FAQPage Schema (for pages with FAQs — add generic global FAQs for product pages)

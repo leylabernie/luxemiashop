@@ -84,22 +84,25 @@ const getGoogleProductCategory = (productType?: string, title?: string): string 
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
-  const { product: shopifyProduct, isLoading: shopifyLoading } = useShopifyProduct(handle);
+  const { product: shopifyProduct, isLoading: shopifyLoading, error: shopifyError } = useShopifyProduct(handle);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
-  const [localProduct, setLocalProduct] = useState<{ node: LocalProduct } | null>(null);
+  const [localProduct, setLocalProduct] = useState<{ node: LocalProduct } | null | undefined>(undefined);
 
   // Lazy-load local product data
   useEffect(() => {
     if (handle) {
+      setLocalProduct(undefined);
       import('@/data/localProducts').then(m => {
         const found = m.getLocalProductByHandle(handle);
         setLocalProduct(found ?? null);
       });
+    } else {
+      setLocalProduct(null);
     }
   }, [handle]);
   const product = shopifyProduct || localProduct;
-  const isLoading = shopifyLoading || (!shopifyProduct && !localProduct);
-  const error = !product && !shopifyLoading && localProduct !== undefined ? 'Product not found' : null;
+  const isLoading = shopifyLoading || localProduct === undefined;
+  const error = !product && !isLoading ? (shopifyError || 'Product not found') : null;
 
   // ── VISUAL TITLE CORRECTION ──
   // Apply image-verified title corrections to ensure the visible product title
