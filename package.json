@@ -9,6 +9,7 @@
     "build:dev": "vite build --mode development",
     "validate:blog-seo": "node scripts/validate-blog-seo-routes.cjs",
     "validate:collection-seo": "node scripts/validate-collection-seo-routes.cjs",
+    "validate:product-seo": "node scripts/validate-product-seo-parity.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
