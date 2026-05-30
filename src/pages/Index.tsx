@@ -203,16 +203,21 @@ const Index = () => {
                 <div key={index} className="border border-border rounded-lg bg-card overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    aria-expanded={openFaq === index}
+                    aria-controls={`homepage-faq-answer-${index}`}
                     className="flex items-center justify-between w-full text-left p-5"
                   >
                     <span className="font-medium text-sm pr-4">{faq.question}</span>
                     <ChevronDown className={`h-4 w-4 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
                   </button>
-                  {openFaq === index && (
-                    <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">
+                  <div
+                    id={`homepage-faq-answer-${index}`}
+                    className={`grid transition-all duration-200 ${openFaq === index ? 'grid-rows-[1fr] pb-5' : 'grid-rows-[0fr]'}`}
+                  >
+                    <div className="px-5 overflow-hidden text-sm text-muted-foreground leading-relaxed">
                       {faq.answer}
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>
