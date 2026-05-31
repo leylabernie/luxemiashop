@@ -19,9 +19,12 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const ROUTES_JSON_PATH = path.resolve(__dirname, 'routes.json');
 const BLOG_POSTS_PATH = path.resolve(__dirname, '../src/data/blogPosts.ts');
 const SITE_URL = 'https://luxemia.shop';
+const BUSINESS_NAME = 'Glamour Indian Wear';
+const BRAND_NAME = 'LuxeMia';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
 const FALLBACK_CURRENCY = 'USD';
+const SHIPPING_COUNTRIES = ['US', 'CA', 'AU'];
 const CANONICAL_LINK_PATTERN = /<link\s+(?=[^>]*rel=["']canonical["'])(?=[^>]*href=["'][^"']+["'])[^>]*>/i;
 const CANONICAL_COMMENT_PATTERN = /\s*<!-- NOTE: Canonical URL[\s\S]*?<!-- Do NOT add a hardcoded canonical here[\s\S]*?-->/i;
 const HOMEPAGE_FAQS = [
@@ -84,6 +87,21 @@ function generateRouteFaqSchema(faqs) {
         '@type': 'Answer',
         text: faq.answer,
       },
+    })),
+  };
+}
+
+function generateRouteBreadcrumbSchema(breadcrumbs) {
+  if (!Array.isArray(breadcrumbs) || breadcrumbs.length === 0) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith('http') ? item.url : `${SITE_URL}${item.url}`,
     })),
   };
 }
@@ -204,6 +222,49 @@ function forceJpegForGmc(url) {
   return url;
 }
 
+function generateCollectionShippingDetails(currency) {
+  return [
+    {
+      '@type': 'OfferShippingDetails',
+      name: 'Free Shipping on Orders Over $350',
+      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
+      },
+    },
+    {
+      '@type': 'OfferShippingDetails',
+      name: 'Flat Rate Shipping $25',
+      shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
+      deliveryTime: {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY' },
+      },
+    },
+  ];
+}
+
+function generateCollectionReturnPolicy() {
+  return {
+    '@type': 'MerchantReturnPolicy',
+    applicableCountry: 'US',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+    description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+  };
+}
+
+function getCollectionProductDescription(product) {
+  const cleanDesc = generateCleanDescription(product?.title, product?.productType, product?.tags || []);
+  const rawDesc = (product?.description || '').replace(/\s+/g, ' ').trim();
+  const fallbackDesc = `Shop the ${product?.title || product?.handle || 'Indian ethnic wear'} at LuxeMia. Free shipping on orders over $350 to USA, Canada, and Australia.`;
+  return (cleanDesc || rawDesc || fallbackDesc).slice(0, 5000);
+}
+
 async function fetchAllShopifyProducts() {
   const map = new Map();
   let cursor = null;
@@ -282,28 +343,36 @@ function createShopifyProductRoute(handle, product) {
 
 function getCollectionSchemaItems(productMap) {
   return Array.from(productMap.values())
-    .filter(product => product?.handle)
+    .filter(product => product?.handle && product.images?.edges?.[0]?.node?.url)
     .slice(0, 30)
     .map((product, index) => {
       const image = product.images?.edges?.[0]?.node?.url;
       const price = product.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
       const currency = product.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
       const availability = product.availableForSale === false ? 'OutOfStock' : 'InStock';
+      const url = `${SITE_URL}/product/${product.handle}`;
 
       return {
         '@type': 'ListItem',
         position: index + 1,
         item: {
           '@type': 'Product',
-          '@id': `${SITE_URL}/product/${product.handle}`,
+          '@id': url,
           name: product.title || product.handle,
-          image: forceJpegForGmc(image || FALLBACK_OG_IMAGE),
-          url: `${SITE_URL}/product/${product.handle}`,
+          image: forceJpegForGmc(image),
+          description: getCollectionProductDescription(product),
+          url,
+          brand: { '@type': 'Brand', name: BRAND_NAME },
           offers: {
             '@type': 'Offer',
+            url,
             price,
             priceCurrency: currency,
             availability: `https://schema.org/${availability}`,
+            itemCondition: 'https://schema.org/NewCondition',
+            seller: { '@type': 'Organization', name: BUSINESS_NAME, alternateName: BRAND_NAME },
+            shippingDetails: generateCollectionShippingDetails(currency),
+            hasMerchantReturnPolicy: generateCollectionReturnPolicy(),
           },
         },
       };
@@ -463,6 +532,37 @@ const routes = [
     title: 'Bridal Lehengas Online | Indian Wedding Lehenga for Brides - LuxeMia',
     description: 'Shop bridal lehengas online at LuxeMia. Explore Indian bridal lehenga choli styles for weddings, engagement, reception, and ceremony looks with custom sizing support.',
     h1: 'Bridal Lehengas for Indian Weddings',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Bridal Lehengas', url: '/collections/bridal-lehengas' },
+    ],
+    collection: {
+      name: 'Bridal Lehengas for Indian Weddings',
+      description: 'Bride-focused collection of Indian bridal lehengas, wedding lehenga choli sets, and embroidered designer lehengas for ceremony, engagement, reception, and sangeet shopping.',
+    },
+    faqs: [
+      {
+        question: 'What type of bridal lehenga should I choose for an Indian wedding?',
+        answer: 'Choose your bridal lehenga based on the ceremony, venue, season, and how formal the event is. Heavily embroidered silk, velvet, or net lehengas work well for the wedding ceremony, while lighter georgette or sequined styles can suit engagement, sangeet, or reception events. Red, maroon, ivory, blush, emerald, and gold are popular bridal directions.',
+      },
+      {
+        question: 'Are bridal lehengas suitable for reception or engagement events?',
+        answer: 'Yes. Many bridal lehengas can be styled for engagement, reception, or sangeet events depending on color, embroidery, and jewelry. A heavily traditional red or maroon lehenga usually feels most bridal, while pastel, ivory, metallic, or sequined lehengas often work beautifully for reception and engagement looks.',
+      },
+      {
+        question: 'Can bridal lehengas be customized or altered?',
+        answer: 'LuxeMia supports fit options such as unstitched, semi-stitched, ready-to-wear, and made-to-measure where available on the product. For bridal shopping, review the product options carefully and contact LuxeMia before ordering if you need styling or sizing guidance.',
+      },
+      {
+        question: 'What colors are popular for Indian bridal lehengas?',
+        answer: 'Classic Indian bridal lehenga colors include red, maroon, wine, gold, and deep pink. Modern brides also choose ivory, blush, champagne, emerald, sage, and pastel tones for wedding, engagement, or reception events. The best color depends on the ceremony, family preference, skin tone, and styling plan.',
+      },
+      {
+        question: 'How should I choose a bridal lehenga online?',
+        answer: 'Check fabric, embroidery, blouse and dupatta details, size options, delivery timing, return policy, and product photos before ordering. Compare the lehenga against your wedding timeline and ceremony needs. If your event date is close, prioritize ready-to-wear or clearly available options and ask for sizing help before purchase.',
+      },
+    ],
     content: '<p>Shop Indian bridal lehengas selected for brides planning wedding, engagement, reception, sangeet, and ceremony looks. This bride-focused collection highlights wedding lehenga choli styles with embroidery, rich fabrics, and sizing options for online bridal shopping.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader festive and partywear styles, or continue wedding shopping with <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> and <a href="/collections/mehendi-outfits">mehendi outfits</a>.</p>',
   },
   {
@@ -470,6 +570,41 @@ const routes = [
     title: 'Wedding Lehengas Online | Indian Wedding Lehenga Choli - LuxeMia',
     description: 'Shop wedding lehengas online at LuxeMia. Explore Indian wedding lehengas, bridal-adjacent lehenga choli, reception lehengas, and wedding guest styles.',
     h1: 'Wedding Lehengas',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Wedding Lehengas', url: '/collections/wedding-lehengas' },
+    ],
+    collection: {
+      name: 'Wedding Lehengas',
+      description: 'Wedding lehenga collection for Indian wedding lehengas, bridal-adjacent lehenga choli, reception lehengas, sangeet lehengas, and wedding guest lehenga shopping.',
+    },
+    faqs: [
+      {
+        question: 'What is a wedding lehenga?',
+        answer: 'A wedding lehenga is an Indian lehenga choli chosen for wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and family celebrations. Brides may choose heavier embroidered styles, while wedding guests often prefer lighter Indian wedding lehengas that are easier to wear through long events.',
+      },
+      {
+        question: 'Are wedding lehengas only for brides?',
+        answer: 'No. Wedding lehengas include bridal lehengas for the bride and bridal-adjacent lehenga styles for sisters, bridesmaids, cousins, mothers, and wedding guests. The right choice depends on the event, dress code, color, embroidery level, and how formal the celebration is.',
+      },
+      {
+        question: 'Can I wear a wedding lehenga to a reception or sangeet?',
+        answer: 'Yes. Reception lehengas and sangeet lehengas are popular for Indian wedding events because they feel festive and polished. For dancing or evening events, shoppers often choose georgette, net, silk blends, sequins, mirror work, or embroidered lehengas with lighter dupattas.',
+      },
+      {
+        question: 'How do I choose an Indian wedding lehenga online?',
+        answer: 'Start with the event, role, comfort level, color palette, fabric, blouse coverage, dupatta styling, embroidery weight, sizing, stitching options, and delivery timeline. Review product photos and measurements before ordering, especially when shopping for a specific wedding date.',
+      },
+      {
+        question: 'Which wedding lehenga colors are popular?',
+        answer: 'Classic wedding lehenga colors include red, maroon, wine, gold, ivory, blush, emerald, pink, and champagne. Brides often choose richer ceremonial colors, while wedding guests and reception shoppers may choose pastels, jewel tones, metallics, or lighter embroidered styles.',
+      },
+      {
+        question: 'Does LuxeMia ship wedding lehengas internationally?',
+        answer: 'Yes. LuxeMia supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling support before purchase. Check each product listing for sizing, stitching, and delivery details before ordering.',
+      },
+    ],
     content: '<p>Shop wedding lehengas for Indian wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia collection highlights Indian wedding lehengas, bridal-adjacent lehenga choli styles, reception lehengas, sangeet lehengas, wedding guest lehengas, embroidered wedding lehengas, silk lehengas, and event-ready wedding outfits.</p><p>Browse the full <a href="/lehengas">lehenga collection</a> for broader lehenga styles, or continue wedding shopping with <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/reception-outfits">reception outfits</a>.</p>',
   },
   {
@@ -610,6 +745,41 @@ const routes = [
     title: 'Pakistani Wedding Dresses | Bridal, Nikah, Mehndi & Walima Outfits - LuxeMia',
     description: 'Shop Pakistani wedding dresses at LuxeMia. Explore Pakistani bridal dresses, wedding outfits, guest dresses, reception dresses, mehndi outfits, nikah dresses, walima dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.',
     h1: 'Pakistani Wedding Dresses',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Pakistani Wedding Dresses', url: '/collections/pakistani-wedding-dresses' },
+    ],
+    collection: {
+      name: 'Pakistani Wedding Dresses',
+      description: 'Pakistani wedding dresses collection for Pakistani bridal dresses, Pakistani wedding outfits, Pakistani wedding guest dresses, reception dresses, mehndi outfits, nikah dresses, walima dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.',
+    },
+    faqs: [
+      {
+        question: 'What are Pakistani wedding dresses?',
+        answer: 'Pakistani wedding dresses include bridal lehengas, shararas, ghararas, Anarkali suits, formal salwar kameez, sarees, saree gowns, and embroidered gowns selected for Pakistani weddings, nikah ceremonies, mehndi events, walima receptions, and wedding guest occasions.',
+      },
+      {
+        question: 'Which Pakistani wedding dress works best for nikah, mehndi, and walima events?',
+        answer: 'For nikah events, many shoppers choose elegant ghararas, shararas, sarees, or soft formal suits. Mehndi outfits often lean festive and colorful, while walima and reception dresses can include polished gowns, lehengas, sarees, Anarkalis, and embroidered formal dresses.',
+      },
+      {
+        question: 'Can wedding guests wear Pakistani bridal-inspired styles?',
+        answer: 'Wedding guests can wear Pakistani wedding guest dresses with embroidery, dupattas, sharara pants, gharara pants, Anarkali silhouettes, sarees, or gowns, but usually choose lighter styling than a bridal outfit. The best guest look feels formal, comfortable, and respectful of the couple or family dress code.',
+      },
+      {
+        question: 'What colors are popular for Pakistani wedding dresses?',
+        answer: 'Popular Pakistani wedding dress colors include ivory, gold, champagne, blush, emerald, teal, navy, maroon, wine, red, pink, sage, mint, and soft pastels. Brides may choose richer ceremonial colors, while guests often select jewel tones, metallics, pastels, or lighter embroidered styles.',
+      },
+      {
+        question: 'How do I choose a Pakistani wedding outfit online?',
+        answer: 'Start with the event, role, venue, time of day, fabric weight, embroidery level, measurements, sleeve and neckline comfort, dupatta styling, stitching needs, and delivery timeline. Review product photos, sizing notes, fabric details, and care instructions before ordering for a wedding date.',
+      },
+      {
+        question: 'Does LuxeMia carry Pakistani wedding dresses for brides and guests?',
+        answer: 'Yes. LuxeMia curates Pakistani wedding dresses across bridal-adjacent lehengas, shararas, ghararas, Anarkalis, formal salwar kameez, sarees, gowns, and wedding guest outfits for nikah, mehndi, walima, reception, and family celebration shopping.',
+      },
+    ],
     content: '<p>Shop Pakistani wedding dresses for nikah ceremonies, mehndi events, walima receptions, wedding guest looks, engagement parties, and formal family celebrations. This collection highlights Pakistani bridal dresses, Pakistani wedding outfits, Pakistani wedding guest dresses, Pakistani formal dresses, Pakistani reception dresses, Pakistani mehndi outfits, Pakistani nikah dresses, Pakistani walima dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.</p><p>Continue Pakistani wedding shopping with <a href="/collections/pakistani-suits">Pakistani suits</a>, <a href="/collections/sharara-suits">sharara suits</a>, <a href="/collections/gharara-suits">gharara suits</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, <a href="/collections/wedding-guest-dresses">guest wedding dresses</a>, <a href="/collections/reception-outfits">reception outfits</a>, and <a href="/collections/mehendi-outfits">mehendi outfits</a>.</p>',
   },
   {
@@ -1784,6 +1954,12 @@ function generateHtml(template, route, productMap = new Map()) {
   if (faqSchema) {
     const faqScript = `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
     html = html.replace('</head>', `${faqScript}\n</head>`);
+  }
+
+  const breadcrumbSchema = generateRouteBreadcrumbSchema(route.breadcrumbs);
+  if (breadcrumbSchema) {
+    const breadcrumbScript = `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`;
+    html = html.replace('</head>', `${breadcrumbScript}\n</head>`);
   }
 
   const collectionSchema = generateCollectionPageSchema(route, productMap);
