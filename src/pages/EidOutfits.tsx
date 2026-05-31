@@ -52,6 +52,15 @@ const EidOutfits = () => {
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
+  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -61,6 +70,11 @@ const EidOutfits = () => {
           { name: 'Occasions', url: '/collections' },
           { name: 'Eid Outfits', url: '/collections/eid-outfits' },
         ]}
+        collection={{
+          name: 'Eid Outfits 2026',
+          description: 'Festive South Asian and Indian ethnic wear collection for Eid celebrations, including chikankari suits, sharara sets, Eid anarkali dresses, Pakistani suits, pastel salwar kameez, and lehengas.',
+          items: collectionItems,
+        }}
         faqs={eidOutfitFaqs}
       />
       <Header />

@@ -52,6 +52,15 @@ const DiwaliOutfits = () => {
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
+  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -61,6 +70,11 @@ const DiwaliOutfits = () => {
           { name: 'Occasions', url: '/collections' },
           { name: 'Diwali Outfits', url: '/collections/diwali-outfits' },
         ]}
+        collection={{
+          name: 'Diwali Outfits 2026',
+          description: 'Festive Indian ethnic wear collection for Diwali celebrations, including Diwali lehengas, festive anarkali suits, silk sarees, sharara sets, and indo-western Diwali outfits.',
+          items: collectionItems,
+        }}
         faqs={diwaliOutfitFaqs}
       />
       <Header />

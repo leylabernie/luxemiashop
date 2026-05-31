@@ -52,6 +52,15 @@ const WeddingGuestOutfits = () => {
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
+  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -61,6 +70,11 @@ const WeddingGuestOutfits = () => {
           { name: 'Occasions', url: '/collections' },
           { name: 'Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
         ]}
+        collection={{
+          name: 'Indian Wedding Guest Outfits',
+          description: 'Indian wedding guest outfit collection featuring wedding guest sarees, anarkali suits, lehengas, salwar kameez, and indo-western reception outfits for every ceremony.',
+          items: collectionItems,
+        }}
         faqs={weddingGuestFaqs}
       />
       <Header />

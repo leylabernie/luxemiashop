@@ -52,6 +52,15 @@ const MehendiOutfits = () => {
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
+  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -61,6 +70,11 @@ const MehendiOutfits = () => {
           { name: 'Occasions', url: '/collections' },
           { name: 'Mehendi Outfits', url: '/collections/mehendi-outfits' },
         ]}
+        collection={{
+          name: 'Mehendi Ceremony Outfits',
+          description: 'Pre-wedding mehendi ceremony collection featuring yellow lehengas, green salwar kameez, floral anarkali suits, mehendi ceremony sarees, and bridal mehendi outfits.',
+          items: collectionItems,
+        }}
         faqs={mehendiOutfitFaqs}
       />
       <Header />
