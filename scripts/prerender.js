@@ -22,7 +22,8 @@ const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
 const FALLBACK_CURRENCY = 'USD';
-const CANONICAL_COMMENT_PATTERN = /\s*<!-- NOTE: Canonical URL is injected dynamically by Vercel Edge Middleware -->\s*<!-- The middleware \(middleware\.ts\) injects the correct <link rel="canonical"> -->\s*<!-- for every page route, ensuring no duplicate canonical issues\. -->\s*<!-- Do NOT add a hardcoded canonical here [\s\S]*? -->/;
+const CANONICAL_LINK_PATTERN = /<link\s+(?=[^>]*rel=["']canonical["'])(?=[^>]*href=["'][^"']+["'])[^>]*>/i;
+const CANONICAL_COMMENT_PATTERN = /\s*<!-- NOTE: Canonical URL[\s\S]*?<!-- Do NOT add a hardcoded canonical here[\s\S]*?-->/i;
 const HOMEPAGE_FAQS = [
   {
     question: 'Do you offer international shipping for Indian ethnic wear?',
@@ -1641,13 +1642,10 @@ function generateHtml(template, route, productMap = new Map()) {
     // Replace canonical URL
     const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
     const canonicalLink = `<link rel="canonical" href="${canonical}" />`;
-    if (/<link rel="canonical" href="[^"]*" \/>/.test(html)) {
-      html = html.replace(
-        /<link rel="canonical" href="[^"]*" \/>/,
-        canonicalLink
-      );
-    } else if (CANONICAL_COMMENT_PATTERN.test(html)) {
+    if (CANONICAL_COMMENT_PATTERN.test(html)) {
       html = html.replace(CANONICAL_COMMENT_PATTERN, `\n    ${canonicalLink}`);
+    } else if (CANONICAL_LINK_PATTERN.test(html)) {
+      html = html.replace(CANONICAL_LINK_PATTERN, canonicalLink);
     } else {
       html = html.replace('<!-- Open Graph / Facebook -->', `${canonicalLink}\n\n    <!-- Open Graph / Facebook -->`);
     }
