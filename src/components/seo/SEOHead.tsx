@@ -3,8 +3,11 @@ import {
   generateProductSchema,
   generateBreadcrumbSchema,
   generateFaqSchema,
+  generateShippingSchema,
+  generateReturnPolicySchema,
   forceJpegForGmc,
   SITE_URL,
+  BRAND_NAME,
 } from '@/lib/schema';
 import type { FAQItem as SchemaFAQItem } from '@/lib/schema';
 
@@ -16,6 +19,7 @@ interface CollectionItem {
   name: string;
   url: string;
   image: string;
+  description?: string;
   price: string;
   currency: string;
 }
@@ -130,36 +134,54 @@ const SEOHead = ({
     ? generateFaqSchema(faqs)
     : null;
 
+  const validCollectionItems = collection
+    ? collection.items
+        .map((item) => ({
+          ...item,
+          image: forceJpegForGmc(item.image || ''),
+          description: (item.description || collection.description || `Shop the ${item.name} at LuxeMia.`).replace(/\s+/g, ' ').trim(),
+          currency: item.currency || 'USD',
+        }))
+        .filter((item) => item.image.length > 0)
+        .slice(0, 30)
+    : [];
+
   // CollectionPage Schema with embedded ItemList for collection/category pages
   // Uses @type: CollectionPage (not just ItemList) for proper Google Rich Results
-  const collectionSchema = collection && collection.items.length > 0
+  const collectionSchema = collection && validCollectionItems.length > 0
     ? {
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
         name: collection.name,
         description: collection.description,
         url: canonicalUrl,
-        numberOfItems: collection.items.length,
+        numberOfItems: validCollectionItems.length,
         mainEntity: {
           '@type': 'ItemList',
           name: collection.name,
           description: collection.description,
-          numberOfItems: collection.items.length,
+          numberOfItems: validCollectionItems.length,
           itemListOrder: 'https://schema.org/ItemListOrderDescending',
-          itemListElement: collection.items.slice(0, 30).map((item, index) => ({
+          itemListElement: validCollectionItems.map((item, index) => ({
             '@type': 'ListItem',
             position: index + 1,
             item: {
               '@type': 'Product',
               '@id': `${siteUrl}/product/${item.url}`,
               name: item.name,
-              image: forceJpegForGmc(item.image),
+              image: item.image,
+              description: item.description,
               url: `${siteUrl}/product/${item.url}`,
+              brand: { '@type': 'Brand', name: BRAND_NAME },
               offers: {
                 '@type': 'Offer',
+                url: `${siteUrl}/product/${item.url}`,
                 price: item.price,
                 priceCurrency: item.currency,
                 availability: 'https://schema.org/InStock',
+                itemCondition: 'https://schema.org/NewCondition',
+                shippingDetails: generateShippingSchema(item.currency),
+                hasMerchantReturnPolicy: generateReturnPolicySchema(),
               },
             },
           })),
