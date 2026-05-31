@@ -8,6 +8,9 @@ import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { getCorrectedTitle, autoCorrectTitle } from './src/lib/titleCorrections.js';
 import { generateHomepageFaqSchema } from './src/lib/homepageFaqs.js';
 
+const CANONICAL_LINK_PATTERN = /<link\s+(?=[^>]*rel=["']canonical["'])(?=[^>]*href=["'][^"']+["'])[^>]*>/i;
+const CANONICAL_COMMENT_PATTERN = /\s*<!-- NOTE: Canonical URL[\s\S]*?<!-- Do NOT add a hardcoded canonical here[\s\S]*?-->/i;
+
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
  *
@@ -354,15 +357,15 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
   }
 
   // Replace or add canonical URL
-  if (html.includes('rel="canonical"')) {
-    html = html.replace(
-      /<link\s+rel="canonical"\s+href="[^"]*"/,
-      `<link rel="canonical" href="${escapedCanonical}"`
-    );
+  const canonicalLink = `<link rel="canonical" href="${escapedCanonical}">`;
+  if (CANONICAL_COMMENT_PATTERN.test(html)) {
+    html = html.replace(CANONICAL_COMMENT_PATTERN, `\n    ${canonicalLink}`);
+  } else if (CANONICAL_LINK_PATTERN.test(html)) {
+    html = html.replace(CANONICAL_LINK_PATTERN, canonicalLink);
   } else {
     html = html.replace(
       '</head>',
-      `<link rel="canonical" href="${escapedCanonical}">\n</head>`
+      `${canonicalLink}\n</head>`
     );
   }
 
