@@ -52,6 +52,15 @@ const NavratriOutfits = () => {
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
+  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+    id: p.node.id,
+    name: p.node.title,
+    url: p.node.handle,
+    image: p.node.images.edges[0]?.node.url || '',
+    price: p.node.priceRange.minVariantPrice.amount,
+    currency: p.node.priceRange.minVariantPrice.currencyCode,
+  }));
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -61,6 +70,11 @@ const NavratriOutfits = () => {
           { name: 'Occasions', url: '/collections' },
           { name: 'Navratri Outfits', url: '/collections/navratri-outfits' },
         ]}
+        collection={{
+          name: 'Navratri Outfits - Chaniya Choli & Garba Dress Collection',
+          description: 'Festive Navratri collection featuring chaniya choli, garba dresses, Navratri lehengas in nine colours, mirror work outfits, bandhani prints, and festive anarkali suits.',
+          items: collectionItems,
+        }}
         faqs={navratriOutfitFaqs}
       />
       <Header />

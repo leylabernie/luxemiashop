@@ -69,6 +69,24 @@ function generateHomepageFaqSchema() {
   };
 }
 
+// Route FAQ schema for static authority pages.
+function generateRouteFaqSchema(faqs) {
+  if (!Array.isArray(faqs) || faqs.length === 0) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
 // ─── Clean description generator (replaces bloated Shopify descriptions) ─────
 // Generates short structured descriptions from product metadata.
 // NEVER uses raw p.description which contains old AI-generated prose.
@@ -258,6 +276,60 @@ function createShopifyProductRoute(handle, product) {
     h1: title,
     content: `<p>${escapeHtml(description).slice(0, 1200)}</p>`,
     product,
+  };
+}
+
+function getCollectionSchemaItems(productMap) {
+  return Array.from(productMap.values())
+    .filter(product => product?.handle)
+    .slice(0, 30)
+    .map((product, index) => {
+      const image = product.images?.edges?.[0]?.node?.url;
+      const price = product.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
+      const currency = product.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
+      const availability = product.availableForSale === false ? 'OutOfStock' : 'InStock';
+
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Product',
+          '@id': `${SITE_URL}/product/${product.handle}`,
+          name: product.title || product.handle,
+          image: forceJpegForGmc(image || FALLBACK_OG_IMAGE),
+          url: `${SITE_URL}/product/${product.handle}`,
+          offers: {
+            '@type': 'Offer',
+            price,
+            priceCurrency: currency,
+            availability: `https://schema.org/${availability}`,
+          },
+        },
+      };
+    });
+}
+
+function generateCollectionPageSchema(route, productMap) {
+  if (!route.collection) return null;
+
+  const itemListElement = getCollectionSchemaItems(productMap);
+  if (itemListElement.length === 0) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: route.collection.name,
+    description: route.collection.description,
+    url: SITE_URL + route.path,
+    numberOfItems: itemListElement.length,
+    mainEntity: {
+      '@type': 'ItemList',
+      name: route.collection.name,
+      description: route.collection.description,
+      numberOfItems: itemListElement.length,
+      itemListOrder: 'https://schema.org/ItemListOrderDescending',
+      itemListElement,
+    },
   };
 }
 
@@ -757,6 +829,32 @@ const routes = [
     title: 'Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia',
     description: 'Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free shipping to USA, Canada & Australia.',
     h1: 'Diwali Outfits 2026',
+    collection: {
+      name: 'Diwali Outfits 2026',
+      description: 'Festive Indian ethnic wear collection for Diwali celebrations, including Diwali lehengas, festive anarkali suits, silk sarees, sharara sets, and indo-western Diwali outfits.',
+    },
+    faqs: [
+      {
+        question: 'What should I wear for Diwali?',
+        answer: 'Diwali calls for festive, vibrant ethnic wear that celebrates joy and prosperity. Traditional choices include lehengas, salwar kameez, anarkali suits, and silk sarees. Popular Diwali colors include gold, red, deep green, royal blue, and orange. For Diwali pooja at home, a silk or cotton salwar kameez is ideal. For a Diwali party or get-together, a lehenga or anarkali suit with zari, sequins, or mirror work is a stunning choice.',
+      },
+      {
+        question: 'What colors are traditional for Diwali outfits?',
+        answer: 'Gold is the quintessential Diwali color as it represents prosperity. Red is equally auspicious and widely worn for Diwali poojas. Other popular colors include deep green, royal purple, burnt orange, fuchsia pink, and navy blue. Traditionally, white and black are avoided for Diwali. Fabrics with gold zari work, sequin embellishments, or mirror details catch the Diwali diyas beautifully and photograph magnificently at festive gatherings.',
+      },
+      {
+        question: 'Should I wear a saree, lehenga, or anarkali for Diwali?',
+        answer: 'All three are excellent Diwali choices depending on the occasion. Lehengas are ideal for Diwali parties and evening get-togethers. Anarkali suits are more practical for visiting relatives and daytime celebrations where you need to move freely. Silk sarees are perfect for a traditional Diwali look, especially for elder family gatherings. Indo-western fusion outfits like cape sets or palazzo suits are popular for modern Diwali parties in the USA and Canada.',
+      },
+      {
+        question: 'Do you ship Diwali outfits to the USA, Canada, and Australia?',
+        answer: 'Yes, LuxeMia ships festive Indian ethnic wear for Diwali to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat rate of $25 applies. All orders are fully tracked and insured. For Diwali, order at least 3-4 weeks in advance to ensure delivery before the festival. Standard delivery takes 7-10 business days after dispatch from India.',
+      },
+      {
+        question: 'What accessories should I pair with my Diwali outfit?',
+        answer: 'Gold jewellery is the classic Diwali accessory: kundan sets, polki necklaces, jhumka earrings, and gold bangles. For a lehenga, a maang tikka and statement necklace complete the look. For an anarkali or salwar kameez, layered necklaces or a choker with matching jhumkas works beautifully. Embellished clutch bags in gold or jewel tones and kolhapuri sandals or heels finish the Diwali ensemble perfectly.',
+      },
+    ],
     content: `
       <p>Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration.</p>
       <h2>What to Wear for Diwali</h2>
@@ -778,6 +876,32 @@ const routes = [
     title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
     description: 'Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free shipping to USA, Canada & Australia.',
     h1: 'Indian Wedding Guest Outfits',
+    collection: {
+      name: 'Indian Wedding Guest Outfits',
+      description: 'Indian wedding guest outfit collection featuring wedding guest sarees, anarkali suits, lehengas, salwar kameez, and indo-western reception outfits for every ceremony.',
+    },
+    faqs: [
+      {
+        question: 'What should I wear as a guest to an Indian wedding?',
+        answer: 'Indian weddings are vibrant, celebratory occasions and guests are expected to dress in elegant ethnic or semi-ethnic attire. Sarees, salwar kameez, anarkali suits, lehengas, and indo-western fusion outfits are all appropriate for Indian wedding guests. The outfit choice also depends on the specific ceremony: a sangeet calls for fun and colourful outfits, while the main wedding ceremony warrants more formal and traditional looks. For non-Indian guests attending for the first time, a salwar kameez or anarkali suit is an easy, elegant, and culturally respectful choice.',
+      },
+      {
+        question: 'What colors should a wedding guest avoid at an Indian wedding?',
+        answer: 'At Indian weddings, guests traditionally avoid wearing white, which is associated with mourning, and red, which is the colour of the bride. Black was once considered inauspicious but is now widely worn at modern Indian wedding receptions and evening events. As a general rule, avoid outfits that could be mistaken for the bridal ensemble. Beyond these, festive colors such as pink, teal, gold, purple, green, and blue are excellent choices for wedding guests.',
+      },
+      {
+        question: 'Should I wear a saree or salwar kameez to an Indian wedding as a guest?',
+        answer: 'Both are excellent choices for an Indian wedding guest. A saree is considered the most elegant and traditional option, and wearing one as a non-Indian guest is deeply appreciated as a sign of cultural respect. A salwar kameez or anarkali suit is easier to wear, more comfortable for all-day celebrations, and just as appropriate. For the sangeet or mehendi ceremony, a colourful salwar suit or lehenga is festive and fun. For the main wedding ceremony and reception, a silk saree or heavily embroidered anarkali is perfect.',
+      },
+      {
+        question: 'Do you ship Indian wedding guest outfits to the USA, Canada, and Australia?',
+        answer: 'Yes, LuxeMia ships Indian wedding guest outfits to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat shipping rate of $25 applies. All orders are fully tracked and insured. We recommend ordering 3-4 weeks before the wedding to ensure timely delivery. Standard delivery takes 7-10 business days after dispatch from India.',
+      },
+      {
+        question: 'Can I wear the same outfit to multiple events at an Indian wedding?',
+        answer: 'Indian weddings typically span multiple ceremonies: mehendi, sangeet, haldi, the wedding ceremony, and the reception. Each has its own dress code. It is perfectly acceptable to wear different outfits to different events. Many guests wear a lighter, more colourful outfit for daytime ceremonies and reserve a more formal, heavily embroidered outfit for the main wedding or reception. If you can only buy one outfit, choose a semi-formal anarkali or salwar kameez that works across multiple ceremonies.',
+      },
+    ],
     content: `
       <p>Dress to impress at every Indian wedding ceremony — from the colourful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colours.</p>
       <h2>What to Wear to Each Indian Wedding Ceremony</h2>
@@ -797,6 +921,32 @@ const routes = [
     title: 'Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia',
     description: 'Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free shipping to USA, Canada & Australia.',
     h1: 'Mehendi Ceremony Outfits',
+    collection: {
+      name: 'Mehendi Ceremony Outfits',
+      description: 'Pre-wedding mehendi ceremony collection featuring yellow lehengas, green salwar kameez, floral anarkali suits, mehendi ceremony sarees, and bridal mehendi outfits.',
+    },
+    faqs: [
+      {
+        question: 'What should I wear to a mehendi ceremony?',
+        answer: 'The mehendi ceremony is a daytime, casual pre-wedding celebration traditionally associated with yellow and green. Guests typically wear bright, cheerful ethnic outfits in yellow, lime green, mustard, orange, or floral prints. Salwar kameez, anarkali suits, and simple lehengas are the most popular choices. Avoid heavy silk sarees or highly formal outfits because the mehendi ceremony is fun and relaxed. Light, breathable fabrics like georgette, chiffon, cotton, and crepe are ideal since the event is often held outdoors or in a garden setting.',
+      },
+      {
+        question: 'What colors are traditional for a mehendi ceremony outfit?',
+        answer: 'Yellow and green are the signature colours of mehendi ceremonies in most Indian cultures: yellow representing turmeric and new beginnings, green representing nature and the mehendi plant itself. Mustard, saffron orange, lime green, and coral are all popular mehendi outfit colours for both the bride and guests. Floral prints and pastel shades are also widely worn. Avoid white, red, and overly dark colours like black and navy for this daytime celebration.',
+      },
+      {
+        question: 'Should the bride wear yellow to her own mehendi?',
+        answer: 'Yes, yellow is considered the most traditional and auspicious colour for the bride at her mehendi ceremony. The yellow turmeric symbolises prosperity, beauty, and the blessing of the ceremony. Most Indian brides wear a yellow lehenga, yellow salwar kameez, or yellow saree for their mehendi. Modern brides also choose pastel green, coral, peach, or floral lehengas for a contemporary take on the mehendi look.',
+      },
+      {
+        question: 'Do you ship mehendi outfits to the USA, Canada, and Australia?',
+        answer: 'Yes, LuxeMia ships mehendi ceremony outfits and all Indian ethnic wear to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders are fully tracked. For wedding functions, order at least 3-4 weeks before the event to ensure timely delivery. Standard delivery takes 7-10 business days after dispatch.',
+      },
+      {
+        question: 'Can guests wear any colour other than yellow and green to a mehendi?',
+        answer: 'Absolutely. While yellow and green are traditional, guests at modern Indian mehendi ceremonies wear a wide range of bright and festive colours: pink, coral, peach, lavender, turquoise, and orange are all popular. The key is to choose something vibrant, cheerful, and celebration-appropriate. Simple anarkali suits, salwar kameez, and lehengas in floral prints or light embroidery are perfect for the mehendi ceremony regardless of colour.',
+      },
+    ],
     content: `
       <p>Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colours traditionally associated with henna celebrations.</p>
       <h2>Mehendi Ceremony Colours</h2>
@@ -816,6 +966,32 @@ const routes = [
     title: 'Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia',
     description: 'Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free shipping to USA, Canada & Australia.',
     h1: 'Eid Outfits 2026',
+    collection: {
+      name: 'Eid Outfits 2026',
+      description: 'Festive South Asian and Indian ethnic wear collection for Eid celebrations, including chikankari suits, sharara sets, Eid anarkali dresses, Pakistani suits, pastel salwar kameez, and lehengas.',
+    },
+    faqs: [
+      {
+        question: 'What should I wear for Eid?',
+        answer: 'Eid is a joyous Islamic festival celebrated with prayer, family gatherings, feasting, and visiting friends. The traditional dress code for Eid calls for clean, elegant, and festive Indian ethnic wear. Popular choices include salwar kameez, anarkali suits, sharara sets, lehengas, and georgette or silk sarees. Light embellished fabrics in pastels, whites, and jewel tones are all Eid-appropriate. For Eid prayer in the morning, a simple but elegant salwar kameez or abaya-style outfit is most appropriate. For afternoon and evening celebrations, more embellished outfits are worn.',
+      },
+      {
+        question: 'What colors are popular for Eid outfits?',
+        answer: 'White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are all classic Eid outfit colours. Gold and silver embellishments on any colour are considered festive and celebratory. In South Asian Muslim communities, red, royal blue, and emerald green are also widely worn for Eid, especially for evening gatherings.',
+      },
+      {
+        question: 'What style of Indian outfit is best for Eid?',
+        answer: 'Salwar kameez and sharara sets are among the most popular choices for Eid, combining elegance with comfort for a full day of celebrations. Chikankari embroidery on white or pastel fabric is considered quintessentially Eid-appropriate in South Asian fashion. Pakistani-style straight cut kameez with palazzo or cigarette pants, anarkali suits in georgette, and embroidered gharara sets are also popular. For Eid Ul-Adha, lighter practical outfits like cotton or chanderi salwar kameez sets are comfortable.',
+      },
+      {
+        question: 'Do you ship Eid outfits to the USA, Canada, and Australia?',
+        answer: 'Yes, LuxeMia ships Eid outfits and Indian ethnic wear for Eid celebrations to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders include full tracking and insurance. For Eid, we recommend ordering at least 3-4 weeks before the celebration to ensure timely delivery. Standard delivery takes 7-10 business days after dispatch from India.',
+      },
+      {
+        question: 'Can I wear a lehenga for Eid?',
+        answer: 'Yes, lehengas are a popular choice for Eid celebrations, especially for evening gatherings, Eid parties, and special family functions. A heavily embroidered or embellished lehenga in white, ivory, pastel pink, or mint green looks stunning for Eid. Sharara sets are also an extremely popular Eid outfit choice in Pakistani and North Indian Muslim fashion traditions. Choose delicate zari, gota patti, or chikankari embroidery for an authentic Eid aesthetic.',
+      },
+    ],
     content: `
       <p>Celebrate Eid in elegance with LuxeMia's curated collection of Indian ethnic wear for Eid festivities. From delicate chikankari salwar kameez and embroidered sharara sets to pastel lehengas and georgette anarkali suits, our Eid collection brings together the finest South Asian fashion traditions.</p>
       <h2>What to Wear for Eid</h2>
@@ -835,6 +1011,32 @@ const routes = [
     title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
     description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colours. Free shipping to USA, Canada & Australia.',
     h1: 'Navratri Outfits — Chaniya Choli & Garba Dress Collection',
+    collection: {
+      name: 'Navratri Outfits - Chaniya Choli & Garba Dress Collection',
+      description: 'Festive Navratri collection featuring chaniya choli, garba dresses, Navratri lehengas in nine colours, mirror work outfits, bandhani prints, and festive anarkali suits.',
+    },
+    faqs: [
+      {
+        question: 'What should I wear for Navratri and Garba?',
+        answer: 'Navratri is a nine-night Hindu festival celebrated with Garba and Dandiya Raas dancing, and the traditional dress for Navratri is the chaniya choli: a three-piece outfit consisting of a flared skirt, fitted blouse, and dupatta. The chaniya choli is traditionally made in bright, vibrant colours with mirror work, bandhani prints, embroidery, or gota patti detailing. Lehengas, anarkali suits, and salwar kameez in festive colours are also popular alternatives for Navratri guests who prefer a less traditional look.',
+      },
+      {
+        question: 'What are the nine colors of Navratri 2026?',
+        answer: 'The nine colours of Navratri 2026 are traditionally assigned to each day by the Hindu calendar. The sequence typically follows: Day 1 Royal Blue or Yellow, Day 2 Green, Day 3 Grey or Silver, Day 4 Orange, Day 5 White, Day 6 Red, Day 7 Royal Blue, Day 8 Pink, Day 9 Purple or Violet. The exact sequence varies slightly by region and year, but bright festive colours in the traditional Navratri palette are always appropriate for Garba and Dandiya celebrations.',
+      },
+      {
+        question: 'What is the difference between a chaniya choli and a lehenga?',
+        answer: 'A chaniya choli is the traditional Gujarati and Rajasthani three-piece outfit specifically associated with Navratri and Garba dancing. It features a very full circular-cut flared skirt designed for movement during Garba, paired with a short fitted blouse and dupatta. A lehenga is usually a more formal flared skirt that is heavier, more structured, and typically more embellished. For Garba dancing, a chaniya choli is the practical and traditional choice.',
+      },
+      {
+        question: 'Do you ship Navratri outfits to the USA, Canada, and Australia?',
+        answer: 'Yes, LuxeMia ships Navratri chaniya cholis, lehengas, and Indian ethnic wear for Navratri celebrations to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders include full tracking and insurance. For Navratri, we recommend ordering at least 3-4 weeks before the festival to ensure timely delivery. Standard delivery takes 7-10 business days after dispatch from India.',
+      },
+      {
+        question: 'What accessories should I wear with a Navratri outfit?',
+        answer: 'Traditional Navratri accessories include heavy oxidised silver or gold jewellery, large jhumka earrings, layered necklaces, stacked bangles, and a maang tikka. Mirror-work jewellery, tribal silver, and polki stone sets complement chaniya cholis beautifully. For Garba dancing, avoid heavy necklaces that may get caught during spinning. Kolhapuri sandals or traditional mojari shoes are classic Navratri footwear.',
+      },
+    ],
     content: `
       <p>Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor.</p>
       <h2>What is a Chaniya Choli?</h2>
@@ -1409,7 +1611,7 @@ const routes = [
  * Generate pre-rendered HTML for a route by injecting SEO content
  * into the index.html template.
  */
-function generateHtml(template, route) {
+function generateHtml(template, route, productMap = new Map()) {
   let html = template;
 
   // Replace title
@@ -1578,6 +1780,18 @@ function generateHtml(template, route) {
   if (route.path === '/') {
     const homepageFaqScript = `<script type="application/ld+json">${JSON.stringify(generateHomepageFaqSchema())}</script>`;
     html = html.replace('</head>', `${homepageFaqScript}\n</head>`);
+  }
+
+  const faqSchema = generateRouteFaqSchema(route.faqs);
+  if (faqSchema) {
+    const faqScript = `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+    html = html.replace('</head>', `${faqScript}\n</head>`);
+  }
+
+  const collectionSchema = generateCollectionPageSchema(route, productMap);
+  if (collectionSchema) {
+    const collectionScript = `<script type="application/ld+json">${JSON.stringify(collectionSchema)}</script>`;
+    html = html.replace('</head>', `${collectionScript}\n</head>`);
   }
 
   // Inject SEO content into the body. This content is visible to search engine crawlers
@@ -1810,7 +2024,7 @@ async function main() {
   let count = 0;
   let productCount = 0;
   for (const route of finalRoutes) {
-    const html = generateHtml(template, route);
+    const html = generateHtml(template, route, productMap);
 
     // Create directory structure: / -> _prerender/index.html, /suits -> _prerender/suits.html
     let outFile;
