@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   generateProductSchema,
@@ -73,6 +74,39 @@ const SOCIAL_LINKS = {
   youtube: 'https://www.youtube.com/@luxemiashop',
 };
 
+const schemaHasType = (schema: any, type: string): boolean => {
+  const schemaType = schema?.['@type'];
+  if (schemaType === type || (Array.isArray(schemaType) && schemaType.includes(type))) {
+    return true;
+  }
+
+  if (Array.isArray(schema?.['@graph'])) {
+    return schema['@graph'].some((entry: any) => schemaHasType(entry, type));
+  }
+
+  return false;
+};
+
+const isHelmetManagedScript = (script: Element): boolean => (
+  script.hasAttribute('data-rh')
+  || script.hasAttribute('data-react-helmet')
+);
+
+const documentHasStaticFaqPageSchema = (): boolean => {
+  if (typeof document === 'undefined') return false;
+
+  const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+  return scripts.some((script) => {
+    if (isHelmetManagedScript(script)) return false;
+
+    try {
+      return schemaHasType(JSON.parse(script.textContent || '{}'), 'FAQPage');
+    } catch {
+      return false;
+    }
+  });
+};
+
 const SEOHead = ({
   title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
   description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
@@ -89,6 +123,10 @@ const SEOHead = ({
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? `${siteUrl}${window.location.pathname}` : siteUrl);
+  const hadStaticFaqPageSchemaRef = useRef<boolean | null>(null);
+  if (hadStaticFaqPageSchemaRef.current === null) {
+    hadStaticFaqPageSchemaRef.current = documentHasStaticFaqPageSchema();
+  }
   
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
@@ -130,7 +168,7 @@ const SEOHead = ({
     : null;
 
   // FAQ Schema — uses shared generateFaqSchema from schema.ts
-  const faqSchema = faqs && faqs.length > 0
+  const faqSchema = faqs && faqs.length > 0 && !hadStaticFaqPageSchemaRef.current
     ? generateFaqSchema(faqs)
     : null;
 
