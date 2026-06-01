@@ -73,6 +73,32 @@ const SOCIAL_LINKS = {
   youtube: 'https://www.youtube.com/@luxemiashop',
 };
 
+const schemaHasType = (schema: any, type: string): boolean => {
+  const schemaType = schema?.['@type'];
+  if (schemaType === type || (Array.isArray(schemaType) && schemaType.includes(type))) {
+    return true;
+  }
+
+  if (Array.isArray(schema?.['@graph'])) {
+    return schema['@graph'].some((entry: any) => schemaHasType(entry, type));
+  }
+
+  return false;
+};
+
+const documentHasFaqPageSchema = (): boolean => {
+  if (typeof document === 'undefined') return false;
+
+  const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+  return scripts.some((script) => {
+    try {
+      return schemaHasType(JSON.parse(script.textContent || '{}'), 'FAQPage');
+    } catch {
+      return false;
+    }
+  });
+};
+
 const SEOHead = ({
   title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
   description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
@@ -130,7 +156,7 @@ const SEOHead = ({
     : null;
 
   // FAQ Schema — uses shared generateFaqSchema from schema.ts
-  const faqSchema = faqs && faqs.length > 0
+  const faqSchema = faqs && faqs.length > 0 && !documentHasFaqPageSchema()
     ? generateFaqSchema(faqs)
     : null;
 
