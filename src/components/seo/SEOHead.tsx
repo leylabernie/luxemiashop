@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   generateProductSchema,
@@ -86,11 +87,18 @@ const schemaHasType = (schema: any, type: string): boolean => {
   return false;
 };
 
-const documentHasFaqPageSchema = (): boolean => {
+const isHelmetManagedScript = (script: Element): boolean => (
+  script.hasAttribute('data-rh')
+  || script.hasAttribute('data-react-helmet')
+);
+
+const documentHasStaticFaqPageSchema = (): boolean => {
   if (typeof document === 'undefined') return false;
 
   const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
   return scripts.some((script) => {
+    if (isHelmetManagedScript(script)) return false;
+
     try {
       return schemaHasType(JSON.parse(script.textContent || '{}'), 'FAQPage');
     } catch {
@@ -115,6 +123,10 @@ const SEOHead = ({
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? `${siteUrl}${window.location.pathname}` : siteUrl);
+  const hadStaticFaqPageSchemaRef = useRef<boolean | null>(null);
+  if (hadStaticFaqPageSchemaRef.current === null) {
+    hadStaticFaqPageSchemaRef.current = documentHasStaticFaqPageSchema();
+  }
   
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
@@ -156,7 +168,7 @@ const SEOHead = ({
     : null;
 
   // FAQ Schema — uses shared generateFaqSchema from schema.ts
-  const faqSchema = faqs && faqs.length > 0 && !documentHasFaqPageSchema()
+  const faqSchema = faqs && faqs.length > 0 && !hadStaticFaqPageSchemaRef.current
     ? generateFaqSchema(faqs)
     : null;
 
