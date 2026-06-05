@@ -13,7 +13,6 @@ import ServiceHighlights from '@/components/home/ServiceHighlights';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
 import FlashSaleBanner from '@/components/home/FlashSaleBanner';
-import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
 import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
 import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
@@ -141,7 +140,6 @@ const Index = () => {
       <Header />
       
       <main className="pt-[88px] lg:pt-[130px]">
-        <NewArrivalsBanner />
         <FlashSaleBanner />
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
         <h1 className="sr-only">Indian Ethnic Wear Online — Bridal Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
