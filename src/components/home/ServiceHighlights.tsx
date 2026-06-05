@@ -4,23 +4,23 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Free Shipping over $350',
-    description: 'Worldwide DHL Express — 3-5 business days',
+    title: 'Shipping Options',
+    description: 'Clear delivery options are shown at checkout when available',
   },
   {
     icon: ShieldCheck,
-    title: 'SSL Secure Checkout',
-    description: '256-bit encryption & Shopify Pay',
+    title: 'Secure Checkout',
+    description: 'Protected payment through the Shopify checkout experience',
   },
   {
     icon: Ruler,
-    title: 'Custom Fitting',
-    description: 'Tailored to your measurements — dispatch 5-7 days',
+    title: 'Custom Measurement Options',
+    description: 'Standard sizes plus custom measurement support on select styles',
   },
   {
     icon: Clock,
-    title: 'Fast Dispatch',
-    description: 'Readymade orders dispatched in 3-5 business days',
+    title: 'Wedding & Festival Ready',
+    description: 'Styles for weddings, Eid, Diwali, parties, and family events',
   },
   {
     icon: RefreshCw,
@@ -29,8 +29,8 @@ const services = [
   },
   {
     icon: Sparkles,
-    title: 'Quality Inspected',
-    description: 'Every piece checked before shipping',
+    title: 'Boutique Ethnic Styles',
+    description: 'Sarees, lehengas, salwar suits, and men\'s ethnic wear',
   },
 ];
 

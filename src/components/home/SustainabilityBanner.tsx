@@ -6,23 +6,23 @@ import { Button } from '@/components/ui/button';
 const values = [
   {
     icon: Package,
-    title: 'Quality Packaging',
-    description: 'Every order is carefully packed to ensure your outfit arrives in perfect condition.',
+    title: 'Boutique Ethnic Styles',
+    description: 'Shop sarees, lehengas, salwar suits, and men\'s ethnic wear selected for celebration dressing.',
   },
   {
     icon: Headphones,
-    title: 'Real Customer Support',
-    description: 'Our team responds to your questions and helps with sizing, returns, and orders.',
+    title: 'Pre-Purchase Support',
+    description: 'Our team can help with sizing questions, product details, and occasion styling before you order.',
   },
   {
     icon: Shield,
-    title: 'What You See Is What You Get',
-    description: 'We provide accurate descriptions and real photos so there are no surprises.',
+    title: 'Clear Product Details',
+    description: 'We keep product descriptions practical so fabrics, styles, and fit options are easier to understand.',
   },
   {
     icon: Truck,
-    title: 'Reliable Shipping',
-    description: 'Trackable worldwide delivery with standard and express options available.',
+    title: 'Wedding & Festival Ready',
+    description: 'Find Indian ethnic wear for weddings, Eid, Diwali, parties, and South Asian celebrations.',
   },
 ];
 
@@ -45,9 +45,9 @@ const SustainabilityBanner = () => {
               Honest Service, Real Value
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              At LuxeMia, we keep it straightforward. We source beautiful Indian ethnic wear 
-              from established suppliers and manufacturers, and we sell it at fair prices. No 
-              inflated claims, no fake stories — just good products and honest service.
+              At LuxeMia, we keep shopping straightforward. Browse Indian ethnic wear for
+              weddings, festivals, parties, and family celebrations with clear product details,
+              practical fit guidance, and secure checkout.
             </p>
 
             {/* Values Grid */}
@@ -95,14 +95,14 @@ const SustainabilityBanner = () => {
             <div className="grid grid-cols-1 gap-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  We source from India's well-known textile regions and established manufacturers. 
-                  Our focus is on offering well-made ethnic wear at prices that work for everyday customers.
+                  We focus on polished Indian and South Asian fashion for weddings, festivals,
+                  parties, and family celebrations, with category pages that make browsing easier.
                 </p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  We are committed to being upfront about what we sell. If something is machine-made, 
-                  we say so. If it is art silk, not pure silk, we say that too.
+                  We are committed to being upfront about what we sell. If an item has standard sizing,
+                  custom measurement options, art silk, or other key details, we aim to make that clear.
                 </p>
               </div>
             </div>
