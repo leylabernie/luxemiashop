@@ -62,7 +62,7 @@ const ShopByCategory = () => {
         // Bestsellers — balanced mix across women's categories, offset from "new" to show different products
         return getBalancedMix(womensProducts, 8);
       case 'ready':
-        // Ready to Ship — products that are in stock and can ship quickly (sarees & suits)
+        // Celebration-ready sarees and suits without making inventory or fulfillment promises.
         return womensProducts
           .filter(p => p.node.productType === 'Sarees' || p.node.productType === 'Salwar Kameez')
           .slice(0, 8);
@@ -114,7 +114,7 @@ const ShopByCategory = () => {
   const tabs = [
     { id: 'new' as TabType, label: 'New Arrivals' },
     { id: 'bestsellers' as TabType, label: 'Bestsellers' },
-    { id: 'ready' as TabType, label: 'Ready to Ship' },
+    { id: 'ready' as TabType, label: 'Sarees & Suits' },
   ];
 
   return (

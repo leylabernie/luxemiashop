@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getOptimizedImage } from '@/lib/imageUtils';
 
 interface CtaChip {
   label: string;
@@ -10,73 +11,68 @@ interface CtaChip {
 
 interface FeaturedSlide {
   id: number;
-  category: string; // small overline label, e.g. "01 — LEHENGA"
-  headline: string; // big bold campaign headline
+  eyebrow: string;
+  headline: string;
   headlineLine2?: string;
+  supportingText: string;
   image: string;
-  // Hex colors tuned to each product so the panel feels editorial, not generic
-  panelBg: string;
+  panelGradient: string;
   panelText: string;
-  imageBg: string; // soft cream/neutral that complements the product
-  ctaBorder: string; // border color for CTA chips on the colored panel
+  imageBg: string;
+  ctaBorder: string;
   ctas: CtaChip[];
 }
 
-// Editorial campaign slides — split-panel layout, uncropped product imagery
-// Colors picked to match each product so the design reads couture, not stock.
 const slides: FeaturedSlide[] = [
   {
     id: 1,
-    category: '01 — BRIDAL LEHENGA',
-    headline: 'BRIDAL EDIT',
-    headlineLine2: '2026',
-    image:
-      'https://images.wholesalesalwar.com/2026y/May/61379/Beige-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-TITLI-1067(1).jpg',
-    // Deep mahogany / cocoa to complement the brown-gold lehenga
-    panelBg: '#3a2418',
+    eyebrow: 'Fresh Styles Just Added',
+    headline: 'Fresh Styles',
+    headlineLine2: 'Just Added',
+    supportingText: 'Explore newly added sarees, designer salwar suits, ready-to-wear sarees, lehengas, and men\'s kurta sets.',
+    image: '/images/banners/lehenga-banner.jpg',
+    panelGradient: 'linear-gradient(135deg, #2f1519 0%, #6b273f 54%, #b4824a 100%)',
     panelText: '#f7ebd9',
-    imageBg: '#f5ead8',
+    imageBg: '#f8efe4',
     ctaBorder: 'rgba(247,235,217,0.45)',
     ctas: [
-      { label: 'LEHENGAS', link: '/lehengas' },
-      { label: 'BRIDAL', link: '/collections/bridal-lehengas' },
-      { label: 'WEDDING', link: '/collections/wedding-sarees' },
+      { label: 'View New Arrivals', link: '/new-arrivals' },
+      { label: 'Lehenga Choli', link: '/collections/lehenga-choli' },
+      { label: 'Men\'s Styles', link: '/menswear' },
     ],
   },
   {
     id: 2,
-    category: '02 — DESIGNER SAREE',
-    headline: 'FESTIVE EDIT',
-    headlineLine2: 'NEW ARRIVALS',
-    image:
-      'https://images.wholesalesalwar.com/2026y/April/61217/Green-Satin-Silk-Festival-Wear-Sequins-Work--Readymade-Saree-BELLE-26809(1).jpg',
-    // Deep forest emerald to echo the green saree
-    panelBg: '#1f3a2c',
+    eyebrow: 'Ready-to-Wear Saree Edit',
+    headline: 'Ready-to-Wear Sarees',
+    headlineLine2: 'For Easy Celebrations',
+    supportingText: 'Pre-stitched saree styles designed for weddings, parties, festive gatherings, and South Asian celebrations.',
+    image: '/images/banners/saree-banner.jpg',
+    panelGradient: 'linear-gradient(135deg, #0e2c24 0%, #285947 52%, #bd9557 100%)',
     panelText: '#f1f5ec',
     imageBg: '#f4efe4',
     ctaBorder: 'rgba(241,245,236,0.45)',
     ctas: [
-      { label: 'SAREES', link: '/sarees' },
-      { label: 'DESIGNER', link: '/sarees?style=designer' },
-      { label: 'FESTIVE', link: '/sarees?occasion=festive' },
+      { label: 'Shop Sarees', link: '/sarees' },
+      { label: 'Designer Sarees', link: '/collections/designer-sarees' },
+      { label: 'View New Arrivals', link: '/new-arrivals' },
     ],
   },
   {
     id: 3,
-    category: '03 — ANARKALI SUIT',
-    headline: 'ANARKALI',
-    headlineLine2: 'COLLECTION',
-    image:
-      'https://images.wholesalesalwar.com/2026y/May/61270/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001(1).jpg',
-    // Twilight navy to lift the sky-blue anarkali
-    panelBg: '#1d2a44',
-    panelText: '#eef2fb',
-    imageBg: '#eef3f8',
-    ctaBorder: 'rgba(238,242,251,0.45)',
+    eyebrow: 'Men\'s Ethnic Wear',
+    headline: 'Men\'s Kurta Pajama',
+    headlineLine2: '& Festive Ethnic Sets',
+    supportingText: 'Shop kurta pajama sets, jacket styles, and sherwani-inspired looks for weddings, Eid, Diwali, and family celebrations.',
+    image: '/images/banners/menswear-banner.jpg',
+    panelGradient: 'linear-gradient(135deg, #1c2430 0%, #34475a 52%, #9f7a4e 100%)',
+    panelText: '#f3efe7',
+    imageBg: '#eee8df',
+    ctaBorder: 'rgba(243,239,231,0.45)',
     ctas: [
-      { label: 'SALWAR SUITS', link: '/suits' },
-      { label: 'ANARKALI', link: '/suits?style=anarkali' },
-      { label: 'OCCASION', link: '/suits?occasion=occasion' },
+      { label: 'Shop Men\'s Styles', link: '/menswear' },
+      { label: 'Kurta Sets', link: '/collections/kurta-sets' },
+      { label: 'Wedding Styles', link: '/collections/wedding-lehengas' },
     ],
   },
 ];
@@ -86,7 +82,7 @@ const AUTO_PLAY_MS = 5500;
 const NewArrivalsBanner = () => {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const next = useCallback(() => {
     setIndex((i) => (i + 1) % slides.length);
@@ -98,7 +94,6 @@ const NewArrivalsBanner = () => {
 
   const goTo = useCallback((i: number) => setIndex(i), []);
 
-  // Auto-play
   useEffect(() => {
     if (isPaused) return;
     timerRef.current = setTimeout(next, AUTO_PLAY_MS);
@@ -107,7 +102,6 @@ const NewArrivalsBanner = () => {
     };
   }, [index, isPaused, next]);
 
-  // Keyboard
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') prev();
@@ -117,7 +111,6 @@ const NewArrivalsBanner = () => {
     return () => window.removeEventListener('keydown', handler);
   }, [next, prev]);
 
-  // Touch swipe
   const touchStartX = useRef(0);
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -133,7 +126,7 @@ const NewArrivalsBanner = () => {
   return (
     <section
       aria-roledescription="carousel"
-      aria-label="Featured collections"
+      aria-label="New arrivals and wedding season edits"
       className="relative w-full overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -150,44 +143,48 @@ const NewArrivalsBanner = () => {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="grid grid-cols-1 lg:grid-cols-2"
           >
-            {/* TEXT PANEL — editorial campaign copy */}
             <div
-              className="order-2 flex items-center px-6 py-12 sm:px-10 sm:py-16 lg:order-1 lg:px-16 lg:py-20"
-              style={{ backgroundColor: slide.panelBg, color: slide.panelText }}
+              className="relative order-2 flex items-center overflow-hidden px-6 py-12 sm:px-10 sm:py-16 lg:order-1 lg:px-16 lg:py-20"
+              style={{ background: slide.panelGradient, color: slide.panelText }}
             >
-              <div className="w-full max-w-xl">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.16),transparent_28%),radial-gradient(circle_at_85%_80%,rgba(255,255,255,0.1),transparent_28%)]" />
+              <div className="relative w-full max-w-xl">
+                <span className="inline-flex rounded-full border border-white/20 bg-white/15 px-3.5 py-1 text-[10px] font-medium uppercase tracking-[0.24em] backdrop-blur-sm">
+                  New Arrivals
+                </span>
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.6 }}
-                  className="text-[11px] font-medium uppercase tracking-[0.32em] opacity-70"
+                  className="mt-5 text-[11px] font-medium uppercase tracking-[0.32em] opacity-75"
                 >
-                  {slide.category}
+                  {slide.eyebrow}
                 </motion.p>
 
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.18, duration: 0.7 }}
-                  className="mt-5 font-serif leading-[0.95] tracking-tight"
+                  className="mt-5 font-serif leading-[0.98]"
                 >
-                  <span className="block text-5xl sm:text-6xl md:text-7xl">
+                  <span className="block text-4xl sm:text-5xl md:text-6xl">
                     {slide.headline}
                   </span>
                   {slide.headlineLine2 && (
-                    <span className="mt-2 block text-3xl font-light italic opacity-90 sm:text-4xl md:text-5xl">
+                    <span className="mt-2 block text-2xl font-light italic opacity-90 sm:text-3xl md:text-4xl">
                       {slide.headlineLine2}
                     </span>
                   )}
                 </motion.h2>
 
-                <motion.div
+                <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.32, duration: 0.7 }}
-                  className="mt-8 h-px w-16"
-                  style={{ backgroundColor: slide.panelText, opacity: 0.4 }}
-                />
+                  className="mt-5 max-w-lg text-sm leading-relaxed opacity-80 sm:text-base"
+                >
+                  {slide.supportingText}
+                </motion.p>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -199,14 +196,14 @@ const NewArrivalsBanner = () => {
                     <Link
                       key={cta.label}
                       to={cta.link}
-                      className="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-all hover:scale-[1.03] sm:text-xs"
+                      className="inline-flex min-h-10 items-center justify-center rounded-full border px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em] transition-all hover:scale-[1.03] sm:text-xs"
                       style={{
                         borderColor: slide.ctaBorder,
                         color: slide.panelText,
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.backgroundColor = slide.panelText;
-                        e.currentTarget.style.color = slide.panelBg;
+                        e.currentTarget.style.color = '#1a1412';
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.backgroundColor = 'transparent';
@@ -220,27 +217,32 @@ const NewArrivalsBanner = () => {
               </div>
             </div>
 
-            {/* IMAGE PANEL — object-contain, no cropping ever */}
             <div
               className="order-1 flex items-center justify-center lg:order-2"
               style={{ backgroundColor: slide.imageBg }}
             >
-              <div className="flex h-[360px] w-full items-center justify-center px-4 py-6 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
-                <motion.img
-                  initial={{ opacity: 0, scale: 1.02 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  src={slide.image}
-                  alt={slide.headline}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  className="max-h-full max-w-full object-contain"
-                />
+              <div className="relative flex h-[330px] w-full items-center justify-center overflow-hidden px-4 py-5 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
+                <div className="absolute inset-x-10 bottom-8 h-14 rounded-full bg-neutral-900/10 blur-2xl" />
+                <picture className="relative">
+                  <source
+                    srcSet={getOptimizedImage(slide.image, 'hero').replace(/\.jpe?g(\?|$)/i, '.webp$1')}
+                    type="image/webp"
+                  />
+                  <motion.img
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    src={getOptimizedImage(slide.image, 'hero')}
+                    alt={slide.headline}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    className="max-h-[300px] max-w-full object-contain sm:max-h-[430px] lg:max-h-[590px]"
+                  />
+                </picture>
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Prev / Next arrows */}
         <button
           type="button"
           onClick={prev}
@@ -258,7 +260,6 @@ const NewArrivalsBanner = () => {
           <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
         </button>
 
-        {/* Dots */}
         <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5 lg:bottom-6">
           {slides.map((s, i) => (
             <button

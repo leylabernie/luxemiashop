@@ -11,51 +11,62 @@ interface HeroSlide {
   subtitle: string;
   cta: string;
   link: string;
+  secondaryCta?: string;
+  secondaryLink?: string;
   image: string;
   tag: string;
-  bgColor: string;
+  bgGradient: string;
+  accent: string;
 }
 
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    title: 'Bridal Lehenga',
-    subtitle: 'Gadhwal Silk Wedding Collection',
-    cta: 'Shop Lehengas',
-    link: '/lehengas',
+    tag: 'Indian Ethnic Wear',
+    title: 'Indian Ethnic Wear for Weddings, Festivals & Every Celebration',
+    subtitle: 'Shop sarees, lehengas, salwar suits, ready-to-wear sarees, and men\'s ethnic sets with standard sizing and custom measurement options.',
+    cta: 'Shop New Arrivals',
+    link: '/new-arrivals',
+    secondaryCta: 'Shop Wedding Styles',
+    secondaryLink: '/collections/wedding-lehengas',
     image: '/images/banners/lehenga-banner.jpg',
-    tag: 'Wedding',
-    bgColor: '#4a0e2e',
+    bgGradient: 'linear-gradient(135deg, #2a0919 0%, #5a1f37 48%, #9d6f42 100%)',
+    accent: '#f6dfb7',
   },
   {
     id: 2,
-    title: 'Saree Collection',
-    subtitle: 'Satin Silk Festival Wear',
-    cta: 'Explore Sarees',
+    tag: 'Saree Edit',
+    title: 'Ready-to-Wear Sarees Made for Easy Celebration Dressing',
+    subtitle: 'Pre-stitched saree styles designed for weddings, parties, festive gatherings, and South Asian celebrations.',
+    cta: 'Shop Saree Styles',
     link: '/sarees',
     image: '/images/banners/saree-banner.jpg',
-    tag: 'Festival',
-    bgColor: '#0d3b2e',
+    bgGradient: 'linear-gradient(135deg, #06241d 0%, #174738 52%, #b99052 100%)',
+    accent: '#f4e7c7',
   },
   {
     id: 3,
-    title: 'Designer Suits',
-    subtitle: 'Embroidered Party Wear',
-    cta: 'View Suits',
-    link: '/suits',
+    tag: 'Suit Edit',
+    title: 'Designer Salwar Suits for Wedding & Festival Outfits',
+    subtitle: 'Explore salwar kameez, anarkali suits, sharara sets, and polished South Asian fashion for every RSVP.',
+    cta: 'Shop Salwar Suits',
+    link: '/collections/salwar-kameez',
     image: '/images/banners/suit-banner.jpg',
-    tag: 'New Arrival',
-    bgColor: '#1a1a4e',
+    bgGradient: 'linear-gradient(135deg, #10172e 0%, #29405f 50%, #8fb5c8 100%)',
+    accent: '#e5f2f8',
   },
   {
     id: 4,
-    title: 'Groom Sherwani',
-    subtitle: 'Hand Embroidery Wedding Wear',
-    cta: 'Shop Menswear',
+    tag: 'Men\'s Ethnic Wear',
+    title: 'Men\'s Kurta Pajama & Festive Ethnic Sets',
+    subtitle: 'Shop kurta pajama sets, jacket styles, and sherwani-inspired looks for weddings, Eid, Diwali, and family celebrations.',
+    cta: 'Shop Men\'s Styles',
     link: '/menswear',
+    secondaryCta: 'Shop Kurta Sets',
+    secondaryLink: '/collections/kurta-sets',
     image: '/images/banners/menswear-banner.jpg',
-    tag: 'Wedding',
-    bgColor: '#1e293b',
+    bgGradient: 'linear-gradient(135deg, #17121f 0%, #42324c 48%, #b0875b 100%)',
+    accent: '#f5dfbd',
   },
 ];
 
@@ -107,95 +118,106 @@ const HeroSection = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Inspired by wholesalesalwar.com — clean, wide, product-focused */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
           className="relative w-full overflow-hidden"
-          style={{ backgroundColor: slide.bgColor }}
+          style={{ background: slide.bgGradient }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="flex flex-col md:flex-row items-center min-h-[55vh] sm:min-h-[60vh] lg:min-h-[70vh]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.18),transparent_28%),radial-gradient(circle_at_78%_18%,rgba(255,255,255,0.12),transparent_30%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/25 to-transparent" />
 
-              {/* LEFT: Category text */}
-              <div className="w-full md:w-[48%] py-10 md:py-14 lg:py-20 z-10">
-                <span className="inline-block px-3 py-1 bg-white/15 backdrop-blur-sm text-white/90 text-[10px] sm:text-xs tracking-[0.25em] uppercase mb-5 rounded border border-white/10">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="relative flex min-h-[58vh] flex-col items-center gap-4 md:min-h-[62vh] md:flex-row md:gap-8 lg:min-h-[72vh]">
+              <div className="z-10 w-full py-10 md:w-[48%] md:py-14 lg:py-20">
+                <span
+                  className="inline-block rounded-full border border-white/20 bg-white/15 px-4 py-1.5 text-[10px] uppercase tracking-[0.25em] text-white/90 backdrop-blur-sm sm:text-xs"
+                  style={{ boxShadow: `0 0 0 1px ${slide.accent}22` }}
+                >
                   {slide.tag}
                 </span>
-                <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl mb-4 leading-[1.1] text-white">
+                <h2 className="mt-5 font-serif text-4xl leading-[1.05] text-white sm:text-5xl lg:text-6xl xl:text-7xl">
                   {slide.title}
                 </h2>
-                <p className="text-sm sm:text-base tracking-[0.08em] text-white/60 mb-8 font-light max-w-md">
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/78 sm:text-lg lg:text-xl">
                   {slide.subtitle}
                 </p>
-                <div className="flex items-center gap-5 flex-wrap">
-                  <Button asChild size="lg" className="bg-white text-foreground hover:bg-white/90 font-medium tracking-widest px-10 py-6 text-xs sm:text-sm rounded-none">
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Button asChild size="lg" className="rounded-sm bg-white px-8 py-6 text-xs font-medium uppercase tracking-[0.18em] text-foreground shadow-[0_18px_40px_rgba(0,0,0,0.22)] hover:bg-white/90 sm:text-sm">
                     <Link to={slide.link}>{slide.cta}</Link>
                   </Button>
+                  {slide.secondaryCta && slide.secondaryLink && (
+                    <Button asChild size="lg" variant="outline" className="rounded-sm border-white/55 bg-white/10 px-8 py-6 text-xs font-medium uppercase tracking-[0.18em] text-white backdrop-blur-sm hover:bg-white/20 hover:text-white sm:text-sm">
+                      <Link to={slide.secondaryLink}>{slide.secondaryCta}</Link>
+                    </Button>
+                  )}
                 </div>
+                <p className="mt-4 max-w-xl text-xs uppercase tracking-[0.18em] text-white/65">
+                  Standard sizes and custom measurement options available on select styles
+                </p>
               </div>
 
-              {/* RIGHT: Full product image — no cropping */}
               <motion.div
-                className="w-full md:w-[52%] flex items-center justify-center py-6 md:py-8 lg:py-10"
+                className="flex w-full items-center justify-center py-6 md:w-[52%] md:py-8 lg:py-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <picture>
-                  <source
-                    srcSet={getOptimizedImage(slide.image, 'hero').replace(/\.jpe?g(\?|$)/i, '.webp$1')}
-                    type="image/webp"
-                  />
-                  <img
-                    src={getOptimizedImage(slide.image, 'hero')}
-                    alt={slide.title}
-                    className="max-h-[55vh] sm:max-h-[60vh] lg:max-h-[70vh] w-auto object-contain rounded-lg drop-shadow-2xl"
-                    fetchPriority="high"
-                    decoding="async"
-                    loading="eager"
-                  />
-                </picture>
+                <div className="relative flex w-full items-center justify-center">
+                  <div className="absolute inset-x-8 bottom-2 h-16 rounded-full bg-black/25 blur-2xl" />
+                  <picture className="relative">
+                    <source
+                      srcSet={getOptimizedImage(slide.image, 'hero').replace(/\.jpe?g(\?|$)/i, '.webp$1')}
+                      type="image/webp"
+                    />
+                    <img
+                      src={getOptimizedImage(slide.image, 'hero')}
+                      alt={slide.title}
+                      className="max-h-[48vh] w-auto object-contain drop-shadow-2xl sm:max-h-[58vh] lg:max-h-[70vh]"
+                      fetchPriority="high"
+                      decoding="async"
+                      loading="eager"
+                    />
+                  </picture>
+                </div>
               </motion.div>
             </div>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Navigation arrows */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-3 lg:left-8 z-20">
+      <div className="absolute left-3 top-1/2 z-20 -translate-y-1/2 lg:left-8">
         <button
           onClick={prevSlide}
-          className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm flex items-center justify-center transition-all duration-300"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/25 lg:h-12 lg:w-12"
           aria-label="Previous slide"
         >
-          <ChevronLeft className="w-5 h-5 text-white" />
+          <ChevronLeft className="h-5 w-5 text-white" />
         </button>
       </div>
-      <div className="absolute top-1/2 -translate-y-1/2 right-3 lg:right-8 z-20">
+      <div className="absolute right-3 top-1/2 z-20 -translate-y-1/2 lg:right-8">
         <button
           onClick={nextSlide}
-          className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm flex items-center justify-center transition-all duration-300"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white/25 lg:h-12 lg:w-12"
           aria-label="Next slide"
         >
-          <ChevronRight className="w-5 h-5 text-white" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
       </div>
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 items-center z-20">
+      <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2">
         {heroSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
             className={`rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? 'w-6 h-2 bg-white'
-                : 'w-2 h-2 bg-white/30 hover:bg-white/50'
+                ? 'h-2 w-6 bg-white'
+                : 'h-2 w-2 bg-white/30 hover:bg-white/50'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
