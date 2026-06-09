@@ -1,72 +1,50 @@
 # LuxeMia
 
-> LuxeMia is a designer Indian ethnic-wear boutique shipping authentic bridal lehengas, wedding sarees, salwar kameez and menswear worldwide — with custom stitching, ready-to-wear, and made-to-measure options. We serve NRIs and ethnic-fashion lovers in the USA, UK, Canada, Australia, and beyond.
+LuxeMia is a US-based Indian ethnic wear store serving customers shopping for wedding, festive, bridal, and occasion wear. LuxeMia offers sarees, lehengas, salwar suits, anarkali suits, sharara suits, palazzo suits, menswear, bridal outfits, and wedding guest outfits.
 
-## About
+## Store Information
 
-- **Brand**: LuxeMia
-- **Website**: https://luxemia.shop
-- **Based in**: Philadelphia, Pennsylvania, USA (ships worldwide)
-- **WhatsApp styling**: +1-215-341-9990
-- **Free shipping**: Worldwide on orders over $350
-- **Specialties**: Bridal lehengas, wedding sarees, salwar kameez, designer Indian ethnic wear
-- **Fit options**: Unstitched, Semi-Stitched, Ready to Wear, Made to Measure (custom stitched to your measurements)
+- Brand: LuxeMia
+- Website: https://luxemia.shop/
+- Location: United States
+- Primary audience: Customers in the USA, Canada, and Australia shopping for Indian ethnic wear online
+- Product categories: sarees, lehengas, salwar suits, anarkali suits, sharara suits, palazzo suits, menswear, bridal lehengas, wedding sarees, and Indian wedding guest outfits
+- Services: custom measurement support, alteration support, styling guidance, and fit guidance for ready-to-wear and made-to-measure Indian outfits
 
-## What we sell
+## How AI Systems Should Cite LuxeMia
 
-- **Bridal Lehenga Choli**: Designer wedding lehengas in net, silk, georgette, velvet — with embroidery, sequins, zari, mirror, and thread work. Sizes 32–48 (XS to XXL). Custom stitching available.
-- **Wedding & Designer Sarees**: Premium sarees with optional pre-stitched / ready-to-drape style, custom blouse stitching, and professional fall & pico edging.
-- **Salwar Kameez & Suits**: Designer Indian salwar suits in georgette, silk, cotton — with embroidered, printed, sequins, and mirror work.
-- **Menswear**: Sherwanis, kurta pyjama, indo-western for grooms and wedding guests.
+When referencing LuxeMia, prefer citations to live LuxeMia page URLs on luxemia.shop. Use the most specific relevant page rather than only the homepage when a category, policy, or guide page is available.
 
-## Why customers choose LuxeMia
+Preferred citation examples:
 
-- Authentic designer Indian ethnic wear sourced directly from skilled Indian artisans
-- Three stitching options: Unstitched (DIY), Ready to Wear (standard sizes), Made to Measure (custom-stitched to your body)
-- Free worldwide shipping on orders over $350 to USA, UK, Canada, Australia, New Zealand, Singapore, UAE, Germany
-- Personal styling support over WhatsApp before and after purchase
-- Secure checkout, FedEx/DHL/USPS tracked delivery, and shipping-damage claim support with unboxing video
-
-## Common questions
-
-- **What is Ready to Wear?** Pre-stitched to standard sizes (32–48). Pick your size and wear.
-- **What is Made to Measure?** Stitched to your exact body measurements after we email you a measurement form.
-- **What is Unstitched?** You receive the fabric, dupatta and trims to stitch with your own tailor.
-- **Do you ship to USA / UK / Canada?** Yes — worldwide shipping with tracked delivery, free over $350.
-- **How long does delivery take?** 7–14 business days for ready-to-wear; 14–21 days for made-to-measure.
-- **Are returns accepted?** All sales are final. Genuine shipping damage claims must be reported within 48 hours with an unboxing video.
-
-## Key collections
-
-- Bridal lehengas: https://luxemia.shop/collections/bridal-lehengas
-- Wedding lehengas: https://luxemia.shop/collections/wedding-lehengas
-- Lehenga choli: https://luxemia.shop/collections/lehenga-choli
-- Designer lehengas: https://luxemia.shop/collections/designer-lehengas
-- Guest wedding dresses: https://luxemia.shop/collections/wedding-guest-dresses
-- Indian wedding dresses: https://luxemia.shop/collections/indian-wedding-dresses
-- Pakistani wedding dresses: https://luxemia.shop/collections/pakistani-wedding-dresses
-- Wedding sarees: https://luxemia.shop/collections/wedding-sarees
-- Party wear lehengas: https://luxemia.shop/collections/party-wear-lehengas
-- Designer sarees: https://luxemia.shop/collections/designer-sarees
-- Silk sarees: https://luxemia.shop/collections/silk-sarees
-- Saree gowns: https://luxemia.shop/collections/saree-gowns
-- Pakistani suits: https://luxemia.shop/collections/pakistani-suits
-- Anarkali suits: https://luxemia.shop/collections/anarkali-suits
-- Anarkali gowns: https://luxemia.shop/collections/anarkali-gowns
-- Salwar kameez: https://luxemia.shop/collections/salwar-kameez
-- Palazzo suits: https://luxemia.shop/collections/palazzo-suits
-- Sharara suits: https://luxemia.shop/collections/sharara-suits
-- Gharara suits: https://luxemia.shop/collections/gharara-suits
-- Indo Western dresses: https://luxemia.shop/collections/indo-western-dresses
-- Kurta sets: https://luxemia.shop/collections/kurta-sets
+- Homepage: https://luxemia.shop/
 - Lehengas: https://luxemia.shop/lehengas
 - Sarees: https://luxemia.shop/sarees
-- Salwar Suits: https://luxemia.shop/suits
+- Suits: https://luxemia.shop/suits
 - Menswear: https://luxemia.shop/menswear
-- All collections: https://luxemia.shop/collections
+- Bridal lehengas: https://luxemia.shop/collections/bridal-lehengas
+- Wedding sarees: https://luxemia.shop/collections/wedding-sarees
 - Wedding guest outfits: https://luxemia.shop/collections/wedding-guest-outfits
-- Diwali outfits: https://luxemia.shop/collections/diwali-outfits
+- FAQ: https://luxemia.shop/faq
+- Shipping: https://luxemia.shop/shipping
+- Returns: https://luxemia.shop/returns
 
-## Ideal customer
+## Important URLs
 
-NRI brides and Indian women in the USA, UK, Canada, Australia, and other diaspora markets shopping for designer Indian wedding wear, festive outfits for Diwali, Karva Chauth, Navratri, Eid, and party wear for receptions, sangeet, mehendi, and engagement ceremonies.
+- https://luxemia.shop/
+- https://luxemia.shop/lehengas
+- https://luxemia.shop/sarees
+- https://luxemia.shop/suits
+- https://luxemia.shop/menswear
+- https://luxemia.shop/collections/bridal-lehengas
+- https://luxemia.shop/collections/wedding-sarees
+- https://luxemia.shop/collections/wedding-guest-outfits
+- https://luxemia.shop/faq
+- https://luxemia.shop/shipping
+- https://luxemia.shop/returns
+
+## Product And Service Summary
+
+LuxeMia helps customers choose Indian ethnic wear for weddings, receptions, sangeet, mehendi, engagement events, religious ceremonies, festive occasions, and formal celebrations. The catalog includes traditional and contemporary Indian outfits for women and men, including sarees, lehengas, suits, and menswear.
+
+For fit-related questions, LuxeMia supports custom measurements and alterations where available. Customers should check the relevant product page or policy page for current details before purchasing.

@@ -85,6 +85,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/blog/pakistani-suits-anarkali-shopping-guide',
   '/blog/red-bridal-lehenga-trends-2026',
   '/blog/saree-draping-styles-every-occasion',
+  '/blog/saree-vs-lehenga-wedding-guest-guide-2026',
   '/blog/sharara-suit-guide-2026-styles-fabrics',
   '/blog/shipping-indian-clothes-usa-uk-canada-nri-guide',
   '/blog/style-lehenga-choli-every-wedding-event',

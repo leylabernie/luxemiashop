@@ -3410,6 +3410,102 @@ export const blogPosts: BlogPost[] = [
     tags: ['chikankari embroidery', 'lucknowi chikankari', 'shadow work embroidery', 'indian hand embroidery', 'lucknow embroidery', 'ethnic wear fabric'],
     image: '/og/og-suits.jpg',
     readTime: 9
+  },
+  {
+    id: '37',
+    slug: 'saree-vs-lehenga-wedding-guest-guide-2026',
+    title: 'Saree vs Lehenga for Wedding Guests: What to Wear in 2026',
+    excerpt: 'Choosing between a saree and lehenga for an Indian wedding? This LuxeMia guide compares comfort, movement, fabrics, event formality, and custom fit options for wedding guests.',
+    content: `
+      <h2>Quick Answer: Should a Wedding Guest Wear a Saree or a Lehenga?</h2>
+      <p>For most Indian wedding guests, a <a href="/sarees">saree</a> is the more timeless and graceful choice, while a <a href="/lehengas">lehenga</a> is the stronger choice when you want a more structured, festive, photo-ready outfit. Choose a saree for ceremony elegance, reception polish, or a lighter packed outfit. Choose a lehenga for sangeet dancing, a grand evening event, or when you prefer a skirt-and-blouse silhouette that feels easier to manage than a traditional drape.</p>
+
+      <p>The best answer depends on the event, venue, weather, and how much movement your day includes. For a multi-day invitation, many guests choose one statement lehenga, one elegant saree, and a lighter <a href="/suits">suit</a> for daytime events.</p>
+
+      <h2>What Is a Saree?</h2>
+      <p>A saree is a long length of fabric worn with a blouse and petticoat or shaping skirt. It is draped around the body and usually finished with a pallu over the shoulder. Sarees can feel traditional, modern, minimal, ornate, formal, or festive depending on the fabric, border, blouse design, and styling.</p>
+
+      <p>A saree is especially beautiful when the ceremony calls for a refined look without feeling overdone. If you are attending a formal wedding ceremony or a temple ceremony, explore <a href="/collections/wedding-sarees">wedding sarees</a> with elegant borders, soft shimmer, or classic silk texture.</p>
+
+      <h2>What Is a Lehenga?</h2>
+      <p>A lehenga is a three-piece Indian outfit made of a skirt, blouse or choli, and dupatta. The skirt creates volume and movement, the blouse frames the upper body, and the dupatta adds softness, coverage, and ceremony styling. Lehengas range from light wedding guest styles to heavily embellished bridal pieces.</p>
+
+      <p>For guests, the ideal lehenga is festive but balanced. It should feel celebratory without competing with the bride. If you want a fuller silhouette, browse <a href="/lehengas">lehengas</a> for wedding guest options, and reserve the most ornate designs in <a href="/collections/bridal-lehengas">bridal lehengas</a> for brides or very close family when appropriate.</p>
+
+      <h2>When Sarees Are Better for Wedding Guests</h2>
+      <p>Choose a saree when the event feels formal, traditional, or ceremony-led. Sarees are elegant for wedding rituals, receptions, family photos, and evening dinners. They also travel well when made in lighter fabrics, because one saree can be styled several ways with different jewelry, blouse cuts, and draping choices.</p>
+
+      <h3>Best moments for a saree</h3>
+      <ul>
+        <li><strong>Formal wedding ceremony:</strong> Silk, organza, tissue, or embroidered georgette sarees look polished and respectful.</li>
+        <li><strong>Reception:</strong> A sequined, satin, or pre-draped saree gives a refined evening look without a heavy skirt.</li>
+        <li><strong>Destination wedding:</strong> Lightweight georgette or chiffon sarees pack easily and move well.</li>
+        <li><strong>Traditional family event:</strong> A saree can feel classic without being too loud.</li>
+      </ul>
+
+      <h2>When Lehengas Are Better for Wedding Guests</h2>
+      <p>Choose a lehenga when you want structure, color, and comfortable movement for dancing. A lehenga is often easier for guests who do not want to manage pleats and pallu placement through a long event. The skirt gives drama, while the dupatta can be pinned neatly for hands-free movement.</p>
+
+      <h3>Best moments for a lehenga</h3>
+      <ul>
+        <li><strong>Sangeet:</strong> A light or medium-weight lehenga is ideal for dancing and photographs.</li>
+        <li><strong>Evening reception:</strong> A sleek lehenga with shimmer or embroidery feels festive and camera-ready.</li>
+        <li><strong>Close family events:</strong> A richer lehenga works well when you are part of the wedding party.</li>
+        <li><strong>Outdoor venue:</strong> A pinned dupatta and comfortable skirt can be easier than managing a long saree pallu.</li>
+      </ul>
+
+      <h2>Best Fabrics for Wedding Guests in 2026</h2>
+      <p>For sarees, georgette, chiffon, crepe, organza, tissue, and soft silk are practical wedding guest fabrics. Georgette and chiffon are comfortable for long events. Organza and tissue offer a crisp, dressier effect. Silk works beautifully for formal ceremonies, especially when the styling is classic.</p>
+
+      <p>For lehengas, choose georgette, net, silk blend, viscose, crepe, or lightweight raw silk depending on the event. Heavy velvet and dense embroidery can be stunning, but they may feel warm or restrictive if the wedding includes dancing, travel, or outdoor photos. For a guest outfit, comfort should sit beside beauty, not behind it.</p>
+
+      <h2>What to Wear for Each Wedding Event</h2>
+      <h3>Mehendi</h3>
+      <p>Mehendi events are often colorful, relaxed, and daytime-friendly. Choose a printed saree, a light lehenga, a sharara suit, or a palazzo suit. Bright shades, mirror work, floral prints, and breathable fabrics feel right here. If you want an easy outfit with less draping, browse <a href="/suits">suits</a> for anarkali, sharara, and palazzo options.</p>
+
+      <h3>Sangeet</h3>
+      <p>For sangeet, movement matters. A lehenga is usually the easier choice because the skirt moves beautifully and the dupatta can be secured. Avoid overly heavy borders that pull while dancing. A pre-draped saree can also work if you want the line of a saree with less adjustment through the evening.</p>
+
+      <h3>Reception</h3>
+      <p>Reception dressing can be more glamorous. A sequined saree, satin saree, embroidered lehenga, or elegant gown-inspired ethnic outfit works well. If you prefer understated luxury, choose a saree with a refined blouse. If you prefer a statement look, choose a lehenga with controlled shimmer and a tailored choli.</p>
+
+      <h3>Formal Wedding Ceremony</h3>
+      <p>For the ceremony, sarees often feel most traditional, especially silk, Banarasi-inspired, Kanchipuram-inspired, tissue, or embroidered styles. Lehengas are also appropriate when the design is elegant and not overly bridal. Wedding guests should generally avoid looks that are too close to the bride's main outfit, especially heavy red bridal styling unless the family dress code welcomes it.</p>
+
+      <h2>Comfort, Movement, and Fit</h2>
+      <p>Comfort is the difference between simply wearing an outfit and enjoying the celebration. Sarees offer beautiful movement, but they need secure pleats, a well-fitted blouse, and a pallu style that suits the event. Lehengas can feel simpler because the skirt sits at the waist and the dupatta can be pinned, but the blouse and waistband must fit well.</p>
+
+      <p>If you are between sizes or shopping for a multi-day wedding, custom measurement support can be helpful. LuxeMia supports custom measurement and alteration guidance where available, so guests can choose a better blouse fit, comfortable skirt waist, or adjusted sleeve and length details.</p>
+
+      <h2>The Pre-Draped Saree Option</h2>
+      <p>A pre-draped saree is a smart middle ground for guests who love the elegance of a saree but want easier wear. It is usually pre-pleated or constructed so it can be worn more like a skirt, gown, or ready-to-drape outfit. This option works especially well for receptions, cocktail-style wedding events, destination weddings, and guests who expect to dance or travel between venues.</p>
+
+      <h2>Best Overall Choice for Wedding Guests</h2>
+      <p>If you want timeless elegance, choose a saree. If you want festive structure and easy dancing, choose a lehenga. If you want the simplest all-day comfort, consider an anarkali, sharara, or palazzo suit. For a full wedding weekend, start with <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, then refine by event: saree for ceremony, lehenga for sangeet, and suit for mehendi or daytime functions.</p>
+
+      <h2>FAQ: Saree vs Lehenga for Wedding Guests</h2>
+      <h3>Is a saree or lehenga better for an Indian wedding guest?</h3>
+      <p>A saree is better for classic ceremony elegance, while a lehenga is better for dancing, structure, and a more festive silhouette.</p>
+
+      <h3>Can wedding guests wear bridal lehengas?</h3>
+      <p>Guests can wear lehengas, but they should avoid heavily bridal styling unless they are close family and the dress code supports it. Browse bridal inspiration carefully and choose guest-appropriate colors, work, and volume.</p>
+
+      <h3>Are pre-draped sarees appropriate for weddings?</h3>
+      <p>Yes. Pre-draped sarees are appropriate for receptions, sangeet events, destination weddings, and any event where you want saree elegance with easier movement.</p>
+
+      <h3>What is the most comfortable Indian wedding guest outfit?</h3>
+      <p>A lightweight lehenga, pre-draped saree, anarkali suit, sharara suit, or palazzo suit is usually most comfortable for long wedding events.</p>
+
+      <h3>Where should I shop first?</h3>
+      <p>Start with <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, then compare <a href="/sarees">sarees</a>, <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/lehengas">lehengas</a>, and <a href="/suits">suits</a> based on the event schedule.</p>
+    `,
+    author: 'LuxeMia Editorial',
+    publishedAt: '2026-06-09',
+    updatedAt: '2026-06-09',
+    category: 'Wedding Guide',
+    tags: ['saree vs lehenga', 'wedding guest outfit', 'indian wedding guest dress', 'pre draped saree', 'lehenga choli', 'indian ethnic wear'],
+    image: '/og/og-sarees.jpg',
+    readTime: 8
   }
 
 ];
