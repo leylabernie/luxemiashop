@@ -13,7 +13,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
-import type { ShopifyProduct } from '@/lib/shopify';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -23,18 +22,6 @@ const sortOptions = [
 ];
 
 const bridalLehengasSeo = metadataToSEOHeadProps(getStaticPageMetadata('/collections/bridal-lehengas'));
-
-const bridalIntentPattern = /\b(bridal|bride|wedding|wedding wear|weddingwear|dulhan|designer|embroider|embroidered|zari|zardozi|sequins?|mirror|velvet|silk|net|heavy|reception|engagement|sangeet)\b/i;
-
-const getSearchText = (product: ShopifyProduct): string => {
-  const tags = product.node.tags ?? [];
-  return [
-    product.node.title,
-    product.node.productType,
-    product.node.description,
-    ...tags,
-  ].filter(Boolean).join(' ');
-};
 
 const bridalLehengaFaqs = [
   {
@@ -60,16 +47,10 @@ const bridalLehengaFaqs = [
 ];
 
 const BridalLehengas = () => {
-  const { products, isLoading } = useShopifyPaginatedProducts('lehengas');
+  const { products, isLoading } = useShopifyPaginatedProducts('bridal-lehengas');
   const [sortBy, setSortBy] = useState('featured');
 
-  const bridalMatches = useMemo(
-    () => products.filter(product => bridalIntentPattern.test(getSearchText(product))),
-    [products]
-  );
-  const isUsingFallback = !isLoading && products.length > 0 && bridalMatches.length < 8;
-  const bridalProducts = isUsingFallback ? products : bridalMatches;
-  const sortedProducts = useMemo(() => sortProducts(bridalProducts, sortBy), [bridalProducts, sortBy]);
+  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
   const collectionItems = sortedProducts.slice(0, 30).map(p => ({
@@ -124,11 +105,6 @@ const BridalLehengas = () => {
               <p className="text-sm text-muted-foreground">
                 {isLoading ? 'Loading...' : `${sortedProducts.length} bridal-ready styles`}
               </p>
-              {isUsingFallback && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Showing all lehengas while bridal product signals are limited.
-                </p>
-              )}
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

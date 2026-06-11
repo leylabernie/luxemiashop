@@ -13,7 +13,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
-import type { ShopifyProduct } from '@/lib/shopify';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -23,25 +22,6 @@ const sortOptions = [
 ];
 
 const receptionOutfitsSeo = metadataToSEOHeadProps(getStaticPageMetadata('/collections/reception-outfits'));
-
-const receptionIntentPattern = /\b(reception|cocktail|party|party wear|partywear|evening|wedding guest|wedding wear|weddingwear|engagement|sangeet|gown|indo.?western|fusion|cape|jacket|sequins?|bead|beaded|crystal|metallic|champagne|black|navy|silver|gold)\b/i;
-const receptionGarmentPattern = /\b(lehenga|lehnga|saree|sari|gown|anarkali|sharara|gharara|salwar|kameez|suit|indo.?western|fusion|cape|coord|co-ord|jacket)\b/i;
-const menswearSignalPattern = /\b(sherwani|kurta\s?pajama|kurta\s?set|nehru|jodhpuri|groom|groomsmen|menswear|men's|for men)\b/i;
-
-const getSearchText = (product: ShopifyProduct): string => {
-  const tags = product.node.tags ?? [];
-  return [
-    product.node.title,
-    product.node.productType,
-    product.node.description,
-    ...tags,
-  ].filter(Boolean).join(' ');
-};
-
-const isReceptionCandidate = (product: ShopifyProduct): boolean => {
-  const text = getSearchText(product);
-  return receptionGarmentPattern.test(text) && !menswearSignalPattern.test(text);
-};
 
 const receptionOutfitFaqs = [
   {
@@ -71,20 +51,10 @@ const receptionOutfitFaqs = [
 ];
 
 const ReceptionOutfits = () => {
-  const { products, isLoading } = useShopifyPaginatedProducts();
+  const { products, isLoading } = useShopifyPaginatedProducts('reception-outfits');
   const [sortBy, setSortBy] = useState('featured');
 
-  const candidateProducts = useMemo(
-    () => products.filter(product => isReceptionCandidate(product)),
-    [products]
-  );
-  const receptionMatches = useMemo(
-    () => candidateProducts.filter(product => receptionIntentPattern.test(getSearchText(product))),
-    [candidateProducts]
-  );
-  const isUsingFallback = !isLoading && candidateProducts.length > 0 && receptionMatches.length < 8;
-  const receptionProducts = isUsingFallback ? candidateProducts : receptionMatches;
-  const sortedProducts = useMemo(() => sortProducts(receptionProducts, sortBy), [receptionProducts, sortBy]);
+  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
   const collectionItems = sortedProducts.slice(0, 30).map(p => ({
@@ -139,11 +109,6 @@ const ReceptionOutfits = () => {
               <p className="text-sm text-muted-foreground">
                 {isLoading ? 'Loading...' : `${sortedProducts.length} reception-ready styles`}
               </p>
-              {isUsingFallback && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Showing broader eveningwear styles while reception product signals are limited.
-                </p>
-              )}
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

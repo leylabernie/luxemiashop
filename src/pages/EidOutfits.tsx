@@ -47,7 +47,7 @@ const eidOutfitFaqs = [
 ];
 
 const EidOutfits = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts('eid-outfits');
   const [sortBy, setSortBy] = useState('featured');
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';

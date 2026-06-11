@@ -56,7 +56,6 @@ const ALL_PRODUCTS_QUERY = `
 const staticPages = [
   { loc: '/', changefreq: 'daily', priority: '1.0' },
   { loc: '/collections', changefreq: 'daily', priority: '0.9' },
-  { loc: '/products', changefreq: 'daily', priority: '0.9' },
   { loc: '/brand-story', changefreq: 'monthly', priority: '0.6' },
   { loc: '/lookbook', changefreq: 'monthly', priority: '0.7' },
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
