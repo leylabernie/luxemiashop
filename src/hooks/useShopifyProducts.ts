@@ -36,7 +36,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Two-tier cache: in-memory (instant within a session) + localStorage (persists
 // across page reloads and new tabs). TTL of 30 minutes prevents stale data.
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes.
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
@@ -172,6 +172,165 @@ function isMenswear(product: ShopifyProduct): boolean {
   return false;
 }
 
+function getEffectiveCategory(explicitCategory?: string): string | undefined {
+  if (explicitCategory) return explicitCategory;
+  if (typeof window === 'undefined') return undefined;
+
+  const path = window.location.pathname.replace(/\/$/, '');
+
+  const routeCategories: Record<string, string> = {
+    '/bestsellers': 'bestsellers',
+    '/new-arrivals': 'new-arrivals',
+    '/collections/wedding-guest-outfits': 'occasion-wedding-guest',
+    '/collections/wedding-guest-dresses': 'occasion-wedding-guest',
+    '/collections/diwali-outfits': 'occasion-diwali',
+    '/collections/eid-outfits': 'occasion-eid',
+    '/collections/navratri-outfits': 'occasion-navratri',
+    '/collections/mehendi-outfits': 'occasion-mehendi',
+    '/collections/reception-outfits': 'occasion-reception',
+    '/collections/indian-wedding-dresses': 'occasion-wedding',
+    '/collections/pakistani-wedding-dresses': 'occasion-wedding',
+  };
+
+  return routeCategories[path];
+}
+
+function productText(product: ShopifyProduct): string {
+  const node = product.node;
+  return [
+    node.title,
+    node.productType,
+    node.handle,
+    node.description,
+    ...(node.tags ?? []),
+  ].filter(Boolean).join(' ').toLowerCase();
+}
+
+function price(product: ShopifyProduct): number {
+  return Number(product.node.priceRange?.minVariantPrice?.amount ?? 0) || 0;
+}
+
+function hasText(product: ShopifyProduct, pattern: RegExp): boolean {
+  return pattern.test(productText(product));
+}
+
+function interleaveByDisplayCategory(products: ShopifyProduct[], limit = 48): ShopifyProduct[] {
+  const buckets: Record<string, ShopifyProduct[]> = {};
+  products.forEach(product => {
+    const category = getDisplayCategory(product.node.productType);
+    buckets[category] = buckets[category] ?? [];
+    buckets[category].push(product);
+  });
+
+  const orderedBucketNames = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Indo Western', 'Menswear', 'Designer Wear'];
+  const result: ShopifyProduct[] = [];
+
+  while (result.length < limit) {
+    let added = false;
+    orderedBucketNames.forEach(bucketName => {
+      const next = buckets[bucketName]?.shift();
+      if (next && result.length < limit) {
+        result.push(next);
+        added = true;
+      }
+    });
+    if (!added) break;
+  }
+
+  return result;
+}
+
+function scoreBestseller(product: ShopifyProduct): number {
+  const text = productText(product);
+  let score = 0;
+
+  if (/bridal|wedding|reception|party|festival|festive|occasion/.test(text)) score += 18;
+  if (/lehenga|saree|anarkali|salwar|sharara|gharara|sherwani|kurta/.test(text)) score += 12;
+  if (/embroider|zari|sequins?|mirror|stone|bead|banarasi|silk|velvet|organza|georgette/.test(text)) score += 10;
+  if (/designer|premium|heavy|grand|royal|classic|traditional/.test(text)) score += 8;
+  if (/bestseller|best seller|popular|customer favorite|featured/.test(text)) score += 30;
+
+  score += Math.min(price(product) / 20, 20);
+
+  return score;
+}
+
+function filterSpecialCollection(products: ShopifyProduct[], category: string): ShopifyProduct[] | null {
+  const womensOnly = products.filter(product => !isMenswear(product));
+
+  if (category === 'new-arrivals') {
+    return products
+      .slice()
+      .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
+      .slice(0, 36);
+  }
+
+  if (category === 'bestsellers') {
+    const scored = products
+      .slice()
+      .sort((a, b) => scoreBestseller(b) - scoreBestseller(a));
+    return interleaveByDisplayCategory(scored, 36);
+  }
+
+  const rules: Record<string, { include: RegExp; exclude?: RegExp; limit?: number }> = {
+    'occasion-wedding-guest': {
+      include: /wedding|guest|party|reception|sangeet|mehendi|festive|occasion|saree|anarkali|salwar|lehenga|sharara|indo.?western/,
+      exclude: /bridal|bride|groom|sherwani|kurta\s?pajama/,
+      limit: 48,
+    },
+    'occasion-diwali': {
+      include: /diwali|festival|festive|pooja|puja|zari|sequin|mirror|gold|silk|banarasi|lehenga|anarkali|saree|sharara|indo.?western/,
+      exclude: /bridal|bride|groom|sherwani/,
+      limit: 48,
+    },
+    'occasion-eid': {
+      include: /eid|ramadan|pakistani|sharara|gharara|anarkali|salwar|kameez|suit|pastel|chikankari|zari|gota|embroider/,
+      exclude: /bridal|bride|groom|sherwani/,
+      limit: 48,
+    },
+    'occasion-navratri': {
+      include: /navratri|garba|dandiya|chaniya|mirror|bandhani|bandhej|lehenga|ghagra|choli|colorful|colourful|festival|festive/,
+      exclude: /bridal|bride|groom|sherwani|kurta\s?pajama/,
+      limit: 48,
+    },
+    'occasion-mehendi': {
+      include: /mehendi|mehndi|haldi|yellow|green|floral|light|georgette|chiffon|anarkali|salwar|sharara|lehenga|pastel|festive/,
+      exclude: /bridal|bride|heavy bridal|groom|sherwani/,
+      limit: 48,
+    },
+    'occasion-reception': {
+      include: /reception|cocktail|party|evening|gown|saree|lehenga|anarkali|indo.?western|sequins?|stone|velvet|organza|designer/,
+      exclude: /haldi|mehendi|groom|kurta\s?pajama/,
+      limit: 48,
+    },
+    'occasion-wedding': {
+      include: /wedding|bridal|bride|reception|sangeet|lehenga|saree|anarkali|sherwani|kurta\s?pajama|pakistani|salwar|sharara|gharara/,
+      limit: 48,
+    },
+  };
+
+  const rule = rules[category];
+  if (!rule) return null;
+
+  const pool = category === 'occasion-wedding' ? products : womensOnly;
+  const matched = pool.filter(product => {
+    if (!hasText(product, rule.include)) return false;
+    if (rule.exclude && hasText(product, rule.exclude)) return false;
+    return true;
+  });
+
+  const fallback = pool.filter(product => {
+    if (rule.exclude && hasText(product, rule.exclude)) return false;
+    return /saree|lehenga|anarkali|salwar|sharara|gharara|gown|indo.?western/.test(productText(product));
+  });
+
+  const merged = [...matched, ...fallback].filter((product, index, all) => (
+    all.findIndex(candidate => candidate.node.id === product.node.id) === index
+  ));
+
+  return interleaveByDisplayCategory(merged, rule.limit ?? 48);
+}
+
 // Filter products by category client-side
 const filterByCategory = (products: ShopifyProduct[], category: string): ShopifyProduct[] => {
   // First, globally exclude old batch products (April 8 batch — hidden after May 7)
@@ -181,6 +340,9 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
     return true;
   });
+
+  const specialCollection = filterSpecialCollection(allowed, category);
+  if (specialCollection) return specialCollection;
 
   if (category === 'all') return allowed;
 
@@ -309,7 +471,8 @@ export const useShopifyProducts = (category?: string) => {
           if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
           return true;
         });
-        const filtered = category ? filterByCategory(allProducts, category) : globallyFiltered;
+        const effectiveCategory = getEffectiveCategory(category);
+        const filtered = effectiveCategory ? filterByCategory(allProducts, effectiveCategory) : globallyFiltered;
         setProducts(enrichProducts(filtered));
       } catch (err) {
         console.error('Error fetching Shopify products:', err);
