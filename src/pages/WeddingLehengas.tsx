@@ -13,7 +13,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
-import type { ShopifyProduct } from '@/lib/shopify';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -23,19 +22,6 @@ const sortOptions = [
 ];
 
 const weddingLehengasSeo = metadataToSEOHeadProps(getStaticPageMetadata('/collections/wedding-lehengas'));
-
-const weddingLehengaIntentPattern = /\b(wedding|wedding wear|weddingwear|wedding guest|bridal|bride|reception|sangeet|mehendi|engagement|ceremony|designer|embroider|embroidered|embroidery|zari|zardozi|sequins?|mirror.?work|silk|banarasi|georgette|net|organza|velvet|dupatta|lehenga\s?choli)\b/i;
-const menswearIntentPattern = /\b(sherwani|kurta\s?pajama|pyjama|men'?s|menswear|groom|groomsmen|jodhpuri|modi\s?jacket|nehru\s?jacket|bandi|pathani|achkan|boys|for\s?men)\b/i;
-
-const getSearchText = (product: ShopifyProduct): string => {
-  const tags = product.node.tags ?? [];
-  return [
-    product.node.title,
-    product.node.productType,
-    product.node.description,
-    ...tags,
-  ].filter(Boolean).join(' ');
-};
 
 const weddingLehengaFaqs = [
   {
@@ -65,19 +51,10 @@ const weddingLehengaFaqs = [
 ];
 
 const WeddingLehengas = () => {
-  const { products, isLoading } = useShopifyPaginatedProducts('lehengas');
+  const { products, isLoading } = useShopifyPaginatedProducts('wedding-lehengas');
   const [sortBy, setSortBy] = useState('featured');
 
-  const weddingMatches = useMemo(
-    () => products.filter(product => {
-      const searchText = getSearchText(product);
-      return weddingLehengaIntentPattern.test(searchText) && !menswearIntentPattern.test(searchText);
-    }),
-    [products]
-  );
-  const isUsingFallback = !isLoading && products.length > 0 && weddingMatches.length < 8;
-  const weddingProducts = isUsingFallback ? products : weddingMatches;
-  const sortedProducts = useMemo(() => sortProducts(weddingProducts, sortBy), [weddingProducts, sortBy]);
+  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
   const collectionItems = sortedProducts.slice(0, 30).map(p => ({
@@ -132,11 +109,6 @@ const WeddingLehengas = () => {
               <p className="text-sm text-muted-foreground">
                 {isLoading ? 'Loading...' : `${sortedProducts.length} wedding-ready lehengas`}
               </p>
-              {isUsingFallback && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Showing all lehengas while wedding product signals are limited.
-                </p>
-              )}
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

@@ -25,7 +25,7 @@ const sortOptions = [
 const NEW_ARRIVALS_LIMIT = 24;
 
 const NewArrivals = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts('new-arrivals');
   const [sortBy, setSortBy] = useState('newest');
 
   // Products already come back from Shopify sorted newest-first.

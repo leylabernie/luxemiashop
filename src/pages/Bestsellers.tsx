@@ -23,7 +23,7 @@ const sortOptions = [
 ];
 
 const Bestsellers = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts('bestsellers');
   const [sortBy, setSortBy] = useState('featured');
 
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
