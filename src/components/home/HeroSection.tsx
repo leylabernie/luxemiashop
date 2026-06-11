@@ -14,6 +14,7 @@ interface HeroSlide {
   secondaryCta?: string;
   secondaryLink?: string;
   image: string;
+  alt: string;
   tag: string;
   bgGradient: string;
   accent: string;
@@ -29,7 +30,8 @@ const heroSlides: HeroSlide[] = [
     link: '/new-arrivals',
     secondaryCta: 'Shop Wedding Styles',
     secondaryLink: '/collections/wedding-lehengas',
-    image: '/images/banners/lehenga-banner.jpg',
+    image: '/images/banners/luxemia_banner_01_premium_occasionwear_real_products.png',
+    alt: 'LuxeMia premium occasionwear real product banner',
     bgGradient: 'linear-gradient(135deg, #2a0919 0%, #5a1f37 48%, #9d6f42 100%)',
     accent: '#f6dfb7',
   },
@@ -40,7 +42,8 @@ const heroSlides: HeroSlide[] = [
     subtitle: 'Pre-stitched saree styles designed for weddings, parties, festive gatherings, and South Asian celebrations.',
     cta: 'Shop Saree Styles',
     link: '/sarees',
-    image: '/images/banners/saree-banner.jpg',
+    image: '/images/banners/luxemia_banner_02_wedding_suit_edit_real_products.png',
+    alt: 'LuxeMia wedding suit edit real product banner',
     bgGradient: 'linear-gradient(135deg, #06241d 0%, #174738 52%, #b99052 100%)',
     accent: '#f4e7c7',
   },
@@ -51,7 +54,8 @@ const heroSlides: HeroSlide[] = [
     subtitle: 'Explore salwar kameez, anarkali suits, sharara sets, and polished South Asian fashion for every RSVP.',
     cta: 'Shop Salwar Suits',
     link: '/collections/salwar-kameez',
-    image: '/images/banners/suit-banner.jpg',
+    image: '/images/banners/luxemia_banner_03_designer_saree_real_product.png',
+    alt: 'LuxeMia designer saree real product banner',
     bgGradient: 'linear-gradient(135deg, #10172e 0%, #29405f 50%, #8fb5c8 100%)',
     accent: '#e5f2f8',
   },
@@ -64,7 +68,8 @@ const heroSlides: HeroSlide[] = [
     link: '/menswear',
     secondaryCta: 'Shop Kurta Sets',
     secondaryLink: '/collections/kurta-sets',
-    image: '/images/banners/menswear-banner.jpg',
+    image: '/images/banners/luxemia_banner_04_high_value_festive_picks_real_products.png',
+    alt: 'LuxeMia high-value festive picks real product banner',
     bgGradient: 'linear-gradient(135deg, #17121f 0%, #42324c 48%, #b0875b 100%)',
     accent: '#f5dfbd',
   },
@@ -111,6 +116,10 @@ const HeroSection = () => {
   }, []);
 
   const slide = heroSlides[currentSlide];
+  const optimizedSlideImage = getOptimizedImage(slide.image, 'hero');
+  const webpSlideImage = /\.jpe?g(\?|$)/i.test(optimizedSlideImage)
+    ? optimizedSlideImage.replace(/\.jpe?g(\?|$)/i, '.webp$1')
+    : null;
 
   return (
     <section
@@ -170,13 +179,15 @@ const HeroSection = () => {
                 <div className="relative flex w-full items-center justify-center">
                   <div className="absolute inset-x-8 bottom-2 h-16 rounded-full bg-black/25 blur-2xl" />
                   <picture className="relative">
-                    <source
-                      srcSet={getOptimizedImage(slide.image, 'hero').replace(/\.jpe?g(\?|$)/i, '.webp$1')}
-                      type="image/webp"
-                    />
+                    {webpSlideImage && (
+                      <source
+                        srcSet={webpSlideImage}
+                        type="image/webp"
+                      />
+                    )}
                     <img
-                      src={getOptimizedImage(slide.image, 'hero')}
-                      alt={slide.title}
+                      src={optimizedSlideImage}
+                      alt={slide.alt}
                       className="max-h-[48vh] w-auto object-contain drop-shadow-2xl sm:max-h-[58vh] lg:max-h-[70vh]"
                       fetchPriority="high"
                       decoding="async"
