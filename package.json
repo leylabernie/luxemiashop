@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/generate-static-feed.cjs && node scripts/generate-sitemap.cjs",
+    "build": "vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/fix-search-console-issues.cjs && node scripts/generate-static-feed.cjs && node scripts/generate-sitemap.cjs",
     "build:dev": "vite build --mode development",
     "validate:blog-seo": "node scripts/validate-blog-seo-routes.cjs",
     "validate:collection-seo": "node scripts/validate-collection-seo-routes.cjs",
