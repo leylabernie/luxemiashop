@@ -7,10 +7,9 @@
     { "source": "/indian-ethnic-wear-uk", "destination": "/nri", "statusCode": 308 },
     { "source": "/uk-indian-clothing", "destination": "/nri", "statusCode": 308 },
     { "source": "/uk-designer-sarees", "destination": "/nri", "statusCode": 308 },
-    { "source": "/collections/wedding-sarees", "destination": "/sarees", "permanent": true },
+    { "source": "/products", "destination": "/collections", "permanent": true },
     { "source": "/collections/festive-wear", "destination": "/collections", "permanent": true },
     { "source": "/collections/sarees", "destination": "/sarees", "permanent": true },
-    { "source": "/collections/salwar-kameez", "destination": "/suits", "permanent": true },
     { "source": "/collections/suits", "destination": "/suits", "permanent": true },
     { "source": "/collections/menswear", "destination": "/menswear", "permanent": true },
     { "source": "/collections/lehengas", "destination": "/lehengas", "permanent": true },
@@ -100,6 +99,6 @@
     { "source": "/_prerender/(.*)", "destination": "/_prerender/$1" },
     { "source": "/google4e3f332d00afc8ba.html", "destination": "/google4e3f332d00afc8ba.html" },
     { "source": "/google-shopping-feed.xml", "destination": "/merchant-feed.xml" },
-    { "source": "/((?!_prerender/|assets/|merchant-feed\\.xml).*)", "destination": "/index.html" }
+    { "source": "/((?!_prerender/|assets/|merchant-feed\.xml).*)", "destination": "/index.html" }
   ]
 }
