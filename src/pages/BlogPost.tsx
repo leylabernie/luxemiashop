@@ -39,6 +39,7 @@ const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
     { label: 'Lehengas', href: '/lehengas' },
     { label: 'Sarees', href: '/sarees' },
     { label: 'Suits', href: '/suits' },
+    { label: 'Wedding Guest Outfits', href: '/collections/wedding-guest-outfits' },
   ],
   'Wedding Trends': [
     { label: 'Lehengas', href: '/lehengas' },
