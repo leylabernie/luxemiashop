@@ -111,10 +111,10 @@ const STEPS = [
     question: "What's your budget?",
     subtitle: 'We have beautiful pieces at every price point',
     options: [
-      { value: 'low', label: 'Under $200', desc: 'Elegant everyday pieces and casual festive wear' },
-      { value: 'mid', label: '$200 – $500', desc: 'Semi-formal embroidered outfits and occasion wear' },
-      { value: 'high', label: '$500 – $1,000', desc: 'Stylish pieces and semi-bridal collections' },
-      { value: 'luxury', label: '$1,000+', desc: 'Bridal and beautifully made pieces' },
+      { value: 'low', label: 'Value Picks (Under $200)', desc: 'Elegant everyday pieces and casual festive wear' },
+      { value: 'mid', label: 'Mid-Range ($200 – $500)', desc: 'Semi-formal embroidered outfits and occasion wear' },
+      { value: 'high', label: 'Premium Quality ($500 – $1,000)', desc: 'Stylish pieces and semi-bridal collections' },
+      { value: 'luxury', label: 'Exquisite Selection ($1,000+)', desc: 'High-end bridal and intricately crafted pieces' },
     ],
   },
   {

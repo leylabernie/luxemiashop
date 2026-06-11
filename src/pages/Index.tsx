@@ -60,7 +60,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Indian ethnic wear store specializing in bridal lehengas, Banarasi silk sarees, anarkali suits, and wedding collections. Free shipping on orders over $350 to the USA, Canada, and Australia.",
+    "description": "Affordable Indian ethnic wear boutique specializing in lehengas, Banarasi silk sarees, and salwar suits. Accessible elegance with free shipping on orders over $350 to the USA, Canada, and Australia.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -142,7 +142,7 @@ const Index = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <FlashSaleBanner />
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
-        <h1 className="sr-only">Indian Ethnic Wear Online — Bridal Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
+        <h1 className="sr-only">Affordable Indian Ethnic Wear Online — Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
         <HeroSection />
 
         {/* Shipping Info Banner */}
@@ -168,7 +168,7 @@ const Index = () => {
         {/* Style Quiz CTA */}
         <section className="py-16 lg:py-20 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl text-center">
-            <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">Personalised For You</p>
+            <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-3">Accessible Elegance</p>
             <h2 className="text-3xl lg:text-4xl font-serif mb-4">
               Find Your Perfect Look
             </h2>

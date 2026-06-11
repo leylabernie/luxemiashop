@@ -145,9 +145,9 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
     canonical: `${SITE_URL}/collections/designer-lehengas`,
     ogImage: `${SITE_URL}/og/og-lehengas.jpg`,
     h1: 'Designer Lehengas',
-    semanticTitle: 'Designer lehengas, designer lehenga choli, Indian designer lehengas, embroidered lehengas, luxury lehenga styles, and couture-inspired lehengas',
+    semanticTitle: 'Designer lehengas, designer lehenga choli, Indian designer lehengas, embroidered lehengas, affordable lehenga styles, and couture-inspired lehengas',
     primaryEntity: 'Designer Lehengas',
-    secondaryEntities: ['Designer lehenga choli', 'Indian designer lehengas', 'Embroidered lehengas', 'Luxury lehenga styles', 'Bridal-adjacent designer lehengas', 'Reception lehengas', 'Wedding guest lehengas', 'Couture-inspired lehengas'],
+    secondaryEntities: ['Designer lehenga choli', 'Indian designer lehengas', 'Embroidered lehengas', 'Affordable lehenga styles', 'Bridal-adjacent designer lehengas', 'Reception lehengas', 'Wedding guest lehengas', 'Couture-inspired lehengas'],
     intent: 'designer',
     relatedCollections: [
       { label: 'All Lehengas', path: '/lehengas' },

@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Shipping Options',
-    description: 'Clear delivery options are shown at checkout when available',
+    title: 'Free Shipping over $350',
+    description: 'Transparent flat rates to USA, Canada & Australia',
   },
   {
     icon: ShieldCheck,
@@ -29,8 +29,8 @@ const services = [
   },
   {
     icon: Sparkles,
-    title: 'Boutique Ethnic Styles',
-    description: 'Sarees, lehengas, salwar suits, and men\'s ethnic wear',
+    title: 'Accessible Elegance',
+    description: 'Beautiful ethnic wear at fair, middle-class prices',
   },
 ];
 

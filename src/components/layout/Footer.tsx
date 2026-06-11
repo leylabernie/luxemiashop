@@ -79,7 +79,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               LuxeMia
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed">
-              Beautiful Indian ethnic wear at fair prices — shipped worldwide.
+              Beautiful Indian ethnic wear at accessible prices — shipped from India to your door.
             </p>
             <div className="flex gap-3 mt-6">
               <a href="https://www.instagram.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Instagram">

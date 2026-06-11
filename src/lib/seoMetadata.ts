@@ -24,8 +24,8 @@ export const PUBLIC_BRAND_NAME = 'LuxeMia';
 export const LEGAL_ENTITY_NAME = 'Glamour Indian Wear';
 export const SITE_NAME = PUBLIC_BRAND_NAME;
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
-export const DEFAULT_TITLE = `${PUBLIC_BRAND_NAME} | Indian Ethnic Wear — Sarees & Lehengas`;
-export const DEFAULT_DESCRIPTION = `Shop Indian ethnic wear at ${PUBLIC_BRAND_NAME}. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.`;
+export const DEFAULT_TITLE = `${PUBLIC_BRAND_NAME} | Affordable Indian Ethnic Wear — Sarees & Lehengas`;
+export const DEFAULT_DESCRIPTION = `Shop affordable Indian ethnic wear at ${PUBLIC_BRAND_NAME}. Beautiful lehengas, Banarasi silk sarees, and salwar suits at fair prices. Accessible elegance with free shipping to USA, Canada & Australia on orders over $350.`;},{find:
 export const DEFAULT_ROBOTS = 'index, follow';
 
 export const BRAND_IDENTITY = {
@@ -124,8 +124,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/collections/eid-outfits': collectionMetadata('/collections/eid-outfits'),
   '/collections/navratri-outfits': collectionMetadata('/collections/navratri-outfits'),
   '/collections': withMetadataDefaults({
-    title: 'All Collections | Indian Ethnic Wear | LuxeMia',
-    description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits, and menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'All Collections | Affordable Indian Ethnic Wear | LuxeMia',
+    description: 'Browse all affordable Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits, and menswear for every occasion at fair prices. Free shipping over $350.',},{find:
     canonical: `${SITE_URL}/collections`,
     type: 'collection',
   }),
@@ -136,19 +136,19 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     type: 'article',
   }),
   '/brand-story': withMetadataDefaults({
-    title: 'Our Story | About LuxeMia - Indian Ethnic Wear Brand',
-    description: 'Learn about LuxeMia, our passion for authentic Indian ethnic wear, ethical sourcing, and commitment to quality craftsmanship. Based in Philadelphia, shipping worldwide.',
+    title: 'Our Story | About LuxeMia - Affordable Indian Ethnic Wear',
+    description: 'Learn about LuxeMia, our passion for making authentic Indian ethnic wear accessible. We offer quality craftsmanship at fair prices, shipping from India to the world.',},{find:
     canonical: `${SITE_URL}/brand-story`,
   }),
   '/new-arrivals': withMetadataDefaults({
-    title: 'New Arrivals | Latest Indian Ethnic Wear | LuxeMia',
-    description: 'Discover the newest arrivals of Indian ethnic wear at LuxeMia. Fresh designs in lehengas, sarees, suits, and menswear. Free shipping over $350.',
+    title: 'New Arrivals | Latest Affordable Indian Ethnic Wear | LuxeMia',
+    description: 'Discover the newest arrivals of affordable Indian ethnic wear at LuxeMia. Fresh, elegant designs in lehengas, sarees, and suits. Free shipping over $350.',},{find:
     canonical: `${SITE_URL}/new-arrivals`,
     type: 'collection',
   }),
   '/bestsellers': withMetadataDefaults({
-    title: 'Bestsellers | Most Popular Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia\'s bestselling Indian ethnic wear. Our most loved lehengas, sarees, and suits chosen by customers. Free shipping over $350.',
+    title: 'Bestsellers | Most Popular Affordable Indian Ethnic Wear | LuxeMia',
+    description: 'Shop LuxeMia\'s bestselling affordable Indian ethnic wear. Our most loved lehengas, sarees, and suits at accessible prices. Free shipping over $350.',}],path:
     canonical: `${SITE_URL}/bestsellers`,
     type: 'collection',
   }),

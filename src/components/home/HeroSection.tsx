@@ -24,8 +24,8 @@ const heroSlides: HeroSlide[] = [
   {
     id: 1,
     tag: 'Indian Ethnic Wear',
-    title: 'Indian Ethnic Wear for Weddings, Festivals & Every Celebration',
-    subtitle: 'Shop sarees, lehengas, salwar suits, ready-to-wear sarees, and men\'s ethnic sets with standard sizing and custom measurement options.',
+    title: 'Affordable Indian Ethnic Wear for Every Celebration',
+    subtitle: 'Shop beautiful sarees, lehengas, and salwar suits at fair prices. Accessible elegance with standard sizing and custom options.',},{find:
     cta: 'Shop New Arrivals',
     link: '/new-arrivals',
     secondaryCta: 'Shop Wedding Styles',
@@ -50,8 +50,8 @@ const heroSlides: HeroSlide[] = [
   {
     id: 3,
     tag: 'Suit Edit',
-    title: 'Designer Salwar Suits for Wedding & Festival Outfits',
-    subtitle: 'Explore salwar kameez, anarkali suits, sharara sets, and polished South Asian fashion for every RSVP.',
+    title: 'Elegant Salwar Suits for Weddings & Festivals',
+    subtitle: 'Explore beautiful salwar kameez, anarkali suits, and sharara sets at accessible prices for every occasion.',}],path:
     cta: 'Shop Salwar Suits',
     link: '/collections/salwar-kameez',
     image: '/images/banners/luxemia_banner_03_designer_saree_real_product.png',

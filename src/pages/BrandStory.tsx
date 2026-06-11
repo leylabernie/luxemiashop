@@ -17,7 +17,7 @@ const organizationSchema = {
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free shipping on orders over $350.',
+    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear boutique shipping authentic sarees, lehengas, and salwar suits directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at accessible prices with free shipping on orders over $350.',},{find:
   address: {
     '@type': 'PostalAddress',
     streetAddress: '2208 Michener St',
@@ -152,9 +152,9 @@ const philosophyPoints = [
 const timelineEvents = [
   {
     year: '2025',
-    title: 'The Spark \u2014 LuxeMia is Founded',
+    title: 'The Spark \u2014 Making Elegance Accessible',
     description:
-      'After years of hearing friends and family complain about the struggles of buying Indian ethnic wear from abroad \u2014 confusing sizing, quality uncertainty, and weeks of anxious waiting \u2014 we decided to build something better. LuxeMia launches with our first curated collection of lehengas, sarees, and suits.',
+      'After years of hearing friends and family complain about the high costs and complexity of buying Indian ethnic wear from abroad, we decided to build something better. LuxeMia was founded to bring accessible elegance to the diaspora, offering high-quality, authentic designs at fair prices that fit a middle-class budget.',},{find:
   },
   {
     year: '2025',
@@ -311,10 +311,10 @@ const BrandStory = () => {
     <div ref={containerRef} className="min-h-screen bg-background">
       {/* SEO Head with enriched props */}
       <SEOHead
-        title="Our Story \u2014 LuxeMia | Authentic Indian Ethnic Wear for USA, Canada & Australia"
-        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the USA, Canada & Australia. Free shipping over $350."
+        title="Our Story \u2014 LuxeMia | Affordable Indian Ethnic Wear Boutique"
+        description="Discover the LuxeMia story. We make authentic Indian ethnic wear accessible, sourcing directly from India\u2019s textile hubs to offer beautiful sarees, lehengas & suits at fair prices to the USA, Canada & Australia."
         canonical="https://luxemia.shop/brand-story"
-        image="/images/heroes/hero-bridal-couture.jpg"
+        image="/images/heroes/hero-bridal-affordable.jpg"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Our Story', url: '/brand-story' },
@@ -371,7 +371,7 @@ const BrandStory = () => {
           className="relative text-center px-4 max-w-4xl mx-auto"
         >
           <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-            Welcome to Luxemia
+            Accessible Elegance
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight">
             A New Chapter

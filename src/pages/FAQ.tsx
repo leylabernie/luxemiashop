@@ -196,7 +196,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is the difference between Banarasi silk and Kanchipuram silk sarees?',
-          answer: 'Banarasi silk sarees originate from Varanasi and are known for their intricate Mughal-inspired motifs, heavy zari work, and brocade weaving. Kanchipuram (Kanjivaram) silk sarees come from Tamil Nadu and feature bold, temple-inspired designs with thick silk and contrast borders. Both are premium choices for weddings — Banarasi for North Indian ceremonies and Kanchipuram for South Indian traditions. Both are available in our saree collection.',
+          answer: 'Banarasi silk sarees originate from Varanasi and are known for their intricate Mughal-inspired motifs, heavy zari work, and brocade weaving. Kanchipuram (Kanjivaram) silk sarees come from Tamil Nadu and feature bold, temple-inspired designs with thick silk and contrast borders. Both are excellent choices for weddings — Banarasi for North Indian ceremonies and Kanchipuram for South Indian traditions. We offer both at accessible price points in our saree collection.',
         },
         {
           question: 'What does semi-stitched mean for lehengas and suits?',
