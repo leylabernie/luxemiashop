@@ -39,11 +39,13 @@ const secondaryLinks = [
 ];
 
 const occasionLinks = [
-  { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },
   { name: 'Wedding Guest', href: '/collections/wedding-guest-outfits' },
+  { name: 'Guest Wedding Dresses', href: '/collections/wedding-guest-dresses' },
+  { name: 'Reception Outfits', href: '/collections/reception-outfits' },
   { name: 'Wedding Guest Under $250', href: '/collections/wedding-guest-outfits-under-250' },
   { name: 'Groom Outfits', href: '/collections/groom-outfits' },
   { name: 'Mehendi Ceremony', href: '/collections/mehendi-outfits' },
+  { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },
   { name: 'Eid Outfits', href: '/collections/eid-outfits' },
   { name: 'Navratri & Garba', href: '/collections/navratri-outfits' },
 ];

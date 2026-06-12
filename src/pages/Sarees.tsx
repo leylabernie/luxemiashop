@@ -1,6 +1,4 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -14,16 +12,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
-import ProductCard from '@/components/ui/ProductCard';
+import { useShopifyProducts } from '@/hooks/useShopifyProducts';
+import CollectionProductBrowser from '@/components/collections/CollectionProductBrowser';
+import { sareeFilterSections } from '@/lib/collectionFilterSections';
 import { sortProducts } from '@/lib/productFilters';
-import { PaginationWithInput } from '@/components/ui/pagination-with-input';
 import { getOptimizedImage } from '@/lib/imageUtils';
 
 const sortOptions = [
@@ -35,58 +27,26 @@ const sortOptions = [
 
 const sareesSeo = metadataToSEOHeadProps(getStaticPageMetadata('/sarees'));
 
+const sareeFaqs = [
+  {
+    question: 'What types of sarees are available at LuxeMia?',
+    answer: 'LuxeMia offers Indian sarees including silk, Banarasi, Kanchipuram, georgette, chiffon, tissue, designer, wedding, festive, and ready-to-wear saree styles where available in the live catalog.',
+  },
+  {
+    question: 'How do I choose the right saree fabric?',
+    answer: 'Choose Kanchipuram, Banarasi, or silk for weddings and formal ceremonies. Georgette, chiffon, organza, and tissue can work well for receptions, parties, and lighter festive events.',
+  },
+  {
+    question: 'Can I filter sarees by color or occasion?',
+    answer: 'Yes. The saree filters use product title, tags, description, and product type signals, so fabric, color, and occasion filters only match information available in product data.',
+  },
+];
+
 const Sarees = () => {
-  const { products, isLoading, currentPage, totalPages, totalCount, goToPage } = useShopifyPaginatedProducts('sarees');
-  const [sortBy, setSortBy] = useState('featured');
+  const { products, isLoading } = useShopifyProducts('sarees');
+  const schemaProducts = useMemo(() => sortProducts(products, 'featured'), [products]);
 
-  const filteredProducts = useMemo(() => {
-    return sortProducts(products, sortBy);
-  }, [products, sortBy]);
-
-  // Generate pagination numbers
-  const getPageNumbers = () => {
-    const pages: (number | 'ellipsis')[] = [];
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      pages.push(1);
-      if (currentPage > 3) pages.push('ellipsis');
-      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-        pages.push(i);
-      }
-      if (currentPage < totalPages - 2) pages.push('ellipsis');
-      pages.push(totalPages);
-    }
-    return pages;
-  };
-
-
-  // Collection-specific FAQs for rich snippets
-  const sareeFaqs = [
-    {
-      question: "What types of sarees are available at LuxeMia?",
-      answer: "LuxeMia offers a curated collection of sarees including Kanchipuram silk, Banarasi silk, Tissue silk, Georgette, and more. Our collection spans wedding sarees, festive wear, casual sarees, and occasion wear suitable for every celebration."
-    },
-    {
-      question: "How do I choose the right saree fabric?",
-      answer: "Choose Kanchipuram or Banarasi silk for weddings and grand occasions. Georgette and Chiffon work well for parties and receptions. Cotton and Tissue silk are ideal for festive wear and day events. Our expert stylists can help you select the perfect fabric for your occasion."
-    },
-    {
-      question: "Do you offer custom blouse stitching with sarees?",
-      answer: "Yes, we offer blouse stitching with every saree purchase. You can provide your measurements and preferred style (padded, princess cut, etc.), and our tailors will prepare a fitted blouse for you."
-    },
-    {
-      question: "What is the delivery time for sarees?",
-      answer: "Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom blouse stitching orders dispatch in 5-7 business days."
-    },
-    {
-      question: "How should I care for my silk saree?",
-      answer: "We recommend professional dry cleaning for all silk sarees. Store in a cool, dry place wrapped in soft muslin cloth. Avoid direct sunlight and refold every few months to prevent permanent creases."
-    }
-  ];
-
-  // Generate collection schema items from products
-  const collectionItems = filteredProducts.slice(0, 30).map(p => ({
+  const collectionItems = schemaProducts.slice(0, 30).map(p => ({
     id: p.node.id,
     name: p.node.title,
     url: p.node.handle,
@@ -106,7 +66,7 @@ const Sarees = () => {
         ]}
         collection={{
           name: 'Sarees Collection',
-          description: 'Silk sarees and elegant drapes for weddings and celebrations.',
+          description: 'Silk sarees, designer sarees, wedding sarees, and elegant drapes for Indian celebrations.',
           items: collectionItems,
         }}
         faqs={sareeFaqs}
@@ -118,7 +78,7 @@ const Sarees = () => {
           <picture className="absolute inset-0 w-full h-full">
             <source srcSet="/images/banners/saree-banner.webp" type="image/webp" />
             <img
-              src={getOptimizedImage("/images/banners/saree-banner.jpg", 'hero')}
+              src={getOptimizedImage('/images/banners/saree-banner.jpg', 'hero')}
               alt="Saree Collection"
               className="absolute inset-0 w-full h-full object-cover object-top"
               fetchPriority="high"
@@ -126,20 +86,13 @@ const Sarees = () => {
             />
           </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 text-center px-4 text-white"
-          >
-            <p className="text-sm tracking-luxury uppercase text-white/70 mb-4">
-              Timeless Elegance
-            </p>
+          <div className="relative z-10 text-center px-4 text-white">
+            <p className="text-sm tracking-luxury uppercase text-white/70 mb-4">Timeless Elegance</p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">Sarees</h1>
             <p className="text-white/80 max-w-lg mx-auto">
-              Beautiful sarees featuring Kanchipuram silks, tissue weaves, and contemporary designs.
+              Beautiful sarees featuring silk, Banarasi, tissue, georgette, and contemporary drape styles.
             </p>
-          </motion.div>
+          </div>
         </section>
 
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6">
@@ -152,92 +105,32 @@ const Sarees = () => {
           </nav>
         </div>
 
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="flex-1">
-            {/* Toolbar - only show sort when there are products */}
-            {filteredProducts.length > 0 && (
-              <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-                <p className="text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
+        <CollectionProductBrowser
+          products={products}
+          isLoading={isLoading}
+          sortOptions={sortOptions}
+          filterSections={sareeFilterSections}
+          priceRangeMax={1000}
+          countLabel="sarees"
+          emptyState={
+            <div className="text-center py-20">
+              <div className="max-w-md mx-auto">
+                <h3 className="font-serif text-2xl mb-4">Coming Soon</h3>
+                <p className="text-muted-foreground mb-6">
+                  Our saree collection is being curated. Check back soon for beautiful new additions.
                 </p>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      Sort by: {sortOptions.find((o) => o.value === sortBy)?.label}
-                      <ChevronDown className="h-4 w-4 ml-2" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48 bg-popover">
-                    {sortOptions.map((option) => (
-                      <DropdownMenuItem
-                        key={option.value}
-                        onClick={() => setSortBy(option.value)}
-                        className={sortBy === option.value ? 'bg-secondary' : ''}
-                      >
-                        {option.label}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Button asChild variant="outline">
+                  <Link to="/lehengas">Explore Lehengas</Link>
+                </Button>
               </div>
-            )}
-
-            {/* Product Grid */}
-            {isLoading ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-                {[...Array(12)].map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="aspect-[3/4] bg-secondary mb-2 sm:mb-3" />
-                    <div className="h-2 sm:h-3 bg-secondary rounded w-1/3 mb-1 sm:mb-2" />
-                    <div className="h-3 sm:h-4 bg-secondary rounded w-2/3 mb-1 sm:mb-2" />
-                    <div className="h-3 sm:h-4 bg-secondary rounded w-1/4" />
-                  </div>
-                ))}
-              </div>
-            ) : filteredProducts.length === 0 ? (
-              <div className="text-center py-20">
-                <div className="max-w-md mx-auto">
-                  <h3 className="font-serif text-2xl mb-4">Coming Soon</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Our saree collection featuring Kanchipuram silks, Banarasi weaves, and contemporary
-                    designs is being curated. Check back soon for beautiful new additions.
-                  </p>
-                  <Button asChild variant="outline">
-                    <Link to="/lehengas">Explore Lehengas</Link>
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
-                  {filteredProducts.map((product, index) => (
-                    <ProductCard
-                      key={product.node.id}
-                      product={product}
-                      index={index % 24}
-                      showQuickAdd={true}
-                    />
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                <PaginationWithInput
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  totalCount={totalCount}
-                  onPageChange={goToPage}
-                  getPageNumbers={getPageNumbers}
-                />
-              </>
-            )}
-          </div>
-        </div>
+            </div>
+          }
+        />
       </main>
 
       <section className="border-t border-border bg-card/30 py-14">
         <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-          <h2 className="font-serif text-2xl mb-8 text-center">Frequently Asked Questions — Sarees</h2>
+          <h2 className="font-serif text-2xl mb-8 text-center">Frequently Asked Questions - Sarees</h2>
           <Accordion type="single" collapsible className="space-y-3">
             {sareeFaqs.map((faq, i) => (
               <AccordionItem key={i} value={`faq-${i}`} className="bg-background border border-border rounded-lg px-5">
@@ -259,3 +152,4 @@ const Sarees = () => {
 };
 
 export default Sarees;
+
