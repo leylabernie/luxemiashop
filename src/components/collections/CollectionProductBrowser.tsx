@@ -175,7 +175,14 @@ const CollectionProductBrowser = ({
                   </Button>
                 </div>
               ) : (
-                emptyState
+                emptyState || (
+                  <div className="text-center py-16">
+                    <h2 className="font-serif text-2xl mb-4">More styles coming soon</h2>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      This collection is being refreshed. Explore related collections or check back soon for new arrivals.
+                    </p>
+                  </div>
+                )
               )
             ) : (
               <motion.div

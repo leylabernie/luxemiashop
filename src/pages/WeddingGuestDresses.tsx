@@ -35,7 +35,7 @@ const getSearchText = (product: ShopifyProduct): string => [
 const weddingGuestDressFaqs = [
   {
     question: 'What are guest wedding dresses for Indian weddings?',
-    answer: 'Guest wedding dresses for Indian weddings include celebration-ready sarees, lehengas, Anarkali suits, saree gowns, salwar kameez, sharara sets, palazzo suits, and Indo-Western outfits.',
+    answer: 'Guest wedding dresses for Indian weddings include celebration-ready sarees, lehengas, Anarkali suits, saree gowns, salwar kameez, sharara sets, palazzo suits, and Indo-Western outfits. The best choice depends on the ceremony, dress code, comfort, fabric, and how formal the event feels.',
   },
   {
     question: 'How is this page different from Wedding Guest Outfits?',
@@ -43,7 +43,23 @@ const weddingGuestDressFaqs = [
   },
   {
     question: 'Can wedding guests wear lehengas, sarees, or gowns?',
-    answer: 'Yes. Wedding guest lehengas, sarees, saree gowns, Anarkali gowns, and Indo-Western dresses can all be appropriate depending on ceremony formality, color, comfort, and styling.',
+    answer: 'Yes. Wedding guest lehengas, sarees, saree gowns, Anarkali gowns, and Indo-Western dresses are all appropriate for many Indian wedding events. Lighter styles often suit mehendi, haldi, and daytime functions, while embellished sarees, gowns, and lehengas can work well for sangeet nights, receptions, and formal ceremonies.',
+  },
+  {
+    question: 'What colors work well for Indian wedding guest dresses?',
+    answer: 'Jewel tones, pastels, metallic accents, greens, blues, pinks, purples, teal, gold, and festive prints are popular for Indian wedding guest outfits. Many guests avoid looks that feel too bridal for the specific wedding, especially heavily bridal red outfits, unless the couple or dress code suggests otherwise.',
+  },
+  {
+    question: 'Which guest wedding dress is easiest to wear for a first Indian wedding?',
+    answer: 'For a first Indian wedding, an Anarkali suit, salwar kameez, palazzo suit, pre-draped saree, or saree gown can feel easier to manage than a traditional saree drape. These options still look polished while offering comfort for long ceremonies, dancing, and reception events.',
+  },
+  {
+    question: 'How should I choose an Indian wedding guest outfit online?',
+    answer: 'Start with the ceremony, venue, time of day, expected formality, size, stitching needs, sleeve and neckline comfort, fabric weight, and delivery timing. Review product photos, measurements, fabric notes, blouse or dupatta details, and care instructions before ordering.',
+  },
+  {
+    question: 'Can the same wedding guest dress work for multiple events?',
+    answer: 'Often, yes. A polished Anarkali, saree gown, lehenga, or festive suit can be styled differently across events with jewelry, shoes, dupatta draping, and hair. For multi-day weddings, many guests still prefer lighter outfits for daytime events and dressier looks for sangeet or reception nights.',
   },
 ];
 
@@ -95,7 +111,7 @@ const WeddingGuestDresses = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Indian Wedding Guest Edit</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Guest Wedding Dresses</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop guest wedding dresses for Indian wedding ceremonies, sangeet nights, receptions, mehendi events, engagement parties, and festive family celebrations. This broad shopping page gathers guest-ready sarees, lehengas, gowns, suits, and Indo-Western looks in one place.
+              Shop guest wedding dresses for Indian wedding ceremonies, sangeet nights, receptions, mehendi events, engagement parties, and festive family celebrations. This edit brings together Indian wedding guest outfits, wedding guest lehengas, sarees, gowns, Anarkali suits, Indo-Western outfits, and polished festive occasion wear.
             </p>
           </div>
         </section>
@@ -103,7 +119,7 @@ const WeddingGuestDresses = () => {
         <section className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              For ceremony-by-ceremony advice, visit <Link to="/collections/wedding-guest-outfits" className="text-foreground underline underline-offset-2">Wedding Guest Outfits</Link>. For evening cocktail styling, compare <Link to="/collections/reception-outfits" className="text-foreground underline underline-offset-2">Reception Outfits</Link>.
+              Explore <strong>guest wedding dresses</strong>, <strong>Indian wedding guest outfits</strong>, <strong>wedding guest lehengas</strong>, <strong>wedding guest sarees</strong>, <strong>saree gowns</strong>, <strong>Anarkali gowns</strong>, <strong>Indo-Western dresses</strong>, and <strong>festive occasion wear</strong>. For ceremony-by-ceremony advice, visit <Link to="/collections/wedding-guest-outfits" className="text-foreground underline underline-offset-2">Wedding Guest Outfits</Link>. For evening cocktail styling, compare <Link to="/collections/reception-outfits" className="text-foreground underline underline-offset-2">Reception Outfits</Link>.
             </p>
             {isUsingFallback && (
               <p className="text-xs text-muted-foreground mt-3 text-center">
@@ -122,17 +138,54 @@ const WeddingGuestDresses = () => {
           countLabel="guest wedding dresses"
         />
 
+        <section className="border-t border-border/30 bg-secondary/20 py-12">
+          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+            <h2 className="font-serif text-2xl mb-6 text-center">How This Guest Wedding Dress Collection Is Different</h2>
+            <div className="grid md:grid-cols-2 gap-6 text-sm text-muted-foreground leading-relaxed">
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Built for wedding guest intent</h3>
+                <p>
+                  This page is focused on guest wedding dresses rather than one silhouette. It highlights Indian wedding guest outfits across lehengas, sarees, gowns, Anarkali suits, festive suits, and Indo-Western dresses.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Ceremony and reception aware</h3>
+                <p>
+                  Wedding guests often compare formality, movement, fabric weight, sleeve comfort, dupatta styling, and jewelry plans across mehendi, sangeet, ceremony, and reception events.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Dressy without feeling bridal</h3>
+                <p>
+                  The goal is polished occasion wear that photographs beautifully without overwhelming the couple&apos;s dress code. Sarees, gowns, and lehengas can all work when color, embellishment, and styling feel guest-appropriate.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Online shopping support for event planning</h3>
+                <p>
+                  Compare product photos, measurements, fabric notes, blouse or dupatta details, stitching options where available, and delivery timing before selecting an outfit for a wedding weekend.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="border-t border-border/20 py-10">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
             <h2 className="font-serif text-xl mb-6">Continue Wedding Guest Shopping</h2>
             <div className="flex flex-wrap justify-center gap-3">
               <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
               <Link to="/collections/reception-outfits"><Button variant="outline" size="sm">Reception Outfits</Button></Link>
+              <Link to="/collections/wedding-lehengas"><Button variant="outline" size="sm">Wedding Lehengas</Button></Link>
+              <Link to="/collections/party-wear-lehengas"><Button variant="outline" size="sm">Party Wear Lehengas</Button></Link>
               <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
               <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
+              <Link to="/collections/saree-gowns"><Button variant="outline" size="sm">Saree Gowns</Button></Link>
+              <Link to="/collections/anarkali-gowns"><Button variant="outline" size="sm">Anarkali Gowns</Button></Link>
               <Link to="/lehengas"><Button variant="outline" size="sm">Lehengas</Button></Link>
               <Link to="/sarees"><Button variant="outline" size="sm">Sarees</Button></Link>
               <Link to="/suits"><Button variant="outline" size="sm">Suits</Button></Link>
+              <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
             </div>
           </div>
         </section>

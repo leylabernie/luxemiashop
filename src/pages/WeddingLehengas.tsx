@@ -23,16 +23,32 @@ const weddingLehengasSeo = metadataToSEOHeadProps(getStaticPageMetadata('/collec
 
 const weddingLehengaFaqs = [
   {
+    question: 'What is a wedding lehenga?',
+    answer: 'A wedding lehenga is an Indian lehenga choli chosen for wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and family celebrations. Brides may choose heavier embroidered styles, while wedding guests often prefer lighter Indian wedding lehengas that are easier to wear through long events.',
+  },
+  {
     question: 'Are wedding lehengas only for brides?',
-    answer: 'No. Wedding lehengas include bridal lehengas as well as styles for sisters, bridesmaids, cousins, mothers, and wedding guests.',
+    answer: 'No. Wedding lehengas include bridal lehengas for the bride and bridal-adjacent lehenga styles for sisters, bridesmaids, cousins, mothers, and wedding guests. The right choice depends on the event, dress code, color, embroidery level, and how formal the celebration is.',
   },
   {
     question: 'How is this different from Bridal Lehengas?',
     answer: 'Wedding Lehengas is broader across wedding events and roles. Bridal Lehengas is focused specifically on bride-first shopping.',
   },
   {
-    question: 'Which filters are available?',
-    answer: 'Use price, fabric, color, and occasion filters derived from product tags, titles, descriptions, and product type.',
+    question: 'Can I wear a wedding lehenga to a reception or sangeet?',
+    answer: 'Yes. Reception lehengas and sangeet lehengas are popular for Indian wedding events because they feel festive and polished. For dancing or evening events, shoppers often choose georgette, net, silk blends, sequins, mirror work, or embroidered lehengas with lighter dupattas.',
+  },
+  {
+    question: 'How do I choose an Indian wedding lehenga online?',
+    answer: 'Start with the event, role, comfort level, color palette, fabric, blouse coverage, dupatta styling, embroidery weight, sizing, stitching options, and delivery timeline. Review product photos and measurements before ordering, especially when shopping for a specific wedding date.',
+  },
+  {
+    question: 'Which wedding lehenga colors are popular?',
+    answer: 'Classic wedding lehenga colors include red, maroon, wine, gold, ivory, blush, emerald, pink, and champagne. Brides often choose richer ceremonial colors, while wedding guests and reception shoppers may choose pastels, jewel tones, metallics, or lighter embroidered styles.',
+  },
+  {
+    question: 'Does LuxeMia ship wedding lehengas internationally?',
+    answer: 'Yes. LuxeMia supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling support before purchase. Check each product listing for sizing, stitching, and delivery details before ordering.',
   },
 ];
 
@@ -73,7 +89,7 @@ const WeddingLehengas = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Indian Wedding Lehenga Collection</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Wedding Lehengas</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop wedding lehengas for Indian wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks.
+              Shop wedding lehengas for Indian wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia collection focuses on Indian wedding lehengas, bridal-adjacent lehenga choli styles, reception lehengas, embroidered lehengas, silk lehengas, and event-ready wedding outfits.
             </p>
           </div>
         </section>
@@ -81,7 +97,7 @@ const WeddingLehengas = () => {
         <section className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              For bride-first shopping, compare <Link to="/collections/bridal-lehengas" className="text-foreground underline underline-offset-2">Bridal Lehengas</Link>. For every lehenga style, visit <Link to="/lehengas" className="text-foreground underline underline-offset-2">All Lehengas</Link>.
+              Explore <strong>wedding lehengas</strong>, <strong>Indian wedding lehengas</strong>, <strong>bridal-adjacent lehenga choli</strong>, <strong>reception lehengas</strong>, <strong>sangeet lehengas</strong>, <strong>wedding guest lehengas</strong>, and <strong>embroidered wedding outfits</strong>. For bride-first shopping, compare <Link to="/collections/bridal-lehengas" className="text-foreground underline underline-offset-2">Bridal Lehengas</Link>; for every lehenga style, visit <Link to="/lehengas" className="text-foreground underline underline-offset-2">All Lehengas</Link>.
             </p>
           </div>
         </section>
@@ -96,15 +112,52 @@ const WeddingLehengas = () => {
           countLabel="wedding-ready lehengas"
         />
 
+        <section className="border-t border-border/30 bg-secondary/20 py-12">
+          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+            <h2 className="font-serif text-2xl mb-6 text-center">How This Wedding Lehenga Collection Is Different</h2>
+            <div className="grid md:grid-cols-2 gap-6 text-sm text-muted-foreground leading-relaxed">
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Built for wedding shopping</h3>
+                <p>
+                  This page is focused on wedding lehenga intent rather than every lehenga style. It highlights Indian wedding lehengas for brides, bridesmaids, sisters, cousins, family members, and wedding guests.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Ceremony, reception, and guest ready</h3>
+                <p>
+                  Wedding shoppers often compare embroidery, skirt volume, blouse coverage, dupatta styling, comfort, and delivery timing. This collection keeps bridal-adjacent, reception, sangeet, and wedding guest decisions close to the shopping path.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Fabric and work aware</h3>
+                <p>
+                  Silk, velvet, net, georgette, Banarasi, zari, sequins, mirror work, thread embroidery, and zardozi can all shape how formal a wedding lehenga feels. Choose heavier details for ceremonies and lighter movement-friendly styles for receptions or sangeet nights.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-medium text-foreground mb-2">Online wedding support</h3>
+                <p>
+                  LuxeMia supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review sizing, stitching, and delivery details before ordering for a wedding date.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="border-t border-border/20 py-10">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
             <h2 className="font-serif text-xl mb-6">Continue Wedding Shopping</h2>
             <div className="flex flex-wrap justify-center gap-3">
+              <Link to="/lehengas"><Button variant="outline" size="sm">All Lehengas</Button></Link>
               <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
               <Link to="/collections/reception-outfits"><Button variant="outline" size="sm">Reception Outfits</Button></Link>
               <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
               <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
+              <Link to="/collections/wedding-guest-dresses"><Button variant="outline" size="sm">Guest Wedding Dresses</Button></Link>
+              <Link to="/collections/party-wear-lehengas"><Button variant="outline" size="sm">Party Wear Lehengas</Button></Link>
+              <Link to="/collections/mehendi-outfits"><Button variant="outline" size="sm">Mehendi Outfits</Button></Link>
               <Link to="/sarees"><Button variant="outline" size="sm">Sarees</Button></Link>
+              <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
             </div>
           </div>
         </section>

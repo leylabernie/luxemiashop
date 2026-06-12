@@ -30,11 +30,23 @@ const sareesSeo = metadataToSEOHeadProps(getStaticPageMetadata('/sarees'));
 const sareeFaqs = [
   {
     question: 'What types of sarees are available at LuxeMia?',
-    answer: 'LuxeMia offers Indian sarees including silk, Banarasi, Kanchipuram, georgette, chiffon, tissue, designer, wedding, festive, and ready-to-wear saree styles where available in the live catalog.',
+    answer: 'LuxeMia offers a curated collection of sarees including Kanchipuram silk, Banarasi silk, tissue silk, georgette, chiffon, designer sarees, wedding sarees, festive wear, and occasion-ready drapes where available in the live catalog.',
   },
   {
     question: 'How do I choose the right saree fabric?',
-    answer: 'Choose Kanchipuram, Banarasi, or silk for weddings and formal ceremonies. Georgette, chiffon, organza, and tissue can work well for receptions, parties, and lighter festive events.',
+    answer: 'Choose Kanchipuram or Banarasi silk for weddings and grand occasions. Georgette, chiffon, organza, and tissue can work well for parties, receptions, and lighter festive events. Consider the ceremony, season, drape comfort, blouse needs, and how much structure you want from the fabric.',
+  },
+  {
+    question: 'Do you offer custom blouse stitching with sarees?',
+    answer: 'Many sarees include blouse fabric or support blouse stitching options where available on the product page. Review each saree listing for blouse details, measurements, and stitching availability before ordering, especially if you are shopping for a wedding date.',
+  },
+  {
+    question: 'What is the delivery time for sarees?',
+    answer: 'Delivery timing depends on product availability, stitching requirements, and shipping method. Ready-made orders generally dispatch faster than custom blouse stitching orders. If you need a saree for a specific event, review the product details and order early enough to allow for fulfillment and tracked delivery.',
+  },
+  {
+    question: 'How should I care for my silk saree?',
+    answer: 'We recommend professional dry cleaning for silk sarees and careful storage in a cool, dry place. Wrap heavier sarees in soft muslin or breathable cloth, avoid direct sunlight, and refold occasionally to prevent permanent creases.',
   },
   {
     question: 'Can I filter sarees by color or occasion?',
