@@ -25,7 +25,7 @@ export const LEGAL_ENTITY_NAME = 'Glamour Indian Wear';
 export const SITE_NAME = PUBLIC_BRAND_NAME;
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 export const DEFAULT_TITLE = `${PUBLIC_BRAND_NAME} | Indian Ethnic Wear — Sarees & Lehengas`;
-export const DEFAULT_DESCRIPTION = `Shop Indian ethnic wear at ${PUBLIC_BRAND_NAME}. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.`;
+export const DEFAULT_DESCRIPTION = `${PUBLIC_BRAND_NAME} is an Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, Banarasi silk sarees, salwar suits, menswear, and wedding collections.`;
 export const DEFAULT_ROBOTS = 'index, follow';
 
 export const BRAND_IDENTITY = {

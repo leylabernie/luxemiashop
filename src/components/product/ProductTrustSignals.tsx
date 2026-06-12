@@ -105,7 +105,7 @@ export const ProductTrustSignals = () => {
       >
         <h3 className="text-lg font-medium flex items-center gap-2">
           <ShieldCheck className="h-5 w-5 text-primary" />
-          Why Shop With Luxemia
+          Why Shop With LuxeMia
         </h3>
         <p className="text-sm text-muted-foreground mt-1">
           The trusted choice for authentic Indian ethnic wear since 2018

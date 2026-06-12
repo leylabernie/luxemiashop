@@ -408,10 +408,10 @@ const routes = [
   {
     path: '/',
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
+    description: 'LuxeMia is an Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, Banarasi silk sarees, salwar suits, menswear, and wedding collections.',
     h1: 'LuxeMia',
     content: `
-      <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with shipping to USA, Canada, and Australia.</p>
+      <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, salwar suits to designer menswear, we bring Indian craftsmanship to your doorstep with shipping to USA, Canada, and Australia.</p>
       <h2>Shop by Category</h2>
       <nav>
         <ul>
@@ -2062,7 +2062,7 @@ function generateHtml(template, route, productMap = new Map()) {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
-        { '@type': 'ListItem', position: 2, name: 'Products', item: SITE_URL + '/products' },
+        { '@type': 'ListItem', position: 2, name: 'Collections', item: SITE_URL + '/collections' },
         { '@type': 'ListItem', position: 3, name: route.h1, item: canonical },
       ],
     };
@@ -2125,8 +2125,8 @@ function generateHtml(template, route, productMap = new Map()) {
 
     // Category link based on product type
     const typeLower = productType.toLowerCase();
-    let categoryLink = '/products';
-    let categoryLabel = 'All Products';
+    let categoryLink = '/collections';
+    let categoryLabel = 'Collections';
     if (typeLower.includes('lehenga')) { categoryLink = '/lehengas'; categoryLabel = 'All Lehengas'; }
     else if (typeLower.includes('saree') || typeLower.includes('sari')) { categoryLink = '/sarees'; categoryLabel = 'All Sarees'; }
     else if (typeLower.includes('suit') || typeLower.includes('kameez') || typeLower.includes('palazzo') || typeLower.includes('sharara') || typeLower.includes('anarkali') || typeLower.includes('patiala')) { categoryLink = '/suits'; categoryLabel = 'All Suits'; }
@@ -2162,7 +2162,7 @@ function generateHtml(template, route, productMap = new Map()) {
       </ul>
       <h2>Shipping &amp; Delivery</h2>
       <p>Free standard shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. All orders ship with full DHL Express tracking. Standard delivery: 7–10 business days. Express (3–5 days) available at checkout.</p>
-      <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/products">All Products</a> | <a href="/collections">Collections</a></p>`;
+      <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">Collections</a></p>`;
   } else {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>

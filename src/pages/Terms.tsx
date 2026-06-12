@@ -320,7 +320,7 @@ const Terms = () => {
                     </p>
                   </div>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>TO THE MAXIMUM EXTENT PERMITTED BY LAW, LUXEMIA SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OUR SERVICES OR PRODUCTS.</li>
+                    <li>TO THE MAXIMUM EXTENT PERMITTED BY LAW, LuxeMia SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OUR SERVICES OR PRODUCTS.</li>
                     <li>OUR TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT ACTUALLY PAID BY YOU FOR THE SPECIFIC PRODUCT OR SERVICE GIVING RISE TO THE CLAIM.</li>
                     <li>WE ARE NOT LIABLE FOR ANY DAMAGES ARISING FROM CUSTOMER-PROVIDED MEASUREMENTS OR SPECIFICATIONS.</li>
                     <li>We are not responsible for any loss, damage, or delay caused by events beyond our reasonable control (force majeure).</li>
