@@ -229,6 +229,11 @@ const Collections = () => {
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">
             <Link to="/collections/bridal-lehengas" className="hover:text-foreground transition-colors underline underline-offset-2">Bridal Lehengas</Link>
             <Link to="/collections/wedding-sarees" className="hover:text-foreground transition-colors underline underline-offset-2">Wedding Sarees</Link>
+            <Link to="/collections/ready-to-wear" className="hover:text-foreground transition-colors underline underline-offset-2">Ready to Wear</Link>
+            <Link to="/collections/suits-under-150" className="hover:text-foreground transition-colors underline underline-offset-2">Suits Under $150</Link>
+            <Link to="/collections/wedding-guest-outfits-under-250" className="hover:text-foreground transition-colors underline underline-offset-2">Wedding Guest Under $250</Link>
+            <Link to="/collections/sarees-under-100" className="hover:text-foreground transition-colors underline underline-offset-2">Sarees Under $100</Link>
+            <Link to="/collections/groom-outfits" className="hover:text-foreground transition-colors underline underline-offset-2">Groom Outfits</Link>
             <Link to="/sarees" className="hover:text-foreground transition-colors underline underline-offset-2">Designer Sarees</Link>
             <Link to="/suits" className="hover:text-foreground transition-colors underline underline-offset-2">Salwar Kameez</Link>
             <Link to="/menswear" className="hover:text-foreground transition-colors underline underline-offset-2">Men's Sherwanis</Link>

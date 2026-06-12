@@ -39,6 +39,11 @@ Allow: /collections/sharara-suits
 Allow: /collections/gharara-suits
 Allow: /collections/indo-western-dresses
 Allow: /collections/kurta-sets
+Allow: /collections/ready-to-wear
+Allow: /collections/suits-under-150
+Allow: /collections/wedding-guest-outfits-under-250
+Allow: /collections/sarees-under-100
+Allow: /collections/groom-outfits
 Allow: /collections/diwali-outfits
 Allow: /collections/mehendi-outfits
 Allow: /collections/eid-outfits
@@ -124,6 +129,11 @@ Allow: /lehengas
 Allow: /suits
 Allow: /menswear
 Allow: /indowestern
+Allow: /collections/ready-to-wear
+Allow: /collections/suits-under-150
+Allow: /collections/wedding-guest-outfits-under-250
+Allow: /collections/sarees-under-100
+Allow: /collections/groom-outfits
 Allow: /blog
 Allow: /sitemap.xml
 Disallow: /products
@@ -195,6 +205,11 @@ Allow: /lehengas
 Allow: /suits
 Allow: /menswear
 Allow: /indowestern
+Allow: /collections/ready-to-wear
+Allow: /collections/suits-under-150
+Allow: /collections/wedding-guest-outfits-under-250
+Allow: /collections/sarees-under-100
+Allow: /collections/groom-outfits
 Allow: /blog
 Allow: /sitemap.xml
 Disallow: /products

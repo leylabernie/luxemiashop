@@ -179,6 +179,7 @@ const WeddingGuestOutfits = () => {
             <h2 className="font-serif text-xl mb-6">Shop by Wedding Ceremony</h2>
             <div className="flex flex-wrap justify-center gap-3">
               <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
+              <Link to="/collections/wedding-guest-outfits-under-250"><Button variant="outline" size="sm">Under $250</Button></Link>
               <Link to="/sarees"><Button variant="outline" size="sm">Silk Sarees</Button></Link>
               <Link to="/suits"><Button variant="outline" size="sm">Anarkali Suits</Button></Link>
               <Link to="/indowestern"><Button variant="outline" size="sm">Indo-Western</Button></Link>

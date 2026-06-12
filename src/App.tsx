@@ -80,6 +80,11 @@ const WeddingGuestOutfits = lazy(() => import("./pages/WeddingGuestOutfits"));
 const MehendiOutfits = lazy(() => import("./pages/MehendiOutfits"));
 const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
+const ReadyToWear = lazy(() => import("./pages/ReadyToWear"));
+const SuitsUnder150 = lazy(() => import("./pages/SuitsUnder150"));
+const WeddingGuestOutfitsUnder250 = lazy(() => import("./pages/WeddingGuestOutfitsUnder250"));
+const SareesUnder100 = lazy(() => import("./pages/SareesUnder100"));
+const GroomOutfits = lazy(() => import("./pages/GroomOutfits"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
 const PageLoader = () => (
@@ -180,6 +185,11 @@ const App = () => (
                 <Route path="/collections/mehendi-outfits" element={<Suspense fallback={<PageLoader />}><MehendiOutfits /></Suspense>} />
                 <Route path="/collections/eid-outfits" element={<Suspense fallback={<PageLoader />}><EidOutfits /></Suspense>} />
                 <Route path="/collections/navratri-outfits" element={<Suspense fallback={<PageLoader />}><NavratriOutfits /></Suspense>} />
+                <Route path="/collections/ready-to-wear" element={<Suspense fallback={<PageLoader />}><ReadyToWear /></Suspense>} />
+                <Route path="/collections/suits-under-150" element={<Suspense fallback={<PageLoader />}><SuitsUnder150 /></Suspense>} />
+                <Route path="/collections/wedding-guest-outfits-under-250" element={<Suspense fallback={<PageLoader />}><WeddingGuestOutfitsUnder250 /></Suspense>} />
+                <Route path="/collections/sarees-under-100" element={<Suspense fallback={<PageLoader />}><SareesUnder100 /></Suspense>} />
+                <Route path="/collections/groom-outfits" element={<Suspense fallback={<PageLoader />}><GroomOutfits /></Suspense>} />
 
                 <Route path="/sitemap" element={<Suspense fallback={<PageLoader />}><Sitemap /></Suspense>} />
                 <Route path="/style-consultation" element={<Suspense fallback={<PageLoader />}><StyleConsultation /></Suspense>} />
