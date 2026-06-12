@@ -713,6 +713,136 @@ const routes = [
     content: '<p>Shop kurta sets and Indian kurta sets for festive events, wedding guest looks, parties, Eid, Diwali, family celebrations, and polished everyday ethnic wear. This collection highlights designer kurta sets, festive kurta sets, wedding guest kurta sets, kurta pant sets, kurta dupatta sets, ethnic kurta sets for women, and Indian outfits for women.</p><p>Browse the full <a href="/suits">suit collection</a> for broader salwar kameez styles, or continue occasion shopping with <a href="/collections/salwar-kameez">salwar kameez</a>, <a href="/collections/anarkali-suits">Anarkali suits</a>, and <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>.</p>',
   },
   {
+    path: '/collections/ready-to-wear',
+    title: 'Ready to Wear Indian Outfits Online | LuxeMia',
+    description: 'Shop ready to wear Indian outfits online at LuxeMia. Explore readymade, stitched, and pre-stitched ethnic wear for weddings, festivals, and easy occasion dressing.',
+    h1: 'Ready to Wear Indian Outfits',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Ready to Wear Indian Outfits', url: '/collections/ready-to-wear' },
+    ],
+    collection: {
+      name: 'Ready to Wear Indian Outfits',
+      description: 'Readymade and stitched Indian outfits selected with ready-to-wear, readymade, pre-stitched, stitched, or pre-draped product signals.',
+    },
+    faqs: [
+      {
+        question: 'What does ready to wear mean for Indian outfits?',
+        answer: 'Ready to wear means the product has a stitched, readymade, pre-stitched, or pre-draped signal in the product data. Ready to wear is not the same as ready to ship.',
+      },
+      {
+        question: 'Are ready to wear Indian outfits good for weddings and festivals?',
+        answer: 'Yes. Ready to wear Indian outfits can work for weddings, receptions, parties, festivals, and family events when the product style and sizing are appropriate.',
+      },
+    ],
+    content: '<p>Shop ready to wear Indian outfits selected for easier sizing and event-ready dressing. This collection highlights readymade Indian outfits, stitched salwar suits, pre-stitched sarees, pre-draped saree styles, and easy occasionwear for weddings, festivals, and family celebrations.</p><p>Continue shopping with <a href="/collections/suits-under-150">Indian suits under $150</a>, <a href="/collections/sarees-under-100">sarees under $100</a>, and <a href="/collections/wedding-guest-outfits-under-250">wedding guest outfits under $250</a>.</p>',
+  },
+  {
+    path: '/collections/suits-under-150',
+    title: 'Indian Suits Under $150 | LuxeMia',
+    description: 'Shop Indian suits under $150 at LuxeMia. Explore affordable salwar kameez, anarkali, sharara, gharara, palazzo, and festive wedding guest suits.',
+    h1: 'Indian Suits Under $150',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Indian Suits Under $150', url: '/collections/suits-under-150' },
+    ],
+    collection: {
+      name: 'Indian Suits Under $150',
+      description: 'Affordable women\'s Indian suit collection under $150 with salwar, anarkali, sharara, gharara, palazzo, patiala, churidar, and kameez signals.',
+    },
+    faqs: [
+      {
+        question: 'What styles are included in Indian suits under $150?',
+        answer: 'This collection includes women\'s salwar kameez, anarkali suits, sharara suits, gharara suits, palazzo suits, patiala suits, and churidar suits when the price is under $150.',
+      },
+      {
+        question: 'Are menswear products included in suits under $150?',
+        answer: 'No. This page excludes menswear, groom, sherwani, and men\'s kurta signals so the collection stays focused on women\'s Indian suits.',
+      },
+    ],
+    content: '<p>Shop Indian suits under $150 for festivals, Eid, parties, wedding guest looks, and family celebrations. This collection focuses on affordable women\'s salwar kameez, anarkali suits, sharara suits, gharara suits, palazzo suits, and festive suit sets.</p><p>Browse the full <a href="/suits">suit collection</a>, or continue with <a href="/collections/anarkali-suits">Anarkali suits</a>, <a href="/collections/pakistani-suits">Pakistani suits</a>, and <a href="/collections/ready-to-wear">ready to wear Indian outfits</a>.</p>',
+  },
+  {
+    path: '/collections/wedding-guest-outfits-under-250',
+    title: 'Indian Wedding Guest Outfits Under $250 | LuxeMia',
+    description: 'Shop Indian wedding guest outfits under $250 at LuxeMia. Explore affordable sarees, suits, lehengas, reception-ready outfits, and festive occasionwear.',
+    h1: 'Indian Wedding Guest Outfits Under $250',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Wedding Guest Outfits Under $250', url: '/collections/wedding-guest-outfits-under-250' },
+    ],
+    collection: {
+      name: 'Indian Wedding Guest Outfits Under $250',
+      description: 'Non-bridal, non-menswear Indian wedding guest outfits under $250 with wedding, reception, sangeet, party, festive, or occasion signals.',
+    },
+    faqs: [
+      {
+        question: 'What can I wear to an Indian wedding as a guest under $250?',
+        answer: 'Sarees, salwar suits, anarkali suits, shararas, lehengas, and party-ready ethnic outfits can work well under $250 when they are festive without looking bridal.',
+      },
+      {
+        question: 'Are bridal or groom outfits included?',
+        answer: 'No. This page excludes bridal, bride, groom, sherwani, and heavy bridal signals so the collection stays focused on guest-appropriate products.',
+      },
+    ],
+    content: '<p>Shop Indian wedding guest outfits under $250 across affordable sarees, suits, lehengas, reception outfits, party wear, sangeet-ready styles, and festive occasionwear. The page is designed for wedding guests and excludes bridal, groom, and sherwani signals.</p><p>Browse the full <a href="/collections/wedding-guest-outfits">wedding guest collection</a>, or continue with <a href="/collections/reception-outfits">reception outfits</a>, <a href="/collections/sarees-under-100">sarees under $100</a>, and <a href="/collections/suits-under-150">suits under $150</a>.</p>',
+  },
+  {
+    path: '/collections/sarees-under-100',
+    title: 'Sarees Under $100 | Affordable Indian Sarees | LuxeMia',
+    description: 'Shop sarees under $100 at LuxeMia. Explore affordable Indian sarees for parties, festivals, weddings, family events, and everyday celebrations.',
+    h1: 'Sarees Under $100',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Sarees Under $100', url: '/collections/sarees-under-100' },
+    ],
+    collection: {
+      name: 'Sarees Under $100',
+      description: 'Affordable Indian saree collection under $100 using saree or sari product signals and price filtering.',
+    },
+    faqs: [
+      {
+        question: 'What types of sarees are included under $100?',
+        answer: 'This collection includes products with saree or sari signals where the minimum product price is under $100. It excludes non-saree products and jewelry.',
+      },
+      {
+        question: 'Are sarees under $100 good for weddings?',
+        answer: 'Some sarees under $100 can work for wedding guest events, festivals, parties, and family celebrations. Review fabric and embellishment before ordering for formal events.',
+      },
+    ],
+    content: '<p>Shop sarees under $100 for parties, festivals, weddings, family events, and everyday celebrations. This affordable saree collection uses true saree or sari product signals and price filtering to avoid unrelated products.</p><p>Browse all <a href="/sarees">sarees</a>, or continue with <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/collections/silk-sarees">silk sarees</a>, and <a href="/collections/wedding-guest-outfits-under-250">wedding guest outfits under $250</a>.</p>',
+  },
+  {
+    path: '/collections/groom-outfits',
+    title: 'Indian Groom Outfits Online | Sherwanis & Menswear | LuxeMia',
+    description: 'Shop Indian groom outfits online at LuxeMia. Explore sherwanis, kurta pajama sets, wedding menswear, reception looks, and formal ethnic wear for men.',
+    h1: 'Indian Groom Outfits',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Collections', url: '/collections' },
+      { name: 'Indian Groom Outfits', url: '/collections/groom-outfits' },
+    ],
+    collection: {
+      name: 'Indian Groom Outfits',
+      description: 'Indian groom outfit collection with menswear, groom, sherwani, and wedding menswear product signals.',
+    },
+    faqs: [
+      {
+        question: 'What does an Indian groom usually wear?',
+        answer: 'Indian grooms often wear sherwanis, kurta pajama sets, Indo-Western menswear, or formal ethnic jackets depending on the ceremony, region, and wedding dress code.',
+      },
+      {
+        question: 'Are women\'s bridal products included here?',
+        answer: 'No. This page uses menswear plus groom, sherwani, or wedding menswear signals and excludes women\'s bridal product signals.',
+      },
+    ],
+    content: '<p>Shop Indian groom outfits online, including groom sherwanis, kurta pajama sets, embroidered sherwanis, wedding menswear, reception sherwanis, and formal ethnic wear for men. This collection excludes women\'s bridal products.</p><p>Browse all <a href="/menswear">menswear</a>, or continue wedding shopping with <a href="/collections/bridal-lehengas">bridal lehengas</a>, <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, and <a href="/collections/ready-to-wear">ready to wear Indian outfits</a>.</p>',
+  },
+  {
     path: '/collections/palazzo-suits',
     title: 'Palazzo Suits Online | Designer Palazzo Suit Sets - LuxeMia',
     description: 'Shop palazzo suits online at LuxeMia. Explore designer palazzo suits, Indian palazzo suits, festive palazzo suits, wedding guest palazzo suits, and kurta palazzo sets.',

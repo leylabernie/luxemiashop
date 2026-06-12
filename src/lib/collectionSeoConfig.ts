@@ -40,6 +40,11 @@ export type CollectionRoutePath =
   | '/collections/gharara-suits'
   | '/collections/indo-western-dresses'
   | '/collections/kurta-sets'
+  | '/collections/ready-to-wear'
+  | '/collections/suits-under-150'
+  | '/collections/wedding-guest-outfits-under-250'
+  | '/collections/sarees-under-100'
+  | '/collections/groom-outfits'
   | '/collections/wedding-guest-outfits'
   | '/collections/diwali-outfits'
   | '/collections/mehendi-outfits'
@@ -48,7 +53,7 @@ export type CollectionRoutePath =
 
 export interface RelatedCollection {
   label: string;
-  path: CollectionRoutePath | '/collections' | '/indowestern';
+  path: CollectionRoutePath | '/collections' | '/indowestern' | '/new-arrivals';
 }
 
 export interface CollectionSeoConfig {
@@ -688,6 +693,116 @@ export const COLLECTION_SEO_CONFIG: Record<CollectionRoutePath, CollectionSeoCon
       'Where can I buy sherwani online?',
       'What should men wear to an Indian wedding?',
       'Does LuxeMia offer Indian ethnic wear for grooms?',
+    ],
+  },
+  '/collections/ready-to-wear': {
+    path: '/collections/ready-to-wear',
+    title: 'Ready to Wear Indian Outfits Online | LuxeMia',
+    description: 'Shop ready to wear Indian outfits online at LuxeMia. Explore readymade, stitched, and pre-stitched ethnic wear for weddings, festivals, and easy occasion dressing.',
+    canonical: `${SITE_URL}/collections/ready-to-wear`,
+    h1: 'Ready to Wear Indian Outfits',
+    semanticTitle: 'Ready to wear Indian outfits, readymade ethnic wear, stitched suits, and pre-draped saree styles',
+    primaryEntity: 'Ready to Wear Indian Outfits',
+    secondaryEntities: ['Readymade Indian outfits', 'Stitched Indian suits', 'Pre-stitched sarees', 'Easy occasionwear'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'Suits Under $150', path: '/collections/suits-under-150' },
+      { label: 'Sarees Under $100', path: '/collections/sarees-under-100' },
+      { label: 'Wedding Guest Under $250', path: '/collections/wedding-guest-outfits-under-250' },
+      { label: 'New Arrivals', path: '/new-arrivals' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy ready to wear Indian outfits online?',
+      'What does ready to wear mean for Indian ethnic wear?',
+      'Are ready to wear Indian outfits the same as ready to ship?',
+    ],
+  },
+  '/collections/suits-under-150': {
+    path: '/collections/suits-under-150',
+    title: 'Indian Suits Under $150 | LuxeMia',
+    description: 'Shop Indian suits under $150 at LuxeMia. Explore affordable salwar kameez, anarkali, sharara, gharara, palazzo, and festive wedding guest suits.',
+    canonical: `${SITE_URL}/collections/suits-under-150`,
+    h1: 'Indian Suits Under $150',
+    semanticTitle: 'Affordable Indian suits under $150, salwar kameez, anarkali suits, sharara suits, and festive suit sets',
+    primaryEntity: 'Indian Suits Under $150',
+    secondaryEntities: ['Affordable salwar kameez', 'Anarkali suits under $150', 'Sharara suits under $150', 'Festival suits'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Suits', path: '/suits' },
+      { label: 'Anarkali Suits', path: '/collections/anarkali-suits' },
+      { label: 'Pakistani Suits', path: '/collections/pakistani-suits' },
+      { label: 'Ready to Wear', path: '/collections/ready-to-wear' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Indian suits under $150?',
+      'Which salwar suits are affordable for festivals and wedding guests?',
+      'Are LuxeMia suits under $150 womenswear only?',
+    ],
+  },
+  '/collections/wedding-guest-outfits-under-250': {
+    path: '/collections/wedding-guest-outfits-under-250',
+    title: 'Indian Wedding Guest Outfits Under $250 | LuxeMia',
+    description: 'Shop Indian wedding guest outfits under $250 at LuxeMia. Explore affordable sarees, suits, lehengas, reception-ready outfits, and festive occasionwear.',
+    canonical: `${SITE_URL}/collections/wedding-guest-outfits-under-250`,
+    h1: 'Indian Wedding Guest Outfits Under $250',
+    semanticTitle: 'Indian wedding guest outfits under $250, affordable sarees, suits, lehengas, and reception-ready styles',
+    primaryEntity: 'Indian Wedding Guest Outfits Under $250',
+    secondaryEntities: ['Wedding guest sarees', 'Wedding guest suits', 'Affordable reception outfits', 'Festive Indian outfits under $250'],
+    intent: 'wedding-guest',
+    relatedCollections: [
+      { label: 'All Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+      { label: 'Reception Outfits', path: '/collections/reception-outfits' },
+      { label: 'Suits Under $150', path: '/collections/suits-under-150' },
+      { label: 'Sarees Under $100', path: '/collections/sarees-under-100' },
+    ],
+    aiSearchQuestions: [
+      'What can I wear to an Indian wedding under $250?',
+      'Where can I buy affordable Indian wedding guest outfits?',
+      'Which Indian outfits work for wedding guests without looking bridal?',
+    ],
+  },
+  '/collections/sarees-under-100': {
+    path: '/collections/sarees-under-100',
+    title: 'Sarees Under $100 | Affordable Indian Sarees | LuxeMia',
+    description: 'Shop sarees under $100 at LuxeMia. Explore affordable Indian sarees for parties, festivals, weddings, family events, and everyday celebrations.',
+    canonical: `${SITE_URL}/collections/sarees-under-100`,
+    h1: 'Sarees Under $100',
+    semanticTitle: 'Sarees under $100, affordable Indian sarees, party sarees, festival sarees, and wedding guest sarees',
+    primaryEntity: 'Sarees Under $100',
+    secondaryEntities: ['Affordable Indian sarees', 'Party sarees under $100', 'Festival sarees', 'Wedding guest sarees'],
+    intent: 'category',
+    relatedCollections: [
+      { label: 'All Sarees', path: '/sarees' },
+      { label: 'Wedding Sarees', path: '/collections/wedding-sarees' },
+      { label: 'Silk Sarees', path: '/collections/silk-sarees' },
+      { label: 'Wedding Guest Under $250', path: '/collections/wedding-guest-outfits-under-250' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy sarees under $100 online?',
+      'Are sarees under $100 good for weddings and festivals?',
+      'What types of affordable Indian sarees does LuxeMia sell?',
+    ],
+  },
+  '/collections/groom-outfits': {
+    path: '/collections/groom-outfits',
+    title: 'Indian Groom Outfits Online | Sherwanis & Menswear | LuxeMia',
+    description: 'Shop Indian groom outfits online at LuxeMia. Explore sherwanis, kurta pajama sets, wedding menswear, reception looks, and formal ethnic wear for men.',
+    canonical: `${SITE_URL}/collections/groom-outfits`,
+    h1: 'Indian Groom Outfits',
+    semanticTitle: 'Indian groom outfits, sherwanis, kurta pajama sets, wedding menswear, and reception menswear',
+    primaryEntity: 'Indian Groom Outfits',
+    secondaryEntities: ['Groom sherwanis', 'Wedding menswear', 'Kurta pajama sets', 'Reception sherwanis'],
+    intent: 'menswear',
+    relatedCollections: [
+      { label: 'All Menswear', path: '/menswear' },
+      { label: 'Ready to Wear', path: '/collections/ready-to-wear' },
+      { label: 'Bridal Lehengas', path: '/collections/bridal-lehengas' },
+      { label: 'Wedding Guest Outfits', path: '/collections/wedding-guest-outfits' },
+    ],
+    aiSearchQuestions: [
+      'Where can I buy Indian groom outfits online?',
+      'What should an Indian groom wear for a wedding?',
+      'Does LuxeMia sell sherwanis and wedding menswear?',
     ],
   },
   '/collections/wedding-guest-outfits': {

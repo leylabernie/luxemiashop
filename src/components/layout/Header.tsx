@@ -33,6 +33,7 @@ const navLinks = [
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bestsellers', href: '/bestsellers' },
+  { name: 'Ready to Wear', href: '/collections/ready-to-wear' },
   { name: 'Bridal', href: '/collections/bridal-lehengas' },
   { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
 ];
@@ -40,6 +41,8 @@ const secondaryLinks = [
 const occasionLinks = [
   { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },
   { name: 'Wedding Guest', href: '/collections/wedding-guest-outfits' },
+  { name: 'Wedding Guest Under $250', href: '/collections/wedding-guest-outfits-under-250' },
+  { name: 'Groom Outfits', href: '/collections/groom-outfits' },
   { name: 'Mehendi Ceremony', href: '/collections/mehendi-outfits' },
   { name: 'Eid Outfits', href: '/collections/eid-outfits' },
   { name: 'Navratri & Garba', href: '/collections/navratri-outfits' },

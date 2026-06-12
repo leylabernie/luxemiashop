@@ -187,6 +187,11 @@ function getEffectiveCategory(explicitCategory?: string): string | undefined {
     '/collections/navratri-outfits': 'navratri-outfits',
     '/collections/mehendi-outfits': 'mehendi-outfits',
     '/collections/reception-outfits': 'reception-outfits',
+    '/collections/ready-to-wear': 'ready-to-wear',
+    '/collections/suits-under-150': 'suits-under-150',
+    '/collections/wedding-guest-outfits-under-250': 'wedding-guest-outfits-under-250',
+    '/collections/sarees-under-100': 'sarees-under-100',
+    '/collections/groom-outfits': 'groom-outfits',
     '/collections/bridal-lehengas': 'bridal-lehengas',
     '/collections/wedding-lehengas': 'wedding-lehengas',
   };
@@ -254,6 +259,11 @@ function isAvailableProduct(product: ShopifyProduct): boolean {
   return variants.length === 0 || variants.some(v => v.node.availableForSale);
 }
 
+function getMinPrice(product: ShopifyProduct): number {
+  const amount = parseFloat(product.node.priceRange?.minVariantPrice?.amount ?? '');
+  return Number.isFinite(amount) ? amount : Number.POSITIVE_INFINITY;
+}
+
 function sortByCreatedAtDesc(products: ShopifyProduct[]): ShopifyProduct[] {
   return [...products].sort((a, b) =>
     new Date(b.node.createdAt || 0).getTime() - new Date(a.node.createdAt || 0).getTime()
@@ -262,6 +272,30 @@ function sortByCreatedAtDesc(products: ShopifyProduct[]): ShopifyProduct[] {
 
 function isLehenga(product: ShopifyProduct): boolean {
   return /\blehenga\b|\blehnga\b|\blehena\b|\blehenga\s+choli\b|\blehnga\s+choli\b/i.test(productText(product));
+}
+
+function isSaree(product: ShopifyProduct): boolean {
+  return /\bsarees?\b|\bsaris?\b/i.test(productText(product));
+}
+
+function isWomensSuit(product: ShopifyProduct): boolean {
+  if (isMenswear(product)) return false;
+
+  const text = productText(product);
+  const productType = (product.node.productType ?? '').toLowerCase();
+  const title = (product.node.title ?? '').toLowerCase();
+  const tags = (product.node.tags ?? []).map(t => t.toLowerCase());
+  const womensIndicators = /\b(salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani|dupatta|churidar|patiala|patiyala|kurti|ladies|women|female)\b/i;
+
+  if (/\b(salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani\s+suit|churidar|patiala|patiyala|kurti)\b/i.test(text)) {
+    return true;
+  }
+
+  if (/\bsuits?\b/i.test(productType) || tags.some(t => /\bsuits?\b/i.test(t))) {
+    return womensIndicators.test(title) || womensIndicators.test(productType) || tags.some(t => womensIndicators.test(t));
+  }
+
+  return false;
 }
 
 function scoreBestseller(product: ShopifyProduct): number {
@@ -350,6 +384,40 @@ function filterNamedCollection(products: ShopifyProduct[], category: string): Sh
         !isMenswear(product)
         && isLehenga(product)
         && hasAny(product, [/\bwedding\s+lehenga\b/i, /\bindian\s+wedding\b/i, /\bwedding\b/i, /\breception\b/i, /\bsangeet\b/i, /\bengagement\b/i, /\bceremony\b/i])
+      );
+
+    case 'ready-to-wear':
+      return products.filter(product =>
+        hasAny(product, [/\bready\s?to\s?wear\b/i, /\breadymade\b/i, /\bpre\s?stitched\b/i, /\bstitched\b/i, /\bpre\s?draped\b/i, /\bsaree\s+gown\b/i])
+        && !hasAny(product, [/\bunstitched\b/i, /\bsemi\s?stitched\b/i])
+      );
+
+    case 'suits-under-150':
+      return products.filter(product =>
+        isWomensSuit(product)
+        && getMinPrice(product) < 150
+      );
+
+    case 'wedding-guest-outfits-under-250':
+      return products.filter(product =>
+        !isMenswear(product)
+        && getMinPrice(product) < 250
+        && hasAny(product, [/\bwedding\s+guest\b/i, /\bwedding\b/i, /\breception\b/i, /\bsangeet\b/i, /\bparty\s?wear\b/i, /\bcocktail\b/i, /\boccasion(?:al)?\b/i, /\bfestive\b/i, /\bfestival\s+wear\b/i])
+        && !bridalOrGroomSignals.test(productText(product))
+      );
+
+    case 'sarees-under-100':
+      return products.filter(product =>
+        !isMenswear(product)
+        && isSaree(product)
+        && getMinPrice(product) < 100
+      );
+
+    case 'groom-outfits':
+      return products.filter(product =>
+        isMenswear(product)
+        && hasAny(product, [/\bgroom\b/i, /\bsherwani\b/i, /\bwedding\s+(?:menswear|wear)\b/i, /\bwedding\b/i])
+        && !hasAny(product, [/\bbridal\s+(?:lehenga|saree|suit)\b/i, /\bbride\b/i, /\bdulhan\b/i])
       );
 
     default:
