@@ -136,19 +136,35 @@ const ProductDetail = () => {
     }
   }, [product, addToRecentlyViewed]);
 
-  // Get category URL from product type
-  const getCategoryUrl = (productType?: string) => {
-    if (!productType) return '/collections';
-    const type = productType.toLowerCase();
-    if (type.includes('lehenga')) return '/lehengas';
-    if (type.includes('saree')) return '/sarees';
-    if (type.includes('suit') || type.includes('salwar') || type.includes('anarkali')) return '/suits';
-    if (type.includes('sherwani') || type.includes('kurta') || type.includes('menswear')) return '/menswear';
-    return '/collections';
+  // Get a safe storefront category from product type/title signals.
+  const getCategory = (productType?: string, title?: string) => {
+    if (!productType && !title) return { name: 'Collections', url: '/collections' };
+    const source = `${productType || ''} ${title || ''}`.toLowerCase();
+    if (source.includes('saree') || source.includes('sari')) return { name: 'Sarees', url: '/sarees' };
+    if (source.includes('lehenga') || source.includes('choli')) return { name: 'Lehengas', url: '/lehengas' };
+    if (
+      source.includes('salwar') ||
+      source.includes('kameez') ||
+      source.includes('suit') ||
+      source.includes('anarkali') ||
+      source.includes('sharara') ||
+      source.includes('palazzo') ||
+      source.includes('gharara')
+    ) return { name: 'Suits', url: '/suits' };
+    if (
+      source.includes('sherwani') ||
+      source.includes('kurta pajama') ||
+      source.includes('menswear') ||
+      source.includes("men's") ||
+      /\bmen\b/.test(source)
+    ) return { name: 'Menswear', url: '/menswear' };
+    if (source.includes('indo') || source.includes('fusion')) return { name: 'Indo-Western', url: '/indowestern' };
+    return { name: 'Collections', url: '/collections' };
   };
 
-  const categoryUrl = getCategoryUrl(product?.productType);
-  const categoryName = product?.productType || 'Collections';
+  const productCategory = getCategory(product?.productType, correctedProductTitle || product?.title);
+  const categoryUrl = productCategory.url;
+  const categoryName = productCategory.name;
 
   // Enrich thin product descriptions with SEO-rich content
   const productColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];

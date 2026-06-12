@@ -1,6 +1,4 @@
-import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,9 +7,9 @@ import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
 import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
-import ProductCard from '@/components/ui/ProductCard';
+import CollectionProductBrowser from '@/components/collections/CollectionProductBrowser';
+import { lehengaFilterSections } from '@/lib/collectionFilterSections';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -33,6 +31,10 @@ const weddingLehengaFaqs = [
     answer: 'No. Wedding lehengas include bridal lehengas for the bride and bridal-adjacent lehenga styles for sisters, bridesmaids, cousins, mothers, and wedding guests. The right choice depends on the event, dress code, color, embroidery level, and how formal the celebration is.',
   },
   {
+    question: 'How is this different from Bridal Lehengas?',
+    answer: 'Wedding Lehengas is broader across wedding events and roles. Bridal Lehengas is focused specifically on bride-first shopping.',
+  },
+  {
     question: 'Can I wear a wedding lehenga to a reception or sangeet?',
     answer: 'Yes. Reception lehengas and sangeet lehengas are popular for Indian wedding events because they feel festive and polished. For dancing or evening events, shoppers often choose georgette, net, silk blends, sequins, mirror work, or embroidered lehengas with lighter dupattas.',
   },
@@ -52,12 +54,9 @@ const weddingLehengaFaqs = [
 
 const WeddingLehengas = () => {
   const { products, isLoading } = useShopifyPaginatedProducts('wedding-lehengas');
-  const [sortBy, setSortBy] = useState('featured');
+  const schemaProducts = useMemo(() => sortProducts(products, 'featured'), [products]);
 
-  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
-  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
-
-  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+  const collectionItems = schemaProducts.slice(0, 30).map(p => ({
     id: p.node.id,
     name: p.node.title,
     url: p.node.handle,
@@ -98,70 +97,20 @@ const WeddingLehengas = () => {
         <section className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Explore <strong>wedding lehengas</strong>, <strong>Indian wedding lehengas</strong>, <strong>bridal-adjacent lehenga choli</strong>, <strong>reception lehengas</strong>, <strong>sangeet lehengas</strong>, <strong>wedding guest lehengas</strong>, and <strong>embroidered wedding outfits</strong>. For the full category, visit the <Link to="/lehengas" className="text-foreground underline underline-offset-2">lehenga collection</Link>.
+              Explore <strong>wedding lehengas</strong>, <strong>Indian wedding lehengas</strong>, <strong>bridal-adjacent lehenga choli</strong>, <strong>reception lehengas</strong>, <strong>sangeet lehengas</strong>, <strong>wedding guest lehengas</strong>, and <strong>embroidered wedding outfits</strong>. For bride-first shopping, compare <Link to="/collections/bridal-lehengas" className="text-foreground underline underline-offset-2">Bridal Lehengas</Link>; for every lehenga style, visit <Link to="/lehengas" className="text-foreground underline underline-offset-2">All Lehengas</Link>.
             </p>
           </div>
         </section>
 
-        <section className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
-          <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {isLoading ? 'Loading...' : `${sortedProducts.length} wedding-ready lehengas`}
-              </p>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  Sort: {currentSort} <ChevronDown className="h-4 w-4 ml-2" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {sortOptions.map(opt => (
-                  <DropdownMenuItem key={opt.value} onClick={() => setSortBy(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
-                    {opt.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[3/4] bg-muted rounded-sm mb-4" />
-                  <div className="h-3 bg-muted rounded w-1/3 mb-2" />
-                  <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-muted rounded w-1/4" />
-                </div>
-              ))}
-            </div>
-          ) : sortedProducts.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="max-w-md mx-auto">
-                <h3 className="font-serif text-2xl mb-4">Wedding Lehengas Coming Soon</h3>
-                <p className="text-muted-foreground mb-6">
-                  The wedding lehenga edit is being curated. Explore all lehengas for bridal, reception, sangeet, party wear, and wedding guest styles.
-                </p>
-                <Button asChild variant="outline">
-                  <Link to="/lehengas">Explore All Lehengas</Link>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              {sortedProducts.map((product, index) => (
-                <ProductCard key={product.node.id} product={product} index={index} />
-              ))}
-            </motion.div>
-          )}
-        </section>
+        <CollectionProductBrowser
+          products={products}
+          isLoading={isLoading}
+          sortOptions={sortOptions}
+          filterSections={lehengaFilterSections}
+          priceRangeMax={2000}
+          priceStep={50}
+          countLabel="wedding-ready lehengas"
+        />
 
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
@@ -201,11 +150,14 @@ const WeddingLehengas = () => {
             <div className="flex flex-wrap justify-center gap-3">
               <Link to="/lehengas"><Button variant="outline" size="sm">All Lehengas</Button></Link>
               <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
-              <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
               <Link to="/collections/reception-outfits"><Button variant="outline" size="sm">Reception Outfits</Button></Link>
-              <Link to="/collections/party-wear-lehengas"><Button variant="outline" size="sm">Party Wear Lehengas</Button></Link>
               <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
+              <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
+              <Link to="/collections/wedding-guest-dresses"><Button variant="outline" size="sm">Guest Wedding Dresses</Button></Link>
+              <Link to="/collections/party-wear-lehengas"><Button variant="outline" size="sm">Party Wear Lehengas</Button></Link>
               <Link to="/collections/mehendi-outfits"><Button variant="outline" size="sm">Mehendi Outfits</Button></Link>
+              <Link to="/sarees"><Button variant="outline" size="sm">Sarees</Button></Link>
+              <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
             </div>
           </div>
         </section>
@@ -231,3 +183,4 @@ const WeddingLehengas = () => {
 };
 
 export default WeddingLehengas;
+

@@ -96,6 +96,9 @@ export default async function middleware(request: Request) {
   if (pathname === '/terms-of-service') {
     return Response.redirect(new URL('/terms', request.url).toString(), 308);
   }
+  if (pathname === '/wedding-sarees') {
+    return Response.redirect(new URL('/collections/wedding-sarees', request.url).toString(), 308);
+  }
   // /products has no React route — redirect to /collections to prevent soft 404
   if (pathname === '/products') {
     return Response.redirect(new URL('/collections', request.url).toString(), 308);

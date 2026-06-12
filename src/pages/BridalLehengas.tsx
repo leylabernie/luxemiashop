@@ -1,6 +1,4 @@
-import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,9 +7,9 @@ import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
 import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
-import ProductCard from '@/components/ui/ProductCard';
+import CollectionProductBrowser from '@/components/collections/CollectionProductBrowser';
+import { lehengaFilterSections } from '@/lib/collectionFilterSections';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -41,6 +39,10 @@ const bridalLehengaFaqs = [
     answer: 'Classic Indian bridal lehenga colors include red, maroon, wine, gold, and deep pink. Modern brides also choose ivory, blush, champagne, emerald, sage, and pastel tones for wedding, engagement, or reception events. The best color depends on the ceremony, family preference, skin tone, and styling plan.',
   },
   {
+    question: 'How is Bridal Lehengas different from Wedding Lehengas?',
+    answer: 'Bridal Lehengas is focused on bride-first shopping. Wedding Lehengas is broader and can include bridal-adjacent, family, reception, sangeet, and guest-ready lehenga styles.',
+  },
+  {
     question: 'How should I choose a bridal lehenga online?',
     answer: 'Check fabric, embroidery, blouse and dupatta details, size options, delivery timing, return policy, and product photos before ordering. Compare the lehenga against your wedding timeline and ceremony needs. If your event date is close, prioritize ready-to-wear or clearly available options and ask for sizing help before purchase.',
   },
@@ -48,12 +50,9 @@ const bridalLehengaFaqs = [
 
 const BridalLehengas = () => {
   const { products, isLoading } = useShopifyPaginatedProducts('bridal-lehengas');
-  const [sortBy, setSortBy] = useState('featured');
+  const schemaProducts = useMemo(() => sortProducts(products, 'featured'), [products]);
 
-  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
-  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
-
-  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+  const collectionItems = schemaProducts.slice(0, 30).map(p => ({
     id: p.node.id,
     name: p.node.title,
     url: p.node.handle,
@@ -94,58 +93,20 @@ const BridalLehengas = () => {
         <section className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Explore <strong>Indian bridal lehengas</strong>, <strong>wedding lehenga choli</strong> sets, <strong>embroidered bridal lehengas</strong>, and <strong>designer bridal lehengas online</strong>. For broader festive and partywear styles, visit the full <Link to="/lehengas" className="text-foreground underline underline-offset-2">lehenga collection</Link>.
+              Explore <strong>Indian bridal lehengas</strong>, <strong>wedding lehenga choli</strong> sets, <strong>embroidered bridal lehengas</strong>, and <strong>designer bridal lehengas online</strong>. This page is bride-first; for broader lehenga shopping, visit <Link to="/collections/wedding-lehengas" className="text-foreground underline underline-offset-2">Wedding Lehengas</Link> or <Link to="/lehengas" className="text-foreground underline underline-offset-2">All Lehengas</Link>.
             </p>
           </div>
         </section>
 
-        <section className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
-          <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {isLoading ? 'Loading...' : `${sortedProducts.length} bridal-ready styles`}
-              </p>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  Sort: {currentSort} <ChevronDown className="h-4 w-4 ml-2" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {sortOptions.map(opt => (
-                  <DropdownMenuItem key={opt.value} onClick={() => setSortBy(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
-                    {opt.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[3/4] bg-muted rounded-sm mb-4" />
-                  <div className="h-3 bg-muted rounded w-1/3 mb-2" />
-                  <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-muted rounded w-1/4" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              {sortedProducts.map((product, index) => (
-                <ProductCard key={product.node.id} product={product} index={index} />
-              ))}
-            </motion.div>
-          )}
-        </section>
+        <CollectionProductBrowser
+          products={products}
+          isLoading={isLoading}
+          sortOptions={sortOptions}
+          filterSections={lehengaFilterSections}
+          priceRangeMax={2000}
+          priceStep={50}
+          countLabel="bridal-ready styles"
+        />
 
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
@@ -172,7 +133,7 @@ const BridalLehengas = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online bridal shopping support</h3>
                 <p>
-                  LuxeMia serves brides and families shopping from abroad with tracked shipping, fit options where available, and styling support before purchase. Review each product's sizing and fulfillment details before ordering.
+                  LuxeMia serves brides and families shopping from abroad with tracked shipping, fit options where available, and styling support before purchase. Review each product&apos;s sizing and fulfillment details before ordering.
                 </p>
               </div>
             </div>
@@ -184,9 +145,13 @@ const BridalLehengas = () => {
             <h2 className="font-serif text-xl mb-6">Continue Wedding Shopping</h2>
             <div className="flex flex-wrap justify-center gap-3">
               <Link to="/lehengas"><Button variant="outline" size="sm">All Lehengas</Button></Link>
+              <Link to="/collections/wedding-lehengas"><Button variant="outline" size="sm">Wedding Lehengas</Button></Link>
+              <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
+              <Link to="/collections/reception-outfits"><Button variant="outline" size="sm">Reception Outfits</Button></Link>
               <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
               <Link to="/collections/mehendi-outfits"><Button variant="outline" size="sm">Mehendi Outfits</Button></Link>
               <Link to="/sarees"><Button variant="outline" size="sm">Sarees</Button></Link>
+              <Link to="/suits"><Button variant="outline" size="sm">Suits</Button></Link>
               <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
             </div>
           </div>
@@ -213,3 +178,4 @@ const BridalLehengas = () => {
 };
 
 export default BridalLehengas;
+

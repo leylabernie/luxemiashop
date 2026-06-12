@@ -1,6 +1,4 @@
-import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,9 +7,9 @@ import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
 import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
-import ProductCard from '@/components/ui/ProductCard';
+import CollectionProductBrowser from '@/components/collections/CollectionProductBrowser';
+import { occasionFilterSections } from '@/lib/collectionFilterSections';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -26,7 +24,11 @@ const receptionOutfitsSeo = metadataToSEOHeadProps(getStaticPageMetadata('/colle
 const receptionOutfitFaqs = [
   {
     question: 'What should I wear to an Indian wedding reception?',
-    answer: 'Indian wedding receptions are usually evening events, so polished semi-formal to formal ethnic wear works well. Reception lehengas, reception sarees, anarkali gowns, Indo-western outfits, embellished suits, and cocktail-ready party wear are all appropriate. Choose the outfit based on venue, dress code, comfort, and how closely you are related to the couple.',
+    answer: 'Indian wedding receptions are usually evening events, so polished semi-formal to formal ethnic wear works well. Reception lehengas, reception sarees, anarkali gowns, Indo-Western outfits, embellished suits, and cocktail-ready party wear are all appropriate. Choose the outfit based on venue, dress code, comfort, and how closely you are related to the couple.',
+  },
+  {
+    question: 'How is this different from wedding guest outfits?',
+    answer: 'This page is focused on evening reception and cocktail styling. Wedding Guest Outfits is broader across the full wedding weekend, including ceremony, mehendi, sangeet, and reception options.',
   },
   {
     question: 'Are lehengas good for wedding reception outfits?',
@@ -37,8 +39,8 @@ const receptionOutfitFaqs = [
     answer: 'A saree is one of the most versatile reception outfits. For cocktail receptions, look for satin, silk, georgette, chiffon, tissue, sequined, or ready-to-drape sarees. Keep the blouse, jewelry, and footwear aligned with the event: sleek styling works well for modern cocktail receptions, while richer borders and zari can suit formal family receptions.',
   },
   {
-    question: 'What are Indo-western reception outfits?',
-    answer: 'Indo-western reception outfits combine Indian details with contemporary silhouettes. Examples include cape sets, jacket-style outfits, gowns with Indian embroidery, fusion lehenga sets, sharara gowns, and coordinated sets. They are useful for guests who want an Indian reception look that still feels modern and easy to wear.',
+    question: 'What are Indo-Western reception outfits?',
+    answer: 'Indo-Western reception outfits combine Indian details with contemporary silhouettes. Examples include cape sets, jacket-style outfits, gowns with Indian embroidery, fusion lehenga sets, sharara gowns, and coordinated sets. They are useful for guests who want an Indian reception look that still feels modern and easy to wear.',
   },
   {
     question: 'Which colors work best for reception outfits?',
@@ -52,12 +54,9 @@ const receptionOutfitFaqs = [
 
 const ReceptionOutfits = () => {
   const { products, isLoading } = useShopifyPaginatedProducts('reception-outfits');
-  const [sortBy, setSortBy] = useState('featured');
+  const schemaProducts = useMemo(() => sortProducts(products, 'featured'), [products]);
 
-  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
-  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
-
-  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+  const collectionItems = schemaProducts.slice(0, 30).map(p => ({
     id: p.node.id,
     name: p.node.title,
     url: p.node.handle,
@@ -77,7 +76,7 @@ const ReceptionOutfits = () => {
         ]}
         collection={{
           name: 'Reception Outfits for Indian Weddings',
-          description: 'Reception-focused collection of Indian reception outfits, reception lehengas, reception sarees, Indo-western reception outfits, gowns, cocktail outfits, and party wear styles for wedding reception shopping.',
+          description: 'Reception-focused collection of Indian reception outfits, reception lehengas, reception sarees, Indo-Western reception outfits, gowns, cocktail outfits, and party wear styles for wedding reception shopping.',
           items: collectionItems,
         }}
         faqs={receptionOutfitFaqs}
@@ -90,7 +89,7 @@ const ReceptionOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Reception and Cocktail Collection</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Reception Outfits for Indian Weddings</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop Indian reception outfits selected for wedding receptions, cocktail events, engagement parties, sangeet nights, and formal evening celebrations. This edit brings together reception lehengas, reception sarees, Indo-western reception outfits, gowns, and party wear Indian outfits for shoppers who want a polished event look online.
+              Shop Indian reception outfits selected for wedding receptions, cocktail events, engagement parties, sangeet nights, and formal evening celebrations. This edit brings together reception lehengas, reception sarees, Indo-Western reception outfits, gowns, and party wear Indian outfits for shoppers who want a polished event look online.
             </p>
           </div>
         </section>
@@ -98,70 +97,19 @@ const ReceptionOutfits = () => {
         <section className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Explore <strong>reception outfits</strong>, <strong>reception lehengas</strong>, <strong>reception sarees</strong>, <strong>reception gowns</strong>, <strong>Indo-western reception outfits</strong>, <strong>cocktail reception outfits</strong>, and <strong>party wear Indian outfits</strong>. For broader wedding shopping, visit <Link to="/collections/wedding-guest-outfits" className="text-foreground underline underline-offset-2">wedding guest outfits</Link>.
+              Explore <strong>reception outfits</strong>, <strong>reception lehengas</strong>, <strong>reception sarees</strong>, <strong>reception gowns</strong>, <strong>Indo-Western reception outfits</strong>, <strong>cocktail reception outfits</strong>, and <strong>party wear Indian outfits</strong>. This page is intentionally evening-focused. For broader wedding weekend shopping, visit <Link to="/collections/wedding-guest-outfits" className="text-foreground underline underline-offset-2">Wedding Guest Outfits</Link>; for drape-first looks, compare <Link to="/collections/wedding-sarees" className="text-foreground underline underline-offset-2">Wedding Sarees</Link>.
             </p>
           </div>
         </section>
 
-        <section className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
-          <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {isLoading ? 'Loading...' : `${sortedProducts.length} reception-ready styles`}
-              </p>
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  Sort: {currentSort} <ChevronDown className="h-4 w-4 ml-2" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {sortOptions.map(opt => (
-                  <DropdownMenuItem key={opt.value} onClick={() => setSortBy(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
-                    {opt.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[3/4] bg-muted rounded-sm mb-4" />
-                  <div className="h-3 bg-muted rounded w-1/3 mb-2" />
-                  <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-muted rounded w-1/4" />
-                </div>
-              ))}
-            </div>
-          ) : sortedProducts.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="max-w-md mx-auto">
-                <h3 className="font-serif text-2xl mb-4">Reception Outfits Coming Soon</h3>
-                <p className="text-muted-foreground mb-6">
-                  The reception edit is being curated. Explore wedding guest outfits for sarees, lehengas, suits, and Indo-western styles that work for formal evening events.
-                </p>
-                <Button asChild variant="outline">
-                  <Link to="/collections/wedding-guest-outfits">Explore Wedding Guest Outfits</Link>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              {sortedProducts.map((product, index) => (
-                <ProductCard key={product.node.id} product={product} index={index} />
-              ))}
-            </motion.div>
-          )}
-        </section>
+        <CollectionProductBrowser
+          products={products}
+          isLoading={isLoading}
+          sortOptions={sortOptions}
+          filterSections={occasionFilterSections}
+          priceRangeMax={1000}
+          countLabel="reception-ready styles"
+        />
 
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
@@ -176,7 +124,7 @@ const ReceptionOutfits = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Reception-ready categories</h3>
                 <p>
-                  Shoppers can compare reception lehengas, reception sarees, gowns, embellished suits, and Indo-western reception outfits in one focused path instead of browsing every broad product category.
+                  Shoppers can compare reception lehengas, reception sarees, gowns, embellished suits, and Indo-Western reception outfits in one focused path instead of browsing every broad product category.
                 </p>
               </div>
               <div>
@@ -188,7 +136,7 @@ const ReceptionOutfits = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online reception shopping support</h3>
                 <p>
-                  LuxeMia supports wedding reception shoppers with tracked shipping, fit options where available, and styling guidance before purchase. Review each product's sizing, stitching, and delivery details before ordering.
+                  LuxeMia supports wedding reception shoppers with tracked shipping, fit options where available, and styling guidance before purchase. Review each product&apos;s sizing, stitching, and delivery details before ordering.
                 </p>
               </div>
             </div>
@@ -200,11 +148,14 @@ const ReceptionOutfits = () => {
             <h2 className="font-serif text-xl mb-6">Continue Reception Shopping</h2>
             <div className="flex flex-wrap justify-center gap-3">
               <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
+              <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
+              <Link to="/collections/wedding-guest-dresses"><Button variant="outline" size="sm">Guest Wedding Dresses</Button></Link>
+              <Link to="/collections/wedding-lehengas"><Button variant="outline" size="sm">Wedding Lehengas</Button></Link>
               <Link to="/lehengas"><Button variant="outline" size="sm">Reception Lehengas</Button></Link>
               <Link to="/sarees"><Button variant="outline" size="sm">Reception Sarees</Button></Link>
               <Link to="/suits"><Button variant="outline" size="sm">Anarkali Suits</Button></Link>
               <Link to="/indowestern"><Button variant="outline" size="sm">Indo-Western</Button></Link>
-              <Link to="/collections/wedding-sarees"><Button variant="outline" size="sm">Wedding Sarees</Button></Link>
+              <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
             </div>
           </div>
         </section>
@@ -230,3 +181,4 @@ const ReceptionOutfits = () => {
 };
 
 export default ReceptionOutfits;
+

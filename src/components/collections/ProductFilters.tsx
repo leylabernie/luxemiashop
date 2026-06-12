@@ -16,6 +16,8 @@ interface ProductFiltersProps {
   priceRange: [number, number];
   onPriceChange: (range: [number, number]) => void;
   filterSections?: FilterSection[];
+  priceRangeMax?: number;
+  priceStep?: number;
 }
 
 const defaultFilterSections: FilterSection[] = [
@@ -47,6 +49,8 @@ export const ProductFilters = ({
   priceRange,
   onPriceChange,
   filterSections = defaultFilterSections,
+  priceRangeMax = 1000,
+  priceStep = 50,
 }: ProductFiltersProps) => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['Price', 'Availability']);
 
@@ -70,7 +74,7 @@ export const ProductFilters = ({
 
   const clearAllFilters = () => {
     onFilterChange({});
-    onPriceChange([0, 1000]);
+    onPriceChange([0, priceRangeMax]);
   };
 
   const totalActiveFilters = Object.values(activeFilters).flat().length;
@@ -127,8 +131,8 @@ export const ProductFilters = ({
                     value={priceRange}
                     onValueChange={(value) => onPriceChange(value as [number, number])}
                     min={0}
-                    max={1000}
-                    step={50}
+                    max={priceRangeMax}
+                    step={priceStep}
                     className="py-4"
                   />
                   <div className="flex items-center justify-between text-sm text-muted-foreground">

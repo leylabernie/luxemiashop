@@ -1,6 +1,4 @@
-import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,9 +7,9 @@ import { metadataToSEOHeadProps } from '@/lib/seoHeadAdapter';
 import { getStaticPageMetadata } from '@/lib/seoMetadata';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
-import ProductCard from '@/components/ui/ProductCard';
+import CollectionProductBrowser from '@/components/collections/CollectionProductBrowser';
+import { sareeFilterSections } from '@/lib/collectionFilterSections';
 import { sortProducts } from '@/lib/productFilters';
 import type { ShopifyProduct } from '@/lib/shopify';
 
@@ -23,18 +21,14 @@ const sortOptions = [
 ];
 
 const weddingSareesSeo = metadataToSEOHeadProps(getStaticPageMetadata('/collections/wedding-sarees'));
-
 const weddingSareeIntentPattern = /\b(wedding|bridal|bride|reception|engagement|sangeet|banarasi|kanjivaram|kanchipuram|silk|zari|woven|pattu|tissue|festive|designer)\b/i;
 
-const getSearchText = (product: ShopifyProduct): string => {
-  const tags = product.node.tags ?? [];
-  return [
-    product.node.title,
-    product.node.productType,
-    product.node.description,
-    ...tags,
-  ].filter(Boolean).join(' ');
-};
+const getSearchText = (product: ShopifyProduct): string => [
+  product.node.title,
+  product.node.productType,
+  product.node.description,
+  ...(product.node.tags ?? []),
+].filter(Boolean).join(' ');
 
 const weddingSareeFaqs = [
   {
@@ -58,6 +52,10 @@ const weddingSareeFaqs = [
     answer: 'Many LuxeMia sarees support blouse stitching or fit options where available on the product. Review each product page for stitching, sizing, and fulfillment details before ordering. If you are shopping for a wedding date, allow extra time for blouse stitching and tracked delivery.',
   },
   {
+    question: 'How is this different from the main Sarees page?',
+    answer: 'Wedding Sarees is focused on ceremony, bridal, family, and guest wedding intent. The Sarees page is broader across everyday, festive, designer, and occasion drape styles.',
+  },
+  {
     question: 'How should I choose wedding sarees online?',
     answer: 'Start with the ceremony, role, color direction, fabric comfort, blouse needs, and delivery timeline. Compare product photos, fabric details, work type, sizing options, and care instructions. If your event is close, prioritize clearly available products and contact LuxeMia for sizing or styling guidance before purchase.',
   },
@@ -65,7 +63,6 @@ const weddingSareeFaqs = [
 
 const WeddingSarees = () => {
   const { products, isLoading } = useShopifyPaginatedProducts('sarees');
-  const [sortBy, setSortBy] = useState('featured');
 
   const weddingMatches = useMemo(
     () => products.filter(product => weddingSareeIntentPattern.test(getSearchText(product))),
@@ -73,10 +70,9 @@ const WeddingSarees = () => {
   );
   const isUsingFallback = !isLoading && products.length > 0 && weddingMatches.length < 8;
   const weddingProducts = isUsingFallback ? products : weddingMatches;
-  const sortedProducts = useMemo(() => sortProducts(weddingProducts, sortBy), [weddingProducts, sortBy]);
-  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const schemaProducts = useMemo(() => sortProducts(weddingProducts, 'featured'), [weddingProducts]);
 
-  const collectionItems = sortedProducts.slice(0, 30).map(p => ({
+  const collectionItems = schemaProducts.slice(0, 30).map(p => ({
     id: p.node.id,
     name: p.node.title,
     url: p.node.handle,
@@ -117,75 +113,24 @@ const WeddingSarees = () => {
         <section className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Explore <strong>wedding sarees online</strong>, <strong>Banarasi wedding sarees</strong>, <strong>Kanjivaram wedding sarees</strong>, <strong>Kanchipuram silk wedding sarees</strong>, and <strong>bridal wedding sarees</strong>. For everyday, festive, and broader drape styles, visit the full <Link to="/sarees" className="text-foreground underline underline-offset-2">saree collection</Link>.
+              Explore <strong>wedding sarees online</strong>, <strong>Banarasi wedding sarees</strong>, <strong>Kanjivaram wedding sarees</strong>, <strong>Kanchipuram silk wedding sarees</strong>, and <strong>bridal wedding sarees</strong>. For everyday, festive, and broader drape styles, visit the full <Link to="/sarees" className="text-foreground underline underline-offset-2">Sarees</Link> page; for guest styling across silhouettes, visit <Link to="/collections/wedding-guest-outfits" className="text-foreground underline underline-offset-2">Wedding Guest Outfits</Link>.
             </p>
-          </div>
-        </section>
-
-        <section className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
-          <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {isLoading ? 'Loading...' : `${sortedProducts.length} wedding-ready sarees`}
+            {isUsingFallback && (
+              <p className="text-xs text-muted-foreground mt-3 text-center">
+                Showing all sarees while wedding product signals are limited.
               </p>
-              {isUsingFallback && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Showing all sarees while wedding product signals are limited.
-                </p>
-              )}
-            </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  Sort: {currentSort} <ChevronDown className="h-4 w-4 ml-2" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {sortOptions.map(opt => (
-                  <DropdownMenuItem key={opt.value} onClick={() => setSortBy(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
-                    {opt.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            )}
           </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-[3/4] bg-muted rounded-sm mb-4" />
-                  <div className="h-3 bg-muted rounded w-1/3 mb-2" />
-                  <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-muted rounded w-1/4" />
-                </div>
-              ))}
-            </div>
-          ) : sortedProducts.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="max-w-md mx-auto">
-                <h3 className="font-serif text-2xl mb-4">Wedding Sarees Coming Soon</h3>
-                <p className="text-muted-foreground mb-6">
-                  The wedding saree edit is being curated. Explore the full saree collection for silk, Banarasi, georgette, and designer saree styles.
-                </p>
-                <Button asChild variant="outline">
-                  <Link to="/sarees">Explore All Sarees</Link>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              {sortedProducts.map((product, index) => (
-                <ProductCard key={product.node.id} product={product} index={index} />
-              ))}
-            </motion.div>
-          )}
         </section>
+
+        <CollectionProductBrowser
+          products={weddingProducts}
+          isLoading={isLoading}
+          sortOptions={sortOptions}
+          filterSections={sareeFilterSections}
+          priceRangeMax={1000}
+          countLabel="wedding-ready sarees"
+        />
 
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
@@ -212,7 +157,7 @@ const WeddingSarees = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online wedding confidence</h3>
                 <p>
-                  LuxeMia supports wedding shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product's sizing, stitching, and fulfillment details before ordering.
+                  LuxeMia supports wedding shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product&apos;s sizing, stitching, and fulfillment details before ordering.
                 </p>
               </div>
             </div>
@@ -225,9 +170,13 @@ const WeddingSarees = () => {
             <div className="flex flex-wrap justify-center gap-3">
               <Link to="/sarees"><Button variant="outline" size="sm">All Sarees</Button></Link>
               <Link to="/collections/bridal-lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
+              <Link to="/collections/wedding-lehengas"><Button variant="outline" size="sm">Wedding Lehengas</Button></Link>
               <Link to="/collections/wedding-guest-outfits"><Button variant="outline" size="sm">Wedding Guest Outfits</Button></Link>
-              <Link to="/collections/mehendi-outfits"><Button variant="outline" size="sm">Mehendi Outfits</Button></Link>
-              <Link to="/suits"><Button variant="outline" size="sm">Anarkali Suits</Button></Link>
+              <Link to="/collections/wedding-guest-dresses"><Button variant="outline" size="sm">Guest Wedding Dresses</Button></Link>
+              <Link to="/collections/reception-outfits"><Button variant="outline" size="sm">Reception Outfits</Button></Link>
+              <Link to="/lehengas"><Button variant="outline" size="sm">Lehengas</Button></Link>
+              <Link to="/suits"><Button variant="outline" size="sm">Suits</Button></Link>
+              <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
             </div>
           </div>
         </section>
@@ -253,3 +202,4 @@ const WeddingSarees = () => {
 };
 
 export default WeddingSarees;
+
