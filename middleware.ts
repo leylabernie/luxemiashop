@@ -293,7 +293,7 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
 
   // Determine the correct meta tags for this page
   let title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas';
-  let description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.';
+  let description = 'LuxeMia is an Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, silk sarees, salwar suits, menswear, and wedding collections.';
   let canonical = `https://luxemia.shop${pathname}`;
   let ogType = 'website';
   let ogImage = 'https://luxemia.shop/og-image.jpg';
@@ -388,42 +388,12 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
     }
   }
 
-  // ── CRITICAL SEO FIX: Inject JSON-LD Schema into prerendered HTML ──
-  // Googlebot and AI search engines need structured data in the initial HTML.
-  // Client-side React Helmet schemas are NOT visible to crawlers that don't execute JS.
+  // ── CRITICAL SEO FIX: Inject page-specific JSON-LD Schema into SPA HTML ──
+  // Organization and WebSite schema are already present in index.html.
+  // Keep this middleware injection page-specific to avoid duplicate global schema.
   const schemas: Record<string, any>[] = [];
 
-  // 1. Organization Schema (always)
-  schemas.push({
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Glamour Indian Wear',
-    alternateName: 'LuxeMia',
-    url: 'https://luxemia.shop',
-    logo: 'https://luxemia.shop/favicon.ico',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.',
-    sameAs: [
-      'https://www.instagram.com/luxemiashop',
-      'https://www.facebook.com/luxemiashop',
-      'https://www.pinterest.com/luxemiashop',
-      'https://www.youtube.com/@luxemiashop',
-    ],
-  });
-
-  // 2. WebSite Schema with SearchAction (always)
-  schemas.push({
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    url: 'https://luxemia.shop',
-    name: 'LuxeMia',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: 'https://luxemia.shop/search?q={search_term_string}' },
-      'query-input': 'required name=search_term_string',
-    },
-  });
-
-  // 3. BreadcrumbList Schema (for all pages except homepage)
+  // 1. BreadcrumbList Schema (for all pages except homepage)
   if (pathname !== '/' && pathname !== '') {
     const breadcrumbItems: Array<{ name: string; url: string }> = [{ name: 'Home', url: 'https://luxemia.shop/' }];
     
@@ -451,34 +421,11 @@ async function injectMetaIntoSpa(request: Request, pathname: string, options?: {
     });
   }
 
-  // 4. Basic Product Schema for product pages (inferred from URL)
-  // Note: This is a lightweight schema. Full product data schema is rendered client-side by SEOHead.
-  if (pathname.startsWith('/product/')) {
-    schemas.push({
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: escapedTitle.replace(/\s*\|\s*LuxeMia$/, ''),
-      url: escapedCanonical,
-      description: escapedDesc,
-      image: escapedOgImage,
-      brand: { '@type': 'Brand', name: 'LuxeMia' },
-      category: 'Clothing > Traditional & Ethnic Wear',
-      offers: {
-        '@type': 'Offer',
-        url: escapedCanonical,
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
-      },
-    });
-  }
-
   if (pathname === '/' || pathname === '') {
     schemas.push(generateHomepageFaqSchema());
   }
 
-  // 5. FAQPage Schema (for pages with FAQs — add generic global FAQs for product pages)
+  // 2. FAQPage Schema (for pages with FAQs — add generic global FAQs for product pages)
   if (pathname.startsWith('/product/')) {
     schemas.push({
       '@context': 'https://schema.org',
@@ -544,7 +491,7 @@ interface PageMeta {
 const STATIC_PAGE_META: Record<string, PageMeta> = {
   '/': {
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
+    description: 'LuxeMia is an Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, Banarasi silk sarees, salwar suits, menswear, and wedding collections.',
     image: 'https://luxemia.shop/og-image.jpg',
   },
   // Occasion landing pages

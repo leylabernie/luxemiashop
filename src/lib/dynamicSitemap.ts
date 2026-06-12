@@ -23,6 +23,8 @@ interface ScrapedProductRow {
   updated_at: string;
 }
 
+const STABLE_STATIC_LASTMOD = '2026-06-11';
+
 // Static pages configuration — only real, indexable pages (no noIndex, no redirects)
 export const staticPages = [
   // Core navigation
@@ -200,20 +202,19 @@ const generateImageTags = (images: string[], title: string, category: string): s
       <image:image>
         <image:loc>${escapeXml(imageUrl)}</image:loc>
         <image:title>${escapeXml(title)}</image:title>
-        <image:caption>${escapeXml(`${title} - ${category} | Luxemia`)}</image:caption>
+        <image:caption>${escapeXml(`${title} - ${category} | LuxeMia`)}</image:caption>
       </image:image>`).join('');
 };
 
 // Generate full XML sitemap
 export const generateXmlSitemap = async (baseUrl: string = 'https://luxemia.shop'): Promise<string> => {
-  const today = formatDate(new Date());
   const products = await fetchAllSitemapProducts();
 
   // Static pages XML
   const staticPagesXml = staticPages.map(page => `
   <url>
     <loc>${baseUrl}${page.loc}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${STABLE_STATIC_LASTMOD}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
   </url>`).join('');
@@ -221,7 +222,7 @@ export const generateXmlSitemap = async (baseUrl: string = 'https://luxemia.shop
   // Products XML with images
   const productsXml = products.map(product => {
     const imageTags = generateImageTags(product.images, product.title, product.category);
-    const lastmod = product.lastmod ? formatDate(product.lastmod) : today;
+    const lastmod = product.lastmod ? formatDate(product.lastmod) : STABLE_STATIC_LASTMOD;
     
     return `
   <url>

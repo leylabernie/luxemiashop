@@ -14,11 +14,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const SITE_URL = 'https://luxemia.shop';
+const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ROUTES_JSON_PATH = path.resolve(__dirname, 'routes.json');
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
+const FALLBACK_STATIC_LASTMOD = '2026-06-11';
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN env var is not set. Product URLs will be missing from sitemap.');
 }
@@ -72,7 +75,6 @@ const staticPages = [
   { loc: '/indian-ethnic-wear-canada', changefreq: 'monthly', priority: '0.8' },
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6' },
-  { loc: '/virtual-try-on', changefreq: 'monthly', priority: '0.7' },
   { loc: '/style-consultation', changefreq: 'monthly', priority: '0.7' },
   { loc: '/style-quiz', changefreq: 'monthly', priority: '0.6' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
@@ -140,6 +142,119 @@ function forceJpeg(url) {
   return url;
 }
 
+function isRobotsBlockedPath(routePath) {
+  return routePath === '/virtual-try-on'
+    || routePath === '/products'
+    || routePath.startsWith('/products/')
+    || routePath.startsWith('/blog/tag/')
+    || routePath.startsWith('/blog/tags/')
+    || routePath.startsWith('/tag/')
+    || routePath === '/admin'
+    || routePath.startsWith('/admin/')
+    || routePath === '/account'
+    || routePath.startsWith('/account/')
+    || routePath === '/auth'
+    || routePath.startsWith('/auth/')
+    || routePath === '/wishlist'
+    || routePath.startsWith('/wishlist/')
+    || routePath === '/cart'
+    || routePath.startsWith('/cart/')
+    || routePath === '/checkout'
+    || routePath.startsWith('/checkout/')
+    || routePath === '/order-confirmation'
+    || routePath.startsWith('/order-confirmation/')
+    || routePath.startsWith('/api/')
+    || routePath === '/collections/all'
+    || routePath === '/blogs'
+    || routePath.startsWith('/blogs/')
+    || routePath.startsWith('/pages/');
+}
+
+const routeSourceFiles = {
+  '/': ['src/pages/Index.tsx', 'src/lib/seoMetadata.ts', 'index.html'],
+  '/collections': ['src/pages/Collections.tsx', 'src/lib/seoMetadata.ts'],
+  '/brand-story': ['src/pages/BrandStory.tsx', 'src/lib/seoMetadata.ts'],
+  '/lookbook': ['src/pages/Lookbook.tsx', 'src/lib/seoMetadata.ts'],
+  '/lehengas': ['src/pages/Lehengas.tsx', 'src/lib/collectionSeoConfig.ts', 'src/lib/seoMetadata.ts'],
+  '/sarees': ['src/pages/Sarees.tsx', 'src/lib/collectionSeoConfig.ts', 'src/lib/seoMetadata.ts'],
+  '/suits': ['src/pages/Suits.tsx', 'src/lib/collectionSeoConfig.ts', 'src/lib/seoMetadata.ts'],
+  '/menswear': ['src/pages/Menswear.tsx', 'src/lib/collectionSeoConfig.ts', 'src/lib/seoMetadata.ts'],
+  '/indowestern': ['src/pages/Indowestern.tsx', 'src/lib/seoMetadata.ts'],
+  '/new-arrivals': ['src/pages/NewArrivals.tsx', 'src/lib/seoMetadata.ts'],
+  '/bestsellers': ['src/pages/Bestsellers.tsx', 'src/lib/seoMetadata.ts'],
+  '/nri': ['src/pages/nri/NRIGeneral.tsx', 'src/lib/seoMetadata.ts'],
+  '/nri/usa': ['src/pages/nri/USA.tsx', 'src/lib/seoMetadata.ts'],
+  '/nri/canada': ['src/pages/nri/Canada.tsx', 'src/lib/seoMetadata.ts'],
+  '/indian-ethnic-wear-usa': ['src/pages/nri/USA.tsx', 'src/lib/seoMetadata.ts'],
+  '/indian-ethnic-wear-canada': ['src/pages/nri/Canada.tsx', 'src/lib/seoMetadata.ts'],
+  '/artisans': ['src/pages/Artisans.tsx', 'src/lib/seoMetadata.ts'],
+  '/sustainability': ['src/pages/Sustainability.tsx', 'src/lib/seoMetadata.ts'],
+  '/style-consultation': ['src/pages/StyleConsultation.tsx', 'src/lib/seoMetadata.ts'],
+  '/style-quiz': ['src/pages/StyleQuiz.tsx', 'src/lib/seoMetadata.ts'],
+  '/contact': ['src/pages/Contact.tsx', 'src/lib/seoMetadata.ts'],
+  '/faq': ['src/pages/FAQ.tsx', 'src/lib/seoMetadata.ts'],
+  '/shipping': ['src/pages/Shipping.tsx', 'src/lib/seoMetadata.ts'],
+  '/returns': ['src/pages/Returns.tsx', 'src/lib/seoMetadata.ts'],
+  '/size-guide': ['src/pages/SizeGuide.tsx', 'src/lib/seoMetadata.ts'],
+  '/care-guide': ['src/pages/CareGuide.tsx', 'src/lib/seoMetadata.ts'],
+  '/privacy': ['src/pages/Privacy.tsx', 'src/lib/seoMetadata.ts'],
+  '/terms': ['src/pages/Terms.tsx', 'src/lib/seoMetadata.ts'],
+  '/blog': ['src/pages/Blog.tsx', 'src/data/blogPosts.ts', 'src/lib/seoMetadata.ts'],
+  '/press': ['src/pages/Press.tsx', 'src/lib/seoMetadata.ts'],
+};
+
+const routeLastmodCache = new Map();
+
+function sourceFilesForRoute(routePath) {
+  if (routeSourceFiles[routePath]) return routeSourceFiles[routePath];
+  if (routePath.startsWith('/collections/')) {
+    return ['src/lib/collectionSeoConfig.ts', 'src/pages/BuyerIntentCollectionPage.tsx', 'src/lib/seoMetadata.ts'];
+  }
+  if (routePath.startsWith('/blog/')) {
+    return ['src/data/blogPosts.ts', 'src/pages/BlogPost.tsx', 'src/lib/seoMetadata.ts'];
+  }
+  return ['src/lib/seoMetadata.ts', 'src/App.tsx'];
+}
+
+function getGitLastmodForFiles(files) {
+  const existingFiles = files.filter((file) => fs.existsSync(path.join(PROJECT_ROOT, file)));
+  if (existingFiles.length === 0) return FALLBACK_STATIC_LASTMOD;
+
+  const cacheKey = existingFiles.join('|');
+  if (routeLastmodCache.has(cacheKey)) return routeLastmodCache.get(cacheKey);
+
+  let lastmod = FALLBACK_STATIC_LASTMOD;
+  try {
+    const output = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...existingFiles], {
+      cwd: PROJECT_ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(output)) {
+      lastmod = output;
+    }
+  } catch {
+    // Keep fixed fallback rather than pretending every URL changed today.
+  }
+
+  routeLastmodCache.set(cacheKey, lastmod);
+  return lastmod;
+}
+
+function getRouteLastmod(routePath) {
+  return getGitLastmodForFiles(sourceFilesForRoute(routePath));
+}
+
+function loadExistingProductUrlBlocks() {
+  const existingSitemapPath = path.resolve(__dirname, '../public/sitemap.xml');
+  if (!fs.existsSync(existingSitemapPath)) return [];
+
+  const existingXml = fs.readFileSync(existingSitemapPath, 'utf8');
+  const productBlocks = existingXml.match(/  <url>[\s\S]*?<loc>https:\/\/luxemia\.shop\/product\/[^<]+<\/loc>[\s\S]*?<\/url>/g) || [];
+  console.log(`[sitemap] Preserving ${productBlocks.length} existing product URL blocks because Shopify token is unavailable`);
+  return productBlocks;
+}
+
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
 async function fetchAllProducts() {
@@ -182,15 +297,16 @@ async function fetchAllProducts() {
 
 // ─── Sitemap XML Generation ─────────────────────────────────────────────────
 
-function generateSitemap(products) {
-  const today = new Date().toISOString().split('T')[0];
+function generateSitemap(products, preservedProductUrlBlocks = []) {
   const urls = [];
 
   // Static pages
   for (const page of staticPages) {
+    if (isRobotsBlockedPath(page.loc)) continue;
+    const lastmod = getRouteLastmod(page.loc);
     urls.push(`  <url>
     <loc>${SITE_URL}${page.loc}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
   </url>`);
@@ -198,9 +314,11 @@ function generateSitemap(products) {
 
   // Collection pages
   for (const collectionPath of collectionPages) {
+    if (isRobotsBlockedPath(collectionPath)) continue;
+    const lastmod = getRouteLastmod(collectionPath);
     urls.push(`  <url>
     <loc>${SITE_URL}${collectionPath}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>`);
@@ -208,9 +326,11 @@ function generateSitemap(products) {
 
   // Blog posts
   for (const blogPath of blogPosts) {
+    if (isRobotsBlockedPath(blogPath)) continue;
+    const lastmod = getRouteLastmod(blogPath);
     urls.push(`  <url>
     <loc>${SITE_URL}${blogPath}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`);
@@ -219,7 +339,7 @@ function generateSitemap(products) {
   // Product pages with images
   for (const product of products) {
     const loc = `${SITE_URL}/product/${escapeXml(product.handle)}`;
-    const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : today;
+    const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : FALLBACK_STATIC_LASTMOD;
     const imageUrl = product.images?.edges?.[0]?.node?.url;
     const imageTitle = product.images?.edges?.[0]?.node?.altText || product.title;
 
@@ -241,6 +361,10 @@ function generateSitemap(products) {
   </url>`);
   }
 
+  if (products.length === 0 && preservedProductUrlBlocks.length > 0) {
+    urls.push(...preservedProductUrlBlocks);
+  }
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -254,8 +378,14 @@ async function main() {
   console.log('[sitemap] Generating dynamic sitemap.xml...');
 
   let products;
+  let preservedProductUrlBlocks = [];
   try {
-    products = await fetchAllProducts();
+    if (SHOPIFY_STOREFRONT_TOKEN) {
+      products = await fetchAllProducts();
+    } else {
+      products = [];
+      preservedProductUrlBlocks = loadExistingProductUrlBlocks();
+    }
   } catch (error) {
     console.error('[sitemap] Failed to fetch from Shopify API:', error);
     // Fallback: use existing sitemap if API fails
@@ -272,7 +402,7 @@ async function main() {
     products = [];
   }
 
-  const sitemap = generateSitemap(products);
+  const sitemap = generateSitemap(products, preservedProductUrlBlocks);
 
   // Write to dist/ (Vercel serves static files from dist/)
   const distDir = path.resolve(__dirname, '../dist');

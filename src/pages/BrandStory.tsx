@@ -371,7 +371,7 @@ const BrandStory = () => {
           className="relative text-center px-4 max-w-4xl mx-auto"
         >
           <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-            Welcome to Luxemia
+            Welcome to LuxeMia
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight">
             A New Chapter
@@ -398,7 +398,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="Luxemia was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to change that. LuxeMia is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the USA, Canada, and Australia."
+        content="LuxeMia was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to change that. LuxeMia is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the USA, Canada, and Australia."
         imagePosition="right"
         bgColor="bg-card"
         imageUrl="/images/heroes/hero-bridal-couture.jpg"
@@ -413,7 +413,7 @@ const BrandStory = () => {
         imagePosition="left"
         bgColor="bg-background"
         imageUrl="/images/lookbook/hero-main.jpg"
-        imageAlt="Luxemia lookbook \u2014 authentic Indian ethnic wear sourced from India\u2019s textile hubs"
+        imageAlt="LuxeMia lookbook \u2014 authentic Indian ethnic wear sourced from India\u2019s textile hubs"
       />
 
       {/* Philosophy Section */}
@@ -578,7 +578,7 @@ const BrandStory = () => {
             beginning.&rdquo;
           </blockquote>
           <cite className="text-muted-foreground not-italic">
-            &mdash; The Luxemia Team
+            &mdash; The LuxeMia Team
           </cite>
         </motion.div>
       </section>

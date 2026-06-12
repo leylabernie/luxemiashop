@@ -109,7 +109,7 @@ const documentHasStaticFaqPageSchema = (): boolean => {
 
 const SEOHead = ({
   title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-  description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
+  description = 'LuxeMia is an Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, silk sarees, salwar suits, menswear, and wedding collections.',
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
