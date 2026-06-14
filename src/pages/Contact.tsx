@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Clock, Send, MapPin } from 'lucide-react';
+import { Mail, Phone, Clock, Send, MapPin, MessageCircle, Ruler, Truck } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -75,8 +76,35 @@ const Contact = () => {
                 <div>
                   <h2 className="text-2xl font-serif mb-6">We'd Love to Hear From You</h2>
                   <p className="text-muted-foreground">
-                    Our customer care team is available to assist you with any inquiries. Reach out through any of the channels below.
+                    Our Philadelphia-based customer care team can help with sizing, shipping, event timing, and outfit questions before you order.
                   </p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <Link
+                    to="/style-consultation"
+                    className="border border-border/60 bg-card/30 p-4 transition-colors hover:border-primary/40 hover:bg-card/60"
+                  >
+                    <MessageCircle className="mb-3 h-4 w-4 text-primary" />
+                    <span className="block text-sm font-medium">Style Help</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">Choose an outfit before purchase</span>
+                  </Link>
+                  <Link
+                    to="/size-guide"
+                    className="border border-border/60 bg-card/30 p-4 transition-colors hover:border-primary/40 hover:bg-card/60"
+                  >
+                    <Ruler className="mb-3 h-4 w-4 text-primary" />
+                    <span className="block text-sm font-medium">Size Guide</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">Measurements and fit guidance</span>
+                  </Link>
+                  <Link
+                    to="/shipping"
+                    className="border border-border/60 bg-card/30 p-4 transition-colors hover:border-primary/40 hover:bg-card/60"
+                  >
+                    <Truck className="mb-3 h-4 w-4 text-primary" />
+                    <span className="block text-sm font-medium">Shipping</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">USA, Canada, and Australia rates</span>
+                  </Link>
                 </div>
 
                 <div className="space-y-6">

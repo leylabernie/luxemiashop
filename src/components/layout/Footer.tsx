@@ -85,6 +85,9 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed">
               Beautiful Indian ethnic wear at accessible prices — shipped from India to your door.
             </p>
+            <p className="mt-2 text-xs text-foreground/50 font-light leading-relaxed">
+              Philadelphia-based support. Ships to USA, Canada, and Australia with secure Shopify checkout.
+            </p>
             <div className="flex gap-3 mt-6">
               <a href="https://www.instagram.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Instagram">
                 <Instagram className="w-4 h-4" />
@@ -267,6 +270,8 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
               <Link to="/returns" className="hover:text-foreground transition-colors">Returns & Cancellations</Link>
               <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
+              <Link to="/size-guide" className="hover:text-foreground transition-colors">Size Guide</Link>
+              <Link to="/style-consultation" className="hover:text-foreground transition-colors">Style Consultation</Link>
             </div>
           </div>
         </div>

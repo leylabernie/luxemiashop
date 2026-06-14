@@ -1,36 +1,41 @@
-import { Truck, RefreshCw, Ruler, ShieldCheck, Clock, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Truck, Ruler, ShieldCheck, MapPin, MessageCircle, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const services = [
   {
-    icon: Truck,
-    title: 'Free Shipping over $350',
-    description: 'Transparent flat rates to USA, Canada & Australia',
+    icon: MapPin,
+    title: 'Philadelphia-Based Boutique',
+    description: 'USA-based support for Indian ethnic wear shoppers',
+    href: '/contact',
   },
   {
-    icon: ShieldCheck,
-    title: 'Secure Checkout',
-    description: 'Protected payment through the Shopify checkout experience',
+    icon: Truck,
+    title: 'Ships to USA, Canada & Australia',
+    description: 'Free over $350; $25 flat rate under $350',
+    href: '/shipping',
   },
   {
     icon: Ruler,
-    title: 'Custom Measurement Options',
-    description: 'Standard sizes plus custom measurement support on select styles',
+    title: 'Custom Sizing Guidance',
+    description: 'Measurement support where product options allow',
+    href: '/size-guide',
   },
   {
-    icon: Clock,
-    title: 'Wedding & Festival Ready',
-    description: 'Styles for weddings, Eid, Diwali, parties, and family events',
+    icon: ShieldCheck,
+    title: 'Secure Shopify Checkout',
+    description: 'Protected payment through Shopify',
   },
   {
-    icon: RefreshCw,
-    title: 'Pre-Purchase Support',
-    description: 'WhatsApp & email support before you buy',
+    icon: MessageCircle,
+    title: 'Style Help Before Purchase',
+    description: 'Ask us about fit, color, occasion, or timing',
+    href: '/style-consultation',
   },
   {
     icon: Sparkles,
-    title: 'Accessible Elegance',
-    description: 'Beautiful ethnic wear at fair, middle-class prices',
+    title: 'Curated Occasion Wear',
+    description: 'Wedding, festive, and family celebration styles',
   },
 ];
 
@@ -48,19 +53,9 @@ const ServiceHighlights = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-3 group cursor-default"
+                className="group"
               >
-                <div className="flex-shrink-0 p-2 rounded-full bg-background/80 group-hover:bg-background transition-colors">
-                  <service.icon className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-foreground leading-tight">
-                    {service.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground font-light">
-                    {service.description}
-                  </p>
-                </div>
+                <TrustStripItem service={service} />
               </motion.div>
             ))}
           </div>
@@ -69,28 +64,54 @@ const ServiceHighlights = () => {
         {/* Mobile: Horizontal scroll */}
         <div className="lg:hidden py-4 -mx-4 px-4 overflow-x-auto scrollbar-hide">
           <div className="flex gap-6 min-w-max">
-            {services.slice(0, 4).map((service) => (
-              <div
-                key={service.title}
-                className="flex items-center gap-2.5"
-              >
-                <div className="flex-shrink-0 p-2 rounded-full bg-background/80">
-                  <service.icon className="w-4 h-4 text-foreground" strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-foreground whitespace-nowrap">
-                    {service.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground font-light whitespace-nowrap">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
+            {services.map((service) => (
+              <TrustStripItem key={service.title} service={service} compact />
             ))}
           </div>
         </div>
       </div>
     </section>
+  );
+};
+
+type TrustStripService = {
+  icon: typeof Truck;
+  title: string;
+  description: string;
+  href?: string;
+};
+
+const TrustStripItem = ({
+  service,
+  compact = false,
+}: {
+  service: TrustStripService;
+  compact?: boolean;
+}) => {
+  const content = (
+    <div className={`flex items-center ${compact ? 'gap-2.5' : 'gap-3'}`}>
+      <div className="flex-shrink-0 p-2 rounded-full bg-background/80 group-hover:bg-background transition-colors">
+        <service.icon className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+      </div>
+      <div>
+        <h3 className={`text-sm font-medium text-foreground leading-tight ${compact ? 'whitespace-nowrap' : ''}`}>
+          {service.title}
+        </h3>
+        <p className={`text-xs text-muted-foreground font-light ${compact ? 'whitespace-nowrap' : ''}`}>
+          {service.description}
+        </p>
+      </div>
+    </div>
+  );
+
+  if (!service.href) {
+    return <div className="cursor-default">{content}</div>;
+  }
+
+  return (
+    <Link to={service.href} className="block hover:text-foreground transition-colors">
+      {content}
+    </Link>
   );
 };
 

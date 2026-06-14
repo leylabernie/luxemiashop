@@ -15,11 +15,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const announcements = [
-  'Free shipping on orders over $350 · Worldwide delivery',
-  'New arrivals just landed — shop the latest styles',
-  'Quality Indian ethnic wear at fair prices',
-  'Flat $25 shipping · Trackable worldwide delivery',
+const trustAnnouncements = [
+  'Free shipping over $350 - ships to USA, Canada & Australia',
+  'New arrivals just landed - shop the latest styles',
+  'Philadelphia-based boutique for Indian ethnic wear',
+  'Flat $25 shipping under $350 - secure Shopify checkout',
 ];
 
 const navLinks = [
@@ -75,7 +75,7 @@ const Header = () => {
   // Rotate announcement bar
   useEffect(() => {
     const id = setInterval(() => {
-      setAnnouncementIdx(i => (i + 1) % announcements.length);
+      setAnnouncementIdx(i => (i + 1) % trustAnnouncements.length);
     }, 4000);
     return () => clearInterval(id);
   }, []);
@@ -101,7 +101,7 @@ const Header = () => {
                 className="text-xs tracking-wide text-center absolute"
                 data-testid="announcement-bar"
               >
-                {announcements[announcementIdx]}
+                {trustAnnouncements[announcementIdx]}
               </motion.p>
             </AnimatePresence>
           </div>

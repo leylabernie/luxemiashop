@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronDown, SlidersHorizontal } from 'lucide-react';
+import { ChevronDown, MessageCircle, Ruler, SlidersHorizontal, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -201,12 +202,61 @@ const CollectionProductBrowser = ({
                 ))}
               </motion.div>
             )}
+            {!isLoading && products.length > 0 && <CollectionHelpBlock />}
           </div>
         </div>
       </section>
     </>
   );
 };
+
+const CollectionHelpBlock = () => (
+  <div className="mt-12 border-t border-border/40 pt-8">
+    <div className="grid gap-5 lg:grid-cols-[1.2fr_2fr] lg:items-center">
+      <div>
+        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">
+          Shopping for an event?
+        </p>
+        <h2 className="font-serif text-2xl">Need help choosing an outfit?</h2>
+        <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+          Tell us your occasion, size questions, delivery country, and event date before ordering.
+        </p>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Link
+          to="/style-consultation"
+          className="group flex items-start gap-3 border border-border/60 bg-card/30 p-4 transition-colors hover:border-primary/40 hover:bg-card/60"
+        >
+          <MessageCircle className="mt-0.5 h-4 w-4 text-primary" />
+          <span>
+            <span className="block text-sm font-medium">Style Consultation</span>
+            <span className="block text-xs text-muted-foreground">Outfit guidance before purchase</span>
+          </span>
+        </Link>
+        <Link
+          to="/size-guide"
+          className="group flex items-start gap-3 border border-border/60 bg-card/30 p-4 transition-colors hover:border-primary/40 hover:bg-card/60"
+        >
+          <Ruler className="mt-0.5 h-4 w-4 text-primary" />
+          <span>
+            <span className="block text-sm font-medium">Size Guide</span>
+            <span className="block text-xs text-muted-foreground">Measurement and fit support</span>
+          </span>
+        </Link>
+        <Link
+          to="/shipping"
+          className="group flex items-start gap-3 border border-border/60 bg-card/30 p-4 transition-colors hover:border-primary/40 hover:bg-card/60"
+        >
+          <Truck className="mt-0.5 h-4 w-4 text-primary" />
+          <span>
+            <span className="block text-sm font-medium">Shipping Info</span>
+            <span className="block text-xs text-muted-foreground">USA, Canada, and Australia rates</span>
+          </span>
+        </Link>
+      </div>
+    </div>
+  </div>
+);
 
 export default CollectionProductBrowser;
 
