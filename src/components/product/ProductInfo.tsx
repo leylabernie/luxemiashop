@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors, MapPin, MessageCircle, Ruler } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -842,8 +843,44 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
       {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
         <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free shipping over $350</span>
-        <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
+        <span className="flex items-center gap-1"><Truck className="h-3.5 w-3.5" />$25 flat rate under $350</span>
+        <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure Shopify checkout</span>
         <span className="flex items-center gap-1"><Award className="h-3.5 w-3.5" />Quality inspected</span>
+      </div>
+
+      <div className="border border-border/50 bg-secondary/25 p-4 space-y-4">
+        <div className="flex items-start gap-3">
+          <Info className="mt-0.5 h-4 w-4 text-primary flex-shrink-0" />
+          <div>
+            <p className="text-sm font-medium">Questions before ordering?</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              For close event dates, custom measurements, or styling uncertainty, contact us before checkout so we can help you choose the right option.
+            </p>
+          </div>
+        </div>
+        <div className="grid gap-2 sm:grid-cols-3">
+          <Link
+            to="/style-consultation"
+            className="flex items-center gap-2 text-xs font-medium text-foreground hover:text-primary transition-colors"
+          >
+            <MessageCircle className="h-3.5 w-3.5" />
+            Style help
+          </Link>
+          <Link
+            to="/size-guide"
+            className="flex items-center gap-2 text-xs font-medium text-foreground hover:text-primary transition-colors"
+          >
+            <Ruler className="h-3.5 w-3.5" />
+            Size guide
+          </Link>
+          <Link
+            to="/shipping"
+            className="flex items-center gap-2 text-xs font-medium text-foreground hover:text-primary transition-colors"
+          >
+            <Truck className="h-3.5 w-3.5" />
+            Shipping terms
+          </Link>
+        </div>
       </div>
 
       {/* Add to Cart */}
@@ -905,8 +942,8 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
             <Truck className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Ships from India</p>
-            <p className="text-xs text-muted-foreground">DHL Express, USPS & UPS</p>
+            <p className="text-sm font-medium">Ships to USA, Canada & Australia</p>
+            <p className="text-xs text-muted-foreground">Free over $350; $25 flat rate under $350</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
@@ -920,11 +957,11 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <RefreshCcw className="h-5 w-5 text-primary" />
+            <MapPin className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Damage Protection</p>
-            <p className="text-xs text-muted-foreground">Report damage within 48 hours</p>
+            <p className="text-sm font-medium">Philadelphia-Based</p>
+            <p className="text-xs text-muted-foreground">USA customer support before purchase</p>
           </div>
         </div>
       </div>
@@ -939,6 +976,10 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Package className="h-4 w-4 text-primary" />
           <span>Premium packaging with <span className="text-foreground font-medium">gift box included</span></span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <RefreshCcw className="h-4 w-4 text-primary" />
+          <span>Damage claims reviewed within <span className="text-foreground font-medium">48 hours with unboxing video</span></span>
         </div>
       </div>
 

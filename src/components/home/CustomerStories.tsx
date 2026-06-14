@@ -9,8 +9,8 @@ const reasons = [
   },
   {
     icon: Truck,
-    title: 'Worldwide Delivery',
-    description: 'Trackable shipping to the US, UK, Canada, and more with standard and express options.',
+    title: 'Tracked Shipping',
+    description: 'Ships to the USA, Canada, and Australia with simple flat-rate shipping and free shipping over $350.',
   },
   {
     icon: RefreshCcw,

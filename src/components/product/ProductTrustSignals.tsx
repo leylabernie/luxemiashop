@@ -7,6 +7,8 @@ import {
   RefreshCcw,
   MessageCircle,
   ArrowRight,
+  MapPin,
+  Ruler,
 } from 'lucide-react';
 
 // ─── Trust Signal Data ──────────────────────────────────────────────────
@@ -20,32 +22,39 @@ interface TrustCard {
 
 const trustCards: TrustCard[] = [
   {
-    icon: <HandMetal className="h-6 w-6" />,
-    title: 'Handcrafted in India',
+    icon: <MapPin className="h-6 w-6" />,
+    title: 'Philadelphia-Based Boutique',
     description:
-      'Each garment is crafted in India using traditional techniques.',
-    highlight: 'Artisan Made',
+      'LuxeMia is a USA-based Indian ethnic wear store with support from Philadelphia.',
+    highlight: 'USA Based',
+  },
+  {
+    icon: <HandMetal className="h-6 w-6" />,
+    title: 'Curated Indian Ethnic Wear',
+    description:
+      'We curate sarees, lehengas, suits, menswear, and occasion styles with clear product details.',
+    highlight: 'Curated',
   },
   {
     icon: <Truck className="h-6 w-6" />,
-    title: 'Free Shipping Over $350',
+    title: 'Clear Shipping Terms',
     description:
-      'Complimentary express delivery to USA, Canada & Australia on all orders above $350. Flat $25 rate otherwise.',
-    highlight: 'Free Delivery',
+      'Ships to USA, Canada & Australia. Orders over $350 ship free; orders under $350 use a $25 flat rate.',
+    highlight: 'US, CA & AU',
   },
   {
-    icon: <BadgeCheck className="h-6 w-6" />,
-    title: 'Quality Inspected',
+    icon: <Ruler className="h-6 w-6" />,
+    title: 'Sizing Guidance',
     description:
-      'Every piece undergoes a 12-point quality check by our in-house team before it leaves our facility.',
-    highlight: '12-Point Check',
+      'Review size guidance and custom measurement options where product selections allow.',
+    highlight: 'Fit Help',
   },
   {
     icon: <ShieldCheck className="h-6 w-6" />,
-    title: 'Secure Payment',
+    title: 'Secure Shopify Checkout',
     description:
-      'Shopify PCI-DSS Level 1 compliant encryption. Your payment data is never stored on our servers.',
-    highlight: 'Bank-Grade Secure',
+      'Checkout is handled through Shopify secure payment infrastructure.',
+    highlight: 'Secure',
   },
   {
     icon: <RefreshCcw className="h-6 w-6" />,
@@ -56,10 +65,10 @@ const trustCards: TrustCard[] = [
   },
   {
     icon: <MessageCircle className="h-6 w-6" />,
-    title: 'WhatsApp Support',
+    title: 'Pre-Purchase Help',
     description:
-      'Real-time assistance for sizing, customization, and order tracking. Average response under 10 minutes.',
-    highlight: '24/7 Chat',
+      'Ask about sizing, styling, customization, and event timing before placing your order.',
+    highlight: 'Style Help',
   },
 ];
 
@@ -108,7 +117,7 @@ export const ProductTrustSignals = () => {
           Why Shop With LuxeMia
         </h3>
         <p className="text-sm text-muted-foreground mt-1">
-          The trusted choice for authentic Indian ethnic wear since 2018
+          Clear support for fit, shipping, secure checkout, and pre-purchase questions.
         </p>
       </motion.div>
 
@@ -168,15 +177,15 @@ export const ProductTrustSignals = () => {
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <BadgeCheck className="h-3.5 w-3.5 text-green-600" />
-            100% Authentic
+            Philadelphia-based support
           </span>
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-            Secure Payment
+            Secure Shopify checkout
           </span>
           <span className="flex items-center gap-1.5">
             <Truck className="h-3.5 w-3.5 text-primary" />
-            Insured Shipping
+            Ships to USA, Canada & Australia
           </span>
           <span className="flex items-center gap-1.5">
             <RefreshCcw className="h-3.5 w-3.5 text-primary" />
