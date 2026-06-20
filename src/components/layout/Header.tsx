@@ -36,12 +36,16 @@ const secondaryLinks = [
   { name: 'Ready to Wear', href: '/collections/ready-to-wear' },
   { name: 'Bridal', href: '/collections/bridal-lehengas' },
   { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
+  { name: 'Anarkali Suits', href: '/collections/anarkali-suits' },
 ];
 
 const occasionLinks = [
   { name: 'Wedding Guest', href: '/collections/wedding-guest-outfits' },
   { name: 'Guest Wedding Dresses', href: '/collections/wedding-guest-dresses' },
   { name: 'Reception Outfits', href: '/collections/reception-outfits' },
+  { name: 'Party Wear Lehengas', href: '/collections/party-wear-lehengas' },
+  { name: 'Sharara Suits', href: '/collections/sharara-suits' },
+  { name: 'Gharara Suits', href: '/collections/gharara-suits' },
   { name: 'Wedding Guest Under $250', href: '/collections/wedding-guest-outfits-under-250' },
   { name: 'Groom Outfits', href: '/collections/groom-outfits' },
   { name: 'Mehendi Ceremony', href: '/collections/mehendi-outfits' },

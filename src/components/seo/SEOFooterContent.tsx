@@ -47,8 +47,9 @@ const SEOFooterContent = () => {
                 <h3 className="font-serif text-lg text-foreground mb-3">Buy Salwar Kameez Online</h3>
                 <p>
                   Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> at affordable prices. 
-                  Discover elegant <strong className="text-foreground">anarkali suits</strong>, 
-                  palazzo sets, and <strong className="text-foreground">sharara suits</strong> perfect for every occasion. 
+                  Discover elegant <Link to="/collections/anarkali-suits" className="text-foreground hover:text-primary transition-colors underline">Anarkali suits</Link>, 
+                  palazzo sets, <Link to="/collections/sharara-suits" className="text-foreground hover:text-primary transition-colors underline">sharara suits</Link>, and{' '}
+                  <Link to="/collections/gharara-suits" className="text-foreground hover:text-primary transition-colors underline">gharara suits</Link> perfect for every occasion. 
                   Our collection features quality fabrics like georgette, chanderi silk, and velvet, 
                   adorned with thread work, mirror work, and contemporary prints.
                 </p>
@@ -58,6 +59,7 @@ const SEOFooterContent = () => {
                 <h3 className="font-serif text-lg text-foreground mb-3">Wedding Guest & Occasion Styling</h3>
                 <p>
                   Shop <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">Indian wedding guest outfits</Link> at LuxeMia.
+                  Explore <Link to="/collections/wedding-guest-dresses" className="text-foreground hover:text-primary transition-colors underline">guest wedding dresses</Link> when you want a broader dress-first view.
                   Discover polished sarees, salwar kameez, lehengas, and indo-western looks for ceremonies, receptions,
                   festivals, and celebrations. Flat rate shipping $25/order, free on orders over $350.
                 </p>
@@ -78,7 +80,8 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Reception & Party Wear</h3>
                 <p>
-                  Discover glamorous <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">reception and wedding guest outfits</Link> and
+                  Discover glamorous <Link to="/collections/reception-outfits" className="text-foreground hover:text-primary transition-colors underline">reception outfits</Link>,{' '}
+                  <Link to="/collections/party-wear-lehengas" className="text-foreground hover:text-primary transition-colors underline">party wear lehengas</Link>, and
                   <strong className="text-foreground"> Indo-western reception gowns</strong>. Our collection features sequined ensembles and 
                   <strong className="text-foreground">cocktail sarees</strong> perfect for wedding receptions and sangeet nights. 
                   Stand out with <strong className="text-foreground">minimalist bridesmaid dresses</strong> and statement pieces.
