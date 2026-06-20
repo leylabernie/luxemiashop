@@ -49,6 +49,7 @@ const STATIC_ROUTES = [
   '/blog',
   '/collections',
   '/brand-story',
+  '/lookbook',
   '/new-arrivals',
   '/bestsellers',
   '/indowestern',
@@ -68,6 +69,8 @@ const STATIC_ROUTES = [
   '/privacy',
   '/terms',
   '/press',
+  '/style-consultation',
+  '/style-quiz',
   // Occasion landing pages — high buyer-intent SEO pages
   '/collections/bridal-lehengas',
   '/collections/wedding-lehengas',
