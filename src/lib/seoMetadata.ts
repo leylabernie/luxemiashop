@@ -20,12 +20,12 @@
 import { COLLECTION_SEO_CONFIG, type CollectionRoutePath } from './collectionSeoConfig';
 
 export const SITE_URL = 'https://luxemia.shop';
-export const PUBLIC_BRAND_NAME = 'LuxeMia';
+export const PUBLIC_BRAND_NAME = 'LuxeMia Boutique';
 export const LEGAL_ENTITY_NAME = 'Glamour Indian Wear';
 export const SITE_NAME = PUBLIC_BRAND_NAME;
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 export const DEFAULT_TITLE = `${PUBLIC_BRAND_NAME} | Indian Ethnic Wear — Sarees & Lehengas`;
-export const DEFAULT_DESCRIPTION = `${PUBLIC_BRAND_NAME} is an Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, Banarasi silk sarees, salwar suits, menswear, and wedding collections.`;
+export const DEFAULT_DESCRIPTION = `${PUBLIC_BRAND_NAME} is a curated Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, Banarasi silk sarees, salwar suits, menswear, and wedding collections.`;
 export const DEFAULT_ROBOTS = 'index, follow';
 
 export const BRAND_IDENTITY = {
@@ -129,8 +129,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/collections/eid-outfits': collectionMetadata('/collections/eid-outfits'),
   '/collections/navratri-outfits': collectionMetadata('/collections/navratri-outfits'),
   '/collections': withMetadataDefaults({
-    title: 'All Collections | Indian Ethnic Wear | LuxeMia',
-    description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits, and menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Shop All Indian Ethnic Wear Online | LuxeMia Boutique | USA, Canada & Australia',
+    description: 'Browse all Indian ethnic wear collections at LuxeMia Boutique. Buy lehengas, sarees, suits, and menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/collections`,
     type: 'collection',
   }),
@@ -146,19 +146,19 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/brand-story`,
   }),
   '/new-arrivals': withMetadataDefaults({
-    title: 'New Arrivals | Latest Indian Ethnic Wear | LuxeMia',
-    description: 'Discover the newest arrivals of Indian ethnic wear at LuxeMia. Fresh designs in lehengas, sarees, suits, and menswear. Free shipping over $350.',
+    title: 'Buy New Arrivals Indian Ethnic Wear Online | LuxeMia Boutique',
+    description: 'Discover the newest arrivals of Indian ethnic wear at LuxeMia Boutique. Fresh designs in lehengas, sarees, suits, and menswear. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/new-arrivals`,
     type: 'collection',
   }),
   '/bestsellers': withMetadataDefaults({
-    title: 'Bestsellers | Most Popular Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia\'s bestselling Indian ethnic wear. Our most loved lehengas, sarees, and suits chosen by customers. Free shipping over $350.',
+    title: 'Shop Best Selling Indian Ethnic Wear Online | LuxeMia Boutique',
+    description: 'Shop LuxeMia Boutique\'s bestselling Indian ethnic wear. Our most loved lehengas, sarees, and suits chosen by customers. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/bestsellers`,
     type: 'collection',
   }),
   '/indowestern': withMetadataDefaults({
-    title: 'Indo-Western Collection | Fusion Wear Online | LuxeMia',
+    title: 'Buy Indo-Western Fusion Wear Online | LuxeMia Boutique',
     description: 'Shop trendy indo-western and fusion wear at LuxeMia. Modern silhouettes with traditional craftsmanship. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/indowestern`,
     type: 'collection',

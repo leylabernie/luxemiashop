@@ -242,14 +242,14 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       {product ? (
         <SEOHead
-          title={`${correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia\s*$/i, '')} | ${categoryName} | LuxeMia`}
+          title={`Buy ${correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia(\s*Boutique)?\s*$/i, '')} Online | ${categoryName} | LuxeMia Boutique`}
           description={content.seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
             }
             const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
-            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
+            return `Shop ${product.title} at LuxeMia Boutique — curated ${productTypeLower}. Free shipping over $350 to USA, Canada & Australia.`;
           })()}
           type="product"
           image={product.images.edges[0]?.node.url}

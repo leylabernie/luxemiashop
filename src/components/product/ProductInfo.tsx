@@ -960,8 +960,8 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
             <MapPin className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Philadelphia-Based</p>
-            <p className="text-xs text-muted-foreground">USA customer support before purchase</p>
+            <p className="text-sm font-medium">Philadelphia-Based Support</p>
+            <p className="text-xs text-muted-foreground">USA business — direct help in your time zone</p>
           </div>
         </div>
       </div>

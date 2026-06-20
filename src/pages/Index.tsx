@@ -10,6 +10,7 @@ import LookbookTeaser from '@/components/home/LookbookTeaser';
 import NewVisitorPopup from '@/components/home/NewVisitorPopup';
 import SEOHead from '@/components/seo/SEOHead';
 import ServiceHighlights from '@/components/home/ServiceHighlights';
+import TrustBadgeSection from '@/components/home/TrustBadgeSection';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
 import FlashSaleBanner from '@/components/home/FlashSaleBanner';
@@ -59,7 +60,7 @@ const Index = () => {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
-    "name": "LuxeMia",
+    "name": "LuxeMia Boutique",
     "description": "Affordable Indian ethnic wear boutique specializing in lehengas, Banarasi silk sarees, and salwar suits. Accessible elegance with free shipping on orders over $350 to the USA, Canada, and Australia.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/logo.png",
@@ -142,7 +143,7 @@ const Index = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <FlashSaleBanner />
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
-        <h1 className="sr-only">Affordable Indian Ethnic Wear Online — Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
+        <h1 className="sr-only">Affordable Indian Ethnic Wear Online — Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia Boutique</h1>
         <HeroSection />
 
         {/* Shipping Info Banner */}
@@ -163,6 +164,7 @@ const Index = () => {
 
         <ServiceHighlights />
         <CategoryShowcase />
+        <TrustBadgeSection />
         <ShopByOccasion />
 
         {/* Style Quiz CTA */}

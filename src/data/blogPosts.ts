@@ -2523,7 +2523,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Personal use exemption:</strong> You may bring back up to $800 worth of goods per person when traveling</li>
       </ul>
       <h3>How LuxeMia Handles Duties</h3>
-      <p>Because LuxeMia is a US-based business (Glamour Indian Wear DBA LuxeMia, Philadelphia, PA), we import in bulk and handle all customs duties on our end. The price you see on our website is the price you pay — no surprise duty bills at your doorstep. This can save you hundreds of dollars compared to ordering directly from Indian retailers.</p>
+      <p>Because LuxeMia Boutique is a US-based business (LuxeMia Boutique, Philadelphia, PA), we import in bulk and handle all customs duties on our end. The price you see on our website is the price you pay — no surprise duty bills at your doorstep. This can save you hundreds of dollars compared to ordering directly from Indian retailers. luxemia.shop is owned and operated by Glamour Indian Wear.</p>
 
       <h2>Quality Concerns: What You See vs. What You Get</h2>
       <p>One of the biggest fears of online ethnic wear shopping is quality mismatch. The outfit that looked stunning on the model arrives looking like a completely different piece. Here's how to protect yourself:</p>

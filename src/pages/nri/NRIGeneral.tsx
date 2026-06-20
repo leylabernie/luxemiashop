@@ -7,7 +7,7 @@ const NRIGeneral = () => (
       country: 'USA, Canada & Australia',
       countryCode: 'WW',
       slug: 'nri',
-      seoTitle: 'Buy Indian Ethnic Wear Online | NRI Shopping | LuxeMia',
+      seoTitle: 'Buy Indian Ethnic Wear Online | NRI Shopping | LuxeMia Boutique',
       seoDescription: 'Shop authentic Indian ethnic wear delivered to USA, Canada & Australia. Designer sarees, bridal lehengas, salwar suits & menswear. Free shipping on orders over $350. 7-10 day delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Your Door',
       heroSubtitle: 'Shopping From Abroad? We\'ve Got You Covered',
