@@ -20,9 +20,9 @@
  */
 
 // JSON data loaded as modules — Vite handles these natively
-import sareeData from '../data/sareeSeoData.json';
-import suitData from '../data/suitSeoData.json';
-import menswearData from '../data/menswearSeoData.json';
+import sareeData from '../data/sareeSeoData.json' with { type: 'json' };
+import suitData from '../data/suitSeoData.json' with { type: 'json' };
+import menswearData from '../data/menswearSeoData.json' with { type: 'json' };
 
 // ---------------------------------------------------------------------------
 // Types
@@ -69,9 +69,6 @@ export interface ProductSeoRecord {
 }
 
 /** Raw JSON wrapper shape — each file wraps products in a "products" array. */
-interface SeoDataFile {
-  products: ProductSeoRecord[];
-}
 
 // ---------------------------------------------------------------------------
 // Data Loading

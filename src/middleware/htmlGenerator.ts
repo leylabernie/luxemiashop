@@ -5,7 +5,6 @@
  * Used by middleware.ts for product page SSR and 404 responses.
  */
 
-import type { ShopifyProduct } from './shopifyProxy.js';
 import {
   forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema,
   generateFaqSchema, getGoogleProductCategory, SITE_URL,
@@ -163,7 +162,7 @@ export function generateProductHtml(product: any, canonicalUrl: string): string 
     name: cleanTitle,
     description: description,
     url: canonicalUrl,
-    image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))],
+    image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map((e: any) => forceJpegForGmc(e.node.url))],
     sku,
     brand: vendor,
     category: product.productType || 'Clothing > Traditional & Ethnic Wear',
