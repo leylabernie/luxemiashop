@@ -7,7 +7,7 @@ const Canada = () => (
       country: 'Canada',
       countryCode: 'CA',
       slug: 'indian-ethnic-wear-canada',
-      seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia',
+      seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia Boutique',
       seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $25/order, free on orders over $350. 7-10 day standard delivery to Canada.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Canada',
       heroSubtitle: 'Shipped from India with Care',
@@ -29,7 +29,7 @@ const Canada = () => (
         },
         {
           question: 'Can I return items from Canada?',
-          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
+          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia Boutique does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you ship to all Canadian provinces?',

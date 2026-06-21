@@ -11,13 +11,14 @@ import SEOHead from '@/components/seo/SEOHead';
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Glamour Indian Wear',
+  name: 'LuxeMia Boutique',
   alternateName: 'LuxeMia',
+  legalName: 'Glamour Indian Wear',
   url: 'https://luxemia.shop',
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free shipping on orders over $350.',
+    'LuxeMia Boutique is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free shipping on orders over $350.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '2208 Michener St',
@@ -371,7 +372,7 @@ const BrandStory = () => {
           className="relative text-center px-4 max-w-4xl mx-auto"
         >
           <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-            Welcome to LuxeMia
+            Welcome to LuxeMia Boutique
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-8 leading-tight">
             A New Chapter
@@ -398,7 +399,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="LuxeMia was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to change that. LuxeMia is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the USA, Canada, and Australia."
+        content="LuxeMia Boutique was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to build something better. LuxeMia Boutique is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the USA, Canada, and Australia."
         imagePosition="right"
         bgColor="bg-card"
         imageUrl="/images/heroes/hero-bridal-couture.jpg"
@@ -610,13 +611,12 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Business Model</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                LuxeMia is an online-only retailer of Indian ethnic wear
-                operated by Glamour Indian Wear. We source our products directly
+                LuxeMia Boutique is an online-only retailer of Indian ethnic wear. We source our products directly
                 from manufacturers and textile hubs in India &mdash; including
                 Surat (embroidered fabrics), Varanasi (Banarasi silk), Jaipur
                 (block printing &amp; bandhani), and Lucknow (chikankari)
                 &mdash; which allows us to offer authentic craftsmanship at fair
-                prices with no middlemen markup. All orders are shipped from our
+                prices with no middlemen markup. luxemia.shop is owned and operated by Glamour Indian Wear. All orders are shipped from our
                 facility in India via DHL Express, USPS, or UPS with full
                 tracking and insurance.
               </p>

@@ -152,7 +152,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">Business Address</h3>
                       <p className="text-muted-foreground">
-                        Glamour Indian Wear<br />
+                  LuxeMia Boutique<br />
                         2208 Michener St<br />
                         Philadelphia, PA 19115<br />
                         United States

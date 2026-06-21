@@ -8,8 +8,8 @@ const Terms = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Terms of Service — LuxeMia"
-        description="Review the LuxeMia terms of service. Understand our policies on orders, payments, shipping, and returns before shopping."
+        title="Terms of Service — LuxeMia Boutique"
+        description="Review the LuxeMia Boutique terms of service. Understand our policies on orders, payments, shipping, and returns before shopping."
         canonical="https://luxemia.shop/terms"
       />
       <Header />
@@ -93,9 +93,9 @@ const Terms = () => {
                 <section id="acceptance">
                   <h2 className="text-xl font-serif text-foreground mb-4">1. Acceptance of Terms</h2>
                   <p className="mb-4">
-                    By accessing, browsing, or using LuxeMia's website (luxemia.shop), mobile applications, 
+                    By accessing, browsing, or using LuxeMia Boutique's website (luxemia.shop), mobile applications,
                     or any of our services, you acknowledge that you have read, understood, and agree to be 
-                    bound by these Terms of Service ("Terms") and our Privacy Policy.
+                    bound by these Terms of Service ("Terms") and our Privacy Policy. luxemia.shop is owned and operated by Glamour Indian Wear.
                   </p>
                   <p>
                     If you do not agree to these Terms, you must immediately discontinue use of our services. 

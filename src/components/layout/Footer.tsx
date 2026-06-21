@@ -233,7 +233,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* Business Transparency Info — Required by Google Merchant Center */}
           <div className="mt-6 pt-6 border-t border-border/30 text-center text-xs text-muted-foreground">
             <p className="mb-1">
-              <strong className="text-foreground">luxemia.shop</strong> is owned and operated by <strong className="text-foreground">Glamour Indian Wear</strong>
+              <strong className="text-foreground">LuxeMia Boutique</strong> is a curated Indian ethnic wear destination. luxemia.shop is owned and operated by Glamour Indian Wear.
             </p>
             <p className="mb-1">
               <MapPin className="h-3 w-3 inline-block mr-1" />
@@ -256,7 +256,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-foreground/50">
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <p>© 2026 LuxeMia. All rights reserved.</p>
+              <p>© 2026 LuxeMia Boutique. All rights reserved.</p>
               <span className="hidden sm:inline text-foreground/30">|</span>
               <p>luxemia.shop is owned and operated by <strong className="text-foreground/70">Glamour Indian Wear</strong></p>
               <span className="hidden sm:inline text-foreground/30">|</span>

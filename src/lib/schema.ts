@@ -11,8 +11,9 @@
  */
 
 export const SITE_URL = 'https://luxemia.shop';
-export const BUSINESS_NAME = 'Glamour Indian Wear';
-export const BRAND_NAME = 'LuxeMia';
+export const BUSINESS_NAME = 'LuxeMia Boutique';
+export const BRAND_NAME = 'LuxeMia Boutique';
+export const LEGAL_ENTITY_NAME = 'Glamour Indian Wear';
 export const SHIPPING_COUNTRIES = ['US', 'CA', 'AU'];
 
 // ─── Price Handling ─────────────────────────────────────────────────────────
@@ -169,7 +170,7 @@ export function generateProductSchema(input: ProductSchemaInput) {
       priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: `https://schema.org/${input.availability}`,
       itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@type': 'Organization', name: BUSINESS_NAME, alternateName: BRAND_NAME },
+      seller: { '@type': 'Organization', name: BRAND_NAME, alternateName: LEGAL_ENTITY_NAME },
       shippingDetails: generateShippingSchema(input.currency),
       hasMerchantReturnPolicy: generateReturnPolicySchema(),
     },
@@ -219,11 +220,11 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: BUSINESS_NAME,
-    alternateName: BRAND_NAME,
+    name: BRAND_NAME,
+    alternateName: LEGAL_ENTITY_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.',
+    description: 'Shop Indian ethnic wear at LuxeMia Boutique. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.',
     address: {
       '@type': 'PostalAddress',
       streetAddress: '2208 Michener St',
@@ -319,7 +320,7 @@ export function generateWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: `${BUSINESS_NAME} — ${BRAND_NAME}`,
+    name: BRAND_NAME,
     url: SITE_URL,
     potentialAction: {
       '@type': 'SearchAction',

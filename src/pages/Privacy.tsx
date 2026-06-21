@@ -37,7 +37,7 @@ const Privacy = () => {
             >
               <div className="space-y-8 text-muted-foreground">
                 <p className="text-foreground font-medium">
-                  Glamour Indian Wear ("LuxeMia," "we," "us," or "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website luxemia.shop (the "Site"), make a purchase, or interact with us in any way. luxemia.shop is owned and operated by Glamour Indian Wear. Please read this policy carefully. By using our Site, you consent to the practices described herein.
+                  LuxeMia Boutique ("LuxeMia Boutique," "we," "us," or "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website luxemia.shop (the "Site"), make a purchase, or interact with us in any way. luxemia.shop is owned and operated by Glamour Indian Wear. Please read this policy carefully. By using our Site, you consent to the practices described herein.
                 </p>
 
                 <section>

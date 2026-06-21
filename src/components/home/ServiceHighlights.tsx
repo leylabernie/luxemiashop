@@ -11,8 +11,8 @@ const services = [
   },
   {
     icon: Truck,
-    title: 'Ships to USA, Canada & Australia',
-    description: 'Free over $350; $25 flat rate under $350',
+    title: 'Direct Global Shipping',
+    description: 'From source to USA, CA & AU via DHL/UPS',
     href: '/shipping',
   },
   {

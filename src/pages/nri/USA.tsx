@@ -7,7 +7,7 @@ const USA = () => (
       country: 'USA',
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
-      seoTitle: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
+      seoTitle: 'Buy Indian Ethnic Wear Online USA | LuxeMia Boutique',
       seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $25/order, free on orders over $350. 7-10 day standard delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to the USA',
       heroSubtitle: 'Shipped from India with Care',
@@ -29,7 +29,7 @@ const USA = () => (
         },
         {
           question: 'Can I return items from the USA?',
-          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
+          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia Boutique does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you offer custom sizing for US customers?',

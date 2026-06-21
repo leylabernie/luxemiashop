@@ -356,7 +356,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       </div>
     </div>
     <footer>
-      <p>&copy; 2026 LuxeMia. All rights reserved. | luxemia.shop is owned and operated by Glamour Indian Wear | 2208 Michener St, Philadelphia, PA 19115, USA</p>
+      <p>&copy; 2026 LuxeMia Boutique. All rights reserved. | luxemia.shop is owned and operated by Glamour Indian Wear | 2208 Michener St, Philadelphia, PA 19115, USA</p>
       <p><a href="${SITE_URL}/shipping">Shipping Policy</a> | <a href="${SITE_URL}/returns">Returns</a> | <a href="${SITE_URL}/privacy">Privacy</a> | <a href="${SITE_URL}/terms">Terms</a> | <a href="${SITE_URL}/contact">Contact</a></p>
     </footer>
   </div>

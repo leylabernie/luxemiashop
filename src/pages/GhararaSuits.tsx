@@ -106,10 +106,10 @@ const GhararaSuits = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <section className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
-            <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Designer Gharara Suit Collection</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Gharara Suits</h1>
+            <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">USA-Based Indian Boutique</span>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Buy Gharara Suits Online | LuxeMia Boutique</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop gharara suits and gharara sets online for weddings, parties, Eid, festivals, mehendi, sangeet, nikah events, receptions, and polished Indian occasion dressing. This collection focuses on designer gharara suits, wedding gharara suits, party wear gharara suits, Pakistani gharara suits, embroidered gharara suits, and festive gharara outfits for shoppers in the USA, Canada, Australia, and worldwide.
+              Explore our curated range of gharara suits and gharara sets online, perfect for weddings, Nikah, and Mehendi ceremonies. LuxeMia Boutique specializes in Pakistani gharara suits and designer gharara sets, quality-checked at the source and shipped directly to the USA, Canada, and Australia. Enjoy authentic craftsmanship with the reliability of a Philadelphia-based support team.
             </p>
           </div>
         </section>
