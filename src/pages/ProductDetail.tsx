@@ -230,7 +230,7 @@ const ProductDetail = () => {
     },
     {
       question: `Can I return the ${correctedProductTitle} if it doesn't fit?`,
-      answer: `All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video.`
+      answer: `All sales are final. LuxeMia Boutique does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video.`
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
@@ -242,7 +242,7 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       {product ? (
         <SEOHead
-          title={`Buy ${correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia(\s*Boutique)?\s*$/i, '')} Online | ${categoryName} | LuxeMia Boutique`}
+          title={`Buy ${correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia Boutique(\s*Boutique)?\s*$/i, '')} Online | ${categoryName} | LuxeMia Boutique`}
           description={content.seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
@@ -254,7 +254,7 @@ const ProductDetail = () => {
           type="product"
           image={product.images.edges[0]?.node.url}
           product={{
-            name: correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia\s*$/i, ''),
+            name: correctedProductTitle.replace(/\s*[-–—]\s*LuxeMia Boutique\s*$/i, ''),
             price: product.priceRange.minVariantPrice.amount,
             currency: product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
@@ -265,7 +265,7 @@ const ProductDetail = () => {
             category: product.productType || 'Ethnic Wear',
             brand: (() => {
               const v = ((product as any).vendor || '').trim();
-              return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
+              return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia Boutique' : v;
             })(),
             color: productColor,
             material: productMaterial,
@@ -283,7 +283,7 @@ const ProductDetail = () => {
         />
       ) : (
         <SEOHead
-          title="Product Not Found | LuxeMia"
+          title="Product Not Found | LuxeMia Boutique"
           description="This product could not be found."
           noIndex={true}
         />
@@ -383,7 +383,7 @@ const ProductDetail = () => {
               <div className="mb-16 p-6 bg-secondary/30 border border-border rounded-lg text-center">
                 <p className="text-sm text-muted-foreground mb-3">Need help styling this piece?</p>
                 <a
-                  href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20need%20help%20styling%20a%20piece"
+                  href="https://wa.me/12153419990?text=Hi%20LuxeMia Boutique%2C%20I%20need%20help%20styling%20a%20piece"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors"

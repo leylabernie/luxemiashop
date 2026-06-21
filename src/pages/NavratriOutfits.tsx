@@ -38,7 +38,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Do you ship Navratri outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships Navratri chaniya cholis, lehengas, and Indian ethnic wear for Navratri celebrations to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders include full tracking and insurance. For Navratri, we recommend ordering at least 3–4 weeks before the festival to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch from India.',
+    answer: 'Yes, LuxeMia Boutique ships Navratri chaniya cholis, lehengas, and Indian ethnic wear for Navratri celebrations to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders include full tracking and insurance. For Navratri, we recommend ordering at least 3–4 weeks before the festival to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch from India.',
   },
   {
     question: 'What accessories should I wear with a Navratri outfit?',
@@ -86,7 +86,7 @@ const NavratriOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Nine Nights of Celebration</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Navratri Outfits — Chaniya Choli & Garba Dress Collection</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the USA, Canada, or Australia, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
+              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia Boutique's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the USA, Canada, or Australia, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
             </p>
           </div>
         </div>

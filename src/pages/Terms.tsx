@@ -221,7 +221,7 @@ const Terms = () => {
                   <ul className="list-disc pl-6 space-y-2">
                     <li>Shipping times and costs vary by destination. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for detailed information.</li>
                     <li>Delivery estimates are not guaranteed and may be affected by customs processing, weather, or carrier delays.</li>
-                    <li>LuxeMia is not responsible for delays caused by customs, weather, or carrier issues.</li>
+                    <li>LuxeMia Boutique is not responsible for delays caused by customs, weather, or carrier issues.</li>
                     <li>Risk of loss passes to you upon delivery to the carrier.</li>
                     <li>Import duties, taxes, and fees are the customer's responsibility and are not included in the product price.</li>
                     <li>Customers are responsible for providing accurate shipping addresses. Reshipment due to incorrect addresses will incur additional charges.</li>
@@ -280,7 +280,7 @@ const Terms = () => {
                 <section id="ip">
                   <h2 className="text-xl font-serif text-foreground mb-4">10. Intellectual Property</h2>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>All content on this website, including but not limited to images, text, logos, designs, graphics, and software, is the exclusive property of LuxeMia and protected by copyright, trademark, and other intellectual property laws.</li>
+                    <li>All content on this website, including but not limited to images, text, logos, designs, graphics, and software, is the exclusive property of LuxeMia Boutique and protected by copyright, trademark, and other intellectual property laws.</li>
                     <li>You may not reproduce, distribute, modify, create derivative works, publicly display, or use our content without prior written permission.</li>
                     <li>Unauthorized use may result in legal action.</li>
                     <li>Product designs are proprietary and may not be copied or replicated.</li>
@@ -320,7 +320,7 @@ const Terms = () => {
                     </p>
                   </div>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>TO THE MAXIMUM EXTENT PERMITTED BY LAW, LuxeMia SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OUR SERVICES OR PRODUCTS.</li>
+                    <li>TO THE MAXIMUM EXTENT PERMITTED BY LAW, LuxeMia Boutique SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OUR SERVICES OR PRODUCTS.</li>
                     <li>OUR TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT ACTUALLY PAID BY YOU FOR THE SPECIFIC PRODUCT OR SERVICE GIVING RISE TO THE CLAIM.</li>
                     <li>WE ARE NOT LIABLE FOR ANY DAMAGES ARISING FROM CUSTOMER-PROVIDED MEASUREMENTS OR SPECIFICATIONS.</li>
                     <li>We are not responsible for any loss, damage, or delay caused by events beyond our reasonable control (force majeure).</li>
@@ -330,7 +330,7 @@ const Terms = () => {
                 <section id="indemnification">
                   <h2 className="text-xl font-serif text-foreground mb-4">14. Indemnification</h2>
                   <p>
-                    You agree to indemnify, defend, and hold harmless LuxeMia, its officers, directors, employees, 
+                    You agree to indemnify, defend, and hold harmless LuxeMia Boutique, its officers, directors, employees,
                     agents, and affiliates from and against any and all claims, damages, losses, liabilities, costs, 
                     and expenses (including reasonable attorneys' fees) arising out of or related to:
                   </p>
@@ -398,7 +398,7 @@ const Terms = () => {
 
                 <section className="text-center pt-8 border-t border-border">
                   <p className="text-sm text-muted-foreground">
-                    By using LuxeMia's services, you acknowledge that you have read, understood, and agree 
+                    By using LuxeMia Boutique's services, you acknowledge that you have read, understood, and agree
                     to be bound by these Terms of Service.
                   </p>
                 </section>

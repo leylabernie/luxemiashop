@@ -93,7 +93,7 @@ function getCategoryUrl(productType?: string): string {
 }
 
 export function generateProductHtml(product: any, canonicalUrl: string): string {
-  const rawCleanTitle = (product.title || '').replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
+  const rawCleanTitle = (product.title || '').replace(/\s*[-–—|]\s*LuxeMia Boutique\s*$/i, '').trim();
   const handleCorrected = getCorrectedTitle(product.handle);
   const seoCorrected = getCorrectedTitleFromSeo(product.title || '');
   const cleanTitle = handleCorrected || seoCorrected || rawCleanTitle;

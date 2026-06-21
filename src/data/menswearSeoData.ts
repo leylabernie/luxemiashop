@@ -2,7 +2,7 @@ export default {
   "products": [
     {
       "original_name": "Viscose White Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "White Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "White Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop white sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "White Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop white sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aus...",
@@ -58,7 +58,7 @@ export default {
     },
     {
       "original_name": "Viscose Off White Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Off White Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Off White Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop off white sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350.",
       "corrected_title": "Off White Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop off white sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada &...",
@@ -114,7 +114,7 @@ export default {
     },
     {
       "original_name": "Viscose Cream Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Cream Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Cream Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop cream sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350.",
       "corrected_title": "Cream Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop cream sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aus...",
@@ -170,7 +170,7 @@ export default {
     },
     {
       "original_name": "Viscose Black Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Black Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Black Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop black sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Black Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop black sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aus...",
@@ -226,7 +226,7 @@ export default {
     },
     {
       "original_name": "Viscose Maroon Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Maroon Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Maroon Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop maroon sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Maroon Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop maroon sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Au...",
@@ -282,7 +282,7 @@ export default {
     },
     {
       "original_name": "Viscose Yellow Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Yellow Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Yellow Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop yellow sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Yellow Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop yellow sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Au...",
@@ -338,7 +338,7 @@ export default {
     },
     {
       "original_name": "Viscose Pink Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Pink Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Pink Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop pink sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pink Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop pink sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aust...",
@@ -394,7 +394,7 @@ export default {
     },
     {
       "original_name": "Viscose Red Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Red Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Red Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop red sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Red Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop red sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Austr...",
@@ -450,7 +450,7 @@ export default {
     },
     {
       "original_name": "Viscose Green Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Green Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Green Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop green sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Green Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop green sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aus...",
@@ -506,7 +506,7 @@ export default {
     },
     {
       "original_name": "Viscose Purple Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Purple Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Purple Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop purple sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Purple Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop purple sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Au...",
@@ -562,7 +562,7 @@ export default {
     },
     {
       "original_name": "Viscose Navy Blue Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Navy Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Navy Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop navy blue sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Navy Blue Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop navy blue sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada &...",
@@ -618,7 +618,7 @@ export default {
     },
     {
       "original_name": "Viscose Dark Blue Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Dark Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Dark Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop dark blue sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Dark Blue Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop dark blue sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada &...",
@@ -674,7 +674,7 @@ export default {
     },
     {
       "original_name": "Viscose Pista Green Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Pista Green Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Pista Green Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop pista green sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pista Green Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop pista green sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada...",
@@ -730,7 +730,7 @@ export default {
     },
     {
       "original_name": "Viscose Orange Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Orange Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Orange Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop orange sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Orange Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop orange sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Au...",
@@ -786,7 +786,7 @@ export default {
     },
     {
       "original_name": "Viscose Light Pink Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Light Pink Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Light Pink Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop light pink sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Light Pink Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop light pink sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada ...",
@@ -842,7 +842,7 @@ export default {
     },
     {
       "original_name": "Viscose Grey Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Grey Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Grey Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop grey sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Grey Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop grey sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aust...",
@@ -898,7 +898,7 @@ export default {
     },
     {
       "original_name": "Viscose Sky Blue Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Sky Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Sky Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop sky blue sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Sky Blue Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop sky blue sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & ...",
@@ -954,7 +954,7 @@ export default {
     },
     {
       "original_name": "Viscose Blue Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Blue Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop blue sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Blue Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop blue sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aust...",
@@ -1010,7 +1010,7 @@ export default {
     },
     {
       "original_name": "Viscose Wine Groom Wear Sequins Work Readymade Indo Western",
-      "seo_title": "Wine Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Wine Sequins Indo Western Sherwani | Art Silk Blend | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop wine sequins Indo Western sherwani in art silk blend. Ready-to-wear men's ethnic outfit with sequins embellishment for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Wine Sequins Indo Western Sherwani for Groom Wedding Wear",
       "meta_description": "Shop wine sequins Indo Western sherwani for groom wedding wear. Art silk blend ethnic outfit with sequins work. Free shipping over $350 to USA, Canada & Aust...",
@@ -1066,7 +1066,7 @@ export default {
     },
     {
       "original_name": "Art Silk Beige Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Beige Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Beige Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop beige thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Beige Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop beige thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada & ...",
@@ -1127,7 +1127,7 @@ export default {
     },
     {
       "original_name": "Art Silk Cream Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Cream Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Cream Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop cream thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Cream Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop cream thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada & ...",
@@ -1188,7 +1188,7 @@ export default {
     },
     {
       "original_name": "Art Silk Light Pink Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Light Pink Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Light Pink Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop light pink thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Light Pink Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop light pink thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Cana...",
@@ -1249,7 +1249,7 @@ export default {
     },
     {
       "original_name": "Art Silk Pista Green Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Pista Green Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Pista Green Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop pista green thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pista Green Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop pista green thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Can...",
@@ -1310,7 +1310,7 @@ export default {
     },
     {
       "original_name": "Art Silk Off White Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Off White Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Off White Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop off white thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Off White Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop off white thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canad...",
@@ -1371,7 +1371,7 @@ export default {
     },
     {
       "original_name": "Art Silk Black Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Black Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Black Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop black thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Black Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop black thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada & ...",
@@ -1432,7 +1432,7 @@ export default {
     },
     {
       "original_name": "Art Silk Maroon Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Maroon Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Maroon Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop maroon thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Maroon Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop maroon thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada &...",
@@ -1493,7 +1493,7 @@ export default {
     },
     {
       "original_name": "Art Silk Grey Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Grey Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Grey Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop grey thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Grey Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop grey thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada & A...",
@@ -1554,7 +1554,7 @@ export default {
     },
     {
       "original_name": "Art Silk Wine Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Wine Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Wine Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop wine thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Wine Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop wine thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada & A...",
@@ -1615,7 +1615,7 @@ export default {
     },
     {
       "original_name": "Art Silk Purple Groom Wear Thread Work Readymade Sherwani",
-      "seo_title": "Purple Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia",
+      "seo_title": "Purple Thread Embroidery Sherwani | Premium Art Silk | Groom Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop purple thread embroidery sherwani in premium art silk. Ready-to-wear men's luxury sherwani with intricate thread work for groom wedding wear. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Purple Thread Embroidery Sherwani for Groom Wedding Wear",
       "meta_description": "Shop purple thread embroidery sherwani for groom wedding wear. Premium art silk sherwani with intricate thread work. Free shipping over $350 to USA, Canada &...",

@@ -1,5 +1,5 @@
 /**
- * SEO Metadata Generation Utilities for LuxeMia
+ * SEO Metadata Generation Utilities for LuxeMia Boutique
  * Generates AI-search-optimized, semantically rich metadata for any product
  */
 
@@ -97,7 +97,7 @@ export function generateImageAltText(product: AnyProduct, imageIndex: number = 0
   }
   
   // Brand
-  parts.push('| LuxeMia Indian Ethnic Wear');
+  parts.push('| LuxeMia Boutique Indian Ethnic Wear');
   
   return parts.join(' ').replace(/\s+/g, ' ').trim();
 }
@@ -246,8 +246,8 @@ export function generateMetaTitle(product: AnyProduct): string {
   const fabric = (product as any).fabric || '';
   const occasion = (product as any).occasion || '';
   
-  // Format: [BaseColor] [Fabric] [Occasion] [Category] | LuxeMia
-  // Example: Pearl White Silk Bridal Lehenga with Maroon Dupatta | LuxeMia
+  // Format: [BaseColor] [Fabric] [Occasion] [Category] | LuxeMia Boutique
+  // Example: Pearl White Silk Bridal Lehenga with Maroon Dupatta | LuxeMia Boutique
   const parts = [
     baseColor,
     fabric,
@@ -262,7 +262,7 @@ export function generateMetaTitle(product: AnyProduct): string {
   }
   
   const title = parts.join(' ');
-  return `${title} | LuxeMia`;
+  return `${title} | LuxeMia Boutique`;
 }
 
 /**
@@ -278,7 +278,7 @@ export function generateMetaDescription(product: AnyProduct): string {
   
   const desc = `Shop ${fullColorDescription} ${category.toLowerCase()} in ${fabric} with ${work}. ` +
     `Perfect for ${occasion.toLowerCase()}. Free shipping to USA, Canada over $350. ` +
-    `Custom stitching available. Price: $${price}. LuxeMia luxury Indian ethnic wear.`;
+    `Custom stitching available. Price: $${price}. LuxeMia Boutique luxury Indian ethnic wear.`;
   
   return desc.substring(0, 160); // Keep under 160 chars
 }

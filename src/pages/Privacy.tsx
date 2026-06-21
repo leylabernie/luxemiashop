@@ -7,8 +7,8 @@ const Privacy = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Privacy Policy — LuxeMia"
-        description="LuxeMia Privacy Policy. Learn how we collect, use, share, and protect your personal information when you shop Indian ethnic wear at luxemia.shop."
+        title="Privacy Policy — LuxeMia Boutique"
+        description="LuxeMia Boutique Privacy Policy. Learn how we collect, use, share, and protect your personal information when you shop Indian ethnic wear at luxemia.shop."
         canonical="https://luxemia.shop/privacy"
       />
       <Header />
@@ -51,7 +51,7 @@ const Privacy = () => {
                     <li><strong>Financial Data:</strong> Payment card details. Please note that we do not store your full credit card number on our servers. All payment information is processed securely through Shopify Payments, Stripe, or other PCI-compliant payment processors. We only retain a tokenized reference and the last four digits of your card for receipt purposes.</li>
                     <li><strong>Transaction Data:</strong> Details of products you have purchased, order history, order value, payment method, and delivery information.</li>
                     <li><strong>Profile Data:</strong> Your preferences, wishlists, product reviews, feedback, survey responses, and any personal data you choose to provide through style consultations or size guides.</li>
-                    <li><strong>Communications Data:</strong> Records of correspondence between you and LuxeMia, including emails, WhatsApp messages, and customer support interactions.</li>
+                    <li><strong>Communications Data:</strong> Records of correspondence between you and LuxeMia Boutique, including emails, WhatsApp messages, and customer support interactions.</li>
                   </ul>
 
                   <h3 className="text-lg font-medium text-foreground mt-6 mb-2">b) Information Collected Automatically</h3>
@@ -74,7 +74,7 @@ const Privacy = () => {
                   <p>We use the information we collect for the following purposes:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-4">
                     <li><strong>Order Processing & Fulfillment:</strong> To process your payments, confirm orders, arrange shipping via DHL Express, USPS, UPS, or FedEx, provide tracking information, and handle returns or damage claims.</li>
-                    <li><strong>Account Management:</strong> To create and manage your LuxeMia account, maintain your order history, and save your preferences and wishlist items.</li>
+                    <li><strong>Account Management:</strong> To create and manage your LuxeMia Boutique account, maintain your order history, and save your preferences and wishlist items.</li>
                     <li><strong>Customer Support:</strong> To respond to your inquiries, resolve issues, process damage claims (with mandatory unboxing video), and provide styling consultations via WhatsApp or email.</li>
                     <li><strong>Personalization:</strong> To recommend products based on your browsing and purchase history, display relevant content, and tailor your shopping experience.</li>
                     <li><strong>Marketing Communications:</strong> To send promotional emails, newsletters, and product updates — only with your consent. You may opt out at any time using the unsubscribe link in any email or by contacting us directly.</li>
@@ -104,7 +104,7 @@ const Privacy = () => {
                     <li><strong>Platform Provider:</strong> Shopify Inc. hosts our online store and processes transactions on our behalf. Shopify's data practices are governed by their own Privacy Policy at shopify.com/legal/privacy.</li>
                     <li><strong>Analytics Providers:</strong> Google Analytics (GA4) helps us understand how visitors interact with our Site. Data is collected pseudonymously and aggregated.</li>
                     <li><strong>Marketing Tools:</strong> Email service providers and social media advertising platforms (Meta Custom Audiences, Google Ads) receive hashed email addresses or cookie-based identifiers for ad targeting — only when you have consented to marketing.</li>
-                    <li><strong>Legal Requirements:</strong> We may disclose your information if required by law, regulation, legal process, or governmental request, or to protect the rights, property, or safety of LuxeMia, our customers, or others.</li>
+                    <li><strong>Legal Requirements:</strong> We may disclose your information if required by law, regulation, legal process, or governmental request, or to protect the rights, property, or safety of LuxeMia Boutique, our customers, or others.</li>
                     <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, reorganization, or sale of all or a portion of our assets, your personal data may be transferred as part of that transaction.</li>
                   </ul>
                 </section>
@@ -112,7 +112,7 @@ const Privacy = () => {
                 <section>
                   <h2 className="text-xl font-serif text-foreground mb-4">5. International Data Transfers</h2>
                   <p>
-                    LuxeMia is based in the United States and our primary data processing occurs in the US. Your information may be transferred to, stored, and processed in the United States or other countries where our service providers operate. These countries may have data protection laws that differ from your country of residence. By using our Site, you consent to the transfer of your information to these countries. We ensure appropriate safeguards are in place, including Standard Contractual Clauses (SCCs) approved by the European Commission, to protect your data during international transfers.
+                    LuxeMia Boutique is based in the United States and our primary data processing occurs in the US. Your information may be transferred to, stored, and processed in the United States or other countries where our service providers operate. These countries may have data protection laws that differ from your country of residence. By using our Site, you consent to the transfer of your information to these countries. We ensure appropriate safeguards are in place, including Standard Contractual Clauses (SCCs) approved by the European Commission, to protect your data during international transfers.
                   </p>
                   <p className="mt-4">
                     Additionally, since our products are shipped internationally from India, order and shipping information may be shared with logistics providers operating in India, the United States, the United Kingdom, Canada, the United Arab Emirates, Australia, and other transit countries.
@@ -209,7 +209,7 @@ const Privacy = () => {
                 <section>
                   <h2 className="text-xl font-serif text-foreground mb-4">12. Third-Party Links</h2>
                   <p>
-                    Our Site may contain links to third-party websites, including social media platforms, payment providers, and partner sites. This Privacy Policy does not apply to those external sites. We encourage you to review the privacy policies of any third-party sites you visit. LuxeMia is not responsible for the privacy practices or content of external websites.
+                    Our Site may contain links to third-party websites, including social media platforms, payment providers, and partner sites. This Privacy Policy does not apply to those external sites. We encourage you to review the privacy policies of any third-party sites you visit. LuxeMia Boutique is not responsible for the privacy practices or content of external websites.
                   </p>
                 </section>
 

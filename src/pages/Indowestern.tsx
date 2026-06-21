@@ -22,7 +22,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Do you ship Indo-Western outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships Indo-Western dresses and fusion outfits to the USA, Canada, Australia, and worldwide with tracked delivery and free shipping on qualifying orders.',
+    answer: 'Yes, LuxeMia Boutique ships Indo-Western dresses and fusion outfits to the USA, Canada, Australia, and worldwide with tracked delivery and free shipping on qualifying orders.',
   },
   {
     question: 'What Indo-Western styles are trending right now?',
@@ -43,8 +43,8 @@ const Indowestern = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Indo-Western Dresses Online | Fusion Indian Outfits USA & Canada - LuxeMia"
-        description="Buy indo-western dresses online at LuxeMia. Shop jacket lehengas, cape kurtas, fusion gowns & palazzo suits with Indian embroidery. Perfect for parties, sangeet & receptions. Free shipping to USA & Canada."
+        title="Buy Indo-Western Dresses Online | Fusion Indian Outfits USA & Canada - LuxeMia Boutique"
+        description="Buy indo-western dresses online at LuxeMia Boutique. Shop jacket lehengas, cape kurtas, fusion gowns & palazzo suits with Indian embroidery. Perfect for parties, sangeet & receptions. Free shipping to USA & Canada."
         canonical="https://luxemia.shop/indowestern"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -67,7 +67,7 @@ const Indowestern = () => {
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              LuxeMia&apos;s Indo-Western collection brings Indian fabrics like georgette, organza, silk, and velvet into modern Western cuts. Browse <strong>jacket lehengas</strong>, <strong>dhoti pants with crop tops</strong>, <strong>cape-style anarkalis</strong>, <strong>sharara co-ord sets</strong>, and <strong>embroidered fusion gowns</strong>.
+              LuxeMia Boutique&apos;s Indo-Western collection brings Indian fabrics like georgette, organza, silk, and velvet into modern Western cuts. Browse <strong>jacket lehengas</strong>, <strong>dhoti pants with crop tops</strong>, <strong>cape-style anarkalis</strong>, <strong>sharara co-ord sets</strong>, and <strong>embroidered fusion gowns</strong>.
             </p>
           </div>
         </div>

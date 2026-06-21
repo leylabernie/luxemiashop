@@ -58,8 +58,8 @@ const Collections = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia"
-        description="Buy Indian ethnic wear online at LuxeMia. Shop our complete collection of bridal lehengas, sarees, salwar kameez, jewelry, menswear & indo-western outfits. Free worldwide shipping."
+        title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia Boutique"
+        description="Buy Indian ethnic wear online at LuxeMia Boutique. Shop our complete collection of bridal lehengas, sarees, salwar kameez, jewelry, menswear & indo-western outfits. Free worldwide shipping."
         canonical="https://luxemia.shop/collections"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -217,7 +217,7 @@ const Collections = () => {
           <h2 className="font-serif text-xl mb-4 text-center">Buy Authentic Indian Ethnic Wear Online</h2>
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-3 text-sm leading-relaxed text-center">
             <p>
-              LuxeMia is your destination for <strong>authentic Indian ethnic wear</strong> delivered to the USA, Canada, and Australia. Our complete collection covers every style and occasion — from <strong>bridal lehengas and wedding sarees</strong> to <strong>salwar kameez suits, sherwanis, and Indo-Western fusion outfits</strong>. Every piece is quality-inspected before dispatch.
+              LuxeMia Boutique is your destination for <strong>authentic Indian ethnic wear</strong> delivered to the USA, Canada, and Australia. Our complete collection covers every style and occasion — from <strong>bridal lehengas and wedding sarees</strong> to <strong>salwar kameez suits, sherwanis, and Indo-Western fusion outfits</strong>. Every piece is quality-inspected before dispatch.
             </p>
             <p>
               We source directly from India's most celebrated textile regions: <strong>Banarasi silk sarees</strong> from Varanasi, <strong>Kanchipuram silk sarees</strong> from Tamil Nadu, <strong>zardozi embroidered lehengas</strong> from Lucknow, and <strong>gota patti suits</strong> from Jaipur. This direct sourcing means you get genuine craftsmanship at prices far below what Indian boutiques charge in North America.

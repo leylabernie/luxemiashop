@@ -23,8 +23,8 @@ const NewArrivals = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
-        description="Shop the latest Indian ethnic wear online at LuxeMia. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free shipping."
+        title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia Boutique"
+        description="Shop the latest Indian ethnic wear online at LuxeMia Boutique. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free shipping."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />
@@ -66,7 +66,7 @@ const NewArrivals = () => {
 
       <section className="border-t border-border/50 bg-card/20 py-12">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
-          <h2 className="font-serif text-xl mb-4">Latest Indian Ethnic Wear - Freshly Arrived at LuxeMia</h2>
+          <h2 className="font-serif text-xl mb-4">Latest Indian Ethnic Wear - Freshly Arrived at LuxeMia Boutique</h2>
           <div className="text-sm text-muted-foreground space-y-3 leading-relaxed">
             <p>
               Our new arrivals are curated weekly from India&apos;s leading fabric markets and artisan workshops. Each new drop includes <strong>bridal lehengas</strong>, <strong>embroidered sarees</strong>, <strong>designer salwar kameez sets</strong>, <strong>party wear anarkalis</strong>, and <strong>men&apos;s sherwanis</strong> for upcoming wedding and festive seasons. Pieces are sourced from Surat, Varanasi, Jaipur, and Lucknow - the heart of India&apos;s textile industry.

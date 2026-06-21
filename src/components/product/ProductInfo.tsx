@@ -971,7 +971,7 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
         {/* Urgency info now shown in DeliveryEstimate component */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Shield className="h-4 w-4 text-primary" />
-          <span>Quality checked by <span className="text-foreground font-medium">LuxeMia team</span></span>
+          <span>Quality checked by <span className="text-foreground font-medium">LuxeMia Boutique team</span></span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Package className="h-4 w-4 text-primary" />

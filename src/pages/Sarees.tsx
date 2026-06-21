@@ -29,8 +29,8 @@ const sareesSeo = metadataToSEOHeadProps(getStaticPageMetadata('/sarees'));
 
 const sareeFaqs = [
   {
-    question: 'What types of sarees are available at LuxeMia?',
-    answer: 'LuxeMia offers a curated collection of sarees including Kanchipuram silk, Banarasi silk, tissue silk, georgette, chiffon, designer sarees, wedding sarees, festive wear, and occasion-ready drapes where available in the live catalog.',
+    question: 'What types of sarees are available at LuxeMia Boutique?',
+    answer: 'LuxeMia Boutique offers a curated collection of sarees including Kanchipuram silk, Banarasi silk, tissue silk, georgette, chiffon, designer sarees, wedding sarees, festive wear, and occasion-ready drapes where available in the live catalog.',
   },
   {
     question: 'How do I choose the right saree fabric?',

@@ -38,7 +38,7 @@ const mehendiOutfitFaqs = [
   },
   {
     question: 'Do you ship mehendi outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships mehendi ceremony outfits and all Indian ethnic wear to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders are fully tracked. For wedding functions, order at least 3–4 weeks before the event to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch.',
+    answer: 'Yes, LuxeMia Boutique ships mehendi ceremony outfits and all Indian ethnic wear to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders are fully tracked. For wedding functions, order at least 3–4 weeks before the event to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch.',
   },
   {
     question: 'Can guests wear any colour other than yellow and green to a mehendi?',

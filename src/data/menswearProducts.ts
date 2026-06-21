@@ -53,7 +53,7 @@ export const menswearProducts: MenswearProduct[] = [
 ];
 
 export function toShopifyMenswearFormat(product: MenswearProduct) {
-  return { node: { id: product.id, title: product.title, description: product.description, handle: product.handle, vendor: "LuxeMia", productType: "Menswear", tags: product.tags, priceRange: { minVariantPrice: { amount: product.price, currencyCode: product.currency } }, images: { edges: product.images.map((url, i) => ({ node: { url, altText: `${product.title} - Image ${i + 1}` } })) }, variants: { edges: product.variants.map(v => ({ node: { id: v.id, title: v.title, price: { amount: v.price, currencyCode: product.currency }, availableForSale: true, selectedOptions: Object.entries(v.options).map(([name, value]) => ({ name, value })) } })) }, options: product.options } };
+  return { node: { id: product.id, title: product.title, description: product.description, handle: product.handle, vendor: "LuxeMia Boutique", productType: "Menswear", tags: product.tags, priceRange: { minVariantPrice: { amount: product.price, currencyCode: product.currency } }, images: { edges: product.images.map((url, i) => ({ node: { url, altText: `${product.title} - Image ${i + 1}` } })) }, variants: { edges: product.variants.map(v => ({ node: { id: v.id, title: v.title, price: { amount: v.price, currencyCode: product.currency }, availableForSale: true, selectedOptions: Object.entries(v.options).map(([name, value]) => ({ name, value })) } })) }, options: product.options } };
 }
 
 export function getMenswearProductByHandle(handle: string) {

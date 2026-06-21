@@ -300,7 +300,7 @@ export function generateProductContent(product: { title: string; productType: st
     seoKeywords: tmpl.keywords,
     seoMetaDescription: (() => {
       const m = inferMaterial(title, tags, description);
-      const base = `${title}${m ? ` in ${m}` : ''}. Shop ${tmpl.label} online at LuxeMia. Free shipping over $350.`;
+      const base = `${title}${m ? ` in ${m}` : ''}. Shop ${tmpl.label} online at LuxeMia Boutique. Free shipping over $350.`;
       return base.length > 160 ? base.slice(0, 157) + '...' : base;
     })(),
     aiSearchDescription: (() => {
@@ -339,7 +339,7 @@ export function enrichProductDescription(desc: string, productType: string, titl
 /** Get category-level SEO description for collection pages / meta. */
 export function getProductCategoryDescription(productType: string): string {
   const cat = normalizeProductType(productType);
-  return TEMPLATES[cat]?.categoryDescription ?? 'Shop Indian ethnic wear at LuxeMia. Premium lehengas, sarees, suits, and menswear. Free shipping over $350 to USA, Canada, and Australia.';
+  return TEMPLATES[cat]?.categoryDescription ?? 'Shop Indian ethnic wear at LuxeMia Boutique. Premium lehengas, sarees, suits, and menswear. Free shipping over $350 to USA, Canada, and Australia.';
 }
 
 /** Legacy: generate meta description (delegates to new system). */

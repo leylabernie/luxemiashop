@@ -228,8 +228,8 @@ const Lehengas = () => {
   // Collection-specific FAQs for rich snippets
   const lehengaFaqs = [
     {
-      question: "What types of lehengas are available at LuxeMia?",
-      answer: "LuxeMia offers bridal lehengas, reception lehengas, festive lehengas, and party wear in various fabrics including Net, Silk, Velvet, Georgette, Chinnon, and Roman Silk. Each piece features embroidery, sequins, zari, or mirror work."
+      question: "What types of lehengas are available at LuxeMia Boutique?",
+      answer: "LuxeMia Boutique offers bridal lehengas, reception lehengas, festive lehengas, and party wear in various fabrics including Net, Silk, Velvet, Georgette, Chinnon, and Roman Silk. Each piece features embroidery, sequins, zari, or mirror work."
     },
     {
       question: "How do I find the right lehenga size?",
@@ -237,7 +237,7 @@ const Lehengas = () => {
     },
     {
       question: "What is included in a lehenga set?",
-      answer: "Every LuxeMia lehenga set includes the lehenga skirt, matching choli (blouse), and dupatta. Bridal sets often include additional accessories like cancan for volume and a matching potli bag."
+      answer: "Every LuxeMia Boutique lehenga set includes the lehenga skirt, matching choli (blouse), and dupatta. Bridal sets often include additional accessories like cancan for volume and a matching potli bag."
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
@@ -270,7 +270,7 @@ const Lehengas = () => {
         ]}
         collection={{
           name: 'Bridal Lehengas Online — Wedding & Festive Collection',
-          description: 'Shop designer bridal lehengas online at LuxeMia. Handcrafted wedding lehenga cholis in silk, georgette, net & Banarasi with intricate embroidery. Custom sizing. Free shipping over $350.',
+          description: 'Shop designer bridal lehengas online at LuxeMia Boutique. Handcrafted wedding lehenga cholis in silk, georgette, net & Banarasi with intricate embroidery. Custom sizing. Free shipping over $350.',
           items: collectionItems,
         }}
         faqs={lehengaFaqs}
@@ -327,7 +327,7 @@ const Lehengas = () => {
             </h2>
             <div className="prose prose-stone max-w-none text-muted-foreground leading-relaxed space-y-4">
               <p>
-                LuxeMia&apos;s curated lehenga collection brings together centuries of Indian textile 
+                LuxeMia Boutique&apos;s curated lehenga collection brings together centuries of Indian textile
                 heritage and contemporary bridal fashion. Each <strong className="text-foreground">bridal lehenga</strong> in our 
                 collection is handcrafted by master artisans using time-honored techniques — from 
                 intricate zardozi gold threadwork to delicate aari embroidery — creating heirloom-quality 

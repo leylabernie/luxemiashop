@@ -38,7 +38,7 @@ const diwaliOutfitFaqs = [
   },
   {
     question: 'Do you ship Diwali outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships festive Indian ethnic wear for Diwali to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat rate of $25 applies. All orders are fully tracked and insured. For Diwali, order at least 3–4 weeks in advance to ensure delivery before the festival. Standard delivery takes 7–10 business days after dispatch from India.',
+    answer: 'Yes, LuxeMia Boutique ships festive Indian ethnic wear for Diwali to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat rate of $25 applies. All orders are fully tracked and insured. For Diwali, order at least 3–4 weeks in advance to ensure delivery before the festival. Standard delivery takes 7–10 business days after dispatch from India.',
   },
   {
     question: 'What accessories should I pair with my Diwali outfit?',
@@ -89,7 +89,7 @@ const DiwaliOutfits = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Diwali Outfits 2026</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the USA, Canada, and Australia with free shipping on orders over $350.
+              Celebrate the festival of lights in style with LuxeMia Boutique's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the USA, Canada, and Australia with free shipping on orders over $350.
             </p>
           </div>
         </div>

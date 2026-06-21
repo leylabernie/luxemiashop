@@ -143,7 +143,7 @@ function generatePinterestDescription(productData?: AIProductData): string {
   if (!productData) return '';
 
   const parts: string[] = [
-    `${productData.name} — Shop at LuxeMia. ${productData.description.slice(0, 120)}`,
+    `${productData.name} — Shop at LuxeMia Boutique. ${productData.description.slice(0, 120)}`,
   ];
 
   if (productData.occasions && productData.occasions.length > 0) {
@@ -323,7 +323,7 @@ export default function AISearchSchema({
         productData.color,
         productData.pattern,
         'Indian ethnic wear',
-        'LuxeMia'
+        'LuxeMia Boutique'
       );
     }
 

@@ -12,8 +12,8 @@ const NotFound = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">
       <SEOHead
-        title="Page Not Found — LuxeMia"
-        description="The page you're looking for doesn't exist. Return to LuxeMia's homepage to explore luxury Indian ethnic wear."
+        title="Page Not Found — LuxeMia Boutique"
+        description="The page you're looking for doesn't exist. Return to LuxeMia Boutique's homepage to explore luxury Indian ethnic wear."
         noIndex
       />
       <div className="text-center">

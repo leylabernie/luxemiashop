@@ -108,10 +108,10 @@ const Shipping = () => {
       {
         '@type': 'MerchantReturnPolicy',
         '@id': 'https://luxemia.shop/#returnPolicy',
-        name: 'LuxeMia Return Policy',
+        name: 'LuxeMia Boutique Return Policy',
         applicableCountry: 'US',
         returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-        description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+        description: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
       },
       {
         '@type': 'OfferShippingDetails',
@@ -243,8 +243,8 @@ const Shipping = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Shipping Information — LuxeMia"
-        description="LuxeMia ships to USA, Canada, and Australia at a flat rate of $25 per order. Free shipping on orders over $350. USPS/UPS/DHL delivery."
+        title="Shipping Information — LuxeMia Boutique"
+        description="LuxeMia Boutique ships to USA, Canada, and Australia at a flat rate of $25 per order. Free shipping on orders over $350. USPS/UPS/DHL delivery."
         canonical="https://luxemia.shop/shipping"
       />
       <Helmet>
@@ -552,7 +552,7 @@ const Shipping = () => {
               <div className="bg-destructive/5 border border-destructive/30 rounded-lg p-6 mb-6">
                 <h3 className="font-bold text-foreground text-lg mb-2">All Sales Are Final</h3>
                 <p className="text-muted-foreground text-sm">
-                  Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges for any reason, 
+                  Due to the international nature of our shipments, LuxeMia Boutique does not accept returns or exchanges for any reason,
                   including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, 
                   which must be supported by a mandatory unboxing video. Please use our Size Guide and contact us before ordering 
                   if you have any questions. See our <a href="/returns" className="text-primary underline">full Returns Policy</a> for details.
@@ -650,7 +650,7 @@ const Shipping = () => {
                 <AccordionItem value="item-8">
                   <AccordionTrigger>How is my order packaged?</AccordionTrigger>
                   <AccordionContent>
-                    Each piece is carefully wrapped in acid-free tissue paper, placed in a signature LuxeMia garment
+                    Each piece is carefully wrapped in acid-free tissue paper, placed in a signature LuxeMia Boutique garment
                     bag, and packed in a sturdy branded box. We ensure your purchase arrives ready to wear or gift.
                   </AccordionContent>
                 </AccordionItem>

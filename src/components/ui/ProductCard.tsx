@@ -265,7 +265,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             <div className="w-full h-full overflow-hidden">
               <img
                 src={getOptimizedImage(imageUrl, 'card')}
-                alt={product.node.images.edges[0]?.node.altText || `${product.node.title} - Buy ${product.node.productType || 'Ethnic Wear'} Online | LuxeMia`}
+                alt={product.node.images.edges[0]?.node.altText || `${product.node.title} - Buy ${product.node.productType || 'Ethnic Wear'} Online | LuxeMia Boutique`}
                 loading="lazy"
                 draggable={false}
                 onLoad={() => setIsLoaded(true)}

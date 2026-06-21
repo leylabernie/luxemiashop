@@ -93,10 +93,10 @@ export function generateShippingSchema(currency: string) {
 export function generateReturnPolicySchema() {
   return {
     '@type': 'MerchantReturnPolicy',
-    name: 'LuxeMia Return Policy',
+    name: 'LuxeMia Boutique Return Policy',
     applicableCountry: 'US',
     returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-    description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+    description: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
   };
 }
 

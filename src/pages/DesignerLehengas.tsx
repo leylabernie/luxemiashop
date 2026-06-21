@@ -40,7 +40,7 @@ const getSearchText = (product: ShopifyProduct): string => {
 const designerLehengaFaqs = [
   {
     question: 'What makes a lehenga a designer lehenga?',
-    answer: 'A designer lehenga usually has a more considered fabric, silhouette, color story, blouse direction, dupatta styling, or embellishment detail than a basic festive lehenga. LuxeMia designer lehengas may include embroidery, zari, sequins, mirror work, silk, georgette, net, organza, velvet, or couture-inspired styling for weddings, receptions, and special events.',
+    answer: 'A designer lehenga usually has a more considered fabric, silhouette, color story, blouse direction, dupatta styling, or embellishment detail than a basic festive lehenga. LuxeMia Boutique designer lehengas may include embroidery, zari, sequins, mirror work, silk, georgette, net, organza, velvet, or couture-inspired styling for weddings, receptions, and special events.',
   },
   {
     question: 'Are designer lehengas only for brides?',
@@ -59,8 +59,8 @@ const designerLehengaFaqs = [
     answer: 'Start with the occasion, role, comfort level, fabric, embroidery weight, blouse coverage, dupatta styling, size, stitching options, and delivery timeline. Review product photos, measurements, work details, lining, and care notes before ordering, especially for a wedding or reception date.',
   },
   {
-    question: 'Does LuxeMia ship designer lehengas internationally?',
-    answer: 'Yes. LuxeMia supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Check each product listing for sizing, stitching, and delivery details before ordering.',
+    question: 'Does LuxeMia Boutique ship designer lehengas internationally?',
+    answer: 'Yes. LuxeMia Boutique supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Check each product listing for sizing, stitching, and delivery details before ordering.',
   },
 ];
 
@@ -216,7 +216,7 @@ const DesignerLehengas = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online designer shopping support</h3>
                 <p>
-                  LuxeMia supports designer lehenga shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review sizing, stitching, and delivery details before ordering for a specific event date.
+                  LuxeMia Boutique supports designer lehenga shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review sizing, stitching, and delivery details before ordering for a specific event date.
                 </p>
               </div>
             </div>

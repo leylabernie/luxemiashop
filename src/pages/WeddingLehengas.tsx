@@ -47,8 +47,8 @@ const weddingLehengaFaqs = [
     answer: 'Classic wedding lehenga colors include red, maroon, wine, gold, ivory, blush, emerald, pink, and champagne. Brides often choose richer ceremonial colors, while wedding guests and reception shoppers may choose pastels, jewel tones, metallics, or lighter embroidered styles.',
   },
   {
-    question: 'Does LuxeMia ship wedding lehengas internationally?',
-    answer: 'Yes. LuxeMia supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling support before purchase. Check each product listing for sizing, stitching, and delivery details before ordering.',
+    question: 'Does LuxeMia Boutique ship wedding lehengas internationally?',
+    answer: 'Yes. LuxeMia Boutique supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling support before purchase. Check each product listing for sizing, stitching, and delivery details before ordering.',
   },
 ];
 
@@ -89,7 +89,7 @@ const WeddingLehengas = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Indian Wedding Lehenga Collection</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Wedding Lehengas</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop wedding lehengas for Indian wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia collection focuses on Indian wedding lehengas, bridal-adjacent lehenga choli styles, reception lehengas, embroidered lehengas, silk lehengas, and event-ready wedding outfits.
+              Shop wedding lehengas for Indian wedding ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia Boutique collection focuses on Indian wedding lehengas, bridal-adjacent lehenga choli styles, reception lehengas, embroidered lehengas, silk lehengas, and event-ready wedding outfits.
             </p>
           </div>
         </section>
@@ -137,7 +137,7 @@ const WeddingLehengas = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online wedding support</h3>
                 <p>
-                  LuxeMia supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review sizing, stitching, and delivery details before ordering for a wedding date.
+                  LuxeMia Boutique supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review sizing, stitching, and delivery details before ordering for a wedding date.
                 </p>
               </div>
             </div>

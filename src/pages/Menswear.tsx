@@ -209,8 +209,8 @@ const Menswear = () => {
   // Collection-specific FAQs for rich snippets
   const menswearFaqs = [
     {
-      question: "What types of men's ethnic wear are available at LuxeMia?",
-      answer: "LuxeMia offers Groom Sherwanis, Kurta Pajama sets, Velvet Sherwanis, Indo-Western outfits, and Nehru Jackets. Our collection features fabrics like Art Silk, Banarasi Jacquard, Velvet, and Cotton with embroidery."
+      question: "What types of men's ethnic wear are available at LuxeMia Boutique?",
+      answer: "LuxeMia Boutique offers Groom Sherwanis, Kurta Pajama sets, Velvet Sherwanis, Indo-Western outfits, and Nehru Jackets. Our collection features fabrics like Art Silk, Banarasi Jacquard, Velvet, and Cotton with embroidery."
     },
     {
       question: "How do I find the right size for a sherwani?",

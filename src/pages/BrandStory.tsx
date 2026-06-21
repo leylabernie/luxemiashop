@@ -12,7 +12,7 @@ const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'LuxeMia Boutique',
-  alternateName: 'LuxeMia',
+  alternateName: 'LuxeMia Boutique',
   legalName: 'Glamour Indian Wear',
   url: 'https://luxemia.shop',
   logo: 'https://luxemia.shop/favicon.ico',
@@ -153,9 +153,9 @@ const philosophyPoints = [
 const timelineEvents = [
   {
     year: '2025',
-    title: 'The Spark \u2014 LuxeMia is Founded',
+    title: 'The Spark \u2014 LuxeMia Boutique is Founded',
     description:
-      'After years of hearing friends and family complain about the struggles of buying Indian ethnic wear from abroad \u2014 confusing sizing, quality uncertainty, and weeks of anxious waiting \u2014 we decided to build something better. LuxeMia launches with our first curated collection of lehengas, sarees, and suits.',
+      'After years of hearing friends and family complain about the struggles of buying Indian ethnic wear from abroad \u2014 confusing sizing, quality uncertainty, and weeks of anxious waiting \u2014 we decided to build something better. LuxeMia Boutique launches with our first curated collection of lehengas, sarees, and suits.',
   },
   {
     year: '2025',
@@ -312,8 +312,8 @@ const BrandStory = () => {
     <div ref={containerRef} className="min-h-screen bg-background">
       {/* SEO Head with enriched props */}
       <SEOHead
-        title="Our Story \u2014 LuxeMia | Authentic Indian Ethnic Wear for USA, Canada & Australia"
-        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the USA, Canada & Australia. Free shipping over $350."
+        title="Our Story \u2014 LuxeMia Boutique | Authentic Indian Ethnic Wear for USA, Canada & Australia"
+        description="Discover the LuxeMia Boutique story. We source authentic Indian ethnic wear directly from India\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the USA, Canada & Australia. Free shipping over $350."
         canonical="https://luxemia.shop/brand-story"
         image="/images/heroes/hero-bridal-couture.jpg"
         breadcrumbs={[
@@ -403,7 +403,7 @@ const BrandStory = () => {
         imagePosition="right"
         bgColor="bg-card"
         imageUrl="/images/heroes/hero-bridal-couture.jpg"
-        imageAlt="Bridal Indian ethnic wear \u2014 LuxeMia curated lehenga collection"
+        imageAlt="Bridal Indian ethnic wear \u2014 LuxeMia Boutique curated lehenga collection"
       />
 
       {/* Craftsmanship Section */}
@@ -414,7 +414,7 @@ const BrandStory = () => {
         imagePosition="left"
         bgColor="bg-background"
         imageUrl="/images/lookbook/hero-main.jpg"
-        imageAlt="LuxeMia lookbook \u2014 authentic Indian ethnic wear sourced from India\u2019s textile hubs"
+        imageAlt="LuxeMia Boutique lookbook \u2014 authentic Indian ethnic wear sourced from India\u2019s textile hubs"
       />
 
       {/* Philosophy Section */}
@@ -463,7 +463,7 @@ const BrandStory = () => {
         </div>
       </section>
 
-      {/* Why Choose LuxeMia Section */}
+      {/* Why Choose LuxeMia Boutique Section */}
       <section className="py-32 px-4 bg-secondary/30">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -474,13 +474,13 @@ const BrandStory = () => {
             className="text-center mb-20"
           >
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
-              The LuxeMia Difference
+              The LuxeMia Boutique Difference
             </p>
             <h2 className="text-4xl md:text-5xl font-serif mb-8">
-              Why Choose LuxeMia
+              Why Choose LuxeMia Boutique
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              We built LuxeMia to solve the real problems NRIs face when
+              We built LuxeMia Boutique to solve the real problems NRIs face when
               shopping for Indian ethnic wear online. Here&#39;s what sets us
               apart.
             </p>
@@ -579,7 +579,7 @@ const BrandStory = () => {
             beginning.&rdquo;
           </blockquote>
           <cite className="text-muted-foreground not-italic">
-            &mdash; The LuxeMia Team
+            &mdash; The LuxeMia Boutique Team
           </cite>
         </motion.div>
       </section>
@@ -602,7 +602,7 @@ const BrandStory = () => {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               We believe in full transparency about how we operate. Here&#39;s
-              everything you should know about LuxeMia before you place an
+              everything you should know about LuxeMia Boutique before you place an
               order.
             </p>
           </motion.div>

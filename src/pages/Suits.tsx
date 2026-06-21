@@ -276,8 +276,8 @@ const Suits = () => {
   // Collection-specific FAQs for rich snippets
   const suitFaqs = [
     {
-      question: "What styles of suits are available at LuxeMia?",
-      answer: "LuxeMia offers Anarkali suits, Sharara sets, Gharara suits, Palazzo suits, and Gowns. Our collection features fabrics like Silk, Georgette, Chinnon, Velvet, and Organza with embroidery and zari work."
+      question: "What styles of suits are available at LuxeMia Boutique?",
+      answer: "LuxeMia Boutique offers Anarkali suits, Sharara sets, Gharara suits, Palazzo suits, and Gowns. Our collection features fabrics like Silk, Georgette, Chinnon, Velvet, and Organza with embroidery and zari work."
     },
     {
       question: "What sizes are available for suits?",
@@ -289,7 +289,7 @@ const Suits = () => {
     },
     {
       question: "Do suits come with dupatta and bottom?",
-      answer: "Yes, all LuxeMia suit sets include a matching kurta/top, bottom (pants, palazzo, or sharara depending on style), and dupatta. Some sets include additional accessories like belts or jewelry."
+      answer: "Yes, all LuxeMia Boutique suit sets include a matching kurta/top, bottom (pants, palazzo, or sharara depending on style), and dupatta. Some sets include additional accessories like belts or jewelry."
     },
     {
       question: "How should I care for embroidered suits?",

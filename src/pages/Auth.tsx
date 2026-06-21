@@ -102,7 +102,7 @@ const Auth = () => {
           }
         } else {
           toast({
-            title: "Welcome to LuxeMia!",
+            title: "Welcome to LuxeMia Boutique!",
             description: "Your account has been created successfully.",
           });
         }
@@ -123,8 +123,8 @@ const Auth = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <SEOHead
-        title="Sign In — LuxeMia"
-        description="Sign in to your LuxeMia account."
+        title="Sign In — LuxeMia Boutique"
+        description="Sign in to your LuxeMia Boutique account."
         noIndex={true}
       />
       <Header />
@@ -147,7 +147,7 @@ const Auth = () => {
               <Sparkles className="w-8 h-8 text-primary" />
             </motion.div>
             <h1 className="font-display text-3xl md:text-4xl text-foreground mb-2">
-              {isLogin ? 'Welcome Back' : 'Join LuxeMia'}
+              {isLogin ? 'Welcome Back' : 'Join LuxeMia Boutique'}
             </h1>
             <p className="text-muted-foreground">
               {isLogin 

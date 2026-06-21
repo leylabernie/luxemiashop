@@ -138,7 +138,7 @@ const StyleConsultation = () => {
     
     // Then open WhatsApp
     const message = encodeURIComponent(
-      `Hi LuxeMia! I'd like to book a styling consultation.\n\n` +
+      `Hi LuxeMia Boutique! I'd like to book a styling consultation.\n\n` +
       `Name: ${formData.name}\n` +
       `Email: ${formData.email}\n` +
       `Phone: ${formData.phone}\n` +
@@ -163,7 +163,7 @@ const StyleConsultation = () => {
     // Then open email
     const subject = encodeURIComponent('Styling Consultation Request');
     const body = encodeURIComponent(
-      `Hi LuxeMia,\n\nI'd like to book a styling consultation.\n\n` +
+      `Hi LuxeMia Boutique,\n\nI'd like to book a styling consultation.\n\n` +
       `Name: ${formData.name}\n` +
       `Email: ${formData.email}\n` +
       `Phone: ${formData.phone}\n` +
@@ -183,8 +183,8 @@ const StyleConsultation = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Personal Styling Consultation | Book a Session | LuxeMia"
-        description="Book a free 30-minute virtual styling consultation with LuxeMia's expert stylists. Get personalized recommendations for Indian ethnic wear — sarees, lehengas, suits & more."
+        title="Personal Styling Consultation | Book a Session | LuxeMia Boutique"
+        description="Book a free 30-minute virtual styling consultation with LuxeMia Boutique's expert stylists. Get personalized recommendations for Indian ethnic wear — sarees, lehengas, suits & more."
         canonical="https://luxemia.shop/style-consultation"
         breadcrumbs={[
           { name: 'Home', url: '/' },

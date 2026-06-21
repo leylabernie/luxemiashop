@@ -80,7 +80,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="font-serif text-2xl">
-              LuxeMia
+              LuxeMia Boutique
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed">
               Beautiful Indian ethnic wear at accessible prices — shipped from India to your door.

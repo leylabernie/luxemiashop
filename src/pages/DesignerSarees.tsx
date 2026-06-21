@@ -39,7 +39,7 @@ const getSearchText = (product: ShopifyProduct): string => {
 const designerSareeFaqs = [
   {
     question: 'What makes a saree a designer saree?',
-    answer: 'A designer saree usually combines a distinctive fabric, color story, border, blouse direction, or embellishment detail with event-ready styling. LuxeMia designer sarees may include embroidery, sequins, zari, silk, georgette, chiffon, organza, tissue, or boutique-inspired drapes for parties, weddings, festivals, and formal events.',
+    answer: 'A designer saree usually combines a distinctive fabric, color story, border, blouse direction, or embellishment detail with event-ready styling. LuxeMia Boutique designer sarees may include embroidery, sequins, zari, silk, georgette, chiffon, organza, tissue, or boutique-inspired drapes for parties, weddings, festivals, and formal events.',
   },
   {
     question: 'Can designer sarees be worn for weddings and parties?',
@@ -51,7 +51,7 @@ const designerSareeFaqs = [
   },
   {
     question: 'How do I choose designer sarees online?',
-    answer: 'Start with the occasion, comfort level, blouse needs, delivery timeline, and styling preference. Review product photos, fabric, work type, border details, blouse information, and care instructions. If your event date is close, prioritize styles with clear availability and contact LuxeMia for fit or styling guidance.',
+    answer: 'Start with the occasion, comfort level, blouse needs, delivery timeline, and styling preference. Review product photos, fabric, work type, border details, blouse information, and care instructions. If your event date is close, prioritize styles with clear availability and contact LuxeMia Boutique for fit or styling guidance.',
   },
   {
     question: 'Are designer sarees good for wedding guests?',
@@ -212,7 +212,7 @@ const DesignerSarees = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online saree shopping support</h3>
                 <p>
-                  LuxeMia supports designer saree shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product's fabric, stitching, and delivery details before ordering.
+                  LuxeMia Boutique supports designer saree shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product's fabric, stitching, and delivery details before ordering.
                 </p>
               </div>
             </div>

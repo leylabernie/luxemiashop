@@ -257,7 +257,7 @@ export const SemanticProductMetadata = ({
       <meta itemProp="name" content={productName} />
 
       {/* Brand */}
-      <meta itemProp="brand" content="LuxeMia" />
+      <meta itemProp="brand" content="LuxeMia Boutique" />
 
       {/* Material / Fabric */}
       {fabric && <meta itemProp="material" content={fabric} />}

@@ -37,8 +37,8 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Contact Us — LuxeMia"
-        description="Get in touch with LuxeMia. Questions about orders, sizing, or custom tailoring? Reach us via email, phone, or WhatsApp."
+        title="Contact Us — LuxeMia Boutique"
+        description="Get in touch with LuxeMia Boutique. Questions about orders, sizing, or custom tailoring? Reach us via email, phone, or WhatsApp."
         canonical="https://luxemia.shop/contact"
       />
       <Header />

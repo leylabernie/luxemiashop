@@ -17,9 +17,9 @@ import {
 
 const trustAnnouncements = [
   'Free shipping over $350 - ships to USA, Canada & Australia',
-  'New arrivals just landed - shop the latest styles',
-  'Philadelphia-based boutique for Indian ethnic wear',
-  'Flat $25 shipping under $350 - secure Shopify checkout',
+  'Philadelphia-Based Support | Direct Global Shipping',
+  'Quality Inspected - rigorous source-workshop certification',
+  'Secure Shopify checkout - flat $25 shipping under $350',
 ];
 
 const navLinks = [
@@ -142,9 +142,9 @@ const Header = () => {
                 transition={{ duration: 0.6 }}
               >
                 {isHomePage ? (
-                  <h1>LuxeMia</h1>
+                  <h1>LuxeMia Boutique</h1>
                 ) : (
-                  <span>LuxeMia</span>
+                  <span>LuxeMia Boutique</span>
                 )}
               </motion.div>
             </Link>

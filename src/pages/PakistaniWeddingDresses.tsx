@@ -59,8 +59,8 @@ const pakistaniWeddingDressFaqs = [
     answer: 'Start with the event, role, venue, time of day, fabric weight, embroidery level, measurements, sleeve and neckline comfort, dupatta styling, stitching needs, and delivery timeline. Review product photos, sizing notes, fabric details, and care instructions before ordering for a wedding date.',
   },
   {
-    question: 'Does LuxeMia carry Pakistani wedding dresses for brides and guests?',
-    answer: 'Yes. LuxeMia curates Pakistani wedding dresses across bridal-adjacent lehengas, shararas, ghararas, Anarkalis, formal salwar kameez, sarees, gowns, and wedding guest outfits for nikah, mehndi, walima, reception, and family celebration shopping.',
+    question: 'Does LuxeMia Boutique carry Pakistani wedding dresses for brides and guests?',
+    answer: 'Yes. LuxeMia Boutique curates Pakistani wedding dresses across bridal-adjacent lehengas, shararas, ghararas, Anarkalis, formal salwar kameez, sarees, gowns, and wedding guest outfits for nikah, mehndi, walima, reception, and family celebration shopping.',
   },
 ];
 
@@ -114,7 +114,7 @@ const PakistaniWeddingDresses = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pakistani Wedding Edit</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Pakistani Wedding Dresses</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop Pakistani wedding dresses for nikah ceremonies, mehndi events, walima receptions, wedding guest looks, engagement parties, and formal family celebrations. This LuxeMia edit brings together Pakistani bridal dresses, Pakistani wedding outfits, Pakistani formal dresses, Pakistani reception dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.
+              Shop Pakistani wedding dresses for nikah ceremonies, mehndi events, walima receptions, wedding guest looks, engagement parties, and formal family celebrations. This LuxeMia Boutique edit brings together Pakistani bridal dresses, Pakistani wedding outfits, Pakistani formal dresses, Pakistani reception dresses, shararas, ghararas, Anarkalis, salwar kameez, lehengas, sarees, and gowns.
             </p>
           </div>
         </section>
@@ -217,7 +217,7 @@ const PakistaniWeddingDresses = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online wedding support</h3>
                 <p>
-                  LuxeMia supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review measurements, stitching, and delivery details before ordering for a wedding date.
+                  LuxeMia Boutique supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review measurements, stitching, and delivery details before ordering for a wedding date.
                 </p>
               </div>
             </div>

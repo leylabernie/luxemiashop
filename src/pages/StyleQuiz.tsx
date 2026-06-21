@@ -276,8 +276,8 @@ const StyleQuiz = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Find Your Style — LuxeMia Style Quiz"
-        description="Take LuxeMia's style quiz to discover your perfect Indian ethnic wear look. Get personalised outfit recommendations in 5 quick questions."
+        title="Find Your Style — LuxeMia Boutique Style Quiz"
+        description="Take LuxeMia Boutique's style quiz to discover your perfect Indian ethnic wear look. Get personalised outfit recommendations in 5 quick questions."
         canonical="https://luxemia.shop/style-quiz"
         noIndex={true}
       />

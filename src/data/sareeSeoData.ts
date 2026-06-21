@@ -2,7 +2,7 @@ export default {
   "products": [
     {
       "original_name": "Lycra Mauve Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Mauve Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Mauve Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop mauve sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Mauve Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Mauve Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -54,7 +54,7 @@ export default {
     },
     {
       "original_name": "Lycra Blue Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Blue Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Blue Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop blue sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Blue Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Blue Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -106,7 +106,7 @@ export default {
     },
     {
       "original_name": "Lycra Brown Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Brown Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Brown Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop brown sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Brown Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Brown Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -158,7 +158,7 @@ export default {
     },
     {
       "original_name": "Silk Blue Wedding Wear Embroidery Work Saree",
-      "seo_title": "Blue Embroidery Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Blue Embroidery Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop blue embroidery silk saree for weddings. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Blue Embroidery Silk Saree",
       "meta_description": "Buy Blue Embroidery silk saree for Weddings. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -210,7 +210,7 @@ export default {
     },
     {
       "original_name": "Silk Beige Wedding Wear Embroidery Work Saree",
-      "seo_title": "Beige Embroidery Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Beige Embroidery Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop beige embroidery silk saree for weddings. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Beige Embroidery Silk Saree",
       "meta_description": "Buy Beige Embroidery silk saree for Weddings. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -262,7 +262,7 @@ export default {
     },
     {
       "original_name": "Silk Yellow Wedding Wear Embroidery Work Saree",
-      "seo_title": "Yellow Embroidery Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Yellow Embroidery Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop yellow embroidery silk saree for weddings. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Yellow Embroidery Silk Saree",
       "meta_description": "Buy Yellow Embroidery silk saree for Weddings. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -314,7 +314,7 @@ export default {
     },
     {
       "original_name": "Georgette Blue Festival Wear Sequins Work Saree",
-      "seo_title": "Blue Sequins Georgette Saree | Festival Wear | LuxeMia",
+      "seo_title": "Blue Sequins Georgette Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop blue sequins georgette saree for festivals. Lightweight fabric with beautiful sequins work and graceful flowy drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Blue Sequins Georgette Saree",
       "meta_description": "Buy Blue Sequins georgette saree for Festivals. Beautiful flowy drape with shimmer, elegant lightweight look. Free shipping $350+ to USA, Canada & Australia.",
@@ -366,7 +366,7 @@ export default {
     },
     {
       "original_name": "Georgette Beige Festival Wear Sequins Work Saree",
-      "seo_title": "Beige Sequins Georgette Saree | Festival Wear | LuxeMia",
+      "seo_title": "Beige Sequins Georgette Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop beige sequins georgette saree for festivals. Lightweight fabric with beautiful sequins work and graceful flowy drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Beige Sequins Georgette Saree",
       "meta_description": "Buy Beige Sequins georgette saree for Festivals. Beautiful flowy drape with shimmer, elegant lightweight look. Free shipping $350+ to USA, Canada & Australia.",
@@ -418,7 +418,7 @@ export default {
     },
     {
       "original_name": "Georgette Pink Festival Wear Sequins Work Saree",
-      "seo_title": "Pink Sequins Georgette Saree | Festival Wear | LuxeMia",
+      "seo_title": "Pink Sequins Georgette Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop pink sequins georgette saree for festivals. Lightweight fabric with beautiful sequins work and graceful flowy drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pink Sequins Georgette Saree",
       "meta_description": "Buy Pink Sequins georgette saree for Festivals. Beautiful flowy drape with shimmer, elegant lightweight look. Free shipping $350+ to USA, Canada & Australia.",
@@ -470,7 +470,7 @@ export default {
     },
     {
       "original_name": "Silk Grey Party Wear Embroidery Work Saree",
-      "seo_title": "Grey Embroidery Silk Saree | Party Wear | LuxeMia",
+      "seo_title": "Grey Embroidery Silk Saree | Party Wear | LuxeMia Boutique",
       "seo_description": "Shop grey embroidery silk saree for parties. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Grey Embroidery Silk Saree",
       "meta_description": "Buy Grey Embroidery silk saree for Parties. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -522,7 +522,7 @@ export default {
     },
     {
       "original_name": "Silk Peach Party Wear Embroidery Work Saree",
-      "seo_title": "Peach Embroidery Silk Saree | Party Wear | LuxeMia",
+      "seo_title": "Peach Embroidery Silk Saree | Party Wear | LuxeMia Boutique",
       "seo_description": "Shop peach embroidery silk saree for parties. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Peach Embroidery Silk Saree",
       "meta_description": "Buy Peach Embroidery silk saree for Parties. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -574,7 +574,7 @@ export default {
     },
     {
       "original_name": "Silk Pink Party Wear Embroidery Work Saree",
-      "seo_title": "Pink Embroidery Silk Saree | Party Wear | LuxeMia",
+      "seo_title": "Pink Embroidery Silk Saree | Party Wear | LuxeMia Boutique",
       "seo_description": "Shop pink embroidery silk saree for parties. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pink Embroidery Silk Saree",
       "meta_description": "Buy Pink Embroidery silk saree for Parties. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -626,7 +626,7 @@ export default {
     },
     {
       "original_name": "Silk Green Party Wear Embroidery Work Saree",
-      "seo_title": "Green Embroidery Silk Saree | Party Wear | LuxeMia",
+      "seo_title": "Green Embroidery Silk Saree | Party Wear | LuxeMia Boutique",
       "seo_description": "Shop green embroidery silk saree for parties. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Green Embroidery Silk Saree",
       "meta_description": "Buy Green Embroidery silk saree for Parties. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -678,7 +678,7 @@ export default {
     },
     {
       "original_name": "Silk Purple Party Wear Embroidery Work Saree",
-      "seo_title": "Purple Embroidery Silk Saree | Party Wear | LuxeMia",
+      "seo_title": "Purple Embroidery Silk Saree | Party Wear | LuxeMia Boutique",
       "seo_description": "Shop purple embroidery silk saree for parties. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Purple Embroidery Silk Saree",
       "meta_description": "Buy Purple Embroidery silk saree for Parties. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -730,7 +730,7 @@ export default {
     },
     {
       "original_name": "Art Silk Orange Wedding Wear Embroidery Work Saree",
-      "seo_title": "Orange Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Orange Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop orange embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Orange Embroidery Art Silk Saree",
       "meta_description": "Buy Orange Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -782,7 +782,7 @@ export default {
     },
     {
       "original_name": "Art Silk Pink Wedding Wear Embroidery Work Saree",
-      "seo_title": "Pink Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Pink Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop pink embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pink Embroidery Art Silk Saree",
       "meta_description": "Buy Pink Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -834,7 +834,7 @@ export default {
     },
     {
       "original_name": "Art Silk Green Wedding Wear Embroidery Work Saree",
-      "seo_title": "Green Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Green Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop green embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Green Embroidery Art Silk Saree",
       "meta_description": "Buy Green Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -886,7 +886,7 @@ export default {
     },
     {
       "original_name": "Art Silk Red Wedding Wear Embroidery Work Saree",
-      "seo_title": "Red Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Red Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop red embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Red Embroidery Art Silk Saree",
       "meta_description": "Buy Red Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -938,7 +938,7 @@ export default {
     },
     {
       "original_name": "Art Silk Blue Wedding Wear Embroidery Work Saree",
-      "seo_title": "Blue Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Blue Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop blue embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Blue Embroidery Art Silk Saree",
       "meta_description": "Buy Blue Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -990,7 +990,7 @@ export default {
     },
     {
       "original_name": "Art Silk Purple Wedding Wear Embroidery Work Saree",
-      "seo_title": "Purple Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Purple Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop purple embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Purple Embroidery Art Silk Saree",
       "meta_description": "Buy Purple Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -1042,7 +1042,7 @@ export default {
     },
     {
       "original_name": "Art Silk Maroon Wedding Wear Embroidery Work Saree",
-      "seo_title": "Maroon Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Maroon Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop maroon embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Maroon Embroidery Art Silk Saree",
       "meta_description": "Buy Maroon Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -1094,7 +1094,7 @@ export default {
     },
     {
       "original_name": "Art Silk Cream Wedding Wear Embroidery Work Saree",
-      "seo_title": "Cream Embroidery Art Silk Saree | Wedding Wear | LuxeMia",
+      "seo_title": "Cream Embroidery Art Silk Saree | Wedding Wear | LuxeMia Boutique",
       "seo_description": "Shop cream embroidery art silk saree for weddings. Elegant hand-finished embroidery work with rich sheen and luxurious drape. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Cream Embroidery Art Silk Saree",
       "meta_description": "Buy Cream Embroidery Art silk saree for Weddings. Beautiful designer work, elegant drape, stunning ethnic wear. Free shipping $350+ to USA, Canada & Australia.",
@@ -1146,7 +1146,7 @@ export default {
     },
     {
       "original_name": "Lycra Wine Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Wine Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Wine Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop wine sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Wine Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Wine Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -1198,7 +1198,7 @@ export default {
     },
     {
       "original_name": "Lycra Black Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Black Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Black Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop black sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Black Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Black Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -1250,7 +1250,7 @@ export default {
     },
     {
       "original_name": "Lycra Green Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Green Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Green Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop green sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Green Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Green Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -1302,7 +1302,7 @@ export default {
     },
     {
       "original_name": "Silk Wine Party Wear Embroidery Work Saree",
-      "seo_title": "Wine Embroidery Silk Saree | Party Wear | LuxeMia",
+      "seo_title": "Wine Embroidery Silk Saree | Party Wear | LuxeMia Boutique",
       "seo_description": "Shop wine embroidery silk saree for parties. Premium hand-crafted embroidery work with luxurious drape and rich texture. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Wine Embroidery Silk Saree",
       "meta_description": "Buy Wine Embroidery silk saree for Parties. Hand-crafted work, premium drape, elegant timeless design. Free shipping $350+ to USA, Canada & Australia.",
@@ -1354,7 +1354,7 @@ export default {
     },
     {
       "original_name": "Lycra Yellow Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Yellow Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Yellow Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop yellow sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Yellow Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Yellow Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -1406,7 +1406,7 @@ export default {
     },
     {
       "original_name": "Lycra Pink Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Pink Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Pink Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop pink sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Pink Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Pink Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -1458,7 +1458,7 @@ export default {
     },
     {
       "original_name": "Lycra Peach Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Peach Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Peach Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop peach sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Peach Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Peach Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",
@@ -1510,7 +1510,7 @@ export default {
     },
     {
       "original_name": "Lycra Red Festival Wear Sequins Work Readymade Saree",
-      "seo_title": "Red Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia",
+      "seo_title": "Red Sequins Lycra Ready-to-Wear Saree | Festival Wear | LuxeMia Boutique",
       "seo_description": "Shop red sequins lycra ready-to-wear saree for festivals. Pre-stitched, easy-to-drape design with shimmer sequins work. Free shipping over $350. USA, Canada & Australia.",
       "corrected_title": "Red Sequins Lycra Ready-to-Wear Saree",
       "meta_description": "Shop Red Sequins Lycra ready-to-wear saree for Festivals. Pre-stitched, easy drape with shimmer detail. Free shipping $350+ to USA, Canada & Australia.",

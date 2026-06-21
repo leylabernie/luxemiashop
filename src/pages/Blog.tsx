@@ -152,7 +152,7 @@ const Blog = () => {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "LuxeMia Indian Wedding Dress Guide",
+    "name": "LuxeMia Boutique Indian Wedding Dress Guide",
     "description": "Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends for NRIs in USA, Canada & Australia",
     "url": "https://luxemia.shop/blog",
     "inLanguage": "en-US",
@@ -163,7 +163,7 @@ const Blog = () => {
     },
     "publisher": {
       "@type": "Organization",
-      "name": "LuxeMia",
+      "name": "LuxeMia Boutique",
       "logo": {
         "@type": "ImageObject",
         "url": "https://luxemia.shop/favicon.ico"
@@ -223,7 +223,7 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion | LuxeMia"
+        title="Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion | LuxeMia Boutique"
         description="Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion for NRIs shopping from USA, Canada & Australia. Get insider tips from top stylists."
         canonical="https://luxemia.shop/blog"
         breadcrumbs={[

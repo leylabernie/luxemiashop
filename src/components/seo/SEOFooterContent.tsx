@@ -6,12 +6,12 @@ const SEOFooterContent = () => {
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-serif text-xl lg:text-2xl mb-6 text-center">
-            Buy Indian Ethnic Wear Online at LuxeMia
+            Buy Indian Ethnic Wear Online at LuxeMia Boutique
           </h2>
           
           <div className="prose prose-sm max-w-none text-muted-foreground font-light leading-relaxed">
             <p className="mb-6">
-              Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for affordable Indian ethnic wear online. 
+              Welcome to <strong className="text-foreground">LuxeMia Boutique</strong>, your destination for affordable Indian ethnic wear online.
               Buy <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
               <Link to="/collections/bridal-lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>,
               <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link>, and 
@@ -57,7 +57,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Wedding Guest & Occasion Styling</h3>
                 <p>
-                  Shop <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">Indian wedding guest outfits</Link> at LuxeMia.
+                  Shop <Link to="/collections/wedding-guest-outfits" className="text-foreground hover:text-primary transition-colors underline">Indian wedding guest outfits</Link> at LuxeMia Boutique.
                   Discover polished sarees, salwar kameez, lehengas, and indo-western looks for ceremonies, receptions,
                   festivals, and celebrations. Flat rate shipping $25/order, free on orders over $350.
                 </p>
@@ -68,7 +68,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Indo-Western Dresses & Fusion Outfits</h3>
                 <p>
-                  Buy <Link to="/indowestern" className="text-foreground hover:text-primary transition-colors underline">indo-western dresses online</Link> at LuxeMia. 
+                  Buy <Link to="/indowestern" className="text-foreground hover:text-primary transition-colors underline">indo-western dresses online</Link> at LuxeMia Boutique.
                   Shop fusion Indian outfits combining traditional embroidery with contemporary silhouettes — 
                   <strong className="text-foreground">coord sets</strong>, <strong className="text-foreground">cape sets</strong>, and 
                   <strong className="text-foreground">jumpsuits</strong> perfect for modern occasions.
@@ -108,14 +108,14 @@ const SEOFooterContent = () => {
             </div>
 
             <div className="text-center mt-8 pt-6 border-t border-border/50">
-              <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
+              <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia Boutique?</h3>
               <p>
-                LuxeMia is the best Indian ethnic wear store online for affordable, stylish ethnic clothing. 
+                LuxeMia Boutique is the best Indian ethnic wear store online for affordable, stylish ethnic clothing.
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
 We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to the USA, Canada, and Australia, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
-                why thousands of customers trust LuxeMia for their Indian ethnic wear needs.
+                why thousands of customers trust LuxeMia Boutique for their Indian ethnic wear needs.
               </p>
             </div>
           </div>

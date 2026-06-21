@@ -38,8 +38,8 @@ const getSearchText = (product: ShopifyProduct): string => {
 
 const silkSareeFaqs = [
   {
-    question: 'What types of silk sarees does LuxeMia carry?',
-    answer: 'LuxeMia silk sarees may include Banarasi silk sarees, Kanjivaram and Kanchipuram silk sarees, tissue silk sarees, art silk sarees, soft silk sarees, zari sarees, and woven ceremonial drapes. Availability depends on the current collection and live Shopify inventory.',
+    question: 'What types of silk sarees does LuxeMia Boutique carry?',
+    answer: 'LuxeMia Boutique silk sarees may include Banarasi silk sarees, Kanjivaram and Kanchipuram silk sarees, tissue silk sarees, art silk sarees, soft silk sarees, zari sarees, and woven ceremonial drapes. Availability depends on the current collection and live Shopify inventory.',
   },
   {
     question: 'Are silk sarees good for weddings?',
@@ -212,7 +212,7 @@ const SilkSarees = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online silk saree support</h3>
                 <p>
-                  LuxeMia supports silk saree shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product's fabric, stitching, and delivery details before ordering.
+                  LuxeMia Boutique supports silk saree shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product's fabric, stitching, and delivery details before ordering.
                 </p>
               </div>
             </div>

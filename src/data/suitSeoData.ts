@@ -2,7 +2,7 @@ export default {
   "products": [
     {
       "original_name": "Heavy Crape Maroon Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Maroon Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Maroon Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop maroon sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Maroon Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop maroon sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -52,7 +52,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Purple Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Purple Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Purple Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop purple sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Purple Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop purple sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -102,7 +102,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Rani Pink Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Rani Pink Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Rani Pink Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop rani pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Rani Pink Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop rani pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -152,7 +152,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Blue Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Blue Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Blue Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop blue sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Blue Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop blue sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -202,7 +202,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Pink Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Pink Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Pink Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Pink Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -252,7 +252,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Black Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Black Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Black Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop black sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Black Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop black sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -302,7 +302,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Green Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Green Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Green Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Green Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -352,7 +352,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Pista Green Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Pista Green Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Pista Green Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop pista green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Pista Green Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop pista green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -402,7 +402,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Peach Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Peach Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Peach Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop peach sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Peach Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop peach sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -452,7 +452,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Yellow Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Yellow Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Yellow Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop yellow sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Yellow Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop yellow sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -502,7 +502,7 @@ export default {
     },
     {
       "original_name": "Heavy Crape Off White Party Wear Sequins Work Readymade Suit",
-      "seo_title": "Off White Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Off White Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop off white sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Off White Sequins Crepe Party Wear Ready-to-Wear Suit",
       "meta_description": "Shop off white sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -552,7 +552,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Beige Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Beige Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Beige Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop beige embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Beige Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop beige embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -602,7 +602,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Wine Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Wine Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Wine Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop wine embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Wine Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop wine embroidery georgette occasion wear ready-to-wear suit. Pre-stitched suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
@@ -652,7 +652,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Rani Pink Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Rani Pink Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Rani Pink Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop rani pink embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Rani Pink Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop rani pink embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -702,7 +702,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Blue Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Blue Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Blue Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop blue embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Blue Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop blue embroidery georgette occasion wear ready-to-wear suit. Pre-stitched suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
@@ -752,7 +752,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Green Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop green embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop green embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -802,7 +802,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Yellow Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Yellow Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Yellow Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop yellow embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Yellow Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop yellow embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -852,7 +852,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Sea Green Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Sea Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Sea Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop sea green embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Sea Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop sea green embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -902,7 +902,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Light Grey Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Light Grey Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Light Grey Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop light grey embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Light Grey Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop light grey embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -952,7 +952,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Peach Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Peach Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Peach Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop peach embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Peach Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop peach embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -1002,7 +1002,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Cream Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Cream Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Cream Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop cream embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Cream Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop cream embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -1052,7 +1052,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Purple Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Purple Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Purple Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop purple embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Purple Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop purple embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -1102,7 +1102,7 @@ export default {
     },
     {
       "original_name": "Chinon Silk Orange Occasional Wear Embroidery Work Readymade Paty Wear",
-      "seo_title": "Orange Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Orange Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop orange embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Orange Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
       "meta_description": "Shop orange embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
@@ -1152,7 +1152,7 @@ export default {
     },
     {
       "original_name": "Art Silk Black Wedding Wear Sequins Work Readymade Suit",
-      "seo_title": "Black Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Black Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop black sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Black Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
       "meta_description": "Shop black sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -1202,7 +1202,7 @@ export default {
     },
     {
       "original_name": "Art Silk Blue Wedding Wear Sequins Work Readymade Suit",
-      "seo_title": "Blue Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Blue Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop blue sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Blue Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
       "meta_description": "Shop blue sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -1252,7 +1252,7 @@ export default {
     },
     {
       "original_name": "Art Silk Red Wedding Wear Sequins Work Readymade Suit",
-      "seo_title": "Red Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Red Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop red sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Red Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
       "meta_description": "Shop red sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -1302,7 +1302,7 @@ export default {
     },
     {
       "original_name": "Art Silk Green Wedding Wear Sequins Work Readymade Suit",
-      "seo_title": "Green Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Green Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop green sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Green Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
       "meta_description": "Shop green sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -1352,7 +1352,7 @@ export default {
     },
     {
       "original_name": "Art Silk Purple Wedding Wear Sequins Work Readymade Suit",
-      "seo_title": "Purple Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Purple Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop purple sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Purple Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
       "meta_description": "Shop purple sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
@@ -1402,7 +1402,7 @@ export default {
     },
     {
       "original_name": "Art Silk Pink Wedding Wear Sequins Work Readymade Suit",
-      "seo_title": "Pink Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_title": "Pink Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia Boutique",
       "seo_description": "Shop pink sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
       "corrected_title": "Pink Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
       "meta_description": "Shop pink sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",

@@ -10,18 +10,18 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const returnPolicySchema = {
   '@context': 'https://schema.org',
   '@type': 'MerchantReturnPolicy',
-  name: 'LuxeMia Return Policy',
+  name: 'LuxeMia Boutique Return Policy',
   applicableCountry: 'US',
   returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-  description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+  description: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
 };
 
 const Returns = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Returns, Refunds & Cancellation Policy — LuxeMia"
-        description="LuxeMia return, refund, and cancellation policy. All sales final. Damage claims require mandatory unboxing video. Cancellations accepted within 24 hours only."
+        title="Returns, Refunds & Cancellation Policy — LuxeMia Boutique"
+        description="LuxeMia Boutique return, refund, and cancellation policy. All sales final. Damage claims require mandatory unboxing video. Cancellations accepted within 24 hours only."
         canonical="https://luxemia.shop/returns"
       />
       <Helmet>
@@ -60,7 +60,7 @@ const Returns = () => {
                 <h2 className="font-bold text-foreground text-lg mb-2 uppercase tracking-wide">⚠ All Sales Are Final — No Returns</h2>
                 <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                   Due to the international nature of our shipments and the complexities of international
-                  shipping, <strong className="text-foreground">LuxeMia does not accept returns or issue refunds</strong> for
+                  shipping, <strong className="text-foreground">LuxeMia Boutique does not accept returns or issue refunds</strong> for
                   any reason — including sizing issues, colour variations, change of mind, or delayed events.
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
@@ -370,7 +370,7 @@ const Returns = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
-                href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20have%20a%20question%20about%20my%20order"
+                href="https://wa.me/12153419990?text=Hi%20LuxeMia Boutique%2C%20I%20have%20a%20question%20about%20my%20order"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-sm transition-colors"

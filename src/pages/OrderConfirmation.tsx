@@ -113,8 +113,8 @@ const OrderConfirmation = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Order Confirmed — Thank You | LuxeMia"
-        description="Your order has been confirmed. Thank you for shopping at LuxeMia."
+        title="Order Confirmed — Thank You | LuxeMia Boutique"
+        description="Your order has been confirmed. Thank you for shopping at LuxeMia Boutique."
         noIndex={true}
       />
       <Header />
@@ -137,7 +137,7 @@ const OrderConfirmation = () => {
           </h1>
 
           <p className="text-gray-600 text-lg mb-2">
-            Thank you for shopping with LuxeMia!
+            Thank you for shopping with LuxeMia Boutique!
           </p>
 
           {orderId && (

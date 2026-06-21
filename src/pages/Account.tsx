@@ -83,8 +83,8 @@ const Account = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="My Account — LuxeMia"
-        description="Manage your LuxeMia account."
+        title="My Account — LuxeMia Boutique"
+        description="Manage your LuxeMia Boutique account."
         noIndex={true}
       />
       <Header />

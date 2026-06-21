@@ -40,8 +40,8 @@ const Artisans = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Our Sourcing Regions — LuxeMia"
-        description="Discover the regions across India where LuxeMia sources its Indian ethnic wear. From Lucknow embroidery to Banarasi silk, learn about the textile traditions behind our collections."
+        title="Our Sourcing Regions — LuxeMia Boutique"
+        description="Discover the regions across India where LuxeMia Boutique sources its Indian ethnic wear. From Lucknow embroidery to Banarasi silk, learn about the textile traditions behind our collections."
         canonical="https://luxemia.shop/artisans"
       />
       <Header />

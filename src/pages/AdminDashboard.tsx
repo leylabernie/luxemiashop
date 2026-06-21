@@ -57,8 +57,8 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Admin Dashboard — LuxeMia"
-        description="LuxeMia admin dashboard."
+        title="Admin Dashboard — LuxeMia Boutique"
+        description="LuxeMia Boutique admin dashboard."
         noIndex={true}
       />
       <Header />

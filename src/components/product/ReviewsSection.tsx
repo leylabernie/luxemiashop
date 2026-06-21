@@ -217,7 +217,7 @@ const ReviewsSection = ({
       <div id="write-review" className="bg-secondary/30 rounded-lg p-6 sm:p-8 border border-border">
         <h3 className="font-serif text-lg text-foreground mb-1">Share Your Experience</h3>
         <p className="text-sm text-muted-foreground mb-6">
-          We'd love to hear about your experience with LuxeMia. Your honest feedback helps other shoppers
+          We'd love to hear about your experience with LuxeMia Boutique. Your honest feedback helps other shoppers
           and helps us improve.
         </p>
 
@@ -256,7 +256,7 @@ const ReviewsSection = ({
         <div className="mb-4">
           <label className="text-sm font-medium text-foreground block mb-2">Your Review</label>
           <Textarea
-            placeholder="Tell us about your experience with your LuxeMia purchase..."
+            placeholder="Tell us about your experience with your LuxeMia Boutique purchase..."
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
             rows={4}

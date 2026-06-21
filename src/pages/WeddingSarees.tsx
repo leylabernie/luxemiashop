@@ -49,7 +49,7 @@ const weddingSareeFaqs = [
   },
   {
     question: 'Do wedding sarees include blouse stitching or delivery support?',
-    answer: 'Many LuxeMia sarees support blouse stitching or fit options where available on the product. Review each product page for stitching, sizing, and fulfillment details before ordering. If you are shopping for a wedding date, allow extra time for blouse stitching and tracked delivery.',
+    answer: 'Many LuxeMia Boutique sarees support blouse stitching or fit options where available on the product. Review each product page for stitching, sizing, and fulfillment details before ordering. If you are shopping for a wedding date, allow extra time for blouse stitching and tracked delivery.',
   },
   {
     question: 'How is this different from the main Sarees page?',
@@ -57,7 +57,7 @@ const weddingSareeFaqs = [
   },
   {
     question: 'How should I choose wedding sarees online?',
-    answer: 'Start with the ceremony, role, color direction, fabric comfort, blouse needs, and delivery timeline. Compare product photos, fabric details, work type, sizing options, and care instructions. If your event is close, prioritize clearly available products and contact LuxeMia for sizing or styling guidance before purchase.',
+    answer: 'Start with the ceremony, role, color direction, fabric comfort, blouse needs, and delivery timeline. Compare product photos, fabric details, work type, sizing options, and care instructions. If your event is close, prioritize clearly available products and contact LuxeMia Boutique for sizing or styling guidance before purchase.',
   },
 ];
 
@@ -157,7 +157,7 @@ const WeddingSarees = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online wedding confidence</h3>
                 <p>
-                  LuxeMia supports wedding shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product&apos;s sizing, stitching, and fulfillment details before ordering.
+                  LuxeMia Boutique supports wedding shoppers with tracked shipping, blouse and fit options where available, and styling guidance before purchase. Review each product&apos;s sizing, stitching, and fulfillment details before ordering.
                 </p>
               </div>
             </div>

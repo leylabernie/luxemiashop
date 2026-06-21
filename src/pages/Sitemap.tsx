@@ -84,8 +84,8 @@ const Sitemap = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Sitemap | LuxeMia - All Pages & Products"
-        description="Browse all pages and products on LuxeMia. Find designer sarees, bridal lehengas, suits, and menswear collections with easy navigation."
+        title="Sitemap | LuxeMia Boutique - All Pages & Products"
+        description="Browse all pages and products on LuxeMia Boutique. Find designer sarees, bridal lehengas, suits, and menswear collections with easy navigation."
         noIndex={true}
       />
       <Header />
@@ -94,7 +94,7 @@ const Sitemap = () => {
         <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
           <h1 className="font-serif text-4xl lg:text-5xl mb-4 text-center">Sitemap</h1>
           <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-            Browse all pages and products on LuxeMia. Use this page to find what you're looking for quickly.
+            Browse all pages and products on LuxeMia Boutique. Use this page to find what you're looking for quickly.
           </p>
 
           {/* XML Sitemap Download */}

@@ -41,8 +41,8 @@ const Sustainability = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Our Approach to Responsibility — LuxeMia"
-        description="Learn about LuxeMia's approach to responsible business and our goals for doing better as we grow. Honest, transparent, and committed to improvement."
+        title="Our Approach to Responsibility — LuxeMia Boutique"
+        description="Learn about LuxeMia Boutique's approach to responsible business and our goals for doing better as we grow. Honest, transparent, and committed to improvement."
         canonical="https://luxemia.shop/sustainability"
       />
       <Header />
@@ -73,7 +73,7 @@ const Sustainability = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              At LuxeMia, we're honest about where we are. We're a growing business and we have a long way to go, 
+              At LuxeMia Boutique, we're honest about where we are. We're a growing business and we have a long way to go,
               but we're committed to learning and improving every step of the way.
             </motion.p>
           </div>

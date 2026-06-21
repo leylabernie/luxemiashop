@@ -196,7 +196,7 @@ const VirtualTryOn = () => {
   const handleShare = async (platform: string) => {
     if (!resultImage || !selectedProduct) return;
 
-    const shareText = `Check out how I look in this ${selectedProduct.title} from LuxeMia! ✨`;
+    const shareText = `Check out how I look in this ${selectedProduct.title} from LuxeMia Boutique! ✨`;
     const shareUrl = `${window.location.origin}/product/${selectedProduct.handle}`;
 
     switch (platform) {
@@ -244,8 +244,8 @@ const VirtualTryOn = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <SEOHead
-        title="Virtual Try-On — LuxeMia"
-        description="Try on LuxeMia's luxury Indian ethnic wear virtually. Upload your photo and preview sarees, lehengas, and suits with our AI-powered virtual try-on."
+        title="Virtual Try-On — LuxeMia Boutique"
+        description="Try on LuxeMia Boutique's luxury Indian ethnic wear virtually. Upload your photo and preview sarees, lehengas, and suits with our AI-powered virtual try-on."
         canonical="https://luxemia.shop/virtual-try-on"
         noIndex={true}
       />

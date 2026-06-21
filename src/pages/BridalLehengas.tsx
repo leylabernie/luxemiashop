@@ -32,7 +32,7 @@ const bridalLehengaFaqs = [
   },
   {
     question: 'Can bridal lehengas be customized or altered?',
-    answer: 'LuxeMia supports fit options such as unstitched, semi-stitched, ready-to-wear, and made-to-measure where available on the product. For bridal shopping, review the product options carefully and contact LuxeMia before ordering if you need styling or sizing guidance.',
+    answer: 'LuxeMia Boutique supports fit options such as unstitched, semi-stitched, ready-to-wear, and made-to-measure where available on the product. For bridal shopping, review the product options carefully and contact LuxeMia Boutique before ordering if you need styling or sizing guidance.',
   },
   {
     question: 'What colors are popular for Indian bridal lehengas?',
@@ -121,7 +121,7 @@ const BridalLehengas = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Wedding-ready details</h3>
                 <p>
-                  Bridal shoppers often compare embroidery, fabric, dupatta styling, blouse fit, color, and delivery timing. LuxeMia brings these considerations into one focused collection path for Indian wedding planning.
+                  Bridal shoppers often compare embroidery, fabric, dupatta styling, blouse fit, color, and delivery timing. LuxeMia Boutique brings these considerations into one focused collection path for Indian wedding planning.
                 </p>
               </div>
               <div>
@@ -133,7 +133,7 @@ const BridalLehengas = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online bridal shopping support</h3>
                 <p>
-                  LuxeMia serves brides and families shopping from abroad with tracked shipping, fit options where available, and styling support before purchase. Review each product&apos;s sizing and fulfillment details before ordering.
+                  LuxeMia Boutique serves brides and families shopping from abroad with tracked shipping, fit options where available, and styling support before purchase. Review each product&apos;s sizing and fulfillment details before ordering.
                 </p>
               </div>
             </div>

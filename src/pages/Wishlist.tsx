@@ -46,7 +46,7 @@ const Wishlist = () => {
       const price = parseFloat(item.node.priceRange.minVariantPrice.amount);
       return `• ${item.node.title} — $${price.toFixed(2)}\n  https://luxemia.shop/product/${item.node.handle}`;
     });
-    const msg = `Hi! Here's my LuxeMia wishlist 💖\n\n${lines.join('\n\n')}\n\nBrowse all: https://luxemia.shop/collections`;
+    const msg = `Hi! Here's my LuxeMia Boutique wishlist 💖\n\n${lines.join('\n\n')}\n\nBrowse all: https://luxemia.shop/collections`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -61,8 +61,8 @@ const Wishlist = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="My Wishlist — LuxeMia"
-        description="View and manage your LuxeMia wishlist. Save your favorite luxury Indian ethnic wear pieces for later."
+        title="My Wishlist — LuxeMia Boutique"
+        description="View and manage your LuxeMia Boutique wishlist. Save your favorite luxury Indian ethnic wear pieces for later."
         canonical="https://luxemia.shop/wishlist"
         noIndex={true}
       />

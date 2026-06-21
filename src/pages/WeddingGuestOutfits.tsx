@@ -40,7 +40,7 @@ const weddingGuestFaqs = [
   },
   {
     question: 'Do you ship Indian wedding guest outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships Indian wedding guest outfits to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat shipping rate of $25 applies. All orders are fully tracked and insured. We recommend ordering 3-4 weeks before the wedding to ensure timely delivery.',
+    answer: 'Yes, LuxeMia Boutique ships Indian wedding guest outfits to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat shipping rate of $25 applies. All orders are fully tracked and insured. We recommend ordering 3-4 weeks before the wedding to ensure timely delivery.',
   },
   {
     question: 'Can I wear the same outfit to multiple events at an Indian wedding?',
@@ -84,7 +84,7 @@ const WeddingGuestOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Wedding Season</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Dress for every Indian wedding ceremony, from the colorful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia&apos;s wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colors. Whether you are a close family member, a colleague, or attending an Indian wedding for the first time, this guide-style collection helps you compare outfits by occasion.
+              Dress for every Indian wedding ceremony, from the colorful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia Boutique&apos;s wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colors. Whether you are a close family member, a colleague, or attending an Indian wedding for the first time, this guide-style collection helps you compare outfits by occasion.
             </p>
           </div>
         </section>

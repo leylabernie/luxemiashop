@@ -108,7 +108,7 @@ const documentHasStaticFaqPageSchema = (): boolean => {
 };
 
 const SEOHead = ({
-  title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
+  title = 'LuxeMia Boutique | Indian Ethnic Wear — Sarees & Lehengas',
   description = 'LuxeMia Boutique is a curated Indian ethnic wear store serving the USA, Canada, and Australia. Shop bridal lehengas, silk sarees, salwar suits, menswear, and wedding collections.',
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
@@ -177,7 +177,7 @@ const SEOHead = ({
         .map((item) => ({
           ...item,
           image: forceJpegForGmc(item.image || ''),
-          description: (item.description || collection.description || `Shop the ${item.name} at LuxeMia.`).replace(/\s+/g, ' ').trim(),
+          description: (item.description || collection.description || `Shop the ${item.name} at LuxeMia Boutique.`).replace(/\s+/g, ' ').trim(),
           currency: item.currency || 'USD',
         }))
         .filter((item) => item.image.length > 0)
@@ -250,7 +250,7 @@ const SEOHead = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
-      <meta property="og:site_name" content="LuxeMia" />
+      <meta property="og:site_name" content="LuxeMia Boutique" />
       <meta property="og:locale" content="en_US" />
 
       {/* Product-specific Open Graph */}
@@ -267,7 +267,7 @@ const SEOHead = ({
           <meta property="product:original_price:amount" content={product.originalPrice || product.price} />
           <meta property="product:original_price:currency" content={product.currency} />
           <meta property="product:availability" content={product.availability === 'InStock' ? 'in stock' : 'out of stock'} />
-          <meta property="product:brand" content={product.brand || 'LuxeMia'} />
+          <meta property="product:brand" content={product.brand || 'LuxeMia Boutique'} />
           <meta property="product:condition" content="new" />
           {product.category && <meta property="product:category" content={product.category} />}
           {product.color && <meta property="product:color" content={product.color} />}
@@ -281,12 +281,12 @@ const SEOHead = ({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={product ? gmcSafeImage : absoluteImage} />
-      <meta name="twitter:site" content="@LuxeMia" />
+      <meta name="twitter:site" content="@LuxeMia Boutique" />
       {product && <meta name="twitter:label1" content="Price" />}
       {product && <meta name="twitter:data1" content={`${product.currency} ${product.price}`} />}
 
       {/* Additional Meta */}
-      <meta name="author" content="LuxeMia" />
+      <meta name="author" content="LuxeMia Boutique" />
       <meta name="keywords" content="indian ethnic wear, sarees online, buy sarees online, indian sarees online, sarees online USA, bridal lehengas online, wedding lehenga, lehenga online, salwar kameez online, buy salwar kameez online USA, anarkali suits online, banarasi silk sarees, kanchipuram silk sarees, affordable indian ethnic wear, indian wedding outfits online, indian jewelry online, kundan jewelry online, indo western dresses, indo western outfits, indian clothing online, indian clothes USA, indian ethnic wear Australia, indian clothing Canada, sherwani online, kurta pajama online, buy indian ethnic wear online, best indian ethnic wear store, NRI indian clothing, indian wedding dress online, party wear lehenga online" />
 
       {/* Structured Data — only page-specific schemas (Organization & WebSite are in index.html) */}

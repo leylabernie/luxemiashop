@@ -111,7 +111,7 @@ const NewVisitorPopup = () => {
         toast.info('You\'re already subscribed! Check your email for your discount code.');
       } else {
         setIsSuccess(true);
-        toast.success('Welcome to LuxeMia! Your discount code is ready.');
+        toast.success('Welcome to LuxeMia Boutique! Your discount code is ready.');
         
         // Copy discount code to clipboard
         if (data?.discountCode) {
@@ -164,7 +164,7 @@ const NewVisitorPopup = () => {
                     </div>
                     
                     <p className="text-xs tracking-[0.2em] uppercase text-foreground/60 mb-2 font-medium">
-                      Welcome to LuxeMia
+                      Welcome to LuxeMia Boutique
                     </p>
                     
                     <h3 className="font-serif text-3xl mb-2">

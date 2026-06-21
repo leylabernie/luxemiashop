@@ -48,7 +48,7 @@ const receptionOutfitFaqs = [
   },
   {
     question: 'How should I choose reception outfits online?',
-    answer: 'Check the fabric, work type, blouse or top details, stitching options, delivery timing, and product photos before ordering. If your reception date is close, prioritize ready-to-wear or clearly available styles. For made-to-measure or custom fit options, allow extra time and contact LuxeMia before purchase if you need sizing support.',
+    answer: 'Check the fabric, work type, blouse or top details, stitching options, delivery timing, and product photos before ordering. If your reception date is close, prioritize ready-to-wear or clearly available styles. For made-to-measure or custom fit options, allow extra time and contact LuxeMia Boutique before purchase if you need sizing support.',
   },
 ];
 
@@ -136,7 +136,7 @@ const ReceptionOutfits = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online reception shopping support</h3>
                 <p>
-                  LuxeMia supports wedding reception shoppers with tracked shipping, fit options where available, and styling guidance before purchase. Review each product&apos;s sizing, stitching, and delivery details before ordering.
+                  LuxeMia Boutique supports wedding reception shoppers with tracked shipping, fit options where available, and styling guidance before purchase. Review each product&apos;s sizing, stitching, and delivery details before ordering.
                 </p>
               </div>
             </div>

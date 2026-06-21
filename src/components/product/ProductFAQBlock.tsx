@@ -82,13 +82,13 @@ const FAQ_ICONS = {
 const LEHENGA_FAQS: FAQEntry[] = [
   {
     question: 'What is included in a lehenga choli set?',
-    answer: 'Every lehenga choli set from LuxeMia includes three pieces: (1) the lehenga (flared skirt) with drawstring or zip closure, (2) the choli (blouse) in a matching or complementary design, and (3) the dupatta (scarf) with coordinated embroidery or border work. All three pieces are designed to be worn together as a complete ensemble. Some bridal lehengas may also include additional embellishments like a kamarbandh (waist chain) or second dupatta.',
+    answer: 'Every lehenga choli set from LuxeMia Boutique includes three pieces: (1) the lehenga (flared skirt) with drawstring or zip closure, (2) the choli (blouse) in a matching or complementary design, and (3) the dupatta (scarf) with coordinated embroidery or border work. All three pieces are designed to be worn together as a complete ensemble. Some bridal lehengas may also include additional embellishments like a kamarbandh (waist chain) or second dupatta.',
     category: 'general',
     icon: FAQ_ICONS.general,
   },
   {
     question: 'How do I choose the right lehenga size?',
-    answer: 'Measure your waist at the navel and your bust at the fullest point. Lehengas are sized primarily by waist measurement since the skirt sits at the waist. The choli (blouse) is sized by bust. LuxeMia offers sizes XS through XXL, plus complimentary custom tailoring with our Made to Measure (UDesign) service. For the best fit, choose a lehenga waist size 1-2 inches larger than your actual waist measurement to allow for comfortable sitting and movement.',
+    answer: 'Measure your waist at the navel and your bust at the fullest point. Lehengas are sized primarily by waist measurement since the skirt sits at the waist. The choli (blouse) is sized by bust. LuxeMia Boutique offers sizes XS through XXL, plus complimentary custom tailoring with our Made to Measure (UDesign) service. For the best fit, choose a lehenga waist size 1-2 inches larger than your actual waist measurement to allow for comfortable sitting and movement.',
     category: 'sizing',
     icon: FAQ_ICONS.sizing,
   },
@@ -124,13 +124,13 @@ const LEHENGA_FAQS: FAQEntry[] = [
   },
   {
     question: 'Can I return or exchange my lehenga if it does not fit?',
-    answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues. We strongly recommend reviewing our detailed Size Guide and contacting our customer service team before ordering if you have any questions about fit. For the best results, opt for Semi-Stitched sizing, which allows easy local alteration. The only exception is genuine shipping damage, which requires a mandatory unboxing video recorded at the time of delivery and must be reported within 48 hours.',
+    answer: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges for any reason, including sizing issues. We strongly recommend reviewing our detailed Size Guide and contacting our customer service team before ordering if you have any questions about fit. For the best results, opt for Semi-Stitched sizing, which allows easy local alteration. The only exception is genuine shipping damage, which requires a mandatory unboxing video recorded at the time of delivery and must be reported within 48 hours.',
     category: 'returns',
     icon: FAQ_ICONS.returns,
   },
   {
     question: 'What is the lehenga flare and how do I choose the right one?',
-    answer: 'Lehenga flare refers to the circumference of the skirt hem. A standard lehenga has a 3-4 meter flare, suitable for most body types and occasions. A full bridal flare (5-6 meters) creates maximum volume and drama, ideal for brides and grand entrances. A minimal flare (2-3 meters) is lighter and easier to manage, perfect for pre-wedding events like mehndi and sangeet where you will be moving and dancing. The flare is supported by a can-can (structured netting) sewn underneath — LuxeMia lehengas include this support by default.',
+    answer: 'Lehenga flare refers to the circumference of the skirt hem. A standard lehenga has a 3-4 meter flare, suitable for most body types and occasions. A full bridal flare (5-6 meters) creates maximum volume and drama, ideal for brides and grand entrances. A minimal flare (2-3 meters) is lighter and easier to manage, perfect for pre-wedding events like mehndi and sangeet where you will be moving and dancing. The flare is supported by a can-can (structured netting) sewn underneath — LuxeMia Boutique lehengas include this support by default.',
     category: 'general',
     icon: FAQ_ICONS.general,
   },
@@ -145,7 +145,7 @@ const LEHENGA_FAQS: FAQEntry[] = [
 const SAREE_FAQS: FAQEntry[] = [
   {
     question: 'Is a blouse piece included with the saree?',
-    answer: 'Yes, every saree from LuxeMia includes a matching or contrast blouse piece (approximately 0.8 to 1 meter of fabric) attached to the saree pallu end. The blouse piece fabric matches the saree body or border design. You will need to get the blouse stitched by a tailor according to your measurements. LuxeMia also offers Ready to Wear and Made to Measure tailoring services where we can stitch the blouse for you — simply select your tailoring preference when ordering and submit your blouse measurements after checkout.',
+    answer: 'Yes, every saree from LuxeMia Boutique includes a matching or contrast blouse piece (approximately 0.8 to 1 meter of fabric) attached to the saree pallu end. The blouse piece fabric matches the saree body or border design. You will need to get the blouse stitched by a tailor according to your measurements. LuxeMia Boutique also offers Ready to Wear and Made to Measure tailoring services where we can stitch the blouse for you — simply select your tailoring preference when ordering and submit your blouse measurements after checkout.',
     category: 'general',
     icon: FAQ_ICONS.general,
   },
@@ -181,13 +181,13 @@ const SAREE_FAQS: FAQEntry[] = [
   },
   {
     question: 'What type of blouse design works best with a silk saree?',
-    answer: 'For Banarasi and Kanchipuram silk sarees, a high-neck or boat-neck blouse with elbow-length or full sleeves creates a classic, elegant look. Deep U-back and keyhole back designs add modern sophistication. For party-wear georgette sarees, a sleeveless or halter-neck blouse works beautifully. A well-fitted blouse with proper darts and structure is essential — the blouse can make or break the saree look. LuxeMia offers custom blouse stitching through our Ready to Wear (+$15) and Made to Measure (+$25) services with neckline and sleeve customization options.',
+    answer: 'For Banarasi and Kanchipuram silk sarees, a high-neck or boat-neck blouse with elbow-length or full sleeves creates a classic, elegant look. Deep U-back and keyhole back designs add modern sophistication. For party-wear georgette sarees, a sleeveless or halter-neck blouse works beautifully. A well-fitted blouse with proper darts and structure is essential — the blouse can make or break the saree look. LuxeMia Boutique offers custom blouse stitching through our Ready to Wear (+$15) and Made to Measure (+$25) services with neckline and sleeve customization options.',
     category: 'styling',
     icon: FAQ_ICONS.styling,
   },
   {
     question: 'Can I return a saree if the color does not match my expectations?',
-    answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including color mismatch or change of mind. We make every effort to display accurate product colors through high-resolution images taken under professional lighting. However, screen variations may cause slight color differences. If you need precise color matching, contact our team via WhatsApp at +1 (215) 341-9990 and we can share additional photos or a video of the actual product before you order. For genuine shipping damage, a mandatory unboxing video is required and the claim must be filed within 48 hours of delivery.',
+    answer: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges for any reason, including color mismatch or change of mind. We make every effort to display accurate product colors through high-resolution images taken under professional lighting. However, screen variations may cause slight color differences. If you need precise color matching, contact our team via WhatsApp at +1 (215) 341-9990 and we can share additional photos or a video of the actual product before you order. For genuine shipping damage, a mandatory unboxing video is required and the claim must be filed within 48 hours of delivery.',
     category: 'returns',
     icon: FAQ_ICONS.returns,
   },
@@ -199,7 +199,7 @@ const SAREE_FAQS: FAQEntry[] = [
   },
   {
     question: 'How do I identify an authentic handloom saree?',
-    answer: 'Authentic handloom sarees have these telltale signs: (1) The reverse side shows the weaving pattern clearly — machine-made sarees have a flat, uniform back. (2) Slight irregularities in the weave and minor thread bunching are normal in handlooms — perfect uniformity indicates power-loom production. (3) Handloom Banarasi sarees have silk mark tags and GI (Geographical Indication) certifications. (4) Kanchipuram sarees have a distinctive zari test — scratch the zari gently; real zari (silver or gold-coated) will show a copper or silver core, while fake zari is simply plastic thread. LuxeMia sources all handloom sarees directly from certified weavers in Varanasi and Kanchipuram with full authenticity documentation.',
+    answer: 'Authentic handloom sarees have these telltale signs: (1) The reverse side shows the weaving pattern clearly — machine-made sarees have a flat, uniform back. (2) Slight irregularities in the weave and minor thread bunching are normal in handlooms — perfect uniformity indicates power-loom production. (3) Handloom Banarasi sarees have silk mark tags and GI (Geographical Indication) certifications. (4) Kanchipuram sarees have a distinctive zari test — scratch the zari gently; real zari (silver or gold-coated) will show a copper or silver core, while fake zari is simply plastic thread. LuxeMia Boutique sources all handloom sarees directly from certified weavers in Varanasi and Kanchipuram with full authenticity documentation.',
     category: 'fabric',
     icon: FAQ_ICONS.fabric,
   },
@@ -214,7 +214,7 @@ const SUIT_FAQS: FAQEntry[] = [
   },
   {
     question: 'How do I select the correct size for a salwar kameez?',
-    answer: 'For salwar kameez suits, your bust measurement is the most important sizing factor. Measure around the fullest part of your bust with the tape level across your back. Also measure your waist at the navel and hips at the widest point. LuxeMia offers sizes XS (Bust 32") through XXL (Bust 44"), plus custom sizing. If you fall between sizes, choose the larger size — it is easier to take a garment in than let it out. For Semi-Stitched suits, the side seams are left open for easy local alteration. For Ready to Wear, we stitch to your exact measurements. Length can always be adjusted by a local tailor.',
+    answer: 'For salwar kameez suits, your bust measurement is the most important sizing factor. Measure around the fullest part of your bust with the tape level across your back. Also measure your waist at the navel and hips at the widest point. LuxeMia Boutique offers sizes XS (Bust 32") through XXL (Bust 44"), plus custom sizing. If you fall between sizes, choose the larger size — it is easier to take a garment in than let it out. For Semi-Stitched suits, the side seams are left open for easy local alteration. For Ready to Wear, we stitch to your exact measurements. Length can always be adjusted by a local tailor.',
     category: 'sizing',
     icon: FAQ_ICONS.sizing,
   },
@@ -238,7 +238,7 @@ const SUIT_FAQS: FAQEntry[] = [
   },
   {
     question: 'What is the difference between semi-stitched and unstitched salwar kameez?',
-    answer: 'A semi-stitched salwar kameez comes with pre-cut fabric pieces that are partially sewn — the main body is assembled but side seams are left open for easy size adjustment. You can have a local tailor take it in or let it out within 2-3 inches. An unstitched salwar kameez is fabric only — you receive the material for the kameez, salwar, and dupatta, which you then have stitched completely by a tailor from scratch. Semi-stitched is faster and requires minimal tailoring. Unstitched gives maximum customization freedom but requires more time and a skilled tailor. LuxeMia offers Semi-Stitched at no extra charge.',
+    answer: 'A semi-stitched salwar kameez comes with pre-cut fabric pieces that are partially sewn — the main body is assembled but side seams are left open for easy size adjustment. You can have a local tailor take it in or let it out within 2-3 inches. An unstitched salwar kameez is fabric only — you receive the material for the kameez, salwar, and dupatta, which you then have stitched completely by a tailor from scratch. Semi-stitched is faster and requires minimal tailoring. Unstitched gives maximum customization freedom but requires more time and a skilled tailor. LuxeMia Boutique offers Semi-Stitched at no extra charge.',
     category: 'general',
     icon: FAQ_ICONS.general,
   },
@@ -250,13 +250,13 @@ const SUIT_FAQS: FAQEntry[] = [
   },
   {
     question: 'What is the return policy for salwar kameez suits?',
-    answer: 'All sales are final. LuxeMia does not accept returns or exchanges for salwar kameez suits or any other products. This policy applies to all reasons including sizing issues, color mismatch, and change of mind. We encourage all customers to review our detailed Size Guide, fabric descriptions, and product images carefully before ordering. If you have sizing questions, contact our customer service team via WhatsApp at +1 (215) 341-9990 before placing your order — we are happy to provide guidance. The only exception is genuine shipping damage, which must be reported within 48 hours of delivery with a mandatory unboxing video as proof.',
+    answer: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges for salwar kameez suits or any other products. This policy applies to all reasons including sizing issues, color mismatch, and change of mind. We encourage all customers to review our detailed Size Guide, fabric descriptions, and product images carefully before ordering. If you have sizing questions, contact our customer service team via WhatsApp at +1 (215) 341-9990 before placing your order — we are happy to provide guidance. The only exception is genuine shipping damage, which must be reported within 48 hours of delivery with a mandatory unboxing video as proof.',
     category: 'returns',
     icon: FAQ_ICONS.returns,
   },
   {
     question: 'Can I get the suit tailored to my exact measurements?',
-    answer: 'Yes. LuxeMia offers a Made to Measure (UDesign) bespoke tailoring service for $25 above the product price. With this service, you can customize: (1) Neckline — round neck, deep U-neck, square neck, or sweetheart. (2) Sleeve style — full sleeve, 3/4 sleeve, half sleeve, sleeveless, or cap sleeve. (3) Bottom style — churidar, salwar, semi patiala, or straight pant/palazzo. After placing your order, submit your exact measurements through My Account → My Orders. Our master tailors with decades of ethnic wear experience will craft your garment to your specifications. Made to Measure adds 5 business days to the dispatch timeline.',
+    answer: 'Yes. LuxeMia Boutique offers a Made to Measure (UDesign) bespoke tailoring service for $25 above the product price. With this service, you can customize: (1) Neckline — round neck, deep U-neck, square neck, or sweetheart. (2) Sleeve style — full sleeve, 3/4 sleeve, half sleeve, sleeveless, or cap sleeve. (3) Bottom style — churidar, salwar, semi patiala, or straight pant/palazzo. After placing your order, submit your exact measurements through My Account → My Orders. Our master tailors with decades of ethnic wear experience will craft your garment to your specifications. Made to Measure adds 5 business days to the dispatch timeline.',
     category: 'sizing',
     icon: FAQ_ICONS.sizing,
   },
@@ -277,7 +277,7 @@ const MENSWEAR_FAQS: FAQEntry[] = [
   },
   {
     question: 'How do I choose the right sherwani size?',
-    answer: 'For sherwanis, measure your chest at the fullest point, your shoulder width from seam to seam, and your height. LuxeMia sherwanis are available in standard sizes (38-48) that correspond to chest measurements in inches. The sherwani should fit comfortably over a thin kurta — do not size down to accommodate layering. The length should fall at or just below the knee. Sleeve length should end at the wrist bone. If you fall between sizes, choose the larger size and have it tailored locally. For the best fit, opt for our Made to Measure service where we customize the garment to your exact chest, shoulder, sleeve, and length measurements for an additional $25.',
+    answer: 'For sherwanis, measure your chest at the fullest point, your shoulder width from seam to seam, and your height. LuxeMia Boutique sherwanis are available in standard sizes (38-48) that correspond to chest measurements in inches. The sherwani should fit comfortably over a thin kurta — do not size down to accommodate layering. The length should fall at or just below the knee. Sleeve length should end at the wrist bone. If you fall between sizes, choose the larger size and have it tailored locally. For the best fit, opt for our Made to Measure service where we customize the garment to your exact chest, shoulder, sleeve, and length measurements for an additional $25.',
     category: 'sizing',
     icon: FAQ_ICONS.sizing,
   },
@@ -301,13 +301,13 @@ const MENSWEAR_FAQS: FAQEntry[] = [
   },
   {
     question: 'What should the groom wear with a sherwani?',
-    answer: 'A groom sherwani ensemble includes several key elements: (1) The sherwani itself — in a ceremonial color like deep maroon, ivory, navy, or gold. (2) A churidar or tailored trousers in a matching or complementary shade. (3) A dupatta or stole draped over one shoulder or across both — often in silk or velvet with embroidered edges. (4) A safa (turban) or pagri in matching or contrast fabric with a sarpech (turban ornament). (5) Mojaris or embroidered juttis in gold or matching leather. (6) A brooch or lapel pin on the sherwani for a regal finishing touch. Many grooms also add a kantha (necklace) or pocket watch for additional ceremony detail. LuxeMia offers coordinating stole and accessory recommendations with each sherwani.',
+    answer: 'A groom sherwani ensemble includes several key elements: (1) The sherwani itself — in a ceremonial color like deep maroon, ivory, navy, or gold. (2) A churidar or tailored trousers in a matching or complementary shade. (3) A dupatta or stole draped over one shoulder or across both — often in silk or velvet with embroidered edges. (4) A safa (turban) or pagri in matching or contrast fabric with a sarpech (turban ornament). (5) Mojaris or embroidered juttis in gold or matching leather. (6) A brooch or lapel pin on the sherwani for a regal finishing touch. Many grooms also add a kantha (necklace) or pocket watch for additional ceremony detail. LuxeMia Boutique offers coordinating stole and accessory recommendations with each sherwani.',
     category: 'styling',
     icon: FAQ_ICONS.styling,
   },
   {
     question: 'Can I return a sherwani if it does not fit properly?',
-    answer: 'All sales are final. LuxeMia does not accept returns or exchanges for sherwanis or any other products for any reason, including fit issues. We strongly recommend using our Made to Measure service for sherwanis, which ensures a perfect custom fit based on your exact measurements. Alternatively, choose Semi-Stitched sizing, which allows a local tailor to make adjustments easily. Before ordering, review our detailed Size Guide carefully and contact our customer service team via WhatsApp at +1 (215) 341-9990 if you have any sizing questions. For genuine shipping damage, a mandatory unboxing video is required, and claims must be filed within 48 hours of delivery.',
+    answer: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges for sherwanis or any other products for any reason, including fit issues. We strongly recommend using our Made to Measure service for sherwanis, which ensures a perfect custom fit based on your exact measurements. Alternatively, choose Semi-Stitched sizing, which allows a local tailor to make adjustments easily. Before ordering, review our detailed Size Guide carefully and contact our customer service team via WhatsApp at +1 (215) 341-9990 if you have any sizing questions. For genuine shipping damage, a mandatory unboxing video is required, and claims must be filed within 48 hours of delivery.',
     category: 'returns',
     icon: FAQ_ICONS.returns,
   },
@@ -334,7 +334,7 @@ const MENSWEAR_FAQS: FAQEntry[] = [
 const OTHER_FAQS: FAQEntry[] = [
   {
     question: 'What sizes are available?',
-    answer: 'LuxeMia offers sizes XS through XXL, plus custom sizing. XS fits a 32" bust, S fits 34", M fits 36", L fits 38", XL fits 40", and XXL fits 44". We also offer complimentary Semi-Stitched sizing, which allows easy local alteration. For a perfect custom fit, choose our Made to Measure (UDesign) service.',
+    answer: 'LuxeMia Boutique offers sizes XS through XXL, plus custom sizing. XS fits a 32" bust, S fits 34", M fits 36", L fits 38", XL fits 40", and XXL fits 44". We also offer complimentary Semi-Stitched sizing, which allows easy local alteration. For a perfect custom fit, choose our Made to Measure (UDesign) service.',
     category: 'sizing',
     icon: FAQ_ICONS.sizing,
   },
@@ -352,13 +352,13 @@ const OTHER_FAQS: FAQEntry[] = [
   },
   {
     question: 'Can I return or exchange if it does not fit?',
-    answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video and must be reported within 48 hours.',
+    answer: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video and must be reported within 48 hours.',
     category: 'returns',
     icon: FAQ_ICONS.returns,
   },
   {
     question: 'Is custom tailoring available?',
-    answer: 'Yes. LuxeMia offers three tailoring options: Semi-Stitched (included free, with open side seams for easy alteration), Ready to Wear (+$15, fully stitched to standard measurements), and Made to Measure (+$25, bespoke with 200+ style combinations for neckline, sleeve, and bottom).',
+    answer: 'Yes. LuxeMia Boutique offers three tailoring options: Semi-Stitched (included free, with open side seams for easy alteration), Ready to Wear (+$15, fully stitched to standard measurements), and Made to Measure (+$25, bespoke with 200+ style combinations for neckline, sleeve, and bottom).',
     category: 'general',
     icon: FAQ_ICONS.general,
   },
@@ -376,7 +376,7 @@ const OTHER_FAQS: FAQEntry[] = [
   },
   {
     question: 'What fabric is this made from?',
-    answer: 'LuxeMia garments are crafted from premium fabrics sourced directly from India\'s finest textile centers — Surat (embroidery & synthetics), Varanasi (Banarasi silk & brocade), and Jaipur (prints & gota patti). Each piece undergoes thorough quality inspection before shipping.',
+    answer: 'LuxeMia Boutique garments are crafted from premium fabrics sourced directly from India\'s finest textile centers — Surat (embroidery & synthetics), Varanasi (Banarasi silk & brocade), and Jaipur (prints & gota patti). Each piece undergoes thorough quality inspection before shipping.',
     category: 'fabric',
     icon: FAQ_ICONS.fabric,
   },
@@ -478,7 +478,7 @@ export const ProductFAQBlock = ({ productName, productType, fabric, price }: Pro
         <p className="text-sm text-muted-foreground">
           Everything you need to know about the {productName}. Can&apos;t find your answer?{' '}
           <a
-            href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20have%20a%20question%20about%20a%20product"
+            href="https://wa.me/12153419990?text=Hi%20LuxeMia Boutique%2C%20I%20have%20a%20question%20about%20a%20product"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:underline inline-flex items-center gap-1"
@@ -580,7 +580,7 @@ export const ProductFAQBlock = ({ productName, productType, fabric, price }: Pro
         <div className="flex items-start gap-3">
           <ShieldCheck className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
           <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">Quality Guaranteed:</strong> Every LuxeMia garment undergoes
+            <strong className="text-foreground">Quality Guaranteed:</strong> Every LuxeMia Boutique garment undergoes
             a thorough multi-point quality inspection before shipping. We check stitching, embroidery integrity,
             fabric quality, color accuracy, and measurements to ensure you receive exactly what you ordered.
           </p>

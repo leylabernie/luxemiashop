@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
       
       <h2>Expert Styling Tips</h2>
-      <p>Trust your instincts when you find "the one." Start your search at <a href="/lehengas">LuxeMia Bridal Lehengas</a>. Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
+      <p>Trust your instincts when you find "the one." Start your search at <a href="/lehengas">LuxeMia Boutique Bridal Lehengas</a>. Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
       
       <h2>Continue Reading</h2>
       <ul>
@@ -75,7 +75,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-season-2026-outfit-guide">Indian Wedding Season 2026: Complete Outfit Guide</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-05',
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
@@ -100,7 +100,7 @@ export const blogPosts: BlogPost[] = [
       <p>Deeper and more sophisticated, maroon lehengas are perfect for winter weddings. They photograph exceptionally well and complement both gold and silver jewelry.</p>
       
       <h3>Wine Wonder</h3>
-      <p>A modern alternative to traditional red. Shop <a href="/lehengas">wine lehengas at LuxeMia</a>. A contemporary choice, wine-colored lehengas offer depth and contemporary appeal. Ideal for evening ceremonies and receptions.</p>
+      <p>A modern alternative to traditional red. Shop <a href="/lehengas">wine lehengas at LuxeMia Boutique</a>. A contemporary choice, wine-colored lehengas offer depth and contemporary appeal. Ideal for evening ceremonies and receptions.</p>
       
       <h3>Coral Crush</h3>
       <p>For summer brides, coral offers a fresh take on red. It's lighter, more playful, and perfect for destination weddings.</p>
@@ -123,7 +123,7 @@ export const blogPosts: BlogPost[] = [
       <h2>How to Style Your Red Lehenga</h2>
       <p>Keep jewelry harmonious—kundan, polki, or temple gold work well with red. For makeup, go for nude lips and dramatic eyes, or classic red lips with subtle eye makeup. Never both dramatic.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-04',
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
@@ -141,7 +141,7 @@ export const blogPosts: BlogPost[] = [
       <p>Your wedding dress doesn't need to cost a fortune to look stunning. With smart shopping strategies and the right choices, you can find gorgeous bridal wear under $500 that photographs beautifully and makes you feel like a queen.</p>
       
       <h2>Where to Find Budget-Friendly Bridal Wear</h2>
-      <h3>Online Boutiques (Like LuxeMia!)</h3>
+      <h3>Online Boutiques (Like LuxeMia Boutique!)</h3>
       <p>Online stores often offer designer-quality pieces at lower prices due to reduced overhead costs. Plus, you can compare options easily and often find exclusive online discounts.</p>
       
       <h3>Local Markets</h3>
@@ -172,9 +172,9 @@ export const blogPosts: BlogPost[] = [
       </ul>
       
       <h2>Our Top Picks Under $500</h2>
-      <p>At LuxeMia, we've curated beautiful bridal options that balance quality, craftsmanship, and affordability. Browse our collection to find pieces that look like they cost twice the price.</p>
+      <p>At LuxeMia Boutique, we've curated beautiful bridal options that balance quality, craftsmanship, and affordability. Browse our collection to find pieces that look like they cost twice the price.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-03',
     updatedAt: '2026-01-07',
     category: 'Shopping Guide',
@@ -240,7 +240,7 @@ export const blogPosts: BlogPost[] = [
         <li>Don't shy away from bright lips—they look amazing!</li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-06',
     updatedAt: '2026-01-07',
     category: 'Styling Tips',
@@ -310,7 +310,7 @@ export const blogPosts: BlogPost[] = [
         <li>Consider family heirlooms for sentimental value</li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-05',
     updatedAt: '2026-01-07',
     category: 'Wedding Guide',
@@ -375,7 +375,7 @@ export const blogPosts: BlogPost[] = [
         <li>Light layered necklaces or one statement piece</li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-02',
     updatedAt: '2026-01-06',
     category: 'Styling Tips',
@@ -443,7 +443,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Final Tips</h2>
       <p>Trust your instincts – you'll know when you've found "the one." Take photos during trials to see how the lehenga looks in different lighting. And most importantly, choose something that makes you feel confident and beautiful on your special day.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-01-01',
     updatedAt: '2026-01-02',
     category: 'Bridal Guide',
@@ -510,7 +510,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Sustainable Accessories</h2>
       <p>From biodegradable floral jewelry for mehendi to upcycled metal accessories, sustainable options are available for every wedding event. Brides are also choosing lab-grown diamonds and ethical gemstones.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2025-12-20',
     updatedAt: '2026-01-02',
     category: 'Wedding Trends',
@@ -593,7 +593,7 @@ export const blogPosts: BlogPost[] = [
         <li>Embellished headbands for modern looks</li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2025-12-15',
     updatedAt: '2025-12-28',
     category: 'Styling Tips',
@@ -707,7 +707,7 @@ export const blogPosts: BlogPost[] = [
         <li>Restoration of antique pieces</li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2025-12-10',
     updatedAt: '2025-12-20',
     category: 'Care Guide',
@@ -724,7 +724,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <h2>What Is a Sharara Suit and Why Is It Trending in 2026?</h2>
       <p>The <strong>sharara suit</strong> is one of the most glamorous silhouettes in Indian ethnic fashion. Originating from the Mughal era, a sharara set features a short or long kameez paired with dramatically flared pants that widen from the knee, creating a stunning, floor-sweeping effect. In 2026, the <strong>designer sharara suit</strong> has made a powerful comeback, blending traditional elegance with contemporary styling that appeals to women across the US, UK, and Canada.</p>
-      <p>Whether you are shopping for an <strong>Eid sharara outfit</strong>, a <strong>wedding sharara dress</strong>, or a versatile <strong>party wear sharara set</strong>, this guide covers every style, fabric, and occasion to help you make the perfect choice. At <a href="/suits">LuxeMia's Suits Collection</a>, we curate the finest sharara designs from top South Asian designers.</p>
+      <p>Whether you are shopping for an <strong>Eid sharara outfit</strong>, a <strong>wedding sharara dress</strong>, or a versatile <strong>party wear sharara set</strong>, this guide covers every style, fabric, and occasion to help you make the perfect choice. At <a href="/suits">LuxeMia Boutique's Suits Collection</a>, we curate the finest sharara designs from top South Asian designers.</p>
 
       <h2>Types of Sharara Suits: Find Your Perfect Silhouette</h2>
 
@@ -771,22 +771,22 @@ export const blogPosts: BlogPost[] = [
       <h2>How to Choose the Right Sharara Suit Online</h2>
 
       <h3>Sizing and Fit</h3>
-      <p>When you <strong>buy sharara suit online USA</strong>, accurate measurements are crucial. Use our <a href="/size-guide">size guide</a> for Indian salwar kameez to determine your perfect fit. Most <strong>readymade sharara suits</strong> come in standard sizes (36-44), but at LuxeMia we also offer <strong>custom size Indian dresses</strong> for the perfect fit.</p>
+      <p>When you <strong>buy sharara suit online USA</strong>, accurate measurements are crucial. Use our <a href="/size-guide">size guide</a> for Indian salwar kameez to determine your perfect fit. Most <strong>readymade sharara suits</strong> come in standard sizes (36-44), but at LuxeMia Boutique we also offer <strong>custom size Indian dresses</strong> for the perfect fit.</p>
 
       <h3>Sharara vs Palazzo Suit: Key Differences</h3>
       <p>The <strong>sharara vs palazzo suit difference</strong> is simple: sharara pants flare from the knee, creating a bell shape, while <strong>palazzo suits</strong> have straight, wide legs from waist to hem. Shararas are more dramatic and traditional, while <strong>wide leg palazzo suits</strong> offer a more modern, minimalist look. Both are available in our <a href="/suits">suits collection</a>.</p>
 
       <h3>Budget Guide</h3>
-      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia offers <strong>sharara suits online</strong> starting from just $50, with quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. We ship worldwide with flat rate shipping.</p>
+      <p>Looking for <strong>affordable sharara suits under $200</strong>? LuxeMia Boutique offers <strong>sharara suits online</strong> starting from just $50, with quality embroidery and fabrics. For wedding-wear, expect to invest $150-$400 for a heavily embellished piece. We ship worldwide with flat rate shipping.</p>
 
       <h2>Styling Your Sharara Suit</h2>
       <p>Complete your look with the right accessories. Heavy <a href="/collections?category=jewelry">kundan jewelry sets</a> pair beautifully with formal shararas, while delicate pieces suit casual styles. Match your dupatta draping style to the occasion — a front drape for formal events, a one-shoulder style for modern appeal. Add juttis or embellished heels to finish the look.</p>
 
-      <h2>Shop Sharara Suits at LuxeMia</h2>
+      <h2>Shop Sharara Suits at LuxeMia Boutique</h2>
       <p>Ready to find your perfect sharara? Browse our complete <a href="/suits">sharara suit collection</a> featuring the <strong>latest sharara collection 2026</strong> with <strong>stitched sharara suits</strong>. Free shipping on orders over $350. Every piece is quality-checked before shipping from India.</p>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-08',
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
@@ -803,7 +803,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <h2>Why Pakistani Suits Are the Most Versatile Indian Ethnic Wear</h2>
       <p>The <strong>Pakistani suit</strong> has earned its place as one of the most beloved silhouettes in South Asian fashion. Known for its elegant cuts, beautiful embroidery, and comfortable fit, <strong>Pakistani salwar kameez</strong> suits every body type and every occasion — from daily wear to grand celebrations. If you are looking to <strong>buy Pakistani clothes online</strong> in the USA, this guide covers everything from styles and fabrics to sizing and care.</p>
-      <p>At <a href="/suits">LuxeMia</a>, we carry an extensive collection of <strong>designer Pakistani suits</strong>, <strong>anarkali dresses</strong>, and <strong>palazzo suits</strong> shipped directly to your door with free US shipping.</p>
+      <p>At <a href="/suits">LuxeMia Boutique</a>, we carry an extensive collection of <strong>designer Pakistani suits</strong>, <strong>anarkali dresses</strong>, and <strong>palazzo suits</strong> shipped directly to your door with free US shipping.</p>
 
       <h2>Understanding Pakistani Suit Styles</h2>
 
@@ -825,7 +825,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Fabrics That Define Pakistani Suits</h2>
 
       <h3>Chiffon Pakistani Suit</h3>
-      <p>A <strong>Pakistani chiffon suit</strong> is the ultimate luxury choice. Pure chiffon creates a weightless, flowing drape that is especially beautiful in <strong>Pakistani suits for Eid</strong>. The fabric takes embroidery gorgeously and is ideal for warm-weather celebrations. <strong>Chiffon salwar kameez</strong> in pastel shades are among our bestsellers at LuxeMia.</p>
+      <p>A <strong>Pakistani chiffon suit</strong> is the ultimate luxury choice. Pure chiffon creates a weightless, flowing drape that is especially beautiful in <strong>Pakistani suits for Eid</strong>. The fabric takes embroidery gorgeously and is ideal for warm-weather celebrations. <strong>Chiffon salwar kameez</strong> in pastel shades are among our bestsellers at LuxeMia Boutique.</p>
 
       <h3>Georgette Pakistani Suit</h3>
       <p>Similar to chiffon but slightly heavier, <strong>Pakistani georgette suit</strong> offers better structure while maintaining an elegant drape. Faux georgette is a budget-friendly option that looks nearly identical to pure georgette. This fabric dominates <strong>embroidered Indian dress</strong> collections for its versatility.</p>
@@ -850,23 +850,23 @@ export const blogPosts: BlogPost[] = [
       <h2>How to Buy Pakistani Suits Online in the USA</h2>
 
       <h3>Getting Your Size Right</h3>
-      <p>The number one concern when you <strong>buy Pakistani suit online USA</strong> is sizing. South Asian sizes differ from Western sizing. Use our detailed <a href="/size-guide">size guide for Indian salwar kameez</a> — you will need bust, waist, hip, and kameez length measurements. At LuxeMia, we offer <strong>readymade Indian clothes</strong> in sizes 36-46, plus <strong>custom size Indian dress</strong> options.</p>
+      <p>The number one concern when you <strong>buy Pakistani suit online USA</strong> is sizing. South Asian sizes differ from Western sizing. Use our detailed <a href="/size-guide">size guide for Indian salwar kameez</a> — you will need bust, waist, hip, and kameez length measurements. At LuxeMia Boutique, we offer <strong>readymade Indian clothes</strong> in sizes 36-46, plus <strong>custom size Indian dress</strong> options.</p>
 
       <h3>Understanding Stitching Options</h3>
-      <p>When shopping for <strong>stitched salwar kameez USA</strong>, check whether the suit is fully stitched (ready to wear), semi-stitched (requires minor tailoring), or unstitched (fabric only). LuxeMia specializes in <strong>readymade Pakistani suits</strong> so you can wear them right out of the box.</p>
+      <p>When shopping for <strong>stitched salwar kameez USA</strong>, check whether the suit is fully stitched (ready to wear), semi-stitched (requires minor tailoring), or unstitched (fabric only). LuxeMia Boutique specializes in <strong>readymade Pakistani suits</strong> so you can wear them right out of the box.</p>
 
       <h3>What to Look for in Product Photos</h3>
-      <p>Always check fabric closeups, embroidery detail shots, and size charts. Reputable <strong>Indian boutiques online USA</strong> like LuxeMia provide multiple angles and detailed descriptions for every piece. Look for information about lining, dupatta fabric, and bottom style.</p>
+      <p>Always check fabric closeups, embroidery detail shots, and size charts. Reputable <strong>Indian boutiques online USA</strong> like LuxeMia Boutique provide multiple angles and detailed descriptions for every piece. Look for information about lining, dupatta fabric, and bottom style.</p>
 
       <h2>Styling Pakistani Suits and Anarkalis</h2>
       <p>Accessorize your <strong>Pakistani festive wear</strong> with matching <a href="/collections?category=jewelry">kundan jewelry</a> or polki sets. For anarkalis, statement earrings and a delicate maang tikka create a stunning bridal or festive look. Keep footwear elegant — embroidered juttis for traditional occasions, stilettos for modern events.</p>
       <p>The dupatta offers endless styling possibilities: classic front drape for formal events, one-shoulder for a modern twist, or wrapped as a hijab for modest styling. Each method transforms the same outfit into a completely different look.</p>
 
-      <h2>Shop Pakistani Suits at LuxeMia</h2>
-      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With flat rate shipping worldwide (free on orders over $350) and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless.</p>
+      <h2>Shop Pakistani Suits at LuxeMia Boutique</h2>
+      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Boutique Suits</a>. With flat rate shipping worldwide (free on orders over $350) and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless.</p>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-08',
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
@@ -883,7 +883,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <h2>The Lehenga Choli: Your Wedding Season Power Outfit</h2>
       <p>No outfit commands attention at an Indian wedding quite like a <strong>lehenga choli</strong>. Whether you are the bride, a bridesmaid, or a guest, the right <strong>designer lehenga</strong> paired with the perfect blouse and styling can make you the best-dressed person at every function. This guide breaks down exactly how to style your <strong>wedding lehenga</strong> for every event — from the <strong>mehndi ceremony dress</strong> to the grand <strong>reception lehenga</strong>.</p>
-      <p>Browse our complete <a href="/lehengas">lehenga choli collection</a> at LuxeMia for the latest 2026 designs.</p>
+      <p>Browse our complete <a href="/lehengas">lehenga choli collection</a> at LuxeMia Boutique for the latest 2026 designs.</p>
 
       <h2>Lehenga for Mehndi Ceremony</h2>
       <h3>The Look: Fun, Colorful, Easy to Move In</h3>
@@ -952,13 +952,13 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Mid-range $300-$600:</strong> Designer-quality fabrics with detailed hand embroidery — great for bridesmaids and engagement</li>
         <li><strong>Premium $600+:</strong> Heavy bridal pieces with couture-level craftsmanship — for the bride</li>
       </ul>
-      <p>At LuxeMia, our <strong>lehenga choli online USA</strong> collection starts at just $80, with free shipping on orders over $350. Browse our <a href="/lehengas">complete lehenga collection</a>.</p>
+      <p>At LuxeMia Boutique, our <strong>lehenga choli online USA</strong> collection starts at just $80, with free shipping on orders over $350. Browse our <a href="/lehengas">complete lehenga collection</a>.</p>
 
       <h2>Complete Your Lehenga Look</h2>
       <p>The right accessories elevate your lehenga from beautiful to breathtaking. Match heavy lehengas with statement <a href="/collections?category=jewelry">kundan necklace sets</a>, maang tikka, and jhumka earrings. For lighter lehengas, choose delicate polki or pearl pieces. Potli bags and embroidered clutches are the perfect finishing touch.</p>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-08',
     updatedAt: '2026-04-08',
     category: 'Styling Tips',
@@ -975,7 +975,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <h2>Your Complete Indian Wedding Wardrobe 2026</h2>
       <p>An <strong>Indian wedding</strong> is not one event — it is a multi-day celebration with distinct ceremonies, each requiring a different outfit. Whether you are the bride, groom, or guest, planning your <strong>Indian wedding outfits</strong> in advance ensures you look stunning at every function. This guide covers the complete <strong>Indian wedding season 2026</strong> wardrobe, from intimate haldi ceremonies to grand receptions.</p>
-      <p>Shop the complete wedding wardrobe at LuxeMia: <a href="/suits">Suits</a>, <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/menswear">Menswear</a>.</p>
+      <p>Shop the complete wedding wardrobe at LuxeMia Boutique: <a href="/suits">Suits</a>, <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/menswear">Menswear</a>.</p>
 
       <h2>Haldi Ceremony Outfit</h2>
       <h3>For the Bride</h3>
@@ -1021,7 +1021,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Where to Shop Indian Wedding Outfits Online</h2>
-      <p>Skip the overwhelming in-store experience. <strong>Buy Indian wedding dresses online</strong> from trusted <strong>Indian boutiques online USA</strong> like LuxeMia. We offer:</p>
+      <p>Skip the overwhelming in-store experience. <strong>Buy Indian wedding dresses online</strong> from trusted <strong>Indian boutiques online USA</strong> like LuxeMia Boutique. We offer:</p>
       <ul>
         <li>Curated collections for every ceremony and budget</li>
         <li>Free shipping on orders over $350 worldwide</li>
@@ -1029,10 +1029,10 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Readymade Indian clothes</strong> with worldwide tracked delivery</li>
         <li>Quality inspected before shipping from India</li>
       </ul>
-      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia</a>. Free shipping on orders over $350.</p>
+      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia Boutique</a>. Free shipping on orders over $350.</p>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-08',
     updatedAt: '2026-04-08',
     category: 'Wedding Guide',
@@ -1139,18 +1139,18 @@ export const blogPosts: BlogPost[] = [
       <h2>Choosing the Right Fabric When Shopping Online</h2>
       <p>When you <strong>buy Indian clothes online USA</strong>, you cannot feel the fabric. Here is how to make the right choice:</p>
       <ul>
-        <li>Read fabric descriptions carefully — reputable stores like LuxeMia specify exact fabric types</li>
+        <li>Read fabric descriptions carefully — reputable stores like LuxeMia Boutique specify exact fabric types</li>
         <li>Check the weight (GSM) if listed — lighter GSM means more fluid drape</li>
         <li>Look at video content showing how the fabric moves</li>
         <li>Consider the season and venue — outdoor summer events need breathable fabrics</li>
         <li>Check lining details — good quality <strong>Indian ethnic wear</strong> always has proper lining</li>
       </ul>
 
-      <h2>Shop by Fabric at LuxeMia</h2>
-      <p>At LuxeMia, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With flat rate shipping worldwide (free on orders over $350) and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier.</p>
+      <h2>Shop by Fabric at LuxeMia Boutique</h2>
+      <p>At LuxeMia Boutique, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With flat rate shipping worldwide (free on orders over $350) and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier.</p>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-08',
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
@@ -1168,7 +1168,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <p>Indian weddings abroad have evolved into magnificent celebrations that beautifully blend traditional roots with contemporary global aesthetics. For <strong>NRI brides and wedding guests in 2026</strong>, the fashion landscape is more exciting than ever — offering styles that honor cultural heritage while embracing modern sensibilities. Whether you are planning a grand wedding in New Jersey, a boutique celebration in London, or an intimate gathering in Toronto, staying ahead of <strong>NRI wedding ethnic wear trends</strong> is essential for looking and feeling your absolute best.</p>
 
-      <p>At <a href="/">LuxeMia</a>, we have curated this comprehensive guide to the top <strong>Indian bridal fashion NRI</strong> trends shaping wedding wardrobes in 2026. From dreamy pastels to sustainable quality pieces, here is everything you need to know.</p>
+      <p>At <a href="/">LuxeMia Boutique</a>, we have curated this comprehensive guide to the top <strong>Indian bridal fashion NRI</strong> trends shaping wedding wardrobes in 2026. From dreamy pastels to sustainable quality pieces, here is everything you need to know.</p>
 
       <h2>1. The Rise of Pastel and Muted Tones</h2>
       <p>Gone are the days when Indian bridal wear was exclusively about bold reds and heavy golds. In 2026, <strong>pastel bridal lehengas</strong> have taken center stage, with NRI brides gravitating toward softer, more romantic hues. Think blush pinks, sage greens, powder blues, lavender, and champagne golds. These muted tones photograph beautifully in both indoor and outdoor settings — a practical consideration for weddings held in venues across the USA and UK.</p>
@@ -1199,7 +1199,7 @@ export const blogPosts: BlogPost[] = [
       <h2>3. Sustainable and Quality Choices</h2>
       <p>Sustainability is no longer a trend — it is a value that NRI shoppers are actively seeking in their wedding wardrobes. In 2026, there is a significant shift toward <strong>quality Indian ethnic wear sourced from established suppliers</strong>. Brides and guests alike are choosing pieces made with transparent sourcing and minimal environmental impact.</p>
 
-      <p>Traditional weaves like Banarasi brocade, Kanchipuram silk, and Chanderi are experiencing a renaissance. These fabrics carry centuries of tradition in every thread. At LuxeMia, every piece is sourced from experienced manufacturers, ensuring you receive quality garments. Our commitment to <a href="/lehengas">bridal lehengas</a> and <a href="/sarees">beautiful sarees</a> reflects this ethos.</p>
+      <p>Traditional weaves like Banarasi brocade, Kanchipuram silk, and Chanderi are experiencing a renaissance. These fabrics carry centuries of tradition in every thread. At LuxeMia Boutique, every piece is sourced from experienced manufacturers, ensuring you receive quality garments. Our commitment to <a href="/lehengas">bridal lehengas</a> and <a href="/sarees">beautiful sarees</a> reflects this ethos.</p>
 
       <h3>Why Sustainable Choices Matter</h3>
       <ul>
@@ -1226,7 +1226,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Make Your NRI Wedding Wardrobe Unforgettable</h2>
       <p>The beauty of Indian wedding fashion in 2026 lies in its diversity. Whether you choose a traditional red bridal lehenga, a pastel-toned reception saree, or a fusion sharara set for the Sangeet, the key is finding pieces that reflect your personal style while honoring cultural traditions. As an NRI, you have the unique advantage of drawing inspiration from both Indian and global fashion sensibilities.</p>
 
-      <p>At LuxeMia, we offer <strong>free worldwide shipping</strong> to the USA, UK, Canada, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
+      <p>At LuxeMia Boutique, we offer <strong>free worldwide shipping</strong> to the USA, UK, Canada, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -1236,7 +1236,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-09',
     updatedAt: '2026-04-09',
     category: 'NRI Fashion',
@@ -1248,7 +1248,7 @@ export const blogPosts: BlogPost[] = [
     id: '18',
     slug: 'buy-authentic-indian-sarees-online-usa-uk',
     title: 'Your Guide to Shopping Authentic Indian Sarees Online from the USA/UK',
-    excerpt: 'A comprehensive guide for NRIs on how to buy authentic Indian sarees online from the USA and UK. Learn what defines authenticity, how to navigate online shopping, and why LuxeMia is the trusted choice.',
+    excerpt: 'A comprehensive guide for NRIs on how to buy authentic Indian sarees online from the USA and UK. Learn what defines authenticity, how to navigate online shopping, and why LuxeMia Boutique is the trusted choice.',
     content: `
       <article>
       <p>For many NRIs living in the USA and UK, the saree holds a special place in the heart. It is more than a garment — it is a connection to heritage, a reminder of home, and a celebration of Indian style that transcends borders. But <strong>buying authentic Indian sarees online</strong> from thousands of miles away comes with its own set of challenges. How do you know the silk is genuine? Will the colors match what you see on screen? Can you trust the quality without touching the fabric?</p>
@@ -1275,8 +1275,8 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Paithani (Maharashtra):</strong> Peacock and lotus motifs on silk, with a handwoven pallu</li>
       </ul>
 
-      <h2>The LuxeMia Difference: Sourcing and Quality</h2>
-      <p>At <a href="/">LuxeMia</a>, authenticity is not a marketing claim — it is the foundation of our business. Every saree in our <a href="/sarees">curated collection</a> is sourced from established suppliers and manufacturers across India. Here is what sets us apart:</p>
+      <h2>The LuxeMia Boutique Difference: Sourcing and Quality</h2>
+      <p>At <a href="/">LuxeMia Boutique</a>, authenticity is not a marketing claim — it is the foundation of our business. Every saree in our <a href="/sarees">curated collection</a> is sourced from established suppliers and manufacturers across India. Here is what sets us apart:</p>
 
       <h3>Our Sourcing</h3>
       <p>We source from established suppliers in India's textile hubs, including Varanasi, Kanchipuram, and other renowned regions. This allows us to offer quality products at fair prices to our customers.</p>
@@ -1310,10 +1310,10 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h3>Check Customer Reviews</h3>
-      <p>Real customer reviews are your best friend when shopping online. Look for reviews that mention fabric quality, color accuracy, and shipping experience. Verified purchase reviews are especially valuable. At LuxeMia, we encourage all customers to share their honest feedback.</p>
+      <p>Real customer reviews are your best friend when shopping online. Look for reviews that mention fabric quality, color accuracy, and shipping experience. Verified purchase reviews are especially valuable. At LuxeMia Boutique, we encourage all customers to share their honest feedback.</p>
 
       <h2>Shipping, Returns, and Customer Support for International Buyers</h2>
-      <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia addresses every concern:</p>
+      <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia Boutique addresses every concern:</p>
 
       <h3>Worldwide Shipping</h3>
       <p>We ship worldwide at a flat rate of $25 per order, with <strong>free shipping on orders over $350</strong> to the USA, UK, Canada, and 100+ countries. Standard delivery (USPS/UPS) takes 7-10 business days transit, with express (DHL) at 3-5 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
@@ -1325,12 +1325,12 @@ export const blogPosts: BlogPost[] = [
       <p>Not sure which saree to choose for a specific occasion? Our dedicated styling team is available via WhatsApp for personalized recommendations. Whether you need help selecting the right fabric for a summer wedding in Texas or choosing between a Banarasi and Kanchipuram for a London reception, our <a href="/style-consultation">style consultation service</a> has you covered.</p>
 
       <h3>Customs and Duties</h3>
-      <p>While LuxeMia covers shipping costs, please note that customers are responsible for any customs duties, taxes, or import fees levied by their country. We recommend checking with your local customs office for specifics. Most orders under the de minimis value ship duty-free.</p>
+      <p>While LuxeMia Boutique covers shipping costs, please note that customers are responsible for any customs duties, taxes, or import fees levied by their country. We recommend checking with your local customs office for specifics. Most orders under the de minimis value ship duty-free.</p>
 
       <h2>Start Your Saree Shopping Journey</h2>
       <p>Shopping for authentic Indian sarees online does not have to be daunting. With the right knowledge and a trusted store, you can find the perfect saree from anywhere in the world. Browse our <a href="/sarees">complete saree collection</a> today — from handwoven Kanchipuram silks to contemporary designer drapes, every piece is selected for its authenticity, quality, and timeless appeal.</p>
 
-      <p>Have questions? Our team is here to help. Reach out via our <a href="/contact">Contact page</a> or message us on WhatsApp for instant support. Because at LuxeMia, we believe that distance should never stand between you and beautiful Indian ethnic wear.</p>
+      <p>Have questions? Our team is here to help. Reach out via our <a href="/contact">Contact page</a> or message us on WhatsApp for instant support. Because at LuxeMia Boutique, we believe that distance should never stand between you and beautiful Indian ethnic wear.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -1340,7 +1340,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-09',
     updatedAt: '2026-04-09',
     category: 'Shopping Guide',
@@ -1436,7 +1436,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>5. Ready-to-Ship and Express Options for Last-Minute Plans</h2>
-      <p>We get it — NRI life is busy, and sometimes festival dates sneak up on you. LuxeMia has you covered with a curated selection of <strong>ready-to-ship Indian ethnic wear</strong> that arrives at your doorstep quickly, wherever you are in the world.</p>
+      <p>We get it — NRI life is busy, and sometimes festival dates sneak up on you. LuxeMia Boutique has you covered with a curated selection of <strong>ready-to-ship Indian ethnic wear</strong> that arrives at your doorstep quickly, wherever you are in the world.</p>
 
       <h3>What We Offer</h3>
       <ul>
@@ -1451,7 +1451,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Celebrate in Style, Wherever You Are</h2>
       <p>Festivals abroad are more than celebrations — they are acts of cultural preservation, moments of connection, and opportunities to share the beauty of Indian heritage with the world around you. Whether you are lighting diyas in Dallas, breaking fast in Birmingham, or performing Garba in Mississauga, the right outfit makes every moment more meaningful.</p>
 
-      <p>At LuxeMia, we are honored to be part of your festive journey. Explore our full range of <strong>festive Indian outfits for NRIs</strong>, and let us help you celebrate in style. Need help choosing? Book a <a href="/style-consultation">style consultation</a> — our team understands the unique needs of NRI customers and will help you find exactly what you need.</p>
+      <p>At LuxeMia Boutique, we are honored to be part of your festive journey. Explore our full range of <strong>festive Indian outfits for NRIs</strong>, and let us help you celebrate in style. Need help choosing? Book a <a href="/style-consultation">style consultation</a> — our team understands the unique needs of NRI customers and will help you find exactly what you need.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -1461,7 +1461,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
       </article>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-09',
     updatedAt: '2026-04-09',
     category: 'NRI Fashion',
@@ -1491,7 +1491,7 @@ export const blogPosts: BlogPost[] = [
 
       <h3>1. Bust (Chest)</h3>
       <p>Wrap the tape around the fullest part of your chest, keeping it parallel to the floor. Do not suck in or push out. Take a natural breath and measure. This is your bust measurement.</p>
-      <p><strong>Tip:</strong> Add 1–2 inches for comfort. LuxeMia blouse stitching includes standard ease — mention if you prefer a tighter or looser fit in order notes.</p>
+      <p><strong>Tip:</strong> Add 1–2 inches for comfort. LuxeMia Boutique blouse stitching includes standard ease — mention if you prefer a tighter or looser fit in order notes.</p>
 
       <h3>2. Waist</h3>
       <p>Measure around your natural waistline — this is the narrowest part of your torso, usually about 1 inch above your belly button. Keep the tape snug but not tight. Do not measure at the hips or belly.</p>
@@ -1512,7 +1512,7 @@ export const blogPosts: BlogPost[] = [
       <p>With your arm slightly bent, measure from the top of the shoulder to the desired end point — elbow, wrist, or wherever you want the sleeve to end. Note your preference: full sleeve, 3/4 sleeve, or short sleeve.</p>
 
       <h2>Measurement Chart: How to Send Us Your Measurements</h2>
-      <p>When placing a custom order on <a href="/">LuxeMia</a>, enter your measurements in the order notes field exactly as below:</p>
+      <p>When placing a custom order on <a href="/">LuxeMia Boutique</a>, enter your measurements in the order notes field exactly as below:</p>
       <ul>
         <li>Bust: ___ inches / cm</li>
         <li>Waist: ___ inches / cm</li>
@@ -1540,12 +1540,12 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Continue Reading</h2>
       <ul>
-        <li><a href="/size-guide">LuxeMia Size Guide with Full Size Charts</a></li>
+        <li><a href="/size-guide">LuxeMia Boutique Size Guide with Full Size Charts</a></li>
         <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a></li>
         <li><a href="/blog/what-to-wear-indian-wedding-guest-2026">What to Wear to an Indian Wedding as a Guest</a></li>
       </ul>
     `,
-    author: 'LuxeMia Styling Team',
+    author: 'LuxeMia Boutique Styling Team',
     publishedAt: '2026-04-10',
     updatedAt: '2026-04-10',
     category: 'Style Tips',
@@ -1637,7 +1637,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/collections">Shop Festive Wear Collection</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-10',
     updatedAt: '2026-04-10',
     category: 'Wedding Style',
@@ -1653,7 +1653,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: "Both iconic, both stunning — but for very different occasions and body types. Understand the key differences between lehenga choli and anarkali suits before you buy.",
     content: `
       <h2>The Two Queens of Indian Ethnic Wear</h2>
-      <p>If you've ever scrolled through an Indian fashion website (including ours at <a href="/">LuxeMia</a>) and found yourself torn between a gorgeous <a href="/lehengas">lehenga choli</a> and an equally stunning <a href="/suits">anarkali suit</a>, you're not alone. Both are statement pieces, both exude elegance — but they serve different purposes and suit different occasions and body types.</p>
+      <p>If you've ever scrolled through an Indian fashion website (including ours at <a href="/">LuxeMia Boutique</a>) and found yourself torn between a gorgeous <a href="/lehengas">lehenga choli</a> and an equally stunning <a href="/suits">anarkali suit</a>, you're not alone. Both are statement pieces, both exude elegance — but they serve different purposes and suit different occasions and body types.</p>
 
       <p>This guide breaks it down so you can choose with confidence.</p>
 
@@ -1745,7 +1745,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Georgette vs Silk vs Chiffon</a></li>
       </ul>
     `,
-    author: 'LuxeMia Styling Team',
+    author: 'LuxeMia Boutique Styling Team',
     publishedAt: '2026-04-11',
     updatedAt: '2026-04-11',
     category: 'Style Tips',
@@ -1763,7 +1763,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Shopping Indian Ethnic Wear from Abroad: What You Need to Know</h2>
       <p>If you're part of the Indian diaspora in the USA, UK, or Canada, buying ethnic wear online is a different experience from shopping in a local store in India. You can't feel the fabric, you can't try it on, and you're often working across time zones with retailers. But it doesn't have to be stressful.</p>
 
-      <p>At <a href="/">LuxeMia</a>, most of our customers are NRI shoppers — and we've built our service around making this experience as smooth and confidence-inspiring as possible. Here's everything you need to know before you buy.</p>
+      <p>At <a href="/">LuxeMia Boutique</a>, most of our customers are NRI shoppers — and we've built our service around making this experience as smooth and confidence-inspiring as possible. Here's everything you need to know before you buy.</p>
 
       <h2>1. Understand the Sizing Reality</h2>
       <p>Indian sizing is not the same as US, UK, or Canadian sizing. A "Medium" in India is typically smaller than a US Medium. Never assume your usual size — always go by measurements.</p>
@@ -1797,10 +1797,10 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Canada:</strong> Orders under CAD$20 are duty-free; higher thresholds apply depending on country of origin</li>
       </ul>
 
-      <p>Note: Thresholds and regulations change. We recommend checking your country's current customs rules. LuxeMia marks packages accurately — we do not under-declare values on customs forms.</p>
+      <p>Note: Thresholds and regulations change. We recommend checking your country's current customs rules. LuxeMia Boutique marks packages accurately — we do not under-declare values on customs forms.</p>
 
       <h2>4. What to Ask Before You Order</h2>
-      <p>A good retailer will answer these questions before you buy. At LuxeMia, you can reach us on WhatsApp (+1-215-341-9990) or email (hello@luxemia.com):</p>
+      <p>A good retailer will answer these questions before you buy. At LuxeMia Boutique, you can reach us on WhatsApp (+1-215-341-9990) or email (hello@luxemia.com):</p>
 
       <ul>
         <li>Is this item in stock or made-to-order?</li>
@@ -1814,12 +1814,12 @@ export const blogPosts: BlogPost[] = [
       <h2>5. Understanding What You're Buying: Stitched vs Unstitched</h2>
       <p>Many Indian garments are sold both stitched (ready-to-wear) and unstitched (fabric only, for a tailor to sew). For NRI shoppers, stitched is generally the better choice — you won't have an Indian tailor on speed dial in Chicago or London.</p>
 
-      <p>At LuxeMia, we offer stitched blouses with your measurements or standard size options. Read product descriptions carefully to know what's included.</p>
+      <p>At LuxeMia Boutique, we offer stitched blouses with your measurements or standard size options. Read product descriptions carefully to know what's included.</p>
 
       <h2>6. The Unboxing Video Rule</h2>
       <p>This applies to all online purchases, especially international ones. Record a video of yourself opening the package from its sealed state. This protects you in case of transit damage and is required to process any damage claim. <a href="/returns">Read our returns policy</a> for full details.</p>
 
-      <h2>7. LuxeMia's NRI-Specific Services</h2>
+      <h2>7. LuxeMia Boutique's NRI-Specific Services</h2>
       <ul>
         <li><strong><a href="/style-consultation">Free style consultations</a></strong> — tell us your event, budget, and measurements and we'll curate outfits for you</li>
         <li><strong>WhatsApp styling support</strong> at +1-215-341-9990 — we understand NRI event contexts</li>
@@ -1843,7 +1843,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/shipping">Shipping & Delivery Information</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-11',
     updatedAt: '2026-04-11',
     category: 'NRI Fashion',
@@ -1861,7 +1861,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Why Proper Care Matters for Indian Wear</h2>
       <p>A hand-embroidered lehenga or silk saree is not like a machine-made garment. The materials used — raw silk, georgette, velvet, zari thread, mirror work, sequins, and stone embellishments — each have their own care requirements. Treat them correctly and they'll last decades. A single washing mistake can cause irreversible damage.</p>
 
-      <p>This guide covers everything from first-wear preparation to long-term storage — so your LuxeMia pieces stay as beautiful as the day you received them.</p>
+      <p>This guide covers everything from first-wear preparation to long-term storage — so your LuxeMia Boutique pieces stay as beautiful as the day you received them.</p>
 
       <h2>Before First Wear</h2>
       <ul>
@@ -1931,7 +1931,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Repairing Embellishments</h2>
-      <p>Despite best care, sequins fall, beads loosen, and hooks wear out over time. For LuxeMia pieces:</p>
+      <p>Despite best care, sequins fall, beads loosen, and hooks wear out over time. For LuxeMia Boutique pieces:</p>
       <ul>
         <li>Small sequin or bead repairs can be done by a skilled local tailor or embroideress</li>
         <li>For significant damage, contact us at hello@luxemia.com — we can sometimes source matching embellishment materials</li>
@@ -1940,12 +1940,12 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Continue Reading</h2>
       <ul>
-        <li><a href="/care-guide">LuxeMia Full Care Guide</a></li>
+        <li><a href="/care-guide">LuxeMia Boutique Full Care Guide</a></li>
         <li><a href="/blog/how-to-measure-yourself-for-indian-ethnic-wear">How to Measure for Indian Ethnic Wear</a></li>
         <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Georgette, Silk & Chiffon Explained</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-12',
     updatedAt: '2026-04-12',
     category: 'Care & Styling',
@@ -1965,7 +1965,7 @@ export const blogPosts: BlogPost[] = [
 <h2>Why the Bridal Lehenga Decision Deserves Serious Thought</h2>
 <p>A bridal lehenga is not a casual purchase. It is a multi-layered ensemble — lehenga skirt, choli blouse, and dupatta — that must work together in terms of color, embroidery, drape, and wearability across what is often a 6- to 8-hour ceremony.</p>
 <p>For NRI brides, there are additional considerations: getting the sizing right without an in-person fitting, understanding customs and duties when importing to countries like the USA or UK, and navigating the difference between unstitched fabric sets and made-to-measure options.</p>
-<p>The good news is that dedicated Indian ethnic-wear boutiques like <a href="https://luxemia.shop">LuxeMia</a> now offer international shipping with custom stitching, which means you can get a lehenga tailored to your exact measurements and delivered to your door, wherever you are in the world.</p>
+<p>The good news is that dedicated Indian ethnic-wear boutiques like <a href="https://luxemia.shop">LuxeMia Boutique</a> now offer international shipping with custom stitching, which means you can get a lehenga tailored to your exact measurements and delivered to your door, wherever you are in the world.</p>
 <p>---</p>
 <h2>Understanding Lehenga Silhouettes</h2>
 <p>The silhouette is the first decision to make, because it determines how the lehenga moves, how it photographs, and how comfortable you will be throughout your wedding day.</p>
@@ -2029,7 +2029,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Entry-Level Bridal Lehengas ($200-$500)</h3>
 <p>In this range, expect machine embroidery on georgette or net fabric with moderate embellishments. These lehengas are well-suited for functions like sangeet, mehendi, or haldi, or for a second outfit worn to the reception.</p>
 <h3>Mid-Range Bridal Lehengas ($500-$1,200)</h3>
-<p>This is where most NRI brides find the best balance of quality and value. Silk fabrics, hand embroidery, and custom stitching are typically available in this range. Brands and boutiques like <a href="https://luxemia.shop/collections/lehengas">LuxeMia</a> offer made-to-measure options in this tier with international shipping.</p>
+<p>This is where most NRI brides find the best balance of quality and value. Silk fabrics, hand embroidery, and custom stitching are typically available in this range. Brands and boutiques like <a href="https://luxemia.shop/collections/lehengas">LuxeMia Boutique</a> offer made-to-measure options in this tier with international shipping.</p>
 <h3>Premium and Designer Lehengas ($1,200+)</h3>
 <p>At this level, expect handwoven fabrics, extensive zardozi or resham hand embroidery, and bespoke tailoring. Designer lehengas from Sabyasachi, Manish Malhotra, and similar houses occupy this tier, though comparable craftsmanship is available from specialist boutiques at lower price points.</p>
 <p>---</p>
@@ -2055,20 +2055,20 @@ export const blogPosts: BlogPost[] = [
 <h3>How far in advance should I order a bridal lehenga from abroad?</h3>
 <p>For NRI brides in the USA, UK, Canada, or Australia ordering custom-stitched lehengas from Indian boutiques, a lead time of 8 to 12 weeks is recommended. This accounts for stitching time (typically 2 to 4 weeks), shipping, and any potential customs clearance delays.</p>
 <h3>Can I get a lehenga custom-stitched to my measurements when ordering online?</h3>
-<p>Yes. Many Indian ethnic-wear boutiques, including <a href="https://luxemia.shop/collections/lehengas">LuxeMia</a>, offer made-to-measure custom stitching for international orders. You provide your measurements at checkout, and the blouse and skirt waistband are tailored accordingly. This eliminates the most common issue with online ethnic wear purchases — a poorly fitting choli.</p>
+<p>Yes. Many Indian ethnic-wear boutiques, including <a href="https://luxemia.shop/collections/lehengas">LuxeMia Boutique</a>, offer made-to-measure custom stitching for international orders. You provide your measurements at checkout, and the blouse and skirt waistband are tailored accordingly. This eliminates the most common issue with online ethnic wear purchases — a poorly fitting choli.</p>
 <h3>What is the difference between a bridal lehenga and a regular lehenga?</h3>
 <p>A bridal lehenga is distinguished by heavier embroidery, richer fabric, and a more elaborate dupatta. Bridal lehengas typically feature hand embroidery techniques like zardozi, resham, or gota patti, while everyday lehengas rely on machine embroidery or digital prints. The price difference reflects the hours of handwork involved.</p>
 <h3>How do I know what lehenga color will suit my skin tone?</h3>
 <p>As a general rule, warm skin tones are complemented by warm colors — orange, coral, red, and gold. Cool or lighter skin tones look striking in jewel tones like emerald, royal blue, and deep magenta. Dusky or deeper skin tones carry rich, saturated colors like burgundy, navy, and burnt orange beautifully. For a detailed breakdown, see our guide to <a href="https://luxemia.shop/collections/lehengas">best lehenga colors for every skin tone</a>.</p>
 <h3>Is free shipping available for international orders?</h3>
-<p>Many boutiques offer complimentary shipping above a certain order value. LuxeMia offers free shipping on orders over $350, which typically covers the cost of a bridal lehenga set. Check individual product pages for current shipping thresholds.</p>
+<p>Many boutiques offer complimentary shipping above a certain order value. LuxeMia Boutique offers free shipping on orders over $350, which typically covers the cost of a bridal lehenga set. Check individual product pages for current shipping thresholds.</p>
 <h3>What occasions beyond the wedding can I wear a bridal lehenga?</h3>
 <p>A lehenga is a versatile garment that works beautifully for Diwali celebrations, Karva Chauth, Navratri, Eid, engagement parties, and formal receptions. Many NRI brides in the USA and Canada re-wear their bridal or semi-bridal lehengas for these occasions throughout the year, making the investment even more worthwhile.</p>
 <p>---</p>
-<h2>Shop the LuxeMia Bridal Lehenga Collection</h2>
-<p>Shop the LuxeMia bridal lehenga collection at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<h2>Shop the LuxeMia Boutique Bridal Lehenga Collection</h2>
+<p>Shop the LuxeMia Boutique bridal lehenga collection at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-05-09',
     updatedAt: '2026-05-09',
     category: 'Bridal Guide',
@@ -2142,7 +2142,7 @@ export const blogPosts: BlogPost[] = [
 <p>---</p>
 <h2>Where to Shop Lehengas, Shararas, and Anarkalis Online</h2>
 <p>For NRI shoppers in the USA, UK, Canada, and Australia, finding high-quality Indian ethnic wear with reliable international shipping used to require a trip back to India. That is no longer the case.</p>
-<p><a href="https://luxemia.shop">LuxeMia</a> offers a curated selection of bridal lehengas, shararas, anarkalis, and <a href="https://luxemia.shop/collections/salwar-suits">salwar kameez</a> with custom stitching and free shipping on orders over $350. The custom stitching option is particularly valuable for buyers ordering internationally, as it ensures the choli and waistband fit precisely to your measurements.</p>
+<p><a href="https://luxemia.shop">LuxeMia Boutique</a> offers a curated selection of bridal lehengas, shararas, anarkalis, and <a href="https://luxemia.shop/collections/salwar-suits">salwar kameez</a> with custom stitching and free shipping on orders over $350. The custom stitching option is particularly valuable for buyers ordering internationally, as it ensures the choli and waistband fit precisely to your measurements.</p>
 <p>You can browse the full <a href="https://luxemia.shop/collections/lehengas">lehenga collection</a> and <a href="https://luxemia.shop/collections/salwar-suits">salwar-suits collection</a> to compare styles before committing.</p>
 <p>---</p>
 <h2>Frequently Asked Questions</h2>
@@ -2155,14 +2155,14 @@ export const blogPosts: BlogPost[] = [
 <h3>Can a lehenga be worn for non-wedding occasions like Diwali or Navratri?</h3>
 <p>Absolutely. A semi-bridal lehenga in a bright or festive color is a popular choice for Diwali parties, Navratri garba celebrations, Karva Chauth, and Eid gatherings among NRI communities in the USA, UK, Canada, and Australia. Many NRI women invest in a versatile lehenga that can be styled differently for multiple occasions across the year.</p>
 <h3>What is the difference between an anarkali and a salwar kameez?</h3>
-<p>Both feature a top (kurta or kameez) and trousers (salwar or churidar), but the anarkali is defined by its dramatically flared skirt section and typically falls to the floor. A salwar kameez is a more practical, everyday-appropriate garment with a straighter silhouette. The anarkali is a formal subset of the broader salwar kameez category. Browse both styles at <a href="https://luxemia.shop/collections/salwar-suits">LuxeMia's salwar-suits collection</a>.</p>
+<p>Both feature a top (kurta or kameez) and trousers (salwar or churidar), but the anarkali is defined by its dramatically flared skirt section and typically falls to the floor. A salwar kameez is a more practical, everyday-appropriate garment with a straighter silhouette. The anarkali is a formal subset of the broader salwar kameez category. Browse both styles at <a href="https://luxemia.shop/collections/salwar-suits">LuxeMia Boutique's salwar-suits collection</a>.</p>
 <h3>How do I choose between a lehenga and a gown for a reception?</h3>
 <p>If your reception has a Western or fusion aesthetic, a lehenga gown or an anarkali gown gives you the grandeur of Indian craftsmanship in a silhouette that resonates with both Indian and non-Indian guests. If your reception is a traditional Indian event, a classic bridal lehenga remains the most appropriate and photographically stunning choice.</p>
 <p>---</p>
-<h2>Shop the LuxeMia Collection</h2>
-<p>Shop the LuxeMia lehenga, sharara, and salwar-suits collections at <a href="https://luxemia.shop">https://luxemia.shop</a> — with custom stitching and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<h2>Shop the LuxeMia Boutique Collection</h2>
+<p>Shop the LuxeMia Boutique lehenga, sharara, and salwar-suits collections at <a href="https://luxemia.shop">https://luxemia.shop</a> — with custom stitching and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-05-10',
     updatedAt: '2026-05-10',
     category: 'Style Tips',
@@ -2257,16 +2257,16 @@ export const blogPosts: BlogPost[] = [
 <h3>Which lehenga color is best for a wheatish complexion?</h3>
 <p>Wheatish skin is complimented by warm tones — gold, saffron, peach, coral, terracotta, and dusty rose. Jewel tones also work well. Wheatish complexions have the broadest range of flattering lehenga colors of any skin tone.</p>
 <h3>What are the trending bridal lehenga colors for 2026?</h3>
-<p>The standout bridal lehenga colors for 2026 include terracotta, midnight blue, sage green, rose gold, and dusty mauve. Classic red and deep pink remain timeless staples. Ivory with heavy gold zari embroidery is gaining ground among brides who want a regal, contemporary look. You can browse current color options at <a href="https://luxemia.shop/collections/lehengas">LuxeMia's lehenga collection</a>.</p>
+<p>The standout bridal lehenga colors for 2026 include terracotta, midnight blue, sage green, rose gold, and dusty mauve. Classic red and deep pink remain timeless staples. Ivory with heavy gold zari embroidery is gaining ground among brides who want a regal, contemporary look. You can browse current color options at <a href="https://luxemia.shop/collections/lehengas">LuxeMia Boutique's lehenga collection</a>.</p>
 <h3>Is red mandatory for an Indian wedding lehenga?</h3>
 <p>No. Red has deep cultural significance in many Hindu wedding traditions and remains the most popular bridal color, but it is not mandatory in any community. NRI brides in the USA, UK, Canada, and Australia have considerable freedom to choose the color that best suits their skin tone, personal aesthetic, and wedding theme. Pink, gold, ivory, and jewel tones are all entirely appropriate bridal choices.</p>
 <h3>Can I wear the same lehenga for multiple occasions like Diwali and Navratri?</h3>
 <p>Yes. A well-chosen semi-bridal lehenga in a versatile color — deep pink, royal blue, or gold — can be worn for multiple occasions throughout the year, including Diwali, Navratri garba nights, Karva Chauth, Eid celebrations, and engagement parties. Styling the dupatta differently and changing your jewelry can give the outfit a distinctly different look for each occasion.</p>
 <p>---</p>
-<h2>Shop the LuxeMia Lehenga Collection</h2>
-<p>Shop the LuxeMia lehenga collection at <a href="https://luxemia.shop/collections/lehengas">https://luxemia.shop/collections/lehengas</a> — with custom stitching available and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<h2>Shop the LuxeMia Boutique Lehenga Collection</h2>
+<p>Shop the LuxeMia Boutique lehenga collection at <a href="https://luxemia.shop/collections/lehengas">https://luxemia.shop/collections/lehengas</a> — with custom stitching available and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-05-11',
     updatedAt: '2026-05-11',
     category: 'Style Tips',
@@ -2291,7 +2291,7 @@ export const blogPosts: BlogPost[] = [
 <p>Not all online Indian clothing retailers are equal. The market includes everything from established boutiques with rigorous quality control to small operations that use stock photographs and deliver garments that look nothing like what was advertised.</p>
 <h3>What to Look For in a Retailer</h3>
 <p>Look for boutiques with a clearly stated return policy, transparent shipping timelines, and verified customer reviews. Photographs should show the garment on an actual model rather than just a flat lay. Detailed fabric descriptions — not just "silk" but "pure Kanjivaram silk" or "Banarasi brocade with resham embroidery" — are a sign of a retailer that understands its inventory.</p>
-<p><a href="https://luxemia.shop">LuxeMia</a> is an Indian ethnic-wear boutique that specifically serves the NRI market, offering bridal lehengas, wedding sarees, and salwar kameez with custom stitching and international shipping. Their free shipping threshold of $350 covers most bridal and semi-bridal purchases.</p>
+<p><a href="https://luxemia.shop">LuxeMia Boutique</a> is an Indian ethnic-wear boutique that specifically serves the NRI market, offering bridal lehengas, wedding sarees, and salwar kameez with custom stitching and international shipping. Their free shipping threshold of $350 covers most bridal and semi-bridal purchases.</p>
 <h3>Red Flags to Avoid</h3>
 <p>Retailers with no physical address, no customer service contact, or prices that seem too good to be true warrant caution. Heavily embroidered bridal lehengas require significant handcraft time and carry corresponding price tags. A "bridal lehenga" priced at $50 is almost certainly not what it claims to be.</p>
 <p>---</p>
@@ -2306,7 +2306,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Customs Duty on Indian Clothes in Australia</h3>
 <p>Australia applies a 5% customs duty on most clothing imports, plus a 10% GST (Goods and Services Tax). The low-value threshold is AUD $1,000 — shipments above this value are subject to formal customs assessment. Below $1,000, GST is still typically collected at the point of sale by registered overseas retailers.</p>
 <h3>How Reputable Retailers Handle Customs</h3>
-<p>Established boutiques like <a href="https://luxemia.shop">LuxeMia</a> that specifically serve NRI markets in the USA, UK, Canada, and Australia are familiar with international customs requirements. They typically provide accurate declarations and commercial invoices with the shipment. Buyers should be aware of their local duty thresholds and budget accordingly.</p>
+<p>Established boutiques like <a href="https://luxemia.shop">LuxeMia Boutique</a> that specifically serve NRI markets in the USA, UK, Canada, and Australia are familiar with international customs requirements. They typically provide accurate declarations and commercial invoices with the shipment. Buyers should be aware of their local duty thresholds and budget accordingly.</p>
 <p>---</p>
 <h2>Shipping Timelines: What to Expect</h2>
 <p>Shipping timelines for Indian ethnic wear ordered from India vary based on carrier, destination, and whether the order requires custom stitching.</p>
@@ -2343,7 +2343,7 @@ export const blogPosts: BlogPost[] = [
 <p>To reduce the risk of an unsatisfactory custom-stitched order, request fabric swatches before ordering, verify the boutique's portfolio of completed custom work, and communicate all preferences in writing so there is a record of what was agreed.</p>
 <p>---</p>
 <h2>Buying Indian Wedding Wear as an NRI: Top Tips Summary</h2>
-<p>Order 10-12 weeks early for wedding-critical outfits. Take measurements precisely and provide them in writing. Request fabric swatches for color-sensitive orders. Factor local customs duties into your total budget. Choose a boutique like <a href="https://luxemia.shop">LuxeMia</a> that specifically serves the NRI market and offers custom stitching and international shipping as standard services.</p>
+<p>Order 10-12 weeks early for wedding-critical outfits. Take measurements precisely and provide them in writing. Request fabric swatches for color-sensitive orders. Factor local customs duties into your total budget. Choose a boutique like <a href="https://luxemia.shop">LuxeMia Boutique</a> that specifically serves the NRI market and offers custom stitching and international shipping as standard services.</p>
 <p>Also explore the <a href="https://luxemia.shop/collections/sarees">wedding sarees collection</a> and <a href="https://luxemia.shop/collections/salwar-suits">salwar kameez options</a> if you are shopping for multiple family members or a full wedding wardrobe.</p>
 <p>---</p>
 <h2>Frequently Asked Questions</h2>
@@ -2352,7 +2352,7 @@ export const blogPosts: BlogPost[] = [
 <h3>How long does shipping from India to the UK take?</h3>
 <p>Shipping from India to the UK via express courier (DHL, FedEx, Aramex) typically takes 3-5 business days once the order is dispatched. Economy shipping takes 10-20 business days. For custom-stitched orders, add 2-4 weeks of production time before dispatch.</p>
 <h3>Do Indian boutiques offer custom stitching for international orders?</h3>
-<p>Yes. Several dedicated NRI boutiques, including <a href="https://luxemia.shop">LuxeMia</a>, offer custom stitching for international orders. You provide your measurements at checkout, and the garment is tailored to your specifications before dispatch. This is especially valuable for blouse-heavy ensembles like lehengas and saree blouses.</p>
+<p>Yes. Several dedicated NRI boutiques, including <a href="https://luxemia.shop">LuxeMia Boutique</a>, offer custom stitching for international orders. You provide your measurements at checkout, and the garment is tailored to your specifications before dispatch. This is especially valuable for blouse-heavy ensembles like lehengas and saree blouses.</p>
 <h3>What is the best way to buy Indian wedding clothes online as an NRI in Canada?</h3>
 <p>Look for boutiques with a track record of shipping to Canada, clear customs documentation processes, and custom stitching options. Factor Canadian customs duties (approximately 18% on most woven garments) and GST/HST into your total budget. Order at least 10 weeks before your event and choose express shipping for peace of mind.</p>
 <h3>How do I avoid buying low-quality Indian ethnic wear online?</h3>
@@ -2362,10 +2362,10 @@ export const blogPosts: BlogPost[] = [
 <h3>Is it cheaper to buy Indian clothes in India or online?</h3>
 <p>In India, you have the advantage of physically examining the garment before purchase and negotiating price at market stores. Online purchases from NRI-focused boutiques are often comparable in price to mid-range Indian stores once you factor in the convenience, custom stitching, and direct shipping. At the premium end, prices are similar. Always factor in import duties when comparing total costs.</p>
 <p>---</p>
-<h2>Shop the LuxeMia Collection</h2>
-<p>Shop the LuxeMia collection of bridal lehengas, wedding sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<h2>Shop the LuxeMia Boutique Collection</h2>
+<p>Shop the LuxeMia Boutique collection of bridal lehengas, wedding sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-05-12',
     updatedAt: '2026-05-12',
     category: 'NRI Fashion',
@@ -2417,7 +2417,7 @@ export const blogPosts: BlogPost[] = [
 <p>Made-to-measure (also called custom-stitched) means the garment is sewn from scratch or from an unstitched base to your exact provided measurements. You submit a detailed measurement sheet at the time of ordering, and the tailor constructs the garment around those dimensions.</p>
 <p>This is distinct from bespoke tailoring, where a tailor takes measurements in person and fits the garment through multiple fittings. Made-to-measure is done remotely but produces a significantly better fit than standard RTW sizing.</p>
 <h3>How Made-to-Measure Works for Online Orders</h3>
-<p>When you order a custom-stitched lehenga or salwar kameez from an online boutique like <a href="https://luxemia.shop">LuxeMia</a>, the process typically involves:</p>
+<p>When you order a custom-stitched lehenga or salwar kameez from an online boutique like <a href="https://luxemia.shop">LuxeMia Boutique</a>, the process typically involves:</p>
 <p>1. Selecting the garment and adding it to your cart 2. Choosing the "custom stitching" or "made-to-measure" option 3. Filling in a measurements form with the required dimensions 4. The boutique's tailor stitches the garment to your specifications 5. The finished garment is shipped to your international address</p>
 <h3>What Made-to-Measure Can and Cannot Fix</h3>
 <p>Made-to-measure can ensure the waistband fits your waist, the blouse fits your bust and arms, and the skirt length falls correctly for your height. What it cannot do is account for unusual proportions that require in-person draping or fitting — such as a significant difference between hip and waist, a very high or low bust point, or asymmetrical shoulders. For these cases, ordering with some ease built in and having local alterations done after delivery is the most practical approach.</p>
@@ -2466,16 +2466,16 @@ export const blogPosts: BlogPost[] = [
 <h3>Can I get an unstitched lehenga stitched in the USA or UK?</h3>
 <p>Yes, though it requires finding a tailor familiar with Indian garment construction. Major South Asian diaspora hubs — New Jersey, New York, London, Birmingham, Toronto, Melbourne, and Sydney — have Indian tailoring shops that handle lehenga and salwar kameez stitching. However, stitching costs in these markets are considerably higher than equivalent work done in India. Many NRI buyers find it more economical and convenient to use the custom stitching service offered by their online boutique.</p>
 <h3>What measurements do I need for a custom stitched salwar kameez?</h3>
-<p>For a custom stitched salwar kameez, the required measurements are typically: bust, waist, hips, shoulder width, kameez length, salwar length, and sleeve length. Some boutiques also ask for the arm circumference, neckline preference, and whether you want the salwar stitched straight, Patiala, or palazzo-style. Browse <a href="https://luxemia.shop/collections/salwar-suits">LuxeMia's salwar kameez collection</a> to see current custom stitching options.</p>
+<p>For a custom stitched salwar kameez, the required measurements are typically: bust, waist, hips, shoulder width, kameez length, salwar length, and sleeve length. Some boutiques also ask for the arm circumference, neckline preference, and whether you want the salwar stitched straight, Patiala, or palazzo-style. Browse <a href="https://luxemia.shop/collections/salwar-suits">LuxeMia Boutique's salwar kameez collection</a> to see current custom stitching options.</p>
 <h3>How do I choose between unstitched and ready to wear for a casual occasion?</h3>
 <p>For casual occasions like Diwali, Navratri, Karva Chauth, or Eid, ready-to-wear is generally the better choice if you are ordering close to the event date and your measurements fall within a standard size range. Unstitched is the better choice if you have a preferred local tailor, want a fully customized silhouette, or are buying a coordinating set for multiple family members in different sizes.</p>
 <h3>Do Indian boutiques ship custom stitched outfits internationally?</h3>
-<p>Yes. Dedicated NRI boutiques like <a href="https://luxemia.shop">LuxeMia</a> offer both custom stitching and international shipping as standard services. The custom stitching process is handled remotely — you submit measurements online, the garment is tailored in India, and shipped to your address in the USA, UK, Canada, or Australia via express courier. Free shipping is available on orders over $350.</p>
+<p>Yes. Dedicated NRI boutiques like <a href="https://luxemia.shop">LuxeMia Boutique</a> offer both custom stitching and international shipping as standard services. The custom stitching process is handled remotely — you submit measurements online, the garment is tailored in India, and shipped to your address in the USA, UK, Canada, or Australia via express courier. Free shipping is available on orders over $350.</p>
 <p>---</p>
-<h2>Shop the LuxeMia Collection</h2>
-<p>Shop the LuxeMia collection of custom-stitched lehengas, sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — made-to-measure options available with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<h2>Shop the LuxeMia Boutique Collection</h2>
+<p>Shop the LuxeMia Boutique collection of custom-stitched lehengas, sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — made-to-measure options available with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-05-13',
     updatedAt: '2026-05-13',
     category: 'Shopping Guide',
@@ -2511,7 +2511,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Express shipping:</strong> 5-7 business days</li>
         <li><strong>Custom-stitched orders:</strong> Add 7-14 days for tailoring before shipping</li>
       </ul>
-      <h3>LuxeMia Shipping Policy</h3>
+      <h3>LuxeMia Boutique Shipping Policy</h3>
       <p>At LuxeMia Boutique, we offer direct global shipping from our source workshops, supported by our Philadelphia-based customer care team. We offer <strong>free shipping on orders over $350</strong> and a flat rate of $25 for orders under $350. Enjoy the reliability of a US-based business with the authenticity of direct sourcing — see our <a href="/shipping">shipping policy</a> for full details.</p>
 
       <h2>Customs Duties and Tariffs: The Hidden Cost</h2>
@@ -2522,7 +2522,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>De minimis exemption:</strong> Orders under $800 enter duty-free under the US de minimis threshold (Section 321)</li>
         <li><strong>Personal use exemption:</strong> You may bring back up to $800 worth of goods per person when traveling</li>
       </ul>
-      <h3>How LuxeMia Handles Duties</h3>
+      <h3>How LuxeMia Boutique Handles Duties</h3>
       <p>Because LuxeMia Boutique is a US-based business (LuxeMia Boutique, Philadelphia, PA), we provide direct support and oversight for every shipment. While items ship directly from our source workshops to provide you with the most authentic and fresh designs, we handle the logistics and support to ensure a smooth delivery experience to your doorstep in the USA, Canada, and Australia. luxemia.shop is owned and operated by Glamour Indian Wear.</p>
 
       <h2>Quality Concerns: What You See vs. What You Get</h2>
@@ -2550,7 +2550,7 @@ export const blogPosts: BlogPost[] = [
         <li>Is there a restocking fee?</li>
         <li>Who pays return shipping?</li>
       </ul>
-      <p>Check our <a href="/faq">FAQ page</a> for LuxeMia's complete return and exchange policy.</p>
+      <p>Check our <a href="/faq">FAQ page</a> for LuxeMia Boutique's complete return and exchange policy.</p>
 
       <h2>Indian Fabric Terminology Decoded</h2>
       <p>Indian ethnic wear comes with its own vocabulary. Here are the terms you need to know:</p>
@@ -2576,7 +2576,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Never order less than 3 weeks before an event</strong> — delays happen</li>
       </ul>
 
-      <h2>Why LuxeMia Is Built for NRI Shoppers</h2>
+      <h2>Why LuxeMia Boutique Is Built for NRI Shoppers</h2>
       <p>LuxeMia Boutique was founded specifically to solve the problems NRIs face when buying Indian clothes. Based in Philadelphia, we provide direct support and quality oversight for every order shipped from our source workshops. You get the reliability of a US-based business without customs surprises. Every product listing includes accurate measurements, fabric details, and close-up photos. Learn more about our mission on our <a href="/brand-story">brand story page</a>.</p>
       <p>For customers in Canada and Australia, we also ship internationally with transparent pricing. Visit our <a href="/nri/usa">NRI USA shopping page</a> for country-specific information.</p>
 
@@ -2587,7 +2587,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/banarasi-silk-saree-guide-authentic">Banarasi Silk Sarees: How to Spot a Fake</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-02-01',
     updatedAt: '2026-02-15',
     category: 'NRI Fashion',
@@ -2657,7 +2657,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-fabric-types-guide-silk-georgette-chiffon">Complete Guide to Indian Fabric Types</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-02-05',
     updatedAt: '2026-02-20',
     category: 'Cultural Guide',
@@ -2744,7 +2744,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/how-to-measure-yourself-indian-ethnic-wear">How to Measure Yourself for Indian Ethnic Wear</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-02-10',
     updatedAt: '2026-02-25',
     category: 'How-To',
@@ -2844,7 +2844,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/accessorize-indian-ethnic-wear">How to Accessorize Indian Ethnic Wear</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-02-15',
     updatedAt: '2026-03-01',
     category: 'Wedding Guide',
@@ -2964,7 +2964,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/kanchipuram-silk-saree-south-indian-wedding-guide">Kanchipuram Silk Sarees: South Indian Wedding Guide</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-02-20',
     updatedAt: '2026-03-05',
     category: 'Shopping Guide',
@@ -2979,7 +2979,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Master the art of styling anarkali suits in 2026 — floor-length, knee-length, jacket style, and layered. Body type guide, occasion mapping, dupatta draping, and footwear pairing.',
     content: `
       <h2>The Timeless Appeal of the Anarkali Suit</h2>
-      <p>Named after the legendary courtesan Anarkali of Mughal-e-Azam fame, the <strong>anarkali suit</strong> is one of the most flattering silhouettes in Indian ethnic wear. Its fitted bodice and dramatically flared skirt create an elegant, feminine shape that works for virtually every occasion — from a casual dinner to a grand wedding reception. At <a href="/suits">LuxeMia's Suits Collection</a>, we offer anarkali suits for every style and budget.</p>
+      <p>Named after the legendary courtesan Anarkali of Mughal-e-Azam fame, the <strong>anarkali suit</strong> is one of the most flattering silhouettes in Indian ethnic wear. Its fitted bodice and dramatically flared skirt create an elegant, feminine shape that works for virtually every occasion — from a casual dinner to a grand wedding reception. At <a href="/suits">LuxeMia Boutique's Suits Collection</a>, we offer anarkali suits for every style and budget.</p>
 
       <h2>Types of Anarkali Suits</h2>
       <h3>Floor-Length Anarkali</h3>
@@ -3048,7 +3048,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-ceremony-outfit-guide">Indian Wedding Ceremony Outfit Guide</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-03-01',
     updatedAt: '2026-03-10',
     category: 'Styling Tips',
@@ -3147,7 +3147,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/how-to-drape-saree-beginner-guide">How to Drape a Saree: Beginner Guide</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-03-05',
     updatedAt: '2026-03-15',
     category: 'How-To',
@@ -3243,7 +3243,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-fabric-types-guide-silk-georgette-chiffon">Complete Guide to Indian Fabric Types</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-03-10',
     updatedAt: '2026-03-20',
     category: 'Cultural Guide',
@@ -3277,7 +3277,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Major Zari Embroidery Styles</h2>
 
       <h3>Zardozi</h3>
-      <p>The king of zari techniques. Zardozi uses thick gold or silver wire to create raised, three-dimensional designs. Originally reserved for Mughal royalty, zardozi is now found on premium bridal lehengas and wedding outfits. The work is heavy, opulent, and commands premium prices. A zardozi-embroidered bridal lehenga at <a href="/lehengas">LuxeMia</a> represents the pinnacle of Indian craftsmanship.</p>
+      <p>The king of zari techniques. Zardozi uses thick gold or silver wire to create raised, three-dimensional designs. Originally reserved for Mughal royalty, zardozi is now found on premium bridal lehengas and wedding outfits. The work is heavy, opulent, and commands premium prices. A zardozi-embroidered bridal lehenga at <a href="/lehengas">LuxeMia Boutique</a> represents the pinnacle of Indian craftsmanship.</p>
 
       <h3>Gota Patti</h3>
       <p>A Rajasthani specialty where strips of zari ribbon (gota) are cut into patterns and appliquéd onto fabric. Gota patti creates a lace-like effect that's lighter than zardozi but equally stunning. It's popular on saree borders, dupatta edges, and festive suits.</p>
@@ -3319,7 +3319,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/caring-for-silk-sarees">Expert Tips for Caring for Silk Sarees</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-03-15',
     updatedAt: '2026-04-01',
     category: 'Cultural Guide',
@@ -3334,7 +3334,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Explore the delicate art of Lucknowi chikankari — from its Mughal origins to modern styling. Learn to identify authentic chikankari, understand stitch types, and shop for genuine pieces online.',
     content: `
       <h2>The Delicate Beauty of Chikankari</h2>
-      <p>Chikankari is one of India's most elegant and refined embroidery traditions. Originating from Lucknow in Uttar Pradesh, this white-on-white (or pastel) shadow work embroidery transforms simple fabric into breathtaking art. Unlike the bold opulence of zardozi or the vibrant colors of Kutch embroidery, chikankari whispers luxury through subtlety — delicate floral motifs, intricate vine patterns, and whisper-thin stitches that seem to float on the fabric. At <a href="/suits">LuxeMia's suits collection</a>, we carry chikankari pieces that showcase this timeless craft.</p>
+      <p>Chikankari is one of India's most elegant and refined embroidery traditions. Originating from Lucknow in Uttar Pradesh, this white-on-white (or pastel) shadow work embroidery transforms simple fabric into breathtaking art. Unlike the bold opulence of zardozi or the vibrant colors of Kutch embroidery, chikankari whispers luxury through subtlety — delicate floral motifs, intricate vine patterns, and whisper-thin stitches that seem to float on the fabric. At <a href="/suits">LuxeMia Boutique's suits collection</a>, we carry chikankari pieces that showcase this timeless craft.</p>
 
       <h2>Historical Origins: A Mughal Legacy</h2>
       <p>Chikankari is believed to have been introduced to India by Noor Jahan, the wife of Mughal Emperor Jahangir, in the 17th century. The word "chikan" comes from the Persian word "chakin" or "chikeen," meaning cloth wrought with needlework. Under Mughal patronage, Lucknow became the center of this art form, and it has remained so for over 400 years. The craft was traditionally passed down through generations of women, with each family specializing in specific stitch types. Today, Lucknow's chikankari artisans number over 2 million, making it one of the largest hand-embroidery sectors in India.</p>
@@ -3403,7 +3403,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/care-guide-washing-storing-indian-ethnic-wear">Care Guide for Indian Ethnic Wear</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-04-01',
     updatedAt: '2026-04-15',
     category: 'Cultural Guide',
@@ -3415,7 +3415,7 @@ export const blogPosts: BlogPost[] = [
     id: '37',
     slug: 'saree-vs-lehenga-wedding-guest-guide-2026',
     title: 'Saree vs Lehenga for Wedding Guests: What to Wear in 2026',
-    excerpt: 'Choosing between a saree and lehenga for an Indian wedding? This LuxeMia guide compares comfort, movement, fabrics, event formality, and custom fit options for wedding guests.',
+    excerpt: 'Choosing between a saree and lehenga for an Indian wedding? This LuxeMia Boutique guide compares comfort, movement, fabrics, event formality, and custom fit options for wedding guests.',
     content: `
       <h2>Quick Answer: Should a Wedding Guest Wear a Saree or a Lehenga?</h2>
       <p>For most Indian wedding guests, a <a href="/sarees">saree</a> is the more timeless and graceful choice, while a <a href="/lehengas">lehenga</a> is the stronger choice when you want a more structured, festive, photo-ready outfit. Choose a saree for ceremony elegance, reception polish, or a lighter packed outfit. Choose a lehenga for sangeet dancing, a grand evening event, or when you prefer a skirt-and-blouse silhouette that feels easier to manage than a traditional drape.</p>
@@ -3475,7 +3475,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Comfort, Movement, and Fit</h2>
       <p>Comfort is the difference between simply wearing an outfit and enjoying the celebration. Sarees offer beautiful movement, but they need secure pleats, a well-fitted blouse, and a pallu style that suits the event. Lehengas can feel simpler because the skirt sits at the waist and the dupatta can be pinned, but the blouse and waistband must fit well.</p>
 
-      <p>If you are between sizes or shopping for a multi-day wedding, custom measurement support can be helpful. LuxeMia supports custom measurement and alteration guidance where available, so guests can choose a better blouse fit, comfortable skirt waist, or adjusted sleeve and length details.</p>
+      <p>If you are between sizes or shopping for a multi-day wedding, custom measurement support can be helpful. LuxeMia Boutique supports custom measurement and alteration guidance where available, so guests can choose a better blouse fit, comfortable skirt waist, or adjusted sleeve and length details.</p>
 
       <h2>The Pre-Draped Saree Option</h2>
       <p>A pre-draped saree is a smart middle ground for guests who love the elegance of a saree but want easier wear. It is usually pre-pleated or constructed so it can be worn more like a skirt, gown, or ready-to-drape outfit. This option works especially well for receptions, cocktail-style wedding events, destination weddings, and guests who expect to dance or travel between venues.</p>
@@ -3499,7 +3499,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Where should I shop first?</h3>
       <p>Start with <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, then compare <a href="/sarees">sarees</a>, <a href="/collections/wedding-sarees">wedding sarees</a>, <a href="/lehengas">lehengas</a>, and <a href="/suits">suits</a> based on the event schedule.</p>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'LuxeMia Boutique Editorial',
     publishedAt: '2026-06-09',
     updatedAt: '2026-06-09',
     category: 'Wedding Guide',

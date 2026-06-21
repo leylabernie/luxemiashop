@@ -59,8 +59,8 @@ const indianWeddingDressFaqs = [
     answer: 'Start with your event, role, venue, time of day, measurements, sleeve and neckline comfort, fabric weight, embellishment level, stitching needs, and delivery timing. Review product photos, sizing notes, blouse or dupatta details, and care instructions before ordering for a wedding date.',
   },
   {
-    question: 'Does LuxeMia carry South Asian wedding dresses for different events?',
-    answer: 'Yes. LuxeMia curates South Asian wedding dresses across lehengas, sarees, suits, gowns, shararas, and Indo Western styles for ceremonies, sangeet nights, receptions, engagements, mehendi events, and wedding guest shopping.',
+    question: 'Does LuxeMia Boutique carry South Asian wedding dresses for different events?',
+    answer: 'Yes. LuxeMia Boutique curates South Asian wedding dresses across lehengas, sarees, suits, gowns, shararas, and Indo Western styles for ceremonies, sangeet nights, receptions, engagements, mehendi events, and wedding guest shopping.',
   },
 ];
 
@@ -114,7 +114,7 @@ const IndianWeddingDresses = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">South Asian Wedding Edit</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Dresses</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop Indian wedding dresses for ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia edit brings together Indian wedding outfits, Indian bridal dresses, South Asian wedding dresses, Indian wedding guest dresses, lehengas, sarees, Anarkalis, shararas, gowns, and Indo Western wedding styles.
+              Shop Indian wedding dresses for ceremonies, receptions, sangeet nights, mehendi events, engagements, and wedding guest looks. This LuxeMia Boutique edit brings together Indian wedding outfits, Indian bridal dresses, South Asian wedding dresses, Indian wedding guest dresses, lehengas, sarees, Anarkalis, shararas, gowns, and Indo Western wedding styles.
             </p>
           </div>
         </section>
@@ -217,7 +217,7 @@ const IndianWeddingDresses = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online wedding support</h3>
                 <p>
-                  LuxeMia supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review measurements, stitching, and delivery details before ordering for a wedding date.
+                  LuxeMia Boutique supports wedding shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, fit options where available, and styling guidance before purchase. Review measurements, stitching, and delivery details before ordering for a wedding date.
                 </p>
               </div>
             </div>

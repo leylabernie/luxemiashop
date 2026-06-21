@@ -24,8 +24,8 @@ const Lookbook = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Lookbook — LuxeMia"
-        description="Explore the LuxeMia lookbook. Curated styling inspiration featuring real products — wedding lehengas, sherwanis, sharara suits, and festive ethnic wear."
+        title="Lookbook — LuxeMia Boutique"
+        description="Explore the LuxeMia Boutique lookbook. Curated styling inspiration featuring real products — wedding lehengas, sherwanis, sharara suits, and festive ethnic wear."
         canonical="https://luxemia.shop/lookbook"
       />
       <Header />
@@ -37,7 +37,7 @@ const Lookbook = () => {
       >
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-foreground/50 z-10" />
-          <LazyImage src='/images/lookbook/hero-main.jpg' alt="LuxeMia Lookbook 2026" className="w-full h-full" />
+          <LazyImage src='/images/lookbook/hero-main.jpg' alt="LuxeMia Boutique Lookbook 2026" className="w-full h-full" />
         </motion.div>
 
         <motion.div

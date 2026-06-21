@@ -212,7 +212,7 @@ const PartyWearLehengas = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online party wear shopping support</h3>
                 <p>
-                  LuxeMia supports party wear shoppers with tracked shipping, fit options where available, and styling guidance before purchase. Review each product's sizing, stitching, and delivery details before ordering for a specific event date.
+                  LuxeMia Boutique supports party wear shoppers with tracked shipping, fit options where available, and styling guidance before purchase. Review each product's sizing, stitching, and delivery details before ordering for a specific event date.
                 </p>
               </div>
             </div>

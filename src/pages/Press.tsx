@@ -9,8 +9,8 @@ const Press = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Press & Media — LuxeMia"
-        description="LuxeMia press and media inquiries. Download our press kit and brand assets."
+        title="Press & Media — LuxeMia Boutique"
+        description="LuxeMia Boutique press and media inquiries. Download our press kit and brand assets."
         canonical="https://luxemia.shop/press"
         noIndex={true}
       />

@@ -212,7 +212,7 @@ const SareeGowns = () => {
               <div>
                 <h3 className="font-medium text-foreground mb-2">Online shopping support for NRIs</h3>
                 <p>
-                  LuxeMia supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, stitching options where available, and styling guidance before purchase. Review each product's sizing, stitching, and delivery details before ordering.
+                  LuxeMia Boutique supports shoppers in the USA, Canada, Australia, and worldwide with tracked shipping, stitching options where available, and styling guidance before purchase. Review each product's sizing, stitching, and delivery details before ordering.
                 </p>
               </div>
             </div>

@@ -25,7 +25,7 @@ const trustCards: TrustCard[] = [
     icon: <MapPin className="h-6 w-6" />,
     title: 'Philadelphia-Based Boutique',
     description:
-      'LuxeMia is a USA-based Indian ethnic wear store with support from Philadelphia.',
+      'LuxeMia Boutique is a USA-based Indian ethnic wear store with support from Philadelphia.',
     highlight: 'USA Based',
   },
   {
@@ -114,7 +114,7 @@ export const ProductTrustSignals = () => {
       >
         <h3 className="text-lg font-medium flex items-center gap-2">
           <ShieldCheck className="h-5 w-5 text-primary" />
-          Why Shop With LuxeMia
+          Why Shop With LuxeMia Boutique
         </h3>
         <p className="text-sm text-muted-foreground mt-1">
           Clear support for fit, shipping, secure checkout, and pre-purchase questions.

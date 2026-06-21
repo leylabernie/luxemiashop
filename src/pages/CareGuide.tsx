@@ -103,7 +103,7 @@ const CareGuide = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Garment Care Guide — LuxeMia"
+        title="Garment Care Guide — LuxeMia Boutique"
         description="Care instructions for Indian ethnic wear. Learn how to preserve silk sarees, lehengas, and embroidered garments so they stay beautiful for years."
         canonical="https://luxemia.shop/care-guide"
       />
@@ -135,7 +135,7 @@ const CareGuide = () => {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              Your LuxeMia pieces deserve proper care to look beautiful for years to come. 
+              Your LuxeMia Boutique pieces deserve proper care to look beautiful for years to come.
               Follow these care instructions to preserve their beauty and quality.
             </motion.p>
           </div>
@@ -272,7 +272,7 @@ const CareGuide = () => {
         <section className="py-12 bg-secondary/30">
           <div className="container mx-auto px-4 text-center">
             <p className="text-muted-foreground">
-              Have questions about caring for your LuxeMia garment? Contact our care specialists at{" "}
+              Have questions about caring for your LuxeMia Boutique garment? Contact our care specialists at{" "}
               <span className="text-primary">hello@luxemia.com</span>
             </p>
           </div>

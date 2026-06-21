@@ -45,7 +45,7 @@ const SustainabilityBanner = () => {
               Honest Service, Real Value
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              At LuxeMia, we keep shopping straightforward. Browse Indian ethnic wear for
+              At LuxeMia Boutique, we keep shopping straightforward. Browse Indian ethnic wear for
               weddings, festivals, parties, and family celebrations with clear product details,
               practical fit guidance, and secure checkout.
             </p>

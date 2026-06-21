@@ -205,7 +205,7 @@ const BlogPost = () => {
     },
     "publisher": {
       "@type": "Organization",
-      "name": "LuxeMia",
+      "name": "LuxeMia Boutique",
       "logo": {
         "@type": "ImageObject",
         "url": "https://luxemia.shop/favicon.ico"
@@ -278,7 +278,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
-        title={`${post.title} | LuxeMia Blog`}
+        title={`${post.title} | LuxeMia Boutique Blog`}
         description={post.excerpt}
         image={post.image}
         canonical={`https://luxemia.shop/blog/${post.slug}`}

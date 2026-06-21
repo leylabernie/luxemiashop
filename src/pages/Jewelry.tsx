@@ -126,8 +126,8 @@ const Jewelry = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Indian Jewelry Online | Kundan, Bridal Sets & Earrings - LuxeMia"
-        description="Buy Indian jewelry online at LuxeMia. Shop kundan necklace sets, bridal jewelry, jhumka earrings, bangles & maang tikka. Perfect for weddings & festivals. Free worldwide shipping."
+        title="Buy Indian Jewelry Online | Kundan, Bridal Sets & Earrings - LuxeMia Boutique"
+        description="Buy Indian jewelry online at LuxeMia Boutique. Shop kundan necklace sets, bridal jewelry, jhumka earrings, bangles & maang tikka. Perfect for weddings & festivals. Free worldwide shipping."
         canonical="https://luxemia.shop/jewelry"
       />
       <Header />

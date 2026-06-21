@@ -106,7 +106,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during package opening.',
+          answer: 'All sales are final. LuxeMia Boutique does not accept returns or exchanges for any reason, including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during package opening.',
         },
         {
           question: 'Why do I need an unboxing video?',
@@ -178,7 +178,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you have a loyalty program?',
-          answer: 'Yes! Join LuxeMia Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy member-only offers. Sign up is free!',
+          answer: 'Yes! Join LuxeMia Boutique Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy member-only offers. Sign up is free!',
         },
         {
           question: 'Can I save items to buy later?',
@@ -226,7 +226,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes! LuxeMia specializes in shipping authentic Indian ethnic wear directly to customers in the USA. We offer free shipping on orders over $350 and a flat $25 shipping fee on orders under $350. All shipments are sent via DHL Express, USPS, or UPS with full tracking and insurance. Typical delivery is 6-15 business days for readymade items.',
+          answer: 'Yes! LuxeMia Boutique specializes in shipping authentic Indian ethnic wear directly to customers in the USA. We offer free shipping on orders over $350 and a flat $25 shipping fee on orders under $350. All shipments are sent via DHL Express, USPS, or UPS with full tracking and insurance. Typical delivery is 6-15 business days for readymade items.',
         },
         {
           question: 'Will I have to pay customs duties on my order in the USA?',
@@ -301,8 +301,8 @@ const FAQ = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Frequently Asked Questions — LuxeMia"
-        description="Find answers to common questions about LuxeMia orders, shipping, sizing, returns, and product care."
+        title="Frequently Asked Questions — LuxeMia Boutique"
+        description="Find answers to common questions about LuxeMia Boutique orders, shipping, sizing, returns, and product care."
         canonical="https://luxemia.shop/faq"
         breadcrumbs={[
           { name: 'Home', url: '/' },
