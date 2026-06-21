@@ -20,9 +20,9 @@
  */
 
 // JSON data loaded as modules — Vite handles these natively
-import sareeData from '../data/sareeSeoData.json' with { type: 'json' };
-import suitData from '../data/suitSeoData.json' with { type: 'json' };
-import menswearData from '../data/menswearSeoData.json' with { type: 'json' };
+import sareeData from '../data/sareeSeoData';
+import suitData from '../data/suitSeoData';
+import menswearData from '../data/menswearSeoData';
 
 // ---------------------------------------------------------------------------
 // Types

@@ -1,0 +1,1455 @@
+export default
+{
+  "products": [
+    {
+      "original_name": "Heavy Crape Maroon Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Maroon Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop maroon sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Maroon Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop maroon sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "maroon suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "maroon crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "maroon sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "maroon crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "maroon",
+      "price_usd": 166.89,
+      "image_alt_text": "Maroon sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this maroon sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Purple Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Purple Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop purple sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Purple Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop purple sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "purple suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "purple crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "purple sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "purple crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "purple",
+      "price_usd": 166.89,
+      "image_alt_text": "Purple sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this purple sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Rani Pink Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Rani Pink Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop rani pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Rani Pink Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop rani pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "rani pink suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "rani pink crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "rani pink sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "rani pink crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "rani pink",
+      "price_usd": 166.89,
+      "image_alt_text": "Rani Pink sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this rani pink sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Blue Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Blue Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop blue sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Blue Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop blue sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "blue suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "blue crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "blue sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "blue crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "blue",
+      "price_usd": 166.89,
+      "image_alt_text": "Blue sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this blue sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Pink Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Pink Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Pink Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop pink sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "pink suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "pink crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "pink sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "pink crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "pink",
+      "price_usd": 166.89,
+      "image_alt_text": "Pink sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this pink sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Black Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Black Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop black sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Black Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop black sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "black suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "black crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "black sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "black crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "black",
+      "price_usd": 166.89,
+      "image_alt_text": "Black sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this black sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Green Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Green Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Green Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "green suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "green crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "green sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "green crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "green",
+      "price_usd": 166.89,
+      "image_alt_text": "Green sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this green sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Pista Green Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Pista Green Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop pista green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Pista Green Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop pista green sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "pista green suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "pista green crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "pista green sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "pista green crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "pista green",
+      "price_usd": 166.89,
+      "image_alt_text": "Pista Green sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this pista green sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Peach Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Peach Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop peach sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Peach Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop peach sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "peach suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "peach crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "peach sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "peach crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "peach",
+      "price_usd": 166.89,
+      "image_alt_text": "Peach sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this peach sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Yellow Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Yellow Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop yellow sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Yellow Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop yellow sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "yellow suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "yellow crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "yellow sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "yellow crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "yellow",
+      "price_usd": 166.89,
+      "image_alt_text": "Yellow sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this yellow sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Heavy Crape Off White Party Wear Sequins Work Readymade Suit",
+      "seo_title": "Off White Sequins Crepe Party Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop off white sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Off White Sequins Crepe Party Wear Ready-to-Wear Suit",
+      "meta_description": "Shop off white sequins crepe party wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "crepe suit",
+        "party wear suit",
+        "ready to wear suit",
+        "off white suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian party wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "off white crepe suit",
+        "sequins crepe suit",
+        "indian suit",
+        "party wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "off white sequins crepe party wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched party wear suit online",
+        "off white crepe salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "crepe",
+      "work": "sequins",
+      "occasion": "party",
+      "color": "off white",
+      "price_usd": 166.89,
+      "image_alt_text": "Off White sequins crepe Party wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this off white sequins suit good for party events?",
+          "answer": "Yes, this sequins work party wear suit is perfect for wedding receptions, sangeet nights, and festive celebrations. The sequins add elegant shimmer under lights."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Beige Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Beige Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop beige embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Beige Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop beige embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "beige suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "beige georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "beige embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "beige georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "beige",
+      "price_usd": 110.67,
+      "image_alt_text": "Beige embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this beige georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Wine Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Wine Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop wine embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Wine Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop wine embroidery georgette occasion wear ready-to-wear suit. Pre-stitched suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "wine suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "wine georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "wine embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "wine georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "wine",
+      "price_usd": 110.67,
+      "image_alt_text": "Wine embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this wine georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Rani Pink Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Rani Pink Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop rani pink embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Rani Pink Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop rani pink embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "rani pink suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "rani pink georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "rani pink embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "rani pink georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "rani pink",
+      "price_usd": 110.67,
+      "image_alt_text": "Rani Pink embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this rani pink georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Blue Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Blue Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop blue embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Blue Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop blue embroidery georgette occasion wear ready-to-wear suit. Pre-stitched suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "blue suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "blue georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "blue embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "blue georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "blue",
+      "price_usd": 110.67,
+      "image_alt_text": "Blue embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this blue georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Green Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop green embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop green embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "green suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "green georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "green embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "green georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "green",
+      "price_usd": 110.67,
+      "image_alt_text": "Green embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this green georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Yellow Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Yellow Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop yellow embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Yellow Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop yellow embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "yellow suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "yellow georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "yellow embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "yellow georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "yellow",
+      "price_usd": 110.67,
+      "image_alt_text": "Yellow embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this yellow georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Sea Green Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Sea Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop sea green embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Sea Green Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop sea green embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "sea green suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "sea green georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "sea green embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "sea green georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "sea green",
+      "price_usd": 110.67,
+      "image_alt_text": "Sea Green embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this sea green georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Light Grey Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Light Grey Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop light grey embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Light Grey Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop light grey embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "light grey suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "light grey georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "light grey embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "light grey georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "light grey",
+      "price_usd": 110.67,
+      "image_alt_text": "Light Grey embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this light grey georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Peach Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Peach Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop peach embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Peach Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop peach embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "peach suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "peach georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "peach embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "peach georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "peach",
+      "price_usd": 110.67,
+      "image_alt_text": "Peach embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this peach georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Cream Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Cream Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop cream embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Cream Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop cream embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "cream suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "cream georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "cream embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "cream georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "cream",
+      "price_usd": 110.67,
+      "image_alt_text": "Cream embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this cream georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Purple Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Purple Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop purple embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Purple Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop purple embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "purple suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "purple georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "purple embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "purple georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "purple",
+      "price_usd": 110.67,
+      "image_alt_text": "Purple embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this purple georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Chinon Silk Orange Occasional Wear Embroidery Work Readymade Paty Wear",
+      "seo_title": "Orange Embroidery Georgette Occasion Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop orange embroidery georgette occasion wear ready-to-wear suit. Pre-stitched designer suit with embroidery work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Orange Embroidery Georgette Occasion Wear Ready-to-Wear Suit",
+      "meta_description": "Shop orange embroidery georgette occasion wear ready-to-wear suit. Elegant pre-stitched designer suit. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "embroidery suit",
+        "georgette suit",
+        "occasion wear suit",
+        "ready to wear suit",
+        "orange suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian occasion wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "orange georgette suit",
+        "embroidery georgette suit",
+        "indian suit",
+        "occasion wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "orange embroidery georgette occasion wear suit",
+        "ready to wear embroidery salwar kameez",
+        "pre stitched occasion wear suit online",
+        "orange georgette salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "georgette",
+      "work": "embroidery",
+      "occasion": "occasion",
+      "color": "orange",
+      "price_usd": 110.67,
+      "image_alt_text": "Orange embroidery georgette Occasion wear ready-to-wear suit with embroidery work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "What occasions is this orange georgette suit good for?",
+          "answer": "This embroidery work occasion wear suit is perfect for festivals, family gatherings, engagement parties, and cultural events. The embroidery adds refined elegance."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Art Silk Black Wedding Wear Sequins Work Readymade Suit",
+      "seo_title": "Black Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop black sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Black Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
+      "meta_description": "Shop black sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "art silk suit",
+        "wedding wear suit",
+        "ready to wear suit",
+        "black suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian wedding wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "black art silk suit",
+        "sequins art silk suit",
+        "indian suit",
+        "wedding wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "black sequins art silk wedding wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched wedding wear suit online",
+        "black art silk salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "art silk",
+      "work": "sequins",
+      "occasion": "wedding",
+      "color": "black",
+      "price_usd": 171.56,
+      "image_alt_text": "Black sequins art silk Wedding wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this black sequins suit suitable for weddings?",
+          "answer": "Yes, this sequins work wedding wear suit is ideal for bridesmaids, wedding guests, and festive ceremonies. The sequins detail adds grandeur."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Art Silk Blue Wedding Wear Sequins Work Readymade Suit",
+      "seo_title": "Blue Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop blue sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Blue Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
+      "meta_description": "Shop blue sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "art silk suit",
+        "wedding wear suit",
+        "ready to wear suit",
+        "blue suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian wedding wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "blue art silk suit",
+        "sequins art silk suit",
+        "indian suit",
+        "wedding wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "blue sequins art silk wedding wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched wedding wear suit online",
+        "blue art silk salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "art silk",
+      "work": "sequins",
+      "occasion": "wedding",
+      "color": "blue",
+      "price_usd": 171.56,
+      "image_alt_text": "Blue sequins art silk Wedding wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this blue sequins suit suitable for weddings?",
+          "answer": "Yes, this sequins work wedding wear suit is ideal for bridesmaids, wedding guests, and festive ceremonies. The sequins detail adds grandeur."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Art Silk Red Wedding Wear Sequins Work Readymade Suit",
+      "seo_title": "Red Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop red sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Red Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
+      "meta_description": "Shop red sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "art silk suit",
+        "wedding wear suit",
+        "ready to wear suit",
+        "red suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian wedding wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "red art silk suit",
+        "sequins art silk suit",
+        "indian suit",
+        "wedding wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "red sequins art silk wedding wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched wedding wear suit online",
+        "red art silk salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "art silk",
+      "work": "sequins",
+      "occasion": "wedding",
+      "color": "red",
+      "price_usd": 171.56,
+      "image_alt_text": "Red sequins art silk Wedding wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this red sequins suit suitable for weddings?",
+          "answer": "Yes, this sequins work wedding wear suit is ideal for bridesmaids, wedding guests, and festive ceremonies. The sequins detail adds grandeur."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Art Silk Green Wedding Wear Sequins Work Readymade Suit",
+      "seo_title": "Green Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop green sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Green Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
+      "meta_description": "Shop green sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "art silk suit",
+        "wedding wear suit",
+        "ready to wear suit",
+        "green suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian wedding wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "green art silk suit",
+        "sequins art silk suit",
+        "indian suit",
+        "wedding wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "green sequins art silk wedding wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched wedding wear suit online",
+        "green art silk salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "art silk",
+      "work": "sequins",
+      "occasion": "wedding",
+      "color": "green",
+      "price_usd": 171.56,
+      "image_alt_text": "Green sequins art silk Wedding wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this green sequins suit suitable for weddings?",
+          "answer": "Yes, this sequins work wedding wear suit is ideal for bridesmaids, wedding guests, and festive ceremonies. The sequins detail adds grandeur."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Art Silk Purple Wedding Wear Sequins Work Readymade Suit",
+      "seo_title": "Purple Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop purple sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Purple Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
+      "meta_description": "Shop purple sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "art silk suit",
+        "wedding wear suit",
+        "ready to wear suit",
+        "purple suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian wedding wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "purple art silk suit",
+        "sequins art silk suit",
+        "indian suit",
+        "wedding wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "purple sequins art silk wedding wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched wedding wear suit online",
+        "purple art silk salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "art silk",
+      "work": "sequins",
+      "occasion": "wedding",
+      "color": "purple",
+      "price_usd": 171.56,
+      "image_alt_text": "Purple sequins art silk Wedding wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this purple sequins suit suitable for weddings?",
+          "answer": "Yes, this sequins work wedding wear suit is ideal for bridesmaids, wedding guests, and festive ceremonies. The sequins detail adds grandeur."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    },
+    {
+      "original_name": "Art Silk Pink Wedding Wear Sequins Work Readymade Suit",
+      "seo_title": "Pink Sequins Art Silk Wedding Wear Ready-to-Wear Suit | LuxeMia",
+      "seo_description": "Shop pink sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "corrected_title": "Pink Sequins Art Silk Wedding Wear Ready-to-Wear Suit",
+      "meta_description": "Shop pink sequins art silk wedding wear ready-to-wear suit. Pre-stitched designer suit with sequins work. Free shipping over $350 to USA, Canada & Australia.",
+      "keywords": [
+        "sequins suit",
+        "art silk suit",
+        "wedding wear suit",
+        "ready to wear suit",
+        "pink suit",
+        "pre stitched salwar kameez",
+        "designer suit online",
+        "indian wedding wear",
+        "ethnic suit",
+        "salwar kameez online",
+        "pink art silk suit",
+        "sequins art silk suit",
+        "indian suit",
+        "wedding wear salwar kameez"
+      ],
+      "long_tail_keywords": [
+        "pink sequins art silk wedding wear suit",
+        "ready to wear sequins salwar kameez",
+        "pre stitched wedding wear suit online",
+        "pink art silk salwar kameez online"
+      ],
+      "category": "suit",
+      "fabric": "art silk",
+      "work": "sequins",
+      "occasion": "wedding",
+      "color": "pink",
+      "price_usd": 171.56,
+      "image_alt_text": "Pink sequins art silk Wedding wear ready-to-wear suit with sequins work",
+      "qa_pairs": [
+        {
+          "question": "What is a ready-to-wear suit?",
+          "answer": "A ready-to-wear or pre-stitched suit comes with the salwar, kameez, and dupatta fully stitched to standard sizes, ready to wear immediately upon delivery."
+        },
+        {
+          "question": "Is this pink sequins suit suitable for weddings?",
+          "answer": "Yes, this sequins work wedding wear suit is ideal for bridesmaids, wedding guests, and festive ceremonies. The sequins detail adds grandeur."
+        },
+        {
+          "question": "What sizes does this ready-to-wear suit fit?",
+          "answer": "Our ready-to-wear suits are stitched to fit most standard sizes (XS to XXL). Please check the size chart for detailed measurements."
+        }
+      ]
+    }
+  ]
+};
