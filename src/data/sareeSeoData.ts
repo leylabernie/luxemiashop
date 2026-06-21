@@ -1,5 +1,4 @@
-export default
-{
+export default {
   "products": [
     {
       "original_name": "Lycra Mauve Festival Wear Sequins Work Readymade Saree",

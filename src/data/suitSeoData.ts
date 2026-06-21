@@ -1,5 +1,4 @@
-export default
-{
+export default {
   "products": [
     {
       "original_name": "Heavy Crape Maroon Party Wear Sequins Work Readymade Suit",

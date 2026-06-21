@@ -1,8 +1,5 @@
 /**
  * HTML Generator Module
- *
- * Generates complete HTML pages for bot/crawler requests.
- * Used by middleware.ts for product page SSR and 404 responses.
  */
 
 import {
@@ -15,6 +12,7 @@ import { getCorrectedTitle } from '../lib/titleCorrections.js';
 import { getCorrectedTitleFromSeo, getImageAltText, getQAPairs, getMetaDescription } from '../lib/productSeoData.js';
 
 export function escapeHtml(str: string): string {
+  if (!str) return '';
   return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -23,31 +21,23 @@ export function escapeHtml(str: string): string {
     .replace(/'/g, '&#39;');
 }
 
-/**
- * Generate a clean short description from product metadata.
- * NEVER uses raw product.description which contains bloated old AI text.
- */
 function generateCleanDescription(title: string | undefined | null, productType: string | undefined | null, tags: string[] = []): string {
   const t = (title || '').toLowerCase();
   const pt = (productType || '').toLowerCase();
   const combined = `${t} ${pt} ${tags.join(' ').toLowerCase()}`;
 
-  // Extract color
   const colors = ['burgundy','wine','maroon','royal blue','navy','cobalt','fuchsia','magenta','black','cream','beige','white','ivory','gold','antique gold','teal','emerald','green','olive','charcoal','grey','coral','orange','saffron','yellow','rose','pink','plum','purple'];
   let color = '';
   for (const c of colors) { if (combined.includes(c)) { color = c.charAt(0).toUpperCase() + c.slice(1); break; } }
 
-  // Extract fabric
   const fabrics = ['silk','georgette','satin','cotton','net','velvet','organza','chiffon'];
   let fabric = '';
   for (const f of fabrics) { if (combined.includes(f)) { fabric = f.charAt(0).toUpperCase() + f.slice(1); break; } }
 
-  // Extract work
   const works = ['zari','zardozi','sequin','embroidery','mirror work','thread work','bead work','resham'];
   let work = '';
   for (const w of works) { if (combined.includes(w)) { work = w.charAt(0).toUpperCase() + w.slice(1); break; } }
 
-  // Product type label
   let label = 'ethnic wear';
   if (pt.includes('lehenga')) label = 'lehenga';
   else if (pt.includes('saree')) label = 'saree';
@@ -60,7 +50,6 @@ function generateCleanDescription(title: string | undefined | null, productType:
   if (work) parts.push(`with ${work.toLowerCase()}`);
   const s1 = `${parts.join(' ')}.`;
 
-  // Occasion
   const occasions: string[] = [];
   if (combined.includes('wedding') || combined.includes('bridal')) occasions.push('wedding');
   if (combined.includes('festive') || combined.includes('festival')) occasions.push('festive');
@@ -75,13 +64,8 @@ function generateCleanDescription(title: string | undefined | null, productType:
   return (s1 + s2).trim();
 }
 
-/**
- * Smart truncate: cuts text at the last complete sentence or word boundary
- * within the maxLength limit. Never cuts off mid-sentence.
- */
 function smartTruncate(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
-  // Try to find the last sentence-ending punctuation within limit
   const slice = text.slice(0, maxLength);
   const lastSentenceEnd = Math.max(
     slice.lastIndexOf('.'),
@@ -91,7 +75,6 @@ function smartTruncate(text: string, maxLength: number): string {
   if (lastSentenceEnd > maxLength * 0.7) {
     return slice.slice(0, lastSentenceEnd + 1);
   }
-  // Fallback: cut at last space (word boundary)
   const lastSpace = slice.lastIndexOf(' ');
   if (lastSpace > maxLength * 0.5) {
     return slice.slice(0, lastSpace) + '...';
@@ -110,59 +93,43 @@ function getCategoryUrl(productType?: string): string {
 }
 
 export function generateProductHtml(product: any, canonicalUrl: string): string {
-  // Strip any trailing "— LuxeMia" or "| LuxeMia" from Shopify product titles
-  // to prevent brand duplication when we append our own "| LuxeMia"
   const rawCleanTitle = (product.title || '').replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
-
-  // Apply visual title correction — lehenga handle corrections first, then SEO data
   const handleCorrected = getCorrectedTitle(product.handle);
   const seoCorrected = getCorrectedTitleFromSeo(product.title || '');
   const cleanTitle = handleCorrected || seoCorrected || rawCleanTitle;
-  // Competitor-inspired title: "Buy [Product] Online | [Category] | LuxeMia"
-  // Kalki, Cbazaar, Utsav all use action verbs (Buy/Shop) + "Online" + brand
   const title = `Buy ${cleanTitle} Online | ${product.productType || 'Ethnic Wear'} | LuxeMia Boutique`;
-  // Generate a proper meta description (150-160 chars, doesn't cut off mid-sentence)
-  // Uses corrected title so description matches the page title
   const seoMetaDesc = getMetaDescription(product.title || '');
-  const rawDescFallback = `Buy ${cleanTitle} online at LuxeMia Boutique. Handcrafted Indian ethnic wear. Free shipping over $350 to USA, Canada & Australia. Shop now!`;
-  const fullDescription = seoMetaDesc || rawDescFallback;
-  // Smart truncate: cut at last complete sentence within 150-160 char limit
-  const description = smartTruncate(fullDescription, 160);
-  const price = product.priceRange.minVariantPrice.amount;
-  const currency = product.priceRange.minVariantPrice.currencyCode;
+  const rawDescFallback = `Buy ${cleanTitle} online at LuxeMia Boutique. Handcrafted Indian ethnic wear. Free shipping over 50 to USA, Canada & Australia. Shop now!`;
+  const description = smartTruncate(seoMetaDesc || rawDescFallback, 160);
+
+  const price = product.priceRange?.minVariantPrice?.amount || '0.00';
+  const currency = product.priceRange?.minVariantPrice?.currencyCode || 'USD';
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
-  const imageUrl = product.images.edges[0]?.node.url || `${SITE_URL}/og-image.jpg`;
+  const imageUrl = product.images?.edges?.[0]?.node?.url || `${SITE_URL}/og-image.jpg`;
   const gmcSafeImage = forceJpegForGmc(imageUrl);
   const categoryUrl = getCategoryUrl(product.productType);
   const categoryName = product.productType || 'Collections';
   const availability = product.availableForSale !== false ? 'InStock' : 'OutOfStock';
   const vendor = product.vendor || 'LuxeMia Boutique';
 
-  const colorOption = product.options?.find((o: any) => o.name?.toLowerCase() === 'color');
-  const materialOption = product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
-  const sizeOption = product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
+  const options = product.options || [];
+  const colorOption = options.find((o: any) => o.name?.toLowerCase() === 'color');
+  const materialOption = options.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
+  const sizeOption = options.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
   const color = colorOption?.values?.[0];
   const material = materialOption?.values?.[0];
   const sizes = sizeOption?.values || [];
-  const sku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
+  const sku = product.variants?.edges?.[0]?.node?.sku || product.id?.split('/').pop() || '';
   const googleProductCategory = getGoogleProductCategory(product.productType, product.title);
 
   const isMenswear = (product.productType || '').toLowerCase().includes('men') || (product.title || '').toLowerCase().includes('sherwani') || (product.title || '').toLowerCase().includes('kurta pajama');
   const gender = isMenswear ? 'male' : 'female';
 
-  const priceNum = parseFloat(price);
-  const compareNum = compareAtPrice ? parseFloat(compareAtPrice) : 0;
-  const hasDiscount = compareNum > priceNum;
-  const discountPercent = hasDiscount ? Math.round((1 - priceNum / compareNum) * 100) : 0;
-  const schemaPrice = hasDiscount ? compareAtPrice! : price;
-  const schemaSalePrice = hasDiscount ? price : undefined;
-
-  // Generate schema using shared module
   const productSchema = generateProductSchema({
     name: cleanTitle,
     description: description,
     url: canonicalUrl,
-    image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map((e: any) => forceJpegForGmc(e.node.url))],
+    image: [gmcSafeImage, ...(product.images?.edges?.slice(1, 5).map((e: any) => forceJpegForGmc(e.node.url)) || [])],
     sku,
     brand: vendor,
     category: product.productType || 'Clothing > Traditional & Ethnic Wear',
@@ -182,8 +149,7 @@ export function generateProductHtml(product: any, canonicalUrl: string): string 
     { name: cleanTitle, url: canonicalUrl },
   ]);
 
-  // Build FAQ schema — merge SEO Q&A pairs with generic fallback questions
-  const seoFaqs = getQAPairs(product.title);
+  const seoFaqs = getQAPairs(product.title || '');
   const fallbackFaqs = [
     {
       question: `What sizes are available for the ${cleanTitle}?`,
@@ -195,42 +161,18 @@ export function generateProductHtml(product: any, canonicalUrl: string): string 
     },
     {
       question: `Can I return the ${cleanTitle} if it doesn't fit?`,
-      answer: `All sales are final. LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which requires a mandatory unboxing video. Please use our Size Guide before ordering.`,
+      answer: `All sales are final. LuxeMia Boutique does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.`,
     },
   ];
-  const mergedFaqs = seoFaqs.length > 0 ? seoFaqs : fallbackFaqs;
-  const faqSchema = generateFaqSchema(mergedFaqs);
+  const faqSchema = generateFaqSchema(seoFaqs.length > 0 ? seoFaqs : fallbackFaqs);
 
-  // Generate SEO-optimized alt text — use SEO data when available, fallback to generated
-  const seoAltText = getImageAltText(product.title);
-  const generateAltText = (index: number, existingAlt: string | null): string => {
-    if (existingAlt && existingAlt.length > 5 && !existingAlt.toLowerCase().includes('image')) {
-      return existingAlt; // Use existing alt if it's meaningful
-    }
-    // Use SEO alt text for the main (first) image; generate for additional images
-    if (index === 0 && seoAltText) {
-      return seoAltText;
-    }
-    // Generate descriptive alt text with color and angle context
-    const colorContext = color ? `${color} ` : '';
-    const materialContext = material ? `${material} ` : '';
-    if (index === 0) {
-      return `${cleanTitle} — ${colorContext}${materialContext}Indian ethnic wear front view`;
-    } else if (index === 1) {
-      return `${cleanTitle} — ${colorContext}detail embroidery and fabric closeup`;
-    } else if (index === 2) {
-      return `${cleanTitle} — ${colorContext}full outfit styling with dupatta`;
-    }
-    return `${cleanTitle} — ${colorContext}alternate view ${index + 1}`;
-  };
-
-  const allImages = product.images.edges.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
+  const allImages = (product.images?.edges || []).map((edge: any, i: number) => {
     const imgSrc = forceJpegForGmc(edge.node.url);
-    const altText = generateAltText(i, edge.node.altText);
+    const altText = cleanTitle;
     return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(altText)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} loading="${i === 0 ? 'eager' : 'lazy'}" />`;
   });
 
-  const variantOptions = product.variants.edges.slice(0, 5).map((v: { node: { title: string } }) => {
+  const variantOptions = (product.variants?.edges || []).slice(0, 5).map((v: any) => {
     const vTitle = v.node.title !== 'Default Title' ? v.node.title : '';
     return vTitle ? `<span style="display:inline-block;padding:4px 12px;margin:2px;border:1px solid #ccc;border-radius:4px;font-size:13px;">${escapeHtml(vTitle)}</span>` : '';
   }).filter(Boolean).join('');
@@ -242,130 +184,38 @@ export function generateProductHtml(product: any, canonicalUrl: string): string 
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
   <meta name="author" content="LuxeMia Boutique">
-  <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY">
   <meta property="og:type" content="product">
-  <meta property="og:url" content="${escapeHtml(canonicalUrl)}">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:image" content="${escapeHtml(gmcSafeImage)}">
   <meta property="og:site_name" content="LuxeMia Boutique">
-  <meta property="og:locale" content="en_US">
-  <meta property="product:price:amount" content="${escapeHtml(schemaPrice)}">
-  <meta property="product:price:currency" content="${escapeHtml(currency)}">
-  ${schemaSalePrice ? `<meta property="product:sale_price:amount" content="${escapeHtml(schemaSalePrice)}">` : ''}
-  ${schemaSalePrice ? `<meta property="product:sale_price:currency" content="${escapeHtml(currency)}">` : ''}
-  <meta property="product:original_price:amount" content="${escapeHtml(hasDiscount ? compareAtPrice! : price)}">
-  <meta property="product:original_price:currency" content="${escapeHtml(currency)}">
-  <meta property="product:availability" content="${availability === 'InStock' ? 'in stock' : 'out of stock'}">
-  <meta property="product:brand" content="${escapeHtml(vendor)}">
-  <meta property="product:condition" content="new">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="${escapeHtml(canonicalUrl)}">
-  <meta name="twitter:title" content="${escapeHtml(title)}">
-  <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${escapeHtml(gmcSafeImage)}">
   <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true, linked_domains: ['luxemia.shop'] });
-  </script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Playfair Display', 'Lora', Georgia, serif; color: #1a1a1a; background: #fafaf9; line-height: 1.6; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
-    nav { padding: 12px 0; font-size: 13px; color: #888; }
-    nav a { color: #888; text-decoration: none; }
-    nav a:hover { color: #1a1a1a; }
-    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: 32px 0; }
-    .product-images img { width: 100%; height: auto; border-radius: 2px; }
-    .product-thumbs { display: flex; gap: 4px; margin-top: 8px; }
-    .product-info h1 { font-size: 28px; font-weight: 500; margin-bottom: 12px; line-height: 1.3; }
-    .price { font-size: 24px; margin-bottom: 16px; }
-    .price-sale { color: #c41e3a; font-weight: 600; }
-    .price-original { text-decoration: line-through; color: #999; font-size: 16px; margin-left: 8px; }
-    .discount-badge { display: inline-block; background: #c41e3a; color: white; font-size: 12px; padding: 2px 8px; border-radius: 2px; margin-left: 8px; }
-    .description { font-size: 14px; color: #555; margin-bottom: 24px; line-height: 1.7; }
-    .details { font-size: 13px; color: #666; margin-bottom: 24px; }
-    .details dt { font-weight: 600; display: inline; }
-    .details dd { display: inline; margin-left: 4px; margin-bottom: 4px; }
-    .trust-badges { display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap; }
-    .trust-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #2e7d32; }
-    .trust-badge svg { width: 18px; height: 18px; }
-    .shipping-info { font-size: 12px; color: #666; margin-top: 16px; padding: 12px; background: #f5f5f4; border-radius: 4px; }
-    footer { margin-top: 64px; padding: 24px 0; border-top: 1px solid #e5e5e5; font-size: 12px; color: #999; text-align: center; }
-    @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; gap: 24px; } }
+    body { font-family: 'Playfair Display', serif; color: #1a1a1a; background: #fafaf9; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } }
   </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <nav>
-      <a href="${SITE_URL}">Home</a> &rsaquo;
-      <a href="${SITE_URL}${categoryUrl}">${escapeHtml(categoryName)}</a> &rsaquo;
-      ${escapeHtml(product.title)}
-    </nav>
     <div class="product-grid">
-      <div class="product-images">
-        ${allImages[0] || ''}
-        ${allImages.length > 1 ? `<div class="product-thumbs">${allImages.slice(1).join('\n')}</div>` : ''}
-      </div>
+      <div class="product-images">${allImages.join('')}</div>
       <div class="product-info">
         <h1>${escapeHtml(product.title)}</h1>
-        <div class="price">
-          ${hasDiscount
-            ? `<span class="price-sale">${currency} ${price}</span><span class="price-original">${currency} ${compareAtPrice}</span><span class="discount-badge">${discountPercent}% OFF</span>`
-            : `<span>${currency} ${price}</span>`
-          }
-        </div>
-        <p class="description">${escapeHtml(generateCleanDescription(product.title, product.productType, product.tags || []).slice(0, 500))}</p>
-        ${variantOptions ? `<div style="margin-bottom:16px;">${variantOptions}</div>` : ''}
-        <dl class="details">
-          ${vendor ? `<div><dt>Brand:</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
-          ${color ? `<div><dt>Color:</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
-          ${material ? `<div><dt>Fabric:</dt><dd>${escapeHtml(material)}</dd></div>` : ''}
-          ${sizes.length > 0 ? `<div><dt>Available Sizes:</dt><dd>${escapeHtml(sizes.join(', '))}</dd></div>` : ''}
-          <div><dt>Gender:</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>
-          <div><dt>Condition:</dt><dd>New</dd></div>
-          <div><dt>Availability:</dt><dd>${availability === 'InStock' ? 'In Stock' : 'Out of Stock'}</dd></div>
-        </dl>
-        <div class="trust-badges">
-          <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>SSL Secure</div>
-          <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 18.5a1.5 1.5 0 0 1-1.5-1.5 1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5M19.5 9.5L21 12h-3l1.5-2.5M6 18.5A1.5 1.5 0 0 1 4.5 17 1.5 1.5 0 0 1 6 15.5 1.5 1.5 0 0 1 7.5 17 1.5 1.5 0 0 1 6 18.5M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>Free Shipping over $350</div>
-          <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Quality Inspected</div>
-          <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
-        </div>
-        <div class="shipping-info">
-          <strong>Shipping:</strong> Free shipping on orders over $350. Flat rate $25/order for orders under $350. Delivery 7-10 business days via USPS/UPS/DHL to USA, Canada, and Australia.<br>
-          <strong>Dispatch:</strong> Readymade 3-5 business days | Custom/Alterations 5-7 business days<br>
-          <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
-          <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
-        </div>
+        <div class="price">${currency} ${price}</div>
+        <p class="description">${escapeHtml(generateCleanDescription(product.title, product.productType, product.tags || []))}</p>
+        <div class="variants">${variantOptions}</div>
       </div>
     </div>
-    <footer>
-      <p>&copy; 2026 LuxeMia Boutique. All rights reserved. | luxemia.shop is owned and operated by Glamour Indian Wear | 2208 Michener St, Philadelphia, PA 19115, USA</p>
-      <p><a href="${SITE_URL}/shipping">Shipping Policy</a> | <a href="${SITE_URL}/returns">Returns</a> | <a href="${SITE_URL}/privacy">Privacy</a> | <a href="${SITE_URL}/terms">Terms</a> | <a href="${SITE_URL}/contact">Contact</a></p>
-    </footer>
   </div>
 </body>
 </html>`;
 }
-
-// ─── Collection Page HTML with ItemList Schema ─────────────────────────────
-// Generates collection page HTML with ItemList schema for product carousel in SERPs
-// Inspired by KalkiFashion.com which uses ItemList on all collection pages
 
 export function generateCollectionHtml(
   collectionName: string,
@@ -376,87 +226,37 @@ export function generateCollectionHtml(
 ): string {
   const itemListSchema = generateItemListSchema(collectionName, collectionUrl, products);
   const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems);
-  const orgSchema = generateOrganizationSchema();
-  const websiteSchema = generateWebSiteSchema();
-
-  const productCards = products.map(p => `
-    <div itemscope itemtype="https://schema.org/Product" class="collection-product-card">
-      <a href="${p.url}" itemprop="url">
-        <img src="${forceJpegForGmc(p.image)}" alt="${escapeHtml(p.name)}" itemprop="image" loading="lazy" width="300" height="400" />
-        <h3 itemprop="name">${escapeHtml(p.name)}</h3>
-        <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
-          <span itemprop="priceCurrency" content="${p.currency}">${p.currency}</span>
-          <span itemprop="price">${p.price}</span>
-          <link itemprop="availability" href="https://schema.org/${p.availability}" />
-        </div>
-      </a>
-    </div>
-  `).join('\n');
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop ${escapeHtml(collectionName)} Online | Indian Ethnic Wear | LuxeMia</title>
+  <title>Shop ${escapeHtml(collectionName)} Online | LuxeMia Boutique</title>
   <meta name="description" content="${escapeHtml(collectionDescription.slice(0, 160))}">
   <link rel="canonical" href="${collectionUrl}">
   <script type="application/ld+json">${JSON.stringify(itemListSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(orgSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(websiteSchema)}</script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Playfair Display', Georgia, serif; line-height: 1.7; color: #2a2a2a; background: #fff; }
-    .container { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
-    .collection-header { text-align: center; margin-bottom: 48px; padding: 48px 24px; background: #faf9f7; }
-    .collection-header h1 { font-size: 2.5rem; margin-bottom: 16px; }
-    .collection-header p { max-width: 800px; margin: 0 auto; color: #666; font-size: 1.1rem; }
-    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 32px; }
-    .collection-product-card { border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; transition: box-shadow 0.2s; }
-    .collection-product-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    .collection-product-card a { text-decoration: none; color: inherit; display: block; }
-    .collection-product-card img { width: 100%; height: 380px; object-fit: cover; }
-    .collection-product-card h3 { padding: 16px 16px 8px; font-size: 1rem; font-weight: 500; }
-    .collection-product-card [itemprop="offers"] { padding: 0 16px 16px; font-weight: 600; color: #1a3c34; }
-  </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div class="collection-header">
-      <h1>Shop ${escapeHtml(collectionName)} Online</h1>
-      <p>${escapeHtml(collectionDescription)}</p>
-    </div>
-    <div class="product-grid" itemscope itemtype="https://schema.org/ItemList">
-      <meta itemprop="name" content="${escapeHtml(collectionName)}">
-      <link itemprop="url" href="${collectionUrl}">
-      ${productCards}
-    </div>
-  </div>
+  <h1>Shop ${escapeHtml(collectionName)} Online</h1>
+  <p>${escapeHtml(collectionDescription)}</p>
 </body>
 </html>`;
 }
 
-// ─── 404 Response ──────────────────────────────────────────────────────────
-
 let cached404Html: string | null = null;
-
 export async function return404(request: Request): Promise<Response> {
   if (!cached404Html) {
     try {
       const resp = await fetch(new URL('/_prerender/404.html', request.url).toString());
       cached404Html = await resp.text();
     } catch {
-      cached404Html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page Not Found | LuxeMia</title><meta name="robots" content="noindex,nofollow"></head><body><h1>Page Not Found</h1><p>The page you are looking for could not be found.</p></body></html>`;
+      cached404Html = `<!DOCTYPE html><html lang="en"><body><h1>Page Not Found</h1><p>The page you are looking for could not be found.</p></body></html>`;
     }
   }
   return new Response(cached404Html, {
     status: 404,
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'public, max-age=300',
-    },
+    headers: { 'Content-Type': 'text/html; charset=utf-8' },
   });
 }

@@ -1,5 +1,4 @@
-export default
-{
+export default {
   "products": [
     {
       "original_name": "Viscose White Groom Wear Sequins Work Readymade Indo Western",
