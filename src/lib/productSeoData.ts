@@ -78,13 +78,13 @@ interface SeoDataFile {
 // ---------------------------------------------------------------------------
 
 /** All saree product SEO records (30 items). */
-export const SAREE_PRODUCTS_SEO: ProductSeoRecord[] = (sareeData as SeoDataFile).products ?? [];
+export const SAREE_PRODUCTS_SEO: ProductSeoRecord[] = (sareeData as any).products ?? [];
 
 /** All suit product SEO records (29 items). */
-export const SUIT_PRODUCTS_SEO: ProductSeoRecord[] = (suitData as SeoDataFile).products ?? [];
+export const SUIT_PRODUCTS_SEO: ProductSeoRecord[] = (suitData as any).products ?? [];
 
 /** All menswear product SEO records (29 items). */
-export const MENSWEAR_PRODUCTS_SEO: ProductSeoRecord[] = (menswearData as SeoDataFile).products ?? [];
+export const MENSWEAR_PRODUCTS_SEO: ProductSeoRecord[] = (menswearData as any).products ?? [];
 
 /** Combined array of all 88 product SEO records. */
 export const ALL_PRODUCTS_SEO: ProductSeoRecord[] = [

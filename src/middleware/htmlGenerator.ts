@@ -9,7 +9,7 @@ import type { ShopifyProduct } from './shopifyProxy.js';
 import {
   forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema,
   generateFaqSchema, getGoogleProductCategory, SITE_URL,
-  generateWebSiteSchema, type ItemListProduct, generateItemListSchema,
+  generateWebSiteSchema, generateItemListSchema,
   generateOrganizationSchema,
 } from '../lib/schema.js';
 import { getCorrectedTitle } from '../lib/titleCorrections.js';
@@ -28,7 +28,7 @@ export function escapeHtml(str: string): string {
  * Generate a clean short description from product metadata.
  * NEVER uses raw product.description which contains bloated old AI text.
  */
-function generateCleanDescription(title: string, productType: string, tags: string[] = []): string {
+function generateCleanDescription(title: string | undefined | null, productType: string | undefined | null, tags: string[] = []): string {
   const t = (title || '').toLowerCase();
   const pt = (productType || '').toLowerCase();
   const combined = `${t} ${pt} ${tags.join(' ').toLowerCase()}`;
@@ -110,22 +110,22 @@ function getCategoryUrl(productType?: string): string {
   return '/collections';
 }
 
-export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): string {
+export function generateProductHtml(product: any, canonicalUrl: string): string {
   // Strip any trailing "— LuxeMia" or "| LuxeMia" from Shopify product titles
   // to prevent brand duplication when we append our own "| LuxeMia"
-  const rawCleanTitle = product.title.replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
+  const rawCleanTitle = (product.title || '').replace(/\s*[-–—|]\s*LuxeMia\s*$/i, '').trim();
 
   // Apply visual title correction — lehenga handle corrections first, then SEO data
   const handleCorrected = getCorrectedTitle(product.handle);
-  const seoCorrected = getCorrectedTitleFromSeo(product.title);
+  const seoCorrected = getCorrectedTitleFromSeo(product.title || '');
   const cleanTitle = handleCorrected || seoCorrected || rawCleanTitle;
   // Competitor-inspired title: "Buy [Product] Online | [Category] | LuxeMia"
   // Kalki, Cbazaar, Utsav all use action verbs (Buy/Shop) + "Online" + brand
-  const title = `Buy ${cleanTitle} Online | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
+  const title = `Buy ${cleanTitle} Online | ${product.productType || 'Ethnic Wear'} | LuxeMia Boutique`;
   // Generate a proper meta description (150-160 chars, doesn't cut off mid-sentence)
   // Uses corrected title so description matches the page title
-  const seoMetaDesc = getMetaDescription(product.title);
-  const rawDescFallback = `Buy ${cleanTitle} online at LuxeMia. Handcrafted Indian ethnic wear. Free shipping over $350 to USA, Canada & Australia. Shop now!`;
+  const seoMetaDesc = getMetaDescription(product.title || '');
+  const rawDescFallback = `Buy ${cleanTitle} online at LuxeMia Boutique. Handcrafted Indian ethnic wear. Free shipping over $350 to USA, Canada & Australia. Shop now!`;
   const fullDescription = seoMetaDesc || rawDescFallback;
   // Smart truncate: cut at last complete sentence within 150-160 char limit
   const description = smartTruncate(fullDescription, 160);
@@ -137,11 +137,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const categoryUrl = getCategoryUrl(product.productType);
   const categoryName = product.productType || 'Collections';
   const availability = product.availableForSale !== false ? 'InStock' : 'OutOfStock';
-  const vendor = product.vendor || 'LuxeMia';
+  const vendor = product.vendor || 'LuxeMia Boutique';
 
-  const colorOption = product.options?.find((o: { name?: string }) => o.name?.toLowerCase() === 'color');
-  const materialOption = product.options?.find((o: { name?: string }) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
-  const sizeOption = product.options?.find((o: { name?: string }) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
+  const colorOption = product.options?.find((o: any) => o.name?.toLowerCase() === 'color');
+  const materialOption = product.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
+  const sizeOption = product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size' || o.name?.toLowerCase() === 'chest size');
   const color = colorOption?.values?.[0];
   const material = materialOption?.values?.[0];
   const sizes = sizeOption?.values || [];
@@ -247,14 +247,14 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
-  <meta name="author" content="LuxeMia">
+  <meta name="author" content="LuxeMia Boutique">
   <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY">
   <meta property="og:type" content="product">
   <meta property="og:url" content="${escapeHtml(canonicalUrl)}">
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:image" content="${escapeHtml(gmcSafeImage)}">
-  <meta property="og:site_name" content="LuxeMia">
+  <meta property="og:site_name" content="LuxeMia Boutique">
   <meta property="og:locale" content="en_US">
   <meta property="product:price:amount" content="${escapeHtml(schemaPrice)}">
   <meta property="product:price:currency" content="${escapeHtml(currency)}">
@@ -372,11 +372,7 @@ export function generateCollectionHtml(
   collectionName: string,
   collectionUrl: string,
   collectionDescription: string,
-  products: Array<{
-    name: string; url: string; image: string;
-    price: string; currency: string; availability: 'InStock' | 'OutOfStock';
-    position: number;
-  }>,
+  products: Array<any>,
   breadcrumbItems: Array<{ name: string; url: string }>
 ): string {
   const itemListSchema = generateItemListSchema(collectionName, collectionUrl, products);

@@ -10,7 +10,9 @@
       ]
     },
     "skipLibCheck": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler"
   },
   "files": [],
   "references": [
