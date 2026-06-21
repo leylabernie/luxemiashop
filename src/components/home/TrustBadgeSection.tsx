@@ -10,17 +10,17 @@ const TrustBadgeSection = () => {
     },
     {
       icon: Search,
-      title: "USA Quality Inspection",
-      description: "Every piece undergoes a rigorous 12-point quality check by our team before being dispatched to you."
+      title: "Expert Quality Inspection",
+      description: "Every piece undergoes a rigorous 12-point check at our source workshop before being dispatched directly to your door."
     },
     {
       icon: Truck,
-      title: "Reliable Global Delivery",
-      description: "Fully tracked shipping to USA, Canada, and Australia via DHL/UPS. No hidden customs 'surprises' on delivery."
+      title: "Direct Global Shipping",
+      description: "Direct shipping from our source to your doorstep in the USA, Canada, and Australia via DHL/UPS. Fully tracked and secure."
     },
     {
       icon: Clock,
-      title: "Time-Sensitive Reliable",
+      title: "Reliable Event Timelines",
       description: "Planning for an event? We provide honest timelines so your outfit arrives exactly when you need it."
     },
     {

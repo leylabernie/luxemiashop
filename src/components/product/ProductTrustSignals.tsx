@@ -37,9 +37,9 @@ const trustCards: TrustCard[] = [
   },
   {
     icon: <Truck className="h-6 w-6" />,
-    title: 'Clear Shipping Terms',
+    title: 'Direct Global Shipping',
     description:
-      'Ships to USA, Canada & Australia. Orders over $350 ship free; orders under $350 use a $25 flat rate.',
+      'Direct shipping from our source workshops to your doorstep in the USA, Canada, and Australia.',
     highlight: 'US, CA & AU',
   },
   {
@@ -185,7 +185,7 @@ export const ProductTrustSignals = () => {
           </span>
           <span className="flex items-center gap-1.5">
             <Truck className="h-3.5 w-3.5 text-primary" />
-            Ships to USA, Canada & Australia
+            Direct Global Shipping
           </span>
           <span className="flex items-center gap-1.5">
             <RefreshCcw className="h-3.5 w-3.5 text-primary" />

@@ -2512,7 +2512,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Custom-stitched orders:</strong> Add 7-14 days for tailoring before shipping</li>
       </ul>
       <h3>LuxeMia Shipping Policy</h3>
-      <p>At LuxeMia, we ship from our Philadelphia warehouse, so delivery is much faster than ordering directly from India. We offer <strong>free shipping on orders over $350</strong> and a flat rate of $25 for orders under $350. No waiting weeks for your outfit to arrive — see our <a href="/shipping">shipping policy</a> for full details.</p>
+      <p>At LuxeMia Boutique, we offer direct global shipping from our source workshops, supported by our Philadelphia-based customer care team. We offer <strong>free shipping on orders over $350</strong> and a flat rate of $25 for orders under $350. Enjoy the reliability of a US-based business with the authenticity of direct sourcing — see our <a href="/shipping">shipping policy</a> for full details.</p>
 
       <h2>Customs Duties and Tariffs: The Hidden Cost</h2>
       <p>This is the part most NRI shoppers don't anticipate. As of 2025-2026, the United States imposes tariffs on goods imported from India, and clothing is no exception.</p>
@@ -2523,7 +2523,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Personal use exemption:</strong> You may bring back up to $800 worth of goods per person when traveling</li>
       </ul>
       <h3>How LuxeMia Handles Duties</h3>
-      <p>Because LuxeMia Boutique is a US-based business (LuxeMia Boutique, Philadelphia, PA), we import in bulk and handle all customs duties on our end. The price you see on our website is the price you pay — no surprise duty bills at your doorstep. This can save you hundreds of dollars compared to ordering directly from Indian retailers. luxemia.shop is owned and operated by Glamour Indian Wear.</p>
+      <p>Because LuxeMia Boutique is a US-based business (LuxeMia Boutique, Philadelphia, PA), we provide direct support and oversight for every shipment. While items ship directly from our source workshops to provide you with the most authentic and fresh designs, we handle the logistics and support to ensure a smooth delivery experience to your doorstep in the USA, Canada, and Australia. luxemia.shop is owned and operated by Glamour Indian Wear.</p>
 
       <h2>Quality Concerns: What You See vs. What You Get</h2>
       <p>One of the biggest fears of online ethnic wear shopping is quality mismatch. The outfit that looked stunning on the model arrives looking like a completely different piece. Here's how to protect yourself:</p>
@@ -2577,7 +2577,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Why LuxeMia Is Built for NRI Shoppers</h2>
-      <p>LuxeMia was founded specifically to solve the problems NRIs face when buying Indian clothes. Based in Philadelphia, we stock our inventory in the US, so you get fast delivery without customs surprises. Every product listing includes accurate measurements, fabric details, and close-up photos. Learn more about our mission on our <a href="/brand-story">brand story page</a>.</p>
+      <p>LuxeMia Boutique was founded specifically to solve the problems NRIs face when buying Indian clothes. Based in Philadelphia, we provide direct support and quality oversight for every order shipped from our source workshops. You get the reliability of a US-based business without customs surprises. Every product listing includes accurate measurements, fabric details, and close-up photos. Learn more about our mission on our <a href="/brand-story">brand story page</a>.</p>
       <p>For customers in Canada and Australia, we also ship internationally with transparent pricing. Visit our <a href="/nri/usa">NRI USA shopping page</a> for country-specific information.</p>
 
       <h2>Continue Reading</h2>

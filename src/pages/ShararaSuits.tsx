@@ -109,7 +109,7 @@ const ShararaSuits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">USA-Based Indian Boutique</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Buy Sharara Suits Online | LuxeMia Boutique</h1>
             <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
-              Shop the finest collection of Indian and Pakistani sharara suits and sharara sets online. From designer sharara suits for weddings to festive sharara outfits for Eid and Mehendi, we offer curated styles with fast shipping to the USA, Canada, and Australia. Every piece is quality-inspected at our Philadelphia-based boutique to ensure the perfect fit for your special occasion.
+              Shop the finest collection of Indian and Pakistani sharara suits and sharara sets online. From designer sharara suits for weddings to festive sharara outfits for Eid and Mehendi, we offer curated styles with direct shipping to the USA, Canada, and Australia. Every piece is quality-inspected at our source workshop to ensure the perfect fit for your special occasion, supported by our Philadelphia-based team.
             </p>
           </div>
         </section>

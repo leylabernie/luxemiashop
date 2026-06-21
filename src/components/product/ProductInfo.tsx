@@ -934,7 +934,7 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Quality Inspected</p>
-            <p className="text-xs text-muted-foreground">Every item checked before shipping</p>
+            <p className="text-xs text-muted-foreground">Rigorous source-workshop certification</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
@@ -942,8 +942,8 @@ export const ProductInfo = ({ product, correctedTitle }: ProductInfoProps) => {
             <Truck className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Ships to USA, Canada & Australia</p>
-            <p className="text-xs text-muted-foreground">Free over $350; $25 flat rate under $350</p>
+            <p className="text-sm font-medium">Direct Global Shipping</p>
+            <p className="text-xs text-muted-foreground">Direct from source to USA, CA & AU</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">

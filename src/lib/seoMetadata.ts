@@ -142,7 +142,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   }),
   '/brand-story': withMetadataDefaults({
     title: 'Our Story | About LuxeMia - Indian Ethnic Wear Brand',
-    description: 'Learn about LuxeMia, our passion for authentic Indian ethnic wear, ethical sourcing, and commitment to quality craftsmanship. Based in Philadelphia, shipping worldwide.',
+    description: 'Learn about LuxeMia Boutique, our passion for authentic Indian ethnic wear, ethical sourcing, and commitment to quality craftsmanship. Philadelphia-based support with direct global shipping.',
     canonical: `${SITE_URL}/brand-story`,
   }),
   '/new-arrivals': withMetadataDefaults({
