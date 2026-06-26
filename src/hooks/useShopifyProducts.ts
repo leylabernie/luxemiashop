@@ -68,6 +68,30 @@ function storeProducts(products: ShopifyProduct[]): void {
 let cachedProducts: ShopifyProduct[] | null = null;
 let cachePromise: Promise<ShopifyProduct[]> | null = null;
 
+// ─── Prerendered initial data ─────────────────────────────────────────────────
+// Build-time prerender (scripts/prerender.js) injects a JSON payload as
+// window.__INITIAL_DATA__ on collection routes (/sarees, /lehengas, /suits,
+// /menswear, /indowestern, /collections, /new-arrivals, /bestsellers).
+// Reading it on hydration lets React paint product cards instantly with zero
+// client-side Shopify fetch — the SEO fix for the 100 → 7 impression drop.
+// On routes without prerendered data (e.g. client-side navigations) this returns
+// null and the hook falls back to the existing cache + Shopify API path.
+declare global {
+  interface Window {
+    __INITIAL_DATA__?: { category?: string; products: ShopifyProduct[] };
+  }
+}
+
+function getInitialData(category?: string): ShopifyProduct[] | null {
+  if (typeof window === 'undefined') return null;
+  const data = window.__INITIAL_DATA__;
+  if (!data || !Array.isArray(data.products) || data.products.length === 0) return null;
+  // Only consume the payload if it matches the requested category — otherwise
+  // a stale payload from a previous collection page could leak in.
+  if (category && data.category && data.category !== category) return null;
+  return data.products;
+}
+
 const getAllProducts = async (): Promise<ShopifyProduct[]> => {
   // 1. In-memory: instant — same session, already fetched
   if (cachedProducts) return cachedProducts;
@@ -301,7 +325,27 @@ export const useShopifyProducts = (category?: string) => {
       setIsLoading(true);
       setError(null);
       try {
-        // Always fetch all products (cached after first call), then filter client-side
+        // 1. Prerendered initial data — instant hydration. Set by scripts/prerender.js
+        //    for collection routes. Also populates the in-memory cache so subsequent
+        //    client-side navigations to other collections are fast too.
+        const initial = getInitialData(category);
+        if (initial) {
+          cachedProducts = initial;
+          // Apply the same global filters the API path uses, for safety.
+          const globallyFiltered = initial.filter(p => {
+            if (isOldBatchProduct(p)) return false;
+            if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
+            return true;
+          });
+          const filtered = category ? filterByCategory(initial, category) : globallyFiltered;
+          setProducts(enrichProducts(filtered));
+          // Clear the payload so a stale one can't leak into a later category navigation.
+          if (typeof window !== 'undefined' && window.__INITIAL_DATA__) {
+            window.__INITIAL_DATA__ = undefined;
+          }
+          return;
+        }
+        // 2. Existing cache + API fallback (unchanged)
         const allProducts = await getAllProducts();
         // Apply global filters (old batch exclusion + excluded titles) even when no category
         const globallyFiltered = allProducts.filter(p => {

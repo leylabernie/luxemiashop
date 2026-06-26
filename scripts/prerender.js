@@ -104,6 +104,246 @@ async function fetchAllShopifyProducts() {
   return map;
 }
 
+// ─── Collection page product injection ───────────────────────────────────────
+// Mirrors the client-side filtering logic in src/hooks/useShopifyProducts.ts.
+// Kept in sync manually — the prerender script runs in Node and cannot import
+// the browser hook. If you add a productType to CATEGORY_PRODUCT_TYPES here,
+// also add it to src/hooks/useShopifyProducts.ts (and vice versa).
+const CATEGORY_PRODUCT_TYPES = {
+  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Palazzo Suit', 'Pakistani Readymade Suit', 'Salwar Kameez', 'Sharara Suit', 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown', 'Salwar', 'Kurti', 'Kurti Set', 'Palazzo', 'Readymade Suit', 'Churidar Suit', 'Patiala Suit', 'Straight Suit', 'Suit'],
+  sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees', 'Silk Saree', 'Banarasi Saree', 'Cotton Saree', 'Georgette Saree', 'Bridal Saree', 'Designer Saree', 'Fancy Saree', 'Party Wear Saree', 'Kanjivaram Saree', 'Kanchipuram Saree', 'Tissue Saree', 'Net Saree', 'Sari'],
+  lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga'],
+  menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
+  indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
+};
+
+const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
+const MENSWEAR_TAGS_EXACT = new Set(['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear', 'indian-menswear', 'men', 'man', 'gender:male', 'gender:men']);
+const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
+const HIDE_OLD_PRODUCTS = true;
+const HIDE_PRODUCTS_BEFORE_DATE = new Date('2026-04-09T00:00:00Z');
+
+function isOldBatchProduct(p) {
+  if (!HIDE_OLD_PRODUCTS) return false;
+  const createdAt = p.createdAt;
+  if (!createdAt) return false;
+  return new Date(createdAt) < HIDE_PRODUCTS_BEFORE_DATE;
+}
+
+function isMenswearProduct(p) {
+  const pt = (p.productType ?? '').toLowerCase();
+  const title = (p.title ?? '').toLowerCase();
+  const tags = (p.tags ?? []).map(t => t.toLowerCase());
+  const menswearTypes = CATEGORY_PRODUCT_TYPES.menswear.map(t => t.toLowerCase());
+  if (menswearTypes.some(t => pt === t || pt.includes(t))) return true;
+  if (/\bmen\b/.test(pt) || /\bmen's\b/.test(pt) || /\bmenswear\b/.test(pt) || /\bmale\b/.test(pt)) return true;
+  if (MENSWEAR_KEYWORDS_REGEX.test(title)) return true;
+  if (tags.some(t => MENSWEAR_TAGS_EXACT.has(t) || MENSWEAR_TAGS_EXACT.has(t.replace(/wear$/, '')))) return true;
+  return false;
+}
+
+// Server-side mirror of filterByCategory() from useShopifyProducts.ts.
+// Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
+const MAX_COLLECTION_PRODUCTS = 50;
+
+function filterProductsForCategory(allProducts, category) {
+  // Global exclusions: old batch + banned titles
+  const allowed = allProducts.filter(p => {
+    if (isOldBatchProduct(p)) return false;
+    if (EXCLUDED_TITLE_KEYWORDS.test(p.title ?? '')) return false;
+    return true;
+  });
+
+  if (category === 'all') return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
+
+  const types = CATEGORY_PRODUCT_TYPES[category];
+  if (!types) return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
+
+  // Menswear: include only men's products, exclude women's wear
+  if (category === 'menswear') {
+    const womensKeywords = /\b(saree|sari|lehenga|lehenga|anarkali|salwar|palazzo|plazzo|sharara|gharara|gown|dupatta|blouse|petticoat|choli|women|women's|female|ladies|bridal|pakistani suit)\b/i;
+    return allowed.filter(p => {
+      if (!isMenswearProduct(p)) return false;
+      if (EXCLUDED_TITLE_KEYWORDS.test(p.title ?? '')) return false;
+      const title = (p.title ?? '').toLowerCase();
+      const tags = (p.tags ?? []).map(t => t.toLowerCase());
+      if (womensKeywords.test(title)) return false;
+      if (tags.some(t => t === 'women' || t === 'womens' || t === 'female' || t === 'ladies' || t === 'gender:female' || t === 'gender:women')) return false;
+      return true;
+    }).slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
+  // Women's categories: exclude menswear first
+  const filtered = allowed.filter(p => !isMenswearProduct(p));
+
+  if (category === 'indowestern') {
+    const womensFusionTypes = [
+      ...types.map(t => t.toLowerCase()),
+      'sharara', 'anarkali', 'co-ords', 'coord set', 'jumpsuit', 'cape set', 'plazzo suit',
+    ];
+    return filtered.filter(p => {
+      const pt = (p.productType ?? '').toLowerCase();
+      const tags = (p.tags ?? []).map(t => t.toLowerCase());
+      return womensFusionTypes.some(t => pt.includes(t)) ||
+        tags.some(t => t.includes('indo') || t.includes('fusion') || t === 'contemporary' || t === 'western');
+    }).slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
+  if (category === 'suits') {
+    const suitTags = ['salwar kameez', 'salwar-kameez', 'sharara suit', 'plazzo suit', 'pakistani suit',
+      'anarkali suit', 'gharara suit', 'designer suit', 'wedding suit', 'boutique salwar suit'];
+    const womensIndicators = /salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani|lehenga|dupatta|churidar|women|ladies|female/i;
+    return filtered.filter(p => {
+      const pt = (p.productType ?? '').toLowerCase();
+      const tags = (p.tags ?? []).map(t => t.toLowerCase());
+      const title = (p.title ?? '').toLowerCase();
+      if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom')) return false;
+      if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
+      if (types.some(t => t.toLowerCase() === pt)) {
+        if (pt === 'wedding suit' || pt === 'designer suit' || pt === 'suit') {
+          if (!womensIndicators.test(title) && !womensIndicators.test(pt)) return false;
+        }
+        return true;
+      }
+      if (suitTags.some(st => tags.some(t => t === st || t.includes(st)))) {
+        const hasMensSignals = tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear' || t === 'groom' || t === 'gender:male');
+        const titleLooksMens = title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men');
+        if (!hasMensSignals && !titleLooksMens) return true;
+      }
+      if (/salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani\s+suit|kurti|churidar|patiala/.test(pt)) return true;
+      return false;
+    }).slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
+  // Lehengas + Sarees: match by productType with keyword fallback
+  return filtered.filter(p => {
+    const pt = (p.productType ?? '').toLowerCase();
+    const tags = (p.tags ?? []).map(t => t.toLowerCase());
+    const title = (p.title ?? '').toLowerCase();
+    if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear')) return false;
+    if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
+    if (types.some(t => t.toLowerCase() === pt)) return true;
+    if (category === 'lehengas') return /lehenga|lehnga|lehena/.test(pt);
+    if (category === 'sarees') return /saree|sari/.test(pt);
+    return false;
+  }).slice(0, MAX_COLLECTION_PRODUCTS);
+}
+
+// Build the compact JSON payload that gets injected as window.__INITIAL_DATA__.
+// React's useShopifyProducts hook reads this on hydration to skip the client-side
+// Shopify fetch entirely on first paint.
+function buildInitialDataPayload(products, category) {
+  // Slim each product down to the fields the hook actually consumes.
+  const slim = products.map(p => ({
+    node: {
+      id: p.id,
+      title: p.title,
+      createdAt: p.createdAt,
+      description: p.description ?? '',
+      handle: p.handle,
+      vendor: p.vendor,
+      productType: p.productType,
+      tags: p.tags ?? [],
+      availableForSale: p.availableForSale,
+      priceRange: p.priceRange,
+      compareAtPriceRange: p.compareAtPriceRange,
+      images: p.images,
+      variants: p.variants,
+      options: p.options ?? [],
+    },
+  }));
+  return JSON.stringify({ category: category || 'all', products: slim });
+}
+
+// Visible HTML product cards for crawlers. Removed by the existing MutationObserver
+// once React hydrates. Mirrors the inline-styling pattern used for /product/* pages.
+function generateCollectionProductHtml(products) {
+  if (!products || products.length === 0) {
+    return '<p>New arrivals are being added to this collection. Please check back shortly.</p>';
+  }
+  const cards = products.map(p => {
+    const price = p.priceRange?.minVariantPrice?.amount;
+    const currency = p.priceRange?.minVariantPrice?.currencyCode || 'USD';
+    const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
+    const isAvailable = p.availableForSale !== false;
+    const firstImage = p.images?.edges?.[0]?.node;
+    const imgHtml = firstImage
+      ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || p.title || '')}" width="400" height="500" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`
+      : '';
+
+    let priceHtml = '';
+    if (price) {
+      priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
+      if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
+        priceHtml += ` <s style="color:#888">${currency} ${parseFloat(comparePrice).toFixed(2)}</s>`;
+      }
+    }
+
+    const availability = isAvailable ? 'In Stock' : 'Currently Unavailable';
+    const title = escapeHtml(p.title || p.handle);
+    const handle = escapeHtml(p.handle);
+
+    return `<div style="display:inline-block;vertical-align:top;width:30%;margin:0 1.5% 24px;min-width:240px">
+      <a href="/product/${handle}" style="text-decoration:none;color:inherit">
+        ${imgHtml}
+        <h3 style="font-size:14px;margin:0 0 4px 0;font-weight:600">${title}</h3>
+      </a>
+      <p style="margin:0 0 2px 0;font-size:13px">${priceHtml}</p>
+      <p style="margin:0;font-size:12px;color:#666">${availability}</p>
+    </div>`;
+  }).join('\n        ');
+
+  return `<div style="margin:24px 0">${cards}</div>`;
+}
+
+// schema.org ItemList JSON-LD for collection pages. Each ListItem wraps a Product
+// with url/image/name/offers — what Google Merchant Center reads for rich results.
+function generateItemListJsonLd(products, category, routePath) {
+  const canonical = SITE_URL + routePath;
+  const items = products.map((p, i) => {
+    const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
+    const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
+    const image = p.images?.edges?.[0]?.node?.url
+      ? forceJpegForGmc(p.images.edges[0].node.url)
+      : FALLBACK_OG_IMAGE;
+    const availability = p.availableForSale === false
+      ? 'https://schema.org/OutOfStock'
+      : 'https://schema.org/InStock';
+    const productUrl = `${SITE_URL}/product/${p.handle}`;
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: p.title,
+        image,
+        url: productUrl,
+        description: (p.description || p.title || '').slice(0, 5000),
+        sku: (p.id || '').split('/').pop() || p.handle,
+        brand: { '@type': 'Brand', name: 'LuxeMia' },
+        offers: {
+          '@type': 'Offer',
+          url: productUrl,
+          price,
+          priceCurrency: currency,
+          availability,
+          itemCondition: 'https://schema.org/NewCondition',
+          seller: { '@type': 'Organization', name: 'LuxeMia' },
+        },
+      },
+    };
+  });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: category === 'all' ? 'LuxeMia Collection' : `LuxeMia ${category.charAt(0).toUpperCase() + category.slice(1)}`,
+    url: canonical,
+    numberOfItems: items.length,
+    itemListElement: items,
+  };
+}
+
 // Route definitions with SEO metadata
 const routes = [
   {
@@ -134,6 +374,7 @@ const routes = [
   },
   {
        path: '/suits',
+    category: 'suits',
     title: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
     description: 'Shop elegant Salwar Kameez, designer suits, sharara sets, anarkali & palazzo suits online at LuxeMia. Premium fabrics, handcrafted embroidery. Free shipping to USA, Canada & Australia. Latest 2026 trends.',
     h1: 'Salwar Kameez & Designer Suits Collection',
@@ -145,6 +386,7 @@ const routes = [
   },
   {
     path: '/lehengas',
+    category: 'lehengas',
     title: 'Lehengas Collection | Bridal & Wedding Lehengas Online | LuxeMia',
     description: 'Shop designer lehengas & bridal lehenga choli at LuxeMia. Handcrafted wedding & party wear lehengas. Premium silk, net & velvet. Free shipping on orders over $350 to USA, Canada & Australia. Latest 2026 trends.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
@@ -160,6 +402,7 @@ const routes = [
   },
   {
     path: '/sarees',
+    category: 'sarees',
     title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
     description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with shipping to USA, Canada & Australia. Authentic Indian handloom sarees & 2026 trends.',
     h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
@@ -176,6 +419,7 @@ const routes = [
   },
   {
     path: '/menswear',
+    category: 'menswear',
     title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
     description: 'Shop Indian menswear at LuxeMia. Designer sherwanis, kurta sets, Indo-western wear & Modi jackets for grooms & weddings. Premium fabrics, expert tailoring. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
@@ -262,6 +506,7 @@ const routes = [
   },
   {
     path: '/collections',
+    category: 'all',
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
     description: 'Browse all LuxeMia collections. Bridal lehengas, wedding sarees, reception outfits, festive wear & more. Curated for every occasion.',
     h1: 'All Collections',
@@ -397,6 +642,7 @@ const routes = [
   },
   {
     path: '/new-arrivals',
+    category: 'all',
     title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
     description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees, suits & more. Fresh styles added weekly. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'New Arrivals',
@@ -409,6 +655,7 @@ const routes = [
   },
   {
     path: '/bestsellers',
+    category: 'all',
     title: 'Bestsellers — Most Loved Indian Ethnic Wear | LuxeMia',
     description: 'Shop LuxeMia bestsellers. Our most popular lehengas, sarees, suits & menswear chosen by customers worldwide. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Bestsellers',
@@ -421,6 +668,7 @@ const routes = [
   },
   {
     path: '/indowestern',
+    category: 'indowestern',
     title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
     description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free shipping on orders over $350 to USA, Canada & Australia.',
     h1: 'Indo-Western Collection',
@@ -1284,8 +1532,12 @@ const routes = [
 /**
  * Generate pre-rendered HTML for a route by injecting SEO content
  * into the index.html template.
+ *
+ * allShopifyProducts is a Map<handle, productNode> fetched once at the start
+ * of main(). It is only consumed by collection routes (route.category set) —
+ * product detail routes already receive their product via route.product.
  */
-function generateHtml(template, route) {
+function generateHtml(template, route, allShopifyProducts) {
   let html = template;
 
   // Replace title
@@ -1508,6 +1760,31 @@ function generateHtml(template, route) {
       <h2>Shipping &amp; Delivery</h2>
       <p>Free standard shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. All orders ship with full DHL Express tracking. Standard delivery: 7–10 business days. Express (3–5 days) available at checkout.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/products">All Products</a> | <a href="/collections">Collections</a></p>`;
+  } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
+    // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals/bestsellers)
+    // Inject REAL Shopify products so Googlebot sees a fully populated category page on
+    // first byte instead of an empty marketing shell. This is the SEO fix for the
+    // 100 -> 7 impression drop on collection pages.
+    const allProducts = Array.from(allShopifyProducts.values());
+    const collectionProducts = filterProductsForCategory(allProducts, route.category);
+    console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
+
+    // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
+    const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
+    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+
+    // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
+    // and skips the client-side Shopify fetch entirely on first paint.
+    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
+    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+
+    // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
+    const productCardsHtml = generateCollectionProductHtml(collectionProducts);
+    mainBodyContent = `
+      <h1>${escapeHtml(route.h1)}</h1>
+      ${route.content}
+      <h2>Products in this Collection</h2>
+      ${productCardsHtml}`;
   } else {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
@@ -1620,7 +1897,7 @@ async function main() {
   let count = 0;
   let productCount = 0;
   for (const route of routes) {
-    const html = generateHtml(template, route);
+    const html = generateHtml(template, route, productMap);
 
     // Create directory structure: / -> _prerender/index.html, /suits -> _prerender/suits.html
     let outFile;
