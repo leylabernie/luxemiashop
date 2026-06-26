@@ -298,6 +298,15 @@ function generateCollectionProductHtml(products) {
 
 // schema.org ItemList JSON-LD for collection pages. Each ListItem wraps a Product
 // with url/image/name/offers — what Google Merchant Center reads for rich results.
+//
+// IMPORTANT: After JSON.stringify(), we replace <, >, & with their JSON unicode
+// escapes (\u003c, \u003e, \u0026). This prevents two real problems:
+//   1. A literal "</script>" inside a product description would prematurely close
+//      the <script type="application/ld+json"> tag and break the page.
+//   2. Google's HTML-aware Rich Results validator flags raw '&' in JSON-LD strings
+//      as Carousel validation errors ("2 invalid items detected").
+// Replacing these 3 chars post-stringify is the recommended fix per Google's own
+// JSON-LD security guidance.
 function generateItemListJsonLd(products, category, routePath) {
   const canonical = SITE_URL + routePath;
   const items = products.map((p, i) => {
@@ -342,6 +351,16 @@ function generateItemListJsonLd(products, category, routePath) {
     numberOfItems: items.length,
     itemListElement: items,
   };
+}
+
+// Apply JSON-LD-safe escaping to a stringified JSON payload. Replaces <, >, &
+// with their \uXXXX forms so the result is safe to embed inside an HTML <script>
+// tag and won't trip Google's stricter Carousel validator.
+function safeJsonLdStringify(obj) {
+  return JSON.stringify(obj)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
 }
 
 // Route definitions with SEO metadata
@@ -1688,8 +1707,8 @@ function generateHtml(template, route, allShopifyProducts) {
     };
 
     const structuredDataScripts = `
-    <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
-    <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`;
+    <script type="application/ld+json">${safeJsonLdStringify(productSchema)}</script>
+    <script type="application/ld+json">${safeJsonLdStringify(breadcrumbSchema)}</script>`;
 
     // Inject before </head>
     html = html.replace('</head>', `${structuredDataScripts}\n</head>`);
@@ -1770,12 +1789,17 @@ function generateHtml(template, route, allShopifyProducts) {
     console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
 
     // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
+    // Uses safeJsonLdStringify() instead of JSON.stringify() to escape <, >, & —
+    // prevents Google's Carousel validator from flagging the ItemList as invalid
+    // when product descriptions contain raw '&' (e.g. "Lehengas & Sarees").
     const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
-    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+    html = html.replace('</head>', `    <script type="application/ld+json">${safeJsonLdStringify(itemListJsonLd)}</script>\n</head>`);
 
     // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
     // and skips the client-side Shopify fetch entirely on first paint.
-    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
+    // Same safe-escaping applied for consistency.
+    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category)
+      .replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026');
     html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
