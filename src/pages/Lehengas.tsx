@@ -269,8 +269,8 @@ const Lehengas = () => {
           { name: 'Lehengas', url: '/lehengas' },
         ]}
         collection={{
-          name: 'Lehengas Collection',
-          description: 'Bridal and festive lehengas with beautiful embroidery and quality fabrics at affordable prices.',
+          name: 'Bridal Lehengas Online — Wedding & Festive Collection',
+          description: 'Shop designer bridal lehengas online at LuxeMia. Handcrafted wedding lehenga cholis in silk, georgette, net & Banarasi with intricate embroidery. Custom sizing. Free shipping over $350.',
           items: collectionItems,
         }}
         faqs={lehengaFaqs}
