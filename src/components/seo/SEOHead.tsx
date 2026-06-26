@@ -74,7 +74,10 @@ const SEOHead = ({
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
   product,
-  collection,
+  // `collection` prop is intentionally not destructured here. It remains in the
+  // SEOHeadProps interface for backwards compatibility (callers still pass it),
+  // but the ItemList schema is now generated server-side by scripts/prerender.js
+  // to avoid a duplicate-ItemList critical error in Google Rich Results.
   breadcrumbs,
   faqs,
   noIndex = false,
@@ -126,33 +129,12 @@ const SEOHead = ({
     ? generateFaqSchema(faqs)
     : null;
 
-  // ItemList Schema for collection/category pages (Google Rich Results)
-  const collectionSchema = collection && collection.items.length > 0
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'ItemList',
-        name: collection.name,
-        description: collection.description,
-        numberOfItems: collection.items.length,
-        itemListElement: collection.items.slice(0, 30).map((item, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          item: {
-            '@type': 'Product',
-            '@id': `${siteUrl}/product/${item.url}`,
-            name: item.name,
-            image: forceJpegForGmc(item.image),
-            url: `${siteUrl}/product/${item.url}`,
-            offers: {
-              '@type': 'Offer',
-              price: item.price,
-              priceCurrency: item.currency,
-              availability: 'https://schema.org/InStock',
-            },
-          },
-        })),
-      }
-    : null;
+  // NOTE: ItemList schema for collection pages is now generated server-side
+  // by scripts/prerender.js and injected into the prerendered HTML at build
+  // time. This client-side injection was removed because it produced a
+  // DUPLICATE ItemList on every collection page (one server-rendered, one
+  // client-injected via react-helmet-async), which Google Rich Results flags
+  // as a critical error: "Multiple ListItem elements defined on page".
 
   return (
     <Helmet>
@@ -235,11 +217,6 @@ const SEOHead = ({
       {faqSchema && (
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}
-        </script>
-      )}
-      {collectionSchema && (
-        <script type="application/ld+json">
-          {JSON.stringify(collectionSchema)}
         </script>
       )}
     </Helmet>
