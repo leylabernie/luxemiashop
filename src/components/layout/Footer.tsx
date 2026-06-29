@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
+import InternalLinkBlock from '@/components/seo/InternalLinkBlock';
 
 const footerLinks = {
   shop: [
@@ -39,6 +40,11 @@ const footerLinks = {
 const Footer = forwardRef<HTMLElement>((_props, ref) => {
   return (
     <footer ref={ref} className="bg-card border-t border-border/50">
+      {/* Site-wide contextual internal-link block.
+          Renders 3 columns of cross-links to distribute PageRank to weakly-indexed
+          pages and guarantee minimum internal link density on every page. */}
+      <InternalLinkBlock />
+
       {/* Newsletter Section */}
       <div className="border-b border-border/50">
         <div className="container mx-auto px-4 lg:px-8 py-16">

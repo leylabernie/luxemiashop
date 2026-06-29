@@ -1,3 +1,4 @@
+# ─── Default (all bots) ──────────────────────────────────────────────────────
 User-agent: *
 Allow: /
 Allow: /merchant-feed.xml
@@ -8,31 +9,65 @@ Disallow: /wishlist
 Disallow: /cart
 Disallow: /checkout
 Disallow: /api/
+Disallow: /order-confirmation
+# Block SPA-only system paths that should never be indexed
+Disallow: /_prerender/
+# Block old /products/* pattern — 301-redirected to /product/ but don't crawl
+# redirect sources unnecessarily (saves crawl budget).
+Disallow: /products/
+Disallow: /p/
 
+# ─── Googlebot ───────────────────────────────────────────────────────────────
 User-agent: Googlebot
 Allow: /
 Allow: /product/
+Allow: /collections/
+Allow: /blog/
+Allow: /lehengas
+Allow: /sarees
+Allow: /suits
+Allow: /menswear
+Allow: /indowestern
+Allow: /new-arrivals
+Allow: /bestsellers
+Allow: /nri
 Allow: /merchant-feed.xml
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+Disallow: /products/
+Disallow: /p/
 
+# ─── Googlebot-Image ─────────────────────────────────────────────────────────
+# Ensure Google can crawl all product images for Merchant Center
 User-agent: Googlebot-Image
 Allow: /
 Allow: /cdn.shopify.com/
 Allow: /kesimg.b-cdn.net/
-# Ensure Google can crawl all product images for Merchant Center
 Allow: /*.jpg
 Allow: /*.jpeg
 Allow: /*.png
 Allow: /*.gif
+Allow: /*.webp
 
+# ─── Bingbot ─────────────────────────────────────────────────────────────────
 User-agent: Bingbot
 Allow: /
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
 
+# ─── AI Search Bots (allowed for AI search visibility) ───────────────────────
 User-agent: OAI-SearchBot
 Allow: /
 
@@ -45,8 +80,12 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
-# Sitemaps
+User-agent: Applebot
+Allow: /
+
+# ─── Sitemaps ────────────────────────────────────────────────────────────────
+# Primary sitemap — regenerated on each build, contains ONLY 200 OK canonical URLs.
 Sitemap: https://luxemia.shop/sitemap.xml
 
-# Google Merchant Center Feed (static XML file — no serverless function)
+# Google Merchant Center product feed (noindex — for GMC only, not for organic).
 Sitemap: https://luxemia.shop/merchant-feed.xml

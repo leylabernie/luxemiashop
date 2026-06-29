@@ -135,6 +135,35 @@ function forceJpeg(url) {
   return url;
 }
 
+// ─── URL Liveness Check ───────────────────────────────────────────────────────
+// HEAD-checks a URL against the live site to ensure it returns 200 OK (not 3xx,
+// not 4xx, not 5xx). Used to filter the sitemap so it ONLY contains canonical,
+// live URLs — which is what Google wants. Dead URLs are collected into
+// dist/dead-product-handles.json so generate-gone-routes.cjs can emit them as
+// 410 Gone routes in middleware.ts on the next build.
+//
+// Skip the check entirely by setting SKIP_SITEMAP_LIVENESS_CHECK=1 (useful for
+// local dev or first-time builds where the site isn't live yet).
+async function isUrlLive(url) {
+  if (process.env.SKIP_SITEMAP_LIVENESS_CHECK === '1') return true;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    const resp = await fetch(url, {
+      method: 'HEAD',
+      redirect: 'manual',  // Don't follow — we want to detect redirects
+      signal: controller.signal,
+      headers: { 'User-Agent': 'LuxeMia-Sitemap-Build/1.0' },
+    });
+    clearTimeout(timeout);
+    // Only 200 OK counts as live. 3xx = redirect (shouldn't be in sitemap).
+    // 404/410/500 = dead, exclude from sitemap and mark for 410 in middleware.
+    return resp.status === 200;
+  } catch {
+    return false;  // Network error / timeout → assume dead, exclude from sitemap.
+  }
+}
+
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
 async function fetchAllProducts() {
@@ -257,14 +286,68 @@ async function main() {
     products = [];
   }
 
-  const sitemap = generateSitemap(products);
-
-  // Write to dist/ (Vercel serves static files from dist/)
+  // ── Liveness filter ────────────────────────────────────────────────────────
+  // HEAD-check every product URL to ensure it returns 200 OK. Excludes dead URLs
+  // from the sitemap (Google penalizes sitemaps with redirects/404s) AND collects
+  // them into dead-product-handles.json so generate-gone-routes.cjs can emit
+  // them as 410 Gone routes in middleware.ts on the next build.
+  //
+  // Skip with SKIP_SITEMAP_LIVENESS_CHECK=1 for local dev / first-time builds.
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
+
+  const liveProducts = [];
+  const deadHandles = [];
+
+  if (process.env.SKIP_SITEMAP_LIVENESS_CHECK === '1') {
+    console.log('[sitemap] SKIP_SITEMAP_LIVENESS_CHECK=1 — skipping HEAD checks.');
+    liveProducts.push(...products);
+  } else {
+    console.log(`[sitemap] HEAD-checking ${products.length} product URLs (this may take a few minutes)...`);
+    const BATCH_SIZE = 10;
+    for (let i = 0; i < products.length; i += BATCH_SIZE) {
+      const batch = products.slice(i, i + BATCH_SIZE);
+      const results = await Promise.all(
+        batch.map(async (p) => {
+          const url = `${SITE_URL}/product/${p.handle}`;
+          const live = await isUrlLive(url);
+          return { product: p, live };
+        })
+      );
+      for (const r of results) {
+        if (r.live) liveProducts.push(r.product);
+        else deadHandles.push(r.product.handle);
+      }
+      const done = Math.min(i + BATCH_SIZE, products.length);
+      if (done % 50 === 0 || done === products.length) {
+        console.log(`[sitemap] Validated ${done}/${products.length} (${deadHandles.length} dead so far)`);
+      }
+    }
+  }
+
+  if (deadHandles.length > 0) {
+    console.warn(`[sitemap] Excluded ${deadHandles.length} dead product URLs from sitemap.`);
+    const deadListPath = path.join(distDir, 'dead-product-handles.json');
+    fs.writeFileSync(deadListPath, JSON.stringify(deadHandles, null, 2));
+    console.log(`[sitemap] Wrote dead handle list to ${deadListPath}`);
+    console.log(`[sitemap] Next build will auto-populate src/lib/goneRoutes.ts with these handles → 410 Gone responses.`);
+    if (deadHandles.length <= 30) {
+      console.warn(`[sitemap] Dead handles: ${deadHandles.join(', ')}`);
+    } else {
+      console.warn(`[sitemap] First 20 dead handles: ${deadHandles.slice(0, 20).join(', ')}... (+${deadHandles.length - 20} more)`);
+    }
+  } else {
+    // Always write an empty array so generate-gone-routes.cjs has a file to read.
+    const deadListPath = path.join(distDir, 'dead-product-handles.json');
+    fs.writeFileSync(deadListPath, JSON.stringify([], null, 2));
+  }
+
+  const sitemap = generateSitemap(liveProducts);
+
+  // Write to dist/ (Vercel serves static files from dist/)
   const distPath = path.join(distDir, 'sitemap.xml');
   fs.writeFileSync(distPath, sitemap, 'utf8');
-  console.log(`[sitemap] Written sitemap to ${distPath} (${(sitemap.length / 1024).toFixed(1)} KB, ${products.length} products, ${staticPages.length + blogPosts.length} static/blog URLs)`);
+  console.log(`[sitemap] Written sitemap to ${distPath} (${(sitemap.length / 1024).toFixed(1)} KB, ${liveProducts.length} live products, ${staticPages.length + blogPosts.length} static/blog URLs)`);
 
   // Also write to public/ for dev and fallback
   const publicDir = path.resolve(__dirname, '../public');

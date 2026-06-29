@@ -85,7 +85,14 @@ const SEOHead = ({
   hreflang,
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
-  const canonicalUrl = canonical || (typeof window !== 'undefined' ? `${siteUrl}${window.location.pathname}` : siteUrl);
+  // CRITICAL SEO FIX: Never derive canonical from window.location.pathname.
+  // Doing so would let trailing slashes, query strings, and URL variants
+  // produce canonicals that disagree with the prerendered HTML — which is
+  // exactly what causes "Duplicate, Google chose different canonical than
+  // user" errors in GSC. Always pass an explicit `canonical` prop from the
+  // page component. Defaulting to the site root is a safe fallback that
+  // surfaces a missing-prop bug rather than silently breaking indexing.
+  const canonicalUrl = canonical || siteUrl;
   
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;

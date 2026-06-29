@@ -5,6 +5,7 @@ import { generateProductHtml, return404, escapeHtml } from './src/middleware/htm
 import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
+import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -43,13 +44,54 @@ const REDIRECT_ROUTES = new Set([
   '/collections/groomsman-outfits',
 ]);
 
-// Routes that must 308 redirect to /nri (UK pages no longer targeted)
+// Routes that must 301 redirect to /nri (UK pages no longer targeted)
 const UK_REDIRECT_ROUTES = new Set([
   '/nri/uk',
   '/indian-ethnic-wear-uk',
   '/uk-indian-clothing',
   '/uk-designer-sarees',
 ]);
+
+// Explicit 410 Gone routes — URLs that have been permanently retired and have
+// NO semantic replacement. Adding URLs here tells Google to drop them from the
+// index FAST (much faster than a 404). Maintained manually below AND auto-extended
+// at build time from src/lib/goneRoutes.ts (which reads dist/dead-product-handles.json
+// produced by scripts/generate-sitemap.cjs when it HEAD-checks Shopify product URLs).
+//
+// Format: full pathname starting with '/'.
+// Example: '/collections/some-old-collection', '/some-old-landing-page'
+const GONE_ROUTES: Set<string> = new Set<string>([
+  // ── Manually maintained entries (add retired URLs from GSC export here) ──
+  // e.g. '/old-flash-sale-page', '/collections/clearance-2024'
+]);
+
+// Combine manual GONE_ROUTES with auto-discovered dead product handles from build.
+// This produces 410 Gone for any /product/{handle} in the set.
+function isGoneProductPath(pathname: string): boolean {
+  if (!pathname.startsWith('/product/')) return false;
+  const handle = pathname.replace('/product/', '');
+  return handle.length > 0 && !handle.includes('/') && GONE_PRODUCT_HANDLES.has(handle);
+}
+
+// Helper: emit a 410 Gone response with proper noindex headers.
+function return410(): Response {
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
+    `<meta name="viewport" content="width=device-width,initial-scale=1">` +
+    `<meta name="robots" content="noindex,nofollow">` +
+    `<title>410 Gone — LuxeMia</title></head><body>` +
+    `<h1>410 — This page has been permanently removed.</h1>` +
+    `<p>The content you were looking for is no longer available.</p>` +
+    `<p><a href=\"/\">Return to LuxeMia homepage</a> ` +
+    `or <a href=\"/collections\">browse our collections</a>.</p></body></html>`;
+  return new Response(html, {
+    status: 410,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=86400',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
 
 // ─── Main Middleware ─────────────────────────────────────────────────────────
 
@@ -58,14 +100,16 @@ export default async function middleware(request: Request) {
   const url = new URL(request.url);
   const { pathname } = url;
 
-  // ── Canonical domain: redirect www → non-www (308 permanent) ──────────────
+  // ── Canonical domain: redirect www → non-www (301 permanent) ──────────────
   // All canonical URLs in prerendered HTML and sitemap use https://luxemia.shop
   // (non-www). Consolidating ensures GSC treats them as one property and avoids
-  // duplicate-content signals across the two versions.
+  // duplicate-content signals across the two versions. Using 301 (not 308) for
+  // maximum crawler compatibility (some older crawlers and third-party SEO tools
+  // handle 308 inconsistently).
   if (url.hostname === 'www.luxemia.shop') {
     const canonical = new URL(request.url);
     canonical.hostname = 'luxemia.shop';
-    return Response.redirect(canonical.toString(), 308);
+    return Response.redirect(canonical.toString(), 301);
   }
 
   // Skip non-page requests (static files, API, etc.)
@@ -79,21 +123,27 @@ export default async function middleware(request: Request) {
     return next();
   }
 
-  // 308 Permanent Redirect for UK pages (no longer targeted markets)
-  if (UK_REDIRECT_ROUTES.has(pathname)) {
-    return Response.redirect(new URL('/nri', request.url).toString(), 308);
+  // 410 Gone check — explicit retired URLs (manual + auto-discovered dead handles)
+  // Run BEFORE the redirect checks so retired URLs always get 410, not a redirect.
+  if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
+    return return410();
   }
 
-  // 308 Permanent Redirect for canonical URL aliases
+  // 301 Permanent Redirect for UK pages (no longer targeted markets)
+  if (UK_REDIRECT_ROUTES.has(pathname)) {
+    return Response.redirect(new URL('/nri', request.url).toString(), 301);
+  }
+
+  // 301 Permanent Redirect for canonical URL aliases
   if (pathname === '/privacy-policy') {
-    return Response.redirect(new URL('/privacy', request.url).toString(), 308);
+    return Response.redirect(new URL('/privacy', request.url).toString(), 301);
   }
   if (pathname === '/terms-of-service') {
-    return Response.redirect(new URL('/terms', request.url).toString(), 308);
+    return Response.redirect(new URL('/terms', request.url).toString(), 301);
   }
   // /products has no React route — redirect to /collections to prevent soft 404
   if (pathname === '/products') {
-    return Response.redirect(new URL('/collections', request.url).toString(), 308);
+    return Response.redirect(new URL('/collections', request.url).toString(), 301);
   }
 
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
@@ -102,11 +152,28 @@ export default async function middleware(request: Request) {
   // so we avoid any self-HTTP HEAD requests — zero extra latency, zero failure modes.
   //
   // Handles NOT in the set (products added to Shopify after the last deploy) fall
-  // through to the bot-SSR path (live Shopify fetch) or the SPA shell for humans.
+  // through to the bot-SSR path (live Shopify fetch) or — for humans — to a
+  // lightweight Shopify existence check below (kills the soft-404 signal where
+  // SPA returns 200 OK for products that no longer exist in Shopify).
   if (pathname.startsWith('/product/')) {
     const handle = pathname.replace('/product/', '');
-    if (handle && !handle.includes('/') && PRERENDERED_PRODUCT_HANDLES.has(handle)) {
+    // Hard-reject malformed handles (slashes, empty) with a true 404 — not the SPA.
+    if (!handle || handle.includes('/')) {
+      return return404(request);
+    }
+    if (PRERENDERED_PRODUCT_HANDLES.has(handle)) {
       return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
+    }
+    // Handle is NOT prerendered. For HUMANS (non-bots), do a Shopify existence
+    // check before serving the SPA. If Shopify returns null, return a true HTTP
+    // 404 — this is the soft-404 fix. (Bots get the same check in the SSR path
+    // below, but we run it once here so the human path is unified.)
+    if (!isBot(userAgent)) {
+      const product = await fetchProductByHandle(handle);
+      if (!product) {
+        return return404(request);
+      }
+      // Product exists → fall through to SPA meta injection.
     }
   }
 
