@@ -1,172 +1,163 @@
-# Shopify Webhook Setup — Auto-Refresh Products on CSV Import
+# Refresh Products Setup — Plain English Guide
 
-This guide sets up the automation so that **when you update products in Shopify
-(via CSV import, manual edit, or API), your Vercel site automatically rebuilds
-within ~3 minutes and the new titles/prices/images show up live** — no manual
-deploy button needed.
+## What you're setting up
 
-## What's happening behind the scenes
+After you import products to Shopify (CSV upload, manual edit, etc.), the titles
+and prices on luxemia.shop don't update automatically. This guide fixes that.
 
-```
-Shopify CSV import → Shopify fires product.update webhook
-                  → POST https://luxemia.shop/api/shopify-webhook
-                  → Verifies HMAC signature (security)
-                  → Debounces (60s window — collapses 100s of webhooks into 1 deploy)
-                  → Calls Vercel Deploy Hook URL
-                  → Vercel triggers fresh build of main branch
-                  → npm run build → prerender.js fetches fresh data from Shopify
-                  → New HTML files deployed to edge
-                  → CDN cache (5 min TTL) refreshes on next request
-                  → Users see new titles ✅
-```
+You have **two options**:
 
-## One-time setup (5 minutes)
+- **Option A (recommended):** Set up the "Refresh Products Now" button on your
+  admin dashboard. After setup, you click ONE button after each CSV import.
+  **5-minute setup.**
 
-### Step 1 — Create a Vercel Deploy Hook
+- **Option B (advanced, optional):** Set up a Shopify webhook so the refresh
+  happens automatically when you import. **Skip this** unless you do CSV imports
+  very frequently.
 
-1. Go to: https://vercel.com/leylabernie/luxemiashop/settings/git
-2. Scroll down to **"Deploy Hooks"** section
-3. Click **"Create Hook"**
-4. Fill in:
-   - **Name:** `Shopify Product Update`
-   - **Branch:** `main`
-5. Click **Create**
-6. **Copy the URL** it gives you — it looks like:
-   ```
-   https://api.vercel.com/v1/integrations/deploy/Qm1234567890abcdef...
-   ```
-7. Keep this URL handy for Step 3
+---
 
-### Step 2 — Generate two secrets
+## Option A — Set up the "Refresh Products Now" button
 
-Open a terminal and run:
+**Time required: 5 minutes**
+**Skills needed: be able to click links and copy-paste**
+
+You only do this ONCE. After setup, the button works forever.
+
+### Step 1 of 3: Create a "Deploy Hook" in Vercel
+
+A "deploy hook" is just a special URL that tells your website to rebuild.
+
+1. Click this link: **https://vercel.com/leylabernie/luxemiashop/settings/git**
+   (Log in with your Vercel account if prompted)
+2. Scroll down the page until you see a section called **"Deploy Hooks"**
+3. Click the **"Create Hook"** button
+4. A small form appears. Fill it in:
+   - **Name** box: type `Shopify Refresh`
+   - **Branch** dropdown: choose `main`
+5. Click the **"Create"** button
+6. After it creates, you'll see a long URL appear (it starts with
+   `https://api.vercel.com/v1/integrations/deploy/Qm...`)
+7. **Click the "Copy" button** next to that URL (or select it and press Ctrl+C / Cmd+C)
+
+✅ Done with Step 1. Keep that copied URL ready for Step 2.
+
+### Step 2 of 3: Add the URL to your Vercel environment variables
+
+This tells your website which URL to call when you click the refresh button.
+
+1. Click this link: **https://vercel.com/leylabernie/luxemiashop/settings/environment-variables**
+2. Click the **"Create New Variable"** button (top-right of the variables list)
+3. A form appears. Fill it in:
+   - **Name** box: type exactly this (no spaces, all caps):
+     ```
+     VERCEL_DEPLOY_HOOK_URL
+     ```
+   - **Value** box: paste the URL you copied in Step 1 (Ctrl+V / Cmd+V)
+   - **Environments** checkboxes: check ALL THREE boxes
+     (Production ✓, Preview ✓, Development ✓)
+4. Click the **"Save"** button
+
+✅ Done with Step 2.
+
+### Step 3 of 3: Trigger a redeploy so the new variable takes effect
+
+Environment variables only take effect on the next build. Let's trigger one now.
+
+1. Click this link: **https://vercel.com/leylabernie/luxemiashop/deployments**
+2. Click the **top row** (your most recent deployment)
+3. In the top-right corner, click the **⋯ (three dots)** menu
+4. Click **"Redeploy"**
+5. A confirmation dialog appears — click **"Redeploy"** again
+6. The page will show a building status. **Wait 2-3 minutes** until it turns
+   green and says "Ready"
+
+✅ Done with Step 3. Setup is complete!
+
+### Test it
+
+1. Go to: **https://luxemia.shop/admin** (log in with your admin account)
+2. At the top, you'll see a card titled **"Refresh Products from Shopify"**
+3. Click the **"Refresh Products Now"** button
+4. You should see a green success message: *"✅ Refresh triggered!"*
+5. Wait 2-4 minutes
+6. Visit any product page on luxemia.shop — the title should now match Shopify
+
+### If the button doesn't work
+
+If you see an error like *"First-time setup needed"* or a 500 error:
+
+1. On the admin page, click **"Show first-time setup"** (below the Refresh button)
+2. A step-by-step wizard appears with copy-paste buttons
+3. Click "Test Setup & Refresh Products" at the bottom of the wizard
+4. The wizard tells you exactly which step is missing
+
+---
+
+## Option B (optional, advanced): Shopify webhook automation
+
+**Skip this unless you do CSV imports weekly or more often.** Option A is enough
+for most users.
+
+If you want the refresh to happen AUTOMATICALLY every time you import products
+to Shopify (no button click needed), follow these additional steps:
+
+### Step 4: Generate a webhook secret
+
+Open a terminal on your computer and run:
 
 ```bash
-# Secret for verifying Shopify webhooks (Shopify will sign requests with this)
 openssl rand -hex 32
-# → e.g. "a1b2c3d4e5f6789012345abcd..."  ← copy this
-
-# Token for the manual /api/refresh-products admin endpoint
-openssl rand -hex 32
-# → e.g. "f6e5d4c3b2a19087654321dcba..."  ← copy this too
 ```
 
-Save both — you'll need them in Step 3.
+Copy the output (a long string of letters and numbers).
 
-### Step 3 — Set 3 environment variables in Vercel
+### Step 5: Add the secret to Vercel
 
 1. Go to: https://vercel.com/leylabernie/luxemiashop/settings/environment-variables
-2. Add these 3 variables (Production + Preview + Development environments):
+2. Click "Create New Variable"
+3. Name: `SHOPIFY_WEBHOOK_SECRET`
+4. Value: paste the string from Step 4
+5. Check all 3 environment boxes
+6. Click Save
 
-| Name | Value | Where it came from |
-|---|---|---|
-| `VERCEL_DEPLOY_HOOK_URL` | `https://api.vercel.com/v1/integrations/deploy/Qm...` | Step 1 |
-| `SHOPIFY_WEBHOOK_SECRET` | `a1b2c3d4e5f6789012345abcd...` | Step 2 (first secret) |
-| `ADMIN_REFRESH_TOKEN` | `f6e5d4c3b2a19087654321dcba...` | Step 2 (second secret) |
-
-3. Click **Save** for each one
-4. **Trigger a redeploy** so the new env vars take effect:
-   - Go to: https://vercel.com/leylabernie/luxemiashop/deployments
-   - Click the most recent deployment → ⋯ menu → **Redeploy**
-   - OR push any commit to `main`
-
-### Step 4 — Register the webhook in Shopify
+### Step 6: Register the webhook in Shopify
 
 1. Go to: https://www.shopify.com/admin/settings/notifications
-2. Scroll down to **"Webhooks"** section (near the bottom)
+2. Scroll to the **"Webhooks"** section (near the bottom)
 3. Click **"Create webhook"**
 4. Fill in:
-   - **Event:** `Product update`
-   - **URL:** `https://luxemia.shop/api/shopify-webhook`
-   - **Webhook API version:** `Latest` (currently 2025-07)
+   - **Event**: `Product update`
+   - **URL**: `https://luxemia.shop/api/shopify-webhook`
+   - **Webhook API version**: `Latest`
 5. Click **Save webhook**
-6. Repeat for these events (one webhook per event, same URL):
-   - **Product creation** → `https://luxemia.shop/api/shopify-webhook`
-   - **Product deletion** → `https://luxemia.shop/api/shopify-webhook`
-7. At the top of the Webhooks section, you'll see a **"Webhook secret"** — copy it
-8. **This is your `SHOPIFY_WEBHOOK_SECRET`** — verify it matches what you set in Vercel in Step 3
-   - If they don't match, update Vercel's `SHOPIFY_WEBHOOK_SECRET` to Shopify's value and redeploy
+6. Repeat for `Product creation` and `Product deletion` (same URL)
+7. At the top of the Webhooks section, you'll see **"Webhook secret"** — copy it
+8. Update Vercel's `SHOPIFY_WEBHOOK_SECRET` env var to match Shopify's secret
+9. Redeploy Vercel (Step 3 again)
 
-### Step 5 — Test the webhook
+### Step 7: Test the webhook
 
-1. In Shopify Admin → Products → click any product → edit the title slightly → Save
-2. Within ~30 seconds, you should see a new Vercel deployment appear at:
-   https://vercel.com/leylabernie/luxemiashop/deployments
-3. The deployment will say **"Triggered by: Deploy Hook"** in the source
-4. Wait 2-4 minutes for the build to complete
-5. Visit the product page on luxemia.shop — title should now match Shopify ✅
+1. In Shopify Admin, edit any product title and Save
+2. Within 30 seconds, check https://vercel.com/leylabernie/luxemiashop/deployments
+3. A new deploy should appear automatically (source: "Deploy Hook")
+4. Wait 2-4 min, check luxemia.shop — title is updated
 
-### Step 6 (optional) — Test the manual refresh button
+---
 
-1. Go to: https://luxemia.shop/admin (log in with your admin account)
-2. You'll see a **"Refresh Products from Shopify"** card at the top
-3. Click the **"Refresh Products Now"** button
-4. You should see a success toast: *"Deploy triggered! Prerendered HTML will refresh in 2-4 minutes."*
-5. Check Vercel deployments to confirm a new build started
+## Troubleshooting cheat sheet
 
-> ⚠️ **Note:** The admin button will return `401 Unauthorized` until `ADMIN_REFRESH_TOKEN` is set in Vercel (Step 3). If you see a 401, double-check that env var.
-
-## How to use it day-to-day
-
-### After a normal Shopify CSV import (one-time setup complete)
-**Do nothing.** The webhook fires automatically, debounces, and triggers a deploy. Wait 3-4 minutes, products are live.
-
-### After a normal Shopify CSV import (webhook NOT yet set up)
-Go to https://luxemia.shop/admin → click **"Refresh Products Now"**. Wait 3-4 minutes. Done.
-
-### If webhooks stop firing (Shopify outage, network blip)
-Manual fallback: push any commit to `main` (e.g. edit a README), OR click Redeploy in Vercel dashboard, OR click the admin button.
-
-### If you want to force-refresh the CDN edge cache immediately
-After a deploy completes, the Vercel CDN edge cache has up to 5 minutes of stale HTML (per the `s-maxage=300` in `vercel.json`). To skip this:
-1. Go to: https://vercel.com/leylabernie/luxemiashop/usage → "Edge Cache"
-2. Click "Purge All" (use sparingly — it increases origin load)
-
-## Troubleshooting
-
-| Symptom | Likely cause | Fix |
+| Symptom | What's wrong | Fix |
 |---|---|---|
-| Webhook fires but no Vercel deploy starts | `VERCEL_DEPLOY_HOOK_URL` not set or wrong | Verify env var in Vercel settings |
-| 401 Unauthorized from `/api/shopify-webhook` | HMAC verification failed | `SHOPIFY_WEBHOOK_SECRET` in Vercel doesn't match Shopify's webhook secret |
-| 401 from `/api/refresh-products` admin button | `ADMIN_REFRESH_TOKEN` not set, or no `Authorization` header | Set env var; button currently sends no token — add `?token=...` to URL or modify the fetch in `AdminDashboard.tsx` |
-| Deploy triggered but titles still stale after 5 min | Vercel CDN edge cache (5 min TTL) | Wait 5 more min, or purge edge cache in Vercel dashboard |
-| Deploy triggered but titles still stale after 10 min | Browser localStorage cache (5 min TTL) | Hard-refresh (Cmd+Shift+R / Ctrl+Shift+R), or wait 5 min, or check in incognito |
-| Webhook fires too often (Vercel build quota) | CSV import sends 100s of webhooks | Already debounced to 1 deploy per 60s — should be fine. If still too many, increase `DEBOUNCE_MS` in `api/shopify-webhook.ts` |
+| Button shows "First-time setup needed" | `VERCEL_DEPLOY_HOOK_URL` env var not set | Do Step 1 + Step 2 + Step 3 above |
+| Button shows "Not logged in" | Supabase session expired | Refresh the admin page, log in again |
+| Button works but titles still stale after 5 min | Vercel CDN edge cache (5 min TTL) | Wait 5 more min, or hard-refresh (Ctrl+Shift+R) |
+| Button works but titles still stale after 10 min | Browser localStorage cache (5 min TTL) | Hard-refresh, or check in incognito window |
+| Webhook fires but no Vercel deploy starts | `VERCEL_DEPLOY_HOOK_URL` not set | Same as row 1 above |
+| 401 from `/api/shopify-webhook` | `SHOPIFY_WEBHOOK_SECRET` doesn't match Shopify's secret | Re-copy secret from Shopify Admin, update Vercel env var, redeploy |
+| Everything works but titles still look wrong | The old data is in `localProducts.ts` (hardcoded fallback) | This is a known issue — only triggers if Shopify API returns null. Contact your developer to remove `localProducts.ts` |
 
-## Verifying env vars are set correctly
+## Need help?
 
-After Step 3, check that env vars are present by hitting the endpoints:
-
-```bash
-# Should return 401 (not 500) — means ADMIN_REFRESH_TOKEN is configured
-curl -X POST https://luxemia.shop/api/refresh-products
-
-# Should return 401 (not 500) — means SHOPIFY_WEBHOOK_SECRET is configured
-# (Shopify will send proper HMAC-signed requests, this is just to verify the endpoint is live)
-curl -X POST https://luxemia.shop/api/shopify-webhook
-
-# If either returns 500 with "env var not set", the Vercel env vars aren't configured yet.
-```
-
-## Files in this commit
-
-| File | Purpose |
-|---|---|
-| `api/shopify-webhook.ts` | Receives Shopify webhooks, verifies HMAC, debounces, triggers Vercel deploy |
-| `api/refresh-products.ts` | Manual trigger endpoint (called by admin dashboard button) |
-| `src/pages/AdminDashboard.tsx` | "Refresh Products Now" button at top of admin page |
-| `vercel.json` | Reduced `_prerender` cache TTL from 24h → 5min so fresh deploys propagate fast |
-| `src/hooks/useShopifyProducts.ts` | localStorage cache TTL 30min → 5min, version bumped v4 → v6 (invalidates all existing browser caches) |
-| `src/middleware/shopifyProxy.ts` | Edge in-memory cache TTL 10min → 2min |
-| `scripts/SETUP_SHOPIFY_WEBHOOK.md` | This document |
-
-## Why this approach
-
-**Problem:** Your frontend is statically prerendered at build time. When Shopify data changes, the prerendered HTML is stale until the next build. Kimi2 said "clear your cache" but there's no single cache to clear — the prerendered HTML *itself* is the cache.
-
-**Solution:** Make Shopify automatically trigger a fresh build via webhooks. This is the standard pattern used by Next.js + Shopify + Vercel e-commerce stacks. Once set up, you never have to manually redeploy after product updates again.
-
-**Trade-offs:**
-- Vercel build minutes: ~2-4 min per CSV import burst (debounced). Should fit in free tier for most stores.
-- CDN cache TTL reduced from 24h → 5min: slightly more origin requests, but titles propagate in minutes instead of days.
-- localStorage cache reduced from 30min → 5min: slightly more Shopify API calls from browsers, but users see fresh data within 5 min of any update.
+If you get stuck on any step, tell me which step number you're on and what you see
+on screen. I can walk you through it.

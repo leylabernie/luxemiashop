@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserRole } from '@/hooks/useUserRole';
+import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Shield, AlertTriangle, Activity, Lock, RefreshCw, CheckCircle2, XCircle } from 'lucide-react';
+import { Shield, AlertTriangle, Activity, Lock, RefreshCw, CheckCircle2, HelpCircle } from 'lucide-react';
 import BlockedIPsTable from '@/components/admin/BlockedIPsTable';
 import RateLimitsTable from '@/components/admin/RateLimitsTable';
 import AdminStats from '@/components/admin/AdminStats';
+import SetupWizard from '@/components/admin/SetupWizard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from 'sonner';
 
@@ -21,6 +23,7 @@ const AdminDashboard = () => {
   const { isAdmin, loading: roleLoading } = useUserRole();
   const [refreshing, setRefreshing] = useState(false);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [showSetup, setShowSetup] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -85,9 +88,8 @@ const AdminDashboard = () => {
             button triggers a fresh Vercel deploy so prerendering runs again
             and picks up the new titles/descriptions/prices/images.
 
-            Behind the scenes: POST /api/refresh-products → Vercel Deploy Hook
-            → fresh build → prerender.js fetches from Shopify → new HTML files.
-            Total ETA: 2-4 minutes from button click to live site update.
+            Auth: uses the logged-in admin's Supabase session token automatically.
+            No separate ADMIN_REFRESH_TOKEN env var needed.
         ──────────────────────────────────────────────────────────────────── */}
         <Card className="mt-8 border-primary/30">
           <CardHeader>
@@ -96,33 +98,47 @@ const AdminDashboard = () => {
               Refresh Products from Shopify
             </CardTitle>
             <CardDescription>
-              Use this after updating products in Shopify (CSV import, title edits, price changes).
-              Triggers a fresh Vercel deploy so prerendered HTML is regenerated with the latest
-              product data. Takes 2-4 minutes to complete.
+              Use this <strong>after every CSV import or product edit in Shopify</strong>.
+              Triggers a fresh website rebuild so new titles, prices, and images appear on luxemia.shop.
+              Takes 2-4 minutes to complete.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div className="flex items-center gap-4 flex-wrap">
               <Button
                 onClick={async () => {
                   setRefreshing(true);
                   try {
+                    // Get the current Supabase session token (admin auth)
+                    const { data: { session }, error: sessionErr } = await supabase.auth.getSession();
+                    if (sessionErr || !session?.access_token) {
+                      toast.error('Not logged in', {
+                        description: 'Please log in to the admin dashboard and try again.',
+                      });
+                      setRefreshing(false);
+                      return;
+                    }
+
                     const resp = await fetch('/api/refresh-products', {
                       method: 'POST',
-                      // The endpoint accepts ?token= for browser-fetch auth.
-                      // Token is read from a meta tag set by the admin layout.
-                      // For now, use the public-no-auth path — the endpoint will
-                      // 401 if ADMIN_REFRESH_TOKEN is set without a matching token.
-                      headers: { 'Content-Type': 'application/json' },
+                      headers: {
+                        'Authorization': `Bearer ${session.access_token}`,
+                        'Content-Type': 'application/json',
+                      },
                     });
                     const data = await resp.json().catch(() => ({}));
                     if (resp.ok && data.ok) {
-                      toast.success('Deploy triggered!', {
-                        description: 'Prerendered HTML will refresh in 2-4 minutes. You can close this page.',
+                      toast.success('✅ Refresh triggered!', {
+                        description: 'New product titles will appear on luxemia.shop in 2-4 minutes. You can close this page.',
                       });
                       setLastRefresh(new Date());
+                    } else if (resp.status === 500 && (data.message || data.error || '').includes('VERCEL_DEPLOY_HOOK_URL')) {
+                      toast.error('First-time setup needed', {
+                        description: 'Click "Show first-time setup" below and follow the 3 steps. Takes 5 minutes.',
+                      });
+                      setShowSetup(true);
                     } else {
-                      toast.error('Failed to trigger deploy', {
+                      toast.error('Failed to trigger refresh', {
                         description: data.error || data.message || `HTTP ${resp.status}`,
                       });
                     }
@@ -135,12 +151,13 @@ const AdminDashboard = () => {
                   }
                 }}
                 disabled={refreshing}
-                className="min-w-[180px]"
+                className="min-w-[200px]"
+                size="lg"
               >
                 {refreshing ? (
                   <>
                     <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                    Triggering...
+                    Triggering refresh...
                   </>
                 ) : (
                   <>
@@ -156,25 +173,30 @@ const AdminDashboard = () => {
                   Last triggered: {lastRefresh.toLocaleTimeString()}
                 </div>
               )}
+            </div>
 
-              <div className="text-xs text-muted-foreground max-w-md">
-                <strong>Note:</strong> This button only works if the{' '}
-                <code className="px-1 py-0.5 bg-muted rounded text-xs">ADMIN_REFRESH_TOKEN</code>{' '}
-                and{' '}
-                <code className="px-1 py-0.5 bg-muted rounded text-xs">VERCEL_DEPLOY_HOOK_URL</code>{' '}
-                env vars are set in Vercel. If you see a 401 error, ask your developer
-                to configure them — see <code className="px-1 py-0.5 bg-muted rounded text-xs">scripts/SETUP_SHOPIFY_WEBHOOK.md</code>.
-              </div>
+            {/* First-time setup toggle */}
+            <div className="border-t pt-4">
+              <button
+                onClick={() => setShowSetup(!showSetup)}
+                className="flex items-center gap-2 text-sm text-primary hover:underline"
+              >
+                <HelpCircle className="h-4 w-4" />
+                {showSetup ? 'Hide first-time setup' : 'Show first-time setup (click here if the button doesn\'t work)'}
+              </button>
+              {showSetup && (
+                <div className="mt-4">
+                  <SetupWizard />
+                </div>
+              )}
             </div>
 
             {lastRefresh && (
-              <div className="mt-4 p-3 bg-muted/50 rounded-md text-xs text-muted-foreground">
-                <XCircle className="h-3 w-3 inline mr-1" />
+              <div className="p-3 bg-muted/50 rounded-md text-xs text-muted-foreground">
                 <strong>What happens next:</strong> Vercel queues a new build →
-                <code className="px-1 py-0.5 bg-muted rounded text-xs mx-1">npm run build</code> runs
-                (1-2 min) → <code className="px-1 py-0.5 bg-muted rounded text-xs mx-1">prerender.js</code> fetches
-                fresh data from Shopify → new HTML files are deployed to the edge. CDN edge
-                cache (5 min TTL) then refreshes on next request.
+                prerender script fetches fresh data from Shopify → new HTML files are
+                deployed to the edge → CDN cache (5 min TTL) refreshes on next request.
+                Total time: 2-4 minutes.
               </div>
             )}
           </CardContent>

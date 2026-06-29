@@ -5,74 +5,105 @@
  *
  * Manually triggers a Vercel redeploy so prerendered HTML is regenerated
  * with the latest product data from Shopify. Use this as the "Refresh
- * Products" button on the Admin Dashboard after a CSV import, when you
- * haven't set up the Shopify webhook automation yet.
+ * Products" button on the Admin Dashboard after a CSV import.
  *
- * Auth: requires a Bearer token in the Authorization header matching the
- * ADMIN_REFRESH_TOKEN env var. Without this, anyone could trigger Vercel
- * deploys and exhaust your build quota. The token is also checked against
- * a `?token=...` query param for convenience when calling from the browser.
+ * ─── Auth ─────────────────────────────────────────────────────────────────
  *
- * Usage from admin UI:
+ * Verifies the caller is a logged-in ADMIN via Supabase session JWT (passed
+ * in the Authorization: Bearer <access_token> header). This means:
+ *   - NO separate ADMIN_REFRESH_TOKEN env var needed
+ *   - Auth is automatic — the admin dashboard includes the session token
+ *     via the supabase-js client on every fetch
+ *   - Only users with role='admin' in the user_roles table can trigger
  *
- *   fetch('/api/refresh-products', {
+ * Required env vars:
+ *   - VERCEL_DEPLOY_HOOK_URL  ← URL from Vercel → Settings → Git → Deploy Hooks
+ *   - SUPABASE_URL            ← already set (Vercel Supabase integration)
+ *   - SUPABASE_SERVICE_ROLE_KEY ← already set (Vercel Supabase integration)
+ *
+ * Usage from admin UI (auto-includes session token via supabase-js):
+ *
+ *   const { data: { session } } = await supabase.auth.getSession();
+ *   await fetch('/api/refresh-products', {
  *     method: 'POST',
- *     headers: { 'Authorization': `Bearer ${token}` }
+ *     headers: { Authorization: `Bearer ${session.access_token}` }
  *   })
- *
- * Usage from CLI (debugging):
- *
- *   curl -X POST https://luxemia.shop/api/refresh-products \
- *        -H "Authorization: Bearer $ADMIN_REFRESH_TOKEN"
  */
 
+// ─── Config ─────────────────────────────────────────────────────────────────
 const DEPLOY_HOOK_URL = process.env.VERCEL_DEPLOY_HOOK_URL || '';
-const ADMIN_REFRESH_TOKEN = process.env.ADMIN_REFRESH_TOKEN || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-export default async function handler(req: {
-  method?: string;
-  headers: Record<string, string | undefined>;
-  query?: Record<string, string | string[] | undefined>;
-}): Promise<{ status: number; body: any }> {
-  if (req.method !== 'POST') {
-    return {
-      status: 405,
-      body: { error: 'Method not allowed — use POST to trigger a deploy.' },
-    };
+// ─── Auth: verify Supabase session + admin role ─────────────────────────────
+async function verifyAdminSession(authHeader: string): Promise<{ ok: boolean; status: number; userId?: string; message?: string }> {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { ok: false, status: 401, message: 'Missing Authorization Bearer token' };
+  }
+  const accessToken = authHeader.slice(7).trim();
+  if (!accessToken) {
+    return { ok: false, status: 401, message: 'Empty access token' };
+  }
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('[refresh-products] SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env var not set.');
+    return { ok: false, status: 500, message: 'Server missing Supabase credentials' };
   }
 
-  // ─── Auth check ─────────────────────────────────────────────────────────
-  // Allow either Authorization: Bearer <token> OR ?token=<token> (for browser fetches)
-  const authHeader = req.headers['authorization'] || '';
-  const headerToken = authHeader.startsWith('Bearer ')
-    ? authHeader.slice(7).trim()
-    : '';
-  const queryToken = (req.query?.token as string) || '';
-  const providedToken = headerToken || queryToken;
-
-  if (!ADMIN_REFRESH_TOKEN) {
-    console.error('[refresh-products] ADMIN_REFRESH_TOKEN env var not set — refusing to authenticate.');
-    return {
-      status: 500,
-      body: { error: 'Server not configured — set ADMIN_REFRESH_TOKEN env var.' },
-    };
-  }
-
-  if (providedToken !== ADMIN_REFRESH_TOKEN) {
-    // Constant-time comparison to prevent timing attacks
-    const a = Buffer.from(providedToken);
-    const b = Buffer.from(ADMIN_REFRESH_TOKEN);
-    if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
-      return { status: 401, body: { error: 'Unauthorized' } };
+  // 1. Verify the access token by calling Supabase auth.getUser
+  //    (this both validates the JWT AND returns the user record)
+  try {
+    const userResp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'apikey': SUPABASE_SERVICE_KEY,
+      },
+    });
+    if (!userResp.ok) {
+      return { ok: false, status: 401, message: 'Invalid or expired session' };
     }
-  }
+    const userJson: any = await userResp.json();
+    const userId: string | undefined = userJson?.id;
+    if (!userId) {
+      return { ok: false, status: 401, message: 'No user id in session' };
+    }
 
-  // ─── Trigger Vercel deploy ──────────────────────────────────────────────
+    // 2. Check user_roles table for admin role using the service role key
+    //    (bypasses RLS so we can read the role even if RLS would block)
+    const rolesResp = await fetch(
+      `${SUPABASE_URL}/rest/v1/user_roles?user_id=eq.${encodeURIComponent(userId)}&select=role`,
+      {
+        headers: {
+          'apikey': SUPABASE_SERVICE_KEY,
+          'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    if (!rolesResp.ok) {
+      console.error(`[refresh-products] user_roles query failed: ${rolesResp.status}`);
+      return { ok: false, status: 500, message: 'Could not verify admin role' };
+    }
+    const rolesJson: any = await rolesResp.json();
+    const roles: Array<{ role: string }> = Array.isArray(rolesJson) ? rolesJson : [];
+    const isAdmin = roles.some(r => r.role === 'admin');
+    if (!isAdmin) {
+      return { ok: false, status: 403, message: 'Admin role required' };
+    }
+
+    return { ok: true, status: 200, userId };
+  } catch (err: any) {
+    console.error('[refresh-products] Session verification error:', err?.message ?? err);
+    return { ok: false, status: 500, message: 'Session verification failed' };
+  }
+}
+
+// ─── Trigger Vercel deploy ──────────────────────────────────────────────────
+async function triggerVercelDeploy(): Promise<{ ok: boolean; status: number; message: string }> {
   if (!DEPLOY_HOOK_URL) {
-    console.error('[refresh-products] VERCEL_DEPLOY_HOOK_URL env var not set.');
     return {
+      ok: false,
       status: 500,
-      body: { error: 'Server not configured — set VERCEL_DEPLOY_HOOK_URL env var.' },
+      message: 'VERCEL_DEPLOY_HOOK_URL env var not set. Create one in Vercel → Settings → Git → Deploy Hooks, then add it as an env var in Vercel → Settings → Environment Variables.',
     };
   }
 
@@ -89,29 +120,57 @@ export default async function handler(req: {
     if (resp.ok || resp.status === 200 || resp.status === 202) {
       console.log('[refresh-products] Deploy triggered manually');
       return {
+        ok: true,
         status: 200,
-        body: {
-          ok: true,
-          message: 'Vercel deploy triggered. Prerendered HTML will refresh in 2-4 minutes.',
-          deployEta: '2-4 minutes',
-        },
+        message: 'Vercel deploy triggered. Prerendered HTML will refresh in 2-4 minutes.',
       };
     }
     const text = await resp.text().catch(() => '');
     console.error(`[refresh-products] Vercel hook returned ${resp.status}: ${text}`);
     return {
+      ok: false,
       status: resp.status,
-      body: { error: `Vercel hook returned ${resp.status}`, detail: text.slice(0, 200) },
+      message: `Vercel hook returned ${resp.status}: ${text.slice(0, 200)}`,
     };
   } catch (err: any) {
     console.error(`[refresh-products] Failed to call Vercel deploy hook: ${err?.message ?? err}`);
     return {
+      ok: false,
       status: 502,
-      body: { error: 'Failed to call Vercel deploy hook', detail: err?.message ?? String(err) },
+      message: `Failed to call Vercel deploy hook: ${err?.message ?? String(err)}`,
     };
   }
 }
 
-// ─── crypto import (Node runtime) ──────────────────────────────────────────
-// Vercel serverless functions run on Node — import crypto at module level.
-import * as crypto from 'crypto';
+// ─── Handler ────────────────────────────────────────────────────────────────
+export default async function handler(req: {
+  method?: string;
+  headers: Record<string, string | undefined>;
+}): Promise<{ status: number; body: any }> {
+  if (req.method !== 'POST') {
+    return {
+      status: 405,
+      body: { error: 'Method not allowed — use POST to trigger a deploy.' },
+    };
+  }
+
+  // 1. Verify caller is a logged-in admin (no env-var token needed — uses Supabase session)
+  const auth = await verifyAdminSession(req.headers['authorization'] || '');
+  if (!auth.ok) {
+    return {
+      status: auth.status,
+      body: { error: auth.message || 'Unauthorized' },
+    };
+  }
+
+  // 2. Trigger Vercel deploy
+  const result = await triggerVercelDeploy();
+  return {
+    status: result.status,
+    body: {
+      ok: result.ok,
+      message: result.message,
+      userId: auth.userId,
+    },
+  };
+}
