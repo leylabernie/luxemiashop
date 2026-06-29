@@ -16,8 +16,8 @@ import {
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import type { SareeProduct } from "@/data/sareeProducts";
-import type { LocalProduct } from "@/data/localProducts";
 import type { SuitProduct } from "@/data/suitProducts";
+import { fetchAllProducts } from "@/lib/shopify";
 import { getOptimizedImage } from "@/lib/imageUtils";
 import LazyImage from "@/components/ui/LazyImage";
 
@@ -42,37 +42,51 @@ const VirtualTryOn = () => {
   const [category, setCategory] = useState<ProductCategory>("sarees");
   const [copied, setCopied] = useState(false);
   const [sareeProducts, setSareeProducts] = useState<SareeProduct[]>([]);
-  const [localProductsData, setLocalProductsData] = useState<LocalProduct[]>([]);
+  const [lehengaProducts, setLehengaProducts] = useState<Product[]>([]);
   const [suitProductsData, setSuitProductsData] = useState<SuitProduct[]>([]);
   const [_isDataLoading, setIsDataLoading] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Fetch live product data:
+  //   - Sarees + suits: from local data files (sareeProducts.ts, suitProducts.ts)
+  //     [These are curated lists — leave them as-is for now]
+  //   - Lehengas: from LIVE Shopify Storefront API
+  //     [Previously came from localProducts.ts which had stale scraped titles.
+  //      Switched to live Shopify so try-on always shows current products.]
   useEffect(() => {
+    let cancelled = false;
     Promise.all([
       import("@/data/sareeProducts").then(m => m.sareeProducts),
-      import("@/data/localProducts").then(m => m.localProducts),
       import("@/data/suitProducts").then(m => m.suitProducts),
-    ]).then(([sarees, locals, suits]) => {
+      fetchAllProducts().then(products =>
+        products
+          .filter(({ node }) => {
+            const pt = (node.productType || '').toLowerCase();
+            const title = (node.title || '').toLowerCase();
+            return /lehenga|lehenga|lehena/.test(pt) || /lehenga|lehena/.test(title);
+          })
+          .map(({ node }) => ({
+            id: node.id,
+            handle: node.handle,
+            title: node.title,
+            price: node.priceRange.minVariantPrice.amount,
+            images: node.images.edges.map(e => e.node.url),
+            fabric: node.options?.find(o => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0] || 'Silk',
+            color: node.options?.find(o => o.name?.toLowerCase() === 'color')?.values?.[0] || '',
+          }))
+      ),
+    ]).then(([sarees, suits, lehengas]) => {
+      if (cancelled) return;
       setSareeProducts(sarees);
-      setLocalProductsData(locals);
       setSuitProductsData(suits);
+      setLehengaProducts(lehengas);
+      setIsDataLoading(false);
+    }).catch(err => {
+      console.error('VirtualTryOn: Failed to load products:', err);
       setIsDataLoading(false);
     });
+    return () => { cancelled = true; };
   }, []);
-
-  // Get lehengas from localProducts (filter by category)
-  const lehengaProducts: Product[] = useMemo(() => 
-    localProductsData.filter(p => 
-      p.category.toLowerCase().includes('lehenga')
-    ).map(p => ({
-      id: p.id,
-      handle: p.handle,
-      title: p.title,
-      price: p.price,
-      images: p.images,
-      fabric: p.fabric,
-      color: p.color
-    })), [localProductsData]);
 
   const suitProductsList: Product[] = useMemo(() => 
     suitProductsData.map(p => ({

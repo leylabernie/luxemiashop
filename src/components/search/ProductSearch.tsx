@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { Slider } from '@/components/ui/slider';
+import { fetchAllProducts } from '@/lib/shopify';
 
 interface SearchResult {
   id: string;
@@ -37,38 +38,49 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  // Lazy-load all products
+  // Fetch all products from Shopify Storefront API (live data — never stale)
+  // Previously this used hardcoded data from src/data/localProducts.ts which
+  // contained titles scraped from wholesalesalwar.com months ago, causing
+  // stale search results after Shopify CSV imports.
   useEffect(() => {
-    import('@/data/localProducts').then(m => {
-      const products = m.getAllLocalProducts().map(product => {
-        const desc = product.node.description.toLowerCase();
-        const title = product.node.title.toLowerCase();
-        
-        // Determine category
-        let category = 'Suits';
-        if (desc.includes('saree') || title.includes('saree')) category = 'Sarees';
-        else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
-        else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
-        
-        // Extract fabric
-        let fabric = 'Silk';
-        if (desc.includes('velvet')) fabric = 'Velvet';
-        else if (desc.includes('georgette')) fabric = 'Georgette';
-        else if (desc.includes('cotton')) fabric = 'Cotton';
-        else if (desc.includes('chiffon')) fabric = 'Chiffon';
-        
-        return {
-          id: product.node.id,
-          handle: product.node.handle,
-          title: product.node.title,
-          category,
-          price: product.node.priceRange.minVariantPrice.amount,
-          image: product.node.images.edges[0]?.node.url || '',
-          fabric,
-        };
-      });
-      setAllProducts(products);
-    });
+    let cancelled = false;
+    (async () => {
+      try {
+        const shopifyProducts = await fetchAllProducts();
+        if (cancelled) return;
+        const products: SearchResult[] = shopifyProducts.map(({ node }) => {
+          const desc = (node.description || '').toLowerCase();
+          const title = (node.title || '').toLowerCase();
+
+          // Determine category
+          let category = 'Suits';
+          if (desc.includes('saree') || title.includes('saree')) category = 'Sarees';
+          else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
+          else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
+
+          // Extract fabric
+          let fabric = 'Silk';
+          if (desc.includes('velvet')) fabric = 'Velvet';
+          else if (desc.includes('georgette')) fabric = 'Georgette';
+          else if (desc.includes('cotton')) fabric = 'Cotton';
+          else if (desc.includes('chiffon')) fabric = 'Chiffon';
+
+          return {
+            id: node.id,
+            handle: node.handle,
+            title: node.title,
+            category,
+            price: node.priceRange.minVariantPrice.amount,
+            image: node.images.edges[0]?.node.url || '',
+            fabric,
+          };
+        });
+        if (!cancelled) setAllProducts(products);
+      } catch (err) {
+        console.error('ProductSearch: Failed to fetch products from Shopify:', err);
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   // Filter products based on query and filters

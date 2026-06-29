@@ -1,8 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import { localProducts } from "@/data/localProducts";
-import { sareeProducts } from "@/data/sareeProducts";
-import { menswearProducts } from "@/data/menswearProducts";
-import { suitProducts } from "@/data/suitProducts";
+import { fetchAllProducts } from "@/lib/shopify";
 import { jewelryProducts } from "@/data/jewelryProducts";
 
 interface SitemapProduct {
@@ -65,51 +62,29 @@ export const staticPages = [
   { loc: '/terms', changefreq: 'yearly', priority: '0.3', title: 'Terms & Conditions' },
 ];
 
-// Fetch all products for sitemap (local + scraped from database)
+// Fetch all products for sitemap.
+// Uses LIVE Shopify data instead of hardcoded local product data files
+// (which were stale and causing the sitemap to advertise deleted products).
+// Falls back to scraped_products in Supabase if Shopify API fails.
 export const fetchAllSitemapProducts = async (): Promise<SitemapProduct[]> => {
   const products: SitemapProduct[] = [];
 
-  // Add local products
-  localProducts.forEach(p => {
-    products.push({
-      handle: p.handle,
-      title: p.title,
-      category: p.category,
-      images: p.images,
+  // 1. Fetch live products from Shopify Storefront API
+  try {
+    const shopifyProducts = await fetchAllProducts();
+    shopifyProducts.forEach(({ node }) => {
+      products.push({
+        handle: node.handle,
+        title: node.title,
+        category: node.productType || 'Ethnic Wear',
+        images: node.images.edges.map(e => e.node.url),
+      });
     });
-  });
+  } catch (err) {
+    console.error('dynamicSitemap: Failed to fetch from Shopify:', err);
+  }
 
-  // Add saree products
-  sareeProducts.forEach(p => {
-    products.push({
-      handle: p.handle,
-      title: p.title,
-      category: 'Sarees',
-      images: p.images,
-    });
-  });
-
-  // Add menswear products
-  menswearProducts.forEach(p => {
-    products.push({
-      handle: p.handle,
-      title: p.title,
-      category: 'Menswear',
-      images: p.images,
-    });
-  });
-
-  // Add suit products
-  suitProducts.forEach(p => {
-    products.push({
-      handle: p.handle,
-      title: p.title,
-      category: 'Suits',
-      images: p.images,
-    });
-  });
-
-  // Add jewelry products
+  // 2. Add jewelry products (still from local data file — jewelry isn't in Shopify)
   jewelryProducts.forEach(p => {
     products.push({
       handle: p.id,

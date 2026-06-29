@@ -1,5 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import type { ShopifyProductNode } from "@/data/localProducts";
+import type { ShopifyProductNode } from "@/lib/types";
 
 export interface ScrapedProduct {
   id: string;
