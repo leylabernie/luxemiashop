@@ -11,11 +11,12 @@ import SEOHead from '@/components/seo/SEOHead';
 import ServiceHighlights from '@/components/home/ServiceHighlights';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
-import FlashSaleBanner from '@/components/home/FlashSaleBanner';
 import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
 import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
+// HeroSection removed — was duplicating NewArrivalsBanner (two hero carousels stacked)
+// FlashSaleBanner removed — redundant "New Arrivals" bar directly below NewArrivalsBanner
 
 const homepageFaqs = [
   {
@@ -139,8 +140,7 @@ const Index = () => {
       
       <main className="pt-[88px] lg:pt-[130px]">
         <NewArrivalsBanner />
-        <FlashSaleBanner />
-        {/* Semantic H1 for SEO */}
+        {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
         <h1 className="sr-only">Indian Ethnic Wear Online — Bridal Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
 
         {/* Shipping Info Banner */}
