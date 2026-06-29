@@ -280,6 +280,12 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
       query,
       variables,
     }),
+    // CRITICAL: never cache Shopify Storefront API responses in the browser.
+    // Without this, the browser may serve a stale title from HTTP cache even
+    // after the user updated the product in Shopify. cache: 'no-store' forces
+    // every request to hit Shopify directly, so users always see the latest
+    // product data.
+    cache: 'no-store',
     ...(signal ? { signal } : {}),
   });
 

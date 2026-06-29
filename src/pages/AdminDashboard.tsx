@@ -95,12 +95,16 @@ const AdminDashboard = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <RefreshCw className="h-5 w-5 text-primary" />
-              Refresh Products from Shopify
+              Refresh Products from Shopify (Optional)
             </CardTitle>
             <CardDescription>
-              Use this <strong>after every CSV import or product edit in Shopify</strong>.
-              Triggers a fresh website rebuild so new titles, prices, and images appear on luxemia.shop.
-              Takes 2-4 minutes to complete.
+              <strong>Good news:</strong> Your website now automatically shows the latest product titles,
+              prices, and images from Shopify within seconds of a customer loading a product page — no
+              setup required. <br /><br />
+              The button below is <strong>optional</strong>. It refreshes the static HTML that Googlebot
+              and social media previews see, so your updates appear in Google search results faster
+              (instead of waiting for Google's next crawl). Skip this entirely if you don't care about
+              SEO refresh speed.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -182,7 +186,7 @@ const AdminDashboard = () => {
                 className="flex items-center gap-2 text-sm text-primary hover:underline"
               >
                 <HelpCircle className="h-4 w-4" />
-                {showSetup ? 'Hide first-time setup' : 'Show first-time setup (click here if the button doesn\'t work)'}
+                {showSetup ? 'Hide optional SEO setup' : 'Show optional SEO setup (only if you want faster Google updates)'}
               </button>
               {showSetup && (
                 <div className="mt-4">
