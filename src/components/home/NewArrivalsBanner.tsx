@@ -68,11 +68,11 @@ const slides: FeaturedSlide[] = [
     headlineLine2: 'SUITS',
     image:
       'https://images.wholesalesalwar.com/2026y/June/62383/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002(1).jpg',
-    // Rich midnight to complement the black suit
-    panelBg: '#1a1a2e',
-    panelText: '#eef2fb',
-    imageBg: '#eef3f8',
-    ctaBorder: 'rgba(238,242,251,0.45)',
+    // True black to match the black georgette suit — warm off-white text for contrast
+    panelBg: '#0d0d0d',
+    panelText: '#f5f5f5',
+    imageBg: '#f5f5f5',
+    ctaBorder: 'rgba(245,245,245,0.45)',
     ctas: [
       { label: 'SUITS', link: '/suits' },
       { label: 'BLACK', link: '/suits?color=black' },
