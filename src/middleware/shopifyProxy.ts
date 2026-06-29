@@ -35,9 +35,12 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
-// Simple in-memory cache for product data (Edge runtime, per-cold-start)
+// Simple in-memory cache for product data (Edge runtime, per-cold-start).
+// TTL of 2 minutes balances freshness against Shopify API call volume.
+// When products are updated via Shopify CSV import, bot SSR HTML picks up
+// the new title within at most 2 minutes of the next bot request.
 const productCache = new Map<string, { data: ShopifyProduct | null; timestamp: number }>();
-const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+const CACHE_TTL = 2 * 60 * 1000; // 2 minutes (was 10 — too stale after CSV imports)
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
   const cached = productCache.get(handle);

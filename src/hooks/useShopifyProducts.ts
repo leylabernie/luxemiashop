@@ -34,11 +34,15 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 
 // ─── Persistent product cache ─────────────────────────────────────────────────
 // Two-tier cache: in-memory (instant within a session) + localStorage (persists
-// across page reloads and new tabs). TTL of 30 minutes prevents stale data.
-// Cache key is versioned — bump CACHE_VERSION when the product schema changes.
-const CACHE_VERSION = 'v4';
+// across page reloads and new tabs). TTL of 5 minutes balances freshness
+// against API call volume — when Shopify titles change via CSV import, users
+// see the new titles within at most 5 minutes of their next page load.
+// Cache key is versioned — bump CACHE_VERSION when the product schema changes
+// OR when you need to force-invalidate every browser's cache (e.g. after a
+// known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
+const CACHE_VERSION = 'v6';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
-const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
 function getStoredProducts(): ShopifyProduct[] | null {
   try {

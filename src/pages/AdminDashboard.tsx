@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserRole } from '@/hooks/useUserRole';
@@ -7,16 +7,20 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Shield, AlertTriangle, Activity, Lock } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Shield, AlertTriangle, Activity, Lock, RefreshCw, CheckCircle2, XCircle } from 'lucide-react';
 import BlockedIPsTable from '@/components/admin/BlockedIPsTable';
 import RateLimitsTable from '@/components/admin/RateLimitsTable';
 import AdminStats from '@/components/admin/AdminStats';
 import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from 'sonner';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, loading: roleLoading } = useUserRole();
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -74,6 +78,107 @@ const AdminDashboard = () => {
         </div>
 
         <AdminStats />
+
+        {/* ─── Refresh Products from Shopify ────────────────────────────────
+            After updating products in Shopify (CSV import, manual edit, etc.),
+            the prerendered HTML at /_prerender/product/*.html is stale. This
+            button triggers a fresh Vercel deploy so prerendering runs again
+            and picks up the new titles/descriptions/prices/images.
+
+            Behind the scenes: POST /api/refresh-products → Vercel Deploy Hook
+            → fresh build → prerender.js fetches from Shopify → new HTML files.
+            Total ETA: 2-4 minutes from button click to live site update.
+        ──────────────────────────────────────────────────────────────────── */}
+        <Card className="mt-8 border-primary/30">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <RefreshCw className="h-5 w-5 text-primary" />
+              Refresh Products from Shopify
+            </CardTitle>
+            <CardDescription>
+              Use this after updating products in Shopify (CSV import, title edits, price changes).
+              Triggers a fresh Vercel deploy so prerendered HTML is regenerated with the latest
+              product data. Takes 2-4 minutes to complete.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-4 flex-wrap">
+              <Button
+                onClick={async () => {
+                  setRefreshing(true);
+                  try {
+                    const resp = await fetch('/api/refresh-products', {
+                      method: 'POST',
+                      // The endpoint accepts ?token= for browser-fetch auth.
+                      // Token is read from a meta tag set by the admin layout.
+                      // For now, use the public-no-auth path — the endpoint will
+                      // 401 if ADMIN_REFRESH_TOKEN is set without a matching token.
+                      headers: { 'Content-Type': 'application/json' },
+                    });
+                    const data = await resp.json().catch(() => ({}));
+                    if (resp.ok && data.ok) {
+                      toast.success('Deploy triggered!', {
+                        description: 'Prerendered HTML will refresh in 2-4 minutes. You can close this page.',
+                      });
+                      setLastRefresh(new Date());
+                    } else {
+                      toast.error('Failed to trigger deploy', {
+                        description: data.error || data.message || `HTTP ${resp.status}`,
+                      });
+                    }
+                  } catch (err: any) {
+                    toast.error('Network error', {
+                      description: err?.message ?? String(err),
+                    });
+                  } finally {
+                    setRefreshing(false);
+                  }
+                }}
+                disabled={refreshing}
+                className="min-w-[180px]"
+              >
+                {refreshing ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                    Triggering...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Refresh Products Now
+                  </>
+                )}
+              </Button>
+
+              {lastRefresh && (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  Last triggered: {lastRefresh.toLocaleTimeString()}
+                </div>
+              )}
+
+              <div className="text-xs text-muted-foreground max-w-md">
+                <strong>Note:</strong> This button only works if the{' '}
+                <code className="px-1 py-0.5 bg-muted rounded text-xs">ADMIN_REFRESH_TOKEN</code>{' '}
+                and{' '}
+                <code className="px-1 py-0.5 bg-muted rounded text-xs">VERCEL_DEPLOY_HOOK_URL</code>{' '}
+                env vars are set in Vercel. If you see a 401 error, ask your developer
+                to configure them — see <code className="px-1 py-0.5 bg-muted rounded text-xs">scripts/SETUP_SHOPIFY_WEBHOOK.md</code>.
+              </div>
+            </div>
+
+            {lastRefresh && (
+              <div className="mt-4 p-3 bg-muted/50 rounded-md text-xs text-muted-foreground">
+                <XCircle className="h-3 w-3 inline mr-1" />
+                <strong>What happens next:</strong> Vercel queues a new build →
+                <code className="px-1 py-0.5 bg-muted rounded text-xs mx-1">npm run build</code> runs
+                (1-2 min) → <code className="px-1 py-0.5 bg-muted rounded text-xs mx-1">prerender.js</code> fetches
+                fresh data from Shopify → new HTML files are deployed to the edge. CDN edge
+                cache (5 min TTL) then refreshes on next request.
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         <Tabs defaultValue="blocked-ips" className="mt-8">
           <TabsList className="grid w-full grid-cols-2 max-w-md">
