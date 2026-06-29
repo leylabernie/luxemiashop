@@ -27,13 +27,13 @@ interface FeaturedSlide {
 const slides: FeaturedSlide[] = [
   {
     id: 1,
-    category: '01 — BRIDAL LEHENGA',
+    category: '01 — SILK LEHENGA',
     headline: 'BRIDAL EDIT',
     headlineLine2: '2026',
     image:
-      'https://images.wholesalesalwar.com/2026y/May/61379/Beige-Net-Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-TITLI-1067(1).jpg',
-    // Deep mahogany / cocoa to complement the brown-gold lehenga
-    panelBg: '#3a2418',
+      'https://images.wholesalesalwar.com/2026y/June/62457/Maroon-Silk-Festival-Wear-Zari-Work-Lehenga-Choli-3040-A(1).jpg',
+    // Deep burgundy to match the maroon silk lehenga
+    panelBg: '#6b1026',
     panelText: '#f7ebd9',
     imageBg: '#f5ead8',
     ctaBorder: 'rgba(247,235,217,0.45)',
@@ -45,13 +45,13 @@ const slides: FeaturedSlide[] = [
   },
   {
     id: 2,
-    category: '02 — DESIGNER SAREE',
+    category: '02 — SATIN SAREE',
     headline: 'FESTIVE EDIT',
     headlineLine2: 'NEW ARRIVALS',
     image:
-      'https://images.wholesalesalwar.com/2026y/April/61217/Green-Satin-Silk-Festival-Wear-Sequins-Work--Readymade-Saree-BELLE-26809(1).jpg',
-    // Deep forest emerald to echo the green saree
-    panelBg: '#1f3a2c',
+      'https://images.wholesalesalwar.com/2026y/June/62432/Teal-Blue-Satin-Silk-Occasional-Wear-Embroidery-Work-Readymade-Saree-A411-B(1).jpg',
+    // Deep teal to echo the blue saree
+    panelBg: '#0d3b4a',
     panelText: '#f1f5ec',
     imageBg: '#f4efe4',
     ctaBorder: 'rgba(241,245,236,0.45)',
@@ -63,20 +63,38 @@ const slides: FeaturedSlide[] = [
   },
   {
     id: 3,
-    category: '03 — ANARKALI SUIT',
-    headline: 'ANARKALI',
-    headlineLine2: 'COLLECTION',
+    category: '03 — DESIGNER SUIT',
+    headline: 'DESIGNER',
+    headlineLine2: 'SUITS',
     image:
-      'https://images.wholesalesalwar.com/2026y/May/61270/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001(1).jpg',
-    // Twilight navy to lift the sky-blue anarkali
-    panelBg: '#1d2a44',
+      'https://images.wholesalesalwar.com/2026y/June/62383/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002(1).jpg',
+    // Rich midnight to complement the black suit
+    panelBg: '#1a1a2e',
     panelText: '#eef2fb',
     imageBg: '#eef3f8',
     ctaBorder: 'rgba(238,242,251,0.45)',
     ctas: [
-      { label: 'SALWAR SUITS', link: '/suits' },
-      { label: 'ANARKALI', link: '/suits?style=anarkali' },
+      { label: 'SUITS', link: '/suits' },
+      { label: 'BLACK', link: '/suits?color=black' },
       { label: 'OCCASION', link: '/suits?occasion=occasion' },
+    ],
+  },
+  {
+    id: 4,
+    category: '04 — GROOM SHERWANI',
+    headline: 'MENSWEAR',
+    headlineLine2: 'COLLECTION',
+    image:
+      '/images/banners/menswear-banner.jpg',
+    // Deep burgundy-brown for the maroon sherwani
+    panelBg: '#3d1020',
+    panelText: '#f7ebd9',
+    imageBg: '#f5ead8',
+    ctaBorder: 'rgba(247,235,217,0.45)',
+    ctas: [
+      { label: 'SHERWANI', link: '/menswear' },
+      { label: 'MENSWEAR', link: '/menswear' },
+      { label: 'WEDDING', link: '/menswear?occasion=wedding' },
     ],
   },
 ];
