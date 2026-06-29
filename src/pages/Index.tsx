@@ -3,7 +3,6 @@ import { Truck, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import HeroSection from '@/components/home/HeroSection';
 import CategoryShowcase from '@/components/home/CategoryShowcase';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import LookbookTeaser from '@/components/home/LookbookTeaser';
@@ -141,9 +140,8 @@ const Index = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <NewArrivalsBanner />
         <FlashSaleBanner />
-        {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
+        {/* Semantic H1 for SEO */}
         <h1 className="sr-only">Indian Ethnic Wear Online — Bridal Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
-        <HeroSection />
 
         {/* Shipping Info Banner */}
         <div className="bg-foreground text-background py-3">
