@@ -19,6 +19,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/indian-ethnic-wear-usa',
   '/indian-ethnic-wear-canada',
   '/size-guide',
+  '/sizing-measurements-guide',
   '/care-guide',
   '/faq',
   '/shipping',

@@ -37,6 +37,7 @@ const Artisans = lazy(() => import("./pages/Artisans"));
 const Sustainability = lazy(() => import("./pages/Sustainability"));
 const Press = lazy(() => import("./pages/Press"));
 const SizeGuide = lazy(() => import("./pages/SizeGuide"));
+const SizingMeasurementsGuide = lazy(() => import("./pages/SizingMeasurementsGuide"));
 const CareGuide = lazy(() => import("./pages/CareGuide"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -117,6 +118,7 @@ const App = () => (
                 <Route path="/sustainability" element={<Suspense fallback={<PageLoader />}><Sustainability /></Suspense>} />
                 <Route path="/press" element={<Suspense fallback={<PageLoader />}><Press /></Suspense>} />
                 <Route path="/size-guide" element={<Suspense fallback={<PageLoader />}><SizeGuide /></Suspense>} />
+                <Route path="/sizing-measurements-guide" element={<Suspense fallback={<PageLoader />}><SizingMeasurementsGuide /></Suspense>} />
                 <Route path="/care-guide" element={<Suspense fallback={<PageLoader />}><CareGuide /></Suspense>} />
                 <Route path="/jewelry" element={<Navigate to="/collections" replace />} />
                 <Route path="/virtual-try-on" element={<Suspense fallback={<PageLoader />}><VirtualTryOn /></Suspense>} />

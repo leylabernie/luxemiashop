@@ -80,6 +80,7 @@ const staticPages = [
   { loc: '/shipping', changefreq: 'monthly', priority: '0.4' },
   { loc: '/returns', changefreq: 'monthly', priority: '0.4' },
   { loc: '/size-guide', changefreq: 'monthly', priority: '0.5' },
+  { loc: '/sizing-measurements-guide', changefreq: 'monthly', priority: '0.8' },
   { loc: '/care-guide', changefreq: 'monthly', priority: '0.5' },
   { loc: '/privacy', changefreq: 'yearly', priority: '0.3' },
   { loc: '/terms', changefreq: 'yearly', priority: '0.3' },

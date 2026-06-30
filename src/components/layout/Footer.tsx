@@ -32,6 +32,7 @@ const footerLinks = {
     { name: 'Shipping Info', href: '/shipping' },
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
+    { name: 'How to Measure Blouse Size', href: '/sizing-measurements-guide' },
     { name: 'Care Guide', href: '/care-guide' },
     { name: 'Style Consultation', href: '/style-consultation' },
   ],

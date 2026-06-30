@@ -57,7 +57,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Indian ethnic wear store specializing in bridal lehengas, Banarasi silk sarees, anarkali suits, and wedding collections. Free shipping on orders over $350 to the USA, Canada, and Australia.",
+    "description": "Ready-to-ship Indian ethnic wear store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free shipping on orders over $350.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/logo.png",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -130,8 +130,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia | Indian Ethnic Wear — Sarees & Lehengas"
-        description="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350."
+        title="Luxemia | Ready-to-Ship Indian Ethnic Wear & Jewelry in USA"
+        description="Shop ready-to-wear designer sarees, sangeet lehengas, and temple jewelry sets. Premium quality, quick delivery across the US, and hassle-free sizing."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
@@ -141,7 +141,7 @@ const Index = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <NewArrivalsBanner />
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
-        <h1 className="sr-only">Indian Ethnic Wear Online — Bridal Lehengas, Silk Sarees, Salwar Kameez & Sherwanis | LuxeMia</h1>
+        <h1 className="sr-only">Ready-to-Ship Indian Ethnic Wear — Bridal Lehengas, Designer Sarees & Temple Jewelry | Fast USA Delivery | Luxemia</h1>
 
         {/* Shipping Info Banner */}
         <div className="bg-foreground text-background py-3">
