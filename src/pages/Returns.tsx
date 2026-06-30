@@ -10,10 +10,25 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const returnPolicySchema = {
   '@context': 'https://schema.org',
   '@type': 'MerchantReturnPolicy',
-  name: 'LuxeMia Return Policy',
-  applicableCountry: 'US',
-  returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-  description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+  name: 'LuxeMia Return & Refund Policy',
+  applicableCountry: ['US', 'CA', 'AU'],
+  returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+  merchantReturnDays: 2,
+  returnMethod: 'https://schema.org/ReturnByMail',
+  returnFees: 'https://schema.org/FreeReturn',
+  restockingFee: {
+    '@type': 'MonetaryAmount',
+    value: '0.00',
+    currency: 'USD',
+  },
+  returnShippingFeesAmount: {
+    '@type': 'MonetaryAmount',
+    value: '0.00',
+    currency: 'USD',
+  },
+  refundType: 'https://schema.org/FullRefund',
+  description: 'All sales are final. Returns and exchanges are not accepted. Damage claims are accepted within 48 hours of delivery with mandatory unboxing video. Cancellations are accepted within 24 hours of order placement for a full refund. Damage resolutions may include replacement part, store credit, or partial refund at LuxeMia discretion.',
+  url: 'https://luxemia.shop/returns',
 };
 
 const Returns = () => {
@@ -288,7 +303,47 @@ const Returns = () => {
               </div>
             </motion.div>
 
-            {/* 6. FAQ */}
+            {/* 6. Refund Policy */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.45 }}>
+              <h2 className="text-2xl font-serif mb-6 text-center">Refund Policy</h2>
+              <div className="prose prose-lg max-w-2xl mx-auto text-muted-foreground space-y-4">
+                <p>
+                  LuxeMia offers refunds in two specific scenarios only. Outside of these scenarios, all sales are final and no refunds will be issued.
+                </p>
+                <div className="bg-secondary/30 rounded-lg p-6 border-l-4 border-primary">
+                  <h3 className="font-semibold text-foreground mb-2">1. Order Cancellation Refunds</h3>
+                  <p className="text-sm">
+                    Orders cancelled within <strong className="text-foreground">24 hours of placement</strong> receive a full refund to the original payment method within 5–7 business days. After 24 hours, the order enters production and cannot be cancelled or refunded.
+                  </p>
+                </div>
+                <div className="bg-secondary/30 rounded-lg p-6 border-l-4 border-primary">
+                  <h3 className="font-semibold text-foreground mb-2">2. Shipping Damage Refunds</h3>
+                  <p className="text-sm">
+                    Verified shipping damage reported within <strong className="text-foreground">48 hours of delivery</strong> with mandatory unboxing video may be resolved at LuxeMia's discretion with one of:
+                  </p>
+                  <ul className="text-sm mt-2 space-y-1 list-disc pl-6">
+                    <li>Replacement part or full replacement garment</li>
+                    <li>Store credit equal to the damaged portion's value</li>
+                    <li>Partial refund proportional to the damage</li>
+                    <li>Full refund in cases of total loss in transit</li>
+                  </ul>
+                  <p className="text-sm mt-3">
+                    Refunds for damage claims are processed within 7–14 business days of approval to the original payment method.
+                  </p>
+                </div>
+                <div className="bg-destructive/5 rounded-lg p-6 border-l-4 border-destructive">
+                  <h3 className="font-semibold text-foreground mb-2">No Refund Scenarios</h3>
+                  <p className="text-sm">
+                    Refunds are not issued for: sizing issues (please use our <Link to="/sizing-measurements-guide" className="text-primary underline">measurement guide</Link> before ordering), color variations due to monitor settings, change of mind, late delivery for events (please order 4–6 weeks in advance), or items worn/altered after delivery.
+                  </p>
+                </div>
+                <p className="text-sm text-center pt-4">
+                  Questions about a refund? Email <a href="mailto:hello@luxemia.shop" className="text-primary underline">hello@luxemia.shop</a> with your order number.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 7. FAQ */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}>
               <h2 className="text-2xl font-serif mb-8 text-center">Frequently Asked Questions</h2>
               <Accordion type="single" collapsible className="w-full">

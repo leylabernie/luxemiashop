@@ -92,10 +92,26 @@ export function generateShippingSchema(currency: string) {
 export function generateReturnPolicySchema() {
   return {
     '@type': 'MerchantReturnPolicy',
-    name: 'LuxeMia Return Policy',
-    applicableCountry: 'US',
-    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-    description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+    '@id': 'https://luxemia.shop/#returnPolicy',
+    name: 'LuxeMia Return & Refund Policy',
+    applicableCountry: ['US', 'CA', 'AU'],
+    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+    merchantReturnDays: 2,
+    returnMethod: 'https://schema.org/ReturnByMail',
+    returnFees: 'https://schema.org/FreeReturn',
+    restockingFee: {
+      '@type': 'MonetaryAmount',
+      value: '0.00',
+      currency: 'USD',
+    },
+    returnShippingFeesAmount: {
+      '@type': 'MonetaryAmount',
+      value: '0.00',
+      currency: 'USD',
+    },
+    refundType: 'https://schema.org/FullRefund',
+    description: 'All sales are final. Returns and exchanges are not accepted. Damage claims are accepted within 48 hours of delivery with mandatory unboxing video. Cancellations are accepted within 24 hours of order placement for a full refund. Damage resolutions may include replacement part, store credit, or partial refund at LuxeMia discretion.',
+    url: 'https://luxemia.shop/returns',
   };
 }
 

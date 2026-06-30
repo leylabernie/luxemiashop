@@ -613,24 +613,32 @@ function generateShippingXml() {
 // GMC requires explicit return policy info per item to satisfy the
 // "return policy" rejection. See:
 // https://support.google.com/merchants/answer/10320582
+//
+// IMPORTANT: The category here MUST match what's on the /returns page.
+// Our website offers damage-claim resolution within 48h (replacement, store
+// credit, or partial refund at our discretion) and cancellations within 24h
+// (full refund). GMC classifies this as "MerchantReturnFiniteReturnWindow"
+// with a 48-hour window, NOT "MerchantReturnNotPermitted".
+//
+// Mismatch between feed and website causes GMC to reject items as
+// "Inconsistent return policy information".
 function generateReturnsXml() {
-  // All sales final, but damage claims within 48h with video
-  // Per schema.org/MerchantReturnPolicy, this is "MerchantReturnNotPermitted"
-  // for the general case but "MerchantReturnFiniteReturnWindow" for damage claims.
   return `
     <g:returns>
       <g:returns_policy>
         <g:countries>US,CA,AU</g:countries>
-        <g:return_policy_category>https://schema.org/MerchantReturnNotPermitted</g:return_policy_category>
+        <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
+        <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
+        <g:customer_service_link>https://luxemia.shop/contact</g:customer_service_link>
         <g:life_time_return_window>false</g:life_time_return_window>
+        <g:return_window_days>2</g:return_window_days>
         <g:return_method>https://schema.org/ReturnByMail</g:return_method>
         <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
         <g:return_shipping_fee>
           <g:price>0.00 USD</g:price>
         </g:return_shipping_fee>
-        <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
-        <g:customer_service_link>https://luxemia.shop/contact</g:customer_service_link>
         <g:restocking_fee>0.00 USD</g:restocking_fee>
+        <g:refund_fee>https://schema.org/FullRefund</g:refund_fee>
       </g:returns_policy>
     </g:returns>`;
 }
