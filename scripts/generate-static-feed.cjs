@@ -609,6 +609,104 @@ function generateShippingXml() {
     </g:shipping>`;
 }
 
+// ─── Returns Policy Block ──────────────────────────────────────────────────
+// GMC requires explicit return policy info per item to satisfy the
+// "return policy" rejection. See:
+// https://support.google.com/merchants/answer/10320582
+function generateReturnsXml() {
+  // All sales final, but damage claims within 48h with video
+  // Per schema.org/MerchantReturnPolicy, this is "MerchantReturnNotPermitted"
+  // for the general case but "MerchantReturnFiniteReturnWindow" for damage claims.
+  return `
+    <g:returns>
+      <g:returns_policy>
+        <g:countries>US,CA,AU</g:countries>
+        <g:return_policy_category>https://schema.org/MerchantReturnNotPermitted</g:return_policy_category>
+        <g:life_time_return_window>false</g:life_time_return_window>
+        <g:return_method>https://schema.org/ReturnByMail</g:return_method>
+        <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
+        <g:return_shipping_fee>
+          <g:price>0.00 USD</g:price>
+        </g:return_shipping_fee>
+        <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
+        <g:customer_service_link>https://luxemia.shop/contact</g:customer_service_link>
+        <g:restocking_fee>0.00 USD</g:restocking_fee>
+      </g:returns_policy>
+    </g:returns>`;
+}
+
+// ─── Product Highlights ────────────────────────────────────────────────────
+// GMC: 3-5 short bullet highlights per item (max 150 chars each).
+// Derived from color, fabric, work type, stitching options, occasion.
+function generateProductHighlights(product, color, material, productType, title) {
+  const highlights = [];
+  const t = (title + ' ' + productType).toLowerCase();
+
+  // Color highlight
+  if (color) {
+    highlights.push(`${color} authentic Indian ethnic wear with rich detailing`);
+  }
+
+  // Fabric/material highlight
+  if (material) {
+    highlights.push(`Premium ${material.toLowerCase()} fabric with comfortable drape and luxury finish`);
+  } else {
+    const fabricPatterns = [
+      { pat: /georgette/i, label: 'Georgette' },
+      { pat: /silk/i, label: 'Silk' },
+      { pat: /net/i, label: 'Net' },
+      { pat: /velvet/i, label: 'Velvet' },
+      { pat: /chiffon/i, label: 'Chiffon' },
+      { pat: /organza/i, label: 'Organza' },
+    ];
+    for (const fp of fabricPatterns) {
+      if (fp.pat.test(t)) {
+        highlights.push(`Premium ${fp.label.toLowerCase()} fabric with comfortable drape and luxury finish`);
+        break;
+      }
+    }
+  }
+
+  // Work type highlight
+  if (/embroider|zardosi|zari|sequin|bead|mirror|stone|cutdana|pearl|kundan|thread/i.test(t)) {
+    if (/zardosi|zari/i.test(t)) {
+      highlights.push(`Hand-applied zardosi/zari gold thread embroidery throughout the garment`);
+    } else if (/sequin/i.test(t)) {
+      highlights.push(`Sparkling sequins work catches light beautifully for evening events`);
+    } else if (/bead|cutdana|pearl/i.test(t)) {
+      highlights.push(`Intricate bead and pearl handwork on every panel of the garment`);
+    } else if (/mirror/i.test(t)) {
+      highlights.push(`Traditional mirror work reflecting festive Indian heritage craftsmanship`);
+    } else {
+      highlights.push(`Handcrafted embroidery with traditional Indian artisanal techniques`);
+    }
+  }
+
+  // Product type / occasion highlight
+  if (t.includes('lehenga')) {
+    highlights.push(`Flared kalidar lehenga construction for statement bridal and wedding guest movement`);
+  } else if (t.includes('saree')) {
+    highlights.push(`Includes unstitched blouse piece so you can tailor the perfect custom fit`);
+  } else if (t.includes('suit') || t.includes('anarkali') || t.includes('salwar') || t.includes('sharara')) {
+    highlights.push(`Three-piece suit set ready for festive occasions, parties, and wedding ceremonies`);
+  } else if (t.includes('necklace') || t.includes('jewelry')) {
+    highlights.push(`Gold-plated finish designed to last through every wedding season`);
+  }
+
+  // Shipping highlight (same for all)
+  highlights.push(`Ready to ship from India in 5-7 business days; flat $25 to USA, free over $350`);
+
+  // Sizing highlight
+  highlights.push(`Available in sizes 32-48 (XS to 5XL) — ready-to-wear and custom-stitched options`);
+
+  // Cap at 5 highlights, each under 150 chars
+  return highlights.slice(0, 5).map(h => {
+    const trimmed = h.slice(0, 150);
+    return `    <g:product_highlight>${escapeXml(trimmed)}</g:product_highlight>`;
+  }).join('\n');
+}
+
+
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
 async function fetchAllProducts() {
@@ -766,6 +864,7 @@ function generateProductItemXml(product, titleCounts) {
     <g:brand>${escapeXml(normalizeBrand(product.vendor))}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
     <g:product_type>${escapeXml(productType)}</g:product_type>
+    ${generateProductHighlights(product, color, material, productType, displayTitle)}
     <g:gender>${gender}</g:gender>
     <g:age_group>adult</g:age_group>
     <g:color>${escapeXml(color || 'Multi-Color')}</g:color>
@@ -778,6 +877,7 @@ function generateProductItemXml(product, titleCounts) {
     <g:target_country>US</g:target_country>
     <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
     ${generateShippingXml()}
+    ${generateReturnsXml()}
     <g:tax>
       <g:country>US</g:country>
       <g:rate>0</g:rate>
