@@ -623,13 +623,25 @@ function generateShippingXml() {
 // Mismatch between feed and website causes GMC to reject items as
 // "Inconsistent return policy information".
 function generateReturnsXml() {
+  // NOTE: Only use sub-attributes defined in Google's g:returns_policy spec.
+  // https://support.google.com/merchants/answer/12100032
+  //
+  // Previously this block emitted three invalid sub-attributes that caused
+  // GMC to throw "XML formatting error" + "Misplaced subattribute" on every
+  // single item (684 errors / 684 warnings in the June 30 2026 upload report):
+  //   - <g:customer_service_link>  -> not a returns_policy sub-attribute
+  //   - <g:restocking_fee>         -> invalid; spec only has g:restocking_fee_percentage
+  //   - <g:refund_fee>             -> not a real attribute; g:return_fee already conveys this
+  //
+  // Valid sub-attributes retained below:
+  //   countries, return_policy_category, return_policy_url, life_time_return_window,
+  //   return_window_days, return_method, return_fee, return_shipping_fee
   return `
     <g:returns>
       <g:returns_policy>
         <g:countries>US,CA,AU</g:countries>
         <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
         <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
-        <g:customer_service_link>https://luxemia.shop/contact</g:customer_service_link>
         <g:life_time_return_window>false</g:life_time_return_window>
         <g:return_window_days>2</g:return_window_days>
         <g:return_method>https://schema.org/ReturnByMail</g:return_method>
@@ -637,8 +649,6 @@ function generateReturnsXml() {
         <g:return_shipping_fee>
           <g:price>0.00 USD</g:price>
         </g:return_shipping_fee>
-        <g:restocking_fee>0.00 USD</g:restocking_fee>
-        <g:refund_fee>https://schema.org/FullRefund</g:refund_fee>
       </g:returns_policy>
     </g:returns>`;
 }
