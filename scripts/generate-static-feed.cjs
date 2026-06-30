@@ -883,6 +883,7 @@ function generateProductItemXml(product, titleCounts) {
     <g:size_system>US</g:size_system>
     <g:identifier_exists>no</g:identifier_exists>
     <g:target_country>US</g:target_country>
+    <g:content_language>en</g:content_language>
     <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
     ${generateShippingXml()}
     ${generateReturnsXml()}
