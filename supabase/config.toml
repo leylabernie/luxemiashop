@@ -15,9 +15,6 @@ verify_jwt = false
 [functions.sync-to-shopify]
 verify_jwt = false
 
-[functions.virtual-tryon]
-verify_jwt = true
-
 [functions.image-proxy]
 verify_jwt = false
 
