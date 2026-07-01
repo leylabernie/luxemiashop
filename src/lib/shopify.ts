@@ -28,6 +28,7 @@ export interface ShopifyProduct {
     productType?: string;
     tags?: string[];
     availableForSale?: boolean;
+    seo?: { title: string | null; description: string | null };
     metadata?: ProductMetadata;
     priceRange: {
       minVariantPrice: {
@@ -95,6 +96,7 @@ const STOREFRONT_LISTING_QUERY = `
           title
           createdAt
           description
+          seo { title description }
           handle
           vendor
           productType
@@ -158,11 +160,12 @@ const STOREFRONT_LISTING_QUERY = `
 
 const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
-    productByHandle(handle: $handle) {
+    product(handle: $handle) {
       id
       title
       description
       descriptionHtml
+      seo { title description }
       handle
       vendor
       productType
@@ -351,7 +354,10 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
   try {
     const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
     if (!data) return null;
-    return data.data.productByHandle || null;
+    // The query now uses `product(handle:)` (replacing the deprecated
+    // `productByHandle`) so the response shape is `data.product`, not
+    // `data.productByHandle`.
+    return data.data.product || null;
   } catch (error) {
     console.error('Error fetching product:', error);
     return null;

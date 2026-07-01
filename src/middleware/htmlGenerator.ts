@@ -28,8 +28,15 @@ function getCategoryUrl(productType?: string): string {
 }
 
 export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): string {
-  const title = `${product.title} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
-  const description = (product.description || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
+  // Prefer Shopify admin "Search engine listing" (SEO) fields when set, fall
+  // back to a template built from the plain product title/type. This matches
+  // the behavior Shopify's own theme uses on the myshopify.com product page
+  // and prevents the SEO Title/Description set in admin from being silently
+  // ignored.
+  const seoTitle = product.seo?.title?.trim();
+  const seoDescription = product.seo?.description?.trim();
+  const title = seoTitle || `${product.title} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
+  const description = (seoDescription || product.description || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;

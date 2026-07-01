@@ -139,6 +139,12 @@ const ProductDetail = () => {
   const productColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];
   const productMaterial = product?.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0];
 
+  // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
+  // Falls back to the existing title template + generated meta description.
+  // Note: `product.seo` is typed via ShopifyProduct['node'] in src/lib/shopify.ts.
+  const seoTitle = product?.seo?.title?.trim() || '';
+  const seoDescription = product?.seo?.description?.trim() || '';
+
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
     return enrichProductDescription(
@@ -184,8 +190,8 @@ const ProductDetail = () => {
     <div className="min-h-screen bg-background">
       {product ? (
         <SEOHead
-          title={`${product.title} | ${categoryName} | LuxeMia`}
-          description={seoMetaDescription || (() => {
+          title={seoTitle || `${product.title} | ${categoryName} | LuxeMia`}
+          description={seoDescription || seoMetaDescription || (() => {
             const d = (product.description || '').trim();
             if (d.length >= 70) {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
