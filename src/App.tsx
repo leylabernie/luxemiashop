@@ -45,7 +45,6 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
 const Lookbook = lazy(() => import("./pages/Lookbook"));
-const VirtualTryOn = lazy(() => import("./pages/VirtualTryOn"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const StyleConsultation = lazy(() => import("./pages/StyleConsultation"));
 const StyleQuiz = lazy(() => import("./pages/StyleQuiz"));
@@ -121,7 +120,6 @@ const App = () => (
                 <Route path="/sizing-measurements-guide" element={<Suspense fallback={<PageLoader />}><SizingMeasurementsGuide /></Suspense>} />
                 <Route path="/care-guide" element={<Suspense fallback={<PageLoader />}><CareGuide /></Suspense>} />
                 <Route path="/jewelry" element={<Navigate to="/collections" replace />} />
-                <Route path="/virtual-try-on" element={<Suspense fallback={<PageLoader />}><VirtualTryOn /></Suspense>} />
                 <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/wedding-sarees" element={<Navigate to="/sarees" replace />} />

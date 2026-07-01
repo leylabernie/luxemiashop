@@ -145,6 +145,11 @@ export default async function middleware(request: Request) {
   if (pathname === '/products') {
     return Response.redirect(new URL('/collections', request.url).toString(), 301);
   }
+  // /virtual-try-on feature has been retired — 301 redirect to homepage so any
+  // old bookmarks or indexed URLs pass link equity to the homepage instead of 404.
+  if (pathname === '/virtual-try-on') {
+    return Response.redirect(new URL('/', request.url).toString(), 301);
+  }
 
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
   // a prerendered file exists for this handle. PRERENDERED_PRODUCT_HANDLES is a

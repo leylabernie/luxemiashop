@@ -180,11 +180,6 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     description: 'LuxeMia in the media. Press coverage and features about our Indian ethnic wear collections and brand story.',
     canonical: `${SITE_URL}/press`,
   },
-  '/virtual-try-on': {
-    title: 'Virtual Try-On | Preview Your Indian Outfit | LuxeMia',
-    description: 'Try on Indian ethnic wear virtually with LuxeMia\'s virtual try-on tool. Preview lehengas, sarees, and suits before you buy.',
-    canonical: `${SITE_URL}/virtual-try-on`,
-  },
 };
 
 /**

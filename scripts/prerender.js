@@ -895,13 +895,6 @@ const routes = [
     content: '<p>We believe quality and responsibility go hand in hand. Learn about our fair trade practices, eco-friendly packaging, and commitment to artisan communities.</p>',
   },
   {
-    path: '/virtual-try-on',
-    title: 'Virtual Try-On — See How You Look in Indian Ethnic Wear | LuxeMia',
-    description: 'Try on Indian ethnic wear virtually at LuxeMia. See how lehengas, sarees & suits look on you before you buy. Free virtual fitting room.',
-    h1: 'Virtual Try-On',
-    content: '<p>Can\'t try it on in person? Use our virtual try-on feature to see how our lehengas, sarees, and suits look on you before you buy.</p>',
-  },
-  {
     path: '/privacy',
     title: 'Privacy Policy | LuxeMia',
     description: 'LuxeMia privacy policy. How we collect, use, and protect your personal information when you shop with us.',

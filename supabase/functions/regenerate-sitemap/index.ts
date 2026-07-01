@@ -22,7 +22,6 @@ const staticPages = [
   { loc: '/collections/festive-wear', changefreq: 'weekly', priority: '0.8', title: 'Festive Wear' },
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6', title: 'Artisans' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6', title: 'Sustainability' },
-  { loc: '/virtual-tryon', changefreq: 'monthly', priority: '0.7', title: 'Virtual Try-On' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5', title: 'Contact' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5', title: 'FAQ' },
   { loc: '/shipping', changefreq: 'monthly', priority: '0.4', title: 'Shipping' },

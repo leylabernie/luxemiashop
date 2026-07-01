@@ -72,7 +72,6 @@ const staticPages = [
   { loc: '/indian-ethnic-wear-canada', changefreq: 'monthly', priority: '0.8' },
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6' },
-  { loc: '/virtual-try-on', changefreq: 'monthly', priority: '0.7' },
   { loc: '/style-consultation', changefreq: 'monthly', priority: '0.7' },
   { loc: '/style-quiz', changefreq: 'monthly', priority: '0.6' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
