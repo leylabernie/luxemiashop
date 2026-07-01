@@ -381,23 +381,98 @@ const routes = [
     h1: 'Salwar Kameez & Designer Suits Collection',
     content: `
       <p>Explore our curated collection of Salwar Kameez and anarkali ensembles. From elegant sharara sets to flowing palazzo suits, each piece features beautiful embroidery on premium fabrics like georgette, silk, and chiffon.</p>
-      <h2>Our Salwar Kameez Collection</h2>
-      <p>Browse anarkali suits, sharara suits, palazzo sets, and straight-cut salwar kameez. Perfect for weddings, festive occasions, and celebrations.</p>
+      <h2>Shop Suits by Occasion</h2>
+      <ul>
+        <li><a href="/suits?sub=wedding">Wedding Suits</a> — Elegant salwar kameez for wedding celebrations</li>
+        <li><a href="/suits?sub=party-wear">Party Wear Suits</a> — Stunning suits for festive occasions</li>
+        <li><a href="/suits?sub=festive">Festive Suits</a> — Vibrant suits for Diwali, Eid & Navratri</li>
+        <li><a href="/suits?sub=casual">Casual Suits</a> — Everyday ethnic wear for women</li>
+      </ul>
+      <h2>Shop Suits by Style</h2>
+      <ul>
+        <li><a href="/suits?sub=anarkali">Anarkali Suits</a> — Flowing Mughal-inspired silhouette</li>
+        <li><a href="/suits?sub=sharara">Sharara Sets</a> — Wide-legged flared pants with short kurti</li>
+        <li><a href="/suits?sub=palazzo">Palazzo Suits</a> — Modern wide-leg pants with kurta</li>
+        <li><a href="/suits?sub=pakistani">Pakistani Suits</a> — Elegant straight-cut designer suits</li>
+        <li><a href="/suits?sub=straight-cut">Straight Cut Suits</a> — Classic everyday salwar kameez</li>
+      </ul>
+      <h2>Shop Suits by Fabric</h2>
+      <ul>
+        <li><a href="/suits?sub=georgette-suit">Georgette Suits</a> — Lightweight & flowy</li>
+        <li><a href="/suits?sub=chinon-suit">Chinon Suits</a> — Premium crepe-like fabric</li>
+        <li><a href="/suits?sub=silk-suit">Silk Suits</a> — Luxurious & traditional</li>
+        <li><a href="/suits?sub=cotton-suit">Cotton Suits</a> — Breathable & comfortable</li>
+        <li><a href="/suits?sub=velvet-suit">Velvet Suits</a> — Rich & regal for winter weddings</li>
+      </ul>
+      <h2>Shop Suits by Color</h2>
+      <ul>
+        <li><a href="/suits?sub=pink">Pink Suits</a></li>
+        <li><a href="/suits?sub=red">Red Suits</a></li>
+        <li><a href="/suits?sub=green">Green Suits</a></li>
+        <li><a href="/suits?sub=blue">Blue Suits</a></li>
+        <li><a href="/suits?sub=maroon">Maroon Suits</a></li>
+        <li><a href="/suits?sub=purple">Purple Suits</a></li>
+      </ul>
+      <h2>Wedding Party & NRI Suits</h2>
+      <ul>
+        <li><a href="/suits?sub=bridesmaid">Bridesmaid Suits</a> — Coordinated looks for the bridal party</li>
+        <li><a href="/suits?sub=mother-of-bride">Mother of Bride Suits</a> — Elegant suits for mothers</li>
+        <li><a href="/suits?sub=nri-wedding">NRI Wedding Suits</a> — Destination wedding appropriate</li>
+      </ul>
+      <h2>Shop Suits by Price</h2>
+      <ul>
+        <li><a href="/suits?sub=under-200">Suits Under $200</a> — Affordable premium ethnic wear</li>
+        <li><a href="/suits?sub=premium-300-plus">Premium Suits $300+</a> — Designer & heavily embellished</li>
+      </ul>
     `,
   },
   {
     path: '/lehengas',
     category: 'lehengas',
-    title: 'Lehengas Collection | Bridal & Wedding Lehengas Online | LuxeMia',
-    description: 'Shop designer lehengas & bridal lehenga choli at LuxeMia. Handcrafted wedding & party wear lehengas. Premium silk, net & velvet. Free shipping on orders over $350 to USA, Canada & Australia. Latest 2026 trends.',
+    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia',
+    description: 'Buy bridal lehengas online at LuxeMia. Shop wedding lehenga choli, festive lehengas & party wear in silk, net & velvet. Custom sizing available. Free shipping to USA & Canada.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
     content: `
       <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
-      <h2>Lehenga Categories</h2>
+      <h2>Shop Lehengas by Occasion</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Bridal lehenga choli for your special day</li>
-        <li>Wedding Lehengas — Elegant designs for wedding celebrations</li>
-        <li>Party Wear Lehengas — Stunning lehengas for festive occasions</li>
+        <li><a href="/lehengas?sub=bridal">Bridal Lehengas</a> — Heavily embroidered lehenga choli for your wedding day</li>
+        <li><a href="/lehengas?sub=wedding">Wedding Lehengas</a> — Elegant designs for wedding celebrations</li>
+        <li><a href="/lehengas?sub=engagement">Engagement Lehengas</a> — Statement pieces for the engagement ceremony</li>
+        <li><a href="/lehengas?sub=reception">Reception Lehengas</a> — Glamorous lehengas for the reception</li>
+        <li><a href="/lehengas?sub=mehendi">Mehendi Lehengas</a> — Vibrant lehengas for the henna ceremony</li>
+        <li><a href="/lehengas?sub=haldi">Haldi Lehengas</a> — Bright yellow & festive lehengas</li>
+        <li><a href="/lehengas?sub=sangeet">Sangeet Lehengas</a> — Dance-ready lehengas for the sangeet</li>
+        <li><a href="/lehengas?sub=party-wear">Party Wear Lehengas</a> — Stunning lehengas for festive occasions</li>
+      </ul>
+      <h2>Shop Lehengas by Style</h2>
+      <ul>
+        <li><a href="/lehengas?sub=floral">Floral Lehengas</a> — Romantic floral embroidery</li>
+        <li><a href="/lehengas?sub=embroidered">Embroidered Lehengas</a> — Hand-embroidered zardozi & resham</li>
+        <li><a href="/lehengas?sub=designer">Designer Lehengas</a> — Couture-inspired pieces</li>
+        <li><a href="/lehengas?sub=mirror-work">Mirror Work Lehengas</a> — Traditional Rajasthani mirror work</li>
+        <li><a href="/lehengas?sub=jacket-lehenga">Jacket Lehengas</a> — Layered lehenga with jacket</li>
+        <li><a href="/lehengas?sub=crop-top">Crop Top & Skirt Lehengas</a> — Modern indo-western silhouette</li>
+      </ul>
+      <h2>Shop Lehengas by Color</h2>
+      <ul>
+        <li><a href="/lehengas?sub=red">Red Lehengas</a> — Classic bridal red</li>
+        <li><a href="/lehengas?sub=pink">Pink Lehengas</a> — Soft & romantic</li>
+        <li><a href="/lehengas?sub=maroon">Maroon Lehengas</a> — Deep & rich</li>
+        <li><a href="/lehengas?sub=pastel">Pastel Lehengas</a> — Modern pastel shades</li>
+        <li><a href="/lehengas?sub=ivory">Ivory Lehengas</a> — Timeless & elegant</li>
+        <li><a href="/lehengas?sub=wine">Wine Lehengas</a> — Sophisticated & deep</li>
+      </ul>
+      <h2>Wedding Party & NRI Lehengas</h2>
+      <ul>
+        <li><a href="/lehengas?sub=bridesmaid">Bridesmaid Lehengas</a> — Coordinated looks for the bridal party</li>
+        <li><a href="/lehengas?sub=mother-of-bride">Mother of Bride Lehengas</a> — Elegant lehengas for mothers</li>
+        <li><a href="/lehengas?sub=nri-wedding">NRI Wedding Lehengas</a> — Destination wedding appropriate</li>
+      </ul>
+      <h2>Shop Lehengas by Price</h2>
+      <ul>
+        <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — Affordable premium lehengas</li>
+        <li><a href="/lehengas?sub=premium-300-plus">Premium Lehengas $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
   },
@@ -405,16 +480,53 @@ const routes = [
     path: '/sarees',
     category: 'sarees',
     title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
-    description: 'Shop designer sarees at LuxeMia. Banarasi silk, Kanjeevaram, georgette, wedding & pre-draped sarees with shipping to USA, Canada & Australia. Authentic Indian handloom sarees & 2026 trends.',
+    description: 'Shop beautiful silk sarees, bridal sarees, and designer sarees at LuxeMia. Banarasi, Kanchipuram, and georgette sarees. Free shipping over $350 to USA, Canada & Australia.',
     h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
     content: `
       <p>Explore our beautiful collection of designer sarees. From Banarasi silk to elegant Kanjeevaram, each saree is made with care by skilled Indian makers. Perfect for weddings, festivals, and special occasions.</p>
-      <h2>Saree Categories</h2>
+      <h2>Shop Sarees by Occasion</h2>
       <ul>
-        <li><a href="/sarees">Wedding Sarees</a> — Traditional & contemporary wedding sarees</li>
-        <li>Banarasi Silk Sarees — Handwoven in Varanasi</li>
-        <li>Kanjeevaram Silk Sarees — Premium South Indian silk</li>
-        <li>Georgette Sarees — Lightweight & elegant</li>
+        <li><a href="/sarees?sub=bridal">Bridal Sarees</a> — Heavily embellished sarees for the bride</li>
+        <li><a href="/sarees?sub=wedding">Wedding Sarees</a> — Elegant sarees for wedding ceremonies</li>
+        <li><a href="/sarees?sub=reception">Reception Sarees</a> — Glamorous sarees for the reception</li>
+        <li><a href="/sarees?sub=party-wear">Party Wear Sarees</a> — Statement sarees for parties</li>
+        <li><a href="/sarees?sub=festive">Festive Sarees</a> — Vibrant sarees for Diwali, Eid & Navratri</li>
+      </ul>
+      <h2>Shop Sarees by Fabric</h2>
+      <ul>
+        <li><a href="/sarees?sub=silk">Silk Sarees</a> — Premium silk sarees</li>
+        <li><a href="/sarees?sub=banarasi">Banarasi Sarees</a> — Handwoven in Varanasi</li>
+        <li><a href="/sarees?sub=kanjeevaram">Kanjeevaram Sarees</a> — Premium South Indian silk</li>
+        <li><a href="/sarees?sub=georgette">Georgette Sarees</a> — Lightweight & elegant</li>
+        <li><a href="/sarees?sub=chiffon">Chiffon Sarees</a> — Flowy & comfortable</li>
+        <li><a href="/sarees?sub=organza">Organza Sarees</a> — Modern sheer fabric</li>
+      </ul>
+      <h2>Shop Sarees by Style</h2>
+      <ul>
+        <li><a href="/sarees?sub=embroidered">Embroidered Sarees</a> — Hand-embroidered detailing</li>
+        <li><a href="/sarees?sub=printed">Printed Sarees</a> — Affordable & stylish</li>
+        <li><a href="/sarees?sub=designer">Designer Sarees</a> — Couture-inspired pieces</li>
+        <li><a href="/sarees?sub=traditional">Traditional Sarees</a> — Heritage weaves</li>
+      </ul>
+      <h2>Shop Sarees by Color</h2>
+      <ul>
+        <li><a href="/sarees?sub=red">Red Sarees</a></li>
+        <li><a href="/sarees?sub=maroon">Maroon Sarees</a></li>
+        <li><a href="/sarees?sub=pink">Pink Sarees</a></li>
+        <li><a href="/sarees?sub=blue">Blue Sarees</a></li>
+        <li><a href="/sarees?sub=green">Green Sarees</a></li>
+        <li><a href="/sarees?sub=pastel">Pastel Sarees</a></li>
+      </ul>
+      <h2>Wedding Party & NRI Sarees</h2>
+      <ul>
+        <li><a href="/sarees?sub=bridesmaid">Bridesmaid Sarees</a> — Coordinated looks for the bridal party</li>
+        <li><a href="/sarees?sub=mother-of-bride">Mother of Bride Sarees</a> — Elegant sarees for mothers</li>
+        <li><a href="/sarees?sub=nri-wedding">NRI Wedding Sarees</a> — Destination wedding appropriate</li>
+      </ul>
+      <h2>Shop Sarees by Price</h2>
+      <ul>
+        <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — Affordable premium sarees</li>
+        <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
   },
@@ -422,10 +534,55 @@ const routes = [
     path: '/menswear',
     category: 'menswear',
     title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
-    description: 'Shop Indian menswear at LuxeMia. Designer sherwanis, kurta sets, Indo-western wear & Modi jackets for grooms & weddings. Premium fabrics, expert tailoring. Free shipping on orders over $350 to USA, Canada & Australia.',
+    description: 'Shop premium sherwanis, kurta pajama sets, and indo-western menswear at LuxeMia. Wedding and festive collection. Free shipping over $350 to USA, Canada & Australia.',
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
     content: `
       <p>Discover our premium collection of Indian menswear. From regal sherwanis for grooms to elegant kurta sets and modern Indo-western outfits, crafted with premium fabrics and expert tailoring.</p>
+      <h2>Shop Menswear by Style</h2>
+      <ul>
+        <li><a href="/menswear?sub=sherwani">Sherwanis</a> — Regal wedding sherwanis for the groom</li>
+        <li><a href="/menswear?sub=kurta-pajama">Kurta Pajama Sets</a> — Classic & comfortable ethnic wear</li>
+        <li><a href="/menswear?sub=modi-jacket">Modi Jackets</a> — Tailored Nehru-style jackets</li>
+        <li><a href="/menswear?sub=indo-western">Indo Western</a> — Modern fusion silhouettes</li>
+        <li><a href="/menswear?sub=bandhgala">Bandhgala Suits</a> — Tailored formal jackets</li>
+      </ul>
+      <h2>Shop Menswear by Fabric</h2>
+      <ul>
+        <li><a href="/menswear?sub=silk-menswear">Silk Sherwanis</a> — Luxurious & traditional</li>
+        <li><a href="/menswear?sub=raw-silk">Raw Silk Sherwanis</a> — Premium & textured</li>
+        <li><a href="/menswear?sub=jacquard">Jacquard Sherwanis</a> — Woven patterns</li>
+        <li><a href="/menswear?sub=velvet-menswear">Velvet Sherwanis</a> — Rich & regal for winter weddings</li>
+        <li><a href="/menswear?sub=cotton-menswear">Cotton Kurtas</a> — Breathable & comfortable</li>
+        <li><a href="/menswear?sub=brocade">Brocade Sherwanis</a> — Ornate & traditional</li>
+      </ul>
+      <h2>Shop Menswear by Occasion</h2>
+      <ul>
+        <li><a href="/menswear?sub=wedding">Wedding Sherwanis</a> — Groom & groomsmen</li>
+        <li><a href="/menswear?sub=engagement">Engagement Sherwanis</a> — Statement pieces</li>
+        <li><a href="/menswear?sub=reception">Reception Sherwanis</a> — Glamorous evening looks</li>
+        <li><a href="/menswear?sub=festive">Festive Menswear</a> — Diwali, Eid & celebrations</li>
+      </ul>
+      <h2>Shop Menswear by Color</h2>
+      <ul>
+        <li><a href="/menswear?sub=cream">Cream Sherwanis</a></li>
+        <li><a href="/menswear?sub=beige">Beige Sherwanis</a></li>
+        <li><a href="/menswear?sub=gold">Gold Sherwanis</a></li>
+        <li><a href="/menswear?sub=black">Black Sherwanis</a></li>
+        <li><a href="/menswear?sub=navy">Navy Sherwanis</a></li>
+        <li><a href="/menswear?sub=maroon">Maroon Sherwanis</a></li>
+        <li><a href="/menswear?sub=wine">Wine Sherwanis</a></li>
+      </ul>
+      <h2>Wedding Party & NRI Menswear</h2>
+      <ul>
+        <li><a href="/menswear?sub=groom">Groom Sherwanis</a> — The main character of the day</li>
+        <li><a href="/menswear?sub=groomsmen">Groomsmen Sherwanis</a> — Coordinated looks for the wedding party</li>
+        <li><a href="/menswear?sub=nri-wedding">NRI Wedding Menswear</a> — Destination wedding appropriate</li>
+      </ul>
+      <h2>Shop Menswear by Price</h2>
+      <ul>
+        <li><a href="/menswear?sub=under-200">Menswear Under $200</a> — Affordable premium ethnic wear</li>
+        <li><a href="/menswear?sub=premium-300-plus">Premium Menswear $300+</a> — Designer & heavily embellished</li>
+      </ul>
       <h2>Sherwanis for Grooms</h2>
       <p>Make a grand entrance on your wedding day with our designer sherwanis. Available in art silk, Banarasi jacquard, and velvet — each piece features intricate embroidery and expert tailoring for a regal look.</p>
       <h2>Kurta Sets & Indo-Western</h2>
