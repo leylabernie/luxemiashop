@@ -108,8 +108,9 @@ const App = () => (
                 <Route path="/account" element={<Suspense fallback={<PageLoader />}><Account /></Suspense>} />
                 <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />
                 <Route path="/shipping" element={<Suspense fallback={<PageLoader />}><Shipping /></Suspense>} />
-                <Route path="/shipping-customs" element={<Suspense fallback={<PageLoader />}><ShippingCustoms /></Suspense>} />
-                <Route path="/customs" element={<Navigate to="/shipping-customs" replace />} />
+                <Route path="/pages/shipping-customs" element={<Suspense fallback={<PageLoader />}><ShippingCustoms /></Suspense>} />
+                <Route path="/shipping-customs" element={<Navigate to="/pages/shipping-customs" replace />} />
+                <Route path="/customs" element={<Navigate to="/pages/shipping-customs" replace />} />
                 <Route path="/returns" element={<Suspense fallback={<PageLoader />}><Returns /></Suspense>} />
                 <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
                 <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />

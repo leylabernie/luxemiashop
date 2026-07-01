@@ -61,7 +61,7 @@ const STATIC_ROUTES = [
   '/care-guide',
   '/faq',
   '/shipping',
-  '/shipping-customs',
+  '/pages/shipping-customs',
   '/returns',
   '/contact',
   '/artisans',

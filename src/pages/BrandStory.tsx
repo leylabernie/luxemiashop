@@ -643,7 +643,7 @@ const BrandStory = () => {
                 <strong>Tracking:</strong> Full tracking provided for all
                 shipments.<br />
                 <strong>Customs:</strong> See our{' '}
-                <Link to="/shipping-customs" className="text-primary underline">Shipping &amp; Customs</Link>
+                <Link to="/pages/shipping-customs" className="text-primary underline">Shipping &amp; Customs</Link>
                 {' '}page for details on import duties and local taxes.
               </p>
             </div>

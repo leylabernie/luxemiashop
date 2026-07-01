@@ -30,7 +30,7 @@ const footerLinks = {
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Shipping Info', href: '/shipping' },
-    { name: 'Shipping & Customs', href: '/shipping-customs' },
+    { name: 'Shipping & Customs', href: '/pages/shipping-customs' },
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'How to Measure Blouse Size', href: '/sizing-measurements-guide' },
@@ -267,7 +267,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
               <Link to="/returns" className="hover:text-foreground transition-colors">Returns & Cancellations</Link>
               <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
-              <Link to="/shipping-customs" className="hover:text-foreground transition-colors">Shipping & Customs</Link>
+              <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">Shipping & Customs</Link>
             </div>
           </div>
         </div>

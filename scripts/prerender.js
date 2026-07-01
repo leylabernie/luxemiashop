@@ -761,25 +761,22 @@ const routes = [
     content: '<p>LuxeMia ships to the USA, Canada, and Australia with full tracking. Flat rate $25 per order. Free shipping on orders over $350. Standard delivery takes 7-10 business days.</p>',
   },
   {
-    path: '/shipping-customs',
+    path: '/pages/shipping-customs',
     title: 'Shipping & Customs | Import Duties & Local Taxes | LuxeMia',
-    description: 'Learn how international shipping and customs work at LuxeMia. Information on import duties, local taxes, and customs clearance for orders shipped from India to USA, Canada & Australia.',
+    description: 'Learn how international shipping and customs work at LuxeMia. Information on import duties, local taxes, and customs clearance for orders shipped from India to USA, Canada, Australia, and beyond.',
     h1: 'Shipping & Customs',
     content: `
-      <p>We ship internationally from India. Depending on your country's import regulations, your order may be subject to customs duties, import taxes, or clearance fees charged by your local customs authority upon delivery. These charges are separate from your order total and are not collected by us at checkout. The amount, if any, depends on your country's current thresholds and rules.</p>
-      <h2>Quick Reference by Country</h2>
-      <ul>
-        <li><strong>United States:</strong> De minimis threshold of $800 — most orders under this amount enter duty-free. Orders over $800 may be subject to duties. An additional tariff on goods from India may apply (currently 50% on certain textile categories).</li>
-        <li><strong>Canada:</strong> GST/HST (5–15% depending on province) plus potential import duties (0–18% on textile imports). Collected by the carrier at delivery.</li>
-        <li><strong>Australia:</strong> GST (10%) applies on goods over AUD 1,000. Import duties vary (0–10%). Collected by customs at delivery.</li>
-      </ul>
-      <h2>Why aren't duties and taxes included at checkout?</h2>
-      <p>Because duty rates and tax thresholds vary by country and change frequently, we cannot accurately calculate them at checkout. Your local customs authority assesses and collects these charges directly when your package arrives in your country. This is standard practice for international shipping from India.</p>
-      <h2>Do you declare accurate values on shipments?</h2>
-      <p>Yes. We always declare the accurate order value on all international shipments. Under-declaring values to avoid duties is customs fraud and can result in your shipment being seized, fines, or prosecution by your local customs authority. We do not accommodate requests to under-declare.</p>
-      <h2>What happens if my package is held by customs?</h2>
-      <p>If your local customs authority requires additional documentation or payment, they will contact you directly using the contact information on your shipment. In rare cases, this can delay delivery by a few days. Once any required duties are paid, customs releases the package for final delivery.</p>
-      <p>If you have questions about potential charges before ordering, we recommend checking with your local customs office. For full shipping rates and delivery times, see our <a href="/shipping">Shipping Policy</a>.</p>
+      <p>We ship internationally to the USA, Canada, Australia, and beyond, with each order sent directly from our workshop in India.</p>
+      <h2>Do I have to pay customs duties or import taxes?</h2>
+      <p>Depending on your country's import regulations, your order may be subject to customs duties, import taxes, or clearance fees when it arrives. These charges are set by your local customs authority — not by LuxeMia — and are separate from the price you pay at checkout.</p>
+      <p>Whether you're charged, and how much, depends on factors like your country's current duty threshold, the declared value of your order, and local trade rules, which can change over time.</p>
+      <h2>When would I need to pay?</h2>
+      <p>If applicable, these charges are usually collected by the shipping carrier at the time of delivery, not at checkout. Your carrier will typically contact you directly if any payment is required before your package can be delivered.</p>
+      <h2>Want to check in advance?</h2>
+      <p>Import rules vary by country and can change, so if you'd like to know what to expect before ordering, we recommend checking directly with your local customs office or postal service.</p>
+      <h2>Questions?</h2>
+      <p>If you have any questions about your order or shipping, feel free to reach out to us at <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> — we're happy to help.</p>
+      <p>Looking for shipping rates, delivery times, or tracking? See our <a href="/shipping">Shipping Policy</a>.</p>
     `,
   },
   {

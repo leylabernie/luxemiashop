@@ -22,7 +22,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/care-guide',
   '/faq',
   '/shipping',
-  '/shipping-customs',
+  '/pages/shipping-customs',
   '/returns',
   '/contact',
   '/artisans',
