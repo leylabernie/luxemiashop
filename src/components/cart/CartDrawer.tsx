@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { X, Minus, Plus, Trash2, Loader2, ExternalLink, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
@@ -206,6 +207,16 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   </div>
                   <p className="text-xs text-foreground/50 text-center">
                     Taxes calculated at checkout
+                  </p>
+                  <p className="text-xs text-foreground/50 text-center">
+                    Customs duties may apply —{' '}
+                    <Link
+                      to="/pages/shipping-customs"
+                      onClick={onClose}
+                      className="underline underline-offset-2 hover:text-foreground transition-colors"
+                    >
+                      see Shipping &amp; Customs
+                    </Link>
                   </p>
                   <Button
                     variant="luxury"
