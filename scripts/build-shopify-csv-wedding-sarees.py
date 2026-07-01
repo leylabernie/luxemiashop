@@ -128,6 +128,20 @@ def build_tags(p, idx):
     catalog_num = f"WS{idx:02d}"  # WS = Wedding Sarees
     
     tags = [
+        # ─── Tag-prefixes (preferred by the new productFilters.ts v2 logic) ───
+        # These match first via tag-prefix matching: color:red, fabric:silk, etc.
+        f'color:{color}',
+        f'fabric:{fabric}',
+        f'work:{work}',
+        f'occasion:{occasion}',
+        f'occasion:{occasion_secondary.replace(" ", "-")}',
+        'role:bride',
+        'role:bridesmaid',
+        'audience:nri',
+        'gender:female',
+        
+        # ─── Bare tags (kept for backward compat + title-substring fallback) ───
+        
         # Product type
         'saree', 'indian saree', 'sari', 'wedding saree', 'bridal saree',
         'saree for wedding', 'indian wedding saree',
@@ -242,7 +256,7 @@ for idx, p in enumerate(products, 1):
         'Title': title,
         'Body (HTML)': sanitize_html(p['body_html']),
         'Vendor': 'LuxeMia',
-        'Product Category': '',
+        'Product Category': '5424',  # Apparel & Accessories > Clothing > Sarees & Blouses
         'Type': 'Wedding Saree',
         'Tags': build_tags(p, idx),
         'Published': 'TRUE',

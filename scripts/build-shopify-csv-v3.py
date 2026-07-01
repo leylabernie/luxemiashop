@@ -172,6 +172,28 @@ def build_tags(item, catalog_num=None):
     occ2 = occasions[1] if len(occasions) > 1 else occ1
 
     tags = [
+        # ─── Tag-prefixes (preferred by the new productFilters.ts v2 logic) ───
+        # These match first via tag-prefix matching: color:black, fabric:brocade, etc.
+        f'color:{color}',
+        f'fabric:{fabric}',
+        f'work:{embroidery}',
+        f'occasion:{occ1.replace(" ", "-")}',
+        f'occasion:{occ2.replace(" ", "-")}' if occ2 != occ1 else None,
+        'role:groom',
+        'role:groomsmen',
+        'audience:nri',
+        'gender:male',
+    ]
+    # Filter out None values
+    tags = [t for t in tags if t]
+    
+    # Add color secondary prefix if present
+    if color_sec and color_sec != 'none':
+        tags.append(f'color:{color_sec}')
+    
+    tags.extend([
+        # ─── Bare tags (kept for backward compat + title-substring fallback) ───
+        
         # Product type
         'sherwani', 'indian sherwani', 'menswear', 'indian menswear',
         'groom wear', 'groom sherwani', 'wedding sherwani',
@@ -180,9 +202,7 @@ def build_tags(item, catalog_num=None):
         color,
         f'{color} sherwani',
         f'{color} {fabric} sherwani',
-
-        # Color (secondary, if any)
-    ]
+    ])
     if color_sec and color_sec != 'none':
         tags.append(color_sec)
         tags.append(f'{color} {color_sec} sherwani')
@@ -309,7 +329,7 @@ for m in mapping:
         'Title': title,
         'Body (HTML)': sanitize_html(p['body_html']),
         'Vendor': 'LuxeMia',
-        'Product Category': '',
+        'Product Category': '1604',  # Apparel & Accessories > Clothing (sherwani falls under Men's Clothing)
         'Type': 'Sherwani',
         'Tags': build_tags(p, catalog_num),
         'Published': 'TRUE',
