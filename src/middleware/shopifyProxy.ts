@@ -13,6 +13,7 @@ export interface ShopifyProduct {
   id: string; title: string; description: string; handle: string;
   vendor?: string; productType?: string; tags?: string[];
   availableForSale?: boolean;
+  seo?: { title?: string | null; description?: string | null };
   priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
   compareAtPriceRange: { minVariantPrice: { amount: string; currencyCode: string } };
   images: { edges: Array<{ node: ShopifyImage }> };
@@ -26,6 +27,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
     product(handle: $handle) {
       id title description handle vendor productType tags availableForSale
+      seo { title description }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount currencyCode } }
       images(first: 5) { edges { node { url altText } } }

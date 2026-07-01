@@ -38,6 +38,7 @@ const ALL_PRODUCTS_QUERY = `
       edges {
         node {
           id title description handle vendor productType availableForSale
+          seo { title description }
           priceRange { minVariantPrice { amount currencyCode } }
           compareAtPriceRange { maxVariantPrice { amount currencyCode } }
           images(first: 5) { edges { node { url altText } } }
@@ -1397,10 +1398,14 @@ async function main() {
   // with no Product schema, breaking GMC validation).
   for (const [handle, p] of productMap.entries()) {
     if (hardcodedProductHandles.has(handle)) continue;
-    const title = p.title || handle;
+    // Prefer Shopify admin "Search engine listing" (SEO) fields when set.
+    // Falls back to plain product title/description.
+    const seoTitle = (p.seo?.title || '').trim();
+    const seoDescription = (p.seo?.description || '').trim();
+    const title = seoTitle || p.title || handle;
     const desc = (p.description || '').trim();
     const fallbackDesc = `Shop the ${title} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics and intricate detailing. Free shipping to USA, Canada & Australia on orders over $350.`;
-    const description = (desc.length >= 60 ? desc : fallbackDesc).slice(0, 320);
+    const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,
       title: `${title} | LuxeMia`,
