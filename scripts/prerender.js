@@ -575,6 +575,13 @@ const routes = [
     content: '<p>Find your perfect fit with our detailed measurement charts. Includes bust, waist, and hip measurements with US and international size conversions for all garments including lehengas, sarees, and salwar suits.</p>',
   },
   {
+    path: '/sizing-measurements-guide',
+    title: 'How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | Luxemia',
+    description: 'Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free shipping over $350 to USA.',
+    h1: 'Sizing & Measurements Guide',
+    content: '<p>Learn how to measure yourself accurately for saree blouses, lehenga cholis, and custom-stitched Indian ethnic wear. This step-by-step guide covers bust, under-bust, shoulder width, blouse length, armhole depth, sleeve length, waist, hips, and skirt length — with standard Indian size charts (32–48), tips for measuring over light clothing, and advice for between-size shoppers. Accurate measurements to the nearest half-inch ensure a perfect fit for both ready-to-wear and made-to-measure orders.</p>',
+  },
+  {
     path: '/care-guide',
     title: 'Care Guide — How to Care for Indian Ethnic Wear | LuxeMia',
     description: 'Expert tips on caring for Indian ethnic wear. Learn how to wash, store & maintain silk sarees, lehengas, and embroidered garments.',
