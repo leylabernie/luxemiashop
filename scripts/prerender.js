@@ -1399,18 +1399,22 @@ async function main() {
   for (const [handle, p] of productMap.entries()) {
     if (hardcodedProductHandles.has(handle)) continue;
     // Prefer Shopify admin "Search engine listing" (SEO) fields when set.
-    // Falls back to plain product title/description.
+    // Falls back to plain product title + " | LuxeMia" suffix.
+    // IMPORTANT: when seoTitle is set, use it VERBATIM. Shopify's SEO title
+    // field is the complete title the user wants shown in search results —
+    // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
+    // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = (p.seo?.title || '').trim();
     const seoDescription = (p.seo?.description || '').trim();
-    const title = seoTitle || p.title || handle;
+    const title = seoTitle || `${p.title || handle} | LuxeMia`;
     const desc = (p.description || '').trim();
-    const fallbackDesc = `Shop the ${title} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics and intricate detailing. Free shipping to USA, Canada & Australia on orders over $350.`;
+    const fallbackDesc = `Shop the ${p.title || handle} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics and intricate detailing. Free shipping to USA, Canada & Australia on orders over $350.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,
-      title: `${title} | LuxeMia`,
+      title,
       description,
-      h1: title,
+      h1: seoTitle || p.title || handle,
       content: `<p>${escapeHtml(desc || fallbackDesc).slice(0, 1200)}</p>`,
       product: p,
     });
