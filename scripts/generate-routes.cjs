@@ -68,6 +68,10 @@ const STATIC_ROUTES = [
   '/privacy',
   '/terms',
   '/press',
+  '/sizing-measurements-guide',
+  '/lookbook',
+  '/style-consultation',
+  '/style-quiz',
   // Occasion landing pages — high buyer-intent SEO pages
   '/collections/diwali-outfits',
   '/collections/wedding-guest-outfits',
