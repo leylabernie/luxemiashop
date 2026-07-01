@@ -2,58 +2,79 @@
 /**
  * bulk-write-shopify-seo.mjs
  *
- * Bulk-generate and write Shopify SEO Title + SEO Description fields
- * across all products in the LuxeMia Shopify store, using an LLM
- * (z-ai-web-dev-sdk) to generate the copy.
- *
- * ─────────────────────────────────────────────────────────────────────────────
- * WHY THIS EXISTS
- * ─────────────────────────────────────────────────────────────────────────────
- * The site's product-page rendering (prerender.js, middleware, React) now
- * correctly reads Shopify's seo.title / seo.description fields — but those
- * fields are empty or auto-filled with boilerplate for most products. This
- * script populates them with hand-quality, keyword-rich, length-constrained
- * SEO copy generated per-product.
+ * Reads a CSV of (Handle, SEO Title, SEO Description) rows and writes
+ * those exact values to the corresponding Shopify products via the
+ * Admin REST API. No LLM generation — the user supplies Claude-reviewed
+ * batches one at a time, this script just applies them.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * PREREQUISITES
  * ─────────────────────────────────────────────────────────────────────────────
- * - SHOPIFY_ADMIN_ACCESS_TOKEN env var (NOT the Storefront token — must be
- *   a Shopify Admin API token with write_products scope). Create at:
+ * - SHOPIFY_ADMIN_ACCESS_TOKEN env var (Admin API token with write_products
+ *   scope, NOT the Storefront token). Create at:
  *   Shopify Admin → Apps → Develop apps → [your app] → API credentials
  *   → Admin API access token (scopes: write_products, read_products)
  *
- * - Node 18+ (for native fetch)
+ * - Node 18+ (for native fetch and fs/promises)
  *
- * - The z-ai-web-dev-sdk package. It's already installed globally via bun
- *   at /home/z/.bun/install/global/node_modules/z-ai-web-dev-sdk. The script
- *   will resolve it from there if not found locally — see resolveZaiSdk().
+ * - Input CSV with header row: Handle,SEO Title,SEO Description
+ *   (column names case-insensitive; "seo_title"/"seotitle" also accepted)
+ *   Quote values containing commas per RFC 4180.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * USAGE
  * ─────────────────────────────────────────────────────────────────────────────
- *   # Dry run — fetch products, generate SEO copy, log to CSV, but DON'T write
- *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node bulk-write-shopify-seo.mjs --dry-run
+ *   # Dry run — validate CSV, fetch current Shopify values, log diff, no writes
+ *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx \
+ *     node bulk-write-shopify-seo.mjs --csv=/path/to/batch.csv --dry-run
  *
- *   # Real run — write SEO fields back to Shopify
- *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node bulk-write-shopify-seo.mjs
+ *   # Real run — write SEO fields to Shopify
+ *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx \
+ *     node bulk-write-shopify-seo.mjs --csv=/path/to/batch.csv
  *
- *   # Limit to N products (for testing)
- *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node bulk-write-shopify-seo.mjs --limit=5
+ *   # Limit to N rows (for testing)
+ *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx \
+ *     node bulk-write-shopify-seo.mjs --csv=/path/to/batch.csv --limit=5
  *
- *   # Skip products that already have non-default SEO fields set
- *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node bulk-write-shopify-seo.mjs --skip-existing
+ *   # Skip rows where Shopify already has the exact same values
+ *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx \
+ *     node bulk-write-shopify-seo.mjs --csv=/path/to/batch.csv --skip-unchanged
  *
- *   # Force re-generate even if SEO fields already set
- *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node bulk-write-shopify-seo.mjs --force
+ * ─────────────────────────────────────────────────────────────────────────────
+ * CSV FORMAT
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   Handle,SEO Title,SEO Description
+ *   shimmer-tissue-stone-bridal-lehenga-lavish-reception-040,"Teal Tissue Lehenga for Lavish Receptions","Command every gaze in shimmer teal tissue with stone setting handwork..."
+ *   red-raw-cutdana-bridal-lehenga-grand-reception-029,"Red Raw Silk Cutdana Bridal Lehenga","Luxuriate in red raw silk adorned with cutdana handwork..."
  *
- * Output:
- *   - /home/z/my-project/download/shopify-seo-changes-<timestamp>.csv
- *     Audit log of every product processed (handle, before, after, status).
- *   - stdout: progress and summary.
+ *   - Header row required (case-insensitive).
+ *   - Handle must match the product's Shopify handle (URL slug).
+ *   - SEO Title and SEO Description will be applied verbatim.
+ *   - Values containing commas MUST be quoted. Embedded quotes escaped as "".
+ *   - Blank rows ignored. Rows with empty Handle skipped with warning.
+ *   - Rows with empty SEO Title OR empty SEO Description are skipped with
+ *     error (we never write one field without the other).
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * LENGTH VALIDATION
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Google truncates titles >60 chars and descriptions >155 chars. This script
+ * does NOT auto-truncate — it WARNS and asks for confirmation. Use --force
+ * to write values that exceed the limits anyway:
+ *
+ *   SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx \
+ *     node bulk-write-shopify-seo.mjs --csv=/path/to/batch.csv --force
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * OUTPUT
+ * ─────────────────────────────────────────────────────────────────────────────
+ * - stdout: progress + summary + sample before/after
+ * - /home/z/my-project/download/shopify-seo-changes-<timestamp>.csv
+ *   Audit log: handle, status, before_seo_title, before_seo_description,
+ *   after_seo_title, after_seo_description, error
  */
 
-import { createRequire } from 'node:module';
+import { readFile } from 'node:fs/promises';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -61,15 +82,10 @@ import { join } from 'node:path';
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_API_VERSION = '2025-07';
 const SHOPIFY_ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || '';
-const SHOP_NAME = 'LuxeMia'; // appended to SEO titles that don't already have it
 
-// Length constraints — Google truncates titles >60 chars and descriptions >155
-// chars in search results. We hard-cap and reject anything longer.
-const MAX_TITLE_LEN = 60;
-const MAX_DESC_LEN = 155;
-
-// Concurrency for LLM calls. Higher = faster but risks rate-limiting.
-const LLM_CONCURRENCY = 3;
+// Length thresholds (warnings, not hard caps unless --force is absent)
+const TITLE_WARN_LEN = 60;
+const DESC_WARN_LEN = 155;
 
 // Concurrency for Shopify Admin API writes. Keep low to avoid 429s.
 const SHOPIFY_WRITE_CONCURRENCY = 2;
@@ -78,7 +94,8 @@ const SHOPIFY_WRITE_CONCURRENCY = 2;
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const FORCE = args.includes('--force');
-const SKIP_EXISTING = args.includes('--skip-existing');
+const SKIP_UNCHANGED = args.includes('--skip-unchanged');
+const CSV_ARG = args.find(a => a.startsWith('--csv='));
 const LIMIT_ARG = args.find(a => a.startsWith('--limit='));
 const LIMIT = LIMIT_ARG ? parseInt(LIMIT_ARG.split('=')[1], 10) : 0;
 
@@ -88,51 +105,117 @@ if (!SHOPIFY_ADMIN_TOKEN) {
   console.error('  Shopify Admin → Apps → Develop apps → [your app] → API credentials');
   process.exit(1);
 }
+if (!CSV_ARG) {
+  console.error('ERROR: --csv=<path> is required.');
+  console.error('Usage: SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node bulk-write-shopify-seo.mjs --csv=/path/to/batch.csv [--dry-run] [--limit=N] [--skip-unchanged] [--force]');
+  process.exit(1);
+}
+const CSV_PATH = CSV_ARG.split('=')[1];
 
 console.log(`\n═══════════════════════════════════════════════════════════════`);
-console.log(`  LuxeMia Bulk SEO Writer`);
+console.log(`  LuxeMia Bulk SEO Writer (CSV-driven, no LLM)`);
 console.log(`═══════════════════════════════════════════════════════════════`);
-console.log(`  Mode:           ${DRY_RUN ? 'DRY RUN (no writes)' : 'LIVE (will write to Shopify)'}`);
-console.log(`  Store:          ${SHOPIFY_STORE_DOMAIN}`);
-console.log(`  API version:    ${SHOPIFY_API_VERSION}`);
-console.log(`  Force regen:    ${FORCE ? 'yes' : 'no'}`);
-console.log(`  Skip existing:  ${SKIP_EXISTING ? 'yes' : 'no'}`);
-console.log(`  Limit:          ${LIMIT || 'no limit'}`);
-console.log(`  Max title len:  ${MAX_TITLE_LEN}`);
-console.log(`  Max desc len:   ${MAX_DESC_LEN}`);
-console.log(`  LLM concurrency: ${LLM_CONCURRENCY}`);
+console.log(`  Mode:             ${DRY_RUN ? 'DRY RUN (no writes)' : 'LIVE (will write to Shopify)'}`);
+console.log(`  CSV:              ${CSV_PATH}`);
+console.log(`  Store:            ${SHOPIFY_STORE_DOMAIN}`);
+console.log(`  API version:      ${SHOPIFY_API_VERSION}`);
+console.log(`  Skip unchanged:   ${SKIP_UNCHANGED ? 'yes' : 'no'}`);
+console.log(`  Force over-limit: ${FORCE ? 'yes (will write titles >60 chars / descs >155 chars)' : 'no (will reject over-limit rows)'}`);
+console.log(`  Limit:            ${LIMIT || 'no limit'}`);
+console.log(`  Write concurrency: ${SHOPIFY_WRITE_CONCURRENCY}`);
 console.log(`═══════════════════════════════════════════════════════════════\n`);
 
-// ─── Resolve z-ai-web-dev-sdk ───────────────────────────────────────────────
-// Try local node_modules first, then fall back to bun's global install.
-// The SDK is exported as a CommonJS module with `default` being the
-// constructor function that has `.create()`. So `require('z-ai-web-dev-sdk')`
-// returns `{ __esModule: true, default: [Function] }` — we need `.default`.
-function resolveZaiSdk() {
-  const require = createRequire(import.meta.url);
-  const candidates = [
-    'z-ai-web-dev-sdk',
-    '/home/z/.bun/install/global/node_modules/z-ai-web-dev-sdk',
-  ];
-  for (const p of candidates) {
-    try {
-      const mod = require(p);
-      // Handle both shapes: `{ default: fn }` (CommonJS interop) and `fn` directly
-      return mod.default || mod;
-    } catch {
-      // try next
+// ─── CSV parser (RFC 4180) ──────────────────────────────────────────────────
+// Minimal but correct: handles quoted fields, escaped quotes (""),
+// embedded newlines inside quotes, trailing newline.
+function parseCsv(text) {
+  const rows = [];
+  let field = '';
+  let row = [];
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    const next = text[i + 1];
+
+    if (inQuotes) {
+      if (c === '"' && next === '"') {
+        field += '"';
+        i++; // skip escaped quote
+      } else if (c === '"') {
+        inQuotes = false;
+      } else {
+        field += c;
+      }
+    } else {
+      if (c === '"') {
+        inQuotes = true;
+      } else if (c === ',') {
+        row.push(field);
+        field = '';
+      } else if (c === '\n') {
+        row.push(field);
+        rows.push(row);
+        row = [];
+        field = '';
+      } else if (c === '\r') {
+        // skip — handled by \n
+      } else {
+        field += c;
+      }
     }
   }
-  throw new Error(
-    'Could not resolve z-ai-web-dev-sdk. Install it locally with `npm i z-ai-web-dev-sdk` or ensure the global bun install is accessible.'
-  );
+  // Last field/row if file doesn't end with newline
+  if (field.length > 0 || row.length > 0) {
+    row.push(field);
+    rows.push(row);
+  }
+  return rows;
 }
 
-const ZAI = resolveZaiSdk();
-const zai = await ZAI.create();
+function normalizeHeader(h) {
+  return h.trim().toLowerCase().replace(/[\s_-]+/g, '');
+}
 
-// ─── Shopify Admin API helpers ──────────────────────────────────────────────
-async function shopifyFetch(path, init = {}) {
+async function readCsv(path) {
+  const text = await readFile(path, 'utf8');
+  const rows = parseCsv(text);
+  if (rows.length === 0) {
+    throw new Error('CSV is empty.');
+  }
+
+  // Find header row (first row that contains a handle-ish column)
+  const header = rows[0].map(normalizeHeader);
+  const handleIdx = header.findIndex(h => h === 'handle' || h === 'slug' || h === 'urlslug');
+  const titleIdx = header.findIndex(h => h === 'seotitle' || h === 'title');
+  const descIdx = header.findIndex(h => h === 'seodescription' || h === 'description' || h === 'metadescription');
+
+  if (handleIdx === -1) {
+    throw new Error(`CSV header missing "Handle" column. Found: ${header.join(', ')}`);
+  }
+  if (titleIdx === -1) {
+    throw new Error(`CSV header missing "SEO Title" column. Found: ${header.join(', ')}`);
+  }
+  if (descIdx === -1) {
+    throw new Error(`CSV header missing "SEO Description" column. Found: ${header.join(', ')}`);
+  }
+
+  const records = [];
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    // Skip blank rows
+    if (row.length === 0 || (row.length === 1 && row[0].trim() === '')) continue;
+    const handle = (row[handleIdx] || '').trim();
+    const seoTitle = (row[titleIdx] || '').trim();
+    const seoDescription = (row[descIdx] || '').trim();
+    records.push({ handle, seoTitle, seoDescription, lineNumber: i + 1 });
+  }
+
+  return records;
+}
+
+// ─── Shopify Admin API ──────────────────────────────────────────────────────
+async function shopifyAdminFetch(path, init = {}) {
   const url = `https://${SHOPIFY_STORE_DOMAIN}/admin/api/${SHOPIFY_API_VERSION}${path}`;
   const res = await fetch(url, {
     ...init,
@@ -144,175 +227,41 @@ async function shopifyFetch(path, init = {}) {
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Shopify ${init.method || 'GET'} ${path} → ${res.status}: ${text.slice(0, 300)}`);
+    const err = new Error(`Shopify ${init.method || 'GET'} ${path} → ${res.status}: ${text.slice(0, 300)}`);
+    err.status = res.status;
+    err.body = text;
+    throw err;
   }
   return res.json();
 }
 
-async function fetchAllProducts() {
-  const all = [];
-  let path = `/products.json?limit=250&fields=id,handle,title,product_type,body_html,tags,vendor,seo_title,seo_description,options`;
-  let pageCount = 0;
-  while (path) {
-    const data = await shopifyFetch(path);
-    const products = data.products || [];
-    all.push(...products);
-    pageCount++;
-    console.log(`  fetched page ${pageCount}: ${products.length} products (total: ${all.length})`);
-    // Shopify REST pagination uses Link header — extract next page_info
-    // We need to use the response object, so re-fetch with parse:
-    // Simpler: use page_info-based URL reconstruction. Shopify's response
-    // doesn't include pagination cursor in body; we need to capture headers.
-    // Re-do this properly below.
-    break; // placeholder — real pagination handled in fetchAllProductsV2
-  }
-  return all;
-}
-
-// Shopify REST pagination uses the Link header (rel="next").
-// We need raw response access, so use a lower-level fetch here.
-async function fetchAllProductsV2() {
-  const all = [];
-  let url = `https://${SHOPIFY_STORE_DOMAIN}/admin/api/${SHOPIFY_API_VERSION}/products.json?limit=250&fields=id,handle,title,product_type,body_html,tags,vendor,seo_title,seo_description,options`;
-  let pageCount = 0;
-  while (url) {
-    const res = await fetch(url, {
-      headers: {
-        'X-Shopify-Access-Token': SHOPIFY_ADMIN_TOKEN,
-      },
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      throw new Error(`Shopify GET products → ${res.status}: ${text.slice(0, 300)}`);
-    }
-    const data = await res.json();
-    const products = data.products || [];
-    all.push(...products);
-    pageCount++;
-    console.log(`  fetched page ${pageCount}: ${products.length} products (total: ${all.length})`);
-
-    // Parse Link header for next page
-    const link = res.headers.get('link') || '';
-    const nextMatch = link.match(/<([^>]+)>;\s*rel="next"/);
-    url = nextMatch ? nextMatch[1] : null;
-  }
-  return all;
+// Look up product ID + current SEO fields by handle.
+// Uses the product listing endpoint which is faster than searching products.
+async function fetchProductByHandle(handle) {
+  // The /products.json endpoint doesn't support filter by handle directly.
+  // Use the product listing endpoint (no auth issue, public-ish) OR the
+  // products search. The cleanest approach: GET /products.json?handle=<h>
+  // Shopify supports this filter.
+  const data = await shopifyAdminFetch(
+    `/products.json?limit=1&fields=id,handle,seo_title,seo_description,title&handle=${encodeURIComponent(handle)}`
+  );
+  return (data.products && data.products[0]) || null;
 }
 
 async function writeProductSeo(productId, seoTitle, seoDescription) {
-  return shopifyFetch(`/products/${productId}.json`, {
+  return shopifyAdminFetch(`/products/${productId}.json`, {
     method: 'PUT',
     body: JSON.stringify({
       product: {
         id: productId,
-        // Shopify REST uses seo_title / seo_description (snake_case)
-        // at the product top level — not the seo: { title, description }
-        // shape used by the Storefront GraphQL API.
+        // Shopify REST uses snake_case seo_title / seo_description at the
+        // product top level — different from Storefront GraphQL's
+        // seo { title, description } shape.
         seo_title: seoTitle,
         seo_description: seoDescription,
       },
     }),
   });
-}
-
-// ─── HTML stripping + truncation ────────────────────────────────────────────
-function stripHtml(html) {
-  if (!html) return '';
-  return html
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function truncate(s, max) {
-  if (!s) return '';
-  if (s.length <= max) return s;
-  // Try to cut at last space before max
-  const cut = s.slice(0, max - 1);
-  const lastSpace = cut.lastIndexOf(' ');
-  return (lastSpace > max * 0.7 ? cut.slice(0, lastSpace) : cut).trim() + '…';
-}
-
-// ─── LLM SEO generation ─────────────────────────────────────────────────────
-const SYSTEM_PROMPT = `You are an expert SEO copywriter for LuxeMia, a luxury Indian ethnic wear store shipping to USA, Canada, and Australia. You write Shopify product SEO titles and meta descriptions that:
-
-1. Rank well for high-intent keywords (product type + color + fabric + occasion)
-2. Read naturally — never keyword-stuffed
-3. Are unique per product — never template-driven
-4. Match search intent (commercial / transactional)
-5. Stay within length limits:
-   - SEO title: 50–60 characters (max 60). Do NOT append " | LuxeMia" — the script will handle that.
-   - SEO description: 140–155 characters (max 155)
-6. Include a soft CTA when space allows ("Shop now", "Free shipping", etc.)
-7. Avoid marketing fluff like "stunning", "exquisite", "beautiful" unless genuinely distinctive
-8. Use the customer's language: "bridal lehenga", "silk saree", "sharara suit", not internal jargon
-
-Respond ONLY with valid JSON — no markdown, no explanation. Format:
-{"seo_title":"...","seo_description":"..."}`;
-
-function buildUserPrompt(product) {
-  const desc = stripHtml(product.body_html).slice(0, 600);
-  const tags = (product.tags || '').split(',').map(t => t.trim()).filter(Boolean).slice(0, 12);
-  const options = (product.options || [])
-    .filter(o => o.name && o.values && o.values.length)
-    .map(o => `${o.name}: ${o.values.slice(0, 6).join('/')}`)
-    .join('; ');
-  const vendor = product.vendor || '';
-
-  return `Generate SEO title + description for this Shopify product.
-
-PRODUCT DATA:
-- Title: ${product.title}
-- Type: ${product.product_type || '(unspecified)'}
-- Vendor: ${vendor}
-- Tags: ${tags.join(', ')}
-- Options: ${options}
-- Body description (first 600 chars): ${desc}
-
-REQUIREMENTS:
-- SEO title must mention the most distinctive feature (color + fabric + product type).
-- SEO description must include the product type + key feature + soft CTA.
-- Do NOT include " | LuxeMia" in the title — it's appended automatically.
-- Return ONLY JSON.`;
-}
-
-async function generateSeo(product, retries = 2) {
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      const completion = await zai.chat.completions.create({
-        messages: [
-          { role: 'assistant', content: SYSTEM_PROMPT },
-          { role: 'user', content: buildUserPrompt(product) },
-        ],
-        thinking: { type: 'disabled' },
-      });
-      let raw = completion.choices?.[0]?.message?.content || '';
-      // Strip any markdown fences the model might add despite instructions
-      raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
-      const parsed = JSON.parse(raw);
-      let seoTitle = (parsed.seo_title || '').trim();
-      let seoDesc = (parsed.seo_description || '').trim();
-
-      // Hard truncate if over limit (LLMs sometimes off-by-a-few)
-      seoTitle = truncate(seoTitle, MAX_TITLE_LEN);
-      seoDesc = truncate(seoDesc, MAX_DESC_LEN);
-
-      return { seo_title: seoTitle, seo_description: seoDesc };
-    } catch (err) {
-      if (attempt < retries) {
-        console.log(`    ⚠️  LLM attempt ${attempt + 1} failed: ${err.message}. Retrying...`);
-        await new Promise(r => setTimeout(r, 500 * (attempt + 1)));
-        continue;
-      }
-      throw new Error(`LLM failed after ${retries + 1} attempts: ${err.message}`);
-    }
-  }
 }
 
 // ─── Concurrency pool ───────────────────────────────────────────────────────
@@ -327,10 +276,10 @@ async function runWithConcurrency(items, fn, concurrency) {
       try {
         results[i] = await fn(items[i], i);
       } catch (err) {
-        results[i] = { error: err.message };
+        results[i] = { error: err.message, ...(items[i] || {}) };
       }
       completed++;
-      if (completed % 10 === 0 || completed === total) {
+      if (completed % 5 === 0 || completed === total) {
         process.stdout.write(`\r  progress: ${completed}/${total} `);
       }
     }
@@ -342,102 +291,151 @@ async function runWithConcurrency(items, fn, concurrency) {
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 async function main() {
-  console.log('\n▼ Fetching all products from Shopify Admin API...\n');
-  const products = await fetchAllProductsV2();
-  console.log(`\n  Total products fetched: ${products.length}\n`);
-
-  // Filter: which products need SEO generation?
-  let targets = products;
-  if (SKIP_EXISTING && !FORCE) {
-    targets = products.filter(p => {
-      const t = (p.seo_title || '').trim();
-      const d = (p.seo_description || '').trim();
-      // Heuristic: skip if both fields are non-empty AND non-default
-      // (default = matches Shopify's auto-generated "{title}" pattern)
-      return !t || !d || t === p.title;
-    });
-    console.log(`  After --skip-existing filter: ${targets.length} products need SEO generation\n`);
+  console.log(`\n▼ Reading CSV: ${CSV_PATH}\n`);
+  let records;
+  try {
+    records = await readCsv(CSV_PATH);
+  } catch (err) {
+    console.error(`\n✗ CSV read failed: ${err.message}`);
+    process.exit(1);
   }
-  if (LIMIT > 0) {
-    targets = targets.slice(0, LIMIT);
-    console.log(`  After --limit=${LIMIT}: ${targets.length} products\n`);
+  console.log(`  Parsed ${records.length} data rows.\n`);
+
+  // ─── Pre-flight validation ──────────────────────────────────────────────
+  const valid = [];
+  const rejected = [];
+  for (const r of records) {
+    const issues = [];
+    if (!r.handle) issues.push('empty handle');
+    if (!r.seoTitle) issues.push('empty SEO Title');
+    if (!r.seoDescription) issues.push('empty SEO Description');
+    if (!FORCE) {
+      if (r.seoTitle.length > TITLE_WARN_LEN) issues.push(`title ${r.seoTitle.length} > ${TITLE_WARN_LEN}`);
+      if (r.seoDescription.length > DESC_WARN_LEN) issues.push(`desc ${r.seoDescription.length} > ${DESC_WARN_LEN}`);
+    }
+    if (issues.length > 0) {
+      rejected.push({ ...r, issues });
+    } else {
+      valid.push(r);
+    }
   }
 
-  if (targets.length === 0) {
-    console.log('  No products to process. Exiting.');
+  if (rejected.length > 0) {
+    console.log(`  ⚠️  Rejected ${rejected.length} rows:`);
+    for (const r of rejected.slice(0, 10)) {
+      console.log(`    line ${r.lineNumber}: ${r.handle || '(no handle)'} — ${r.issues.join(', ')}`);
+    }
+    if (rejected.length > 10) console.log(`    ... and ${rejected.length - 10} more`);
+    if (!FORCE) {
+      console.log(`\n  (Use --force to write over-limit rows anyway.)`);
+    }
+    console.log('');
+  }
+
+  if (valid.length === 0) {
+    console.log('  No valid rows to process. Exiting.');
     return;
   }
 
-  console.log(`▼ Generating SEO copy via LLM for ${targets.length} products (concurrency: ${LLM_CONCURRENCY})...\n`);
-  const generated = await runWithConcurrency(
-    targets,
-    async (product) => {
-      try {
-        const seo = await generateSeo(product);
-        // Append " | LuxeMia" to title if it doesn't already contain "LuxeMia"
-        // AND if there's room. This matches the existing prerender fallback template.
-        let finalTitle = seo.seo_title;
-        if (!/luxemia/i.test(finalTitle)) {
-          const withSuffix = `${finalTitle} | ${SHOP_NAME}`;
-          finalTitle = withSuffix.length <= MAX_TITLE_LEN ? withSuffix : finalTitle;
-        }
-        return {
-          product,
-          before: { seo_title: product.seo_title || '', seo_description: product.seo_description || '' },
-          after: { seo_title: finalTitle, seo_description: seo.seo_description },
-        };
-      } catch (err) {
-        return { product, error: err.message };
-      }
-    },
-    LLM_CONCURRENCY
-  );
-
-  const ok = generated.filter(g => g.after);
-  const failed = generated.filter(g => g.error);
-  console.log(`\n  Generated: ${ok.length} | Failed: ${failed.length}\n`);
-
-  if (failed.length > 0) {
-    console.log('  Failures:');
-    for (const f of failed.slice(0, 5)) {
-      console.log(`    • ${f.product.handle}: ${f.error}`);
-    }
-    if (failed.length > 5) console.log(`    ... and ${failed.length - 5} more`);
+  let targets = valid;
+  if (LIMIT > 0) {
+    targets = valid.slice(0, LIMIT);
+    console.log(`  After --limit=${LIMIT}: ${targets.length} rows\n`);
   }
 
-  // ─── Write back to Shopify ───
-  let writeResults = [];
+  // ─── Look up each product by handle (concurrent) ─────────────────────────
+  console.log(`▼ Looking up ${targets.length} products by handle in Shopify...\n`);
+  const lookups = await runWithConcurrency(
+    targets,
+    async (r) => {
+      try {
+        const product = await fetchProductByHandle(r.handle);
+        if (!product) {
+          return { ...r, status: 'not_found', error: `No Shopify product with handle "${r.handle}"` };
+        }
+        return {
+          ...r,
+          product_id: product.id,
+          product_title: product.title,
+          before: { seo_title: product.seo_title || '', seo_description: product.seo_description || '' },
+        };
+      } catch (err) {
+        return { ...r, status: 'lookup_error', error: err.message };
+      }
+    },
+    SHOPIFY_WRITE_CONCURRENCY
+  );
+
+  const notFound = lookups.filter(l => l.status === 'not_found');
+  const lookupErrors = lookups.filter(l => l.status === 'lookup_error');
+  const readyToWrite = lookups.filter(l => l.product_id);
+
+  if (notFound.length > 0) {
+    console.log(`\n  ⚠️  ${notFound.length} handles not found in Shopify:`);
+    for (const r of notFound.slice(0, 10)) {
+      console.log(`    ${r.handle}`);
+    }
+    if (notFound.length > 10) console.log(`    ... and ${notFound.length - 10} more`);
+  }
+  if (lookupErrors.length > 0) {
+    console.log(`\n  ⚠️  ${lookupErrors.length} lookup errors:`);
+    for (const r of lookupErrors.slice(0, 5)) {
+      console.log(`    ${r.handle}: ${r.error}`);
+    }
+  }
+
+  console.log(`\n  Ready to write: ${readyToWrite.length}\n`);
+
+  // ─── Filter: skip unchanged (optional) ───────────────────────────────────
+  let toWrite = readyToWrite;
+  if (SKIP_UNCHANGED) {
+    toWrite = readyToWrite.filter(r => {
+      const sameTitle = (r.before.seo_title || '').trim() === r.seoTitle.trim();
+      const sameDesc = (r.before.seo_description || '').trim() === r.seoDescription.trim();
+      return !(sameTitle && sameDesc);
+    });
+    const skipped = readyToWrite.length - toWrite.length;
+    console.log(`  --skip-unchanged: skipped ${skipped} rows where Shopify already matches.\n`);
+  }
+
+  if (toWrite.length === 0) {
+    console.log('  Nothing to write. Exiting.');
+    return;
+  }
+
+  // ─── Write to Shopify ────────────────────────────────────────────────────
+  let writeResults;
   if (DRY_RUN) {
-    console.log(`\n▼ DRY RUN — skipping Shopify writes. (Use without --dry-run to actually write.)\n`);
-    writeResults = ok.map(g => ({
-      product_id: g.product.id,
-      handle: g.product.handle,
+    console.log(`▼ DRY RUN — skipping Shopify writes. (Remove --dry-run to write.)\n`);
+    writeResults = toWrite.map(r => ({
+      handle: r.handle,
+      product_id: r.product_id,
       status: 'dry_run',
-      before: g.before,
-      after: g.after,
+      before: r.before,
+      after: { seo_title: r.seoTitle, seo_description: r.seoDescription },
     }));
   } else {
-    console.log(`\n▼ Writing SEO fields back to Shopify (concurrency: ${SHOPIFY_WRITE_CONCURRENCY})...\n`);
+    console.log(`▼ Writing SEO fields to Shopify (concurrency: ${SHOPIFY_WRITE_CONCURRENCY})...\n`);
     writeResults = await runWithConcurrency(
-      ok,
-      async (g) => {
+      toWrite,
+      async (r) => {
         try {
-          await writeProductSeo(g.product.id, g.after.seo_title, g.after.seo_description);
+          await writeProductSeo(r.product_id, r.seoTitle, r.seoDescription);
           return {
-            product_id: g.product.id,
-            handle: g.product.handle,
+            handle: r.handle,
+            product_id: r.product_id,
             status: 'success',
-            before: g.before,
-            after: g.after,
+            before: r.before,
+            after: { seo_title: r.seoTitle, seo_description: r.seoDescription },
           };
         } catch (err) {
           return {
-            product_id: g.product.id,
-            handle: g.product.handle,
+            handle: r.handle,
+            product_id: r.product_id,
             status: 'error',
             error: err.message,
-            before: g.before,
-            after: g.after,
+            before: r.before,
+            after: { seo_title: r.seoTitle, seo_description: r.seoDescription },
           };
         }
       },
@@ -445,20 +443,26 @@ async function main() {
     );
   }
 
-  // ─── Write audit CSV ───
+  // ─── Audit CSV ───────────────────────────────────────────────────────────
   const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const csvPath = join('/home/z/my-project/download', `shopify-seo-changes-${ts}.csv`);
+  const csvOutPath = join('/home/z/my-project/download', `shopify-seo-changes-${ts}.csv`);
   mkdirSync('/home/z/my-project/download', { recursive: true });
 
   const csvRows = [
-    'product_id,handle,status,before_seo_title,before_seo_description,after_seo_title,after_seo_description,error',
+    'handle,product_id,status,before_seo_title,before_seo_description,after_seo_title,after_seo_description,error',
   ];
-  for (const r of writeResults) {
+  // Include lookups that failed + write results
+  const allResults = [
+    ...notFound.map(r => ({ handle: r.handle, product_id: '', status: 'not_found', before: null, after: null, error: r.error })),
+    ...lookupErrors.map(r => ({ handle: r.handle, product_id: '', status: 'lookup_error', before: null, after: null, error: r.error })),
+    ...writeResults,
+  ];
+  for (const r of allResults) {
     const esc = v => `"${String(v || '').replace(/"/g, '""')}"`;
     csvRows.push([
-      r.product_id,
-      r.handle,
-      r.status,
+      r.handle || '',
+      r.product_id || '',
+      r.status || '',
       r.before?.seo_title || '',
       r.before?.seo_description || '',
       r.after?.seo_title || '',
@@ -466,30 +470,33 @@ async function main() {
       r.error || '',
     ].map(esc).join(','));
   }
-  writeFileSync(csvPath, csvRows.join('\n'));
+  writeFileSync(csvOutPath, csvRows.join('\n'));
 
-  // ─── Summary ───
+  // ─── Summary ─────────────────────────────────────────────────────────────
   const successCount = writeResults.filter(r => r.status === 'success' || r.status === 'dry_run').length;
   const errorCount = writeResults.filter(r => r.status === 'error').length;
 
   console.log(`\n═══════════════════════════════════════════════════════════════`);
   console.log(`  SUMMARY`);
   console.log(`═══════════════════════════════════════════════════════════════`);
-  console.log(`  Total products:   ${products.length}`);
-  console.log(`  Processed:        ${targets.length}`);
-  console.log(`  ${DRY_RUN ? 'Would write' : 'Wrote'}:      ${successCount}`);
-  console.log(`  Errors:           ${errorCount}`);
-  console.log(`  Audit CSV:        ${csvPath}`);
+  console.log(`  CSV rows parsed:      ${records.length}`);
+  console.log(`  Rejected (validation):${rejected.length}`);
+  console.log(`  Handles not found:    ${notFound.length}`);
+  console.log(`  Lookup errors:        ${lookupErrors.length}`);
+  console.log(`  ${DRY_RUN ? 'Would write' : 'Wrote'}:           ${successCount}`);
+  console.log(`  Write errors:         ${errorCount}`);
+  console.log(`  Audit CSV:            ${csvOutPath}`);
   console.log(`═══════════════════════════════════════════════════════════════\n`);
 
-  // Print a few sample before/after for visual review
-  console.log('Sample before/after (first 5):\n');
+  // ─── Sample before/after ─────────────────────────────────────────────────
+  console.log('Sample before/after (first 5 written):\n');
   for (const r of writeResults.slice(0, 5)) {
     console.log(`  ${r.handle}`);
     console.log(`    BEFORE title: ${r.before?.seo_title || '(empty)'}`);
-    console.log(`    AFTER  title: ${r.after?.seo_title || '(error)'}`);
-    console.log(`    BEFORE desc:  ${(r.before?.seo_description || '(empty)').slice(0, 100)}`);
-    console.log(`    AFTER  desc:  ${(r.after?.seo_description || '').slice(0, 100)}`);
+    console.log(`    AFTER  title: ${r.after?.seo_title}`);
+    console.log(`    BEFORE desc:  ${(r.before?.seo_description || '(empty)').slice(0, 100)}${r.before?.seo_description && r.before.seo_description.length > 100 ? '…' : ''}`);
+    console.log(`    AFTER  desc:  ${(r.after?.seo_description || '').slice(0, 100)}${r.after?.seo_description && r.after.seo_description.length > 100 ? '…' : ''}`);
+    if (r.error) console.log(`    ERROR:        ${r.error}`);
     console.log('');
   }
 }
