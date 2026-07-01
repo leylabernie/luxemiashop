@@ -642,8 +642,9 @@ const BrandStory = () => {
                 days (ready-made) or 8&ndash;17 business days (custom).<br />
                 <strong>Tracking:</strong> Full tracking provided for all
                 shipments.<br />
-                Import duties and local taxes are the customer&#39;s
-                responsibility.
+                <strong>Customs:</strong> See our{' '}
+                <Link to="/shipping-customs" className="text-primary underline">Shipping &amp; Customs</Link>
+                {' '}page for details on import duties and local taxes.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">

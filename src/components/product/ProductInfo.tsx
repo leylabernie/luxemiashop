@@ -503,7 +503,6 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             )}
           </p>
         )}
-        <span className="text-sm text-muted-foreground">Import duties and local taxes may apply</span>
       </div>
 
       {/* Estimated Delivery — dynamic based on stitching selection */}

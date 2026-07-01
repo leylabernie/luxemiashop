@@ -27,6 +27,7 @@ const Suits = lazy(() => import("./pages/Suits"));
 const Menswear = lazy(() => import("./pages/Menswear"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Shipping = lazy(() => import("./pages/Shipping"));
+const ShippingCustoms = lazy(() => import("./pages/ShippingCustoms"));
 const Returns = lazy(() => import("./pages/Returns"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -107,6 +108,8 @@ const App = () => (
                 <Route path="/account" element={<Suspense fallback={<PageLoader />}><Account /></Suspense>} />
                 <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />
                 <Route path="/shipping" element={<Suspense fallback={<PageLoader />}><Shipping /></Suspense>} />
+                <Route path="/shipping-customs" element={<Suspense fallback={<PageLoader />}><ShippingCustoms /></Suspense>} />
+                <Route path="/customs" element={<Navigate to="/shipping-customs" replace />} />
                 <Route path="/returns" element={<Suspense fallback={<PageLoader />}><Returns /></Suspense>} />
                 <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
                 <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />

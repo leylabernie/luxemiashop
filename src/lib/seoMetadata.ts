@@ -120,6 +120,11 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     description: 'LuxeMia ships to USA, Canada & Australia. Free shipping on orders over $350. Flat rate $25 for orders under $350. Standard delivery 7-10 business days.',
     canonical: `${SITE_URL}/shipping`,
   },
+  '/shipping-customs': {
+    title: 'Shipping & Customs | Import Duties & Local Taxes | LuxeMia',
+    description: 'Learn how international shipping and customs work at LuxeMia. Information on import duties, local taxes, and customs clearance for orders shipped from India to USA, Canada & Australia.',
+    canonical: `${SITE_URL}/shipping-customs`,
+  },
   '/returns': {
     title: 'Returns & Cancellations Policy | LuxeMia',
     description: 'LuxeMia returns and cancellations policy. All sales are final. Only genuine shipping damage claims accepted within 48 hours with mandatory unboxing video.',

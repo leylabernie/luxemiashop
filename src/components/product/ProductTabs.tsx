@@ -793,10 +793,6 @@ export const ProductTabs = ({ description, productType, isStitchable }: ProductT
                 <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
                 <span>Wrapped in tissue paper and placed in our signature gift box</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Import duties and local taxes are the customer&apos;s responsibility</span>
-              </li>
             </ul>
           </div>
 
