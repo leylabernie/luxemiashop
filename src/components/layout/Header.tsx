@@ -5,6 +5,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 import ProductSearch from '../search/ProductSearch';
+import { MegaMenuNavItem, PlainNavItem } from './MegaMenuNavItem';
+import { MEGA_MENUS } from '@/config/categoryConfig';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,12 +24,19 @@ const announcements = [
   'Flat $25 shipping · Trackable worldwide delivery',
 ];
 
-const navLinks = [
-  { name: 'Lehengas', href: '/lehengas' },
-  { name: 'Sarees', href: '/sarees' },
-  { name: 'Salwar Kameez', href: '/suits' },
-  { name: 'Menswear', href: '/menswear' },
+// Categories without a mega-menu use plain links.
+// Indo-Western has its own page (Indowestern.tsx) without subcategory config,
+// so it stays a plain link.
+const PLAIN_NAV_LINKS = [
   { name: 'Indo-Western', href: '/indowestern' },
+];
+
+// Combined nav links for the mobile menu (mega-menu not used on mobile).
+// Built from MEGA_MENUS + PLAIN_NAV_LINKS so the mobile drawer shows all
+// categories in one flat list.
+const navLinks = [
+  ...MEGA_MENUS.map(m => ({ name: m.label, href: m.href })),
+  ...PLAIN_NAV_LINKS,
 ];
 
 const secondaryLinks = [
@@ -117,14 +126,8 @@ const Header = () => {
 
             {/* Left Navigation - Desktop */}
             <nav className="hidden lg:flex items-center gap-5 flex-1">
-              {navLinks.slice(0, 3).map(link => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="luxury-link text-xs tracking-editorial uppercase font-light text-foreground/80 hover:text-foreground transition-colors whitespace-nowrap"
-                >
-                  {link.name}
-                </Link>
+              {MEGA_MENUS.slice(0, 3).map(menu => (
+                <MegaMenuNavItem key={menu.href} menu={menu} />
               ))}
             </nav>
 
@@ -146,14 +149,11 @@ const Header = () => {
 
             {/* Right Navigation - Desktop */}
             <nav className="hidden lg:flex items-center gap-5 flex-1 justify-end">
-              {navLinks.slice(3).map(link => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="luxury-link text-xs tracking-editorial uppercase font-light text-foreground/80 hover:text-foreground transition-colors whitespace-nowrap"
-                >
-                  {link.name}
-                </Link>
+              {MEGA_MENUS.slice(3).map(menu => (
+                <MegaMenuNavItem key={menu.href} menu={menu} />
+              ))}
+              {PLAIN_NAV_LINKS.map(link => (
+                <PlainNavItem key={link.href} label={link.name} href={link.href} />
               ))}
             </nav>
 

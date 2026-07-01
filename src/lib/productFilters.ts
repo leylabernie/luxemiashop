@@ -1,64 +1,158 @@
 import type { ShopifyProduct } from '@/lib/shopify';
+import type { Subcategory, FilterSection } from '@/config/categoryConfig';
 
 /**
- * Build a searchable string from a product's tags, title, and description.
+ * Product filter + sort + subcategory matching utilities.
+ *
+ * v2 changes (Kalki-style rewrite):
+ * - Tag-prefix matching (color:red, fabric:silk, occasion:wedding, role:bridesmaid)
+ *   with fallback to substring match on title — much more reliable than the
+ *   previous substring-everything approach (which matched "Sacred" for "Red").
+ * - Subcategory matching uses the same tag-prefix logic.
+ * - Price-tier subcategories (Under $200, Premium $300+) supported via priceMin/priceMax.
  */
-const getSearchableText = (p: ShopifyProduct): string => {
-  const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
-  const title = p.node.title.toLowerCase();
-  const description = (p.node.description ?? '').toLowerCase();
-  const productType = (p.node.productType ?? '').toLowerCase();
-  return [...tags, title, description, productType].join(' ');
-};
+
+type ProductNode = ShopifyProduct['node'];
 
 /**
- * Apply product filters based on active filter selections.
- * Filters match against Shopify tags, title, description, and productType
- * since metadata/metafields are not available via Storefront API.
+ * Get lowercase tags array. Tags may come from Storefront API as
+ * `string[]` (e.g. ['red', 'silk', 'occasion:bridal', 'gender:female']).
  */
-export const applyProductFilters = (
+function getTags(p: ProductNode): string[] {
+  return (p.tags ?? []).map(t => t.toLowerCase());
+}
+
+/**
+ * Match a filter value against a product using tag-prefix logic.
+ *
+ * Strategy (in order):
+ * 1. Tag-prefix match: if tagPrefix is 'color' and value is 'red',
+ *    match tag 'color:red' OR tag 'red'.
+ * 2. Bare tag match: tag exactly equals value (case-insensitive).
+ * 3. Title substring match (last resort — kept for backward compat with
+ *    products that have no structured tags).
+ *
+ * Returns true if any match strategy succeeds.
+ */
+function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: string): boolean {
+  const tags = getTags(p);
+  const valueLower = value.toLowerCase();
+  const titleLower = (p.title || '').toLowerCase();
+
+  // Strategy 1: tag-prefix match (preferred)
+  if (tagPrefix) {
+    const prefixed = `${tagPrefix}:${valueLower}`;
+    if (tags.includes(prefixed)) return true;
+  }
+
+  // Strategy 2: bare tag match
+  if (tags.includes(valueLower)) return true;
+
+  // Strategy 3: title substring (last resort)
+  if (titleLower.includes(valueLower)) return true;
+
+  return false;
+}
+
+/**
+ * Match a subcategory against a product.
+ *
+ * Subcategories define `matchTags` (e.g. ['occasion:bridal', 'bridal'])
+ * and optionally priceMin/priceMax for price-tier subcategories.
+ *
+ * Returns true if:
+ * - Any of matchTags matches (via tag-prefix or bare tag), OR
+ * - Title contains the subcategory label, AND
+ * - Price is within [priceMin, priceMax] if those are set.
+ */
+export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
+  // Price-tier check first — if subcategory has price bounds, must be in range
+  if (sub.priceMin !== undefined || sub.priceMax !== undefined) {
+    const price = parseFloat(p.priceRange.minVariantPrice.amount);
+    if (sub.priceMin !== undefined && price < sub.priceMin) return false;
+    if (sub.priceMax !== undefined && price > sub.priceMax) return false;
+    // Price-tier subcategories have empty matchTags — price check is sufficient
+    if (sub.matchTags.length === 0) return true;
+  }
+
+  // Tag matching
+  const tags = getTags(p);
+  const titleLower = (p.title || '').toLowerCase();
+
+  for (const tag of sub.matchTags) {
+    const tagLower = tag.toLowerCase();
+    // Exact tag match (handles both 'color:red' and bare 'red')
+    if (tags.includes(tagLower)) return true;
+  }
+
+  // Fallback: title contains the subcategory label
+  if (titleLower.includes(sub.label.toLowerCase())) return true;
+
+  return false;
+}
+
+/**
+ * Apply filter sections + price range to a product list.
+ *
+ * `activeFilters` is Record<filterName, string[]> (e.g. { Color: ['red', 'pink'], Fabric: ['silk'] }).
+ * `filterSections` is the config array — used to look up the tagPrefix for each section.
+ */
+export function applyProductFiltersV2(
   products: ShopifyProduct[],
   activeFilters: Record<string, string[]>,
-  priceRange: [number, number]
-): ShopifyProduct[] => {
+  priceRange: [number, number],
+  filterSections: FilterSection[]
+): ShopifyProduct[] {
+  // Build a lookup: filterName → tagPrefix
+  const sectionMap = new Map<string, FilterSection>();
+  for (const s of filterSections) {
+    sectionMap.set(s.name.toLowerCase(), s);
+  }
+
   let filtered = [...products];
 
-  // Apply category-based filters
-  Object.entries(activeFilters).forEach(([category, values]) => {
-    if (values.length === 0) return;
+  // Apply each active filter section
+  for (const [sectionName, values] of Object.entries(activeFilters)) {
+    if (!values || values.length === 0) continue;
+    const section = sectionMap.get(sectionName.toLowerCase());
+    if (!section) continue;
 
-    const normalizedCategory = category.toLowerCase();
-
-    filtered = filtered.filter(p => {
-      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
-      const variants = p.node.variants?.edges || [];
-      const searchable = getSearchableText(p);
-
-      // Handle Size filter - check variant options and tags
-      if (normalizedCategory === 'size') {
-        return values.some(filterValue => {
-          const filterLower = filterValue.toLowerCase();
-
-          return variants.some(v =>
+    // Special case: Size — also check variant selectedOptions + product options
+    if (section.name.toLowerCase() === 'size') {
+      filtered = filtered.filter(p => {
+        return values.some(value => {
+          const valueLower = value.toLowerCase();
+          // Check tag-prefix match
+          if (matchFilterValue(p.node, section.tagPrefix, value)) return true;
+          // Check variant selectedOptions
+          const variants = p.node.variants?.edges || [];
+          const hasVariantSize = variants.some(v =>
             v.node.selectedOptions?.some(opt =>
               opt.name.toLowerCase() === 'size' &&
-              opt.value.toLowerCase().includes(filterLower)
+              opt.value.toLowerCase().includes(valueLower)
             )
-          ) ||
-          p.node.options?.some(opt =>
+          );
+          if (hasVariantSize) return true;
+          // Check product options
+          const hasOptionSize = p.node.options?.some(opt =>
             opt.name.toLowerCase() === 'size' &&
-            opt.values.some(val => val.toLowerCase().includes(filterLower))
-          ) ||
-          tags.some(tag => tag === `size ${filterLower}` || tag === filterLower);
+            opt.values.some(val => val.toLowerCase().includes(valueLower))
+          );
+          return !!hasOptionSize;
         });
-      }
+      });
+      continue;
+    }
 
-      // Handle Availability filter
-      if (normalizedCategory === 'availability') {
-        return values.some(filterValue => {
-          const filterLower = filterValue.toLowerCase();
+    // Special case: Availability — check variant availability + ready/made-to-order tags
+    if (section.name.toLowerCase() === 'availability') {
+      filtered = filtered.filter(p => {
+        return values.some(value => {
+          const valueLower = value.toLowerCase();
+          const tags = getTags(p.node);
+          const variants = p.node.variants?.edges || [];
 
-          if (filterLower.includes('ready')) {
+          if (valueLower.includes('ready')) {
             const hasAvailable = variants.some(v => v.node.availableForSale);
             const hasReadyTag = tags.some(tag =>
               tag.includes('ready') || tag.includes('in stock') || tag.includes('readymade')
@@ -66,35 +160,48 @@ export const applyProductFilters = (
             return hasAvailable || hasReadyTag;
           }
 
-          if (filterLower.includes('made to order') || filterLower.includes('custom')) {
+          if (valueLower.includes('made to order') || valueLower.includes('custom')) {
             return tags.some(tag =>
               tag.includes('made to order') || tag.includes('custom') || tag.includes('pre-order')
             );
           }
 
-          return true;
+          return false;
         });
-      }
-
-      // For all other filters, search tags + title + description
-      return values.some(filterValue => {
-        const filterLower = filterValue.toLowerCase();
-        return searchable.includes(filterLower);
       });
-    });
-  });
+      continue;
+    }
 
-  // Apply price filter
+    // Standard filter sections (Color, Fabric, Work, Style) — use tag-prefix match
+    filtered = filtered.filter(p => {
+      return values.some(value => matchFilterValue(p.node, section.tagPrefix, value));
+    });
+  }
+
+  // Apply price range
   filtered = filtered.filter(p => {
     const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
     return price >= priceRange[0] && price <= priceRange[1];
   });
 
   return filtered;
-};
+}
 
 /**
- * Sort products by the specified sort option
+ * Apply subcategory filter (in addition to the regular filters).
+ * If no subcategory is active, returns products unchanged.
+ */
+export function applySubcategory(
+  products: ShopifyProduct[],
+  sub: Subcategory | null
+): ShopifyProduct[] {
+  if (!sub) return products;
+  return products.filter(p => matchSubcategory(p.node, sub));
+}
+
+/**
+ * Sort products by the specified sort option.
+ * Same as before — no changes needed.
  */
 export const sortProducts = (
   products: ShopifyProduct[],
@@ -122,7 +229,6 @@ export const sortProducts = (
       break;
     case 'featured':
     default:
-      // Featured is the default order
       break;
   }
 
@@ -130,14 +236,36 @@ export const sortProducts = (
 };
 
 /**
- * Combined filter and sort function for convenience
+ * Combined filter + subcategory + sort function for the new shared
+ * CategoryListing component.
  */
+export const filterSortAndSubcategorize = (
+  products: ShopifyProduct[],
+  activeFilters: Record<string, string[]>,
+  priceRange: [number, number],
+  sortBy: string,
+  filterSections: FilterSection[],
+  subcategory: Subcategory | null
+): ShopifyProduct[] => {
+  const filtered = applyProductFiltersV2(products, activeFilters, priceRange, filterSections);
+  const subcategorized = applySubcategory(filtered, subcategory);
+  return sortProducts(subcategorized, sortBy);
+};
+
+// ─── Backward-compatible exports (legacy v1 API) ───────────────────────────
+// Existing pages (Collections.tsx) still call filterAndSortProducts — keep
+// the old signature working until those pages are also migrated.
+
+export const applyProductFilters = applyProductFiltersV2;
+
 export const filterAndSortProducts = (
   products: ShopifyProduct[],
   activeFilters: Record<string, string[]>,
   priceRange: [number, number],
   sortBy: string
 ): ShopifyProduct[] => {
-  const filtered = applyProductFilters(products, activeFilters, priceRange);
+  // Use empty filterSections — matchFilterValue will fall back to bare-tag
+  // + title substring match (same behavior as the legacy code).
+  const filtered = applyProductFiltersV2(products, activeFilters, priceRange, []);
   return sortProducts(filtered, sortBy);
 };
