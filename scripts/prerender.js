@@ -1637,9 +1637,46 @@ async function main() {
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = (p.seo?.title || '').trim();
     const seoDescription = (p.seo?.description || '').trim();
-    const title = seoTitle || `${p.title || handle} | LuxeMia`;
+
+    // ─── USP-enhanced title generation ──────────────────────────────────────
+    // When no Shopify SEO title is set, inject fabric/color USP into the title
+    // to carve out high-converting long-tail niches (e.g., "Maroon Raw Silk
+    // Bridal Lehenga | Hand Embroidery | LuxeMia") that corporate catalogs lack.
     const desc = (p.description || '').trim();
-    const fallbackDesc = `Shop the ${p.title || handle} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics and intricate detailing. Free shipping to USA, Canada & Australia on orders over $350.`;
+    const baseTitle = p.title || handle;
+    const titleDescLower = `${baseTitle} ${desc}`.toLowerCase();
+
+    // Fabric + color detection arrays (shared by title + description generation)
+    const fabrics = ['raw silk', 'banarasi silk', 'kanchipuram silk', 'kanjivaram', 'georgette', 'chiffon', 'velvet', 'organza', 'chinnon', 'chinon', 'crepe', 'net', 'cotton', 'satin', 'taffeta', 'jacquard', 'tussar', 'brocade', 'silk', 'art silk'];
+    const colors = ['maroon', 'wine', 'burgundy', 'red', 'pink', 'rani pink', 'baby pink', 'dusty rose', 'blue', 'navy', 'royal blue', 'sky blue', 'teal', 'green', 'emerald', 'olive', 'mint', 'sage', 'yellow', 'gold', 'mustard', 'orange', 'peach', 'coral', 'rust', 'purple', 'lavender', 'plum', 'mauve', 'lilac', 'white', 'ivory', 'cream', 'beige', 'black', 'grey', 'gray', 'champagne', 'copper', 'bronze'];
+    const foundFabric = fabrics.find(f => titleDescLower.includes(f));
+    const foundColor = colors.find(c => titleDescLower.includes(c));
+
+    let title;
+    if (seoTitle) {
+      title = seoTitle;
+    } else {
+      // Build USP suffix: "in Maroon Raw Silk" or "in Raw Silk" or ""
+      let uspSuffix = '';
+      if (foundFabric && foundColor) {
+        uspSuffix = ` in ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)} ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}`;
+      } else if (foundFabric) {
+        uspSuffix = ` in ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}`;
+      }
+
+      // Keep title under 70 chars for SERP display
+      const candidateTitle = `${baseTitle}${uspSuffix} | LuxeMia`;
+      title = candidateTitle.length > 70
+        ? `${baseTitle} | LuxeMia`
+        : candidateTitle;
+    }
+
+    // ─── USP-enhanced fallback description ──────────────────────────────────
+    // Injects fabric, color, and shipping turnaround into the fallback so even
+    // products with thin Shopify descriptions get unique, keyword-rich meta.
+    const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
+    const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
+    const fallbackDesc = `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics. Ships worldwide in 7-10 days, free over $350.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,

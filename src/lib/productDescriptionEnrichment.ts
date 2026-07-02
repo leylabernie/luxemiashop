@@ -1045,55 +1045,85 @@ export function generateMetaDescription(
   productType: string,
   title: string,
   price?: string,
+  color?: string,
+  material?: string,
 ): string {
   const categoryKey = normalizeProductType(productType);
   const template = CATEGORY_TEMPLATES[categoryKey] ?? CATEGORY_TEMPLATES['suit'];
-  const material = inferMaterial(title, undefined, description);
+  const inferredMaterial = inferMaterial(title, material, description);
+  const inferredColor = inferColor(title, color, description);
   const label = template.label;
+  const keyword = template.keywords[0] ?? '';
 
-  const fabricPhrase = material !== 'premium fabric' ? ` in ${material}` : '';
-  const pricePhrase = price ? ` at ${price}` : '';
+  // ─── USP injection components ───────────────────────────────────────────
+  // Build fabric+color phrase: "in raw silk" or "in maroon raw silk"
+  let fabricColorPhrase = '';
+  if (inferredMaterial !== 'premium fabric' && inferredColor) {
+    fabricColorPhrase = ` in ${inferredColor} ${inferredMaterial}`;
+  } else if (inferredMaterial !== 'premium fabric') {
+    fabricColorPhrase = ` in ${inferredMaterial}`;
+  } else if (inferredColor) {
+    fabricColorPhrase = ` in ${inferredColor}`;
+  }
 
-  // Build the meta description targeting 150-160 characters.
-  // Structure: "{Title}{fabric} at {price}. Shop {label} online. Free shipping over $350 to USA, Canada & Australia."
-  const shippingCta = 'Free shipping over $350 to USA, Canada & Australia.';
+  // Trust + shipping USP — rotate between shipping turnaround & craftsmanship
+  // for natural variation across products (deterministic by title hash)
+  const trustUsps = [
+    'Ships worldwide in 7-10 days.',
+    'Handcrafted by Indian artisans.',
+    'Luxury craftsmanship, worldwide shipping.',
+    'Free shipping over $350 to USA, Canada & Australia.',
+    'Ready to ship in 3-5 business days.',
+  ];
+  const uspIndex = hashString(title) % trustUsps.length;
+  const trustUsp = trustUsps[uspIndex];
 
-  // Build the core prefix (everything before the shipping CTA)
-  const shopPhrase = `Shop ${label} online at LuxeMia.`;
-  const corePrefix = `${title}${fabricPhrase}${pricePhrase}. ${shopPhrase}`;
+  // Category keyword phrase (capitalized for mid-sentence use)
+  const keywordPhrase = keyword
+    ? keyword.charAt(0).toUpperCase() + keyword.slice(1) + '. '
+    : '';
 
-  // Calculate available space for the core part
+  // ─── Build the description targeting 150-160 characters ─────────────────
+  // Structure: "{Title}{fabric/color}. {Keyword phrase}{trust USP}"
+  // This injects: product-specific USP (fabric/color) + category keyword + trust signal
   const maxTotal = 160;
-  const separator = ' ';
-  const availableForCore = maxTotal - shippingCta.length - separator.length;
+  const core = `${title}${fabricColorPhrase}.`;
+  let meta = `${core} ${keywordPhrase}${trustUsp}`;
 
-  let core = corePrefix;
-  if (core.length > availableForCore) {
-    // Truncate intelligently — don't break mid-word
-    core = core.substring(0, availableForCore - 1).replace(/\s+\S*$/, '');
-    // Ensure we end with a period
-    if (!core.endsWith('.')) {
-      core += '.';
+  // If too long, truncate the keyword phrase first (keep title + USP)
+  if (meta.length > maxTotal) {
+    meta = `${core} ${trustUsp}`;
+    if (meta.length > maxTotal) {
+      // Last resort: truncate core title
+      const available = maxTotal - trustUsp.length - 1;
+      const truncatedCore = core.substring(0, available).replace(/\s+\S*$/, '');
+      meta = `${truncatedCore} ${trustUsp}`;
     }
   }
 
-  let meta = `${core} ${shippingCta}`;
-
-  // If the meta is too short (< 150), add a long-tail keyword for SEO value
-  if (meta.length < 150) {
-    const catTemplate = CATEGORY_TEMPLATES[categoryKey] ?? CATEGORY_TEMPLATES['suit'];
-    const keyword = catTemplate.keywords[0] ?? '';
-    if (keyword) {
-      // Insert keyword between core and shipping CTA
-      const keywordPhrase = `${keyword.charAt(0).toUpperCase() + keyword.slice(1)}.`;
-      const padded = `${core} ${keywordPhrase} ${shippingCta}`;
-      if (padded.length <= 160) {
-        meta = padded;
-      }
+  // If too short, pad with the shipping USP for consistency
+  if (meta.length < 140) {
+    const padded = `${meta} Free shipping over $350.`;
+    if (padded.length <= 160) {
+      meta = padded;
     }
   }
 
   return meta;
+}
+
+/**
+ * Simple deterministic string hash for stable USP rotation across products.
+ * Same title → same USP every build (prevents description churn between deploys).
+ */
+function hashString(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
 }
 
 /**

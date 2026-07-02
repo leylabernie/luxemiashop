@@ -163,8 +163,10 @@ const ProductDetail = () => {
       product.productType || '',
       product.title,
       product?.priceRange?.minVariantPrice?.amount,
+      productColor,
+      productMaterial,
     );
-  }, [product]);
+  }, [product, productColor, productMaterial]);
 
   // Product-specific FAQs for rich snippets
   const productFaqs = product ? [
