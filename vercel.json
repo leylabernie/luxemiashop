@@ -22,7 +22,6 @@
     { "source": "/our-story", "destination": "/brand-story", "statusCode": 301 },
     { "source": "/about-us", "destination": "/brand-story", "statusCode": 301 },
     { "source": "/about", "destination": "/brand-story", "statusCode": 301 },
-    { "source": "/jewelry", "destination": "/collections", "statusCode": 301 },
     { "source": "/feed.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
     { "source": "/shopping-feed.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
     { "source": "/products.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
