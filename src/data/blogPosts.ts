@@ -3410,6 +3410,455 @@ export const blogPosts: BlogPost[] = [
     tags: ['chikankari embroidery', 'lucknowi chikankari', 'shadow work embroidery', 'indian hand embroidery', 'lucknow embroidery', 'ethnic wear fabric'],
     image: '/images/blog/blog-001-deep-maroon-silk.jpg',
     readTime: 9
+  },
+
+  // ─── Long-tail SEO blog posts (Cluster keyword targeting) ──────────────────
+  {
+    id: '41',
+    slug: 'buy-bridal-lehenga-online-usa-complete-guide',
+    title: 'Buy Bridal Lehenga Online in USA: Complete 2026 Guide for NRI Brides',
+    excerpt: 'Everything NRI brides need to know about buying a bridal lehenga online in the USA — fabrics, sizing, shipping, customs, and how to ensure the perfect fit without visiting a store.',
+    content: `
+      <p>For NRI brides living in the USA, buying a <a href="/lehengas">bridal lehenga online</a> is now the most practical path to a dream wedding outfit. You get access to authentic Indian craftsmanship, designer collections, and custom tailoring — all without flying to India. This guide covers everything you need to know to buy a bridal lehenga online in the USA with confidence.</p>
+
+      <h2>Why Buy a Bridal Lehenga Online in the USA?</h2>
+      <p>The traditional approach — flying to India, visiting dozens of boutiques, and shipping your purchase back — is expensive and time-consuming. When you <a href="/lehengas">buy bridal lehengas online</a>, you get the same designer quality, often at better prices, with direct shipping to your US address. LuxeMia ships to all 50 states with free shipping on orders over $350.</p>
+
+      <h3>Advantages of Online Bridal Lehenga Shopping</h3>
+      <ul>
+        <li><strong>Wider selection:</strong> Access to hundreds of designer styles vs. 20-30 in a single boutique</li>
+        <li><strong>Better pricing:</strong> No boutique markups; direct from artisan pricing</li>
+        <li><strong>Custom tailoring:</strong> Made-to-measure options for a perfect fit</li>
+        <li><strong>Convenience:</strong> Browse, compare, and order from home</li>
+        <li><strong>Detailed product info:</strong> Fabric, care, and sizing details clearly listed</li>
+      </ul>
+
+      <h2>Choosing the Right Bridal Lehenga Fabric</h2>
+      <p>The fabric you choose affects comfort, appearance, and price. Here are the most popular bridal lehenga fabrics and what to know about each:</p>
+
+      <h3>Raw Silk Bridal Lehengas</h3>
+      <p>Raw silk is the most traditional bridal fabric — rich, structured, and perfect for heavy embroidery. It photographs beautifully and holds its shape throughout a long wedding day. Raw silk lehengas are ideal for the main wedding ceremony. <a href="/lehengas">Explore raw silk bridal lehengas</a> in our collection.</p>
+
+      <h3>Velvet Bridal Lehengas</h3>
+      <p>Velvet lehengas are luxurious and warm — perfect for winter weddings. The fabric's depth makes it ideal for deep colors like maroon, wine, and emerald. Velvet also holds intricate zari and thread work beautifully.</p>
+
+      <h3>Georgette and Net Lehengas</h3>
+      <p>For summer weddings or destination ceremonies, georgette and net lehengas are lighter and more comfortable. They create beautiful movement and are easier to dance in during the reception.</p>
+
+      <h2>Sizing and Fit: Made-to-Measure vs. Ready-to-Wear</h2>
+      <p>One of the biggest concerns for NRI brides is getting the right fit without an in-person fitting. LuxeMia offers three options:</p>
+
+      <h3>Ready-to-Wear Bridal Lehengas</h3>
+      <p>Pre-stitched to standard sizes (32-48 bust). Ships within 3-5 business days. Best if you need your lehenga quickly and your measurements align with standard sizing.</p>
+
+      <h3>Made-to-Measure Bridal Lehengas</h3>
+      <p>Stitched to your exact body measurements after you submit a measurement form. Takes 3-4 weeks to ship but guarantees a perfect fit. This is the recommended option for brides who want their lehenga to fit flawlessly.</p>
+
+      <h3>Unstitched Lehenga Fabric</h3>
+      <p>You receive the fabric, dupatta, and trims to stitch with your own local tailor. Most economical but requires you to find a skilled tailor in your area.</p>
+
+      <p>For detailed measurement instructions, see our <a href="/sizing-measurements-guide">sizing and measurements guide</a>.</p>
+
+      <h2>Shipping, Customs, and Duties for USA Orders</h2>
+      <p>When you buy a bridal lehenga online from LuxeMia, here's what to expect for US delivery:</p>
+      <ul>
+        <li><strong>Free shipping:</strong> Orders over $350 ship free to all US states</li>
+        <li><strong>Delivery time:</strong> 7-10 business days for ready-to-wear; 4-5 weeks for made-to-measure</li>
+        <li><strong>Customs duties:</strong> US imports under $800 are duty-free under the de minimis exemption — most bridal lehengas qualify</li>
+        <li><strong>Tracking:</strong> Full tracking via DHL, USPS, or UPS</li>
+      </ul>
+
+      <h2>How to Ensure You're Buying Authentic Quality</h2>
+      <p>When shopping for a bridal lehenga online, look for these quality indicators:</p>
+      <ul>
+        <li><strong>Detailed fabric descriptions:</strong> Sellers should specify "raw silk," "pure silk," or "art silk" — not just "silk-like"</li>
+        <li><strong>Multiple product photos:</strong> At minimum, a full-shot, close-up of embroidery, and back view</li>
+        <li><strong>Clear sizing information:</strong> Bust, waist, hip measurements for ready-to-wear; measurement form for custom</li>
+        <li><strong>Transparent pricing:</strong> No hidden fees; shipping and customs clearly stated</li>
+        <li><strong>Return policy:</strong> Understand the policy before buying — bridal lehengas are often final sale</li>
+      </ul>
+
+      <h2>Bridal Lehenga Shopping Timeline for USA Brides</h2>
+      <p>Start your bridal lehenga shopping 4-6 months before the wedding:</p>
+      <ul>
+        <li><strong>6 months out:</strong> Browse collections, shortlist 3-5 favorites</li>
+        <li><strong>5 months out:</strong> Order your chosen lehenga (allows time for custom tailoring)</li>
+        <li><strong>3 months out:</strong> Lehenga arrives; schedule a fitting and any alterations</li>
+        <li><strong>2 months out:</strong> Coordinate jewelry, footwear, and accessories</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I return a bridal lehenga bought online?</h3>
+      <p>Most bridal lehengas are final sale due to the custom nature of the garment. LuxeMia accepts returns only for genuine shipping damage, reported within 48 hours with an unboxing video. This is why it's important to carefully review sizing and fabric before ordering.</p>
+
+      <h3>How do I know my lehenga will fit if I can't try it on?</h3>
+      <p>Choose made-to-measure and submit accurate measurements using our <a href="/sizing-measurements-guide">measurement guide</a>. If you're between sizes, size up — it's easier to take in a lehenga than to let it out.</p>
+
+      <h3>Are the photos on the website accurate?</h3>
+      <p>LuxeMia photographs every product in natural light with no color enhancement. However, screen settings vary — we recommend reviewing all available images and reading the fabric description for the most accurate representation.</p>
+
+      <p>Ready to find your dream bridal lehenga? <a href="/lehengas">Browse our full collection</a> of designer bridal lehenga choli, all available with worldwide shipping to the USA.</p>
+    `,
+    author: 'LuxeMia Editorial Team',
+    publishedAt: '2026-05-01',
+    updatedAt: '2026-05-01',
+    category: 'Bridal Guide',
+    tags: ['buy bridal lehenga online', 'bridal lehenga usa', 'indian wedding lehenga', 'bridal lehenga choli online', 'nri bridal shopping', 'designer bridal lehengas'],
+    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    readTime: 8
+  },
+
+  {
+    id: '42',
+    slug: 'designer-sherwani-online-usa-groom-guide',
+    title: 'Designer Sherwani Online USA: The Complete Groom Shopping Guide',
+    excerpt: 'How to shop for a designer sherwani online in the USA — fabric choices, sizing, what to pair it with, and how to ensure your groom sherwani arrives on time for the wedding.',
+    content: `
+      <p>The groom's sherwani is the centerpiece of his wedding look. For grooms in the USA, buying a <a href="/menswear">designer sherwani online</a> is now the smartest way to get authentic Indian craftsmanship without traveling. This guide walks you through everything you need to know.</p>
+
+      <h2>Why Shop for a Designer Sherwani Online in the USA?</h2>
+      <p>Local Indian clothing stores in the US typically carry a limited selection of sherwanis, often with significant markups. When you <a href="/menswear">shop designer sherwanis for men online</a>, you get access to hundreds of styles, direct-from-India pricing, and the same custom tailoring options — all delivered to your door.</p>
+
+      <h2>Choosing the Right Sherwani Fabric</h2>
+      <h3>Art Silk Sherwanis</h3>
+      <p>Art silk is the most popular sherwani fabric — it has the rich look of pure silk at a more accessible price point. Art silk sherwanis drape well, hold embroidery beautifully, and are comfortable for long wedding days.</p>
+
+      <h3>Pure Silk Sherwanis</h3>
+      <p>For grooms who want the ultimate in luxury, pure silk sherwanis offer unmatched richness and texture. They're the traditional choice for the main wedding ceremony.</p>
+
+      <h3>Velvet Sherwanis</h3>
+      <p>Velvet sherwanis are regal and warm — ideal for winter weddings. The fabric's depth makes deep colors like maroon, navy, and emerald look incredibly rich.</p>
+
+      <h2>Sherwani Styles: Which One Is Right for You?</h2>
+      <h3>Classic Groom Sherwani</h3>
+      <p>The traditional groom sherwani features a long coat with churidar pants and a dupatta. This is the most formal option and perfect for the main wedding ceremony. <a href="/menswear">Browse our groom sherwani collection</a>.</p>
+
+      <h3>Indo-Western Sherwani</h3>
+      <p>A modern fusion style that blends the sherwani silhouette with contemporary cuts. Ideal for the engagement or reception — less formal but still striking.</p>
+
+      <h3>Sherwani with Kurta Pajama</h3>
+      <p>A more relaxed option for pre-wedding functions like the haldi or mehendi. Lighter and more comfortable while still looking festive.</p>
+
+      <h2>Sizing Your Sherwani for the Perfect Fit</h2>
+      <p>Sherwani sizing is based on chest measurement. Most sherwanis come in sizes 36-44. For the best fit:</p>
+      <ul>
+        <li>Measure your chest at the fullest part</li>
+        <li>Measure your shoulder width from edge to edge</li>
+        <li>If you're between sizes, size up — a sherwani can be tailored smaller but not larger</li>
+        <li>For custom tailoring, submit measurements using our <a href="/sizing-measurements-guide">measurement guide</a></li>
+      </ul>
+
+      <h2>What to Pair with Your Sherwani</h2>
+      <h3>Churidar Pants</h3>
+      <p>The traditional choice — fitted pants that gather at the ankle. Most sherwanis come with matching churidar.</p>
+
+      <h3>Dupatta or Stole</h3>
+      <p>A matching or contrast dupatta draped over one shoulder adds formality. Some grooms skip this for a modern look.</p>
+
+      <h3>Footwear</h3>
+      <p>Traditional mojaris or juttis complete the look. For comfort during long ceremonies, choose a padded pair.</p>
+
+      <h3>Accessories</h3>
+      <p>A brooch (kalgi) for the turban, a pocket square, and a statement watch or kada bracelet finish the groom's ensemble.</p>
+
+      <h2>Shipping Timeline for USA Grooms</h2>
+      <p>When you order a <a href="/menswear">designer sherwani online in the USA</a>, plan ahead:</p>
+      <ul>
+        <li><strong>Ready-to-wear:</strong> Ships in 3-5 business days, arrives in 7-10 days total</li>
+        <li><strong>Made-to-measure:</strong> Ships in 3-4 weeks, arrives in 4-5 weeks total</li>
+        <li><strong>Order 2-3 months before the wedding</strong> to allow time for any alterations</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I get my sherwani altered in the USA?</h3>
+      <p>Yes — most local tailors can handle basic alterations like hemming pants or adjusting sleeve length. For more complex changes, look for a tailor who specializes in Indian formal wear.</p>
+
+      <h3>What color sherwani should I choose?</h3>
+      <p>Off-white and ivory are traditional for the main ceremony. For the reception, deeper colors like navy, maroon, or charcoal are popular. Choose a color that complements (not matches) the bride's outfit.</p>
+
+      <h3>Do I need to wear a turban with my sherwani?</h3>
+      <p>A turban (safa) is traditional for the groom but optional. If you choose to wear one, it should complement your sherwani color.</p>
+
+      <p>Ready to find your groom sherwani? <a href="/menswear">Shop designer sherwanis for men online</a> with worldwide shipping to the USA.</p>
+    `,
+    author: 'LuxeMia Editorial Team',
+    publishedAt: '2026-05-05',
+    updatedAt: '2026-05-05',
+    category: 'Groom Guide',
+    tags: ['designer sherwanis for men online usa', 'shop designer sherwani for men', 'wedding groom sherwanis', 'premium sherwani for weddings', 'groom wear', 'indian groom usa'],
+    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    readTime: 7
+  },
+
+  {
+    id: '43',
+    slug: 'salwar-kameez-online-usa-everyday-ethnic-guide',
+    title: 'Buy Salwar Kameez Online in USA: Everyday Ethnic Wear Guide',
+    excerpt: 'A practical guide to buying salwar kameez online in the USA — fabric choices for the American climate, sizing, and how to style Indian designer suits for work and festivities.',
+    content: `
+      <p>The salwar kameez is the most versatile piece in Indian ethnic wear — comfortable enough for everyday wear, elegant enough for festivities. For Indian women in the USA, buying <a href="/suits">salwar kameez online</a> is the easiest way to build an ethnic wardrobe. This guide covers everything from fabric selection to styling.</p>
+
+      <h2>Why Salwar Kameez Is Perfect for NRI Women</h2>
+      <p>Unlike lehengas or heavy sarees, salwar kameez suits are practical for daily life. You can wear them to work, to temple, to community gatherings, and to festive celebrations. When you <a href="/suits">buy Indian designer salwar suits online in the USA</a>, you get authentic designs shipped directly to your door.</p>
+
+      <h2>Choosing the Right Fabric for the US Climate</h2>
+      <h3>Cotton Salwar Kameez</h3>
+      <p>Best for summer and everyday wear. Cotton breathes well in warm US weather and is comfortable for long days. Look for hand-block printed cottons for a traditional look.</p>
+
+      <h3>Georgette Salwar Suits</h3>
+      <p>Georgette is lightweight and drapes beautifully — ideal for parties and evening events. It's comfortable year-round in most US climates.</p>
+
+      <h3>Silk Salwar Kameez</h3>
+      <p>Silk suits are richer and more formal — perfect for weddings, festivals, and special occasions. Raw silk and art silk are the most common options.</p>
+
+      <h3>Chinnon and Chiffon</h3>
+      <p>These flowing fabrics are elegant for festive wear. They're lightweight and photograph beautifully, making them popular for Diwali and Navratri celebrations.</p>
+
+      <h2>Popular Salwar Kameez Styles</h2>
+      <h3>Anarkali Suits</h3>
+      <p>The Anarkali is a floor-length suit with a flared silhouette — elegant and forgiving for all body types. It's the most popular style for festive and wedding wear. <a href="/suits">Browse designer anarkali suits</a> in our collection.</p>
+
+      <h3>Sharara Sets</h3>
+      <p>Sharara suits feature wide-legged pants that flare from the knee. They're trendy for mehendi and sangeet ceremonies and offer beautiful movement.</p>
+
+      <h3>Palazzo Suits</h3>
+      <p>Modern and comfortable, palazzo suits pair a kurti with wide-leg pants. They're perfect for daytime events and casual gatherings.</p>
+
+      <h3>Straight-Cut Suits</h3>
+      <p>The most versatile style — a straight kurti with churidar or salwar pants. Wear it to work or to a puja with equal ease.</p>
+
+      <h2>Sizing Your Salwar Kameez</h2>
+      <p>Salwar kameez sizing is based on bust measurement. Most suits come in sizes S (32) through XXL (44). For the best fit:</p>
+      <ul>
+        <li>Measure your bust, waist, and hips</li>
+        <li>Check the size chart for each product — sizing can vary by brand</li>
+        <li>For made-to-measure, submit accurate measurements using our <a href="/sizing-measurements-guide">measurement guide</a></li>
+      </ul>
+
+      <h2>Styling Salwar Kameez for Different Occasions</h2>
+      <h3>For Work</h3>
+      <p>Choose a straight-cut cotton suit in a muted color. Pair with minimal jewelry and comfortable flats. A dupatta is optional for office wear.</p>
+
+      <h3>For Temple or Puja</h3>
+      <p>A silk or cotton suit in traditional colors (red, maroon, yellow) is appropriate. Add simple gold jewelry and bindi.</p>
+
+      <h3>For Festivities (Diwali, Navratri)</h3>
+      <p>An Anarkali or sharara set in a vibrant color with embroidery work. Accessorize with statement earrings and bangles.</p>
+
+      <h3>For Weddings</h3>
+      <p>A heavily embroidered silk or georgette suit in a rich color. Add <a href="/jewelry">bridal jewelry</a> and heels for a complete festive look.</p>
+
+      <h2>Shipping and Care for USA Customers</h2>
+      <ul>
+        <li><strong>Free shipping:</strong> Orders over $350 ship free to the USA</li>
+        <li><strong>Delivery:</strong> 7-10 business days for ready-to-wear</li>
+        <li><strong>Care:</strong> Dry clean silk and embroidered suits; hand wash cotton</li>
+        <li><strong>Customs:</strong> US imports under $800 are duty-free</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I wear a salwar kameez to work in the USA?</h3>
+      <p>Absolutely — a straight-cut cotton suit is professional and comfortable. Many NRI women wear ethnic suits to work regularly.</p>
+
+      <h3>How do I know which size to order?</h3>
+      <p>Check the size chart on each product page. If you're between sizes, size up — it's easier to take in a suit than to let it out. See our <a href="/size-guide">size guide</a> for detailed measurements.</p>
+
+      <h3>Are the colors in the photos accurate?</h3>
+      <p>We photograph in natural light without color enhancement, but screen settings vary. Read the fabric and color description for the most accurate representation.</p>
+
+      <p>Ready to build your ethnic wardrobe? <a href="/suits">Shop designer salwar suits online</a> with worldwide shipping to the USA.</p>
+    `,
+    author: 'LuxeMia Editorial Team',
+    publishedAt: '2026-05-10',
+    updatedAt: '2026-05-10',
+    category: 'Ethnic Wear Guide',
+    tags: ['buy indian designer salwar suits online usa', 'salwar kameez for women', 'designer indian suits online', 'designer suits anarkalis', 'nri ethnic wear', 'indian suits usa'],
+    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    readTime: 8
+  },
+
+  {
+    id: '44',
+    slug: 'indian-bridal-jewelry-sets-complete-guide',
+    title: 'Indian Bridal Jewelry Sets: Complete Guide to Wedding Necklaces & Accessories',
+    excerpt: 'Everything you need to know about Indian bridal jewelry sets — Kundan, polki, and traditional wedding necklaces, plus how to choose the right set for your bridal look.',
+    content: `
+      <p>No bridal look is complete without the right jewelry. Indian bridal jewelry sets — particularly the wedding necklace — are the statement pieces that tie the entire ensemble together. This guide covers everything you need to know about choosing <a href="/jewelry">Indian bridal jewelry sets</a> for your wedding day.</p>
+
+      <h2>Types of Indian Bridal Jewelry</h2>
+      <h3>Kundan Bridal Jewelry</h3>
+      <p>Kundan is the most traditional form of Indian bridal jewelry, featuring uncut gemstones set in gold foil. The stones are set without faceting, creating a rich, regal look. Kundan necklace sets are the classic choice for North Indian brides. <a href="/jewelry">Shop Kundan bridal jewelry sets</a> in our collection.</p>
+
+      <h3>Polki Jewelry</h3>
+      <p>Polki uses uncut diamonds set in gold — the most luxurious bridal jewelry option. Polki sets have a warm, antique finish and are prized for their natural sparkle. They're typically the most expensive option.</p>
+
+      <h3>Temple Jewelry</h3>
+      <p>Temple jewelry features motifs of deities and traditional patterns, originally worn by classical dancers. It's the traditional choice for South Indian brides and pairs beautifully with silk sarees.</p>
+
+      <h3>Meenakari Jewelry</h3>
+      <p>Meenakari features colorful enamel work on the reverse side of jewelry, often combined with Kundan on the front. This dual-sided craftsmanship makes it versatile — you get two looks in one piece.</p>
+
+      <h2>Choosing Your Bridal Necklace Set</h2>
+      <h3>Match Your Necklace to Your Neckline</h3>
+      <p>The necklace length should complement your blouse or outfit neckline:</p>
+      <ul>
+        <li><strong>Choker (14-16 inches):</strong> Best with high neckline blouses; sits at the base of the neck</li>
+        <li><strong>Princess (17-19 inches):</strong> The most versatile length; works with most necklines</li>
+        <li><strong>Long necklace (24-32 inches):</strong> Pairs with chokers for a layered look; traditional for South Indian brides</li>
+      </ul>
+
+      <h3>Coordinate with Your Outfit Color</h3>
+      <ul>
+        <li><strong>Red/maroon lehenga:</strong> Gold Kundan or polki sets with red accents</li>
+        <li><strong>Gold/yellow lehenga:</strong> Pearl or green meenakari sets</li>
+        <li><strong>Pink/rose lehenga:</strong> Kundan with pink stones or all-gold sets</li>
+        <li><strong>Blue/teal lehenga:</strong> Silver or white-stone polki sets</li>
+      </ul>
+
+      <h2>The Complete Bridal Jewelry Set</h2>
+      <p>A full Indian bridal jewelry set typically includes:</p>
+      <ul>
+        <li><strong>Necklace set:</strong> Choker + long necklace (rani haar)</li>
+        <li><strong>Earrings:</strong> Matching the necklace, usually jhumka style</li>
+        <li><strong>Maang tikka:</strong> Forehead ornament</li>
+        <li><strong>Nose ring (nath):</strong> Traditional for many brides</li>
+        <li><strong>Bangles or kadas:</strong> Gold or glass bangles</li>
+        <li><strong>Ring:</strong> Usually on the left hand</li>
+      </ul>
+
+      <h2>How to Shop for Bridal Jewelry Online in the USA</h2>
+      <p>When you <a href="/jewelry">shop wedding looks online in the USA</a>, look for:</p>
+      <ul>
+        <li><strong>Clear material descriptions:</strong> Kundan, polki, or gold-plated — know what you're buying</li>
+        <li><strong>Multiple photos:</strong> Close-ups of stonework and clasps</li>
+        <li><strong>Dimensions:</strong> Necklace length and earring drop should be listed</li>
+        <li><strong>Weight:</strong> Heavier pieces use more material and cost more</li>
+        <li><strong>Return policy:</strong> Understand before buying</li>
+      </ul>
+
+      <h2>Caring for Your Bridal Jewelry</h2>
+      <ul>
+        <li>Store in a soft cloth or jewelry box, separated to prevent scratching</li>
+        <li>Avoid contact with water, perfume, and cosmetics</li>
+        <li>Clean with a soft dry cloth — never use chemical cleaners</li>
+        <li>Put jewelry on last (after makeup and perfume) and take it off first</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Is Kundan or polki better for a bride?</h3>
+      <p>Both are traditional — Kundan is more colorful and affordable; polki is more luxurious and has a softer, antique sparkle. Many brides choose Kundan for the ceremony and polki for the reception.</p>
+
+      <h3>How much should I budget for bridal jewelry?</h3>
+      <p>Bridal jewelry costs range from $200 for a simple Kundan set to $2,000+ for polki. Budget 10-15% of your total wedding outfit cost for jewelry.</p>
+
+      <h3>Can I wear bridal jewelry after the wedding?</h3>
+      <p>Yes — simpler pieces like earrings and rings can be worn for festivities and parties. The full necklace set is typically reserved for special occasions.</p>
+
+      <p>Find your perfect bridal jewelry set. <a href="/jewelry">Shop Indian bridal jewelry online</a> with worldwide shipping to the USA.</p>
+    `,
+    author: 'LuxeMia Editorial Team',
+    publishedAt: '2026-05-15',
+    updatedAt: '2026-05-15',
+    category: 'Bridal Guide',
+    tags: ['indian bridal jewelry sets', 'shop wedding looks online usa', 'traditional wedding necklaces', 'south asian bridal jewelry', 'kundan bridal jewelry', 'bridal necklace set'],
+    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    readTime: 9
+  },
+
+  {
+    id: '45',
+    slug: 'lehenga-choli-designer-bridal-party-wear-guide',
+    title: 'Lehenga Choli Designer Styles: Bridal & Party Wear Guide 2026',
+    excerpt: 'From bridal masterpieces to party-ready festive lehengas — the complete guide to designer lehenga choli styles, fabrics, and how to choose the right one for your occasion.',
+    content: `
+      <p>The lehenga choli is the most iconic Indian garment — worn by brides, wedding guests, and festive celebrants alike. Whether you're shopping for a <a href="/lehengas">designer bridal lehenga choli</a> or a stylish party-wear lehenga, this guide covers everything you need to know about the latest lehenga choli designs.</p>
+
+      <h2>Types of Lehenga Choli by Occasion</h2>
+      <h3>Bridal Lehenga Choli</h3>
+      <p>The bridal lehenga is the most elaborate — heavy embroidery, rich fabrics, and a dramatic silhouette. Bridal lehengas are typically in red, maroon, or deep colors for the main ceremony. <a href="/lehengas">Browse bridal lehenga choli</a> in our collection.</p>
+
+      <h3>Wedding Guest Lehengas</h3>
+      <p>For wedding guests, lighter lehengas in pastel or jewel tones are ideal. You want to look festive without overshadowing the bride. Embroidered georgette or net lehengas work beautifully.</p>
+
+      <h3>Festive & Party Wear Lehengas</h3>
+      <p>For Diwali, Navratri, and parties, a stylish lehenga in a vibrant color with sequin or mirror work is perfect. These are lighter and more comfortable for dancing.</p>
+
+      <h3>Engagement & Reception Lehengas</h3>
+      <p>For pre-wedding functions, many brides choose a lighter lehenga in a non-traditional color — pastels, blues, or even black. These are often more modern in silhouette.</p>
+
+      <h2>Choosing the Right Fabric</h2>
+      <h3>Raw Silk Lehengas</h3>
+      <p>The traditional choice for bridal lehengas — structured, rich, and perfect for heavy embroidery. Raw silk holds its shape beautifully throughout the wedding day.</p>
+
+      <h3>Velvet Lehengas</h3>
+      <p>Luxurious and warm, velvet is ideal for winter weddings. The fabric's depth makes it perfect for deep colors and intricate zari work.</p>
+
+      <h3>Georgette Lehengas</h3>
+      <p>Lightweight and flowing, georgette is comfortable for summer weddings and destination ceremonies. It creates beautiful movement.</p>
+
+      <h3>Net Lehengas</h3>
+      <p>Net lehengas are light and ethereal — often layered over a satin or silk base. They're popular for engagement and reception functions.</p>
+
+      <h2>Lehenga Silhouettes: Which Shape Flatters You?</h2>
+      <h3>A-Line Lehenga</h3>
+      <p>The most classic silhouette — fitted at the waist and flares out to an A-shape. Flatters all body types and is the safest choice.</p>
+
+      <h3>Flared (Circular) Lehenga</h3>
+      <p>Maximum flare with lots of panels (kalis). Creates dramatic movement — perfect for the bridal entry and photographs.</p>
+
+      <h3>Straight-Cut Lehenga</h3>
+      <p>A modern silhouette that falls straight from the waist. Sleek and contemporary — ideal for reception parties.</p>
+
+      <h3>Mermaid (Fishtail) Lehenga</h3>
+      <p>Fitted through the hips and thighs, then flares at the knee. Very glamorous and body-hugging — best for slim figures.</p>
+
+      <h2>Embroidery Types Explained</h2>
+      <ul>
+        <li><strong>Zari work:</strong> Gold or silver thread embroidery — traditional and rich</li>
+        <li><strong>Zardozi:</strong> Metallic thread work with sequins and beads — heavy and opulent</li>
+        <li><strong>Thread work:</strong> Colored thread embroidery — lighter and more colorful</li>
+        <li><strong>Mirror work:</strong> Small mirrors sewn into the fabric — festive and Rajasthani</li>
+        <li><strong>Sequin work:</strong> Sequins for sparkle — popular for party wear</li>
+        <li><strong>Stone work:</strong> Kundan or crystal stones — bridal and luxurious</li>
+      </ul>
+
+      <h2>How to Style Your Lehenga Choli</h2>
+      <h3>Dupatta Draping</h3>
+      <p>The dupatta can be draped in multiple ways — over both shoulders, one shoulder, or as a veil. For a bridal look, a double dupatta (one on the head, one on the shoulder) is traditional.</p>
+
+      <h3>Blouse Design</h3>
+      <p>The choli (blouse) can be sleeveless, short-sleeved, or full-sleeved. Deep backs, sweetheart necklines, and off-shoulder styles are trending in 2026.</p>
+
+      <h3>Accessorizing</h3>
+      <p>Pair your lehenga with <a href="/jewelry">bridal jewelry</a>, a maang tikka, and kamarbandh (waist belt) for a complete bridal look. For party wear, keep it simpler with earrings and bangles.</p>
+
+      <h2>Sizing and Fit</h2>
+      <p>Lehenga sizing is based on bust and waist measurements. For the best fit:</p>
+      <ul>
+        <li>Measure your bust, waist, and hips accurately</li>
+        <li>Choose made-to-measure for a perfect fit — see our <a href="/sizing-measurements-guide">measurement guide</a></li>
+        <li>The lehenga skirt is typically 40-42 inches long; specify if you need longer</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>What is the difference between a bridal lehenga and a party wear lehenga?</h3>
+      <p>Bridal lehengas are heavier, with more embroidery and richer fabrics. Party wear lehengas are lighter, more comfortable, and often in brighter or pastel colors.</p>
+
+      <h3>How much does a designer lehenga choli cost?</h3>
+      <p>Designer lehenga choli prices range from $150 for a simple party wear lehenga to $1,500+ for a heavily embroidered bridal lehenga. <a href="/lehengas">Browse our collection</a> for options at every price point.</p>
+
+      <h3>Can I wear a lehenga to a wedding as a guest?</h3>
+      <p>Yes — a lighter lehenga in a non-red color is perfect for wedding guests. Avoid red and maroon, which are traditionally reserved for the bride.</p>
+
+      <p>Find your perfect lehenga choli. <a href="/lehengas">Shop the latest lehenga choli designs</a> with worldwide shipping.</p>
+    `,
+    author: 'LuxeMia Editorial Team',
+    publishedAt: '2026-05-20',
+    updatedAt: '2026-05-20',
+    category: 'Fashion Guide',
+    tags: ['lehenga choli designer bridal party wear', 'buy designer lehenga choli online usa', 'stylish elegant lehengas for women', 'latest lehenga choli designs', 'bridal lehenga choli', 'designer lehengas'],
+    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    readTime: 10
   }
 
 ];

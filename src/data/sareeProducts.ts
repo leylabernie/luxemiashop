@@ -51,7 +51,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Occasional",
     color: "Yellow",
     work: "Embroidery Work",
-    tags: ["occasional", "silk", "yellow", "embroidery", "haldi", "festive"],
+    tags: ["occasional", "silk", "yellow", "embroidery", "haldi", "festive", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-026-free", title: "Free Size", price: convertPrice(4045), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -69,7 +69,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Occasional",
     color: "Light Pink",
     work: "Embroidery Work",
-    tags: ["occasional", "silk", "pink", "embroidery", "engagement", "romantic"],
+    tags: ["occasional", "silk", "pink", "embroidery", "engagement", "romantic", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-027-free", title: "Free Size", price: convertPrice(4045), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -87,7 +87,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Occasional",
     color: "Green",
     work: "Embroidery Work",
-    tags: ["occasional", "silk", "green", "embroidery", "mehndi", "auspicious"],
+    tags: ["occasional", "silk", "green", "embroidery", "mehndi", "auspicious", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-028-free", title: "Free Size", price: convertPrice(4045), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -105,7 +105,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Occasional",
     color: "Sea Green",
     work: "Embroidery Work",
-    tags: ["occasional", "silk", "sea-green", "embroidery", "destination", "serene"],
+    tags: ["occasional", "silk", "sea-green", "embroidery", "destination", "serene", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-029-free", title: "Free Size", price: convertPrice(4045), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -123,7 +123,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Rani Pink",
     work: "Sequins Work",
-    tags: ["casual", "silk", "rani-pink", "sequins", "daily", "vibrant"],
+    tags: ["casual", "silk", "rani-pink", "sequins", "daily", "vibrant", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-030-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -141,7 +141,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Rust Orange",
     work: "Sequins Work",
-    tags: ["casual", "silk", "rust-orange", "sequins", "autumn", "warm"],
+    tags: ["casual", "silk", "rust-orange", "sequins", "autumn", "warm", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-031-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -159,7 +159,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Blue",
     work: "Sequins Work",
-    tags: ["casual", "silk", "blue", "sequins", "office", "versatile"],
+    tags: ["casual", "silk", "blue", "sequins", "office", "versatile", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-032-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -177,7 +177,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Mustard",
     work: "Weaving Work",
-    tags: ["festive", "banarasi", "silk", "mustard", "weaving", "traditional"],
+    tags: ["festive", "banarasi", "silk", "mustard", "weaving", "traditional", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-033-free", title: "Free Size", price: convertPrice(1695), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -195,7 +195,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Mint Green",
     work: "Weaving Work",
-    tags: ["festive", "banarasi", "silk", "mint-green", "weaving", "contemporary"],
+    tags: ["festive", "banarasi", "silk", "mint-green", "weaving", "contemporary", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-034-free", title: "Free Size", price: convertPrice(1695), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -213,7 +213,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Occasional",
     color: "Teal Green",
     work: "Embroidery Work",
-    tags: ["occasional", "satin", "teal-green", "embroidery", "sophisticated", "elegant"],
+    tags: ["occasional", "satin", "teal-green", "embroidery", "sophisticated", "elegant", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-035-free", title: "Free Size", price: convertPrice(1995), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -233,7 +233,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Mint Green",
     work: "Weaving Work",
-    tags: ["wedding", "silk", "mint-green", "kanchipuram", "weaving", "traditional"],
+    tags: ["wedding", "silk", "mint-green", "kanchipuram", "weaving", "traditional", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-001-free", title: "Free Size", price: convertPrice(12195), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -251,7 +251,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Pink",
     work: "Weaving Work",
-    tags: ["wedding", "silk", "pink", "kanchipuram", "weaving", "bridal"],
+    tags: ["wedding", "silk", "pink", "kanchipuram", "weaving", "bridal", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-002-free", title: "Free Size", price: convertPrice(12195), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -269,7 +269,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Beige",
     work: "Weaving Work",
-    tags: ["wedding", "silk", "beige", "kanchipuram", "weaving", "elegant"],
+    tags: ["wedding", "silk", "beige", "kanchipuram", "weaving", "elegant", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-003-free", title: "Free Size", price: convertPrice(11545), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -287,7 +287,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Multi Color",
     work: "Weaving Work",
-    tags: ["wedding", "silk", "multicolor", "kanchipuram", "weaving", "vibrant"],
+    tags: ["wedding", "silk", "multicolor", "kanchipuram", "weaving", "vibrant", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-004-free", title: "Free Size", price: convertPrice(11845), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -305,7 +305,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Gold",
     work: "Weaving Work",
-    tags: ["wedding", "silk", "gold", "kanchipuram", "weaving", "royal"],
+    tags: ["wedding", "silk", "gold", "kanchipuram", "weaving", "royal", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-005-free", title: "Free Size", price: convertPrice(11545), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -323,7 +323,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Beige Gold",
     work: "Weaving Work",
-    tags: ["wedding", "tissue-silk", "beige", "gold", "lightweight", "elegant"],
+    tags: ["wedding", "tissue-silk", "beige", "gold", "lightweight", "elegant", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-006-free", title: "Free Size", price: convertPrice(2645), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -341,7 +341,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Pink",
     work: "Weaving Work",
-    tags: ["wedding", "tissue-silk", "pink", "romantic", "lightweight", "sangeet"],
+    tags: ["wedding", "tissue-silk", "pink", "romantic", "lightweight", "sangeet", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-007-free", title: "Free Size", price: convertPrice(2645), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -359,7 +359,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Sea Green",
     work: "Weaving Work",
-    tags: ["wedding", "tissue-silk", "sea-green", "coastal", "destination", "fresh"],
+    tags: ["wedding", "tissue-silk", "sea-green", "coastal", "destination", "fresh", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-008-free", title: "Free Size", price: convertPrice(2645), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -377,7 +377,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Orange",
     work: "Weaving Work",
-    tags: ["wedding", "tissue-silk", "orange", "sunset", "haldi", "auspicious"],
+    tags: ["wedding", "tissue-silk", "orange", "sunset", "haldi", "auspicious", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-009-free", title: "Free Size", price: convertPrice(2645), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -395,7 +395,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Wedding",
     color: "Lavender",
     work: "Weaving Work",
-    tags: ["wedding", "tissue-silk", "lavender", "contemporary", "destination", "dreamy"],
+    tags: ["wedding", "tissue-silk", "lavender", "contemporary", "destination", "dreamy", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-010-free", title: "Free Size", price: convertPrice(2645), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -415,7 +415,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Party",
     color: "Royal Blue",
     work: "Sequins Work",
-    tags: ["party", "georgette", "blue", "sequins", "cocktail", "evening"],
+    tags: ["party", "georgette", "blue", "sequins", "cocktail", "evening", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-011-free", title: "Free Size", price: convertPrice(3495), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -433,7 +433,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Party",
     color: "Wine",
     work: "Sequins Work",
-    tags: ["party", "georgette", "wine", "sequins", "evening", "glamour"],
+    tags: ["party", "georgette", "wine", "sequins", "evening", "glamour", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-012-free", title: "Free Size", price: convertPrice(3495), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -451,7 +451,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Party",
     color: "Emerald Green",
     work: "Sequins Work",
-    tags: ["party", "georgette", "green", "sequins", "cocktail", "nature"],
+    tags: ["party", "georgette", "green", "sequins", "cocktail", "nature", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-013-free", title: "Free Size", price: convertPrice(3495), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -469,7 +469,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Party",
     color: "Dusty Rose",
     work: "Sequins Work",
-    tags: ["party", "georgette", "dusty-rose", "sequins", "romantic", "feminine"],
+    tags: ["party", "georgette", "dusty-rose", "sequins", "romantic", "feminine", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-014-free", title: "Free Size", price: convertPrice(3295), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -487,7 +487,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Party",
     color: "Black",
     work: "Sequins Work",
-    tags: ["party", "georgette", "black", "sequins", "evening", "statement"],
+    tags: ["party", "georgette", "black", "sequins", "evening", "statement", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-015-free", title: "Free Size", price: convertPrice(3495), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -507,7 +507,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Sky Blue",
     work: "Print Work",
-    tags: ["casual", "cotton", "blue", "print", "daily", "comfort"],
+    tags: ["casual", "cotton", "blue", "print", "daily", "comfort", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-016-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -525,7 +525,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Peach",
     work: "Print Work",
-    tags: ["casual", "cotton", "peach", "print", "daily", "soft"],
+    tags: ["casual", "cotton", "peach", "print", "daily", "soft", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-017-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -543,7 +543,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Mint Green",
     work: "Print Work",
-    tags: ["casual", "cotton", "mint", "print", "fresh", "contemporary"],
+    tags: ["casual", "cotton", "mint", "print", "fresh", "contemporary", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-018-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -561,7 +561,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Coral",
     work: "Print Work",
-    tags: ["casual", "cotton", "coral", "print", "vibrant", "daily"],
+    tags: ["casual", "cotton", "coral", "print", "vibrant", "daily", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-019-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -579,7 +579,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Casual",
     color: "Lavender",
     work: "Print Work",
-    tags: ["casual", "cotton", "lavender", "print", "dreamy", "contemporary"],
+    tags: ["casual", "cotton", "lavender", "print", "dreamy", "contemporary", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-020-free", title: "Free Size", price: convertPrice(1895), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -599,7 +599,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Magenta",
     work: "Weaving Work",
-    tags: ["festive", "art-silk", "magenta", "weaving", "diwali", "navratri"],
+    tags: ["festive", "art-silk", "magenta", "weaving", "diwali", "navratri", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-021-free", title: "Free Size", price: convertPrice(2995), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -617,7 +617,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Teal Green",
     work: "Weaving Work",
-    tags: ["festive", "art-silk", "teal", "weaving", "diwali", "prosperity"],
+    tags: ["festive", "art-silk", "teal", "weaving", "diwali", "prosperity", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-022-free", title: "Free Size", price: convertPrice(2995), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -635,7 +635,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Maroon",
     work: "Weaving Work",
-    tags: ["festive", "art-silk", "maroon", "weaving", "puja", "traditional"],
+    tags: ["festive", "art-silk", "maroon", "weaving", "puja", "traditional", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-023-free", title: "Free Size", price: convertPrice(2995), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -653,7 +653,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Mustard Yellow",
     work: "Weaving Work",
-    tags: ["festive", "art-silk", "yellow", "weaving", "basant", "auspicious"],
+    tags: ["festive", "art-silk", "yellow", "weaving", "basant", "auspicious", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-024-free", title: "Free Size", price: convertPrice(2995), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   },
@@ -671,7 +671,7 @@ export const sareeProducts: SareeProduct[] = [
     occasion: "Festival",
     color: "Royal Purple",
     work: "Weaving Work",
-    tags: ["festive", "art-silk", "purple", "weaving", "evening", "regal"],
+    tags: ["festive", "art-silk", "purple", "weaving", "evening", "regal", "designer sarees online usa", "bridal silk sarees", "wedding saree online", "banarasi silk saree", "kanchipuram silk saree", "designer sarees for weddings"],
     variants: [{ id: "saree-025-free", title: "Free Size", price: convertPrice(2995), options: { Size: "Free Size" } }],
     options: [{ name: "Size", values: ["Free Size"] }]
   }
