@@ -1,0 +1,84 @@
+# LuxeMia — Full Page Inventory for AI Crawlers
+# https://luxemia.shop/llms-full.txt
+#
+# This file lists all crawlable pages on luxemia.shop for AI search engines
+# (Perplexity, ChatGPT, Claude, Gemini, Copilot). Updated automatically on build.
+
+## Homepage
+
+- https://luxemia.shop/
+
+## Product Collections (Category Pages)
+
+- https://luxemia.shop/lehengas
+- https://luxemia.shop/sarees
+- https://luxemia.shop/suits
+- https://luxemia.shop/menswear
+- https://luxemia.shop/indowestern
+- https://luxemia.shop/new-arrivals
+- https://luxemia.shop/bestsellers
+- https://luxemia.shop/collections
+
+## Occasion Landing Pages
+
+- https://luxemia.shop/collections/diwali-outfits
+- https://luxemia.shop/collections/wedding-guest-outfits
+- https://luxemia.shop/collections/mehendi-outfits
+- https://luxemia.shop/collections/eid-outfits
+- https://luxemia.shop/collections/navratri-outfits
+
+## Guides & Tools
+
+- https://luxemia.shop/sizing-measurements-guide
+- https://luxemia.shop/size-guide
+- https://luxemia.shop/care-guide
+- https://luxemia.shop/style-consultation
+- https://luxemia.shop/style-quiz
+
+## Brand & Content
+
+- https://luxemia.shop/brand-story
+- https://luxemia.shop/lookbook
+- https://luxemia.shop/blog
+- https://luxemia.shop/press
+- https://luxemia.shop/artisans
+- https://luxemia.shop/sustainability
+
+## NRI Landing Pages
+
+- https://luxemia.shop/nri
+- https://luxemia.shop/nri/usa
+- https://luxemia.shop/nri/canada
+- https://luxemia.shop/indian-ethnic-wear-usa
+- https://luxemia.shop/indian-ethnic-wear-canada
+
+## Customer Service Pages
+
+- https://luxemia.shop/contact
+- https://luxemia.shop/faq
+- https://luxemia.shop/shipping
+- https://luxemia.shop/returns
+- https://luxemia.shop/privacy
+- https://luxemia.shop/terms
+
+## Blog Posts
+
+- https://luxemia.shop/blog/sharara-suit-guide-2026-styles-fabrics
+- https://luxemia.shop/blog/pakistani-suits-anarkali-shopping-guide
+- https://luxemia.shop/blog/style-lehenga-choli-every-wedding-event
+- https://luxemia.shop/blog/banarasi-silk-saree-buying-guide
+- https://luxemia.shop/blog/indian-wedding-guest-outfit-ideas
+
+## Structured Data & Feeds
+
+- https://luxemia.shop/sitemap.xml
+- https://luxemia.shop/merchant-feed.xml
+- https://luxemia.shop/robots.txt
+- https://luxemia.shop/llms.txt
+- https://luxemia.shop/manifest.json
+
+## Contact
+
+- WhatsApp: +1-215-341-9990
+- Email: hello@luxemia.shop
+- Address: 2208 Michener St, Philadelphia, PA 19115, USA

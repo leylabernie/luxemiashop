@@ -254,6 +254,71 @@ export function generateOrganizationSchema() {
   };
 }
 
+// ─── WebPage Schema ────────────────────────────────────────────────────────
+
+/**
+ * Generate a WebPage schema for any page.
+ * Helps search engines understand the page type, its relationship to the site,
+ * and enables rich result features like "Breadcrumbs" in SERP.
+ */
+export function generateWebPageSchema(options: {
+  url: string;
+  title: string;
+  description: string;
+  type?: string;
+  breadcrumbs?: Array<{ name: string; url: string }>;
+}) {
+  const pageType = options.type || 'WebPage';
+  const breadcrumbSchema = options.breadcrumbs && options.breadcrumbs.length > 0
+    ? generateBreadcrumbSchema(options.breadcrumbs)
+    : null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': pageType,
+    '@id': options.url,
+    url: options.url,
+    name: options.title,
+    description: options.description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    ...(breadcrumbSchema && { breadcrumb: breadcrumbSchema }),
+  };
+}
+
+// ─── SiteNavigationElement Schema ──────────────────────────────────────────
+
+/**
+ * Generate a SiteNavigationElement schema for the main site navigation.
+ * Helps Google understand site structure for sitelinks and rich results.
+ * Emitted once per page (in SEOHead) so crawlers always see the full nav.
+ */
+export function generateSiteNavigationSchema() {
+  const navItems = [
+    { name: 'Lehengas', url: '/lehengas' },
+    { name: 'Sarees', url: '/sarees' },
+    { name: 'Suits', url: '/suits' },
+    { name: 'Menswear', url: '/menswear' },
+    { name: 'Indo-Western', url: '/indowestern' },
+    { name: 'New Arrivals', url: '/new-arrivals' },
+    { name: 'Bestsellers', url: '/bestsellers' },
+    { name: 'Collections', url: '/collections' },
+    { name: 'Blog', url: '/blog' },
+    { name: 'Brand Story', url: '/brand-story' },
+  ];
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SiteNavigationElement',
+    name: 'Main Navigation',
+    url: SITE_URL,
+    hasPart: navItems.map(item => ({
+      '@type': 'SiteNavigationElement',
+      name: item.name,
+      url: `${SITE_URL}${item.url}`,
+    })),
+  };
+}
+
 // ─── Google Product Category Helper ────────────────────────────────────────
 
 export function getGoogleProductCategory(productType?: string, title?: string): string {

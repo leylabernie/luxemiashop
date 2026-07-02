@@ -3,6 +3,8 @@ import {
   generateProductSchema,
   generateBreadcrumbSchema,
   generateFaqSchema,
+  generateWebPageSchema,
+  generateSiteNavigationSchema,
   forceJpegForGmc,
   SITE_URL,
 } from '@/lib/schema';
@@ -136,6 +138,17 @@ const SEOHead = ({
     ? generateFaqSchema(faqs)
     : null;
 
+  // WebPage Schema — helps search engines understand page context
+  const webPageSchema = generateWebPageSchema({
+    url: canonicalUrl,
+    title,
+    description,
+    breadcrumbs: breadcrumbs || undefined,
+  });
+
+  // SiteNavigationElement Schema — helps Google understand site structure for sitelinks
+  const siteNavSchema = generateSiteNavigationSchema();
+
   // NOTE: ItemList schema for collection pages is now generated server-side
   // by scripts/prerender.js and injected into the prerendered HTML at build
   // time. This client-side injection was removed because it produced a
@@ -226,6 +239,13 @@ const SEOHead = ({
           {JSON.stringify(faqSchema)}
         </script>
       )}
+      {/* WebPage + SiteNavigation schemas — emitted on every page for sitelinks & rich results */}
+      <script type="application/ld+json">
+        {JSON.stringify(webPageSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(siteNavSchema)}
+      </script>
     </Helmet>
   );
 };

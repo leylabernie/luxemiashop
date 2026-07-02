@@ -3,14 +3,57 @@
   "short_name": "LuxeMia",
   "description": "Shop affordable Indian ethnic wear. Lehengas, silk sarees, salwar suits & more. Free worldwide shipping.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
+  "lang": "en-US",
+  "dir": "ltr",
   "background_color": "#ffffff",
   "theme_color": "#1a1a1a",
+  "categories": ["shopping", "lifestyle", "fashion"],
   "icons": [
     {
       "src": "/favicon.ico",
       "sizes": "48x48",
       "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Shop Lehengas",
+      "short_name": "Lehengas",
+      "description": "Browse bridal and designer lehengas",
+      "url": "/lehengas"
+    },
+    {
+      "name": "Shop Sarees",
+      "short_name": "Sarees",
+      "description": "Browse wedding and designer sarees",
+      "url": "/sarees"
+    },
+    {
+      "name": "Shop Suits",
+      "short_name": "Suits",
+      "description": "Browse salwar kameez and anarkali suits",
+      "url": "/suits"
+    },
+    {
+      "name": "Shop Menswear",
+      "short_name": "Menswear",
+      "description": "Browse sherwanis and kurta pyjama",
+      "url": "/menswear"
+    },
+    {
+      "name": "New Arrivals",
+      "short_name": "New",
+      "description": "Latest arrivals at LuxeMia",
+      "url": "/new-arrivals"
+    },
+    {
+      "name": "Collections",
+      "short_name": "All",
+      "description": "Browse all collections",
+      "url": "/collections"
     }
   ]
 }

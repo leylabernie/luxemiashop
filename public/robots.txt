@@ -83,6 +83,11 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
+# ─── AI Search Engine Discovery ──────────────────────────────────────────────
+# llms.txt — human-readable summary for AI crawlers (Perplexity, ChatGPT, etc.)
+# llms-full.txt — full page inventory for AI crawlers
+# These help AI search engines understand the site structure and content.
+
 # ─── Sitemaps ────────────────────────────────────────────────────────────────
 # Primary sitemap — regenerated on each build, contains ONLY 200 OK canonical URLs.
 Sitemap: https://luxemia.shop/sitemap.xml

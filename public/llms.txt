@@ -25,7 +25,23 @@
 - Three stitching options: Unstitched (DIY), Ready to Wear (standard sizes), Made to Measure (custom-stitched to your body)
 - Free worldwide shipping on orders over $350 to USA, UK, Canada, Australia, New Zealand, Singapore, UAE, Germany
 - Personal styling support over WhatsApp before and after purchase
-- 7-day easy returns, secure checkout, FedEx/DHL/USPS tracked delivery
+- Secure checkout, FedEx/DHL/USPS tracked delivery
+
+## Shipping & dispatch
+
+- **Free shipping**: Orders over $350 USD to USA, Canada, Australia
+- **Flat rate**: $25 USD for orders under $350
+- **Dispatch time**: Ready-to-wear items dispatch in 3–5 business days; made-to-measure and custom-stitched items dispatch in 5–7 business days
+- **Transit time**: 7–10 business days via USPS/UPS/DHL with tracking
+- **Customs duties**: Buyer's responsibility — check with your local customs office
+- Full policy: https://luxemia.shop/shipping
+
+## Returns & refunds
+
+- **All sales are final** — LuxeMia does not accept returns or exchanges for any reason, including sizing issues or colour variations
+- **Damage claims**: Accepted within 48 hours of delivery with mandatory unboxing video
+- **Cancellations**: Accepted within 24 hours of order placement for a full refund
+- Full policy: https://luxemia.shop/returns
 
 ## Common questions
 
@@ -34,16 +50,51 @@
 - **What is Unstitched?** You receive the fabric, dupatta and trims to stitch with your own tailor.
 - **Do you ship to USA / UK / Canada?** Yes — worldwide shipping with tracked delivery, free over $350.
 - **How long does delivery take?** 7–14 business days for ready-to-wear; 14–21 days for made-to-measure.
-- **Are returns accepted?** Yes — 7-day easy returns on standard-size items.
+- **Are returns accepted?** All sales are final. Only genuine shipping damage claims are accepted within 48 hours with unboxing video.
 
 ## Key collections
 
-- Lehengas: https://luxemia.shop/collections/lehengas
-- Sarees: https://luxemia.shop/collections/sarees
-- Salwar Suits: https://luxemia.shop/collections/salwar-suits
-- Menswear: https://luxemia.shop/collections/menswear
-- All products: https://luxemia.shop/products
+- Lehengas: https://luxemia.shop/lehengas
+- Sarees: https://luxemia.shop/sarees
+- Salwar Suits: https://luxemia.shop/suits
+- Menswear: https://luxemia.shop/menswear
+- Indo-Western: https://luxemia.shop/indowestern
+- New Arrivals: https://luxemia.shop/new-arrivals
+- Bestsellers: https://luxemia.shop/bestsellers
+- All collections: https://luxemia.shop/collections
+
+## Occasion collections
+
+- Diwali outfits: https://luxemia.shop/collections/diwali-outfits
+- Wedding guest outfits: https://luxemia.shop/collections/wedding-guest-outfits
+- Mehendi outfits: https://luxemia.shop/collections/mehendi-outfits
+- Eid outfits: https://luxemia.shop/collections/eid-outfits
+- Navratri outfits: https://luxemia.shop/collections/navratri-outfits
+
+## Guides & resources
+
+- Sizing & measurements guide: https://luxemia.shop/sizing-measurements-guide
+- Size guide: https://luxemia.shop/size-guide
+- Care guide: https://luxemia.shop/care-guide
+- Style consultation: https://luxemia.shop/style-consultation
+- Style quiz: https://luxemia.shop/style-quiz
+- Brand story: https://luxemia.shop/brand-story
+- Blog: https://luxemia.shop/blog
+- FAQ: https://luxemia.shop/faq
+- Contact: https://luxemia.shop/contact
+
+## NRI landing pages
+
+- NRI hub: https://luxemia.shop/nri
+- USA: https://luxemia.shop/nri/usa
+- Canada: https://luxemia.shop/nri/canada
+- Indian ethnic wear USA: https://luxemia.shop/indian-ethnic-wear-usa
+- Indian ethnic wear Canada: https://luxemia.shop/indian-ethnic-wear-canada
 
 ## Ideal customer
 
 NRI brides and Indian women in the USA, UK, Canada, Australia, and other diaspora markets shopping for designer Indian wedding wear, festive outfits for Diwali, Karva Chauth, Navratri, Eid, and party wear for receptions, sangeet, mehendi, and engagement ceremonies.
+
+## Full page inventory
+
+For a complete list of all crawlable pages, see: https://luxemia.shop/llms-full.txt

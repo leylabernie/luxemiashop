@@ -30,43 +30,43 @@ export interface PageMetadata {
 export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/': {
     title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
+    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & wedding collections. Free shipping over $350 to USA, Canada & Australia.',
     canonical: SITE_URL,
     image: `${SITE_URL}/og-image.jpg`,
   },
   '/sarees': {
     title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
-    description: 'Shop beautiful silk sarees, bridal sarees, and designer sarees at LuxeMia. Banarasi, Kanchipuram, and georgette sarees. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Shop silk, bridal & designer sarees at LuxeMia. Banarasi, Kanchipuram & georgette sarees. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/sarees`,
     image: `${SITE_URL}/og/og-sarees.jpg`,
   },
   '/lehengas': {
     title: 'Lehengas Collection | Bridal & Wedding Lehengas Online | LuxeMia',
-    description: 'Shop stunning bridal lehengas, wedding lehengas, and festive lehengas at LuxeMia. Embroidered, silk, and designer lehengas. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Shop bridal & wedding lehengas at LuxeMia. Embroidered, silk & designer lehengas for every occasion. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/lehengas`,
     image: `${SITE_URL}/og/og-lehengas.jpg`,
   },
   '/suits': {
     title: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
-    description: 'Shop elegant salwar kameez, anarkali suits, palazzo suits, and sharara sets at LuxeMia. Pakistani suits and designer suits. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Shop salwar kameez, anarkali & palazzo suits at LuxeMia. Pakistani & designer suits with handcrafted embroidery. Free shipping over $350 to USA & Canada.',
     canonical: `${SITE_URL}/suits`,
     image: `${SITE_URL}/og/og-suits.jpg`,
   },
   '/menswear': {
     title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
-    description: 'Shop premium sherwanis, kurta pajama sets, and indo-western menswear at LuxeMia. Wedding and festive collection. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Shop premium sherwanis, kurta pajama & indo-western menswear at LuxeMia. Wedding & festive collection. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/menswear`,
     image: `${SITE_URL}/og/og-menswear.jpg`,
   },
   '/jewelry': {
     title: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-    description: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Shop Kundan bridal jewelry & polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/jewelry`,
     image: `${SITE_URL}/og-image.jpg`,
   },
   '/collections': {
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
-    description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits, and menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits & menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/collections`,
     image: `${SITE_URL}/og-image.jpg`,
   },
@@ -78,7 +78,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/brand-story': {
     title: 'Our Story | About LuxeMia — Indian Ethnic Wear Brand',
-    description: 'Learn about LuxeMia, our passion for authentic Indian ethnic wear, ethical sourcing, and commitment to quality craftsmanship. Based in Philadelphia, shipping worldwide.',
+    description: 'Learn about LuxeMia — our passion for authentic Indian ethnic wear, ethical sourcing & quality craftsmanship. Based in Philadelphia, shipping worldwide.',
     canonical: `${SITE_URL}/brand-story`,
   },
   '/new-arrivals': {
@@ -128,7 +128,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/pages/shipping-customs': {
     title: 'Shipping & Customs | Import Duties & Local Taxes | LuxeMia',
-    description: 'Learn how international shipping and customs work at LuxeMia. Information on import duties, local taxes, and customs clearance for orders shipped from India to USA, Canada & Australia.',
+    description: 'Learn how international shipping & customs work at LuxeMia. Import duties, local taxes & customs clearance for orders to USA, Canada & Australia.',
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {
@@ -153,7 +153,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/faq': {
     title: 'FAQ | Frequently Asked Questions | LuxeMia',
-    description: 'Find answers to common questions about LuxeMia orders, shipping, sizing, fabric care, and Indian ethnic wear. Free shipping over $350 to USA, Canada & Australia.',
+    description: 'Answers to common LuxeMia questions on orders, shipping, sizing, fabric care & Indian ethnic wear. Free shipping over $350 to USA, Canada & Australia.',
     canonical: `${SITE_URL}/faq`,
   },
   '/size-guide': {

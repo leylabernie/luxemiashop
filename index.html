@@ -19,7 +19,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LuxeMia | Indian Ethnic Wear — Sarees & Lehengas</title>
-    <meta name="description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices." />
+    <meta name="description" content="Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping over $350 to USA, Canada & Australia." />
     <meta name="author" content="LuxeMia" />
     <meta name="keywords" content="indian ethnic wear, sarees online, lehengas, bridal lehenga, wedding sarees, anarkali suits, banarasi silk, affordable ethnic wear, indian wedding dress, buy sarees online, salwar kameez" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -32,6 +32,9 @@
     
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY" />
+
+    <!-- Bing Webmaster Tools Verification — replace PASTE_YOUR_BING_CODE_HERE with your actual verification code from Bing Webmaster Tools -->
+    <meta name="msvalidate.01" content="PASTE_YOUR_BING_CODE_HERE" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -204,9 +207,26 @@
           "publisher": { "@id": "https://luxemia.shop/#org" },
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://luxemia.shop/collections?q={search_term_string}",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://luxemia.shop/collections?q={search_term_string}"
+            },
             "query-input": "required name=search_term_string"
           }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://luxemia.shop/#webpage",
+          "name": "LuxeMia — Indian Ethnic Wear",
+          "url": "https://luxemia.shop",
+          "isPartOf": { "@id": "https://luxemia.shop/#website" },
+          "about": { "@id": "https://luxemia.shop/#org" }
+        },
+        {
+          "@type": "SpeakableSpecification",
+          "@id": "https://luxemia.shop/#speakable",
+          "cssSelector": ["h1", ".hero-title", ".product-title", "nav"],
+          "url": "https://luxemia.shop"
         },
         {
           "@type": "MerchantReturnPolicy",
