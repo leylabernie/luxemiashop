@@ -16,6 +16,11 @@ Disallow: /_prerender/
 # redirect sources unnecessarily (saves crawl budget).
 Disallow: /products/
 Disallow: /p/
+# Block URL parameter crawl traps (search, sort, filter) — saves crawl budget
+Disallow: /*?q=
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?page=
 
 # ─── Googlebot ───────────────────────────────────────────────────────────────
 User-agent: Googlebot
@@ -35,6 +40,7 @@ Allow: /merchant-feed.xml
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
+Disallow: /wishlist
 Disallow: /cart
 Disallow: /checkout
 Disallow: /api/
@@ -42,13 +48,17 @@ Disallow: /order-confirmation
 Disallow: /_prerender/
 Disallow: /products/
 Disallow: /p/
+Disallow: /*?q=
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /*?page=
 
 # ─── Googlebot-Image ─────────────────────────────────────────────────────────
-# Ensure Google can crawl all product images for Merchant Center
+# Ensure Google can crawl all product images for Merchant Center.
+# Note: external CDN domains (cdn.shopify.com, kesimg.b-cdn.net) are governed by
+# their own robots.txt — we only control crawling on luxemia.shop itself.
 User-agent: Googlebot-Image
 Allow: /
-Allow: /cdn.shopify.com/
-Allow: /kesimg.b-cdn.net/
 Allow: /*.jpg
 Allow: /*.jpeg
 Allow: /*.png
@@ -61,27 +71,78 @@ Allow: /
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+Disallow: /products/
+Disallow: /p/
+
+# ─── AI Search Bots (allowed for AI search visibility) ───────────────────────
+# AI bots are allowed to crawl public content for AI search engines (Perplexity,
+# ChatGPT, Claude, Gemini, Apple Intelligence) but are blocked from sensitive
+# paths — same disallow set as other bots.
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
 Disallow: /cart
 Disallow: /checkout
 Disallow: /api/
 Disallow: /order-confirmation
 Disallow: /_prerender/
 
-# ─── AI Search Bots (allowed for AI search visibility) ───────────────────────
-User-agent: OAI-SearchBot
-Allow: /
-
 User-agent: PerplexityBot
 Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
 
 User-agent: GPTBot
 Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
 
 User-agent: Applebot
 Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
 
 # ─── AI Search Engine Discovery ──────────────────────────────────────────────
 # llms.txt — human-readable summary for AI crawlers (Perplexity, ChatGPT, etc.)
