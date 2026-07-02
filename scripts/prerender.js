@@ -349,8 +349,8 @@ function generateItemListJsonLd(products, category, routePath) {
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & wedding collections. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'LuxeMia | Buy Indian Ethnic Wear Online — Lehengas, Sarees & Sherwanis',
+    description: 'Shop designer Indian ethnic wear online. Bridal lehengas, silk sarees, salwar suits & sherwanis. Luxury craftsmanship, worldwide shipping over $350.',
     h1: 'LuxeMia',
     content: `
       <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with shipping to USA, Canada, and Australia.</p>
@@ -376,8 +376,8 @@ const routes = [
   {
        path: '/suits',
     category: 'suits',
-    title: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
-    description: 'Shop salwar kameez, anarkali & palazzo suits at LuxeMia. Premium fabrics with handcrafted embroidery. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Buy Indian Designer Salwar Suits Online USA | Anarkali & Palazzo | LuxeMia',
+    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with handcrafted embroidery. Worldwide shipping.',
     h1: 'Salwar Kameez & Designer Suits Collection',
     content: `
       <p>Explore our curated collection of Salwar Kameez and anarkali ensembles. From elegant sharara sets to flowing palazzo suits, each piece features beautiful embroidery on premium fabrics like georgette, silk, and chiffon.</p>
@@ -429,8 +429,8 @@ const routes = [
   {
     path: '/lehengas',
     category: 'lehengas',
-    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia',
-    description: 'Buy bridal lehengas online at LuxeMia. Wedding lehenga choli, festive & party wear in silk, net & velvet. Custom sizing. Free shipping to USA & Canada.',
+    title: 'Buy Bridal & Wedding Lehengas Online | Designer Lehenga Choli | LuxeMia',
+    description: 'Buy bridal lehengas & wedding lehengas online. Designer bridal lehenga choli in silk & velvet with hand embroidery. Luxury craftsmanship, worldwide shipping.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
     content: `
       <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
@@ -533,8 +533,8 @@ const routes = [
   {
     path: '/menswear',
     category: 'menswear',
-    title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
-    description: 'Shop premium sherwanis, kurta pajama & indo-western menswear at LuxeMia. Wedding & festive collection. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Designer Sherwanis for Men Online USA | Wedding & Groom Sherwanis | LuxeMia',
+    description: 'Shop designer sherwanis for men online in USA. Premium sherwani for weddings & festive events, kurta pajama & indo-western. Luxury craftsmanship worldwide.',
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
     content: `
       <p>Discover our premium collection of Indian menswear. From regal sherwanis for grooms to elegant kurta sets and modern Indo-western outfits, crafted with premium fabrics and expert tailoring.</p>
@@ -591,8 +591,8 @@ const routes = [
   },
   {
     path: '/jewelry',
-    title: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-    description: 'Shop Kundan bridal jewelry & polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Indian Bridal Jewelry Sets | Traditional Wedding Necklaces | LuxeMia',
+    description: 'Shop Indian bridal jewelry sets online in USA. Traditional wedding necklaces, Kundan & polki sets. South Asian bridal jewelry with luxury craftsmanship.',
     h1: 'Kundan Bridal Jewelry Collection',
     content: `
       <p>Discover our handcrafted Kundan bridal jewelry collection — regal necklace sets, chokers, and full bridal sets featuring traditional Rajasthani stone-setting techniques. Each piece is designed for the modern NRI bride who wants to make a statement on her wedding day.</p>

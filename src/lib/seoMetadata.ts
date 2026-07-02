@@ -29,8 +29,8 @@ export interface PageMetadata {
  */
 export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/': {
-    title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & wedding collections. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'LuxeMia | Buy Indian Ethnic Wear Online — Lehengas, Sarees & Sherwanis',
+    description: 'Shop designer Indian ethnic wear online. Bridal lehengas, silk sarees, salwar suits & sherwanis. Luxury craftsmanship, worldwide shipping over $350.',
     canonical: SITE_URL,
     image: `${SITE_URL}/og-image.jpg`,
   },
@@ -41,26 +41,26 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     image: `${SITE_URL}/og/og-sarees.jpg`,
   },
   '/lehengas': {
-    title: 'Lehengas Collection | Bridal & Wedding Lehengas Online | LuxeMia',
-    description: 'Shop bridal & wedding lehengas at LuxeMia. Embroidered, silk & designer lehengas for every occasion. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Buy Bridal & Wedding Lehengas Online | Designer Lehenga Choli | LuxeMia',
+    description: 'Buy bridal lehengas & wedding lehengas online. Designer bridal lehenga choli in silk & velvet with hand embroidery. Luxury craftsmanship, worldwide shipping.',
     canonical: `${SITE_URL}/lehengas`,
     image: `${SITE_URL}/og/og-lehengas.jpg`,
   },
   '/suits': {
-    title: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
-    description: 'Shop salwar kameez, anarkali & palazzo suits at LuxeMia. Pakistani & designer suits with handcrafted embroidery. Free shipping over $350 to USA & Canada.',
+    title: 'Buy Indian Designer Salwar Suits Online USA | Anarkali & Palazzo | LuxeMia',
+    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with handcrafted embroidery. Worldwide shipping.',
     canonical: `${SITE_URL}/suits`,
     image: `${SITE_URL}/og/og-suits.jpg`,
   },
   '/menswear': {
-    title: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
-    description: 'Shop premium sherwanis, kurta pajama & indo-western menswear at LuxeMia. Wedding & festive collection. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Designer Sherwanis for Men Online USA | Wedding & Groom Sherwanis | LuxeMia',
+    description: 'Shop designer sherwanis for men online in USA. Premium sherwani for weddings & festive events, kurta pajama & indo-western. Luxury craftsmanship worldwide.',
     canonical: `${SITE_URL}/menswear`,
     image: `${SITE_URL}/og/og-menswear.jpg`,
   },
   '/jewelry': {
-    title: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-    description: 'Shop Kundan bridal jewelry & polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Indian Bridal Jewelry Sets | Traditional Wedding Necklaces | LuxeMia',
+    description: 'Shop Indian bridal jewelry sets online in USA. Traditional wedding necklaces, Kundan & polki sets. South Asian bridal jewelry with luxury craftsmanship.',
     canonical: `${SITE_URL}/jewelry`,
     image: `${SITE_URL}/og-image.jpg`,
   },
