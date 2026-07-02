@@ -7,6 +7,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/lehengas',
   '/sarees',
   '/menswear',
+  '/jewelry',
   '/blog',
   '/collections',
   '/brand-story',

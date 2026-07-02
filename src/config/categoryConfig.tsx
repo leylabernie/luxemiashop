@@ -698,6 +698,133 @@ const MENSWEAR: CategoryConfig = {
   ],
 };
 
+// ─── Jewelry (Kundan + Polki Bridal Jewelry) ───────────────────────────────
+
+const JEWELRY: CategoryConfig = {
+  slug: 'jewelry',
+  name: 'Bridal Jewelry',
+  heroImage: '/images/banners/jewelry-banner.jpg',
+  heroTitle: 'Bridal Jewelry',
+  heroSubtitle: 'Handcrafted Kundan and uncut polki necklace sets for the modern bride — regal statements for your wedding day.',
+  seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
+  seoDescription: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
+  canonical: 'https://luxemia.shop/jewelry',
+  ogImage: '/og-image.jpg',
+  breadcrumbs: [
+    { name: 'Home', url: '/' },
+    { name: 'Collections', url: '/collections' },
+    { name: 'Bridal Jewelry', url: '/jewelry' },
+  ],
+  subcategories: [
+    // By Stone Type
+    styleSub('kundan', 'Kundan', ['stone:kundan', 'kundan']),
+    styleSub('kundan-with-stone', 'Kundan with Stone', ['stone:kundan with stone', 'kundan with stone']),
+    styleSub('uncut-polki', 'Uncut Polki', ['stone:uncut polki', 'uncut polki', 'polki']),
+    styleSub('pearl', 'Pearl', ['stone:pearl', 'pearl']),
+    // By Jewelry Type
+    styleSub('necklace-set', 'Necklace Set', ['style:necklace set', 'necklace set']),
+    styleSub('choker', 'Choker Necklace', ['style:choker', 'choker']),
+    styleSub('bridal-set', 'Full Bridal Set', ['style:full bridal set', 'full bridal set', 'bridal set']),
+    styleSub('with-maang-tikka', 'With Maang Tikka', ['style:with maang tikka', 'maang tikka']),
+    // By Occasion
+    occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal']),
+    occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding']),
+    occasionSub('reception', 'Reception', ['occasion:reception', 'reception']),
+    occasionSub('engagement', 'Engagement', ['occasion:engagement', 'engagement']),
+    occasionSub('mehendi', 'Mehendi', ['occasion:mehendi', 'mehendi']),
+    occasionSub('sangeet', 'Sangeet', ['occasion:sangeet', 'sangeet']),
+    // By Color
+    colorSub('clear', 'Clear'),
+    colorSub('pearl-white', 'Pearl White'),
+    colorSub('multicolor', 'Multicolor'),
+    colorSub('green', 'Green'),
+    colorSub('red', 'Red'),
+    colorSub('pink', 'Pink'),
+    // By Audience
+    audienceSub('bride', 'Bride', ['role:bride', 'bride']),
+    audienceSub('bridesmaid', 'Bridesmaid', ['role:bridesmaid', 'bridesmaid']),
+    audienceSub('mother-of-bride', 'Mother of Bride', ['role:mother of bride', 'mother of bride']),
+    audienceSub('nri-wedding', 'NRI Wedding', ['audience:nri', 'nri', 'destination wedding']),
+    // By Price
+    priceSub('under-100', 'Under $100', 0, 100),
+    priceSub('premium-120-plus', 'Premium $120+', 120, 10000),
+  ],
+  filters: [
+    {
+      name: 'Stone Type',
+      tagPrefix: 'stone',
+      defaultExpanded: true,
+      options: [
+        { value: 'kundan', label: 'Kundan' },
+        { value: 'kundan with stone', label: 'Kundan with Stone' },
+        { value: 'uncut polki', label: 'Uncut Polki' },
+        { value: 'pearl', label: 'Pearl' },
+      ],
+    },
+    {
+      name: 'Jewelry Type',
+      tagPrefix: 'style',
+      defaultExpanded: true,
+      options: [
+        { value: 'necklace set', label: 'Necklace Set' },
+        { value: 'choker', label: 'Choker Necklace' },
+        { value: 'full bridal set', label: 'Full Bridal Set' },
+      ],
+    },
+    {
+      name: 'Color',
+      tagPrefix: 'color',
+      defaultExpanded: true,
+      renderAsSwatches: true,
+      options: colors('Clear', 'Pearl White', 'Multicolor', 'Green', 'Red', 'Pink', 'Gold', 'Maroon', 'Blue'),
+    },
+    {
+      name: 'Metal',
+      tagPrefix: 'metal',
+      defaultExpanded: false,
+      options: [
+        { value: 'gold', label: 'Gold' },
+        { value: 'antique gold', label: 'Antique Gold' },
+        { value: 'silver', label: 'Silver' },
+        { value: 'rose gold', label: 'Rose Gold' },
+      ],
+    },
+    {
+      name: 'Availability',
+      tagPrefix: 'availability',
+      defaultExpanded: false,
+      options: [
+        { value: 'ready to ship', label: 'Ready to Ship' },
+        { value: 'made to order', label: 'Made to Order' },
+      ],
+    },
+  ],
+  priceRange: [80, 200],
+  priceStep: 10,
+  faqs: [
+    {
+      question: "What types of bridal jewelry are available at LuxeMia?",
+      answer: "LuxeMia offers handcrafted Kundan necklace sets, Kundan with stone bridal sets, uncut polki necklace sets, and full bridal sets (necklace + earrings + maang tikka). Each piece uses traditional Rajasthani stone-setting techniques with 24k gold foil framing."
+    },
+    {
+      question: "Is Kundan jewelry real diamond jewelry?",
+      answer: "Our Kundan jewelry uses traditional Indian stone-setting techniques with glass-based Kundan stones and uncut polki accents. It offers the look of fine diamond jewelry at a fraction of the cost, making it perfect for brides who want a regal appearance without the investment of real diamonds."
+    },
+    {
+      question: "What's included in a Kundan necklace set?",
+      answer: "Most LuxeMia Kundan necklace sets include the necklace and matching earrings. Full bridal sets also include a maang tikka. The necklace features an adjustable dori (thread) closure for a comfortable fit, and the earrings come with secure push-backs."
+    },
+    {
+      question: "How should I care for my Kundan jewelry?",
+      answer: "Store in the provided velvet pouch away from moisture and direct sunlight. Avoid contact with perfume, hairspray, and water. Gently wipe with a soft dry cloth after each wear. For deep cleaning, take to a professional jewelry cleaner — do not use chemical cleaners at home as they can damage the Kundan setting."
+    },
+    {
+      question: "Do you ship bridal jewelry to USA, Canada, and Australia?",
+      answer: "Yes, we ship worldwide with free shipping on orders over $350. Standard delivery takes 7-10 business days via USPS/UPS, or 3-5 business days via DHL Express. Each piece ships in a signature gift box."
+    }
+  ],
+};
+
 // ─── Exported registry ─────────────────────────────────────────────────────
 
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -705,6 +832,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   sarees: SAREES,
   suits: SUITS,
   menswear: MENSWEAR,
+  jewelry: JEWELRY,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {
@@ -783,6 +911,19 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
       { label: 'Wedding Party', links: [
         ...subcatLinks('menswear', MENSWEAR.subcategories, 'audience'),
         ...subcatLinks('menswear', MENSWEAR.subcategories, 'price'),
+      ]},
+    ],
+  },
+  {
+    label: 'Jewelry',
+    href: '/jewelry',
+    groups: [
+      { label: 'By Stone', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Kundan', 'Kundan with Stone', 'Uncut Polki', 'Pearl'].includes(l.name)) },
+      { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Set', 'Choker Necklace', 'Full Bridal Set', 'With Maang Tikka'].includes(l.name)) },
+      { label: 'By Occasion', links: subcatLinks('jewelry', JEWELRY.subcategories, 'occasion') },
+      { label: 'Wedding Party', links: [
+        ...subcatLinks('jewelry', JEWELRY.subcategories, 'audience'),
+        ...subcatLinks('jewelry', JEWELRY.subcategories, 'price'),
       ]},
     ],
   },

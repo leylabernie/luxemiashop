@@ -46,6 +46,7 @@ const STATIC_ROUTES = [
   '/lehengas',
   '/sarees',
   '/menswear',
+  '/jewelry',
   '/blog',
   '/collections',
   '/brand-story',

@@ -10,6 +10,7 @@ const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
   lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga'],
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
+  jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace'],
 };
 
 // Map Shopify productType to display category names
@@ -28,6 +29,10 @@ export const getDisplayCategory = (productType: string | undefined): string => {
   if (/saree|sari/.test(pt)) return 'Sarees';
   if (/pakistani|salwar|kameez|sharara|anarkali|plazzo|palazzo|gharara|gown|kurti|churidar|patiala/.test(pt)) return 'Salwar Kameez';
   if (/indo.?western|fusion|jumpsuit|cape set|coord set|co.?ord/.test(pt)) return 'Indo Western';
+
+  // Jewelry — must come after clothing categories to avoid false positives
+  // (e.g., 'Kundan Necklace Set' shouldn't match 'necklace' inside a clothing title)
+  if (/kundan|polki|jewelry|jewellery|necklace set|bridal set|choker necklace|maang tikka/.test(pt)) return 'Jewelry';
 
   return productType;
 };

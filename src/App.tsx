@@ -25,6 +25,7 @@ const Lehengas = lazy(() => import("./pages/Lehengas"));
 const Sarees = lazy(() => import("./pages/Sarees"));
 const Suits = lazy(() => import("./pages/Suits"));
 const Menswear = lazy(() => import("./pages/Menswear"));
+const Jewelry = lazy(() => import("./pages/Jewelry"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const ShippingCustoms = lazy(() => import("./pages/ShippingCustoms"));
@@ -98,6 +99,7 @@ const App = () => (
                 <Route path="/sarees" element={<Suspense fallback={<PageLoader />}><Sarees /></Suspense>} />
                 <Route path="/suits" element={<Suspense fallback={<PageLoader />}><Suits /></Suspense>} />
                 <Route path="/menswear" element={<Suspense fallback={<PageLoader />}><Menswear /></Suspense>} />
+                <Route path="/jewelry" element={<Suspense fallback={<PageLoader />}><Jewelry /></Suspense>} />
                 <Route path="/our-story" element={<Navigate to="/brand-story" replace />} />
                 <Route path="/about-us" element={<Navigate to="/brand-story" replace />} />
                 <Route path="/about" element={<Navigate to="/brand-story" replace />} />
@@ -123,7 +125,6 @@ const App = () => (
                 <Route path="/size-guide" element={<Suspense fallback={<PageLoader />}><SizeGuide /></Suspense>} />
                 <Route path="/sizing-measurements-guide" element={<Suspense fallback={<PageLoader />}><SizingMeasurementsGuide /></Suspense>} />
                 <Route path="/care-guide" element={<Suspense fallback={<PageLoader />}><CareGuide /></Suspense>} />
-                <Route path="/jewelry" element={<Navigate to="/collections" replace />} />
                 <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/wedding-sarees" element={<Navigate to="/sarees" replace />} />

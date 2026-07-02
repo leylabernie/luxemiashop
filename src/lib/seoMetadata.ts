@@ -58,6 +58,12 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/menswear`,
     image: `${SITE_URL}/og/og-menswear.jpg`,
   },
+  '/jewelry': {
+    title: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
+    description: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
+    canonical: `${SITE_URL}/jewelry`,
+    image: `${SITE_URL}/og-image.jpg`,
+  },
   '/collections': {
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
     description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits, and menswear for every occasion. Free shipping over $350 to USA, Canada & Australia.',
