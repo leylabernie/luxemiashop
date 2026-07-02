@@ -132,6 +132,6 @@
     { "source": "/_prerender/(.*)", "destination": "/_prerender/$1" },
     { "source": "/google4e3f332d00afc8ba.html", "destination": "/google4e3f332d00afc8ba.html" },
     { "source": "/google-shopping-feed.xml", "destination": "/merchant-feed.xml" },
-    { "source": "/((?!_prerender/|assets/|merchant-feed\\.xml).*)", "destination": "/index.html" }
+    { "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map)).*)", "destination": "/index.html" }
   ]
 }
