@@ -81,63 +81,192 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
   }
 
   // Tag matching — this is the primary and preferred matching method.
-  // Products should have structured tags like 'occasion:bridal', 'role:bridesmaid',
-  // 'color:red', etc. for accurate subcategory assignment.
   const tags = getTags(p);
-
   for (const tag of sub.matchTags) {
     const tagLower = tag.toLowerCase();
-    // Exact tag match (handles both 'occasion:bridal' and bare 'bridal')
     if (tags.includes(tagLower)) return true;
   }
 
-  // Title fallback — word-boundary matching on the product title.
-  // This is needed because most products don't have structured occasion/role tags
-  // in Shopify, so the title is the only signal we have.
-  //
-  // CRITICAL: For occasion/audience subcategories, we check for EXCLUSIONS first
-  // to prevent false positives. For example, a product titled "Bridesmaid Lehenga
-  // for Bridal Party" should match "Bridesmaid" but NOT "Bridal" — even though
-  // "bridal" appears in the title.
   const titleLower = (p.title || '').toLowerCase();
   const labelLower = sub.label.toLowerCase();
 
-  // Exclusion map: if the title contains any of these words, the subcategory
-  // should NOT match (even if the label appears in the title).
-  const exclusions: Record<string, string[]> = {
-    'bridal': ['bridesmaid', 'mother of bride', 'mother-of-bride', 'bride\'s mother', 'groom', 'groomsmen'],
-    'bridesmaid': ['bridal', 'bride'],
-    'mother of bride': ['bridal', 'bride', 'bridesmaid'],
-    'wedding': ['bridesmaid'],
-    'reception': ['bridesmaid', 'haldi', 'mehendi', 'mehndi'],
-  };
-
-  // Check exclusions for occasion/audience subcategories
-  if (sub.group === 'occasion' || sub.group === 'audience') {
+  // ─── Occasion subcategories: use business-rule inference ─────────────────
+  // Instead of loose title matching, we infer occasions from product attributes
+  // (fabric, style, embroidery) using store-owner-provided rules:
+  //   Sarees: silk→wedding, designer/R2W→reception+party, embroidery→party+guest-wedding
+  //   Suits: partywear→party, anarkali/sharara→festive+party, cotton/straight→casual
+  if (sub.group === 'occasion') {
+    const inferred = inferOccasions(p);
+    // Check if any of the subcategory's matchTags (bare values, stripped of prefix)
+    // appear in the inferred occasions set
+    for (const tag of sub.matchTags) {
+      const tagLower = tag.toLowerCase();
+      const bareValue = tagLower.includes(':') ? tagLower.split(':')[1] : tagLower;
+      if (inferred.has(bareValue)) return true;
+    }
+    // Also check if the label itself is in inferred (handles 'Party Wear' label
+    // vs 'party' tag value)
+    if (inferred.has(labelLower)) return true;
+    // Fallback: explicit word-boundary title match (for occasions not covered by inference)
+    const exclusions: Record<string, string[]> = {
+      'bridal': ['bridesmaid', 'mother of bride', 'mother-of-bride', 'groom'],
+      'reception': ['bridesmaid', 'haldi', 'mehendi'],
+    };
     const excludedWords = exclusions[labelLower];
     if (excludedWords) {
       for (const excluded of excludedWords) {
-        const exclRegex = new RegExp(`\\b${escapeRegex(excluded)}\\b`, 'i');
-        if (exclRegex.test(titleLower)) return false;
+        if (new RegExp(`\\b${escapeRegex(excluded)}\\b`, 'i').test(titleLower)) return false;
       }
+    }
+    if (new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i').test(titleLower)) return true;
+    return false;
+  }
+
+  // ─── Audience subcategories: exclusion-aware title matching ──────────────
+  if (sub.group === 'audience') {
+    const exclusions: Record<string, string[]> = {
+      'bridesmaid': ['bridal', 'bride'],
+      'mother of bride': ['bridal', 'bride', 'bridesmaid'],
+    };
+    const excludedWords = exclusions[labelLower];
+    if (excludedWords) {
+      for (const excluded of excludedWords) {
+        if (new RegExp(`\\b${escapeRegex(excluded)}\\b`, 'i').test(titleLower)) return false;
+      }
+    }
+    if (new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i').test(titleLower)) return true;
+    for (const tag of sub.matchTags) {
+      const tagLower = tag.toLowerCase();
+      if (tagLower.includes(':')) continue;
+      if (new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i').test(titleLower)) return true;
+    }
+    return false;
+  }
+
+  // ─── Color + Style subcategories: word-boundary title matching ───────────
+  if (sub.group === 'color' || sub.group === 'style') {
+    if (new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i').test(titleLower)) return true;
+    for (const tag of sub.matchTags) {
+      const tagLower = tag.toLowerCase();
+      if (tagLower.includes(':')) continue;
+      if (new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i').test(titleLower)) return true;
     }
   }
 
-  // Word-boundary match on title (works for all subcategory groups)
-  const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
-  if (wordBoundaryRegex.test(titleLower)) return true;
+  return false;
+}
 
-  // Also check matchTags values against title (for tags like 'mehndi' that differ
-  // from the label 'Mehendi')
-  for (const tag of sub.matchTags) {
-    const tagLower = tag.toLowerCase();
-    // Skip prefix tags (occasion:bridal) — only check bare values
-    if (tagLower.includes(':')) continue;
-    const tagRegex = new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i');
-    if (tagRegex.test(titleLower)) return true;
+/**
+ * Detect the product category from productType, title, and tags.
+ */
+function detectProductCategory(p: ProductNode): string {
+  const text = `${p.productType || ''} ${p.title || ''} ${(p.tags || []).join(' ')}`.toLowerCase();
+  if (/\b(lehenga|lehenga choli)\b/.test(text)) return 'lehenga';
+  if (/\b(saree|sari)\b/.test(text)) return 'saree';
+  if (/\b(sherwani|kurta|menswear|groom)\b/.test(text)) return 'menswear';
+  if (/\b(suit|salwar|anarkali|sharara|palazzo|kameez)\b/.test(text)) return 'suit';
+  if (/\b(jewelry|jewellery|necklace|kundan|polki|earring|bangle)\b/.test(text)) return 'jewelry';
+  return 'unknown';
+}
+
+/**
+ * Infer occasion subcategories for a product based on business rules.
+ *
+ * SAREES (store-owner rules):
+ *   - Silk sarees (banarasi, kanchipuram, raw silk) → Wedding
+ *   - Designer / Ready-to-wear sarees → Reception, Party Wear
+ *   - Heavy embroidery sarees → Party Wear, Wedding (for guests)
+ *   - Bridal in title → Bridal
+ *
+ * SUITS (store-owner rules):
+ *   - Partywear suits → Party Wear
+ *   - Anarkali / Sharara → Festive, Party Wear
+ *   - Regular / Cotton / Straight-cut → Casual
+ *   - Silk / Velvet suits → Wedding
+ */
+function inferOccasions(p: ProductNode): Set<string> {
+  const occasions = new Set<string>();
+  const titleLower = (p.title || '').toLowerCase();
+  const descLower = (p.description || '').toLowerCase();
+  const tags = getTags(p);
+  const text = `${titleLower} ${descLower} ${tags.join(' ')}`;
+  const category = detectProductCategory(p);
+
+  // Explicit occasion tags always win
+  for (const tag of tags) {
+    if (tag.startsWith('occasion:')) {
+      occasions.add(tag.replace('occasion:', ''));
+    }
   }
 
-  return false;
+  // ─── Saree rules ──────────────────────────────────────────────────────
+  if (category === 'saree') {
+    // Silk sarees → Wedding
+    if (/\b(silk|banarasi|kanchipuram|kanjeevaram|raw silk|art silk|tussar)\b/.test(text)) {
+      occasions.add('wedding');
+    }
+    // Designer / Ready-to-wear → Reception, Party Wear
+    if (/\b(designer|ready to wear|ready-to-wear|r2w|pre-draped|pre stitched)\b/.test(text)) {
+      occasions.add('reception');
+      occasions.add('party wear');
+      occasions.add('party');
+    }
+    // Heavy embroidery → Party Wear, Wedding (guests)
+    if (/\b(embroidery|embroidered|heavy|zari|zardozi|stone work|stonework|sequin|sequins|bead work|beadwork|mirror work)\b/.test(text)) {
+      occasions.add('party wear');
+      occasions.add('party');
+      occasions.add('wedding');
+    }
+    // Bridal in title → Bridal (but not if it's bridesmaid/mother of bride)
+    if (/\bbridal\b/.test(titleLower) && !/\b(bridesmaid|mother of bride|mother-of-bride)\b/.test(titleLower)) {
+      occasions.add('bridal');
+    }
+    // Festive keywords → Festive
+    if (/\b(festive|diwali|navratri|eid|durga puja|onam|pongal)\b/.test(text)) {
+      occasions.add('festive');
+    }
+    // Reception in title → Reception
+    if (/\breception\b/.test(titleLower)) {
+      occasions.add('reception');
+    }
+  }
+
+  // ─── Suit rules ───────────────────────────────────────────────────────
+  if (category === 'suit') {
+    // Partywear suits → Party Wear
+    if (/\b(party wear|partywear|party)\b/.test(text)) {
+      occasions.add('party wear');
+      occasions.add('party');
+    }
+    // Anarkali / Sharara → Festive, Party Wear
+    if (/\b(anarkali|sharara|palazzo)\b/.test(text)) {
+      occasions.add('festive');
+      occasions.add('party wear');
+      occasions.add('party');
+    }
+    // Regular / Cotton / Straight-cut → Casual
+    if (/\b(cotton|casual|everyday|regular|straight|straight-cut)\b/.test(text)) {
+      occasions.add('casual');
+    }
+    // Silk / Velvet suits → Wedding
+    if (/\b(silk|velvet|brocade|raw silk|art silk)\b/.test(text)) {
+      occasions.add('wedding');
+    }
+    // Wedding/festive in title → Wedding/Festive
+    if (/\b(wedding|bridal)\b/.test(titleLower)) {
+      occasions.add('wedding');
+    }
+    if (/\b(festive|diwali|navratri|eid)\b/.test(text)) {
+      occasions.add('festive');
+    }
+    // Embroidery on suits → Party Wear (embroidered suits are party-appropriate)
+    if (/\b(embroidery|embroidered|heavy|zari|sequin|stone work)\b/.test(text)) {
+      occasions.add('party wear');
+      occasions.add('party');
+    }
+  }
+
+  return occasions;
 }
 
 /**
