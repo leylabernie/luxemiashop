@@ -3,135 +3,368 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
-    { "source": "/nri/uk", "destination": "/nri", "statusCode": 301 },
-    { "source": "/indian-ethnic-wear-uk", "destination": "/nri", "statusCode": 301 },
-    { "source": "/uk-indian-clothing", "destination": "/nri", "statusCode": 301 },
-    { "source": "/uk-designer-sarees", "destination": "/nri", "statusCode": 301 },
-    { "source": "/collections/wedding-sarees", "destination": "/sarees", "statusCode": 301 },
-    { "source": "/collections/bridal-lehengas", "destination": "/lehengas", "statusCode": 301 },
-    { "source": "/collections/reception-outfits", "destination": "/collections", "statusCode": 301 },
-    { "source": "/collections/festive-wear", "destination": "/collections", "statusCode": 301 },
-    { "source": "/collections/sarees", "destination": "/sarees", "statusCode": 301 },
-    { "source": "/collections/salwar-kameez", "destination": "/suits", "statusCode": 301 },
-    { "source": "/collections/suits", "destination": "/suits", "statusCode": 301 },
-    { "source": "/collections/menswear", "destination": "/menswear", "statusCode": 301 },
-    { "source": "/collections/lehengas", "destination": "/lehengas", "statusCode": 301 },
-    { "source": "/collections/indo-western", "destination": "/indowestern", "statusCode": 301 },
-    { "source": "/collections/bridesmaid-dresses", "destination": "/sarees", "statusCode": 301 },
-    { "source": "/collections/groomsman-outfits", "destination": "/menswear", "statusCode": 301 },
-    { "source": "/our-story", "destination": "/brand-story", "statusCode": 301 },
-    { "source": "/about-us", "destination": "/brand-story", "statusCode": 301 },
-    { "source": "/about", "destination": "/brand-story", "statusCode": 301 },
-    { "source": "/feed.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
-    { "source": "/shopping-feed.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
-    { "source": "/products.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
-    { "source": "/google-shopping.xml", "destination": "/merchant-feed.xml", "statusCode": 301 },
-    { "source": "/feed.tsv", "destination": "/merchant-feed.xml", "statusCode": 301 },
-    { "source": "/api/merchant-feed", "destination": "/merchant-feed.xml", "statusCode": 302 },
-    { "source": "/privacy-policy", "destination": "/privacy", "statusCode": 301 },
-    { "source": "/terms-of-service", "destination": "/terms", "statusCode": 301 },
-    { "source": "/products", "destination": "/collections", "statusCode": 301 },
-    { "source": "/products/:handle", "destination": "/product/:handle", "statusCode": 301 },
-    { "source": "/p/:handle", "destination": "/product/:handle", "statusCode": 301 },
-    { "source": "/shop", "destination": "/collections", "statusCode": 301 },
-    { "source": "/collection/:slug", "destination": "/collections", "statusCode": 301 },
-    { "source": "/blog/tag/:tag", "destination": "/blog", "statusCode": 301 },
-    { "source": "/blog/category/:cat", "destination": "/blog", "statusCode": 301 },
-    { "source": "/sitemap", "destination": "/sitemap.xml", "statusCode": 301 }
+    {
+      "source": "/nri/uk",
+      "destination": "/nri",
+      "statusCode": 301
+    },
+    {
+      "source": "/indian-ethnic-wear-uk",
+      "destination": "/nri",
+      "statusCode": 301
+    },
+    {
+      "source": "/uk-indian-clothing",
+      "destination": "/nri",
+      "statusCode": 301
+    },
+    {
+      "source": "/uk-designer-sarees",
+      "destination": "/nri",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/wedding-sarees",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/bridal-lehengas",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/reception-outfits",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/festive-wear",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/sarees",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/salwar-kameez",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/suits",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/menswear",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/lehengas",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/indo-western",
+      "destination": "/indowestern",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/bridesmaid-dresses",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/groomsman-outfits",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/our-story",
+      "destination": "/brand-story",
+      "statusCode": 301
+    },
+    {
+      "source": "/about-us",
+      "destination": "/brand-story",
+      "statusCode": 301
+    },
+    {
+      "source": "/about",
+      "destination": "/brand-story",
+      "statusCode": 301
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "/merchant-feed.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/shopping-feed.xml",
+      "destination": "/merchant-feed.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/products.xml",
+      "destination": "/merchant-feed.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/google-shopping.xml",
+      "destination": "/merchant-feed.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/feed.tsv",
+      "destination": "/merchant-feed.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/api/merchant-feed",
+      "destination": "/merchant-feed.xml",
+      "statusCode": 302
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms-of-service",
+      "destination": "/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/products",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/:handle",
+      "destination": "/product/:handle",
+      "statusCode": 301
+    },
+    {
+      "source": "/p/:handle",
+      "destination": "/product/:handle",
+      "statusCode": 301
+    },
+    {
+      "source": "/shop",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/:slug",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tag/:tag",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/:cat",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/sitemap",
+      "destination": "/sitemap.xml",
+      "statusCode": 301
+    }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/_prerender/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=600" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+        }
       ]
     },
     {
       "source": "/merchant-feed.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=0, s-maxage=3600, must-revalidate" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "X-Robots-Tag", "value": "noindex, follow" }
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=3600, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
       ]
     },
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400"
+        }
       ]
     },
     {
       "source": "/llms-full.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=86400" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400"
+        }
       ]
     },
     {
       "source": "/e6b81aa0325a277cfb7c764e603dd9cd.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     },
     {
       "source": "/(.*).html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/product/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "index, follow" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     },
     {
       "source": "/images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000"
+        }
       ]
     },
     {
       "source": "/catalog-images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000"
+        }
       ]
     },
     {
       "source": "/",
       "headers": [
-        { "key": "Link", "value": "<https://kesimg.b-cdn.net>; rel=preconnect; crossorigin, <https://cdn.shopify.com>; rel=preconnect; crossorigin" }
+        {
+          "key": "Link",
+          "value": "<https://kesimg.b-cdn.net>; rel=preconnect; crossorigin, <https://cdn.shopify.com>; rel=preconnect; crossorigin"
+        }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        }
       ]
     }
   ],
   "rewrites": [
-    { "source": "/_prerender/(.*)", "destination": "/_prerender/$1" },
-    { "source": "/google4e3f332d00afc8ba.html", "destination": "/google4e3f332d00afc8ba.html" },
-    { "source": "/google-shopping-feed.xml", "destination": "/merchant-feed.xml" },
-    { "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map)).*)", "destination": "/index.html" }
+    {
+      "source": "/_prerender/(.*)",
+      "destination": "/_prerender/$1"
+    },
+    {
+      "source": "/google4e3f332d00afc8ba.html",
+      "destination": "/google4e3f332d00afc8ba.html"
+    },
+    {
+      "source": "/google-shopping-feed.xml",
+      "destination": "/merchant-feed.xml"
+    },
+    {
+      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map)).*)",
+      "destination": "/index.html"
+    }
   ]
 }
