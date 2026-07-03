@@ -37,7 +37,6 @@ function getTags(p: ProductNode): string[] {
 function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: string): boolean {
   const tags = getTags(p);
   const valueLower = value.toLowerCase();
-  const titleLower = (p.title || '').toLowerCase();
 
   // Strategy 1: tag-prefix match (preferred)
   if (tagPrefix) {
@@ -48,8 +47,14 @@ function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: 
   // Strategy 2: bare tag match
   if (tags.includes(valueLower)) return true;
 
-  // Strategy 3: title substring (last resort)
-  if (titleLower.includes(valueLower)) return true;
+  // Strategy 3: title word-boundary match (last resort)
+  // Use word boundaries to prevent false positives like "red" matching "sacred".
+  // Also check product type and vendor for broader coverage.
+  const titleLower = (p.title || '').toLowerCase();
+  const productTypeLower = (p.productType || '').toLowerCase();
+  const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(valueLower)}\\b`, 'i');
+  if (wordBoundaryRegex.test(titleLower)) return true;
+  if (productTypeLower && wordBoundaryRegex.test(productTypeLower)) return true;
 
   return false;
 }
@@ -75,20 +80,71 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
     if (sub.matchTags.length === 0) return true;
   }
 
-  // Tag matching
+  // Tag matching — this is the primary and preferred matching method.
+  // Products should have structured tags like 'occasion:bridal', 'role:bridesmaid',
+  // 'color:red', etc. for accurate subcategory assignment.
   const tags = getTags(p);
-  const titleLower = (p.title || '').toLowerCase();
 
   for (const tag of sub.matchTags) {
     const tagLower = tag.toLowerCase();
-    // Exact tag match (handles both 'color:red' and bare 'red')
+    // Exact tag match (handles both 'occasion:bridal' and bare 'bridal')
     if (tags.includes(tagLower)) return true;
   }
 
-  // Fallback: title contains the subcategory label
-  if (titleLower.includes(sub.label.toLowerCase())) return true;
+  // Title fallback — word-boundary matching on the product title.
+  // This is needed because most products don't have structured occasion/role tags
+  // in Shopify, so the title is the only signal we have.
+  //
+  // CRITICAL: For occasion/audience subcategories, we check for EXCLUSIONS first
+  // to prevent false positives. For example, a product titled "Bridesmaid Lehenga
+  // for Bridal Party" should match "Bridesmaid" but NOT "Bridal" — even though
+  // "bridal" appears in the title.
+  const titleLower = (p.title || '').toLowerCase();
+  const labelLower = sub.label.toLowerCase();
+
+  // Exclusion map: if the title contains any of these words, the subcategory
+  // should NOT match (even if the label appears in the title).
+  const exclusions: Record<string, string[]> = {
+    'bridal': ['bridesmaid', 'mother of bride', 'mother-of-bride', 'bride\'s mother', 'groom', 'groomsmen'],
+    'bridesmaid': ['bridal', 'bride'],
+    'mother of bride': ['bridal', 'bride', 'bridesmaid'],
+    'wedding': ['bridesmaid'],
+    'reception': ['bridesmaid', 'haldi', 'mehendi', 'mehndi'],
+  };
+
+  // Check exclusions for occasion/audience subcategories
+  if (sub.group === 'occasion' || sub.group === 'audience') {
+    const excludedWords = exclusions[labelLower];
+    if (excludedWords) {
+      for (const excluded of excludedWords) {
+        const exclRegex = new RegExp(`\\b${escapeRegex(excluded)}\\b`, 'i');
+        if (exclRegex.test(titleLower)) return false;
+      }
+    }
+  }
+
+  // Word-boundary match on title (works for all subcategory groups)
+  const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
+  if (wordBoundaryRegex.test(titleLower)) return true;
+
+  // Also check matchTags values against title (for tags like 'mehndi' that differ
+  // from the label 'Mehendi')
+  for (const tag of sub.matchTags) {
+    const tagLower = tag.toLowerCase();
+    // Skip prefix tags (occasion:bridal) — only check bare values
+    if (tagLower.includes(':')) continue;
+    const tagRegex = new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i');
+    if (tagRegex.test(titleLower)) return true;
+  }
 
   return false;
+}
+
+/**
+ * Escape special regex characters in a string for safe use in RegExp.
+ */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**
