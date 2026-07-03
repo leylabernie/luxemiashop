@@ -22,6 +22,21 @@ function getTags(p: ProductNode): string[] {
   return (p.tags ?? []).map(t => t.toLowerCase());
 }
 
+/** Escape special regex characters so a filter value can be used in a RegExp. */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Whole-word title match. A plain substring check produced mass false
+ * positives — e.g. the Red color filter matched every "Embroidered" product
+ * because "embroide[red]" contains "red". Word boundaries restrict the match
+ * to the actual word/phrase.
+ */
+function titleHasWord(titleLower: string, valueLower: string): boolean {
+  return new RegExp(`\\b${escapeRegex(valueLower)}\\b`).test(titleLower);
+}
+
 /**
  * Match a filter value against a product using tag-prefix logic.
  *
@@ -29,7 +44,7 @@ function getTags(p: ProductNode): string[] {
  * 1. Tag-prefix match: if tagPrefix is 'color' and value is 'red',
  *    match tag 'color:red' OR tag 'red'.
  * 2. Bare tag match: tag exactly equals value (case-insensitive).
- * 3. Title substring match (last resort — kept for backward compat with
+ * 3. Whole-word title match (last resort — kept for backward compat with
  *    products that have no structured tags).
  *
  * Returns true if any match strategy succeeds.
@@ -48,8 +63,8 @@ function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: 
   // Strategy 2: bare tag match
   if (tags.includes(valueLower)) return true;
 
-  // Strategy 3: title substring (last resort)
-  if (titleLower.includes(valueLower)) return true;
+  // Strategy 3: whole-word title match (last resort)
+  if (titleHasWord(titleLower, valueLower)) return true;
 
   return false;
 }
@@ -62,7 +77,7 @@ function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: 
  *
  * Returns true if:
  * - Any of matchTags matches (via tag-prefix or bare tag), OR
- * - Title contains the subcategory label, AND
+ * - Title contains the subcategory label as a whole word, AND
  * - Price is within [priceMin, priceMax] if those are set.
  */
 export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
@@ -85,8 +100,8 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
     if (tags.includes(tagLower)) return true;
   }
 
-  // Fallback: title contains the subcategory label
-  if (titleLower.includes(sub.label.toLowerCase())) return true;
+  // Fallback: title contains the subcategory label as a whole word
+  if (titleHasWord(titleLower, sub.label.toLowerCase())) return true;
 
   return false;
 }
