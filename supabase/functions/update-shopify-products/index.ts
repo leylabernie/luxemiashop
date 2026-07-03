@@ -194,7 +194,7 @@ const PRODUCT_UPDATES: Record<string, {
 <ul>
 <li><strong>Fabric:</strong> Premium cotton with a hand-selected weave that offers both structure and fluidity — the teal dye penetrates deeply into natural fibres for a rich, lasting colour that won't fade</li>
 <li><strong>Colour:</strong> A rich teal green that flatters a wide range of skin tones and catches candlelight beautifully — cool yet vibrant, sophisticated yet eye-catching</li>
-<li><strong>Embroidery:</strong> Delicate hand-embroidered threadwork by skilled artisans — subtle irregularities that mark each piece as genuinely handcrafted</li>
+<li><strong>Embroidery:</strong> Delicate hand-embroidered threadwork by skilled artisans — subtle irregularities that mark each piece as genuinely unique</li>
 <li><strong>Occasion:</strong> Designed for party wear, cocktail mehndi, Diwali celebrations, evening events, and cultural gatherings</li>
 <li><strong>Dupatta:</strong> Lightweight cotton mul dupatta with crochet lace border — sheer, airy, and beautifully draped</li>
 </ul>

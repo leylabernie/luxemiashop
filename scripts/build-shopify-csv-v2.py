@@ -134,7 +134,7 @@ def build_image_alt(item):
     a = item['analysis']
     occasions = item['occasions']
     return (f"{a['color_primary']} {a['fabric']} sherwani with {a['embroidery']} "
-            f"for {occasions[0]} groom — handcrafted Indian menswear by LuxeMia")
+            f"for {occasions[0]} groom — premium Indian menswear by LuxeMia")
 
 
 def build_tags(item):
@@ -216,7 +216,7 @@ def build_tags(item):
         f'buy {color} sherwani online usa',
         f'{color} sherwani for indian {occ1}',
         f'premium {fabric} sherwani for {occ1}',
-        f'handcrafted {embroidery} sherwani for groom',
+        f'{embroidery} sherwani for groom',
         f'sherwani for {occ1} in usa',
         f'sherwani for {occ1} in canada',
         f'sherwani for {occ1} in australia',
@@ -229,7 +229,7 @@ def build_tags(item):
 
         # Brand + status
         'LuxeMia', 'gender:male', 'men', 'menswear',
-        'new arrival', 'handcrafted', 'premium menswear',
+        'new arrival', 'premium menswear',
         'worldwide shipping', 'free shipping over 350',
     ])
 

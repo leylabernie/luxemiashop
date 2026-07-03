@@ -101,7 +101,7 @@ def generate_body_html(p):
     craft = STONE_CRAFT.get(stone, STONE_CRAFT['kundan with stone'])
     styling_outfit, styling_acc = COLOR_STYLING.get(color, COLOR_STYLING['Clear'])
     
-    body = f"""<p>The {color.lower()} {stone.lower()} {jtype.lower()} is designed for the modern NRI bride who wants to make a regal statement on her wedding day. This handcrafted piece includes {includes}, with each stone set by master jewelers using traditional Indian techniques. {style_notes.capitalize() if style_notes else 'The intricate detailing photographs beautifully in both natural daylight and evening lighting.'}</p>
+    body = f"""<p>The {color.lower()} {stone.lower()} {jtype.lower()} is designed for the modern NRI bride who wants to make a regal statement on her wedding day. This piece includes {includes}, with each stone set by master jewelers using traditional Indian techniques. {style_notes.capitalize() if style_notes else 'The intricate detailing photographs beautifully in both natural daylight and evening lighting.'}</p>
 
 <h3>Why Brides Choose {stone_clean} {jtype_clean}</h3>
 <p>{stone_clean} jewelry has been a cornerstone of Indian bridal adornment for centuries, prized for its regal appearance and the way it catches light from every angle. The {metal} setting complements a wide range of bridal lehengas and sarees, while the {color.lower()} stones flatter most skin tones and pair effortlessly with both gold and diamond accent jewelry. Brides love {stone_clean.lower()} for its versatility — equally appropriate for the main wedding ceremony, the reception, or pre-wedding events like the mehendi and sangeet.</p>
@@ -168,8 +168,8 @@ def generate_seo_description(p):
     color = a['color_primary'].lower()
     
     candidates = [
-        f"Shop this {color} {stone} {jtype} for weddings. Handcrafted for brides. Free shipping USA, Canada, Australia.",
-        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free shipping over $350 to USA, Canada & Australia.",
+        f"Shop this {color} {stone} {jtype} for weddings. Perfect for brides. Free shipping USA, Canada, Australia.",
+        f"{a['color_primary']} {stone} {jtype} for brides — premium Indian bridal jewelry. Free shipping over $350 to USA, Canada & Australia.",
         f"Buy {color} {stone} {jtype} online. Premium bridal jewelry. Free shipping to USA, Canada, Australia.",
     ]
     for c in candidates:
@@ -274,7 +274,7 @@ def build_image_alt(p):
     color = a['color_primary']
     stone = a['stone_type'].replace(' with stone', 'with Stone')
     jtype = a['jewelry_type'].replace('_', ' ').title()
-    return f"{color} {stone} {jtype} — handcrafted Indian bridal jewelry by LuxeMia"
+    return f"{color} {stone} {jtype} — premium Indian bridal jewelry by LuxeMia"
 
 
 def build_tags(p):
@@ -348,7 +348,7 @@ def build_tags(p):
         f'buy kundan jewelry online usa',
         f'kundan necklace for indian wedding',
         f'premium {stone} necklace for wedding',
-        f'handcrafted kundan jewelry for bride',
+        f'kundan jewelry for bride',
         f'bridal jewelry for wedding in usa',
         f'bridal jewelry for wedding in canada',
         f'bridal jewelry for wedding in australia',
@@ -358,7 +358,7 @@ def build_tags(p):
         
         # Brand + status
         'LuxeMia', 'gender:female', 'women', 'womenswear',
-        'new arrival', 'handcrafted', 'premium jewelry',
+        'new arrival', 'premium jewelry',
         'worldwide shipping', 'free shipping over 350',
         
         # Catalog number

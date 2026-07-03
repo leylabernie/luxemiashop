@@ -92,7 +92,7 @@ async function main() {
 function generateSeoDescription(item) {
   const a = item.analysis;
   // Generate SEO meta description under 155 chars
-  const base = `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')}. Handcrafted for weddings & receptions. Free shipping to USA, Canada, Australia.`;
+  const base = `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')}. Perfect for weddings & receptions. Free shipping to USA, Canada, Australia.`;
   if (base.length <= 155) return base;
   // Trim if over
   return base.slice(0, 152).trimEnd() + '…';

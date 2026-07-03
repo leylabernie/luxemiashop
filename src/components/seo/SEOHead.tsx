@@ -112,7 +112,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — handcrafted Indian ethnic wear with worldwide shipping to USA, Canada, and Australia.`,
+            : `Shop the ${product.name} at LuxeMia — premium Indian ethnic wear with worldwide shipping to USA, Canada, and Australia.`,
         sku: product.sku || '',
         url: canonicalUrl,
         brand: product.brand,

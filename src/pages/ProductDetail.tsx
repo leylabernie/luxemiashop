@@ -199,7 +199,7 @@ const ProductDetail = () => {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
             }
             const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
-            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
+            return `Shop the ${product.title} at LuxeMia — premium ${productTypeLower}. Shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
           })()}
           type="product"
           image={product.images.edges[0]?.node.url}

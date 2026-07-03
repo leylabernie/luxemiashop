@@ -108,7 +108,7 @@ def build_image_alt(p):
     color = p.get('color') or ''
     fabric = p.get('fabric') or ''
     work = p.get('work') or ''
-    return f"{color} {fabric} wedding saree with {work} — handcrafted Indian ethnic wear by LuxeMia"
+    return f"{color} {fabric} wedding saree with {work} — premium Indian ethnic wear by LuxeMia"
 
 
 def build_tags(p, idx):
@@ -190,7 +190,7 @@ def build_tags(p, idx):
         f'buy {color} saree online usa',
         f'{color} saree for indian wedding',
         f'premium {fabric} saree for wedding',
-        f'handcrafted {work} saree for bride',
+        f'{work} saree for bride',
         f'saree for wedding in usa',
         f'saree for wedding in canada',
         f'saree for wedding in australia',
@@ -201,7 +201,7 @@ def build_tags(p, idx):
         
         # Brand + status
         'LuxeMia', 'gender:female', 'women', 'womenswear',
-        'new arrival', 'handcrafted', 'premium ethnic wear',
+        'new arrival', 'premium ethnic wear',
         'worldwide shipping', 'free shipping over 350',
         
         # Catalog number for inventory traceability

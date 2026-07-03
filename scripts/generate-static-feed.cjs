@@ -696,7 +696,7 @@ function generateProductHighlights(product, color, material, productType, title)
     } else if (/mirror/i.test(t)) {
       highlights.push(`Traditional mirror work reflecting festive Indian heritage craftsmanship`);
     } else {
-      highlights.push(`Handcrafted embroidery with traditional Indian artisanal techniques`);
+      highlights.push(`Intricate embroidery with traditional Indian artisanal techniques`);
     }
   }
 

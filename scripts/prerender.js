@@ -115,7 +115,7 @@ const CATEGORY_PRODUCT_TYPES = {
   sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees', 'Silk Saree', 'Banarasi Saree', 'Cotton Saree', 'Georgette Saree', 'Bridal Saree', 'Designer Saree', 'Fancy Saree', 'Party Wear Saree', 'Kanjivaram Saree', 'Kanchipuram Saree', 'Tissue Saree', 'Net Saree', 'Sari'],
   lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga'],
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
-  indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
+  indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress'],
 };
 
 const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
@@ -180,7 +180,7 @@ function filterProductsForCategory(allProducts, category) {
   if (category === 'indowestern') {
     const womensFusionTypes = [
       ...types.map(t => t.toLowerCase()),
-      'sharara', 'anarkali', 'co-ords', 'coord set', 'jumpsuit', 'cape set', 'plazzo suit',
+      'anarkali', 'co-ords', 'coord set', 'jumpsuit', 'cape set', 'plazzo suit',
     ];
     return filtered.filter(p => {
       const pt = (p.productType ?? '').toLowerCase();
@@ -370,14 +370,14 @@ const routes = [
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
-      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Handcrafted with love by Indian artisans.</p>
+      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Made with care by Indian artisans.</p>
     `,
   },
   {
        path: '/suits',
     category: 'suits',
     title: 'Buy Indian Designer Salwar Suits Online USA | Anarkali & Palazzo | LuxeMia',
-    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with handcrafted embroidery. Worldwide shipping.',
+    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with intricate embroidery. Worldwide shipping.',
     h1: 'Salwar Kameez & Designer Suits Collection',
     content: `
       <p>Explore our curated collection of Salwar Kameez and anarkali ensembles. From elegant sharara sets to flowing palazzo suits, each piece features beautiful embroidery on premium fabrics like georgette, silk, and chiffon.</p>
@@ -433,7 +433,7 @@ const routes = [
     description: 'Buy bridal lehengas & wedding lehengas online. Designer bridal lehenga choli in silk & velvet with hand embroidery. Luxury craftsmanship, worldwide shipping.',
     h1: 'Designer Lehengas & Bridal Lehenga Collection',
     content: `
-      <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Handcrafted with intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
+      <p>Discover our stunning collection of designer lehengas and bridal lehenga choli. Featuring intricate embroidery on premium silk, net, and velvet fabrics. Each lehenga is a beautiful piece of Indian design.</p>
       <h2>Shop Lehengas by Occasion</h2>
       <ul>
         <li><a href="/lehengas?sub=bridal">Bridal Lehengas</a> — Heavily embroidered lehenga choli for your wedding day</li>
@@ -595,7 +595,7 @@ const routes = [
     description: 'Shop Indian bridal jewelry sets online in USA. Traditional wedding necklaces, Kundan & polki sets. South Asian bridal jewelry with luxury craftsmanship.',
     h1: 'Kundan Bridal Jewelry Collection',
     content: `
-      <p>Discover our handcrafted Kundan bridal jewelry collection — regal necklace sets, chokers, and full bridal sets featuring traditional Rajasthani stone-setting techniques. Each piece is designed for the modern NRI bride who wants to make a statement on her wedding day.</p>
+      <p>Discover our Kundan bridal jewelry collection — regal necklace sets, chokers, and full bridal sets featuring traditional Rajasthani stone-setting techniques. Each piece is designed for the modern NRI bride who wants to make a statement on her wedding day.</p>
       <h2>Shop Jewelry by Stone Type</h2>
       <ul>
         <li><a href="/jewelry?sub=kundan">Kundan Jewelry</a> — Traditional Kundan stones set in 24k gold foil</li>
@@ -742,15 +742,15 @@ const routes = [
       <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free shipping on orders over $350.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Every piece is handcrafted by skilled Indian artisans and ships worldwide with full tracking. Free shipping on orders over $350 to USA, Canada, and Australia.</p>
+      <p>Every piece is made in India and ships worldwide with full tracking. Free shipping on orders over $350 to USA, Canada, and Australia.</p>
     `,
   },
   {
     path: '/collections/bridal-lehengas',
     title: 'Bridal Lehenga Collection | Designer Wedding Lehengas | LuxeMia',
-    description: 'Shop bridal lehengas at LuxeMia. Designer bridal lehenga choli in silk, velvet & net. Handcrafted embroidery, luxurious fabrics. Free shipping.',
+    description: 'Shop bridal lehengas at LuxeMia. Designer bridal lehenga choli in silk, velvet & net. Intricate embroidery, luxurious fabrics. Free shipping.',
     h1: 'Bridal Lehenga Collection',
-    content: '<p>Discover our stunning bridal lehenga collection. Each piece is handcrafted with intricate embroidery on premium silk, velvet, and net fabrics. Find your dream bridal lehenga.</p>',
+    content: '<p>Discover our stunning bridal lehenga collection. Each piece features intricate embroidery on premium silk, velvet, and net fabrics. Find your dream bridal lehenga.</p>',
   },
   {
     path: '/collections/wedding-sarees',
@@ -776,7 +776,7 @@ const routes = [
   {
     path: '/our-story',
     title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
-    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',
+    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Authentic ethnic wear from skilled makers.',
     h1: 'Our Story',
     content: '<p>LuxeMia was born from a passion for preserving India\'s rich textile heritage while making Indian ethnic wear accessible worldwide. We work directly with skilled makers across India to bring you authentic, beautifully made pieces.</p>',
   },
@@ -869,12 +869,12 @@ const routes = [
   {
     path: '/brand-story',
     title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
-    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',
+    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Authentic ethnic wear from skilled makers.',
     h1: 'Our Story',
     content: `
       <p>LuxeMia was born from a passion for preserving India's rich textile heritage while making Indian ethnic wear accessible worldwide. We work directly with skilled makers across India to bring you authentic, beautifully made pieces.</p>
       <h2>Our Mission</h2>
-      <p>We believe every Indian — no matter where they live — deserves access to authentic, handcrafted ethnic wear. Our mission is to bridge the gap between India's master artisans and the global Indian diaspora, delivering museum-quality craftsmanship to your doorstep.</p>
+      <p>We believe every Indian — no matter where they live — deserves access to authentic ethnic wear. Our mission is to bridge the gap between India's master artisans and the global Indian diaspora, delivering museum-quality craftsmanship to your doorstep.</p>
       <h2>Why LuxeMia?</h2>
       <p>Unlike mass-produced fast fashion, each LuxeMia piece supports real artisans and preserves centuries-old techniques. We offer custom sizing, free shipping on orders over $350, and a curated selection that honors tradition while embracing modern design.</p>
     `,
@@ -886,7 +886,7 @@ const routes = [
     description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees & suits added weekly. Free shipping over $350 to USA, Canada & Australia.',
     h1: 'New Arrivals',
     content: `
-      <p>Discover the newest additions to our collection. Fresh styles of designer lehengas, silk sarees, and anarkali suits — handcrafted and shipped worldwide.</p>
+      <p>Discover the newest additions to our collection. Fresh styles of designer lehengas, silk sarees, and anarkali suits — shipped worldwide.</p>
       <h2>What's New</h2>
       <p>We add new styles every week, from bridal lehengas and Banarasi silk sarees to trendy palazzo suits and groom sherwanis. Each new arrival features the latest embroidery techniques, color palettes, and fabric innovations for 2026.</p>
       <p>Sign up for our newsletter to be the first to know when new collections drop. Free shipping on all new arrivals to USA, Canada, and Australia.</p>
@@ -931,7 +931,7 @@ const routes = [
         <li><a href="/nri/canada">Indian Ethnic Wear for Canada</a> — Free shipping coast to coast</li>
       </ul>
       <h2>Why NRIs Love LuxeMia</h2>
-      <p>Living abroad doesn't mean you have to settle for less. We deliver authentic, handcrafted Indian ethnic wear directly from our artisans to your doorstep — no middlemen, no compromises. Custom sizing available on all outfits.</p>
+      <p>Living abroad doesn't mean you have to settle for less. We deliver authentic Indian ethnic wear directly from our artisans to your doorstep — no middlemen, no compromises. Custom sizing available on all outfits.</p>
     `,
   },
   {
@@ -946,7 +946,7 @@ const routes = [
       <h2>Duty-Free Under $800</h2>
       <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery.</p>
       <h2>Shop Our USA Collection</h2>
-      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — all handcrafted in India and shipped directly to your US address.</p>
+      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — all made in India and shipped directly to your US address.</p>
     `,
   },
   {
@@ -961,7 +961,7 @@ const routes = [
       <h2>Canadian Customs Information</h2>
       <p>Canadian customs may charge GST/HST (5-15% depending on province) and import duties on textile imports. These charges are collected by the carrier at delivery.</p>
       <h2>Shop Our Canada Collection</h2>
-      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — handcrafted in India and delivered across Canada.</p>
+      <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — made in India and delivered across Canada.</p>
     `,
   },
   // --- NRI sub-pages ---
@@ -1676,7 +1676,7 @@ async function main() {
     // products with thin Shopify descriptions get unique, keyword-rich meta.
     const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
-    const fallbackDesc = `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics. Ships worldwide in 7-10 days, free over $350.`;
+    const fallbackDesc = `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Premium Indian ethnic wear with quality fabrics. Ships worldwide in 7-10 days, free over $350.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,

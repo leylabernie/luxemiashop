@@ -68,7 +68,7 @@ const convertPrice = (inrPrice: number): number => {
 const generateDescription = (title: string, fabric: string, color: string, work: string, category: string): string => {
   const descriptions: Record<string, string[]> = {
     lehengas: [
-      `Experience the grandeur of traditional craftsmanship with this exquisite ${color} ${fabric} lehenga. Meticulously handcrafted with ${work}, this piece embodies the timeless elegance that defines bridal luxury.`,
+      `Experience the grandeur of traditional craftsmanship with this exquisite ${color} ${fabric} lehenga. Meticulously detailed with ${work}, this piece embodies the timeless elegance that defines bridal luxury.`,
       `Step into your fairy tale with this breathtaking ${color} lehenga crafted from premium ${fabric}. The intricate ${work} has been executed by master artisans, creating a masterpiece worthy of your most special moments.`
     ],
     sarees: [

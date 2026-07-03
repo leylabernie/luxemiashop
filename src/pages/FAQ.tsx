@@ -242,7 +242,7 @@ const FAQ = () => {
         },
         {
           question: 'What if the color looks different in person than on screen?',
-          answer: 'We strive for accurate color representation in our product photography, but slight variations can occur due to screen settings, lighting conditions, and the nature of handcrafted textiles. Many Indian fabrics also appear different in natural vs. artificial light. We recommend reviewing all available product images and reading the fabric description carefully before purchasing.',
+          answer: 'We strive for accurate color representation in our product photography, but slight variations can occur due to screen settings, lighting conditions, and the nature of embroidered textiles. Many Indian fabrics also appear different in natural vs. artificial light. We recommend reviewing all available product images and reading the fabric description carefully before purchasing.',
         },
         {
           question: 'How long does delivery take to the USA, Canada, or Australia?',

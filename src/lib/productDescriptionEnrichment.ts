@@ -195,7 +195,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'lehenga for reception',
     ],
     categoryDescription:
-      'Explore LuxeMia\'s curated collection of designer lehengas — from bridal masterpieces to festive-ready silhouettes. Handcrafted with intricate embroidery, zari, and sequin work, each lehenga blends traditional Indian artistry with contemporary design. Shop bridal lehengas, wedding lehengas, and festive lehengas online with free shipping over $350 to the USA, Canada, and Australia.',
+      'Explore LuxeMia\'s curated collection of designer lehengas — from bridal masterpieces to festive-ready silhouettes. Featuring intricate embroidery, zari, and sequin work, each lehenga blends traditional Indian artistry with contemporary design. Shop bridal lehengas, wedding lehengas, and festive lehengas online with free shipping over $350 to the USA, Canada, and Australia.',
   },
 
   saree: {
@@ -565,7 +565,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
   jewelry: {
     label: 'jewelry piece',
     adjectives: {
-      primary: ['exquisite', 'dazzling', 'ornate', 'luminous', 'artistic', 'handcrafted'],
+      primary: ['exquisite', 'dazzling', 'ornate', 'luminous', 'artistic', 'refined'],
       secondary: ['intricate', 'radiant', 'timeless', 'statement', 'delicate', 'brilliant'],
     },
     designElements: [
@@ -611,7 +611,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'gold-plated Indian jewelry',
     ],
     categoryDescription:
-      'Adorn yourself with LuxeMia\'s jewelry collection — handcrafted kundan sets, temple jewelry, polki designs, and statement earrings. Each piece is crafted to complement Indian ethnic wear with timeless artistry. Free shipping over $350 to the USA, Canada, and Australia.',
+      'Adorn yourself with LuxeMia\'s jewelry collection — kundan sets, temple jewelry, polki designs, and statement earrings. Each piece is crafted to complement Indian ethnic wear with timeless artistry. Free shipping over $350 to the USA, Canada, and Australia.',
   },
 
   'indo-western': {
@@ -1070,7 +1070,7 @@ export function generateMetaDescription(
   // for natural variation across products (deterministic by title hash)
   const trustUsps = [
     'Ships worldwide in 7-10 days.',
-    'Handcrafted by Indian artisans.',
+    'Made by skilled Indian artisans.',
     'Luxury craftsmanship, worldwide shipping.',
     'Free shipping over $350 to USA, Canada & Australia.',
     'Ready to ship in 3-5 business days.',

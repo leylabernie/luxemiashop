@@ -52,7 +52,7 @@ const classifyProduct = (productType?: string): ProductCategory => {
 // --- Product-type-specific detail bullet points ---
 const DETAIL_BULLETS: Record<ProductCategory, string[]> = {
   lehenga: [
-    'Exquisite embroidery with zari, zardozi, or resham thread work handcrafted by artisans',
+    'Exquisite embroidery with zari, zardozi, or resham thread work by skilled artisans',
     'Flared silhouette with structured can-can or canvas inner for that royal volume',
     'Perfect for bridal ceremonies, mehndi, sangeet, and reception celebrations',
     'Comes with matching choli (blouse) and dupatta — complete 3-piece ensemble',
@@ -80,7 +80,7 @@ const DETAIL_BULLETS: Record<ProductCategory, string[]> = {
     'Detailed embroidery and embellishments befitting groom and groomsmen',
   ],
   other: [
-    'Handcrafted with care and attention to detail by skilled Indian artisans',
+    'Made with care and attention to detail by skilled Indian artisans',
     'Quality construction using time-honored textile traditions',
     'Beautiful design details that celebrate India\'s rich heritage',
     'Comfortable and elegant silhouette for a flattering fit',
@@ -811,7 +811,7 @@ export const ProductTabs = ({ description, productType, isStitchable }: ProductT
                   <div>
                     <h5 className="font-medium text-foreground mb-1">All Sales Final</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Due to the handcrafted and often custom nature of our garments, all sales are final. 
+                      Due to the custom nature of our garments, all sales are final. 
                       We encourage you to carefully review sizing, measurements, and product details before placing your order.
                       Our team is always available to answer any pre-purchase questions.
                     </p>

@@ -137,8 +137,8 @@ function generateSeoDescription(item) {
   const occ = item.occasions[0];
   // Mid-tail + long-tail keywords, ≤155 chars
   const candidates = [
-    `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')} for ${occ.toLowerCase()}. Handcrafted for grooms. Free shipping USA, Canada, Australia.`,
-    `${a.color_primary} ${a.fabric} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} — handcrafted for the modern groom. Free shipping over $350 to USA, Canada & Australia.`,
+    `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')} for ${occ.toLowerCase()}. Perfect for grooms. Free shipping USA, Canada, Australia.`,
+    `${a.color_primary} ${a.fabric} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} — made for the modern groom. Free shipping over $350 to USA, Canada & Australia.`,
     `Buy ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} grooms. Premium menswear. Free shipping to USA, Canada, Australia.`,
   ];
   for (const c of candidates) {

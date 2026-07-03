@@ -425,7 +425,7 @@ const SUITS: CategoryConfig = {
   heroImage: '/images/banners/suit-banner.jpg',
   heroImageWebp: '/images/banners/suit-banner.webp',
   heroTitle: 'Salwar Kameez & Suits',
-  heroSubtitle: 'Anarkali, sharara, palazzo, and Pakistani suits — handcrafted for festive and wedding celebrations.',
+  heroSubtitle: 'Anarkali, sharara, palazzo, and Pakistani suits — perfect for festive and wedding celebrations.',
   seoTitle: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
   seoDescription: 'Shop elegant salwar kameez, anarkali suits, palazzo suits, and sharara sets at LuxeMia. Pakistani suits and designer suits. Free shipping over $350 to USA, Canada & Australia.',
   canonical: 'https://luxemia.shop/suits',
@@ -536,7 +536,7 @@ const SUITS: CategoryConfig = {
   faqs: [
     {
       question: "What types of salwar kameez and suits are available at LuxeMia?",
-      answer: "LuxeMia offers anarkali suits, sharara sets, palazzo suits, Pakistani suits, and straight-cut salwar kameez in fabrics including georgette, chinon, silk, cotton, velvet, and net. Each piece is handcrafted with embroidery, sequence, zari, or mirror work."
+      answer: "LuxeMia offers anarkali suits, sharara sets, palazzo suits, Pakistani suits, and straight-cut salwar kameez in fabrics including georgette, chinon, silk, cotton, velvet, and net. Each piece features embroidery, sequence, zari, or mirror work."
     },
     {
       question: "What is the difference between anarkali and sharara suits?",
@@ -677,7 +677,7 @@ const MENSWEAR: CategoryConfig = {
   faqs: [
     {
       question: "What types of menswear are available at LuxeMia?",
-      answer: "LuxeMia offers sherwanis, kurta pajama sets, Modi jackets, indo-western menswear, and bandhgalas in silk, jacquard, velvet, cotton, and brocade fabrics. Each piece is handcrafted for the modern groom and wedding party."
+      answer: "LuxeMia offers sherwanis, kurta pajama sets, Modi jackets, indo-western menswear, and bandhgalas in silk, jacquard, velvet, cotton, and brocade fabrics. Each piece is tailored for the modern groom and wedding party."
     },
     {
       question: "What sizes are available for sherwanis?",
@@ -705,9 +705,9 @@ const JEWELRY: CategoryConfig = {
   name: 'Bridal Jewelry',
   heroImage: '/images/banners/jewelry-banner.jpg',
   heroTitle: 'Bridal Jewelry',
-  heroSubtitle: 'Handcrafted Kundan and uncut polki necklace sets for the modern bride — regal statements for your wedding day.',
+  heroSubtitle: 'Kundan and uncut polki necklace sets for the modern bride — regal statements for your wedding day.',
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-  seoDescription: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
+  seoDescription: 'Shop Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free shipping over $350 to USA, Canada & Australia.',
   canonical: 'https://luxemia.shop/jewelry',
   ogImage: '/og-image.jpg',
   breadcrumbs: [
@@ -804,7 +804,7 @@ const JEWELRY: CategoryConfig = {
   faqs: [
     {
       question: "What types of bridal jewelry are available at LuxeMia?",
-      answer: "LuxeMia offers handcrafted Kundan necklace sets, Kundan with stone bridal sets, uncut polki necklace sets, and full bridal sets (necklace + earrings + maang tikka). Each piece uses traditional Rajasthani stone-setting techniques with 24k gold foil framing."
+      answer: "LuxeMia offers Kundan necklace sets, Kundan with stone bridal sets, uncut polki necklace sets, and full bridal sets (necklace + earrings + maang tikka). Each piece uses traditional Rajasthani stone-setting techniques with 24k gold foil framing."
     },
     {
       question: "Is Kundan jewelry real diamond jewelry?",

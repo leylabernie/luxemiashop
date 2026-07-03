@@ -106,8 +106,8 @@ function generateSeoTitle(p) {
 function generateSeoDescription(p) {
   const usdPrice = Math.round((p.price_inr * 2) / 90);
   const candidates = [
-    `Shop this ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} for brides. Handcrafted. Free shipping USA, Canada, Australia.`,
-    `${p.color} ${p.fabric} saree with ${p.work.toLowerCase()} for weddings — handcrafted for the modern bride. Free shipping over $350 to USA, Canada & Australia.`,
+    `Shop this ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} for brides. Free shipping USA, Canada, Australia.`,
+    `${p.color} ${p.fabric} saree with ${p.work.toLowerCase()} for weddings — made for the modern bride. Free shipping over $350 to USA, Canada & Australia.`,
     `Buy ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} online. Premium ethnic wear for brides. Free shipping to USA, Canada, Australia.`,
   ];
   for (const c of candidates) {

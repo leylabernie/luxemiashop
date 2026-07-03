@@ -48,7 +48,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/suits': {
     title: 'Buy Indian Designer Salwar Suits Online USA | Anarkali & Palazzo | LuxeMia',
-    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with handcrafted embroidery. Worldwide shipping.',
+    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with intricate embroidery. Worldwide shipping.',
     canonical: `${SITE_URL}/suits`,
     image: `${SITE_URL}/og/og-suits.jpg`,
   },
