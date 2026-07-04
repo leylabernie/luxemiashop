@@ -130,11 +130,12 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                {isHomePage ? (
-                  <h1>LuxeMia</h1>
-                ) : (
-                  <span>LuxeMia</span>
-                )}
+                {/* Brand logo text — always a <span> (never an <h1>) to avoid
+                    duplicate H1 conflicts with the page-level H1. The homepage
+                    has its own sr-only H1 for SEO ('Affordable Indian Ethnic
+                    Wear & Traditional Fashion'). Using <h1> here for the logo
+                    created a second H1 that diluted the SEO target. */}
+                <span>LuxeMia</span>
               </motion.div>
             </Link>
 
