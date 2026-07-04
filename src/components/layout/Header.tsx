@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 import ProductSearch from '../search/ProductSearch';
-import { MegaMenuNavItem, PlainNavItem } from './MegaMenuNavItem';
+import { MegaMenuNavItem } from './MegaMenuNavItem';
 import { MEGA_MENUS } from '@/config/categoryConfig';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore } from '@/stores/cartStore';
@@ -142,9 +142,6 @@ const Header = () => {
             <nav className="hidden lg:flex items-center gap-5 flex-1 justify-end">
               {MEGA_MENUS.slice(3).map(menu => (
                 <MegaMenuNavItem key={menu.href} menu={menu} />
-              ))}
-              {PLAIN_NAV_LINKS.map(link => (
-                <PlainNavItem key={link.href} label={link.name} href={link.href} />
               ))}
             </nav>
 
