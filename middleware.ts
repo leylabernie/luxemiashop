@@ -281,8 +281,8 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
   let html = spaHtml;
 
   // Determine the correct meta tags for this page
-  let title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas';
-  let description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.';
+  let title = 'Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees';
+  let description = 'Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!';
   let canonical = `https://luxemia.shop${pathname}`;
   let ogType = 'website';
   let ogImage = 'https://luxemia.shop/og-image.jpg';
@@ -396,8 +396,8 @@ interface PageMeta {
 
 const STATIC_PAGE_META: Record<string, PageMeta> = {
   '/': {
-    title: 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, Banarasi silk sarees, anarkali suits & wedding collections. Free shipping to USA, Canada & Australia on orders over $350.',
+    title: 'Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees',
+    description: 'Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!',
     image: 'https://luxemia.shop/og-image.jpg',
   },
   // Occasion landing pages

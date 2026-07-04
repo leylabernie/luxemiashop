@@ -131,14 +131,21 @@ const Index = () => {
   // apparel retailer (not the unrelated sneaker store on luxemia.net). The
   // knowsAbout array and category field are the key disambiguation signals for
   // AI search engines and entity-based ranking.
+  //
+  // Schema.org compliance notes:
+  // - logo/image use real image URLs (og-image.jpg, verified 200 OK)
+  // - shippingDetails uses @type OfferShippingDetails (not ShippingDeliveryTime)
+  //   because shippingRate is a property of OfferShippingDetails, not
+  //   ShippingDeliveryTime. ShippingDeliveryTime is only for transit/processing
+  //   time, not shipping rates.
   const onlineStoreSchema = {
     "@context": "https://schema.org",
     "@type": "OnlineStore",
     "name": "Luxemia Shop",
     "url": "https://luxemia.shop",
-    "logo": "https://luxemia.shop",
+    "logo": "https://luxemia.shop/og-image.jpg",
     "description": "Affordable e-commerce store for South Asian traditional clothing, festive lehengas, trendy kurtis, and everyday casual sarees.",
-    "image": "https://luxemia.shop",
+    "image": "https://luxemia.shop/og-image.jpg",
     "category": "Indian Clothing Store",
     "knowsAbout": [
       "Indian Ethnic Wear",
@@ -153,7 +160,7 @@ const Index = () => {
       "eligibleRegion": ["US", "CA", "AU"]
     },
     "shippingDetails": {
-      "@type": "ShippingDeliveryTime",
+      "@type": "OfferShippingDetails",
       "shippingRate": {
         "@type": "MonetaryAmount",
         "value": "0.00",

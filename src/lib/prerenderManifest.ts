@@ -337,7 +337,6 @@ export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
   'handcrafted-lavender-kurta-with-nehru-jacket-groomsmen-ready-to-ship',
   'buy-handcrafted-banarasi-brocade-saree-bridesmaid-ready-to-ship',
   'handcrafted-fuchsia-banarasi-brocade-lehenga-choli-set-bridesmaid',
-  'custom-fit-viscose-rayon-color-chart-mehndi-guest-dress-made-to-order',
   'handcrafted-banarasi-brocade-lehenga-choli-set-bridesmaid-ready-to-ship',
   'handcrafted-periwinkle-chanderi-silk-lehenga-choli-set-bridesmaid',
   'handcrafted-ivory-kurta-with-nehru-jacket-wedding-guest-ready-to-ship',

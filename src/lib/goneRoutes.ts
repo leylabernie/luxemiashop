@@ -9,7 +9,7 @@
 // Source: dist/dead-product-handles.json (produced by scripts/generate-sitemap.cjs
 // after HEAD-checking every Shopify product URL against the live site).
 //
-// Last generated: 2026-07-04T19:51:29.426Z
+// Last generated: 2026-07-04T20:16:50.698Z
 // Handle count: 0
 
 export const GONE_PRODUCT_HANDLES: Set<string> = new Set<string>([]);

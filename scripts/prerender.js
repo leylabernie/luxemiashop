@@ -1539,14 +1539,19 @@ function generateHtml(template, route, allShopifyProducts) {
     // Homepage — inject OnlineStore JSON-LD schema to explicitly categorize
     // Luxemia Shop as a South Asian apparel retailer (disambiguates from the
     // unrelated sneaker store on luxemia.net).
+    //
+    // Schema.org compliance:
+    // - logo/image use real image URLs (og-image.jpg, verified 200 OK)
+    // - shippingDetails uses @type OfferShippingDetails (not ShippingDeliveryTime)
+    //   because shippingRate is a property of OfferShippingDetails
     const onlineStoreSchema = {
       "@context": "https://schema.org",
       "@type": "OnlineStore",
       "name": "Luxemia Shop",
       "url": "https://luxemia.shop",
-      "logo": "https://luxemia.shop",
+      "logo": "https://luxemia.shop/og-image.jpg",
       "description": "Affordable e-commerce store for South Asian traditional clothing, festive lehengas, trendy kurtis, and everyday casual sarees.",
-      "image": "https://luxemia.shop",
+      "image": "https://luxemia.shop/og-image.jpg",
       "category": "Indian Clothing Store",
       "knowsAbout": [
         "Indian Ethnic Wear",
@@ -1561,7 +1566,7 @@ function generateHtml(template, route, allShopifyProducts) {
         "eligibleRegion": ["US", "CA", "AU"]
       },
       "shippingDetails": {
-        "@type": "ShippingDeliveryTime",
+        "@type": "OfferShippingDetails",
         "shippingRate": {
           "@type": "MonetaryAmount",
           "value": "0.00",

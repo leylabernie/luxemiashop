@@ -4,7 +4,7 @@
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>https://luxemia.shop</link>
   <description>Shop quality Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Flat rate shipping $25 per order, free on orders over $350.</description>
-  <last_build_date>2026-07-04T19:51:40.724Z</last_build_date>
+  <last_build_date>2026-07-04T20:17:05.902Z</last_build_date>
 
   <item>
     <g:id>LUX-LEH-005-36</g:id>
@@ -11582,115 +11582,6 @@
     <g:target_country>US</g:target_country>
     <g:content_language>en</g:content_language>
     <g:custom_label_0>Lehenga Choli Set</g:custom_label_0>
-    
-    <g:shipping>
-      <g:country>US</g:country>
-      <g:service>Standard</g:service>
-      <g:price>25.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>US</g:country>
-      <g:service>Free over $350</g:service>
-      <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>CA</g:country>
-      <g:service>Standard</g:service>
-      <g:price>25.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>CA</g:country>
-      <g:service>Free over $350</g:service>
-      <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>AU</g:country>
-      <g:service>Standard</g:service>
-      <g:price>25.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>AU</g:country>
-      <g:service>Free over $350</g:service>
-      <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    
-    <g:returns>
-      <g:returns_policy>
-        <g:countries>US,CA,AU</g:countries>
-        <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
-        <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
-        <g:life_time_return_window>false</g:life_time_return_window>
-        <g:return_window_days>2</g:return_window_days>
-        <g:return_method>https://schema.org/ReturnByMail</g:return_method>
-        <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
-        <g:return_shipping_fee>
-          <g:price>0.00 USD</g:price>
-        </g:return_shipping_fee>
-      </g:returns_policy>
-    </g:returns>
-    <g:tax>
-      <g:country>US</g:country>
-      <g:rate>0</g:rate>
-      <g:tax_ship>no</g:tax_ship>
-    </g:tax>
-  </item>
-
-  <item>
-    <g:id>DWS-033</g:id>
-    <g:title>Custom Fit Viscose rayon Color Chart - Mehndi Guest Dress | Made to Order</g:title>
-    <g:description>Modern cocktail party fusion wear. This made-to-order viscose rayon color chart ships in 10 to 15 business days. fast shipping ethnic wear canada. Browse Neelam Thread Color Chart to pick your color.Details Style: Color Chart Fabric: Viscose rayon Fit: Custom tailored FAQQ: what to wear to an outdoor summer indian wedding?A: This viscose rayon color chart is perfect for that. Comfortable all-day wear.Q: Custom color?A: Yes — send us your Neelam Thread Color Chart choice after ordering.</g:description>
-    <g:link>https://luxemia.shop/product/custom-fit-viscose-rayon-color-chart-mehndi-guest-dress-made-to-order</g:link>
-    <g:image_link>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7754104351_az8u.jpg?v=1782927109&amp;format=jpg&amp;width=1200</g:image_link>
-    <g:additional_image_link>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7706162544_frah.jpg?v=1782927109&amp;format=jpg&amp;width=1200</g:additional_image_link>
-    <g:additional_image_link>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7754104359_m8g8.jpg?v=1782927112&amp;format=jpg&amp;width=1200</g:additional_image_link>
-    <g:additional_image_link>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7706162558_iedd.jpg?v=1782927109&amp;format=jpg&amp;width=1200</g:additional_image_link>
-    <g:availability>in_stock</g:availability>
-    <g:price>1346.80 USD</g:price>
-    <g:sale_price>1036.00 USD</g:sale_price>
-    <g:sale_price_effective_date>2026-07-04T00:00:00+00:00/2026-10-02T23:59:59+00:00</g:sale_price_effective_date>
-    <g:condition>new</g:condition>
-    <g:brand>LuxeMia</g:brand>
-    <g:google_product_category>2271</g:google_product_category>
-    <g:product_type>Lehenga</g:product_type>
-        <g:product_highlight>Flared kalidar lehenga construction for statement bridal and wedding guest movement</g:product_highlight>
-    <g:product_highlight>Ready to ship from India in 5-7 business days; flat $25 to USA, free over $350</g:product_highlight>
-    <g:product_highlight>Available in sizes 32-48 (XS to 5XL) — ready-to-wear and custom-stitched options</g:product_highlight>
-    <g:gender>female</g:gender>
-    <g:age_group>adult</g:age_group>
-    <g:color>Multi-Color</g:color>
-    
-    <g:pattern>embroidery</g:pattern>
-    <g:size>S,M,L,XL,XXL</g:size>
-    <g:size_type>regular</g:size_type>
-    <g:size_system>US</g:size_system>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:target_country>US</g:target_country>
-    <g:content_language>en</g:content_language>
-    <g:custom_label_0>Lehenga</g:custom_label_0>
     
     <g:shipping>
       <g:country>US</g:country>
