@@ -349,11 +349,11 @@ function generateItemListJsonLd(products, category, routePath) {
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia | Buy Indian Ethnic Wear Online — Lehengas, Sarees & Sherwanis',
-    description: 'Shop designer Indian ethnic wear online. Bridal lehengas, silk sarees, salwar suits & sherwanis. Luxury craftsmanship, worldwide shipping over $350.',
-    h1: 'LuxeMia',
+    title: 'Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees',
+    description: 'Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!',
+    h1: 'Affordable Indian Ethnic Wear & Traditional Fashion',
     content: `
-      <p>Discover beautiful Indian ethnic wear at LuxeMia. From bridal lehengas to silk sarees, anarkali suits to designer menswear — we bring the finest Indian craftsmanship to your doorstep with shipping to USA, Canada, and Australia.</p>
+      <p>Welcome to Luxemia Shop — your destination for affordable traditional clothing and ready-to-ship Indian ethnic wear. Shop trendy sarees, festive lehengas, and ready-to-wear salwar kameez with fast USA delivery.</p>
       <h2>Shop by Category</h2>
       <nav>
         <ul>
@@ -1535,6 +1535,48 @@ function generateHtml(template, route, allShopifyProducts) {
       ${route.content}
       <h2>Products in this Collection</h2>
       ${productCardsHtml}`;
+  } else if (route.path === '/') {
+    // Homepage — inject OnlineStore JSON-LD schema to explicitly categorize
+    // Luxemia Shop as a South Asian apparel retailer (disambiguates from the
+    // unrelated sneaker store on luxemia.net).
+    const onlineStoreSchema = {
+      "@context": "https://schema.org",
+      "@type": "OnlineStore",
+      "name": "Luxemia Shop",
+      "url": "https://luxemia.shop",
+      "logo": "https://luxemia.shop",
+      "description": "Affordable e-commerce store for South Asian traditional clothing, festive lehengas, trendy kurtis, and everyday casual sarees.",
+      "image": "https://luxemia.shop",
+      "category": "Indian Clothing Store",
+      "knowsAbout": [
+        "Indian Ethnic Wear",
+        "Affordable Sarees",
+        "Festive Lehengas",
+        "Salwar Kameez",
+        "South Asian Fashion"
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "eligibleRegion": ["US", "CA", "AU"]
+      },
+      "shippingDetails": {
+        "@type": "ShippingDeliveryTime",
+        "shippingRate": {
+          "@type": "MonetaryAmount",
+          "value": "0.00",
+          "currency": "USD"
+        },
+        "shippingDestination": {
+          "@type": "DefinedRegion",
+          "addressCountry": "US"
+        }
+      }
+    };
+    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(onlineStoreSchema)}</script>\n</head>`);
+    mainBodyContent = `
+      <h1>${escapeHtml(route.h1)}</h1>
+      ${route.content}`;
   } else {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>

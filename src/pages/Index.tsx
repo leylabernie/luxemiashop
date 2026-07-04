@@ -127,21 +127,71 @@ const Index = () => {
     },
   };
 
+  // OnlineStore Schema — explicitly distinguishes Luxemia Shop as a South Asian
+  // apparel retailer (not the unrelated sneaker store on luxemia.net). The
+  // knowsAbout array and category field are the key disambiguation signals for
+  // AI search engines and entity-based ranking.
+  const onlineStoreSchema = {
+    "@context": "https://schema.org",
+    "@type": "OnlineStore",
+    "name": "Luxemia Shop",
+    "url": "https://luxemia.shop",
+    "logo": "https://luxemia.shop",
+    "description": "Affordable e-commerce store for South Asian traditional clothing, festive lehengas, trendy kurtis, and everyday casual sarees.",
+    "image": "https://luxemia.shop",
+    "category": "Indian Clothing Store",
+    "knowsAbout": [
+      "Indian Ethnic Wear",
+      "Affordable Sarees",
+      "Festive Lehengas",
+      "Salwar Kameez",
+      "South Asian Fashion"
+    ],
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "eligibleRegion": ["US", "CA", "AU"]
+    },
+    "shippingDetails": {
+      "@type": "ShippingDeliveryTime",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0.00",
+        "currency": "USD"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "US"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Luxemia | Ready-to-Ship Indian Ethnic Wear & Jewelry in USA"
-        description="Shop ready-to-wear designer sarees, sangeet lehengas, and temple jewelry sets. Premium quality, quick delivery across the US, and hassle-free sizing."
+        title="Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees"
+        description="Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!"
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
+        additionalSchemas={[onlineStoreSchema]}
       />
       <Header />
       
       <main className="pt-[88px] lg:pt-[130px]">
         <NewArrivalsBanner />
-        {/* Semantic H1 for SEO — the carousel uses h2 for slide titles */}
-        <h1 className="sr-only">Ready-to-Ship Indian Ethnic Wear — Bridal Lehengas, Designer Sarees & Temple Jewelry | Fast USA Delivery | Luxemia</h1>
+        {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
+            Kept sr-only (screen-reader only) so visual layout is unchanged
+            but search engines see a single, keyword-rich H1. */}
+        <h1 className="sr-only">Affordable Indian Ethnic Wear & Traditional Fashion — Ready-to-Ship Sarees, Lehengas & Salwar Kameez | Luxemia Shop</h1>
+
+        {/* First paragraph of copy — explicitly uses "Luxemia Shop" and
+            "affordable traditional clothing" for algorithmic relevance.
+            sr-only so it doesn't disrupt the visual hero, but crawlers see it
+            as the opening body copy. */}
+        <p className="sr-only">
+          Welcome to Luxemia Shop — your destination for affordable traditional clothing and ready-to-ship Indian ethnic wear. Shop trendy sarees, festive lehengas, and ready-to-wear salwar kameez with fast USA delivery.
+        </p>
 
         {/* Shipping Info Banner */}
         <div className="bg-foreground text-background py-3">

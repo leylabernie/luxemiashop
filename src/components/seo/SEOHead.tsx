@@ -58,6 +58,13 @@ interface SEOHeadProps {
   faqs?: FAQItem[];
   noIndex?: boolean;
   localBusiness?: Record<string, any>;
+  /**
+   * Additional JSON-LD schemas to inject (each rendered as its own
+   * <script type="application/ld+json"> block). Use for page-specific schemas
+   * that don't fit the localBusiness/product/breadcrumb/faq pattern, e.g.
+   * OnlineStore, ItemList, etc.
+   */
+  additionalSchemas?: Record<string, any>[];
   hreflang?: HreflangAlternate[];
 }
 
@@ -84,6 +91,7 @@ const SEOHead = ({
   faqs,
   noIndex = false,
   localBusiness,
+  additionalSchemas,
   hreflang,
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
@@ -224,6 +232,11 @@ const SEOHead = ({
           {JSON.stringify(localBusiness)}
         </script>
       )}
+      {additionalSchemas && additionalSchemas.map((schema, i) => (
+        <script key={`additional-schema-${i}`} type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      ))}
       {productSchema && (
         <script type="application/ld+json">
           {JSON.stringify(productSchema)}
