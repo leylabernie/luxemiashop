@@ -145,15 +145,15 @@ export function CategoryListing({ config }: CategoryListingProps) {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={config.seoTitle}
-        description={config.seoDescription}
-        canonical={config.canonical}
+        title={activeSubcategory?.seoTitle || config.seoTitle}
+        description={activeSubcategory?.seoDescription || config.seoDescription}
+        canonical={activeSubcategory?.seoCanonical || config.canonical}
         type="collection"
         image={config.ogImage}
         breadcrumbs={config.breadcrumbs}
         collection={{
-          name: config.heroTitle,
-          description: config.seoDescription,
+          name: activeSubcategory ? `${config.heroTitle} — ${activeSubcategory.label}` : config.heroTitle,
+          description: activeSubcategory?.seoDescription || config.seoDescription,
           items: collectionItems,
         }}
         faqs={config.faqs}
@@ -216,6 +216,19 @@ export function CategoryListing({ config }: CategoryListingProps) {
               </>
             )}
           </nav>
+          {/* When a subcategory is active, the hero banner is hidden — render an
+              h1 here so the page still has a single H1 for SEO. Hero banner
+              already has the H1 when no sub is active. */}
+          {activeSubcategory && (
+            <h1 className="text-3xl md:text-4xl font-serif mt-4 mb-2">
+              {activeSubcategory.label} {config.name}
+            </h1>
+          )}
+          {activeSubcategory?.seoDescription && (
+            <p className="text-sm text-muted-foreground max-w-2xl mb-2">
+              {activeSubcategory.seoDescription}
+            </p>
+          )}
         </div>
 
         {/* Subcategory chips removed — moved to left sidebar FilterSidebar */}

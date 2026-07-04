@@ -49,6 +49,15 @@ export interface Subcategory {
    * title-only matching is insufficient (e.g. Sarees Party Wear).
    */
   descriptionKeywords?: string[];
+  /**
+   * Optional SEO override — when this subcategory is active, the category page
+   * uses these instead of the parent CategoryConfig SEO fields.
+   * Falls back to the parent config if undefined.
+   */
+  seoTitle?: string;
+  seoDescription?: string;
+  /** Optional canonical URL override (defaults to <config.canonical>?sub=<slug>) */
+  seoCanonical?: string;
 }
 
 export interface FilterOption {
@@ -152,7 +161,13 @@ function occasionSub(
   slug: string,
   label: string,
   matchTags: string[],
-  opts: { matchProductType?: string[]; descriptionKeywords?: string[] } = {}
+  opts: {
+    matchProductType?: string[];
+    descriptionKeywords?: string[];
+    seoTitle?: string;
+    seoDescription?: string;
+    seoCanonical?: string;
+  } = {}
 ): Subcategory {
   return { slug, label, group: 'occasion', matchTags, ...opts };
 }
@@ -189,10 +204,26 @@ const LEHENGAS: CategoryConfig = {
   ],
   subcategories: [
     // By Occasion (simplified — 3 main occasions)
-    occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal']),
-    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest']),
-    occasionSub('reception', 'Reception', ['occasion:reception', 'reception']),
-    occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive']),
+    occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
+      seoTitle: 'Bridal Lehengas Online USA | Red & Maroon Wedding Lehengas - LuxeMia',
+      seoDescription: 'Shop bridal lehengas for the Indian bride in USA. Red, maroon, and ivory wedding lehengas with zardozi, zari, and embroidery. Custom sizing, 5-day express delivery, free shipping over $350.',
+      seoCanonical: 'https://luxemia.shop/lehengas?sub=bridal',
+    }),
+    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest'], {
+      seoTitle: 'Wedding Guest Lehengas & Bridesmaid Lehengas Online | LuxeMia',
+      seoDescription: 'Shop wedding guest lehengas and bridesmaid lehengas online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Ready to ship from USA, custom fit available.',
+      seoCanonical: 'https://luxemia.shop/lehengas?sub=wedding-guest',
+    }),
+    occasionSub('reception', 'Reception', ['occasion:reception', 'reception'], {
+      seoTitle: 'Reception Lehengas for Brides | Cocktail & Evening Lehengas - LuxeMia',
+      seoDescription: 'Shop reception lehengas for the bride\'s evening event. Non-bridal colors (blue, green, pink, wine) with heavy embroidery and beadwork. Custom sizing, express delivery to USA & Canada.',
+      seoCanonical: 'https://luxemia.shop/lehengas?sub=reception',
+    }),
+    occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive'], {
+      seoTitle: 'Party Wear Lehengas & Festive Lehenga Choli Online | LuxeMia',
+      seoDescription: 'Shop party wear lehengas and festive lehenga cholis for cocktails, sangeet, and Diwali. Net, georgette, and velvet with sequins, mirror, and beadwork. Ready to ship from USA.',
+      seoCanonical: 'https://luxemia.shop/lehengas?sub=party-wear',
+    }),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'raw silk', 'art silk']),
     styleSub('velvet', 'Velvet', ['fabric:velvet', 'velvet']),
@@ -329,8 +360,15 @@ const SAREES: CategoryConfig = {
     // saree gown, ready-to-wear, casual wear, festival wear, festive).
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       matchProductType: ['Bridal Saree'],
+      seoTitle: 'Bridal Sarees for Indian Brides in USA | Silk & Kanjeevaram - LuxeMia',
+      seoDescription: 'Shop bridal sarees for Indian brides in USA. Silk, Kanjeevaram, and Banarasi bridal sarees with zari and embroidery. Custom stitching, 5-day express delivery, free shipping over $350.',
+      seoCanonical: 'https://luxemia.shop/sarees?sub=bridal',
     }),
-    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid']),
+    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid'], {
+      seoTitle: 'Wedding Guest Sarees & Bridesmaid Sarees Online | LuxeMia',
+      seoDescription: 'Shop elegant wedding guest sarees and bridesmaid sarees online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Ready to ship, custom fit available.',
+      seoCanonical: 'https://luxemia.shop/sarees?sub=wedding-guest',
+    }),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'occasion:reception', 'occasion:festival', 'party wear', 'party', 'reception', 'festive', 'cocktail'], {
       matchProductType: ['Party Wear Saree', 'Designer Saree', 'Fancy Saree', 'Pre-Draped Saree', 'Saree Gown'],
       descriptionKeywords: [
@@ -340,6 +378,9 @@ const SAREES: CategoryConfig = {
         'casual wear', 'festival wear', 'festival',
         'festive', 'occasionwear',
       ],
+      seoTitle: 'Party Wear Sarees & Reception Sarees Online | Designer Drapes - LuxeMia',
+      seoDescription: 'Shop party wear sarees, reception sarees, and pre-draped designer sarees. Sequins, beads, and zari work for cocktails, receptions, and festive celebrations. Ready to ship from USA.',
+      seoCanonical: 'https://luxemia.shop/sarees?sub=party-wear',
     }),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'banarasi', 'kanchipuram', 'kanjeevaram']),
