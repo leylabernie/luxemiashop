@@ -81,30 +81,36 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
   const tags = getTags(p);
   const titleLower = (p.title || '').toLowerCase();
 
-  for (const tag of sub.matchTags) {
-    const tagLower = tag.toLowerCase();
-    // Exact tag match (handles both 'occasion:bridal' and bare 'bridal')
-    if (tags.includes(tagLower)) return true;
-  }
-
-  // ─── Occasion subcategories: title-only matching ─────────────────────────
-  // CRITICAL: Do NOT match occasion words in the product DESCRIPTION.
-  // Many bridal products mention "reception" or "wedding" in their description
-  // (e.g., "perfect for your wedding reception") but they are bridal products,
-  // not reception-wear. Only match if the occasion word is in the TITLE.
+  // ─── Occasion subcategories: prefixed-tag + title-only matching ──────────
+  // CRITICAL: For occasion subcategories, ONLY match prefixed tags (occasion:bridal)
+  // and title words — NOT bare tags or description.
+  // A bridal product might have a bare 'reception' tag in Shopify (added loosely),
+  // but that doesn't make it a reception-wear product. The occasion must be in
+  // the TITLE or as a structured occasion: tag to be reliable.
   if (sub.group === 'occasion') {
-    const labelLower = sub.label.toLowerCase();
-    // Word-boundary match on title only (not description)
-    const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
-    if (wordBoundaryRegex.test(titleLower)) return true;
-    // Also check bare matchTag values against title (e.g. 'mehndi' tag for 'Mehendi' label)
+    // Only check prefixed tags (occasion:bridal, occasion:reception, etc.)
     for (const tag of sub.matchTags) {
       const tagLower = tag.toLowerCase();
-      if (tagLower.includes(':')) continue; // skip prefixed tags like 'occasion:bridal'
+      if (tagLower.includes(':') && tags.includes(tagLower)) return true;
+    }
+    // Word-boundary match on title only (not description, not bare tags)
+    const labelLower = sub.label.toLowerCase();
+    const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
+    if (wordBoundaryRegex.test(titleLower)) return true;
+    // Also check bare matchTag values against title (e.g. 'mehndi' for 'Mehendi')
+    for (const tag of sub.matchTags) {
+      const tagLower = tag.toLowerCase();
+      if (tagLower.includes(':')) continue;
       const tagRegex = new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i');
       if (tagRegex.test(titleLower)) return true;
     }
     return false;
+  }
+
+  // ─── Non-occasion subcategories: full tag + title + description matching ─
+  for (const tag of sub.matchTags) {
+    const tagLower = tag.toLowerCase();
+    if (tags.includes(tagLower)) return true;
   }
 
   // ─── Non-occasion subcategories: title + description matching ────────────
