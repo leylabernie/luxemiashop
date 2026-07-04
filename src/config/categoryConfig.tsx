@@ -38,6 +38,18 @@ export interface Subcategory {
   /** Optional price ceiling/floor for price-tier subcategories */
   priceMin?: number;
   priceMax?: number;
+  /**
+   * Optional Shopify productType values that map to this subcategory
+   * (e.g. 'Bridal Lehenga' → Bridal). Useful when productType is more reliable
+   * than tags or titles.
+   */
+  matchProductType?: string[];
+  /**
+   * Optional keywords to match against product description (left word-boundary,
+   * so 'reception' matches 'receptions'). Used by occasion subcategories where
+   * title-only matching is insufficient (e.g. Sarees Party Wear).
+   */
+  descriptionKeywords?: string[];
 }
 
 export interface FilterOption {
@@ -137,8 +149,13 @@ function colors(...names: string[]): FilterOption[] {
 
 // ─── Shared subcategory builders ───────────────────────────────────────────
 
-function occasionSub(slug: string, label: string, matchTags: string[]): Subcategory {
-  return { slug, label, group: 'occasion', matchTags };
+function occasionSub(
+  slug: string,
+  label: string,
+  matchTags: string[],
+  opts: { matchProductType?: string[]; descriptionKeywords?: string[] } = {}
+): Subcategory {
+  return { slug, label, group: 'occasion', matchTags, ...opts };
 }
 
 function styleSub(slug: string, label: string, matchTags: string[]): Subcategory {
@@ -304,10 +321,38 @@ const SAREES: CategoryConfig = {
     { name: 'Sarees', url: '/sarees' },
   ],
   subcategories: [
-    // By Occasion (simplified — 3 main occasions)
-    occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal']),
-    occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding']),
-    occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'reception', 'festive']),
+    // By Occasion — Sarees-specific mapping (see productFilters.ts matchSubcategory)
+    //
+    // Sarees have 'wedding' baked into nearly every title due to CSV import
+    // (e.g. 'Yellow Viscose Silk Wedding Saree'), so title-word matching on
+    // 'wedding' would put every saree in the Wedding subcategory. We removed
+    // the Wedding subcategory entirely and use tag + description signals instead.
+    //
+    // Bridal: role:bride tag, occasion:bridal tag, 'bridal' bare tag (only if
+    // NOT role:bridesmaid), title 'bridal' word, OR description 'bridal' word
+    // (excluding 'bridal party'/'bridal parties' which refers to bridesmaids).
+    //
+    // Wedding Guest: role:bridesmaid tag, occasion:wedding-guest tag, OR title
+    // 'wedding guest'/'bridesmaid' word.
+    //
+    // Party Wear: occasion:party-wear / occasion:reception / occasion:festival
+    // tag, OR title party/reception/cocktail/festive word, OR description
+    // containing party-wear keywords (reception, cocktail, party, pre-draped,
+    // saree gown, ready-to-wear, casual wear, festival wear, festive).
+    occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
+      matchProductType: ['Bridal Saree'],
+    }),
+    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid']),
+    occasionSub('party-wear', 'Party Wear', ['occasion:party', 'occasion:reception', 'occasion:festival', 'party wear', 'party', 'reception', 'festive', 'cocktail'], {
+      matchProductType: ['Party Wear Saree', 'Designer Saree', 'Fancy Saree', 'Pre-Draped Saree', 'Saree Gown'],
+      descriptionKeywords: [
+        'reception', 'cocktail', 'party', 'parties',
+        'pre-draped', 'pre draped', 'saree gown',
+        'ready to wear', 'ready-to-wear',
+        'casual wear', 'festival wear', 'festival',
+        'festive', 'occasionwear',
+      ],
+    }),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'banarasi', 'kanchipuram', 'kanjeevaram']),
     styleSub('georgette', 'Georgette', ['fabric:georgette', 'georgette']),

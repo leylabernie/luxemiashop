@@ -4,6 +4,17 @@ import type { Subcategory, FilterSection } from '@/config/categoryConfig';
 /**
  * Product filter + sort + subcategory matching utilities.
  *
+ * v3 changes (Sarees remap):
+ * - matchSubcategory now supports matchProductType (Shopify productType matching)
+ *   and descriptionKeywords (left word-boundary description matching).
+ * - For occasion group: added productType matching and descriptionKeywords
+ *   matching. Bridal description check now excludes 'bridal party'/'bridal
+ *   parties' which refer to bridesmaids, not brides.
+ * - applySubcategory now applies bridal-priority exclusion (bridal products
+ *   excluded from non-bridal occasion subs) and wedding-guest-priority
+ *   exclusion (wedding-guest products excluded from party-wear) for cleaner
+ *   separation. Reception sub retains its existing color-based exclusion.
+ *
  * v2 changes (Kalki-style rewrite):
  * - Tag-prefix matching (color:red, fabric:silk, occasion:wedding, role:bridesmaid)
  *   with fallback to substring match on title — much more reliable than the
@@ -80,39 +91,82 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
   // Tag matching — check structured tags (e.g. 'occasion:bridal', 'color:red')
   const tags = getTags(p);
   const titleLower = (p.title || '').toLowerCase();
+  const productTypeLower = (p.productType || '').toLowerCase();
 
-  // ─── Occasion subcategories: prefixed-tag + title-only matching ──────────
+  // ─── Occasion subcategories ───────────────────────────────────────────────
   // CRITICAL: For occasion subcategories, ONLY match prefixed tags (occasion:bridal)
-  // and title words — NOT bare tags or description.
-  // A bridal product might have a bare 'reception' tag in Shopify (added loosely),
-  // but that doesn't make it a reception-wear product. The occasion must be in
-  // the TITLE or as a structured occasion: tag to be reliable.
+  // and title words — NOT bare tags or description (with controlled exceptions).
   //
-  // EXCEPTION: The Bridal subcategory also checks the description, because many
-  // bridal products have "bridal" in their description but a short title without
-  // "bridal" (e.g., "Rust Orange Lehenga Choli" — description says "bridal").
+  // Exceptions (controlled via matchProductType and descriptionKeywords fields):
+  // 1. matchProductType: if the subcategory lists productType values, the product's
+  //    productType matches if it's in the list (e.g. 'Bridal Saree' → Bridal).
+  // 2. descriptionKeywords: if listed, the description is checked for those
+  //    keywords (left word-boundary, so 'reception' matches 'receptions').
+  // 3. Bridal description exception: the Bridal subcategory also checks the
+  //    description for the word 'bridal' (but NOT 'bridal party'/'bridal parties',
+  //    which refer to bridesmaids).
   if (sub.group === 'occasion') {
-    // Only check prefixed tags (occasion:bridal, occasion:reception, etc.)
+    // 1. Prefixed-tag match (occasion:bridal, occasion:reception, etc.)
     for (const tag of sub.matchTags) {
       const tagLower = tag.toLowerCase();
       if (tagLower.includes(':') && tags.includes(tagLower)) return true;
     }
-    // Word-boundary match on title
+
+    // 2. productType match (optional — controlled by sub.matchProductType)
+    if (sub.matchProductType && sub.matchProductType.length > 0) {
+      for (const pt of sub.matchProductType) {
+        if (pt.toLowerCase() === productTypeLower) return true;
+      }
+    }
+
+    // 3. Title word-boundary match on label
     const labelLower = sub.label.toLowerCase();
-    const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
-    if (wordBoundaryRegex.test(titleLower)) return true;
-    // Also check bare matchTag values against title (e.g. 'mehndi' for 'Mehendi')
+    const labelRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
+    if (labelRegex.test(titleLower)) return true;
+
+    // 4. Title word-boundary match on bare matchTags (e.g. 'mehndi' for 'Mehendi')
     for (const tag of sub.matchTags) {
       const tagLower = tag.toLowerCase();
       if (tagLower.includes(':')) continue;
       const tagRegex = new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i');
       if (tagRegex.test(titleLower)) return true;
     }
-    // Bridal exception: also check description for "bridal"
-    if (sub.slug === 'bridal') {
+
+    // 5. Description keyword match (optional — controlled by sub.descriptionKeywords)
+    if (sub.descriptionKeywords && sub.descriptionKeywords.length > 0) {
       const descLower = (p.description || '').toLowerCase();
-      if (/\bbridal\b/.test(descLower)) return true;
+      for (const kw of sub.descriptionKeywords) {
+        const kwLower = kw.toLowerCase();
+        // Left word-boundary only, so 'reception' matches 'receptions'
+        const kwRegex = new RegExp(`\\b${escapeRegex(kwLower)}`, 'i');
+        if (kwRegex.test(descLower)) return true;
+      }
     }
+
+    // 6. Bridal-specific bare-tag + description checks
+    //    The Bridal subcategory matches products with strong bridal signals:
+    //    - 'role:bride' tag (the bride herself)
+    //    - 'bridal' bare tag (only if NOT 'role:bridesmaid' — bridesmaid products
+    //      sometimes have a 'bridal' tag because they're for the bridal party)
+    //    - description 'bridal' word NOT followed by 'party'/'parties'
+    //      (excludes 'bridal party'/'bridal parties' which refer to bridesmaids)
+    if (sub.slug === 'bridal') {
+      if (tags.includes('role:bride')) return true;
+      if (tags.includes('bridal') && !tags.includes('role:bridesmaid')) return true;
+
+      const descLower = (p.description || '').toLowerCase();
+      if (descLower) {
+        const bridalMatches = descLower.matchAll(/\bbridal\b/gi);
+        for (const m of bridalMatches) {
+          const end = (m.index ?? 0) + m[0].length;
+          const after = descLower.slice(end, end + 15).trim();
+          if (!after.startsWith('party') && !after.startsWith('parties')) {
+            return true;
+          }
+        }
+      }
+    }
+
     return false;
   }
 
@@ -236,6 +290,59 @@ export function applyProductFiltersV2(
 }
 
 /**
+ * Check if a product matches the Bridal subcategory criteria.
+ * Used for bridal-priority exclusion (bridal products are excluded from
+ * other occasion subcategories).
+ *
+ * Bridal signals (any one is sufficient):
+ * - 'role:bride' tag, OR
+ * - 'occasion:bridal' tag, OR
+ * - 'bridal' bare tag (only if NOT 'role:bridesmaid' tag — bridesmaid products
+ *   sometimes have a 'bridal' tag because they're for the bridal party), OR
+ * - Title contains 'bridal' word, OR
+ * - Description contains 'bridal' word NOT followed by 'party'/'parties'.
+ */
+function isBridalProduct(p: ProductNode): boolean {
+  const tags = getTags(p);
+  if (tags.includes('role:bride')) return true;
+  if (tags.includes('occasion:bridal')) return true;
+  if (tags.includes('bridal') && !tags.includes('role:bridesmaid')) return true;
+
+  const titleLower = (p.title || '').toLowerCase();
+  if (/\bbridal\b/i.test(titleLower)) return true;
+
+  const descLower = (p.description || '').toLowerCase();
+  if (descLower) {
+    const matches = descLower.matchAll(/\bbridal\b/gi);
+    for (const m of matches) {
+      const end = m.index! + m[0].length;
+      const after = descLower.slice(end, end + 15).trim();
+      if (!after.startsWith('party') && !after.startsWith('parties')) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
+ * Check if a product matches the Wedding Guest subcategory criteria.
+ * Used for wedding-guest-priority exclusion (wedding-guest products are
+ * excluded from Party Wear to avoid double-listing).
+ */
+function isWeddingGuestProduct(p: ProductNode): boolean {
+  const tags = getTags(p);
+  if (tags.includes('role:bridesmaid')) return true;
+  if (tags.includes('occasion:wedding-guest')) return true;
+
+  const titleLower = (p.title || '').toLowerCase();
+  if (/\bwedding guest\b/i.test(titleLower)) return true;
+  if (/\bbridesmaid\b/i.test(titleLower)) return true;
+
+  return false;
+}
+
+/**
  * Apply subcategory filter (in addition to the regular filters).
  * If no subcategory is active, returns products unchanged.
  */
@@ -254,6 +361,23 @@ export function applySubcategory(
     const descLower = (p.node.description || '').toLowerCase();
     const matches = matchSubcategory(p.node, sub);
     if (!matches) return false;
+
+    // ─── Bridal-priority exclusion ────────────────────────────────────────
+    // If a product is bridal and the active sub is a non-bridal occasion,
+    // exclude it. The bridal subcategory 'owns' bridal products.
+    // EXCEPTION: Reception (for Lehengas) has its own color-based exclusion
+    // and explicitly allows 'bridal' in description (reception lehengas are
+    // for brides — just for the reception event, not the wedding ceremony).
+    if (sub.group === 'occasion' && sub.slug !== 'bridal' && sub.slug !== 'reception') {
+      if (isBridalProduct(p.node)) return false;
+    }
+
+    // ─── Wedding-Guest-priority exclusion ────────────────────────────────
+    // If a product is wedding-guest (bridesmaid) and the active sub is party-wear,
+    // exclude it. Wedding Guest is more specific than Party Wear.
+    if (sub.group === 'occasion' && sub.slug === 'party-wear') {
+      if (isWeddingGuestProduct(p.node)) return false;
+    }
 
     // ─── Reception-specific exclusions ──────────────────────────────────────
     // Reception lehengas ARE for brides (just for the reception event, not the

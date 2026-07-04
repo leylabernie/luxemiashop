@@ -53,3 +53,6 @@ public/merchant-feed.xml
 # CSV data files (not web assets — keep them out of public/)
 public/*.csv
 
+
+# Local test scripts (use real Shopify data, not for commit)
+scripts/
