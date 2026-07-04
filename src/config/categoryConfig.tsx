@@ -18,7 +18,6 @@ import type { ReactNode } from 'react';
 export type SubcategoryGroup =
   | 'occasion'
   | 'style'
-  | 'color'
   | 'price'
   | 'audience';
 
@@ -162,10 +161,6 @@ function styleSub(slug: string, label: string, matchTags: string[]): Subcategory
   return { slug, label, group: 'style', matchTags };
 }
 
-function colorSub(slug: string, label: string): Subcategory {
-  return { slug, label, group: 'color', matchTags: [`color:${slug}`, slug] };
-}
-
 function priceSub(slug: string, label: string, priceMin: number, priceMax: number): Subcategory {
   return { slug, label, group: 'price', matchTags: [], priceMin, priceMax };
 }
@@ -203,13 +198,6 @@ const LEHENGAS: CategoryConfig = {
     styleSub('velvet', 'Velvet', ['fabric:velvet', 'velvet']),
     styleSub('georgette', 'Georgette', ['fabric:georgette', 'georgette']),
     styleSub('net', 'Net', ['fabric:net', 'net']),
-    // By Color (6 main colors)
-    colorSub('red', 'Red'),
-    colorSub('maroon', 'Maroon'),
-    colorSub('pink', 'Pink'),
-    colorSub('blue', 'Blue'),
-    colorSub('green', 'Green'),
-    colorSub('ivory', 'Ivory'),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
     priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
@@ -358,13 +346,6 @@ const SAREES: CategoryConfig = {
     styleSub('georgette', 'Georgette', ['fabric:georgette', 'georgette']),
     styleSub('chiffon', 'Chiffon', ['fabric:chiffon', 'chiffon']),
     styleSub('organza', 'Organza', ['fabric:organza', 'organza']),
-    // By Color (6 main colors)
-    colorSub('red', 'Red'),
-    colorSub('maroon', 'Maroon'),
-    colorSub('pink', 'Pink'),
-    colorSub('blue', 'Blue'),
-    colorSub('green', 'Green'),
-    colorSub('purple', 'Purple'),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
     priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
@@ -481,13 +462,6 @@ const SUITS: CategoryConfig = {
     occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding']),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive']),
     occasionSub('casual', 'Casual', ['occasion:casual', 'casual', 'everyday']),
-    // By Color (6 main colors)
-    colorSub('pink', 'Pink'),
-    colorSub('red', 'Red'),
-    colorSub('green', 'Green'),
-    colorSub('blue', 'Blue'),
-    colorSub('purple', 'Purple'),
-    colorSub('maroon', 'Maroon'),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
     priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
@@ -616,13 +590,6 @@ const MENSWEAR: CategoryConfig = {
     // By Occasion (simplified — 2 main)
     occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding']),
     occasionSub('festive', 'Festive', ['occasion:festive', 'festive', 'reception', 'party', 'engagement']),
-    // By Color (6 main colors)
-    colorSub('cream', 'Cream'),
-    colorSub('gold', 'Gold'),
-    colorSub('black', 'Black'),
-    colorSub('navy', 'Navy'),
-    colorSub('maroon', 'Maroon'),
-    colorSub('wine', 'Wine'),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
     priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
@@ -756,13 +723,6 @@ const JEWELRY: CategoryConfig = {
     occasionSub('engagement', 'Engagement', ['occasion:engagement', 'engagement']),
     occasionSub('mehendi', 'Mehendi', ['occasion:mehendi', 'mehendi']),
     occasionSub('sangeet', 'Sangeet', ['occasion:sangeet', 'sangeet']),
-    // By Color
-    colorSub('clear', 'Clear'),
-    colorSub('pearl-white', 'Pearl White'),
-    colorSub('multicolor', 'Multicolor'),
-    colorSub('green', 'Green'),
-    colorSub('red', 'Red'),
-    colorSub('pink', 'Pink'),
     // By Audience
     audienceSub('bride', 'Bride', ['role:bride', 'bride']),
     audienceSub('bridesmaid', 'Bridesmaid', ['role:bridesmaid', 'bridesmaid']),

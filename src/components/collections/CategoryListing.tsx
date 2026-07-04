@@ -61,7 +61,6 @@ import { useListingFilters } from '@/hooks/useListingFilters';
 import { filterSortAndSubcategorize } from '@/lib/productFilters';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import ProductCard from '@/components/ui/ProductCard';
-import { SubcategoryChips } from './SubcategoryChips';
 import { FilterSidebar, ActiveFilterTags } from './FilterSidebar';
 import type { CategoryConfig } from '@/config/categoryConfig';
 
