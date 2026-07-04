@@ -87,13 +87,17 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
   // A bridal product might have a bare 'reception' tag in Shopify (added loosely),
   // but that doesn't make it a reception-wear product. The occasion must be in
   // the TITLE or as a structured occasion: tag to be reliable.
+  //
+  // EXCEPTION: The Bridal subcategory also checks the description, because many
+  // bridal products have "bridal" in their description but a short title without
+  // "bridal" (e.g., "Rust Orange Lehenga Choli" — description says "bridal").
   if (sub.group === 'occasion') {
     // Only check prefixed tags (occasion:bridal, occasion:reception, etc.)
     for (const tag of sub.matchTags) {
       const tagLower = tag.toLowerCase();
       if (tagLower.includes(':') && tags.includes(tagLower)) return true;
     }
-    // Word-boundary match on title only (not description, not bare tags)
+    // Word-boundary match on title
     const labelLower = sub.label.toLowerCase();
     const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
     if (wordBoundaryRegex.test(titleLower)) return true;
@@ -103,6 +107,11 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
       if (tagLower.includes(':')) continue;
       const tagRegex = new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i');
       if (tagRegex.test(titleLower)) return true;
+    }
+    // Bridal exception: also check description for "bridal"
+    if (sub.slug === 'bridal') {
+      const descLower = (p.description || '').toLowerCase();
+      if (/\bbridal\b/.test(descLower)) return true;
     }
     return false;
   }
@@ -241,12 +250,25 @@ export function applySubcategory(
   const bridalColors = ['red', 'maroon', 'off-white', 'off white', 'ivory', 'light pink'];
 
   return products.filter(p => {
+    const titleLower = (p.node.title || '').toLowerCase();
+    const descLower = (p.node.description || '').toLowerCase();
+    const titleDescLower = `${titleLower} ${descLower}`;
+
+    // ─── Bridal priority rule ───────────────────────────────────────────────
+    // If a product is bridal (title or description contains "bridal"), it should
+    // ONLY appear in the Bridal subcategory — NOT in Reception, Party Wear,
+    // Wedding Guest, etc. even if those words are in the title.
+    // This prevents bridal lehengas like "Rust Orange Zardosi Lehenga for
+    // Sangeet Reception Engagement" from showing in Reception.
+    if (sub.group === 'occasion' && sub.slug !== 'bridal') {
+      if (/\bbridal\b/.test(titleDescLower)) return false;
+    }
+
     const matches = matchSubcategory(p.node, sub);
     if (!matches) return false;
 
-    // For Reception subcategory, exclude bridal colors
+    // For Reception subcategory, also exclude bridal colors
     if (sub.slug === 'reception') {
-      const titleLower = (p.node.title || '').toLowerCase();
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
       const text = `${titleLower} ${tags.join(' ')}`;
       for (const color of bridalColors) {
