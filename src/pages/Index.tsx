@@ -59,7 +59,7 @@ const Index = () => {
     "name": "LuxeMia",
     "description": "Ready-to-ship Indian ethnic wear store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free shipping on orders over $350.",
     "url": "https://luxemia.shop",
-    "logo": "https://luxemia.shop/logo.png",
+    "logo": "https://luxemia.shop/og-image.jpg",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
     "telephone": "+1-215-341-9990",
     "email": "hello@luxemia.shop",
