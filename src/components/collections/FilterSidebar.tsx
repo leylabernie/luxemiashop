@@ -14,6 +14,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, X } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
@@ -28,6 +29,7 @@ interface FilterSidebarProps {
   onPriceChange: (range: [number, number]) => void;
   onClearAll: () => void;
   activeFilterCount: number;
+  activeSubSlug?: string;
 }
 
 export function FilterSidebar({
@@ -38,11 +40,12 @@ export function FilterSidebar({
   onPriceChange,
   onClearAll,
   activeFilterCount,
+  activeSubSlug,
 }: FilterSidebarProps) {
   // Track which sections are expanded. Default-expand sections where
   // defaultExpanded === true in config.
   const [expandedSections, setExpandedSections] = useState<string[]>(() => {
-    const defaults: string[] = ['Price'];
+    const defaults: string[] = ['Price', 'Occasion'];
     for (const section of config.filters) {
       if (section.defaultExpanded) defaults.push(section.name);
     }
@@ -81,6 +84,46 @@ export function FilterSidebar({
             </Button>
           )}
         </div>
+
+        {/* Subcategory navigation — moved from horizontal chips to sidebar */}
+        {config.subcategories.filter(s => s.group === 'occasion').length > 0 && (
+          <FilterSectionBlock
+            name="Occasion"
+            isActive={!!activeSubSlug}
+            isExpanded={expandedSections.includes('Occasion')}
+            onToggle={() => toggleSection('Occasion')}
+          >
+            <div className="flex flex-col gap-1">
+              <Link
+                to={`/${config.slug}`}
+                className={cn(
+                  'text-sm py-1.5 px-2 rounded transition-colors',
+                  !activeSubSlug
+                    ? 'bg-secondary text-foreground font-medium'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
+                )}
+              >
+                All {config.name}
+              </Link>
+              {config.subcategories
+                .filter(s => s.group === 'occasion')
+                .map(sub => (
+                  <Link
+                    key={sub.slug}
+                    to={`/${config.slug}?sub=${sub.slug}`}
+                    className={cn(
+                      'text-sm py-1.5 px-2 rounded transition-colors',
+                      activeSubSlug === sub.slug
+                        ? 'bg-secondary text-foreground font-medium'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
+                    )}
+                  >
+                    {sub.label}
+                  </Link>
+                ))}
+            </div>
+          </FilterSectionBlock>
+        )}
 
         {/* Price Range */}
         <FilterSectionBlock

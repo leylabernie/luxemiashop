@@ -196,7 +196,27 @@ export function applySubcategory(
   sub: Subcategory | null
 ): ShopifyProduct[] {
   if (!sub) return products;
-  return products.filter(p => matchSubcategory(p.node, sub));
+
+  // Special exclusions: Reception should NOT show bridal colors
+  // (red, maroon, off-white, light pink) — those are bride ceremony colors
+  const bridalColors = ['red', 'maroon', 'off-white', 'off white', 'ivory', 'light pink'];
+
+  return products.filter(p => {
+    const matches = matchSubcategory(p.node, sub);
+    if (!matches) return false;
+
+    // For Reception subcategory, exclude bridal colors
+    if (sub.slug === 'reception') {
+      const titleLower = (p.node.title || '').toLowerCase();
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+      const text = `${titleLower} ${tags.join(' ')}`;
+      for (const color of bridalColors) {
+        if (text.includes(color)) return false;
+      }
+    }
+
+    return true;
+  });
 }
 
 /**

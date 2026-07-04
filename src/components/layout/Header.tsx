@@ -25,25 +25,16 @@ const announcements = [
 ];
 
 // Categories without a mega-menu use plain links.
-// Indo-Western has its own page (Indowestern.tsx) without subcategory config,
-// so it stays a plain link.
-const PLAIN_NAV_LINKS = [
-  { name: 'Indo-Western', href: '/indowestern' },
-];
+// Indo-Western removed from top-level nav — will become a menswear subcategory later.
 
 // Combined nav links for the mobile menu (mega-menu not used on mobile).
-// Built from MEGA_MENUS + PLAIN_NAV_LINKS so the mobile drawer shows all
-// categories in one flat list.
 const navLinks = [
   ...MEGA_MENUS.map(m => ({ name: m.label, href: m.href })),
-  ...PLAIN_NAV_LINKS,
 ];
 
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bestsellers', href: '/bestsellers' },
-  { name: 'Bridal', href: '/lehengas' },
-  { name: 'Wedding Sarees', href: '/sarees' },
 ];
 
 const occasionLinks = [

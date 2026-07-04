@@ -26,7 +26,24 @@ const Bestsellers = () => {
   const { products, isLoading } = useShopifyProducts();
   const [sortBy, setSortBy] = useState('featured');
 
-  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
+  const sortedProducts = useMemo(() => {
+    // Filter to actual bestsellers — products tagged 'bestseller', 'best-seller',
+    // 'popular', or with 'isBestseller' metadata. Fall back to top 40 by featured
+    // if no bestseller tags exist (avoids showing the entire catalog).
+    const bestsellers = products.filter(p => {
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+      const hasBestsellerTag = tags.some(t =>
+        t.includes('bestseller') || t.includes('best-seller') || t.includes('best seller') || t.includes('popular')
+      );
+      const hasMeta = (p.node as any).metadata?.isBestseller === true;
+      return hasBestsellerTag || hasMeta;
+    });
+
+    // If we found tagged bestsellers, use those; otherwise limit to 40 products
+    // (sorted by newest — a reasonable proxy for "popular" when no tags exist)
+    const pool = bestsellers.length >= 8 ? bestsellers : products.slice(0, 40);
+    return sortProducts(pool, sortBy);
+  }, [products, sortBy]);
 
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Best Selling';
 

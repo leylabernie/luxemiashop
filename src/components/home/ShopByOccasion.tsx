@@ -19,7 +19,7 @@ const occasions = [
   {
     label: 'Reception',
     sublabel: 'Evening glamour',
-    href: '/lehengas?sub=party-wear',
+    href: '/lehengas?sub=reception',
     color: 'bg-indigo-50 dark:bg-indigo-950/30',
     accent: 'text-indigo-700 dark:text-indigo-300',
   },

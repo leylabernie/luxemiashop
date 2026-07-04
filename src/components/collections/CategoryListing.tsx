@@ -162,7 +162,8 @@ export function CategoryListing({ config }: CategoryListingProps) {
       <Header />
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
-        {/* Hero Banner */}
+        {/* Hero Banner — hidden when a subcategory is active (no occasion-specific banners) */}
+        {!activeSubcategory && (
         <section className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
           <picture className="absolute inset-0 w-full h-full">
             {config.heroImageWebp && (
@@ -192,6 +193,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
             </p>
           </motion.div>
         </section>
+        )}
 
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6">
@@ -217,15 +219,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
           </nav>
         </div>
 
-        {/* Subcategory Chips — horizontal pill nav */}
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <SubcategoryChips
-            subcategories={config.subcategories}
-            activeSubSlug={state.subcategory}
-            onSelect={setSubcategory}
-            basePath={`/${config.slug}`}
-          />
-        </div>
+        {/* Subcategory chips removed — moved to left sidebar FilterSidebar */}
 
         {/* Main Content: Sidebar + Grid */}
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
@@ -240,6 +234,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
                 onPriceChange={setPriceRange}
                 onClearAll={clearAll}
                 activeFilterCount={activeFilterCount}
+                activeSubSlug={state.subcategory}
               />
             </div>
 
@@ -288,6 +283,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
                           onPriceChange={setPriceRange}
                           onClearAll={clearAll}
                           activeFilterCount={activeFilterCount}
+                          activeSubSlug={state.subcategory}
                         />
                       </div>
                     </SheetContent>

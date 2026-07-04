@@ -178,7 +178,8 @@ const LEHENGAS: CategoryConfig = {
   subcategories: [
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal']),
-    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest', 'reception', 'party wear', 'party']),
+    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest', 'party wear', 'party']),
+    occasionSub('reception', 'Reception', ['occasion:reception', 'reception', 'party', 'party wear']),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive']),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'raw silk', 'art silk']),
@@ -427,8 +428,6 @@ const SUITS: CategoryConfig = {
     styleSub('anarkali', 'Anarkali', ['style:anarkali', 'anarkali']),
     styleSub('sharara', 'Sharara', ['style:sharara', 'sharara']),
     styleSub('palazzo', 'Palazzo', ['style:palazzo', 'palazzo']),
-    styleSub('pakistani', 'Pakistani', ['style:pakistani', 'pakistani']),
-    styleSub('straight-cut', 'Straight Cut', ['style:straight', 'straight cut', 'straight']),
     // By Fabric (simplified)
     styleSub('georgette-suit', 'Georgette', ['fabric:georgette', 'georgette']),
     styleSub('silk-suit', 'Silk', ['fabric:silk', 'silk']),
@@ -846,12 +845,6 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     href: '/lehengas',
     groups: [
       { label: 'By Occasion', links: subcatLinks('lehengas', LEHENGAS.subcategories, 'occasion') },
-      { label: 'By Style', links: subcatLinks('lehengas', LEHENGAS.subcategories, 'style', 5) },
-      { label: 'By Color', links: subcatLinks('lehengas', LEHENGAS.subcategories, 'color', 4) },
-      { label: 'Wedding Party', links: [
-        ...subcatLinks('lehengas', LEHENGAS.subcategories, 'audience'),
-        ...subcatLinks('lehengas', LEHENGAS.subcategories, 'price'),
-      ]},
     ],
   },
   {
@@ -859,25 +852,14 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     href: '/sarees',
     groups: [
       { label: 'By Occasion', links: subcatLinks('sarees', SAREES.subcategories, 'occasion') },
-      { label: 'By Fabric', links: subcatLinks('sarees', SAREES.subcategories, 'style').filter(l => ['Silk', 'Banarasi', 'Kanjeevaram', 'Georgette', 'Chiffon', 'Organza'].includes(l.name)) },
-      { label: 'By Color', links: subcatLinks('sarees', SAREES.subcategories, 'color', 4) },
-      { label: 'Wedding Party', links: [
-        ...subcatLinks('sarees', SAREES.subcategories, 'audience'),
-        ...subcatLinks('sarees', SAREES.subcategories, 'price'),
-      ]},
     ],
   },
   {
     label: 'Salwar Kameez',
     href: '/suits',
     groups: [
-      { label: 'By Style', links: subcatLinks('suits', SUITS.subcategories, 'style').filter(l => ['Anarkali', 'Sharara', 'Palazzo', 'Pakistani', 'Straight Cut'].includes(l.name)) },
+      { label: 'By Style', links: subcatLinks('suits', SUITS.subcategories, 'style') },
       { label: 'By Occasion', links: subcatLinks('suits', SUITS.subcategories, 'occasion') },
-      { label: 'By Color', links: subcatLinks('suits', SUITS.subcategories, 'color', 4) },
-      { label: 'Wedding Party', links: [
-        ...subcatLinks('suits', SUITS.subcategories, 'audience'),
-        ...subcatLinks('suits', SUITS.subcategories, 'price'),
-      ]},
     ],
   },
   {
@@ -886,24 +868,14 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     groups: [
       { label: 'By Style', links: subcatLinks('menswear', MENSWEAR.subcategories, 'style') },
       { label: 'By Occasion', links: subcatLinks('menswear', MENSWEAR.subcategories, 'occasion') },
-      { label: 'By Color', links: subcatLinks('menswear', MENSWEAR.subcategories, 'color', 4) },
-      { label: 'Wedding Party', links: [
-        ...subcatLinks('menswear', MENSWEAR.subcategories, 'audience'),
-        ...subcatLinks('menswear', MENSWEAR.subcategories, 'price'),
-      ]},
     ],
   },
   {
     label: 'Jewelry',
     href: '/jewelry',
     groups: [
-      { label: 'By Stone', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Kundan', 'Kundan with Stone', 'Uncut Polki', 'Pearl'].includes(l.name)) },
       { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Set', 'Choker Necklace', 'Full Bridal Set', 'With Maang Tikka'].includes(l.name)) },
       { label: 'By Occasion', links: subcatLinks('jewelry', JEWELRY.subcategories, 'occasion') },
-      { label: 'Wedding Party', links: [
-        ...subcatLinks('jewelry', JEWELRY.subcategories, 'audience'),
-        ...subcatLinks('jewelry', JEWELRY.subcategories, 'price'),
-      ]},
     ],
   },
 ];
