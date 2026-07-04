@@ -858,7 +858,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Salwar Kameez',
     href: '/suits',
     groups: [
-      { label: 'By Style', links: subcatLinks('suits', SUITS.subcategories, 'style') },
+      { label: 'By Style', links: subcatLinks('suits', SUITS.subcategories, 'style').filter(l => ['Anarkali', 'Sharara', 'Palazzo'].includes(l.name)) },
       { label: 'By Occasion', links: subcatLinks('suits', SUITS.subcategories, 'occasion') },
     ],
   },
