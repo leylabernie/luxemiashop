@@ -75,20 +75,51 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
     if (sub.matchTags.length === 0) return true;
   }
 
-  // Tag matching
+  // Tag matching — check structured tags (e.g. 'occasion:bridal', 'color:red')
   const tags = getTags(p);
   const titleLower = (p.title || '').toLowerCase();
 
   for (const tag of sub.matchTags) {
     const tagLower = tag.toLowerCase();
-    // Exact tag match (handles both 'color:red' and bare 'red')
+    // Exact tag match (handles both 'occasion:bridal' and bare 'bridal')
     if (tags.includes(tagLower)) return true;
   }
 
-  // Fallback: title contains the subcategory label
-  if (titleLower.includes(sub.label.toLowerCase())) return true;
+  // ─── Occasion subcategories: title-only matching ─────────────────────────
+  // CRITICAL: Do NOT match occasion words in the product DESCRIPTION.
+  // Many bridal products mention "reception" or "wedding" in their description
+  // (e.g., "perfect for your wedding reception") but they are bridal products,
+  // not reception-wear. Only match if the occasion word is in the TITLE.
+  if (sub.group === 'occasion') {
+    const labelLower = sub.label.toLowerCase();
+    // Word-boundary match on title only (not description)
+    const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(labelLower)}\\b`, 'i');
+    if (wordBoundaryRegex.test(titleLower)) return true;
+    // Also check bare matchTag values against title (e.g. 'mehndi' tag for 'Mehendi' label)
+    for (const tag of sub.matchTags) {
+      const tagLower = tag.toLowerCase();
+      if (tagLower.includes(':')) continue; // skip prefixed tags like 'occasion:bridal'
+      const tagRegex = new RegExp(`\\b${escapeRegex(tagLower)}\\b`, 'i');
+      if (tagRegex.test(titleLower)) return true;
+    }
+    return false;
+  }
+
+  // ─── Non-occasion subcategories: title + description matching ────────────
+  // For color, style, fabric — it's safe to match in description too since
+  // those are product attributes, not occasion-context words.
+  const descLower = (p.description || '').toLowerCase();
+  const titleDescLower = `${titleLower} ${descLower}`;
+  if (titleDescLower.includes(sub.label.toLowerCase())) return true;
 
   return false;
+}
+
+/**
+ * Escape special regex characters in a string for safe use in RegExp.
+ */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /**
