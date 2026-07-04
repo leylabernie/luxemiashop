@@ -245,32 +245,26 @@ export function applySubcategory(
 ): ShopifyProduct[] {
   if (!sub) return products;
 
-  // Special exclusions: Reception should NOT show bridal colors
-  // (red, maroon, off-white, light pink) — those are bride ceremony colors
-  const bridalColors = ['red', 'maroon', 'off-white', 'off white', 'ivory', 'light pink'];
+  // Bridal colors — excluded from Reception (bride ceremony colors)
+  // Rust is included because rust-colored lehengas are bridal for wedding
+  const bridalColors = ['red', 'maroon', 'off-white', 'off white', 'ivory', 'light pink', 'rust'];
 
   return products.filter(p => {
     const titleLower = (p.node.title || '').toLowerCase();
     const descLower = (p.node.description || '').toLowerCase();
-    const titleDescLower = `${titleLower} ${descLower}`;
-
-    // ─── Bridal priority rule ───────────────────────────────────────────────
-    // If a product is bridal (title or description contains "bridal"), it should
-    // ONLY appear in the Bridal subcategory — NOT in Reception, Party Wear,
-    // Wedding Guest, etc. even if those words are in the title.
-    // This prevents bridal lehengas like "Rust Orange Zardosi Lehenga for
-    // Sangeet Reception Engagement" from showing in Reception.
-    if (sub.group === 'occasion' && sub.slug !== 'bridal') {
-      if (/\bbridal\b/.test(titleDescLower)) return false;
-    }
-
     const matches = matchSubcategory(p.node, sub);
     if (!matches) return false;
 
-    // For Reception subcategory, also exclude bridal colors
+    // ─── Reception-specific exclusions ──────────────────────────────────────
+    // Reception lehengas ARE for brides (just for the reception event, not the
+    // wedding ceremony). So "bridal" in the description is OK.
+    // The ONLY exclusion is bridal ceremony colors:
+    // red, maroon, off-white, light pink, rust
     if (sub.slug === 'reception') {
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
       const text = `${titleLower} ${tags.join(' ')}`;
+
+      // Exclude bridal ceremony colors only
       for (const color of bridalColors) {
         if (text.includes(color)) return false;
       }
