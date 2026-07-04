@@ -178,8 +178,8 @@ const LEHENGAS: CategoryConfig = {
   subcategories: [
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal']),
-    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest', 'party wear', 'party']),
-    occasionSub('reception', 'Reception', ['occasion:reception', 'reception', 'party', 'party wear']),
+    occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest']),
+    occasionSub('reception', 'Reception', ['occasion:reception', 'reception']),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive']),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'raw silk', 'art silk']),
@@ -866,7 +866,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Menswear',
     href: '/menswear',
     groups: [
-      { label: 'By Style', links: subcatLinks('menswear', MENSWEAR.subcategories, 'style') },
+      { label: 'By Style', links: subcatLinks('menswear', MENSWEAR.subcategories, 'style').filter(l => ['Sherwani', 'Kurta Pajama', 'Indo-Western'].includes(l.name)) },
       { label: 'By Occasion', links: subcatLinks('menswear', MENSWEAR.subcategories, 'occasion') },
     ],
   },
@@ -874,8 +874,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Jewelry',
     href: '/jewelry',
     groups: [
-      { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Set', 'Choker Necklace', 'Full Bridal Set', 'With Maang Tikka'].includes(l.name)) },
-      { label: 'By Occasion', links: subcatLinks('jewelry', JEWELRY.subcategories, 'occasion') },
+      { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Set', 'Full Bridal Set'].includes(l.name)) },
     ],
   },
 ];
