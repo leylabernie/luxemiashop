@@ -37,7 +37,6 @@ function getTags(p: ProductNode): string[] {
 function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: string): boolean {
   const tags = getTags(p);
   const valueLower = value.toLowerCase();
-  const titleLower = (p.title || '').toLowerCase();
 
   // Strategy 1: tag-prefix match (preferred)
   if (tagPrefix) {
@@ -48,8 +47,11 @@ function matchFilterValue(p: ProductNode, tagPrefix: string | undefined, value: 
   // Strategy 2: bare tag match
   if (tags.includes(valueLower)) return true;
 
-  // Strategy 3: title substring (last resort)
-  if (titleLower.includes(valueLower)) return true;
+  // Strategy 3: word-boundary match in title, productType, and description
+  // Use word boundaries to prevent false positives (e.g., "silk" matching "silk-like")
+  const text = `${p.title || ''} ${p.productType || ''} ${p.description || ''}`.toLowerCase();
+  const wordBoundaryRegex = new RegExp(`\\b${escapeRegex(valueLower)}\\b`, 'i');
+  if (wordBoundaryRegex.test(text)) return true;
 
   return false;
 }

@@ -28,8 +28,7 @@ const Bestsellers = () => {
 
   const sortedProducts = useMemo(() => {
     // Filter to actual bestsellers — products tagged 'bestseller', 'best-seller',
-    // 'popular', or with 'isBestseller' metadata. Fall back to top 40 by featured
-    // if no bestseller tags exist (avoids showing the entire catalog).
+    // 'popular', or with 'isBestseller' metadata.
     const bestsellers = products.filter(p => {
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
       const hasBestsellerTag = tags.some(t =>
@@ -39,9 +38,22 @@ const Bestsellers = () => {
       return hasBestsellerTag || hasMeta;
     });
 
-    // If we found tagged bestsellers, use those; otherwise limit to 40 products
-    // (sorted by newest — a reasonable proxy for "popular" when no tags exist)
-    const pool = bestsellers.length >= 8 ? bestsellers : products.slice(0, 40);
+    // If we found tagged bestsellers, use those.
+    // Otherwise, pick products from the MIDDLE of the catalog (not the newest 24
+    // which overlap with New Arrivals). Sort by price descending as a proxy for
+    // "premium/popular" and limit to 24.
+    let pool: typeof products;
+    if (bestsellers.length >= 8) {
+      pool = bestsellers;
+    } else {
+      // Sort by price descending (premium products as bestseller proxy)
+      // and skip the first 24 (those are in New Arrivals) to avoid overlap
+      const byPriceDesc = [...products].sort((a, b) =>
+        parseFloat(b.node.priceRange.minVariantPrice.amount) -
+        parseFloat(a.node.priceRange.minVariantPrice.amount)
+      );
+      pool = byPriceDesc.slice(0, 24);
+    }
     return sortProducts(pool, sortBy);
   }, [products, sortBy]);
 
