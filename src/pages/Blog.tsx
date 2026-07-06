@@ -123,6 +123,8 @@ const Blog = () => {
   const categories = [...new Set(blogPosts.map(post => post.category))];
 
   // Determine which posts to show based on cluster or category filter
+  // CRITICAL FIX: blogPosts added to dependency array — without it, this
+  // memo returns an empty array on first render (before lazy import resolves).
   const filteredPosts = useMemo(() => {
     if (activeCluster) {
       const cluster = topicClusters.find(c => c.id === activeCluster);
@@ -134,11 +136,14 @@ const Blog = () => {
       return blogPosts.filter(post => post.category === activeCategory);
     }
     return blogPosts.slice(1);
-  }, [activeCategory, activeCluster]);
+  }, [activeCategory, activeCluster, blogPosts]);
 
   const displayFeatured = (activeCategory || activeCluster) ? null : featuredPost;
 
   // Count posts per cluster
+  // CRITICAL FIX: blogPosts MUST be in the dependency array. Without it,
+  // the counts are calculated once when blogPosts is still [] (empty, before
+  // the lazy import resolves) and never recalculated — so all counts show 0.
   const clusterCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     topicClusters.forEach(cluster => {
@@ -147,7 +152,7 @@ const Blog = () => {
       ).length;
     });
     return counts;
-  }, []);
+  }, [blogPosts]);
 
   const blogSchema = {
     "@context": "https://schema.org",
