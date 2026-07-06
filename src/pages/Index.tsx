@@ -6,7 +6,6 @@ import Footer from '@/components/layout/Footer';
 import CategoryShowcase from '@/components/home/CategoryShowcase';
 import ShopByCategory from '@/components/home/ShopByCategory';
 import LookbookTeaser from '@/components/home/LookbookTeaser';
-import NewVisitorPopup from '@/components/home/NewVisitorPopup';
 import SEOHead from '@/components/seo/SEOHead';
 import ServiceHighlights from '@/components/home/ServiceHighlights';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
@@ -273,9 +272,9 @@ const Index = () => {
 
         <SEOFooterContent />
       </main>
-      
+
       <Footer />
-      <NewVisitorPopup />
+      {/* NewVisitorPopup moved to App.tsx so it shows on ALL pages, not just homepage */}
 
     </div>
   );

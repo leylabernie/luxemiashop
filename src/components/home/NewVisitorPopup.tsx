@@ -142,18 +142,25 @@ const NewVisitorPopup = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92vw] max-w-md bg-background z-50 shadow-2xl rounded-lg overflow-hidden"
+            // Mobile-friendly positioning:
+            // - w-[92vw] max-w-md: 92% of viewport width, capped at 448px on desktop
+            // - max-h-[90dvh]: dynamic viewport height (handles mobile browser chrome)
+            // - overflow-y-auto: scroll if content is taller than viewport (small phones)
+            // - On mobile: bottom-aligned so keyboard doesn't cover the email input
+            // - On desktop (sm+): centered vertically and horizontally
+            className="fixed left-1/2 -translate-x-1/2 bottom-[env(safe-area-inset-bottom,0.5rem)] sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 w-[92vw] max-w-md max-h-[90dvh] overflow-y-auto bg-background z-50 shadow-2xl rounded-lg"
           >
             <div className="relative">
               {/* Decorative header */}
               <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent h-2" />
               
+              {/* Close button — enlarged touch target for mobile (44x44px minimum) */}
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 p-2 hover:bg-muted rounded-full transition-colors z-10"
+                className="absolute top-3 right-3 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-muted rounded-full transition-colors z-10"
                 aria-label="Close popup"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
 
               <div className="p-8 pt-6">
@@ -188,7 +195,11 @@ const NewVisitorPopup = () => {
                           required
                           disabled={isSubmitting}
                           maxLength={255}
-                          className={`w-full bg-transparent border px-4 py-3.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-foreground/40 font-light rounded-md disabled:opacity-50 ${emailError ? 'border-destructive' : 'border-border'}`}
+                          // text-base (16px) on mobile to prevent iOS Safari auto-zoom on focus.
+                          // sm:text-sm reverts to 14px on desktop where zoom isn't an issue.
+                          autoComplete="email"
+                          inputMode="email"
+                          className={`w-full bg-transparent border px-4 py-3.5 text-base sm:text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-foreground/40 font-light rounded-md disabled:opacity-50 ${emailError ? 'border-destructive' : 'border-border'}`}
                         />
                         {emailError && (
                           <p className="text-destructive text-xs mt-1 text-center">{emailError}</p>

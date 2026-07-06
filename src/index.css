@@ -122,6 +122,24 @@
     height: auto;
   }
 
+  /* Mobile-friendly: Prevent iOS Safari auto-zoom on input focus.
+     iOS Safari zooms in when an input has font-size < 16px. Forcing
+     16px on mobile (max-width: 767px) prevents the jarring zoom behavior.
+     Desktop keeps the smaller font sizes set by Tailwind utilities. */
+  @media (max-width: 767px) {
+    input[type="email"],
+    input[type="text"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="search"],
+    input[type="url"],
+    input[type="number"],
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
+
   /* Font fallback with size-adjust to reduce CLS from font swap */
   body {
     @apply bg-background text-foreground antialiased;
