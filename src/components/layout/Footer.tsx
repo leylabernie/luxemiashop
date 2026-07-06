@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Mail, Phone, Clock, Twitter, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, Clock, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
 import InternalLinkBlock from '@/components/seo/InternalLinkBlock';
 
 const footerLinks = {
@@ -91,12 +91,6 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               </a>
               <a href="https://www.facebook.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Facebook">
                 <Facebook className="w-4 h-4" />
-              </a>
-              <a href="https://www.youtube.com/@luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Subscribe on YouTube">
-                <Youtube className="w-4 h-4" />
-              </a>
-              <a href="https://twitter.com/luxemia" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Twitter">
-                <Twitter className="w-4 h-4" />
               </a>
               <a href="https://www.pinterest.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Pinterest">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">

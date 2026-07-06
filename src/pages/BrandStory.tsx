@@ -49,7 +49,6 @@ const organizationSchema = {
     'https://www.instagram.com/luxemiashop',
     'https://www.facebook.com/luxemiashop',
     'https://www.pinterest.com/luxemiashop',
-    'https://www.youtube.com/@luxemiashop',
   ],
   foundingDate: '2025',
   knowsAbout: [

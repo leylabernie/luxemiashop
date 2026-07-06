@@ -262,6 +262,11 @@ export async function return404(request: Request): Promise<Response> {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'public, max-age=300',
+      // CRITICAL: Tell Google NOT to index 404 pages.
+      // Without this, Vercel's catch-all header rule (or no rule at all)
+      // would default to indexing, causing 404s to appear in Google search
+      // results and waste crawl budget.
+      'X-Robots-Tag': 'noindex, follow',
     },
   });
 }

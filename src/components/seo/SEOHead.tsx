@@ -73,7 +73,6 @@ const SOCIAL_LINKS = {
   instagram: 'https://www.instagram.com/luxemiashop',
   facebook: 'https://www.facebook.com/luxemiashop',
   pinterest: 'https://www.pinterest.com/luxemiashop',
-  youtube: 'https://www.youtube.com/@luxemiashop',
 };
 
 const SEOHead = ({

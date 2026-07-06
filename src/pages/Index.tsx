@@ -96,7 +96,6 @@ const Index = () => {
     "sameAs": [
       "https://www.instagram.com/luxemiashop",
       "https://www.facebook.com/luxemiashop",
-      "https://www.youtube.com/@luxemiashop",
       "https://www.pinterest.com/luxemiashop"
     ],
     "hasOfferCatalog": {
