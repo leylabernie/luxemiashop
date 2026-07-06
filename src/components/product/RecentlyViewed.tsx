@@ -1,6 +1,7 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Clock } from 'lucide-react';
+import { Clock, Package } from 'lucide-react';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { getOptimizedImage } from '@/lib/imageUtils';
 
@@ -10,7 +11,25 @@ interface RecentlyViewedProps {
 
 export const RecentlyViewed = ({ currentProductId }: RecentlyViewedProps) => {
   const getRecentProducts = useRecentlyViewedStore((state) => state.getRecentProducts);
-  const recentProducts = getRecentProducts(currentProductId, 6);
+  const removeProduct = useRecentlyViewedStore((state) => state.removeProduct);
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+
+  // Filter out products with empty image URLs (stale/broken entries)
+  const recentProducts = getRecentProducts(currentProductId, 6).filter(
+    (p) => p.imageUrl && p.imageUrl.trim().length > 0
+  );
+
+  // Auto-remove products whose images fail to load (cleans up stale localStorage entries)
+  const handleImageError = (productId: string) => {
+    setImageErrors((prev) => new Set(prev).add(productId));
+    // Also remove from the store so it doesn't show up on next page load
+    removeProduct(productId);
+  };
+
+  // Re-render if products change (e.g. after removal)
+  useEffect(() => {
+    // no-op — just triggers re-render when imageErrors changes
+  }, [imageErrors]);
 
   if (recentProducts.length === 0) {
     return null;
@@ -48,6 +67,7 @@ export const RecentlyViewed = ({ currentProductId }: RecentlyViewedProps) => {
                   alt={product.title}
                   loading="lazy"
                   decoding="async"
+                  onError={() => handleImageError(product.id)}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-300" />
