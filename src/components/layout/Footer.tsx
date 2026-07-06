@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Mail, Phone, Clock, Shield, MapPin, Lock, CreditCard, Truck } from 'lucide-react';
-import InternalLinkBlock from '@/components/seo/InternalLinkBlock';
+import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck } from 'lucide-react';
 
 const footerLinks = {
   shop: [
@@ -30,10 +29,8 @@ const footerLinks = {
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Shipping Info', href: '/shipping' },
-    { name: 'Shipping & Customs', href: '/pages/shipping-customs' },
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
-    { name: 'How to Measure Blouse Size', href: '/sizing-measurements-guide' },
     { name: 'Care Guide', href: '/care-guide' },
     { name: 'Style Consultation', href: '/style-consultation' },
   ],
@@ -42,14 +39,9 @@ const footerLinks = {
 const Footer = forwardRef<HTMLElement>((_props, ref) => {
   return (
     <footer ref={ref} className="bg-card border-t border-border/50">
-      {/* Site-wide contextual internal-link block.
-          Renders 3 columns of cross-links to distribute PageRank to weakly-indexed
-          pages and guarantee minimum internal link density on every page. */}
-      <InternalLinkBlock />
-
-      {/* Newsletter Section */}
+      {/* ─── Newsletter Section ─────────────────────────────────────────── */}
       <div className="border-b border-border/50">
-        <div className="container mx-auto px-4 lg:px-8 py-16">
+        <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
           <div className="max-w-xl mx-auto text-center">
             <h3 className="font-serif text-2xl lg:text-3xl mb-3">
               Join Our World
@@ -57,15 +49,15 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <p className="text-foreground/60 text-sm mb-6 font-light">
               Be the first to discover new collections, exclusive offers, and styling inspiration.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3">
+            <form className="flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 bg-background border border-border/50 px-4 py-3 text-sm focus:outline-none focus:border-foreground transition-colors font-light placeholder:text-foreground/40"
+                className="flex-1 bg-background border border-border/50 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-foreground transition-colors font-light placeholder:text-foreground/40 rounded-md"
               />
               <button
                 type="submit"
-                className="bg-foreground text-background px-8 py-3 text-sm tracking-editorial uppercase hover:bg-foreground/90 transition-colors"
+                className="bg-foreground text-background px-8 py-3 text-sm tracking-editorial uppercase hover:bg-foreground/90 transition-colors rounded-md whitespace-nowrap"
               >
                 Subscribe
               </button>
@@ -74,17 +66,19 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
         </div>
       </div>
 
-      {/* Links Section */}
+      {/* ─── Main Links Section ─────────────────────────────────────────── */}
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 lg:gap-12">
-          {/* Brand Column */}
-          <div className="col-span-2 md:col-span-1">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-10">
+
+          {/* Brand Column — spans 2 cols on all screens for breathing room */}
+          <div className="col-span-2 md:col-span-1 lg:col-span-2">
             <Link to="/" className="font-serif text-2xl">
               LuxeMia
             </Link>
-            <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed">
-              Beautiful Indian ethnic wear at fair prices — shipped worldwide.
+            <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed max-w-xs">
+              Beautiful Indian ethnic wear at fair prices — shipped worldwide to USA, Canada & Australia.
             </p>
+            {/* Social icons */}
             <div className="flex gap-3 mt-6">
               <a href="https://www.instagram.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Instagram">
                 <Instagram className="w-4 h-4" />
@@ -98,18 +92,30 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
                 </svg>
               </a>
             </div>
+            {/* Contact info — consolidated here, removed from separate column */}
+            <div className="mt-6 space-y-2 text-sm text-foreground/60 font-light">
+              <a href="tel:+1-215-341-9990" className="flex items-center gap-2 hover:text-foreground transition-colors">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                +1-215-341-9990
+              </a>
+              <a href="mailto:hello@luxemia.shop" className="flex items-center gap-2 hover:text-foreground transition-colors">
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                hello@luxemia.shop
+              </a>
+              <div className="flex items-start gap-2">
+                <Clock className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <span>Mon-Sat 10am-7pm EST<br />Sun 11am-5pm EST</span>
+              </div>
+            </div>
           </div>
 
           {/* Shop Links */}
           <div>
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Shop</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {footerLinks.shop.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light"
-                  >
+                  <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
                     {link.name}
                   </Link>
                 </li>
@@ -120,13 +126,10 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* Collections Links */}
           <div>
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Collections</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {footerLinks.collections.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light"
-                  >
+                  <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
                     {link.name}
                   </Link>
                 </li>
@@ -137,13 +140,10 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* About Links */}
           <div>
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">About</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {footerLinks.about.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light"
-                  >
+                  <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
                     {link.name}
                   </Link>
                 </li>
@@ -154,115 +154,67 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* Help Links */}
           <div>
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Help</h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {footerLinks.help.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light"
-                  >
+                  <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
+        </div>
+      </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Contact</h4>
-            <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-foreground/60 flex-shrink-0" />
-                <a href="tel:+1-215-341-9990" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
-                  +1-215-341-9990
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-foreground/60 flex-shrink-0" />
-                <a href="mailto:hello@luxemia.shop" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
-                  hello@luxemia.shop
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-foreground/60 mt-0.5 flex-shrink-0" />
-                <span className="text-sm text-foreground/60 font-light leading-relaxed">
-                  Mon - Sat: 10am - 7pm EST<br />
-                  Sun: 11am - 5pm EST
-                </span>
-              </li>
-            </ul>
+      {/* ─── Trust Badges Bar ───────────────────────────────────────────── */}
+      <div className="border-t border-border/50 bg-background/50">
+        <div className="container mx-auto px-4 lg:px-8 py-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center">
+            <div className="flex flex-col items-center gap-1.5">
+              <Lock className="h-5 w-5 text-foreground/50" />
+              <span className="text-xs font-medium">SSL Secure Checkout</span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5">
+              <Shield className="h-5 w-5 text-foreground/50" />
+              <span className="text-xs font-medium">Quality Guaranteed</span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5">
+              <Truck className="h-5 w-5 text-foreground/50" />
+              <span className="text-xs font-medium">Tracked Shipping</span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5">
+              <CreditCard className="h-5 w-5 text-foreground/50" />
+              <span className="text-xs font-medium">Safe Payments</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Trust Signals & Business Transparency — Critical for GMC Misrepresentation compliance */}
+      {/* ─── Bottom Bar — copyright + legal links + business info ──────── */}
       <div className="border-t border-border/50 bg-secondary/30">
-        <div className="container mx-auto px-4 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="flex flex-col items-center gap-2">
-              <Lock className="h-6 w-6 text-green-600" />
-              <span className="text-xs font-medium">SSL Secure Checkout</span>
-              <span className="text-xs text-muted-foreground">256-bit encryption</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <Shield className="h-6 w-6 text-green-600" />
-              <span className="text-xs font-medium">Quality Guaranteed</span>
-              <span className="text-xs text-muted-foreground">Inspected before shipping</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <Truck className="h-6 w-6 text-green-600" />
-              <span className="text-xs font-medium">Tracked Shipping</span>
-              <span className="text-xs text-muted-foreground">DHL Express &amp; USPS/UPS</span>
-            </div>
-            <div className="flex flex-col items-center gap-2">
-              <CreditCard className="h-6 w-6 text-green-600" />
-              <span className="text-xs font-medium">Safe Payments</span>
-              <span className="text-xs text-muted-foreground">Shopify Secure</span>
-            </div>
+        <div className="container mx-auto px-4 lg:px-8 py-6">
+          {/* Legal links — top row */}
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-foreground/60 mb-4">
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <span className="text-foreground/20">·</span>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <span className="text-foreground/20">·</span>
+            <Link to="/returns" className="hover:text-foreground transition-colors">Returns & Cancellations</Link>
+            <span className="text-foreground/20">·</span>
+            <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
+            <span className="text-foreground/20">·</span>
+            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">Shipping & Customs</Link>
           </div>
-          {/* Business Transparency Info — Required by Google Merchant Center */}
-          <div className="mt-6 pt-6 border-t border-border/30 text-center text-xs text-muted-foreground">
-            <p className="mb-1">
-              <strong className="text-foreground">luxemia.shop</strong> is owned and operated by <strong className="text-foreground">Glamour Indian Wear</strong>
-            </p>
-            <p className="mb-1">
-              <MapPin className="h-3 w-3 inline-block mr-1" />
+
+          {/* Copyright + business info — bottom row, centered */}
+          <div className="text-center text-xs text-foreground/50 space-y-1">
+            <p>© 2026 LuxeMia. All rights reserved.</p>
+            <p>
+              luxemia.shop is owned and operated by <strong className="text-foreground/70">Glamour Indian Wear</strong>
+              {' '}&middot;{' '}
               2208 Michener St, Philadelphia, PA 19115, USA
             </p>
-            <p className="mb-1">
-              <Phone className="h-3 w-3 inline-block mr-1" />
-              <a href="tel:+1-215-341-9990" className="hover:text-foreground transition-colors">+1-215-341-9990</a>
-              {' '}&bull;{' '}
-              <Mail className="h-3 w-3 inline-block mr-1" />
-              <a href="mailto:hello@luxemia.shop" className="hover:text-foreground transition-colors">hello@luxemia.shop</a>
-            </p>
-            <p>Mon-Sat 10am-7pm EST &bull; Sun 11am-5pm EST</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-border/50">
-        <div className="container mx-auto px-4 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-foreground/50">
-            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <p>© 2026 LuxeMia. All rights reserved.</p>
-              <span className="hidden sm:inline text-foreground/30">|</span>
-              <p>luxemia.shop is owned and operated by <strong className="text-foreground/70">Glamour Indian Wear</strong></p>
-              <span className="hidden sm:inline text-foreground/30">|</span>
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                2208 Michener St, Philadelphia, PA 19115, USA
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-5">
-              <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
-              <Link to="/returns" className="hover:text-foreground transition-colors">Returns & Cancellations</Link>
-              <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
-              <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">Shipping & Customs</Link>
-            </div>
           </div>
         </div>
       </div>
