@@ -747,80 +747,31 @@ const JEWELRY: CategoryConfig = {
     { name: 'Bridal Jewelry', url: '/jewelry' },
   ],
   subcategories: [
-    // By Stone Type
-    styleSub('kundan', 'Kundan', ['stone:kundan', 'kundan']),
-    styleSub('kundan-with-stone', 'Kundan with Stone', ['stone:kundan with stone', 'kundan with stone']),
-    styleSub('uncut-polki', 'Uncut Polki', ['stone:uncut polki', 'uncut polki', 'polki']),
-    styleSub('pearl', 'Pearl', ['stone:pearl', 'pearl']),
-    // By Jewelry Type
-    styleSub('necklace-set', 'Necklace Set', ['style:necklace set', 'necklace set']),
-    styleSub('choker', 'Choker Necklace', ['style:choker', 'choker']),
-    styleSub('bridal-set', 'Full Bridal Set', ['style:full bridal set', 'full bridal set', 'bridal set']),
-    styleSub('with-maang-tikka', 'With Maang Tikka', ['style:with maang tikka', 'maang tikka']),
-    // By Occasion
-    occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal']),
-    occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding']),
-    occasionSub('reception', 'Reception', ['occasion:reception', 'reception']),
-    occasionSub('engagement', 'Engagement', ['occasion:engagement', 'engagement']),
-    occasionSub('mehendi', 'Mehendi', ['occasion:mehendi', 'mehendi']),
-    occasionSub('sangeet', 'Sangeet', ['occasion:sangeet', 'sangeet']),
-    // By Audience
-    audienceSub('bride', 'Bride', ['role:bride', 'bride']),
-    audienceSub('bridesmaid', 'Bridesmaid', ['role:bridesmaid', 'bridesmaid']),
-    audienceSub('mother-of-bride', 'Mother of Bride', ['role:mother of bride', 'mother of bride']),
-    audienceSub('nri-wedding', 'NRI Wedding', ['audience:nri', 'nri', 'destination wedding']),
-    // By Price
+    // By Jewelry Type — the most useful grouping for shoppers
+    styleSub('necklace-set', 'Necklace Sets', ['style:necklace set', 'necklace set', 'necklace']),
+    styleSub('choker', 'Chokers', ['style:choker', 'choker']),
+    styleSub('bridal-set', 'Bridal Sets', ['style:full bridal set', 'full bridal set', 'bridal set']),
+    // By Price — simple, actionable
     priceSub('under-100', 'Under $100', 0, 100),
-    priceSub('premium-120-plus', 'Premium $120+', 120, 10000),
+    priceSub('premium-100-plus', '$100+', 100, 10000),
   ],
   filters: [
-    {
-      name: 'Stone Type',
-      tagPrefix: 'stone',
-      defaultExpanded: true,
-      options: [
-        { value: 'kundan', label: 'Kundan' },
-        { value: 'kundan with stone', label: 'Kundan with Stone' },
-        { value: 'uncut polki', label: 'Uncut Polki' },
-        { value: 'pearl', label: 'Pearl' },
-      ],
-    },
     {
       name: 'Jewelry Type',
       tagPrefix: 'style',
       defaultExpanded: true,
       options: [
         { value: 'necklace set', label: 'Necklace Set' },
-        { value: 'choker', label: 'Choker Necklace' },
-        { value: 'full bridal set', label: 'Full Bridal Set' },
+        { value: 'choker', label: 'Choker' },
+        { value: 'full bridal set', label: 'Bridal Set' },
       ],
     },
     {
       name: 'Color',
       tagPrefix: 'color',
-      defaultExpanded: true,
+      defaultExpanded: false,
       renderAsSwatches: true,
-      options: colors('Clear', 'Pearl White', 'Multicolor', 'Green', 'Red', 'Pink', 'Gold', 'Maroon', 'Blue'),
-    },
-    {
-      name: 'Metal',
-      tagPrefix: 'metal',
-      defaultExpanded: false,
-      options: [
-        { value: 'gold', label: 'Gold' },
-        { value: 'antique gold', label: 'Antique Gold' },
-        { value: 'silver', label: 'Silver' },
-        { value: 'rose gold', label: 'Rose Gold' },
-      ],
-    },
-    {
-      name: 'Availability',
-      tagPrefix: 'availability',
-      defaultExpanded: false,
-      options: [
-        { value: 'ready to ship', label: 'Ready to Ship' },
-        { value: 'made to order', label: 'Made to Order' },
-      ],
+      options: colors('Green', 'Red', 'White', 'Gold', 'Multicolor'),
     },
   ],
   priceRange: [80, 200],
@@ -920,7 +871,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Jewelry',
     href: '/jewelry',
     groups: [
-      { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Set', 'Full Bridal Set'].includes(l.name)) },
+      { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Sets', 'Chokers', 'Bridal Sets'].includes(l.name)) },
     ],
   },
 ];

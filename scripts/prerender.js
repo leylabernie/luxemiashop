@@ -612,49 +612,16 @@ const routes = [
     h1: 'Kundan Bridal Jewelry Collection',
     content: `
       <p>Discover our handcrafted Kundan bridal jewelry collection — regal necklace sets, chokers, and full bridal sets featuring traditional Rajasthani stone-setting techniques. Each piece is designed for the modern NRI bride who wants to make a statement on her wedding day.</p>
-      <h2>Shop Jewelry by Stone Type</h2>
-      <ul>
-        <li><a href="/jewelry?sub=kundan">Kundan Jewelry</a> — Traditional Kundan stones set in 24k gold foil</li>
-        <li><a href="/jewelry?sub=kundan-with-stone">Kundan with Stone</a> — Kundan stones with uncut polki accents</li>
-        <li><a href="/jewelry?sub=uncut-polki">Uncut Polki Jewelry</a> — Natural uncut polki diamonds</li>
-        <li><a href="/jewelry?sub=pearl">Pearl Jewelry</a> — Kundan with pearl embellishments</li>
-      </ul>
       <h2>Shop Jewelry by Type</h2>
       <ul>
         <li><a href="/jewelry?sub=necklace-set">Necklace Sets</a> — Necklace with matching earrings</li>
-        <li><a href="/jewelry?sub=choker">Choker Necklaces</a> — Close-fitting statement necklaces</li>
-        <li><a href="/jewelry?sub=bridal-set">Full Bridal Sets</a> — Necklace, earrings, and maang tikka</li>
-        <li><a href="/jewelry?sub=with-maang-tikka">With Maang Tikka</a> — Sets including a maang tikka</li>
-      </ul>
-      <h2>Shop Jewelry by Occasion</h2>
-      <ul>
-        <li><a href="/jewelry?sub=bridal">Bridal Jewelry</a> — For the bride's wedding day</li>
-        <li><a href="/jewelry?sub=wedding">Wedding Jewelry</a> — For wedding ceremonies</li>
-        <li><a href="/jewelry?sub=reception">Reception Jewelry</a> — Statement pieces for the reception</li>
-        <li><a href="/jewelry?sub=engagement">Engagement Jewelry</a> — For the engagement ceremony</li>
-        <li><a href="/jewelry?sub=mehendi">Mehendi Jewelry</a> — For the henna ceremony</li>
-        <li><a href="/jewelry?sub=sangeet">Sangeet Jewelry</a> — For the sangeet celebration</li>
-      </ul>
-      <h2>Shop Jewelry by Color</h2>
-      <ul>
-        <li><a href="/jewelry?sub=clear">Clear Kundan Jewelry</a></li>
-        <li><a href="/jewelry?sub=pearl-white">Pearl White Jewelry</a></li>
-        <li><a href="/jewelry?sub=multicolor">Multicolor Jewelry</a></li>
-        <li><a href="/jewelry?sub=green">Green Stone Jewelry</a></li>
-        <li><a href="/jewelry?sub=red">Red Stone Jewelry</a></li>
-        <li><a href="/jewelry?sub=pink">Pink Stone Jewelry</a></li>
-      </ul>
-      <h2>Wedding Party & NRI Jewelry</h2>
-      <ul>
-        <li><a href="/jewelry?sub=bride">Jewelry for the Bride</a></li>
-        <li><a href="/jewelry?sub=bridesmaid">Bridesmaid Jewelry</a></li>
-        <li><a href="/jewelry?sub=mother-of-bride">Mother of Bride Jewelry</a></li>
-        <li><a href="/jewelry?sub=nri-wedding">NRI Wedding Jewelry</a></li>
+        <li><a href="/jewelry?sub=choker">Chokers</a> — Close-fitting statement necklaces</li>
+        <li><a href="/jewelry?sub=bridal-set">Bridal Sets</a> — Necklace, earrings, and maang tikka</li>
       </ul>
       <h2>Shop Jewelry by Price</h2>
       <ul>
         <li><a href="/jewelry?sub=under-100">Jewelry Under $100</a></li>
-        <li><a href="/jewelry?sub=premium-120-plus">Premium Jewelry $120+</a></li>
+        <li><a href="/jewelry?sub=premium-100-plus">Jewelry $100+</a></li>
       </ul>
       <h2>Why Choose Kundan Jewelry for Your Wedding?</h2>
       <p>Kundan jewelry has been a cornerstone of Indian bridal adornment for centuries, prized for its regal appearance and the way it catches light from every angle. Each stone is hand-set using traditional Rajasthani techniques, with 24k gold foil framing that creates the signature Kundan look. Our collection offers the look of fine diamond jewelry at a fraction of the cost, making it perfect for brides who want a regal appearance without the investment of real diamonds.</p>

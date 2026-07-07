@@ -182,6 +182,26 @@ export default async function middleware(request: Request) {
     }
   }
 
+  // SPEED FIX: Serve prerendered HTML to ALL visitors (not just bots) for
+  // routes that have a prerendered version. This gives humans:
+  //   - Instant correct meta tags (title, description, canonical, OG)
+  //   - Instant product data via window.__INITIAL_DATA__ (skips the 200-800ms
+  //     Shopify Storefront API fetch that useShopifyProducts would otherwise
+  //     do on mount)
+  //   - Visible product cards while JS bundles download and React hydrates
+  // The prerendered HTML includes a MutationObserver that auto-removes the
+  // static cards once React populates #root, so there's no visual duplication.
+  // This is the single biggest speed win for collection pages (/jewelry,
+  // /sarees, /lehengas, /suits, /menswear, /indowestern, /collections, etc.).
+  if (PRERENDERED_ROUTES.has(pathname)) {
+    const prerenderPath =
+      pathname === '/'
+        ? '/_prerender/index.html'
+        : `/_prerender${pathname}.html`;
+
+    return rewrite(new URL(prerenderPath, request.url));
+  }
+
   // For bots: serve prerendered or dynamically-rendered content
   if (isBot(userAgent)) {
     // 1. Prerendered static routes → serve prerendered HTML
