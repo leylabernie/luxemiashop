@@ -31,7 +31,7 @@ const slides: FeaturedSlide[] = [
     headline: 'BRIDAL EDIT',
     headlineLine2: '2026',
     image:
-      'https://images.wholesalesalwar.com/2026y/June/62457/Maroon-Silk-Festival-Wear-Zari-Work-Lehenga-Choli-3040-A(1).jpg',
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Hero_image.jpg?v=1783466029&width=800',
     // Deep burgundy to match the maroon silk lehenga
     panelBg: '#6b1026',
     panelText: '#f7ebd9',
