@@ -154,6 +154,8 @@ const HeroSection = () => {
                   <img
                     src={getOptimizedImage(slide.image, 'hero')}
                     alt={slide.title}
+                    width={600}
+                    height={800}
                     className="max-h-[55vh] sm:max-h-[60vh] lg:max-h-[70vh] w-auto object-contain rounded-lg drop-shadow-2xl"
                     fetchPriority="high"
                     decoding="async"

@@ -250,7 +250,10 @@ const NewArrivalsBanner = () => {
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   src={slide.image}
                   alt={slide.headline}
+                  width={600}
+                  height={800}
                   loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={index === 0 ? 'high' : 'auto'}
                   className="max-h-full max-w-full object-contain"
                 />
               </div>
