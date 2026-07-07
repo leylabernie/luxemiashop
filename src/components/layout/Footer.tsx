@@ -1,6 +1,17 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck } from 'lucide-react';
+
+// Google Customer Reviews badge — loads the merchant widget script and renders
+// the badge showing our seller rating. Positioned in the footer so it appears
+// on every page. Shows "no rating available" until we collect enough reviews.
+declare global {
+  interface Window {
+    merchantwidget?: {
+      start: (config: { merchant_id: number; position?: string; region?: string }) => void;
+    };
+  }
+}
 
 const footerLinks = {
   shop: [
@@ -37,6 +48,27 @@ const footerLinks = {
 };
 
 const Footer = forwardRef<HTMLElement>((_props, ref) => {
+  // Google Customer Reviews badge — load script and render badge
+  useEffect(() => {
+    // Skip if script already loaded (e.g., on client-side navigation)
+    if (document.querySelector('script[src*="merchantwidget.js"]')) {
+      return;
+    }
+    const script = document.createElement('script');
+    script.id = 'merchantWidgetScript';
+    script.src = 'https://www.gstatic.com/shopping/merchant/merchantwidget.js';
+    script.defer = true;
+    script.addEventListener('load', () => {
+      if (window.merchantwidget) {
+        window.merchantwidget.start({
+          merchant_id: 5773333098,
+          position: 'BOTTOM_LEFT',
+        });
+      }
+    });
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <footer ref={ref} className="bg-card border-t border-border/50">
       {/* ─── Newsletter Section ─────────────────────────────────────────── */}
