@@ -380,7 +380,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Styling Tips',
     tags: ['wedding guest outfit', 'indian wedding', 'what to wear', 'wedding fashion', 'ethnic wear'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/IMG-3856_45a56c17-f220-433d-8013-dfbc9b297bae.jpg?v=1780412428&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/amoha-538-exclusive-beads-work-dendy-satin-designer-readymade-saree.jpg?v=1783447885&width=1200&height=675&crop=center',
     readTime: 6
   },
   {
