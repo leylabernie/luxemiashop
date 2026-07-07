@@ -1345,7 +1345,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'Shopping Guide',
     tags: ['buy authentic Indian sarees online USA', 'Indian saree shopping UK NRI', 'how to choose silk saree online', 'Kanchipuram saree online', 'Banarasi saree USA', 'NRI saree shopping', 'authentic Indian ethnic wear'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Tussar-Silk-Casual-Wear-Printed-Work-Saree-PC-RUHAB-104_1.jpg?v=1778975870&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Kanchipuram_sarees.png?v=1783441513&width=1200&height=675&crop=center',
     readTime: 11
   },
   {
@@ -1750,7 +1750,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-11',
     category: 'Style Tips',
     tags: ['lehenga vs anarkali', 'lehenga choli guide', 'anarkali suit styling', 'Indian ethnic wear comparison', 'which Indian outfit to choose', 'lehenga for wedding', 'anarkali for mehendi'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/9_a7c6d15d-abb2-4694-ba79-f0aeed0350e3.jpg?v=1780412423&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gemini_Generated_Image_r3qp73r3qp73r3qp.png?v=1783447053&width=1200&height=675&crop=center',
     readTime: 7
   },
 
