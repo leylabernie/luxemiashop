@@ -56,7 +56,6 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/blog/how-to-choose-perfect-lehenga-wedding-2026',
   '/blog/how-to-drape-saree-beginner-guide',
   '/blog/how-to-measure-yourself-for-indian-ethnic-wear',
-  '/blog/how-to-measure-yourself-indian-ethnic-wear',
   '/blog/indian-bridal-jewelry-sets-complete-guide',
   '/blog/indian-fabric-types-guide-silk-georgette-chiffon',
   '/blog/indian-wedding-ceremony-outfit-guide',

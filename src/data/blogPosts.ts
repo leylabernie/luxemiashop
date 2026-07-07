@@ -1647,85 +1647,131 @@ export const blogPosts: BlogPost[] = [
   {
     id: '20',
     slug: 'how-to-measure-yourself-for-indian-ethnic-wear',
-    title: 'How to Measure Yourself for Indian Ethnic Wear: Step-by-Step Guide',
-    excerpt: 'Getting the right fit for your lehenga, saree blouse, or salwar kameez starts with accurate measurements. Follow this step-by-step home measuring guide used by professional tailors.',
-    content: `
-      <h2>Why Accurate Measurements Matter for Indian Ethnic Wear</h2>
-      <p>Indian ethnic wear is not like buying a T-shirt off a rack. A lehenga choli, fitted salwar kameez, or stitched saree blouse needs to fit your exact proportions — not a generic size chart. Getting this wrong is the single biggest reason orders don't fit. The good news: measuring yourself at home takes 10 minutes and a soft measuring tape.</p>
+    title: 'How to Measure Yourself for Indian Ethnic Wear: Complete Sizing Guide',
+    excerpt: 'Detailed guide to measuring yourself for Indian ethnic wear — 10 key measurements for lehengas, saree blouses, and salwar kameez. Includes ease guidance, international size conversion, and a measurement template.',
+    content: `            <h2>Why Accurate Measurements Matter for Indian Ethnic Wear</h2>
+            <p>Getting the right fit is the single most important factor in how your Indian ethnic wear looks and feels. Unlike Western clothing where a slightly loose fit can still look good, Indian outfits — especially blouses, kameez tops, and lehengas — need to fit precisely. A blouse that's even one inch too tight across the bust will be uncomfortable all day. A lehenga that's too long will drag and get dirty. Getting measurements wrong is the single biggest reason orders don't fit. The good news: measuring yourself at home takes about 10 minutes, a soft measuring tape, and a helper. This guide teaches you exactly how to measure yourself so you can shop with confidence. For our complete size chart, visit the <a href="/size-guide">size guide</a> page.</p>
 
-      <h2>What You Need</h2>
-      <ul>
-        <li><strong>A soft (flexible) measuring tape</strong> — the kind used by tailors, not a rigid ruler</li>
-        <li><strong>A helper</strong> — always ask someone else to measure you; self-measurements are inaccurate</li>
-        <li><strong>Form-fitting inner clothing</strong> — measure over thin clothing, not thick layers</li>
-        <li><strong>Paper and pen</strong> — write measurements down immediately</li>
-      </ul>
+            <h2>Tools You Need</h2>
+            <ul>
+              <li><strong>A soft (flexible) measuring tape</strong> — the kind used by tailors, not a rigid ruler or construction tape</li>
+              <li><strong>A helper</strong> — always ask someone else to measure you; self-measurements are inaccurate, especially for back measurements</li>
+              <li><strong>A full-length mirror</strong> — to ensure the tape is level and parallel to the floor</li>
+              <li><strong>Form-fitting inner clothing</strong> — measure over thin, fitted clothing, not bulky layers</li>
+              <li><strong>The right bra</strong> — wear the type of bra you'd wear with the outfit; different bras change your bust measurement significantly</li>
+              <li><strong>The shoes you plan to wear</strong> — especially important for lehenga length measurements</li>
+              <li><strong>Pen and paper</strong> — or your phone to record measurements immediately</li>
+            </ul>
 
-      <h2>The 7 Key Measurements for Indian Ethnic Wear</h2>
+            <h2>Core Measurements</h2>
+            <p>These six measurements are needed for almost every Indian ethnic garment — saree blouses, salwar kameez, anarkali suits, and lehengas.</p>
 
-      <h3>1. Bust (Chest)</h3>
-      <p>Wrap the tape around the fullest part of your chest, keeping it parallel to the floor. Do not suck in or push out. Take a natural breath and measure. This is your bust measurement.</p>
-      <p><strong>Tip:</strong> Add 1–2 inches for comfort. LuxeMia blouse stitching includes standard ease — mention if you prefer a tighter or looser fit in order notes.</p>
+            <h3>1. Bust (Chest)</h3>
+            <p>Wrap the measuring tape around the fullest part of your bust, keeping it parallel to the floor. The tape should be snug but not compressing your breasts. Make sure you're wearing the type of bra you'd wear with the outfit — a push-up bra versus a sports bra can change your bust measurement by 2+ inches. Take a natural breath and measure. Do not suck in or push out.</p>
+            <p><strong>Tip:</strong> Add 1–2 inches for comfort. LuxeMia blouse stitching includes standard ease — mention if you prefer a tighter or looser fit in order notes.</p>
 
-      <h3>2. Waist</h3>
-      <p>Measure around your natural waistline — this is the narrowest part of your torso, usually about 1 inch above your belly button. Keep the tape snug but not tight. Do not measure at the hips or belly.</p>
+            <h3>2. Waist</h3>
+            <p>Find your natural waist — the narrowest part of your torso, usually about an inch above your navel. Wrap the tape around your waist without sucking in your stomach. You should be able to slip one finger under the tape comfortably. Do not measure at the hips or belly. This measurement is critical for <a href="/lehengas">lehengas</a> and <a href="/suits">suits</a>.</p>
 
-      <h3>3. Hips</h3>
-      <p>Measure around the fullest part of your hips and buttocks, usually 7–9 inches below your natural waist. Stand with feet together for accuracy. This measurement governs lehenga skirt and salwar fit.</p>
+            <h3>3. Hips</h3>
+            <p>Measure around the fullest part of your hips and buttocks, usually 7–9 inches below your natural waist. Stand with feet together for accuracy. This measurement matters most for churidar pants, palazzo pants, A-line suits, and lehenga skirt fit.</p>
 
-      <h3>4. Shoulder Width</h3>
-      <p>Measure from the tip of one shoulder to the tip of the other, across the back. This is crucial for blouse and kameez fit — narrow or wide shoulders significantly affect the look and comfort.</p>
+            <h3>4. Shoulder Width</h3>
+            <p>Measure from the edge of one shoulder (where the sleeve seam would sit) across the back of your neck to the other shoulder edge. This is crucial for blouse and kameez fit — narrow or wide shoulders significantly affect the look and comfort. If you have a well-fitting blouse or top, you can measure that instead.</p>
 
-      <h3>5. Blouse Length</h3>
-      <p>Measure from the top of your shoulder, down through the bust, to where you want the blouse to end. Standard lehenga blouses end just below the bust (cropped). Specify your preferred length if different.</p>
+            <h3>5. Sleeve Length</h3>
+            <p>Start at the shoulder seam and measure down the outside of your arm to your desired sleeve endpoint. With your arm slightly bent, measure from the top of the shoulder to the desired end point. For full sleeves, measure to the wrist bone. For three-quarter sleeves, measure to the forearm. Bend your arm slightly when measuring full sleeves to ensure comfort. Note your preference: full sleeve, 3/4 sleeve, or short sleeve.</p>
 
-      <h3>6. Lehenga / Skirt Length</h3>
-      <p>Measure from your natural waist down to the floor (or desired hemline). For floor-length lehengas, measure barefoot. If you plan to wear heels, add 2–3 inches. Most of our lehengas are designed for floor length.</p>
+            <h3>6. Arm Hole (Arm Circumference)</h3>
+            <p>Wrap the tape around the fullest part of your upper arm (bicep). This ensures your sleeves aren't too tight, especially important for fitted blouses and kameez.</p>
 
-      <h3>7. Sleeve Length (for blouses and kameez)</h3>
-      <p>With your arm slightly bent, measure from the top of the shoulder to the desired end point — elbow, wrist, or wherever you want the sleeve to end. Note your preference: full sleeve, 3/4 sleeve, or short sleeve.</p>
+            <h2>Lehenga-Specific Measurements</h2>
 
-      <h2>Measurement Chart: How to Send Us Your Measurements</h2>
-      <p>When placing a custom order on <a href="/">LuxeMia</a>, enter your measurements in the order notes field exactly as below:</p>
-      <ul>
-        <li>Bust: ___ inches / cm</li>
-        <li>Waist: ___ inches / cm</li>
-        <li>Hips: ___ inches / cm</li>
-        <li>Shoulder: ___ inches / cm</li>
-        <li>Blouse length: ___ inches / cm</li>
-        <li>Lehenga length: ___ inches / cm</li>
-        <li>Sleeve: Full / 3/4 / Short / Sleeveless</li>
-      </ul>
+            <h3>7. Lehenga / Skirt Length</h3>
+            <p>Measure from your natural waist (where the lehenga waistband will sit) down to the floor. <strong>Do this while wearing the shoes you plan to wear with the lehenga.</strong> Most lehengas come in standard lengths of 40, 42, or 44 inches, but custom lengths are available. If you're tall (5'7"+), you may need a 44+ inch lehenga. If you plan to wear heels, add 2–3 inches.</p>
 
-      <h2>Common Measuring Mistakes to Avoid</h2>
-      <ul>
-        <li><strong>Measuring over thick clothing:</strong> Always measure over a thin camisole or fitted top</li>
-        <li><strong>Holding the tape too tight:</strong> The tape should lie flat, not dig in</li>
-        <li><strong>Self-measuring:</strong> Have a second person measure for accuracy</li>
-        <li><strong>Forgetting posture:</strong> Stand straight with relaxed shoulders</li>
-        <li><strong>Measuring only once:</strong> Take each measurement twice and use the average</li>
-      </ul>
+            <h3>8. Lehenga Waist</h3>
+            <p>Same as your waist measurement, but note whether the lehenga sits at your natural waist or lower. Some modern lehengas sit at the hip — in that case, measure at the hip level where you want the waistband.</p>
 
-      <h2>When to Add Extra Room</h2>
-      <p>If you are between two sizes, always go larger. It is far easier for a local tailor to take in a garment than to let it out. For hand-embroidered pieces, the embroidery is fixed — fabric cannot be added.</p>
+            <h2>Blouse-Specific Measurements</h2>
 
-      <h2>Need Help?</h2>
-      <p>Our team is available on WhatsApp (+1-215-341-9990) to walk you through measurements before you order. We also offer a free <a href="/style-consultation">style consultation</a> where we help you choose the right size and style for your body type and the occasion.</p>
+            <h3>9. Blouse Length</h3>
+            <p>Measure from the top of your shoulder (where the blouse strap sits), down through the bust, to where you want the blouse to end. Crop blouses typically end at the underbust, while standard blouses reach the waist. Standard lehenga blouses end just below the bust (cropped). Specify your preferred length if different.</p>
 
-      <h2>Continue Reading</h2>
-      <ul>
-        <li><a href="/size-guide">LuxeMia Size Guide with Full Size Charts</a></li>
-        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a></li>
-        <li><a href="/blog/what-to-wear-indian-wedding-guest-2026">What to Wear to an Indian Wedding as a Guest</a></li>
-      </ul>
+            <h3>10. Neck Depth (Front and Back)</h3>
+            <p>Measure from the base of your throat down to the desired neckline depth. For the back, measure from the nape of your neck down. This is especially important for custom-stitched blouses.</p>
+
+            <h2>Adding Ease: The Secret to Comfortable Fit</h2>
+            <p>"Ease" is the extra room added to your body measurements for comfortable movement. Without ease, your outfit will be skin-tight and uncomfortable. For custom tailoring, always provide your actual body measurements plus desired ease — don't just give body measurements and hope the tailor adds ease automatically.</p>
+            <ul>
+              <li><strong>Bust:</strong> Add 1–2 inches of ease</li>
+              <li><strong>Waist:</strong> Add 0.5–1 inch of ease (1.5–2 inches for lehengas)</li>
+              <li><strong>Hips:</strong> Add 1–2 inches of ease</li>
+              <li><strong>Arm hole:</strong> Add 1 inch of ease minimum</li>
+            </ul>
+
+            <h2>Measurement Chart: How to Send Us Your Measurements</h2>
+            <p>When placing a custom order on <a href="/">LuxeMia</a>, enter your measurements in the order notes field exactly as below:</p>
+            <ul>
+              <li>Bust: ___ inches / cm</li>
+              <li>Waist: ___ inches / cm</li>
+              <li>Hips: ___ inches / cm</li>
+              <li>Shoulder: ___ inches / cm</li>
+              <li>Sleeve length: Full / 3/4 / Short / Sleeveless — ___ inches</li>
+              <li>Arm hole: ___ inches / cm</li>
+              <li>Blouse length: ___ inches / cm</li>
+              <li>Neck depth (front): ___ inches / cm</li>
+              <li>Neck depth (back): ___ inches / cm</li>
+              <li>Lehenga length: ___ inches / cm</li>
+              <li>Lehenga waist: ___ inches / cm</li>
+            </ul>
+
+            <h2>Common Measuring Mistakes to Avoid</h2>
+            <ul>
+              <li><strong>Measuring over thick clothing:</strong> Always measure over a thin camisole or fitted top — thick layers add 1–2 inches to every measurement</li>
+              <li><strong>Holding the tape too tight:</strong> The tape should lie flat, not dig in — pulling too tight gives a garment that's too small</li>
+              <li><strong>Self-measuring:</strong> Have a second person measure for accuracy, especially for back measurements like shoulder width</li>
+              <li><strong>Not wearing the right bra:</strong> A push-up bra vs. a sports bra can change bust by 2+ inches</li>
+              <li><strong>Forgetting posture:</strong> Stand straight with relaxed shoulders</li>
+              <li><strong>Measuring barefoot but wearing heels with the outfit:</strong> Lehenga length will be too short — always measure with the shoes you plan to wear</li>
+              <li><strong>Taking measurements at different times:</strong> Body measurements can fluctuate — measure at the same time of day</li>
+              <li><strong>Measuring only once:</strong> Take each measurement twice and use the average</li>
+              <li><strong>Forgetting to account for weight changes:</strong> If you're between sizes, size up — it's easier to take in than to let out</li>
+            </ul>
+
+            <h2>When to Add Extra Room</h2>
+            <p>If you are between two sizes, always go larger. It is far easier for a local tailor to take in a garment than to let it out. For hand-embroidered pieces, the embroidery is fixed — fabric cannot be added. When in doubt, size up and have the garment tailored down to your exact fit.</p>
+
+            <h2>International Size Conversion</h2>
+            <p>Indian sizing doesn't always align with US/UK sizes. Use our <a href="/size-guide">size guide</a> for a detailed conversion chart, but as a quick reference:</p>
+            <table style="width:100%;border-collapse:collapse;margin:16px 0">
+              <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ddd;text-align:left">US Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">UK Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Indian Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Bust (inches)</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Waist (inches)</th></tr>
+              <tr><td style="padding:8px;border:1px solid #ddd">XS (0-2)</td><td style="padding:8px;border:1px solid #ddd">4-6</td><td style="padding:8px;border:1px solid #ddd">32-34</td><td style="padding:8px;border:1px solid #ddd">32-33</td><td style="padding:8px;border:1px solid #ddd">24-25</td></tr>
+              <tr><td style="padding:8px;border:1px solid #ddd">S (4-6)</td><td style="padding:8px;border:1px solid #ddd">8-10</td><td style="padding:8px;border:1px solid #ddd">34-36</td><td style="padding:8px;border:1px solid #ddd">34-35</td><td style="padding:8px;border:1px solid #ddd">26-27</td></tr>
+              <tr><td style="padding:8px;border:1px solid #ddd">M (8-10)</td><td style="padding:8px;border:1px solid #ddd">12-14</td><td style="padding:8px;border:1px solid #ddd">38-40</td><td style="padding:8px;border:1px solid #ddd">36-37</td><td style="padding:8px;border:1px solid #ddd">28-30</td></tr>
+              <tr><td style="padding:8px;border:1px solid #ddd">L (12-14)</td><td style="padding:8px;border:1px solid #ddd">16-18</td><td style="padding:8px;border:1px solid #ddd">42-44</td><td style="padding:8px;border:1px solid #ddd">38-40</td><td style="padding:8px;border:1px solid #ddd">32-34</td></tr>
+              <tr><td style="padding:8px;border:1px solid #ddd">XL (16-18)</td><td style="padding:8px;border:1px solid #ddd">20-22</td><td style="padding:8px;border:1px solid #ddd">46-48</td><td style="padding:8px;border:1px solid #ddd">42-44</td><td style="padding:8px;border:1px solid #ddd">36-38</td></tr>
+            </table>
+
+            <h2>Need Help?</h2>
+            <p>Our team is available on WhatsApp (+1-215-341-9990) to walk you through measurements before you order. We also offer a free <a href="/style-consultation">style consultation</a> where we help you choose the right size and style for your body type and the occasion. If you're uncertain about sizing for your <a href="/sarees">saree blouse</a>, <a href="/lehengas">lehenga</a>, or <a href="/suits">suit</a>, check our <a href="/faq">FAQ</a> or contact our customer service team — we're here to help you get the perfect fit.</p>
+
+            <h2>Continue Reading</h2>
+            <ul>
+              <li><a href="/size-guide">LuxeMia Size Guide with Full Size Charts</a></li>
+              <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a></li>
+              <li><a href="/blog/what-to-wear-indian-wedding-guest-2026">What to Wear to an Indian Wedding as a Guest</a></li>
+              <li><a href="/blog/buying-indian-ethnic-wear-online-usa">Complete Guide to Buying Indian Ethnic Wear Online from USA</a></li>
+              <li><a href="/blog/how-to-drape-saree-beginner-guide">How to Drape a Saree: Beginner Guide</a></li>
+            </ul>
     `,
     author: 'LuxeMia Styling Team',
     publishedAt: '2026-04-10',
-    updatedAt: '2026-04-10',
+    updatedAt: '2026-07-08',
     category: 'Style Tips',
-    tags: ['how to measure for lehenga', 'Indian ethnic wear measurement guide', 'lehenga size chart', 'blouse measurement tips', 'salwar kameez sizing', 'custom Indian wear measurements'],
+    tags: ['how to measure for lehenga', 'Indian ethnic wear measurement guide', 'lehenga size chart', 'blouse measurement tips', 'salwar kameez sizing', 'custom Indian wear measurements', 'bust size measurement', 'indian clothing size guide', 'ethnic wear sizing'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/creation_3069389256.png?v=1782927091&width=1200&height=675&crop=center',
-    readTime: 8
+    readTime: 10
   },
 
   {
@@ -2675,7 +2721,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Bust and waist measurements are critical:</strong> Indian outfits tend to be fitted at the bust and waist. Even an inch off can make a blouse or kameez uncomfortable.</li>
         <li><strong>Lehenga length:</strong> Measure from your waist to the floor while wearing the heels you plan to wear. Standard lehenga lengths (40-42 inches) may be too short for taller women.</li>
       </ul>
-      <p>For detailed measurement instructions, visit our <a href="/size-guide">size guide page</a> and our <a href="/blog/how-to-measure-yourself-indian-ethnic-wear">measurement guide</a>.</p>
+      <p>For detailed measurement instructions, visit our <a href="/size-guide">size guide page</a> and our <a href="/blog/how-to-measure-yourself-for-indian-ethnic-wear">measurement guide</a>.</p>
 
       <h2>Shipping to the USA: What to Expect</h2>
       <p>Shipping Indian ethnic wear to the USA involves more than just transit time. Here's what you need to know:</p>
@@ -2756,7 +2802,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Continue Reading</h2>
       <ul>
-        <li><a href="/blog/how-to-measure-yourself-indian-ethnic-wear">How to Measure Yourself for Indian Ethnic Wear</a></li>
+        <li><a href="/blog/how-to-measure-yourself-for-indian-ethnic-wear">How to Measure Yourself for Indian Ethnic Wear</a></li>
         <li><a href="/blog/indian-fabric-types-guide-silk-georgette-chiffon">Complete Guide to Indian Fabric Types</a></li>
         <li><a href="/blog/banarasi-silk-saree-guide-authentic">Banarasi Silk Sarees: How to Spot a Fake</a></li>
       </ul>
@@ -2915,7 +2961,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Continue Reading</h2>
       <ul>
         <li><a href="/blog/saree-draping-styles-every-occasion">12 Elegant Saree Draping Styles for Every Occasion</a></li>
-        <li><a href="/blog/how-to-measure-yourself-indian-ethnic-wear">How to Measure Yourself for Indian Ethnic Wear</a></li>
+        <li><a href="/blog/how-to-measure-yourself-for-indian-ethnic-wear">How to Measure Yourself for Indian Ethnic Wear</a></li>
       </ul>
     `,
     author: 'LuxeMia Editorial',
@@ -3229,105 +3275,6 @@ export const blogPosts: BlogPost[] = [
     tags: ['anarkali suit', 'anarkali styling', 'anarkali 2026', 'indian suit guide', 'salwar kameez styling'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001_1.jpg?v=1780590906&width=1200&height=675&crop=center',
     readTime: 8
-  },
-  {
-    id: '19',
-    slug: 'how-to-measure-yourself-indian-ethnic-wear',
-    title: 'How to Measure Yourself for Indian Ethnic Wear: Complete Sizing Guide',
-    excerpt: 'Detailed guide to measuring yourself for Indian ethnic wear — bust, waist, hips, shoulder, sleeve length, lehenga length, and blouse measurements. Includes tips for accuracy and international size conversion.',
-    content: `
-      <h2>Why Accurate Measurements Matter</h2>
-      <p>Getting the right fit is the single most important factor in how your Indian ethnic wear looks and feels. Unlike Western clothing where a slightly loose fit can still look good, Indian outfits — especially blouses, kameez tops, and lehengas — need to fit precisely. A blouse that's even one inch too tight across the bust will be uncomfortable all day. A lehenga that's too long will drag and get dirty. This guide teaches you exactly how to measure yourself so you can shop with confidence. For our complete size chart, visit the <a href="/size-guide">size guide</a> page.</p>
-
-      <h2>Tools You Need</h2>
-      <ul>
-        <li><strong>Flexible measuring tape</strong> — the soft kind used for sewing, not a rigid construction tape</li>
-        <li><strong>A full-length mirror</strong> — to ensure the tape is level</li>
-        <li><strong>A friend (recommended)</strong> — self-measurement is less accurate, especially for back measurements</li>
-        <li><strong>Form-fitting clothes</strong> — measure over thin, fitted clothing, not bulky items</li>
-        <li><strong>Pen and paper</strong> — or your phone to record measurements immediately</li>
-      </ul>
-
-      <h2>Core Measurements</h2>
-      <h3>1. Bust</h3>
-      <p>Wrap the measuring tape around the fullest part of your bust, keeping it parallel to the floor. The tape should be snug but not compressing your breasts. Make sure you're wearing the type of bra you'd wear with the outfit — different bras change your bust measurement significantly.</p>
-
-      <h3>2. Waist</h3>
-      <p>Find your natural waist — the narrowest part of your torso, usually about an inch above your navel. Wrap the tape around your waist without sucking in your stomach. You should be able to slip one finger under the tape comfortably. This measurement is critical for <a href="/lehengas">lehengas</a> and <a href="/suits">suits</a>.</p>
-
-      <h3>3. Hips</h3>
-      <p>Measure around the widest part of your hips and buttocks. Stand with your feet together. This measurement matters most for churidar pants, palazzo pants, and A-line suits.</p>
-
-      <h3>4. Shoulder Width</h3>
-      <p>Measure from the edge of one shoulder (where the sleeve seam would sit) across the back of your neck to the other shoulder edge. This is crucial for kameez and blouse fitting. If you have a well-fitting blouse or top, you can measure that instead.</p>
-
-      <h3>5. Sleeve Length</h3>
-      <p>Start at the shoulder seam and measure down the outside of your arm to your desired sleeve endpoint. For full sleeves, measure to the wrist bone. For three-quarter sleeves, measure to the forearm. Bend your arm slightly when measuring full sleeves to ensure comfort.</p>
-
-      <h3>6. Arm Hole (Arm Circumference)</h3>
-      <p>Wrap the tape around the fullest part of your upper arm (bicep). This ensures your sleeves aren't too tight, especially important for fitted blouses.</p>
-
-      <h2>Lehenga-Specific Measurements</h2>
-      <h3>7. Lehenga Length</h3>
-      <p>Measure from your natural waist (where the lehenga waistband will sit) down to the floor. <strong>Do this while wearing the shoes you plan to wear with the lehenga.</strong> Most lehengas come in standard lengths of 40, 42, or 44 inches, but custom lengths are available. If you're tall (5'7"+), you may need a 44+ inch lehenga.</p>
-
-      <h3>8. Lehenga Waist</h3>
-      <p>Same as waist measurement, but note whether the lehenga sits at your natural waist or lower. Some modern lehengas sit at the hip — in that case, measure at the hip level where you want the waistband.</p>
-
-      <h2>Blouse-Specific Measurements</h2>
-      <h3>9. Blouse Length</h3>
-      <p>Measure from the top of your shoulder (where the blouse strap sits) to the desired bottom edge. Crop blouses typically end at the underbust, while standard blouses reach the waist.</p>
-
-      <h3>10. Neck Depth (Front and Back)</h3>
-      <p>Measure from the base of your throat down to the desired neckline depth. For the back, measure from the nape of your neck down. This is especially important for custom-stitched blouses.</p>
-
-      <h2>Adding Ease: The Secret to Comfortable Fit</h2>
-      <p>"Ease" is the extra room added to your body measurements for comfortable movement. Without ease, your outfit will be skin-tight and uncomfortable:</p>
-      <ul>
-        <li><strong>Bust:</strong> Add 1-2 inches of ease</li>
-        <li><strong>Waist:</strong> Add 0.5-1 inch of ease (1.5-2 inches for lehengas)</li>
-        <li><strong>Hips:</strong> Add 1-2 inches of ease</li>
-        <li><strong>Arm hole:</strong> Add 1 inch of ease minimum</li>
-      </ul>
-      <p>For custom tailoring, always provide your actual body measurements plus desired ease — don't just give body measurements and hope the tailor adds ease automatically.</p>
-
-      <h2>Common Measurement Mistakes</h2>
-      <ul>
-        <li><strong>Pulling the tape too tight:</strong> You'll get a garment that's too small</li>
-        <li><strong>Measuring over thick clothing:</strong> Adds 1-2 inches to every measurement</li>
-        <li><strong>Not wearing the right bra:</strong> A push-up bra vs. a sports bra can change bust by 2+ inches</li>
-        <li><strong>Measuring barefoot but wearing heels with the outfit:</strong> Lehenga length will be too short</li>
-        <li><strong>Taking measurements at different times:</strong> Body measurements can fluctuate — measure at the same time of day</li>
-        <li><strong>Forgetting to account for weight changes:</strong> If you're between sizes, size up — it's easier to take in than to let out</li>
-      </ul>
-
-      <h2>International Size Conversion</h2>
-      <p>Indian sizing doesn't always align with US/UK sizes. Use our <a href="/size-guide">size guide</a> for a detailed conversion chart, but as a quick reference:</p>
-      <table style="width:100%;border-collapse:collapse;margin:16px 0">
-        <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ddd;text-align:left">US Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">UK Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Indian Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Bust (inches)</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Waist (inches)</th></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd">XS (0-2)</td><td style="padding:8px;border:1px solid #ddd">4-6</td><td style="padding:8px;border:1px solid #ddd">32-34</td><td style="padding:8px;border:1px solid #ddd">32-33</td><td style="padding:8px;border:1px solid #ddd">24-25</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd">S (4-6)</td><td style="padding:8px;border:1px solid #ddd">8-10</td><td style="padding:8px;border:1px solid #ddd">34-36</td><td style="padding:8px;border:1px solid #ddd">34-35</td><td style="padding:8px;border:1px solid #ddd">26-27</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd">M (8-10)</td><td style="padding:8px;border:1px solid #ddd">12-14</td><td style="padding:8px;border:1px solid #ddd">38-40</td><td style="padding:8px;border:1px solid #ddd">36-37</td><td style="padding:8px;border:1px solid #ddd">28-30</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd">L (12-14)</td><td style="padding:8px;border:1px solid #ddd">16-18</td><td style="padding:8px;border:1px solid #ddd">42-44</td><td style="padding:8px;border:1px solid #ddd">38-40</td><td style="padding:8px;border:1px solid #ddd">32-34</td></tr>
-        <tr><td style="padding:8px;border:1px solid #ddd">XL (16-18)</td><td style="padding:8px;border:1px solid #ddd">20-22</td><td style="padding:8px;border:1px solid #ddd">46-48</td><td style="padding:8px;border:1px solid #ddd">42-44</td><td style="padding:8px;border:1px solid #ddd">36-38</td></tr>
-      </table>
-
-      <h2>Still Unsure? We Can Help</h2>
-      <p>If you're uncertain about sizing for your <a href="/sarees">saree blouse</a>, <a href="/lehengas">lehenga</a>, or <a href="/suits">suit</a>, check our <a href="/faq">FAQ</a> or contact our customer service team. We're here to help you get the perfect fit.</p>
-
-      <h2>Continue Reading</h2>
-      <ul>
-        <li><a href="/blog/buying-indian-ethnic-wear-online-usa">Complete Guide to Buying Indian Ethnic Wear Online from USA</a></li>
-        <li><a href="/blog/how-to-drape-saree-beginner-guide">How to Drape a Saree: Beginner Guide</a></li>
-      </ul>
-    `,
-    author: 'LuxeMia Editorial',
-    publishedAt: '2026-03-05',
-    updatedAt: '2026-03-15',
-    category: 'How-To',
-    tags: ['ethnic wear sizing', 'how to measure for lehenga', 'indian clothing size guide', 'bust size measurement', 'custom tailoring'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Faux-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-PC-SIFRA-1_1.jpg?v=1778982900&width=1200&height=675&crop=center',
-    readTime: 7
   },
   {
     id: '20',

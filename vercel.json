@@ -177,6 +177,11 @@
       "source": "/sitemap",
       "destination": "/sitemap.xml",
       "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-measure-yourself-indian-ethnic-wear",
+      "destination": "/blog/how-to-measure-yourself-for-indian-ethnic-wear",
+      "statusCode": 301
     }
   ],
   "headers": [
