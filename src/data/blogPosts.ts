@@ -388,68 +388,242 @@ export const blogPosts: BlogPost[] = [
     slug: 'saree-draping-styles-every-occasion',
     title: '12 Elegant Saree Draping Styles for Every Occasion (Step-by-Step)',
     excerpt: 'Master the art of saree draping with step-by-step guides. From classic Nivi to trendy mermaid style, learn 12 draping techniques that transform any saree.',
-    content: `
-      <h2>Understanding Your Body Type</h2>
-      <p>Choosing the perfect bridal lehenga starts with understanding your body shape. Whether you're pear-shaped, apple-shaped, hourglass, or rectangle, there's a lehenga silhouette that will flatter your figure beautifully.</p>
-      
-      <h3>For Pear-Shaped Bodies</h3>
-      <p>If you have wider hips and a smaller bust, opt for A-line lehengas with detailed work on the blouse. This draws attention upward while the flared skirt balances your proportions. Consider heavily embroidered dupattas to add volume to your upper body.</p>
-      
-      <h3>For Apple-Shaped Bodies</h3>
-      <p>Empire waist lehengas work wonderfully for apple-shaped brides. The high waistline creates an elongated silhouette while the flowing skirt gracefully skims over the midsection. Choose darker colors for the lehenga and lighter shades for the dupatta.</p>
-      
-      <h2>Selecting the Right Fabric</h2>
-      <p>The fabric of your bridal lehenga affects both comfort and appearance. Here's what you need to know:</p>
-      
-      <h3>Velvet</h3>
-      <p>Perfect for winter weddings, velvet lehengas exude royal elegance. They photograph beautifully and add a luxurious dimension to your bridal look. Our Maharani Velvet collection features exquisite hand-embroidered pieces.</p>
-      
-      <h3>Silk</h3>
-      <p>Traditional and timeless, silk lehengas are ideal for any season. They drape beautifully and are lightweight despite their rich appearance. Consider raw silk for a more contemporary look or Banarasi silk for traditional ceremonies.</p>
-      
-      <h3>Georgette and Chiffon</h3>
-      <p>These lightweight fabrics are perfect for summer weddings. They flow gracefully and are incredibly comfortable for long ceremonies. Layer them for a fuller look without the weight.</p>
-      
-      <h2>Color Selection Based on Skin Tone</h2>
-      <p>While red remains the traditional choice, modern brides are experimenting with various colors. Here's how to choose based on your skin tone:</p>
-      
-      <h3>Fair Skin</h3>
-      <p>Jewel tones like emerald green, royal blue, and deep burgundy look stunning. Pastels also work beautifully, especially blush pink and powder blue.</p>
-      
-      <h3>Medium Skin</h3>
-      <p>You have the widest range of options! From traditional reds and oranges to contemporary colors like mustard, coral, and wine, most colors will complement your skin tone.</p>
-      
-      <h3>Dusky Skin</h3>
-      <p>Embrace rich, vibrant colors like gold, orange, coral, and hot pink. These colors create a beautiful contrast and make your complexion glow.</p>
-      
-      <h2>Budget Considerations</h2>
-      <p>Bridal lehengas range from ₹50,000 to several lakhs. Set a realistic budget before you start shopping. Remember, the cost depends on:</p>
-      <ul>
-        <li>Type and quality of fabric</li>
-        <li>Complexity of embroidery and embellishments</li>
-        <li>Designer label</li>
-        <li>Customization requirements</li>
-      </ul>
-      
-      <h2>Timeline for Shopping</h2>
-      <p>Start your bridal lehenga shopping at least 4-6 months before your wedding. This allows time for:</p>
-      <ul>
-        <li>Exploring different options and styles</li>
-        <li>Customization and alterations</li>
-        <li>Multiple fittings</li>
-        <li>Any last-minute adjustments</li>
-      </ul>
-      
-      <h2>Final Tips</h2>
-      <p>Trust your instincts – you'll know when you've found "the one." Take photos during trials to see how the lehenga looks in different lighting. And most importantly, choose something that makes you feel confident and beautiful on your special day.</p>
+    content: `            <h2>Why Saree Draping Matters</h2>
+            <p>The saree is arguably the most versatile garment in the world — six yards of unstitched fabric that can be draped in dozens of distinct ways, each telling a story about where you're from, what you're celebrating, and how you want to present yourself. The same silk saree can look like a traditional bridal ensemble, a sleek modern gown, or a relaxed festive look, simply depending on how you drape it. Mastering multiple saree draping styles gives you an incredible wardrobe advantage: one saree, many looks.</p>
+            <p>At <a href="/sarees">LuxeMia's saree collection</a>, we carry silk, georgette, chiffon, and Banarasi sarees suited to every draping style. This guide walks you through 12 distinct saree draping styles — from the classic Nivi to the modern belt style — with step-by-step instructions, styling tips, and guidance on which body type and occasion each style suits best.</p>
+
+            <h2>Essential Preparation: What You Need Before You Drape</h2>
+            <p>Regardless of which draping style you choose, a few fundamentals remain the same. Get these right and half your work is done.</p>
+            <ul>
+              <li><strong>A well-fitted petticoat:</strong> The petticoat is the foundation of every saree drape. It should sit firmly at your natural waist — not your hips — and be snug enough to hold the saree's weight without slipping. Match the petticoat color to the saree, or wear a neutral beige/white one under light-colored sarees.</li>
+              <li><strong>A fitted blouse:</strong> The blouse should complement the saree and the draping style. Deep-back blouses work with most styles, but high-neck blouses limit some pallu drapes. Browse our <a href="/sarees">saree blouse styles</a> for inspiration.</li>
+              <li><strong>Safety pins (multiple):</strong> Keep at least 6-8 safety pins in two sizes — small ones for securing pleats, larger ones for the pallu. Match the pin color to your saree so they don't show.</li>
+              <li><strong>Comfortable heels:</strong> Wear the shoes you plan to use on the day of the event while draping. This ensures the saree falls to the right length.</li>
+              <li><strong>A full-length mirror:</strong> Never drape a saree without checking it from all angles. Pleats that look fine from the front may be uneven from the side.</li>
+            </ul>
+
+            <h2>The 12 Saree Draping Styles</h2>
+
+            <h3>1. Nivi Style (The Classic Andhra Drape)</h3>
+            <p>The Nivi drape is what most people picture when they think of a saree. Originating from Andhra Pradesh, it became the standard across India in the mid-20th century and is the style taught in most beginner guides. It features a single set of front pleats, a pallu draped over the left shoulder, and a clean, symmetrical silhouette that suits almost every body type and saree fabric.</p>
+            <p><strong>Best for:</strong> Almost every occasion — weddings, offices, festivals, and parties. Works with silk, georgette, chiffon, and cotton sarees.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Tuck the plain end of the saree into the petticoat at the right waist, wrapping once around to the left.</li>
+              <li>Make 5-7 even pleats at the front waist and tuck them in, opening to the left.</li>
+              <li>Take the remaining fabric (pallu) around your back to the right shoulder.</li>
+              <li>Make 5 even pleats in the pallu and pin it securely on the left shoulder, letting it fall gracefully over your left arm.</li>
+              <li>Adjust the pallu length — mid-forearm is classic; elbow length is modern.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> For a bridal look, pin a small floral garland along the pallu edge. For a modern office look, skip the pallu pleats and let it fall flat.</p>
+
+            <h3>2. Bengali Style (Aishwarya's Devdas Drape)</h3>
+            <p>The Bengali drape is one of India's most recognizable styles, thanks in part to cinema — think Aishwarya Rai in Devdas or Vidya Balan in Parineeta. It features broad box pleats at the front and a wide pallu that comes from the back over the right shoulder (not left), with the pallu's other corner often pinned at the left shoulder. The look is regal, bold, and deeply traditional, typically worn with red-and-white Banarasi or Jamdani sarees.</p>
+            <p><strong>Best for:</strong> Durga Puja, Bengali weddings, traditional cultural events, and any occasion where you want a statement look.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Start by tucking the saree at the right waist and wrap anticlockwise to the left.</li>
+              <li>Make broad box pleats (4-5 wide pleats) at the front and tuck them facing left.</li>
+              <li>Take the pallu from the back over your RIGHT shoulder (opposite of Nivi).</li>
+              <li>Let the pallu fall wide — do not pleat it. It should cover your chest and fall to the knee.</li>
+              <li>Take the pallu's bottom-left corner and pin it at the left shoulder, creating a wide U-shape across your chest.</li>
+              <li>Wear traditional Bengali jewelry — a broad red-and-white shakha-pola bangle set and a gold choker.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Use a Banarasi silk or Tussar saree for authenticity. A big red bindi is non-negotiable.</p>
+
+            <h3>3. Gujarati Seedha Pallu (Front Pallu Drape)</h3>
+            <p>The Gujarati drape, also called the seedha pallu style, is instantly recognizable by its front-facing pallu. Instead of falling over the shoulder and down the back, the pallu comes from the back and drapes across the front of the body, pinned at the right shoulder. This style showcases the pallu's embroidery and zari work beautifully, which is why it's the preferred drape for bridal and festive sarees with heavy pallu work.</p>
+            <p><strong>Best for:</strong> Weddings, festivals, and any saree with a heavily embroidered pallu you want to show off. Pairs beautifully with Kanchipuram and Banarasi bridal sarees.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Tuck the saree at the right waist and wrap once to the left.</li>
+              <li>Make 6-8 even front pleats and tuck them facing left.</li>
+              <li>Take the pallu from the back and bring it OVER your right shoulder, so it falls across the front of your body.</li>
+              <li>Make 4-5 neat pleats in the pallu and pin them at the right shoulder.</li>
+              <li>Let the pleated pallu fall diagonally across your chest to your left hip.</li>
+              <li>Secure the pallu's bottom corner at the left waist with a small pin.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> This is the go-to drape for Kalyanam (South Indian wedding) ceremonies. Pair with temple jewelry and a jasmine gajra.</p>
+
+            <h3>4. Maharashtrian Kashta (Dhoti-Style Drape)</h3>
+            <p>The Maharashtrian Kashta drape is unique because it doesn't require a petticoat — the saree itself is draped like a dhoti, with the fabric pulled between the legs for ease of movement. Historically worn by Marathi women for work and dance (Lavani performances), this 9-yard drape is now a bold, statement style for Gudi Padwa, Ganesh Chaturthi, and Maharashtrian weddings. It's powerful, athletic, and unmistakably traditional.</p>
+            <p><strong>Best for:</strong> Gudi Padwa, Ganesh Chaturthi, Lavani performances, and traditional Maharashtrian events. Requires a 9-yard saree (not the standard 6-yard).</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Center the 9-yard saree at the back waist, with equal lengths hanging on both sides.</li>
+              <li>Take the left end between your legs and tuck it at the back waist — this forms the dhoti.</li>
+              <li>Repeat with the right end, pulling it through the legs and tucking at the back.</li>
+              <li>Make pleats at the front waist with the remaining fabric and tuck them in.</li>
+              <li>Take the pallu (the decorative end) across the back and over the left shoulder.</li>
+              <li>Secure with a kamarbandh (waist belt) for an authentic finish.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Wear with a traditional nose ring (nath), green glass bangles, and a crescent-moon bindi. A purple or red Nauvari saree is the classic choice.</p>
+
+            <h3>5. Rajasthani Ghungat Style</h3>
+            <p>The Rajasthani drape emphasizes modesty with the pallu pulled forward over the head as a ghungat (veil). This style is deeply rooted in Marwari and Rajput traditions and is still worn at Rajasthani weddings, particularly by the bride's mother and elder female relatives. The pallu, often a richly embroidered red or maroon, is the focal point and is drawn across the crown of the head, falling softly down the back.</p>
+            <p><strong>Best for:</strong> Rajasthani and Marwari weddings, Teej and Gangaur festivals, and traditional family rituals where a ghungat is expected.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Tuck the saree at the right waist and wrap to the left, making front pleats as in the Nivi style.</li>
+              <li>Take the pallu from the back but instead of pinning at the shoulder, bring it up and over the crown of your head.</li>
+              <li>Let the pallu fall over your forehead and down the back, covering your hair completely.</li>
+              <li>Pin it at the back of the head to keep it secure.</li>
+              <li>Pull a small section of the pallu forward over your face as the ghungat when greeting elders.</li>
+              <li>Wear a borla (round maang tikka) on the forehead — the signature Rajasthani jewelry.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Pair with heavy kundan or polki jewelry, red bangles (chooda), and traditional juttis. A Bandhej or Leheriya saree is the authentic choice.</p>
+
+            <h3>6. Mermaid Style (Fishtail Drape)</h3>
+            <p>The mermaid drape is a modern, sleek style that mimics the silhouette of a mermaid gown — fitted through the hips and thighs, then flaring at the knee. It's a favorite at cocktail parties, sangeet receptions, and Indo-western events where you want a contemporary, body-conscious look. This style works best with lightweight, fluid fabrics like georgette, chiffon, or crepe — stiff silks don't drape closely enough to create the fishtail effect.</p>
+            <p><strong>Best for:</strong> Cocktail parties, reception nights, sangeet, and modern Indo-western events. Suits hourglass and tall body types.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Tuck the saree at the right waist and wrap tightly around the hips to the left, keeping it snug (no pleats at the front).</li>
+              <li>Pin the saree along the hip line to keep it fitted.</li>
+              <li>Make small tight pleats only at the knee level, tucking them so the fabric flares below the knee.</li>
+              <li>Take the pallu around the back and over the left shoulder in a thin, neat pleated fold.</li>
+              <li>Alternatively, pin the pallu at the waist like a sash for a gown-like effect.</li>
+              <li>Wear heels — the mermaid silhouette only works if the saree falls to the floor.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Pair with a corset-style or strappy blouse. Statement earrings and a sleek bun complete the gown-like look.</p>
+
+            <h3>7. Butterfly Style (Mumtaz Drape)</h3>
+            <p>The butterfly drape, made iconic by Mumtaz in the 1960s Bollywood era, is a retro statement style where the pallu is pleated into very thin, tight folds that flare out like butterfly wings over the bust. The pleats are typically 2-3 inches wide and pinned carefully so they hold their shape. It's a dramatic, vintage-glamour look that turns heads — best reserved for parties, retro-themed events, or when you want to channel old-Bollywood elegance.</p>
+            <p><strong>Best for:</strong> Parties, retro-themed events, sangeet, and any occasion where you want a glamorous, statement look. Works with chiffon and georgette.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Start with the Nivi drape — front pleats and pallu over the left shoulder.</li>
+              <li>Instead of letting the pallu fall flat, make 7-8 very thin, tight pleats in the pallu (each about 1 inch wide).</li>
+              <li>Pull the pleated pallu high up on your bust, so it sits just below the collarbone.</li>
+              <li>Pink the pleated pallu securely at the left shoulder and at the right side of your bust.</li>
+              <li>The pallu should fan out across your bust like butterfly wings, with the pleats visible.</li>
+              <li>Wear a contrasting blouse — the pallu's wing shape will frame it.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Channel the retro vibe with winged eyeliner, a high bouffant, and chandelier earrings. A printed chiffon saree is the most authentic choice.</p>
+
+            <h3>8. Lehenga Style (Wide Pleats Drape)</h3>
+            <p>The lehenga drape is exactly what it sounds like — a saree draped to look like a lehenga. Instead of neat narrow pleats, you make very broad, deep box pleats that create a flared, skirt-like silhouette. The pallu is usually draped Gujarati-style (front pallu) to mimic a dupatta. This is a popular choice for brides who want the elegance of a saree but the volume and drama of a lehenga at their wedding or reception.</p>
+            <p><strong>Best for:</strong> Brides who want a saree-look with lehenga volume, reception events, and festive occasions. Works best with heavy silk, Banarasi, or Kanchipuram sarees.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Tuck the saree at the right waist and wrap to the left.</li>
+              <li>Make 4-5 very broad box pleats (each 5-6 inches wide) at the front waist. This creates the lehenga-like flare.</li>
+              <li>Take the pallu from the back and drape it across the front (Gujarati seedha pallu style).</li>
+              <li>Make broad pleats in the pallu and pin at the right shoulder, letting it fall diagonally across your chest like a dupatta.</li>
+              <li>For maximum lehenga effect, wear a can-can or flare petticoat underneath.</li>
+              <li>Add a kamarbandh (waist belt) to define your waist — this completes the lehenga look.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Pair with heavy bridal jewelry — a kundan choker, maang tikka, and jhumkas. A red Banarasi or Kanchipuram silk saree is ideal for this drape.</p>
+
+            <h3>9. Pant Style (Modern Trousers Drape)</h3>
+            <p>The pant-style drape is an Indo-western fusion where the saree is worn over tailored trousers or palazzo pants instead of a petticoat. This contemporary style is perfect for NRI women and modern wedding guests who want the grace of a saree with the comfort and mobility of pants. It's a favorite at destination weddings, beach weddings, and modern cocktail events where you'll be on your feet all night.</p>
+            <p><strong>Best for:</strong> Destination weddings, beach weddings, cocktail parties, and modern Indo-western events. Works with chiffon, georgette, and crepe.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Wear fitted trousers or palazzo pants in a matching or contrasting color — no petticoat needed.</li>
+              <li>Tuck the saree at the right waist (into the trousers) and wrap to the left.</li>
+              <li>Make 5-6 neat front pleats and tuck them in at the front waist.</li>
+              <li>Take the pallu around the back and over the left shoulder in a thin pleated fold.</li>
+              <li>For a more structured look, pin the pallu at the waist like a sash.</li>
+              <li>Pair with a structured blouse or even a blazer for a power-look.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Strappy heels, a sleek clutch, and minimalist jewelry complete the modern look. A solid-color crepe saree works best — prints can look busy over trousers.</p>
+
+            <h3>10. Indo-Western Fusion (Creative Drape)</h3>
+            <p>The Indo-western drape is a category of creative, free-form styles that break traditional rules. Think sarees draped over one shoulder like a gown, pallu wrapped around the neck like a scarf, or sarees paired with crop tops instead of blouses. This is the most experimental of the 12 styles and is favored by fashion-forward women at sangeets, engagement parties, and fashion events. There are no fixed steps — the joy is in the creativity.</p>
+            <p><strong>Best for:</strong> Sangeet, engagement parties, fashion-forward events, and any occasion where you want to stand out. Works with all lightweight fabrics.</p>
+            <p><strong>How to drape (one-shoulder gown style):</strong></p>
+            <ul>
+              <li>Tuck the saree at the right waist and wrap to the left, making front pleats as usual.</li>
+              <li>Take the pallu from the back, but instead of over the shoulder, bring it up across your chest diagonally.</li>
+              <li>Drape it over your RIGHT shoulder (so it crosses your body), pinning it securely.</li>
+              <li>Let the rest of the pallu fall down your back like a gown train.</li>
+              <li>Wear a strapless or one-shoulder blouse — the pallu will be the "sleeve".</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Experiment with a dhoti-style pallu, a hooded pallu, or a saree-gown hybrid. Statement earrings and a sleek ponytail keep the focus on the creative drape.</p>
+
+            <h3>11. Mumtaz Style (One-Shoulder Retro Drape)</h3>
+            <p>The Mumtaz drape (distinct from the butterfly style, though both are associated with the actress) is a one-shoulder style where the pallu is wrapped tightly around the body and pinned at one shoulder, creating a bodycon silhouette. The fabric is typically pulled tight across the bust and waist, then the pallu is draped in tight pleats over one shoulder only. It's a vintage-glamour look that's recently seen a comeback at sangeet and cocktail events.</p>
+            <p><strong>Best for:</strong> Sangeet, cocktail parties, retro-themed events. Works best with stretchy chiffon or georgette.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Start with the saree tucked at the right waist, wrapping tightly to the left (no front pleats — keep it fitted).</li>
+              <li>Take the pallu from the back and bring it across your bust, pulling it snug.</li>
+              <li>Wrap the pallu once tightly around your waist, pinning at the side.</li>
+              <li>Take the remaining pallu up and over your RIGHT shoulder only, pinning it securely.</li>
+              <li>Make tight pleats in the shoulder pallu so it stays compact.</li>
+              <li>Wear a high-neck or boat-neck blouse — the pallu will frame it.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> Pair with a sleek high bun, winged liner, and a bold red lip. This is a head-turner — keep jewelry minimal so the drape shines.</p>
+
+            <h3>12. Belt Style (Kamarbandh Drape)</h3>
+            <p>The belt style, also called the kamarbandh drape, is any saree drape (usually Nivi or Gujarati) worn with a decorative waist belt over the pallu at the waist. The belt cinches the saree at the waist, defining your silhouette and keeping the pallu securely in place. It's a popular choice for brides, wedding guests, and festive occasions — the belt adds a touch of traditional jewelry while making the saree easier to move in.</p>
+            <p><strong>Best for:</strong> Weddings, receptions, Navratri, and festive occasions. Works with all saree types, especially silks and Banarasi.</p>
+            <p><strong>How to drape:</strong></p>
+            <ul>
+              <li>Drape the saree in any style you prefer (Nivi and Gujarati are most common).</li>
+              <li>Make sure the front pleats and pallu are secure.</li>
+              <li>Choose a decorative waist belt — kundan, gold, or fabric-wrapped. Browse our <a href="/jewelry">jewelry collection</a> for options.</li>
+              <li>Place the belt around your waist over the saree, positioning it at your natural waist (just above the belly button).</li>
+              <li>For the Nivi drape, the belt goes over the pallu at the waist, holding it in place.</li>
+              <li>For the Gujarati drape, the belt goes over the diagonal pallu across your hip.</li>
+              <li>Adjust the pallu so it falls neatly above and below the belt.</li>
+            </ul>
+            <p><strong>Styling tip:</strong> The belt style is forgiving for all body types — it defines the waist and creates an hourglass effect. Pair with a cropped blouse and heavy earrings.</p>
+
+            <h2>Choosing the Right Style for Your Body Type</h2>
+            <p>Different saree draping styles flatter different body shapes. Here's a quick guide to help you choose.</p>
+            <ul>
+              <li><strong>Pear-shaped (wider hips):</strong> Nivi and belt styles balance your proportions by defining the waist. Avoid the mermaid style, which emphasizes the hips.</li>
+              <li><strong>Apple-shaped (fuller midsection):</strong> The lehenga style and Gujarati seedha pallu work beautifully — the broad pleats and front pallu draw attention upward. Avoid fitted styles like Mumtaz.</li>
+              <li><strong>Hourglass:</strong> You can carry off almost any style. The mermaid and butterfly styles particularly highlight your curves. The belt style adds extra definition.</li>
+              <li><strong>Petite:</strong> The Nivi and pant styles elongate your frame. Avoid the lehenga style, which can overwhelm a petite figure. Choose thin pallu pleats over broad ones.</li>
+              <li><strong>Tall:</strong> The lehenga and Rajasthani styles suit your frame well — you can carry off volume and broad pleats. The mermaid style also looks striking on tall women.</li>
+            </ul>
+
+            <h2>Saree Draping for Different Occasions</h2>
+            <p>Choosing the right drape for the occasion is just as important as choosing the right saree. Here's a quick reference guide.</p>
+            <ul>
+              <li><strong>Weddings (as a bride):</strong> Gujarati seedha pallu or lehenga style with a Kanchipuram or Banarasi silk. Pair with bridal jewelry and a kamarbandh.</li>
+              <li><strong>Weddings (as a guest):</strong> Nivi or belt style with a silk or georgette saree. Avoid white (reserved for the bride in many communities) and all-black.</li>
+              <li><strong>Festivals (Diwali, Navratri):</strong> Nivi, belt, or Gujarati style with a silk or Bandhej saree. For Navratri, the Gujarati style is traditional for Garba.</li>
+              <li><strong>Office and formal events:</strong> Nivi style with a cotton, chiffon, or crepe saree. Keep jewelry minimal.</li>
+              <li><strong>Cocktail and sangeet:</strong> Mermaid, butterfly, or pant style with a chiffon or crepe saree. Modern, sleek, and easy to dance in.</li>
+              <li><strong>Pooja and religious ceremonies:</strong> Nivi or Gujarati style with a silk or cotton saree. Cover your head with the pallu where tradition requires.</li>
+            </ul>
+
+            <h2>Common Saree Draping Mistakes to Avoid</h2>
+            <p>Even experienced saree wearers make these mistakes. Watch out for them.</p>
+            <ul>
+              <li><strong>Petticoat too loose:</strong> A loose petticoat causes the saree to slip and the pleats to fall apart within an hour. Invest in a well-fitted petticoat — or better, an elastic-waist shapewear petticoat.</li>
+              <li><strong>Uneven pleats:</strong> Take the time to make even pleats (each about 1 inch wide for Nivi, 5-6 inches for lehenga style). Uneven pleats look sloppy and add bulk to the wrong places.</li>
+              <li><strong>Pallu too long or too short:</strong> The pallu should fall to mid-forearm for classic styles, elbow length for modern styles. Too long and it gets in your food; too short and it looks awkward.</li>
+              <li><strong>Visible safety pins:</strong> Always match pin color to your saree, and pin from the inside where possible. Visible pins are the most common saree faux pas.</li>
+              <li><strong>Wrong footwear:</strong> Always wear the shoes you'll be using while draping. If you drape barefoot and then put on heels, the saree will be too short.</li>
+              <li><strong>Skipping the final mirror check:</strong> Always check your drape from the front, back, and both sides before leaving. Pleats that look fine from the front may be uneven from the side.</li>
+            </ul>
+
+            <h2>Final Tips for Perfect Saree Draping</h2>
+            <p>Draping a saree beautifully is a skill that improves with practice. Start with the Nivi style until you can drape it confidently in under 10 minutes, then experiment with the other styles. Don't be afraid to use extra safety pins — even professional drapers use 8-10 pins for a single drape. And most importantly, wear your saree with confidence. A woman who carries herself with grace makes any drape look beautiful.</p>
+            <p>Ready to find the perfect saree to drape? Browse our complete <a href="/sarees">saree collection</a> — including <a href="/collections?category=silk">silk sarees</a>, <a href="/collections?category=georgette">georgette sarees</a>, and <a href="/collections?category=banarasi">Banarasi sarees</a> — and find the one that suits your style. For more saree guidance, check out our <a href="/blog/how-to-drape-saree-beginner-guide">beginner's guide to draping a saree</a> and our <a href="/blog/caring-for-silk-sarees">silk saree care guide</a>.</p>
+
+            <h2>Related Reading</h2>
+            <ul>
+              <li><a href="/blog/how-to-drape-saree-beginner-guide">How to Drape a Saree: Step-by-Step Guide for Beginners</a></li>
+              <li><a href="/blog/caring-for-silk-sarees">Expert Tips for Caring for Silk Sarees</a></li>
+              <li><a href="/blog/banarasi-silk-saree-guide-authentic">Banarasi Silk Sarees: History & How to Spot a Fake</a></li>
+              <li><a href="/blog/kanchipuram-silk-saree-south-indian-wedding-guide">Kanchipuram Silk Sarees: South Indian Wedding Guide</a></li>
+              <li><a href="/blog/saree-draping-styles-every-occasion">12 Elegant Saree Draping Styles for Every Occasion</a></li>
+              <li><a href="/blog/buy-authentic-indian-sarees-online-usa-uk">Shopping Authentic Indian Sarees Online from USA/UK</a></li>
+            </ul>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-01-01',
-    updatedAt: '2026-01-02',
-    category: 'Bridal Guide',
-    tags: ['bridal lehenga', 'wedding shopping', 'bridal fashion', 'lehenga guide'],
+    updatedAt: '2026-07-08',
+    category: 'Styling Guide',
+    tags: ['saree draping styles', 'how to drape saree', 'Nivi drape', 'Bengali saree drape', 'Gujarati seedha pallu', 'mermaid saree drape', 'saree styling'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gemini_Generated_Image_bk6pj2bk6pj2bk6p.png?v=1783446015&width=1200&height=675&crop=center',
-    readTime: 8
+    readTime: 12
   },
   {
     id: '3',
