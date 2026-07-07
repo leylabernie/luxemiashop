@@ -47,8 +47,9 @@ const organizationSchema = {
   },
   sameAs: [
     'https://www.instagram.com/luxemiashop',
-    'https://www.facebook.com/luxemiashop',
+    'https://www.facebook.com/LuxeMia',
     'https://www.pinterest.com/luxemiashop',
+    'https://www.tiktok.com/@shopluxemia',
   ],
   foundingDate: '2025',
   knowsAbout: [

@@ -94,8 +94,9 @@ const Index = () => {
     "paymentAccepted": "Credit Card, Debit Card, PayPal, Apple Pay, Google Pay",
     "sameAs": [
       "https://www.instagram.com/luxemiashop",
-      "https://www.facebook.com/luxemiashop",
-      "https://www.pinterest.com/luxemiashop"
+      "https://www.facebook.com/LuxeMia",
+      "https://www.pinterest.com/luxemiashop",
+      "https://www.tiktok.com/@shopluxemia"
     ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",

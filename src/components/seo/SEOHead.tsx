@@ -71,8 +71,9 @@ interface SEOHeadProps {
 // Unified social media links — single source of truth
 const SOCIAL_LINKS = {
   instagram: 'https://www.instagram.com/luxemiashop',
-  facebook: 'https://www.facebook.com/luxemiashop',
+  facebook: 'https://www.facebook.com/LuxeMia',
   pinterest: 'https://www.pinterest.com/luxemiashop',
+  tiktok: 'https://www.tiktok.com/@shopluxemia',
 };
 
 const SEOHead = ({
