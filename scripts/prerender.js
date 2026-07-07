@@ -116,6 +116,7 @@ const CATEGORY_PRODUCT_TYPES = {
   lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga'],
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
+  jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
 };
 
 const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
@@ -216,7 +217,7 @@ function filterProductsForCategory(allProducts, category) {
     }).slice(0, MAX_COLLECTION_PRODUCTS);
   }
 
-  // Lehengas + Sarees: match by productType with keyword fallback
+  // Lehengas + Sarees + Jewelry: match by productType with keyword fallback
   return filtered.filter(p => {
     const pt = (p.productType ?? '').toLowerCase();
     const tags = (p.tags ?? []).map(t => t.toLowerCase());
@@ -226,6 +227,20 @@ function filterProductsForCategory(allProducts, category) {
     if (types.some(t => t.toLowerCase() === pt)) return true;
     if (category === 'lehengas') return /lehenga|lehnga|lehena/.test(pt);
     if (category === 'sarees') return /saree|sari/.test(pt);
+    // Jewelry fallback — Shopify products often have productType "Jewelry Set",
+    // "Bridal Jewelry Set", etc. Also tag-match for products whose productType
+    // is generic but whose tags identify them as jewelry. Mirrors the same fix
+    // in src/hooks/useShopifyProducts.ts filterByCategory().
+    if (category === 'jewelry') {
+      if (/\bjewel|jewell|kundan|polki|necklace|choker|bangle|earring|maang\s?tikka|bridal\s?set/.test(pt)) {
+        return true;
+      }
+      const jewelryTagPattern = /\bjewel|jewell|kundan|polki|necklace|choker|bangle|earring|maang|bridal\s?set|bridal\s?jewelry/;
+      if (tags.some(t => jewelryTagPattern.test(t))) {
+        return true;
+      }
+      return false;
+    }
     return false;
   }).slice(0, MAX_COLLECTION_PRODUCTS);
 }
@@ -591,6 +606,7 @@ const routes = [
   },
   {
     path: '/jewelry',
+    category: 'jewelry',
     title: 'Indian Bridal Jewelry Sets | Traditional Wedding Necklaces | LuxeMia',
     description: 'Shop Indian bridal jewelry sets online in USA. Traditional wedding necklaces, Kundan & polki sets. South Asian bridal jewelry with luxury craftsmanship.',
     h1: 'Kundan Bridal Jewelry Collection',

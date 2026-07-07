@@ -10,7 +10,7 @@ const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
   lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Bridal Lehengas', 'Reception Lehengas', 'Mehendi Haldi Lehengas', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga'],
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
-  jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace'],
+  jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
 };
 
 // Map Shopify productType to display category names
@@ -45,7 +45,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
-const CACHE_VERSION = 'v6';
+const CACHE_VERSION = 'v7';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
@@ -308,6 +308,26 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     //    e.g. "Lehnga Choli", "Silk Saree", "Party Wear Lehenga", "Bridal Sari"
     if (category === 'lehengas') return /lehenga|lehnga|lehena/.test(pt);
     if (category === 'sarees') return /saree|sari/.test(pt);
+
+    // Jewelry fallback — Shopify products often have productType "Jewelry Set",
+    // "Bridal Jewelry Set", "Kundan Necklace Set", etc. Also catch products
+    // whose TYPE doesn't say jewelry but whose TAGS do (e.g. a necklace set
+    // typed as "Accessories" but tagged "indian bridal jewelry"). Without this,
+    // any jewelry productType not in CATEGORY_PRODUCT_TYPES is silently dropped
+    // and never appears on /jewelry. (Bug observed July 2026: 8 newly imported
+    // Shopify jewelry products with Type="Jewelry Set" were invisible.)
+    if (category === 'jewelry') {
+      if (/\bjewel|jewell|kundan|polki|necklace|choker|bangle|earring|maang\s?tikka|bridal\s?set/.test(pt)) {
+        return true;
+      }
+      // Tag fallback — catches products with tags like 'indian bridal jewelry',
+      // 'bridal kundan set', 'kundan necklace set' even if productType is generic.
+      const jewelryTagPattern = /\bjewel|jewell|kundan|polki|necklace|choker|bangle|earring|maang|bridal\s?set|bridal\s?jewelry/;
+      if (tags.some(t => jewelryTagPattern.test(t))) {
+        return true;
+      }
+      return false;
+    }
 
     return false;
   });
