@@ -2662,7 +2662,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-02-20',
     category: 'Cultural Guide',
     tags: ['banarasi silk saree', 'authentic banarasi', 'varanasi saree', 'silk saree guide', 'indian textiles'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7760570563_82cr_ecd769b2-f6cd-4a96-84c4-3298946a65a9.jpg?v=1782927108&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/HO129845-blue-meenakari-boota-katan-silk-handloom-banarasi-saree.webp?v=1783444142&width=1200&height=675&crop=center',
     readTime: 10
   },
   {
