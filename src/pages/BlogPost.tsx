@@ -106,27 +106,13 @@ const BlogPost = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  if (isDataLoading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="flex items-center justify-center py-32">
-          <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (!post) {
-    return <Navigate to="/blog" replace />;
-  }
-
   // Sanitize blog HTML content to prevent XSS attacks.
   // Even though our blog content is authored internally, this protects against
   // supply-chain attacks if the content source is ever compromised.
+  // NOTE: All hooks must be called before any conditional early returns
+  // to comply with React's Rules of Hooks (fixes Error #310).
   const sanitizedContent = useMemo(
-    () => DOMPurify.sanitize(post.content, {
+    () => DOMPurify.sanitize(post?.content ?? '', {
       ALLOWED_TAGS: [
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr',
         'ul', 'ol', 'li', 'a', 'strong', 'em', 'b', 'i', 'u',
@@ -140,11 +126,12 @@ const BlogPost = () => {
       ],
       ADD_ATTR: ['target'], // Allow target="_blank" for external links
     }),
-    [post.content]
+    [post?.content]
   );
 
   // Extract h2 headings for TOC
   const tocItems: TocItem[] = useMemo(() => {
+    if (!sanitizedContent) return [];
     const parser = new DOMParser();
     const doc = parser.parseFromString(sanitizedContent, 'text/html');
     const headings = doc.querySelectorAll('h2');
@@ -165,6 +152,7 @@ const BlogPost = () => {
   // separately with fetchPriority="high", so these inline images are
   // all below the fold and safe to lazy-load.
   const contentWithIds = useMemo(() => {
+    if (!sanitizedContent) return '';
     let html = sanitizedContent;
     let h2Index = 0;
     html = html.replace(/<h2([^>]*)>/g, (_match, attrs) => {
@@ -178,6 +166,38 @@ const BlogPost = () => {
     html = html.replace(/<img\s+(?![^>]*loading=)/g, '<img loading="lazy" decoding="async" ');
     return html;
   }, [sanitizedContent]);
+
+  // Related category links based on post category and tags
+  const relatedCategories = useMemo(() => {
+    const links = categoryToShopLink[post?.category ?? ''] || [
+      { label: 'Lehengas', href: '/lehengas' },
+      { label: 'Sarees', href: '/sarees' },
+      { label: 'Suits', href: '/suits' },
+    ];
+    // Deduplicate
+    const seen = new Set<string>();
+    return links.filter(l => {
+      if (seen.has(l.href)) return false;
+      seen.add(l.href);
+      return true;
+    });
+  }, [post?.category]);
+
+  if (isDataLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="flex items-center justify-center py-32">
+          <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!post) {
+    return <Navigate to="/blog" replace />;
+  }
 
   // Estimate word count from stripped content
   const plainTextContent = stripHtml(post.content);
@@ -247,22 +267,6 @@ const BlogPost = () => {
   };
 
   const shareUrl = `https://luxemia.shop/blog/${post.slug}`;
-
-  // Related category links based on post category and tags
-  const relatedCategories = useMemo(() => {
-    const links = categoryToShopLink[post.category] || [
-      { label: 'Lehengas', href: '/lehengas' },
-      { label: 'Sarees', href: '/sarees' },
-      { label: 'Suits', href: '/suits' },
-    ];
-    // Deduplicate
-    const seen = new Set<string>();
-    return links.filter(l => {
-      if (seen.has(l.href)) return false;
-      seen.add(l.href);
-      return true;
-    });
-  }, [post.category]);
 
   // Check if updated date differs from published date
   const showUpdatedDate = post.updatedAt && post.updatedAt !== post.publishedAt;
