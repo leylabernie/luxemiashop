@@ -80,7 +80,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/VB400S_1.png?v=1782927068&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
     readTime: 8
   },
   {
@@ -448,7 +448,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-02',
     category: 'Bridal Guide',
     tags: ['bridal lehenga', 'wedding shopping', 'bridal fashion', 'lehenga guide'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7975362473_m34k.jpg?v=1782927113&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gemini_Generated_Image_bk6pj2bk6pj2bk6p.png?v=1783446015&width=1200&height=675&crop=center',
     readTime: 8
   },
   {
@@ -2167,7 +2167,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-10',
     category: 'Style Tips',
     tags: ['lehenga vs sharara', 'anarkali vs lehenga', 'sharara guide', 'anarkali guide', 'indian outfit comparison', 'wedding outfit', 'ethnic wear'],
-    image: '/og/og-suits.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gemini_Generated_Image_x58jfvx58jfvx58j.png?v=1783446419&width=1200&height=675&crop=center',
     readTime: 10
   },
   {
