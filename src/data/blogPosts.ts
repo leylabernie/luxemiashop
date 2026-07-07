@@ -80,7 +80,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
-    image: '/images/blog/custom/indian-wedding-dress-complete-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7726110370_184r.jpg?v=1782927148',
     readTime: 8
   },
   {
@@ -128,7 +128,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
     tags: ['red bridal lehenga', 'wedding lehenga', 'bridal trends', 'lehenga designs', 'indian bride'],
-    image: '/images/blog/custom/red-bridal-lehenga-trends-2026.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/VB400S_1.png?v=1782927068',
     readTime: 7
   },
   {
@@ -179,7 +179,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-07',
     category: 'Shopping Guide',
     tags: ['budget wedding dress', 'affordable bridal lehenga', 'wedding shopping', 'bridal budget', 'indian wedding'],
-    image: '/images/blog/custom/designer-wedding-dress-under-500.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/MM243Salmon-2-_1.png?v=1782927106',
     readTime: 6
   },
   {
@@ -245,7 +245,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-07',
     category: 'Styling Tips',
     tags: ['lehenga color dark skin', 'dusky skin lehenga', 'bridal colors', 'skin tone fashion', 'wedding styling'],
-    image: '/images/blog/blog-017-wisteria-lilac-soft.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Dark-Blue-pure-Vichitra--Festival-Wear-Embroidery-Work-Readymade-Lehenga-Choli-4263-177-A_1_af828f39-d89f-48e1-a7ea-df129c46167f.jpg?v=1778985775',
     readTime: 7
   },
   {
@@ -315,7 +315,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-07',
     category: 'Wedding Guide',
     tags: ['mother of bride saree', 'wedding saree', 'family wedding outfit', 'saree for mothers', 'wedding fashion'],
-    image: '/images/blog/custom/wedding-saree-for-mother-of-bride.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.8231443895_k398.jpg?v=1782927140',
     readTime: 6
   },
   {
@@ -380,7 +380,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Styling Tips',
     tags: ['wedding guest outfit', 'indian wedding', 'what to wear', 'wedding fashion', 'ethnic wear'],
-    image: '/images/blog/custom/wedding-guest-outfit-ideas.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Black-Tussar-Silk-Casual-Wear-Printed-Work-Saree-PC-MIRAL-105_1.jpg?v=1778975872',
     readTime: 6
   },
   {
@@ -448,7 +448,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-02',
     category: 'Bridal Guide',
     tags: ['bridal lehenga', 'wedding shopping', 'bridal fashion', 'lehenga guide'],
-    image: '/images/blog/custom/saree-draping-styles-every-occasion.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/01copy_9217b9de-b7c7-4e2e-9262-691db8dbac93.jpg?v=1783383919',
     readTime: 8
   },
   {
@@ -515,7 +515,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-02',
     category: 'Wedding Trends',
     tags: ['wedding trends', '2026 fashion', 'bridal trends', 'sustainable fashion'],
-    image: '/images/blog/blog-021-soft-yellow-soft.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Maroon-Silk-Festival-Wear-Embroidery-Work-Lehenga-Choli-4259-7164-A_1_def9ddc2-7681-467a-a4e6-e817076c4eb9.jpg?v=1778985788',
     readTime: 7
   },
   {
@@ -598,7 +598,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2025-12-28',
     category: 'Styling Tips',
     tags: ['accessories', 'jewelry', 'styling tips', 'ethnic fashion'],
-    image: '/images/blog/blog-011-ivory-gold-net.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/image_2.jpg?v=1783362170',
     readTime: 5
   },
   {
@@ -712,7 +712,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2025-12-20',
     category: 'Care Guide',
     tags: ['silk care', 'saree maintenance', 'fabric care', 'storage tips'],
-    image: '/images/blog/custom/caring-for-silk-sarees.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Tussar-Silk-Casual-Wear-Printed-Work-Saree-PC-RUHAB-104_1.jpg?v=1778975870',
     readTime: 6
   },
   {
@@ -791,7 +791,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
     tags: ['sharara suit', 'sharara dress', 'designer sharara', 'eid sharara', 'wedding sharara', 'georgette sharara', 'silk sharara', 'sharara online USA', 'sharara styling', 'Indian ethnic wear'],
-    image: '/images/blog/custom/sharara-suit-guide-2026-styles-fabrics.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Gmy-Silk-Occasional-Wear-Embroidery-Work-Readymade-Sharara-Suit-6162-1712-A_1.jpg?v=1778982734',
     readTime: 9
   },
   {
@@ -871,7 +871,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
     tags: ['Pakistani suit', 'anarkali suit', 'salwar kameez', 'Pakistani dress online USA', 'anarkali gown', 'palazzo suit', 'designer Pakistani suit', 'Indian ethnic wear', 'Pakistani festive wear', 'stitched salwar kameez'],
-    image: '/images/blog/custom/pakistani-suits-anarkali-shopping-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Crunchy-Silk-Occasional-Wear-Zari-Work-Readymade-Anarkali-Suit-6143-5175-A_1_6516530c-e6f8-4cb3-ae74-732d95e9788a.jpg?v=1778982826',
     readTime: 10
   },
   {
@@ -963,7 +963,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Styling Tips',
     tags: ['lehenga choli', 'bridal lehenga', 'wedding lehenga', 'reception lehenga', 'sangeet outfit', 'lehenga styling', 'lehenga blouse designs', 'dupatta draping', 'sequence lehenga', 'buy lehenga online USA'],
-    image: '/images/blog/custom/style-lehenga-choli-every-wedding-event.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/H84_2.png?v=1782927093',
     readTime: 10
   },
   {
@@ -1037,7 +1037,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Wedding Guide',
     tags: ['Indian wedding outfit', 'wedding ceremony dress', 'sangeet outfit', 'mehndi dress', 'haldi ceremony', 'reception lehenga', 'wedding sherwani', 'Indian wedding guest', 'bridal lehenga', 'wedding season 2026', 'baraat outfit'],
-    image: '/images/blog/blog-018-silver-mist-soft.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7726293768_9iza_a504ee28-4e7d-46fc-a1b4-5de7164f7f9d.jpg?v=1782927147',
     readTime: 10
   },
   {
@@ -1155,7 +1155,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
     tags: ['georgette suit', 'silk ethnic wear', 'chiffon salwar kameez', 'fabric guide', 'Indian dress fabric', 'net sharara suit', 'velvet lehenga', 'cotton salwar kameez', 'Indian clothes online', 'ethnic wear care tips'],
-    image: '/images/blog/blog-023-lavender-georgette.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Faux-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-PC-SIFRA-1_1.jpg?v=1778982900',
     readTime: 11
   },
 
@@ -1241,7 +1241,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'NRI Fashion',
     tags: ['NRI wedding ethnic wear trends 2026', 'Indian bridal fashion NRI', 'latest lehenga designs USA', 'NRI wedding outfits', 'pastel bridal lehenga', 'Indo-Western fusion', 'sustainable Indian fashion'],
-    image: '/images/blog/custom/nri-wedding-ethnic-wear-trends-2026.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Silk-Festival-Wear-Embroidery-Work-Lehenga-Choli-4259-7164-B_1_4dc8ab0b-575e-40b6-8a77-a2c2dc52845c.jpg?v=1778985786',
     readTime: 10
   },
   {
@@ -1345,7 +1345,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'Shopping Guide',
     tags: ['buy authentic Indian sarees online USA', 'Indian saree shopping UK NRI', 'how to choose silk saree online', 'Kanchipuram saree online', 'Banarasi saree USA', 'NRI saree shopping', 'authentic Indian ethnic wear'],
-    image: '/images/blog/custom/buy-authentic-indian-sarees-online-usa-uk.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7722718686_cgvl_68fe743f-528e-4e82-af0e-993437e86a3c.jpg?v=1782927152',
     readTime: 11
   },
   {
@@ -1466,7 +1466,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'NRI Fashion',
     tags: ['festive Indian outfits NRI', 'Diwali ethnic wear ideas USA', 'Eid salwar suit styling UK', 'NRI festive fashion', 'Indian outfit abroad', 'Diwali lehenga', 'sharara suit Eid', 'festival dressing NRI'],
-    image: '/images/blog/blog-019-red-soft.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Crunchy-Silk-Occasional-Wear-Zari-Work-Readymade-Anarkali-Suit-6143-5175-B_1.jpg?v=1778975602',
     readTime: 12
   },
 
@@ -1550,7 +1550,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-10',
     category: 'Style Tips',
     tags: ['how to measure for lehenga', 'Indian ethnic wear measurement guide', 'lehenga size chart', 'blouse measurement tips', 'salwar kameez sizing', 'custom Indian wear measurements'],
-    image: '/images/blog/custom/how-to-measure-yourself-for-indian-ethnic-wear.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/9_630d99c8-7e87-41e7-bcb9-784c9935584e.jpg?v=1780412435',
     readTime: 8
   },
 
@@ -1642,7 +1642,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-10',
     category: 'Wedding Style',
     tags: ['what to wear to Indian wedding', 'Indian wedding guest outfit', 'mehendi outfit ideas', 'sangeet night dress', 'reception outfit for wedding', 'Indian wedding dress code', 'guest outfit Indian wedding 2026'],
-    image: '/images/blog/custom/what-to-wear-indian-wedding-guest-2026.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Maroon-Crunchy-Silk-Occasional-Wear-Zari-Work-Readymade-Anarkali-Suit-6143-5175-C_1.jpg?v=1778975597',
     readTime: 9
   },
 
@@ -1750,7 +1750,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-11',
     category: 'Style Tips',
     tags: ['lehenga vs anarkali', 'lehenga choli guide', 'anarkali suit styling', 'Indian ethnic wear comparison', 'which Indian outfit to choose', 'lehenga for wedding', 'anarkali for mehendi'],
-    image: '/images/blog/custom/lehenga-vs-anarkali-which-is-right-for-you.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/9_a7c6d15d-abb2-4694-ba79-f0aeed0350e3.jpg?v=1780412423',
     readTime: 7
   },
 
@@ -1848,7 +1848,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-11',
     category: 'NRI Fashion',
     tags: ['NRI buying guide Indian ethnic wear', 'Indian clothes online USA', 'Indian ethnic wear UK', 'Indian clothes Canada', 'buying saree online NRI', 'Indian dress online shopping tips', 'NRI Indian fashion guide'],
-    image: '/images/blog/blog-014-rani-pink-raw.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4262-8258-A_1.jpg?v=1778985784',
     readTime: 10
   },
 
@@ -1950,7 +1950,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-12',
     category: 'Care & Styling',
     tags: ['how to care for Indian ethnic wear', 'washing lehenga at home', 'how to store saree', 'dry clean Indian clothes', 'embroidery care tips', 'lehenga preservation', 'care guide Indian dress'],
-    image: '/images/blog/blog-004-ivory-shimmer.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4262-8258-B_1_a7869624-631c-48a1-8643-d28f34ee363c.jpg?v=1778985781',
     readTime: 8
   },
   {
@@ -2592,7 +2592,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-02-15',
     category: 'NRI Fashion',
     tags: ['buy indian clothes online USA', 'NRI shopping', 'indian ethnic wear USA', 'customs duty indian clothes', 'indian clothing online'],
-    image: '/images/blog/blog-040-shimmer-teal-tissue.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7760570563_82cr_ecd769b2-f6cd-4a96-84c4-3298946a65a9.jpg?v=1782927108',
     readTime: 12
   },
   {
@@ -2662,7 +2662,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-02-20',
     category: 'Cultural Guide',
     tags: ['banarasi silk saree', 'authentic banarasi', 'varanasi saree', 'silk saree guide', 'indian textiles'],
-    image: '/images/blog/custom/banarasi-silk-saree-guide-authentic.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Red-Banarasi-Silk-Festival-Wear-Sequins-Work--Saree-PC-TARA-103_1.jpg?v=1778958483',
     readTime: 10
   },
   {
@@ -2749,7 +2749,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-02-25',
     category: 'How-To',
     tags: ['how to drape saree', 'saree draping for beginners', 'wear saree step by step', 'saree styling tips'],
-    image: '/images/blog/custom/how-to-drape-saree-beginner-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/7_1dc6705f-5de1-4415-8ffb-f0c8e1aaedf5.jpg?v=1780412416',
     readTime: 8
   },
   {
@@ -2849,7 +2849,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-01',
     category: 'Wedding Guide',
     tags: ['indian wedding outfits', 'mehendi outfit', 'sangeet dress', 'wedding ceremony dress code', 'indian wedding guide'],
-    image: '/images/blog/custom/indian-wedding-ceremony-outfit-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/H76p_1.png?v=1782927092',
     readTime: 9
   },
   {
@@ -2969,7 +2969,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-05',
     category: 'Shopping Guide',
     tags: ['indian fabric types', 'silk vs georgette', 'ethnic wear fabric guide', 'wedding fabric', 'banarasi silk'],
-    image: '/images/blog/custom/indian-fabric-types-guide-silk-georgette-chiffon.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Mustard-Roman-Silk-Party-Wear-Embroidery-Work-Readymade-Plazzo-Suit-PC-MIRAY-1_1.jpg?v=1778982896',
     readTime: 10
   },
   {
@@ -3053,7 +3053,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-10',
     category: 'Styling Tips',
     tags: ['anarkali suit', 'anarkali styling', 'anarkali 2026', 'indian suit guide', 'salwar kameez styling'],
-    image: '/images/blog/custom/anarkali-suit-styling-guide-2026.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Crunchy-Silk-Occasional-Wear-Zari-Work-Readymade-Anarkali-Suit-6143-5175-B_1_65c98cb8-e1ae-4668-9335-76fefa375db5.jpg?v=1778982823',
     readTime: 8
   },
   {
@@ -3152,7 +3152,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-15',
     category: 'How-To',
     tags: ['ethnic wear sizing', 'how to measure for lehenga', 'indian clothing size guide', 'bust size measurement', 'custom tailoring'],
-    image: '/images/blog/custom/how-to-measure-yourself-indian-ethnic-wear.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/15_dac29677-6b3b-4f1e-bf8c-20d85e8f89cb.jpg?v=1780412421',
     readTime: 7
   },
   {
@@ -3248,7 +3248,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-20',
     category: 'Cultural Guide',
     tags: ['kanchipuram saree', 'kanjivaram silk', 'south indian wedding saree', 'kanchipuram silk guide', 'bridal saree'],
-    image: '/images/blog/custom/kanchipuram-silk-saree-south-indian-wedding-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Silk-Festival-Wear-Embroidery-Work-Saree-26722_1.jpg?v=1778975607',
     readTime: 9
   },
   {
@@ -3324,7 +3324,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-01',
     category: 'Cultural Guide',
     tags: ['zari work', 'zardozi embroidery', 'gold thread embroidery', 'indian textile art', 'banarasi zari', 'bridal embroidery'],
-    image: '/images/blog/custom/zari-work-guide-indian-embroidery-gold-silver-thread.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Celestial03M_c0f02562-902d-48f7-b3c9-c44aad08c957.jpg?v=1782927098',
     readTime: 10
   },
   {
@@ -3408,7 +3408,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-15',
     category: 'Cultural Guide',
     tags: ['chikankari embroidery', 'lucknowi chikankari', 'shadow work embroidery', 'indian hand embroidery', 'lucknow embroidery', 'ethnic wear fabric'],
-    image: '/images/blog/custom/chikankari-embroidery-lucknow-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Olive-Green-Pure-Jam-Casual-Wear-Embroidery-Work-Salwar-Suit-ORBIT-M-01-2_1.jpg?v=1778982878',
     readTime: 9
   },
 
@@ -3504,7 +3504,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-01',
     category: 'Bridal Guide',
     tags: ['buy bridal lehenga online', 'bridal lehenga usa', 'indian wedding lehenga', 'bridal lehenga choli online', 'nri bridal shopping', 'designer bridal lehengas'],
-    image: '/images/blog/custom/buy-bridal-lehenga-online-usa-complete-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Light-Pink-Net-Festival-Wear-Beads-Work-Readymade-Lehenga-Choli-Indri-1080_1_8605edd4-0e9f-4938-9dc4-7ad697383508.jpg?v=1778985768',
     readTime: 8
   },
 
@@ -3586,7 +3586,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-05',
     category: 'Groom Guide',
     tags: ['designer sherwanis for men online usa', 'shop designer sherwani for men', 'wedding groom sherwanis', 'premium sherwani for weddings', 'groom wear', 'indian groom usa'],
-    image: '/images/blog/custom/designer-sherwani-online-usa-groom-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7798197949_1wzv_08c66a53-b9b4-48f2-9c17-f53cbe87b715.jpg?v=1782927131',
     readTime: 7
   },
 
@@ -3673,7 +3673,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-10',
     category: 'Ethnic Wear Guide',
     tags: ['buy indian designer salwar suits online usa', 'salwar kameez for women', 'designer indian suits online', 'designer suits anarkalis', 'nri ethnic wear', 'indian suits usa'],
-    image: '/images/blog/custom/salwar-kameez-online-usa-everyday-ethnic-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Pure-Jam-Casual-Wear-Embroidery-Work-Salwar-Suit-ORBIT-M-01-1_1.jpg?v=1778982880',
     readTime: 8
   },
 
@@ -3761,7 +3761,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-15',
     category: 'Bridal Guide',
     tags: ['indian bridal jewelry sets', 'shop wedding looks online usa', 'traditional wedding necklaces', 'south asian bridal jewelry', 'kundan bridal jewelry', 'bridal necklace set'],
-    image: '/images/blog/custom/indian-bridal-jewelry-sets-complete-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/4d9d429c-f19d-4600-9b21-67e263174219.jpg?v=1783362200',
     readTime: 9
   },
 
@@ -3857,7 +3857,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-20',
     category: 'Fashion Guide',
     tags: ['lehenga choli designer bridal party wear', 'buy designer lehenga choli online usa', 'stylish elegant lehengas for women', 'latest lehenga choli designs', 'bridal lehenga choli', 'designer lehengas'],
-    image: '/images/blog/custom/lehenga-choli-designer-bridal-party-wear-guide.jpg',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Turquoise-Georgette-Occasional-Wear-Embroidery-Work-Lehenga-Choli-4262-8258-C_1_0c4f3ca7-2eb5-42f6-98df-8e76cf55ad59.jpg?v=1778985779',
     readTime: 10
   }
 
