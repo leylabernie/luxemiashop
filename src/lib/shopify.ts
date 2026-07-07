@@ -416,6 +416,11 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
       url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
     }
     url.searchParams.set('channel', 'online_store');
+    // Add return_url so Shopify redirects back to luxemia.shop/order-confirmation
+    // after checkout completes. This is REQUIRED for Google Customer Reviews
+    // opt-in integration (the opt-in snippet must fire on a page hosted on
+    // our own domain, not Shopify's thank-you page).
+    url.searchParams.set('return_url', 'https://luxemia.shop/order-confirmation');
     checkoutUrl = url.toString();
   } catch {
     // URL parsing failed — do plain string replacements as fallback

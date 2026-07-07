@@ -359,26 +359,10 @@
       ]
     }
     </script>
-    <!-- Google Customer Reviews opt-in script -->
-    <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
-    <script>
-      window.renderOptIn = function() {
-        window.gapi.load('surveyoptin', function() {
-          window.gapi.surveyoptin.render(
-            {
-              // REQUIRED FIELDS — populated dynamically by OrderConfirmation page
-              "merchant_id": 5773333098,
-              "order_id": "ORDER_ID",
-              "email": "CUSTOMER_EMAIL",
-              "delivery_country": "COUNTRY_CODE",
-              "estimated_delivery_date": "YYYY-MM-DD",
-
-              // OPTIONAL FIELDS
-              "products": [{"gtin":"GTIN1"}, {"gtin":"GTIN2"}]
-            });
-        });
-      }
-    </script>
+    <!-- Google Customer Reviews opt-in script REMOVED from global head.
+         Was loading on EVERY page with placeholder values, which is wrong.
+         The script is now loaded ONLY on the /order-confirmation page
+         via OrderConfirmation.tsx with real order data. -->
   </head>
 
   <body>

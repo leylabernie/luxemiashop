@@ -51,6 +51,16 @@ const OrderConfirmation = () => {
   useEffect(() => {
     if (optInTriggered || !orderId) return;
 
+    // Load the Google platform.js script ONLY on this page (not globally)
+    const existingScript = document.querySelector('script[src*="apis.google.com/js/platform.js"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://apis.google.com/js/platform.js?onload=renderOptIn';
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+
     const tryRenderOptIn = () => {
       if (window.gapi && window.gapi.surveyoptin) {
         window.gapi.surveyoptin.render({
