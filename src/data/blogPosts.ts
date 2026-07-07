@@ -245,7 +245,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-07',
     category: 'Styling Tips',
     tags: ['lehenga color dark skin', 'dusky skin lehenga', 'bridal colors', 'skin tone fashion', 'wedding styling'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7770693367_3am5.jpg?v=1782927151&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/ZX154_1.png?v=1782927105&width=1200&height=675&crop=center',
     readTime: 7
   },
   {
@@ -712,7 +712,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2025-12-20',
     category: 'Care Guide',
     tags: ['silk care', 'saree maintenance', 'fabric care', 'storage tips'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Black-Tussar-Silk-Casual-Wear-Printed-Work-Saree-PC-MIRAL-105_1.jpg?v=1778975872&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Kanchipuram_sarees.png?v=1783441513&width=1200&height=675&crop=center',
     readTime: 6
   },
   {
@@ -1466,7 +1466,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'NRI Fashion',
     tags: ['festive Indian outfits NRI', 'Diwali ethnic wear ideas USA', 'Eid salwar suit styling UK', 'NRI festive fashion', 'Indian outfit abroad', 'Diwali lehenga', 'sharara suit Eid', 'festival dressing NRI'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Crunchy-Silk-Occasional-Wear-Zari-Work-Readymade-Anarkali-Suit-6143-5175-B_1.jpg?v=1778975602&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/1A7A0218Final.jpg?v=1783383907&width=1200&height=675&crop=center',
     readTime: 12
   },
 
@@ -2849,7 +2849,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-01',
     category: 'Wedding Guide',
     tags: ['indian wedding outfits', 'mehendi outfit', 'sangeet dress', 'wedding ceremony dress code', 'indian wedding guide'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/RDX96_1_8429f679-8e79-48fc-933e-42cf510e1b5c.png?v=1782927098&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Shagun13_9368c226-6db9-421c-84d0-049d14726220.jpg?v=1782927095&width=1200&height=675&crop=center',
     readTime: 9
   },
   {
