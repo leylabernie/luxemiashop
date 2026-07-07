@@ -49,7 +49,7 @@ const slides: FeaturedSlide[] = [
     headline: 'FESTIVE EDIT',
     headlineLine2: 'NEW ARRIVALS',
     image:
-      'https://images.wholesalesalwar.com/2026y/June/62432/Teal-Blue-Satin-Silk-Occasional-Wear-Embroidery-Work-Readymade-Saree-A411-B(1).jpg',
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Teal-Blue-Satin-Silk-Occasional-Wear-Embroidery-Work-Readymade-Saree-A411-B_1_1.jpg?v=1783468274&width=800',
     // Deep teal to echo the blue saree
     panelBg: '#0d3b4a',
     panelText: '#f1f5ec',
@@ -67,7 +67,7 @@ const slides: FeaturedSlide[] = [
     headline: 'DESIGNER',
     headlineLine2: 'SUITS',
     image:
-      'https://images.wholesalesalwar.com/2026y/June/62383/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002(1).jpg',
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002_1.jpg?v=1783468144&width=800',
     // True black to match the black georgette suit — warm off-white text for contrast
     panelBg: '#0d0d0d',
     panelText: '#f5f5f5',
