@@ -2,7 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SEOHead from "@/components/seo/SEOHead";
 import { motion } from "framer-motion";
-import { Download, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Press = () => {
@@ -10,7 +10,7 @@ const Press = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Press & Media — LuxeMia"
-        description="LuxeMia press and media inquiries. Download our press kit and brand assets."
+        description="LuxeMia press and media inquiries. Contact us for press kit requests, brand assets, and partnership opportunities."
         canonical="https://luxemia.shop/press"
         noIndex={true}
       />
@@ -44,44 +44,38 @@ const Press = () => {
             <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 bg-card rounded-lg p-6 border border-border">
               <div>
                 <h2 className="font-display text-xl text-foreground mb-2">Press Inquiries</h2>
-                <p className="text-muted-foreground">For media inquiries, interviews, and press kit requests</p>
+                <p className="text-muted-foreground">For media inquiries, interviews, and press kit requests — including logos, brand guidelines, and product images</p>
               </div>
               <div className="flex gap-4">
-                <Button variant="outline" className="gap-2">
-                  <Mail className="w-4 h-4" />
-                  hello@luxemia.shop
-                </Button>
-                <Button className="gap-2">
-                  <Download className="w-4 h-4" />
-                  Press Kit
+                <Button asChild variant="outline" className="gap-2">
+                  <a href="mailto:hello@luxemia.shop?subject=Press%20Kit%20Request">
+                    <Mail className="w-4 h-4" />
+                    Request Press Kit
+                  </a>
                 </Button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Brand Assets */}
+        {/* Brand Assets Info */}
         <section className="py-20">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-2xl md:text-3xl text-foreground mb-4">
-              Brand Assets
+              Brand Assets Available on Request
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Download our official logos, brand guidelines, and high-resolution images
-              for editorial use.
+              We provide official logos, brand guidelines, and high-resolution product images
+              for editorial and partnership use. Email us at{" "}
+              <a href="mailto:hello@luxemia.shop" className="text-primary underline">hello@luxemia.shop</a>{" "}
+              with your request and we'll send the assets directly.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="outline" className="gap-2">
-                <Download className="w-4 h-4" />
-                Logo Package
-              </Button>
-              <Button variant="outline" className="gap-2">
-                <Download className="w-4 h-4" />
-                Brand Guidelines
-              </Button>
-              <Button variant="outline" className="gap-2">
-                <Download className="w-4 h-4" />
-                Product Images
+              <Button asChild className="gap-2">
+                <a href="mailto:hello@luxemia.shop?subject=Brand%20Assets%20Request">
+                  <Mail className="w-4 h-4" />
+                  Email for Brand Assets
+                </a>
               </Button>
             </div>
           </div>

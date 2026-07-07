@@ -16,6 +16,17 @@ const SizeGuide = () => {
     { size: "XXL", bust: "42", waist: "36", hips: "45", length: "42" },
   ];
 
+  // Suits, Sharara & Anarkali — measurements differ from lehengas:
+  // kameez length (top), salwar/sharara length (bottom), no skirt length.
+  const suitSizes = [
+    { size: "XS", bust: "32", waist: "26", hips: "35", kameezLength: "44", bottomLength: "40" },
+    { size: "S", bust: "34", waist: "28", hips: "37", kameezLength: "44", bottomLength: "40" },
+    { size: "M", bust: "36", waist: "30", hips: "39", kameezLength: "45", bottomLength: "41" },
+    { size: "L", bust: "38", waist: "32", hips: "41", kameezLength: "45", bottomLength: "41" },
+    { size: "XL", bust: "40", waist: "34", hips: "43", kameezLength: "46", bottomLength: "42" },
+    { size: "XXL", bust: "42", waist: "36", hips: "45", kameezLength: "46", bottomLength: "42" },
+  ];
+
   const blouseSizes = [
     { size: "32", bust: "32", underBust: "28", shoulderWidth: "13", sleeveLength: "6" },
     { size: "34", bust: "34", underBust: "30", shoulderWidth: "13.5", sleeveLength: "6" },
@@ -117,8 +128,9 @@ const SizeGuide = () => {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <Tabs defaultValue="lehenga" className="max-w-4xl mx-auto">
-              <TabsList className="grid w-full grid-cols-3 mb-8">
-                <TabsTrigger value="lehenga">Lehengas & Suits</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 mb-8">
+                <TabsTrigger value="lehenga">Lehengas</TabsTrigger>
+                <TabsTrigger value="suit">Suits & Sharara</TabsTrigger>
                 <TabsTrigger value="blouse">Blouses</TabsTrigger>
                 <TabsTrigger value="saree">Sarees</TabsTrigger>
               </TabsList>
@@ -133,7 +145,7 @@ const SizeGuide = () => {
                           <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Bust (in)</th>
                           <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Waist (in)</th>
                           <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Hips (in)</th>
-                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Length (in)</th>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Skirt Length (in)</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-border">
@@ -144,6 +156,37 @@ const SizeGuide = () => {
                             <td className="px-6 py-4 text-sm text-muted-foreground">{row.waist}</td>
                             <td className="px-6 py-4 text-sm text-muted-foreground">{row.hips}</td>
                             <td className="px-6 py-4 text-sm text-muted-foreground">{row.length}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="suit">
+                <div className="bg-card rounded-lg border border-border overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-secondary/50">
+                        <tr>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Size</th>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Bust (in)</th>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Waist (in)</th>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Hips (in)</th>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Kameez Length (in)</th>
+                          <th className="px-6 py-4 text-left text-sm font-medium text-foreground">Salwar/Sharara Length (in)</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        {suitSizes.map((row) => (
+                          <tr key={row.size} className="hover:bg-secondary/20">
+                            <td className="px-6 py-4 text-sm font-medium text-foreground">{row.size}</td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">{row.bust}</td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">{row.waist}</td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">{row.hips}</td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">{row.kameezLength}</td>
+                            <td className="px-6 py-4 text-sm text-muted-foreground">{row.bottomLength}</td>
                           </tr>
                         ))}
                       </tbody>
