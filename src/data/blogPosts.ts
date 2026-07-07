@@ -3248,7 +3248,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-20',
     category: 'Cultural Guide',
     tags: ['kanchipuram saree', 'kanjivaram silk', 'south indian wedding saree', 'kanchipuram silk guide', 'bridal saree'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Silk-Festival-Wear-Embroidery-Work-Saree-26722_1.jpg?v=1778975607&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Kanchipuram_Wedding_Manthrskodi_saree.webp?v=1783441513&width=1200&height=675&crop=center',
     readTime: 9
   },
   {
@@ -3408,7 +3408,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-15',
     category: 'Cultural Guide',
     tags: ['chikankari embroidery', 'lucknowi chikankari', 'shadow work embroidery', 'indian hand embroidery', 'lucknow embroidery', 'ethnic wear fabric'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/White-Georgette-Occasional-Wear-Embroidery-Work-Palazzo-Suit-with-Dupatta-9473-7842-A_1.jpg?v=1778978487&width=1200&height=675&crop=center',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Chickenkari_lehenga2.jpg?v=1783441498&width=1200&height=675&crop=center',
     readTime: 9
   },
 
