@@ -80,7 +80,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
-    image: '/images/blog/blog-002-ivory-gold-net.jpg',
+    image: '/images/blog/custom/indian-wedding-dress-complete-guide.jpg',
     readTime: 8
   },
   {
@@ -128,7 +128,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Bridal Guide',
     tags: ['red bridal lehenga', 'wedding lehenga', 'bridal trends', 'lehenga designs', 'indian bride'],
-    image: '/images/blog/blog-025-red-raw.jpg',
+    image: '/images/blog/custom/red-bridal-lehenga-trends-2026.jpg',
     readTime: 7
   },
   {
@@ -179,7 +179,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-07',
     category: 'Shopping Guide',
     tags: ['budget wedding dress', 'affordable bridal lehenga', 'wedding shopping', 'bridal budget', 'indian wedding'],
-    image: '/images/blog/blog-007-champagne-rose-net.jpg',
+    image: '/images/blog/custom/designer-wedding-dress-under-500.jpg',
     readTime: 6
   },
   {
@@ -315,7 +315,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-07',
     category: 'Wedding Guide',
     tags: ['mother of bride saree', 'wedding saree', 'family wedding outfit', 'saree for mothers', 'wedding fashion'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/wedding-saree-for-mother-of-bride.jpg',
     readTime: 6
   },
   {
@@ -380,7 +380,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Styling Tips',
     tags: ['wedding guest outfit', 'indian wedding', 'what to wear', 'wedding fashion', 'ethnic wear'],
-    image: '/images/blog/blog-006-teal-green-net.jpg',
+    image: '/images/blog/custom/wedding-guest-outfit-ideas.jpg',
     readTime: 6
   },
   {
@@ -448,7 +448,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-02',
     category: 'Bridal Guide',
     tags: ['bridal lehenga', 'wedding shopping', 'bridal fashion', 'lehenga guide'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/saree-draping-styles-every-occasion.jpg',
     readTime: 8
   },
   {
@@ -712,7 +712,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2025-12-20',
     category: 'Care Guide',
     tags: ['silk care', 'saree maintenance', 'fabric care', 'storage tips'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/caring-for-silk-sarees.jpg',
     readTime: 6
   },
   {
@@ -791,7 +791,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
     tags: ['sharara suit', 'sharara dress', 'designer sharara', 'eid sharara', 'wedding sharara', 'georgette sharara', 'silk sharara', 'sharara online USA', 'sharara styling', 'Indian ethnic wear'],
-    image: '/og/og-suits.jpg',
+    image: '/images/blog/custom/sharara-suit-guide-2026-styles-fabrics.jpg',
     readTime: 9
   },
   {
@@ -871,7 +871,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Shopping Guide',
     tags: ['Pakistani suit', 'anarkali suit', 'salwar kameez', 'Pakistani dress online USA', 'anarkali gown', 'palazzo suit', 'designer Pakistani suit', 'Indian ethnic wear', 'Pakistani festive wear', 'stitched salwar kameez'],
-    image: '/og/og-suits.jpg',
+    image: '/images/blog/custom/pakistani-suits-anarkali-shopping-guide.jpg',
     readTime: 10
   },
   {
@@ -963,7 +963,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-08',
     category: 'Styling Tips',
     tags: ['lehenga choli', 'bridal lehenga', 'wedding lehenga', 'reception lehenga', 'sangeet outfit', 'lehenga styling', 'lehenga blouse designs', 'dupatta draping', 'sequence lehenga', 'buy lehenga online USA'],
-    image: '/images/blog/blog-006-teal-green-net.jpg',
+    image: '/images/blog/custom/style-lehenga-choli-every-wedding-event.jpg',
     readTime: 10
   },
   {
@@ -1241,7 +1241,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'NRI Fashion',
     tags: ['NRI wedding ethnic wear trends 2026', 'Indian bridal fashion NRI', 'latest lehenga designs USA', 'NRI wedding outfits', 'pastel bridal lehenga', 'Indo-Western fusion', 'sustainable Indian fashion'],
-    image: '/images/blog/blog-026-maroon-velvet.jpg',
+    image: '/images/blog/custom/nri-wedding-ethnic-wear-trends-2026.jpg',
     readTime: 10
   },
   {
@@ -1345,7 +1345,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-09',
     category: 'Shopping Guide',
     tags: ['buy authentic Indian sarees online USA', 'Indian saree shopping UK NRI', 'how to choose silk saree online', 'Kanchipuram saree online', 'Banarasi saree USA', 'NRI saree shopping', 'authentic Indian ethnic wear'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/buy-authentic-indian-sarees-online-usa-uk.jpg',
     readTime: 11
   },
   {
@@ -1550,7 +1550,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-10',
     category: 'Style Tips',
     tags: ['how to measure for lehenga', 'Indian ethnic wear measurement guide', 'lehenga size chart', 'blouse measurement tips', 'salwar kameez sizing', 'custom Indian wear measurements'],
-    image: '/images/blog/blog-007-champagne-rose-net.jpg',
+    image: '/images/blog/custom/how-to-measure-yourself-for-indian-ethnic-wear.jpg',
     readTime: 8
   },
 
@@ -1642,7 +1642,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-10',
     category: 'Wedding Style',
     tags: ['what to wear to Indian wedding', 'Indian wedding guest outfit', 'mehendi outfit ideas', 'sangeet night dress', 'reception outfit for wedding', 'Indian wedding dress code', 'guest outfit Indian wedding 2026'],
-    image: '/images/blog/blog-006-teal-green-net.jpg',
+    image: '/images/blog/custom/what-to-wear-indian-wedding-guest-2026.jpg',
     readTime: 9
   },
 
@@ -1750,7 +1750,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-11',
     category: 'Style Tips',
     tags: ['lehenga vs anarkali', 'lehenga choli guide', 'anarkali suit styling', 'Indian ethnic wear comparison', 'which Indian outfit to choose', 'lehenga for wedding', 'anarkali for mehendi'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/lehenga-vs-anarkali-which-is-right-for-you.jpg',
     readTime: 7
   },
 
@@ -2662,7 +2662,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-02-20',
     category: 'Cultural Guide',
     tags: ['banarasi silk saree', 'authentic banarasi', 'varanasi saree', 'silk saree guide', 'indian textiles'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/banarasi-silk-saree-guide-authentic.jpg',
     readTime: 10
   },
   {
@@ -2749,7 +2749,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-02-25',
     category: 'How-To',
     tags: ['how to drape saree', 'saree draping for beginners', 'wear saree step by step', 'saree styling tips'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/how-to-drape-saree-beginner-guide.jpg',
     readTime: 8
   },
   {
@@ -2849,7 +2849,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-01',
     category: 'Wedding Guide',
     tags: ['indian wedding outfits', 'mehendi outfit', 'sangeet dress', 'wedding ceremony dress code', 'indian wedding guide'],
-    image: '/images/blog/blog-006-teal-green-net.jpg',
+    image: '/images/blog/custom/indian-wedding-ceremony-outfit-guide.jpg',
     readTime: 9
   },
   {
@@ -2969,7 +2969,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-05',
     category: 'Shopping Guide',
     tags: ['indian fabric types', 'silk vs georgette', 'ethnic wear fabric guide', 'wedding fabric', 'banarasi silk'],
-    image: '/images/blog/blog-026-maroon-velvet.jpg',
+    image: '/images/blog/custom/indian-fabric-types-guide-silk-georgette-chiffon.jpg',
     readTime: 10
   },
   {
@@ -3053,7 +3053,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-10',
     category: 'Styling Tips',
     tags: ['anarkali suit', 'anarkali styling', 'anarkali 2026', 'indian suit guide', 'salwar kameez styling'],
-    image: '/og/og-suits.jpg',
+    image: '/images/blog/custom/anarkali-suit-styling-guide-2026.jpg',
     readTime: 8
   },
   {
@@ -3152,7 +3152,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-15',
     category: 'How-To',
     tags: ['ethnic wear sizing', 'how to measure for lehenga', 'indian clothing size guide', 'bust size measurement', 'custom tailoring'],
-    image: '/images/blog/blog-007-champagne-rose-net.jpg',
+    image: '/images/blog/custom/how-to-measure-yourself-indian-ethnic-wear.jpg',
     readTime: 7
   },
   {
@@ -3248,7 +3248,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-20',
     category: 'Cultural Guide',
     tags: ['kanchipuram saree', 'kanjivaram silk', 'south indian wedding saree', 'kanchipuram silk guide', 'bridal saree'],
-    image: '/og/og-sarees.jpg',
+    image: '/images/blog/custom/kanchipuram-silk-saree-south-indian-wedding-guide.jpg',
     readTime: 9
   },
   {
@@ -3324,7 +3324,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-01',
     category: 'Cultural Guide',
     tags: ['zari work', 'zardozi embroidery', 'gold thread embroidery', 'indian textile art', 'banarasi zari', 'bridal embroidery'],
-    image: '/images/blog/blog-025-red-raw.jpg',
+    image: '/images/blog/custom/zari-work-guide-indian-embroidery-gold-silver-thread.jpg',
     readTime: 10
   },
   {
@@ -3408,7 +3408,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-04-15',
     category: 'Cultural Guide',
     tags: ['chikankari embroidery', 'lucknowi chikankari', 'shadow work embroidery', 'indian hand embroidery', 'lucknow embroidery', 'ethnic wear fabric'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/chikankari-embroidery-lucknow-guide.jpg',
     readTime: 9
   },
 
@@ -3504,7 +3504,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-01',
     category: 'Bridal Guide',
     tags: ['buy bridal lehenga online', 'bridal lehenga usa', 'indian wedding lehenga', 'bridal lehenga choli online', 'nri bridal shopping', 'designer bridal lehengas'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/buy-bridal-lehenga-online-usa-complete-guide.jpg',
     readTime: 8
   },
 
@@ -3586,7 +3586,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-05',
     category: 'Groom Guide',
     tags: ['designer sherwanis for men online usa', 'shop designer sherwani for men', 'wedding groom sherwanis', 'premium sherwani for weddings', 'groom wear', 'indian groom usa'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/designer-sherwani-online-usa-groom-guide.jpg',
     readTime: 7
   },
 
@@ -3673,7 +3673,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-10',
     category: 'Ethnic Wear Guide',
     tags: ['buy indian designer salwar suits online usa', 'salwar kameez for women', 'designer indian suits online', 'designer suits anarkalis', 'nri ethnic wear', 'indian suits usa'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/salwar-kameez-online-usa-everyday-ethnic-guide.jpg',
     readTime: 8
   },
 
@@ -3761,7 +3761,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-15',
     category: 'Bridal Guide',
     tags: ['indian bridal jewelry sets', 'shop wedding looks online usa', 'traditional wedding necklaces', 'south asian bridal jewelry', 'kundan bridal jewelry', 'bridal necklace set'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/indian-bridal-jewelry-sets-complete-guide.jpg',
     readTime: 9
   },
 
@@ -3857,7 +3857,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-20',
     category: 'Fashion Guide',
     tags: ['lehenga choli designer bridal party wear', 'buy designer lehenga choli online usa', 'stylish elegant lehengas for women', 'latest lehenga choli designs', 'bridal lehenga choli', 'designer lehengas'],
-    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
+    image: '/images/blog/custom/lehenga-choli-designer-bridal-party-wear-guide.jpg',
     readTime: 10
   }
 
