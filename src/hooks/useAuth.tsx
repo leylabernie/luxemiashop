@@ -1,6 +1,11 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import type { User, Session } from '@supabase/supabase-js';
+
+// Use `import type` for User/Session so the types are erased at compile time
+// and don't pull in the Supabase runtime. Dynamically import the actual
+// supabase client only when needed (inside useEffect / action handlers)
+// so the 169KB vendor-supabase chunk is NOT preloaded on every page.
+const getSupabase = () => import('@/integrations/supabase/client').then(m => m.supabase);
 
 interface AuthContextType {
   user: User | null;
@@ -19,28 +24,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+    let subscription: { unsubscribe: () => void } | null = null;
+
+    // Dynamically import Supabase only when the auth provider mounts.
+    // This keeps the 169KB vendor-supabase chunk out of the initial preload.
+    getSupabase().then(supabase => {
+      // Set up auth state listener FIRST
+      const { data } = supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setSession(session);
+          setUser(session?.user ?? null);
+          setLoading(false);
+        }
+      );
+      subscription = data.subscription;
+
+      // THEN check for existing session
+      supabase.auth.getSession().then(({ data: { session } }) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
-      }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
+      });
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
 
   const signUp = async (email: string, password: string) => {
     const redirectUrl = `${window.location.origin}/`;
-    
+    const supabase = await getSupabase();
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -52,6 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signIn = async (email: string, password: string) => {
+    const supabase = await getSupabase();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -60,6 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signOut = async () => {
+    const supabase = await getSupabase();
     await supabase.auth.signOut();
   };
 

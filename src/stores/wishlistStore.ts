@@ -1,8 +1,11 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import { supabase } from '@/integrations/supabase/client';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { trackAddToWishlist } from '@/hooks/useAnalytics';
+
+// Dynamically import Supabase only when database sync is needed.
+// This keeps the 169KB vendor-supabase chunk out of the initial preload.
+const getSupabase = () => import('@/integrations/supabase/client').then(m => m.supabase);
 
 interface WishlistStore {
   items: ShopifyProduct[];
@@ -38,6 +41,7 @@ export const useWishlistStore = create<WishlistStore>()(
           });
           
           // Sync to database if user is logged in
+          const supabase = await getSupabase();
           const { data: { user } } = await supabase.auth.getUser();
           if (user) {
             await supabase.from('wishlists').upsert({
@@ -55,6 +59,7 @@ export const useWishlistStore = create<WishlistStore>()(
         });
         
         // Sync to database if user is logged in
+        const supabase = await getSupabase();
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           await supabase.from('wishlists')
@@ -82,6 +87,7 @@ export const useWishlistStore = create<WishlistStore>()(
         set({ items: [] });
         
         // Sync to database if user is logged in
+        const supabase = await getSupabase();
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           await supabase.from('wishlists')
@@ -92,6 +98,7 @@ export const useWishlistStore = create<WishlistStore>()(
 
       syncWithDatabase: async (userId: string) => {
         const { items } = get();
+        const supabase = await getSupabase();
         
         // Upload local items to database
         for (const product of items) {
@@ -105,6 +112,7 @@ export const useWishlistStore = create<WishlistStore>()(
 
       loadFromDatabase: async (userId: string) => {
         set({ isLoading: true });
+        const supabase = await getSupabase();
         
         const { data, error } = await supabase
           .from('wishlists')
