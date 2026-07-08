@@ -9,7 +9,11 @@ import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
-import NewVisitorPopup from "./components/home/NewVisitorPopup";
+
+// Lazy loaded: NewVisitorPopup imports Supabase (169KB) — only needed after
+// the user has been on the page for a few seconds. Deferring it removes
+// vendor-supabase from the initial preload, freeing bandwidth for the LCP image.
+const NewVisitorPopup = lazy(() => import("./components/home/NewVisitorPopup"));
 
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
@@ -175,7 +179,9 @@ const App = () => (
               </Routes>
               <MobileBottomNav />
               <WhatsAppButton />
-              <NewVisitorPopup />
+              <Suspense fallback={null}>
+                <NewVisitorPopup />
+              </Suspense>
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>
