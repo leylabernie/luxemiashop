@@ -122,12 +122,10 @@ const Contact = () => {
                       <MapPin className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-medium mb-1">Business Address</h3>
+                      <h3 className="font-medium mb-1">USA-Based Support</h3>
                       <p className="text-muted-foreground">
                         Glamour Indian Wear<br />
-                        2208 Michener St<br />
-                        Philadelphia, PA 19115<br />
-                        United States
+                        USA-based support team
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         luxemia.shop is owned and operated by Glamour Indian Wear

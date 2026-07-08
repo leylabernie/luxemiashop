@@ -250,7 +250,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <p>
               luxemia.shop is owned and operated by <strong className="text-foreground/70">Glamour Indian Wear</strong>
               {' '}&middot;{' '}
-              2208 Michener St, Philadelphia, PA 19115, USA
+              USA-based support
             </p>
           </div>
         </div>

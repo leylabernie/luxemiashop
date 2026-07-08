@@ -235,7 +235,7 @@ const Privacy = () => {
                   <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:</p>
                   <div className="mt-4 p-6 bg-card border border-border rounded-lg space-y-2">
                     <p><strong className="text-foreground">Glamour Indian Wear</strong></p>
-                    <p>2208 Michener St, Philadelphia, PA 19115, USA</p>
+                    <p>USA-based support</p>
                     <p>Email: <a href="mailto:hello@luxemia.shop" className="text-primary hover:underline">hello@luxemia.shop</a></p>
                     <p>Phone: <a href="tel:+12153419990" className="text-primary hover:underline">+1-215-341-9990</a></p>
                     <p>WhatsApp: <a href="https://wa.me/12153419990" className="text-primary hover:underline">+1-215-341-9990</a></p>

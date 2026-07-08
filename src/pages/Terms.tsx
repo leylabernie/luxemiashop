@@ -386,7 +386,7 @@ const Terms = () => {
                   <p className="mb-4">For questions about these Terms of Service, please contact us:</p>
                   <div className="space-y-2">
                     <p><strong>Glamour Indian Wear</strong></p>
-                    <p>2208 Michener St, Philadelphia, PA 19115, USA</p>
+                    <p>USA-based support</p>
                     <p className="mt-4">
                       Email: <a href="mailto:hello@luxemia.shop" className="text-primary hover:underline">hello@luxemia.shop</a>
                     </p>

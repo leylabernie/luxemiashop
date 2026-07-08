@@ -20,10 +20,6 @@ const organizationSchema = {
     'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free shipping on orders over $350.',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '2208 Michener St',
-    addressLocality: 'Philadelphia',
-    addressRegion: 'PA',
-    postalCode: '19115',
     addressCountry: 'US',
   },
   contactPoint: {
@@ -681,7 +677,7 @@ const BrandStory = () => {
                   <p className="font-medium text-foreground mb-1">
                     Glamour Indian Wear
                   </p>
-                  <p>2208 Michener St, Philadelphia, PA 19115</p>
+                  <p>USA-based support</p>
                   <p>
                     Email:{' '}
                     <a

@@ -233,10 +233,6 @@ export function generateOrganizationSchema() {
     description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '2208 Michener St',
-      addressLocality: 'Philadelphia',
-      addressRegion: 'PA',
-      postalCode: '19115',
       addressCountry: 'US',
     },
     contactPoint: {

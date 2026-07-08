@@ -64,16 +64,7 @@ const Index = () => {
     "email": "hello@luxemia.shop",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2208 Michener St",
-      "addressLocality": "Philadelphia",
-      "addressRegion": "PA",
-      "postalCode": "19115",
       "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": "40.0722",
-      "longitude": "-75.0409"
     },
     "openingHoursSpecification": [
       {
