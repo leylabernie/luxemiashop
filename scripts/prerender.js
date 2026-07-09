@@ -1346,6 +1346,16 @@ function generateHtml(template, route, allShopifyProducts) {
     const productDescription = (live?.description?.trim() || route.description || '').slice(0, 5000);
     const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
+    // Extract the compareAtPrice (regular/original price) for sale-price JSON-LD.
+    // The merchant feed (generate-static-feed.cjs) emits this as g:price when a
+    // discount exists, with g:sale_price carrying the lower (current) price.
+    // Without priceSpecification in the JSON-LD, Google Merchant Center sees a
+    // mismatch between the feed (g:price=$193.70) and the landing page
+    // (offers.price=$149.00) and disapproves the product.
+    const productComparePrice = live?.compareAtPriceRange?.maxVariantPrice?.amount || null;
+    const hasSale =
+      productComparePrice &&
+      parseFloat(productComparePrice) > parseFloat(productPrice);
     const productSku = live?.variants?.edges?.[0]?.node?.sku || (live?.id || '').split('/').pop() || handle;
     const productAvailability = live?.availableForSale === false ? 'OutOfStock' : 'InStock';
     const productBrand = (() => {
@@ -1373,6 +1383,20 @@ function generateHtml(template, route, allShopifyProducts) {
         price: productPrice,
         priceCurrency: productCurrency,
         priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        // When the product is on sale (compareAtPrice > price), emit a
+        // priceSpecification with maxPrice = the regular price. This matches
+        // the merchant feed's g:price (regular) / g:sale_price (sale) pair,
+        // resolving the GMC "Price mismatch" disapproval.
+        // See: https://developers.google.com/search/docs/appearance/structured-data/product
+        ...(hasSale ? {
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: productPrice,
+            priceCurrency: productCurrency,
+            maxPrice: productComparePrice,
+            validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          },
+        } : {}),
         availability: `https://schema.org/${productAvailability}`,
         itemCondition: 'https://schema.org/NewCondition',
         seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
