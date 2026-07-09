@@ -182,6 +182,301 @@
       "source": "/blog/how-to-measure-yourself-indian-ethnic-wear",
       "destination": "/blog/how-to-measure-yourself-for-indian-ethnic-wear",
       "statusCode": 301
+    },
+    {
+      "source": "/product/mens-cotton-silk-kurta-pajama-set-with-banarasi-vest-indian",
+      "destination": "/product/handcrafted-cotton-silk-kurta-with-nehru-jacket-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/moss-green-lehenga-saree-ready-to-wear-pre-stitched-indian",
+      "destination": "/product/handcrafted-green-georgette-lehenga-saree-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/turquoise-lehenga-choli-set-indian-wedding-guest-dress",
+      "destination": "/product/handcrafted-turquoise-jacquard-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/bridesmaid-lehenga-for-indian-wedding-copper-banarasi",
+      "destination": "/product/handcrafted-copper-banarasi-brocade-lehenga-choli-set-bridesmaid",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/rust-terracotta-lehenga-choli-black-banarasi-brocade-blouse",
+      "destination": "/product/handcrafted-terracotta-banarasi-brocade-lehenga-choli-set-mehndi",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/charcoal-silk-halter-choli-brown-satin-box-pleat-skirt",
+      "destination": "/product/charcoal-satin-sequin-with-sequin-lehenga-choli-set-wedding-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/black-jacquard-silk-lehenga-choli-set-indian-wedding-guest",
+      "destination": "/product/handcrafted-black-jacquard-lehenga-choli-set-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/aqua-blue-floral-embroidered-silk-organza-lehenga-choli-set",
+      "destination": "/product/aqua-organza-lehenga-choli-set-with-embroidery-reception-outfit",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/mens-mauve-banarasi-brocade-indo-western-outfit-custom",
+      "destination": "/product/handcrafted-mauve-banarasi-brocade-kurta-pajama-set-wedding-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/indian-wedding-guest-lehenga-deep-purple-banarasi-brocade",
+      "destination": "/product/handcrafted-deep-purple-banarasi-brocade-lehenga-choli-set-bridesmaid",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/olive-green-satin-lehenga-choli-indian-wedding-guest-outfit",
+      "destination": "/product/handcrafted-olive-satin-lehenga-choli-set-sangeet-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/purple-sequin-lehenga-choli-art-silk-blouse-soft-net-dupatta",
+      "destination": "/product/purple-art-silk-sequin-with-sequin-lehenga-choli-set-wedding-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/mustard-emerald-green-lehenga-choli-custom-sangeet-outfit",
+      "destination": "/product/buy-handcrafted-mustard-lehenga-choli-set-sangeet-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/sarees-online-usa-lavender-blue-banarasi-brocade-georgette",
+      "destination": "/product/handcrafted-periwinkle-banarasi-brocade-saree-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/teal-lehenga-choli-indian-wedding-dress-satin-blouse-tulle",
+      "destination": "/product/handcrafted-teal-satin-lehenga-choli-set-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/mint-green-tulle-net-lehenga-choli-pink-brocade-bridesmaid",
+      "destination": "/product/handcrafted-green-tulle-net-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/dusty-rose-banarasi-lehenga-set-halter-choli-zari-wedding",
+      "destination": "/product/dusty-banarasi-brocade-zari-with-zari-lehenga-choli-set-wedding-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/fuchsia-banarasi-brocade-nehru-jacket-with-white-kurta",
+      "destination": "/product/fuchsia-banarasi-nehru-jacket-kurta-set-made-to-measure",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/indian-wedding-guest-kurta-set-custom-fit-mens-nehru-jacket",
+      "destination": "/product/handcrafted-lavender-kurta-with-nehru-jacket-groomsmen-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/mens-indian-wedding-kurta-set-ivory-silk-with-nehru-jacket",
+      "destination": "/product/handcrafted-ivory-kurta-with-nehru-jacket-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/ready-to-wear-indian-saree-dusty-blue-wedding-guest-outfit",
+      "destination": "/product/buy-handcrafted-dusty-blue-georgette-saree-wedding-guest-outfit",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/mocha-bridesmaid-lehenga-choli-custom-tailored-georgette",
+      "destination": "/product/handcrafted-mocha-georgette-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/sapphire-blue-chanderi-silk-lehenga-custom-tailored-indian",
+      "destination": "/product/handcrafted-sapphire-chanderi-silk-lehenga-choli-set-sangeet-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/bridesmaid-lehenga-for-indian-wedding-teal-silk-with-gold",
+      "destination": "/product/buy-handcrafted-teal-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/lilac-lehenga-set-chanderi-corset-blouse-sequin-dupatta",
+      "destination": "/product/handcrafted-chanderi-silk-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/emerald-green-mirror-work-lehenga-choli-indian-bridesmaid",
+      "destination": "/product/buy-handcrafted-green-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/rani-pink-apple-green-lehenga-choli-georgette-silk",
+      "destination": "/product/apple-green-georgette-with-embroidery-lehenga-choli-set-sangeet",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/pale-sage-lehenga-choli-with-gold-sequins-custom-fit-indian",
+      "destination": "/product/pale-sage-sequin-sequins-with-sequin-lehenga-choli-set-wedding-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/maroon-floral-organza-lehenga-custom-fit-indian-party-wear",
+      "destination": "/product/handcrafted-maroon-organza-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/mens-grey-kurta-pajama-set-indian-wedding-guest-outfit",
+      "destination": "/product/handcrafted-grey-kurta-pajama-set-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/burnt-orange-banarasi-brocade-lehenga-burgundy-net-dupatta",
+      "destination": "/product/handcrafted-burnt-orange-banarasi-brocade-lehenga-choli-set-wedding-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/lime-green-chanderi-lehenga-yellow-georgette-skirt-pink-net",
+      "destination": "/product/yellow-chanderi-silk-lehenga-bridesmaid-set",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/crimson-ruffle-satin-saree-ready-to-wear-halter-blouse",
+      "destination": "/product/handcrafted-crimson-georgette-saree-wedding-guest-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/lime-green-banarasi-brocade-lehenga-set-white-satin-choli",
+      "destination": "/product/green-banarasi-brocade-lehenga-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/pastel-net-3d-bridal-lehenga-couture-bridal-entry-003",
+      "destination": "/product/pastel-sage-net-thread-work-indian-wedding-lehenga-for-bridal-entry",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/ivory-shimmer-pearl-bridal-lehenga-destination-bride-004",
+      "destination": "/product/ivory-shimmer-silk-pearl-bead-work-indian-wedding-lehenga-for-bride",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/champagne-net-mirror-bridal-lehenga-grand-celebration-007",
+      "destination": "/product/champagne-rose-net-mirror-bridal-lehenga-choli-for-grand-celebration",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/baby-net-cutdana-bridal-lehenga-couture-reception-009",
+      "destination": "/product/baby-pink-net-bead-work-indian-wedding-lehenga-for-engagement-ceremony",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/pastel-net-3d-bridal-lehenga-royal-baraat-010",
+      "destination": "/product/pastel-multicolor-net-thread-work-wedding-lehenga-for-bridal-party",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/ivory-net-beads-bridal-lehenga-bridal-vidaai-011",
+      "destination": "/product/ivory-gold-net-pearl-bead-work-wedding-lehenga-for-vidaai-ceremony",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/shocking-soft-pearl-bridal-lehenga-rajwadi-wedding-015",
+      "destination": "/product/shocking-pink-soft-net-pearl-bridal-lehenga-choli-for-rajwadi-wedding",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/silver-soft-pearl-bridal-lehenga-high-society-bride-018",
+      "destination": "/product/silver-mist-soft-net-pearl-bead-work-bridal-lehenga-choli-for-cocktail",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/royal-soft-3d-bridal-lehenga-lavish-celebration-019",
+      "destination": "/product/red-soft-net-bead-work-indian-bridal-lehenga-choli-for-reception-guest",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/soft-soft-3d-bridal-lehenga-premium-reception-021",
+      "destination": "/product/soft-yellow-soft-net-sequins-embroidery-wedding-lehenga-for-trousseau",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/maroon-viscose-couture-bridal-lehenga-royal-bridal-look-022",
+      "destination": "/product/maroon-viscose-velvet-thread-work-wedding-lehenga-for-festive-occasion",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/lavender-georgette-cutdana-bridal-lehenga-couture-indian-wedding-023",
+      "destination": "/product/lavender-georgette-pearl-bead-work-lehenga-choli-for-wedding-function",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/pastel-raw-patchwork-bridal-lehenga-luxury-couture-024",
+      "destination": "/product/pastel-multicolor-patchwork-lehenga-choli",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/lavender-premium-beads-bridal-lehenga-vidaai-look-030",
+      "destination": "/product/lavender-premium-net-bead-work-indian-wedding-lehenga-for-festive-wear",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/royal-raw-zardosi-bridal-lehenga-engagement-look-032",
+      "destination": "/product/royal-red-raw-silk-zardosi-bridal-lehenga-choli-for-engagement-look",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/royal-raw-couture-bridal-lehenga-luxury-trousseau-035",
+      "destination": "/product/red-raw-silk-thread-work-indian-bridal-lehenga-choli-for-wedding-party",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/ivory-crape-couture-bridal-lehenga-bridal-celebration-036",
+      "destination": "/product/ivory-crape-silk-pearl-bead-work-wedding-lehenga-for-traditional-wear",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/muted-tissue-stone-bridal-lehenga-statement-ensemble-039",
+      "destination": "/product/muted-salmon-tissue-silk-stone-setting-lehenga-for-statement-ensemble",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/off-white-linen-cotton-embroidered-men-s-kurta-pajama-set",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/black-cotton-embroidered-men-s-kurta-pajama-set",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/cream-satin-embroidered-occasionwear-ready-to-wear-saree",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/blue-silk-embroidered-festive-ready-to-wear-saree",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/luxemia-off-white-sequin-work-net-lehenga-choli-for-sangeet-and-wedding-guests",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/luxemia-brown-embroidered-art-silk-indo-western-for-south-asian-weddings",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/raw-test-banarasi-copper-wedding-lehenga",
+      "destination": "/lehengas",
+      "statusCode": 301
     }
   ],
   "headers": [
