@@ -144,6 +144,112 @@ Disallow: /api/
 Disallow: /order-confirmation
 Disallow: /_prerender/
 
+# ─── Additional AI / LLM Training Crawlers (added 2026-07-09 per SEO audit) ──
+# These 8 bots were previously unmanaged, meaning they fell through to the
+# default `User-agent: *` block. Google-Extended governs Gemini / AI Overviews,
+# Applebot-Extended governs Apple Intelligence training, ChatGPT-User governs
+# ChatGPT Shopping / browsing, CCBot governs Common Crawl (used by many LLMs),
+# anthropic-ai governs Claude, Bytespider governs ByteDance / Doubao,
+# FacebookBot governs Meta AI, and Amazonbot governs Amazon's crawler.
+# All are allowed to crawl public catalog/content paths and are blocked from
+# the same sensitive paths as the bots above.
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /auth
+Disallow: /wishlist
+Disallow: /cart
+Disallow: /checkout
+Disallow: /api/
+Disallow: /order-confirmation
+Disallow: /_prerender/
+
 # ─── AI Search Engine Discovery ──────────────────────────────────────────────
 # llms.txt — human-readable summary for AI crawlers (Perplexity, ChatGPT, etc.)
 # llms-full.txt — full page inventory for AI crawlers

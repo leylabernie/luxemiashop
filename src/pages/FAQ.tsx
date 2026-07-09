@@ -252,20 +252,11 @@ const FAQ = () => {
     },
   ];
 
-  // Generate FAQ Schema for structured data
+  // FAQPage schema was REMOVED 2026-07-09 per SEO audit Item #1 — Google
+  // Aug-2023 policy restricts FAQPage rich results to gov/health authority
+  // sites only. The visible FAQ HTML below remains for AI search / PAA.
+  // BreadcrumbList schema is still emitted.
   const allFaqs = faqCategories.flatMap(category => category.faqs);
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: allFaqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
 
   // BreadcrumbList schema
   const breadcrumbSchema = {
@@ -310,9 +301,6 @@ const FAQ = () => {
         ]}
       />
       <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
-        </script>
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
         </script>

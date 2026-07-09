@@ -91,6 +91,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     { name: product.title, url: canonicalUrl },
   ]);
 
+  // FAQPage schema is intentionally suppressed — see generateFaqSchema() in
+  // src/lib/schema.ts for the rationale (Google Aug-2023 policy change).
+  // Visible FAQ HTML is still emitted for AI search / PAA.
   const faqSchema = generateFaqSchema([
     {
       question: `What sizes are available for the ${product.title}?`,
@@ -134,6 +137,8 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:image" content="${escapeHtml(gmcSafeImage)}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="LuxeMia">
   <meta property="og:locale" content="en_US">
   <meta property="product:price:amount" content="${escapeHtml(schemaPrice)}">
@@ -152,7 +157,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta name="twitter:image" content="${escapeHtml(gmcSafeImage)}">
   <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+  ${faqSchema ? `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>` : ''}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

@@ -187,6 +187,15 @@ const SEOHead = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
+      {/* og:image dimensions — declared as 1200x630 to match the brand OG
+          (public/og-image.jpg) per the 2026-07-09 SEO audit Item #4. This
+          fixes WhatsApp/LinkedIn/Twitter share card rendering and removes
+          the "og:image dimensions missing" warning from social card
+          validators. Product pages may serve a product image; the dimensions
+          meta is a hint, not a constraint, so crawlers will fall back to
+          the actual image if it differs. */}
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
