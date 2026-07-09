@@ -53,7 +53,6 @@
 - **Are returns accepted?** All sales are final. Only genuine shipping damage claims are accepted within 48 hours with unboxing video.
 
 ## Key collections
-
 - Lehengas: https://luxemia.shop/lehengas
 - Sarees: https://luxemia.shop/sarees
 - Salwar Suits: https://luxemia.shop/suits
@@ -62,6 +61,16 @@
 - New Arrivals: https://luxemia.shop/new-arrivals
 - Bestsellers: https://luxemia.shop/bestsellers
 - All collections: https://luxemia.shop/collections
+
+## Bestselling categories (with descriptions for AI shopping assistants)
+
+- [Bridal Lehengas](https://luxemia.shop/lehengas): Shop bridal and festive lehengas shipped to USA, Canada & Australia. Net, silk, georgette, velvet with embroidery, sequins, zari, mirror and thread work. Sizes XS to XXL with custom tailoring.
+- [Wedding Sarees](https://luxemia.shop/sarees): Banarasi silk, Kanjivaram, organza and georgette sarees with optional pre-stitched ready-to-drape style and custom blouse stitching.
+- [Salwar Kameez](https://luxemia.shop/suits): Anarkali suits, palazzo sets, sharara suits in georgette, silk and cotton with embroidered, printed and mirror work.
+- [Menswear](https://luxemia.shop/menswear): Sherwanis, kurta pajama, Nehru jackets and indo-western outfits for grooms and wedding guests.
+- [Indo-Western](https://luxemia.shop/indowestern): Contemporary indo-western fusion outfits for women and men.
+- [New Arrivals](https://luxemia.shop/new-arrivals): Latest ready-to-ship ethnic wear added to the catalog.
+- [Bestsellers](https://luxemia.shop/bestsellers): Most-ordered ethnic wear pieces by LuxeMia customers.
 
 ## Occasion collections
 

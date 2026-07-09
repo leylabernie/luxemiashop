@@ -130,6 +130,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
+  <link rel="alternate" hreflang="en-US" href="${escapeHtml(canonicalUrl)}">
+  <link rel="alternate" hreflang="en-CA" href="${escapeHtml(canonicalUrl)}">
+  <link rel="alternate" hreflang="en-AU" href="${escapeHtml(canonicalUrl)}">
+  <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonicalUrl)}">
   <meta name="author" content="LuxeMia">
   <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY">
   <meta property="og:type" content="product">

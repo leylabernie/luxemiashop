@@ -29,6 +29,16 @@
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1a1a1a" />
     <link rel="canonical" href="https://luxemia.shop/" />
+
+    <!-- Hreflang: single-URL international targeting.
+         LuxeMia serves one URL to all three markets (USA, Canada, Australia).
+         These tags tell Google the same URL is the appropriate result for
+         users in all three regions. x-default catches all other locales.
+         Added 2026-07-09 per SEO audit Item #5. -->
+    <link rel="alternate" hreflang="en-US" href="https://luxemia.shop/" />
+    <link rel="alternate" hreflang="en-CA" href="https://luxemia.shop/" />
+    <link rel="alternate" hreflang="en-AU" href="https://luxemia.shop/" />
+    <link rel="alternate" hreflang="x-default" href="https://luxemia.shop/" />
     
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="YkBw01UrNiQIlBg0FzSt7XjnWbNuMmbC4ux8eJGBEjY" />
@@ -302,5 +312,72 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- ─── <noscript> crawler fallback ─────────────────────────────────────────
+         Per 2026-07-09 SEO audit Items #12 & #16: the SPA renders all visible
+         content via JavaScript, so crawlers that don't execute JS (Bing, most
+         AI bots, Google's initial crawl pass) see only ~83 words. This block
+         gives them substantive, keyword-rich content describing LuxeMia, the
+         product categories, shipping policy, and key links — without
+         duplicating the React-rendered UI (which is what users with JS
+         enabled will see). Visible only when JavaScript is disabled. -->
+
+    <noscript>
+      <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 900px; margin: 0 auto; padding: 24px 16px; color: #1a1a1a; line-height: 1.7;">
+        <h1>Affordable Indian Ethnic Wear &amp; Traditional Fashion — Ready-to-Ship Sarees, Lehengas &amp; Salwar Kameez | LuxeMia</h1>
+
+        <p>Welcome to <strong>LuxeMia</strong> (luxemia.shop) — your destination for affordable Indian ethnic wear online, shipped fast to the USA, Canada, and Australia. We carry ready-to-ship sarees, festive lehengas, ready-to-wear salwar kameez, sherwanis, and indo-western outfits, all directly sourced from India's textile hubs in Surat, Varanasi, and Jaipur. Free shipping on orders over $350; flat $25 per order otherwise. Custom tailoring and made-to-measure options available on most products.</p>
+
+        <h2>Shop by Category</h2>
+        <ul>
+          <li><a href="https://luxemia.shop/lehengas">Bridal Lehengas</a> — Designer wedding lehengas in net, silk, georgette, and velvet with embroidery, sequins, zari, mirror, and thread work. Sizes XS to XXL with custom stitching.</li>
+          <li><a href="https://luxemia.shop/sarees">Wedding &amp; Designer Sarees</a> — Banarasi silk, Kanjivaram, organza, and georgette sarees with optional pre-stitched ready-to-drape style and custom blouse stitching.</li>
+          <li><a href="https://luxemia.shop/suits">Salwar Kameez &amp; Suits</a> — Anarkali suits, palazzo sets, and sharara suits in georgette, silk, and cotton with embroidered, printed, and mirror work.</li>
+          <li><a href="https://luxemia.shop/menswear">Menswear</a> — Sherwanis, kurta pajama sets, Nehru jackets, and indo-western outfits for grooms and wedding guests.</li>
+          <li><a href="https://luxemia.shop/indowestern">Indo-Western</a> — Contemporary fusion outfits blending Indian and Western silhouettes.</li>
+          <li><a href="https://luxemia.shop/new-arrivals">New Arrivals</a> — Latest ready-to-ship ethnic wear added to the catalog.</li>
+          <li><a href="https://luxemia.shop/bestsellers">Bestsellers</a> — Most-ordered pieces by LuxeMia customers.</li>
+          <li><a href="https://luxemia.shop/collections">All Collections</a> — Browse the full catalog.</li>
+        </ul>
+
+        <h2>Shop by Occasion</h2>
+        <ul>
+          <li><a href="https://luxemia.shop/collections/diwali-outfits">Diwali Outfits</a></li>
+          <li><a href="https://luxemia.shop/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
+          <li><a href="https://luxemia.shop/collections/mehendi-outfits">Mehendi Outfits</a></li>
+          <li><a href="https://luxemia.shop/collections/eid-outfits">Eid Outfits</a></li>
+          <li><a href="https://luxemia.shop/collections/navratri-outfits">Navratri Outfits</a></li>
+        </ul>
+
+        <h2>About LuxeMia</h2>
+        <p>LuxeMia is an Indian ethnic wear boutique founded in 2025 and operated by Glamour Indian Wear. We serve the NRI diaspora and ethnic-fashion lovers in the United States, Canada, and Australia, offering authentic designer Indian clothing at affordable prices. Every piece is sourced directly from skilled Indian artisans and textile hubs — no middlemen, no inflated markups. Our catalog includes bridal lehengas, wedding sarees, salwar kameez suits, sherwanis, and indo-western outfits, with three fit options: Unstitched (DIY), Ready to Wear (standard sizes 32–48), and Made to Measure (custom-stitched to your body measurements).</p>
+
+        <h2>Shipping &amp; Returns</h2>
+        <p><strong>Shipping:</strong> Free on orders over $350 USD to USA, Canada, and Australia. Flat $25 USD per order for orders under $350. Ready-to-wear items dispatch in 3–5 business days; made-to-measure and custom-stitched items dispatch in 5–7 business days. Transit time 7–10 business days via USPS/UPS/DHL with full tracking and insurance. Customers are responsible for any customs duties or import fees levied by their country.</p>
+        <p><strong>Returns:</strong> All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues or colour variations. The only exception is genuine shipping damage, which must be reported within 48 hours of delivery with a mandatory unboxing video. Cancellations are accepted within 24 hours of order placement for a full refund.</p>
+
+        <h2>Customer Support</h2>
+        <p>USA-based support team. Phone &amp; WhatsApp: <a href="tel:+12153419990">+1-215-341-9990</a>. Email: <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a>. Personal styling support available before and after purchase. <a href="https://luxemia.shop/contact">Contact us</a> for sizing help, fabric questions, or custom tailoring requests.</p>
+
+        <h2>Guides &amp; Resources</h2>
+        <ul>
+          <li><a href="https://luxemia.shop/size-guide">Size Guide</a></li>
+          <li><a href="https://luxemia.shop/sizing-measurements-guide">Sizing &amp; Measurements Guide</a></li>
+          <li><a href="https://luxemia.shop/care-guide">Care Guide</a></li>
+          <li><a href="https://luxemia.shop/brand-story">Brand Story</a></li>
+          <li><a href="https://luxemia.shop/blog">Blog — Styling Guides &amp; Fashion Tips</a></li>
+          <li><a href="https://luxemia.shop/faq">Frequently Asked Questions</a></li>
+        </ul>
+
+        <h2>NRI Shopping</h2>
+        <ul>
+          <li><a href="https://luxemia.shop/nri">NRI Hub</a></li>
+          <li><a href="https://luxemia.shop/nri/usa">Indian Ethnic Wear USA</a></li>
+          <li><a href="https://luxemia.shop/nri/canada">Indian Ethnic Wear Canada</a></li>
+        </ul>
+
+        <p style="margin-top: 32px; font-size: 13px; color: #666;">LuxeMia is owned and operated by Glamour Indian Wear. &copy; 2026 LuxeMia. All rights reserved.</p>
+      </div>
+    </noscript>
   </body>
 </html>

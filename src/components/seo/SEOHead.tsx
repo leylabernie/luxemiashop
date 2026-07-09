@@ -103,6 +103,18 @@ const SEOHead = ({
   // page component. Defaulting to the site root is a safe fallback that
   // surfaces a missing-prop bug rather than silently breaking indexing.
   const canonicalUrl = canonical || siteUrl;
+
+  // Hreflang defaults: LuxeMia serves one URL to USA, Canada, and Australia.
+  // If a page doesn't pass explicit hreflang alternates, emit the standard
+  // 4-tag set (en-US, en-CA, en-AU, x-default) pointing at the canonical URL.
+  // Pages with truly different regional URLs (none currently) can override
+  // by passing the `hreflang` prop. Added 2026-07-09 per SEO audit Item #5.
+  const hreflangAlternates = hreflang || [
+    { lang: 'en-US', href: canonicalUrl },
+    { lang: 'en-CA', href: canonicalUrl },
+    { lang: 'en-AU', href: canonicalUrl },
+    { lang: 'x-default', href: canonicalUrl },
+  ];
   
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
@@ -177,7 +189,7 @@ const SEOHead = ({
       <link rel="canonical" href={canonicalUrl} />
 
       {/* Hreflang tags for international pages */}
-      {hreflang && hreflang.map((alt) => (
+      {hreflangAlternates.map((alt) => (
         <link key={alt.lang} rel="alternate" hrefLang={alt.lang} href={alt.href} />
       ))}
 

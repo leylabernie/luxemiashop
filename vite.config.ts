@@ -30,10 +30,34 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     // Smaller chunk size warning threshold
     chunkSizeWarningLimit: 800,
+    // Module preload policy (SEO audit 2026-07-09 Item #17):
+    // Vite by default emits <link rel="modulepreload"> for every chunk in
+    // the import graph, including those reachable only via dynamic import().
+    // That defeated the lazy-loading of @supabase/supabase-js (169 kB /
+    // 44 kB gzip) — the browser was preloading it on every page even
+    // though it's only used for auth/account/admin. The filter below
+    // excludes the supabase chunk from preload hints, so the browser
+    // only fetches it when getSupabase() is actually called (after first
+    // paint, inside useEffect). Recharts is no longer in manualChunks,
+    // so it's already correctly code-split behind AdminDashboard's lazy().
+    modulePreload: {
+      polyfill: true,
+      resolveDependencies: (_, deps) => deps.filter((d) => !d.includes('supabase')),
+    },
     rollupOptions: {
       output: {
         manualChunks: {
           "vendor-react": ["react", "react-dom", "react-router-dom"],
+          // @supabase/supabase-js kept as a named manualChunk so it stays
+          // in its own file and can be lazy-loaded. On 2026-07-09 (SEO
+          // audit Item #17) we also converted useAuth.tsx to use
+          // `import('@/integrations/supabase/client')` (dynamic import),
+          // which means Vite will NO LONGER emit a <link rel="modulepreload">
+          // for this chunk in index.html — the browser will fetch it on
+          // demand only when auth state is checked (after first paint).
+          // Net effect: ~169 kB (44 kB gzip) removed from initial load on
+          // every route. Previously Vite preloaded it because the static
+          // import graph reached it; now the dynamic import breaks that edge.
           "vendor-supabase": ["@supabase/supabase-js"],
           "vendor-query": ["@tanstack/react-query"],
           "vendor-motion": ["framer-motion"],
@@ -48,7 +72,11 @@ export default defineConfig(({ mode }) => ({
             "@radix-ui/react-accordion",
           ],
           "vendor-helmet": ["react-helmet-async"],
-          "vendor-charts": ["recharts"],
+          // recharts removed from manualChunks on 2026-07-09 (SEO audit
+          // Item #17). It's only used by AdminDashboard, which is already
+          // lazy-loaded via React.lazy() in App.tsx. Letting Rollup
+          // code-split it naturally means the chart library only loads
+          // when /admin is visited.
           "vendor-forms": ["react-hook-form", "@hookform/resolvers", "zod"],
         },
       },
