@@ -626,31 +626,31 @@ function generateReturnsXml() {
   // NOTE: Only use sub-attributes defined in Google's g:returns_policy spec.
   // https://support.google.com/merchants/answer/12100032
   //
-  // Previously this block emitted three invalid sub-attributes that caused
-  // GMC to throw "XML formatting error" + "Misplaced subattribute" on every
-  // single item (684 errors / 684 warnings in the June 30 2026 upload report):
-  //   - <g:customer_service_link>  -> not a returns_policy sub-attribute
-  //   - <g:restocking_fee>         -> invalid; spec only has g:restocking_fee_percentage
-  //   - <g:refund_fee>             -> not a real attribute; g:return_fee already conveys this
+  // History:
+  //   Jun 30 2026 — Removed 3 invalid sub-attributes (customer_service_link,
+  //     restocking_fee, refund_fee) that were not in Google's spec.
+  //   Jul 9 2026 — Removed the <g:returns> wrapper element. <g:returns> is NOT
+  //     a valid GMC element per https://support.google.com/merchants/answer/12100032
+  //     — <g:returns_policy> must be a direct child of <item>. The invalid
+  //     wrapper caused GMC to throw "Misplaced subattribute" on every item
+  //     even after the sub-attribute cleanup.
   //
-  // Valid sub-attributes retained below:
+  // Valid sub-attributes used below:
   //   countries, return_policy_category, return_policy_url, life_time_return_window,
   //   return_window_days, return_method, return_fee, return_shipping_fee
   return `
-    <g:returns>
-      <g:returns_policy>
-        <g:countries>US,CA,AU</g:countries>
-        <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
-        <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
-        <g:life_time_return_window>false</g:life_time_return_window>
-        <g:return_window_days>2</g:return_window_days>
-        <g:return_method>https://schema.org/ReturnByMail</g:return_method>
-        <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
-        <g:return_shipping_fee>
-          <g:price>0.00 USD</g:price>
-        </g:return_shipping_fee>
-      </g:returns_policy>
-    </g:returns>`;
+    <g:returns_policy>
+      <g:countries>US,CA,AU</g:countries>
+      <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
+      <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
+      <g:life_time_return_window>false</g:life_time_return_window>
+      <g:return_window_days>2</g:return_window_days>
+      <g:return_method>https://schema.org/ReturnByMail</g:return_method>
+      <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
+      <g:return_shipping_fee>
+        <g:price>0.00 USD</g:price>
+      </g:return_shipping_fee>
+    </g:returns_policy>`;
 }
 
 // ─── Product Highlights ────────────────────────────────────────────────────
