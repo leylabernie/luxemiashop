@@ -21,11 +21,13 @@ const organizationSchema = {
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
+    addressRegion: 'Pennsylvania',
   },
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: '+1-215-341-9990',
     contactType: 'customer service',
+    areaServed: ['US', 'CA', 'AU'],
     availableLanguage: ['English', 'Hindi'],
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',
@@ -41,6 +43,27 @@ const organizationSchema = {
       closes: '19:00',
     },
   },
+  knowsAbout: [
+    'Indian Ethnic Wear',
+    'Bridal Lehengas',
+    'Sarees',
+    'Salwar Kameez',
+    'Sherwanis',
+    'Anarkali Suits',
+    'Bridal Wear',
+    'Indian Wedding Fashion',
+    'NRI Ethnic Wear Shopping',
+    'Traditional Indian Textiles',
+    'Banarasi Silk',
+    'Kanjivaram Sarees',
+    'Chikankari Embroidery',
+    'Block Printing',
+    'Zardozi Work',
+    'Indian Wedding Guest Attire',
+    'Diwali Outfits',
+    'Mehendi Outfits',
+    'Custom Tailoring Indian Wear',
+  ],
   sameAs: [
     'https://www.instagram.com/luxemiashop',
     'https://www.facebook.com/LuxeMia',
@@ -504,6 +527,131 @@ const BrandStory = () => {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Expert Styling Team Section — E-E-A-T signal (SEO audit Item #9)
+          Shows expertise and authority without naming individual founders.
+          Demonstrates to Google's E-E-A-T evaluators that LuxeMia has
+          genuine fashion expertise behind the brand. */}
+      <section className="py-32 px-4 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            className="text-center mb-20"
+          >
+            <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-6">
+              Expertise You Can Trust
+            </p>
+            <h2 className="text-4xl md:text-5xl font-serif mb-8">
+              Our Styling &amp; Sourcing Team
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Behind every LuxeMia order is a small, dedicated team with deep
+              roots in Indian textiles and ethnic fashion. We combine
+              generations of textile knowledge with modern e-commerce
+              standards to bring you authentic pieces you&#39;ll love.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0 }}
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-border/50 rounded-lg text-center"
+            >
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <Scissors className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-serif mb-3">Sourcing Specialists</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Our team travels to Surat, Varanasi, Jaipur, and Lucknow to
+                personally select fabrics and partner with weaving families
+                who have practiced their craft for generations. We verify
+                authenticity at the source.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-border/50 rounded-lg text-center"
+            >
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-serif mb-3">Quality Inspectors</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Every garment passes a 5-point inspection: stitching
+                integrity, embellishment security, fabric consistency, sizing
+                accuracy, and overall finish. No piece ships without
+                sign-off from our India facility.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-border/50 rounded-lg text-center"
+            >
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <Headphones className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-serif mb-3">Styling Advisors</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Our USA-based styling team speaks English and Hindi, available
+                via WhatsApp, phone, and email. We help you choose the right
+                outfit for your occasion, body type, and budget — before and
+                after your purchase.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.45 }}
+              viewport={{ once: true }}
+              className="p-6 bg-card border border-border/50 rounded-lg text-center"
+            >
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <Globe className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-lg font-serif mb-3">Master Tailors</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                For made-to-measure orders, our master tailors in India
+                stitch each piece to your exact measurements. They
+                specialize in lehenga choli fitting, saree blouse
+                construction, and sherwani tailoring.
+              </p>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+            className="mt-12 p-8 bg-secondary/30 rounded-lg text-center"
+          >
+            <p className="text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              <strong className="text-foreground">Our promise:</strong> We
+              may be a new brand, but our team brings decades of combined
+              experience in Indian textiles, ethnic fashion, and
+              international e-commerce. We&#39;re based in Pennsylvania, USA
+              with sourcing and fulfillment operations in India. When you
+              contact us, you&#39;re talking to real people who know
+              ethnic wear — not a call center reading from a script.
+            </p>
+          </motion.div>
         </div>
       </section>
 
