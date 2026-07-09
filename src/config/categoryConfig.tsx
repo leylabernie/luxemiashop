@@ -319,6 +319,60 @@ const LEHENGAS: CategoryConfig = {
       answer: "Yes! Most of our lehengas can be customized in different colors. Contact our styling team with your color preferences, and we'll confirm availability and any additional timeline requirements."
     }
   ],
+  // SEO editorial content (Item #14) — keyword-rich copy below the product grid
+  editorialTitle: 'Buy Lehengas Online in the USA — Bridal, Wedding Guest & Festive',
+  editorialContent: (
+    <>
+      <p>
+        Shop the finest collection of <strong>lehengas online</strong> at LuxeMia, your destination for
+        authentic Indian ethnic wear shipped to the USA, Canada, and Australia. Our curated catalog includes
+        <strong> bridal lehengas</strong>, wedding guest lehengas, festive lehengas for Diwali and Navratri,
+        and party wear lehengas for every celebration. Each piece is sourced directly from India's textile
+        hubs and quality-inspected before shipping.
+      </p>
+
+      <h3>Bridal Lehengas for the Modern NRI Bride</h3>
+      <p>
+        Your wedding day deserves a lehenga as special as the occasion. Our <strong>bridal lehenga collection</strong>
+        features hand-embroidered designs in net, silk, velvet, georgette, and raw silk — with zardozi,
+        sequin, zari, mirror, and thread work. Choose from traditional reds and maroons or modern pastels
+        and ivories. Every bridal lehenga includes the skirt, choli (blouse), and dupatta, with complimentary
+        custom tailoring for the perfect fit.
+      </p>
+
+      <h3>Wedding Guest Lehengas</h3>
+      <p>
+        Attending an Indian wedding? Our wedding guest lehengas are designed to make you look elegant without
+        upstaging the bride. Choose from royal blue, emerald green, dusty rose, wine, and champagne — colors
+        that photograph beautifully and suit every skin tone. Lightweight fabrics like georgette and net keep
+        you comfortable through long ceremonies.
+      </p>
+
+      <h3>Festival &amp; Party Wear Lehengas</h3>
+      <p>
+        Celebrate Diwali, Navratri, Eid, and Karva Chauth in style. Our festive lehenga collection features
+        vibrant colors, mirror work, and gota patti detailing — perfect for dancing the night away. For
+        cocktail parties and receptions, explore our sequin and embellished lehengas in ivory, champagne,
+        and jewel tones.
+      </p>
+
+      <h3>Custom Tailoring &amp; Sizing</h3>
+      <p>
+        Every lehenga at LuxeMia can be custom-tailored to your exact measurements. We offer sizes S through
+        XXL plus made-to-measure options — simply send us your bust, waist, hip, and height measurements
+        and our master tailors will stitch the perfect fit. See our <a href="/size-guide">size guide</a> for
+        measuring instructions.
+      </p>
+
+      <h3>Shipping to USA, Canada &amp; Australia</h3>
+      <p>
+        Free shipping on lehenga orders over $350 to the USA, Canada, and Australia. Ready-to-ship lehengas
+        dispatch in 3-5 business days; custom-tailored lehengas dispatch in 5-7 business days. Delivery via
+        DHL Express (3-5 business days) or USPS/UPS (7-10 business days) with full tracking and insurance.
+        See our <a href="/shipping">shipping policy</a> for details.
+      </p>
+    </>
+  ),
 };
 
 // ─── Sarees ────────────────────────────────────────────────────────────────
@@ -470,6 +524,58 @@ const SAREES: CategoryConfig = {
       answer: "Yes, we ship worldwide with free shipping on orders over $350. Standard delivery takes 7-10 business days via USPS/UPS, or 3-5 business days via DHL Express."
     }
   ],
+  // SEO editorial content (Item #14)
+  editorialTitle: 'Buy Sarees Online — Silk, Bridal & Designer Sarees Shipped to USA',
+  editorialContent: (
+    <>
+      <p>
+        Discover an exquisite collection of <strong>sarees online</strong> at LuxeMia. We offer
+        <strong> silk sarees</strong>, bridal sarees, designer sarees, and festive sarees — all sourced
+        directly from India's textile hubs in Varanasi, Kanchipuram, and Surat. Whether you are a bride,
+        a wedding guest, or celebrating Diwali, our saree collection has the perfect drape for every occasion.
+        Free shipping to the USA, Canada, and Australia on orders over $350.
+      </p>
+
+      <h3>Silk Sarees — Banarasi, Kanjivaram &amp; More</h3>
+      <p>
+        Our <strong>pure silk saree collection</strong> includes Banarasi silk from Varanasi, Kanjivaram silk
+        from Kanchipuram, and art silk sarees at affordable prices. Each silk saree features real zari work,
+        handwoven borders, and traditional motifs. Shop <a href="/sarees?sub=bridal">bridal silk sarees</a> for
+        your wedding or <a href="/sarees?sub=wedding-guest">wedding guest silk sarees</a> for the next
+        celebration you attend.
+      </p>
+
+      <h3>Bridal Sarees for the Traditional Bride</h3>
+      <p>
+        For South Indian and Bengali brides, the saree is the wedding dress of choice. Our bridal saree
+        collection features red and gold Kanjivarams, heavy Banarasi brocades, and contemporary designer
+        sarees. Every bridal saree can be paired with custom blouse stitching and matching jewelry for a
+        complete bridal look.
+      </p>
+
+      <h3>Wedding Guest &amp; Festive Sarees</h3>
+      <p>
+        Attending an Indian wedding? Choose from our wedding guest sarees in royal blue, emerald green,
+        magenta, and wine — colors that celebrate without overshadowing the bride. For Diwali and Navratri,
+        explore our festive sarees with mirror work, gota patti, and sequin embellishments.
+      </p>
+
+      <h3>Ready-to-Wear &amp; Pre-Stitched Sarees</h3>
+      <p>
+        New to saree draping? Our <strong>ready-to-wear sarees</strong> (also called pre-stitched or
+        lehenga sarees) give you the look of a saree with the ease of a skirt. Slip it on and go — no
+        draping required. Perfect for beginners and for events where you want to look elegant without
+        the hassle.
+      </p>
+
+      <h3>Custom Blouse Stitching</h3>
+      <p>
+        Every saree deserves a perfectly fitted blouse. LuxeMia offers custom blouse stitching with your
+        choice of neckline, sleeve length, and back design. Send us your measurements and we will tailor
+        a blouse that fits like a glove. See our <a href="/sizing-measurements-guide">measurement guide</a> for details.
+      </p>
+    </>
+  ),
 };
 
 // ─── Suits / Salwar Kameez ─────────────────────────────────────────────────
@@ -599,6 +705,55 @@ const SUITS: CategoryConfig = {
       answer: "Dry cleaning is recommended for embroidered, sequined, or zari work suits. For cotton and everyday suits, hand wash in cold water with mild detergent. Always iron on reverse side over embroidery. Store in a cool, dry place."
     }
   ],
+  // SEO editorial content (Item #14)
+  editorialTitle: 'Buy Salwar Kameez &amp; Anarkali Suits Online — USA Shipping',
+  editorialContent: (
+    <>
+      <p>
+        Shop beautiful <strong>salwar kameez online</strong> at LuxeMia. Our collection includes anarkali suits,
+        palazzo sets, sharara suits, and traditional salwar kameez in georgette, silk, cotton, and chinon
+        fabrics. Whether you are attending a wedding, celebrating Eid, or looking for everyday ethnic wear,
+        we have the perfect suit for you — shipped to the USA, Canada, and Australia with free shipping over $350.
+      </p>
+
+      <h3>Anarkali Suits — Elegant &amp; Flattering</h3>
+      <p>
+        <strong>Anarkali suits</strong> are floor-length, frock-style kameez paired with slim churidar pants.
+        They flatter every body type and are perfect for weddings, sangeet ceremonies, and festive events.
+        Our anarkali collection features embroidery, sequin work, and gota patti detailing in both traditional
+        and contemporary designs.
+      </p>
+
+      <h3>Palazzo Sets — Modern &amp; Comfortable</h3>
+      <p>
+        <strong>Palazzo sets</strong> pair a kurti with wide-leg palazzo pants for a modern, comfortable look.
+        Perfect for daytime events, office Diwali parties, and casual ethnic wear. Choose from cotton palazzo
+        sets for everyday or silk palazzo sets for festive occasions.
+      </p>
+
+      <h3>Sharara Suits — Festive &amp; Traditional</h3>
+      <p>
+        <strong>Sharara suits</strong> feature wide-flared pants that look like a lehenga, paired with a short
+        kurti and dupatta. A popular choice for mehendi ceremonies and Eid celebrations, sharara suits combine
+        the elegance of a lehenga with the comfort of a salwar kameez.
+      </p>
+
+      <h3>Wedding Guest &amp; Festive Salwar Kameez</h3>
+      <p>
+        Attending an Indian wedding? A well-chosen salwar kameez is comfortable, elegant, and appropriate for
+        every ceremony. For mehendi and haldi, choose cotton or georgette suits in bright colors. For sangeet
+        and reception, go for embroidered anarkalis in silk or chinon. Browse our
+        <a href="/collections/wedding-guest-outfits">wedding guest collection</a> for curated options.
+      </p>
+
+      <h3>Custom Tailoring for the Perfect Fit</h3>
+      <p>
+        Every salwar kameez at LuxeMia can be custom-tailored to your measurements. Choose your kameez length,
+        neckline, sleeve style, and bottom type — we will stitch it to your exact specifications. See our
+        <a href="/sizing-measurements-guide">measurement guide</a> for instructions on how to measure yourself.
+      </p>
+    </>
+  ),
 };
 
 // ─── Menswear ──────────────────────────────────────────────────────────────
@@ -727,6 +882,63 @@ const MENSWEAR: CategoryConfig = {
       answer: "Dry clean only for sherwanis with embroidery, zardozi, or sequence work. Store in a breathable garment bag in a cool, dry place. Avoid direct sunlight to prevent color fading. Iron on reverse side over embroidery, or use a pressing cloth."
     }
   ],
+  // SEO editorial content (Item #14)
+  editorialTitle: 'Buy Indian Menswear Online — Sherwanis, Kurtas &amp; Nehru Jackets',
+  editorialContent: (
+    <>
+      <p>
+        Shop authentic <strong>Indian menswear online</strong> at LuxeMia. Our collection includes sherwanis,
+        kurta pajama sets, Nehru jackets, and indo-western outfits for grooms, groomsmen, and wedding guests.
+        Every piece is sourced directly from India and shipped to the USA, Canada, and Australia with free
+        shipping on orders over $350.
+      </p>
+
+      <h3>Sherwanis for Grooms &amp; Wedding Guests</h3>
+      <p>
+        A <strong>sherwani</strong> is the most formal Indian menswear garment — a long coat worn over a
+        kurta and churidar. Our sherwani collection features embroidery, zardozi work, and brocade fabrics
+        in ivory, gold, maroon, and deep blue. Perfect for grooms, groomsmen, and guests attending a wedding
+        ceremony.
+      </p>
+
+      <h3>Kurta Pajama Sets — Comfortable &amp; Versatile</h3>
+      <p>
+        <strong>Kurta pajama sets</strong> are the foundation of every Indian man's wardrobe. A kurta (long
+        tunic) paired with pajama (loose pants) is perfect for mehendi ceremonies, pujas, festivals, and
+        casual ethnic wear. Choose from cotton kurtas for everyday comfort or silk kurtas for festive
+        occasions.
+      </p>
+
+      <h3>Nehru Jackets — The Versatile Layer</h3>
+      <p>
+        A <strong>Nehru jacket</strong> is a sleeveless mandarin-collar vest that adds instant formality to
+        any kurta. Available in brocade, silk, and linen, a Nehru jacket is the most versatile piece in
+        Indian menswear — wear it over a kurta for a wedding or over a Western shirt for an indo-western look.
+      </p>
+
+      <h3>Indo-Western Menswear</h3>
+      <p>
+        For a modern take on Indian fashion, explore our <strong>indo-western menswear</strong> collection.
+        Structured blazers with Indian embroidery, kurta-shirt hybrids, and tailored trousers with ethnic
+        detailing — perfect for receptions, cocktail parties, and contemporary celebrations.
+      </p>
+
+      <h3>Wedding Guest Outfits for Men</h3>
+      <p>
+        Attending an Indian wedding? For the mehendi and haldi, a simple cotton kurta pajama in yellow or
+        orange is perfect. For the sangeet, choose a silk kurta with a Nehru jacket. For the wedding ceremony
+        and reception, go for a sherwani or an embroidered indo-western suit. See our
+        <a href="/blog/indian-wedding-guest-outfits-men-usa-guide">complete men's wedding guest guide</a>.
+      </p>
+
+      <h3>Custom Tailoring &amp; Sizing</h3>
+      <p>
+        Every menswear outfit at LuxeMia can be custom-tailored to your measurements. We offer sizes S
+        through XXL plus made-to-measure options. Send us your chest, shoulder, waist, and length measurements
+        and our master tailors will stitch the perfect fit. See our <a href="/size-guide">size guide</a> for details.
+      </p>
+    </>
+  ),
 };
 
 // ─── Jewelry (Kundan + Polki Bridal Jewelry) ───────────────────────────────

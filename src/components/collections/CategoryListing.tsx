@@ -400,6 +400,29 @@ export function CategoryListing({ config }: CategoryListingProps) {
         </div>
       </main>
 
+      {/* Editorial / SEO Content Section — shown below the product grid
+          for keyword-rich content that helps search engines understand the
+          category. Added per SEO audit Item #14. */}
+      {config.editorialContent && (
+        <section className="border-t border-border bg-background py-14">
+          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+            {config.editorialTitle && (
+              <h2 className="font-serif text-2xl lg:text-3xl mb-6 text-center">
+                {config.editorialTitle}
+              </h2>
+            )}
+            <div className="prose prose-sm max-w-none text-muted-foreground leading-relaxed
+                            [&_a]:text-foreground [&_a]:underline [&_a:hover]:text-primary
+                            [&_h3]:font-serif [&_h3]:text-lg [&_h3]:text-foreground [&_h3]:mt-6 [&_h3]:mb-2
+                            [&_p]:mb-4
+                            [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4
+                            [&_strong]:text-foreground">
+              {config.editorialContent}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* FAQ Section */}
       {config.faqs && config.faqs.length > 0 && (
         <section className="border-t border-border bg-card/30 py-14">

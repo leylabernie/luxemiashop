@@ -13,6 +13,12 @@ export interface BlogPost {
   readTime: number;
 }
 
+// Pillar articles (SEO audit Item #13) — imported separately for maintainability.
+// These 10 long-form articles target high-volume informational and commercial
+// keywords (how to wear a saree, diwali outfit ideas, kanjivaram vs banarasi,
+// etc.) and are designed to rank on page 1 within 60-90 days of indexing.
+import { pillarBlogPosts } from './pillarBlogPosts';
+
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
@@ -3980,8 +3986,14 @@ export const blogPosts: BlogPost[] = [
     tags: ['lehenga choli designer bridal party wear', 'buy designer lehenga choli online usa', 'stylish elegant lehengas for women', 'latest lehenga choli designs', 'bridal lehenga choli', 'designer lehengas'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/ZX152s-_1.jpg?v=1782927073&width=1200&height=675&crop=center',
     readTime: 10
-  }
+  },
 
+  // ─── Pillar Articles (SEO audit Item #13) ──────────────────────────────────
+  // 10 long-form, keyword-targeted articles for topical authority. These are
+  // imported from pillarBlogPosts.ts for maintainability — see that file for
+  // the full content. Spread here so they appear in the blog index, search,
+  // and sitemap alongside the existing posts.
+  ...pillarBlogPosts,
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {
