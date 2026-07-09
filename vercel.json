@@ -477,6 +477,16 @@
       "source": "/product/raw-test-banarasi-copper-wedding-lehenga",
       "destination": "/lehengas",
       "statusCode": 301
+    },
+    {
+      "source": "/product/indian-wedding-guest-lehenga-custom-fit-banarasi-brocade",
+      "destination": "/product/handcrafted-banarasi-brocade-lehenga-choli-set-bridesmaid-ready-to-ship",
+      "statusCode": 301
+    },
+    {
+      "source": "/product/luxemia-maroon-embroidered-chinon-silk-designer-saree-for-reception-and-party-wear",
+      "destination": "/sarees",
+      "statusCode": 301
     }
   ],
   "headers": [
