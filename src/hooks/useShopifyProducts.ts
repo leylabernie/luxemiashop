@@ -45,7 +45,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
-const CACHE_VERSION = 'v7';
+const CACHE_VERSION = 'v9';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
@@ -153,7 +153,7 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
 //   - Set HIDE_OLD_PRODUCTS = true to activate (flip to true around May 7)
 //   - Set HIDE_OLD_PRODUCTS = false to disable (shows all products again)
 // =============================================================================
-const HIDE_OLD_PRODUCTS = true; // ← Flip to true to hide April 8 batch
+const HIDE_OLD_PRODUCTS = false; // Disabled 2026-07-10 — was hiding most products
 const HIDE_PRODUCTS_BEFORE_DATE = new Date('2026-04-09T00:00:00Z'); // April 9 = cutoff
 // Anything created before April 9 2026 = April 8 batch (hide)
 // Anything created on/after April 9 2026 = April 24+ batch (keep)
