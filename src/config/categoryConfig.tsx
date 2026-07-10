@@ -205,6 +205,7 @@ const LEHENGAS: CategoryConfig = {
   subcategories: [
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
+      matchProductType: ['Bridal Lehenga', 'Bridal Lehengas', 'Bridal Lehenga Choli'],
       seoTitle: 'Bridal Lehengas Online USA | Red & Maroon Wedding Lehengas - LuxeMia',
       seoDescription: 'Shop bridal lehengas for the Indian bride in USA. Red, maroon, and ivory wedding lehengas with zardozi, zari, and embroidery. Custom sizing, 5-day express delivery, free shipping over $350.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=bridal',
