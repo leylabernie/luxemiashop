@@ -636,6 +636,16 @@ const routes = [
       <p>Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends for 2026.</p>
       <h2>Latest Articles</h2>
       <ul>
+        <li><a href="/blog/how-to-wear-a-saree-step-by-step">How to Wear a Saree Step-by-Step: Complete Beginner Guide</a></li>
+        <li><a href="/blog/best-lehenga-styles-indian-wedding-guests-usa-2026">Best Lehenga Styles for Indian Wedding Guests in USA (2026 Guide)</a></li>
+        <li><a href="/blog/what-to-wear-south-asian-wedding-non-indian-guest">What to Wear to a South Asian Wedding as a Non-Indian Guest</a></li>
+        <li><a href="/blog/diwali-outfit-ideas-nri-women-usa-canada-australia">Diwali Outfit Ideas for NRI Women in USA, Canada & Australia (2026)</a></li>
+        <li><a href="/blog/kanjivaram-vs-banarasi-silk-sarees">Kanjivaram vs Banarasi Silk Sarees: Which Should You Buy?</a></li>
+        <li><a href="/blog/indian-wedding-guest-outfits-men-usa-guide">Indian Wedding Guest Outfits for Men: Complete USA Guide (2026)</a></li>
+        <li><a href="/blog/how-to-choose-salwar-kameez-body-type">How to Choose the Right Salwar Kameez for Your Body Type</a></li>
+        <li><a href="/blog/custom-tailoring-indian-ethnic-wear-usa">Custom Tailoring Indian Ethnic Wear in USA: What You Need to Know</a></li>
+        <li><a href="/blog/haldi-vs-mehendi-outfits-complete-guide">Haldi vs Mehendi Outfits: Complete Guide to Pre-Wedding Ceremony Fashion</a></li>
+        <li><a href="/blog/how-to-care-for-silk-sarees-and-lehengas">How to Care for Silk Sarees & Lehengas: Complete Guide</a></li>
         <li><a href="/blog/sharara-suit-guide-2026-styles-fabrics">Sharara Suit Guide 2026: Styles & Fabrics</a></li>
         <li><a href="/blog/pakistani-suits-anarkali-shopping-guide">Pakistani Suits & Anarkali Shopping Guide</a></li>
         <li><a href="/blog/style-lehenga-choli-every-wedding-event">How to Style Lehenga Choli for Every Wedding Event</a></li>
@@ -1259,6 +1269,79 @@ const routes = [
     h1: 'Order Confirmed!',
     content: '<p>Thank you for shopping with LuxeMia. Your order has been confirmed and you will receive a confirmation email shortly. Your order will be prepared within 3-5 business days and delivered within 7-10 business days after dispatch.</p>',
     noIndex: true,
+  },
+  // ─── Pillar Blog Articles (SEO audit Item #13) ─────────────────────────────
+  // 10 long-form articles for topical authority. Each gets a prerendered HTML
+  // file so crawlers see the content without executing JavaScript.
+  {
+    path: '/blog/how-to-wear-a-saree-step-by-step',
+    title: 'How to Wear a Saree Step-by-Step: Complete Beginner Guide (With Photos) | LuxeMia',
+    description: 'Learn how to drape a saree in 7 simple steps. This beginner-friendly guide covers the Nivi style, blouse fitting, petticoat tips, and common mistakes to avoid.',
+    h1: 'How to Wear a Saree Step-by-Step: Complete Beginner Guide',
+    content: '<p>Wearing a saree for the first time can feel intimidating, but once you understand the basic draping technique, it becomes second nature. This step-by-step guide walks you through the classic Nivi style with clear instructions and common mistakes to avoid.</p><h2>What You Need</h2><p>The saree (5.5-6.5 yards), a matching blouse, a petticoat (underskirt), safety pins, and shoes.</p><h2>Step 1: Put On the Petticoat and Blouse</h2><p>Start by wearing your petticoat tied firmly at the waist and your fitted blouse.</p><h2>Step 2: Tuck the Inner End Into the Petticoat</h2><p>Starting from your right hip, tuck the top edge of the inner end into the petticoat waistband, walking the fabric around to the left.</p><h2>Step 3: Make the Front Pleats</h2><p>Gather 5-7 evenly spaced pleats, each about 4-5 inches wide, and tuck them into the petticoat slightly left of your navel.</p><h2>Step 4: Drape the Pallu Over Your Shoulder</h2><p>Take the remaining fabric (pallu) and bring it from your left hip around your back to your right shoulder.</p><h2>Step 5: Secure the Pallu</h2><p>Pin the pallu to your blouse at the shoulder with a safety pin.</p><h2>Step 6: Adjust the Length</h2><p>Check the length all the way around — the saree should just touch the top of your feet.</p><h2>Common Mistakes to Avoid</h2><p>Petticoat too loose, pleats too wide or too narrow, pallu too long, wrong shoes. Shop our <a href="/sarees">saree collection</a> for beginner-friendly options.</p>',
+  },
+  {
+    path: '/blog/best-lehenga-styles-indian-wedding-guests-usa-2026',
+    title: 'Best Lehenga Styles for Indian Wedding Guests in USA (2026 Guide) | LuxeMia',
+    description: 'Discover the best lehenga styles for Indian wedding guests in 2026. From sangeet to reception, learn which colors, fabrics, and silhouettes work best for each ceremony.',
+    h1: 'Best Lehenga Styles for Indian Wedding Guests in USA (2026 Guide)',
+    content: '<p>Attending an Indian wedding as a guest comes with a delicious dilemma: what to wear. This 2026 guide breaks down the best lehenga styles for Indian wedding guests in the USA, with practical advice on color choices, fabric selection, and where to shop online.</p><h2>Best Lehenga Colors for Wedding Guests in 2026</h2><p>Royal blue, emerald green, dusty rose and blush pink, wine and burgundy, ivory and champagne. Avoid red (reserved for the bride), white, and black.</p><h2>Best Lehenga Fabrics for Each Season</h2><p>Summer: georgette, chiffon, organza, net. Winter: velvet, raw silk, brocade, chinon.</p><h2>Lehenga Silhouettes for Different Body Types</h2><p>A-Line (universally flattering), Flared (dramatic), Straight-Cut (modern), Mermaid (body-hugging).</p><h2>Where to Shop Lehengas Online in the USA</h2><p>Shop our <a href="/lehengas">lehenga collection</a> — ready-to-ship and custom-tailored options shipped to the USA, Canada, and Australia with free shipping over $350.</p>',
+  },
+  {
+    path: '/blog/what-to-wear-south-asian-wedding-non-indian-guest',
+    title: 'What to Wear to a South Asian Wedding as a Non-Indian Guest | LuxeMia',
+    description: 'Attending an Indian wedding but not sure what to wear? This guide for non-Indian guests covers dress codes, color etiquette, where to shop, and cultural tips.',
+    h1: 'What to Wear to a South Asian Wedding as a Non-Indian Guest',
+    content: '<p>Being invited to a South Asian wedding is an honor. But if you are not of Indian or South Asian heritage, the question of what to wear can feel daunting. This guide answers all your questions so you can attend with confidence and cultural respect.</p><h2>Is It Okay to Wear Indian Clothes?</h2><p>Yes — and your hosts will likely be delighted. Wearing Indian attire shows appreciation for the culture.</p><h2>Understanding the Different Ceremonies</h2><p>Mehendi (casual), Sangeet (glamorous), Haldi (yellow), Wedding Ceremony (formal), Reception (most formal).</p><h2>Color Etiquette</h2><p>Safe colors: royal blue, emerald green, pink, gold, purple, yellow. Avoid: red (bride), pure white (mourning), pure black (inauspicious).</p><h2>What to Wear: Your Options</h2><p>Saree, Lehenga, Salwar Kameez, Anarkali Suit, Indo-Western Fusion. Shop <a href="/lehengas">lehengas</a> or <a href="/sarees">sarees</a> at LuxeMia.</p>',
+  },
+  {
+    path: '/blog/diwali-outfit-ideas-nri-women-usa-canada-australia',
+    title: 'Diwali Outfit Ideas for NRI Women in USA, Canada & Australia (2026) | LuxeMia',
+    description: 'Celebrate Diwali 2026 in style. From silk sarees to festive lehengas, discover the best Diwali outfit ideas for NRI women — plus where to shop online and how to ship fast.',
+    h1: 'Diwali Outfit Ideas for NRI Women in USA, Canada & Australia (2026)',
+    content: '<p>Diwali, the festival of lights, is the most celebrated festival in Indian culture. This guide covers the best Diwali outfit ideas for 2026, from traditional silks to modern fusion wear, with practical tips on where to shop and how to get your outfit shipped fast.</p><h2>Traditional Diwali Outfit Ideas</h2><p>Silk Saree, Festive Lehenga, Anarkali Suit, Salwar Kameez with Dupatta.</p><h2>Modern Diwali Outfit Ideas</h2><p>Indo-Western Fusion, Cape-Style Lehenga, Pre-Stitched Saree.</p><h2>Diwali Color Palette 2026</h2><p>Traditional: deep red, royal blue, emerald green, gold. Modern: dusty rose, ivory, plum.</p><h2>When to Order Your Diwali Outfit</h2><p>Order 4-6 weeks before Diwali for ready-to-ship items. Shop our <a href="/collections/diwali-outfits">Diwali collection</a>.</p>',
+  },
+  {
+    path: '/blog/kanjivaram-vs-banarasi-silk-sarees',
+    title: 'Kanjivaram vs Banarasi Silk Sarees: Which Should You Buy? | LuxeMia',
+    description: 'Confused between Kanjivaram and Banarasi silk sarees? This detailed comparison covers origin, weaving technique, design, price, and care — helping you choose the right silk saree.',
+    h1: 'Kanjivaram vs Banarasi Silk Sarees: Which Should You Buy?',
+    content: '<p>Kanjivaram and Banarasi are the two most celebrated silk sarees in India. Both are handwoven masterpieces with centuries of tradition. This guide compares them across every dimension that matters.</p><h2>Origin and History</h2><p>Kanjivaram from Kanchipuram, Tamil Nadu (400+ years). Banarasi from Varanasi, Uttar Pradesh (Mughal era, 17th century).</p><h2>Weaving Technique</h2><p>Kanjivaram: three shuttles, korvai interlocking. Banarasi: jacquard loom, intricate brocade.</p><h2>Visual Differences</h2><p>Kanjivaram: bold contrasting borders, temple motifs, thick lustrous silk. Banarasi: all-over brocade, Persian motifs, softer silk.</p><h2>Price Comparison</h2><p>Art silk: $50-150. Pure silk with test zari: $200-500. Pure silk with real zari: $500-2000. Shop <a href="/sarees">silk sarees</a> at LuxeMia.</p>',
+  },
+  {
+    path: '/blog/indian-wedding-guest-outfits-men-usa-guide',
+    title: 'Indian Wedding Guest Outfits for Men: Complete USA Guide (2026) | LuxeMia',
+    description: 'The only guide men need for Indian wedding guest outfits. From sherwani to kurta pajama, learn what to wear to each ceremony, where to shop online in the USA, and how to get the right fit.',
+    h1: 'Indian Wedding Guest Outfits for Men: Complete USA Guide (2026)',
+    content: '<p>Indian weddings are no longer just a South Asian celebration. This guide covers everything men need to know about Indian wedding guest outfits, from ceremony dress codes to where to shop online.</p><h2>Key Indian Menswear Terms</h2><p>Kurta Pajama, Sherwani, Nehru Jacket, Indo-Western, Churidar.</p><h2>What to Wear to Each Ceremony</h2><p>Mehendi (casual kurta), Sangeet (silk kurta + Nehru jacket), Haldi (yellow kurta), Wedding Ceremony (sherwani), Reception (indo-western suit).</p><h2>Color Guide for Men</h2><p>Safe: ivory, gold, deep blue, emerald green, maroon. Avoid: black, white, red.</p><h2>Where to Shop</h2><p>Shop our <a href="/menswear">menswear collection</a> with free shipping over $350.</p>',
+  },
+  {
+    path: '/blog/how-to-choose-salwar-kameez-body-type',
+    title: 'How to Choose the Right Salwar Kameez for Your Body Type | LuxeMia',
+    description: 'Find the perfect salwar kameez for your body shape. This guide covers the best styles for pear, apple, hourglass, rectangle, and petite figures — with fit tips, fabric choices, and styling advice.',
+    h1: 'How to Choose the Right Salwar Kameez for Your Body Type',
+    content: '<p>The salwar kameez is one of the most versatile garments in Indian fashion. This guide breaks down the best styles for each body type, with practical fit tips and styling advice.</p><h2>Understanding Your Body Type</h2><p>Pear, Apple, Hourglass, Rectangle, Petite.</p><h2>Best Styles for Each Body Type</h2><p>Pear: A-line kameez, boat neck. Apple: long anarkali, V-neck. Hourglass: fitted kameez. Rectangle: anarkali, peplum. Petite: short kameez, churidar.</p><h2>Neckline Guide</h2><p>V-neck, boat neck, square neck, round neck, halter, high collar.</p><h2>Fabric Guide by Body Type</h2><p>Flowy for pear/apple/petite. Stiff for rectangle/hourglass. Shop <a href="/suits">salwar kameez</a> at LuxeMia.</p>',
+  },
+  {
+    path: '/blog/custom-tailoring-indian-ethnic-wear-usa',
+    title: 'Custom Tailoring Indian Ethnic Wear in USA: What You Need to Know | LuxeMia',
+    description: 'Thinking about custom-tailored Indian ethnic wear? This complete guide covers the measurement process, timeline, costs, and benefits of made-to-measure lehengas, sarees, and suits shipped to the USA.',
+    h1: 'Custom Tailoring Indian Ethnic Wear in USA: What You Need to Know',
+    content: '<p>Off-the-rack Indian ethnic wear is convenient, but nothing fits quite like a custom-tailored outfit. This guide explains everything you need to know about custom tailoring Indian ethnic wear, from the measurement process to what to expect.</p><h2>Benefits of Custom-Tailored Ethnic Wear</h2><p>Perfect fit, better comfort, customization options, better quality, investment value.</p><h2>The Measurement Process</h2><p>Bust, under-bust, waist, hip, shoulder, sleeve length, bicep, armhole, kameez length, neck depth, pant length, thigh, ankle.</p><h2>Custom Tailoring Timeline</h2><p>Measurement: 1-2 days. Stitching: 5-10 business days. Shipping: 7-10 business days. Total: 2-4 weeks.</p><h2>Cost</h2><p>At LuxeMia, custom tailoring is complimentary on most products. Shop <a href="/lehengas">lehengas</a> or <a href="/suits">suits</a>.</p>',
+  },
+  {
+    path: '/blog/haldi-vs-mehendi-outfits-complete-guide',
+    title: 'Haldi vs Mehendi Outfits: Complete Guide to Pre-Wedding Ceremony Fashion | LuxeMia',
+    description: 'What is the difference between haldi and mehendi outfits? This complete guide covers color choices, fabrics, styling tips, and outfit ideas for both pre-wedding ceremonies.',
+    h1: 'Haldi vs Mehendi Outfits: Complete Guide to Pre-Wedding Ceremony Fashion',
+    content: '<p>Of all the pre-wedding ceremonies in an Indian wedding, the haldi and mehendi are the most colorful, festive, and fun. This guide covers everything you need to know about haldi and mehendi outfits.</p><h2>What Is the Haldi Ceremony?</h2><p>A pre-wedding ritual where turmeric paste is applied to the bride and groom. Morning event, yellow/orange theme.</p><h2>What Is the Mehendi Ceremony?</h2><p>A pre-wedding event where henna designs are applied. Evening event, colorful and festive.</p><h2>Haldi Outfit Guide</h2><p>Colors: bright yellow, marigold orange, mustard. Fabrics: cotton, linen. Styles: kurta pajama, salwar kameez.</p><h2>Mehendi Outfit Guide</h2><p>Colors: green, pink, orange, turquoise. Fabrics: georgette, chiffon, cotton silk. Styles: salwar kameez, anarkali, lehenga. Shop <a href="/collections/mehendi-outfits">mehendi outfits</a>.</p>',
+  },
+  {
+    path: '/blog/how-to-care-for-silk-sarees-and-lehengas',
+    title: 'How to Care for Silk Sarees & Lehengas: Complete Guide (Wash, Store, Maintain) | LuxeMia',
+    description: 'Silk sarees and lehengas are investments. This complete care guide covers washing, storing, ironing, and maintaining silk ethnic wear so it lasts for generations.',
+    h1: 'How to Care for Silk Sarees & Lehengas: Complete Guide',
+    content: '<p>Silk sarees and lehengas are more than clothing — they are investments, heirlooms, and often the most expensive garments in your wardrobe. This guide covers everything you need to know about caring for silk sarees and lehengas.</p><h2>Why Silk Requires Special Care</h2><p>Silk is a natural protein fiber — heat sensitive, sunlight sensitive, chemical sensitive, absorbent, crease-prone.</p><h2>Washing Silk Sarees and Lehengas</h2><p>Golden rule: dry clean only. Hand wash only if label allows and no embellishments.</p><h2>Storing Silk Sarees and Lehengas</h2><p>Cool and dry, dark, well-ventilated, pest-free. Wrap in muslin cloth. Refold every 3-6 months. Never hang.</p><h2>Ironing</h2><p>Use silk setting, iron inside-out, use pressing cloth. Steam preferred.</p><h2>Maintaining Zari Work</h2><p>Wrap in muslin, avoid perfume, never iron directly on zari. See our <a href="/care-guide">care guide</a> for more.</p>',
   },
 ];
 
