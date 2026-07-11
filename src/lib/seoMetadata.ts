@@ -29,32 +29,32 @@ export interface PageMetadata {
  */
 export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/': {
-    title: 'LuxeMia | Buy Indian Ethnic Wear Online — Lehengas, Sarees & Sherwanis',
-    description: 'Shop designer Indian ethnic wear online. Bridal lehengas, silk sarees, salwar suits & sherwanis. Luxury craftsmanship, worldwide shipping over $350.',
+    title: 'LuxeMia — Buy Indian Ethnic Wear Online | Sarees, Lehengas & Suits',
+    description: 'Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350.',
     canonical: SITE_URL,
     image: `${SITE_URL}/og-image.jpg`,
   },
   '/sarees': {
-    title: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
-    description: 'Shop silk, bridal & designer sarees at LuxeMia. Banarasi, Kanchipuram & georgette sarees. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
+    description: 'Shop 200+ Indian sarees online at LuxeMia. Banarasi silk, Kanchipuram, designer georgette & wedding sarees with custom blouse stitching. Free shipping to USA, Canada & Australia over $350.',
     canonical: `${SITE_URL}/sarees`,
     image: `${SITE_URL}/og/og-sarees.jpg`,
   },
   '/lehengas': {
-    title: 'Buy Bridal & Wedding Lehengas Online | Designer Lehenga Choli | LuxeMia',
-    description: 'Buy bridal lehengas & wedding lehengas online. Designer bridal lehenga choli in silk & velvet with hand embroidery. Luxury craftsmanship, worldwide shipping.',
+    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
+    description: 'Shop 260+ lehengas online at LuxeMia. Bridal, wedding, party wear & festive lehenga choli in silk, net & velvet with hand embroidery. Custom tailoring available. Free shipping over $350.',
     canonical: `${SITE_URL}/lehengas`,
     image: `${SITE_URL}/og/og-lehengas.jpg`,
   },
   '/suits': {
-    title: 'Buy Indian Designer Salwar Suits Online USA | Anarkali & Palazzo | LuxeMia',
-    description: 'Buy Indian designer salwar suits online in USA. Salwar kameez for women, designer anarkalis & palazzo suits with handcrafted embroidery. Worldwide shipping.',
+    title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
+    description: 'Shop 300+ Indian salwar suits online at LuxeMia. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring available. Free shipping to USA, Canada & Australia over $350.',
     canonical: `${SITE_URL}/suits`,
     image: `${SITE_URL}/og/og-suits.jpg`,
   },
   '/menswear': {
-    title: 'Designer Sherwanis for Men Online USA | Wedding & Groom Sherwanis | LuxeMia',
-    description: 'Shop designer sherwanis for men online in USA. Premium sherwani for weddings & festive events, kurta pajama & indo-western. Luxury craftsmanship worldwide.',
+    title: 'Buy Sherwanis Online — Wedding & Groom Sherwani for Men | LuxeMia',
+    description: 'Shop designer sherwanis for men online at LuxeMia. Groom sherwanis, kurta pajama sets & indo-western menswear with hand embroidery. Custom tailoring available. Free shipping over $350.',
     canonical: `${SITE_URL}/menswear`,
     image: `${SITE_URL}/og/og-menswear.jpg`,
   },

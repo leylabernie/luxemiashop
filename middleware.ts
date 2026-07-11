@@ -71,7 +71,10 @@ const UK_REDIRECT_ROUTES = new Set([
 // Example: '/collections/some-old-collection', '/some-old-landing-page'
 const GONE_ROUTES: Set<string> = new Set<string>([
   // ── Manually maintained entries (add retired URLs from GSC export here) ──
-  // e.g. '/old-flash-sale-page', '/collections/clearance-2024'
+  // Product was deleted from Shopify but still gets GSC impressions (8 imp, 1 click
+  // at pos 6.38 as of 2026-07-11). 410 tells Google to drop it from the index
+  // immediately, vs. 404 which Google retries for weeks.
+  '/product/art-silk-pista-green-groom-wear-thread-work-readymade-sherwani',
 ]);
 
 // Combine manual GONE_ROUTES with auto-discovered dead product handles from build.
@@ -442,8 +445,8 @@ interface PageMeta {
 
 const STATIC_PAGE_META: Record<string, PageMeta> = {
   '/': {
-    title: 'Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees',
-    description: 'Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!',
+    title: 'LuxeMia — Buy Indian Ethnic Wear Online | Sarees, Lehengas & Suits',
+    description: 'Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350.',
     image: 'https://luxemia.shop/og-image.jpg',
   },
   // Occasion landing pages
@@ -473,23 +476,23 @@ const STATIC_PAGE_META: Record<string, PageMeta> = {
     image: 'https://luxemia.shop/og/og-lehengas.jpg',
   },
   '/sarees': {
-    title: 'Buy Sarees Online | Indian Silk, Wedding & Banarasi Sarees - LuxeMia',
-    description: 'Buy Indian sarees online at LuxeMia. Shop silk sarees, Banarasi, Kanchipuram wedding sarees, party wear & festive sarees. Free shipping to USA & Canada.',
+    title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
+    description: 'Shop 200+ Indian sarees online at LuxeMia. Banarasi silk, Kanchipuram, designer georgette & wedding sarees with custom blouse stitching. Free shipping to USA, Canada & Australia over $350.',
     image: 'https://luxemia.shop/og/og-sarees.jpg',
   },
   '/lehengas': {
-    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia',
-    description: 'Buy bridal lehengas online at LuxeMia. Shop wedding lehenga choli, festive lehengas & party wear in silk, net & velvet. Custom sizing available. Free shipping to USA & Canada.',
+    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
+    description: 'Shop 260+ lehengas online at LuxeMia. Bridal, wedding, party wear & festive lehenga choli in silk, net & velvet with hand embroidery. Custom tailoring available. Free shipping over $350.',
     image: 'https://luxemia.shop/og/og-lehengas.jpg',
   },
   '/suits': {
-    title: 'Buy Salwar Kameez Online | Anarkali, Palazzo & Sharara Suits - LuxeMia',
-    description: 'Buy salwar kameez online at LuxeMia. Shop Anarkali suits, Palazzo sets, Sharara suits & Pakistani suits. Free worldwide shipping to USA & Canada.',
+    title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
+    description: 'Shop 300+ Indian salwar suits online at LuxeMia. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring available. Free shipping to USA, Canada & Australia over $350.',
     image: 'https://luxemia.shop/og/og-suits.jpg',
   },
   '/menswear': {
-    title: 'Buy Sherwani Online | Indian Ethnic Wear for Men - Groom & Wedding - LuxeMia',
-    description: 'Buy Indian ethnic wear for men online at LuxeMia. Shop groom sherwanis, kurta pajama sets, velvet sherwanis & Nehru jackets. Custom sizing available. Free shipping worldwide.',
+    title: 'Buy Sherwanis Online — Wedding & Groom Sherwani for Men | LuxeMia',
+    description: 'Shop designer sherwanis for men online at LuxeMia. Groom sherwanis, kurta pajama sets & indo-western menswear with hand embroidery. Custom tailoring available. Free shipping over $350.',
     image: 'https://luxemia.shop/og/og-menswear.jpg',
   },
   '/collections': {
