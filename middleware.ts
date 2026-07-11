@@ -42,6 +42,15 @@ const REDIRECT_ROUTES = new Set([
   '/collections/indo-western',
   '/collections/bridesmaid-dresses',
   '/collections/groomsman-outfits',
+  '/collections/sharara-suits',
+  '/collections/gharara-suits',
+  '/collections/anarkali-suits',
+  '/collections/pakistani-suits',
+  '/collections/party-wear-lehengas',
+  '/collections/wedding-lehengas',
+  '/collections/lehenga-choli',
+  '/collections/silk-sarees',
+  '/collections/designer-sarees',
 ]);
 
 // Routes that must 301 redirect to /nri (UK pages no longer targeted)

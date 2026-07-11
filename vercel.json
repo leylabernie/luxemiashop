@@ -69,6 +69,56 @@
       "statusCode": 301
     },
     {
+      "source": "/collections/sharara-suits",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/gharara-suits",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/anarkali-suits",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/pakistani-suits",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/party-wear-lehengas",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/wedding-lehengas",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/lehenga-choli",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/silk-sarees",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/designer-sarees",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/designer-wedding-dress-under-50000",
+      "destination": "/blog/designer-wedding-dress-under-500",
+      "statusCode": 301
+    },
+    {
       "source": "/collections/indo-western",
       "destination": "/indowestern",
       "statusCode": 301

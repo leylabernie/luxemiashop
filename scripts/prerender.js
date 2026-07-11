@@ -1198,6 +1198,13 @@ const routes = [
     content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver elegance for less.</p>',
   },
   {
+    path: '/blog/kanchipuram-silk-saree-south-indian-wedding-guide',
+    title: 'Kanchipuram Silk Sarees: South Indian Wedding Guide | LuxeMia Blog',
+    description: 'Complete guide to Kanchipuram (Kanjivaram) silk sarees — history, authentication with GI tags, pricing, bridal styling, and care tips for South Indian weddings.',
+    h1: 'Kanchipuram Silk Sarees: The Ultimate South Indian Wedding Guide',
+    content: '<p>The Kanchipuram silk saree (also called Kanjivaram) is the finest silk saree in India and the traditional choice for South Indian brides. Woven in Kanchipuram, Tamil Nadu for over 400 years, these sarees feature pure mulberry silk, real zari threads, and an interlocked-weft technique that makes the border and body inseparable. Authentic Kanchipuram sarees carry a GI tag with a unique serial number. Prices range from $200 for simple festive styles to $2,000+ for heavy bridal pieces. South Indian brides traditionally wear a 9-yard Kanchipuram in auspicious colors like arakku red, maroon, or yellow, with heavy temple border designs. For festive occasions, lighter Kanchipuram sarees in royal blue, emerald green, or mango yellow are popular. Always dry-clean Kanchipuram silk and store in muslin cloth with neem leaves to preserve the zari for generations.</p>',
+  },
+  {
     path: '/blog/nri-wedding-ethnic-wear-trends-2026',
     title: 'NRI Wedding Ethnic Wear Trends 2026 | LuxeMia',
     description: 'NRI wedding ethnic wear trends for 2026. Fusion styles, destination wedding outfits & practical tips for Indians abroad planning their wedding.',

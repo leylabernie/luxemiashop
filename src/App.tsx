@@ -137,6 +137,16 @@ const App = () => (
                 <Route path="/collections/suits" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/menswear" element={<Navigate to="/menswear" replace />} />
                 <Route path="/collections/lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/sharara-suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/gharara-suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/anarkali-suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/pakistani-suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/party-wear-lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/wedding-lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/lehenga-choli" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/silk-sarees" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/designer-sarees" element={<Navigate to="/sarees" replace />} />
+                <Route path="/blog/designer-wedding-dress-under-50000" element={<Navigate to="/blog/designer-wedding-dress-under-500" replace />} />
                 <Route path="/collections/indo-western" element={<Navigate to="/indowestern" replace />} />
                 <Route path="/collections/bridesmaid-dresses" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/groomsman-outfits" element={<Navigate to="/menswear" replace />} />
