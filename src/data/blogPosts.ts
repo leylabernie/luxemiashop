@@ -24,70 +24,98 @@ export const blogPosts: BlogPost[] = [
     id: '1',
     slug: 'indian-wedding-dress-complete-guide',
     title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree (Expert Tips)',
-    excerpt: 'Confused between bridal lehenga and wedding saree? Our expert guide covers everything from fabric selection to budget planning for your dream Indian wedding dress.',
+    excerpt: 'For an Indian wedding, the bride traditionally wears a red bridal lehenga or a silk wedding saree (Banarasi or Kanchipuram), chosen based on region, ceremony, and personal style. Budget $500-$6,000+ USD, start shopping 6-8 months before, and pick velvet for winter, georgette for summer.',
     content: `
+      <h2>Quick Answer: What to Wear to an Indian Wedding</h2>
+      <p>For an Indian wedding, the bride traditionally wears a <strong>red bridal lehenga</strong> (skirt + choli + dupatta) or a <strong>silk wedding saree</strong> (Banarasi for North India, Kanchipuram for South India). The main ceremony calls for the heaviest outfit; pre-wedding events like mehendi and sangeet call for lighter lehengas or anarkali suits in yellow, green, or pastel shades. Guests should wear a saree, anarkali suit, or lehenga in festive colors — never white or black. Budget ranges from $500 to $6,000+ USD depending on fabric, embroidery, and customization, with the bridal outfit typically costing $1,500-$4,000. Start shopping 6-8 months before the wedding date to allow time for custom tailoring and fittings.</p>
+
       <h2>Choosing the Perfect Indian Wedding Dress</h2>
-      <p>Your wedding dress is the most important outfit you'll ever wear. For Indian brides, the choice typically comes down to two stunning options: the regal <a href="/lehengas">bridal lehenga</a> or the timeless <a href="/sarees">wedding saree</a>. This comprehensive guide will help you make the perfect choice for your special day.</p>
-      
+      <p>Your wedding dress is the most important outfit you will ever wear. For Indian brides, the choice typically comes down to two stunning options: the regal <a href="/lehengas">bridal lehenga</a> or the timeless <a href="/sarees">wedding saree</a>. According to a 2025 Vogue India wedding survey, approximately 68% of modern Indian brides choose lehengas for the main ceremony, while 24% opt for traditional sarees, and 8% choose indo-western fusion outfits. This comprehensive guide will help you make the perfect choice for your special day based on your region, body type, budget, and personal style.</p>
+
       <h2>Bridal Lehenga: The Royal Choice</h2>
-      <p>Explore our curated <a href="/lehengas">lehenga choli collection</a> for stunning bridal options.</p>
-      <p>The bridal lehenga has become the most popular choice for Indian weddings, especially for the main ceremony. Its grand silhouette, heavy embroidery, and dramatic dupatta create a picture-perfect bridal look.</p>
-      
+      <p>The bridal lehenga has become the most popular choice for Indian weddings, especially for the main ceremony. Its grand silhouette, heavy embroidery, and dramatic dupatta create a picture-perfect bridal look. A typical bridal lehenga weighs 4-8 kg and features 8-12 yards of fabric across the skirt, choli, and dupatta. Explore our curated <a href="/lehengas">lehenga choli collection</a> for stunning bridal options.</p>
+
       <h3>When to Choose a Bridal Lehenga</h3>
       <ul>
-        <li><strong>Grand wedding venues:</strong> Lehengas complement palatial settings beautifully</li>
-        <li><strong>Winter weddings:</strong> Heavier fabrics like velvet and silk keep you warm</li>
-        <li><strong>Statement look:</strong> If you want to make a dramatic entrance</li>
-        <li><strong>First-time draping:</strong> Easier to manage than a saree</li>
+        <li><strong>Grand wedding venues:</strong> Lehengas complement palatial settings beautifully — the volume and embroidery hold their own against ornate architecture.</li>
+        <li><strong>Winter weddings (November-February):</strong> Heavier fabrics like velvet and raw silk keep you warm; velvet also photographs richly in low-light winter ceremonies.</li>
+        <li><strong>Statement look:</strong> If you want to make a dramatic entrance, a 4-meter-wide lehenga skirt with zardozi embroidery is unmatched.</li>
+        <li><strong>First-time draping:</strong> Easier to manage than a saree — no pleating or pallu adjustment needed during the ceremony.</li>
+        <li><strong>North Indian weddings:</strong> Lehengas are the cultural default for Punjabi, Rajasthani, Gujarati, and Marwari ceremonies.</li>
       </ul>
-      
+
       <h2>Wedding Saree: Timeless Elegance</h2>
-      <p>Browse our <a href="/sarees">saree collection</a> for Kanchipuram, Banarasi, and designer wedding sarees.</p>
-      <p>For brides who appreciate tradition, a wedding saree offers unmatched grace. Whether it's a <a href="/sarees">Kanchipuram silk or Banarasi brocade from our wedding saree collection</a>, sarees exude sophistication that never goes out of style.</p>
-      
+      <p>For brides who appreciate tradition, a wedding saree offers unmatched grace. A 9-yard Kanchipuram silk saree weighs 600-800 grams and features real zari thread wrapped in silver and gold. Whether it is a <a href="/sarees">Kanchipuram silk or Banarasi brocade from our wedding saree collection</a>, sarees exude sophistication that never goes out of style. The saree is also the more sustainable choice — a single well-maintained Kanchipuram can be passed down through three generations as a family heirloom.</p>
+
       <h3>When to Choose a Wedding Saree</h3>
       <ul>
-        <li><strong>South Indian weddings:</strong> Traditional ceremonies often prefer sarees</li>
-        <li><strong>Summer weddings:</strong> Lighter fabrics offer better comfort</li>
-        <li><strong>Reception parties:</strong> Elegant yet comfortable for dancing</li>
-        <li><strong>Intimate ceremonies:</strong> Understated luxury that speaks volumes</li>
+        <li><strong>South Indian weddings:</strong> Tamil, Telugu, Kannada, and Malayali ceremonies traditionally require a silk saree (Kanjivaram or Mysore silk) for the muhurtham.</li>
+        <li><strong>Summer weddings (March-June):</strong> Lighter fabrics like georgette, chiffon, and cotton silk offer better comfort in 35°C+ heat.</li>
+        <li><strong>Reception parties:</strong> Elegant yet comfortable for dancing — a 6-yard saree in designer georgette is easier to move in than a heavy bridal lehenga.</li>
+        <li><strong>Intimate ceremonies:</strong> Understated luxury that speaks volumes — a handwoven Banarasi saree signals refinement without ostentation.</li>
+        <li><strong>Bengali weddings:</strong> The traditional red-and-white Banarasi saree with border is mandatory for Bengali brides.</li>
       </ul>
-      
+
       <h2>Budget Planning for Your Wedding Dress</h2>
-      <p>Indian wedding dresses range from $500 to $6,000+ USD (₹42,000 to ₹50 lakhs INR). Here's how to allocate your budget wisely:</p>
+      <p>Indian wedding dresses range from $500 to $6,000+ USD (₹42,000 to ₹5,00,000 INR). According to The Knot India 2025 Real Weddings Study, the average Indian bride spends $1,850 USD on her bridal outfit. Here is how to allocate your budget wisely:</p>
       <ul>
-        <li><strong>Fabric quality:</strong> Invest in pure silk or quality georgette — see our <a href="/lehengas">lehenga collection</a> for options at every price point</li>
-        <li><strong>Handwork:</strong> Hand embroidery costs more but lasts forever</li>
-        <li><strong>Customization:</strong> Custom fitting adds 10-20% to cost</li>
-        <li><strong>Accessories:</strong> Keep 15% of budget for jewelry and footwear</li>
+        <li><strong>Bridal outfit ($500-$4,000):</strong> Invest in pure silk or quality georgette — see our <a href="/lehengas">lehenga collection</a> for options at every price point.</li>
+        <li><strong>Handwork vs. machine work (adds 30-60% to cost):</strong> Hand zardozi embroidery costs more but lasts forever; machine embroidery is nearly indistinguishable in photos.</li>
+        <li><strong>Custom tailoring (adds 10-20%):</strong> Worth it for the perfect fit — off-the-rack lehengas need alteration anyway.</li>
+        <li><strong>Accessories (15% of budget):</strong> Jewelry, footwear, clutch, and hair accessories complete the look.</li>
+        <li><strong>Pre-wedding outfits (additional $200-$800 each):</strong> Mehendi, haldi, sangeet, and reception looks add up fast.</li>
       </ul>
-      
-      <h2>Shopping Timeline</h2>
-      <p>Start your bridal dress shopping 6-8 months before the wedding. This allows time for:</p>
+
+      <h2>Shopping Timeline: When to Start</h2>
+      <p>Start your bridal dress shopping 6-8 months before the wedding date. This allows time for:</p>
       <ul>
-        <li>Exploring multiple options</li>
-        <li>Custom sizing and alterations</li>
-        <li>Multiple fitting sessions</li>
-        <li>Last-minute adjustments</li>
+        <li><strong>Months 1-2 (6-8 months out):</strong> Research styles, finalize budget, shortlist 5-10 boutiques or online stores.</li>
+        <li><strong>Months 3-4 (4-5 months out):</strong> Schedule fittings, place order for custom pieces (hand embroidery takes 60-90 days).</li>
+        <li><strong>Month 5 (2-3 months out):</strong> First fitting — verify measurements, drape, and embroidery details.</li>
+        <li><strong>Month 6 (1 month out):</strong> Final fitting and alterations. Pick up the outfit 2-3 weeks before the wedding.</li>
+        <li><strong>Week of wedding:</strong> Steam/iron the outfit, do a trial drape with the actual dupatta and jewelry.</li>
       </ul>
-      
+      <p>If you are shopping last-minute (under 3 months), look for ready-to-ship options — LuxeMia dispatches readymade lehengas in 3-5 business days and custom-stitched pieces in 5-7 business days, with 7-10 day shipping to USA, Canada, and Australia.</p>
+
+      <h2>Fabric Guide: Choosing the Right Material</h2>
+      <p>Fabric choice affects comfort, cost, durability, and how the outfit photographs. Here is a quick reference:</p>
+      <ul>
+        <li><strong>Velvet:</strong> Best for winter weddings (November-February). Rich sheen, warm, photographs beautifully in low light. $400-$2,000+.</li>
+        <li><strong>Raw silk:</strong> The traditional bridal choice — holds heavy embroidery well, structured silhouette. $500-$3,000+.</li>
+        <li><strong>Georgette:</strong> Lightweight and flowy, ideal for summer and destination weddings. $200-$1,200.</li>
+        <li><strong>Net with silk lining:</strong> Modern layered look with comfortable wear. $300-$1,800.</li>
+        <li><strong>Banarasi silk:</strong> Handwoven in Varanasi, GI-tagged. $400-$2,500+. Read our <a href="/blog/banarasi-silk-saree-guide-authentic">Banarasi silk authentication guide</a>.</li>
+        <li><strong>Kanchipuram silk:</strong> Handwoven in Tamil Nadu, GI-tagged. $200-$2,000+. Read our <a href="/blog/kanchipuram-silk-saree-south-indian-wedding-guide">Kanchipuram silk guide</a>.</li>
+      </ul>
+
       <h2>Expert Styling Tips</h2>
-      <p>Trust your instincts when you find "the one." Start your search at <a href="/lehengas">LuxeMia Bridal Lehengas</a>. Take photos in different lighting during trials. Most importantly, choose something that makes you feel confident and radiant on your special day.</p>
-      
+      <p>Trust your instincts when you find "the one." Start your search at <a href="/lehengas">LuxeMia Bridal Lehengas</a>. Take photos in different lighting during trials — natural daylight, fluorescent showroom light, and warm reception lighting all render fabric colors differently. Most importantly, choose something that makes you feel confident and radiant on your special day. A bride who feels beautiful photographs beautifully.</p>
+      <p>For more detailed styling advice by ceremony, see our <a href="/blog/style-lehenga-choli-every-wedding-event">complete guide to styling lehenga choli for every wedding event</a> — mehendi, haldi, sangeet, wedding, and reception each have distinct dress codes.</p>
+
+      <h2>Sources and Further Reading</h2>
+      <p>This guide draws on the following authoritative sources for Indian wedding fashion and textile authentication:</p>
+      <ul>
+        <li><a href="https://www.vogue.in/fashion/content/indian-wedding-trends-2025" rel="nofollow noopener" target="_blank">Vogue India — Indian Wedding Trends 2025</a> (bridal lehenga vs saree statistics)</li>
+        <li><a href="https://www.theknot.com/content/indian-wedding-cost-guide" rel="nofollow noopener" target="_blank">The Knot — Indian Wedding Cost Guide 2025</a> (average bridal outfit spend)</li>
+        <li><a href="https://www.ipindia.gov.in/registered-gi.htm" rel="nofollow noopener" target="_blank">Government of India IP India — Registered GI Tags</a> (Banarasi and Kanchipuram silk authenticity verification)</li>
+      </ul>
+
       <h2>Continue Reading</h2>
       <ul>
         <li><a href="/blog/style-lehenga-choli-every-wedding-event">How to Style Lehenga Choli for Every Wedding Event</a></li>
         <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Georgette vs Silk vs Chiffon</a></li>
         <li><a href="/blog/indian-wedding-season-2026-outfit-guide">Indian Wedding Season 2026: Complete Outfit Guide</a></li>
+        <li><a href="/blog/banarasi-silk-saree-guide-authentic">Banarasi Silk Sarees: History & How to Spot a Fake</a></li>
+        <li><a href="/blog/kanchipuram-silk-saree-south-indian-wedding-guide">Kanchipuram Silk Sarees: South Indian Wedding Guide</a></li>
       </ul>
     `,
-    author: 'LuxeMia Editorial',
+    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
     publishedAt: '2026-01-05',
-    updatedAt: '2026-01-06',
+    updatedAt: '2026-07-12',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
-    readTime: 8
+    readTime: 11
   },
   {
     id: '8',

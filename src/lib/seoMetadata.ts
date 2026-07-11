@@ -222,8 +222,8 @@ export function getBlogMetadata(slug: string): PageMetadata | null {
       description: 'Understanding Indian ethnic wear fabrics. Complete guide to georgette, silk, chiffon, and more at LuxeMia.',
     },
     'indian-wedding-dress-complete-guide': {
-      title: 'Indian Wedding Dress Complete Guide | LuxeMia Blog',
-      description: 'Complete guide to Indian wedding dresses. From bridal lehengas to wedding sarees, find your perfect dress at LuxeMia.',
+      title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree | LuxeMia Blog',
+      description: 'For an Indian wedding, the bride wears a red bridal lehenga or silk wedding saree (Banarasi/Kanchipuram). Budget $500-$6,000+, start 6-8 months ahead. Expert guide with prices, fabrics, and timeline.',
     },
     'red-bridal-lehenga-trends-2026': {
       title: 'Red Bridal Lehenga Trends 2026 | LuxeMia Blog',

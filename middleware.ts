@@ -589,7 +589,7 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'style-lehenga-choli-every-wedding-event': { title: 'Style Lehenga Choli for Every Wedding Event | LuxeMia Blog', description: 'Style your lehenga choli for every wedding event at LuxeMia.' },
     'indian-wedding-season-2026-outfit-guide': { title: 'Indian Wedding Season 2026 Outfit Guide | LuxeMia Blog', description: 'Complete outfit guide for Indian wedding season 2026 at LuxeMia.' },
     'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon': { title: 'Fabric Guide: Georgette, Silk & Chiffon | LuxeMia Blog', description: 'Understanding Indian ethnic wear fabrics at LuxeMia.' },
-    'indian-wedding-dress-complete-guide': { title: 'Indian Wedding Dress Complete Guide | LuxeMia Blog', description: 'Complete guide to Indian wedding dresses at LuxeMia.' },
+    'indian-wedding-dress-complete-guide': { title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree | LuxeMia Blog', description: 'For an Indian wedding, the bride wears a red bridal lehenga or silk wedding saree (Banarasi/Kanchipuram). Budget $500-$6,000+, start 6-8 months ahead. Expert guide with prices, fabrics, and timeline.' },
     'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Trends 2026 | LuxeMia Blog', description: 'Latest red bridal lehenga trends for 2026 at LuxeMia.' },
     'designer-wedding-dress-under-50000': { title: 'Designer Wedding Dress Under ₹50,000 | LuxeMia Blog', description: 'Designer wedding dresses under ₹50,000 at LuxeMia.' },
     'wedding-guest-outfit-ideas': { title: 'Wedding Guest Outfit Ideas | LuxeMia Blog', description: 'Wedding guest outfit ideas for Indian weddings at LuxeMia.' },

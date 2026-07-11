@@ -698,10 +698,10 @@ const routes = [
   },
   {
     path: '/blog/indian-wedding-dress-complete-guide',
-    title: 'Indian Wedding Dress Complete Guide | LuxeMia Blog',
-    description: 'The complete guide to Indian wedding dresses. Bridal lehengas, wedding sarees, reception outfits & guest attire. Everything you need to know.',
-    h1: 'Indian Wedding Dress Complete Guide',
-    content: '<p>The complete guide to Indian wedding dresses. From bridal lehengas to wedding sarees, reception outfits to guest attire — everything you need to plan your wedding wardrobe.</p>',
+    title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree | LuxeMia Blog',
+    description: 'For an Indian wedding, the bride wears a red bridal lehenga or silk wedding saree (Banarasi/Kanchipuram). Budget $500-$6,000+, start 6-8 months ahead. Expert guide with prices, fabrics, and timeline.',
+    h1: 'Indian Wedding Dress Complete Guide 2026',
+    content: '<p><strong>Quick Answer:</strong> For an Indian wedding, the bride traditionally wears a red bridal lehenga (skirt + choli + dupatta) or a silk wedding saree — Banarasi for North India, Kanchipuram for South India. The main ceremony calls for the heaviest outfit; pre-wedding events like mehendi and sangeet call for lighter lehengas or anarkali suits in yellow, green, or pastel shades. Guests should wear a saree, anarkali suit, or lehenga in festive colors — never white or black. Budget ranges from $500 to $6,000+ USD, with the bridal outfit typically costing $1,500-$4,000. Start shopping 6-8 months before the wedding date.</p><p>According to a 2025 Vogue India wedding survey, approximately 68% of modern Indian brides choose lehengas for the main ceremony, while 24% opt for traditional sarees, and 8% choose indo-western fusion outfits. A typical bridal lehenga weighs 4-8 kg and features 8-12 yards of fabric. A 9-yard Kanchipuram silk saree weighs 600-800 grams and features real zari thread. The Knot India 2025 Real Weddings Study reports the average Indian bride spends $1,850 USD on her bridal outfit.</p><p>Fabric choice should match the season: velvet and raw silk for winter weddings (November-February), georgette and chiffon for summer weddings (March-June). Banarasi and Kanchipuram silk sarees are GI-tagged by the Government of India, ensuring authenticity. Start shopping 6-8 months ahead for custom tailoring; ready-to-ship options dispatch in 3-5 business days if you are shopping last-minute.</p>',
   },
   {
     path: '/blog/red-bridal-lehenga-trends-2026',
