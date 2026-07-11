@@ -45,6 +45,7 @@ const CareGuide = lazy(() => import("./pages/CareGuide"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogCategory = lazy(() => import("./pages/BlogCategory"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
 const Lookbook = lazy(() => import("./pages/Lookbook"));
@@ -176,6 +177,15 @@ const App = () => (
                 <Route path="/admin" element={<Suspense fallback={<PageLoader />}><AdminDashboard /></Suspense>} />
                 {/* Blog */}
                 <Route path="/blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
+                {/* Utsavpedia-style blog category hub routes — MUST come before /blog/:slug to avoid route collision */}
+                <Route path="/blog/attires" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/cultural-connections" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/ethnicalley" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/fashion-cults" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/motifs-embroideries" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/weddings-festivals" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/how-to-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/nri-shopping" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
                 <Route path="/new-arrivals" element={<Suspense fallback={<PageLoader />}><NewArrivals /></Suspense>} />
                 <Route path="/bestsellers" element={<Suspense fallback={<PageLoader />}><Bestsellers /></Suspense>} />

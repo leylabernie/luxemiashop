@@ -659,7 +659,77 @@ const routes = [
         <li><a href="/blog/shipping-indian-clothes-usa-uk-canada-nri-guide">Shipping Indian Clothes to USA, UK & Canada: NRI Guide</a></li>
         <li><a href="/blog/unstitched-vs-ready-to-wear-vs-made-to-measure">Unstitched vs Ready to Wear vs Made to Measure</a></li>
       </ul>
+      <h2>Browse by Category</h2>
+      <ul>
+        <li><a href="/blog/attires">Attires — Lehengas, Sarees, Suits & Sherwanis</a></li>
+        <li><a href="/blog/cultural-connections">Cultural Connections — Symbolism & Traditions</a></li>
+        <li><a href="/blog/ethnicalley">Ethnicalley — Wedding Ceremonies & Festivals</a></li>
+        <li><a href="/blog/fashion-cults">Fashion Cults — Designer Profiles</a></li>
+        <li><a href="/blog/motifs-embroideries">Motifs & Embroideries — Textile Techniques</a></li>
+        <li><a href="/blog/weddings-festivals">Weddings & Festivals — Guest Outfits & Regional Traditions</a></li>
+        <li><a href="/blog/how-to-care">How-To & Care — Draping, Care & Tailoring</a></li>
+        <li><a href="/blog/nri-shopping">NRI Shopping — Buying from USA, Canada & Australia</a></li>
+      </ul>
     `,
+  },
+  // ─── Utsavpedia-style blog category hub pages ─────────────────────────────
+  // 8 top-level categories covering the full topical map of Indian ethnic fashion.
+  // Each category page lists all posts in that category with proper CollectionPage schema.
+  {
+    path: '/blog/attires',
+    title: 'Indian Ethnic Attires — Lehengas, Sarees, Suits & Sherwanis Guide | LuxeMia',
+    description: 'Encyclopedia of Indian ethnic clothing — bridal lehengas, silk sarees, anarkali suits, sharara sets, sherwanis & jewelry. Fabric, fit, color, and styling guides for every attire.',
+    h1: 'Attires — Encyclopedia of Indian Ethnic Clothing',
+    content: '<p>Explore the complete encyclopedia of Indian ethnic attires. From the regal bridal lehenga to the timeless Banarasi saree, from sharara suits to designer sherwanis — each garment has a history, a regional tradition, and a specific ceremony it belongs to. Our attires guides cover fabric choices, silhouette comparisons, color theory for skin tones, budget allocation, and styling for every body type.</p><h2>What You\'ll Find in This Category</h2><ul><li>Bridal lehenga guides — color trends, fabric choices, budget planning, and online buying tips</li><li>Saree encyclopedias — Banarasi, Kanchipuram, georgette, and designer wedding sarees</li><li>Suit comparisons — anarkali vs palazzo vs sharara vs Pakistani suits</li><li>Sherwani and menswear guides for grooms and wedding guests</li><li>Jewelry guides — bridal necklace sets, Kundan, polki, and temple jewelry</li><li>Color theory for Indian skin tones — lehenga colors for every complexion</li></ul><p>Browse all 19 articles below, or jump to a specific attire guide using the category navigation.</p>',
+  },
+  {
+    path: '/blog/cultural-connections',
+    title: 'Cultural Significance of Indian Ethnic Wear — Symbolism & Traditions | LuxeMia',
+    description: 'Explore the cultural meaning behind Indian ethnic wear — bindi, sindoor, mangalsutra, bridal colors, regional wedding rituals, and the symbolism of embroidery motifs.',
+    h1: 'Cultural Connections — Symbolism & Traditions of Indian Ethnic Wear',
+    content: '<p>Discover the deep cultural significance behind Indian ethnic wear. Every garment, color, and accessory carries meaning — the red of a bridal lehenga symbolizes prosperity, the bindi marks the ajna chakra, sindoor signals married status, and the mangalsutra is a sacred bond. Our Cultural Connections guides explore the symbolism, rituals, and regional traditions that give Indian ethnic fashion its soul.</p><h2>What You\'ll Find in This Category</h2><ul><li>The symbolism of bridal colors — why red, maroon, and yellow are auspicious</li><li>Regional wedding rituals — Punjabi, Bengali, Tamil, Marwari, Malayali traditions</li><li>The meaning behind the bindi, sindoor, mangalsutra, and kalire</li><li>Mehendi ceremony traditions and the significance of henna patterns</li><li>The cultural importance of specific embroidery motifs — paisley, peacock, lotus</li><li>How NRI families preserve cultural traditions through ethnic fashion</li></ul><p>This category is currently being developed. Check back soon for our first articles, or explore our other categories below.</p>',
+  },
+  {
+    path: '/blog/ethnicalley',
+    title: 'Indian Wedding Ceremonies & Festival Dress Codes — Mehendi to Reception | LuxeMia',
+    description: 'Complete dress code guides for every Indian wedding ceremony — mehendi, haldi, sangeet, pheras, reception. Plus festival outfits for Diwali, Navratri, and Eid.',
+    h1: 'Ethnicalley — Indian Wedding Ceremonies & Festival Dress Codes',
+    content: '<p>Step into the ethnicalley of Indian celebrations. Every Indian wedding is a multi-day affair with distinct ceremonies — mehendi, haldi, sangeet, pheras, vidaai, reception — each with its own dress code, color palette, and styling conventions. Our ethnicalley guides walk you through what to wear to each ceremony, the difference between Haldi and Mehendi outfits, how to dress for a South Indian muhurtham vs a Punjabi sangeet, and how NRI women can celebrate Diwali, Navratri, and Eid with authentic ethnic style.</p><h2>What You\'ll Find in This Category</h2><ul><li>Complete Indian wedding ceremony outfit guides — mehendi, haldi, sangeet, pheras, reception</li><li>The difference between Haldi and Mehendi dress codes</li><li>Indian wedding season 2026 outfit planning</li><li>Diwali, Navratri, and Eid outfit ideas for NRI women</li><li>Regional wedding ceremony differences — North vs South India</li><li>What to wear to each ceremony as a guest, bridesmaid, or family member</li></ul><p>Browse all articles below to plan your wedding wardrobe ceremony by ceremony.</p>',
+  },
+  {
+    path: '/blog/fashion-cults',
+    title: 'Indian Ethnic Fashion Designers — Sabyasachi, Manish Malhotra & More | LuxeMia',
+    description: 'Profiles of India\'s top ethnic fashion designers — Sabyasachi, Manish Malhotra, JJ Valaya, Anita Dongre. Their signature styles, iconic collections, and how to shop their looks.',
+    h1: 'Fashion Cults — Designer Profiles of Indian Ethnic Fashion',
+    content: '<p>Meet the designers who shaped modern Indian ethnic fashion. From Sabyasachi Mukherjee\'s revival of handloom textiles to Manish Malhotra\'s Bollywood bridal aesthetic, from JJ Valaya\'s royal couture to Anita Dongre\'s sustainable luxury — each designer has defined a movement. Our Fashion Cults profiles trace their journeys, signature styles, iconic bridal collections, and the cultural moments that made them.</p><h2>What You\'ll Find in This Category</h2><ul><li>Sabyasachi Mukherjee — the revival of handloom and the royal bridal aesthetic</li><li>Manish Malhotra — Bollywood\'s favorite designer and his bridal signature</li><li>JJ Valaya — royal couture and the house of Valaya</li><li>Anita Dongre — sustainable luxury and grassroots empowerment</li><li>Ritu Kumar — the pioneer of Indian fashion revival</li><li>How to shop designer-inspired looks on a budget</li></ul><p>This category is currently being developed. Check back soon for our first designer profiles.</p>',
+  },
+  {
+    path: '/blog/motifs-embroideries',
+    title: 'Indian Embroidery & Textile Guide — Zari, Chikankari, Banarasi & Kanchipuram | LuxeMia',
+    description: 'Complete guide to Indian textile techniques — zari work, chikankari, zardozi, Banarasi silk, Kanchipuram silk, georgette, chiffon. Authentication, pricing, and care.',
+    h1: 'Motifs & Embroideries — Indian Textile Techniques Encyclopedia',
+    content: '<p>Decode the artistry of Indian textiles. The motifs and embroideries on Indian ethnic wear are centuries-old techniques, each with a regional origin and a specific method. Zari is real gold-wrapped thread from Varanasi, chikankari is white shadow-work from Lucknow, zardozi is metallic embroidery once reserved for Mughal royalty, Kanchipuram silk is handwoven on jacquard looms in Tamil Nadu, and Banarasi brocade carries a GI tag protecting its authenticity.</p><h2>What You\'ll Find in This Category</h2><ul><li>Zari work guide — gold and silver thread embroidery techniques</li><li>Chikankari embroidery of Lucknow — shadow work, stitch types, authentication</li><li>Banarasi silk sarees — history, GI tag verification, how to spot a fake</li><li>Kanchipuram (Kanjivaram) silk — South Indian bridal saree encyclopedia</li><li>Fabric comparison guides — silk vs georgette vs chiffon vs net vs velvet</li><li>Indian fabric types reference — pricing, durability, and care for each</li></ul><p>Browse all articles below to understand what you are buying and how to verify authenticity.</p>',
+  },
+  {
+    path: '/blog/weddings-festivals',
+    title: 'Indian Wedding Guest Outfits & Festival Styling Guide | LuxeMia',
+    description: 'What to wear to an Indian wedding — guest dress codes, bridesmaid outfits, mother of bride sarees, men\'s wedding attire, and festival styling for Diwali, Navratri & Eid.',
+    h1: 'Weddings & Festivals — Guest Outfits & Regional Wedding Traditions',
+    content: '<p>Your complete guide to dressing for Indian weddings and festivals. Whether you are a guest at a multi-day Indian wedding, a bridesmaid choosing a cohesive look, a mother of the bride selecting an elegant saree, or an NRI family celebrating Diwali abroad — our Weddings & Festivals guides cover every scenario. Learn the difference between a Punjabi wedding and a Tamil wedding, what men should wear to each ceremony, how to dress for a South Asian wedding as a non-Indian guest, and the latest 2026 wedding fashion trends.</p><h2>What You\'ll Find in This Category</h2><ul><li>What to wear to an Indian wedding as a guest — complete dress code guide</li><li>Wedding guest outfit ideas for every ceremony</li><li>How to style lehenga choli for every wedding event</li><li>Indian wedding trends for 2026</li><li>What non-Indian guests should wear to a South Asian wedding</li><li>Diwali outfit ideas for NRI women in USA, Canada & Australia</li><li>Indian wedding guest outfits for men — complete USA guide</li><li>Styling Indian ethnic wear for festive occasions abroad</li></ul><p>Browse all articles below to plan your wedding and festival wardrobe.</p>',
+  },
+  {
+    path: '/blog/how-to-care',
+    title: 'How to Drape Saree, Care for Silk & Measure for Indian Ethnic Wear | LuxeMia',
+    description: 'Step-by-step guides for saree draping, fabric care, measuring for lehengas, custom tailoring, and storing Indian ethnic wear. Practical skills for every ethnic wardrobe.',
+    h1: 'How-To & Care — Draping, Measuring, Tailoring & Fabric Care',
+    content: '<p>Master the practical skills of Indian ethnic wear. Learn how to drape a saree in 7 different styles (Nivi, Bengali, Gujarati, Maharashtrian, and more), how to measure yourself for a perfect lehenga fit, how to care for silk sarees so they last generations, how to store embroidered lehengas, and the difference between unstitched, ready-to-wear, and made-to-measure options. Our How-To & Care guides are written by professional tailors and stylists with step-by-step photos and video references.</p><h2>What You\'ll Find in This Category</h2><ul><li>How to drape a saree — step-by-step beginner guide with photos</li><li>Saree draping styles for every occasion — 7 regional styles explained</li><li>How to measure yourself for Indian ethnic wear — bust, waist, hips, shoulder</li><li>Custom tailoring guide for Indian ethnic wear in the USA</li><li>How to care for silk sarees — washing, storing, and preserving</li><li>Unstitched vs ready-to-wear vs made-to-measure — which is right for you</li><li>How to choose the right salwar kameez for your body type</li></ul><p>Browse all articles below to master the practical skills of Indian ethnic wear.</p>',
+  },
+  {
+    path: '/blog/nri-shopping',
+    title: 'NRI Guide: Buy Indian Ethnic Wear Online from USA, Canada & Australia | LuxeMia',
+    description: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, customs duties, shipping times, authenticity checks, and trusted online stores for USA, Canada & Australia.',
+    h1: 'NRI Shopping — Buy Indian Ethnic Wear from USA, Canada & Australia',
+    content: '<p>The definitive guide for the NRI diaspora shopping for Indian ethnic wear from abroad. Buying a bridal lehenga from Philadelphia, a wedding saree from Toronto, or a sherwani from Sydney comes with specific challenges — sizing conversion, customs duties, shipping times, authenticity verification, and return policies. Our NRI Shopping guides answer every practical question: how to convert Indian bust sizes to US sizes, what the duty-free limits are for USA/Canada/Australia, how to verify a Banarasi saree is handwoven vs. machine-made, and which online stores ship reliably to your country.</p><h2>What You\'ll Find in This Category</h2><ul><li>NRI guide to buying Indian ethnic wear online from USA, UK & Canada</li><li>How to buy authentic Indian sarees online internationally</li><li>Shipping Indian clothes to USA, UK & Canada — customs and duty guide</li><li>Complete guide to buying Indian ethnic wear online from USA</li><li>NRI wedding ethnic wear trends for 2026</li></ul><p>Browse all articles below to shop with confidence from abroad.</p>',
   },
   {
     path: '/blog/sharara-suit-guide-2026-styles-fabrics',

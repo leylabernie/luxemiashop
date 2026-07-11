@@ -80,6 +80,15 @@ const STATIC_ROUTES = [
   '/collections/mehendi-outfits',
   '/collections/eid-outfits',
   '/collections/navratri-outfits',
+  // Utsavpedia-style blog category hub routes — 8 top-level categories
+  '/blog/attires',
+  '/blog/cultural-connections',
+  '/blog/ethnicalley',
+  '/blog/fashion-cults',
+  '/blog/motifs-embroideries',
+  '/blog/weddings-festivals',
+  '/blog/how-to-care',
+  '/blog/nri-shopping',
 ];
 
 // ─── Shopify GraphQL ────────────────────────────────────────────────────────

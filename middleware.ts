@@ -503,6 +503,38 @@ const STATIC_PAGE_META: Record<string, PageMeta> = {
     title: 'Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion | LuxeMia',
     description: 'Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion for NRIs shopping from USA, Canada & Australia. Get insider tips from top stylists.',
   },
+  '/blog/attires': {
+    title: 'Indian Ethnic Attires — Lehengas, Sarees, Suits & Sherwanis Guide | LuxeMia',
+    description: 'Encyclopedia of Indian ethnic clothing — bridal lehengas, silk sarees, anarkali suits, sharara sets, sherwanis & jewelry. Fabric, fit, color, and styling guides for every attire.',
+  },
+  '/blog/cultural-connections': {
+    title: 'Cultural Significance of Indian Ethnic Wear — Symbolism & Traditions | LuxeMia',
+    description: 'Explore the cultural meaning behind Indian ethnic wear — bindi, sindoor, mangalsutra, bridal colors, regional wedding rituals, and the symbolism of embroidery motifs.',
+  },
+  '/blog/ethnicalley': {
+    title: 'Indian Wedding Ceremonies & Festival Dress Codes — Mehendi to Reception | LuxeMia',
+    description: 'Complete dress code guides for every Indian wedding ceremony — mehendi, haldi, sangeet, pheras, reception. Plus festival outfits for Diwali, Navratri, and Eid.',
+  },
+  '/blog/fashion-cults': {
+    title: 'Indian Ethnic Fashion Designers — Sabyasachi, Manish Malhotra & More | LuxeMia',
+    description: 'Profiles of India\'s top ethnic fashion designers — Sabyasachi, Manish Malhotra, JJ Valaya, Anita Dongre. Their signature styles, iconic collections, and how to shop their looks.',
+  },
+  '/blog/motifs-embroideries': {
+    title: 'Indian Embroidery & Textile Guide — Zari, Chikankari, Banarasi & Kanchipuram | LuxeMia',
+    description: 'Complete guide to Indian textile techniques — zari work, chikankari, zardozi, Banarasi silk, Kanchipuram silk, georgette, chiffon. Authentication, pricing, and care.',
+  },
+  '/blog/weddings-festivals': {
+    title: 'Indian Wedding Guest Outfits & Festival Styling Guide | LuxeMia',
+    description: 'What to wear to an Indian wedding — guest dress codes, bridesmaid outfits, mother of bride sarees, men\'s wedding attire, and festival styling for Diwali, Navratri & Eid.',
+  },
+  '/blog/how-to-care': {
+    title: 'How to Drape Saree, Care for Silk & Measure for Indian Ethnic Wear | LuxeMia',
+    description: 'Step-by-step guides for saree draping, fabric care, measuring for lehengas, custom tailoring, and storing Indian ethnic wear. Practical skills for every ethnic wardrobe.',
+  },
+  '/blog/nri-shopping': {
+    title: 'NRI Guide: Buy Indian Ethnic Wear Online from USA, Canada & Australia | LuxeMia',
+    description: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, customs duties, shipping times, authenticity checks, and trusted online stores for USA, Canada & Australia.',
+  },
   '/brand-story': {
     title: 'Our Story — LuxeMia | Authentic Indian Ethnic Wear for USA, Canada & Australia',
     description: 'Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\'s textile hubs — Surat, Varanasi, Jaipur — and deliver quality-inspected sarees, lehengas & suits to the USA, Canada & Australia. Free shipping over $350.',
