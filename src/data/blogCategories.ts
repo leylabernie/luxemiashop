@@ -107,7 +107,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
  * Each post is assigned to exactly ONE primary category for clean URL hierarchy.
  * Posts can still be cross-referenced via tags and internal links.
  *
- * Total: 56 posts across 8 categories (as of July 2026).
+ * Total: 62 posts across 8 categories (as of July 2026).
  */
 export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   // ─── Attires (19 posts) — clothing types, comparisons, styling ────────────
@@ -131,13 +131,19 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'lehenga-choli-designer-bridal-party-wear-guide': 'attires',
   'best-lehenga-styles-indian-wedding-guests-usa-2026': 'attires',
 
-  // ─── Cultural Connections (2 posts) — symbolism & traditions ──────────────
+  // ─── Cultural Connections (5 posts) — symbolism & traditions ──────────────
   'why-indian-brides-wear-red-cultural-significance': 'cultural-connections',
   'bindi-meaning-history-indian-women': 'cultural-connections',
+  'sindoor-mangalsutra-sacred-symbols-hindu-marriage': 'cultural-connections',
+  'regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari': 'cultural-connections',
+  'embroidery-motifs-symbolism-paisley-peacock-lotus': 'cultural-connections',
 
-  // ─── Fashion Cults (2 posts) — designer profiles ──────────────────────────
+  // ─── Fashion Cults (5 posts) — designer profiles ──────────────────────────
   'sabyasachi-mukherjee-designer-profile-handloom-revival': 'fashion-cults',
   'manish-malhotra-bollywood-bridal-designer-profile': 'fashion-cults',
+  'jj-valaya-royal-couture-house-of-valaya': 'fashion-cults',
+  'anita-dongre-sustainable-luxury-grassroots': 'fashion-cults',
+  'ritu-kumar-pioneer-indian-textile-revival': 'fashion-cults',
 
   // ─── Ethnicalley (3 posts) — ceremonies & traditions ──────────────────────
   'indian-wedding-season-2026-outfit-guide': 'ethnicalley',
