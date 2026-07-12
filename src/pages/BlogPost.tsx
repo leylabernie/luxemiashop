@@ -11,6 +11,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import RelatedArticles from '@/components/blog/RelatedArticles';
+import { getBlogCategoryGroup } from '@/data/blogCategories';
+import { getAuthorByName } from '@/data/blogAuthors';
 
 interface TocItem {
   id: string;
@@ -356,14 +359,39 @@ const BlogPost = () => {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground mb-2">
                 <span className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  {post.author}
+                  {(() => {
+                    const authorProfile = getAuthorByName(post.author);
+                    if (authorProfile) {
+                      return (
+                        <Link to={`/authors/${authorProfile.slug}`} className="hover:text-primary hover:underline transition-colors">
+                          {post.author}
+                        </Link>
+                      );
+                    }
+                    return <span>{post.author}</span>;
+                  })()}
                 </span>
+                {(() => {
+                  const categoryGroup = getBlogCategoryGroup(post.slug);
+                  if (categoryGroup) {
+                    return (
+                      <Link
+                        to={`/blog/${categoryGroup.slug}`}
+                        className="flex items-center gap-1 text-primary hover:underline"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        {categoryGroup.name}
+                      </Link>
+                    );
+                  }
+                  return null;
+                })()}
                 <span className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {new Date(post.publishedAt).toLocaleDateString('en-US', { 
-                    month: 'long', 
-                    day: 'numeric', 
-                    year: 'numeric' 
+                  {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
                   })}
                 </span>
                 <span className="flex items-center gap-2">
@@ -515,45 +543,12 @@ const BlogPost = () => {
           </div>
         </article>
 
-        {/* Related Posts */}
-        {relatedPosts.length > 0 && (
-          <section className="py-12 lg:py-16 bg-muted/30">
-            <div className="container mx-auto px-4">
-              <h2 className="text-2xl font-display font-semibold text-center mb-8">
-                Related Articles
-              </h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
-                {relatedPosts.map(relatedPost => (
-                  <Link key={relatedPost.id} to={`/blog/${relatedPost.slug}`} className="group">
-                    <Card className="h-full overflow-hidden border hover:shadow-lg transition-all">
-                      <div className="aspect-[16/10] overflow-hidden">
-                        <img 
-                          src={relatedPost.image} 
-                          alt={relatedPost.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                      <CardContent className="p-5">
-                        <Badge variant="secondary" className="mb-3">{relatedPost.category}</Badge>
-                        <h3 className="text-lg font-display font-semibold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                          {relatedPost.title}
-                        </h3>
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            {relatedPost.readTime} min
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        {/* Related Articles — uses Utsavpedia-style category system */}
+        <section className="py-12 lg:py-16 bg-muted/30">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <RelatedArticles currentSlug={post.slug} limit={3} />
+          </div>
+        </section>
 
         {/* CTA */}
         <section className="py-12 lg:py-16 bg-primary/5">

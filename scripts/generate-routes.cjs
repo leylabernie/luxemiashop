@@ -89,6 +89,11 @@ const STATIC_ROUTES = [
   '/blog/weddings-festivals',
   '/blog/how-to-care',
   '/blog/nri-shopping',
+  // Author bio pages — E-E-A-T compliance
+  '/authors/ananya-iyer',
+  '/authors/meera-kapoor',
+  '/authors/rajesh-sharma',
+  '/authors/priya-nair',
 ];
 
 // ─── Shopify GraphQL ────────────────────────────────────────────────────────

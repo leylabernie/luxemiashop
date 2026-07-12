@@ -46,6 +46,7 @@ const FAQ = lazy(() => import("./pages/FAQ"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogCategory = lazy(() => import("./pages/BlogCategory"));
+const AuthorBio = lazy(() => import("./pages/AuthorBio"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
 const Lookbook = lazy(() => import("./pages/Lookbook"));
@@ -187,6 +188,8 @@ const App = () => (
                 <Route path="/blog/how-to-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/nri-shopping" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
+                {/* Author bio pages — E-E-A-T compliance per Google's AI playbook */}
+                <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />
                 <Route path="/new-arrivals" element={<Suspense fallback={<PageLoader />}><NewArrivals /></Suspense>} />
                 <Route path="/bestsellers" element={<Suspense fallback={<PageLoader />}><Bestsellers /></Suspense>} />
                 <Route path="/indowestern" element={<Suspense fallback={<PageLoader />}><Indowestern /></Suspense>} />

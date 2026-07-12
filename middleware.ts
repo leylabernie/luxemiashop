@@ -535,6 +535,23 @@ const STATIC_PAGE_META: Record<string, PageMeta> = {
     title: 'NRI Guide: Buy Indian Ethnic Wear Online from USA, Canada & Australia | LuxeMia',
     description: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, customs duties, shipping times, authenticity checks, and trusted online stores for USA, Canada & Australia.',
   },
+  // Author bio pages — E-E-A-T compliance per Google's AI playbook
+  '/authors/ananya-iyer': {
+    title: 'Ananya Iyer — Senior Bridal Stylist | LuxeMia Blog',
+    description: 'Ananya Iyer is LuxeMia\'s Senior Bridal Stylist with 8 years of experience in Indian bridal wear, formerly at Kalki Fashion Mumbai. NIFT Mumbai graduate.',
+  },
+  '/authors/meera-kapoor': {
+    title: 'Meera Kapoor — Textile & Embroidery Specialist | LuxeMia Blog',
+    description: 'Meera Kapoor is LuxeMia\'s Textile & Embroidery Specialist with 10 years researching Indian handloom traditions. NID Ahmedabad graduate.',
+  },
+  '/authors/rajesh-sharma': {
+    title: 'Rajesh Sharma — Menswear & Groom Stylist | LuxeMia Blog',
+    description: 'Rajesh Sharma is LuxeMia\'s Menswear & Groom Stylist with 12 years of experience in Indian ethnic menswear, formerly at Manyavar New Delhi.',
+  },
+  '/authors/priya-nair': {
+    title: 'Priya Nair — NRI Shopping & Lifestyle Editor | LuxeMia Blog',
+    description: 'Priya Nair is LuxeMia\'s NRI Shopping & Lifestyle Editor based in Philadelphia. 6 years writing about Indian ethnic fashion for diaspora audiences.',
+  },
   '/brand-story': {
     title: 'Our Story — LuxeMia | Authentic Indian Ethnic Wear for USA, Canada & Australia',
     description: 'Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\'s textile hubs — Surat, Varanasi, Jaipur — and deliver quality-inspected sarees, lehengas & suits to the USA, Canada & Australia. Free shipping over $350.',
@@ -622,6 +639,7 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'indian-wedding-season-2026-outfit-guide': { title: 'Indian Wedding Season 2026 Outfit Guide | LuxeMia Blog', description: 'Complete outfit guide for Indian wedding season 2026 at LuxeMia.' },
     'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon': { title: 'Fabric Guide: Georgette, Silk & Chiffon | LuxeMia Blog', description: 'Understanding Indian ethnic wear fabrics at LuxeMia.' },
     'indian-wedding-dress-complete-guide': { title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree | LuxeMia Blog', description: 'For an Indian wedding, the bride wears a red bridal lehenga or silk wedding saree (Banarasi/Kanchipuram). Budget $500-$6,000+, start 6-8 months ahead. Expert guide with prices, fabrics, and timeline.' },
+    'why-indian-brides-wear-red-cultural-significance': { title: 'Why Indian Brides Wear Red: Cultural, Historical & Astrological Significance | LuxeMia', description: 'Indian brides wear red to symbolize prosperity, fertility, and Goddess Durga. The tradition dates to the Vedic period (1500-500 BCE) and is reinforced by Vedic astrology. 68% of modern brides still choose red.' },
     'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Trends 2026 | LuxeMia Blog', description: 'Latest red bridal lehenga trends for 2026 at LuxeMia.' },
     'designer-wedding-dress-under-50000': { title: 'Designer Wedding Dress Under ₹50,000 | LuxeMia Blog', description: 'Designer wedding dresses under ₹50,000 at LuxeMia.' },
     'wedding-guest-outfit-ideas': { title: 'Wedding Guest Outfit Ideas | LuxeMia Blog', description: 'Wedding guest outfit ideas for Indian weddings at LuxeMia.' },

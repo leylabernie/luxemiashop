@@ -107,7 +107,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
  * Each post is assigned to exactly ONE primary category for clean URL hierarchy.
  * Posts can still be cross-referenced via tags and internal links.
  *
- * Total: 52 posts across 8 categories (as of July 2026).
+ * Total: 53 posts across 8 categories (as of July 2026).
  */
 export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   // ─── Attires (19 posts) — clothing types, comparisons, styling ────────────
@@ -130,6 +130,9 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'indian-bridal-jewelry-sets-complete-guide': 'attires',
   'lehenga-choli-designer-bridal-party-wear-guide': 'attires',
   'best-lehenga-styles-indian-wedding-guests-usa-2026': 'attires',
+
+  // ─── Cultural Connections (1 post) — symbolism & traditions ───────────────
+  'why-indian-brides-wear-red-cultural-significance': 'cultural-connections',
 
   // ─── Ethnicalley (3 posts) — ceremonies & traditions ──────────────────────
   'indian-wedding-season-2026-outfit-guide': 'ethnicalley',

@@ -5,70 +5,37 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import type { BlogPost } from '@/data/blogPosts';
-import { Calendar, Clock, User, ArrowRight, BookOpen, Sparkles, ChevronRight, Home, Layers, Compass, GraduationCap, Palette, Globe } from 'lucide-react';
+import { BLOG_CATEGORY_GROUPS, getCategoryPostCounts, getPostSlugsByCategory } from '@/data/blogCategories';
+import { Calendar, Clock, User, ArrowRight, BookOpen, Sparkles, ChevronRight, Home, Layers, Compass, GraduationCap, Palette, Globe, Heart, Crown, Shirt } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
 
-// AI-optimized topic clusters — organizes content into semantic pillars
-// for both user navigation and search engine comprehension
-const topicClusters = [
-  {
-    id: 'bridal',
-    icon: Sparkles,
-    title: 'Bridal Fashion',
-    description: 'Everything for the Indian bride — lehenga vs saree decisions, color guides, budget planning, and styling tips',
-    categories: ['Bridal Guide', 'Fashion Guide'],
-    shopLink: '/lehengas',
-    shopLabel: 'Shop Bridal Lehengas',
-  },
-  {
-    id: 'wedding',
-    icon: Compass,
-    title: 'Wedding Planning',
-    description: 'Complete wedding outfit guides for every ceremony, guest dress codes, and family styling',
-    categories: ['Wedding Guide', 'Wedding Style', 'Wedding Trends', 'Groom Guide'],
-    shopLink: '/collections',
-    shopLabel: 'Shop Collections',
-  },
-  {
-    id: 'styling',
-    icon: Palette,
-    title: 'Styling & Fashion',
-    description: 'Accessorizing, color matching, body-type tips, and trend guides for Indian ethnic wear',
-    categories: ['Styling Tips', 'Style Tips', 'Styling Guide'],
-    shopLink: '/sarees',
-    shopLabel: 'Shop Sarees',
-  },
-  {
-    id: 'nri',
-    icon: Globe,
-    title: 'NRI Shopping',
-    description: 'Guides for buying Indian ethnic wear from USA, Canada & Australia — sizing, shipping, customs, and more',
-    categories: ['NRI Fashion'],
-    shopLink: '/nri',
-    shopLabel: 'NRI Hub',
-  },
-  {
-    id: 'howto',
-    icon: GraduationCap,
-    title: 'How-To & Care',
-    description: 'Step-by-step guides for saree draping, fabric care, storage, and garment maintenance',
-    categories: ['Care Guide', 'Care & Styling', 'How-To'],
-    shopLink: '/care-guide',
-    shopLabel: 'Care Guide',
-  },
-  {
-    id: 'cultural',
-    icon: Layers,
-    title: 'Cultural & Shopping',
-    description: 'Deep dives into Indian textile traditions, fabric encyclopedias, and smart shopping strategies',
-    categories: ['Cultural Guide', 'Shopping Guide', 'Ethnic Wear Guide'],
-    shopLink: '/suits',
-    shopLabel: 'Shop Suits',
-  },
-];
+// Map BLOG_CATEGORY_GROUPS to lucide icons (icon names are stored as strings in blogCategories.ts)
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Shirt,
+  Sparkles,
+  Compass,
+  Crown,
+  Palette,
+  Heart,
+  GraduationCap,
+  Globe,
+  Layers,
+};
+
+// Build topicClusters from the canonical BLOG_CATEGORY_GROUPS (single source of truth)
+const topicClusters = BLOG_CATEGORY_GROUPS.map(group => ({
+  id: group.slug,
+  icon: iconMap[group.icon] || BookOpen,
+  title: group.name,
+  description: group.shortDescription,
+  // Use slug as the link target — /blog/{slug} is the category index page
+  categoryLink: `/blog/${group.slug}`,
+  shopLink: '/collections',
+  shopLabel: 'Shop Collection',
+}));
 
 const popularTopics = [
   {
@@ -123,14 +90,12 @@ const Blog = () => {
   const categories = [...new Set(blogPosts.map(post => post.category))];
 
   // Determine which posts to show based on cluster or category filter
-  // CRITICAL FIX: blogPosts added to dependency array — without it, this
-  // memo returns an empty array on first render (before lazy import resolves).
+  // Uses the canonical BLOG_POST_CATEGORY_MAP for category → posts lookup.
   const filteredPosts = useMemo(() => {
     if (activeCluster) {
-      const cluster = topicClusters.find(c => c.id === activeCluster);
-      if (cluster) {
-        return blogPosts.filter(post => cluster.categories.includes(post.category));
-      }
+      // activeCluster is the category slug (e.g. 'attires', 'motifs-embroideries')
+      const categorySlugs = new Set(getPostSlugsByCategory(activeCluster));
+      return blogPosts.filter(post => categorySlugs.has(post.slug));
     }
     if (activeCategory) {
       return blogPosts.filter(post => post.category === activeCategory);
@@ -140,19 +105,12 @@ const Blog = () => {
 
   const displayFeatured = (activeCategory || activeCluster) ? null : featuredPost;
 
-  // Count posts per cluster
-  // CRITICAL FIX: blogPosts MUST be in the dependency array. Without it,
-  // the counts are calculated once when blogPosts is still [] (empty, before
-  // the lazy import resolves) and never recalculated — so all counts show 0.
+  // Count posts per cluster — uses the canonical BLOG_POST_CATEGORY_MAP.
+  // This replaces the old fragile per-post.category matching that didn't align
+  // with the 8-category Utsavpedia taxonomy.
   const clusterCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    topicClusters.forEach(cluster => {
-      counts[cluster.id] = blogPosts.filter(post =>
-        cluster.categories.includes(post.category)
-      ).length;
-    });
-    return counts;
-  }, [blogPosts]);
+    return getCategoryPostCounts();
+  }, []);
 
   const blogSchema = {
     "@context": "https://schema.org",
@@ -299,15 +257,15 @@ const Blog = () => {
         {/* Topic Cluster Navigation — Pillar content organization for AI search */}
         <section className="py-8 border-b border-border bg-card">
           <div className="container mx-auto px-4">
-            <h2 className="text-sm font-medium text-muted-foreground text-center mb-4 uppercase tracking-wider">Explore by Topic</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            <h2 className="text-sm font-medium text-muted-foreground text-center mb-4 uppercase tracking-wider">Browse by Category</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
               {topicClusters.map(cluster => {
                 const Icon = cluster.icon;
                 const isActive = activeCluster === cluster.id;
                 return (
-                  <button
+                  <Link
                     key={cluster.id}
-                    onClick={() => handleClusterClick(cluster.id)}
+                    to={cluster.categoryLink}
                     className={`flex flex-col items-center gap-2 p-4 rounded-lg border transition-all text-center ${
                       isActive
                         ? 'border-primary bg-primary/10 text-primary'
@@ -316,8 +274,8 @@ const Blog = () => {
                   >
                     <Icon className={`w-5 h-5 ${isActive ? 'text-primary' : 'text-muted-foreground'}`} />
                     <span className="text-xs font-medium leading-tight">{cluster.title}</span>
-                    <span className="text-[10px] text-muted-foreground">{clusterCounts[cluster.id]} articles</span>
-                  </button>
+                    <span className="text-[10px] text-muted-foreground">{clusterCounts[cluster.id] || 0} articles</span>
+                  </Link>
                 );
               })}
             </div>
