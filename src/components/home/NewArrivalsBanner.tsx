@@ -13,7 +13,7 @@ interface FeaturedSlide {
   category: string; // small overline label, e.g. "01 — LEHENGA"
   headline: string; // big bold campaign headline
   headlineLine2?: string;
-  image: string;
+  image: string; // base path (without _mobile/_tablet/_desktop suffix)
   // Hex colors tuned to each product so the panel feels editorial, not generic
   panelBg: string;
   panelText: string;
@@ -30,8 +30,7 @@ const slides: FeaturedSlide[] = [
     category: '01 — SILK LEHENGA',
     headline: 'BRIDAL EDIT',
     headlineLine2: '2026',
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Hero_image.jpg?v=1783466029&width=800',
+    image: '/images/hero/Hero_image',
     // Deep burgundy to match the maroon silk lehenga
     panelBg: '#6b1026',
     panelText: '#f7ebd9',
@@ -48,8 +47,7 @@ const slides: FeaturedSlide[] = [
     category: '02 — SATIN SAREE',
     headline: 'FESTIVE EDIT',
     headlineLine2: 'NEW ARRIVALS',
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Teal-Blue-Satin-Silk-Occasional-Wear-Embroidery-Work-Readymade-Saree-A411-B_1_1.jpg?v=1783468274&width=800',
+    image: '/images/hero/Teal-Blue-Satin-Silk-Occasional-Wear-Embroidery-Work-Readymade-Saree-A411-B',
     // Deep teal to echo the blue saree
     panelBg: '#0d3b4a',
     panelText: '#f1f5ec',
@@ -66,8 +64,7 @@ const slides: FeaturedSlide[] = [
     category: '03 — DESIGNER SUIT',
     headline: 'DESIGNER',
     headlineLine2: 'SUITS',
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002_1.jpg?v=1783468144&width=800',
+    image: '/images/hero/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002',
     // True black to match the black georgette suit — warm off-white text for contrast
     panelBg: '#0d0d0d',
     panelText: '#f5f5f5',
@@ -244,16 +241,17 @@ const NewArrivalsBanner = () => {
               style={{ backgroundColor: slide.imageBg }}
             >
               <div className="flex h-[360px] w-full items-center justify-center px-4 py-6 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
-                <motion.img
-                  initial={{ opacity: 0, scale: 1.02 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  src={slide.image}
+                <img
+                  src={slide.image.includes('/images/hero/') ? `${slide.image}_desktop.webp` : slide.image}
+                  srcSet={slide.image.includes('/images/hero/')
+                    ? `${slide.image}_mobile.webp 480w, ${slide.image}_tablet.webp 768w, ${slide.image}_desktop.webp 1200w`
+                    : undefined}
+                  sizes="(max-width: 640px) 480px, (max-width: 1024px) 768px, 1200px"
                   alt={slide.headline}
                   width={600}
                   height={800}
                   loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchpriority={index === 0 ? 'high' : 'auto'}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
                   className="max-h-full max-w-full object-contain"
                 />
               </div>

@@ -74,8 +74,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Preload LCP hero banner image (first slide of NewArrivalsBanner carousel) -->
-    <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Hero_image.jpg?v=1783466029&width=800" fetchpriority="high">
+    <!-- Preload LCP hero banner image (first slide of NewArrivalsBanner carousel)
+         Self-hosted WebP with responsive sizes. Mobile gets the smallest version. -->
+    <link rel="preload" as="image" href="/images/hero/Hero_image_mobile.webp" fetchpriority="high">
+    <link rel="preload" as="image" imagesrcset="/images/hero/Hero_image_mobile.webp 480w, /images/hero/Hero_image_tablet.webp 768w, /images/hero/Hero_image_desktop.webp 1200w" imagesizes="(max-width: 640px) 480px, (max-width: 1024px) 768px, 1200px" fetchpriority="high">
 
     <!-- Critical CSS: Reserve space for header + hero to prevent CLS -->
     <style>
