@@ -114,7 +114,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
-    image: '/og-image.jpg',
+    image: '/images/blog/gdrive/couple-red-lehenga-sherwani-sunset.jpg',
     readTime: 11
   },
   {
@@ -565,7 +565,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-01-06',
     category: 'Styling Tips',
     tags: ['wedding guest outfit', 'indian wedding', 'what to wear', 'wedding fashion', 'ethnic wear'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/amoha-538-exclusive-beads-work-dendy-satin-designer-readymade-saree.jpg?v=1783447885&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/bridesmaid-green-outfit.webp',
     readTime: 6
   },
   {
@@ -1010,7 +1010,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Weddings & Festivals',
     tags: ['indian wedding trends 2026', 'intimate wedding india', 'pastel bridal lehenga', 'ivory bridal lehenga', 'sustainable wedding wear', 'indo western groom', 'destination wedding india', 'udaipur wedding', 'ai wedding planning', 'sangeet choreography', 'wedding favors 2026', 'eco friendly wedding'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/VB383_093bd415-f8e7-45b6-b3d9-764345f2cb9b.jpg?v=1782927103&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/bride-blue-lehenga-festive.jpg',
     readTime: 14
   },
   {
@@ -2384,7 +2384,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Weddings & Festivals',
     tags: ['indian wedding guest outfit', 'what to wear indian wedding', 'sangeet outfit', 'mehendi outfit', 'wedding guest lehenga', 'indian wedding dress code', 'sherwani for men', 'indian wedding colors', 'wedding guest budget', 'indian wedding etiquette', 'non indian guest indian wedding', 'jewel tone indian outfit'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.8231443895_k398.jpg?v=1782927140&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/groomsmen-lavender-pink-turbans.jpg',
     readTime: 14
   },
 
@@ -2815,7 +2815,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-09',
     category: 'Bridal Guide',
     tags: ['how to choose wedding lehenga', 'bridal lehenga guide', 'lehenga colors wedding', 'lehenga fabric guide', 'bridal lehenga 2026', 'indian bride', 'nri wedding'],
-    image: '/images/blog/blog-021-soft-yellow-soft.jpg',
+    image: '/images/blog/gdrive/lehenga-red-embroidered.jpg',
     readTime: 12
   },
   {
@@ -3515,7 +3515,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Motifs & Embroideries',
     tags: ['banarasi silk saree', 'banarasi authentication', 'varanasi saree', 'real zari', 'silk mark india', 'gi tag textile', 'handloom banarasi', 'jala weaving', 'banarasi vs kanchipuram', 'bridal banarasi', 'banarasi counterfeit', 'pure silk burn test'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/HO129845-blue-meenakari-boota-katan-silk-handloom-banarasi-saree.webp?v=1783444142&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/banarasi-saree-blue-gold.webp',
     readTime: 15
   },
   {
@@ -3815,7 +3815,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-01',
     category: 'Wedding Guide',
     tags: ['indian wedding outfits', 'mehendi outfit', 'sangeet dress', 'wedding ceremony dress code', 'indian wedding guide'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Shagun13_9368c226-6db9-421c-84d0-049d14726220.jpg?v=1782927095&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/couple-mandap-mint-lehenga.jpg',
     readTime: 9
   },
   {
@@ -4234,7 +4234,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-10',
     category: 'Styling Tips',
     tags: ['anarkali suit', 'anarkali styling', 'anarkali 2026', 'indian suit guide', 'salwar kameez styling'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Chinon-Occasional-Wear-Embroidery-Work-Readymade-Anarkali-Suit-FLORAL-001_1.jpg?v=1780590906&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/anarkali-gold-mint.webp',
     readTime: 8
   },
   {
@@ -4397,7 +4397,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Attires',
     tags: ['kanchipuram silk saree', 'kanjeevaram silk', 'tamil bridal saree', 'silk mark india', 'korvai joinery', 'real zari', 'gi tag textile', 'south indian wedding saree', 'kanchipuram authentication', 'temple border saree', 'bridal silk saree', 'kanchipuram motifs'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Kanchipuram_Wedding_Manthrskodi_saree.webp?v=1783441513&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/kanchipuram-saree-brass-lamps.jpg',
     readTime: 14
   },
   {
@@ -4847,7 +4847,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-01',
     category: 'Bridal Guide',
     tags: ['buy bridal lehenga online', 'bridal lehenga usa', 'indian wedding lehenga', 'bridal lehenga choli online', 'nri bridal shopping', 'designer bridal lehengas'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Shagun12_4.png?v=1782927097&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/lehenga-shop-hangers.jpg',
     readTime: 8
   },
 
@@ -5104,7 +5104,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-15',
     category: 'Bridal Guide',
     tags: ['indian bridal jewelry sets', 'shop wedding looks online usa', 'traditional wedding necklaces', 'south asian bridal jewelry', 'kundan bridal jewelry', 'bridal necklace set'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/M-660.jpg?v=1783368953&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/jewelry-set-display.jpg',
     readTime: 9
   },
 
@@ -5200,7 +5200,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-20',
     category: 'Fashion Guide',
     tags: ['lehenga choli designer bridal party wear', 'buy designer lehenga choli online usa', 'stylish elegant lehengas for women', 'latest lehenga choli designs', 'bridal lehenga choli', 'designer lehengas'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/ZX152s-_1.jpg?v=1782927073&width=1200&height=675&crop=center',
+    image: '/images/blog/gdrive/lehenga-cream-embroidered.webp',
     readTime: 10
   },
 
@@ -7355,7 +7355,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Attires',
     tags: ['indian jewelry glossary', 'indian jewelry terms', 'kundan meaning', 'polki meaning', 'jhumka meaning', 'chandbali meaning', 'maang tikka meaning', 'matha patti meaning', 'mangalsutra meaning', 'thaali meaning', 'kamarbandh meaning', 'meenakari jewelry', 'jadau jewelry', 'temple jewelry'],
-    image: '/og-image.jpg',
+    image: '/images/blog/gdrive/jewelry-set-display.jpg',
     readTime: 14,
   },
   {
@@ -7508,7 +7508,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Weddings & Festivals',
     tags: ['indian wedding glossary', 'indian wedding terms', 'muhuratham meaning', 'sangeet meaning', 'mehendi meaning', 'haldi meaning', 'nikah meaning', 'pheras meaning', 'kanyadaan meaning', 'sindoor daan meaning', 'vidaai meaning', 'jaimala meaning', 'baraat meaning', 'mangalsutra dharana', 'saptapadi meaning'],
-    image: '/og-image.jpg',
+    image: '/images/blog/gdrive/couple-mandap-mint-lehenga.jpg',
     readTime: 15,
   },
   {
