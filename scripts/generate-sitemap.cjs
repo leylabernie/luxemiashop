@@ -88,31 +88,27 @@ const staticPages = [
   { loc: '/press', changefreq: 'monthly', priority: '0.5' },
 ];
 
-// Blog posts
-const blogPosts = [
-  '/blog/sharara-suit-guide-2026-styles-fabrics',
-  '/blog/pakistani-suits-anarkali-shopping-guide',
-  '/blog/style-lehenga-choli-every-wedding-event',
-  '/blog/indian-wedding-season-2026-outfit-guide',
-  '/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
-  '/blog/indian-wedding-dress-complete-guide',
-  '/blog/red-bridal-lehenga-trends-2026',
-  '/blog/designer-wedding-dress-under-50000',
-  '/blog/wedding-guest-outfit-ideas',
-  '/blog/saree-draping-styles-every-occasion',
-  '/blog/indian-wedding-trends-2026',
-  '/blog/lehenga-color-for-dark-skin',
-  '/blog/wedding-saree-for-mother-of-bride',
-  '/blog/designer-wedding-dress-under-500',
-  '/blog/nri-wedding-ethnic-wear-trends-2026',
-  '/blog/buy-authentic-indian-sarees-online-usa-uk',
-  '/blog/styling-indian-ethnic-wear-festive-occasions-abroad',
-  '/blog/how-to-choose-perfect-lehenga-wedding-2026',
-  '/blog/lehenga-vs-sharara-vs-anarkali-comparison',
-  '/blog/best-lehenga-colors-for-indian-skin-tone',
-  '/blog/shipping-indian-clothes-usa-uk-canada-nri-guide',
-  '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
-];
+
+// Parse blogPosts.ts to extract slug strings for sitemap inclusion.
+function parseBlogSlugs() {
+  const blogPostsTsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
+  if (!fs.existsSync(blogPostsTsPath)) {
+    console.warn('[sitemap] blogPosts.ts not found');
+    return [];
+  }
+  const content = fs.readFileSync(blogPostsTsPath, 'utf8');
+  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+  const slugs = [];
+  let match;
+  while ((match = slugRegex.exec(content)) !== null) {
+    slugs.push(match[1]);
+  }
+  console.log(`[sitemap] Parsed ${slugs.length} blog slugs from blogPosts.ts`);
+  return slugs.map(slug => `/blog/${slug}`);
+}
+
+// Blog posts — auto-parsed from src/data/blogPosts.ts
+const blogPosts = parseBlogSlugs();
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -221,7 +217,26 @@ function generateSitemap(products) {
   </url>`);
   }
 
-  // Blog posts
+  
+// Parse blogPosts.ts to extract slug strings for sitemap inclusion.
+function parseBlogSlugs() {
+  const blogPostsTsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
+  if (!fs.existsSync(blogPostsTsPath)) {
+    console.warn('[sitemap] blogPosts.ts not found');
+    return [];
+  }
+  const content = fs.readFileSync(blogPostsTsPath, 'utf8');
+  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+  const slugs = [];
+  let match;
+  while ((match = slugRegex.exec(content)) !== null) {
+    slugs.push(match[1]);
+  }
+  console.log(`[sitemap] Parsed ${slugs.length} blog slugs from blogPosts.ts`);
+  return slugs.map(slug => `/blog/${slug}`);
+}
+
+// Blog posts
   for (const blogPath of blogPosts) {
     urls.push(`  <url>
     <loc>${SITE_URL}${blogPath}</loc>
