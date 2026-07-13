@@ -269,6 +269,50 @@ const BlogPost = () => {
     ]
   };
 
+  // Extract Q&A pairs from the post content for FAQPage schema.
+  // Pattern: <h3>Question?</h3> followed by one or more <p>...</p> paragraphs.
+  // This auto-generates FAQ rich result eligibility for any post that uses
+  // the "Common Questions" H2 + H3 question + P answer structure.
+  const extractFAQPairs = (html: string): { question: string; answer: string }[] => {
+    const faqs: { question: string; answer: string }[] = [];
+    // Match <h3>...</h3> followed by <p>...</p> (with optional whitespace/newlines between)
+    // The H3 must look like a question (ends with ?)
+    const pattern = /<h3[^>]*>([^<]+\?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let match;
+    while ((match = pattern.exec(html)) !== null && faqs.length < 20) {
+      const question = match[1].trim();
+      // Strip inline HTML tags from the answer for clean plain text
+      const answerHtml = match[2].trim();
+      const answerText = answerHtml
+        .replace(/<[^>]+>/g, '')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (question.length > 10 && answerText.length > 30) {
+        faqs.push({ question, answer: answerText });
+      }
+    }
+    return faqs;
+  };
+
+  const faqPairs = extractFAQPairs(post.content);
+  const faqSchema = faqPairs.length >= 3 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqPairs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null;
+
   const shareUrl = `https://luxemia.shop/blog/${post.slug}`;
 
   // Check if updated date differs from published date
@@ -296,6 +340,11 @@ const BlogPost = () => {
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
         </script>
+        {faqSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
         <meta property="article:author" content={post.author} />
