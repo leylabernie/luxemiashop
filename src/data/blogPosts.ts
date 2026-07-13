@@ -114,7 +114,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-033-ombre-pastel-tissue.jpg',
     readTime: 11
   },
   {
@@ -5310,7 +5310,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Cultural Guide',
     tags: ['why indian brides wear red', 'red bridal lehenga significance', 'indian wedding colors', 'hindu wedding traditions', 'red saree meaning', 'sindoor significance', 'indian bridal colors'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-019-red-soft.jpg',
     readTime: 12
   },
 
@@ -5435,7 +5435,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Designer Profile',
     tags: ['sabyasachi mukherjee', 'sabyasachi designer', 'indian fashion designer', 'sabyasachi bridal lehenga', 'sabyasachi celebrity brides', 'anushka sharma wedding', 'deepika padukone wedding', 'katrina kaif wedding', 'handloom revival india'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-001-deep-maroon-silk.jpg',
     readTime: 13
   },
 
@@ -5555,7 +5555,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Designer Profile',
     tags: ['manish malhotra', 'manish malhotra designer', 'bollywood fashion designer', 'manish malhotra bridal', 'manish malhotra celebrity brides', 'kiara advani wedding', 'parineeti chopra wedding', 'bollywood costume designer'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-005-pink-net.jpg',
     readTime: 13
   },
 
@@ -5653,7 +5653,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Cultural Guide',
     tags: ['bindi meaning', 'bindi significance', 'hindu bindi', 'ajna chakra', 'third eye bindi', 'indian women forehead mark', 'bindi history', 'red bindi married women'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-014-rani-pink-raw.jpg',
     readTime: 11
   },
 
@@ -5732,7 +5732,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Designer Profile',
     tags: ['jj valaya', 'house of valaya', 'indian fashion designer', 'valaya couture', 'royal indian fashion', 'jodhpur designer', 'mughal embroidery'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-026-maroon-velvet.jpg',
     readTime: 10
   },
 
@@ -5814,7 +5814,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Designer Profile',
     tags: ['anita dongre', 'house of anita dongre', 'sustainable fashion india', 'grassroot anita dongre', 'indian fashion designer', 'and global desi', 'pinkcity jewelry'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-013-pure-white-soft.jpg',
     readTime: 10
   },
 
@@ -5893,7 +5893,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Designer Profile',
     tags: ['ritu kumar', 'indian fashion pioneer', 'textile revival india', 'ritu kumar designer', 'boutique culture india', 'hand-block printing', 'lady irwin college', 'indian textiles'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-002-ivory-gold-net.jpg',
     readTime: 10
   },
 
@@ -5979,7 +5979,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Cultural Guide',
     tags: ['sindoor', 'mangalsutra', 'hindu marriage symbols', 'sindoor daan', 'mangalsutra dharana', 'hindu wedding rituals', 'indian marriage traditions', 'marital status symbols'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-025-red-raw.jpg',
     readTime: 11
   },
 
@@ -6072,7 +6072,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Cultural Guide',
     tags: ['indian wedding rituals', 'punjabi wedding', 'sikh wedding anand karaj', 'bengali wedding', 'tamil wedding', 'marwari wedding', 'regional indian weddings', 'hindu wedding ceremonies'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-010-pastel-multicolor-net.jpg',
     readTime: 12
   },
 
@@ -6166,7 +6166,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Cultural Guide',
     tags: ['indian embroidery motifs', 'paisley meaning', 'peacock motif symbolism', 'lotus motif indian textiles', 'ambi mango motif', 'indian textile symbolism', 'traditional indian designs'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-040-shimmer-teal-tissue.jpg',
     readTime: 11
   },
 
@@ -6327,7 +6327,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
     tags: ['tarun tahiliani', 'tarun tahiliani designer', 'indian fashion designer', 'tarun tahiliani bridal lehenga', 'ensemble boutique mumbai', 'fdci founder', 'shilpa shetty wedding lehenga', 'india modern aesthetic', 'tarun tahiliani cost', 'indian couture designer', 'lightweight bridal lehenga', 'internal corsetry lehenga'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-006-teal-green-net.jpg',
     readTime: 13,
   },
   {
@@ -6478,7 +6478,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
     tags: ['rahul mishra', 'rahul mishra designer', 'paris haute couture week indian', 'international woolmark prize', 'rahul mishra cost', 'sustainable indian fashion', '3d hand embroidery', 'rahul mishra zendaya', 'rahul mishra celebrity', 'nid ahmedabad alumni', 'indian couture designer', 'rahul mishra paris'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-003-pastel-sage-net.jpg',
     readTime: 13,
   },
   {
@@ -6621,7 +6621,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
     tags: ['anamika khanna', 'anamika khanna designer', 'dhoti sari', 'designers designer', 'ana mika harrods', 'anamika khanna cost', 'kolkata fashion designer', 'sonam kapoor anamika khanna', 'indian couture designer', 'anamika khanna cape', 'anamika khanna lehenga', 'indian designer international'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-018-silver-mist-soft.jpg',
     readTime: 12,
   },
   {
@@ -6783,7 +6783,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
     tags: ['abu jani sandeep khosla', 'abu sandeep designer', 'chikankari couture', 'mukaish embroidery', 'aishwarya rai wedding lehenga', 'bachchan wedding designer', 'sonam kapoor wedding lehenga', 'champagne pink lehenga', 'antique zardozi', 'mata hari boutique mumbai', 'indian designer duo', 'abu sandeep cost'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-007-champagne-rose-net.jpg',
     readTime: 14,
   },
   {
@@ -6950,7 +6950,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
     tags: ['neeta lulla', 'neeta lulla designer', 'neeta lulla bridal lehenga', 'neeta lulla national award', 'jodhaa akbar costume', 'devdas costume designer', 'aishwarya rai wedding lehenga', 'neeta lulla cost', 'bollywood costume designer', 'neeta lulla stores', 'neeta lulla trousseau', 'indian film costume design'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-022-maroon-viscose.jpg',
     readTime: 14,
   },
   {
@@ -7186,7 +7186,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Attires',
     tags: ['indian fashion glossary', 'indian fashion terms', 'indian clothing terms', 'lehenga meaning', 'saree meaning', 'choli meaning', 'dupatta meaning', 'zardozi meaning', 'chikankari meaning', 'bindi meaning', 'sindoor meaning', 'mangalsutra meaning', 'kundan jewelry meaning', 'polki jewelry meaning', 'sangeet meaning', 'mehendi meaning', 'haldi meaning', 'muhratham meaning'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-024-pastel-multicolor-raw.jpg',
     readTime: 16,
   },
   {
@@ -7355,7 +7355,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Attires',
     tags: ['indian jewelry glossary', 'indian jewelry terms', 'kundan meaning', 'polki meaning', 'jhumka meaning', 'chandbali meaning', 'maang tikka meaning', 'matha patti meaning', 'mangalsutra meaning', 'thaali meaning', 'kamarbandh meaning', 'meenakari jewelry', 'jadau jewelry', 'temple jewelry'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-011-ivory-gold-net.jpg',
     readTime: 14,
   },
   {
@@ -7508,7 +7508,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Weddings & Festivals',
     tags: ['indian wedding glossary', 'indian wedding terms', 'muhuratham meaning', 'sangeet meaning', 'mehendi meaning', 'haldi meaning', 'nikah meaning', 'pheras meaning', 'kanyadaan meaning', 'sindoor daan meaning', 'vidaai meaning', 'jaimala meaning', 'baraat meaning', 'mangalsutra dharana', 'saptapadi meaning'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-028-red-raw.jpg',
     readTime: 15,
   },
   {
@@ -7695,7 +7695,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Motifs & Embroideries',
     tags: ['indian embroidery glossary', 'indian embroidery terms', 'zardozi meaning', 'chikankari meaning', 'aari meaning', 'dabka meaning', 'gota patti meaning', 'kantha meaning', 'phulkari meaning', 'bandhani meaning', 'kasuti meaning', 'sozni meaning', 'tilla work', 'resham embroidery', 'mirror work abhala', 'hand embroidery authentication'],
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/2026-04-29_18_53_22-Maharani_203017_20By_20Fashid_20A_ad15ca1b-6b1d-42ed-b119-3af960cc01b1.jpg?v=1783445686&width=1200&height=675&crop=center',
+    image: '/images/blog/blog-039-muted-salmon-tissue.jpg',
     readTime: 15,
   },
 ];
