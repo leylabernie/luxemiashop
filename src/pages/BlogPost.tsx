@@ -345,6 +345,8 @@ const BlogPost = () => {
             {JSON.stringify(faqSchema)}
           </script>
         )}
+        {/* Preload hero image for LCP optimization */}
+        <link rel="preload" as="image" href={post.image} fetchPriority="high" />
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
         <meta property="article:author" content={post.author} />
@@ -465,6 +467,8 @@ const BlogPost = () => {
                 <img
                   src={post.image}
                   alt={post.title}
+                  width={1200}
+                  height={675}
                   fetchPriority="high"
                   decoding="async"
                   className="w-full h-full object-cover"

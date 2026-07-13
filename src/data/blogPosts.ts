@@ -114,7 +114,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-12',
     category: 'Bridal Guide',
     tags: ['indian wedding dress', 'bridal lehenga', 'wedding saree', 'bridal fashion', 'wedding shopping'],
-    image: '/images/blog/gdrive/couple-red-lehenga-sherwani-sunset.jpg',
+    image: '/images/blog/gdrive/couple-red-lehenga-sherwani-sunset.webp',
     readTime: 11
   },
   {
@@ -1010,7 +1010,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Weddings & Festivals',
     tags: ['indian wedding trends 2026', 'intimate wedding india', 'pastel bridal lehenga', 'ivory bridal lehenga', 'sustainable wedding wear', 'indo western groom', 'destination wedding india', 'udaipur wedding', 'ai wedding planning', 'sangeet choreography', 'wedding favors 2026', 'eco friendly wedding'],
-    image: '/images/blog/gdrive/bride-blue-lehenga-festive.jpg',
+    image: '/images/blog/gdrive/bride-blue-lehenga-festive.webp',
     readTime: 14
   },
   {
@@ -2384,7 +2384,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Weddings & Festivals',
     tags: ['indian wedding guest outfit', 'what to wear indian wedding', 'sangeet outfit', 'mehendi outfit', 'wedding guest lehenga', 'indian wedding dress code', 'sherwani for men', 'indian wedding colors', 'wedding guest budget', 'indian wedding etiquette', 'non indian guest indian wedding', 'jewel tone indian outfit'],
-    image: '/images/blog/gdrive/groomsmen-lavender-pink-turbans.jpg',
+    image: '/images/blog/gdrive/groomsmen-lavender-pink-turbans.webp',
     readTime: 14
   },
 
@@ -2815,7 +2815,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-09',
     category: 'Bridal Guide',
     tags: ['how to choose wedding lehenga', 'bridal lehenga guide', 'lehenga colors wedding', 'lehenga fabric guide', 'bridal lehenga 2026', 'indian bride', 'nri wedding'],
-    image: '/images/blog/gdrive/lehenga-red-embroidered.jpg',
+    image: '/images/blog/gdrive/lehenga-red-embroidered.webp',
     readTime: 12
   },
   {
@@ -3013,7 +3013,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-11',
     category: 'Style Tips',
     tags: ['best lehenga colors', 'lehenga color fair skin', 'lehenga color dusky skin', 'bridal lehenga colors 2026', 'skin tone guide', 'indian bride styling'],
-    image: '/images/blog/blog-012-blush-pink-silk.jpg',
+    image: '/images/blog/blog-012-blush-pink-silk.webp',
     readTime: 10
   },
   {
@@ -3112,7 +3112,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-12',
     category: 'NRI Fashion',
     tags: ['buy indian clothes online usa', 'shipping indian outfits to usa', 'indian wedding wear nri', 'customs duty indian clothes', 'nri shopping guide', 'indian ethnic wear canada'],
-    image: '/images/blog/blog-022-maroon-viscose.jpg',
+    image: '/images/blog/blog-022-maroon-viscose.webp',
     readTime: 12
   },
   {
@@ -3222,7 +3222,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-13',
     category: 'Shopping Guide',
     tags: ['unstitched vs ready to wear', 'made to measure indian clothing', 'custom stitched lehenga', 'indian outfit sizing', 'stitching options', 'nri buying guide'],
-    image: '/images/blog/blog-033-ombre-pastel-tissue.jpg',
+    image: '/images/blog/blog-033-ombre-pastel-tissue.webp',
     readTime: 10
   },
   {
@@ -3815,7 +3815,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-03-01',
     category: 'Wedding Guide',
     tags: ['indian wedding outfits', 'mehendi outfit', 'sangeet dress', 'wedding ceremony dress code', 'indian wedding guide'],
-    image: '/images/blog/gdrive/couple-mandap-mint-lehenga.jpg',
+    image: '/images/blog/gdrive/couple-mandap-mint-lehenga.webp',
     readTime: 9
   },
   {
@@ -4397,7 +4397,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-13',
     category: 'Attires',
     tags: ['kanchipuram silk saree', 'kanjeevaram silk', 'tamil bridal saree', 'silk mark india', 'korvai joinery', 'real zari', 'gi tag textile', 'south indian wedding saree', 'kanchipuram authentication', 'temple border saree', 'bridal silk saree', 'kanchipuram motifs'],
-    image: '/images/blog/gdrive/kanchipuram-saree-brass-lamps.jpg',
+    image: '/images/blog/gdrive/kanchipuram-saree-brass-lamps.webp',
     readTime: 14
   },
   {
@@ -4847,7 +4847,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-01',
     category: 'Bridal Guide',
     tags: ['buy bridal lehenga online', 'bridal lehenga usa', 'indian wedding lehenga', 'bridal lehenga choli online', 'nri bridal shopping', 'designer bridal lehengas'],
-    image: '/images/blog/gdrive/lehenga-shop-hangers.jpg',
+    image: '/images/blog/gdrive/lehenga-shop-hangers.webp',
     readTime: 8
   },
 
@@ -5104,7 +5104,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-05-15',
     category: 'Bridal Guide',
     tags: ['indian bridal jewelry sets', 'shop wedding looks online usa', 'traditional wedding necklaces', 'south asian bridal jewelry', 'kundan bridal jewelry', 'bridal necklace set'],
-    image: '/images/blog/gdrive/jewelry-set-display.jpg',
+    image: '/images/blog/gdrive/jewelry-set-display.webp',
     readTime: 9
   },
 
@@ -7355,7 +7355,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Attires',
     tags: ['indian jewelry glossary', 'indian jewelry terms', 'kundan meaning', 'polki meaning', 'jhumka meaning', 'chandbali meaning', 'maang tikka meaning', 'matha patti meaning', 'mangalsutra meaning', 'thaali meaning', 'kamarbandh meaning', 'meenakari jewelry', 'jadau jewelry', 'temple jewelry'],
-    image: '/images/blog/gdrive/jewelry-set-display.jpg',
+    image: '/images/blog/gdrive/jewelry-set-display.webp',
     readTime: 14,
   },
   {
@@ -7508,7 +7508,7 @@ export const blogPosts: BlogPost[] = [
     updatedAt: '2026-07-14',
     category: 'Weddings & Festivals',
     tags: ['indian wedding glossary', 'indian wedding terms', 'muhuratham meaning', 'sangeet meaning', 'mehendi meaning', 'haldi meaning', 'nikah meaning', 'pheras meaning', 'kanyadaan meaning', 'sindoor daan meaning', 'vidaai meaning', 'jaimala meaning', 'baraat meaning', 'mangalsutra dharana', 'saptapadi meaning'],
-    image: '/images/blog/gdrive/couple-mandap-mint-lehenga.jpg',
+    image: '/images/blog/gdrive/couple-mandap-mint-lehenga.webp',
     readTime: 15,
   },
   {
