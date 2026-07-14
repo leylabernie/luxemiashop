@@ -166,6 +166,7 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'styling-indian-ethnic-wear-festive-occasions-abroad': 'weddings-festivals',
   'what-to-wear-indian-wedding-guest-2026': 'weddings-festivals',
   'what-to-wear-south-asian-wedding-non-indian-guest': 'weddings-festivals',
+  'what-to-wear-indian-wedding-non-indian-guest': 'weddings-festivals',
   'diwali-outfit-ideas-nri-women-usa-canada-australia': 'weddings-festivals',
   'indian-wedding-guest-outfits-men-usa-guide': 'weddings-festivals',
 

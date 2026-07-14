@@ -137,21 +137,56 @@ const WeddingGuestOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
             <h2 className="font-serif text-2xl mb-6 text-center">What to Wear to Each Indian Wedding Ceremony</h2>
             <div className="space-y-5 text-sm text-muted-foreground leading-relaxed">
+              <p>Indian weddings are multi-day celebrations, and each ceremony has its own dress code, color palette, and formality level. Wearing the right outfit to the right event shows respect for the culture and helps you feel confident. Whether you are an Indian guest refreshing your wardrobe or a first-time guest unfamiliar with the traditions, this guide breaks down exactly what to wear — and what to avoid — for every event on the wedding weekend.</p>
+
               <div>
                 <h3 className="font-medium text-foreground mb-1">Mehendi Ceremony</h3>
-                <p>The mehendi is a daytime ceremony traditionally associated with the colour yellow and green. Guests wear bright, cheerful salwar kameez, anarkali suits, or simple lehengas in yellow, lime green, orange, or floral prints. Avoid heavily embellished outfits as the mehendi ceremony is casual and fun. Cotton, georgette, or chiffon fabrics in festive colours are ideal.</p>
+                <p>The mehendi is a daytime ceremony traditionally associated with the colour yellow and green. Guests wear bright, cheerful <Link to="/suits" className="text-primary underline">salwar kameez or anarkali suits</Link>, or simple lehengas in yellow, lime green, orange, or floral prints. Avoid heavily embellished outfits as the mehendi ceremony is casual and fun — you will be sitting for hours while henna is applied. Cotton, georgette, or chiffon fabrics in festive colours are ideal. Budget $120-$250 for a mehendi outfit.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Sangeet Night</h3>
-                <p>The sangeet is an evening of music and dance — the most festive and lively of all Indian wedding ceremonies. Guests wear their most glamorous outfits: embellished lehengas, sequin anarkalis, heavily embroidered salwar suits, or indo-western fusion outfits. Bold colours, mirror work, and sequin embellishments photograph beautifully at sangeet events. This is the ceremony to wear your most statement-making ethnic wear.</p>
+                <p>The sangeet is an evening of music and dance — the most festive and lively of all Indian wedding ceremonies. Guests wear their most glamorous outfits: embellished <Link to="/lehengas" className="text-primary underline">lehengas</Link>, sequin anarkalis, heavily embroidered salwar suits, or indo-western fusion outfits. Bold colours, mirror work, and sequin embellishments photograph beautifully at sangeet events. This is the ceremony to wear your most statement-making ethnic wear. Budget $200-$400.</p>
               </div>
               <div>
-                <h3 className="font-medium text-foreground mb-1">Wedding Ceremony</h3>
-                <p>The main wedding ceremony is the most formal of all events. Guests dress in their most elegant ethnic wear — silk sarees, heavily embroidered anarkali gowns, formal lehengas, or sophisticated salwar kameez. Avoid wearing red (the traditional bridal colour) and white. Rich jewel tones, gold, and pastel shades are perfect for the main wedding ceremony.</p>
+                <h3 className="font-medium text-foreground mb-1">Wedding Ceremony (Muhurtham)</h3>
+                <p>The main wedding ceremony is the most formal of all events. Guests dress in their most elegant ethnic wear — <Link to="/sarees" className="text-primary underline">silk sarees</Link>, heavily embroidered anarkali gowns, formal lehengas, or sophisticated salwar kameez. <strong>Avoid wearing red</strong> (the traditional bridal colour) and white (associated with mourning in Indian culture). Rich jewel tones — emerald, sapphire, maroon, plum — gold, and pastel shades are perfect for the main wedding ceremony. Budget $250-$500.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Reception</h3>
-                <p>The reception is an evening cocktail-style event and the most flexible in terms of dress code. Semi-formal to formal ethnic or indo-western outfits are appropriate. This is a great occasion to wear an elegant silk saree, a fusion indo-western gown, or a formal anarkali. The reception is also where non-Indian guests often feel most comfortable in a Western-style ethnic fusion outfit.</p>
+                <p>The reception is an evening cocktail-style event and the most flexible in terms of dress code. Semi-formal to formal ethnic or <Link to="/indowestern" className="text-primary underline">indo-western outfits</Link> are appropriate. This is a great occasion to wear an elegant silk saree, a fusion indo-western gown, or a formal anarkali. The reception is also where non-Indian guests often feel most comfortable in a Western-style ethnic fusion outfit. Budget $200-$500.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Indian Wedding Guest Outfit Colors — What to Wear and What to Avoid</h3>
+                <p><strong>DO wear:</strong> Deep green, royal blue, maroon, burgundy, fuchsia, magenta, purple, gold, burnt orange, emerald, sapphire, ruby. These colors symbolize joy, prosperity, and celebration in Indian culture.</p>
+                <p className="mt-2"><strong>DO NOT wear white</strong> — it is the color of mourning in Indian culture. <strong>DO NOT wear black</strong> — it is considered inauspicious for celebrations. <strong>DO NOT wear all-red</strong> — red is the traditional bridal color, and wearing it as a guest can be seen as trying to upstage the bride. Maroon, burgundy, and wine are fine because they are visually distinct from bridal red.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Not Indian? Read This First</h3>
+                <p>If you are a non-Indian guest attending your first Indian wedding, the outfit choices can feel overwhelming. The easiest outfit for first-timers is an <Link to="/suits" className="text-primary underline">anarkali suit</Link> — it slips on like a dress, no draping or pinning required. Pre-draped sarees are also a good option if you want the saree look without the draping skill. Budget $150-$400 for a quality outfit, and order at least 4-6 weeks before the wedding to allow time for shipping from India.</p>
+                <p className="mt-2">For the complete step-by-step guide — including sizing help, color etiquette, what to bring, and common mistakes to avoid — read our <Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline font-medium">complete guide for non-Indian wedding guests</Link>. It is the resource we wish we had when our non-Indian friends first asked us for help.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">How Much Should You Spend on an Indian Wedding Guest Outfit?</h3>
+                <p>Budget $150-$400 USD for a quality Indian wedding guest outfit. Cheaper options ($80-$150) exist but often use lower-quality fabrics that photograph poorly and may not survive dry-cleaning. More expensive options ($500+) are usually overkill for a guest — that territory is for bridal outfits. The sweet spot for a beautiful, photogenic outfit you can re-wear to future Indian weddings is $200-$350. At LuxeMia, most of our wedding-guest lehengas, sarees, and anarkali suits fall in this range, and we offer free shipping to the USA, Canada, and Australia on orders over $350.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">When to Order Your Indian Wedding Guest Outfit</h3>
+                <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. Last-minute orders often do not arrive in time, and Indian weddings have hard dates that cannot be moved. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping via USPS, UPS, or DHL to the USA, Canada, and Australia.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest — Complete Guide</Link></li>
+                  <li><Link to="/blog/indian-wedding-dress-complete-guide" className="text-primary underline">Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree</Link></li>
+                  <li><Link to="/blog/lehenga-vs-sharara-vs-anarkali-comparison" className="text-primary underline">Lehenga vs Sharara vs Anarkali: Which to Choose</Link></li>
+                  <li><Link to="/blog/indian-wedding-terms-glossary-50-events-rituals-roles" className="text-primary underline">Indian Wedding Terms Glossary: 50+ Events, Rituals & Roles</Link></li>
+                  <li><Link to="/size-guide" className="text-primary underline">Size Guide — How to Measure for Indian Ethnic Wear</Link></li>
+                </ul>
               </div>
             </div>
           </div>
