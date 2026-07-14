@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     // Smaller chunk size warning threshold
     chunkSizeWarningLimit: 800,
-    // Module preload policy (SEO audit 2026-07-09 Item #17):
+    // Module preload policy (SEO audit 2026-07-09 Item #17 + PageSpeed 2026-07-14):
     // Vite by default emits <link rel="modulepreload"> for every chunk in
     // the import graph, including those reachable only via dynamic import().
     // That defeated the lazy-loading of @supabase/supabase-js (169 kB /
@@ -38,11 +38,23 @@ export default defineConfig(({ mode }) => ({
     // though it's only used for auth/account/admin. The filter below
     // excludes the supabase chunk from preload hints, so the browser
     // only fetches it when getSupabase() is actually called (after first
-    // paint, inside useEffect). Recharts is no longer in manualChunks,
-    // so it's already correctly code-split behind AdminDashboard's lazy().
+    // paint, inside useEffect).
+    //
+    // PageSpeed 2026-07-14: also exclude vendor-motion (41 kB gzip),
+    // vendor-forms (22 kB gzip), and vendor-query (12 kB gzip) from
+    // modulepreload. These are only needed AFTER first paint (animations,
+    // form interactions, data fetching) — preloading them delays FCP/LCP
+    // by ~75 kB gzip on every page. They'll still be fetched on demand
+    // when the components that need them hydrate.
     modulePreload: {
       polyfill: true,
-      resolveDependencies: (_, deps) => deps.filter((d) => !d.includes('supabase')),
+      resolveDependencies: (_, deps) => deps.filter((d) =>
+        !d.includes('supabase') &&
+        !d.includes('vendor-motion') &&
+        !d.includes('vendor-forms') &&
+        !d.includes('vendor-query') &&
+        !d.includes('vendor-ui-extra')
+      ),
     },
     rollupOptions: {
       output: {
