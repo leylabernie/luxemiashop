@@ -9,7 +9,11 @@ import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
-import NewVisitorPopup from "./components/home/NewVisitorPopup";
+// Lazy-loaded so the popup's dependencies (framer-motion, lucide-react icons,
+// zod, supabase client) are split into a separate chunk that only loads when
+// the popup actually opens. Per PSI 2026-07-15: this removes ~24KB (vendor-mo)
+// + ~37KB (vendor-supabase) + lucide + zod from the initial bundle.
+const NewVisitorPopup = lazy(() => import("./components/home/NewVisitorPopup"));
 
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
@@ -198,7 +202,7 @@ const App = () => (
               </Routes>
               <MobileBottomNav />
               <WhatsAppButton />
-              <NewVisitorPopup />
+              <Suspense fallback={null}><NewVisitorPopup /></Suspense>
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>

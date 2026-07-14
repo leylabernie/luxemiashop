@@ -77,7 +77,15 @@
     <!-- Preload LCP hero banner image (first slide of NewArrivalsBanner carousel)
          Self-hosted WebP with responsive sizes. Mobile gets the smallest version. -->
     <link rel="preload" as="image" href="/images/hero/Hero_image_mobile.webp" fetchpriority="high">
-    <link rel="preload" as="image" imagesrcset="/images/hero/Hero_image_mobile.webp 480w, /images/hero/Hero_image_tablet.webp 768w, /images/hero/Hero_image_desktop.webp 1200w" imagesizes="(max-width: 640px) 480px, (max-width: 1024px) 768px, 1200px" fetchpriority="high">
+    <link rel="preload" as="image" imagesrcset="/images/hero/Hero_image_mobile.webp 480w, /images/hero/Hero_image_tablet.webp 768w, /images/hero/Hero_image_desktop.webp 1000w" imagesizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 50vw" fetchpriority="high">
+
+    <!-- Preconnect to Shopify Storefront API host (PSI 2026-07-15: ~300ms LCP savings).
+         The SPA fires 6+ graphql.json requests to this host during initial load;
+         pre-warming the TLS+DNS connection shaves RTT off the first one.
+         Previous vercel.json Link header preconnected cdn.shopify.com which is
+         UNUSED — corrected below to point at the actual API host. -->
+    <link rel="preconnect" href="https://lovable-project-zlh0w.myshopify.com" crossorigin>
+    <link rel="dns-prefetch" href="https://lovable-project-zlh0w.myshopify.com">
 
     <!-- Critical CSS: Reserve space for header + hero to prevent CLS -->
     <style>

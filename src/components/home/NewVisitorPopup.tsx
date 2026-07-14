@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, Clock, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { z } from 'zod';
+
+// CRITICAL: Do NOT import supabase at the top level.
+// The supabase client chunk (~44KB / 37KB unused) was previously bundled
+// into the initial payload even though it is only used inside handleSubmit.
+// Dynamic-importing it here lets Vite split it into a separate chunk that
+// only loads when a user actually submits the form.
+// See PSI diagnosis 2026-07-15: "Reduce unused JavaScript — vendor-supabase 44KB".
 
 const emailSchema = z.object({
   email: z
@@ -40,21 +46,65 @@ const recordAttempt = () => {
   localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
 };
 
+// ─── Trigger tuning ────────────────────────────────────────────────────
+// Previous behavior: 4-second setTimeout. That fired the popup during
+// LCP/hero render on mobile, and the popup's eager <img> became the LCP
+// element itself (per Lighthouse 2026-07-15: 13.1s LCP, 4.8s resource
+// load delay). New behavior: trigger on exit-intent (desktop) OR
+// scroll-past-50% (mobile) OR a 15-second backstop. The popup image is
+// also lazy + low fetchpriority so it can never become the LCP candidate.
+const BACKSTOP_MS = 15000;
+const SCROLL_TRIGGER_FRACTION = 0.5; // 50% of viewport
+
 const NewVisitorPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const triggeredRef = useRef(false);
 
   useEffect(() => {
-    const hasSeenPopup = localStorage.getItem('luxemia_popup_seen');
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
+    // Respect previous dismissal
+    if (localStorage.getItem('luxemia_popup_seen')) return;
+
+    // Server-side / unsupported — bail without listeners
+    if (typeof window === 'undefined') return;
+
+    const trigger = () => {
+      if (triggeredRef.current) return;
+      triggeredRef.current = true;
+      cleanup();
+      setIsOpen(true);
+    };
+
+    // Desktop: exit intent (mouse leaves top of viewport)
+    const onMouseLeave = (e: MouseEvent) => {
+      // Only trigger when cursor exits through the TOP of the window
+      // (real exit-intent signal, not just moving to the address bar)
+      if (e.clientY <= 0) trigger();
+    };
+
+    // Mobile: scroll past 50% of viewport
+    const onScroll = () => {
+      const scrolled = window.scrollY;
+      const viewport = window.innerHeight;
+      if (scrolled > viewport * SCROLL_TRIGGER_FRACTION) trigger();
+    };
+
+    // Backstop: 15s idle, only if no exit-intent / scroll yet
+    const idleTimer = window.setTimeout(trigger, BACKSTOP_MS);
+
+    const cleanup = () => {
+      document.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(idleTimer);
+    };
+
+    document.addEventListener('mouseleave', onMouseLeave);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return cleanup;
   }, []);
 
   const handleClose = () => {
@@ -88,6 +138,10 @@ const NewVisitorPopup = () => {
     setIsSubmitting(true);
 
     try {
+      // Dynamic-import supabase — keeps ~44KB out of initial bundle.
+      // The chunk is fetched only when a visitor actually submits the form.
+      const { supabase } = await import('@/integrations/supabase/client');
+
       const { data, error } = await supabase.functions.invoke('submit-email', {
         body: {
           email: email.toLowerCase().trim(),
@@ -160,10 +214,19 @@ const NewVisitorPopup = () => {
                 {/* ─── Image Panel ─────────────────────────────────────── */}
                 <div className="relative order-1 sm:order-1 aspect-square sm:aspect-auto sm:min-h-[420px] bg-gradient-to-br from-primary/10 via-primary/5 to-transparent overflow-hidden">
                   <img
-                    src="/images/popup-image.jpg"
+                    src="/images/popup-image.webp"
                     alt="Luxemia Indian ethnic wear — bridal lehenga collection"
                     className="absolute inset-0 w-full h-full object-cover"
-                    loading="eager"
+                    // CRITICAL (PSI 2026-07-15): the popup image was the LCP
+                    // element because it was loading="eager" and the popup
+                    // was triggered at T+4s — after the real hero LCP. Lazy
+                    // + low fetchpriority ensures it can never beat the
+                    // actual hero image for LCP.
+                    loading="lazy"
+                    fetchPriority="low"
+                    decoding="async"
+                    width={768}
+                    height={768}
                   />
                   {/* Overlay gradient for text readability if needed */}
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent sm:hidden" />
