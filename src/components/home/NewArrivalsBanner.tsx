@@ -244,9 +244,15 @@ const NewArrivalsBanner = () => {
                 <img
                   src={slide.image.includes('/images/hero/') ? `${slide.image}_desktop.webp` : slide.image}
                   srcSet={slide.image.includes('/images/hero/')
-                    ? `${slide.image}_mobile.webp 480w, ${slide.image}_tablet.webp 768w, ${slide.image}_desktop.webp 1200w`
+                    ? `${slide.image}_mobile.webp 480w, ${slide.image}_tablet.webp 768w, ${slide.image}_desktop.webp 1000w`
                     : undefined}
-                  sizes="(max-width: 640px) 480px, (max-width: 1024px) 768px, 1200px"
+                  // sizes attribute tuned to ACTUAL display width (PSI 2026-07-15):
+                  //   - mobile (<=640px): image fills ~100vw minus padding = ~92vw, cap at 480px
+                  //   - tablet (<=1024px): image is in 1-col layout, fills ~90vw, cap at 768px
+                  //   - desktop (>1024px): image is in 2-col grid, takes ~50vw, cap at 600px
+                  // Previous sizes=1200px caused DPR-2 mobile to pick the 1200w variant
+                  // even though display was only ~400px — wasting ~375KB per hero.
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 50vw"
                   alt={slide.headline}
                   width={600}
                   height={800}
