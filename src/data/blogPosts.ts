@@ -7857,6 +7857,695 @@ export const blogPosts: BlogPost[] = [
     image: '/images/blog/gdrive/couple-red-lehenga-sherwani-sunset.webp',
     readTime: 12
   },
+  {
+    id: '63',
+    slug: 'navratri-9-day-color-guide-2026',
+    title: 'Navratri 9 Day Color Guide 2026: What to Wear Each Night of Garba',
+    excerpt: 'Navratri 2026 runs September 22 to October 1. Each of the 9 days has a designated color — Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green. Here is what to wear each night, with shoppable chaniya choli and garba outfit ideas for every color.',
+    content: `
+      <h2>Quick Answer: Navratri 2026 Dates and 9 Day Color Schedule</h2>
+      <p>Navratri 2026 begins on <strong>Tuesday, September 22, 2026</strong> and ends on <strong>Thursday, October 1, 2026</strong> with Dussehra (Vijayadashami) on October 2. Each of the 9 nights of Navratri is associated with a specific color and a form of Goddess Durga. Wearing the day's color is considered auspicious and is a beloved tradition in Gujarat, Maharashtra, and among Indian diaspora communities worldwide. The 2026 Navratri color schedule is: <strong>Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green</strong>. Below is a day-by-day guide with outfit ideas, fabric recommendations, and shoppable chaniya choli options for each color, all available with free shipping to the USA, Canada, and Australia from LuxeMia.</p>
+
+      <h2>What Is Navratri and Why Do Colors Matter?</h2>
+      <p>Navratri (literally "nine nights" in Sanskrit) is a Hindu festival celebrating the victory of Goddess Durga over the buffalo demon Mahishasura. It is one of the most important festivals in Gujarat, where it is celebrated with nightly garba and dandiya raas dances. Each day of Navratri is dedicated to a different form of Durga (Shailaputri, Brahmacharini, Chandraghanta, Kushmanda, Skandamata, Katyayani, Kalaratri, Mahagauri, Siddhidatri) and is associated with a specific color. The color schedule changes every year because it is tied to the Hindu lunar calendar, but the tradition of wearing the day's color is constant.</p>
+      <p>For Indian diaspora communities in the USA, Canada, and Australia, Navratri is celebrated with community garba nights organized by Gujarati and Indian cultural associations. Most diaspora celebrations happen on the closest weekend to the actual Navratri dates, so check your local Indian community center for the exact garba night schedule. If you are attending a garba event, you will want a different outfit for each night — or at least 2-3 outfits you can rotate. This guide helps you plan your 9-day Navratri wardrobe with the right colors and silhouettes.</p>
+
+      <h2>Day 1 (Sept 22, 2026) — Orange: Shailaputri Puja</h2>
+      <p>Orange represents energy, warmth, and the rising sun. For Day 1 of Navratri, wear an orange <a href="/lehengas">chaniya choli</a>, anarkali suit, or saree. Orange is one of the easiest Navratri colors to find because it is a festive staple in Indian fashion. Pair orange with gold jewelry and a contrasting dupatta in yellow or pink for a vibrant garba look. <strong>Budget:</strong> $150-$400 for a ready-to-ship orange chaniya choli. <strong>Fabric:</strong> Georgette or art silk for garba (you will be dancing for hours — avoid heavy velvet on Day 1).</p>
+
+      <h2>Day 2 (Sept 23, 2026) — White: Brahmacharini Puja</h2>
+      <p>White represents purity, peace, and spiritual devotion. White is unusual for Indian festivals (it is normally associated with mourning), but for Navratri Day 2, it is considered highly auspicious. Wear a white chaniya choli or anarkali suit with colorful embroidery or mirror work — pure white with no embellishment can look too plain for garba. A white georgette chaniya choli with multi-color mirror work and a contrasting orange or pink dupatta is a classic Day 2 look. <strong>Budget:</strong> $180-$400. <strong>Fabric:</strong> Georgette, chiffon, or cotton silk with mirror work.</p>
+
+      <h2>Day 3 (Sept 24, 2026) — Red: Chandraghanta Puja</h2>
+      <p>Red represents power, passion, and the Goddess Durga herself. Red is the boldest Navratri color and one of the most photogenic for garba photos. A red chaniya choli with gold zari and mirror work is the quintessential garba outfit — if you only buy one Navratri outfit, make it red. Pair with gold jhumka earrings, a kundan necklace, and red bangles. <strong>Budget:</strong> $200-$500. <strong>Fabric:</strong> Art silk or raw silk holds mirror work well and photographs richly under garba lighting. <a href="/lehengas">Shop red lehengas and chaniya choli at LuxeMia</a>.</p>
+
+      <h2>Day 4 (Sept 25, 2026) — Royal Blue: Kushmanda Puja</h2>
+      <p>Royal blue represents depth, calm, and the infinite. Royal blue is a striking Navratri color — it stands out in a sea of reds and oranges at garba. A royal blue chaniya choli with silver or white mirror work and a contrasting yellow or orange dupatta is a stunning Day 4 look. Royal blue also photographs beautifully against the warm lighting of garba venues. <strong>Budget:</strong> $180-$400. <strong>Fabric:</strong> Velvet for cooler evening garbas (late September can be chilly in some US cities), or georgette for indoor venues.</p>
+
+      <h2>Day 5 (Sept 26, 2026) — Yellow: Skandamata Puja</h2>
+      <p>Yellow represents happiness, optimism, and the warmth of turmeric. Yellow is a cheerful daytime Navratri color — many garba events on Day 5 are afternoon events. A yellow chaniya choli with green or pink embroidery is fresh and photogenic. Yellow is also a practical choice because it does not show sweat as much as darker colors (you will be dancing for hours). <strong>Budget:</strong> $150-$350. <strong>Fabric:</strong> Cotton silk or georgette for daytime comfort.</p>
+
+      <h2>Day 6 (Sept 27, 2026) — Green: Katyayani Puja</h2>
+      <p>Green represents growth, harmony, and new beginnings. Green is a popular Navratri color — especially emerald and forest green, which photograph richly. A green chaniya choli with gold zari and a contrasting maroon or pink dupatta is a classic Day 6 look. Green also pairs beautifully with gold jewelry, which is the traditional Navratri accessory. <strong>Budget:</strong> $180-$450. <strong>Fabric:</strong> Raw silk or art silk for a structured silhouette that holds up during dandiya raas.</p>
+
+      <h2>Day 7 (Sept 28, 2026) — Grey: Kalaratri Puja</h2>
+      <p>Grey represents balance, neutrality, and the fierce form of Durga. Grey is the most unusual Navratri color — many people do not own grey Indian clothes. A grey chaniya choli with bright mirror work in pink, orange, or yellow is a striking look. If you cannot find a grey outfit, silver or charcoal are acceptable substitutes. <strong>Budget:</strong> $180-$400. <strong>Fabric:</strong> Georgette with heavy mirror work to lift the grey.</p>
+
+      <h2>Day 8 (Sept 29, 2026) — Purple: Mahagauri Puja</h2>
+      <p>Purple represents royalty, spirituality, and devotion. Purple is a gorgeous Navratri color — deep eggplant purple and lavender both work. A purple chaniya choli with silver or gold mirror work and a contrasting pink or yellow dupatta is an elegant Day 8 look. Purple also pairs well with kundan jewelry. <strong>Budget:</strong> $180-$450. <strong>Fabric:</strong> Velvet for a rich evening look, or georgette for dancing comfort.</p>
+
+      <h2>Day 9 (Sept 30, 2026) — Peacock Green: Siddhidatri Puja</h2>
+      <p>Peacock green (a teal-blue-green) represents beauty, vibrancy, and the divine feminine. Peacock green is a striking Navratri color — it photographs brilliantly and stands out in any garba crowd. A peacock green chaniya choli with gold zari and a contrasting maroon or orange dupatta is a memorable final-night look. Many people save their most elaborate outfit for Day 9 since it is the last night of garba before Dussehra. <strong>Budget:</strong> $200-$500. <strong>Fabric:</strong> Raw silk or art silk for a statement final-night look.</p>
+
+      <h2>What Is a Chaniya Choli and How Is It Different from a Lehenga?</h2>
+      <p>A <strong>chaniya choli</strong> is the traditional garba outfit — a flared skirt (chaniya), fitted blouse (choli), and dupatta (chunri). It is essentially the same silhouette as a <a href="/lehengas">lehenga choli</a>, but with key differences for garba dancing:</p>
+      <ul>
+        <li><strong>Skirt flare:</strong> Chaniya cholis have extra-flared skirts (4-6 meters of fabric) for dramatic spinning during garba. Standard lehengas have 2-3 meters of flare.</li>
+        <li><strong>Mirror work:</strong> Chaniya cholis traditionally feature heavy mirror work (abhla) which catches the light during dance. Lehengas more often use zari or sequin work.</li>
+        <li><strong>Weight:</strong> Chaniya cholis are lighter than bridal lehengas — you can dance for 4+ hours in them without your back hurting.</li>
+        <li><strong>Dupatta style:</strong> Garba dupattas are often worn as a chunri (head scarf) or tucked at the waist, while lehenga dupattas are draped over the shoulder.</li>
+      </ul>
+
+      <h2>How Many Navratri Outfits Do You Really Need?</h2>
+      <p>You do not need 9 different outfits for Navratri — most diaspora garba events happen on 2-4 nights, not all 9. Here is a practical wardrobe plan:</p>
+      <ul>
+        <li><strong>If attending 1-2 garba nights:</strong> Buy 1-2 outfits in the colors of those specific nights. Most popular: red (Day 3), royal blue (Day 4), green (Day 6).</li>
+        <li><strong>If attending 3-4 garba nights:</strong> Buy 3 outfits in different colors. Mix and match dupattas to create 4 looks from 3 outfits.</li>
+        <li><strong>If attending all 9 nights:</strong> You are either Gujarati or a serious garba enthusiast. Invest in 5-6 outfits and repeat 2-3 nights. No one expects you to have 9 outfits.</li>
+      </ul>
+
+      <h2>Where to Buy Navratri Chaniya Choli in the USA</h2>
+      <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the USA, Canada, and Australia with free shipping on orders over $350. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990) and can help you pick the right color and size. Browse our <a href="/lehengas">lehenga collection</a> (many styles work for garba) or our curated <a href="/collections/navratri-outfits">Navratri outfits page</a>.</p>
+
+      <h2>Navratri Accessories — What You Need Beyond the Outfit</h2>
+      <ul>
+        <li><strong>Dandiya sticks:</strong> Usually provided at garba events, but you can bring your own decorated pair ($15-$40).</li>
+        <li><strong>Oxidized silver jewelry:</strong> The traditional garba accessory — heavy silver-tone necklaces, earrings, and bangles. Budget $40-$120 for a set.</li>
+        <li><strong>Kamarbandh (waist belt):</strong> A decorative waist chain that defines the waist over the chaniya. $30-$80.</li>
+        <li><strong>Mojari or juti footwear:</strong> Traditional embroidered flats — you will be dancing for hours, do not wear heels. $30-$80.</li>
+        <li><strong>Bindi:</strong> A decorative forehead dot in a contrasting color. $2-$5 for a pack.</li>
+        <li><strong>Flower garland for hair:</strong> Optional but traditional — fresh or artificial jasmine garlands woven into a braid. $10-$25.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>What if I do not own the day's color?</h3>
+      <p>You can wear the closest substitute. If the day's color is grey and you do not own grey, silver or charcoal work. If the color is peacock green and you do not own it, royal blue or emerald green are acceptable. The tradition is about honoring the goddess — wearing a close substitute is fine.</p>
+
+      <h3>Can I wear the same outfit on multiple Navratri nights?</h3>
+      <p>Yes, especially if the colors are different. Many people rotate 3-4 outfits across 9 nights. If you are attending community garba events on different nights with different crowds, no one will notice you rewearing. Just do not wear the same outfit on consecutive nights to the same crowd.</p>
+
+      <h3>Do I have to wear a chaniya choli for garba?</h3>
+      <p>No. While chaniya choli is traditional, you can also wear an <a href="/suits">anarkali suit</a>, <a href="/sarees">saree</a>, or indo-western outfit for garba. The key requirements are: (1) you can dance in it, (2) it is festive (mirror work, embroidery, or embellishment), and (3) it follows the day's color tradition. Avoid heavy bridal lehengas — they are too heavy for hours of dancing.</p>
+
+      <h3>What should men wear for Navratri garba?</h3>
+      <p>Men traditionally wear a <a href="/menswear">kurta pajama</a> or kediyu (a traditional Gujarati tunic) with a printed bandhani dupatta. For Navratri 2026 colors, men can match the day's color in their kurta. Budget $80-$250 for a men's garba outfit.</p>
+
+      <h2>Related Reading</h2>
+      <ul>
+        <li><a href="/collections/navratri-outfits">Shop Navratri Outfits at LuxeMia</a></li>
+        <li><a href="/lehengas">Shop Lehengas and Chaniya Choli</a></li>
+        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a></li>
+        <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali: Which to Choose</a></li>
+        <li><a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary</a></li>
+      </ul>
+    `,
+    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    publishedAt: '2026-07-15',
+    updatedAt: '2026-07-15',
+    category: 'Festival Guide',
+    tags: ['navratri 2026', 'navratri colors 2026', 'navratri 9 day colors', 'chaniya choli', 'garba outfit', 'dandiya night outfit', 'navratri outfit ideas', 'navratri usa', 'what to wear navratri', 'navratri color schedule'],
+    image: '/images/blog/blog-006-teal-green-net.webp',
+    readTime: 10
+  },
+  {
+    id: '64',
+    slug: 'diwali-outfit-ideas-by-setting',
+    title: 'Diwali Outfit Ideas by Setting: Puja, Party, Office & Community — 2026 Guide',
+    excerpt: 'What to wear for Diwali depends on the setting. For Lakshmi Puja at home, wear a silk saree or cotton salwar kameez. For a Diwali party, choose an embellished lehenga or anarkali. For office Diwali, go indo-western. For community Diwali, wear festive colors. Budget $120-$500 per outfit.',
+    content: `
+      <h2>Quick Answer: What to Wear for Diwali by Setting</h2>
+      <p>Diwali outfit choices depend on where you are celebrating. For <strong>Lakshmi Puja at home</strong>, wear a traditional silk saree or cotton salwar kameez in auspicious colors (red, gold, deep green). For a <strong>Diwali party</strong>, choose an embellished lehenga or sequin anarkali in jewel tones. For an <strong>office Diwali celebration</strong>, go indo-western — a palazzo suit or contemporary anarkali in festive colors. For a <strong>community Diwali event</strong>, wear festive colors with traditional embellishments. Budget $120-$500 per Diwali outfit. At LuxeMia, we ship ready-to-ship Diwali outfits to the USA, Canada, and Australia with free shipping on orders over $350 — <a href="/collections/diwali-outfits">shop Diwali outfits here</a>.</p>
+
+      <h2>Why Diwali Outfit Choices Matter</h2>
+      <p>Diwali, the Hindu festival of lights, is the most celebrated Indian festival worldwide. Unlike a wedding (one event, one outfit), Diwali typically involves multiple celebrations across 5 days: Dhanteras (Day 1), Choti Diwali (Day 2), main Diwali / Lakshmi Puja (Day 3), Govardhan Puja / Padwa (Day 4), and Bhai Dooj (Day 5). Most Indian diaspora families in the USA, Canada, and Australia celebrate at least 2-3 of these: a home puja, a community celebration, and possibly an office or friend-hosted Diwali party. Each setting has a different dress code — wearing the wrong outfit to the wrong setting is a common mistake. This guide breaks down exactly what to wear for each Diwali setting, with shoppable outfit ideas for every budget and body type.</p>
+
+      <h2>Setting 1: Lakshmi Puja at Home (Most Traditional)</h2>
+      <p>The main Diwali day is dedicated to Lakshmi, the goddess of wealth. Families perform a Lakshmi Puja (prayer ceremony) at home in the evening, lighting diyas (oil lamps) and offering sweets. This is the most traditional Diwali setting and calls for authentic Indian ethnic wear.</p>
+      <h3>What to Wear for Lakshmi Puja</h3>
+      <ul>
+        <li><strong>Silk saree</strong> in red, gold, deep green, or maroon. Banarasi silk and Kanchipuram silk are the most auspicious choices. <a href="/sarees">Shop silk sarees at LuxeMia</a>. Budget $120-$400.</li>
+        <li><strong>Cotton salwar kameez</strong> in festive colors for comfort during the long puja. Cotton is preferred over synthetic fabrics for religious ceremonies. Budget $80-$200.</li>
+        <li><strong>Anarkali suit</strong> in silk or cotton silk with light zari work. <a href="/suits">Shop anarkali suits</a>. Budget $120-$300.</li>
+      </ul>
+      <p><strong>Colors:</strong> Red, gold, deep green, maroon, royal blue, orange. These are the auspicious Diwali colors representing prosperity, joy, and the goddess Lakshmi. <strong>Avoid:</strong> Black (inauspicious), white (associated with mourning), and overly dark colors for the puja. <strong>Fabric:</strong> Natural fibers (silk, cotton) are preferred for religious ceremonies. Avoid synthetic fabrics like polyester for the puja itself.</p>
+
+      <h2>Setting 2: Diwali Party (Most Glamorous)</h2>
+      <p>Diwali parties are hosted by friends, family, or community organizations on or around the main Diwali night. These are the most glamorous Diwali events — think music, dancing, food, and lots of photos. The dress code is festive-formal: you want to look stunning but still be able to dance and eat comfortably.</p>
+      <h3>What to Wear for a Diwali Party</h3>
+      <ul>
+        <li><strong>Embellished lehenga</strong> in jewel tones (emerald, sapphire, ruby, plum) with mirror work, zari, or sequin embellishment. <a href="/lehengas">Shop lehengas at LuxeMia</a>. Budget $200-$500.</li>
+        <li><strong>Sequin or velvet anarkali</strong> in deep colors — wine, navy, emerald. Velvet is perfect for cool October/November evenings. Budget $180-$400.</li>
+        <li><strong>Designer saree</strong> in georgette or net with heavy border work. Pair with a statement blouse. Budget $150-$450.</li>
+        <li><strong>Indo-western gown</strong> for a modern look — cape sets, dhoti pants with kurti, or jacket sets. <a href="/indowestern">Shop indo-western</a>. Budget $150-$400.</li>
+      </ul>
+      <p><strong>Colors:</strong> Anything festive — jewel tones, metallics, deep colors. This is the setting where you can be most fashion-forward. <strong>Embellishment:</strong> The more sparkle, the better. Diwali parties are maximalist — sequins, mirror work, zari all photograph beautifully against diyas and string lights.</p>
+
+      <h2>Setting 3: Office Diwali Celebration (Most Modern)</h2>
+      <p>Many workplaces in the USA, Canada, and Australia now celebrate Diwali with an office party, potluck, or cultural event. The dress code is "festive office" — you want to celebrate the holiday but still look professional. This is where indo-western fusion shines.</p>
+      <h3>What to Wear for Office Diwali</h3>
+      <ul>
+        <li><strong>Palazzo suit</strong> in a contemporary color — dusty rose, sage green, navy, ivory with gold print. Budget $120-$280.</li>
+        <li><strong>Straight-cut kurta with pants</strong> in cotton or linen. Pair with statement earrings. Budget $80-$200.</li>
+        <li><strong>Indo-western jacket set</strong> — a long ethnic jacket over a plain kurta or even over a Western top and pants. Budget $150-$350.</li>
+        <li><strong>Simple silk saree</strong> in a muted color with a contrast blouse. Avoid heavy embellishment for the office. Budget $120-$300.</li>
+      </ul>
+      <p><strong>Avoid for office:</strong> Heavy bridal-style lehengas, crop-top cholis that show midriff, extreme bling. You want to look festive but workplace-appropriate. <strong>Colors:</strong> Muted jewel tones, pastels with gold accents, ivory and gold.</p>
+
+      <h2>Setting 4: Community Diwali Event (Most Social)</h2>
+      <p>Indian community organizations in major US, Canadian, and Australian cities host large Diwali celebrations — usually a cultural program with dance performances, food stalls, and a firework display. These events can have 200-2,000 attendees and run 4-6 hours. The dress code is festive and practical — you will be walking, sitting on folding chairs, and possibly dancing.</p>
+      <h3>What to Wear for Community Diwali</h3>
+      <ul>
+        <li><strong>Anarkali suit</strong> in a festive color with light embellishment. Anarkalis are comfortable for long events and flatter all body types. Budget $150-$350.</li>
+        <li><strong>Lehenga with a choli that has sleeves</strong> (not a crop top) for modesty at a community event. Budget $200-$450.</li>
+        <li><strong>Salwar kameez with dupatta</strong> in silk or georgette — practical, comfortable, and traditional. Budget $120-$300.</li>
+      </ul>
+      <p><strong>Practical tips:</strong> Wear comfortable flats or low wedges (you will be standing on grass or concrete). Bring a light wrap or dupatta for evening fireworks. Avoid heavy jewelry that gets uncomfortable after 4 hours. <a href="/collections/diwali-outfits">Shop Diwali outfits at LuxeMia</a>.</p>
+
+      <h2>Setting 5: Diwali Dinner with Family (Most Intimate)</h2>
+      <p>For a small family Diwali dinner (5-15 people), the dress code is "festive casual." You want to look put-together but not overdressed — this is family, after all.</p>
+      <h3>What to Wear for Family Diwali Dinner</h3>
+      <ul>
+        <li><strong>Cotton or silk salwar kameez</strong> in a festive color. Budget $80-$200.</li>
+        <li><strong>Simple anarkali</strong> in cotton silk. Budget $120-$280.</li>
+        <li><strong>Cotton saree</strong> with a simple blouse. Budget $80-$200.</li>
+      </ul>
+      <p>This is the setting where you can wear your most comfortable Indian clothes. Skip heavy embellishment — you will be eating, sitting on the floor, or playing cards after dinner. Cotton and natural fabrics are ideal.</p>
+
+      <h2>Diwali Outfit Color Guide — What Each Color Means</h2>
+      <ul>
+        <li><strong>Gold:</strong> The quintessential Diwali color — represents prosperity, wealth, and the blessing of Lakshmi. Wearing gold is considered especially auspicious.</li>
+        <li><strong>Red:</strong> Represents joy, celebration, and marital bliss. Auspicious for the main Diwali puja.</li>
+        <li><strong>Deep green:</strong> Represents growth, harmony, and new beginnings. A popular modern Diwali color.</li>
+        <li><strong>Royal blue:</strong> Represents depth and the infinite. Photographs beautifully against diyas.</li>
+        <li><strong>Maroon:</strong> A sophisticated alternative to red. Pairs beautifully with gold jewelry.</li>
+        <li><strong>Orange/Saffron:</strong> Represents courage, sacrifice, and spirituality. A traditional Hindu color.</li>
+        <li><strong>Purple:</strong> Represents royalty and luxury. A modern Diwali choice for parties.</li>
+      </ul>
+      <p><strong>Avoid for Diwali:</strong> Black (inauspicious), pure white (mourning color), dull grey (lacks festive energy).</p>
+
+      <h2>Diwali Outfit Budget Guide</h2>
+      <table>
+        <tr><th>Setting</th><th>Budget Range</th><th>Best Pick</th></tr>
+        <tr><td>Lakshmi Puja at home</td><td>$120-$300</td><td>Silk saree or cotton salwar kameez</td></tr>
+        <tr><td>Diwali party</td><td>$200-$500</td><td>Embellished lehenga or sequin anarkali</td></tr>
+        <tr><td>Office Diwali</td><td>$120-$280</td><td>Palazzo suit or indo-western jacket set</td></tr>
+        <tr><td>Community Diwali</td><td>$150-$350</td><td>Anarkali suit or salwar kameez</td></tr>
+        <tr><td>Family dinner</td><td>$80-$200</td><td>Cotton salwar kameez or simple anarkali</td></tr>
+      </table>
+
+      <h2>When to Order Diwali Outfits</h2>
+      <p>Diwali 2026 falls on <strong>October 21, 2026</strong> (main Diwali night). Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. If you are ordering multiple outfits (for different settings), order them all together to take advantage of free shipping over $350. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I wear black for Diwali?</h3>
+      <p>Traditionally, no — black is considered inauspicious for Hindu celebrations. However, some modern Diwali parties with a "black tie" or "cocktail" theme may welcome black outfits. When in doubt, avoid black and choose a festive color instead.</p>
+
+      <h3>Can I wear a Western dress for Diwali?</h3>
+      <p>For office Diwali celebrations, a Western dress in a festive color (emerald, burgundy, gold) with Indian-inspired jewelry is acceptable. For traditional settings (puja, family dinner), wear Indian ethnic wear — it shows respect for the culture. For Diwali parties, Indian attire is strongly preferred.</p>
+
+      <h3>How many Diwali outfits do I need?</h3>
+      <p>Most diaspora families celebrate 2-3 Diwali settings (e.g., home puja + community event + office party). You will want a different outfit for each setting. If budget is tight, one versatile silk saree or anarkali can work for multiple settings with different accessories.</p>
+
+      <h2>Related Reading</h2>
+      <ul>
+        <li><a href="/collections/diwali-outfits">Shop Diwali Outfits at LuxeMia</a></li>
+        <li><a href="/blog/navratri-9-day-color-guide-2026">Navratri 9 Day Color Guide 2026</a></li>
+        <li><a href="/lehengas">Shop Lehengas</a></li>
+        <li><a href="/sarees">Shop Sarees</a></li>
+        <li><a href="/suits">Shop Anarkali Suits</a></li>
+        <li><a href="/indowestern">Shop Indo-Western</a></li>
+      </ul>
+    `,
+    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    publishedAt: '2026-07-15',
+    updatedAt: '2026-07-15',
+    category: 'Festival Guide',
+    tags: ['diwali outfit ideas', 'diwali 2026', 'what to wear diwali', 'diwali party outfit', 'diwali puja outfit', 'diwali office outfit', 'diwali outfit usa', 'diwali outfit canada', 'diwali outfit australia', 'diwali color guide'],
+    image: '/images/blog/blog-001-deep-maroon-silk.webp',
+    readTime: 11
+  },
+  {
+    id: '65',
+    slug: 'mehendi-outfit-by-role',
+    title: 'Mehendi Outfit Ideas by Role: Bride, Sister, Bridesmaid, Guest — 2026 Guide',
+    excerpt: 'What to wear for a mehendi ceremony depends on your role. The bride wears yellow or green. The bride sister wears a bright contrasting color. Bridesmaids match in a coordinated palette. Guests wear festive casual. Budget $120-$400. Here is the complete role-by-role mehendi outfit guide.',
+    content: `
+      <h2>Quick Answer: What to Wear to a Mehendi Ceremony by Role</h2>
+      <p>The mehendi ceremony is a pre-wedding event where henna is applied to the bride hands and feet, and guests celebrate with music, food, and dancing. What you wear depends on your role: <strong>the bride</strong> wears yellow, orange, or green (traditional mehendi colors); <strong>the bride sister</strong> wears a bright contrasting color (fuchsia, royal blue, or purple); <strong>bridesmaids</strong> coordinate in a matching palette (usually yellow, orange, or coral); <strong>guests</strong> wear festive casual in bright colors. Budget $120-$400. The most important rule: wear something comfortable — you will be sitting for hours while henna is applied, and the outfit should not have heavy embellishment that gets in the way. <a href="/collections/mehendi-outfits">Shop mehendi outfits at LuxeMia</a>.</p>
+
+      <h2>What Is a Mehendi Ceremony?</h2>
+      <p>The mehendi (or mehndi) ceremony is one of the most beloved pre-wedding events in an Indian wedding. It is held 1-2 days before the main wedding, usually in the daytime. A henna artist applies intricate designs to the bride hands and feet — a process that takes 4-8 hours. Female guests also get smaller henna designs applied. The atmosphere is festive, casual, and very photogenic — think bright colors, flower jewelry, folk music, and dancing. The mehendi is the most relaxed Indian wedding event, and the dress code reflects that.</p>
+
+      <h2>Role 1: The Bride — What to Wear for Your Mehendi</h2>
+      <p>The bride is the center of attention at her mehendi. Traditionally, the bride wears yellow, orange, or green — colors associated with henna, turmeric, and new beginnings. Modern brides often choose a bright fuchsia, coral, or lime green instead. The most popular bride mehendi outfits are:</p>
+      <ul>
+        <li><strong>Yellow or orange lehenga</strong> with floral or mirror work. Yellow is the most traditional mehendi color — it represents turmeric (used in pre-wedding rituals) and joy. Budget $300-$800 for a bride mehendi lehenga. <a href="/lehengas">Shop lehengas</a>.</li>
+        <li><strong>Green anarkali suit</strong> with gota patti or mirror work. Green represents henna itself and is highly traditional. Budget $250-$600.</li>
+        <li><strong>Floral print lehenga</strong> in mixed bright colors. Floral prints are trendy for mehendi brides — they photograph beautifully against flower decorations. Budget $300-$700.</li>
+        <li><strong>Cape set or indo-western gown</strong> in yellow or coral for a modern bride. Budget $300-$600.</li>
+      </ul>
+      <p><strong>Bride mehendi outfit tips:</strong> Avoid heavy embellishment (zardozi, heavy zari) — you will be sitting for 4-8 hours with henna on your hands, and heavy embroidery gets uncomfortable. Choose lightweight fabrics like georgette, chiffon, or organza. Avoid velvet — it is too hot for a daytime mehendi. Wear comfortable flats or juti — no heels (you will be sitting on the floor or low seating).</p>
+
+      <h2>Role 2: Bride Sister — What to Wear</h2>
+      <p>The bride sister (and the groom sister at his mehendi) has a special role — she is in the wedding party but not the center of attention. Her outfit should be festive and coordinated with the bride, but in a contrasting color. Popular choices:</p>
+      <ul>
+        <li><strong>Fuchsia or magenta lehenga</strong> if the bride is wearing yellow or orange. Fuchsia is the most popular bride-sister color — it photographs beautifully and stands out from the bride outfit. Budget $200-$450.</li>
+        <li><strong>Royal blue or purple anarkali</strong> if the bride is wearing green or yellow. Blue and purple contrast beautifully with yellow and green in photos. Budget $180-$400.</li>
+        <li><strong>Coral or burnt orange suit</strong> for a softer contrast. Coral works with almost any bride color. Budget $150-$350.</li>
+      </ul>
+      <p><strong>Bride sister tips:</strong> Coordinate with the bride — ask her what color she is wearing, then choose a complementary color. Do not wear the same color as the bride. Avoid white, black, and red (red is for the wedding ceremony, not the mehendi).</p>
+
+      <h2>Role 3: Bridesmaid — What to Wear</h2>
+      <p>Bridesmaids at an Indian wedding mehendi usually coordinate in matching or color-coordinated outfits. The bride typically chooses the bridesmaid color palette when she sends out the wedding invitations. Popular bridesmaid mehendi looks:</p>
+      <ul>
+        <li><strong>Matching yellow anarkali suits</strong> for all bridesmaids — the classic mehendi look. Budget $150-$300 each.</li>
+        <li><strong>Color-coordinated lehengas</strong> in shades of orange (peach, coral, burnt orange, deep orange) — a modern ombre effect. Budget $200-$400 each.</li>
+        <li><strong>Matching floral print kurtis with palazzo pants</strong> — comfortable and photogenic. Budget $120-$250 each.</li>
+        <li><strong>Coordinated sharara sets</strong> in a single color — shararas are trendy for mehendi because they are easy to dance in. Budget $180-$350 each.</li>
+      </ul>
+      <p><strong>Bridesmaid tips:</strong> Coordinate with the other bridesmaids via a group chat. Do not deviate from the agreed color palette — photos will look messy if one bridesmaid wears a different color. If the bride did not specify a color, ask her.</p>
+
+      <h2>Role 4: Wedding Guest — What to Wear</h2>
+      <p>If you are attending a mehendi as a guest (not in the wedding party), the dress code is festive casual. You want to look put-together but not overdressed — the mehendi is more relaxed than the sangeet or wedding ceremony. Popular guest looks:</p>
+      <ul>
+        <li><strong>Bright salwar kameez</strong> in yellow, orange, pink, or green. Cotton or georgette for daytime comfort. Budget $120-$280. <a href="/suits">Shop salwar kameez</a>.</li>
+        <li><strong>Simple anarkali suit</strong> in a festive color with light embellishment. Budget $150-$350.</li>
+        <li><strong>Cotton saree</strong> in a bright color — comfortable for sitting during henna application. Budget $100-$250.</li>
+        <li><strong>Palazzo suit</strong> for a modern indo-western look. Budget $150-$300.</li>
+      </ul>
+      <p><strong>Guest tips:</strong> Avoid wearing the bride color (ask the host if unsure). Avoid heavy lehengas — they are overdressed for a mehendi. Wear something you can sit in comfortably for 3-4 hours. Choose bright, festive colors — pastels and dark colors look out of place at a mehendi.</p>
+
+      <h2>Role 5: Mother of the Bride or Groom — What to Wear</h2>
+      <p>The mother of the bride (and mother of the groom) has a special role at the mehendi — she is hosting and receiving guests. Her outfit should be elegant, traditional, and comfortable. Popular choices:</p>
+      <ul>
+        <li><strong>Silk saree</strong> in maroon, deep green, or royal blue — elegant and traditional. Budget $200-$500. <a href="/sarees">Shop silk sarees</a>.</li>
+        <li><strong>Heavily embroidered salwar kameez</strong> in a rich color — sophisticated and comfortable. Budget $200-$450.</li>
+        <li><strong>Silk anarkali suit</strong> in a deep jewel tone — modern but traditional. Budget $250-$500.</li>
+      </ul>
+
+      <h2>Mehendi Outfit Color Guide</h2>
+      <p>Color choice at a mehendi is important because it sets the festive, joyful tone of the event. Here is what each color represents and when to wear it:</p>
+      <ul>
+        <li><strong>Yellow:</strong> The most traditional mehendi color — represents turmeric (used in pre-wedding haldi ceremony) and joy. The bride often wears yellow.</li>
+        <li><strong>Orange:</strong> Represents energy and celebration. Popular for bridesmaids and guests.</li>
+        <li><strong>Green:</strong> Represents henna itself and new beginnings. A popular bride color, especially in South Indian weddings.</li>
+        <li><strong>Pink and fuchsia:</strong> Represent joy and femininity. Popular for bride sisters and bridesmaids.</li>
+        <li><strong>Coral and peach:</strong> Soft, photogenic colors that work for any role.</li>
+        <li><strong>Royal blue and purple:</strong> Bold contrasts for bride sisters who want to stand out.</li>
+      </ul>
+      <p><strong>Avoid for mehendi:</strong> White (mourning color), black (inauspicious), red (reserved for the wedding ceremony), and pastels (too muted for a festive mehendi).</p>
+
+      <h2>Mehendi Outfit Fabric Guide</h2>
+      <ul>
+        <li><strong>Cotton:</strong> The most comfortable for daytime mehendi events. Breathable and easy to sit in for hours. Best for guests and family.</li>
+        <li><strong>Georgette:</strong> Lightweight and flowy — flattering for anarkalis and lehengas. A good all-purpose mehendi fabric.</li>
+        <li><strong>Chiffon:</strong> Lighter than georgette, very comfortable for summer mehendi events. Often used for dupattas.</li>
+        <li><strong>Organza:</strong> A stiff, sheer fabric that holds its shape — popular for trendy mehendi lehengas with floral prints.</li>
+        <li><strong>Silk:</strong> Rich and traditional. Best for mothers of the bride/groom. Too heavy for most guests at a daytime mehendi.</li>
+        <li><strong>Avoid velvet:</strong> Too hot and heavy for a daytime mehendi. Save velvet for the sangeet or winter wedding.</li>
+      </ul>
+
+      <h2>Mehendi Accessories — What You Need</h2>
+      <ul>
+        <li><strong>Floral jewelry (gajra):</strong> A flower garland for the hair — traditional for mehendi. Budget $10-$30. Many brides wear fresh flower jewelry for the whole mehendi.</li>
+        <li><strong>Oxidized silver jewelry:</strong> The most popular mehendi accessory — silver-tone necklaces, earrings, and bangles. Pairs beautifully with bright mehendi colors. Budget $30-$100 for a set.</li>
+        <li><strong>Comfortable flats or juti:</strong> You will be sitting for hours — no heels. Budget $30-$80.</li>
+        <li><strong>Small clutch or potli bag:</strong> For your phone, lip balm, and tissues. Budget $20-$50.</li>
+        <li><strong>Floral maang tikka:</strong> Optional but photogenic — a small floral forehead piece. Budget $15-$40.</li>
+      </ul>
+
+      <h2>What NOT to Wear to a Mehendi</h2>
+      <ul>
+        <li><strong>Heavy bridal lehengas:</strong> Overdressed and uncomfortable for a daytime mehendi.</li>
+        <li><strong>Velvet:</strong> Too hot for daytime. Save it for the sangeet.</li>
+        <li><strong>Heels:</strong> You will be sitting on low seating and getting henna applied. Flats only.</li>
+        <li><strong>White or black:</strong> White is for mourning, black is inauspicious. Avoid both.</li>
+        <li><strong>Red:</strong> Reserved for the wedding ceremony. Maroon and burgundy are fine for mehendi.</li>
+        <li><strong>Western clothes:</strong> Even if the invitation says "casual," wear Indian ethnic wear. It shows respect for the culture.</li>
+        <li><strong>Heavy zardozi embroidery:</strong> Gets in the way when henna is being applied. Choose lighter embellishment.</li>
+      </ul>
+
+      <h2>When to Order Your Mehendi Outfit</h2>
+      <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I wear a lehenga to a mehendi?</h3>
+      <p>Yes, but choose a lightweight lehenga in georgette or organza — not a heavy bridal lehenga. The lehenga should be comfortable enough to sit in for hours while henna is applied.</p>
+
+      <h3>What if the bride did not specify a color for guests?</h3>
+      <p>Default to bright festive colors — yellow, orange, pink, coral, or green. Avoid white, black, and red. When in doubt, ask the bride sister or a bridesmaid.</p>
+
+      <h3>Can men wear kurta pajama to a mehendi?</h3>
+      <p>Yes — kurta pajama or a short kurta with nehru jacket is the standard mehendi outfit for men. Choose bright colors that match the festive tone. <a href="/menswear">Shop men kurtas at LuxeMia</a>.</p>
+
+      <h3>How much should I spend on a mehendi outfit?</h3>
+      <p>Guests: $120-$280. Bridesmaids: $150-$350. Bride sister: $200-$450. Bride: $300-$800. Mother of bride/groom: $200-$500.</p>
+
+      <h2>Related Reading</h2>
+      <ul>
+        <li><a href="/collections/mehendi-outfits">Shop Mehendi Outfits at LuxeMia</a></li>
+        <li><a href="/blog/what-to-wear-indian-wedding-non-indian-guest">What to Wear to an Indian Wedding as a Non-Indian Guest</a></li>
+        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a></li>
+        <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali Comparison</a></li>
+        <li><a href="/lehengas">Shop Lehengas</a> | <a href="/suits">Shop Suits</a> | <a href="/sarees">Shop Sarees</a></li>
+      </ul>
+    `,
+    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    publishedAt: '2026-07-15',
+    updatedAt: '2026-07-15',
+    category: 'Wedding Guest Guide',
+    tags: ['mehendi outfit', 'mehendi outfit ideas', 'mehendi bride outfit', 'mehendi bridesmaid', 'mehendi guest outfit', 'what to wear mehendi', 'mehendi color guide', 'mehendi outfit for bride sister', 'indian wedding mehendi', 'mehendi ceremony outfit'],
+    image: '/images/blog/blog-021-soft-yellow-soft.webp',
+    readTime: 11
+  },
+  {
+    id: '66',
+    slug: 'plus-size-indian-ethnic-wear-guide',
+    title: 'Plus Size Indian Ethnic Wear: What Actually Flatters Curves (2026 Guide)',
+    excerpt: 'Plus size Indian ethnic wear that actually fits and flatters. Best silhouettes for plus size women: A-line lehengas, anarkali suits, wrap-style kurtis, and pre-draped sarees. Fabrics that drape (georgette, chiffon) over fabrics that cling (silk, brocade). Custom stitching is the gold standard. Budget $150-$500.',
+    content: `
+      <h2>Quick Answer: Plus Size Indian Ethnic Wear That Actually Fits</h2>
+      <p>For plus size women shopping for Indian ethnic wear, the best silhouettes are <strong>A-line lehengas, anarkali suits, wrap-style kurtis, and pre-draped sarees</strong>. Choose fabrics that drape (georgette, chiffon, crepe) over fabrics that cling (raw silk, brocade). Get <strong>custom stitching (Made to Measure)</strong> — off-the-rack Indian clothes rarely fit plus size bodies well because they are cut for standard Indian body proportions. Budget $150-$500 for a quality plus size Indian outfit. At LuxeMia, we offer Made to Measure on every product at no extra cost, and our USA-based support team (+1-215-341-9990) can help you find flattering styles for your body type. We ship to the USA, Canada, and Australia with free shipping over $350.</p>
+
+      <h2>The Plus Size Indian Ethnic Wear Problem</h2>
+      <p>Finding plus size Indian ethnic wear is genuinely difficult. Most Indian boutiques — both in India and in the USA — stock standard sizes (XS-XL or bust 32-40). Plus size women (US size 16+ or bust 42+) are often told to "lose weight" by Indian boutique staff, or are shown a tiny selection of matronly styles. Online marketplaces like Utsav Fashion and Cbazaar have plus size sections, but the fits are often boxy and unflattering. This guide is written for plus size women who want to wear beautiful Indian ethnic wear that actually flatters their curves — not hide them.</p>
+
+      <h2>Best Indian Ethnic Wear Silhouettes for Plus Size Women</h2>
+
+      <h3>1. Anarkali Suit (Most Flattering)</h3>
+      <p>The anarkali suit is the most flattering Indian silhouette for plus size women. The fitted bodice and flared skirt create an A-line shape that skims over the stomach and hips without clinging. The vertical line of the anarkali elongates the body. Choose an anarkali with:</p>
+      <ul>
+        <li><strong>V-neck or sweetheart neckline</strong> — elongates the neck and draws the eye up</li>
+        <li><strong>Fitted bodice to the waist, then flare</strong> — defines the waistline</li>
+        <li><strong>Length to the knee or mid-calf</strong> — shorter anarkalis can cut you off awkwardly</li>
+        <li><strong>3/4 or full sleeves</strong> — more flattering than sleeveless or cap sleeves for plus size arms</li>
+        <li><strong>Vertical embellishment</strong> (center seam embroidery, vertical panels) rather than horizontal</li>
+      </ul>
+      <p>Budget $150-$400. <a href="/suits">Shop anarkali suits at LuxeMia</a>.</p>
+
+      <h3>2. A-Line Lehenga (Photogenic and Flattering)</h3>
+      <p>A-line lehengas (where the skirt flares gradually from the waist) are far more flattering for plus size women than panel or circular lehengas. The A-line creates a long, lean silhouette. Look for:</p>
+      <ul>
+        <li><strong>A-line or panel-cut skirt</strong> (not circular — too much volume)</li>
+        <li><strong>Skirt with 2-3 meters of flare</strong> (not 4-6 meters — too much fabric adds bulk)</li>
+        <li><strong>Longer choli that ends at the waist</strong> (not a crop top — midriff-baring cholis are not flattering on plus size bodies)</li>
+        <li><strong>3/4 sleeve choli</strong> (not sleeveless)</li>
+        <li><strong>Heavy border at the hem</strong> (draws the eye down, elongates the legs)</li>
+        <li><strong>Dupatta draped over one shoulder</strong> (not both shoulders — draping over both adds bulk)</li>
+      </ul>
+      <p>Budget $200-$500. <a href="/lehengas">Shop lehengas at LuxeMia</a>.</p>
+
+      <h3>3. Pre-Draped Saree (Easy and Flattering)</h3>
+      <p>Pre-draped sarees are a plus size woman best friend. The pleats are pre-stitched, so the saree falls perfectly without needing constant adjustment. Look for:</p>
+      <ul>
+        <li><strong>Georgette or chiffon fabric</strong> (drapes beautifully, does not add bulk)</li>
+        <li><strong>Darker colors or deeper jewel tones</strong> (slimming and elegant)</li>
+        <li><strong>Solid color with border</strong> (busy prints add visual weight)</li>
+        <li><strong>3/4 sleeve blouse</strong> (not sleeveless)</li>
+        <li><strong>Boat neck or V-neck blouse</strong> (most flattering necklines for plus size)</li>
+      </ul>
+      <p>Budget $150-$400. <a href="/sarees">Shop pre-draped sarees at LuxeMia</a>.</p>
+
+      <h3>4. Palazzo Suit (Comfortable and Modern)</h3>
+      <p>Palazzo suits (wide-leg pants with a long kurti) are comfortable, modern, and flattering for plus size women. The wide-leg pants balance the proportions of a fuller figure. Look for:</p>
+      <ul>
+        <li><strong>Long kurti (knee-length or longer)</strong> — covers the stomach and hips</li>
+        <li><strong>Wide-leg palazzo pants</strong> (not tapered — tapered pants emphasize hips)</li>
+        <li><strong>V-neck or boat neck kurti</strong></li>
+        <li><strong>3/4 sleeves</strong></li>
+        <li><strong>Vertical print or center seam embellishment</strong></li>
+      </ul>
+      <p>Budget $150-$350.</p>
+
+      <h3>5. Sharara Set (Trendy and Forgiving)</h3>
+      <p>Sharara sets (wide flared pants with a short kurti and dupatta) are trending for 2026 and are very flattering for plus size women. The wide-flare pants skim over the legs and create a flowing silhouette. Look for:</p>
+      <ul>
+        <li><strong>Wide flare sharara pants</strong> (the flare starts at the hip, not the knee)</li>
+        <li><strong>Knee-length kurti</strong> (covers the stomach)</li>
+        <li><strong>Light embellishment</strong> (heavy zardozi adds bulk)</li>
+        <li><strong>Dupatta draped diagonally</strong> (creates a vertical line)</li>
+      </ul>
+      <p>Budget $180-$400.</p>
+
+      <h2>Indian Ethnic Wear Fabrics for Plus Size Women</h2>
+      <p>Fabric choice is critical for plus size women. The wrong fabric can add 10 pounds visually; the right fabric can take off 10 pounds.</p>
+
+      <h3>Fabrics That Work (Drape and Skim)</h3>
+      <ul>
+        <li><strong>Georgette:</strong> The best all-purpose fabric for plus size Indian wear. Drapes beautifully, does not cling, hides lumps and bumps.</li>
+        <li><strong>Chiffon:</strong> Lighter than georgette, very flowy. Excellent for sarees and dupattas.</li>
+        <li><strong>Crepe:</strong> Has a slight stretch and a matte finish. Flattering for anarkalis and kurtis.</li>
+        <li><strong>Cotton silk:</strong> Comfortable and structured without being stiff. Good for daytime events.</li>
+        <li><strong>Organza:</strong> Crisp and structured — good for lehengas where you want some volume, but choose a lining that skims.</li>
+      </ul>
+
+      <h3>Fabrics to Avoid (Cling or Add Bulk)</h3>
+      <ul>
+        <li><strong>Raw silk:</strong> Stiff and unforgiving. Clings to every curve and emphasizes lumps. Avoid for plus size bodies.</li>
+        <li><strong>Banarasi brocade:</strong> Heavy and stiff. Adds visual bulk. Choose Banarasi georgette instead.</li>
+        <li><strong>Velvet:</strong> Beautiful but heavy and unflattering on plus size bodies. If you must wear velvet, choose a structured silhouette like an A-line lehenga.</li>
+        <li><strong>Satin:</strong> Clings to every curve. Avoid unless you are very confident.</li>
+        <li><strong>Stretch fabrics (lycra, spandex blends):</strong> Cling to every lump. Avoid in Indian wear.</li>
+      </ul>
+
+      <h2>Plus Size Indian Outfit Color Guide</h2>
+      <p>Color choice matters more for plus size women because the right color can be slimming while the wrong color adds visual weight. General rules:</p>
+      <ul>
+        <li><strong>Best colors:</strong> Deep jewel tones — emerald green, sapphire blue, ruby red, plum, burgundy, deep teal. These colors are slimming and elegant.</li>
+        <li><strong>Good colors:</strong> Maroon, navy, forest green, wine, deep purple, chocolate brown. These rich colors photograph beautifully.</li>
+        <li><strong>Use with caution:</strong> Black (can look heavy if the silhouette is wrong), pastels (can wash out plus size skin tones), white (adds visual weight).</li>
+        <li><strong>Avoid:</strong> Bright yellow, hot pink, neon colors (add visual weight), light pastels (can look matronly), all-white outfits.</li>
+      </ul>
+      <p><strong>Pro tip:</strong> Color blocking (dark bottom, lighter top, or vice versa) creates a vertical line that elongates the body. Monochrome outfits (all one color) are also slimming.</p>
+
+      <h2>The Importance of Custom Stitching (Made to Measure)</h2>
+      <p>For plus size women, <strong>custom stitching is not optional — it is essential.</strong> Off-the-rack Indian clothes are cut for standard Indian body proportions (smaller bust, narrower waist, narrower hips than typical plus size Western bodies). Even when an off-the-rack outfit claims to be "plus size," it rarely fits well. At LuxeMia, we offer <strong>Made to Measure on every product at no extra cost</strong>. Here is how it works:</p>
+      <ol>
+        <li>Choose any outfit on our site and select "Made to Measure" at checkout.</li>
+        <li>After ordering, we email you a measurement form.</li>
+        <li>You (or a friend, or a local tailor) take your measurements with a soft tape measure. The form takes 10-15 minutes.</li>
+        <li>We custom-stitch the outfit to your exact measurements — bust, waist, hips, sleeve length, kurti length, pant length, everything.</li>
+        <li>The finished outfit is dispatched in 5-7 business days.</li>
+      </ol>
+      <p>See our <a href="/size-guide">size guide</a> for measurement instructions, or call our USA-based support team at +1-215-341-9990 if you need help measuring.</p>
+
+      <h2>What Plus Size Women Should Avoid</h2>
+      <ul>
+        <li><strong>Crop top cholis:</strong> They show midriff and emphasize the stomach. Choose longer cholis that end at the waist.</li>
+        <li><strong>Sleeveless blouses:</strong> Emphasize plus size arms. Choose 3/4 or full sleeves.</li>
+        <li><strong>Circular lehengas (4-6 meter flare):</strong> Too much fabric adds bulk. Choose A-line or panel-cut lehengas with 2-3 meters of flare.</li>
+        <li><strong>Heavy zardozi embroidery all over:</strong> Adds visual weight. Choose embroidery concentrated at the borders or yoke.</li>
+        <li><strong>Tight-fitting kurtis:</strong> Cling to every lump. Choose kurtis with a slight A-line flare.</li>
+        <li><strong>Horizontal prints:</strong> Add visual width. Choose vertical prints or solid colors.</li>
+        <li><strong>Light pastel colors:</strong> Can look matronly on plus size bodies. Choose richer colors.</li>
+        <li><strong>Tiny prints:</strong> Busy and overwhelming. Choose larger prints or solids.</li>
+        <li><strong>Sleeveless anarkalis:</strong> Unflattering for plus size arms. Always choose sleeves.</li>
+        <li><strong>Clingy fabrics (raw silk, satin):</strong> Emphasize every lump. Choose draping fabrics.</li>
+      </ul>
+
+      <h2>Plus Size Indian Outfit Budget Guide</h2>
+      <table>
+        <tr><th>Outfit Type</th><th>Budget</th><th>Best For</th></tr>
+        <tr><td>Anarkali suit</td><td>$150-$400</td><td>Most flattering all-rounder</td></tr>
+        <tr><td>A-line lehenga</td><td>$200-$500</td><td>Weddings, sangeet, reception</td></tr>
+        <tr><td>Pre-draped saree</td><td>$150-$400</td><td>Reception, party, easy wear</td></tr>
+        <tr><td>Palazzo suit</td><td>$150-$350</td><td>Office, casual, mehendi</td></tr>
+        <tr><td>Sharara set</td><td>$180-$400</td><td>Mehendi, sangeet, festive</td></tr>
+      </table>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>What size is "plus size" in Indian clothing?</h3>
+      <p>In Indian clothing, plus size typically starts at bust 42 inches (Indian XXL) or US size 16. Indian "ready-to-wear" sizes usually go up to XXL (bust 44). For sizes above 44, custom stitching (Made to Measure) is the best option. At LuxeMia, we offer Made to Measure on every product.</p>
+
+      <h3>Can plus size women wear lehengas?</h3>
+      <p>Absolutely. A-line lehengas with 2-3 meters of flare are extremely flattering on plus size women. The key is choosing the right silhouette — A-line, not circular — and the right fabric — georgette or chiffon, not raw silk. Pair with a longer choli that ends at the waist (not a crop top).</p>
+
+      <h3>What is the best Indian outfit for a plus size woman?</h3>
+      <p>The anarkali suit is the most universally flattering Indian silhouette for plus size women. The fitted bodice and flared skirt create an A-line shape that skims over the stomach and hips. Choose a V-neck, 3/4 sleeves, and knee-length or longer.</p>
+
+      <h3>How do I measure myself for custom Indian clothing?</h3>
+      <p>Use a soft tape measure and follow our <a href="/size-guide">detailed measurement guide</a>. The key measurements are bust, waist, hips, shoulder width, sleeve length, and kurti/dress length. Have a friend help with the back measurements. If you are unsure, call our USA-based support team at +1-215-341-9990.</p>
+
+      <h3>Are Indian boutiques in the USA plus-size friendly?</h3>
+      <p>It depends. Some boutiques in major US cities (New Jersey, Houston, Chicago) have plus size sections, but the selection is often limited. Online shopping with Made to Measure is usually the best option for plus size women because you get custom fit without the boutique experience of being shown only matronly styles.</p>
+
+      <h2>Where to Shop Plus Size Indian Ethnic Wear in the USA</h2>
+      <p>At LuxeMia, we offer Made to Measure on every product at no extra cost. Our catalog includes lehengas, sarees, anarkali suits, palazzo suits, and sharara sets — all available in custom plus size fits. We ship from India to the USA, Canada, and Australia with full tracking and insurance. Free shipping on orders over $350. Our support team is USA-based and experienced in helping plus size women find flattering styles. <a href="/collections">Browse our full collection</a> or call us at +1-215-341-9990 for personalized help.</p>
+
+      <h2>Related Reading</h2>
+      <ul>
+        <li><a href="/size-guide">LuxeMia Size Guide — How to Measure for Indian Clothes</a></li>
+        <li><a href="/blog/what-to-wear-indian-wedding-non-indian-guest">What to Wear to an Indian Wedding as a Non-Indian Guest</a></li>
+        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a></li>
+        <li><a href="/lehengas">Shop Lehengas</a> | <a href="/suits">Shop Suits</a> | <a href="/sarees">Shop Sarees</a></li>
+      </ul>
+    `,
+    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    publishedAt: '2026-07-15',
+    updatedAt: '2026-07-15',
+    category: 'Style Guide',
+    tags: ['plus size indian ethnic wear', 'plus size lehenga', 'plus size saree', 'plus size anarkali', 'plus size indian clothes', 'indian outfits for plus size', 'plus size indian wedding outfit', 'made to measure indian clothes', 'plus size indian fashion usa', 'curvy indian ethnic wear'],
+    image: '/images/blog/blog-026-maroon-velvet.webp',
+    readTime: 12
+  },
+  {
+    id: '67',
+    slug: 'indian-to-us-clothing-size-conversion-guide',
+    title: 'Indian to US Clothing Size Conversion Guide (With How to Measure)',
+    excerpt: 'Convert Indian clothing sizes to US sizes with this complete guide. Indian XS-S-M-L-XL maps to US 2-4-6-8-10. Indian bust 32-44 maps to US 0-14. Custom stitching (Made to Measure) is the gold standard for Indian ethnic wear. Includes detailed measuring instructions and a size chart.',
+    content: `
+      <h2>Quick Answer: Indian to US Clothing Size Conversion</h2>
+      <p>Indian clothing sizes map to US sizes as follows: Indian <strong>XS = US 0-2</strong>, <strong>S = US 4-6</strong>, <strong>M = US 8-10</strong>, <strong>L = US 12-14</strong>, <strong>XL = US 16-18</strong>, <strong>XXL = US 20</strong>. Indian bust measurements (32, 34, 36, 38, 40, 42, 44) correspond to US bust sizes 0, 2, 4, 6, 8, 10, 14. For Indian ethnic wear, <strong>custom stitching (Made to Measure) is the gold standard</strong> — off-the-rack Indian clothes rarely fit Western bodies perfectly because Indian body proportions differ. At LuxeMia, we offer Made to Measure on every product at no extra cost. See our <a href="/size-guide">size guide</a> for measurement instructions.</p>
+
+      <h2>Indian Size Chart vs US Size Chart</h2>
+      <p>Indian clothing uses two sizing systems: alphabetical (XS, S, M, L, XL, XXL) and numerical bust measurements (32, 34, 36, 38, 40, 42, 44). Here is the conversion to US sizes:</p>
+
+      <table>
+        <tr><th>Indian Size</th><th>Indian Bust (inches)</th><th>US Dress Size</th><th>US Bust (inches)</th><th>UK Size</th><th>EU Size</th><th>AU Size</th></tr>
+        <tr><td>XS</td><td>32</td><td>0-2</td><td>32-33</td><td>4-6</td><td>32-34</td><td>4-6</td></tr>
+        <tr><td>S</td><td>34</td><td>4-6</td><td>34-35</td><td>8-10</td><td>36-38</td><td>8-10</td></tr>
+        <tr><td>M</td><td>36</td><td>8-10</td><td>36-37</td><td>12-14</td><td>40-42</td><td>12-14</td></tr>
+        <tr><td>L</td><td>38</td><td>12-14</td><td>38-39</td><td>16-18</td><td>44-46</td><td>16-18</td></tr>
+        <tr><td>XL</td><td>40</td><td>16-18</td><td>40-41</td><td>20-22</td><td>48-50</td><td>20-22</td></tr>
+        <tr><td>XXL</td><td>42</td><td>20-22</td><td>42-43</td><td>24-26</td><td>52-54</td><td>24-26</td></tr>
+        <tr><td>3XL</td><td>44</td><td>24-26</td><td>44-45</td><td>28-30</td><td>56-58</td><td>28-30</td></tr>
+      </table>
+
+      <p><strong>Important:</strong> Indian "ready-to-wear" sizes are cut for Indian body proportions, which tend to have smaller busts, narrower waists, and narrower hips than Western bodies. A US size 8 woman may need an Indian size L (38) rather than an Indian M (36) to accommodate her bust, even though her dress size suggests M. This is why <strong>Made to Measure is the gold standard for Indian ethnic wear</strong> — it eliminates the guesswork.</p>
+
+      <h2>How Indian Ethnic Wear Sizing Differs from Western Sizing</h2>
+      <p>Indian ethnic wear sizing is fundamentally different from Western dress sizing in several ways:</p>
+
+      <h3>1. Saree Blouses Are Sized Separately</h3>
+      <p>A <a href="/sarees">saree</a> itself is one-size-fits-all — it is just 6-9 yards of fabric. But the blouse (choli) is sized to your body. Indian blouse sizes use bust measurements (32, 34, 36, 38, 40, 42). A US size 8 woman typically wears an Indian blouse size 36 or 38. If you are between sizes, always size up — a blouse can be taken in, but it cannot be let out.</p>
+
+      <h3>2. Lehenga Skirts Are Sized by Waist</h3>
+      <p><a href="/lehengas">Lehenga</a> skirts are sized by waist measurement, not by dress size. Most lehengas have a waist that can be adjusted 1-2 inches by a local tailor. Standard Indian lehenga waist sizes: 28, 30, 32, 34, 36, 38, 40 inches. For women with waist measurements above 40 inches, custom stitching is essential.</p>
+
+      <h3>3. Salwar Kameez and Anarkali Sizes Use Bust</h3>
+      <p><a href="/suits">Salwar kameez and anarkali suits</a> use the alphabetical sizing system (XS, S, M, L, XL, XXL) based on bust measurement. The pants (salwar or churidar) are typically one-size-fits-all with a drawstring waist. For women with larger hips, the pants may need to be custom-stitched.</p>
+
+      <h3>4. Men Indian Clothing Uses Chest Measurement</h3>
+      <p><a href="/menswear">Men Indian clothing</a> (kurta pajama, sherwani) uses chest measurement in inches: 36, 38, 40, 42, 44, 46. A US men size 40 suit jacket typically wears an Indian kurta size 40. Men kurtas tend to run slightly looser than Western shirts.</p>
+
+      <h2>How to Measure Yourself for Indian Ethnic Wear</h2>
+      <p>To get the right size in Indian ethnic wear, you need accurate body measurements. Here is how to measure yourself (or have a friend help):</p>
+
+      <h3>What You Need</h3>
+      <ul>
+        <li>Soft tape measure (not a metal ruler — fabric tape only)</li>
+        <li>A friend to help with back measurements</li>
+        <li>Form-fitting clothing (or just underwear) — do not measure over bulky clothes</li>
+        <li>A mirror to check tape placement</li>
+      </ul>
+
+      <h3>Key Measurements</h3>
+      <ol>
+        <li><strong>Bust:</strong> Measure around the fullest part of your bust, with the tape parallel to the floor. Keep the tape snug but not tight. This is the most important measurement for blouses, kurtis, and anarkalis.</li>
+        <li><strong>Under-bust:</strong> Measure around your ribcage, just under your bust. Important for fitted blouses and cholis.</li>
+        <li><strong>Waist:</strong> Measure around your natural waist (the narrowest part of your torso, usually 1-2 inches above your belly button). Important for lehengas and saree petticoats.</li>
+        <li><strong>Hips:</strong> Measure around the fullest part of your hips (usually 7-9 inches below your waist). Important for palazzo pants and salwar.</li>
+        <li><strong>Shoulder:</strong> Measure from the edge of one shoulder to the edge of the other, across the back. Important for kurtis, anarkalis, and blouses.</li>
+        <li><strong>Sleeve length:</strong> Measure from the shoulder edge to your wrist (for full sleeves) or to your desired length (for 3/4 sleeves).</li>
+        <li><strong>Armhole:</strong> Measure around the armpit, with the tape snug but not tight. Important for fitted blouses.</li>
+        <li><strong>Upper arm:</strong> Measure around the fullest part of your bicep. Important for fitted sleeves.</li>
+        <li><strong>Kurti length:</strong> Measure from the shoulder (where the seam sits) to your desired hem length. For anarkalis, measure to the knee or mid-calf.</li>
+        <li><strong>Pant length:</strong> Measure from your waist to your ankle (for churidar) or to the floor (for palazzo).</li>
+      </ol>
+
+      <h3>Measurement Tips</h3>
+      <ul>
+        <li><strong>Stand up straight</strong> with your weight evenly distributed. Do not slouch.</li>
+        <li><strong>Do not pull the tape tight</strong> — you should be able to fit one finger under the tape.</li>
+        <li><strong>Measure over form-fitting clothing</strong> or underwear — not over bulky sweaters or jeans.</li>
+        <li><strong>Have a friend help</strong> with back measurements (shoulder, armhole) — you cannot accurately measure these yourself.</li>
+        <li><strong>Round up, not down</strong> — if you measure 37.5 inches, round to 38. Better to size up than size down.</li>
+        <li><strong>Measure twice</strong> to confirm accuracy.</li>
+      </ul>
+
+      <h2>Indian vs US vs UK vs EU vs AU Size Conversion Chart</h2>
+      <p>For our international customers in the USA, Canada, Australia, UK, and Europe, here is the full size conversion chart for women dresses:</p>
+
+      <table>
+        <tr><th>Indian</th><th>US</th><th>UK</th><th>EU</th><th>AU</th><th>Bust (inches)</th><th>Waist (inches)</th><th>Hips (inches)</th></tr>
+        <tr><td>XS</td><td>0</td><td>4</td><td>32</td><td>4</td><td>32</td><td>24</td><td>34</td></tr>
+        <tr><td>XS</td><td>2</td><td>6</td><td>34</td><td>6</td><td>33</td><td>25</td><td>35</td></tr>
+        <tr><td>S</td><td>4</td><td>8</td><td>36</td><td>8</td><td>34</td><td>26</td><td>36</td></tr>
+        <tr><td>S</td><td>6</td><td>10</td><td>38</td><td>10</td><td>35</td><td>27</td><td>37</td></tr>
+        <tr><td>M</td><td>8</td><td>12</td><td>40</td><td>12</td><td>36</td><td>28</td><td>38</td></tr>
+        <tr><td>M</td><td>10</td><td>14</td><td>42</td><td>14</td><td>37</td><td>29</td><td>39</td></tr>
+        <tr><td>L</td><td>12</td><td>16</td><td>44</td><td>16</td><td>38</td><td>30</td><td>40</td></tr>
+        <tr><td>L</td><td>14</td><td>18</td><td>46</td><td>18</td><td>39</td><td>31</td><td>41</td></tr>
+        <tr><td>XL</td><td>16</td><td>20</td><td>48</td><td>20</td><td>40</td><td>32</td><td>42</td></tr>
+        <tr><td>XL</td><td>18</td><td>22</td><td>50</td><td>22</td><td>41</td><td>33</td><td>43</td></tr>
+        <tr><td>XXL</td><td>20</td><td>24</td><td>52</td><td>24</td><td>42</td><td>34</td><td>44</td></tr>
+        <tr><td>XXL</td><td>22</td><td>26</td><td>54</td><td>26</td><td>43</td><td>35</td><td>45</td></tr>
+        <tr><td>3XL</td><td>24</td><td>28</td><td>56</td><td>28</td><td>44</td><td>36</td><td>46</td></tr>
+      </table>
+
+      <h2>Why Made to Measure Is Better Than Off-the-Rack for Indian Ethnic Wear</h2>
+      <p>Indian ethnic wear is not like Western clothing — it cannot be bought off the rack and worn immediately. Here is why Made to Measure is the gold standard:</p>
+
+      <h3>1. Indian Body Proportions Differ from Western</h3>
+      <p>Indian women tend to have smaller busts, narrower waists, and narrower hips than Western women of the same dress size. Off-the-rack Indian clothes are cut for Indian proportions, so a US size 8 woman may find that an Indian size M (36) fits her waist but is too tight in the bust. Made to Measure eliminates this problem.</p>
+
+      <h3>2. Saree Blouses Must Fit Perfectly</h3>
+      <p>A saree blouse is the most fitted garment in Indian ethnic wear — it should fit like a second skin. An off-the-rack blouse will almost never fit perfectly. Made to Measure blouses are essential for sarees.</p>
+
+      <h3>3. Lehenga Skirts Need Waist Adjustment</h3>
+      <p>Lehenga skirts are sized by waist, but the waist measurement on a sizing chart rarely matches your actual waist. Made to Measure ensures the skirt fits your waist perfectly, with no awkward gaps or tight spots.</p>
+
+      <h3>4. Height and Length Customization</h3>
+      <p>Indian ethnic wear is cut for an average Indian woman height of 5 to 5 4. Taller women (5 7+) will find that off-the-rack anarkalis, kurtis, and lehenga skirts are too short. Made to Measure lets you specify the exact length you need.</p>
+
+      <h3>5. Plus Size Women Need Custom Fit</h3>
+      <p>Plus size women (US 16+) almost never find off-the-rack Indian clothes that fit well. Made to Measure is essential. Read our <a href="/blog/plus-size-indian-ethnic-wear-guide">plus size Indian ethnic wear guide</a> for more.</p>
+
+      <h2>How Made to Measure Works at LuxeMia</h2>
+      <p>At LuxeMia, we offer Made to Measure on every product at no extra cost. Here is the process:</p>
+      <ol>
+        <li>Choose any outfit on our site and select "Made to Measure" at checkout.</li>
+        <li>After ordering, we email you a detailed measurement form.</li>
+        <li>You take your measurements with a soft tape measure (or have a friend/local tailor help). The form takes 10-15 minutes.</li>
+        <li>Email the form back to us.</li>
+        <li>We custom-stitch the outfit to your exact measurements — bust, waist, hips, shoulder, sleeve length, kurti length, pant length, everything.</li>
+        <li>The finished outfit is dispatched in 5-7 business days (vs 3-5 days for ready-to-wear).</li>
+        <li>Shipping takes 7-10 business days to the USA, Canada, and Australia.</li>
+      </ol>
+      <p>See our <a href="/size-guide">size guide</a> for detailed measurement instructions, or call our USA-based support team at +1-215-341-9990 if you need help.</p>
+
+      <h2>Common Sizing Mistakes to Avoid</h2>
+      <ul>
+        <li><strong>Assuming your US dress size equals your Indian size:</strong> It often does not, because Indian sizes are cut for different body proportions. Always measure.</li>
+        <li><strong>Ordering a smaller size hoping to lose weight:</strong> Indian ethnic wear is too expensive to waste on wishful thinking. Order your current size.</li>
+        <li><strong>Not measuring your bust accurately:</strong> The bust measurement is the most important for Indian tops. Measure around the fullest part, with the tape parallel to the floor.</li>
+        <li><strong>Forgetting to account for the petticoat:</strong> Saree petticoats add 1-2 inches to your waist measurement. Order a lehenga or petticoat 1 inch larger than your actual waist.</li>
+        <li><strong>Ordering the wrong length:</strong> Indian ethnic wear is cut for average Indian height (5 to 5 4). If you are taller or shorter, you need Made to Measure.</li>
+        <li><strong>Not checking the size chart:</strong> Every boutique has slightly different sizing. Always check the size chart before ordering.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>What is Indian size 36 in US?</h3>
+      <p>Indian size 36 (bust 36 inches) is approximately a US size 8-10. However, because Indian clothes are cut for different body proportions, a US size 8 woman may need an Indian 36 or 38 depending on her bust measurement.</p>
+
+      <h3>What is Indian size L in US?</h3>
+      <p>Indian size L corresponds to US size 12-14. The bust measurement for Indian L is 38-39 inches.</p>
+
+      <h3>How do I know my Indian size?</h3>
+      <p>Measure your bust, waist, and hips with a soft tape measure, then compare to the boutique size chart. At LuxeMia, you can also choose Made to Measure and we will custom-stitch the outfit to your exact measurements. See our <a href="/size-guide">size guide</a> for measuring instructions.</p>
+
+      <h3>Is Indian clothing smaller than US clothing?</h3>
+      <p>Yes, generally. Indian clothing runs 1-2 sizes smaller than US clothing because Indian body proportions tend to be smaller. A US size 8 woman typically wears an Indian size M or L.</p>
+
+      <h3>Can I return Indian clothes if they do not fit?</h3>
+      <p>It depends on the boutique. LuxeMia policy is final sale (no returns) because each piece is custom-stitched or quality-checked. This is why we strongly recommend Made to Measure — a custom-stitched outfit will fit you perfectly. If you are unsure about sizing, call our support team before ordering: +1-215-341-9990.</p>
+
+      <h2>Related Reading</h2>
+      <ul>
+        <li><a href="/size-guide">LuxeMia Size Guide — Detailed Measurement Instructions</a></li>
+        <li><a href="/blog/plus-size-indian-ethnic-wear-guide">Plus Size Indian Ethnic Wear Guide</a></li>
+        <li><a href="/blog/what-to-wear-indian-wedding-non-indian-guest">What to Wear to an Indian Wedding as a Non-Indian Guest</a></li>
+        <li><a href="/lehengas">Shop Lehengas</a> | <a href="/sarees">Shop Sarees</a> | <a href="/suits">Shop Suits</a> | <a href="/menswear">Shop Menswear</a></li>
+      </ul>
+    `,
+    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    publishedAt: '2026-07-15',
+    updatedAt: '2026-07-15',
+    category: 'How-To & Care',
+    tags: ['indian to us size conversion', 'indian clothing size chart', 'indian size to us size', 'how to measure for indian clothes', 'indian bust size to us', 'indian dress size chart', 'made to measure indian clothes', 'indian saree blouse size', 'indian lehenga size', 'indian size 36 to us'],
+    image: '/images/blog/blog-004-ivory-shimmer.webp',
+    readTime: 10
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {

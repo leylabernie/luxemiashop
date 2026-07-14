@@ -167,6 +167,11 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'what-to-wear-indian-wedding-guest-2026': 'weddings-festivals',
   'what-to-wear-south-asian-wedding-non-indian-guest': 'weddings-festivals',
   'what-to-wear-indian-wedding-non-indian-guest': 'weddings-festivals',
+  'navratri-9-day-color-guide-2026': 'weddings-festivals',
+  'diwali-outfit-ideas-by-setting': 'weddings-festivals',
+  'mehendi-outfit-by-role': 'weddings-festivals',
+  'plus-size-indian-ethnic-wear-guide': 'weddings-festivals',
+  'indian-to-us-clothing-size-conversion-guide': 'how-to-care',
   'diwali-outfit-ideas-nri-women-usa-canada-australia': 'weddings-festivals',
   'indian-wedding-guest-outfits-men-usa-guide': 'weddings-festivals',
 
