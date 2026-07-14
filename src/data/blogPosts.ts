@@ -7698,6 +7698,165 @@ export const blogPosts: BlogPost[] = [
     image: '/og-image.jpg',
     readTime: 15,
   },
+  {
+    id: '62',
+    slug: 'what-to-wear-indian-wedding-non-indian-guest',
+    title: 'What to Wear to an Indian Wedding as a Non-Indian Guest: The Complete 2026 Guide',
+    excerpt: 'Attending an Indian wedding as a non-Indian guest? Wear a saree, lehenga, or anarkali suit in festive colors (never white or black). Budget $150-$400 USD, order 4-6 weeks ahead, and choose ready-to-ship styles. This guide covers outfit choices by ceremony, color etiquette, sizing help, and where to shop with USA-based support.',
+    content: `
+      <h2>Quick Answer: What Non-Indian Guests Should Wear to an Indian Wedding</h2>
+      <p>If you have been invited to an Indian wedding and you are not Indian, wear a <strong>saree, lehenga choli, or anarkali suit</strong> in festive colors like deep green, royal blue, maroon, fuchsia, or gold. <strong>Never wear white or black</strong> — white is for funerals in Indian culture, and black is considered inauspicious for celebrations. Budget between $150 and $400 USD for a quality outfit, and order at least 4-6 weeks before the wedding to allow time for shipping from India and any tailoring. If you have never worn Indian clothes before, choose a <strong>pre-draped saree</strong> or an <strong>anarkali suit</strong> — both are easier to wear than a traditional saree and require no special draping skills. At LuxeMia, we ship ready-to-ship Indian ethnic wear to the USA, Canada, and Australia with free shipping on orders over $350, and our USA-based support team can help you pick the right outfit and size.</p>
+
+      <h2>Understanding Indian Wedding Dress Codes</h2>
+      <p>Indian weddings are multi-day affairs with distinct ceremonies, each with its own dress code. As a non-Indian guest, you do not need to attend every event, but the wedding invitation will specify which events you are invited to. The main events you may attend are:</p>
+      <ul>
+        <li><strong>Mehendi (henna ceremony):</strong> Daytime event, usually 1-2 days before the wedding. Wear bright, festive colors — yellow, orange, green, or pink are traditional. Anarkali suits or lehengas in lighter fabrics like georgette or chiffon are perfect.</li>
+        <li><strong>Sangeet (musical evening):</strong> Night of dancing and music. This is the most glamorous event for guests — wear a dressy lehenga or embellished anarkali suit. Jewel tones (emerald, sapphire, ruby) photograph beautifully.</li>
+        <li><strong>The wedding ceremony (muhurtham):</strong> The main event. Wear your most formal Indian outfit — a silk saree, heavily embroidered lehenga, or rich anarkali suit. Red is traditionally reserved for the bride, so avoid wearing all-red.</li>
+        <li><strong>Reception:</strong> Evening party after the ceremony. Cocktail attire Indian-style — elegant sarees, Indo-western gowns, or designer anarkalis. This is where you can be most fashion-forward.</li>
+      </ul>
+      <p>If you are only attending the wedding ceremony and reception, you will want two outfits (Indians change between events). If you can only afford one outfit, choose a versatile <a href="/sarees">silk saree</a> or <a href="/lehengas">embroidered lehenga</a> that works for both.</p>
+
+      <h2>Outfit Options for Non-Indian Guests — Ranked by Ease of Wearing</h2>
+      <p>If you have never worn Indian clothes before, the choices can feel overwhelming. Here is a ranking from easiest to hardest for a first-time wearer:</p>
+
+      <h3>1. Anarkali Suit (Easiest)</h3>
+      <p>An anarkali suit is a long, flowy tunic over fitted pants (churidar), with a matching scarf (dupatta). It is the easiest Indian outfit for non-Indian guests because it slips on like a dress — no draping, no pinning, no special skills required. Anarkalis flatter every body type and are comfortable for long events. <strong>Best for:</strong> mehendi, sangeet, wedding ceremony, reception. <strong>Budget:</strong> $120-$350. <a href="/suits">Shop anarkali suits at LuxeMia</a>.</p>
+
+      <h3>2. Lehenga Choli (Medium)</h3>
+      <p>A lehenga is a long skirt worn with a fitted blouse (choli) and a scarf (dupatta). It is the most photogenic Indian outfit and what most people picture when they think "Indian wedding." The skirt has an elastic or hook closure, and the dupatta can be worn over one shoulder, both shoulders, or pinned in place. <strong>Best for:</strong> sangeet, wedding, reception. <strong>Budget:</strong> $200-$500. <a href="/lehengas">Shop lehengas at LuxeMia</a>.</p>
+
+      <h3>3. Pre-Draped / Ready-to-Wear Saree (Medium)</h3>
+      <p>A pre-draped saree is a modern invention where the pleating and pallu (the decorative end) are pre-stitched into the skirt, so you just step into it and zip up. You get the elegant look of a saree without needing to know how to drape one. <strong>Best for:</strong> reception, sangeet, wedding. <strong>Budget:</strong> $150-$400. <a href="/sarees">Shop pre-draped sarees at LuxeMia</a>.</p>
+
+      <h3>4. Traditional Saree (Hardest)</h3>
+      <p>A traditional saree is 6-9 yards of fabric that you wrap, pleat, and pin around yourself. It takes practice to drape correctly — if you have never done it, do not attempt it for the first time on the wedding day. If you fall in love with a traditional saree, ask a friend to help you drape it, or hire a local Indian beautician to help you get ready. <strong>Best for:</strong> wedding ceremony (if you have help). <strong>Budget:</strong> $100-$500.</p>
+
+      <h2>Color Etiquette: What to Wear and What to Avoid</h2>
+      <p>Color choice matters enormously at Indian weddings. Here is the etiquette:</p>
+      <ul>
+        <li><strong>DO wear:</strong> Deep green, royal blue, maroon, burgundy, fuchsia, magenta, purple, gold, burnt orange, deep yellow, emerald, sapphire, ruby red. These colors symbolize joy, prosperity, and celebration.</li>
+        <li><strong>DO NOT wear white:</strong> White is the color of mourning in Indian culture. It is acceptable only at Christian-Indian weddings or specific South Indian ceremonies (where white silk sarees with gold borders are traditional) — but if you are not sure, do not risk it.</li>
+        <li><strong>DO NOT wear black:</strong> Black is considered inauspicious for celebrations. Some modern Indian weddings have black-themed cocktail nights, but unless the invitation explicitly says so, avoid black.</li>
+        <li><strong>DO NOT wear all-red:</strong> Red is the traditional bridal color (especially for North Indian Hindu weddings). Wearing all-red as a guest can be seen as trying to upstage the bride. Maroon, burgundy, and wine are fine because they are distinct from bridal red.</li>
+        <li><strong>DO wear embellishment:</strong> Sequins, zari (gold thread), mirror work, and embroidery are all welcome. Indian weddings are maximalist — the more sparkle, the better. Plain outfits can look underdressed.</li>
+      </ul>
+
+      <h2>Sizing Help: Converting Western Sizes to Indian Sizes</h2>
+      <p>Indian clothing sizing is different from Western sizing, and this is one of the biggest pain points for non-Indian guests. Here is what you need to know:</p>
+      <ul>
+        <li><strong>Indian "ready-to-wear" sizes</strong> use either XS/S/M/L/XL/XXL or bust measurements (32, 34, 36, 38, 40, 42, 44). A US size 8 typically corresponds to an Indian size M or 36.</li>
+        <li><strong>Custom stitching</strong> is the gold standard in Indian ethnic wear. Most online boutiques (including LuxeMia) offer free or low-cost custom stitching — you send your measurements, and the outfit is sewn to your exact body. This is the best option for non-Indian guests because fit issues are the #1 problem.</li>
+        <li><strong>Saree blouses</strong> are sized separately from the saree itself. The saree is one-size-fits-all (it is just fabric), but the blouse is sized to your body. Always order a custom-stitched blouse if you are not sure of your size.</li>
+        <li><strong>Lehenga skirts</strong> are typically sized by waist measurement. Most lehengas can be adjusted 1-2 inches at the waist by a local tailor, but custom-stitching is more reliable.</li>
+      </ul>
+      <p>At LuxeMia, we offer three fit options on every product: <strong>Unstitched</strong> (fabric only, you arrange tailoring), <strong>Ready to Wear</strong> (standard sizes 32-48), and <strong>Made to Measure</strong> (custom-stitched to your measurements). For non-Indian guests, we recommend Made to Measure — it eliminates the sizing guesswork. See our <a href="/size-guide">size guide</a> for measurement instructions.</p>
+
+      <h2>What to Wear by Ceremony — Quick Reference</h2>
+      <h3>Mehendi Ceremony</h3>
+      <p>Daytime, casual, festive. Wear an <a href="/suits">anarkali suit</a> or <a href="/lehengas">light lehenga</a> in yellow, orange, green, or pink. Avoid heavy embroidery — mehendi involves getting henna applied, which can stain clothes. Budget $120-$250.</p>
+
+      <h3>Sangeet (Musical Night)</h3>
+      <p>Evening, dressy, dance-friendly. Wear a <a href="/lehengas">lehenga</a> or embellished anarkali in jewel tones (emerald, sapphire, magenta). You will be dancing, so choose something you can move in. Budget $200-$400.</p>
+
+      <h3>Wedding Ceremony</h3>
+      <p>The main event — most formal. Wear a heavily embroidered <a href="/lehengas">lehenga</a>, silk <a href="/sarees">saree</a>, or rich anarkali suit. Avoid all-red. Gold jewelry and embellished clutch complete the look. Budget $250-$500.</p>
+
+      <h3>Reception</h3>
+      <p>Evening party, cocktail attire Indian-style. Wear a designer saree, Indo-western gown, or statement anarkali. This is your chance to be most fashion-forward — modern silhouettes, contemporary colors, experimental draping all work. Budget $200-$500.</p>
+
+      <h2>Accessories: What You Need Beyond the Outfit</h2>
+      <p>An Indian outfit is not complete without the right accessories. Here is what you need:</p>
+      <ul>
+        <li><strong>Jewelry:</strong> Indian outfits call for Indian jewelry — jhumka earrings, a statement necklace (kundan or polki), and bangles. If you do not own Indian jewelry, the easiest starter set is a pair of gold-tone jhumka earrings ($20-$60) and a matching necklace ($40-$120).</li>
+        <li><strong>Shoes:</strong> Most Indian weddings involve removing shoes at the ceremony (especially Hindu temple ceremonies). Wear flats or low heels you can slip off easily. Embellished sandals or kolhapuri flats are perfect. Avoid stilettos — Indian weddings involve a lot of standing.</li>
+        <li><strong>Clutch:</strong> A small embellished clutch for your phone, lipstick, and tissues. Gold or jewel-tone colors work best.</li>
+        <li><strong>Bindi (optional):</strong> A small decorative forehead dot. Wearing one is appreciated (it shows cultural respect) but not required for non-Indian guests.</li>
+        <li><strong>Dupatta / scarf:</strong> Comes with the outfit. Worn over one shoulder or both. At religious ceremonies, you may be asked to cover your head with it.</li>
+      </ul>
+
+      <h2>Where to Shop for Indian Wedding Guest Outfits in the USA</h2>
+      <p>You have two options: shop locally at an Indian boutique in a major US city (New Jersey, Houston, Chicago, LA, Bay Area all have Indian shopping districts), or shop online. For non-Indian guests, online shopping from a boutique with USA-based support is usually easier because:</p>
+      <ul>
+        <li>You can chat/call with a stylist who understands you are not familiar with Indian sizing</li>
+        <li>You get clear shipping timelines (Indian weddings have hard dates — you cannot be late)</li>
+        <li>You can return or exchange if the fit is wrong (always check the return policy before ordering)</li>
+        <li>You avoid the overwhelm of walking into an Indian boutique where staff may assume you know what you want</li>
+      </ul>
+      <p>At LuxeMia, we ship from India to the USA, Canada, and Australia with full tracking and insurance. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990, email: hello@luxemia.shop) and we regularly help non-Indian guests pick outfits and sizes. Browse our <a href="/collections">full collection</a> or our curated <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> page.</p>
+
+      <h2>Tips for First-Time Indian Wedding Guests</h2>
+      <ul>
+        <li><strong>Order early.</strong> Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door. Custom-stitched items take 3-4 weeks. Order at least 4-6 weeks before the wedding.</li>
+        <li><strong>Get help with draping.</strong> If you choose a saree, ask an Indian friend or hire a local Indian beautician to help you drape it. A well-draped saree is stunning; a badly-draped one is a wardrobe malfunction waiting to happen.</li>
+        <li><strong>Safety-pin everything.</strong> Indian clothes involve a lot of fabric. Bring 4-5 large safety pins to secure your dupatta, pleats, and pallu.</li>
+        <li><strong>Wear makeup that lasts.</strong> Indian weddings are long (4-8 hours) and involve dancing. Use a primer, long-wear foundation, and setting spray.</li>
+        <li><strong>Bring tissues and blotting paper.</strong> Indian weddings are emotional and sweaty (lots of dancing, often in warm venues).</li>
+        <li><strong>Eat before the ceremony.</strong> Indian wedding ceremonies can run 2-3 hours before food is served. Have a snack.</li>
+        <li><strong>Dance.</strong> Indian weddings are joyous affairs. Even if you do not know the moves, get on the dance floor — the baraat (groom's procession) and sangeet are specifically for guests to dance.</li>
+        <li><strong>Bring a gift.</strong> Cash gifts in odd amounts ($101, $201, $501) are traditional and appreciated. Avoid giving cash in even amounts or amounts ending in zero.</li>
+      </ul>
+
+      <h2>Common Mistakes Non-Indian Guests Make</h2>
+      <ul>
+        <li><strong>Wearing white or black.</strong> The most common mistake. Both colors are inappropriate for Indian celebrations.</li>
+        <li><strong>Underdressing.</strong> Indian weddings are maximalist. A simple dress or business-formal outfit looks underdressed. When in doubt, choose the more embellished option.</li>
+        <li><strong>Choosing a saree when you cannot drape one.</strong> A badly-draped saree is worse than a beautifully-fitted anarkali. If you are not confident draping, choose an anarkali suit or pre-draped saree instead.</li>
+        <li><strong>Ordering too late.</strong> Indian ethnic wear takes time to ship and tailor. Last-minute orders often do not arrive in time.</li>
+        <li><strong>Ignoring sizing.</strong> Indian sizing is not the same as Western sizing. Always measure yourself and order custom-stitched if you are between sizes.</li>
+        <li><strong>Forgetting the dupatta.</strong> The dupatta (scarf) is part of the outfit, not an optional accessory. Wear it — draping it over one shoulder or both.</li>
+        <li><strong>Wearing stilettos.</strong> Indian weddings involve standing on grass, carpets, and temple floors. Wear comfortable flats or low heels.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Can I wear a dress to an Indian wedding?</h3>
+      <p>No, not a Western dress. Indian weddings call for Indian attire. If you absolutely cannot wear Indian clothes, wear a long formal gown in a festive color (deep green, royal blue, or maroon) with gold jewelry — but this should be a last resort. Indian attire shows respect for the culture and the couple.</p>
+
+      <h3>Can I wear red to an Indian wedding as a guest?</h3>
+      <p>Avoid wearing all-red. Red is the traditional bridal color, especially for North Indian Hindu weddings. Maroon, burgundy, wine, and deep pink are fine because they are distinct from bridal red. If the bride is wearing a non-traditional color (pastel, ivory, or pastel pink), red is less of a concern — but when in doubt, avoid it.</p>
+
+      <h3>How much should I spend on an Indian wedding guest outfit?</h3>
+      <p>Budget $150-$400 USD for a quality outfit. Cheaper options ($80-$150) exist but often use lower-quality fabrics that photograph poorly. More expensive options ($500+) are usually overkill for a guest. The sweet spot for a beautiful, photogenic outfit that you can re-wear is $200-$350.</p>
+
+      <h3>Do I need to buy jewelry too?</h3>
+      <p>You need at least one piece of Indian jewelry — ideally jhumka earrings. A matching necklace and bangles complete the look. Budget $40-$200 for a basic jewelry set. Many boutiques (including LuxeMia) sell jewelry sets designed to match specific outfits.</p>
+
+      <h3>How do I know what size I am in Indian clothes?</h3>
+      <p>Measure your bust, waist, and hips with a soft tape measure, then compare to the boutique's size chart. At LuxeMia, you can also choose "Made to Measure" and we will custom-stitch the outfit to your exact measurements. See our <a href="/size-guide">size guide</a> for detailed measuring instructions.</p>
+
+      <h3>Can I return an Indian outfit if it does not fit?</h3>
+      <p>It depends on the boutique. LuxeMia's policy is final sale (no returns) because each piece is custom-stitched or quality-checked. This is why we strongly recommend Made to Measure for non-Indian guests — a custom-stitched outfit will fit you perfectly. If you are unsure about sizing, call our support team before ordering: +1-215-341-9990.</p>
+
+      <h3>What if my Indian outfit arrives and I hate it?</h3>
+      <p>This is why ordering early matters. If your outfit arrives 4 weeks before the wedding and you hate it, you have time to order a different one. If it arrives 3 days before the wedding, you are stuck. Order early, try it on immediately, and reach out to support if you need help.</p>
+
+      <h2>Ready to Shop?</h2>
+      <p>If you have an Indian wedding coming up and need an outfit, we are here to help. Browse our curated <a href="/collections/wedding-guest-outfits">wedding guest outfits</a>, or start with one of these popular categories:</p>
+      <ul>
+        <li><a href="/lehengas">Lehengas — the most photogenic Indian outfit</a></li>
+        <li><a href="/sarees">Sarees — elegant and timeless (choose pre-draped if you are a beginner)</a></li>
+        <li><a href="/suits">Anarkali Suits — easiest to wear, comfortable, flattering</a></li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits — curated for non-Indian guests</a></li>
+      </ul>
+      <p>Questions? Call or WhatsApp our USA-based team at <strong>+1-215-341-9990</strong> or email <strong>hello@luxemia.shop</strong>. We regularly help non-Indian guests pick the perfect outfit — it is one of our favorite things to do.</p>
+
+      <h2>Related Reading</h2>
+      <ul>
+        <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree</a></li>
+        <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali: Which to Choose</a></li>
+        <li><a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary: 50+ Events, Rituals & Roles</a></li>
+        <li><a href="/size-guide">LuxeMia Size Guide — How to Measure for Indian Clothes</a></li>
+        <li><a href="/shipping">Shipping Policy — USA, Canada & Australia</a></li>
+      </ul>
+    `,
+    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    publishedAt: '2026-07-15',
+    updatedAt: '2026-07-15',
+    category: 'Wedding Guest Guide',
+    tags: ['what to wear indian wedding non indian', 'indian wedding guest outfit', 'non indian guest indian wedding', 'what to wear to indian wedding', 'indian wedding outfit for white guest', 'first time indian wedding', 'indian wedding dress code', 'indian wedding guest attire', 'saree for beginners', 'anarkali suit for wedding guest'],
+    image: '/images/blog/gdrive/couple-red-lehenga-sherwani-sunset.webp',
+    readTime: 12
+  },
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined => {
