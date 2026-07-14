@@ -67,6 +67,8 @@ const WeddingGuestOutfits = lazy(() => import("./pages/WeddingGuestOutfits"));
 const MehendiOutfits = lazy(() => import("./pages/MehendiOutfits"));
 const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
+// Programmatic SEO combo pages — 25 long-tail landing pages
+const ComboPageRoute = lazy(() => import("./pages/combo/ComboPageRoute"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
 const PageLoader = () => (
@@ -162,6 +164,35 @@ const App = () => (
                 <Route path="/collections/mehendi-outfits" element={<Suspense fallback={<PageLoader />}><MehendiOutfits /></Suspense>} />
                 <Route path="/collections/eid-outfits" element={<Suspense fallback={<PageLoader />}><EidOutfits /></Suspense>} />
                 <Route path="/collections/navratri-outfits" element={<Suspense fallback={<PageLoader />}><NavratriOutfits /></Suspense>} />
+
+                {/* Programmatic SEO combo pages — color/silhouette/fabric × occasion/role
+                    Per SEO research 2026-07-15: Andaaz Fashion proves these pages rank
+                    for "[color] lehenga for [occasion]" type long-tail queries. */}
+                <Route path="/maroon-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="maroon-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/emerald-green-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="emerald-green-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/royal-blue-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="royal-blue-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/pink-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="pink-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/purple-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="purple-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/wine-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="wine-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/navy-blue-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="navy-blue-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/maroon-lehenga-for-reception" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="maroon-lehenga-for-reception" /></Suspense>} />
+                <Route path="/black-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="black-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/pastel-lehenga-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="pastel-lehenga-for-wedding-guest" /></Suspense>} />
+                <Route path="/anarkali-suit-for-mother-of-bride" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="anarkali-suit-for-mother-of-bride" /></Suspense>} />
+                <Route path="/lehenga-for-bridesmaid" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="lehenga-for-bridesmaid" /></Suspense>} />
+                <Route path="/anarkali-suit-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="anarkali-suit-for-wedding-guest" /></Suspense>} />
+                <Route path="/saree-for-mother-of-bride" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="saree-for-mother-of-bride" /></Suspense>} />
+                <Route path="/lehenga-for-mother-of-bride" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="lehenga-for-mother-of-bride" /></Suspense>} />
+                <Route path="/sherwani-for-groom" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="sherwani-for-groom" /></Suspense>} />
+                <Route path="/kurta-for-groom-brother" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="kurta-for-groom-brother" /></Suspense>} />
+                <Route path="/sharara-for-bride-sister" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="sharara-for-bride-sister" /></Suspense>} />
+                <Route path="/georgette-saree-for-reception" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="georgette-saree-for-reception" /></Suspense>} />
+                <Route path="/banarasi-silk-saree-for-wedding" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="banarasi-silk-saree-for-wedding" /></Suspense>} />
+                <Route path="/kanjivaram-saree-for-wedding" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="kanjivaram-saree-for-wedding" /></Suspense>} />
+                <Route path="/chiffon-saree-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="chiffon-saree-for-wedding-guest" /></Suspense>} />
+                <Route path="/silk-saree-for-festival" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="silk-saree-for-festival" /></Suspense>} />
+                <Route path="/organza-saree-for-engagement" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="organza-saree-for-engagement" /></Suspense>} />
+                <Route path="/georgette-saree-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="georgette-saree-for-wedding-guest" /></Suspense>} />
 
                 <Route path="/sitemap" element={<Suspense fallback={<PageLoader />}><Sitemap /></Suspense>} />
                 <Route path="/style-consultation" element={<Suspense fallback={<PageLoader />}><StyleConsultation /></Suspense>} />
