@@ -141,6 +141,33 @@ const MehendiOutfits = () => {
               <p><strong>Yellow is the quintessential mehendi colour</strong>, symbolising turmeric, new beginnings, and the blessing of Goddess Lakshmi. The bride traditionally wears yellow — a yellow lehenga, yellow salwar kameez, or yellow saree — and guests are encouraged to join in the yellow and green colour theme. Mustard, saffron, lime green, coral, and floral prints are all celebration-appropriate choices for mehendi guests.</p>
               <p>Since mehendi ceremonies are often held outdoors — in gardens, on terraces, or in open courtyards — <strong>fabric choice is important</strong>. Light, breathable fabrics like georgette, chiffon, cotton, crepe, and rayon are ideal. Heavy brocade or stiff silk can feel uncomfortable in outdoor settings. Look for <strong>light embroidery, gota patti work, mirror detailing, and block print</strong> rather than heavy zari or stone work for a mehendi-appropriate outfit.</p>
               <p>For the bride, a matching jewellery set in gold, floral motifs, or polki stones complements the mehendi aesthetic beautifully. For guests, simple gold jewellery, floral accessories, or colourful bangles complete the look perfectly.</p>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Mehendi Outfit by Role — Bride, Sister, Bridesmaid, or Guest?</h3>
+                <p>What you wear to a mehendi depends on your role in the wedding. <strong>The bride</strong> wears yellow, orange, or green (traditional mehendi colors) — yellow is the most traditional, representing turmeric and joy. <strong>The bride sister</strong> wears a contrasting color (fuchsia, royal blue, or purple) — fuchsia is the most popular because it photographs beautifully against the bride yellow. <strong>Bridesmaids</strong> coordinate in a matching palette chosen by the bride. <strong>Guests</strong> wear festive casual in bright colors (yellow, orange, pink, green) — avoid heavy lehengas and avoid red (reserved for the wedding ceremony).</p>
+                <p className="mt-2">For the complete role-by-role guide with budget breakdowns ($120-$800), fabric recommendations, accessory list (floral gajra, oxidized silver jewelry, mojari flats), and what NOT to wear, read our <Link to="/blog/mehendi-outfit-by-role" className="text-primary underline font-medium">Mehendi Outfit Ideas by Role guide</Link>.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Mehendi Color Etiquette — What to Wear and What to Avoid</h3>
+                <p><strong>DO wear:</strong> Yellow (turmeric, joy — bride color), orange (energy, celebration), green (henna, new beginnings), pink/fuchsia (joy, femininity — bride sister color), coral/peach (soft, photogenic), royal blue/purple (bold contrasts for bride sister).</p>
+                <p className="mt-2"><strong>AVOID for mehendi:</strong> White (mourning color), black (inauspicious), red (reserved for the wedding ceremony — maroon and burgundy are fine), pastels (too muted for a festive mehendi). <strong>Avoid velvet</strong> — too hot for a daytime mehendi. Save velvet for the sangeet or winter wedding.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">When to Order Your Mehendi Outfit</h3>
+                <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><Link to="/blog/mehendi-outfit-by-role" className="text-primary underline">Mehendi Outfit Ideas by Role: Bride, Sister, Bridesmaid, Guest — 2026 Guide</Link></li>
+                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest</Link></li>
+                  <li><Link to="/blog/indian-wedding-dress-complete-guide" className="text-primary underline">Indian Wedding Dress Guide 2026</Link></li>
+                  <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/suits" className="text-primary underline">Shop Anarkali Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>

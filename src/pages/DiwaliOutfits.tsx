@@ -140,10 +140,37 @@ const DiwaliOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
             <h2 className="font-serif text-2xl mb-6 text-center">What to Wear for Diwali — Style Guide</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Diwali, the Hindu festival of lights, is one of the most celebrated occasions in the Indian diaspora — and it calls for your most festive, vibrant ethnic wear. The five-day celebration encompasses Dhanteras, Choti Diwali, the main Diwali day, Govardhan Puja, and Bhai Dooj, each with its own dress code.</p>
+              <p>Diwali, the Hindu festival of lights, is one of the most celebrated occasions in the Indian diaspora — and it calls for your most festive, vibrant ethnic wear. The five-day celebration encompasses Dhanteras, Choti Diwali, the main Diwali day, Govardhan Puja, and Bhai Dooj, each with its own dress code. Diwali 2026 falls on <strong>October 21, 2026</strong> — order your outfits by September 25 to ensure delivery in time.</p>
               <p>For the main Diwali day and Lakshmi Puja, traditional <strong>silk sarees</strong> in red, gold, or green are considered auspicious. For the earlier part of the day, a comfortable but elegant <strong>salwar kameez or anarkali suit</strong> in Banarasi silk or chanderi is ideal for prayer rituals. For the Diwali party or evening celebrations, a heavily embellished <strong>lehenga with mirror work, zari embroidery, or sequin detailing</strong> photographs beautifully against the backdrop of diyas and fairy lights.</p>
               <p>A <strong>velvet anarkali</strong> in deep jewel tones — emerald green, royal purple, or midnight blue — with gold zari and dupatta is a timeless festive choice. For a modern look, <strong>indo-western cape sets, palazzo suits, or sharara co-ord sets</strong> in metallic fabrics are extremely popular at Diwali parties across the USA and Canada.</p>
               <p><strong>Gold is the quintessential Diwali color</strong> — representing prosperity and the blessing of Goddess Lakshmi. Pair your Diwali outfit with kundan jewelry, jhumka earrings, and gold bangles for the complete festive look.</p>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Diwali Outfit by Setting — Which One Are You Attending?</h3>
+                <p>What you wear for Diwali depends heavily on the setting. For <strong>Lakshmi Puja at home</strong>, a silk saree or cotton salwar kameez in auspicious colors (red, gold, deep green) is ideal — natural fibers are preferred for religious ceremonies. For a <strong>Diwali party</strong>, choose an embellished lehenga or sequin anarkali in jewel tones (emerald, sapphire, plum) — the more sparkle, the better. For an <strong>office Diwali celebration</strong>, go indo-western — a palazzo suit or contemporary anarkali in muted festive colors. For a <strong>community Diwali event</strong>, anarkalis or salwar kameez with comfortable flats are practical for 4-6 hour events.</p>
+                <p className="mt-2">For the complete setting-by-setting guide with budget breakdowns ($80-$500), fabric recommendations, and color meanings, read our <Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline font-medium">Diwali Outfit Ideas by Setting guide</Link>.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Diwali Color Etiquette — What to Wear and What to Avoid</h3>
+                <p><strong>DO wear:</strong> Gold (prosperity, Lakshmi blessing), red (joy), deep green (growth), royal blue (photographs beautifully), maroon (sophisticated alternative to red), orange/saffron (courage, spirituality), purple (royalty, modern).</p>
+                <p className="mt-2"><strong>AVOID:</strong> Black (inauspicious for Hindu celebrations), pure white (mourning color), dull grey (lacks festive energy). Some modern Diwali parties may welcome black with a "cocktail" theme, but when in doubt, choose a festive color instead.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">When to Order Your Diwali Outfit</h3>
+                <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched (Made to Measure) items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia via USPS/UPS/DHL. Free shipping on orders over $350.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline">Diwali Outfit Ideas by Setting: Puja, Party, Office & Community — 2026 Guide</Link></li>
+                  <li><Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline">Navratri 9 Day Color Guide 2026</Link></li>
+                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest</Link></li>
+                  <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link> | <Link to="/suits" className="text-primary underline">Shop Anarkali Suits</Link></li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>

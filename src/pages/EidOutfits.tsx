@@ -141,6 +141,36 @@ const EidOutfits = () => {
               <p>For Eid morning prayers, a <strong>modest and elegant salwar kameez or anarkali suit</strong> in white, cream, or pastel shades is the most appropriate choice. After prayers, many families change into more embellished celebration outfits for family visits and Eid lunch or dinner gatherings. <strong>Chikankari embroidery</strong> — the intricate shadow-work embroidery from Lucknow — is considered the quintessential Eid fabric, traditionally done on white or pastel muslin, cotton, or georgette.</p>
               <p><strong>Sharara sets</strong> — wide-leg flared pants paired with embroidered kurtas and dupattas — have long been a signature Eid outfit in Pakistani and North Indian Muslim fashion. They offer a graceful, traditional silhouette that is both comfortable and elegant for all-day celebrations. <strong>Pastel lehengas</strong> in mint green, baby pink, lavender, and sky blue are equally popular for Eid evening gatherings.</p>
               <p>For Eid Ul-Adha, which often involves outdoor activities, lighter and more practical fabrics like <strong>cotton, chanderi, or light georgette</strong> in simple embroidery are most comfortable. Gold and silver zari border work on pastel fabrics creates a beautifully festive look without excessive embellishment.</p>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Eid Outfit by Setting — Prayers, Lunch, or Dinner?</h3>
+                <p>What you wear for Eid depends on the time of day and the setting. For <strong>Eid morning prayers</strong> at the mosque, a modest and elegant salwar kameez or anarkali suit in white, cream, or pastel shades is most appropriate — cover your head with a dupatta and avoid revealing silhouettes. For <strong>Eid lunch with family</strong>, change into a more embellished celebration outfit — a sharara set, pastel lehenga, or chikankari anarkali. For <strong>Eid dinner or evening parties</strong>, you can go more glamorous — heavier embroidery, richer colors (deep green, royal blue, wine), and statement jewelry.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Eid Outfit Color Etiquette</h3>
+                <p><strong>Best colors for Eid:</strong> White (purity, traditional for Eid prayers), cream/ivory (elegance), pastel pink/mint/lavender (modern festive), mint green (associated with Islam), royal blue, deep green, wine, gold. <strong>Avoid:</strong> Black (some interpretations consider black inauspicious for Eid celebrations, though it is acceptable for evening parties), bright red (reserved for Hindu bridal wear — choose wine or maroon instead), pure black for morning prayers.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Eid Outfit Budget Guide</h3>
+                <p><strong>Eid morning prayers outfit:</strong> $120-$280 (simple salwar kameez or anarkali in cotton or chikankari). <strong>Eid lunch outfit:</strong> $180-$400 (sharara set or pastel lehenga). <strong>Eid dinner/party outfit:</strong> $200-$500 (embellished anarkali or designer suit). <strong>Men Eid outfit:</strong> $100-$300 (kurta pajama or pathani suit). At LuxeMia, we offer free shipping on orders over $350 to the USA, Canada, and Australia.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
+                <p>Eid Ul-Fitr 2026 falls on <strong>March 20, 2026</strong> (subject to moon sighting). Eid Ul-Adha 2026 falls on <strong>May 27, 2026</strong>. Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your Eid outfits at least 4-6 weeks before the Eid date.</strong> At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline">Diwali Outfit Ideas by Setting (similar festival structure)</Link></li>
+                  <li><Link to="/blog/indian-to-us-clothing-size-conversion-guide" className="text-primary underline">Indian to US Clothing Size Conversion Guide</Link></li>
+                  <li><Link to="/blog/plus-size-indian-ethnic-wear-guide" className="text-primary underline">Plus Size Indian Ethnic Wear Guide</Link></li>
+                  <li><Link to="/suits" className="text-primary underline">Shop Salwar Kameez & Anarkali</Link> | <Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/indowestern" className="text-primary underline">Shop Indo-Western</Link></li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>

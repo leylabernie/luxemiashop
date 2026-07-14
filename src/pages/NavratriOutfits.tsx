@@ -141,6 +141,32 @@ const NavratriOutfits = () => {
               <p>The <strong>chaniya choli</strong> is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with <strong>mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery</strong>. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor. For Indian communities outside India, chaniya cholis have become popular choices for community Garba events in the USA, Canada, UK, and Australia — where entire families participate in the nine-night celebration.</p>
               <p>One of the most beloved Navratri traditions is <strong>dressing in the colour of the day</strong>. Each of the nine nights is associated with a specific colour linked to the nine forms of Goddess Durga worshipped during the festival. Common Navratri colour sequences include royal blue, green, grey, orange, white, red, royal blue, pink, and purple — though the exact sequence varies by year according to the Hindu calendar. Many participants plan nine separate Navratri outfits in each day's colour — making Navratri one of the biggest ethnic fashion occasions of the year.</p>
               <p>For guests who prefer an alternative to the chaniya choli, <strong>embroidered lehengas, festive anarkali suits, and mirror-work salwar kameez</strong> in bright Navratri colours are equally beautiful choices. Men traditionally wear a white kurta-pyjama with colourful dupattas or embroidered nehru jackets for Garba celebrations.</p>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Navratri 2026 Dates and 9-Day Color Schedule</h3>
+                <p>Navratri 2026 begins on <strong>Tuesday, September 22, 2026</strong> and ends on <strong>Thursday, October 1, 2026</strong> with Dussehra on October 2. The 2026 Navratri color schedule is: <strong>Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green</strong>.</p>
+                <p className="mt-2">For the complete day-by-day outfit guide — what to wear each night, fabric recommendations, accessories (dandiya sticks, oxidized silver jewelry, kamarbandh, mojari flats), and how many outfits you actually need — read our <Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline font-medium">Navratri 9 Day Color Guide 2026</Link>.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">When to Order Your Navratri Chaniya Choli</h3>
+                <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the USA, Canada, and Australia with free shipping on orders over $350.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">How Many Navratri Outfits Do You Need?</h3>
+                <p>You do not need 9 different outfits. Most diaspora garba events happen on 2-4 nights, not all 9. <strong>1-2 garba nights:</strong> buy 1-2 outfits in those colors (most popular: red Day 3, royal blue Day 4, green Day 6). <strong>3-4 garba nights:</strong> buy 3 outfits and mix-and-match dupattas. <strong>All 9 nights:</strong> invest in 5-6 outfits and rotate. No one expects you to have 9 outfits.</p>
+              </div>
+
+              <div className="border-t border-border/30 pt-5 mt-6">
+                <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline">Navratri 9 Day Color Guide 2026: What to Wear Each Night of Garba</Link></li>
+                  <li><Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline">Diwali Outfit Ideas by Setting</Link></li>
+                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest</Link></li>
+                  <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas & Chaniya Choli</Link> | <Link to="/suits" className="text-primary underline">Shop Anarkali Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
