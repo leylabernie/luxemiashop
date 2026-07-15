@@ -70,3 +70,74 @@ After creating collections, update the Shopify navigation menu at **Online Store
 | `src/App.tsx` | Added redirects for `/collections/sarees`, `/collections/indo-western`, etc. |
 | `src/components/home/ShopByOccasion.tsx` | Fixed broken `/collections/bridesmaid-dresses` link |
 | `build_csv.py` | Already uses per-product INR×2÷90 pricing with compare-at at 1.43x |
+
+---
+
+## 4. Product Data Quality Auto-Fixer (NEW — July 2026)
+
+A new script `scripts/fix-product-quality.mjs` automatically fixes Shopify product data quality issues identified in a comprehensive audit (1,132 issues across 528 of 613 products).
+
+### What it fixes
+
+| Fix | Severity | Description |
+|---|---|---|
+| `type` | P0 | Fixes product_type mismatches — e.g., "Saree" listed as "Lehenga Choli Set", "Sherwani" listed as "Menswear", "Indian Ethnic Wear" → "Lehenga Choli" |
+| `title` | P1 | Removes " \| LuxeMia" suffix, " — Style N" suffix, embedded SKU codes like "(393994-UN-XS)", fixes ALL CAPS, collapses whitespace |
+| `color` | P1 | Adds missing color to tags when title mentions a color not in tags (e.g., title says "Green Lehenga" but tags don't include "green") |
+| `vendor` | P2 | Standardizes vendor to "LuxeMia" (currently mixed: "luxemia.shop", "Luxemia", "Premium Ethnic") |
+| `tags` | P2 | Removes numeric values from tags (size codes that leaked in: "38", "40", "44\"" etc.) |
+
+### What it does NOT fix (requires manual review)
+
+- **Watermark brand references** (e.g., `lapink`) — script reports these in the audit log but does not auto-fix
+- **Image supplier codes** (e.g., `CHAAVI-1083` in filename) — cosmetic only, not customer-visible
+- **Handle suffixes** (e.g., `-7093`) — requires 301 redirects
+- **Navratri tags** — founder decision (remove tags now OR add to Navratri collection later)
+- **Description content** — descriptions are not auto-modified (too risky)
+
+### How to run
+
+```bash
+# 1. Create Shopify Admin API token (one-time setup)
+#    Shopify Admin → Settings → Apps → Develop apps → [your app] → API credentials
+#    → Admin API access token (scopes: write_products, read_products)
+#    Copy the shpat_xxx token
+
+# 2. Dry run — fetch all products, compute fixes, log before/after, NO writes
+SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node scripts/fix-product-quality.mjs
+
+# 3. Review the dry-run output + audit CSV at /home/z/my-project/download/shopify-quality-fixes-<timestamp>.csv
+
+# 4. Apply fixes to Shopify (LIVE)
+SHOPIFY_ADMIN_ACCESS_TOKEN=shpat_xxx node scripts/fix-product-quality.mjs --apply
+
+# Optional flags:
+#   --limit=20            Only process first 20 products (for testing)
+#   --only=type,title    Only run specific fix categories
+#   --skip=tags          Skip specific fix categories
+```
+
+### Safety features
+
+- **DRY RUN BY DEFAULT** — no changes written unless `--apply` flag is passed
+- **Concurrency = 2** — respects Shopify Admin API rate limits
+- **Before/after audit CSV** written to `/home/z/my-project/download/shopify-quality-fixes-<timestamp>.csv`
+- **Conservative type fixer** — only fixes egregious mismatches (Saree ↔ Lehenga, Menswear → Sherwani/Kurta, generic → specific). Preserves modern types like "Indo Western Set", "Lehenga Saree", "Saree Gown".
+- **Watermark reports** — flagged in audit log for manual image review
+
+### Expected impact
+
+Based on local dry-run against cached Shopify data (613 products):
+
+| Fix | Products affected |
+|---|---|
+| Product Type (P0) | 18 |
+| Title Cleanup (P1) | 107 |
+| Add Color Tag (P1) | 252 |
+| Vendor Standardization (P2) | 91 |
+| Tag Cleanup (P2) | 1 |
+| **Total products with at least 1 fix** | **361** |
+
+### Re-running the audit
+
+After applying fixes, the founder can request a re-run of the quality audit (script `09_quality_audit.py` in the agent's workspace) to verify all P0/P1 issues are resolved and identify any new issues.
