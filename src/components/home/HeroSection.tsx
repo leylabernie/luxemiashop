@@ -9,6 +9,7 @@ interface HeroSlide {
   id: number;
   title: string;
   subtitle: string;
+  alt: string;
   cta: string;
   link: string;
   image: string;
@@ -21,6 +22,7 @@ const heroSlides: HeroSlide[] = [
     id: 1,
     title: 'Bridal Lehengas',
     subtitle: 'Silk Maroon Festival Wear Zari Work Lehenga Choli',
+    alt: 'Maroon silk bridal lehenga with zari work by LuxeMia - Indian wedding ethnic wear',
     cta: 'Shop Lehengas',
     link: '/lehengas',
     image: '/images/banners/lehenga-banner.jpg',
@@ -31,6 +33,7 @@ const heroSlides: HeroSlide[] = [
     id: 2,
     title: 'Saree Collection',
     subtitle: 'Satin Silk Teal Blue Occasional Wear Embroidery Saree',
+    alt: 'Teal blue satin silk embroidery saree by LuxeMia - Indian ethnic wear collection',
     cta: 'Explore Sarees',
     link: '/sarees',
     image: '/images/banners/saree-banner.jpg',
@@ -41,6 +44,7 @@ const heroSlides: HeroSlide[] = [
     id: 3,
     title: 'Designer Suits',
     subtitle: 'Georgette Black Occasional Wear Embroidery Work Suit',
+    alt: 'Black georgette embroidery designer salwar suit by LuxeMia - Indian ethnic wear',
     cta: 'View Suits',
     link: '/suits',
     image: '/images/banners/suit-banner.jpg',
@@ -51,6 +55,7 @@ const heroSlides: HeroSlide[] = [
     id: 4,
     title: 'Groom Sherwani',
     subtitle: 'Maroon Indo-Western Sherwani for Wedding & Reception',
+    alt: 'Maroon indo-western sherwani for wedding reception by LuxeMia - Indian menswear',
     cta: 'Shop Menswear',
     link: '/menswear',
     image: '/images/banners/menswear-banner.jpg',
@@ -153,7 +158,7 @@ const HeroSection = () => {
                   />
                   <img
                     src={getOptimizedImage(slide.image, 'hero')}
-                    alt={slide.title}
+                    alt={slide.alt}
                     width={600}
                     height={800}
                     className="max-h-[55vh] sm:max-h-[60vh] lg:max-h-[70vh] w-auto object-contain rounded-lg drop-shadow-2xl"

@@ -537,6 +537,41 @@
       "source": "/product/luxemia-maroon-embroidered-chinon-silk-designer-saree-for-reception-and-party-wear",
       "destination": "/sarees",
       "statusCode": 301
+    },
+    {
+      "source": "/pages/about-us",
+      "destination": "/brand-story",
+      "statusCode": 301
+    },
+    {
+      "source": "/pages/shipping-policy",
+      "destination": "/shipping",
+      "statusCode": 301
+    },
+    {
+      "source": "/pages/returns-policy",
+      "destination": "/returns",
+      "statusCode": 301
+    },
+    {
+      "source": "/pages/privacy-policy",
+      "destination": "/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/pages/refund-policy",
+      "destination": "/returns",
+      "statusCode": 301
+    },
+    {
+      "source": "/pages/terms-of-service",
+      "destination": "/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/all",
+      "destination": "/collections",
+      "statusCode": 301
     }
   ],
   "headers": [
