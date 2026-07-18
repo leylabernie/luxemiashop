@@ -1,6 +1,11 @@
 import { supabase } from "@/integrations/supabase/client";
 import { fetchAllProducts } from "@/lib/shopify";
-import { jewelryProducts } from "@/data/jewelryProducts";
+// NOTE: jewelryProducts are NOT added to the sitemap because the middleware
+// checks Shopify Storefront API for all /product/{handle} requests.
+// Jewelry products only exist in local data (not in Shopify), so the
+// middleware returns HTTP 404 for them. Including them in the sitemap
+// caused Google to crawl 404 pages (GSC Coverage "Failed" errors).
+// If jewelry is later moved to Shopify, this import can be restored.
 
 interface SitemapProduct {
   handle: string;
@@ -84,17 +89,9 @@ export const fetchAllSitemapProducts = async (): Promise<SitemapProduct[]> => {
     console.error('dynamicSitemap: Failed to fetch from Shopify:', err);
   }
 
-  // 2. Add jewelry products (still from local data file — jewelry isn't in Shopify)
-  jewelryProducts.forEach(p => {
-    products.push({
-      handle: p.id,
-      title: p.name,
-      category: 'Jewelry',
-      images: [p.image],
-    });
-  });
-
-  // Fetch scraped products from database
+  // 2. Fetch scraped products from database
+  //    Skip any handle already added from Shopify to avoid duplicate sitemap entries
+  const seenHandles = new Set(products.map(p => p.handle));
   try {
     const { data: scrapedProducts, error } = await supabase
       .from('scraped_products')
@@ -104,6 +101,9 @@ export const fetchAllSitemapProducts = async (): Promise<SitemapProduct[]> => {
 
     if (!error && scrapedProducts) {
       scrapedProducts.forEach((p: ScrapedProductRow) => {
+        // Deduplicate: skip if this handle was already added from Shopify
+        if (seenHandles.has(p.source_id)) return;
+        seenHandles.add(p.source_id);
         const images = p.image_urls && p.image_urls.length > 0 
           ? p.image_urls 
           : [p.image_url];

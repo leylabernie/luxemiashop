@@ -135,6 +135,56 @@ export default async function middleware(request: Request) {
     return next();
   }
 
+  // STRIP query parameters from collection/category filter URLs for bots.
+  // URLs like /lehengas?sub=wedding-guest or /sarees?color=red should NOT be
+  // indexed as separate pages — they cause duplicate content and waste crawl
+  // budget. Serve the canonical category page with a noindex header so Google
+  // drops the parameterized URL from the index.
+  if (url.search && isBot(userAgent)) {
+    const cleanPath = pathname; // without query params
+    // Only strip params from known category/collection routes
+    const CATEGORY_ROUTES = new Set([
+      '/lehengas', '/sarees', '/suits', '/menswear', '/jewelry',
+      '/indowestern', '/new-arrivals', '/bestsellers', '/collections',
+    ]);
+    if (CATEGORY_ROUTES.has(cleanPath) || cleanPath.startsWith('/collections/')) {
+      // Return the clean URL's content but with noindex to drop the param URL
+      if (PRERENDERED_ROUTES.has(cleanPath)) {
+        const prerenderPath = cleanPath === '/'
+          ? '/_prerender/index.html'
+          : `/_prerender${cleanPath}.html`;
+        const resp = fetch(new URL(prerenderPath, request.url));
+        if (resp) {
+          const html = await resp.text();
+          return new Response(html, {
+            status: 200,
+            headers: {
+              'Content-Type': 'text/html; charset=utf-8',
+              'X-Robots-Tag': 'noindex, follow',
+              'Link': `<https://luxemia.shop${cleanPath}>; rel="canonical"`,
+            },
+          });
+        }
+      }
+      // For non-prerendered collection routes, just noindex
+      return new Response(
+        `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
+        `<meta name="robots" content="noindex,follow">` +
+        `<link rel="canonical" href="https://luxemia.shop${cleanPath}">` +
+        `<title>Redirecting...</title></head>` +
+        `<body><p>See <a href="https://luxemia.shop${cleanPath}">https://luxemia.shop${cleanPath}</a></p></body></html>`,
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'X-Robots-Tag': 'noindex, follow',
+            'Link': `<https://luxemia.shop${cleanPath}>; rel="canonical"`,
+          },
+        }
+      );
+    }
+  }
+
   // 410 Gone check — explicit retired URLs (manual + auto-discovered dead handles)
   // Run BEFORE the redirect checks so retired URLs always get 410, not a redirect.
   if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
@@ -161,6 +211,10 @@ export default async function middleware(request: Request) {
   // old bookmarks or indexed URLs pass link equity to the homepage instead of 404.
   if (pathname === '/virtual-try-on') {
     return Response.redirect(new URL('/', request.url).toString(), 301);
+  }
+  // /collections/lehenga-choli — Shopify collection URL, 301 to /lehengas
+  if (pathname === '/collections/lehenga-choli') {
+    return Response.redirect(new URL('/lehengas', request.url).toString(), 301);
   }
 
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
@@ -649,13 +703,14 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'sindoor-mangalsutra-sacred-symbols-hindu-marriage': { title: 'Sindoor and Mangalsutra: The Sacred Symbols of Hindu Marriage | LuxeMia', description: 'Sindoor (red vermilion) and the mangalsutra (black-beaded gold necklace) are the two most sacred symbols of Hindu marriage. Sindoor is applied to the bride\'s hair parting, the mangalsutra is tied around her neck. Both signify married status.' },
     'regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari': { title: 'Regional Indian Wedding Rituals: Punjabi, Bengali, Tamil & Marwari Traditions | LuxeMia', description: 'Indian wedding rituals vary by region. Punjabi Sikh weddings feature Anand Karaj (4 circumambulations of Guru Granth Sahib). Bengali weddings center on sindoor daan and shankha-pola. Tamil weddings feature Kashi Yatra and Oonjal.' },
     'embroidery-motifs-symbolism-paisley-peacock-lotus': { title: 'The Symbolism of Embroidery Motifs: Paisley, Peacock, and Lotus in Indian Textiles | LuxeMia', description: 'Indian embroidery motifs carry deep symbolism. The paisley (mango/ambi) represents fertility and eternity. The peacock symbolizes beauty and grace. The lotus represents purity and divinity.' },
-    'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Trends 2026 | LuxeMia Blog', description: 'Latest red bridal lehenga trends for 2026 at LuxeMia.' },
-    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Dress Under ₹50,000 | LuxeMia Blog', description: 'Designer wedding dresses under ₹50,000 at LuxeMia.' },
-    'wedding-guest-outfit-ideas': { title: 'Wedding Guest Outfit Ideas | LuxeMia Blog', description: 'Wedding guest outfit ideas for Indian weddings at LuxeMia.' },
-    'saree-draping-styles-every-occasion': { title: 'Saree Draping Styles for Every Occasion | LuxeMia Blog', description: 'Different saree draping styles at LuxeMia.' },
-    'indian-wedding-trends-2026': { title: 'Indian Wedding Trends 2026 | LuxeMia Blog', description: 'Top Indian wedding trends for 2026 at LuxeMia.' },
-    'lehenga-color-for-dark-skin': { title: 'Best Lehenga Colors for Dark Skin Tones | LuxeMia Blog', description: 'Perfect lehenga color for dark skin tones at LuxeMia.' },
-    'wedding-saree-for-mother-of-bride': { title: 'Wedding Saree for Mother of the Bride | LuxeMia Blog', description: 'Wedding saree options for the mother of the bride at LuxeMia.' },
+    'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Designs 2026: 50+ Stunning Ideas for Your Wedding | LuxeMia Blog', description: 'Explore the latest red bridal lehenga designs for 2026. From classic crimson Banarasi to modern maroon velvet, discover 50+ stunning red lehenga ideas with expert tips on fabric, embroidery, and styling for your Indian wedding.' },
+    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Dresses Under $500: Affordable Bridal Lehengas & Sarees | LuxeMia Blog', description: 'Find stunning designer wedding dresses under $500 at LuxeMia. Affordable bridal lehengas, silk sarees, and anarkali suits with premium embroidery, shipped to USA, Canada, and Australia.' },
+    'wedding-guest-outfit-ideas': { title: 'Indian Wedding Guest Outfit Ideas: What to Wear to Every Ceremony | LuxeMia Blog', description: 'Complete Indian wedding guest outfit ideas for every ceremony — mehendi, sangeet, reception. Lehenga, saree, anarkali, and suit options by budget and dress code.' },
+    'saree-draping-styles-every-occasion': { title: 'Saree Draping Styles for Every Occasion: 7 Popular Styles Explained | LuxeMia Blog', description: 'Learn 7 saree draping styles — Nivi, Bengali, Gujarati, Maharashtrian, and more. Step-by-step draping guide for weddings, festivals, and daily wear.' },
+    'indian-wedding-trends-2026': { title: 'Indian Wedding Fashion Trends 2026: What Brides, Grooms & Guests Are Wearing | LuxeMia Blog', description: 'Top Indian wedding fashion trends for 2026 — pastel bridal lehengas, indo-western sherwanis, sustainable fabrics, and statement jewelry for every ceremony.' },
+    'unstitched-vs-ready-to-wear-vs-made-to-measure': { title: 'Unstitched vs Ready to Wear vs Made to Measure: Complete Guide | LuxeMia Blog', description: 'Unstitched, ready to wear, or made to measure — a complete guide to Indian outfit sizing options for NRI buyers. Learn which format is best for lehengas, salwar suits, and sherwanis.' },
+    'lehenga-color-for-dark-skin': { title: 'Best Lehenga Colors for Dark Skin Tones: Expert Color Guide | LuxeMia Blog', description: 'Discover the most flattering lehenga colors for dark skin tones — from royal blue and emerald green to deep maroon and gold, with fabric and occasion recommendations.' },
+    'wedding-saree-for-mother-of-bride': { title: 'How to Choose a Wedding Saree for Mother of the Bride: Complete 2026 Guide | LuxeMia Blog', description: 'Expert guide to choosing the perfect wedding saree for the mother of the bride. Best colors, fabrics, and styles for 2026 Indian weddings — Banarasi silk, Kanchipuram, and chiffon options with styling tips.' },
     'designer-wedding-dress-under-500': { title: 'Designer Wedding Dress Under $500 | LuxeMia Blog', description: 'Designer wedding dresses under $500 at LuxeMia.' },
     'nri-wedding-ethnic-wear-trends-2026': { title: 'NRI Wedding Ethnic Wear Trends 2026 | LuxeMia Blog', description: 'NRI wedding ethnic wear trends for 2026 at LuxeMia.' },
     'buy-authentic-indian-sarees-online-usa-uk': { title: 'How to Buy Authentic Indian Sarees Online | LuxeMia Blog', description: 'Guide to buying authentic Indian sarees online at LuxeMia.' },
@@ -676,7 +731,7 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'how-to-measure-yourself-indian-ethnic-wear': { title: 'How to Measure Yourself for Indian Ethnic Wear: Sizing Guide | LuxeMia Blog', description: 'Detailed guide to measuring for Indian ethnic wear — bust, waist, hips, shoulder, with international size conversion.' },
     'kanchipuram-silk-saree-south-indian-wedding-guide': { title: 'Kanchipuram Silk Sarees: South Indian Wedding Guide | LuxeMia Blog', description: 'Complete guide to Kanchipuram (Kanjivaram) silk sarees — history, authentication, pricing, and bridal styling.' },
     'zari-work-guide-indian-embroidery-gold-silver-thread': { title: 'The Art of Zari Work: Golden Thread Tradition | LuxeMia Blog', description: 'Discover the centuries-old art of zari embroidery — authentic zari identification, styles, and garment care tips.' },
-    'chikankari-embroidery-lucknow-guide': { title: 'Chikankari Embroidery of Lucknow: Shadow Work Guide | LuxeMia Blog', description: 'Explore Lucknowi chikankari — Mughal origins, stitch types, identifying authentic pieces, and shopping online.' },
+    'chikankari-embroidery-lucknow-guide': { title: 'Chikankari Embroidery of Lucknow: Shadow Work Guide | LuxeMia Blog', description: 'Explore Lucknowi chikankari embroidery — Mughal origins, 32 stitch types, how to identify authentic handwork vs machine-made, and where to shop chikankari online.' },
   };
   return blogMap[slug] || null;
 }
