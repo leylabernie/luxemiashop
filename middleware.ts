@@ -213,9 +213,35 @@ export default async function middleware(request: Request) {
   if (pathname === '/virtual-try-on') {
     return Response.redirect(new URL('/', request.url).toString(), 301);
   }
-  // /collections/lehenga-choli — Shopify collection URL, 301 to /lehengas
-  if (pathname === '/collections/lehenga-choli') {
-    return Response.redirect(new URL('/lehengas', request.url).toString(), 301);
+  // 301 Permanent Redirect for /collections/* → canonical category pages.
+  // These routes exist as client-side React Router <Navigate> redirects, but
+  // bots need server-side 301s to properly transfer link equity and avoid
+  // indexing the redirect-source URL with thin/empty SPA content.
+  const COLLECTION_301_REDIRECTS: Record<string, string> = {
+    '/collections/wedding-sarees': '/sarees',
+    '/collections/bridal-lehengas': '/lehengas',
+    '/collections/reception-outfits': '/collections',
+    '/collections/festive-wear': '/collections',
+    '/collections/sarees': '/sarees',
+    '/collections/salwar-kameez': '/suits',
+    '/collections/suits': '/suits',
+    '/collections/menswear': '/menswear',
+    '/collections/lehengas': '/lehengas',
+    '/collections/sharara-suits': '/suits',
+    '/collections/gharara-suits': '/suits',
+    '/collections/anarkali-suits': '/suits',
+    '/collections/pakistani-suits': '/suits',
+    '/collections/party-wear-lehengas': '/lehengas',
+    '/collections/wedding-lehengas': '/lehengas',
+    '/collections/silk-sarees': '/sarees',
+    '/collections/designer-sarees': '/sarees',
+    '/collections/indo-western': '/indowestern',
+    '/collections/bridesmaid-dresses': '/sarees',
+    '/collections/groomsman-outfits': '/menswear',
+    '/collections/lehenga-choli': '/lehengas',
+  };
+  if (COLLECTION_301_REDIRECTS[pathname]) {
+    return Response.redirect(new URL(COLLECTION_301_REDIRECTS[pathname], request.url).toString(), 301);
   }
 
   // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
