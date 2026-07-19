@@ -2903,6 +2903,14 @@ export const blogPosts: BlogPost[] = [
 <p>---</p>
 <h2>Shop the LuxeMia Collection</h2>
 <p>Shop the LuxeMia lehenga, sharara, and salwar-suits collections at <a href="https://luxemia.shop">https://luxemia.shop</a> — with custom stitching and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<h2>Shop These Styles</h2>
+<ul>
+  <li>Browse our full <a href="/collections/sharara-suits">sharara suits</a> collection — embroidered, sequined, and festive styles ready to ship worldwide</li>
+  <li>Explore our <a href="/collections/gharara-suits">gharara suits</a> — Lucknowi-crafted sets with gota-patti and zari work</li>
+  <li>Shop <a href="/collections/anarkali-suits">anarkali suits</a> in every price range — from casual cotton to bridal silk</li>
+  <li>Find your perfect <a href="/collections/party-wear-lehengas">party wear lehengas</a> for sangeet, reception, and festive celebrations</li>
+  <li>Discover our <a href="/collections/bridal-lehengas">bridal lehengas</a> — red, pastel, and regal designs for the big day</li>
+</ul>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-05-10',

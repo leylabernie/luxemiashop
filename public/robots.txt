@@ -21,6 +21,7 @@ Disallow: /*?q=
 Disallow: /*?sort=
 Disallow: /*?filter=
 Disallow: /*?page=
+Disallow: /*?sub=
 
 # ─── Googlebot ───────────────────────────────────────────────────────────────
 User-agent: Googlebot
@@ -52,6 +53,7 @@ Disallow: /*?q=
 Disallow: /*?sort=
 Disallow: /*?filter=
 Disallow: /*?page=
+Disallow: /*?sub=
 
 # ─── Googlebot-Image ─────────────────────────────────────────────────────────
 # Ensure Google can crawl all product images for Merchant Center.

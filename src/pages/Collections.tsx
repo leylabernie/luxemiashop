@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -38,6 +38,12 @@ const Collections = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [collectionSlug, setCollectionSlug] = useState('');
+
+  useEffect(() => {
+    const slug = window.location.pathname.replace('/collections/', '');
+    setCollectionSlug(slug);
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
@@ -208,6 +214,29 @@ const Collections = () => {
               )}
             </div>
           </div>
+          {/* Collection SEO Content — semantic text for crawlers */}
+          {collectionSlug === 'sharara-suits' && (
+            <section className="container mx-auto px-4 lg:px-8 max-w-5xl py-12 border-t border-border/50">
+              <h2 className="font-serif text-2xl mb-4 text-center">Sharara Suits: The Statement Silhouette for Every Celebration</h2>
+              <div className="prose prose-sm max-w-none text-muted-foreground space-y-4">
+                <p>Sharara suits have emerged as one of the most sought-after ethnic wear styles for South Asian women worldwide, combining the drama of a flared lehenga with the comfort of a traditional salwar kameez. Originating from the Mughal-era courts of Awadh, the sharara features wide, floor-grazing pants that create a striking silhouette — paired with a fitted kurta and dupatta for a complete, regal look. At LuxeMia, our curated collection of sharara suits spans embroidered georgette sets for festive occasions, sequined net shararas for sangeet nights, and understated cotton sharara suits for casual elegance. Each piece is fully stitched and ready to wear, shipped internationally to the USA, Canada, UK, Australia, and the UAE.</p>
+                <h3>Sharara vs. Gharara: What's the Difference?</h3>
+                <p><strong>Q: How do I tell a sharara apart from a gharara?</strong><br />The key difference lies in the construction. A <strong>sharara</strong> has wide, flared pants that are cut like a skirt from the waist down — the fabric flows continuously from the hip to the hem, creating a dramatic A-line flare. A <strong>gharara</strong>, by contrast, features pants that are fitted from the knee up and flared from the knee down, with the flare often gathered or pleated at the knee joint using a traditional gota or fabric fold. Visually, a gharara has a more structured, bell-like shape at the bottom, while a sharara flows more like a maxi skirt.</p>
+                <p><strong>Q: Can I wear a sharara suit to a wedding?</strong><br />Absolutely. Sharara suits are now one of the most popular choices for wedding guests, mehendi ceremonies, and sangeet nights. For bridal events, look for heavily embroidered or sequined sharara sets in richer fabrics like silk, georgette, or velvet.</p>
+              </div>
+            </section>
+          )}
+          {collectionSlug === 'gharara-suits' && (
+            <section className="container mx-auto px-4 lg:px-8 max-w-5xl py-12 border-t border-border/50">
+              <h2 className="font-serif text-2xl mb-4 text-center">Gharara Suits: Timeless Elegance with a Royal Heritage</h2>
+              <div className="prose prose-sm max-w-none text-muted-foreground space-y-4">
+                <p>Gharara suits represent the pinnacle of Lucknowi craftsmanship, tracing their origins to the nawabi courts of Awadh where they were worn as a symbol of aristocratic refinement. The defining feature of a gharara is its unique knee-length flare — unlike a sharara's continuous flow from the waist, the gharara's pants are fitted through the thigh and flare dramatically from the knee, often with intricate gota-patti or zari work at the joint. This construction gives the gharara its distinctive bell silhouette that moves beautifully when you walk. LuxeMia's gharara suit collection features hand-embroidered designs, ready-to-wear stitching, and fabrics ranging from lightweight georgette to rich silk — all available for international delivery across 50+ countries.</p>
+                <h3>Sharara vs. Gharara: Which One Should You Choose?</h3>
+                <p><strong>Q: Is a gharara more traditional than a sharara?</strong><br />Both have Mughal-era origins, but the gharara is more closely associated with Lucknow's chikankari and gota-patti traditions, making it feel slightly more rooted in North Indian wedding culture. The sharara, with its simpler construction, has become more versatile for contemporary fusion looks. If you're attending a traditional wedding, a gharara in silk or velvet with zari work is an elegant choice. For a modern sangeet or reception, a sequined sharara suit may feel more current.</p>
+                <p><strong>Q: Do gharara suits come unstitched?</strong><br />At LuxeMia, all our gharara suits are fully stitched and ready to wear. We offer standard sizing as well as custom measurements to ensure the perfect fit. Refer to our <a href="/sizing-measurements-guide" className="text-foreground underline">Indian to US size conversion guide</a> for detailed measurements.</p>
+              </div>
+            </section>
+          )}
         </div>
       </main>
 

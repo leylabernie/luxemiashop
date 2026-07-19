@@ -6,6 +6,7 @@ import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
+import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -302,6 +303,10 @@ export default async function middleware(request: Request) {
     //    Instead of letting bots through to the SPA (which renders empty HTML
     //    that GMC can't crawl), we fetch product data from Shopify and generate
     //    complete HTML with meta tags, structured data, and visible content.
+    // NOTE: Desktop GSC positions may lag behind mobile positions because
+    // Google uses mobile-first indexing. The mobile position is the
+    // canonical ranking signal. Desktop position data will converge as
+    // Google re-processes the mobile-first index.
     if (pathname.startsWith('/product/')) {
       const handle = pathname.replace('/product/', '');
 
@@ -322,7 +327,23 @@ export default async function middleware(request: Request) {
         });
       }
 
-      // Product not found in Shopify → return 404 with noindex
+      // Jewelry products are NOT in Shopify — they're hardcoded locally.
+      // If Shopify returns null, check the local jewelry product data
+      // before returning 404. This prevents soft-404s for jewelry pages.
+      const jewelryProduct = getJewelryProductByHandle(handle);
+      if (jewelryProduct) {
+        const jewelryHtml = generateJewelryProductHtml(jewelryProduct, `https://luxemia.shop/product/${handle}`);
+        return new Response(jewelryHtml, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+            'X-Robots-Tag': 'index, follow',
+          },
+        });
+      }
+
+      // Product not found in Shopify or local data → return 404 with noindex
       return return404(request);
     }
 
@@ -691,23 +712,27 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'pakistani-suits-anarkali-shopping-guide': { title: 'Pakistani Suits & Anarkali Shopping Guide | LuxeMia Blog', description: 'Shopping guide for Pakistani suits and Anarkali sets at LuxeMia.' },
     'style-lehenga-choli-every-wedding-event': { title: 'Style Lehenga Choli for Every Wedding Event | LuxeMia Blog', description: 'Style your lehenga choli for every wedding event at LuxeMia.' },
     'indian-wedding-season-2026-outfit-guide': { title: 'Indian Wedding Season 2026 Outfit Guide | LuxeMia Blog', description: 'Complete outfit guide for Indian wedding season 2026 at LuxeMia.' },
+    'indian-to-us-clothing-size-conversion-guide': { title: 'Indian to US Size Chart: Clothing Conversion Guide | LuxeMia', description: 'Accurate Indian to US clothing size conversion chart for women & men. Convert saree blouse, lehenga, kurta sizes instantly. Free printable guide.' },
     'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon': { title: 'Fabric Guide: Georgette, Silk & Chiffon | LuxeMia Blog', description: 'Understanding Indian ethnic wear fabrics at LuxeMia.' },
-    'indian-wedding-dress-complete-guide': { title: 'Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree | LuxeMia Blog', description: 'For an Indian wedding, the bride wears a red bridal lehenga or silk wedding saree (Banarasi/Kanchipuram). Budget $500-$6,000+, start 6-8 months ahead. Expert guide with prices, fabrics, and timeline.' },
+    'indian-wedding-dress-complete-guide': { title: 'Indian Wedding Dress Guide: Lehenga, Saree & Sherwani Styles 2026 | LuxeMia', description: 'Complete guide to Indian wedding dresses for brides, grooms & guests. Lehengas, sarees, sharara suits, sherwanis — when to wear what. Expert style advice.' },
     'why-indian-brides-wear-red-cultural-significance': { title: 'Why Indian Brides Wear Red: Cultural, Historical & Astrological Significance | LuxeMia', description: 'Indian brides wear red to symbolize prosperity, fertility, and Goddess Durga. The tradition dates to the Vedic period (1500-500 BCE) and is reinforced by Vedic astrology. 68% of modern brides still choose red.' },
-    'sabyasachi-mukherjee-designer-profile-handloom-revival': { title: 'Sabyasachi Mukherjee: The Designer Who Revived Indian Handloom | LuxeMia', description: 'Sabyasachi Mukherjee (born 1974, Kolkata) founded his label in 1999 with 3 artisans. NIFT Kolkata graduate. Known for reviving handloom textiles and dressing celebrity brides Anushka Sharma (2017), Deepika Padukone (2018), and Katrina Kaif (2021).' },
-    'manish-malhotra-bollywood-bridal-designer-profile': { title: 'Manish Malhotra: Bollywood\'s Bridal Designer of Choice | LuxeMia', description: 'Manish Malhotra (born December 5, 1966, Mumbai) started as a costume designer for Bollywood films in 1990 (Swarg), won Filmfare for Rangeela (1995), launched his label in 2005. Dressed celebrity brides Kiara Advani (2023) and Parineeti Chopra (2023).' },
-    'bindi-meaning-history-indian-women': { title: 'The Bindi: Meaning, History, and Modern Styling for Indian Women | LuxeMia', description: 'The bindi is a mark worn on the forehead between the eyebrows by Hindu, Jain, and Buddhist women. It represents the ajna chakra (third eye) and symbolizes spiritual wisdom. Traditionally red for married women.' },
+    'sabyasachi-mukherjee-designer-profile-handloom-revival': { title: 'Sabyasachi Mukherjee: Age, Education & Handloom Revival Legacy | LuxeMia', description: 'Explore Sabyasachi Mukherjee\'s journey — from NIFT education to becoming India\'s iconic bridal couturier. His handloom revival & red bridal lehengas explained.' },
+    'manish-malhotra-bollywood-bridal-designer-profile': { title: 'Manish Malhotra: Bollywood Celebrity Brides & Bridal Designer Story | LuxeMia', description: 'From Bollywood costume designer to India\'s most sought-after bridal couturier. Discover Manish Malhotra\'s celebrity brides, education, and iconic bridal lehengas.' },
+    'bindi-meaning-history-indian-women': { title: 'Bindi Meaning, History & Colors: What Does a Bindi Signify? | LuxeMia', description: 'Discover the true meaning of a bindi — its history, spiritual significance, red vs. black color meanings, and why Indian women wear bindis. Complete guide.' },
     'jj-valaya-royal-couture-house-of-valaya': { title: 'JJ Valaya: Royal Couture and the House of Valaya | LuxeMia', description: 'JJ Valaya (born 8 October 1967, Jodhpur) graduated from NIFT New Delhi in 1991 and founded his couture label in 1992. Known for royal-inspired Indian couture, Mughal-era embroidery, and the House of Valaya at Jhalamand House in Jodhpur.' },
     'anita-dongre-sustainable-luxury-grassroots': { title: 'Anita Dongre: Sustainable Luxury and Grassroots Empowerment | LuxeMia', description: 'Anita Dongre (born 3 October 1963, Mumbai) founded House of Anita Dongre in 1995 with two sewing machines. 5 brands: AND, Global Desi, Anita Dongre Couture, Pinkcity, Grassroot. Over 1,000 stores across 114 cities.' },
     'ritu-kumar-pioneer-indian-textile-revival': { title: 'Ritu Kumar: The Pioneer Who Revived Indian Textile Traditions | LuxeMia', description: 'Ritu Kumar (born 11 November 1944) studied art history at Lady Irwin College (1964) and Briarcliff College New York (1966). Started in Kolkata with hand-block printing. Pioneered boutique culture in India and revived traditional Indian textiles.' },
     'sindoor-mangalsutra-sacred-symbols-hindu-marriage': { title: 'Sindoor and Mangalsutra: The Sacred Symbols of Hindu Marriage | LuxeMia', description: 'Sindoor (red vermilion) and the mangalsutra (black-beaded gold necklace) are the two most sacred symbols of Hindu marriage. Sindoor is applied to the bride\'s hair parting, the mangalsutra is tied around her neck. Both signify married status.' },
+    'tarun-tahiliani-designer-profile-india-modern-couture': { title: 'Tarun Tahiliani: Biography, Ensemble Store & Modern Indian Couture | LuxeMia', description: 'Tarun Tahiliani — India\'s pioneering fashion designer, founded Ensemble (India\'s first multi-designer store). Known for modern Indian couture, draping, and bridal lehengas.' },
     'regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari': { title: 'Regional Indian Wedding Rituals: Punjabi, Bengali, Tamil & Marwari Traditions | LuxeMia', description: 'Indian wedding rituals vary by region. Punjabi Sikh weddings feature Anand Karaj (4 circumambulations of Guru Granth Sahib). Bengali weddings center on sindoor daan and shankha-pola. Tamil weddings feature Kashi Yatra and Oonjal.' },
     'embroidery-motifs-symbolism-paisley-peacock-lotus': { title: 'The Symbolism of Embroidery Motifs: Paisley, Peacock, and Lotus in Indian Textiles | LuxeMia', description: 'Indian embroidery motifs carry deep symbolism. The paisley (mango/ambi) represents fertility and eternity. The peacock symbolizes beauty and grace. The lotus represents purity and divinity.' },
+    'rahul-mishra-designer-profile-paris-haute-couture-sustainable': { title: 'Rahul Mishra: Age, Education & Sustainable Paris Haute Couture | LuxeMia', description: 'Rahul Mishra — NIFT Delhi graduate, India\'s first Paris Haute Couture Week designer. Known for sustainable fashion, handloom textiles, and winning the International Woolmark Prize.' },
     'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Designs 2026: 50+ Stunning Ideas for Your Wedding | LuxeMia Blog', description: 'Explore the latest red bridal lehenga designs for 2026. From classic crimson Banarasi to modern maroon velvet, discover 50+ stunning red lehenga ideas with expert tips on fabric, embroidery, and styling for your Indian wedding.' },
-    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Dresses Under $500: Affordable Bridal Lehengas & Sarees | LuxeMia Blog', description: 'Find stunning designer wedding dresses under $500 at LuxeMia. Affordable bridal lehengas, silk sarees, and anarkali suits with premium embroidery, shipped to USA, Canada, and Australia.' },
+    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Lehengas Under $500 — Affordable Luxury Guide | LuxeMia', description: 'Beautiful designer wedding lehengas under 500 dollars. Curated picks from top Indian designers. Budget bridal shopping without compromising on style.' },
     'wedding-guest-outfit-ideas': { title: 'Indian Wedding Guest Outfit Ideas: What to Wear to Every Ceremony | LuxeMia Blog', description: 'Complete Indian wedding guest outfit ideas for every ceremony — mehendi, sangeet, reception. Lehenga, saree, anarkali, and suit options by budget and dress code.' },
     'saree-draping-styles-every-occasion': { title: 'Saree Draping Styles for Every Occasion: 7 Popular Styles Explained | LuxeMia Blog', description: 'Learn 7 saree draping styles — Nivi, Bengali, Gujarati, Maharashtrian, and more. Step-by-step draping guide for weddings, festivals, and daily wear.' },
     'indian-wedding-trends-2026': { title: 'Indian Wedding Fashion Trends 2026: What Brides, Grooms & Guests Are Wearing | LuxeMia Blog', description: 'Top Indian wedding fashion trends for 2026 — pastel bridal lehengas, indo-western sherwanis, sustainable fabrics, and statement jewelry for every ceremony.' },
+    'indian-wedding-terms-glossary-50-events-rituals-roles': { title: 'Indian Wedding Glossary: 50+ Ceremony Terms, Rituals & Roles | LuxeMia', description: 'Complete Indian wedding glossary — 50+ terms covering every ceremony from Mehendi to Vidaai. Learn the meaning of baraat, pheras, sangeet, mandap, and more.' },
     'unstitched-vs-ready-to-wear-vs-made-to-measure': { title: 'Unstitched vs Ready to Wear vs Made to Measure: Complete Guide | LuxeMia Blog', description: 'Unstitched, ready to wear, or made to measure — a complete guide to Indian outfit sizing options for NRI buyers. Learn which format is best for lehengas, salwar suits, and sherwanis.' },
     'lehenga-color-for-dark-skin': { title: 'Best Lehenga Colors for Dark Skin Tones: Expert Color Guide | LuxeMia Blog', description: 'Discover the most flattering lehenga colors for dark skin tones — from royal blue and emerald green to deep maroon and gold, with fabric and occasion recommendations.' },
     'wedding-saree-for-mother-of-bride': { title: 'How to Choose a Wedding Saree for Mother of the Bride: Complete 2026 Guide | LuxeMia Blog', description: 'Expert guide to choosing the perfect wedding saree for the mother of the bride. Best colors, fabrics, and styles for 2026 Indian weddings — Banarasi silk, Kanchipuram, and chiffon options with styling tips.' },
@@ -726,7 +751,9 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'banarasi-silk-saree-guide-authentic': { title: 'Banarasi Silk Sarees: History & How to Spot a Fake | LuxeMia Blog', description: 'Deep dive into Varanasi weaving traditions, types of Banarasi silk, and tips to identify authentic handloom.' },
     'how-to-drape-saree-beginner-guide': { title: 'How to Drape a Saree: Step-by-Step Guide for Beginners | LuxeMia Blog', description: 'Master the classic Nivi saree draping style with our beginner-friendly guide including pallu styling tips.' },
     'indian-wedding-ceremony-outfit-guide': { title: 'Indian Wedding Ceremony Outfit Guide: Mehendi to Reception | LuxeMia Blog', description: 'Per-ceremony outfit guide for Indian weddings — Mehendi, Haldi, Sangeet, Wedding, and Reception.' },
+    'indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry': { title: 'Indian Fashion Glossary: 50 Garment, Fabric & Embroidery Terms | LuxeMia', description: 'Learn 50 essential Indian fashion terms — garments (saree, lehenga, sherwani), fabrics (Banarasi, georgette, chiffon), embroidery (zardozi, chikankari), and jewelry (kundan, polki, jhumka).' },
     'indian-fabric-types-guide-silk-georgette-chiffon': { title: 'Complete Guide to Indian Fabric Types: Silk, Georgette & More | LuxeMia Blog', description: 'Everything about Indian ethnic wear fabrics — Banarasi, Kanchipuram, georgette, chiffon, velvet, and care tips.' },
+    'anamika-khanna-designer-profile-kolkata-couture': { title: 'Anamika Khanna: Biography, Age, Couture Label & Bridal Lehengas | LuxeMia', description: 'The definitive biography of Anamika Khanna — born 1971, launched her label in 1998. Explore her Kolkata couture, celebrity bridal lehengas, and fashion career.' },
     'anarkali-suit-styling-guide-2026': { title: 'Anarkali Suit Styling Guide 2026: Casual to Bridal | LuxeMia Blog', description: 'Master styling anarkali suits — floor-length, knee-length, jacket style, with body type guide and dupatta draping.' },
     'how-to-measure-yourself-indian-ethnic-wear': { title: 'How to Measure Yourself for Indian Ethnic Wear: Sizing Guide | LuxeMia Blog', description: 'Detailed guide to measuring for Indian ethnic wear — bust, waist, hips, shoulder, with international size conversion.' },
     'kanchipuram-silk-saree-south-indian-wedding-guide': { title: 'Kanchipuram Silk Sarees: South Indian Wedding Guide | LuxeMia Blog', description: 'Complete guide to Kanchipuram (Kanjivaram) silk sarees — history, authentication, pricing, and bridal styling.' },
