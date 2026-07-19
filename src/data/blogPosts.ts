@@ -2897,7 +2897,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Can a lehenga be worn for non-wedding occasions like Diwali or Navratri?</h3>
 <p>Absolutely. A semi-bridal lehenga in a bright or festive color is a popular choice for Diwali parties, Navratri garba celebrations, Karva Chauth, and Eid gatherings among NRI communities in the USA, UK, Canada, and Australia. Many NRI women invest in a versatile lehenga that can be styled differently for multiple occasions across the year.</p>
 <h3>What is the difference between an anarkali and a salwar kameez?</h3>
-<p>Both feature a top (kurta or kameez) and trousers (salwar or churidar), but the anarkali is defined by its dramatically flared skirt section and typically falls to the floor. A salwar kameez is a more practical, everyday-appropriate garment with a straighter silhouette. The anarkali is a formal subset of the broader salwar kameez category. Browse both styles at <a href="https://luxemia.shop/collections/salwar-suits">LuxeMia's salwar-suits collection</a>.</p>
+<p>Both feature a top (kurta or kameez) and trousers (salwar or churidar), but the anarkali is defined by its dramatically flared skirt section and typically falls to the floor. A salwar kameez is a more practical, everyday-appropriate garment with a straighter silhouette. The anarkali is a formal subset of the broader salwar kameez category. Browse both styles in <a href="/suits">LuxeMia's suits collection</a>.</p>
 <h3>How do I choose between a lehenga and a gown for a reception?</h3>
 <p>If your reception has a Western or fusion aesthetic, a lehenga gown or an anarkali gown gives you the grandeur of Indian craftsmanship in a silhouette that resonates with both Indian and non-Indian guests. If your reception is a traditional Indian event, a classic bridal lehenga remains the most appropriate and photographically stunning choice.</p>
 <p>---</p>
@@ -2905,11 +2905,11 @@ export const blogPosts: BlogPost[] = [
 <p>Shop the LuxeMia lehenga, sharara, and salwar-suits collections at <a href="https://luxemia.shop">https://luxemia.shop</a> — with custom stitching and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
 <h2>Shop These Styles</h2>
 <ul>
-  <li>Browse our full <a href="/collections/sharara-suits">sharara suits</a> collection — embroidered, sequined, and festive styles ready to ship worldwide</li>
-  <li>Explore our <a href="/collections/gharara-suits">gharara suits</a> — Lucknowi-crafted sets with gota-patti and zari work</li>
-  <li>Shop <a href="/collections/anarkali-suits">anarkali suits</a> in every price range — from casual cotton to bridal silk</li>
-  <li>Find your perfect <a href="/collections/party-wear-lehengas">party wear lehengas</a> for sangeet, reception, and festive celebrations</li>
-  <li>Discover our <a href="/collections/bridal-lehengas">bridal lehengas</a> — red, pastel, and regal designs for the big day</li>
+  <li>Browse our full <a href="/suits">sharara suits</a> collection — embroidered, sequined, and festive styles ready to ship worldwide</li>
+  <li>Explore our <a href="/suits">gharara suits</a> — Lucknowi-crafted sets with gota-patti and zari work</li>
+  <li>Shop <a href="/suits">anarkali suits</a> in every price range — from casual cotton to bridal silk</li>
+  <li>Find your perfect <a href="/lehengas">party wear lehengas</a> for sangeet, reception, and festive celebrations</li>
+  <li>Discover our <a href="/lehengas">bridal lehengas</a> — red, pastel, and regal designs for the big day</li>
 </ul>
     `,
     author: 'LuxeMia Editorial',
