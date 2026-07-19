@@ -83,6 +83,12 @@ export const NewArrivals = () => {
     );
   }
 
+  // Time-decay helper: only badge products published within the last 30 days
+  const isNewArrival = (createdAt: string) => {
+    const daysSince = (Date.now() - new Date(createdAt).getTime()) / 86400000;
+    return daysSince <= 30;
+  };
+
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -111,35 +117,39 @@ export const NewArrivals = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-12">
-          {newArrivals.map((product, index) => (
-            <motion.div
-              key={product.node.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              viewport={{ once: true }}
-            >
-              <Link to={`/product/${product.node.handle}`} className="group block">
-                <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3 rounded-sm">
-                  <img
-                    src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')}
-                    alt={product.node.title}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
-                  
-                  {/* New Badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs font-medium rounded">
-                      <Sparkles className="h-3 w-3" />
-                      New
-                    </span>
-                  </div>
+          {newArrivals.map((product, index) => {
+            const showNewBadge = isNewArrival(product.node.createdAt);
+            return (
+              <motion.div
+                key={product.node.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                viewport={{ once: true }}
+              >
+                <Link to={`/product/${product.node.handle}`} className="group block">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3 rounded-sm">
+                    <img
+                      src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')}
+                      alt={product.node.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                    
+                    {/* New Badge — time-decay: only shows if product is ≤ 30 days old */}
+                    {showNewBadge && (
+                      <div className="absolute top-3 left-3">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs font-medium rounded">
+                          <Sparkles className="h-3 w-3" />
+                          New
+                        </span>
+                      </div>
+                    )}
                   
                   {/* Quick Actions */}
                   <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
@@ -195,7 +205,8 @@ export const NewArrivals = () => {
                 </div>
               </Link>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
 
         {/* View All Button */}

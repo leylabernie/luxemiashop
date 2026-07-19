@@ -202,11 +202,12 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isAvailable = product.node.variants.edges[0]?.node.availableForSale !== false;
 
-  // "New" badge — products added within the last 45 days
+  // "New" badge — products added within the last 30 days
+  const NEW_ARRIVAL_WINDOW_DAYS = 30;
   const isNew = (() => {
     if (!product.node.createdAt) return false;
     const daysSince = (Date.now() - new Date(product.node.createdAt).getTime()) / 86400000;
-    return daysSince <= 45;
+    return daysSince <= NEW_ARRIVAL_WINDOW_DAYS;
   })();
 
   // Deterministic social proof signals based on product ID hash
