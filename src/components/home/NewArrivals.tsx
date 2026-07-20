@@ -1,79 +1,121 @@
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Heart, ShoppingBag, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
-import { useCartStore } from '@/stores/cartStore';
-import { useWishlistStore } from '@/stores/wishlistStore';
-import { toast } from 'sonner';
-import type { ShopifyProduct } from '@/lib/shopify';
-import { getOptimizedImage } from '@/lib/imageUtils';
+import ProductCard from '@/components/ui/ProductCard';
+
+const NEW_ARRIVAL_WINDOW_DAYS = 30;
+const MAX_PER_CATEGORY = 5;
+
+// These match the enriched productType values from useShopifyProducts
+const CATEGORIES = [
+  { key: 'all', label: 'All' },
+  { key: 'Lehengas', label: 'Lehengas', href: '/lehengas' },
+  { key: 'Sarees', label: 'Sarees', href: '/sarees' },
+  { key: 'Salwar Kameez', label: 'Suits', href: '/suits' },
+  { key: 'Menswear', label: 'Menswear', href: '/menswear' },
+  { key: 'Jewelry', label: 'Jewelry', href: '/jewelry' },
+] as const;
+
+type CategoryKey = (typeof CATEGORIES)[number]['key'];
 
 export const NewArrivals = () => {
   const { products, isLoading } = useShopifyProducts();
-  const addItem = useCartStore((state) => state.addItem);
-  const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
-  
-  // Get latest 8 products sorted by creation date
-  const newArrivals = useMemo(() => 
-    [...products]
-      .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
-      .slice(0, 8)
-  , [products]);
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
 
-  const formatPrice = (amount: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(parseFloat(amount));
-  };
+  // 1. Filter to products within the 30-day window
+  const recentByCategory = useMemo(() => {
+    const now = Date.now();
+    const cutoff = now - NEW_ARRIVAL_WINDOW_DAYS * 86400000;
 
-  const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const variant = product.node.variants.edges[0]?.node;
-    addItem({
-      product: product,
-      variantId: variant?.id || product.node.id,
-      variantTitle: variant?.title || 'Default',
-      price: product.node.priceRange.minVariantPrice,
-      quantity: 1,
-      selectedOptions: variant?.selectedOptions || [],
-    });
-    toast.success('Added to bag!', { position: 'top-center' });
-  };
+    // Group by enriched productType (already set by useShopifyProducts)
+    const groups: Record<string, typeof products> = {};
 
-  const handleWishlistToggle = (e: React.MouseEvent, product: ShopifyProduct) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (isInWishlist(product.node.id)) {
-      removeFromWishlist(product.node.id);
-      toast.success('Removed from wishlist');
-    } else {
-      addToWishlist(product);
-      toast.success('Added to wishlist!');
+    for (const product of products) {
+      const created = new Date(product.node.createdAt).getTime();
+      if (created > cutoff) {
+        const cat = product.node.productType || 'Other';
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(product);
+      }
     }
-  };
 
+    // Sort each group newest-first and cap at MAX_PER_CATEGORY
+    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
+    for (const cat of Object.keys(groups)) {
+      groups[cat].sort(
+        (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
+      );
+      // Give main categories a higher cap, others get 3
+      const limit = mainCategories.includes(cat) ? MAX_PER_CATEGORY : 3;
+      groups[cat] = groups[cat].slice(0, limit);
+    }
+
+    return groups;
+  }, [products]);
+
+  // 2. Build the category-ordered list for "All" view
+  const allOrdered = useMemo(() => {
+    const ordered: typeof products = [];
+    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
+    for (const cat of mainCategories) {
+      if (recentByCategory[cat]) {
+        ordered.push(...recentByCategory[cat]);
+      }
+    }
+    // Append any remaining categories
+    for (const cat of Object.keys(recentByCategory)) {
+      if (!mainCategories.includes(cat)) {
+        ordered.push(...recentByCategory[cat]);
+      }
+    }
+    return ordered;
+  }, [recentByCategory]);
+
+  // 3. Resolve displayed products based on active tab
+  const displayedProducts = useMemo(() => {
+    if (activeCategory === 'all') return allOrdered;
+    return recentByCategory[activeCategory] || [];
+  }, [activeCategory, allOrdered, recentByCategory]);
+
+  // 4. Compute tab counts (for the pill badges)
+  const tabCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: allOrdered.length };
+    for (const cat of Object.keys(recentByCategory)) {
+      counts[cat] = recentByCategory[cat].length;
+    }
+    return counts;
+  }, [allOrdered, recentByCategory]);
+
+  const totalNew = allOrdered.length;
+
+  // ── Loading skeleton ──
   if (isLoading) {
     return (
       <section className="py-16 lg:py-24 bg-background">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 mb-4">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <p className="text-sm tracking-luxury uppercase text-muted-foreground">Just Dropped</p>
-              <Sparkles className="h-4 w-4 text-primary" />
+              <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+              <div className="h-4 bg-secondary rounded w-24 animate-pulse" />
+              <Sparkles className="h-4 w-4 text-primary animate-pulse" />
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">New Arrivals</h2>
+            <div className="h-10 bg-secondary rounded w-64 mx-auto mb-3 animate-pulse" />
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-            {[...Array(8)].map((_, i) => (
+          {/* Category pills skeleton */}
+          <div className="flex justify-center gap-2 mb-10">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-9 w-20 bg-secondary rounded-full animate-pulse" />
+            ))}
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
+            {Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-[3/4] bg-secondary mb-3 rounded-sm" />
+                <div className="aspect-[3/4] bg-secondary rounded-sm mb-3" />
                 <div className="h-3 bg-secondary rounded w-1/3 mb-2" />
-                <div className="h-4 bg-secondary rounded w-2/3 mb-2" />
+                <div className="h-4 bg-secondary rounded w-3/4 mb-2" />
                 <div className="h-4 bg-secondary rounded w-1/4" />
               </div>
             ))}
@@ -83,11 +125,8 @@ export const NewArrivals = () => {
     );
   }
 
-  // Time-decay helper: only badge products published within the last 30 days
-  const isNewArrival = (createdAt: string) => {
-    const daysSince = (Date.now() - new Date(createdAt).getTime()) / 86400000;
-    return daysSince <= 30;
-  };
+  // ── Empty state ──
+  if (totalNew === 0) return null;
 
   return (
     <section className="py-16 lg:py-24 bg-background">
@@ -98,7 +137,7 @@ export const NewArrivals = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
           <div className="inline-flex items-center gap-2 mb-4">
             <Sparkles className="h-4 w-4 text-primary" />
@@ -107,118 +146,86 @@ export const NewArrivals = () => {
             </p>
             <Sparkles className="h-4 w-4 text-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-3">
             New Arrivals
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Discover our latest collection of Indian ethnic wear, fresh from India's textile hubs.
+            {totalNew} new {totalNew === 1 ? 'piece' : 'pieces'} across {Object.keys(recentByCategory).length} {Object.keys(recentByCategory).length === 1 ? 'category' : 'categories'} — fresh from India&rsquo;s textile hubs.
           </p>
         </motion.div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-12">
-          {newArrivals.map((product, index) => {
-            const showNewBadge = isNewArrival(product.node.createdAt);
+        {/* Category Filter Pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap items-center justify-center gap-2 mb-10"
+        >
+          {CATEGORIES.map((cat) => {
+            const count = tabCounts[cat.key] || 0;
+            // Hide tabs with zero products (except "All")
+            if (cat.key !== 'all' && count === 0) return null;
+
+            const isActive = activeCategory === cat.key;
+
             return (
-              <motion.div
-                key={product.node.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                viewport={{ once: true }}
+              <button
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key)}
+                className={`
+                  inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium uppercase tracking-wider transition-all duration-200
+                  ${isActive
+                    ? 'bg-foreground text-background shadow-sm'
+                    : 'bg-secondary/60 text-muted-foreground hover:bg-secondary hover:text-foreground'
+                  }
+                `}
               >
-                <Link to={`/product/${product.node.handle}`} className="group block">
-                  <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-3 rounded-sm">
-                    <img
-                      src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')}
-                      alt={product.node.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
-                    
-                    {/* New Badge — time-decay: only shows if product is ≤ 30 days old */}
-                    {showNewBadge && (
-                      <div className="absolute top-3 left-3">
-                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs font-medium rounded">
-                          <Sparkles className="h-3 w-3" />
-                          New
-                        </span>
-                      </div>
-                    )}
-                  
-                  {/* Quick Actions */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <Button
-                      size="sm"
-                      className="w-full bg-background/95 hover:bg-background text-foreground backdrop-blur-sm"
-                      onClick={(e) => handleQuickAdd(e, product)}
-                    >
-                      <ShoppingBag className="h-4 w-4 mr-2" />
-                      Quick Add
-                    </Button>
-                  </div>
-                  
-                  {/* Wishlist */}
-                  <button
-                    onClick={(e) => handleWishlistToggle(e, product)}
-                    className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
-                  >
-                    <Heart
-                      className={`h-4 w-4 ${
-                        isInWishlist(product.node.id)
-                          ? 'fill-primary text-primary'
-                          : 'text-foreground'
-                      }`}
-                    />
-                  </button>
-                </div>
-                
-                <div className="space-y-1">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                    {product.node.productType}
-                  </p>
-                  <h3 className="font-serif text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
-                    {product.node.title}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium">
-                      {formatPrice(product.node.priceRange.minVariantPrice.amount)}
-                    </p>
-                    {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
-                      parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.node.priceRange.minVariantPrice.amount) && (
-                      <span className="text-xs text-muted-foreground line-through">
-                        {formatPrice(product.node.compareAtPriceRange.minVariantPrice.amount)}
-                      </span>
-                    )}
-                    {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
-                      parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.node.priceRange.minVariantPrice.amount) && (
-                      <span className="text-xs text-primary font-medium">
-                        {Math.round((1 - parseFloat(product.node.priceRange.minVariantPrice.amount) / parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+                {cat.label}
+                {count > 0 && (
+                  <span className={`
+                    inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full text-[10px] font-semibold px-1
+                    ${isActive ? 'bg-background/20 text-background' : 'bg-background/60 text-muted-foreground'}
+                  `}>
+                    {count}
+                  </span>
+                )}
+              </button>
             );
           })}
-        </div>
+        </motion.div>
+
+        {/* Product Grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6 mb-12"
+          >
+            {displayedProducts.map((product, index) => (
+              <ProductCard
+                key={product.node.id}
+                product={product}
+                index={index}
+                showQuickAdd
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* View All Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
           className="text-center"
         >
           <Button asChild variant="outline" size="lg" className="group">
-            <Link to="/collections">
+            <Link to="/new-arrivals">
               View All New Arrivals
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>

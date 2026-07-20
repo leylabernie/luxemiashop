@@ -11,6 +11,7 @@ import ServiceHighlights from '@/components/home/ServiceHighlights';
 import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
 import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
+import { NewArrivals } from '@/components/home/NewArrivals';
 import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
@@ -206,6 +207,7 @@ const Index = () => {
           </div>
         </div>
 
+        <NewArrivals />
         <ServiceHighlights />
         <CategoryShowcase />
         <ShopByOccasion />
