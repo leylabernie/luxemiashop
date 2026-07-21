@@ -6,6 +6,8 @@ interface ProductTabsProps {
   productType?: string;
   /** Whether this product supports stitching (controls Tailoring Services tab visibility) */
   isStitchable?: boolean;
+  /** Product tags for fabric-specific care lookup (e.g. ['fabric:silk', 'color:red']) */
+  tags?: string[];
 }
 
 // Product types that support stitching
@@ -176,6 +178,38 @@ const MATERIAL_INFO: Record<ProductCategory, MaterialInfo> = {
   },
 };
 
+// --- Fabric-specific care instructions ---
+const FABRIC_CARE: Record<string, string> = {
+  'art silk': 'Dry clean only. Store wrapped in muslin cloth. Avoid direct sunlight to prevent color fading.',
+  'silk': 'Dry clean only. Store wrapped in muslin cloth. Avoid direct sunlight to prevent color fading.',
+  'georgette': 'Gentle dry clean recommended. Hang on padded hangers. Steam to remove wrinkles.',
+  'chiffon': 'Gentle dry clean recommended. Hang on padded hangers. Steam to remove wrinkles.',
+  'cotton': 'Gentle machine wash in cold water with similar colors. Tumble dry low. Iron on medium heat.',
+  'velvet': 'Professional dry clean only. Store flat, do not fold. Brush with velvet brush to maintain pile.',
+  'net': 'Hand wash in cold water with mild detergent. Do not wring. Air dry flat.',
+  'tulle': 'Hand wash in cold water with mild detergent. Do not wring. Air dry flat.',
+  'chinnon': 'Gentle dry clean recommended. Hang on padded hangers. Steam to remove wrinkles.',
+  'organza': 'Hand wash in cold water with mild detergent. Do not wring. Air dry flat.',
+  'satin': 'Dry clean recommended. Iron on low heat on reverse side. Store hung to prevent creasing.',
+};
+
+/**
+ * Extracts the first fabric type from product tags (e.g. 'fabric:silk' → 'silk')
+ * and returns the matching care instruction, or null if no match.
+ */
+const getFabricCare = (tags?: string[]): { fabric: string; care: string } | null => {
+  if (!tags || tags.length === 0) return null;
+  for (const tag of tags) {
+    const lower = tag.toLowerCase();
+    if (lower.startsWith('fabric:')) {
+      const fabric = lower.replace('fabric:', '').trim();
+      const care = FABRIC_CARE[fabric];
+      if (care) return { fabric, care };
+    }
+  }
+  return null;
+};
+
 // --- Product-type-specific styling & occasions content ---
 interface OccasionInfo {
   occasions: { name: string; description: string }[];
@@ -267,12 +301,13 @@ const OCCASION_INFO: Record<ProductCategory, OccasionInfo> = {
   },
 };
 
-export const ProductTabs = ({ description, productType, isStitchable }: ProductTabsProps) => {
+export const ProductTabs = ({ description, productType, isStitchable, tags }: ProductTabsProps) => {
   const showTailoringTab = isStitchable ?? isStitchableType(productType);
   const category = classifyProduct(productType);
   const detailBullets = DETAIL_BULLETS[category];
   const materialInfo = MATERIAL_INFO[category];
   const occasionInfo = OCCASION_INFO[category];
+  const fabricCare = getFabricCare(tags);
 
   return (
     <Tabs defaultValue="details" className="w-full">
@@ -528,11 +563,22 @@ export const ProductTabs = ({ description, productType, isStitchable }: ProductT
             </div>
           </div>
 
+          {/* Fabric-Specific Care */}
+          {fabricCare && (
+            <div className="p-4 bg-primary/5 border border-primary/20 rounded-sm">
+              <div className="flex items-center gap-2 mb-2 text-foreground">
+                <Heart className="h-4 w-4 text-primary" />
+                <h4 className="font-medium text-sm">Care for {fabricCare.fabric.charAt(0).toUpperCase() + fabricCare.fabric.slice(1)}</h4>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">{fabricCare.care}</p>
+            </div>
+          )}
+
           {/* Care Instructions */}
           <div>
             <div className="flex items-center gap-2 mb-3 text-foreground">
               <Droplets className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Care Instructions</h4>
+              <h4 className="font-medium">General Care Instructions</h4>
             </div>
             <ul className="text-sm text-muted-foreground space-y-2">
               {materialInfo.careInstructions.map((instruction, i) => (

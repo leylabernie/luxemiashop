@@ -35,6 +35,8 @@ const SHOP_LINKS: LinkItem[] = [
   { to: "/indowestern", label: "Indo-Western Outfits" },
   { to: "/new-arrivals", label: "New Arrivals" },
   { to: "/bestsellers", label: "Bestsellers" },
+  { to: "/ready-to-ship", label: "Ready to Ship Indian Wear" },
+  { to: "/jewelry", label: "Bridal & Temple Jewelry" },
   { to: "/collections", label: "All Collections" },
 ];
 
@@ -44,6 +46,7 @@ const OCCASION_LINKS: LinkItem[] = [
   { to: "/collections/mehendi-outfits", label: "Mehendi Ceremony Outfits" },
   { to: "/collections/eid-outfits", label: "Eid Outfits" },
   { to: "/collections/navratri-outfits", label: "Navratri & Garba Outfits" },
+  { to: "/collections/haldi-outfits", label: "Haldi Ceremony Outfits" },
   { to: "/nri", label: "NRI Shopping Hub" },
   { to: "/nri/usa", label: "Indian Ethnic Wear — USA" },
   { to: "/nri/canada", label: "Indian Ethnic Wear — Canada" },

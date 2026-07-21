@@ -215,7 +215,7 @@ const NewVisitorPopup = () => {
                 <div className="relative order-1 sm:order-1 aspect-square sm:aspect-auto sm:min-h-[420px] bg-gradient-to-br from-primary/10 via-primary/5 to-transparent overflow-hidden">
                   <img
                     src="/images/popup-image.webp"
-                    alt="Luxemia Indian ethnic wear — bridal lehenga collection"
+                    alt="LuxeMia Indian ethnic wear — bridal lehenga collection"
                     className="absolute inset-0 w-full h-full object-cover"
                     // CRITICAL (PSI 2026-07-15): the popup image was the LCP
                     // element because it was loading="eager" and the popup

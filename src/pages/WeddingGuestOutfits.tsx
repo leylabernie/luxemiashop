@@ -4,6 +4,7 @@ import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import RelatedOccasions from '@/components/seo/RelatedOccasions';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -22,15 +23,15 @@ const sortOptions = [
 const weddingGuestFaqs = [
   {
     question: 'What should I wear as a guest to an Indian wedding?',
-    answer: 'Indian weddings are vibrant, celebratory occasions and guests are expected to dress in elegant ethnic or semi-ethnic attire. Sarees, salwar kameez, anarkali suits, lehengas, and indo-western fusion outfits are all appropriate for Indian wedding guests. The outfit choice also depends on the specific ceremony — a sangeet calls for fun and colourful outfits, while the main wedding ceremony warrants more formal and traditional looks. For non-Indian guests attending for the first time, a salwar kameez or anarkali suit is an easy, elegant, and culturally respectful choice.',
+    answer: 'Indian weddings are vibrant, celebratory occasions and guests are expected to dress in elegant ethnic or semi-ethnic attire. Sarees, salwar kameez, anarkali suits, lehengas, and indo-western fusion outfits are all appropriate for Indian wedding guests. The outfit choice also depends on the specific ceremony — a sangeet calls for fun and colorful outfits, while the main wedding ceremony warrants more formal and traditional looks. For non-Indian guests attending for the first time, a salwar kameez or anarkali suit is an easy, elegant, and culturally respectful choice.',
   },
   {
     question: 'What colors should a wedding guest avoid at an Indian wedding?',
-    answer: 'At Indian weddings, guests traditionally avoid wearing white (associated with mourning) and red (the colour of the bride\'s lehenga or saree). Black was once considered inauspicious but is now widely worn at modern Indian wedding receptions and evening events. As a general rule, avoid outfits that could be mistaken for the bridal ensemble. Beyond these, the more festive and colourful your outfit, the better — Indians love vibrant colours at celebrations. Pink, teal, gold, purple, green, and blue are all excellent choices for wedding guests.',
+    answer: 'At Indian weddings, guests traditionally avoid wearing white (associated with mourning) and red (the color of the bride\'s lehenga or saree). Black was once considered inauspicious but is now widely worn at modern Indian wedding receptions and evening events. As a general rule, avoid outfits that could be mistaken for the bridal ensemble. Beyond these, the more festive and colorful your outfit, the better — Indians love vibrant colors at celebrations. Pink, teal, gold, purple, green, and blue are all excellent choices for wedding guests.',
   },
   {
     question: 'Should I wear a saree or salwar kameez to an Indian wedding as a guest?',
-    answer: 'Both are excellent choices for an Indian wedding guest. A saree is considered the most elegant and traditional option, and wearing one as a non-Indian guest is deeply appreciated as a sign of cultural respect. A salwar kameez or anarkali suit is easier to wear, more comfortable for all-day celebrations, and just as appropriate. For the sangeet or mehendi ceremony, a colourful salwar suit or lehenga is festive and fun. For the main wedding ceremony and reception, a silk saree or heavily embroidered anarkali is perfect.',
+    answer: 'Both are excellent choices for an Indian wedding guest. A saree is considered the most elegant and traditional option, and wearing one as a non-Indian guest is deeply appreciated as a sign of cultural respect. A salwar kameez or anarkali suit is easier to wear, more comfortable for all-day celebrations, and just as appropriate. For the sangeet or mehendi ceremony, a colorful salwar suit or lehenga is festive and fun. For the main wedding ceremony and reception, a silk saree or heavily embroidered anarkali is perfect.',
   },
   {
     question: 'Do you ship Indian wedding guest outfits to the USA, Canada, and Australia?',
@@ -38,7 +39,7 @@ const weddingGuestFaqs = [
   },
   {
     question: 'Can I wear the same outfit to multiple events at an Indian wedding?',
-    answer: 'Indian weddings typically span multiple ceremonies — mehendi, sangeet, haldi, the wedding ceremony, and the reception — and each has its own dress code. It is perfectly acceptable to wear different outfits to different events. Many guests wear a lighter, more colourful outfit for daytime ceremonies (mehendi, haldi) and reserve a more formal, heavily embroidered outfit for the main wedding or reception. If you can only buy one outfit, choose a semi-formal anarkali or salwar kameez that works across multiple ceremonies.',
+    answer: 'Indian weddings typically span multiple ceremonies — mehendi, sangeet, haldi, the wedding ceremony, and the reception — and each has its own dress code. It is perfectly acceptable to wear different outfits to different events. Many guests wear a lighter, more colorful outfit for daytime ceremonies (mehendi, haldi) and reserve a more formal, heavily embroidered outfit for the main wedding or reception. If you can only buy one outfit, choose a semi-formal anarkali or salwar kameez that works across multiple ceremonies.',
   },
 ];
 
@@ -70,7 +71,7 @@ const WeddingGuestOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Wedding Season</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Dress to impress at every Indian wedding ceremony — from the colourful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colours. Whether you are a close family member, a colleague, or attending an Indian wedding for the first time, we have the perfect outfit for you — shipped directly to your door in the USA, Canada, or Australia.
+              Dress to impress at every Indian wedding ceremony — from the colorful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colors. Whether you are a close family member, a colleague, or attending an Indian wedding for the first time, we have the perfect outfit for you — shipped directly to your door in the USA, Canada, or Australia.
             </p>
           </div>
         </div>
@@ -79,7 +80,7 @@ const WeddingGuestOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>wedding guest sarees</strong>, <strong>anarkali suits for Indian weddings</strong>, <strong>lehengas for wedding guests</strong>, <strong>salwar kameez for weddings</strong>, and <strong>indo-western outfits for receptions</strong>. Gorgeous colours including pink, teal, gold, purple, and royal blue. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong> on orders over $350.
+              Shop <strong>wedding guest sarees</strong>, <strong>anarkali suits for Indian weddings</strong>, <strong>lehengas for wedding guests</strong>, <strong>salwar kameez for weddings</strong>, and <strong>indo-western outfits for receptions</strong>. Gorgeous colors including pink, teal, gold, purple, and royal blue. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong> on orders over $350.
             </p>
           </div>
         </div>
@@ -141,15 +142,15 @@ const WeddingGuestOutfits = () => {
 
               <div>
                 <h3 className="font-medium text-foreground mb-1">Mehendi Ceremony</h3>
-                <p>The mehendi is a daytime ceremony traditionally associated with the colour yellow and green. Guests wear bright, cheerful <Link to="/suits" className="text-primary underline">salwar kameez or anarkali suits</Link>, or simple lehengas in yellow, lime green, orange, or floral prints. Avoid heavily embellished outfits as the mehendi ceremony is casual and fun — you will be sitting for hours while henna is applied. Cotton, georgette, or chiffon fabrics in festive colours are ideal. Budget $120-$250 for a mehendi outfit.</p>
+                <p>The mehendi is a daytime ceremony traditionally associated with the color yellow and green. Guests wear bright, cheerful <Link to="/suits" className="text-primary underline">salwar kameez or anarkali suits</Link>, or simple lehengas in yellow, lime green, orange, or floral prints. Avoid heavily embellished outfits as the mehendi ceremony is casual and fun — you will be sitting for hours while henna is applied. Cotton, georgette, or chiffon fabrics in festive colors are ideal. Budget $120-$250 for a mehendi outfit.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Sangeet Night</h3>
-                <p>The sangeet is an evening of music and dance — the most festive and lively of all Indian wedding ceremonies. Guests wear their most glamorous outfits: embellished <Link to="/lehengas" className="text-primary underline">lehengas</Link>, sequin anarkalis, heavily embroidered salwar suits, or indo-western fusion outfits. Bold colours, mirror work, and sequin embellishments photograph beautifully at sangeet events. This is the ceremony to wear your most statement-making ethnic wear. Budget $200-$400.</p>
+                <p>The sangeet is an evening of music and dance — the most festive and lively of all Indian wedding ceremonies. Guests wear their most glamorous outfits: embellished <Link to="/lehengas" className="text-primary underline">lehengas</Link>, sequin anarkalis, heavily embroidered salwar suits, or indo-western fusion outfits. Bold colors, mirror work, and sequin embellishments photograph beautifully at sangeet events. This is the ceremony to wear your most statement-making ethnic wear. Budget $200-$400.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Wedding Ceremony (Muhurtham)</h3>
-                <p>The main wedding ceremony is the most formal of all events. Guests dress in their most elegant ethnic wear — <Link to="/sarees" className="text-primary underline">silk sarees</Link>, heavily embroidered anarkali gowns, formal lehengas, or sophisticated salwar kameez. <strong>Avoid wearing red</strong> (the traditional bridal colour) and white (associated with mourning in Indian culture). Rich jewel tones — emerald, sapphire, maroon, plum — gold, and pastel shades are perfect for the main wedding ceremony. Budget $250-$500.</p>
+                <p>The main wedding ceremony is the most formal of all events. Guests dress in their most elegant ethnic wear — <Link to="/sarees" className="text-primary underline">silk sarees</Link>, heavily embroidered anarkali gowns, formal lehengas, or sophisticated salwar kameez. <strong>Avoid wearing red</strong> (the traditional bridal color) and white (associated with mourning in Indian culture). Rich jewel tones — emerald, sapphire, maroon, plum — gold, and pastel shades are perfect for the main wedding ceremony. Budget $250-$500.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Reception</h3>
@@ -221,6 +222,8 @@ const WeddingGuestOutfits = () => {
           </Accordion>
         </div>
       </section>
+
+      <RelatedOccasions currentOccasion="wedding-guest" />
 
       <Footer />
     </div>

@@ -106,7 +106,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during package opening.',
+          answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, color variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during package opening.',
         },
         {
           question: 'Why do I need an unboxing video?',
@@ -114,7 +114,7 @@ const FAQ = () => {
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'All items are final sale with no exceptions other than genuine shipping damage supported by an unboxing video. This includes sizing issues, colour variations, change of mind, and event cancellations.',
+          answer: 'All items are final sale with no exceptions other than genuine shipping damage supported by an unboxing video. This includes sizing issues, color variations, change of mind, and event cancellations.',
         },
         {
           question: 'What if my item arrives damaged?',
@@ -126,7 +126,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'No. All sales are final and we do not accept exchanges. We recommend using our detailed Size Guide and contacting us before ordering with any questions about sizing, fit, or colour.',
+          answer: 'No. All sales are final and we do not accept exchanges. We recommend using our detailed Size Guide and contacting us before ordering with any questions about sizing, fit, or color.',
         },
       ],
     },

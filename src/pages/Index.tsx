@@ -25,7 +25,7 @@ const homepageFaqs = [
   },
   {
     question: "What is your return policy?",
-    answer: "All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video. Please refer to our Returns Policy page for full details."
+    answer: "All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, color variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video. Please refer to our Returns Policy page for full details."
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
@@ -118,7 +118,7 @@ const Index = () => {
     },
   };
 
-  // OnlineStore Schema — explicitly distinguishes Luxemia Shop as a South Asian
+  // OnlineStore Schema — explicitly distinguishes LuxeMia as a South Asian
   // apparel retailer (not the unrelated sneaker store on luxemia.net). The
   // knowsAbout array and category field are the key disambiguation signals for
   // AI search engines and entity-based ranking.
@@ -132,17 +132,19 @@ const Index = () => {
   const onlineStoreSchema = {
     "@context": "https://schema.org",
     "@type": "OnlineStore",
-    "name": "Luxemia Shop",
+    "name": "LuxeMia",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/og-image.jpg",
-    "description": "Affordable e-commerce store for South Asian traditional clothing, festive lehengas, trendy kurtis, and everyday casual sarees.",
+    "description": "Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350.",
     "image": "https://luxemia.shop/og-image.jpg",
     "category": "Indian Clothing Store",
     "knowsAbout": [
       "Indian Ethnic Wear",
-      "Affordable Sarees",
-      "Festive Lehengas",
+      "Bridal Lehengas",
+      "Silk Sarees",
       "Salwar Kameez",
+      "Sherwanis",
+      "Anarkali Suits",
       "South Asian Fashion"
     ],
     "offers": {
@@ -167,8 +169,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees"
-        description="Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!"
+        title="LuxeMia | Indian Ethnic Wear Online | Sarees, Lehengas & Suits"
+        description="Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
@@ -181,14 +183,13 @@ const Index = () => {
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
             Kept sr-only (screen-reader only) so visual layout is unchanged
             but search engines see a single, keyword-rich H1. */}
-        <h1 className="sr-only">Affordable Indian Ethnic Wear & Traditional Fashion — Ready-to-Ship Sarees, Lehengas & Salwar Kameez | Luxemia Shop</h1>
+        <h1 className="sr-only">Indian Ethnic Wear Online — Sarees, Lehengas, Salwar Kameez & Sherwanis | LuxeMia</h1>
 
-        {/* First paragraph of copy — explicitly uses "Luxemia Shop" and
-            "affordable traditional clothing" for algorithmic relevance.
+        {/* First paragraph of copy — keyword-rich intro for search crawlers.
             sr-only so it doesn't disrupt the visual hero, but crawlers see it
             as the opening body copy. */}
         <p className="sr-only">
-          Welcome to Luxemia Shop — your destination for affordable traditional clothing and ready-to-ship Indian ethnic wear. Shop trendy sarees, festive lehengas, and ready-to-wear salwar kameez with fast USA delivery.
+          Welcome to LuxeMia — your destination for Indian ethnic wear online, shipped fast to the USA, Canada, and Australia. Shop 900+ styles including bridal lehengas, silk sarees, anarkali suits, and sherwanis. Free shipping on orders over $350.
         </p>
 
         {/* Shipping Info Banner */}

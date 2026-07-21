@@ -1,6 +1,8 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck, Check } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 // Google Customer Reviews badge — loads the merchant widget script and renders
 // the badge showing our seller rating. Positioned in the footer so it appears
@@ -24,10 +26,12 @@ const footerLinks = {
     { name: 'Menswear', href: '/menswear' },
   ],
   collections: [
-    { name: 'Bridal Lehengas', href: '/lehengas' },
-    { name: 'Wedding Sarees', href: '/sarees' },
+    { name: 'Bridal Lehengas', href: '/lehengas?sub=bridal' },
+    { name: 'Wedding Sarees', href: '/sarees?sub=bridal' },
     { name: 'Indo-Western', href: '/indowestern' },
     { name: 'Festive Wear', href: '/collections' },
+    { name: 'Ready to Ship', href: '/ready-to-ship' },
+    { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
     { name: 'Our Story', href: '/brand-story' },
@@ -48,6 +52,32 @@ const footerLinks = {
 };
 
 const Footer = forwardRef<HTMLElement>((_props, ref) => {
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+
+    setNewsletterSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke('submit-email', {
+        body: { email: newsletterEmail, type: 'newsletter', source: 'footer' },
+      });
+      if (error) throw error;
+      setNewsletterSubmitted(true);
+      toast.success('You\'re on the list!', {
+        description: 'We\'ll send you new arrivals and exclusive offers.',
+      });
+    } catch {
+      toast.error('Something went wrong', {
+        description: 'Please try again or contact us directly.',
+      });
+    } finally {
+      setNewsletterSubmitting(false);
+    }
+  };
   // Google Customer Reviews badge — load script and render badge
   useEffect(() => {
     // Skip if script already loaded (e.g., on client-side navigation)
@@ -81,19 +111,30 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <p className="text-foreground/60 text-sm mb-6 font-light">
               Be the first to discover new collections, exclusive offers, and styling inspiration.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 bg-background border border-border/50 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-foreground transition-colors font-light placeholder:text-foreground/40 rounded-md"
-              />
-              <button
-                type="submit"
-                className="bg-foreground text-background px-8 py-3 text-sm tracking-editorial uppercase hover:bg-foreground/90 transition-colors rounded-md whitespace-nowrap"
-              >
-                Subscribe
-              </button>
-            </form>
+            {newsletterSubmitted ? (
+              <div className="flex items-center justify-center gap-2 py-3 text-sm text-green-700 dark:text-green-400">
+                <Check className="h-4 w-4" />
+                <span>Thank you! You\'re on the list.</span>
+              </div>
+            ) : (
+              <form className="flex flex-col sm:flex-row gap-3" onSubmit={handleNewsletterSubmit}>
+                <input
+                  type="email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="flex-1 bg-background border border-border/50 px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-foreground transition-colors font-light placeholder:text-foreground/40 rounded-md"
+                />
+                <button
+                  type="submit"
+                  disabled={newsletterSubmitting}
+                  className="bg-foreground text-background px-8 py-3 text-sm tracking-editorial uppercase hover:bg-foreground/90 transition-colors rounded-md whitespace-nowrap disabled:opacity-50"
+                >
+                  {newsletterSubmitting ? 'Subscribing...' : 'Subscribe'}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

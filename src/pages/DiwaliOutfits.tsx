@@ -4,6 +4,7 @@ import { ChevronDown, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import RelatedOccasions from '@/components/seo/RelatedOccasions';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -73,7 +74,7 @@ const DiwaliOutfits = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Diwali Outfits 2026</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the USA, Canada, and Australia with free shipping on orders over $350.
+              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the USA, Canada, and Australia with free shipping on orders over $350.
             </p>
           </div>
         </div>
@@ -204,6 +205,8 @@ const DiwaliOutfits = () => {
           </Accordion>
         </div>
       </section>
+
+      <RelatedOccasions currentOccasion="diwali" />
 
       <Footer />
     </div>

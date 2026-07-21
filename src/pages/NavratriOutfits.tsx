@@ -4,6 +4,7 @@ import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import RelatedOccasions from '@/components/seo/RelatedOccasions';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -22,11 +23,11 @@ const sortOptions = [
 const navratriOutfitFaqs = [
   {
     question: 'What should I wear for Navratri and Garba?',
-    answer: 'Navratri is a nine-night Hindu festival celebrated with Garba and Dandiya Raas dancing, and the traditional dress for Navratri is the chaniya choli — a three-piece outfit consisting of a flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya choli is traditionally made in bright, vibrant colours with mirror work, bandhani prints, embroidery, or gota patti detailing. Each of the nine nights of Navratri is traditionally associated with a specific colour, and many participants dress according to the day\'s colour. Lehengas, anarkali suits, and salwar kameez in festive colours are also popular alternatives for Navratri guests who prefer a less traditional look.',
+    answer: 'Navratri is a nine-night Hindu festival celebrated with Garba and Dandiya Raas dancing, and the traditional dress for Navratri is the chaniya choli — a three-piece outfit consisting of a flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya choli is traditionally made in bright, vibrant colors with mirror work, bandhani prints, embroidery, or gota patti detailing. Each of the nine nights of Navratri is traditionally associated with a specific color, and many participants dress according to the day\'s color. Lehengas, anarkali suits, and salwar kameez in festive colors are also popular alternatives for Navratri guests who prefer a less traditional look.',
   },
   {
     question: 'What are the nine colors of Navratri 2026?',
-    answer: 'The nine colours of Navratri 2026 are traditionally assigned to each day by the Hindu calendar (Panchang). The sequence typically follows: Day 1 — Royal Blue or Yellow, Day 2 — Green, Day 3 — Grey or Silver, Day 4 — Orange, Day 5 — White, Day 6 — Red, Day 7 — Royal Blue, Day 8 — Pink, Day 9 — Purple or Violet. These colours are associated with the nine forms of Goddess Durga worshipped during Navratri. While the exact colour sequence varies slightly by region and year, wearing bright festive colours in the traditional Navratri palette is always appropriate for Garba and Dandiya celebrations.',
+    answer: 'The nine colors of Navratri 2026 are traditionally assigned to each day by the Hindu calendar (Panchang). The sequence typically follows: Day 1 — Royal Blue or Yellow, Day 2 — Green, Day 3 — Grey or Silver, Day 4 — Orange, Day 5 — White, Day 6 — Red, Day 7 — Royal Blue, Day 8 — Pink, Day 9 — Purple or Violet. These colors are associated with the nine forms of Goddess Durga worshipped during Navratri. While the exact color sequence varies slightly by region and year, wearing bright festive colors in the traditional Navratri palette is always appropriate for Garba and Dandiya celebrations.',
   },
   {
     question: 'What is the difference between a chaniya choli and a lehenga?',
@@ -38,7 +39,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'What accessories should I wear with a Navratri outfit?',
-    answer: 'Traditional Navratri accessories include heavy oxidised silver or gold jewellery — large jhumka earrings, layered necklaces, stacked bangles, and a maang tikka. Mirror-work jewellery, tribal silver, and polki stone sets complement chaniya cholis beautifully. For Garba dancing, avoid heavy necklaces that may get caught during spinning. Kolhapuri sandals or traditional mojari shoes are the classic Navratri footwear. Many participants also carry dandiya sticks — decorated wooden sticks used in Dandiya Raas — which are often colour-matched to the outfit.',
+    answer: 'Traditional Navratri accessories include heavy oxidised silver or gold jewellery — large jhumka earrings, layered necklaces, stacked bangles, and a maang tikka. Mirror-work jewellery, tribal silver, and polki stone sets complement chaniya cholis beautifully. For Garba dancing, avoid heavy necklaces that may get caught during spinning. Kolhapuri sandals or traditional mojari shoes are the classic Navratri footwear. Many participants also carry dandiya sticks — decorated wooden sticks used in Dandiya Raas — which are often color-matched to the outfit.',
   },
 ];
 
@@ -52,7 +53,7 @@ const NavratriOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia"
-        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colours. Free shipping to USA, Canada & Australia."
+        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free shipping to USA, Canada & Australia."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -70,7 +71,7 @@ const NavratriOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Nine Nights of Celebration</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Navratri Outfits — Chaniya Choli & Garba Dress Collection</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the USA, Canada, or Australia, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
+              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colors, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the USA, Canada, or Australia, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
             </p>
           </div>
         </div>
@@ -79,7 +80,7 @@ const NavratriOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colours</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong> on orders over $350.
+              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong> on orders over $350.
             </p>
           </div>
         </div>
@@ -135,12 +136,12 @@ const NavratriOutfits = () => {
         {/* About section */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-            <h2 className="font-serif text-2xl mb-6 text-center">Navratri Outfit Guide — Nine Nights, Nine Colours</h2>
+            <h2 className="font-serif text-2xl mb-6 text-center">Navratri Outfit Guide — Nine Nights, Nine Colors</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>Navratri — meaning "nine nights" in Sanskrit — is one of the most joyful and vibrant Hindu festivals, celebrated twice a year across India and by the Indian diaspora worldwide. The Sharad Navratri (autumn Navratri, typically October) is the most widely celebrated, especially in the states of Gujarat and Maharashtra where Garba and Dandiya Raas dancing are the central traditions.</p>
               <p>The <strong>chaniya choli</strong> is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with <strong>mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery</strong>. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor. For Indian communities outside India, chaniya cholis have become popular choices for community Garba events in the USA, Canada, UK, and Australia — where entire families participate in the nine-night celebration.</p>
-              <p>One of the most beloved Navratri traditions is <strong>dressing in the colour of the day</strong>. Each of the nine nights is associated with a specific colour linked to the nine forms of Goddess Durga worshipped during the festival. Common Navratri colour sequences include royal blue, green, grey, orange, white, red, royal blue, pink, and purple — though the exact sequence varies by year according to the Hindu calendar. Many participants plan nine separate Navratri outfits in each day's colour — making Navratri one of the biggest ethnic fashion occasions of the year.</p>
-              <p>For guests who prefer an alternative to the chaniya choli, <strong>embroidered lehengas, festive anarkali suits, and mirror-work salwar kameez</strong> in bright Navratri colours are equally beautiful choices. Men traditionally wear a white kurta-pyjama with colourful dupattas or embroidered nehru jackets for Garba celebrations.</p>
+              <p>One of the most beloved Navratri traditions is <strong>dressing in the color of the day</strong>. Each of the nine nights is associated with a specific color linked to the nine forms of Goddess Durga worshipped during the festival. Common Navratri color sequences include royal blue, green, grey, orange, white, red, royal blue, pink, and purple — though the exact sequence varies by year according to the Hindu calendar. Many participants plan nine separate Navratri outfits in each day's color — making Navratri one of the biggest ethnic fashion occasions of the year.</p>
+              <p>For guests who prefer an alternative to the chaniya choli, <strong>embroidered lehengas, festive anarkali suits, and mirror-work salwar kameez</strong> in bright Navratri colors are equally beautiful choices. Men traditionally wear a white kurta-pyjama with colorful dupattas or embroidered nehru jackets for Garba celebrations.</p>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Navratri 2026 Dates and 9-Day Color Schedule</h3>
@@ -200,6 +201,8 @@ const NavratriOutfits = () => {
           </Accordion>
         </div>
       </section>
+
+      <RelatedOccasions currentOccasion="navratri" />
 
       <Footer />
     </div>

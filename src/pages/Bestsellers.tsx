@@ -147,7 +147,7 @@ const Bestsellers = () => {
               These are the styles our customers return to again and again. LuxeMia's bestselling <strong>Indian ethnic wear</strong> includes our most-loved <strong>bridal lehenga choli sets</strong>, <strong>Banarasi and silk sarees</strong>, <strong>heavy embroidered anarkali suits</strong>, and <strong>groom sherwanis</strong> for weddings. These pieces consistently receive the highest customer satisfaction scores across our NRI customer base in the USA, Canada, and Australia.
             </p>
             <p>
-              Our bestsellers are curated based on repeat orders, customer reviews, and styling team picks. Every piece in this collection has been worn to <strong>Indian weddings</strong>, <strong>Diwali celebrations</strong>, <strong>Eid festivities</strong>, <strong>sangeet nights</strong>, and <strong>reception dinners</strong>. Shop with confidence — these are the pieces that actually deliver on quality, colour accuracy, and fit.
+              Our bestsellers are curated based on repeat orders, customer reviews, and styling team picks. Every piece in this collection has been worn to <strong>Indian weddings</strong>, <strong>Diwali celebrations</strong>, <strong>Eid festivities</strong>, <strong>sangeet nights</strong>, and <strong>reception dinners</strong>. Shop with confidence — these are the pieces that actually deliver on quality, color accuracy, and fit.
             </p>
           </div>
         </div>

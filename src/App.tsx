@@ -67,6 +67,8 @@ const WeddingGuestOutfits = lazy(() => import("./pages/WeddingGuestOutfits"));
 const MehendiOutfits = lazy(() => import("./pages/MehendiOutfits"));
 const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
+const ReadyToShip = lazy(() => import("./pages/ReadyToShip"));
+const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
 // Programmatic SEO combo pages — 25 long-tail landing pages
 const ComboPageRoute = lazy(() => import("./pages/combo/ComboPageRoute"));
 
@@ -164,6 +166,9 @@ const App = () => (
                 <Route path="/collections/mehendi-outfits" element={<Suspense fallback={<PageLoader />}><MehendiOutfits /></Suspense>} />
                 <Route path="/collections/eid-outfits" element={<Suspense fallback={<PageLoader />}><EidOutfits /></Suspense>} />
                 <Route path="/collections/navratri-outfits" element={<Suspense fallback={<PageLoader />}><NavratriOutfits /></Suspense>} />
+                <Route path="/collections/haldi-outfits" element={<Suspense fallback={<PageLoader />}><HaldiOutfits /></Suspense>} />
+                <Route path="/ready-to-ship" element={<Suspense fallback={<PageLoader />}><ReadyToShip /></Suspense>} />
+                <Route path="/collections/ready-to-ship" element={<Navigate to="/ready-to-ship" replace />} />
 
                 {/* Programmatic SEO combo pages — color/silhouette/fabric × occasion/role
                     Per SEO research 2026-07-15: Andaaz Fashion proves these pages rank

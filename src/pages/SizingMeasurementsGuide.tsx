@@ -68,7 +68,7 @@ const SizingMeasurementsGuide = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | Luxemia"
+        title="How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | LuxeMia"
         description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free shipping over $350 to USA."
         canonical="https://luxemia.shop/sizing-measurements-guide"
         faqs={faqs}
@@ -274,7 +274,7 @@ const SizingMeasurementsGuide = () => {
                 Standard Indian Blouse Size Chart (Inches)
               </h2>
               <p className="text-muted-foreground text-center mb-8">
-                If you already know your standard size, use this chart. All Luxemia ready-to-wear blouses
+                If you already know your standard size, use this chart. All LuxeMia ready-to-wear blouses
                 and lehenga cholis follow these measurements.
               </p>
               <div className="overflow-x-auto">

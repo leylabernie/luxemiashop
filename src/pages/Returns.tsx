@@ -7,29 +7,10 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-const returnPolicySchema = {
-  '@context': 'https://schema.org',
-  '@type': 'MerchantReturnPolicy',
-  name: 'LuxeMia Return & Refund Policy',
-  applicableCountry: ['US', 'CA', 'AU'],
-  returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-  merchantReturnDays: 2,
-  returnMethod: 'https://schema.org/ReturnByMail',
-  returnFees: 'https://schema.org/FreeReturn',
-  restockingFee: {
-    '@type': 'MonetaryAmount',
-    value: '0.00',
-    currency: 'USD',
-  },
-  returnShippingFeesAmount: {
-    '@type': 'MonetaryAmount',
-    value: '0.00',
-    currency: 'USD',
-  },
-  refundType: 'https://schema.org/FullRefund',
-  description: 'All sales are final. Returns and exchanges are not accepted. Damage claims are accepted within 48 hours of delivery with mandatory unboxing video. Cancellations are accepted within 24 hours of order placement for a full refund. Damage resolutions may include replacement part, store credit, or partial refund at LuxeMia discretion.',
-  url: 'https://luxemia.shop/returns',
-};
+// Return policy schema removed from this page — it now lives ONLY in index.html
+// as MerchantReturnNotPermitted. Previously, this page emitted a conflicting
+// MerchantReturnFiniteReturnWindow schema, causing Google to see two
+// contradicting return policies and ignore both. (SEO Audit Fix 1.4)
 
 const Returns = () => {
   return (
@@ -40,9 +21,7 @@ const Returns = () => {
         canonical="https://luxemia.shop/returns"
       />
       <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(returnPolicySchema)}
-        </script>
+        {/* Return policy schema lives in index.html only (MerchantReturnNotPermitted) to avoid conflicting schemas */}
       </Helmet>
       <Header />
 
@@ -76,7 +55,7 @@ const Returns = () => {
                 <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
                   Due to the international nature of our shipments and the complexities of international
                   shipping, <strong className="text-foreground">LuxeMia does not accept returns or issue refunds</strong> for
-                  any reason — including sizing issues, colour variations, change of mind, or delayed events.
+                  any reason — including sizing issues, color variations, change of mind, or delayed events.
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   <strong className="text-foreground">The only exception</strong> is genuine shipping damage, which must be
@@ -215,7 +194,7 @@ const Returns = () => {
                       <p className="text-destructive font-medium mb-2">✗ Not eligible for claims</p>
                       <ul className="text-muted-foreground space-y-1">
                         <li>• Size does not fit or wrong size ordered</li>
-                        <li>• Colour looks different from screen</li>
+                        <li>• Color looks different from screen</li>
                         <li>• Minor variations in embroidery (expected)</li>
                         <li>• Change of mind or event cancelled</li>
                         <li>• Customs delays or fees</li>
@@ -265,7 +244,7 @@ const Returns = () => {
                 <ul className="text-sm text-muted-foreground space-y-4">
                   {[
                     { label: 'Rigorous Quality Checks', text: 'Every piece is inspected before packaging — stitching, embellishments, and finish are reviewed.' },
-                    { label: 'Accurate Product Representation', text: 'Our photos and descriptions accurately show what you will receive. We note colour variations where relevant.' },
+                    { label: 'Accurate Product Representation', text: 'Our photos and descriptions accurately show what you will receive. We note color variations where relevant.' },
                     { label: 'Premium Secure Packaging', text: 'Garments are packed in tissue, garment bags, and sturdy outer boxes designed for international transit.' },
                     { label: 'Pre-Purchase Support', text: 'Our team answers sizing, fabric, and styling questions before you order — WhatsApp +1-215-341-9990 or email hello@luxemia.shop.' },
                     { label: 'Damage Resolution', text: 'Genuine shipping damage supported by an unboxing video will be reviewed and resolved at our discretion — replacement part, store credit, or partial refund depending on the case.' },
@@ -285,7 +264,7 @@ const Returns = () => {
               <div className="space-y-3">
                 {[
                   { step: '1', title: 'Measure Carefully Before Ordering', desc: 'Use our detailed Size Guide. Have someone else measure you — self-measurements are often inaccurate. When between sizes, go up and plan for a local tailor to take in.' },
-                  { step: '2', title: 'Ask Us Before You Buy', desc: 'Not sure about sizing, fabric weight, or colour? WhatsApp or email us first. We reply within a few hours during business hours.' },
+                  { step: '2', title: 'Ask Us Before You Buy', desc: 'Not sure about sizing, fabric weight, or color? WhatsApp or email us first. We reply within a few hours during business hours.' },
                   { step: '3', title: 'Check All Product Details', desc: 'Read the full product description including fabric, what\'s included (dupatta, stitched/unstitched blouse), and embroidery notes before placing your order.' },
                   { step: '4', title: 'Order Well in Advance of Your Event', desc: 'Standard items take 7–12 business days to deliver. Custom-sized pieces require an additional 5–7 business days for production. Order 4–6 weeks ahead for major events.' },
                   { step: '5', title: 'Record Your Unboxing', desc: 'Make it a habit to record the unboxing of every order as a continuous video from sealed package to opened item. This is your protection if anything goes wrong in transit.' },
@@ -374,10 +353,10 @@ const Returns = () => {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="q4">
-                  <AccordionTrigger>The colour looks different from the website photo — is that a defect?</AccordionTrigger>
+                  <AccordionTrigger>The color looks different from the website photo — is that a defect?</AccordionTrigger>
                   <AccordionContent>
-                    No. Colour variations between screen display and physical fabric are expected and do not qualify as
-                    defects. All screens display colours differently and the tone of your lighting affects perception.
+                    No. Color variations between screen display and physical fabric are expected and do not qualify as
+                    defects. All screens display colors differently and the tone of your lighting affects perception.
                     Our photos are taken under professional lighting to represent the garment as accurately as possible,
                     but a slight variation is inherent to screen-to-fabric comparison.
                   </AccordionContent>
@@ -396,7 +375,7 @@ const Returns = () => {
                     Manufacturing defects include: significant stitching failures, fabric tears present before wearing,
                     incorrect item shipped (entirely different product), or missing components of a set (e.g. dupatta
                     missing from a 3-piece lehenga set). This does <strong>not</strong> include: minor embroidery variations
-                    (common in embroidered items), colour variations from screen, fit issues, or any issue not supported
+                    (common in embroidered items), color variations from screen, fit issues, or any issue not supported
                     by an unboxing video.
                   </AccordionContent>
                 </AccordionItem>

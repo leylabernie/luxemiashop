@@ -28,6 +28,59 @@ const formatPrice = (amount: string, _currency: string) => {
   return priceFormatter.format(parseFloat(amount));
 };
 
+/**
+ * Build a rich, SEO-optimized alt text from product tags.
+ * Tags follow the pattern "color:red", "fabric:silk", "occasion:wedding", "work:zardozi".
+ * Formula: [Color] [Fabric] [Garment Type] with [Work Type] for [Occasion] - LuxeMia
+ * Missing fields are omitted gracefully.
+ */
+function buildSeoAltText(
+  title: string,
+  productType: string | undefined,
+  tags: string[] | undefined | null,
+): string {
+  const tagMap = new Map<string, string>();
+  (tags ?? []).forEach((tag) => {
+    const idx = tag.indexOf(':');
+    if (idx > 0) {
+      const key = tag.slice(0, idx).toLowerCase().trim();
+      const val = tag.slice(idx + 1).trim();
+      if (val) tagMap.set(key, val);
+    }
+  });
+
+  const parts: string[] = [];
+
+  // Color (title-case)
+  const color = tagMap.get('color');
+  if (color) parts.push(titleCase(color));
+
+  // Fabric (title-case)
+  const fabric = tagMap.get('fabric');
+  if (fabric) parts.push(titleCase(fabric));
+
+  // Garment type (from productType or first two words of title)
+  const garmentType = productType || title.split(/\s+/).slice(0, 2).join(' ');
+  if (garmentType) parts.push(titleCase(garmentType));
+
+  // Work type
+  const work = tagMap.get('work');
+  if (work) parts.push(`with ${titleCase(work)} Work`);
+
+  // Occasion
+  const occasion = tagMap.get('occasion');
+  if (occasion) parts.push(`for ${titleCase(occasion)}`);
+
+  // Fallback: if nothing was built, use title
+  if (parts.length === 0) return `${title} - LuxeMia`;
+
+  return `${parts.join(' ')} - LuxeMia`;
+}
+
+function titleCase(str: string): string {
+  return str.replace(/\b\w+/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+}
+
 export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({ 
   product, 
   index = 0, 
@@ -210,15 +263,9 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
     return daysSince <= NEW_ARRIVAL_WINDOW_DAYS;
   })();
 
-  // Deterministic social proof signals based on product ID hash
-  const _hash = (() => {
-    let h = 0;
-    const s = product.node.id;
-    for (let i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
-    return Math.abs(h);
-  })();
-  const isTrending = isAvailable && !isNew && (_hash % 7 === 0 || _hash % 7 === 1); // ~28%
-  const savedCount = isAvailable ? ((_hash % 47) + 8) : 0; // 8–54
+  // NOTE: Fake social proof badges ("Trending", "X saved") were removed
+  // per SEO audit Fix 1.3. These were generated via deterministic hash
+  // on product IDs — NOT real data — creating FTC compliance risk.
 
   // Reduce animation delay on mobile for faster perceived loading
   const isMobile = useMemo(() => typeof window !== 'undefined' && window.innerWidth < 768, []);
@@ -266,7 +313,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             <div className="w-full h-full overflow-hidden">
               <img
                 src={getOptimizedImage(imageUrl, 'card')}
-                alt={product.node.images.edges[0]?.node.altText || `${product.node.title} - Buy ${product.node.productType || 'Ethnic Wear'} Online | LuxeMia`}
+                alt={product.node.images.edges[0]?.node.altText || buildSeoAltText(product.node.title, product.node.productType, product.node.tags)}
                 loading="lazy"
                 draggable={false}
                 onLoad={() => setIsLoaded(true)}
@@ -338,11 +385,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 New
               </span>
             )}
-            {isTrending && (
-              <span className="px-2 py-0.5 text-[10px] uppercase tracking-widest bg-primary/90 text-primary-foreground rounded-sm font-medium">
-                Trending
-              </span>
-            )}
+
           </div>
           {!isAvailable && (
             <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] uppercase tracking-widest bg-muted text-muted-foreground rounded-sm z-10">
@@ -377,11 +420,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 </p>
               )}
             </div>
-            {isAvailable && savedCount > 15 && (
-              <p className="text-[10px] text-muted-foreground/70 flex-shrink-0">
-                ♥ {savedCount} saved
-              </p>
-            )}
+
           </div>
           {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
             parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) >

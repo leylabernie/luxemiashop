@@ -12,6 +12,7 @@
  */
 
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -193,8 +194,8 @@ const LEHENGAS: CategoryConfig = {
   heroImageWebp: '/images/banners/lehenga-banner.webp',
   heroTitle: 'Lehengas',
   heroSubtitle: 'Bridal lehengas, festive lehenga cholis, and contemporary designs for your special moments.',
-  seoTitle: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli - LuxeMia',
-  seoDescription: 'Buy bridal lehengas online at LuxeMia. Shop wedding lehenga choli, festive lehengas & party wear in silk, net & velvet. Custom sizing available. Free shipping to USA & Canada.',
+  seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
+  seoDescription: 'Buy bridal lehengas for Indian brides in USA. Red, maroon, and ivory wedding lehengas with zardozi and embroidery. Custom sizing, 5-day express delivery, free shipping over $350.',
   canonical: 'https://luxemia.shop/lehengas',
   ogImage: '/og/og-lehengas.jpg',
   breadcrumbs: [
@@ -245,7 +246,7 @@ const LEHENGAS: CategoryConfig = {
         { value: 'net', label: 'Net' },
         { value: 'organza', label: 'Organza' },
         { value: 'velvet', label: 'Velvet' },
-        { value: 'chinon', label: 'Chinon' },
+        { value: 'chinnon', label: 'Chinnon' },
         { value: 'brocade', label: 'Brocade' },
         { value: 'satin', label: 'Satin' },
       ],
@@ -263,7 +264,7 @@ const LEHENGAS: CategoryConfig = {
       defaultExpanded: false,
       options: [
         { value: 'zardozi', label: 'Zardozi' },
-        { value: 'sequence', label: 'Sequence Work' },
+        { value: 'sequin', label: 'Sequin Work' },
         { value: 'resham', label: 'Resham Thread' },
         { value: 'mirror', label: 'Mirror Work' },
         { value: 'zari', label: 'Zari' },
@@ -371,6 +372,14 @@ const LEHENGAS: CategoryConfig = {
         DHL Express (3-5 business days) or USPS/UPS (7-10 business days) with full tracking and insurance.
         See our <a href="/shipping">shipping policy</a> for details.
       </p>
+
+      <h3>Ready-to-Ship Lehengas with Fast USA Delivery</h3>
+      <p>
+        Need your lehenga in a hurry? LuxeMia offers a curated selection of <strong>ready to ship lehengas USA</strong> that dispatch within 3–5 business days. Our <strong>in stock bridal lehengas with fast delivery</strong> include wedding, festive, and reception styles — all with the same handcrafted quality and free shipping on orders over $350 to the USA, Canada, and Australia. Browse our <Link to="/ready-to-ship">full ready-to-ship collection</Link> for the quickest delivery options when your event is just weeks away.
+      </p>
+
+      <h3>Complete the Couple's Look</h3>
+      <p>Pair your bridal lehenga with a matching <Link to="/menswear">groom sherwani</Link> or <Link to="/menswear?sub=groom">wedding sherwani</Link> for the perfect coordinated couple's look.</p>
     </>
   ),
 };
@@ -384,8 +393,8 @@ const SAREES: CategoryConfig = {
   heroImageWebp: '/images/banners/saree-banner.webp',
   heroTitle: 'Sarees',
   heroSubtitle: 'Silk, designer, and bridal sarees for every celebration — Banarasi, Kanjeevaram, and modern drapes.',
-  seoTitle: 'Sarees Collection | Silk & Bridal Sarees Online | LuxeMia',
-  seoDescription: 'Shop beautiful silk sarees, bridal sarees, and designer sarees at LuxeMia. Banarasi, Kanchipuram, and georgette sarees. Free shipping over $350 to USA, Canada & Australia.',
+  seoTitle: 'Buy Banarasi Silk Sarees Online USA | Fast Ship | LuxeMia',
+  seoDescription: 'Shop authentic Banarasi silk sarees online in USA. Handwoven zari borders, traditional motifs. Custom blouse stitching. Free shipping over $350 to USA, Canada & Australia.',
   canonical: 'https://luxemia.shop/sarees',
   ogImage: '/og/og-sarees.jpg',
   breadcrumbs: [
@@ -475,7 +484,7 @@ const SAREES: CategoryConfig = {
       options: [
         { value: 'zari', label: 'Zari' },
         { value: 'embroidery', label: 'Embroidery' },
-        { value: 'sequence', label: 'Sequence' },
+        { value: 'sequin', label: 'Sequin' },
         { value: 'printed', label: 'Printed' },
         { value: 'mirror', label: 'Mirror Work' },
         { value: 'stone', label: 'Stone Setting' },
@@ -517,7 +526,7 @@ const SAREES: CategoryConfig = {
     },
     {
       question: "How should I care for my silk saree?",
-      answer: "Dry clean only for silk sarees. Store in a cool, dry place wrapped in muslin cloth. Avoid direct sunlight and never iron directly on zari or embroidery. Refold the saree every 3-4 months to prevent creasing along the same lines."
+      answer: "Dry clean only for silk sarees. Store in a cool, dry place wrapped in muslin cloth. Avoid direct sunlight and never iron directly on zari or embroidery. Refold the saree every 3-4 months to prevent creasing along the same lines. (Note: many affordable 'silk' options use art silk, a high-quality polyester blend with a silk-like appearance — art silk shares the same dry-clean-only care requirements.)"
     },
     {
       question: "Do you ship sarees to USA, Canada, and Australia?",
@@ -538,8 +547,9 @@ const SAREES: CategoryConfig = {
 
       <h3>Silk Sarees — Banarasi, Kanjivaram &amp; More</h3>
       <p>
-        Our <strong>pure silk saree collection</strong> includes Banarasi silk from Varanasi, Kanjivaram silk
-        from Kanchipuram, and art silk sarees at affordable prices. Each silk saree features real zari work,
+        Our <strong>silk saree collection</strong> includes Banarasi silk from Varanasi, Kanjivaram silk
+        from Kanchipuram, and art silk sarees at affordable prices (note: art silk is a high-quality
+        polyester blend with a silk-like appearance and drape). Each silk saree features real zari work,
         handwoven borders, and traditional motifs. Shop <a href="/sarees?sub=bridal">bridal silk sarees</a> for
         your wedding or <a href="/sarees?sub=wedding-guest">wedding guest silk sarees</a> for the next
         celebration you attend.
@@ -568,6 +578,11 @@ const SAREES: CategoryConfig = {
         the hassle.
       </p>
 
+      <h3>Ready-to-Ship Sarees with Fast USA Delivery</h3>
+      <p>
+        Short on time before your event? Our <strong>ready to ship sarees</strong> dispatch within 3–5 business days, so you can have your drape ready well before the celebration. The selection includes <strong>in stock Banarasi sarees with fast delivery</strong>, georgette party-wear sarees, and pre-draped ready-to-wear options. Every saree ships with free delivery on orders over $350 to the USA, Canada, and Australia. Explore our <Link to="/ready-to-ship">full ready-to-ship collection</Link> for the fastest saree delivery options available.
+      </p>
+
       <h3>Custom Blouse Stitching</h3>
       <p>
         Every saree deserves a perfectly fitted blouse. LuxeMia offers custom blouse stitching with your
@@ -587,8 +602,8 @@ const SUITS: CategoryConfig = {
   heroImageWebp: '/images/banners/suit-banner.webp',
   heroTitle: 'Salwar Kameez & Suits',
   heroSubtitle: 'Anarkali, sharara, palazzo, and Pakistani suits — handcrafted for festive and wedding celebrations.',
-  seoTitle: 'Salwar Kameez & Suits | Anarkali & Palazzo Suits Online | LuxeMia',
-  seoDescription: 'Shop elegant salwar kameez, anarkali suits, palazzo suits, and sharara sets at LuxeMia. Pakistani suits and designer suits. Free shipping over $350 to USA, Canada & Australia.',
+  seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
+  seoDescription: 'Shop 300+ salwar kameez online. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring. Free shipping over $350.',
   canonical: 'https://luxemia.shop/suits',
   ogImage: '/og/og-suits.jpg',
   breadcrumbs: [
@@ -632,7 +647,7 @@ const SUITS: CategoryConfig = {
       defaultExpanded: true,
       options: [
         { value: 'georgette', label: 'Georgette' },
-        { value: 'chinon', label: 'Chinon' },
+        { value: 'chinnon', label: 'Chinnon' },
         { value: 'silk', label: 'Silk' },
         { value: 'net', label: 'Net' },
         { value: 'cotton', label: 'Cotton' },
@@ -652,7 +667,7 @@ const SUITS: CategoryConfig = {
       defaultExpanded: false,
       options: [
         { value: 'embroidery', label: 'Embroidery' },
-        { value: 'sequence', label: 'Sequence' },
+        { value: 'sequin', label: 'Sequin' },
         { value: 'zari', label: 'Zari' },
         { value: 'mirror', label: 'Mirror Work' },
         { value: 'printed', label: 'Printed' },
@@ -686,7 +701,7 @@ const SUITS: CategoryConfig = {
   faqs: [
     {
       question: "What types of salwar kameez and suits are available at LuxeMia?",
-      answer: "LuxeMia offers anarkali suits, sharara sets, palazzo suits, Pakistani suits, and straight-cut salwar kameez in fabrics including georgette, chinon, silk, cotton, velvet, and net. Each piece is handcrafted with embroidery, sequence, zari, or mirror work."
+      answer: "LuxeMia offers anarkali suits, sharara sets, palazzo suits, Pakistani suits, and straight-cut salwar kameez in fabrics including georgette, chinnon, silk, cotton, velvet, and net. Each piece is handcrafted with embroidery, sequin, zari, or mirror work."
     },
     {
       question: "What is the difference between anarkali and sharara suits?",
@@ -711,7 +726,7 @@ const SUITS: CategoryConfig = {
     <>
       <p>
         Shop beautiful <strong>salwar kameez online</strong> at LuxeMia. Our collection includes anarkali suits,
-        palazzo sets, sharara suits, and traditional salwar kameez in georgette, silk, cotton, and chinon
+        palazzo sets, sharara suits, and traditional salwar kameez in georgette, silk, cotton, and chinnon
         fabrics. Whether you are attending a wedding, celebrating Eid, or looking for everyday ethnic wear,
         we have the perfect suit for you — shipped to the USA, Canada, and Australia with free shipping over $350.
       </p>
@@ -742,8 +757,13 @@ const SUITS: CategoryConfig = {
       <p>
         Attending an Indian wedding? A well-chosen salwar kameez is comfortable, elegant, and appropriate for
         every ceremony. For mehendi and haldi, choose cotton or georgette suits in bright colors. For sangeet
-        and reception, go for embroidered anarkalis in silk or chinon. Browse our
+        and reception, go for embroidered anarkalis in silk or chinnon. Browse our
         <a href="/collections/wedding-guest-outfits">wedding guest collection</a> for curated options.
+      </p>
+
+      <h3>Ready-to-Ship Salwar Kameez with Fast USA Delivery</h3>
+      <p>
+        Have a wedding or festival coming up soon? LuxeMia stocks a rotating selection of <strong>ready to ship salwar kameez</strong> that dispatch in 3–5 business days. Our <strong>in stock anarkali suits USA</strong> inventory spans bridal, festive, and everyday styles in georgette, silk, and cotton — all with the same artisan craftsmanship. Free shipping applies on orders over $350 to the USA, Canada, and Australia. Check out our <Link to="/ready-to-ship">full ready-to-ship collection</Link> when you need your outfit delivered quickly.
       </p>
 
       <h3>Custom Tailoring for the Perfect Fit</h3>
@@ -765,8 +785,8 @@ const MENSWEAR: CategoryConfig = {
   heroImageWebp: '/images/banners/menswear-banner.webp',
   heroTitle: 'Menswear',
   heroSubtitle: 'Sherwanis, kurta pajama sets, Modi jackets, and indo-western menswear for the modern groom.',
-  seoTitle: 'Menswear | Sherwanis & Kurta Pajama Sets Online | LuxeMia',
-  seoDescription: 'Shop premium sherwanis, kurta pajama sets, and indo-western menswear at LuxeMia. Wedding and festive collection. Free shipping over $350 to USA, Canada & Australia.',
+  seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
+  seoDescription: 'Shop designer sherwanis for men. Groom sherwanis, kurta pajama sets & indo-western outfits. Custom tailoring available. Free shipping over $350 to USA & Canada.',
   canonical: 'https://luxemia.shop/menswear',
   ogImage: '/og/og-menswear.jpg',
   breadcrumbs: [
@@ -829,7 +849,7 @@ const MENSWEAR: CategoryConfig = {
       defaultExpanded: false,
       options: [
         { value: 'zardozi', label: 'Zardozi' },
-        { value: 'sequence', label: 'Sequence' },
+        { value: 'sequin', label: 'Sequin' },
         { value: 'resham', label: 'Resham Thread' },
         { value: 'embroidery', label: 'Embroidery' },
         { value: 'printed', label: 'Printed' },
@@ -879,7 +899,7 @@ const MENSWEAR: CategoryConfig = {
     },
     {
       question: "How should I care for my sherwani?",
-      answer: "Dry clean only for sherwanis with embroidery, zardozi, or sequence work. Store in a breathable garment bag in a cool, dry place. Avoid direct sunlight to prevent color fading. Iron on reverse side over embroidery, or use a pressing cloth."
+      answer: "Dry clean only for sherwanis with embroidery, zardozi, or sequin work. Store in a breathable garment bag in a cool, dry place. Avoid direct sunlight to prevent color fading. Iron on reverse side over embroidery, or use a pressing cloth."
     }
   ],
   // SEO editorial content (Item #14)
@@ -937,6 +957,14 @@ const MENSWEAR: CategoryConfig = {
         through XXL plus made-to-measure options. Send us your chest, shoulder, waist, and length measurements
         and our master tailors will stitch the perfect fit. See our <a href="/size-guide">size guide</a> for details.
       </p>
+
+      <h3>Ready-to-Ship Sherwanis with Fast USA Delivery</h3>
+      <p>
+        Wedding day approaching fast? LuxeMia carries <strong>ready to ship sherwanis</strong> that leave our warehouse within 3–5 business days — perfect for grooms and guests who need <strong>in stock groom wear with fast delivery</strong>. Our ready-to-ship menswear range includes sherwanis, kurta pajama sets, and Nehru jackets in standard sizes, all with the same quality embroidery and tailoring LuxeMia is known for. Free shipping on orders over $350 to the USA, Canada, and Australia. Browse the <Link to="/ready-to-ship">full ready-to-ship collection</Link> for the fastest delivery options.
+      </p>
+
+      <h3>Complete the Couple's Look</h3>
+      <p>Pair your sherwani or indo-western outfit with a matching <Link to="/lehengas?sub=bridal">bridal lehenga</Link> for the perfect coordinated couple's look. LuxeMia offers matching sets for weddings, receptions, and all ceremonial events.</p>
     </>
   ),
 };

@@ -1476,10 +1476,10 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Lehenga for Sangeet Night</h2>
       <h3>The Look: Glamorous, Dance-Ready, Statement-Making</h3>
-      <p>The sangeet is your night to shine on the dance floor. A <strong>sequence lehenga</strong> or <strong>sequin Indian outfit</strong> in a jewel tone creates a dazzling effect under event lighting. This is where you go bold — think <strong>designer lehenga</strong> with heavy embellishment, metallic accents, and dramatic blouse designs.</p>
+      <p>The sangeet is your night to shine on the dance floor. A <strong>sequin lehenga</strong> or <strong>sequin Indian outfit</strong> in a jewel tone creates a dazzling effect under event lighting. This is where you go bold — think <strong>designer lehenga</strong> with heavy embellishment, metallic accents, and dramatic blouse designs.</p>
       <h3>Styling Tips</h3>
       <p>For the <strong>sangeet night outfit</strong>, prioritize a lehenga that moves well. <strong>A-line lehenga</strong> silhouettes are easier to dance in than <strong>fishcut lehenga</strong> styles. Choose a fitted or crop-top style blouse to balance the volume of the skirt. Pin your dupatta securely — a one-shoulder drape pinned at the waist is both stylish and practical for dancing.</p>
-      <p>Try our <a href="/lehengas">Luxe Sequence Lehenga</a> collection for sangeet-ready pieces that catch every light.</p>
+      <p>Try our <a href="/lehengas">Luxe Sequin Lehenga</a> collection for sangeet-ready pieces that catch every light.</p>
 
       <h2>Lehenga for the Wedding Ceremony</h2>
       <h3>For the Bride: The Ultimate Bridal Lehenga</h3>
@@ -1544,7 +1544,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: '2026-04-08',
     updatedAt: '2026-04-08',
     category: 'Styling Tips',
-    tags: ['lehenga choli', 'bridal lehenga', 'wedding lehenga', 'reception lehenga', 'sangeet outfit', 'lehenga styling', 'lehenga blouse designs', 'dupatta draping', 'sequence lehenga', 'buy lehenga online USA'],
+    tags: ['lehenga choli', 'bridal lehenga', 'wedding lehenga', 'reception lehenga', 'sangeet outfit', 'lehenga styling', 'lehenga blouse designs', 'dupatta draping', 'sequin lehenga', 'buy lehenga online USA'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/H84_2.png?v=1782927093&width=1200&height=675&crop=center',
     readTime: 10
   },
@@ -1573,7 +1573,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Sangeet Night Outfit</h2>
       <h3>For the Bride</h3>
-      <p>The sangeet is the party night — dress to impress. A <strong><a href="/lehengas">designer lehenga</a></strong> or <strong><a href="/suits">designer anarkali gown</a></strong> in a statement color (think midnight blue, emerald, or champagne gold) sets the tone. <strong>Sequin Indian outfits</strong> and <strong>mirror work suits</strong> catch the light beautifully on the dance floor. Choose a <a href="/lehengas">sequence lehenga</a> that moves well for dance performances.</p>
+      <p>The sangeet is the party night — dress to impress. A <strong><a href="/lehengas">designer lehenga</a></strong> or <strong><a href="/suits">designer anarkali gown</a></strong> in a statement color (think midnight blue, emerald, or champagne gold) sets the tone. <strong>Sequin Indian outfits</strong> and <strong>mirror work suits</strong> catch the light beautifully on the dance floor. Choose a <a href="/lehengas">sequin lehenga</a> that moves well for dance performances.</p>
       <h3>For the Groom</h3>
       <p>A <strong>designer kurta pajama</strong> in a complementary color to the bride works perfectly. For a more formal sangeet, an <strong>Indo western sherwani</strong> or a <strong>Jodhpuri suit</strong> makes a strong impression. Browse our <a href="/menswear">mens ethnic wear</a> collection for the latest styles.</p>
       <h3>For Guests</h3>
@@ -1650,7 +1650,7 @@ export const blogPosts: BlogPost[] = [
       <p><strong>Silk ethnic wear</strong> comes in many varieties, each with distinct characteristics:</p>
       <ul>
         <li><strong>Art silk (artificial silk):</strong> Budget-friendly with a silk-like sheen — great for <strong>affordable Indian ethnic wear</strong></li>
-        <li><strong>Chinon silk:</strong> Lightweight with beautiful fluidity — popular for <strong>Pakistani suits</strong> and <strong>sharara sets</strong></li>
+        <li><strong>Chinnon silk:</strong> Lightweight with beautiful fluidity — popular for <strong>Pakistani suits</strong> and <strong>sharara sets</strong></li>
         <li><strong>Banarasi silk:</strong> Heavy, intricately woven with gold/silver zari — the gold standard for bridal wear</li>
         <li><strong>Chanderi silk:</strong> Lightweight with a golden sheen — perfect for festive <strong>salwar kameez</strong></li>
         <li><strong>Raw silk:</strong> Textured, slightly rough — creates structured, regal silhouettes</li>
@@ -2462,7 +2462,7 @@ export const blogPosts: BlogPost[] = [
           <tr><td>Formality</td><td>High — bridal/semi-bridal</td><td>Medium — semi-formal to formal</td></tr>
           <tr><td>Ease of wearing</td><td>Requires experience</td><td>Simple — pull on and go</td></tr>
           <tr><td>Movement</td><td>Limited by heavy skirt</td><td>Excellent — flare allows full movement</td></tr>
-          <tr><td>Embellishment</td><td>Heavy — zardozi, sequence, mirror work</td><td>Light to medium — thread work, prints</td></tr>
+          <tr><td>Embellishment</td><td>Heavy — zardozi, sequin, mirror work</td><td>Light to medium — thread work, prints</td></tr>
           <tr><td>Occasion</td><td>Wedding ceremony, sangeet, reception</td><td>Mehendi, parties, festive dinners, office events</td></tr>
           <tr><td>Price range</td><td>$200–$3,000+</td><td>$80–$800</td></tr>
         </tbody>
@@ -2549,7 +2549,7 @@ export const blogPosts: BlogPost[] = [
         <li>What fabric is used (weight, drape, season-appropriateness)?</li>
         <li>Is the blouse stitched or unstitched? (Stitched saves you tailor hassle; unstitched gives flexibility)</li>
         <li>Does the set include a dupatta?</li>
-        <li>What is the actual colour in natural light? (Photos vary by screen)</li>
+        <li>What is the actual color in natural light? (Photos vary by screen)</li>
         <li>Can you accommodate custom length?</li>
       </ul>
 
@@ -2619,7 +2619,7 @@ export const blogPosts: BlogPost[] = [
       <p>Zardozi, zari, stonework, heavy sequin work, and silk-based garments must be dry cleaned only. Home washing — even gentle cycle — causes:</p>
       <ul>
         <li>Thread breakage and sequin loss</li>
-        <li>Colour bleeding between fabric panels</li>
+        <li>Color bleeding between fabric panels</li>
         <li>Shape distortion in structured blouses</li>
         <li>Tarnishing of metallic thread (zari)</li>
       </ul>
@@ -2632,7 +2632,7 @@ export const blogPosts: BlogPost[] = [
         <li>Do not scrub, wring, or twist — gently squeeze water through the fabric</li>
         <li>Rinse thoroughly until water runs clear</li>
         <li>Roll in a clean towel to absorb excess water — never wring</li>
-        <li>Dry in shade — never in direct sunlight (causes colour fading)</li>
+        <li>Dry in shade — never in direct sunlight (causes color fading)</li>
       </ul>
 
       <h3>Dupattas</h3>
@@ -2642,7 +2642,7 @@ export const blogPosts: BlogPost[] = [
       <ul>
         <li><strong>Fresh stains:</strong> Blot (do not rub) with a clean white cloth. Take to dry cleaner immediately</li>
         <li><strong>Food/liquid stains on silk:</strong> Do not attempt to wash at home — go to dry cleaner within 24–48 hours</li>
-        <li><strong>Colour transfer:</strong> If a fabric has bled onto another section, consult a specialist dry cleaner — home remedies usually worsen the damage</li>
+        <li><strong>Color transfer:</strong> If a fabric has bled onto another section, consult a specialist dry cleaner — home remedies usually worsen the damage</li>
       </ul>
 
       <h2>Storing Indian Ethnic Wear</h2>

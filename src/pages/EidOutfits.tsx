@@ -4,6 +4,7 @@ import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import RelatedOccasions from '@/components/seo/RelatedOccasions';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -26,7 +27,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'What colors are popular for Eid outfits?',
-    answer: 'White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are all classic Eid outfit colours. Gold and silver embellishments on any colour are considered festive and celebratory. In South Asian Muslim communities, red, royal blue, and emerald green are also widely worn for Eid, especially for evening gatherings. Pakistani and Indian fashion-influenced Eid outfits often feature heavy chikankari embroidery, gota patti work, and delicate sequin embellishments on pastel or white fabrics.',
+    answer: 'White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are all classic Eid outfit colors. Gold and silver embellishments on any color are considered festive and celebratory. In South Asian Muslim communities, red, royal blue, and emerald green are also widely worn for Eid, especially for evening gatherings. Pakistani and Indian fashion-influenced Eid outfits often feature heavy chikankari embroidery, gota patti work, and delicate sequin embellishments on pastel or white fabrics.',
   },
   {
     question: 'What style of Indian outfit is best for Eid?',
@@ -203,6 +204,8 @@ const EidOutfits = () => {
           </Accordion>
         </div>
       </section>
+
+      <RelatedOccasions currentOccasion="eid" />
 
       <Footer />
     </div>

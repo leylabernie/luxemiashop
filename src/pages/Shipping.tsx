@@ -110,22 +110,8 @@ const Shipping = () => {
         '@id': 'https://luxemia.shop/#returnPolicy',
         name: 'LuxeMia Return & Refund Policy',
         applicableCountry: ['US', 'CA', 'AU'],
-        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-        merchantReturnDays: 2,
-        returnMethod: 'https://schema.org/ReturnByMail',
-        returnFees: 'https://schema.org/FreeReturn',
-        restockingFee: {
-          '@type': 'MonetaryAmount',
-          value: '0.00',
-          currency: 'USD',
-        },
-        returnShippingFeesAmount: {
-          '@type': 'MonetaryAmount',
-          value: '0.00',
-          currency: 'USD',
-        },
-        refundType: 'https://schema.org/FullRefund',
-        description: 'All sales are final. Returns and exchanges are not accepted. Damage claims are accepted within 48 hours of delivery with mandatory unboxing video. Cancellations are accepted within 24 hours of order placement for a full refund. Damage resolutions may include replacement part, store credit, or partial refund at LuxeMia discretion.',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+        description: 'Returns accepted only for damaged or defective items. Made-to-order and customized items are not eligible for returns. Contact support within 48 hours of delivery with photos for damage claims.',
         url: 'https://luxemia.shop/returns',
       },
       {
@@ -568,7 +554,7 @@ const Shipping = () => {
                 <h3 className="font-bold text-foreground text-lg mb-2">All Sales Are Final</h3>
                 <p className="text-muted-foreground text-sm">
                   Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges for any reason, 
-                  including sizing issues, colour variations, or change of mind. The only exception is genuine shipping damage, 
+                  including sizing issues, color variations, or change of mind. The only exception is genuine shipping damage, 
                   which must be supported by a mandatory unboxing video. Please use our Size Guide and contact us before ordering 
                   if you have any questions. See our <a href="/returns" className="text-primary underline">full Returns Policy</a> for details.
                 </p>

@@ -97,7 +97,7 @@ const STEPS = [
   },
   {
     id: 'colors',
-    question: 'Choose your colour story',
+    question: 'Choose your color story',
     subtitle: 'Which palette speaks to you most?',
     options: [
       { value: 'jewel', label: 'Jewel Tones', desc: 'Deep ruby, sapphire blue, emerald, regal purple', swatch: ['#9B2335', '#1B4B8A', '#1A5C38', '#5B2D8E'] },
@@ -157,8 +157,8 @@ const getProfile = (answers: Answers): Profile => {
   if (occasion === 'festive') {
     return {
       name: 'The Festive Queen',
-      tagline: 'Born to celebrate in colour',
-      description: 'Festivals are your stage. You love vibrant colours, celebratory embroidery, and outfits that radiate joy. Salwar kameez, sharara sets, and festive lehengas are your signature.',
+      tagline: 'Born to celebrate in color',
+      description: 'Festivals are your stage. You love vibrant colors, celebratory embroidery, and outfits that radiate joy. Salwar kameez, sharara sets, and festive lehengas are your signature.',
       emoji: '🎊',
       gradient: 'from-amber-50 via-orange-50 to-yellow-50 dark:from-amber-950/30 dark:via-orange-950/30 dark:to-yellow-950/30',
       primaryHref: '/collections',

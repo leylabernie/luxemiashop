@@ -289,6 +289,7 @@ const ProductDetail = () => {
                   description={enrichedDescription || product.description}
                   productType={product.productType}
                   isStitchable={isStitchableProductType(product.productType)}
+                  tags={product.tags ?? undefined}
                 />
               </div>
 

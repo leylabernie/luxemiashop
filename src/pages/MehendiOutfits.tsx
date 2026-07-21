@@ -4,6 +4,7 @@ import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import RelatedOccasions from '@/components/seo/RelatedOccasions';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -22,23 +23,23 @@ const sortOptions = [
 const mehendiOutfitFaqs = [
   {
     question: 'What should I wear to a mehendi ceremony?',
-    answer: 'The mehendi ceremony is a daytime, casual pre-wedding celebration traditionally associated with the colours yellow and green. Guests typically wear bright, cheerful ethnic outfits in yellow, lime green, mustard, orange, or floral prints. Salwar kameez, anarkali suits, and simple lehengas are the most popular choices. Avoid heavy silk sarees or highly formal outfits as the mehendi ceremony is fun and relaxed. Light, breathable fabrics like georgette, chiffon, cotton, and crepe are ideal since the event is often held outdoors or in a garden setting.',
+    answer: 'The mehendi ceremony is a daytime, casual pre-wedding celebration traditionally associated with the colors yellow and green. Guests typically wear bright, cheerful ethnic outfits in yellow, lime green, mustard, orange, or floral prints. Salwar kameez, anarkali suits, and simple lehengas are the most popular choices. Avoid heavy silk sarees or highly formal outfits as the mehendi ceremony is fun and relaxed. Light, breathable fabrics like georgette, chiffon, cotton, and crepe are ideal since the event is often held outdoors or in a garden setting.',
   },
   {
     question: 'What colors are traditional for a mehendi ceremony outfit?',
-    answer: 'Yellow and green are the signature colours of mehendi ceremonies in most Indian cultures — yellow representing turmeric (haldi) and new beginnings, green representing nature and the mehendi plant itself. Mustard, saffron orange, lime green, and coral are all popular mehendi outfit colours for both the bride and guests. Floral prints and pastel shades are also widely worn. Avoid white (inauspicious), red (reserved for the bride), and overly dark colours like black and navy for this daytime celebration.',
+    answer: 'Yellow and green are the signature colors of mehendi ceremonies in most Indian cultures — yellow representing turmeric (haldi) and new beginnings, green representing nature and the mehendi plant itself. Mustard, saffron orange, lime green, and coral are all popular mehendi outfit colors for both the bride and guests. Floral prints and pastel shades are also widely worn. Avoid white (inauspicious), red (reserved for the bride), and overly dark colors like black and navy for this daytime celebration.',
   },
   {
     question: 'Should the bride wear yellow to her own mehendi?',
-    answer: 'Yes, yellow is considered the most traditional and auspicious colour for the bride at her mehendi ceremony. The yellow turmeric (haldi) symbolises prosperity, beauty, and the blessing of the ceremony. Most Indian brides wear a yellow lehenga, yellow salwar kameez, or yellow saree for their mehendi. However, modern brides also choose pastel green, coral, peach, or floral lehengas for a contemporary take on the mehendi look.',
+    answer: 'Yes, yellow is considered the most traditional and auspicious color for the bride at her mehendi ceremony. The yellow turmeric (haldi) symbolises prosperity, beauty, and the blessing of the ceremony. Most Indian brides wear a yellow lehenga, yellow salwar kameez, or yellow saree for their mehendi. However, modern brides also choose pastel green, coral, peach, or floral lehengas for a contemporary take on the mehendi look.',
   },
   {
     question: 'Do you ship mehendi outfits to the USA, Canada, and Australia?',
     answer: 'Yes, LuxeMia ships mehendi ceremony outfits and all Indian ethnic wear to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders are fully tracked. For wedding functions, order at least 3–4 weeks before the event to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch.',
   },
   {
-    question: 'Can guests wear any colour other than yellow and green to a mehendi?',
-    answer: 'Absolutely. While yellow and green are traditional, guests at modern Indian mehendi ceremonies wear a wide range of bright and festive colours — pink, coral, peach, lavender, turquoise, and orange are all popular. The key is to choose something vibrant, cheerful, and celebration-appropriate. Simple anarkali suits, salwar kameez, and lehengas in floral prints or light embroidery are perfect for the mehendi ceremony regardless of colour.',
+    question: 'Can guests wear any color other than yellow and green to a mehendi?',
+    answer: 'Absolutely. While yellow and green are traditional, guests at modern Indian mehendi ceremonies wear a wide range of bright and festive colors — pink, coral, peach, lavender, turquoise, and orange are all popular. The key is to choose something vibrant, cheerful, and celebration-appropriate. Simple anarkali suits, salwar kameez, and lehengas in floral prints or light embroidery are perfect for the mehendi ceremony regardless of color.',
   },
 ];
 
@@ -70,7 +71,7 @@ const MehendiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Mehendi Ceremony Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colours traditionally associated with henna celebrations. Perfect for the bride, bridesmaids, and all guests attending Indian mehendi ceremonies in the USA, Canada, Australia, or anywhere in the world.
+              Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colors traditionally associated with henna celebrations. Perfect for the bride, bridesmaids, and all guests attending Indian mehendi ceremonies in the USA, Canada, Australia, or anywhere in the world.
             </p>
           </div>
         </div>
@@ -79,7 +80,7 @@ const MehendiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colours — perfect for outdoor garden celebrations. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong>.
+              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong>.
             </p>
           </div>
         </div>
@@ -138,9 +139,9 @@ const MehendiOutfits = () => {
             <h2 className="font-serif text-2xl mb-6 text-center">Mehendi Ceremony Outfit Guide</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>The mehendi ceremony is one of the most beloved pre-wedding rituals in Indian culture — a joyful afternoon of henna application, music, dance, and family togetherness. Traditionally held one or two days before the main wedding, the mehendi is a casual, intimate celebration that calls for bright, cheerful ethnic wear rather than heavy formal attire.</p>
-              <p><strong>Yellow is the quintessential mehendi colour</strong>, symbolising turmeric, new beginnings, and the blessing of Goddess Lakshmi. The bride traditionally wears yellow — a yellow lehenga, yellow salwar kameez, or yellow saree — and guests are encouraged to join in the yellow and green colour theme. Mustard, saffron, lime green, coral, and floral prints are all celebration-appropriate choices for mehendi guests.</p>
+              <p><strong>Yellow is the quintessential mehendi color</strong>, symbolising turmeric, new beginnings, and the blessing of Goddess Lakshmi. The bride traditionally wears yellow — a yellow lehenga, yellow salwar kameez, or yellow saree — and guests are encouraged to join in the yellow and green color theme. Mustard, saffron, lime green, coral, and floral prints are all celebration-appropriate choices for mehendi guests.</p>
               <p>Since mehendi ceremonies are often held outdoors — in gardens, on terraces, or in open courtyards — <strong>fabric choice is important</strong>. Light, breathable fabrics like georgette, chiffon, cotton, crepe, and rayon are ideal. Heavy brocade or stiff silk can feel uncomfortable in outdoor settings. Look for <strong>light embroidery, gota patti work, mirror detailing, and block print</strong> rather than heavy zari or stone work for a mehendi-appropriate outfit.</p>
-              <p>For the bride, a matching jewellery set in gold, floral motifs, or polki stones complements the mehendi aesthetic beautifully. For guests, simple gold jewellery, floral accessories, or colourful bangles complete the look perfectly.</p>
+              <p>For the bride, a matching jewellery set in gold, floral motifs, or polki stones complements the mehendi aesthetic beautifully. For guests, simple gold jewellery, floral accessories, or colorful bangles complete the look perfectly.</p>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Mehendi Outfit by Role — Bride, Sister, Bridesmaid, or Guest?</h3>
@@ -200,6 +201,8 @@ const MehendiOutfits = () => {
           </Accordion>
         </div>
       </section>
+
+      <RelatedOccasions currentOccasion="mehendi" />
 
       <Footer />
     </div>
