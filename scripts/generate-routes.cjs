@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Auto-generate the prerendered routes list for LuxemiaShop.
+ * Auto-generate the prerendered routes list for LuxeMia.
  *
  * This script:
  *   1. Fetches all product handles from the Shopify Storefront API (with pagination)
@@ -27,6 +27,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
+const PILLAR_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/pillarBlogPosts.ts');
 
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn(
@@ -80,6 +81,8 @@ const STATIC_ROUTES = [
   '/collections/mehendi-outfits',
   '/collections/eid-outfits',
   '/collections/navratri-outfits',
+  '/collections/haldi-outfits',
+  '/ready-to-ship',
   // Utsavpedia-style blog category hub routes — 8 top-level categories
   '/blog/attires',
   '/blog/cultural-connections',
@@ -188,25 +191,29 @@ async function fetchAllProductHandles() {
  * Returns an array of slug strings.
  */
 function parseBlogSlugs() {
-  if (!fs.existsSync(BLOG_POSTS_TS)) {
-    console.warn(
-      `[generate-routes] Blog posts file not found at ${BLOG_POSTS_TS} — no blog routes will be included`
-    );
-    return [];
-  }
-
-  const content = fs.readFileSync(BLOG_POSTS_TS, 'utf8');
-
-  // Match: slug: 'some-slug' or slug: "some-slug"
-  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+  const files = [BLOG_POSTS_TS, PILLAR_BLOG_POSTS_TS];
   const slugs = [];
-  let match;
 
-  while ((match = slugRegex.exec(content)) !== null) {
-    slugs.push(match[1]);
+  for (const filePath of files) {
+    if (!fs.existsSync(filePath)) {
+      console.warn(
+        `[generate-routes] Blog file not found at ${filePath} — skipping`
+      );
+      continue;
+    }
+
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+
+    // Match: slug: 'some-slug' or slug: "some-slug"
+    const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+    let match;
+
+    while ((match = slugRegex.exec(fileContent)) !== null) {
+      slugs.push(match[1]);
+    }
   }
 
-  console.log(`[generate-routes] Parsed ${slugs.length} blog slugs from blogPosts.ts`);
+  console.log(`[generate-routes] Parsed ${slugs.length} blog slugs from blogPosts.ts + pillarBlogPosts.ts`);
   return slugs;
 }
 
@@ -272,7 +279,7 @@ async function main() {
     );
   }
 
-  // 2. Parse blog slugs from blogPosts.ts
+  // 2. Parse blog slugs from blogPosts.ts + pillarBlogPosts.ts
   const blogSlugs = parseBlogSlugs();
 
   // 3. Build combined routes list

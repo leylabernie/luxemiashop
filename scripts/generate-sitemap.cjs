@@ -121,25 +121,27 @@ const staticPages = [
 ];
 
 
-// Parse blogPosts.ts to extract slug strings for sitemap inclusion.
+// Parse blogPosts.ts + pillarBlogPosts.ts to extract slug strings for sitemap inclusion.
 function parseBlogSlugs() {
-  const blogPostsTsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
-  if (!fs.existsSync(blogPostsTsPath)) {
-    console.warn('[sitemap] blogPosts.ts not found');
-    return [];
-  }
-  const content = fs.readFileSync(blogPostsTsPath, 'utf8');
-  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+  const files = [
+    path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts'),
+    path.join(__dirname, '..', 'src', 'data', 'pillarBlogPosts.ts'),
+  ];
   const slugs = [];
-  let match;
-  while ((match = slugRegex.exec(content)) !== null) {
-    slugs.push(match[1]);
+  for (const filePath of files) {
+    if (!fs.existsSync(filePath)) { continue; }
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+    let match;
+    while ((match = slugRegex.exec(fileContent)) !== null) {
+      slugs.push(match[1]);
+    }
   }
-  console.log(`[sitemap] Parsed ${slugs.length} blog slugs from blogPosts.ts`);
+  console.log(`[sitemap] Parsed ${slugs.length} blog slugs from blogPosts.ts + pillarBlogPosts.ts`);
   return slugs.map(slug => `/blog/${slug}`);
 }
 
-// Blog posts — auto-parsed from src/data/blogPosts.ts
+// Blog posts — auto-parsed from src/data/blogPosts.ts + pillarBlogPosts.ts
 const blogPosts = parseBlogSlugs();
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -248,27 +250,7 @@ function generateSitemap(products) {
     <priority>${page.priority}</priority>
   </url>`);
   }
-
-  
-// Parse blogPosts.ts to extract slug strings for sitemap inclusion.
-function parseBlogSlugs() {
-  const blogPostsTsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
-  if (!fs.existsSync(blogPostsTsPath)) {
-    console.warn('[sitemap] blogPosts.ts not found');
-    return [];
-  }
-  const content = fs.readFileSync(blogPostsTsPath, 'utf8');
-  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
-  const slugs = [];
-  let match;
-  while ((match = slugRegex.exec(content)) !== null) {
-    slugs.push(match[1]);
-  }
-  console.log(`[sitemap] Parsed ${slugs.length} blog slugs from blogPosts.ts`);
-  return slugs.map(slug => `/blog/${slug}`);
-}
-
-// Blog posts
+  // Blog posts — uses top-level blogPosts array (parsed from blogPosts.ts + pillarBlogPosts.ts)
   for (const blogPath of blogPosts) {
     urls.push(`  <url>
     <loc>${SITE_URL}${blogPath}</loc>

@@ -185,30 +185,29 @@ export function generateBreadcrumbSchema(items: Array<{ name: string; url: strin
 }
 
 // ─── FAQ Schema ────────────────────────────────────────────────────────────
-//
-// IMPORTANT: FAQPage rich results were restricted by Google in August 2023 to
-// "well-known authoritative government and health websites." For a commercial
-// e-commerce site like LuxeMia, emitting FAQPage JSON-LD:
-//   • produces ZERO rich-result benefit (Google suppresses it), and
-//   • risks a manual quality action if the content is deemed low-quality.
-//
-// Per the 2026-07-09 SEO audit (Item #1, URGENT), generateFaqSchema() now
-// returns `null`. All callers (SEOHead.tsx, htmlGenerator.ts, FAQ.tsx) already
-// guard against null, so no FAQPage JSON-LD is emitted anywhere on the site.
-// The visible FAQ HTML remains in place — it still helps with AI Engines
-// (Perplexity, ChatGPT) and People-Also-Ask since those read the DOM, not
-// the JSON-LD.
-//
-// To re-enable FAQPage schema in the future (e.g. if Google lifts the
-// restriction), restore the function body below.
+// Re-enabled per SEO audit Phase 4 (Fix 4.x): FAQPage JSON-LD provides structured
+// data for AI engines (Perplexity, ChatGPT) and potential Google rich results.
+// Blog posts already emit FAQPage via inline logic — this restores consistency.
 
 export interface FAQItem {
   question: string;
   answer: string;
 }
 
-export function generateFaqSchema(_faqs: FAQItem[]): null {
-  return null;
+export function generateFaqSchema(faqs: FAQItem[]) {
+  if (!faqs || faqs.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
 }
 
 // ─── Organization Schema ───────────────────────────────────────────────────

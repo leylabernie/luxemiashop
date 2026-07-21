@@ -107,10 +107,10 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
  * Each post is assigned to exactly ONE primary category for clean URL hierarchy.
  * Posts can still be cross-referenced via tags and internal links.
  *
- * Total: 62 posts across 8 categories (as of July 2026).
+ * Total: 77 posts across 8 categories (as of July 2026).
  */
 export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
-  // ─── Attires (19 posts) — clothing types, comparisons, styling ────────────
+  // ─── Attires (21 posts) — clothing types, comparisons, styling ────────────
   'indian-wedding-dress-complete-guide': 'attires',
   'red-bridal-lehenga-trends-2026': 'attires',
   'designer-wedding-dress-under-500': 'attires',
@@ -130,27 +130,36 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'indian-bridal-jewelry-sets-complete-guide': 'attires',
   'lehenga-choli-designer-bridal-party-wear-guide': 'attires',
   'best-lehenga-styles-indian-wedding-guests-usa-2026': 'attires',
+  'sherwani-vs-jodhpuri-vs-bandhgala-groom-guide': 'attires',
+  'kundan-vs-polki-vs-jadau-bridal-jewelry-guide': 'attires',
 
-  // ─── Cultural Connections (5 posts) — symbolism & traditions ──────────────
+  // ─── Cultural Connections (7 posts) — symbolism & traditions ──────────────
   'why-indian-brides-wear-red-cultural-significance': 'cultural-connections',
   'bindi-meaning-history-indian-women': 'cultural-connections',
   'sindoor-mangalsutra-sacred-symbols-hindu-marriage': 'cultural-connections',
   'regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari': 'cultural-connections',
   'embroidery-motifs-symbolism-paisley-peacock-lotus': 'cultural-connections',
+  'punjabi-wedding-outfit-guide-nri': 'cultural-connections',
+  'south-indian-bridal-saree-style-guide': 'cultural-connections',
 
-  // ─── Fashion Cults (5 posts) — designer profiles ──────────────────────────
+  // ─── Fashion Cults (10 posts) — designer profiles ─────────────────────────
   'sabyasachi-mukherjee-designer-profile-handloom-revival': 'fashion-cults',
   'manish-malhotra-bollywood-bridal-designer-profile': 'fashion-cults',
   'jj-valaya-royal-couture-house-of-valaya': 'fashion-cults',
   'anita-dongre-sustainable-luxury-grassroots': 'fashion-cults',
   'ritu-kumar-pioneer-indian-textile-revival': 'fashion-cults',
+  'tarun-tahiliani-designer-profile-india-modern-couture': 'fashion-cults',
+  'rahul-mishra-designer-profile-paris-haute-couture-sustainable': 'fashion-cults',
+  'anamika-khanna-designer-profile-kolkata-couture': 'fashion-cults',
+  'abu-jani-sandeep-khosla-designer-profile-chikankari-couture': 'fashion-cults',
+  'neeta-lulla-designer-profile-national-award-costume-bridal': 'fashion-cults',
 
   // ─── Ethnicalley (3 posts) — ceremonies & traditions ──────────────────────
   'indian-wedding-season-2026-outfit-guide': 'ethnicalley',
   'indian-wedding-ceremony-outfit-guide': 'ethnicalley',
   'haldi-vs-mehendi-outfits-complete-guide': 'ethnicalley',
 
-  // ─── Motifs & Embroideries (7 posts) — textile techniques ─────────────────
+  // ─── Motifs & Embroideries (11 posts) — textile techniques ────────────────
   'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon': 'motifs-embroideries',
   'banarasi-silk-saree-guide-authentic': 'motifs-embroideries',
   'indian-fabric-types-guide-silk-georgette-chiffon': 'motifs-embroideries',
@@ -158,8 +167,12 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'zari-work-guide-indian-embroidery-gold-silver-thread': 'motifs-embroideries',
   'chikankari-embroidery-lucknow-guide': 'motifs-embroideries',
   'kanjivaram-vs-banarasi-silk-sarees': 'motifs-embroideries',
+  'indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry': 'motifs-embroideries',
+  'indian-jewelry-glossary-40-terms-kundan-polki-jhumka-maang-tikka': 'motifs-embroideries',
+  'indian-embroidery-glossary-40-terms-zardozi-chikankari-aari': 'motifs-embroideries',
+  'tussar-silk-saree-guide-nri': 'motifs-embroideries',
 
-  // ─── Weddings & Festivals (8 posts) — guest outfits, regional weddings ────
+  // ─── Weddings & Festivals (14 posts) — guest outfits, regional weddings ────
   'wedding-guest-outfit-ideas': 'weddings-festivals',
   'indian-wedding-trends-2026': 'weddings-festivals',
   'style-lehenga-choli-every-wedding-event': 'weddings-festivals',
@@ -171,6 +184,7 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'diwali-outfit-ideas-by-setting': 'weddings-festivals',
   'mehendi-outfit-by-role': 'weddings-festivals',
   'plus-size-indian-ethnic-wear-guide': 'weddings-festivals',
+  'indian-wedding-terms-glossary-50-events-rituals-roles': 'weddings-festivals',
   'indian-to-us-clothing-size-conversion-guide': 'how-to-care',
   'diwali-outfit-ideas-nri-women-usa-canada-australia': 'weddings-festivals',
   'indian-wedding-guest-outfits-men-usa-guide': 'weddings-festivals',
@@ -187,12 +201,13 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'custom-tailoring-indian-ethnic-wear-usa': 'how-to-care',
   'how-to-care-for-silk-sarees-and-lehengas': 'how-to-care',
 
-  // ─── NRI Shopping (5 posts) — buying from abroad ─────────────────────────
+  // ─── NRI Shopping (6 posts) — buying from abroad ─────────────────────────
   'nri-wedding-ethnic-wear-trends-2026': 'nri-shopping',
   'buy-authentic-indian-sarees-online-usa-uk': 'nri-shopping',
   'nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada': 'nri-shopping',
   'shipping-indian-clothes-usa-uk-canada-nri-guide': 'nri-shopping',
   'buying-indian-ethnic-wear-online-usa': 'nri-shopping',
+  'what-to-pack-indian-wedding-from-usa-nri-guide': 'nri-shopping',
 };
 
 /** Get the BlogCategoryGroup for a given blog post slug. */

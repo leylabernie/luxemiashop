@@ -589,6 +589,9 @@ const SAREES: CategoryConfig = {
         choice of neckline, sleeve length, and back design. Send us your measurements and we will tailor
         a blouse that fits like a glove. See our <a href="/sizing-measurements-guide">measurement guide</a> for details.
       </p>
+
+      <h3>Complete the Couple's Look</h3>
+      <p>Pair your saree with a matching <Link to="/menswear">groom sherwani</Link> or <Link to="/menswear?sub=groom">wedding sherwani</Link> for a perfectly coordinated couple's look at your next ceremony or reception.</p>
     </>
   ),
 };
@@ -772,6 +775,9 @@ const SUITS: CategoryConfig = {
         neckline, sleeve style, and bottom type — we will stitch it to your exact specifications. See our
         <a href="/sizing-measurements-guide">measurement guide</a> for instructions on how to measure yourself.
       </p>
+
+      <h3>Complete the Couple's Look</h3>
+      <p>Complete your outfit with a coordinated <Link to="/menswear">groom sherwani</Link> or <Link to="/menswear?sub=groom">wedding sherwani</Link> for the perfect couple's look at weddings, receptions, and festive celebrations.</p>
     </>
   ),
 };

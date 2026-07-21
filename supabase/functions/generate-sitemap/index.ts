@@ -86,7 +86,7 @@ function generateImageTags(images: string[], title: string, category: string): s
       <image:image>
         <image:loc>${escapeXml(imageUrl)}</image:loc>
         <image:title>${escapeXml(title)}</image:title>
-        <image:caption>${escapeXml(`${title} - ${category} | Luxemia`)}</image:caption>
+        <image:caption>${escapeXml(`${title} - ${category} | LuxeMia`)}</image:caption>
       </image:image>`).join('')
 }
 

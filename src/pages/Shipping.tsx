@@ -101,19 +101,12 @@ const ShippingCalculator = () => {
 };
 
 const Shipping = () => {
-  // MerchantReturnPolicy + OfferShippingDetails schemas for GMC compliance
+  // OfferShippingDetails schemas for GMC compliance
+  // Note: MerchantReturnPolicy is defined once in index.html with @id https://luxemia.shop/#returnPolicy
+  // to avoid duplicate schema conflicts across pages.
   const shippingSchemas = {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'MerchantReturnPolicy',
-        '@id': 'https://luxemia.shop/#returnPolicy',
-        name: 'LuxeMia Return & Refund Policy',
-        applicableCountry: ['US', 'CA', 'AU'],
-        returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-        description: 'Returns accepted only for damaged or defective items. Made-to-order and customized items are not eligible for returns. Contact support within 48 hours of delivery with photos for damage claims.',
-        url: 'https://luxemia.shop/returns',
-      },
       {
         '@type': 'OfferShippingDetails',
         '@id': 'https://luxemia.shop/#shippingDetailsFreeReadymade',

@@ -301,6 +301,51 @@ const OCCASION_INFO: Record<ProductCategory, OccasionInfo> = {
   },
 };
 
+// --- Tag extraction helpers for the Fabric & Details tab ---
+interface ParsedTags {
+  color?: string;
+  fabric?: string;
+  work?: string;
+  occasion?: string;
+  style?: string;
+  silhouette?: string;
+  length?: string;
+  sleeve?: string;
+}
+
+function parseProductTags(tags?: string[]): ParsedTags {
+  const result: ParsedTags = {};
+  (tags ?? []).forEach((tag) => {
+    const idx = tag.indexOf(':');
+    if (idx > 0) {
+      const key = tag.slice(0, idx).toLowerCase().trim();
+      const val = tag.slice(idx + 1).trim();
+      if (val && key in result) {
+        (result as any)[key] = val;
+      }
+    }
+  });
+  return result;
+}
+
+function titleCase(str: string): string {
+  return str.replace(/\b\w+/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+}
+
+function getLabel(key: string): string {
+  const labels: Record<string, string> = {
+    color: 'Color',
+    fabric: 'Fabric',
+    work: 'Embroidery / Work',
+    occasion: 'Occasion',
+    style: 'Style',
+    silhouette: 'Silhouette',
+    length: 'Length',
+    sleeve: 'Sleeve',
+  };
+  return labels[key] || titleCase(key);
+}
+
 export const ProductTabs = ({ description, productType, isStitchable, tags }: ProductTabsProps) => {
   const showTailoringTab = isStitchable ?? isStitchableType(productType);
   const category = classifyProduct(productType);
@@ -308,10 +353,20 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
   const materialInfo = MATERIAL_INFO[category];
   const occasionInfo = OCCASION_INFO[category];
   const fabricCare = getFabricCare(tags);
+  const parsedTags = parseProductTags(tags);
+  const hasFabricDetails = Object.keys(parsedTags).length > 0;
 
   return (
     <Tabs defaultValue="details" className="w-full">
       <TabsList className="w-full justify-start h-auto p-0 bg-transparent border-b border-border rounded-none overflow-x-auto">
+        {hasFabricDetails && (
+          <TabsTrigger 
+            value="fabric" 
+            className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
+          >
+            Fabric & Details
+          </TabsTrigger>
+        )}
         <TabsTrigger 
           value="details" 
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
@@ -351,6 +406,43 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           Shipping & Returns
         </TabsTrigger>
       </TabsList>
+
+      {/* ─── Fabric & Details Tab (Fix 3.2) ─── */}
+      <TabsContent value="fabric" className="pt-6">
+        <div className="space-y-6">
+          <div className="flex items-center gap-2 text-foreground">
+            <Sparkles className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-serif font-medium">Fabric & Details</h3>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Key specifications for this {productType || 'piece'}. Each attribute is sourced from the product tags verified at the time of listing.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+            {Object.entries(parsedTags).map(([key, value]) => (
+              <div key={key} className="flex flex-col gap-0.5">
+                <span className="text-xs uppercase tracking-wide text-muted-foreground font-medium">{getLabel(key)}</span>
+                <span className="text-sm text-foreground font-medium">{titleCase(value)}</span>
+              </div>
+            ))}
+          </div>
+          {parsedTags.fabric && fabricCare.length > 0 && (
+            <div className="mt-4 p-4 bg-muted/50 rounded-sm border border-border/50">
+              <div className="flex items-center gap-2 mb-2 text-foreground">
+                <Droplets className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium">Care Note for {titleCase(parsedTags.fabric)}</span>
+              </div>
+              <ul className="space-y-1">
+                {fabricCare.map((tip, i) => (
+                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <Shield className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </TabsContent>
 
       {/* ─── Details Tab ─── */}
       <TabsContent value="details" className="pt-6">

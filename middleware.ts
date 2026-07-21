@@ -431,8 +431,8 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
   let html = spaHtml;
 
   // Determine the correct meta tags for this page
-  let title = 'Luxemia Shop: Ready-to-Ship Indian Ethnic Wear & Sarees';
-  let description = 'Shop affordable Indian ethnic wear online at Luxemia Shop. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!';
+  let title = 'LuxeMia | Ready-to-Ship Indian Ethnic Wear & Sarees';
+  let description = 'Shop affordable Indian ethnic wear online at LuxeMia. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!';
   let canonical = `https://luxemia.shop${pathname}`;
   let ogType = 'website';
   let ogImage = 'https://luxemia.shop/og-image.jpg';
