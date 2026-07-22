@@ -9,6 +9,7 @@ import {
   SITE_URL,
 } from '@/lib/schema';
 import type { FAQItem as SchemaFAQItem } from '@/lib/schema';
+import { clampDescription, clampTitle } from '@/lib/meta/clamp';
 
 // Re-export FAQItem for consumers that import it from this module
 export type FAQItem = SchemaFAQItem;
@@ -95,6 +96,8 @@ const SEOHead = ({
   hreflang,
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
+  const seoTitle = clampTitle(title);
+  const seoDescription = clampDescription(description);
   // CRITICAL SEO FIX: Never derive canonical from window.location.pathname.
   // Doing so would let trailing slashes, query strings, and URL variants
   // produce canonicals that disagree with the prerendered HTML — which is
@@ -161,8 +164,8 @@ const SEOHead = ({
   // WebPage Schema — helps search engines understand page context
   const webPageSchema = generateWebPageSchema({
     url: canonicalUrl,
-    title,
-    description,
+    title: seoTitle,
+    description: seoDescription,
     breadcrumbs: breadcrumbs || undefined,
   });
 
@@ -179,9 +182,9 @@ const SEOHead = ({
   return (
     <Helmet>
       {/* Primary Meta Tags */}
-      <title>{title}</title>
-      <meta name="title" content={title} />
-      <meta name="description" content={description} />
+      <title>{seoTitle}</title>
+      <meta name="title" content={seoTitle} />
+      <meta name="description" content={seoDescription} />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
       {!noIndex && <meta name="robots" content="index, follow" />}
 
@@ -196,8 +199,8 @@ const SEOHead = ({
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta property="og:title" content={seoTitle} />
+      <meta property="og:description" content={seoDescription} />
       <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
       {/* og:image dimensions — declared as 1200x630 to match the brand OG
           (public/og-image.jpg) per the 2026-07-09 SEO audit Item #4. This
@@ -236,8 +239,8 @@ const SEOHead = ({
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={canonicalUrl} />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:title" content={seoTitle} />
+      <meta name="twitter:description" content={seoDescription} />
       <meta name="twitter:image" content={product ? gmcSafeImage : absoluteImage} />
       <meta name="twitter:site" content="@LuxeMia" />
       {product && <meta name="twitter:label1" content="Price" />}

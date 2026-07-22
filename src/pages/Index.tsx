@@ -170,8 +170,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia | Indian Ethnic Wear Online | Sarees, Lehengas & Suits"
-        description="Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350."
+        title="Buy Indian Ethnic Wear Online: Sarees & Lehengas | LuxeMia"
+        description="Shop 900+ Indian ethnic wear styles at LuxeMia — bridal lehengas, silk sarees, anarkalis & sherwanis. Free shipping over $350 to USA, Canada & Australia."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
@@ -179,7 +179,7 @@ const Index = () => {
       />
       <Header />
       
-      <main className="pt-[88px] lg:pt-[130px]">
+      <main id="main-content" className="pt-[88px] lg:pt-[130px]">
         <NewArrivalsBanner />
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
             Kept sr-only (screen-reader only) so visual layout is unchanged
@@ -189,7 +189,7 @@ const Index = () => {
         {/* First paragraph of copy — keyword-rich intro for search crawlers.
             sr-only so it doesn't disrupt the visual hero, but crawlers see it
             as the opening body copy. */}
-        <p className="sr-only">
+        <p className="sr-only lead">
           Welcome to LuxeMia — your destination for Indian ethnic wear online, shipped fast to the USA, Canada, and Australia. Shop 900+ styles including bridal lehengas, silk sarees, anarkali suits, and sherwanis. Free shipping on orders over $350.
         </p>
 
