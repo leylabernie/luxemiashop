@@ -140,6 +140,7 @@ const FeaturedProducts = () => {
                         <img
                           src={getOptimizedImage(image.url, 'card')}
                           alt={image.altText || product.node.title}
+                          width={300} height={400}
                           className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                           onError={(e) => {

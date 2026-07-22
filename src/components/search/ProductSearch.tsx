@@ -336,6 +336,8 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                             <img
                               src={getOptimizedImage(product.image, 'card')}
                               alt={product.title}
+                              width={300}
+                              height={400}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           </div>

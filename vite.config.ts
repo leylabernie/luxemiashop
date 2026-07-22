@@ -11,13 +11,37 @@ try {
 
 const isReplit = !!process.env.REPL_ID;
 
+// Vite plugin: make CSS links non-render-blocking using the media="print" trick.
+// PageSpeed flags <link rel="stylesheet"> as render-blocking. This plugin
+// transforms Vite's CSS <link> tags to use media="print" onload, which
+// allows the browser to continue rendering while the CSS downloads.
+// The CSS is applied immediately once loaded (no flash of unstyled content
+// because the critical CSS is inlined in index.html <style> tags).
+function deferCssPlugin(): import('vite').Plugin {
+  return {
+    name: 'defer-css-bundle',
+    enforce: 'post',
+    transformIndexHtml(html: string) {
+      // Match Vite-injected CSS stylesheet links: <link rel="stylesheet" ... href="/assets/...css">
+      return html.replace(
+        /<link rel="stylesheet"([^>]*)href="(\/assets\/[^"\s]+\.css)"([^>]*)>/g,
+        (_match, before, href, after) => {
+          // Build the non-blocking version with media="print" trick
+          return `<link rel="stylesheet"${before}href="${href}"${after} media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet"${before}href="${href}"${after}></noscript>`;
+        }
+      );
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
   server: {
     host: isReplit ? "0.0.0.0" : "localhost",
     port: isReplit ? 5000 : 8080,
     allowedHosts: isReplit ? (true as true) : undefined,
   },
-  plugins: [react(), mode === "development" && componentTagger?.()].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger?.(), deferCssPlugin()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

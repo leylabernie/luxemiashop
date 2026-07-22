@@ -290,6 +290,8 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
               <img
                 src={getOptimizedImage(image.node.url, 'thumbnail')}
                 alt={image.node.altText || `${productTitle} - View ${index + 1}`}
+                width={100}
+                height={100}
                 className="w-full h-full object-cover object-top"
                 loading="lazy"
                 draggable={false}
@@ -586,6 +588,8 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
                       <img
                         src={getOptimizedImage(image.node.url, 'thumbnail')}
                         alt={image.node.altText || `${productTitle} - View ${index + 1}`}
+                        width={100}
+                        height={100}
                         className="w-full h-full object-cover object-top"
                         draggable={false}
                       />

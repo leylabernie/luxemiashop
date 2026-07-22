@@ -84,6 +84,7 @@ const CategoryShowcase = () => {
                     <img 
                       src={category.image}
                       alt={`${category.name} collection - ${category.description}`}
+                      width={300} height={400}
                       loading="lazy"
                       decoding="async"
                       className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110"

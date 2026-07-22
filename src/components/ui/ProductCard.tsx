@@ -315,6 +315,8 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 src={getOptimizedImage(imageUrl, 'card')}
                 alt={product.node.images.edges[0]?.node.altText || buildSeoAltText(product.node.title, product.node.productType, product.node.tags)}
                 loading="lazy"
+                width={300}
+                height={400}
                 draggable={false}
                 onLoad={() => setIsLoaded(true)}
                 onError={() => setImageError(true)}

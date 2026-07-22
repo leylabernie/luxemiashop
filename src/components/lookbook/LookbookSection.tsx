@@ -102,6 +102,8 @@ const LookbookSection = ({
                     <img 
                       src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')} 
                       alt={product.node.title}
+                      width={300}
+                      height={400}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"

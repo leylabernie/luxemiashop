@@ -73,6 +73,8 @@ const LazyImage = ({
           src={src}
           alt={alt}
           loading="lazy"
+          width={{ portrait: 300, square: 300, landscape: 400, video: 640, auto: undefined }[aspectRatio]}
+          height={{ portrait: 400, square: 300, landscape: 300, video: 360, auto: undefined }[aspectRatio]}
           onLoad={() => setIsLoaded(true)}
           className={cn(
             'w-full h-full object-cover object-top transition-opacity duration-500',

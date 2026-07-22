@@ -112,6 +112,8 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                           <img
                             src={getOptimizedImage(image.url, 'thumbnail')}
                             alt={image.altText || item.product.node.title}
+                            width={80}
+                            height={96}
                             className="w-full h-full object-cover object-top"
                           />
                         ) : (

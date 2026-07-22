@@ -84,6 +84,8 @@ const RelatedArticles = ({ currentSlug, limit = 3 }: RelatedArticlesProps) => {
                   <img
                     src={post.image}
                     alt={post.title}
+                    width={400}
+                    height={300}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />

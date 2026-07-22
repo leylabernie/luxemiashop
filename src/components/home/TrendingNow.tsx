@@ -139,6 +139,7 @@ const TrendingNow = () => {
                   <img
                     src={getOptimizedImage(product.node.images.edges[0]?.node.url || '', 'card')}
                     alt={product.node.title}
+                    width={300} height={400}
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     onError={(e) => {
