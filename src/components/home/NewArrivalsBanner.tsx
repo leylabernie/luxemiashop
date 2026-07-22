@@ -82,7 +82,7 @@ const slides: FeaturedSlide[] = [
     headline: 'MENSWEAR',
     headlineLine2: 'COLLECTION',
     image:
-      '/images/banners/menswear-banner.jpg',
+      '/images/banners/menswear-banner.webp',
     // Deep burgundy-brown for the maroon sherwani
     panelBg: '#3d1020',
     panelText: '#f7ebd9',
