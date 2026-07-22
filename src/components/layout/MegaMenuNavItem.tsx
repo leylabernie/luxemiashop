@@ -13,7 +13,7 @@
 
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+
 import type { MegaMenuConfig } from '@/config/categoryConfig';
 
 interface MegaMenuNavItemProps {
@@ -51,17 +51,28 @@ export function MegaMenuNavItem({ menu }: MegaMenuNavItemProps) {
         {menu.label}
       </Link>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.15 }}
-            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50"
-            onMouseEnter={open}
-            onMouseLeave={close}
-          >
+      <style>{`
+        @keyframes megaMenuFadeIn {
+          from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+          to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        .mega-menu-dropdown {
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s ease-out;
+          willChange: opacity;
+        }
+        .mega-menu-dropdown.is-open {
+          opacity: 1;
+          pointer-events: auto;
+          animation: megaMenuFadeIn 0.15s ease-out;
+        }
+      `}</style>
+      <div
+        className={`mega-menu-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50${isOpen ? ' is-open' : ''}`}
+        onMouseEnter={open}
+        onMouseLeave={close}
+      >
             <div className="bg-background border border-border shadow-lg rounded-lg p-6 min-w-[640px]">
               <div className="grid grid-cols-4 gap-6">
                 {menu.groups.map(group => (
@@ -95,9 +106,7 @@ export function MegaMenuNavItem({ menu }: MegaMenuNavItemProps) {
                 </Link>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 }

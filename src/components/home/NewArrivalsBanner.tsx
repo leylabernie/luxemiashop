@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -101,17 +100,35 @@ const AUTO_PLAY_MS = 5500;
 const NewArrivalsBanner = () => {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const next = useCallback(() => {
-    setIndex((i) => (i + 1) % slides.length);
-  }, []);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIndex((i) => (i + 1) % slides.length);
+      setIsTransitioning(false);
+    }, 350); // fade-out duration
+  }, [isTransitioning]);
 
   const prev = useCallback(() => {
-    setIndex((i) => (i - 1 + slides.length) % slides.length);
-  }, []);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIndex((i) => (i - 1 + slides.length) % slides.length);
+      setIsTransitioning(false);
+    }, 350);
+  }, [isTransitioning]);
 
-  const goTo = useCallback((i: number) => setIndex(i), []);
+  const goTo = useCallback((i: number) => {
+    if (isTransitioning || i === index) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setIndex(i);
+      setIsTransitioning(false);
+    }, 350);
+  }, [index, isTransitioning]);
 
   // Auto-play
   useEffect(() => {
@@ -156,114 +173,122 @@ const NewArrivalsBanner = () => {
       onTouchEnd={onTouchEnd}
     >
       <div className="relative w-full">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="grid grid-cols-1 lg:grid-cols-2"
+        {/* PSI 2026-07-22: Replaced framer-motion AnimatePresence with pure CSS
+            transitions. This removes ~120KB (vendor-motion chunk) from the
+            initial render critical path. Only opacity transitions are used
+            (GPU-composited), avoiding layout-triggering y-transforms. */}
+        <div
+          key={slide.id}
+          className="grid grid-cols-1 lg:grid-cols-2"
+          style={{
+            opacity: isTransitioning ? 0 : 1,
+            transition: 'opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
+            willChange: 'opacity',
+          }}
+        >
+          {/* TEXT PANEL — editorial campaign copy */}
+          <div
+            className="order-2 flex items-center px-6 py-12 sm:px-10 sm:py-16 lg:order-1 lg:px-16 lg:py-20"
+            style={{ backgroundColor: slide.panelBg, color: slide.panelText }}
           >
-            {/* TEXT PANEL — editorial campaign copy */}
-            <div
-              className="order-2 flex items-center px-6 py-12 sm:px-10 sm:py-16 lg:order-1 lg:px-16 lg:py-20"
-              style={{ backgroundColor: slide.panelBg, color: slide.panelText }}
-            >
-              <div className="w-full max-w-xl">
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                  className="text-[11px] font-medium uppercase tracking-[0.32em] opacity-70"
-                >
-                  {slide.category}
-                </motion.p>
+            <div className="w-full max-w-xl">
+              <p
+                className="text-[11px] font-medium uppercase tracking-[0.32em] opacity-70"
+                style={{
+                  animation: 'heroFadeIn 0.6s ease-out 0.1s both',
+                  willChange: 'opacity',
+                }}
+              >
+                {slide.category}
+              </p>
 
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.18, duration: 0.7 }}
-                  className="mt-5 font-serif leading-[0.95] tracking-tight"
-                >
-                  <span className="block text-5xl sm:text-6xl md:text-7xl">
-                    {slide.headline}
+              <h2
+                className="mt-5 font-serif leading-[0.95] tracking-tight"
+                style={{
+                  animation: 'heroFadeIn 0.7s ease-out 0.18s both',
+                  willChange: 'opacity',
+                }}
+              >
+                <span className="block text-5xl sm:text-6xl md:text-7xl">
+                  {slide.headline}
+                </span>
+                {slide.headlineLine2 && (
+                  <span className="mt-2 block text-3xl font-light italic opacity-90 sm:text-4xl md:text-5xl">
+                    {slide.headlineLine2}
                   </span>
-                  {slide.headlineLine2 && (
-                    <span className="mt-2 block text-3xl font-light italic opacity-90 sm:text-4xl md:text-5xl">
-                      {slide.headlineLine2}
-                    </span>
-                  )}
-                </motion.h2>
+                )}
+              </h2>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.32, duration: 0.7 }}
-                  className="mt-8 h-px w-16"
-                  style={{ backgroundColor: slide.panelText, opacity: 0.4 }}
-                />
+              <div
+                className="mt-8 h-px w-16"
+                style={{
+                  backgroundColor: slide.panelText,
+                  opacity: 0.4,
+                  animation: 'heroFadeIn 0.7s ease-out 0.32s both',
+                  willChange: 'opacity',
+                }}
+              />
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.42, duration: 0.7 }}
-                  className="mt-8 flex flex-wrap items-center gap-3"
-                >
-                  {slide.ctas.map((cta) => (
-                    <Link
-                      key={cta.label}
-                      to={cta.link}
-                      className="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-all hover:scale-[1.03] sm:text-xs"
-                      style={{
-                        borderColor: slide.ctaBorder,
-                        color: slide.panelText,
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = slide.panelText;
-                        e.currentTarget.style.color = slide.panelBg;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                        e.currentTarget.style.color = slide.panelText;
-                      }}
-                    >
-                      {cta.label}
-                    </Link>
-                  ))}
-                </motion.div>
+              <div
+                className="mt-8 flex flex-wrap items-center gap-3"
+                style={{
+                  animation: 'heroFadeIn 0.7s ease-out 0.42s both',
+                  willChange: 'opacity',
+                }}
+              >
+                {slide.ctas.map((cta) => (
+                  <Link
+                    key={cta.label}
+                    to={cta.link}
+                    className="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-all hover:scale-[1.03] sm:text-xs"
+                    style={{
+                      borderColor: slide.ctaBorder,
+                      color: slide.panelText,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = slide.panelText;
+                      e.currentTarget.style.color = slide.panelBg;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = slide.panelText;
+                    }}
+                  >
+                    {cta.label}
+                  </Link>
+                ))}
               </div>
             </div>
+          </div>
 
-            {/* IMAGE PANEL — object-contain, no cropping ever */}
-            <div
-              className="order-1 flex items-center justify-center lg:order-2"
-              style={{ backgroundColor: slide.imageBg }}
-            >
-              <div className="flex h-[360px] w-full items-center justify-center px-4 py-6 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
-                <img
-                  src={slide.image.includes('/images/hero/') ? `${slide.image}_desktop.webp` : slide.image}
-                  srcSet={slide.image.includes('/images/hero/')
-                    ? `${slide.image}_mobile.webp 480w, ${slide.image}_tablet.webp 768w, ${slide.image}_desktop.webp 1000w`
-                    : undefined}
-                  // sizes attribute tuned to ACTUAL display width (PSI 2026-07-15):
-                  //   - mobile (<=640px): image fills ~100vw minus padding = ~92vw, cap at 480px
-                  //   - tablet (<=1024px): image is in 1-col layout, fills ~90vw, cap at 768px
-                  //   - desktop (>1024px): image is in 2-col grid, takes ~50vw, cap at 600px
-                  // Previous sizes=1200px caused DPR-2 mobile to pick the 1200w variant
-                  // even though display was only ~400px — wasting ~375KB per hero.
-                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 50vw"
-                  alt={slide.headline}
-                  width={600}
-                  height={800}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : 'auto'}
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
+          {/* IMAGE PANEL — object-contain, no cropping ever */}
+          <div
+            className="order-1 flex items-center justify-center lg:order-2"
+            style={{ backgroundColor: slide.imageBg }}
+          >
+            <div className="flex h-[360px] w-full items-center justify-center px-4 py-6 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
+              <img
+                src={slide.image.includes('/images/hero/') ? `${slide.image}_desktop.webp` : slide.image}
+                srcSet={slide.image.includes('/images/hero/')
+                  ? `${slide.image}_mobile.webp 480w, ${slide.image}_tablet.webp 768w, ${slide.image}_desktop.webp 1000w`
+                  : undefined}
+                // sizes attribute tuned to ACTUAL display width (PSI 2026-07-15):
+                //   - mobile (<=640px): image fills ~100vw minus padding = ~92vw, cap at 480px
+                //   - tablet (<=1024px): image is in 1-col layout, fills ~90vw, cap at 768px
+                //   - desktop (>1024px): image is in 2-col grid, takes ~50vw, cap at 600px
+                // Previous sizes=1200px caused DPR-2 mobile to pick the 1200w variant
+                // even though display was only ~400px — wasting ~375KB per hero.
+                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 50vw"
+                alt={slide.headline}
+                width={600}
+                height={800}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
+                className="max-h-full max-w-full object-contain"
+              />
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        </div>
 
         {/* Prev / Next arrows */}
         <button
@@ -301,6 +326,14 @@ const NewArrivalsBanner = () => {
           ))}
         </div>
       </div>
+
+      {/* Inline @keyframes for hero fade-in — avoids injecting into global CSS */}
+      <style>{`
+        @keyframes heroFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </section>
   );
 };

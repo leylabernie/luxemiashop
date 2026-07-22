@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight, ChevronDown } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
@@ -84,22 +83,20 @@ const Header = () => {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
-        {/* Rotating Announcement Bar */}
+        {/* Rotating Announcement Bar — CSS-only fade (PSI 2026-07-22: removed framer-motion) */}
         <div className="bg-foreground text-background overflow-hidden" style={{ height: '32px' }}>
           <div className="container mx-auto px-4 h-full flex items-center justify-center relative">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={announcementIdx}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.35 }}
-                className="text-xs tracking-wide text-center absolute"
-                data-testid="announcement-bar"
-              >
-                {announcements[announcementIdx]}
-              </motion.p>
-            </AnimatePresence>
+            <p
+              key={announcementIdx}
+              className="text-xs tracking-wide text-center absolute"
+              data-testid="announcement-bar"
+              style={{
+                animation: 'announcementFade 0.35s ease-out',
+                willChange: 'opacity',
+              }}
+            >
+              {announcements[announcementIdx]}
+            </p>
           </div>
         </div>
 
@@ -123,21 +120,17 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Center Logo */}
+            {/* Center Logo — CSS-only fade-in (PSI 2026-07-22: removed framer-motion) */}
             <Link to="/" className="flex-shrink-0 mx-6 lg:mx-8">
-              <motion.div
+              <div
                 className="font-serif text-2xl lg:text-3xl tracking-wide"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                style={{
+                  animation: 'heroFadeIn 0.6s ease-out',
+                  willChange: 'opacity',
+                }}
               >
-                {/* Brand logo text — always a <span> (never an <h1>) to avoid
-                    duplicate H1 conflicts with the page-level H1. The homepage
-                    has its own sr-only H1 for SEO ('Affordable Indian Ethnic
-                    Wear & Traditional Fashion'). Using <h1> here for the logo
-                    created a second H1 that diluted the SEO target. */}
                 <span>LuxeMia</span>
-              </motion.div>
+              </div>
             </Link>
 
             {/* Right Navigation - Desktop */}
@@ -242,23 +235,17 @@ const Header = () => {
       {/* Search Modal */}
       <ProductSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
+      {/* Mobile Menu — CSS-only slide (PSI 2026-07-22: removed framer-motion) */}
+      {isMenuOpen && (
           <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               className="fixed inset-0 bg-foreground/20 z-50 lg:hidden"
+              style={{ animation: 'menuFadeIn 0.3s ease-out', willChange: 'opacity' }}
               onClick={() => setIsMenuOpen(false)}
             />
-            <motion.nav
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
+            <nav
               className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-background z-50 lg:hidden overflow-y-auto"
+              style={{ animation: 'menuSlideIn 0.3s ease-out', willChange: 'transform' }}
             >
               <div className="flex items-center justify-between p-4 border-b border-border/50">
                 <h2 className="font-serif text-xl">Menu</h2>
@@ -271,11 +258,9 @@ const Header = () => {
                 {/* Main categories */}
                 <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Categories</p>
                 {navLinks.map((link, index) => (
-                  <motion.div
+                  <div
                     key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    style={{ animation: `menuItemIn 0.3s ease-out ${index * 0.05}s both`, willChange: 'opacity, transform' }}
                   >
                     <Link
                       to={link.href}
@@ -285,18 +270,16 @@ const Header = () => {
                       {link.name}
                       <ChevronRight className="w-4 h-4 text-muted-foreground" />
                     </Link>
-                  </motion.div>
+                  </div>
                 ))}
 
                 {/* Secondary links */}
                 <div className="pt-4 border-t border-border/30">
                   <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Collections</p>
                   {secondaryLinks.map((link, index) => (
-                    <motion.div
+                    <div
                       key={link.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: (navLinks.length + index) * 0.05 }}
+                      style={{ animation: `menuItemIn 0.3s ease-out ${(navLinks.length + index) * 0.05}s both`, willChange: 'opacity, transform' }}
                     >
                       <Link
                         to={link.href}
@@ -305,7 +288,7 @@ const Header = () => {
                       >
                         {link.name}
                       </Link>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
 
@@ -341,10 +324,15 @@ const Header = () => {
                   )}
                 </div>
               </div>
-            </motion.nav>
+            </nav>
           </>
         )}
-      </AnimatePresence>
+      <style>{`
+        @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes menuSlideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+        @keyframes menuItemIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes announcementFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
 
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
