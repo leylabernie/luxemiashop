@@ -18,6 +18,7 @@ interface FeaturedSlide {
   cta: string;
   link: string;
   image: string;
+  desktopImage?: string;
   alt: string;
   width: number;
   height: number;
@@ -32,6 +33,7 @@ const slides: FeaturedSlide[] = [
     cta: 'Shop Bridal Lehengas',
     link: '/lehengas',
     image: '/images/hero-carousel/bridal-lehenga',
+    desktopImage: '/images/hero-carousel/bridal-lehenga-desktop',
     alt: 'Bride wearing an off-white hand-embroidered lehenga and bridal jewelry',
     width: 509,
     height: 700,
@@ -44,6 +46,7 @@ const slides: FeaturedSlide[] = [
     cta: 'Shop Sarees',
     link: '/sarees',
     image: '/images/hero-carousel/saree-teal',
+    desktopImage: '/images/hero-carousel/saree-teal-desktop',
     alt: 'Woman wearing a teal pre-stitched saree with traditional jewelry',
     width: 493,
     height: 700,
@@ -56,6 +59,7 @@ const slides: FeaturedSlide[] = [
     cta: 'Shop Festive Lehengas',
     link: '/collections',
     image: '/images/hero-carousel/navratri-lehenga',
+    desktopImage: '/images/hero-carousel/navratri-lehenga-desktop',
     alt: 'Woman twirling in a bright pink Navratri lehenga and mirror-work jacket',
     width: 462,
     height: 700,
@@ -68,6 +72,7 @@ const slides: FeaturedSlide[] = [
     cta: 'Shop Menswear',
     link: '/menswear',
     image: '/images/hero-carousel/menswear-kurta',
+    desktopImage: '/images/hero-carousel/menswear-kurta-desktop',
     alt: 'Man wearing a cream embroidered kurta and dhoti set',
     width: 367,
     height: 579,
@@ -167,6 +172,7 @@ const NewArrivalsBanner = () => {
       <div className="absolute inset-0">
         {slides.map((slide, slideIndex) => {
           const isActive = slideIndex === index;
+          const preservesFullImage = Boolean(slide.desktopImage);
 
           return (
             <div
@@ -181,7 +187,46 @@ const NewArrivalsBanner = () => {
               role="group"
               style={{ zIndex: isActive ? 1 : 0 }}
             >
+              {preservesFullImage && (
+                <picture aria-hidden="true" className="absolute inset-0 block overflow-hidden">
+                  <source
+                    media="(min-width: 640px)"
+                    srcSet={`${slide.desktopImage}.webp`}
+                    type="image/webp"
+                  />
+                  <source
+                    media="(min-width: 640px)"
+                    srcSet={`${slide.desktopImage}.jpg`}
+                    type="image/jpeg"
+                  />
+                  <source srcSet={`${slide.image}.webp`} type="image/webp" />
+                  <img
+                    src={`${slide.image}.jpg`}
+                    alt=""
+                    width={slide.width}
+                    height={slide.height}
+                    decoding="async"
+                    loading={slideIndex === 0 ? 'eager' : 'lazy'}
+                    className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-2xl"
+                  />
+                </picture>
+              )}
+
               <picture className="absolute inset-0 block overflow-hidden">
+                {slide.desktopImage && (
+                  <source
+                    media="(min-width: 640px)"
+                    srcSet={`${slide.desktopImage}.webp`}
+                    type="image/webp"
+                  />
+                )}
+                {slide.desktopImage && (
+                  <source
+                    media="(min-width: 640px)"
+                    srcSet={`${slide.desktopImage}.jpg`}
+                    type="image/jpeg"
+                  />
+                )}
                 <source srcSet={`${slide.image}.webp`} type="image/webp" />
                 <img
                   data-hero-image
@@ -191,7 +236,11 @@ const NewArrivalsBanner = () => {
                   height={slide.height}
                   decoding="async"
                   loading={slideIndex === 0 ? 'eager' : 'lazy'}
-                  className="absolute inset-0 h-full w-full object-cover object-[center_15%] transition-transform ease-out sm:object-[center_20%]"
+                  className={`absolute inset-0 h-full w-full transition-transform ease-out ${
+                    preservesFullImage
+                      ? 'object-contain object-top sm:object-center'
+                      : 'object-cover object-[center_15%] sm:object-[center_20%]'
+                  }`}
                   style={{
                     transform: isActive ? 'scale(1)' : 'scale(1.08)',
                     transitionDuration: '8000ms',
