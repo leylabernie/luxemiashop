@@ -69,16 +69,12 @@
          Now loads only 6 variants (~28KB) — removes ~17KB unused font CSS. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"></noscript>
 
-    <!-- Preload LCP hero banner image (first slide of NewArrivalsBanner carousel)
-         Self-hosted WebP with responsive sizes. Uses imagesrcset for responsive
-         preloading — browser picks the right variant based on viewport.
-         PSI 2026-07-22: fetchpriority="high" ensures this competes with CSS for
-         the first network slot. -->
-    <link rel="preload" as="image" imagesrcset="/images/hero/Hero_image_mobile.webp 480w, /images/hero/Hero_image_tablet.webp 768w, /images/hero/Hero_image_desktop.webp 1000w" imagesizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 50vw" fetchpriority="high">
+    <!-- Preload the first image in the full-bleed homepage carousel. -->
+    <link rel="preload" as="image" href="/images/hero-carousel/bridal-lehenga.webp" type="image/webp" fetchpriority="high">
 
     <!-- Preconnect to Shopify Storefront API host (PSI 2026-07-15: ~300ms LCP savings).
          The SPA fires 6+ graphql.json requests to this host during initial load;
@@ -102,12 +98,11 @@
       .font-serif,h1,h2,h3,.font-serif{font-family:'Playfair Display',Georgia,'Times New Roman',serif}
       /* Prevent CLS on images */
       img{max-width:100%;height:auto;display:block}
-      /* Reserve hero carousel space — prevents 0→600px layout shift.
-         Desktop: grid 2-col with image panel ~620px tall.
-         Mobile: single col with image ~360px tall.
-         The main content padding-top accounts for the fixed header. */
+      /* Reserve the full-bleed carousel space before the stylesheet loads. */
       main.pt-\[88px\]{padding-top:88px}
       @media(min-width:1024px){main.pt-\[88px\]{padding-top:130px}}
+      [data-home-hero]{height:620px;min-height:620px;background:#0f0d0b}
+      @media(min-width:641px){[data-home-hero]{height:min(78vh,720px);min-height:520px}}
       /* Ensure smooth loading without layout shifts */
       [style*="min-height"]{content-visibility:auto}
       /* Touch target sizing for mobile accessibility */

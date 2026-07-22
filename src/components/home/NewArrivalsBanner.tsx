@@ -1,337 +1,358 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  type FocusEvent,
+  type KeyboardEvent,
+  type TouchEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-interface CtaChip {
-  label: string;
-  link: string;
-}
 
 interface FeaturedSlide {
   id: number;
-  category: string; // small overline label, e.g. "01 — LEHENGA"
-  headline: string; // big bold campaign headline
-  headlineLine2?: string;
-  image: string; // base path (without _mobile/_tablet/_desktop suffix)
-  // Hex colors tuned to each product so the panel feels editorial, not generic
-  panelBg: string;
-  panelText: string;
-  imageBg: string; // soft cream/neutral that complements the product
-  ctaBorder: string; // border color for CTA chips on the colored panel
-  ctas: CtaChip[];
+  eyebrow: string;
+  headline: string;
+  subline: string;
+  cta: string;
+  link: string;
+  image: string;
+  alt: string;
+  width: number;
+  height: number;
 }
 
-// Editorial campaign slides — split-panel layout, uncropped product imagery
-// Colors picked to match each product so the design reads couture, not stock.
 const slides: FeaturedSlide[] = [
   {
     id: 1,
-    category: '01 — SILK LEHENGA',
-    headline: 'BRIDAL EDIT',
-    headlineLine2: '2026',
-    image: '/images/hero/Hero_image',
-    // Deep burgundy to match the maroon silk lehenga
-    panelBg: '#6b1026',
-    panelText: '#f7ebd9',
-    imageBg: '#f5ead8',
-    ctaBorder: 'rgba(247,235,217,0.45)',
-    ctas: [
-      { label: 'LEHENGAS', link: '/lehengas' },
-      { label: 'BRIDAL', link: '/lehengas?occasion=bridal' },
-      { label: 'WEDDING', link: '/wedding-sarees' },
-    ],
+    eyebrow: 'The Bridal Edit',
+    headline: 'Lehengas Made for the Aisle',
+    subline: 'Hand-embroidered silk, dupattas that photograph like a dream.',
+    cta: 'Shop Bridal Lehengas',
+    link: '/lehengas',
+    image: '/images/hero-carousel/bridal-lehenga',
+    alt: 'Bride wearing an off-white hand-embroidered lehenga and bridal jewelry',
+    width: 509,
+    height: 700,
   },
   {
     id: 2,
-    category: '02 — SATIN SAREE',
-    headline: 'FESTIVE EDIT',
-    headlineLine2: 'NEW ARRIVALS',
-    image: '/images/hero/Teal-Blue-Satin-Silk-Occasional-Wear-Embroidery-Work-Readymade-Saree-A411-B',
-    // Deep teal to echo the blue saree
-    panelBg: '#0d3b4a',
-    panelText: '#f1f5ec',
-    imageBg: '#f4efe4',
-    ctaBorder: 'rgba(241,245,236,0.45)',
-    ctas: [
-      { label: 'SAREES', link: '/sarees' },
-      { label: 'DESIGNER', link: '/sarees?style=designer' },
-      { label: 'FESTIVE', link: '/sarees?occasion=festive' },
-    ],
+    eyebrow: 'Ready to Drape',
+    headline: 'Pre-Stitched Sarees, Zero Fuss',
+    subline: 'Nine yards of grace, pleated and pinned before it reaches you.',
+    cta: 'Shop Sarees',
+    link: '/sarees',
+    image: '/images/hero-carousel/saree-teal',
+    alt: 'Woman wearing a teal pre-stitched saree with traditional jewelry',
+    width: 493,
+    height: 700,
   },
   {
     id: 3,
-    category: '03 — DESIGNER SUIT',
-    headline: 'DESIGNER',
-    headlineLine2: 'SUITS',
-    image: '/images/hero/Black-Georgette-Occasional-Wear-Embroidery-Work-Readymade-Designer-Suit-Isha-10002',
-    // True black to match the black georgette suit — warm off-white text for contrast
-    panelBg: '#0d0d0d',
-    panelText: '#f5f5f5',
-    imageBg: '#f5f5f5',
-    ctaBorder: 'rgba(245,245,245,0.45)',
-    ctas: [
-      { label: 'SUITS', link: '/suits' },
-      { label: 'BLACK', link: '/suits?color=black' },
-      { label: 'OCCASION', link: '/suits?occasion=occasion' },
-    ],
+    eyebrow: 'Festive 2026',
+    headline: 'Navratri, in Full Twirl',
+    subline: 'Tiered ghagras and mirror-work jackets built for nine nights of garba.',
+    cta: 'Shop Festive Lehengas',
+    link: '/collections',
+    image: '/images/hero-carousel/navratri-lehenga',
+    alt: 'Woman twirling in a bright pink Navratri lehenga and mirror-work jacket',
+    width: 462,
+    height: 700,
   },
   {
     id: 4,
-    category: '04 — GROOM SHERWANI',
-    headline: 'MENSWEAR',
-    headlineLine2: 'COLLECTION',
-    image:
-      '/images/banners/menswear-banner.webp',
-    // Deep burgundy-brown for the maroon sherwani
-    panelBg: '#3d1020',
-    panelText: '#f7ebd9',
-    imageBg: '#f5ead8',
-    ctaBorder: 'rgba(247,235,217,0.45)',
-    ctas: [
-      { label: 'SHERWANI', link: '/menswear' },
-      { label: 'MENSWEAR', link: '/menswear' },
-      { label: 'WEDDING', link: '/menswear?occasion=wedding' },
-    ],
+    eyebrow: 'For Him',
+    headline: 'Kurtas, Sherwanis, Statement Sets',
+    subline: 'The groom, the brother, the best man — sorted.',
+    cta: 'Shop Menswear',
+    link: '/menswear',
+    image: '/images/hero-carousel/menswear-kurta',
+    alt: 'Man wearing a cream embroidered kurta and dhoti set',
+    width: 367,
+    height: 579,
+  },
+  {
+    id: 5,
+    eyebrow: 'Finish the Look',
+    headline: 'Bridal Jewellery Sets',
+    subline: 'Kundan, polki and pearl — because the outfit is only half the story.',
+    cta: 'Shop Collections',
+    link: '/collections',
+    image: '/images/hero-carousel/bridal-jewellery',
+    alt: 'Bride wearing a kundan necklace, earrings, maang tikka, and maroon lehenga',
+    width: 524,
+    height: 700,
   },
 ];
 
-const AUTO_PLAY_MS = 5500;
+const AUTO_PLAY_MS = 6000;
+const padSlideNumber = (value: number) => String(value).padStart(2, '0');
 
 const NewArrivalsBanner = () => {
   const [index, setIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocusWithin, setIsFocusWithin] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const touchStartX = useRef(0);
+  const isPaused = isHovered || isFocusWithin;
+  const autoplayRunning = !isPaused && !prefersReducedMotion;
 
   const next = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setIndex((i) => (i + 1) % slides.length);
-      setIsTransitioning(false);
-    }, 350); // fade-out duration
-  }, [isTransitioning]);
+    setIndex((current) => (current + 1) % slides.length);
+  }, []);
 
   const prev = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setIndex((i) => (i - 1 + slides.length) % slides.length);
-      setIsTransitioning(false);
-    }, 350);
-  }, [isTransitioning]);
+    setIndex((current) => (current - 1 + slides.length) % slides.length);
+  }, []);
 
-  const goTo = useCallback((i: number) => {
-    if (isTransitioning || i === index) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setIndex(i);
-      setIsTransitioning(false);
-    }, 350);
-  }, [index, isTransitioning]);
-
-  // Auto-play
   useEffect(() => {
-    if (isPaused) return;
-    timerRef.current = setTimeout(next, AUTO_PLAY_MS);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [index, isPaused, next]);
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+    updatePreference();
+    mediaQuery.addEventListener('change', updatePreference);
+    return () => mediaQuery.removeEventListener('change', updatePreference);
+  }, []);
 
-  // Keyboard
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [next, prev]);
+    if (isPaused || prefersReducedMotion) return;
+    const timer = window.setTimeout(next, AUTO_PLAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [index, isPaused, next, prefersReducedMotion]);
 
-  // Touch swipe
-  const touchStartX = useRef(0);
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (dx > 50) prev();
-    if (dx < -50) next();
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      prev();
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      next();
+    }
   };
 
-  const slide = slides[index];
+  const handleTouchStart = (event: TouchEvent<HTMLElement>) => {
+    touchStartX.current = event.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLElement>) => {
+    const distance = event.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(distance) <= 40) return;
+    if (distance < 0) next();
+    else prev();
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setIsFocusWithin(false);
+    }
+  };
 
   return (
     <section
+      data-home-hero
+      aria-label="LuxeMia featured collections"
       aria-roledescription="carousel"
-      aria-label="Featured collections"
-      className="relative w-full overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
+      className="relative h-[620px] min-h-[620px] w-full overflow-hidden bg-[#0f0d0b] text-[#faf7f0] outline-none sm:h-[min(78vh,720px)] sm:min-h-[520px]"
+      style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
+      tabIndex={0}
+      onBlur={handleBlur}
+      onFocus={() => setIsFocusWithin(true)}
+      onKeyDown={handleKeyDown}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchEnd={handleTouchEnd}
+      onTouchStart={handleTouchStart}
     >
-      <div className="relative w-full">
-        {/* PSI 2026-07-22: Replaced framer-motion AnimatePresence with pure CSS
-            transitions. This removes ~120KB (vendor-motion chunk) from the
-            initial render critical path. Only opacity transitions are used
-            (GPU-composited), avoiding layout-triggering y-transforms. */}
-        <div
-          key={slide.id}
-          className="grid grid-cols-1 lg:grid-cols-2"
-          style={{
-            opacity: isTransitioning ? 0 : 1,
-            transition: 'opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
-            willChange: 'opacity',
-          }}
-        >
-          {/* TEXT PANEL — editorial campaign copy */}
-          <div
-            className="order-2 flex items-center px-6 py-12 sm:px-10 sm:py-16 lg:order-1 lg:px-16 lg:py-20"
-            style={{ backgroundColor: slide.panelBg, color: slide.panelText }}
-          >
-            <div className="w-full max-w-xl">
-              <p
-                className="text-[11px] font-medium uppercase tracking-[0.32em] opacity-70"
-                style={{
-                  animation: 'heroFadeIn 0.6s ease-out 0.1s both',
-                  willChange: 'opacity',
-                }}
-              >
-                {slide.category}
-              </p>
+      <div className="absolute inset-0">
+        {slides.map((slide, slideIndex) => {
+          const isActive = slideIndex === index;
 
-              <h2
-                className="mt-5 font-serif leading-[0.95] tracking-tight"
-                style={{
-                  animation: 'heroFadeIn 0.7s ease-out 0.18s both',
-                  willChange: 'opacity',
-                }}
-              >
-                <span className="block text-5xl sm:text-6xl md:text-7xl">
-                  {slide.headline}
-                </span>
-                {slide.headlineLine2 && (
-                  <span className="mt-2 block text-3xl font-light italic opacity-90 sm:text-4xl md:text-5xl">
-                    {slide.headlineLine2}
-                  </span>
-                )}
-              </h2>
+          return (
+            <div
+              key={slide.id}
+              data-hero-slide
+              aria-hidden={!isActive}
+              aria-label={`${slideIndex + 1} of ${slides.length}`}
+              aria-roledescription="slide"
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+              }`}
+              role="group"
+              style={{ zIndex: isActive ? 1 : 0 }}
+            >
+              <picture className="absolute inset-0 block overflow-hidden">
+                <source srcSet={`${slide.image}.webp`} type="image/webp" />
+                <img
+                  data-hero-image
+                  src={`${slide.image}.jpg`}
+                  alt={slide.alt}
+                  width={slide.width}
+                  height={slide.height}
+                  decoding="async"
+                  loading={slideIndex === 0 ? 'eager' : 'lazy'}
+                  className="absolute inset-0 h-full w-full object-cover object-[center_15%] transition-transform ease-out sm:object-[center_20%]"
+                  style={{
+                    transform: isActive ? 'scale(1)' : 'scale(1.08)',
+                    transitionDuration: '8000ms',
+                  }}
+                />
+              </picture>
 
               <div
-                className="mt-8 h-px w-16"
+                className="absolute inset-0 sm:hidden"
                 style={{
-                  backgroundColor: slide.panelText,
-                  opacity: 0.4,
-                  animation: 'heroFadeIn 0.7s ease-out 0.32s both',
-                  willChange: 'opacity',
+                  background:
+                    'linear-gradient(180deg, rgba(20,16,14,0.35) 0%, rgba(20,16,14,0.5) 45%, rgba(20,16,14,0.92) 100%)',
+                }}
+              />
+              <div
+                className="absolute inset-0 hidden sm:block"
+                style={{
+                  background:
+                    'linear-gradient(90deg, rgba(20,16,14,0.85) 0%, rgba(20,16,14,0.55) 45%, rgba(20,16,14,0.15) 75%, rgba(20,16,14,0.35) 100%), linear-gradient(180deg, rgba(20,16,14,0.25) 0%, rgba(20,16,14,0) 30%, rgba(20,16,14,0) 65%, rgba(20,16,14,0.6) 100%)',
                 }}
               />
 
-              <div
-                className="mt-8 flex flex-wrap items-center gap-3"
-                style={{
-                  animation: 'heroFadeIn 0.7s ease-out 0.42s both',
-                  willChange: 'opacity',
-                }}
-              >
-                {slide.ctas.map((cta) => (
-                  <Link
-                    key={cta.label}
-                    to={cta.link}
-                    className="inline-flex items-center justify-center rounded-full border px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-all hover:scale-[1.03] sm:text-xs"
-                    style={{
-                      borderColor: slide.ctaBorder,
-                      color: slide.panelText,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = slide.panelText;
-                      e.currentTarget.style.color = slide.panelBg;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.color = slide.panelText;
-                    }}
+              <div className="relative z-10 flex h-full items-end px-6 pb-[130px] sm:items-center sm:px-[6vw] sm:pb-0">
+                <div
+                  data-hero-content
+                  className={`max-w-[560px] transition-all delay-300 duration-700 ease-out ${
+                    isActive ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+                  }`}
+                >
+                  <p
+                    className="mb-[22px] inline-flex items-center gap-2.5 text-[15px] font-medium italic uppercase tracking-[0.14em] text-[#d4b078]"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', serif" }}
                   >
-                    {cta.label}
+                    <span
+                      aria-hidden="true"
+                      className="h-px w-8 bg-gradient-to-r from-transparent to-[#d4b078]"
+                    />
+                    {slide.eyebrow}
+                  </p>
+
+                  <h2
+                    className="mb-[18px] text-[34px] font-normal leading-[1.02] tracking-[-0.01em] text-[#faf7f0] sm:text-[clamp(38px,5.5vw,68px)]"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', serif" }}
+                  >
+                    {slide.headline}
+                  </h2>
+
+                  <p className="mb-[34px] max-w-[460px] text-[15px] font-light leading-[1.55] text-[#f5f0e6]/80 sm:text-[clamp(15px,1.15vw,17px)]">
+                    {slide.subline}
+                  </p>
+
+                  <Link
+                    to={slide.link}
+                    tabIndex={isActive ? 0 : -1}
+                    className="group inline-flex min-h-11 items-center gap-3 border border-transparent bg-[#faf7f0] px-7 py-[15px] text-sm font-semibold uppercase tracking-[0.06em] text-[#1a1a1a] transition-colors duration-300 hover:bg-[#b8935a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4b078]"
+                  >
+                    <span>{slide.cta}</span>
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="h-[18px] w-[18px] transition-transform duration-300 group-hover:translate-x-1"
+                      strokeWidth={1.5}
+                    />
                   </Link>
-                ))}
+                </div>
               </div>
             </div>
-          </div>
+          );
+        })}
+      </div>
 
-          {/* IMAGE PANEL — object-contain, no cropping ever */}
-          <div
-            className="order-1 flex items-center justify-center lg:order-2"
-            style={{ backgroundColor: slide.imageBg }}
-          >
-            <div className="flex h-[360px] w-full items-center justify-center px-4 py-6 sm:h-[460px] sm:px-6 lg:h-[620px] lg:px-8">
-              <img
-                src={slide.image.includes('/images/hero/') ? `${slide.image}_desktop.webp` : slide.image}
-                srcSet={slide.image.includes('/images/hero/')
-                  ? `${slide.image}_mobile.webp 480w, ${slide.image}_tablet.webp 768w, ${slide.image}_desktop.webp 1000w`
-                  : undefined}
-                // sizes attribute tuned to ACTUAL display width (PSI 2026-07-15):
-                //   - mobile (<=640px): image fills ~100vw minus padding = ~92vw, cap at 480px
-                //   - tablet (<=1024px): image is in 1-col layout, fills ~90vw, cap at 768px
-                //   - desktop (>1024px): image is in 2-col grid, takes ~50vw, cap at 600px
-                // Previous sizes=1200px caused DPR-2 mobile to pick the 1200w variant
-                // even though display was only ~400px — wasting ~375KB per hero.
-                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 90vw, 50vw"
-                alt={slide.headline}
-                width={600}
-                height={800}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : 'auto'}
-                className="max-h-full max-w-full object-contain"
-              />
-            </div>
+      <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-between px-[clamp(12px,2vw,28px)] sm:flex">
+        <button
+          type="button"
+          aria-label="Previous slide"
+          onClick={prev}
+          className="pointer-events-auto grid h-[52px] w-[52px] place-items-center rounded-full border border-[#f5f0e6]/25 bg-[#14100e]/35 text-[#faf7f0] backdrop-blur-xl transition-colors duration-300 hover:border-[#faf7f0] hover:bg-[#faf7f0] hover:text-[#1a1a1a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4b078]"
+        >
+          <ChevronLeft aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
+        </button>
+        <button
+          type="button"
+          aria-label="Next slide"
+          onClick={next}
+          className="pointer-events-auto grid h-[52px] w-[52px] place-items-center rounded-full border border-[#f5f0e6]/25 bg-[#14100e]/35 text-[#faf7f0] backdrop-blur-xl transition-colors duration-300 hover:border-[#faf7f0] hover:bg-[#faf7f0] hover:text-[#1a1a1a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4b078]"
+        >
+          <ChevronRight aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
+        </button>
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex flex-col-reverse items-center gap-6 px-6 pb-6 sm:flex-row sm:items-end sm:justify-between sm:px-[6vw] sm:pb-8">
+        <div
+          aria-hidden="true"
+          className="pointer-events-auto hidden items-center gap-3.5 sm:flex"
+          style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', serif" }}
+        >
+          <span className="min-w-8 text-[28px] tracking-[0.06em] text-[#d4b078]">
+            {padSlideNumber(index + 1)}
+          </span>
+          <div className="relative h-px w-[140px] overflow-hidden bg-[#f5f0e6]/20">
+            <div
+              key={`${index}-${autoplayRunning}`}
+              data-hero-progress
+              className="absolute inset-0 bg-[#d4b078]"
+              style={{
+                animation: autoplayRunning
+                  ? `heroCarouselProgress ${AUTO_PLAY_MS}ms linear forwards`
+                  : 'none',
+                transform: autoplayRunning ? undefined : 'translateX(-100%)',
+              }}
+            />
           </div>
+          <span className="text-[15px] text-[#f5f0e6]/55">/ {padSlideNumber(slides.length)}</span>
         </div>
 
-        {/* Prev / Next arrows */}
-        <button
-          type="button"
-          onClick={prev}
-          aria-label="Previous slide"
-          className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-neutral-900/15 bg-white/85 p-2.5 text-neutral-900 backdrop-blur-sm transition hover:bg-white sm:flex md:left-5 md:p-3"
+        <div
+          className="pointer-events-auto flex items-center gap-0 sm:gap-2"
+          aria-label="Choose a featured collection"
+          role="group"
         >
-          <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-        </button>
-        <button
-          type="button"
-          onClick={next}
-          aria-label="Next slide"
-          className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-neutral-900/15 bg-white/85 p-2.5 text-neutral-900 backdrop-blur-sm transition hover:bg-white sm:flex md:right-5 md:p-3"
-        >
-          <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-        </button>
-
-        {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5 lg:bottom-6">
-          {slides.map((s, i) => (
+          {slides.map((slide, slideIndex) => (
             <button
-              key={s.id}
+              key={slide.id}
               type="button"
-              onClick={() => goTo(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              aria-current={i === index ? 'true' : 'false'}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                i === index
-                  ? 'w-10 bg-neutral-900'
-                  : 'w-2.5 bg-neutral-900/30 hover:bg-neutral-900/60'
-              }`}
-            />
+              aria-label={`Go to slide ${slideIndex + 1}`}
+              aria-current={slideIndex === index ? 'true' : undefined}
+              onClick={() => setIndex(slideIndex)}
+              className="group grid h-11 w-11 place-items-center p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4b078] sm:h-6 sm:w-auto"
+            >
+              <span
+                className={`block h-0.5 transition-all duration-300 ${
+                  slideIndex === index
+                    ? 'w-11 bg-[#d4b078]'
+                    : 'w-7 bg-[#f5f0e6]/30 group-hover:bg-[#f5f0e6]/60'
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Inline @keyframes for hero fade-in — avoids injecting into global CSS */}
       <style>{`
-        @keyframes heroFadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+        @keyframes heroCarouselProgress {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          [data-home-hero] [data-hero-slide],
+          [data-home-hero] [data-hero-content],
+          [data-home-hero] [data-hero-image] {
+            transition: none !important;
+          }
+
+          [data-home-hero] [data-hero-image] {
+            transform: scale(1) !important;
+          }
+
+          [data-home-hero] [data-hero-progress] {
+            animation: none !important;
+            transform: translateX(0) !important;
+          }
         }
       `}</style>
     </section>
