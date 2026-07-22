@@ -20,6 +20,48 @@ const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
 const FALLBACK_CURRENCY = 'USD';
 
+function normalizeWhitespace(value) {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
+function truncateAtWord(value, maxLength) {
+  if (value.length <= maxLength) return value;
+
+  const available = Math.max(1, maxLength - 1);
+  const candidate = value.slice(0, available + 1);
+  const lastSpace = candidate.lastIndexOf(' ');
+  const truncated = (lastSpace > 0
+    ? candidate.slice(0, lastSpace)
+    : value.slice(0, available))
+    .replace(/\s+(?:&|and|or|of|for|the|with|in|on|at|to)$/i, '')
+    .replace(/[|,:;\-/]+$/, '');
+
+  return `${truncated.trimEnd()}…`;
+}
+
+function clampTitle(raw, brand = 'LuxeMia', maxLength = 58) {
+  const cleaned = normalizeWhitespace(raw);
+  const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const brandAtStart = new RegExp(`^${escapedBrand}\\s*(?:[|—–:\\-]\\s*)?`, 'i');
+  const brandAtEnd = new RegExp(`\\s*(?:[|—–:\\-]\\s*)?${escapedBrand}$`, 'i');
+  const withoutBrand = cleaned
+    .replace(brandAtStart, '')
+    .replace(brandAtEnd, '')
+    .trim();
+
+  if (!withoutBrand) return brand.slice(0, maxLength);
+
+  const suffix = ` | ${brand}`;
+  const title = `${withoutBrand}${suffix}`;
+  if (title.length <= maxLength) return title;
+
+  return `${truncateAtWord(withoutBrand, Math.max(1, maxLength - suffix.length))}${suffix}`;
+}
+
+function clampDescription(raw, maxLength = 155) {
+  return truncateAtWord(normalizeWhitespace(raw), maxLength);
+}
+
 // ─── Shopify Storefront API (build-time product fetch) ──────────────────────
 // Pulls live product data so prerendered HTML emits valid Product schema with
 // image, description, offers.price, etc. — required by Google Merchant
@@ -360,16 +402,85 @@ function generateItemListJsonLd(products, category, routePath) {
   };
 }
 
+const FAQ_PAGE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Where does LuxeMia ship?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'LuxeMia currently ships to the USA, Canada, and Australia. Shipping is free on orders over $350 USD, and a flat rate of $25 USD applies to orders under $350.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How long does LuxeMia shipping take?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Readymade items are dispatched within 3–5 business days, and custom or alteration orders within 5–7 business days. Delivery then takes 3–5 business days by DHL Express or 7–10 business days by USPS or UPS standard shipping.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does LuxeMia offer custom sizing?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. LuxeMia offers custom sizing for its garments. Customers submit their measurements through the Size Guide, and custom orders require additional production time.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is LuxeMia’s return policy?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'All sales are final. LuxeMia does not accept returns or exchanges for sizing issues, color variations, or change of mind. Genuine shipping damage must be reported within 48 hours with an unboxing video.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I cancel a LuxeMia order?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Orders can be cancelled within 24 hours of placement. After 24 hours, production begins and the order cannot be cancelled.',
+      },
+    },
+  ],
+};
+
+const MEASUREMENT_HOW_TO_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to measure for a custom-stitched Indian outfit',
+  description: 'Measure your bust, waist, hips, garment length, and sleeves for a custom-stitched lehenga choli, saree blouse, anarkali, or salwar kameez.',
+  totalTime: 'PT10M',
+  supply: [
+    { '@type': 'HowToSupply', name: 'Soft measuring tape' },
+    { '@type': 'HowToSupply', name: 'Pen and paper' },
+    { '@type': 'HowToSupply', name: 'A friend to assist, if available' },
+  ],
+  tool: [{ '@type': 'HowToTool', name: 'Soft measuring tape' }],
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Measure your bust', text: 'Wear the bra you plan to use with the outfit. Wrap the tape around the fullest part of your bust and keep it level across your back.' },
+    { '@type': 'HowToStep', position: 2, name: 'Measure your waist', text: 'Measure around your natural waist at the narrowest part of your torso without pulling the tape tight.' },
+    { '@type': 'HowToStep', position: 3, name: 'Measure your hips', text: 'Stand with your feet together and measure around the fullest part of your hips, keeping the tape parallel to the floor.' },
+    { '@type': 'HowToStep', position: 4, name: 'Measure the garment length', text: 'Measure from the garment starting point to the desired hem. Wear the shoes you plan to use when measuring a floor-length lehenga or anarkali.' },
+    { '@type': 'HowToStep', position: 5, name: 'Measure sleeve length and circumference', text: 'Measure from the shoulder point to the desired sleeve end, then measure around the arm where the sleeve will finish.' },
+  ],
+};
+
 // Route definitions with SEO metadata
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia — Buy Indian Ethnic Wear Online | Sarees, Lehengas & Suits',
-    description: 'Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350.',
+    title: 'Buy Indian Ethnic Wear Online: Sarees & Lehengas | LuxeMia',
+    description: 'Shop 900+ Indian ethnic wear styles at LuxeMia — bridal lehengas, silk sarees, anarkalis & sherwanis. Free shipping over $350 to USA, Canada & Australia.',
     h1: 'Affordable Indian Ethnic Wear & Traditional Fashion',
     content: `
-      <p>Welcome to Luxemia Shop — your destination for affordable traditional clothing and ready-to-ship Indian ethnic wear. Shop trendy sarees, festive lehengas, and ready-to-wear salwar kameez with fast USA delivery.</p>
-      <h2>Shop by Category</h2>
+      <p>Welcome to LuxeMia — your destination for affordable traditional clothing and ready-to-ship Indian ethnic wear. Shop trendy sarees, festive lehengas, and ready-to-wear salwar kameez with fast USA delivery.</p>
+      <h2>What can I shop at LuxeMia?</h2>
+      <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
         <ul>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
@@ -378,14 +489,16 @@ const routes = [
           <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
         </ul>
       </nav>
-      <h2>Featured Collections</h2>
+      <h2>Which LuxeMia collections are best for weddings?</h2>
+      <p>Wedding shoppers can browse bridal lehengas, wedding sarees, reception outfits, and festive wear for every ceremony.</p>
       <ul>
         <li><a href="/lehengas">Bridal Lehengas</a></li>
         <li><a href="/sarees">Wedding Sarees</a></li>
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
-      <p>Free shipping on orders over $350 to USA, Canada, and Australia. Flat rate $25 per order for orders under $350. Handcrafted with love by Indian artisans.</p>
+      <h2>How much is LuxeMia shipping?</h2>
+      <p>Shipping is free on orders over $350 to the USA, Canada, and Australia. A flat rate of $25 per order applies below $350.</p>
     `,
   },
   {
@@ -858,10 +971,20 @@ const routes = [
   },
   {
     path: '/sizing-measurements-guide',
-    title: 'How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | Luxemia',
+    title: 'How to Measure Blouse Size for Saree | LuxeMia',
     description: 'Complete guide on how to measure blouse size for saree, lehenga choli & custom ethnic wear. Step-by-step instructions, size charts & tips for the perfect fit.',
     h1: 'Sizing & Measurements Guide',
-    content: '<p>Learn how to measure yourself accurately for saree blouses, lehenga cholis, and custom-stitched Indian ethnic wear. This step-by-step guide covers bust, under-bust, shoulder width, blouse length, armhole depth, sleeve length, waist, hips, and skirt length — with standard Indian size charts (32–48), tips for measuring over light clothing, and advice for between-size shoppers. Accurate measurements to the nearest half-inch ensure a perfect fit for both ready-to-wear and made-to-measure orders.</p>',
+    schemas: [MEASUREMENT_HOW_TO_SCHEMA],
+    content: `<p>Learn how to measure yourself accurately for saree blouses, lehenga cholis, and custom-stitched Indian ethnic wear. Use a soft measuring tape, record every measurement in inches, and ask a friend to help when possible.</p>
+      <h2>How do I measure for a custom-stitched Indian outfit?</h2>
+      <p>Take five core measurements while wearing light, close-fitting clothing and the undergarments and shoes you plan to use with the outfit.</p>
+      <ol>
+        <li><strong>Measure your bust:</strong> Wrap the tape around the fullest part of your bust and keep it level across your back.</li>
+        <li><strong>Measure your waist:</strong> Measure around your natural waist without pulling the tape tight.</li>
+        <li><strong>Measure your hips:</strong> Stand with your feet together and measure around the fullest part of your hips.</li>
+        <li><strong>Measure the garment length:</strong> Measure to the desired hem while wearing the shoes planned for a floor-length outfit.</li>
+        <li><strong>Measure sleeves:</strong> Record sleeve length from the shoulder and the arm circumference where the sleeve will end.</li>
+      </ol>`,
   },
   {
     path: '/care-guide',
@@ -875,7 +998,18 @@ const routes = [
     title: 'Frequently Asked Questions | LuxeMia',
     description: 'Find answers to common questions about LuxeMia — shipping, returns, sizing, custom orders, fabrics & more.',
     h1: 'Frequently Asked Questions',
-    content: '<p>Find answers to common questions about LuxeMia orders, shipping, returns, sizing, custom stitching, fabrics, and more.</p>',
+    schemas: [FAQ_PAGE_SCHEMA],
+    content: `<p>Find answers to common questions about LuxeMia orders, shipping, returns, sizing, custom stitching, fabrics, and more.</p>
+      <h2>Where does LuxeMia ship?</h2>
+      <p>LuxeMia currently ships to the USA, Canada, and Australia. Shipping is free on orders over $350 USD, and a flat rate of $25 USD applies to orders under $350.</p>
+      <h2>How long does LuxeMia shipping take?</h2>
+      <p>Readymade items are dispatched within 3–5 business days, and custom or alteration orders within 5–7 business days. Delivery then takes 3–5 business days by DHL Express or 7–10 business days by USPS or UPS standard shipping.</p>
+      <h2>Does LuxeMia offer custom sizing?</h2>
+      <p>Yes. LuxeMia offers custom sizing for its garments. Customers submit their measurements through the Size Guide, and custom orders require additional production time.</p>
+      <h2>What is LuxeMia’s return policy?</h2>
+      <p>All sales are final. LuxeMia does not accept returns or exchanges for sizing issues, color variations, or change of mind. Genuine shipping damage must be reported within 48 hours with an unboxing video.</p>
+      <h2>Can I cancel a LuxeMia order?</h2>
+      <p>Orders can be cancelled within 24 hours of placement. After 24 hours, production begins and the order cannot be cancelled.</p>`,
   },
   {
     path: '/shipping',
@@ -1819,17 +1953,19 @@ const routes = [
  */
 function generateHtml(template, route, allShopifyProducts) {
   let html = template;
+  const seoTitle = clampTitle(route.title);
+  const seoDescription = clampDescription(route.description);
 
   // Replace title
   html = html.replace(
     /<title>.*?<\/title>/,
-    `<title>${escapeHtml(route.title)}</title>`
+    `<title>${escapeHtml(seoTitle)}</title>`
   );
 
   // Replace meta description
   html = html.replace(
     /<meta name="description" content="[^"]*" \/>/,
-    `<meta name="description" content="${escapeHtml(route.description)}" />`
+    `<meta name="description" content="${escapeHtml(seoDescription)}" />`
   );
 
   // Handle noIndex for 404 pages
@@ -1861,22 +1997,29 @@ function generateHtml(template, route, allShopifyProducts) {
   // Replace OG title and description
   html = html.replace(
     /<meta property="og:title" content="[^"]*" \/>/,
-    `<meta property="og:title" content="${escapeHtml(route.title)}" />`
+    `<meta property="og:title" content="${escapeHtml(seoTitle)}" />`
   );
   html = html.replace(
     /<meta property="og:description" content="[^"]*" \/>/,
-    `<meta property="og:description" content="${escapeHtml(route.description)}" />`
+    `<meta property="og:description" content="${escapeHtml(seoDescription)}" />`
   );
 
   // Replace Twitter tags
   html = html.replace(
     /<meta name="twitter:title" content="[^"]*" \/>/,
-    `<meta name="twitter:title" content="${escapeHtml(route.title)}" />`
+    `<meta name="twitter:title" content="${escapeHtml(seoTitle)}" />`
   );
   html = html.replace(
     /<meta name="twitter:description" content="[^"]*" \/>/,
-    `<meta name="twitter:description" content="${escapeHtml(route.description)}" />`
+    `<meta name="twitter:description" content="${escapeHtml(seoDescription)}" />`
   );
+
+  if (Array.isArray(route.schemas) && route.schemas.length > 0) {
+    const routeSchemas = route.schemas
+      .map((schema) => `<script type="application/ld+json" data-prerender-schema>${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>`)
+      .join('\n    ');
+    html = html.replace('</head>', `    ${routeSchemas}\n</head>`);
+  }
 
   // Inject structured data (JSON-LD) for product pages
   if (route.path.startsWith('/product/')) {
@@ -2143,7 +2286,7 @@ function generateHtml(template, route, allShopifyProducts) {
   }
 
   const seoContent = `
-    <div id="seo-prerender">
+    <main id="seo-prerender">
       ${mainBodyContent}
       <nav aria-label="Site navigation">
         <a href="/">Home</a> |
@@ -2155,7 +2298,7 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/collections">Collections</a> |
         <a href="/contact">Contact</a>
       </nav>
-    </div>
+    </main>
     <script>
       (function(){
         var root = document.getElementById('root');

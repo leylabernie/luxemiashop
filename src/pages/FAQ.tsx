@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -13,7 +12,7 @@ import { HelpCircle, Package, Truck, Ruler, Sparkles, CreditCard, RotateCcw, Mai
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const faqCategories = [
+  const faqCategories = useMemo(() => ([
     {
       icon: Package,
       title: 'Orders & Payment',
@@ -250,23 +249,12 @@ const FAQ = () => {
         },
       ],
     },
-  ];
+  ]), []);
 
-  // FAQPage schema was REMOVED 2026-07-09 per SEO audit Item #1 — Google
-  // Aug-2023 policy restricts FAQPage rich results to gov/health authority
-  // sites only. The visible FAQ HTML below remains for AI search / PAA.
-  // BreadcrumbList schema is still emitted.
-  const allFaqs = faqCategories.flatMap(category => category.faqs);
-
-  // BreadcrumbList schema
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://luxemia.shop' },
-      { '@type': 'ListItem', position: 2, name: 'FAQ', item: 'https://luxemia.shop/faq' },
-    ],
-  };
+  const allFaqs = useMemo(
+    () => faqCategories.flatMap(category => category.faqs),
+    [faqCategories],
+  );
 
   // Search/filter logic
   const filteredCategories = useMemo(() => {
@@ -299,12 +287,8 @@ const FAQ = () => {
           { name: 'Home', url: '/' },
           { name: 'FAQ', url: '/faq' },
         ]}
+        faqs={allFaqs}
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
-        </script>
-      </Helmet>
       <Header />
       
       <main className="pt-[90px] lg:pt-[132px] pb-16">

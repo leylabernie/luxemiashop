@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Ruler, Shirt, Scissors, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { howToMeasureSchema } from '@/lib/schema/howTo';
 
 const SizingMeasurementsGuide = () => {
   const [activeTab, setActiveTab] = useState<'blouse' | 'lehenga' | 'saree'>('blouse');
@@ -72,6 +73,7 @@ const SizingMeasurementsGuide = () => {
         description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free shipping over $350 to USA."
         canonical="https://luxemia.shop/sizing-measurements-guide"
         faqs={faqs}
+        additionalSchemas={[howToMeasureSchema()]}
       />
       <Header />
 
