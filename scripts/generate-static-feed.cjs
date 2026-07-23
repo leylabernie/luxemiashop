@@ -538,13 +538,13 @@ function buildDescription(product, color, material, productType) {
 
   // Occasion + shipping sentence — adds genuine shopper-relevant detail
   // and keeps every fallback description well above the 150-char floor.
-  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships worldwide from LuxeMia with a $25 flat rate (free over $350) to the USA, Canada and Australia.');
+  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships from LuxeMia with a $25 flat rate (free over $350) to the USA, Canada and Australia.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
   // 150 chars, append a closing line so GMC never sees a sub-150 description.
   if (out.length < 150) {
-    out += ` Discover more authentic Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia — affordable luxury, worldwide delivery.`;
+    out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery to the USA, Canada and Australia.`;
   }
   return out.slice(0, 5000);
 }
@@ -829,7 +829,10 @@ function generateProductItemXml(product, titleCounts) {
   // GMC BEST PRACTICE: One feed item per product with ALL sizes listed in a single <g:size> field.
   // Creating one item per size variant inflates the feed (92 products → 1,647 items) and causes
   // duplicate content issues in GMC. Instead, use one item per product with comma-separated sizes.
-  const itemId = sku || handle;
+  // Product handles are unique and stable in Shopify. SKUs are not reliably
+  // unique in this catalog (some suppliers reuse a base SKU), which caused GMC
+  // to reject otherwise valid products as duplicate IDs.
+  const itemId = handle;
   const allSizes = sizes.length > 0 ? sizes.join(',') : '';
 
   // Use the lowest price across variants as the product price

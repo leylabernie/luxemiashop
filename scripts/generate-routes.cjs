@@ -55,8 +55,6 @@ const STATIC_ROUTES = [
   '/bestsellers',
   '/indowestern',
   '/nri',
-  '/nri/usa',
-  '/nri/canada',
   '/indian-ethnic-wear-usa',
   '/indian-ethnic-wear-canada',
   '/size-guide',
@@ -74,6 +72,7 @@ const STATIC_ROUTES = [
   '/sizing-measurements-guide',
   '/lookbook',
   '/style-consultation',
+  '/wedding-party-orders',
   '/style-quiz',
   // Occasion landing pages — high buyer-intent SEO pages
   '/collections/diwali-outfits',

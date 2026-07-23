@@ -209,7 +209,7 @@ const BlogPost = () => {
 
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
     "image": {
@@ -221,9 +221,9 @@ const BlogPost = () => {
     "datePublished": post.publishedAt,
     "dateModified": post.updatedAt,
     "author": {
-      "@type": "Person",
-      "name": post.author,
-      "url": "https://luxemia.shop/about"
+      "@type": "Organization",
+      "name": "LuxeMia Editorial Team",
+      "url": "https://luxemia.shop/authors/luxemia-editorial-team"
     },
     "publisher": {
       "@type": "Organization",

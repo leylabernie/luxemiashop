@@ -6,15 +6,12 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import ProductSearch from '@/components/search/ProductSearch';
-import CartDrawer from '@/components/cart/CartDrawer';
 
 const MobileBottomNav = () => {
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const cartItems = useCartStore((state) => state.items);
-  const cartOpen = useCartStore((state) => state.isCartOpen);
   const openCart = useCartStore((state) => state.openCart);
-  const closeCart = useCartStore((state) => state.closeCart);
   const wishlistItems = useWishlistStore((state) => state.items);
   
   const totalCartItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -59,9 +56,6 @@ const MobileBottomNav = () => {
     <>
       {/* Search Dialog */}
       <ProductSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      
-      {/* Cart Drawer */}
-      <CartDrawer isOpen={cartOpen} onClose={closeCart} />
       
       {/* Bottom Navigation Bar - Only visible on mobile */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-md border-t border-border md:hidden safe-area-bottom">

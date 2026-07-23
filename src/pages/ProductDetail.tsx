@@ -229,13 +229,13 @@ const ProductDetail = () => {
           ]}
           faqs={productFaqs}
         />
-      ) : (
+      ) : !isLoading ? (
         <SEOHead
           title="Product Not Found | LuxeMia"
           description="This product could not be found."
           noIndex={true}
         />
-      )}
+      ) : null}
 
       <Header />
       

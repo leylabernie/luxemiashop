@@ -34,7 +34,7 @@ export const LOOKBOOK_COLLECTIONS: LookbookCollection[] = [
     title: 'Festive Favorites',
     subtitle: 'Season\'s Best',
     description:
-      'A curated mix of our most-loved pieces across categories — versatile outfits that transition effortlessly from festive gatherings to celebrations.',
+      'A curated mix of featured pieces across categories — versatile outfits for festive gatherings and celebrations.',
     query: 'tag:"salwar" OR tag:"anarkali" OR tag:"Anarkali Suit" OR tag:"Salwar Suit" OR tag:"lehenga-choli"',
     maxProducts: 8,
   },

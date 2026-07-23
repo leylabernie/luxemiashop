@@ -87,8 +87,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/new-arrivals`,
   },
   '/bestsellers': {
-    title: 'Bestsellers | Most Popular Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia\'s bestselling Indian ethnic wear. Our most loved lehengas, sarees, and suits chosen by customers. Free shipping over $350.',
+    title: 'Featured Indian Ethnic Wear | LuxeMia',
+    description: 'Explore featured lehengas, sarees, suits, menswear and jewelry selected by the LuxeMia team for weddings and celebrations.',
     canonical: `${SITE_URL}/bestsellers`,
   },
   '/indowestern': {

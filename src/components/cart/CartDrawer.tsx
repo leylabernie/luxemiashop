@@ -179,7 +179,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   {subtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
-                      You've unlocked free worldwide shipping!
+                      You've unlocked free shipping!
                     </div>
                   ) : (
                     <div className="mb-2">

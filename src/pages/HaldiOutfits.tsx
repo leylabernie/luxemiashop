@@ -39,7 +39,7 @@ const haldiOutfitFaqs = [
   },
   {
     question: 'Do you ship haldi ceremony outfits to the USA and Canada?',
-    answer: 'Yes, LuxeMia ships haldi ceremony outfits worldwide, including the USA, Canada, and Australia. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders are fully tracked with estimated delivery of 7-10 business days after dispatch. For wedding functions, we recommend ordering at least 4-6 weeks in advance to ensure timely delivery. If you need an outfit quickly, check our ready-to-ship collection for items that dispatch in 3-5 business days.',
+    answer: 'LuxeMia currently ships haldi outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking with estimated transit of 7–10 business days after dispatch. For wedding functions, order at least 4–6 weeks in advance.',
   },
 ];
 
@@ -96,7 +96,7 @@ const HaldiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Haldi Ceremony Outfits — Yellow & Gold Lehengas, Sarees & Suits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features stunning yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets perfect for the bride, bridesmaids, family, and guests. Sourced from India's finest artisans and shipped worldwide with free delivery on orders over $350.
+              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets for the bride, bridesmaids, family, and guests. Delivery is available to the USA, Canada and Australia, with free shipping over $350.
             </p>
           </div>
         </div>

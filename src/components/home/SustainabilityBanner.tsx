@@ -22,7 +22,7 @@ const values = [
   {
     icon: Truck,
     title: 'Reliable Shipping',
-    description: 'Trackable worldwide delivery with standard and express options available.',
+    description: 'Tracked delivery to the USA, Canada and Australia with standard and express options.',
   },
 ];
 

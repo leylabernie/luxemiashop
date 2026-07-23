@@ -9,12 +9,6 @@ import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
-// Lazy-loaded so the popup's dependencies (framer-motion, lucide-react icons,
-// zod, supabase client) are split into a separate chunk that only loads when
-// the popup actually opens. Per PSI 2026-07-15: this removes ~24KB (vendor-mo)
-// + ~37KB (vendor-supabase) + lucide + zod from the initial bundle.
-const NewVisitorPopup = lazy(() => import("./components/home/NewVisitorPopup"));
-
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
 
@@ -56,6 +50,7 @@ const Sitemap = lazy(() => import("./pages/Sitemap"));
 const Lookbook = lazy(() => import("./pages/Lookbook"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const StyleConsultation = lazy(() => import("./pages/StyleConsultation"));
+const WeddingPartyOrders = lazy(() => import("./pages/WeddingPartyOrders"));
 const StyleQuiz = lazy(() => import("./pages/StyleQuiz"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
 const USA = lazy(() => import("./pages/nri/USA"));
@@ -201,13 +196,14 @@ const App = () => (
 
                 <Route path="/sitemap" element={<Suspense fallback={<PageLoader />}><Sitemap /></Suspense>} />
                 <Route path="/style-consultation" element={<Suspense fallback={<PageLoader />}><StyleConsultation /></Suspense>} />
+                <Route path="/wedding-party-orders" element={<Suspense fallback={<PageLoader />}><WeddingPartyOrders /></Suspense>} />
                 <Route path="/style-quiz" element={<Suspense fallback={<PageLoader />}><StyleQuiz /></Suspense>} />
                 {/* Order Confirmation — Google Customer Reviews opt-in */}
                 <Route path="/order-confirmation" element={<Suspense fallback={<PageLoader />}><OrderConfirmation /></Suspense>} />
                 {/* NRI Landing Pages for SEO */}
                 <Route path="/nri" element={<Suspense fallback={<PageLoader />}><NRIGeneral /></Suspense>} />
-                <Route path="/nri/usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
-                <Route path="/nri/canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
+                <Route path="/nri/usa" element={<Navigate to="/indian-ethnic-wear-usa" replace />} />
+                <Route path="/nri/canada" element={<Navigate to="/indian-ethnic-wear-canada" replace />} />
                 <Route path="/indian-ethnic-wear-usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
                 <Route path="/indian-ethnic-wear-canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
                 {/* UK pages redirect to /nri (no longer targeted) */}
@@ -238,7 +234,6 @@ const App = () => (
               </Routes>
               <MobileBottomNav />
               <WhatsAppButton />
-              <Suspense fallback={null}><NewVisitorPopup /></Suspense>
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>

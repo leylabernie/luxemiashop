@@ -10,6 +10,43 @@ const RATE_WINDOW_MINUTES = 5; // 5 minutes
 const VIOLATION_THRESHOLD = 3; // violations before blocking
 const BLOCK_DURATION_MINUTES = 60; // initial block duration
 
+const escapeHtml = (value: string | null | undefined): string => String(value || '')
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
+
+async function notifyTeam(lead: ConsultationLead): Promise<void> {
+  const apiKey = Deno.env.get('RESEND_API_KEY');
+  if (!apiKey) {
+    console.warn('Lead saved but RESEND_API_KEY is not configured; skipping notification');
+    return;
+  }
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: 'LuxeMia Leads <hello@luxemia.shop>',
+      to: ['hello@luxemia.shop'],
+      reply_to: lead.email,
+      subject: `New LuxeMia lead: ${lead.occasion || 'Website enquiry'}`,
+      html: `<h2>New website lead</h2>
+        <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
+        <p><strong>Phone:</strong> ${escapeHtml(lead.phone)}</p>
+        <p><strong>Country:</strong> ${escapeHtml(lead.country)}</p>
+        <p><strong>Occasion:</strong> ${escapeHtml(lead.occasion)}</p>
+        <p><strong>Preferred date:</strong> ${escapeHtml(lead.preferred_date)}</p>
+        <p><strong>Budget:</strong> ${escapeHtml(lead.budget)}</p>
+        <p><strong>Requirements:</strong><br>${escapeHtml(lead.requirements).replaceAll('\n', '<br>')}</p>`,
+    }),
+  });
+
+  if (!response.ok) throw new Error(`Lead notification failed: ${await response.text()}`);
+}
+
 interface ConsultationLead {
   id: string;
   name: string;
@@ -262,6 +299,13 @@ Deno.serve(async (req) => {
     }
 
     console.log(`Consultation lead created: ${sanitizedEmail} (${country})`);
+
+    // A notification failure must not lose or duplicate a lead that is already saved.
+    try {
+      await notifyTeam(data as ConsultationLead);
+    } catch (notificationError) {
+      console.error('Consultation lead notification error:', notificationError);
+    }
 
     return new Response(
       JSON.stringify({ 

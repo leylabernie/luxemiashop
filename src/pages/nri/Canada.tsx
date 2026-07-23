@@ -13,7 +13,7 @@ const Canada = () => (
       heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-10 business days',
       shippingCost: '$25/order, free on orders over $350',
-      customsNote: 'Canadian orders may be subject to GST/HST (5-15%) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery.',
+      customsNote: 'Canadian orders may be subject to GST/HST, import duties, and carrier processing fees. Charges depend on the province, product classification, value, and current customs rules.',
       faqs: [
         {
           question: 'How long does shipping to Canada take?',
@@ -25,7 +25,7 @@ const Canada = () => (
         },
         {
           question: 'Will I have to pay customs duties in Canada?',
-          answer: 'Canadian customs may charge GST/HST (5-15% depending on your province) and import duties of 0-18% on textile imports. These charges are collected by the carrier at delivery and are the customer\'s responsibility.',
+          answer: 'Canadian customs may assess GST/HST, duties, and carrier processing fees based on the province, product classification, value, and current rules. These charges are not included unless checkout explicitly states otherwise.',
         },
         {
           question: 'Can I return items from Canada?',
@@ -37,7 +37,7 @@ const Canada = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $25/order, free over $350' },
+        { icon: Truck, title: 'Canada Delivery', description: 'Flat rate $25/order, free over $350' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day DHL express shipping at checkout' },
       ],

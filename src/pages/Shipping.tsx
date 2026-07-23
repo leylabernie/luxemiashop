@@ -29,9 +29,9 @@ const regionRates = [
 ];
 
 const importDutyRates = [
-  { country: 'United States', dutyRate: '0–32%', additionalTariff: '50%*', notes: '*Additional 50% tariff on goods from India (effective Aug 2025)' },
-  { country: 'Canada', dutyRate: '0–18%', additionalTariff: 'None', notes: 'GST/HST applies (5–15%)' },
-  { country: 'Australia', dutyRate: '0–10%', additionalTariff: 'None', notes: 'GST 10% on goods over AUD 1000' },
+  { country: 'United States', dutyRate: 'Varies', additionalTariff: 'May apply', notes: 'Depends on classification, value, origin and current CBP rules' },
+  { country: 'Canada', dutyRate: 'Varies', additionalTariff: 'May apply', notes: 'GST/HST and carrier processing fees may also apply' },
+  { country: 'Australia', dutyRate: 'Varies', additionalTariff: 'May apply', notes: 'GST and carrier processing fees may also apply' },
 ];
 
 const ShippingCalculator = () => {
@@ -456,21 +456,20 @@ const Shipping = () => {
                 <div className="flex items-start gap-3">
                   <FileText className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="font-semibold mb-2">US Customers: Important Tariff Notice</h3>
+                    <h3 className="font-semibold mb-2">US Customers: Customs Guidance</h3>
                     <p className="text-muted-foreground text-sm mb-3">
-                      As of August 2025, goods imported from India to the United States are subject to an additional
-                      <strong className="text-foreground"> 50% tariff</strong> on top of standard duty rates. This is in addition to:
+                      Duty-free de minimis treatment for low-value imports has been suspended. Duties, taxes, and carrier
+                      processing fees may apply based on the current rules for the shipment's classification, value, and origin.
                     </p>
                     <ul className="text-sm text-muted-foreground space-y-1 mb-3">
-                      <li>• <strong>Standard textile/apparel duty:</strong> 12–32% depending on fiber content</li>
-                      <li>• <strong>Silk garments:</strong> Generally 0–7% base duty</li>
-                      <li>• <strong>Cotton/synthetic blends:</strong> 15–32% base duty</li>
-                      <li>• <strong>Embroidered/embellished items:</strong> May have higher classification rates</li>
+                      <li>• Rates differ for apparel, textiles, jewelry, and accessories.</li>
+                      <li>• Fiber content and construction can change an apparel classification.</li>
+                      <li>• The carrier may collect assessed charges before or at delivery.</li>
+                      <li>• LuxeMia cannot guarantee an estimated duty unless checkout explicitly includes it.</li>
                     </ul>
                     <p className="text-muted-foreground text-sm">
-                      <strong className="text-foreground">Example:</strong> A $500 silk lehenga may incur approximately
-                      $25–35 (5–7% base duty) + $250 (50% tariff) = <strong>$275–285 in total duties</strong>, plus any
-                      state sales tax. Actual amounts are determined by US Customs and Border Protection.
+                      Check current guidance from US Customs and Border Protection before ordering. Any amount quoted by a
+                      carrier or customs authority controls over general information on this page.
                     </p>
                   </div>
                 </div>

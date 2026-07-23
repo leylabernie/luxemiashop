@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -50,6 +50,13 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
     deliveryExtraDays: 5,
   },
 ];
+
+const openTailoringQuote = (option: StitchingTypeOption) => {
+  const message = encodeURIComponent(
+    `Hi LuxeMia, I would like a tailoring quote for ${option.label}.`
+  );
+  window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
+};
 
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
@@ -220,9 +227,16 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     );
   });
 
+  // Products with a single Shopify variant do not need an option selection.
+  // Keep that variant available even when Shopify returns an option name that
+  // is not represented by the tailoring controls shown on this page.
+  const purchasableVariant = selectedVariant ?? (
+    product.variants.edges.length === 1 ? product.variants.edges[0] : undefined
+  );
+
   // Find the best-matching variant for price display even when not all options are selected.
   const bestMatchVariant = useMemo(() => {
-    if (selectedVariant) return selectedVariant;
+    if (purchasableVariant) return purchasableVariant;
 
     const selectedKeys = Object.keys(selectedOptions);
     if (selectedKeys.length === 0) return null;
@@ -244,7 +258,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     }
 
     return bestVar;
-  }, [selectedVariant, selectedOptions, product.variants.edges]);
+  }, [purchasableVariant, selectedOptions, product.variants.edges]);
 
   // Calculate current price, including stitching option premium if applicable
   const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
@@ -273,8 +287,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       currencyCode: basePrice.currencyCode,
     };
   }, [basePrice, stitchingPremium]);
-  const isAvailable = selectedVariant?.node.availableForSale ?? true;
-  const sku = selectedVariant?.node.sku || product.variants.edges[0]?.node.sku;
+  const isAvailable = purchasableVariant?.node.availableForSale ?? false;
+  const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
 
@@ -385,7 +399,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   };
 
   const handleAddToCart = async () => {
-    if (!selectedVariant) {
+    if (!purchasableVariant) {
       toast.error('Please select all options');
       return;
     }
@@ -438,11 +452,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
     addItem({
       product: { node: product },
-      variantId: selectedVariant.node.id,
-      variantTitle: selectedVariant.node.title,
-      price: selectedVariant.node.price,
+      variantId: purchasableVariant.node.id,
+      variantTitle: purchasableVariant.node.title,
+      price: purchasableVariant.node.price,
       quantity,
-      selectedOptions: selectedVariant.node.selectedOptions,
+      selectedOptions: purchasableVariant.node.selectedOptions,
       customAttributes: customAttributes.length > 0 ? customAttributes : undefined,
     });
 
@@ -570,7 +584,16 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             {STITCHING_TYPE_OPTIONS.map((option) => (
               <button
                 key={option.id}
-                onClick={() => handleStitchingTypeSelect(option.id)}
+                onClick={() => {
+                  // Paid tailoring cannot be represented as a Shopify line-item
+                  // price yet. Request a confirmed quote instead of displaying
+                  // a surcharge that checkout would silently omit.
+                  if (option.priceModifier > 0) {
+                    openTailoringQuote(option);
+                    return;
+                  }
+                  handleStitchingTypeSelect(option.id);
+                }}
                 className={`w-full text-left p-4 border rounded-sm transition-all duration-300 ${
                   selectedStitchingType === option.id
                     ? 'border-primary bg-primary/5 ring-1 ring-primary'
@@ -596,10 +619,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
                       ? 'text-green-600 dark:text-green-400'
                       : 'text-foreground'
                   }`}>
-                    {option.priceModifier === 0
-                      ? 'Included'
-                      : `+$${option.priceModifier}.00`
-                    }
+                    {option.priceModifier === 0 ? 'Included' : 'Contact for quote'}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
@@ -802,6 +822,17 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <Share2 className="h-5 w-5" />
         </Button>
       </div>
+
+      <button
+        type="button"
+        onClick={() => {
+          const message = encodeURIComponent(`Hi LuxeMia, can you share more photos or a product video for ${product.title}?`);
+          window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
+        }}
+        className="w-full flex items-center justify-center gap-2 text-sm text-primary hover:underline underline-offset-4"
+      >
+        <MessageCircle className="h-4 w-4" /> Ask for more photos or a product video
+      </button>
 
       <Separator />
 

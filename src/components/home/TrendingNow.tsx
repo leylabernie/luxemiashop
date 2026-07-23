@@ -15,11 +15,9 @@ const TrendingNow = () => {
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
-  // Trending = highest-priced products (premium/bestseller positioning)
+  // Editorial selection only; price is not treated as evidence of popularity.
   const trendingProducts = useMemo(() =>
-    [...products]
-      .sort((a, b) => parseFloat(b.node.priceRange.minVariantPrice.amount) - parseFloat(a.node.priceRange.minVariantPrice.amount))
-      .slice(0, 4)
+    products.slice(0, 4)
   , [products]);
 
   const formatPrice = (amount: string) => {
@@ -64,9 +62,9 @@ const TrendingNow = () => {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <TrendingUp className="w-4 h-4 text-primary" />
-                <span className="text-xs tracking-luxury uppercase text-muted-foreground">Trending Now</span>
+                <span className="text-xs tracking-luxury uppercase text-muted-foreground">LuxeMia Selection</span>
               </div>
-              <h2 className="font-serif text-3xl lg:text-4xl">Bestsellers This Season</h2>
+              <h2 className="font-serif text-3xl lg:text-4xl">Featured This Season</h2>
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
@@ -99,7 +97,7 @@ const TrendingNow = () => {
             >
               <TrendingUp className="w-4 h-4 text-primary" />
               <span className="text-xs tracking-luxury uppercase text-muted-foreground">
-                Trending Now
+                LuxeMia Selection
               </span>
             </motion.div>
             <motion.h2
@@ -109,7 +107,7 @@ const TrendingNow = () => {
               viewport={{ once: true }}
               className="font-serif text-3xl lg:text-4xl"
             >
-              Bestsellers This Season
+              Featured This Season
             </motion.h2>
           </div>
           <Link to="/collections" className="hidden md:block">
@@ -150,7 +148,7 @@ const TrendingNow = () => {
                   
                   {/* Trending Badge */}
                   <div className="absolute top-3 left-3 bg-foreground text-background px-2.5 py-1 text-xs tracking-editorial uppercase">
-                    Bestseller
+                    Featured
                   </div>
                   
                   {/* Quick Actions */}

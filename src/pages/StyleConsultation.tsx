@@ -65,7 +65,7 @@ const StyleConsultation = () => {
     }
   }, []);
 
-  const submitConsultationLead = async () => {
+  const submitConsultationLead = async (): Promise<boolean> => {
     try {
       setIsSubmitting(true);
       
@@ -115,6 +115,7 @@ const StyleConsultation = () => {
         });
         setSubmitSuccess(false);
       }, 3000);
+      return true;
     } catch (err) {
       console.error('Error submitting consultation:', err);
       toast({
@@ -122,6 +123,7 @@ const StyleConsultation = () => {
         description: 'Failed to submit your request. Please try again.',
         variant: 'destructive',
       });
+      return false;
     } finally {
       setIsSubmitting(false);
     }
@@ -134,7 +136,8 @@ const StyleConsultation = () => {
     trackConsultationBookingAttempt('whatsapp');
     
     // First save to database
-    await submitConsultationLead();
+    const saved = await submitConsultationLead();
+    if (!saved) return;
     
     // Then open WhatsApp
     const message = encodeURIComponent(
@@ -151,14 +154,15 @@ const StyleConsultation = () => {
     window.open(`https://wa.me/12153419990?text=${message}`, '_blank');
   };
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     
     // Track the booking attempt
     trackConsultationBookingAttempt('email');
     
     // First save to database
-    await submitConsultationLead();
+    const saved = await submitConsultationLead();
+    if (!saved) return;
     
     // Then open email
     const subject = encodeURIComponent('Styling Consultation Request');
@@ -399,7 +403,11 @@ const StyleConsultation = () => {
                     variant="outline"
                     size="lg"
                     className="flex-1 gap-2"
-                    onClick={handleEmailSubmit}
+                    onClick={(event) => {
+                      const form = event.currentTarget.form;
+                      if (!form?.reportValidity()) return;
+                      void handleEmailSubmit(event);
+                    }}
                     disabled={isSubmitting || submitSuccess}
                   >
                     {submitSuccess ? (

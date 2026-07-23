@@ -5,7 +5,7 @@ const services = [
   {
     icon: Truck,
     title: 'Free Shipping over $350',
-    description: 'Worldwide DHL Express — 3-5 business days',
+    description: 'Tracked delivery to USA, Canada & Australia',
   },
   {
     icon: ShieldCheck,

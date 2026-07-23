@@ -17,10 +17,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const announcements = [
-  'Free shipping on orders over $350 · Worldwide delivery',
+  'Free shipping over $350 · Delivery to USA, Canada & Australia',
   'New arrivals just landed — shop the latest styles',
   'Quality Indian ethnic wear at fair prices',
-  'Flat $25 shipping · Trackable worldwide delivery',
+  'Flat $25 shipping · Fully tracked delivery',
 ];
 
 // Categories without a mega-menu use plain links.
@@ -33,7 +33,7 @@ const navLinks = [
 
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
-  { name: 'Bestsellers', href: '/bestsellers' },
+  { name: 'Featured', href: '/bestsellers' },
   { name: 'Blog', href: '/blog' },
 ];
 

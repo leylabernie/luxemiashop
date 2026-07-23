@@ -35,7 +35,7 @@ const weddingGuestFaqs = [
   },
   {
     question: 'Do you ship Indian wedding guest outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships Indian wedding guest outfits to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat shipping rate of $25 applies. All orders are fully tracked and insured. We recommend ordering 3–4 weeks before the wedding to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch from India.',
+    answer: 'LuxeMia currently ships Indian wedding guest outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. We recommend ordering 3–4 weeks before the wedding; standard transit is estimated at 7–10 business days after dispatch.',
   },
   {
     question: 'Can I wear the same outfit to multiple events at an Indian wedding?',

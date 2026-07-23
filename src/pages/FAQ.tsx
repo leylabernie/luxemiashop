@@ -57,7 +57,7 @@ const FAQ = () => {
         },
         {
           question: 'Do I have to pay customs duties or taxes?',
-          answer: 'Yes, import duties, customs fees, and local taxes are the responsibility of the customer and are NOT included in our prices. These are collected by your country\'s customs authority upon delivery. US customers should note the additional 50% tariff on goods from India.',
+          answer: 'Import duties, customs fees, and local taxes may apply and are not included in our prices unless checkout explicitly states otherwise. Charges depend on the destination, product classification, value, and current customs rules. Please check with your country\'s customs authority for current information before ordering.',
         },
         {
           question: 'What if my package is delayed or lost?',
@@ -177,7 +177,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you have a loyalty program?',
-          answer: 'Yes! Join LuxeMia Rewards to earn points on every purchase, get early access to sales, receive birthday discounts, and enjoy member-only offers. Sign up is free!',
+          answer: 'LuxeMia does not currently operate a points-based loyalty program. Subscribe to our email list for new-arrival and promotion updates.',
         },
         {
           question: 'Can I save items to buy later?',

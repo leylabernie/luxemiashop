@@ -330,7 +330,7 @@ const NewVisitorPopup = () => {
                         <span>·</span>
                         <span>Unsubscribe anytime</span>
                         <span className="hidden sm:inline">·</span>
-                        <span className="hidden sm:inline">10,000+ happy customers</span>
+                        <span className="hidden sm:inline">USA-based customer support</span>
                       </div>
                     </>
                   ) : (

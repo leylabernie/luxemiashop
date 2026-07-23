@@ -8,7 +8,8 @@
     "build": "node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/generate-static-feed.cjs && node scripts/generate-sitemap.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:merchant-feed": "node scripts/validate-merchant-feed.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

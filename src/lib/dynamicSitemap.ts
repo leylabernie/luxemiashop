@@ -37,7 +37,7 @@ export const staticPages = [
   { loc: '/menswear', changefreq: 'daily', priority: '0.9', title: 'Menswear' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8', title: 'Indo-Western' },
   { loc: '/new-arrivals', changefreq: 'daily', priority: '0.8', title: 'New Arrivals' },
-  { loc: '/bestsellers', changefreq: 'weekly', priority: '0.8', title: 'Bestsellers' },
+  { loc: '/bestsellers', changefreq: 'weekly', priority: '0.8', title: 'Featured Styles' },
   // Occasion landing pages — high buyer-intent SEO
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9', title: 'Diwali Outfits 2026' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Guest Outfits' },
@@ -51,8 +51,6 @@ export const staticPages = [
   { loc: '/blog', changefreq: 'weekly', priority: '0.7', title: 'Blog' },
   // NRI landing pages
   { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'Indian Ethnic Wear for NRIs' },
-  { loc: '/nri/usa', changefreq: 'monthly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
-  { loc: '/nri/canada', changefreq: 'monthly', priority: '0.8', title: 'Indian Ethnic Wear Canada' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
   { loc: '/indian-ethnic-wear-canada', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear Canada' },
   // Customer service

@@ -34,7 +34,7 @@ const SHOP_LINKS: LinkItem[] = [
   { to: "/menswear", label: "Sherwanis & Kurta Pajama" },
   { to: "/indowestern", label: "Indo-Western Outfits" },
   { to: "/new-arrivals", label: "New Arrivals" },
-  { to: "/bestsellers", label: "Bestsellers" },
+  { to: "/bestsellers", label: "Featured Styles" },
   { to: "/ready-to-ship", label: "Ready to Ship Indian Wear" },
   { to: "/jewelry", label: "Bridal & Temple Jewelry" },
   { to: "/collections", label: "All Collections" },

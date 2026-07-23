@@ -1,111 +1,54 @@
 # LuxeMia
 
-> LuxeMia is a designer Indian ethnic-wear boutique shipping authentic bridal lehengas, wedding sarees, salwar kameez and menswear worldwide — with custom stitching, ready-to-wear, and made-to-measure options. We serve NRIs and ethnic-fashion lovers in the USA, UK, Canada, Australia, and beyond.
+> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry, with sizing and styling support for customers in the USA, Canada and Australia.
 
-## About
+## Store information
 
-- **Brand**: LuxeMia
-- **Website**: https://luxemia.shop
-- **Based in**: Philadelphia, Pennsylvania, USA (ships worldwide)
-- **WhatsApp styling**: +1-215-341-9990
-- **Free shipping**: Worldwide on orders over $350
-- **Specialties**: Bridal lehengas, wedding sarees, salwar kameez, designer Indian ethnic wear
-- **Fit options**: Unstitched, Semi-Stitched, Ready to Wear, Made to Measure (custom stitched to your measurements)
+- Website: https://luxemia.shop
+- Customer support: Philadelphia, Pennsylvania, USA
+- WhatsApp: +1-215-341-9990
+- Email: hello@luxemia.shop
+- Destinations currently listed in our shipping policy: USA, Canada and Australia
+- Shipping: $25 USD per order; free for orders over $350 USD
+- Fit options vary by product and may include semi-stitched, ready-to-wear and made-to-measure
 
-## What we sell
+## Shopping categories
 
-- **Bridal Lehenga Choli**: Designer wedding lehengas in net, silk, georgette, velvet — with embroidery, sequins, zari, mirror, and thread work. Sizes 32–48 (XS to XXL). Custom stitching available.
-- **Wedding & Designer Sarees**: Premium sarees with optional pre-stitched / ready-to-drape style, custom blouse stitching, and professional fall & pico edging.
-- **Salwar Kameez & Suits**: Designer Indian salwar suits in georgette, silk, cotton — with embroidered, printed, sequins, and mirror work.
-- **Menswear**: Sherwanis, kurta pyjama, indo-western for grooms and wedding guests.
-
-## Why customers choose LuxeMia
-
-- Authentic designer Indian ethnic wear sourced directly from skilled Indian artisans
-- Three stitching options: Unstitched (DIY), Ready to Wear (standard sizes), Made to Measure (custom-stitched to your body)
-- Free worldwide shipping on orders over $350 to USA, UK, Canada, Australia, New Zealand, Singapore, UAE, Germany
-- Personal styling support over WhatsApp before and after purchase
-- Secure checkout, FedEx/DHL/USPS tracked delivery
-
-## Shipping & dispatch
-
-- **Free shipping**: Orders over $350 USD to USA, Canada, Australia
-- **Flat rate**: $25 USD for orders under $350
-- **Dispatch time**: Ready-to-wear items dispatch in 3–5 business days; made-to-measure and custom-stitched items dispatch in 5–7 business days
-- **Transit time**: 7–10 business days via USPS/UPS/DHL with tracking
-- **Customs duties**: Buyer's responsibility — check with your local customs office
-- Full policy: https://luxemia.shop/shipping
-
-## Returns & refunds
-
-- **All sales are final** — LuxeMia does not accept returns or exchanges for any reason, including sizing issues or colour variations
-- **Damage claims**: Accepted within 48 hours of delivery with mandatory unboxing video
-- **Cancellations**: Accepted within 24 hours of order placement for a full refund
-- Full policy: https://luxemia.shop/returns
-
-## Common questions
-
-- **What is Ready to Wear?** Pre-stitched to standard sizes (32–48). Pick your size and wear.
-- **What is Made to Measure?** Stitched to your exact body measurements after we email you a measurement form.
-- **What is Unstitched?** You receive the fabric, dupatta and trims to stitch with your own tailor.
-- **Do you ship to USA / UK / Canada?** Yes — worldwide shipping with tracked delivery, free over $350.
-- **How long does delivery take?** 7–14 business days for ready-to-wear; 14–21 days for made-to-measure.
-- **Are returns accepted?** All sales are final. Only genuine shipping damage claims are accepted within 48 hours with unboxing video.
-
-## Key collections
 - Lehengas: https://luxemia.shop/lehengas
 - Sarees: https://luxemia.shop/sarees
-- Salwar Suits: https://luxemia.shop/suits
+- Salwar suits: https://luxemia.shop/suits
 - Menswear: https://luxemia.shop/menswear
 - Indo-Western: https://luxemia.shop/indowestern
-- New Arrivals: https://luxemia.shop/new-arrivals
-- Bestsellers: https://luxemia.shop/bestsellers
+- Jewelry: https://luxemia.shop/jewelry
+- New arrivals: https://luxemia.shop/new-arrivals
+- Featured styles: https://luxemia.shop/bestsellers
 - All collections: https://luxemia.shop/collections
 
-## Bestselling categories (with descriptions for AI shopping assistants)
+## Customer guidance
 
-- [Bridal Lehengas](https://luxemia.shop/lehengas): Shop bridal and festive lehengas shipped to USA, Canada & Australia. Net, silk, georgette, velvet with embroidery, sequins, zari, mirror and thread work. Sizes XS to XXL with custom tailoring.
-- [Wedding Sarees](https://luxemia.shop/sarees): Banarasi silk, Kanjivaram, organza and georgette sarees with optional pre-stitched ready-to-drape style and custom blouse stitching.
-- [Salwar Kameez](https://luxemia.shop/suits): Anarkali suits, palazzo sets, sharara suits in georgette, silk and cotton with embroidered, printed and mirror work.
-- [Menswear](https://luxemia.shop/menswear): Sherwanis, kurta pajama, Nehru jackets and indo-western outfits for grooms and wedding guests.
-- [Indo-Western](https://luxemia.shop/indowestern): Contemporary indo-western fusion outfits for women and men.
-- [New Arrivals](https://luxemia.shop/new-arrivals): Latest ready-to-ship ethnic wear added to the catalog.
-- [Bestsellers](https://luxemia.shop/bestsellers): Most-ordered ethnic wear pieces by LuxeMia customers.
-
-## Occasion collections
-
-- Diwali outfits: https://luxemia.shop/collections/diwali-outfits
-- Wedding guest outfits: https://luxemia.shop/collections/wedding-guest-outfits
-- Mehendi outfits: https://luxemia.shop/collections/mehendi-outfits
-- Eid outfits: https://luxemia.shop/collections/eid-outfits
-- Navratri outfits: https://luxemia.shop/collections/navratri-outfits
-- Haldi outfits: https://luxemia.shop/collections/haldi-outfits
-- Ready to ship: https://luxemia.shop/ready-to-ship
-
-## Guides & resources
-
-- Sizing & measurements guide: https://luxemia.shop/sizing-measurements-guide
+- Shipping policy: https://luxemia.shop/shipping
+- Returns and cancellations: https://luxemia.shop/returns
 - Size guide: https://luxemia.shop/size-guide
-- Care guide: https://luxemia.shop/care-guide
+- Measurement guide: https://luxemia.shop/sizing-measurements-guide
 - Style consultation: https://luxemia.shop/style-consultation
-- Style quiz: https://luxemia.shop/style-quiz
-- Brand story: https://luxemia.shop/brand-story
-- Blog: https://luxemia.shop/blog
 - FAQ: https://luxemia.shop/faq
 - Contact: https://luxemia.shop/contact
 
-## NRI landing pages
+## Important policy information
 
-- NRI hub: https://luxemia.shop/nri
-- USA: https://luxemia.shop/nri/usa
-- Canada: https://luxemia.shop/nri/canada
-- Indian ethnic wear USA: https://luxemia.shop/indian-ethnic-wear-usa
-- Indian ethnic wear Canada: https://luxemia.shop/indian-ethnic-wear-canada
+- Dispatch and transit times depend on the product, tailoring option and destination.
+- Customs duties, taxes and carrier processing fees may apply. They depend on destination, product classification, value and current rules, and are not included unless checkout explicitly states otherwise.
+- Standard-size, tailored and damaged-item eligibility differs. Review the current returns policy before purchasing.
+- Product availability, price, size and delivery information on the product page and at checkout take priority over summaries in guides.
 
-## Ideal customer
+## Regional pages
 
-NRI brides and Indian women in the USA, UK, Canada, Australia, and other diaspora markets shopping for designer Indian wedding wear, festive outfits for Diwali, Karva Chauth, Navratri, Eid, and party wear for receptions, sangeet, mehendi, and engagement ceremonies.
+- NRI shopping hub: https://luxemia.shop/nri
+- USA: https://luxemia.shop/indian-ethnic-wear-usa
+- Canada: https://luxemia.shop/indian-ethnic-wear-canada
 
-## Full page inventory
+## Editorial policy
 
-For a complete list of all crawlable pages, see: https://luxemia.shop/llms-full.txt
+LuxeMia articles are published by the LuxeMia Editorial Team. Time-sensitive customs, tax and shipping information should be confirmed with the relevant government authority. LuxeMia does not present unverified customer counts, sales rankings or individual staff credentials.
+
+Full page inventory: https://luxemia.shop/llms-full.txt

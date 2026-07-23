@@ -173,7 +173,7 @@ const ReadyToShip = () => {
                 <ul className="list-disc pl-5 space-y-1">
                   <li><Link to="/lehengas" className="text-primary underline">Shop All Lehengas</Link> | <Link to="/sarees" className="text-primary underline">Shop All Sarees</Link> | <Link to="/suits" className="text-primary underline">Shop All Suits</Link></li>
                   <li><Link to="/menswear" className="text-primary underline">Shop Menswear</Link> | <Link to="/jewelry" className="text-primary underline">Shop Jewelry</Link></li>
-                  <li><Link to="/new-arrivals" className="text-primary underline">New Arrivals</Link> | <Link to="/bestsellers" className="text-primary underline">Bestsellers</Link></li>
+                  <li><Link to="/new-arrivals" className="text-primary underline">New Arrivals</Link> | <Link to="/bestsellers" className="text-primary underline">Featured Styles</Link></li>
                   <li><Link to="/shipping" className="text-primary underline">Shipping Policy — Delivery Times & Costs</Link></li>
                 </ul>
               </div>

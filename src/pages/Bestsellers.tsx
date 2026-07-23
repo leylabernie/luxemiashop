@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, TrendingUp } from 'lucide-react';
+import { ChevronDown, Sparkles } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -16,7 +16,7 @@ import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
-  { label: 'Best Selling', value: 'featured' },
+  { label: 'Featured', value: 'featured' },
   { label: 'Newest First', value: 'newest' },
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
@@ -27,43 +27,19 @@ const Bestsellers = () => {
   const [sortBy, setSortBy] = useState('featured');
 
   const sortedProducts = useMemo(() => {
-    // Filter to actual bestsellers — products tagged 'bestseller', 'best-seller',
-    // 'popular', or with 'isBestseller' metadata.
-    const bestsellers = products.filter(p => {
-      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
-      const hasBestsellerTag = tags.some(t =>
-        t.includes('bestseller') || t.includes('best-seller') || t.includes('best seller') || t.includes('popular')
-      );
-      const hasMeta = (p.node as any).metadata?.isBestseller === true;
-      return hasBestsellerTag || hasMeta;
-    });
-
-    // If we found tagged bestsellers, use those.
-    // Otherwise, pick products from the MIDDLE of the catalog (not the newest 24
-    // which overlap with New Arrivals). Sort by price descending as a proxy for
-    // "premium/popular" and limit to 24.
-    let pool: typeof products;
-    if (bestsellers.length >= 8) {
-      pool = bestsellers;
-    } else {
-      // Sort by price descending (premium products as bestseller proxy)
-      // and skip the first 24 (those are in New Arrivals) to avoid overlap
-      const byPriceDesc = [...products].sort((a, b) =>
-        parseFloat(b.node.priceRange.minVariantPrice.amount) -
-        parseFloat(a.node.priceRange.minVariantPrice.amount)
-      );
-      pool = byPriceDesc.slice(0, 24);
-    }
+    // This collection is editorially featured until verified order history is
+    // available. Never infer sales popularity from price or unverified tags.
+    const pool = products.slice(0, 24);
     return sortProducts(pool, sortBy);
   }, [products, sortBy]);
 
-  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Best Selling';
+  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Bestsellers: Most-Loved Indian Ethnic Wear Online | LuxeMia"
-        description="Shop LuxeMia's bestselling Indian ethnic wear online. Most-loved bridal lehengas, sarees, salwar kameez & jewelry — trusted by customers worldwide. Free shipping."
+        title="Featured Indian Ethnic Wear | LuxeMia"
+        description="Explore LuxeMia's featured lehengas, sarees, salwar kameez, menswear and jewelry, selected for weddings and celebrations."
         canonical="https://luxemia.shop/bestsellers"
       />
       <Header />
@@ -72,12 +48,12 @@ const Bestsellers = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <div className="flex items-center justify-center gap-2 mb-3">
-              <TrendingUp className="w-5 h-5 text-primary" />
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Customer Favourites</span>
+              <Sparkles className="w-5 h-5 text-primary" />
+              <span className="text-xs uppercase tracking-widest text-muted-foreground">LuxeMia Selection</span>
             </div>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-3">Bestsellers</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-3">Featured Styles</h1>
             <p className="text-muted-foreground font-light max-w-md mx-auto text-sm lg:text-base">
-              The styles our customers love most — tried, trusted and adored worldwide.
+              An edited selection of occasion-ready styles chosen by the LuxeMia team.
             </p>
           </div>
         </div>
@@ -141,13 +117,13 @@ const Bestsellers = () => {
       {/* SEO section — keyword content */}
       <section className="border-t border-border/50 bg-card/20 py-12">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
-          <h2 className="font-serif text-xl mb-4">Most Popular Indian Ethnic Wear — Trusted by Customers in USA, Canada & Australia</h2>
+          <h2 className="font-serif text-xl mb-4">Featured Indian Ethnic Wear for Weddings and Celebrations</h2>
           <div className="text-sm text-muted-foreground space-y-3 leading-relaxed">
             <p>
-              These are the styles our customers return to again and again. LuxeMia's bestselling <strong>Indian ethnic wear</strong> includes our most-loved <strong>bridal lehenga choli sets</strong>, <strong>Banarasi and silk sarees</strong>, <strong>heavy embroidered anarkali suits</strong>, and <strong>groom sherwanis</strong> for weddings. These pieces consistently receive the highest customer satisfaction scores across our NRI customer base in the USA, Canada, and Australia.
+              Browse an editorial selection of <strong>Indian ethnic wear</strong>, including <strong>bridal lehenga choli sets</strong>, <strong>silk sarees</strong>, <strong>embroidered anarkali suits</strong>, and <strong>groom sherwanis</strong> for weddings and celebrations.
             </p>
             <p>
-              Our bestsellers are curated based on repeat orders, customer reviews, and styling team picks. Every piece in this collection has been worn to <strong>Indian weddings</strong>, <strong>Diwali celebrations</strong>, <strong>Eid festivities</strong>, <strong>sangeet nights</strong>, and <strong>reception dinners</strong>. Shop with confidence — these are the pieces that actually deliver on quality, color accuracy, and fit.
+              These pieces are selected for their design, fabric details and suitability for <strong>Indian weddings</strong>, <strong>Diwali celebrations</strong>, <strong>Eid festivities</strong>, <strong>sangeet nights</strong>, and <strong>reception dinners</strong>. Contact our USA-based team if you would like help with sizing or styling before ordering.
             </p>
           </div>
         </div>

@@ -159,7 +159,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <ul>
         <li><strong>Detailed size charts:</strong> Look for stores with inch-by-inch measurements, not just S/M/L. Our <a href="/size-guide">size guide</a> includes bust, waist, and hip measurements for every size.</li>
         <li><strong>Real product photos:</strong> Multiple angles and close-up embroidery shots help you assess quality.</li>
-        <li><strong>Custom tailoring:</strong> For the best fit, choose a store that offers made-to-measure options. LuxeMia offers complimentary custom tailoring on most lehengas.</li>
+        <li><strong>Custom tailoring:</strong> For the best fit, choose a store that offers made-to-measure options. At LuxeMia, availability and pricing vary by product and should be confirmed before ordering.</li>
         <li><strong>Clear shipping policies:</strong> Indian ethnic wear ships from India, so allow 2-3 weeks for delivery. See our <a href="/shipping">shipping policy</a> for details.</li>
         <li><strong>USA-based support:</strong> A local support team means you can call or WhatsApp with questions. LuxeMia offers USA-based styling support at +1-215-341-9990.</li>
       </ul>

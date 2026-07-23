@@ -35,7 +35,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Do you ship Navratri outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships Navratri chaniya cholis, lehengas, and Indian ethnic wear for Navratri celebrations to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders include full tracking and insurance. For Navratri, we recommend ordering at least 3–4 weeks before the festival to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch from India.',
+    answer: 'LuxeMia currently ships Navratri outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. Order at least 3–4 weeks before the festival; standard transit is estimated at 7–10 business days after dispatch.',
   },
   {
     question: 'What accessories should I wear with a Navratri outfit?',

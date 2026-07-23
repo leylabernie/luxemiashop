@@ -13,7 +13,7 @@ const USA = () => (
       heroSubtitle: 'Shipped from India with Care',
       shippingTime: '7-10 business days',
       shippingCost: '$25/order, free on orders over $350',
-      customsNote: 'US imports from India may be subject to tariffs and duties. As of 2025, an additional 50% tariff applies to many goods from India. Customers are responsible for all customs fees.',
+      customsNote: 'US imports may be subject to duties, taxes, and carrier processing fees based on the product classification, value, and current customs rules. These charges are not included unless checkout explicitly states otherwise.',
       faqs: [
         {
           question: 'How long does shipping to the USA take?',
@@ -25,7 +25,7 @@ const USA = () => (
         },
         {
           question: 'Will I have to pay customs duties?',
-          answer: 'Possibly. As of 2025, goods imported from India to the United States may be subject to an additional 50% tariff on top of standard duty rates. These charges are determined by US Customs and are the customer\'s responsibility. We recommend checking with your local customs office for the most current rates.',
+          answer: 'Possibly. Duties and taxes depend on the product classification, shipment value, and current US customs rules. They are not included unless checkout explicitly states otherwise. Please review current US Customs and Border Protection guidance before ordering.',
         },
         {
           question: 'Can I return items from the USA?',
@@ -37,7 +37,7 @@ const USA = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Worldwide Shipping', description: 'Flat rate $25/order, free over $350' },
+        { icon: Truck, title: 'USA Delivery', description: 'Flat rate $25/order, free over $350' },
         { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
         { icon: Clock, title: 'Express Available', description: '3-5 day express shipping at checkout' },
       ],

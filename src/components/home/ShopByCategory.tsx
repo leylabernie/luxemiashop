@@ -113,7 +113,7 @@ const ShopByCategory = () => {
 
   const tabs = [
     { id: 'new' as TabType, label: 'New Arrivals' },
-    { id: 'bestsellers' as TabType, label: 'Bestsellers' },
+    { id: 'bestsellers' as TabType, label: 'Featured' },
     { id: 'ready' as TabType, label: 'Ready to Ship' },
   ];
 
@@ -219,7 +219,7 @@ const ShopByCategory = () => {
                       )}
                       {activeTab === 'bestsellers' && (
                         <span className="absolute top-3 left-3 px-2 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-sm">
-                          Bestseller
+                          Featured
                         </span>
                       )}
                     </div>

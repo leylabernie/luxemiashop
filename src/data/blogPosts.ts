@@ -109,7 +109,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/kanchipuram-silk-saree-south-indian-wedding-guide">Kanchipuram Silk Sarees: South Indian Wedding Guide</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-01-05',
     updatedAt: '2026-07-12',
     category: 'Bridal Guide',
@@ -275,12 +275,12 @@ export const blogPosts: BlogPost[] = [
 <ul>
   <li>Product price: $400</li>
   <li>International shipping (DHL/FedEx, 5 to 7 days): $45 to $65</li>
-  <li>US customs duty (under $800 is duty-free under Section 321): $0</li>
+  <li>US customs duties and processing fees: confirm the current amount with the carrier or US Customs before ordering</li>
   <li>State sales tax (varies by state, 0 to 9.5 percent): $0 to $38</li>
   <li>Payment-card foreign-transaction fee (3 percent typical): $12</li>
   <li><strong>Landed cost: $457 to $515</strong></li>
 </ul>
-<p>For orders under $800, US Customs and Border Protection's <a href="https://www.cbp.gov/trade/basic-import-export/internet-purchases" rel="nofollow noopener" target="_blank">Section 321 de minimis exemption</a> waives all duties. This is the single biggest reason to buy direct from India rather than through a US importer.</p>
+<p>Import rules and duty thresholds can change. Confirm current duties, taxes, and carrier processing fees with US Customs or the shipping carrier before ordering.</p>
 
 <h2>Timeline: When to Order for a Wedding</h2>
 <p>For a made-to-measure outfit under $500, order 8 to 10 weeks before the wedding date. For semi-stitched or ready-to-wear, order 4 to 6 weeks ahead. The timeline breaks down as:</p>
@@ -306,7 +306,7 @@ export const blogPosts: BlogPost[] = [
 <p>Online direct-from-India stores win on price (30 to 50 percent below US boutiques) and selection. US boutiques win on tactile experience, immediate alteration, and trust. If you have not bought Indian ethnic wear before, visit a store once to understand your size and silhouette, then order online for the actual wedding outfit.</p>
 
 <h3>What about customs duties for shipments over $800?</h3>
-<p>US duties on textile apparel are typically 5.6 to 32 percent depending on fabric and garment type. Keep individual orders under $800 to qualify for the Section 321 de minimis exemption. If your order exceeds $800, split it across two shipments on different days.</p>
+<p>Duty rates and exemptions depend on the garment, materials, shipment, and rules in effect when it enters the country. Confirm the current landed cost with US Customs or the shipping carrier; do not split shipments to avoid applicable duties.</p>
 
 <h2>What to Wear to Different Wedding Functions Under $500</h2>
 <p>A typical Indian wedding in 2026 has 4 to 7 events: engagement, mehendi, haldi, sangeet, muhuratham (the main ceremony), and reception. Outfitting yourself for all of them on a $500 budget per event is realistic if you mix and match lehenga, saree, anarkali, and suit silhouettes. Here is a function-by-function breakdown of what to wear and what to spend:</p>
@@ -350,7 +350,7 @@ export const blogPosts: BlogPost[] = [
   <li>Keep a $50 to $80 buffer for last-minute alterations</li>
 </ul>
 <p>A $500 Indian bridal outfit is not a compromise — it is the rational price point for a once-worn garment in 2026, given direct-from-India sourcing and the strong USD. Pair the savings with a $300 jewelry budget and a professional henna artist, and you will look like you spent $2,000. Browse LuxeMia's <a href="/lehengas">lehenga collection</a> and <a href="/sarees">saree catalog</a> for pieces engineered to hit this bracket, or read our <a href="/blog/nri-shopping">NRI shopping guides</a> for more landed-cost breakdowns.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-01-03',
     updatedAt: '2026-07-13',
     category: 'NRI Shopping',
@@ -1005,7 +1005,7 @@ export const blogPosts: BlogPost[] = [
   <li><strong>Multi-cultural fusion ceremonies:</strong> With cross-cultural marriages rising (Hindu-Christian, Hindu-Muslim, Hindu-Jewish, Sikh-Christian), expect more multi-faith ceremonies that blend rituals from both traditions. Planners report a 40 percent increase in cross-cultural weddings between 2020 and 2025.</li>
 </ul>
 <p>Indian weddings in 2026 are more personal, more sustainable, and more stylish than ever — and the trends favor intimate, multi-day celebrations over massive single-day events. Browse LuxeMia's <a href="/lehengas">bridal lehenga</a>, <a href="/sarees">saree</a>, and <a href="/menswear">menswear collections</a> for 2026 trend-ready outfits, or read our <a href="/blog/weddings-festivals">weddings and festivals guide</a> for more on Indian wedding traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2025-12-20',
     updatedAt: '2026-07-13',
     category: 'Weddings & Festivals',
@@ -1368,7 +1368,7 @@ export const blogPosts: BlogPost[] = [
   <li>Dry-clean only — never machine-wash an embroidered sharara</li>
 </ul>
 <p>The sharara is 2026's most versatile Indian ethnic silhouette — comfortable enough to dance in, formal enough for a wedding, and flattering on most body types. Browse LuxeMia's <a href="/suits">sharara suit collection</a> for current styles, or read our <a href="/blog/attires">attires encyclopedia</a> for more on Indian ethnic silhouettes. For a comparison of sharara vs. anarkali vs. lehenga, see our <a href="/blog/attires">silhouette comparison guide</a>.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-04-08',
     updatedAt: '2026-07-13',
     category: 'Attires',
@@ -2379,7 +2379,7 @@ export const blogPosts: BlogPost[] = [
   <li>If non-Indian, practice draping the saree at home 2-3 times before the event</li>
 </ul>
 <p>Attending an Indian wedding as a guest is a once-in-a-lifetime cultural experience — and the outfit is half the fun. Choose your outfits by event, color, and body type; budget $300 to $500 for a multi-event wedding; and remember that the most important rule is to dress respectfully (no white, no black for muhuratham, no red). Browse LuxeMia's <a href="/lehengas">lehenga</a>, <a href="/sarees">saree</a>, and <a href="/suits">suit collections</a> for wedding-guest options, or read our <a href="/blog/weddings-festivals">weddings and festivals guide</a> for more on Indian wedding traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-04-10',
     updatedAt: '2026-07-13',
     category: 'Weddings & Festivals',
@@ -3269,7 +3269,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Understanding the Duty Structure</h3>
       <ul>
         <li><strong>Apparel duty rate:</strong> Typically 20-50% depending on the category and fabric type</li>
-        <li><strong>De minimis exemption:</strong> Orders under $800 enter duty-free under the US de minimis threshold (Section 321)</li>
+        <li><strong>US customs:</strong> Duty-free de minimis treatment has been suspended; duties and processing fees may apply based on current rules</li>
         <li><strong>Personal use exemption:</strong> You may bring back up to $800 worth of goods per person when traveling</li>
       </ul>
       <h3>How LuxeMia Handles Duties</h3>
@@ -3518,7 +3518,7 @@ export const blogPosts: BlogPost[] = [
   <li>For orders above $500, video-call the seller to see the actual piece before paying</li>
 </ul>
 <p>Authentic Banarasi silk is the most imitated Indian saree — and the most rewarding to own when genuine. Buy from a reputable source, verify the five authentication markers, and care for it as a heirloom. Browse LuxeMia's <a href="/sarees">saree catalog</a> for Banarasi-pattern and authentic Banarasi options, or read our <a href="/blog/attires">attires encyclopedia</a> for more on Indian silk saree traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-02-05',
     updatedAt: '2026-07-13',
     category: 'Motifs & Embroideries',
@@ -3718,7 +3718,7 @@ export const blogPosts: BlogPost[] = [
   <li>Jewelry, footwear, and bag selected before draping (you cannot easily add jewelry after the pallu is pinned)</li>
 </ul>
 <p>The saree is the most rewarding Indian garment to wear — and the most frustrating to learn. Practice at home, start with georgette, and do not be discouraged if your first drape takes 35 minutes. By your 10th drape, you will be draping in 10 minutes and fielding compliments all night. Browse LuxeMia's <a href="/sarees">saree catalog</a> for beginner-friendly georgette and chiffon sarees, or read our <a href="/blog/how-to-care">how-to guides</a> for more on Indian ethnic wear care and styling.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-02-10',
     updatedAt: '2026-07-13',
     category: 'How-To & Care',
@@ -4153,7 +4153,7 @@ export const blogPosts: BlogPost[] = [
 <p>These blends are particularly useful for NRI buyers who want the look of traditional Indian fabrics with easier care and lower price points. When shopping, check the fabric blend percentage — a "silk-cotton blend" with 95 percent cotton and 5 percent silk will feel and behave like cotton, not silk. Look for blends with at least 30 percent of the luxury fiber to get the visual and tactile benefits.</p>
 
 <p>Choosing the right fabric is the single most important decision in Indian ethnic wear — more important than the color, the embroidery, or the silhouette. A $200 silk saree looks better than a $200 polyester saree, every time. Browse LuxeMia's <a href="/lehengas">lehenga</a>, <a href="/sarees">saree</a>, <a href="/suits">suit</a>, and <a href="/menswear">menswear collections</a> for fabric-disclosed options, or read our <a href="/blog/attires">attires encyclopedia</a> for more on Indian textile traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-02-20',
     updatedAt: '2026-07-13',
     category: 'Attires',
@@ -4400,7 +4400,7 @@ export const blogPosts: BlogPost[] = [
   <li>For orders above $500, video-call the seller to see the actual piece before paying</li>
 </ul>
 <p>Authentic Kanchipuram silk is an investment piece that outlasts every other garment in a bridal trousseau. Buy from a reputable source, verify the five authentication markers, and care for it as a heirloom. Browse LuxeMia's <a href="/sarees">saree catalog</a> for Kanchipuram-pattern and authentic Kanchipuram options, or read our <a href="/blog/attires">attires encyclopedia</a> for more on Indian silk saree traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-03-10',
     updatedAt: '2026-07-13',
     category: 'Attires',
@@ -4567,7 +4567,7 @@ export const blogPosts: BlogPost[] = [
 <p>When you buy a real-zari hand-embroidered piece, you are not just buying a garment — you are supporting a 2,000-year-old craft tradition and the artisan families who practice it. The higher upfront cost is offset by the piece's 25+ year lifespan and its increasing value as a heirloom.</p>
 
 <p>Zari embroidery is the soul of Indian bridal and couture wear — the difference between a $200 lehenga and a $2,000 lehenga is largely the zari type and embroidery technique. Buy from a reputable source, verify the zari type with a burn test, and care for it as a heirloom. Browse LuxeMia's <a href="/lehengas">bridal lehenga</a>, <a href="/sarees">saree</a>, and <a href="/menswear">menswear collections</a> for zari-embroidered options, or read our <a href="/blog/motifs-embroideries">motifs and embroidery guide</a> for more on Indian textile traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-03-15',
     updatedAt: '2026-07-13',
     category: 'Motifs & Embroideries',
@@ -4754,7 +4754,7 @@ export const blogPosts: BlogPost[] = [
 <p>Modern chikankari also breaks the traditional white-on-white rule: contemporary pieces use colored chikankari thread (especially pastels and jewel tones), mukaish zari embellishment, and even mirror work combined with chikankari. These innovations have helped chikankari move from "traditional Indian wear" to "versatile luxury fashion," expanding its market beyond Indian weddings to global cocktail and resort wear. The global market for chikankari is projected to reach $850 million by 2028 (per a 2025 Indian Brand Equity Foundation report), up from $320 million in 2020.</p>
 
 <p>Chikankari is the most delicate and romantic of Indian embroideries — and the most counterfeited. Buy from a reputable source, verify the five authentication markers, and care for it as a heirloom. Browse LuxeMia's <a href="/suits">chikankari kurti</a> and <a href="/sarees">saree collections</a> for authentic hand-embroidered options, or read our <a href="/blog/motifs-embroideries">motifs and embroidery guide</a> for more on Indian textile traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-04-01',
     updatedAt: '2026-07-13',
     category: 'Motifs & Embroideries',
@@ -4815,7 +4815,7 @@ export const blogPosts: BlogPost[] = [
       <ul>
         <li><strong>Free shipping:</strong> Orders over $350 ship free to all US states</li>
         <li><strong>Delivery time:</strong> 7-10 business days for ready-to-wear; 4-5 weeks for made-to-measure</li>
-        <li><strong>Customs duties:</strong> US imports under $800 are duty-free under the de minimis exemption — most bridal lehengas qualify</li>
+        <li><strong>Customs duties:</strong> US duties and carrier processing fees may apply; confirm current rules before ordering</li>
         <li><strong>Tracking:</strong> Full tracking via DHL, USPS, or UPS</li>
       </ul>
 
@@ -5313,7 +5313,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/what-to-wear-indian-wedding-guest-2026">What to Wear to an Indian Wedding as a Guest 2026</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-12',
     updatedAt: '2026-07-12',
     category: 'Cultural Guide',
@@ -5438,7 +5438,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/zari-work-guide-indian-embroidery-gold-silver-thread">The Art of Zari Work: Golden Thread Tradition</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-12',
     updatedAt: '2026-07-12',
     category: 'Designer Profile',
@@ -5558,7 +5558,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-trends-2026">Indian Wedding Fashion Trends 2026</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-12',
     updatedAt: '2026-07-12',
     category: 'Designer Profile',
@@ -5656,7 +5656,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/what-to-wear-indian-wedding-guest-2026">What to Wear to an Indian Wedding as a Guest 2026</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-12',
     updatedAt: '2026-07-12',
     category: 'Cultural Guide',
@@ -5735,7 +5735,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/zari-work-guide-indian-embroidery-gold-silver-thread">The Art of Zari Work: Golden Thread Tradition</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-13',
     updatedAt: '2026-07-13',
     category: 'Designer Profile',
@@ -5817,7 +5817,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Complete Guide 2026</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-13',
     updatedAt: '2026-07-13',
     category: 'Designer Profile',
@@ -5896,7 +5896,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-fabric-types-guide-silk-georgette-chiffon">Complete Guide to Indian Fabric Types</a></li>
       </ul>
     `,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-13',
     updatedAt: '2026-07-13',
     category: 'Designer Profile',
@@ -5982,7 +5982,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Complete Guide 2026</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-13',
     updatedAt: '2026-07-13',
     category: 'Cultural Guide',
@@ -6075,7 +6075,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Complete Guide 2026</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-13',
     updatedAt: '2026-07-13',
     category: 'Cultural Guide',
@@ -6169,7 +6169,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-fabric-types-guide-silk-georgette-chiffon">Complete Guide to Indian Fabric Types</a></li>
       </ul>
     `,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-13',
     updatedAt: '2026-07-13',
     category: 'Cultural Guide',
@@ -6330,7 +6330,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Tarun Tahiliani is one of the foundational figures of modern Indian couture — a designer whose structural innovations (lightweight construction, internal corsetry, pre-stitched draping) have become industry standards. His "India Modern" aesthetic, dual training in business and design, and founding role in the FDCI make him a unique figure in Indian fashion. Browse LuxeMia's <a href="/lehengas">bridal lehenga collection</a> for accessible alternatives inspired by Tahiliani's design principles, or read our <a href="/blog/fashion-cults">designer profile collection</a> for more on Indian couture. For more on Tahiliani's design innovations in bridal wear, see our <a href="/blog/attires">attires encyclopedia</a>.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
@@ -6481,7 +6481,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Rahul Mishra is the most globally recognized Indian designer of his generation — the only Indian at Paris Haute Couture Week, the only Indian International Woolmark Prize winner, and a pioneer of sustainable luxury. His 3-D embroidery, employment of 1,000+ Indian artisans, and nature-inspired couture have repositioned Indian fashion on the global stage. Browse LuxeMia's <a href="/lehengas">lehenga collection</a> for accessible alternatives inspired by Mishra's design principles, or read our <a href="/blog/fashion-cults">designer profile collection</a> for more on Indian couture. For more on Indian hand-embroidery traditions, see our <a href="/blog/motifs-embroideries">motifs and embroidery guide</a>.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
@@ -6624,7 +6624,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Anamika Khanna is the most respected "designer's designer" in Indian fashion — a self-taught couturier who blended Indian textiles with Western tailoring decades before it became the industry norm. Her refusal to follow the fashion week system, her private trunk show model, and her muted luxury aesthetic have made her a cult favorite among mature luxury clients. Browse LuxeMia's <a href="/sarees">saree collection</a> for accessible alternatives inspired by Khanna's dhoti-sari and cape-pallu silhouettes, or read our <a href="/blog/fashion-cults">designer profile collection</a> for more on Indian couture. For more on Indian textile traditions, see our <a href="/blog/attires">attires encyclopedia</a>.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
@@ -6786,7 +6786,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Abu Jani-Sandeep Khosla are foundational figures of Indian luxury fashion — a duo who elevated chikankari and zardozi to couture standards, dressed three generations of Bollywood royalty, and pioneered Indian fashion's international expansion. Their 40-year partnership is the longest-running active designer duo in Indian fashion. Browse LuxeMia's <a href="/lehengas">lehenga collection</a> for accessible alternatives inspired by their chikankari and zardozi work, or read our <a href="/blog/fashion-cults">designer profile collection</a> for more on Indian couture. For more on chikankari embroidery specifically, see our <a href="/blog/motifs-embroideries">chikankari guide</a>.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
@@ -6953,7 +6953,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Neeta Lulla is the most decorated costume designer in Indian cinema history and one of the country's leading bridal couturiers. Her dual career — film costume design (300+ films, 4 National Awards) and bridal couture (40+ years, including the Bachchan wedding) — gives her a unique position in Indian fashion. Browse LuxeMia's <a href="/lehengas">lehenga collection</a> for accessible alternatives inspired by Lulla's zardozi-heavy bridal aesthetic, or read our <a href="/blog/fashion-cults">designer profile collection</a> for more on Indian couture. For more on Indian embroidery traditions, see our <a href="/blog/motifs-embroideries">zari work guide</a>.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Designer Profile',
@@ -7189,7 +7189,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>This glossary covers 50+ Indian fashion terms — a comprehensive reference for the vocabulary of Indian ethnic wear. For deeper exploration of any category, see our <a href="/blog/attires">attires encyclopedia</a> (garments), <a href="/blog/motifs-embroideries">motifs and embroidery guides</a> (embroidery), and <a href="/blog/cultural-connections">cultural connections articles</a> (symbolism). Browse LuxeMia's <a href="/lehengas">lehenga</a>, <a href="/sarees">saree</a>, <a href="/suits">suit</a>, and <a href="/menswear">menswear collections</a> for pieces that bring this vocabulary to life, or read our <a href="/blog/weddings-festivals">weddings and festivals guide</a> for more on Indian wedding traditions.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Attires',
@@ -7358,7 +7358,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Indian jewelry is a deep tradition with regional variations, technical distinctions, and cultural significance. This glossary covers 40+ terms — for more on Indian fashion vocabulary, see our <a href="/blog/indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry">main Indian Fashion Glossary</a>, our <a href="/blog/motifs-embroideries">embroidery guide</a>, and our <a href="/blog/cultural-connections">cultural symbolism articles</a>. Browse LuxeMia's <a href="/jewelry">jewelry collection</a> for accessible Indian jewelry pieces starting at $30.</p>`,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Attires',
@@ -7511,7 +7511,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Indian weddings are multi-day celebrations with distinct rituals at each stage. Understanding this vocabulary helps non-Indian guests participate appropriately and helps NRI diaspora members reconnect with their cultural heritage. For outfit advice for each event, see our <a href="/blog/weddings-festivals">weddings and festivals guide</a>. For more on Indian fashion vocabulary, see our <a href="/blog/indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry">main Indian Fashion Glossary</a>. Browse LuxeMia's <a href="/lehengas">lehenga</a>, <a href="/sarees">saree</a>, <a href="/suits">suit</a>, and <a href="/menswear">menswear collections</a> for wedding-ready outfits.</p>`,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Weddings & Festivals',
@@ -7698,7 +7698,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Final Notes</h2>
 <p>Indian embroidery is one of the world's richest textile traditions, with 40+ distinct regional techniques and 7+ million artisan workers. This glossary covers the major traditions — for deeper exploration, see our detailed guides on <a href="/blog/motifs-embroideries">zari work</a>, <a href="/blog/motifs-embroideries">chikankari</a>, and <a href="/blog/motifs-embroideries">embroidery motif symbolism</a>. For more on Indian fashion vocabulary, see our <a href="/blog/indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry">main Indian Fashion Glossary</a>. Browse LuxeMia's <a href="/lehengas">lehenga</a>, <a href="/sarees">saree</a>, <a href="/suits">suit</a>, and <a href="/menswear">menswear collections</a> for hand-embroidered pieces at accessible prices.</p>`,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-14',
     updatedAt: '2026-07-14',
     category: 'Motifs & Embroideries',
@@ -7857,7 +7857,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/shipping">Shipping Policy — USA, Canada & Australia</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-15',
     updatedAt: '2026-07-15',
     category: 'Wedding Guest Guide',
@@ -7957,7 +7957,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-15',
     updatedAt: '2026-07-15',
     category: 'Festival Guide',
@@ -8074,7 +8074,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/indowestern">Shop Indo-Western</a></li>
       </ul>
     `,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-15',
     updatedAt: '2026-07-15',
     category: 'Festival Guide',
@@ -8208,7 +8208,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/lehengas">Shop Lehengas</a> | <a href="/suits">Shop Suits</a> | <a href="/sarees">Shop Sarees</a></li>
       </ul>
     `,
-    author: 'Ananya Iyer, LuxeMia Senior Bridal Stylist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-15',
     updatedAt: '2026-07-15',
     category: 'Wedding Guest Guide',
@@ -8378,7 +8378,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/lehengas">Shop Lehengas</a> | <a href="/suits">Shop Suits</a> | <a href="/sarees">Shop Sarees</a></li>
       </ul>
     `,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-15',
     updatedAt: '2026-07-15',
     category: 'Style Guide',
@@ -8546,7 +8546,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/lehengas">Shop Lehengas</a> | <a href="/sarees">Shop Sarees</a> | <a href="/suits">Shop Suits</a> | <a href="/menswear">Shop Menswear</a></li>
       </ul>
     `,
-    author: 'Meera Kapoor, LuxeMia Textile & Embroidery Specialist',
+    author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-15',
     updatedAt: '2026-07-15',
     category: 'How-To & Care',

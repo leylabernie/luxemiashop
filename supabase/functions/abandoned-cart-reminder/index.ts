@@ -5,6 +5,14 @@ interface ResendEmailResponse {
 }
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const CRON_SECRET = Deno.env.get("CRON_SECRET");
+
+const escapeHtml = (value: string): string => value
+  .replaceAll("&", "&amp;")
+  .replaceAll("<", "&lt;")
+  .replaceAll(">", "&gt;")
+  .replaceAll('"', "&quot;")
+  .replaceAll("'", "&#039;");
 
 async function sendEmail(options: {
   from: string;
@@ -12,6 +20,7 @@ async function sendEmail(options: {
   subject: string;
   html: string;
 }): Promise<ResendEmailResponse> {
+  if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY is not configured");
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -63,11 +72,11 @@ const formatCartItemsHtml = (items: CartItem[], currency: string): string => {
   return items.map(item => `
     <tr>
       <td style="padding: 16px; border-bottom: 1px solid #e5e5e5;">
-        ${item.image ? `<img src="${item.image}" alt="${item.title}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />` : ''}
+        ${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />` : ''}
       </td>
       <td style="padding: 16px; border-bottom: 1px solid #e5e5e5;">
-        <p style="margin: 0; font-weight: 600; color: #1a1a1a;">${item.title}</p>
-        ${item.variant ? `<p style="margin: 4px 0 0; color: #666; font-size: 14px;">${item.variant}</p>` : ''}
+        <p style="margin: 0; font-weight: 600; color: #1a1a1a;">${escapeHtml(item.title)}</p>
+        ${item.variant ? `<p style="margin: 4px 0 0; color: #666; font-size: 14px;">${escapeHtml(item.variant)}</p>` : ''}
         <p style="margin: 4px 0 0; color: #666; font-size: 14px;">Qty: ${item.quantity}</p>
       </td>
       <td style="padding: 16px; border-bottom: 1px solid #e5e5e5; text-align: right;">
@@ -78,7 +87,7 @@ const formatCartItemsHtml = (items: CartItem[], currency: string): string => {
 };
 
 const generateEmailHtml = (cart: AbandonedCart): string => {
-  const recoveryUrl = `https://luxemia.shop/cart?recover=${cart.recovery_code}`;
+  const recoveryUrl = "https://luxemia.shop/collections?utm_source=abandoned_cart&utm_medium=email&utm_campaign=cart_reminder";
   
   return `
 <!DOCTYPE html>
@@ -106,7 +115,7 @@ const generateEmailHtml = (cart: AbandonedCart): string => {
             <td style="padding: 40px;">
               <h2 style="margin: 0 0 16px; color: #1a1a1a; font-size: 24px; font-weight: 600;">You left something beautiful behind...</h2>
               <p style="margin: 0 0 24px; color: #666; font-size: 16px; line-height: 1.6;">
-                We noticed you were exploring our exquisite collection but didn't complete your purchase. Your handpicked items are still waiting for you!
+                You recently saved items while browsing LuxeMia. Return to the collection to review availability and continue shopping.
               </p>
               
               <!-- Cart Items -->
@@ -129,24 +138,17 @@ const generateEmailHtml = (cart: AbandonedCart): string => {
                 </tfoot>
               </table>
               
-              <!-- Special Offer -->
-              <div style="background: linear-gradient(135deg, #fef7e5 0%, #fdf2d0 100%); border-radius: 8px; padding: 20px; margin-bottom: 24px; text-align: center;">
-                <p style="margin: 0 0 8px; font-size: 14px; color: #8b6914; font-weight: 600;">EXCLUSIVE OFFER FOR YOU</p>
-                <p style="margin: 0; font-size: 24px; color: #1a1a1a; font-weight: 700;">10% OFF YOUR ORDER</p>
-                <p style="margin: 8px 0 0; font-size: 14px; color: #666;">Use code: <strong style="color: #d4af37;">${cart.recovery_code}</strong></p>
-              </div>
-              
               <!-- CTA Button -->
               <table role="presentation" style="width: 100%;">
                 <tr>
                   <td style="text-align: center;">
-                    <a href="${recoveryUrl}" style="display: inline-block; padding: 16px 48px; background-color: #1a1a1a; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 4px; letter-spacing: 1px;">COMPLETE MY ORDER</a>
+                    <a href="${recoveryUrl}" style="display: inline-block; padding: 16px 48px; background-color: #1a1a1a; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; border-radius: 4px; letter-spacing: 1px;">RETURN TO LUXEMIA</a>
                   </td>
                 </tr>
               </table>
               
               <p style="margin: 24px 0 0; color: #999; font-size: 14px; text-align: center;">
-                This offer expires in 48 hours. Free shipping on orders over $150!
+                Product availability may change. Free shipping on orders over $350.
               </p>
             </td>
           </tr>
@@ -184,7 +186,7 @@ const handler = async (req: Request): Promise<Response> => {
   );
 
   try {
-    const { action, email, cart_items, cart_total, user_id } = await req.json();
+    const { action, email, cart_items, cart_total, user_id, recovery_code } = await req.json();
     
     console.log(`Processing abandoned cart action: ${action}`);
 
@@ -224,6 +226,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     if (action === "send_reminders") {
+      const authorization = req.headers.get("authorization");
+      if (!CRON_SECRET || authorization !== `Bearer ${CRON_SECRET}`) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 401,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
       // Find abandoned carts that need reminders (pending, older than 1 hour, not yet reminded)
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
       const fortyEightHoursAgo = new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString();
@@ -279,8 +288,12 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     if (action === "mark_recovered") {
-      const { recovery_code } = await req.json();
-      
+      if (!recovery_code || typeof recovery_code !== "string") {
+        return new Response(JSON.stringify({ error: "Recovery code is required" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
       const { error } = await supabase
         .from("abandoned_carts")
         .update({

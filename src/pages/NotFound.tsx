@@ -51,7 +51,7 @@ const NotFound = () => {
     <div className="min-h-screen flex items-center justify-center bg-muted px-4 py-16">
       <SEOHead
         title="Page Not Found — LuxeMia"
-        description="The page you're looking for has moved or no longer exists. Explore LuxeMia's collection of bridal lehengas, silk sarees, salwar suits, sherwanis and indo-western outfits with free worldwide shipping."
+        description="The page you're looking for has moved or no longer exists. Explore LuxeMia's bridal lehengas, silk sarees, salwar suits, sherwanis and indo-western outfits."
         noIndex
       />
       <div className="max-w-2xl w-full text-center">

@@ -71,18 +71,6 @@ const organizationSchema = {
     'https://www.tiktok.com/@shopluxemia',
   ],
   foundingDate: '2025',
-  knowsAbout: [
-    'Indian Ethnic Wear',
-    'Bridal Lehengas',
-    'Silk Sarees',
-    'Salwar Kameez',
-    'Anarkali Suits',
-    'Indo-Western Fashion',
-    'Indian Wedding Attire',
-    'Banarasi Silk',
-    'Kanchipuram Sarees',
-    'Traditional Indian Textiles',
-  ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Indian Ethnic Wear Collection',

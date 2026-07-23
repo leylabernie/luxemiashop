@@ -4,6 +4,16 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/nri/usa",
+      "destination": "/indian-ethnic-wear-usa",
+      "statusCode": 301
+    },
+    {
+      "source": "/nri/canada",
+      "destination": "/indian-ethnic-wear-canada",
+      "statusCode": 301
+    },
+    {
       "source": "/nri/uk",
       "destination": "/nri",
       "statusCode": 301

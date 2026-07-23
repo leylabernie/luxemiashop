@@ -111,12 +111,12 @@ const SEOFooterContent = () => {
             <div className="text-center mt-8 pt-6 border-t border-border/50">
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
-                LuxeMia is the best Indian ethnic wear store online for affordable, stylish ethnic clothing. 
+                LuxeMia offers affordable, stylish Indian ethnic clothing online.
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
 We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to the USA, Canada, and Australia, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
-                why thousands of customers trust LuxeMia for their Indian ethnic wear needs.
+                how LuxeMia selects Indian ethnic wear for weddings and celebrations.
               </p>
             </div>
           </div>

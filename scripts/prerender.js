@@ -924,7 +924,7 @@ const routes = [
       <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free shipping on orders over $350.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Every piece is handcrafted by skilled Indian artisans and ships worldwide with full tracking. Free shipping on orders over $350 to USA, Canada, and Australia.</p>
+      <p>Pieces ship with tracking to the USA, Canada and Australia. Free shipping applies to orders over $350.</p>
     `,
   },
   {
@@ -973,7 +973,7 @@ const routes = [
     path: '/sizing-measurements-guide',
     title: 'How to Measure Blouse Size for Saree | LuxeMia',
     description: 'Complete guide on how to measure blouse size for saree, lehenga choli & custom ethnic wear. Step-by-step instructions, size charts & tips for the perfect fit.',
-    h1: 'Sizing & Measurements Guide',
+    h1: 'How to Measure Blouse Size for Saree',
     schemas: [MEASUREMENT_HOW_TO_SCHEMA],
     content: `<p>Learn how to measure yourself accurately for saree blouses, lehenga cholis, and custom-stitched Indian ethnic wear. Use a soft measuring tape, record every measurement in inches, and ask a friend to help when possible.</p>
       <h2>How do I measure for a custom-stitched Indian outfit?</h2>
@@ -1064,7 +1064,7 @@ const routes = [
       <h2>Eid Collection</h2>
       <p>Celebrate in style with flowing shararas and elegant palazzo suits — graceful silhouettes in luxurious georgette, chinon, and net fabrics.</p>
       <h2>Festive Favorites</h2>
-      <p>A curated mix of our most-loved pieces across categories — versatile outfits that transition effortlessly from festive gatherings to celebrations.</p>
+      <p>A curated mix of featured pieces across categories — versatile outfits for festive gatherings and celebrations.</p>
       <h2>His & Hers</h2>
       <p>Perfectly paired looks for couples — elegant kurta pajamas and jodhpuri suits alongside complementing lehengas and sharara sets.</p>
     `,
@@ -1089,7 +1089,7 @@ const routes = [
     description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees & suits added weekly. Free shipping over $350 to USA, Canada & Australia.',
     h1: 'New Arrivals',
     content: `
-      <p>Discover the newest additions to our collection. Fresh styles of designer lehengas, silk sarees, and anarkali suits — handcrafted and shipped worldwide.</p>
+      <p>Discover the newest additions to our collection, including lehengas, silk sarees, and anarkali suits with delivery to the USA, Canada and Australia.</p>
       <h2>What's New</h2>
       <p>We add new styles every week, from bridal lehengas and Banarasi silk sarees to trendy palazzo suits and groom sherwanis. Each new arrival features the latest embroidery techniques, color palettes, and fabric innovations for 2026.</p>
       <p>Sign up for our newsletter to be the first to know when new collections drop. Free shipping on all new arrivals to USA, Canada, and Australia.</p>
@@ -1098,14 +1098,14 @@ const routes = [
   {
     path: '/bestsellers',
     category: 'all',
-    title: 'Bestsellers — Most Loved Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia bestsellers. Our most popular lehengas, sarees & suits chosen by customers worldwide. Free shipping over $350 to USA, Canada & Australia.',
-    h1: 'Bestsellers',
+    title: 'Featured Indian Ethnic Wear | LuxeMia',
+    description: 'Explore featured lehengas, sarees, suits, menswear and jewelry selected by the LuxeMia team for weddings and celebrations.',
+    h1: 'Featured Styles',
     content: `
-      <p>Browse our most-loved pieces — the lehengas, sarees, and suits that our customers can't stop buying. Tried, tested, and loved worldwide.</p>
-      <h2>Customer Favorites</h2>
-      <p>Our bestsellers are curated based on real customer purchases and reviews. From bridal lehengas that steal the show to everyday silk sarees that never go out of style, these are the pieces our community recommends most.</p>
-      <p>Every bestseller comes with free shipping on orders over $350. Flat rate $25 per order otherwise. All sales final — damage claims accepted within 48h with unboxing video.</p>
+      <p>Browse an editorial selection of lehengas, sarees, suits, menswear and jewelry chosen for their design and occasion-ready details.</p>
+      <h2>How Featured Styles Are Selected</h2>
+      <p>The LuxeMia team highlights pieces based on design, fabric information, occasion suitability and current availability. This page does not claim a sales ranking.</p>
+      <p>Shipping is free on orders over $350 to the USA, Canada and Australia. A flat $25 rate applies otherwise. Review each product and policy page before ordering.</p>
     `,
   },
   {
@@ -1130,8 +1130,8 @@ const routes = [
       <p>Curated for the global Indian. Shop authentic ethnic wear from anywhere in the world with free shipping to USA, Canada, and Australia. No compromises on quality or authenticity.</p>
       <h2>Shop by Region</h2>
       <ul>
-        <li><a href="/nri/usa">Indian Ethnic Wear for USA</a> — Free shipping across America</li>
-        <li><a href="/nri/canada">Indian Ethnic Wear for Canada</a> — Free shipping coast to coast</li>
+        <li><a href="/indian-ethnic-wear-usa">Indian Ethnic Wear for USA</a> — shipping information for America</li>
+        <li><a href="/indian-ethnic-wear-canada">Indian Ethnic Wear for Canada</a> — shipping information for Canada</li>
       </ul>
       <h2>Why NRIs Love LuxeMia</h2>
       <p>Living abroad doesn't mean you have to settle for less. We deliver authentic, handcrafted Indian ethnic wear directly from our artisans to your doorstep — no middlemen, no compromises. Custom sizing available on all outfits.</p>
@@ -1146,8 +1146,8 @@ const routes = [
       <p>Shopping for Indian ethnic wear in the USA? LuxeMia offers authentic bridal lehengas, silk sarees, and designer suits with free shipping across America.</p>
       <h2>Free Shipping to the USA</h2>
       <p>Enjoy free standard shipping on orders over $350 to the contiguous United States. Most orders arrive within 7-12 business days via DHL Express with full tracking. Express shipping (3-5 days) also available.</p>
-      <h2>Duty-Free Under $800</h2>
-      <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery.</p>
+      <h2>US Customs Information</h2>
+      <p>Duties, taxes, and carrier processing fees may apply based on the product classification, shipment value, and current US customs rules. These charges are not included unless checkout explicitly states otherwise.</p>
       <h2>Shop Our USA Collection</h2>
       <p>Browse <a href="/lehengas">bridal lehengas</a>, <a href="/sarees">designer sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">sherwanis</a> — all handcrafted in India and shipped directly to your US address.</p>
     `,
@@ -1171,14 +1171,14 @@ const routes = [
   {
     path: '/nri/usa',
     title: 'Indian Ethnic Wear USA — Free Shipping to America | LuxeMia',
-    description: 'Shop Indian ethnic wear online in the USA. Bridal lehengas, silk sarees & salwar suits with free shipping across America. Duty-free under $800.',
+    description: 'Shop Indian ethnic wear online in the USA. Bridal lehengas, silk sarees and salwar suits with tracked delivery and USA-based support.',
     h1: 'Indian Ethnic Wear for USA',
     content: `
       <p>LuxeMia delivers authentic Indian ethnic wear straight to your doorstep in the USA. Shop bridal lehengas, silk sarees, salwar kameez, and designer sherwanis with free shipping on orders over $350.</p>
       <h2>Free Shipping Across America</h2>
       <p>Standard shipping takes 7-12 business days via DHL Express with full tracking. Express shipping (3-5 business days) is also available at checkout. Free standard shipping on all orders over $350 to the contiguous United States.</p>
-      <h2>Duty-Free Under $800</h2>
-      <p>Most individual orders under $800 enter the US duty-free under the de minimis threshold. No hidden customs fees or surprises at delivery. Orders over $800 may be subject to import duties.</p>
+      <h2>US Customs Information</h2>
+      <p>Duties, taxes, and carrier processing fees may apply based on the product classification, shipment value, and current US customs rules. These charges are not included unless checkout explicitly states otherwise.</p>
       <h2>Shop by Category</h2>
       <ul>
         <li><a href="/lehengas">Bridal Lehengas</a> — Designer lehenga choli for your wedding</li>
@@ -1492,11 +1492,19 @@ const routes = [
     content: '<p>Not sure what to wear? Our expert stylists are here to help. Book a free consultation and get personalized recommendations for your occasion, body type, and budget.</p>',
   },
   {
+    path: '/wedding-party-orders',
+    title: 'Indian Wedding Party & Group Outfit Orders | LuxeMia',
+    description: 'Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups. Tell LuxeMia your event date, palette, sizes and budget.',
+    h1: 'Wedding Party & Group Orders',
+    content: '<p>Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups across multiple sizes, colors and events. Send LuxeMia your wedding date, group size, palette and budget for personalized help.</p>',
+  },
+  {
     path: '/style-quiz',
     title: 'Style Quiz — Find Your Perfect Indian Outfit | LuxeMia',
     description: 'Take the LuxeMia style quiz to discover your perfect Indian outfit. Personalized recommendations based on your taste, occasion & budget.',
     h1: 'Style Quiz',
     content: '<p>Discover your signature ethnic style. Answer a few questions and we\'ll recommend the perfect lehenga, saree, or suit for you.</p>',
+    noIndex: true,
   },
   {
     path: '/artisans',
@@ -1737,7 +1745,7 @@ const routes = [
     title: 'Shipping Indian Clothes to USA, UK & Canada: NRI Guide | LuxeMia',
     description: 'Complete NRI guide to shipping Indian clothes to USA, UK & Canada. Customs, duties, delivery times & how to avoid common shipping problems.',
     h1: 'Shipping Indian Clothes to USA, UK & Canada: NRI Guide',
-    content: '<p>The complete NRI guide to ordering Indian ethnic wear online and shipping it to the USA, UK, or Canada. Customs duties, delivery timelines, country-specific rules, and how LuxeMia handles worldwide shipping with no surprises.</p>',
+    content: '<p>A guide to ordering Indian ethnic wear online, including customs considerations, delivery timelines, sizing and current LuxeMia destinations.</p>',
   },
   {
     path: '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
@@ -2142,6 +2150,22 @@ function generateHtml(template, route, allShopifyProducts) {
     html = html.replace('</head>', `${structuredDataScripts}\n</head>`);
   }
 
+  // Blog routes need article-specific schema in the initial HTML. The author
+  // is the real editorial team; individual credentials are not implied.
+  if (route.path.startsWith('/blog/') && route.path.split('/').length === 3) {
+    const articleSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: route.h1,
+      description: route.description,
+      url: SITE_URL + route.path,
+      mainEntityOfPage: SITE_URL + route.path,
+      author: { '@type': 'Organization', name: 'LuxeMia Editorial Team', url: SITE_URL + '/authors/luxemia-editorial-team' },
+      publisher: { '@type': 'Organization', name: 'LuxeMia', url: SITE_URL },
+    };
+    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(articleSchema)}</script>\n</head>`);
+  }
+
   // Inject SEO content into the body. This content is visible to search engine crawlers
   // and accessible to screen readers. JavaScript removes it once React has mounted
   // so regular users see only the React-rendered UI (no duplicate content).
@@ -2420,7 +2444,7 @@ async function main() {
     // products with thin Shopify descriptions get unique, keyword-rich meta.
     const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
-    const fallbackDesc = `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Handcrafted Indian ethnic wear with premium fabrics. Ships worldwide in 7-10 days, free over $350.`;
+    const fallbackDesc = `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with delivery to USA, Canada and Australia; free shipping over $350.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,

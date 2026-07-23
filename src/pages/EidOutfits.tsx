@@ -35,7 +35,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Do you ship Eid outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships Eid outfits and Indian ethnic wear for Eid celebrations to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD, flat rate $25 for orders under $350. All orders include full tracking and insurance. For Eid, we recommend ordering at least 3–4 weeks before the celebration to ensure timely delivery. Standard delivery takes 7–10 business days after dispatch from India.',
+    answer: 'LuxeMia currently ships Eid outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. Order at least 3–4 weeks before the celebration; standard transit is estimated at 7–10 business days after dispatch.',
   },
   {
     question: 'Can I wear a lehenga for Eid?',

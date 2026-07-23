@@ -18,7 +18,7 @@ declare global {
 const footerLinks = {
   shop: [
     { name: 'New Arrivals', href: '/new-arrivals' },
-    { name: 'Bestsellers', href: '/bestsellers' },
+    { name: 'Featured', href: '/bestsellers' },
     { name: 'Sarees', href: '/sarees' },
     { name: 'Lehengas', href: '/lehengas' },
     { name: 'Suits', href: '/suits' },
@@ -48,6 +48,7 @@ const footerLinks = {
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'Care Guide', href: '/care-guide' },
     { name: 'Style Consultation', href: '/style-consultation' },
+    { name: 'Wedding Party Orders', href: '/wedding-party-orders' },
   ],
 };
 
@@ -149,7 +150,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               LuxeMia
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed max-w-xs">
-              Beautiful Indian ethnic wear at fair prices — shipped worldwide to USA, Canada & Australia.
+              Beautiful Indian ethnic wear at fair prices — delivered to USA, Canada and Australia.
             </p>
             {/* Social icons */}
             <div className="flex gap-3 mt-6">

@@ -9,7 +9,7 @@ const reasons = [
   },
   {
     icon: Truck,
-    title: 'Worldwide Delivery',
+    title: 'Tracked Delivery',
     description: 'Trackable shipping to the US, UK, Canada, and more with standard and express options.',
   },
   {

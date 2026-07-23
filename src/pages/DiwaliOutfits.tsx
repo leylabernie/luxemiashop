@@ -35,7 +35,7 @@ const diwaliOutfitFaqs = [
   },
   {
     question: 'Do you ship Diwali outfits to the USA, Canada, and Australia?',
-    answer: 'Yes, LuxeMia ships festive Indian ethnic wear for Diwali to the USA, Canada, Australia, and worldwide. Free shipping on orders over $350 USD. For orders under $350, a flat rate of $25 applies. All orders are fully tracked and insured. For Diwali, order at least 3–4 weeks in advance to ensure delivery before the festival. Standard delivery takes 7–10 business days after dispatch from India.',
+    answer: 'LuxeMia currently ships Diwali outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. Order at least 3–4 weeks in advance; standard transit is estimated at 7–10 business days after dispatch.',
   },
   {
     question: 'What accessories should I pair with my Diwali outfit?',
@@ -83,7 +83,7 @@ const DiwaliOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>Diwali lehengas</strong>, <strong>festive anarkali suits</strong>, <strong>silk sarees for Diwali</strong>, <strong>sharara sets</strong>, and <strong>indo-western Diwali outfits</strong> in traditional colors of gold, red, deep green, royal blue, and orange. All pieces quality-inspected and shipped worldwide.
+              Shop <strong>Diwali lehengas</strong>, <strong>festive anarkali suits</strong>, <strong>silk sarees for Diwali</strong>, <strong>sharara sets</strong>, and <strong>indo-western Diwali outfits</strong> in traditional colors of gold, red, deep green, royal blue, and orange. Delivery is available to the USA, Canada and Australia.
             </p>
           </div>
         </div>

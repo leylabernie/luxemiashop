@@ -65,7 +65,7 @@ const Collections = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia"
-        description="Buy Indian ethnic wear online at LuxeMia. Shop our complete collection of bridal lehengas, sarees, salwar kameez, jewelry, menswear & indo-western outfits. Free worldwide shipping."
+        description="Buy Indian ethnic wear online at LuxeMia. Shop bridal lehengas, sarees, salwar kameez, jewelry, menswear and indo-western outfits."
         canonical="https://luxemia.shop/collections"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -242,7 +242,7 @@ const Collections = () => {
             <Link to="/menswear" className="hover:text-foreground transition-colors underline underline-offset-2">Men's Sherwanis</Link>
             <Link to="/indowestern" className="hover:text-foreground transition-colors underline underline-offset-2">Indo-Western</Link>
             <Link to="/new-arrivals" className="hover:text-foreground transition-colors underline underline-offset-2">New Arrivals</Link>
-            <Link to="/bestsellers" className="hover:text-foreground transition-colors underline underline-offset-2">Bestsellers</Link>
+            <Link to="/bestsellers" className="hover:text-foreground transition-colors underline underline-offset-2">Featured Styles</Link>
           </div>
         </div>
       </section>

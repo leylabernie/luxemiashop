@@ -121,11 +121,11 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
           </div>
         </section>
 
-        {/* Bestsellers Grid */}
+        {/* Editorially featured products */}
         {featuredProducts.length > 0 && (
           <section className="py-16 bg-secondary/30">
             <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-              <h2 className="text-2xl font-serif text-center mb-10">Bestsellers in {config.country}</h2>
+              <h2 className="text-2xl font-serif text-center mb-10">Featured Styles for {config.country}</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
                 {featuredProducts.map((product, index) => (
                   <ProductCard key={product.node.id} product={product} index={index} />
