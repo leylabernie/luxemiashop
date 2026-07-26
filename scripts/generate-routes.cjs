@@ -20,7 +20,7 @@ const path = require('path');
 // ─── Config ─────────────────────────────────────────────────────────────────
 
 const SHOPIFY_STOREFRONT_URL =
-  'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
+  'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');

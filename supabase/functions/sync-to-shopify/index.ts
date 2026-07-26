@@ -36,7 +36,7 @@ interface ShopifyProductResponse {
 }
 
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
-const SHOPIFY_API_VERSION = '2025-07';
+const SHOPIFY_API_VERSION = '2025-10';
 
 // Check if a product with the same title already exists in Shopify
 async function checkProductExistsInShopify(title: string, accessToken: string): Promise<number | null> {

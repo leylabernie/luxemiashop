@@ -56,7 +56,7 @@ const triggerTrackingNotification = async (orderData: {
     console.error("Failed to trigger tracking notification:", error);
   }
 };
-const SHOPIFY_API_VERSION = "2025-07";
+const SHOPIFY_API_VERSION = "2025-10";
 
 // Helper function to return a generic "not found" response with random delay
 // This prevents timing attacks that could reveal valid order numbers

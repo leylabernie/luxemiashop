@@ -6,7 +6,7 @@ const corsHeaders = {
 };
 
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
-const SHOPIFY_API_VERSION = '2025-07';
+const SHOPIFY_API_VERSION = '2025-10';
 
 // SEO-optimized product updates for the 4 new salwar suits
 const PRODUCT_UPDATES: Record<string, {

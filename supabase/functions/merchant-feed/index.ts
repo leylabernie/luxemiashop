@@ -8,7 +8,7 @@ if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.error("SHOPIFY_STOREFRONT_TOKEN env var is not set. Feed generation will fail.");
 }
 
-const SHOPIFY_API_VERSION = "2025-07";
+const SHOPIFY_API_VERSION = "2025-10";
 const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 const SITE_URL = "https://luxemia.shop";

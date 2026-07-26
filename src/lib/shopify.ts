@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 
 // Shopify API Configuration
-const SHOPIFY_API_VERSION = '2025-07';
+const SHOPIFY_API_VERSION = '2025-10';
 const SHOPIFY_STORE_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
