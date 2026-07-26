@@ -716,7 +716,7 @@ const SUITS: CategoryConfig = {
     },
     {
       question: "Do you offer custom tailoring for suits?",
-      answer: "Yes, we offer complimentary custom tailoring on most suits. Provide your bust, waist, hip, and length measurements, and our team will tailor the suit to your specifications. Custom orders dispatch in 5-7 business days."
+      answer: "Yes, we offer made-to-measure tailoring on most suits. Provide your bust, waist, hip, and length measurements, and our team will tailor the suit to your specifications. Custom orders dispatch in 5-7 business days."
     },
     {
       question: "How do I care for my salwar kameez?",

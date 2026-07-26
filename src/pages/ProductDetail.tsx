@@ -172,7 +172,7 @@ const ProductDetail = () => {
   const productFaqs = product ? [
     {
       question: `What sizes are available for the ${product.title}?`,
-      answer: `The ${product.title} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer complimentary custom tailoring to ensure a perfect fit. Please refer to our Size Guide for detailed measurements.`
+      answer: `The ${product.title} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer made-to-measure tailoring to ensure a perfect fit. Please refer to our Size Guide for detailed measurements.`
     },
     {
       question: `What is the delivery time for the ${product.title}?`,

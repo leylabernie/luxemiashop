@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors, MessageCircle } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -882,6 +882,17 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </div>
 
       <Separator />
+
+      {/* $30 Fit Guarantee Trust Card */}
+      <div className="flex items-center gap-3 p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-sm border border-emerald-200 dark:border-emerald-800/50">
+        <div className="h-10 w-10 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center flex-shrink-0">
+          <BadgeCheck className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-emerald-900 dark:text-emerald-100">$30 Fit Guarantee</p>
+          <p className="text-xs text-emerald-700 dark:text-emerald-300">Free $30 stitching credit if your readymade size doesn't fit perfectly</p>
+        </div>
+      </div>
 
       {/* Trust Badges - Enhanced */}
       <div className="grid grid-cols-2 gap-3 pt-4">

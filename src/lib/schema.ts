@@ -95,7 +95,8 @@ export function generateReturnPolicySchema() {
     '@id': 'https://luxemia.shop/#returnPolicy',
     name: 'LuxeMia Return & Refund Policy',
     applicableCountry: ['US', 'CA', 'AU'],
-    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+    merchantReturnDays: 2,
     description: 'Returns accepted only for damaged or defective items. Made-to-order and customized items are not eligible for returns. Contact support within 48 hours of delivery with photos for damage claims.',
     url: 'https://luxemia.shop/returns',
   };
@@ -143,7 +144,6 @@ export function generateProductSchema(input: ProductSchemaInput) {
     ...(input.color && { color: input.color }),
     ...(input.material && { material: input.material }),
     ...(input.sizes && input.sizes.length > 0 && { size: input.sizes.length === 1 ? input.sizes[0] : input.sizes.join('/') }),
-    itemCondition: 'https://schema.org/NewCondition',
     offers: {
       '@type': 'Offer',
       url: input.url,
