@@ -66,7 +66,7 @@ function clampDescription(raw, maxLength = 155) {
 // Pulls live product data so prerendered HTML emits valid Product schema with
 // image, description, offers.price, etc. — required by Google Merchant
 // Listings / Rich Results validation.
-const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
+const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[prerender] WARNING: SHOPIFY_STOREFRONT_TOKEN env var is not set. Product prerendering will use fallback data.');
@@ -1987,6 +1987,23 @@ function generateHtml(template, route, allShopifyProducts) {
       /<link rel="canonical" href="[^"]*" \/>/,
       ''
     );
+    // Also remove hreflang tags for noIndex pages
+    html = html.replace(
+      /<link rel="alternate" hreflang="en-US" href="[^"]*"\s*\/?>/,
+      ''
+    );
+    html = html.replace(
+      /<link rel="alternate" hreflang="en-CA" href="[^"]*"\s*\/?>/,
+      ''
+    );
+    html = html.replace(
+      /<link rel="alternate" hreflang="en-AU" href="[^"]*"\s*\/?>/,
+      ''
+    );
+    html = html.replace(
+      /<link rel="alternate" hreflang="x-default" href="[^"]*"\s*\/?>/,
+      ''
+    );
   } else {
     // Replace canonical URL
     const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
@@ -1999,6 +2016,24 @@ function generateHtml(template, route, allShopifyProducts) {
     html = html.replace(
       /<meta property="og:url" content="[^"]*" \/>/,
       `<meta property="og:url" content="${canonical}" />`
+    );
+
+    // Replace hreflang alternate tags to point to the route's canonical URL
+    html = html.replace(
+      /<link rel="alternate" hreflang="en-US" href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-US" href="${canonical}" />`
+    );
+    html = html.replace(
+      /<link rel="alternate" hreflang="en-CA" href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-CA" href="${canonical}" />`
+    );
+    html = html.replace(
+      /<link rel="alternate" hreflang="en-AU" href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-AU" href="${canonical}" />`
+    );
+    html = html.replace(
+      /<link rel="alternate" hreflang="x-default" href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="x-default" href="${canonical}" />`
     );
   }
 

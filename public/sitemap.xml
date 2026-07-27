@@ -3,867 +3,1147 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://luxemia.shop/</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/brand-story</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lookbook</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lehengas</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sarees</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/suits</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/menswear</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indowestern</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/new-arrivals</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/bestsellers</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/nri</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/nri/usa</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/nri/canada</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indian-ethnic-wear-usa</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indian-ethnic-wear-canada</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/artisans</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sustainability</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/style-consultation</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://luxemia.shop/wedding-party-orders</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://luxemia.shop/style-quiz</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/contact</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/faq</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/shipping</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/returns</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/size-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sizing-measurements-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/care-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/privacy</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/terms</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/press</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/diwali-outfits</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/wedding-guest-outfits</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/mehendi-outfits</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/eid-outfits</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/navratri-outfits</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/maroon-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/emerald-green-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/royal-blue-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/pink-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/purple-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/wine-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/navy-blue-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/maroon-lehenga-for-reception</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/black-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/pastel-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/anarkali-suit-for-mother-of-bride</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lehenga-for-bridesmaid</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/anarkali-suit-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/saree-for-mother-of-bride</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lehenga-for-mother-of-bride</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sherwani-for-groom</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/kurta-for-groom-brother</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sharara-for-bride-sister</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/georgette-saree-for-reception</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/banarasi-silk-saree-for-wedding</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/kanjivaram-saree-for-wedding</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/chiffon-saree-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/silk-saree-for-festival</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/organza-saree-for-engagement</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/georgette-saree-for-wedding-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-dress-complete-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/red-bridal-lehenga-trends-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/designer-wedding-dress-under-500</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/lehenga-color-for-dark-skin</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/wedding-saree-for-mother-of-bride</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/wedding-guest-outfit-ideas</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/saree-draping-styles-every-occasion</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-trends-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/accessorize-indian-ethnic-wear</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/caring-for-silk-sarees</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/sharara-suit-guide-2026-styles-fabrics</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/pakistani-suits-anarkali-shopping-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/style-lehenga-choli-every-wedding-event</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-season-2026-outfit-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/nri-wedding-ethnic-wear-trends-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/buy-authentic-indian-sarees-online-usa-uk</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/styling-indian-ethnic-wear-festive-occasions-abroad</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-measure-yourself-for-indian-ethnic-wear</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/what-to-wear-indian-wedding-guest-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/lehenga-vs-anarkali-which-is-right-for-you</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/care-guide-washing-storing-indian-ethnic-wear</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-choose-perfect-lehenga-wedding-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/lehenga-vs-sharara-vs-anarkali-comparison</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/best-lehenga-colors-for-indian-skin-tone</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/shipping-indian-clothes-usa-uk-canada-nri-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/unstitched-vs-ready-to-wear-vs-made-to-measure</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/buying-indian-ethnic-wear-online-usa</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/banarasi-silk-saree-guide-authentic</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-drape-saree-beginner-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-ceremony-outfit-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-fabric-types-guide-silk-georgette-chiffon</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/anarkali-suit-styling-guide-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/kanchipuram-silk-saree-south-indian-wedding-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/zari-work-guide-indian-embroidery-gold-silver-thread</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/chikankari-embroidery-lucknow-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/buy-bridal-lehenga-online-usa-complete-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/designer-sherwani-online-usa-groom-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/salwar-kameez-online-usa-everyday-ethnic-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-bridal-jewelry-sets-complete-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/lehenga-choli-designer-bridal-party-wear-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/why-indian-brides-wear-red-cultural-significance</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/sabyasachi-mukherjee-designer-profile-handloom-revival</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/manish-malhotra-bollywood-bridal-designer-profile</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/bindi-meaning-history-indian-women</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/jj-valaya-royal-couture-house-of-valaya</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/anita-dongre-sustainable-luxury-grassroots</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/ritu-kumar-pioneer-indian-textile-revival</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/sindoor-mangalsutra-sacred-symbols-hindu-marriage</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/embroidery-motifs-symbolism-paisley-peacock-lotus</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/tarun-tahiliani-designer-profile-india-modern-couture</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/rahul-mishra-designer-profile-paris-haute-couture-sustainable</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/anamika-khanna-designer-profile-kolkata-couture</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/abu-jani-sandeep-khosla-designer-profile-chikankari-couture</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/neeta-lulla-designer-profile-national-award-costume-bridal</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-jewelry-glossary-40-terms-kundan-polki-jhumka-maang-tikka</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-terms-glossary-50-events-rituals-roles</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-embroidery-glossary-40-terms-zardozi-chikankari-aari</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/what-to-wear-indian-wedding-non-indian-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/navratri-9-day-color-guide-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/diwali-outfit-ideas-by-setting</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/mehendi-outfit-by-role</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/plus-size-indian-ethnic-wear-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-to-us-clothing-size-conversion-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-wear-a-saree-step-by-step</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/best-lehenga-styles-indian-wedding-guests-usa-2026</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/what-to-wear-south-asian-wedding-non-indian-guest</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/diwali-outfit-ideas-nri-women-usa-canada-australia</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/kanjivaram-vs-banarasi-silk-sarees</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/indian-wedding-guest-outfits-men-usa-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-choose-salwar-kameez-body-type</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/custom-tailoring-indian-ethnic-wear-usa</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/haldi-vs-mehendi-outfits-complete-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-care-for-silk-sarees-and-lehengas</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/punjabi-wedding-outfit-guide-nri</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/south-indian-bridal-saree-style-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/what-to-pack-indian-wedding-from-usa-nri-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/sherwani-vs-jodhpuri-vs-bandhgala-groom-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/tussar-silk-saree-guide-nri</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/kundan-vs-polki-vs-jadau-bridal-jewelry-guide</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-cotton-jacquard-wedding-kurta-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/xaWZMdQJ.jpg?v=1784746919&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Navy Blue Cotton Jacquard Wedding Kurta Set for Men - front view</image:title>
+      <image:caption>Navy Blue Cotton Jacquard Wedding Kurta Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/grey-cotton-jacquard-festive-kurta-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/KSKLCvsl.jpg?v=1784746922&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Grey Cotton Jacquard Festive Kurta Set for Men - front view</image:title>
+      <image:caption>Grey Cotton Jacquard Festive Kurta Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peach-pink-cotton-jacquard-kurta-pajama-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CtErHmMk.jpg?v=1784746917&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Peach Pink Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Peach Pink Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-cotton-jacquard-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/yCIyhZnX.jpg?v=1784746914&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Red Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-cotton-jacquard-kurta-pajama-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gbp3zJ0z_fa74f691-2a88-4f2a-b679-f6ce5a9ab636.jpg?v=1784746912&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Navy Blue Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Navy Blue Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/light-mint-cotton-jacquard-pathani-kurta-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lYchJB3Z.jpg?v=1784746905&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Light Mint Cotton Jacquard Pathani Kurta Set for Men - front view</image:title>
+      <image:caption>Light Mint Cotton Jacquard Pathani Kurta Set for Men - Men&apos;s Pathani Kurta Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/grey-cotton-jacquard-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CpMHRDCt.jpg?v=1784746899&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Grey Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Grey Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/beige-chiku-cotton-jacquard-kurta-pajama-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/DEMQdLi5.jpg?v=1784746896&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Beige Chiku Cotton Jacquard Kurta Pajama for Men - front view</image:title>
+      <image:caption>Beige Chiku Cotton Jacquard Kurta Pajama for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peach-cotton-jacquard-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PZ8_wrDH.jpg?v=1784746902&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Peach Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Peach Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-cotton-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/mdbXUWe8.jpg?v=1784746894&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Navy Blue Cotton Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Navy Blue Cotton Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-cotton-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PBNKroJe.jpg?v=1784746892&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor Cotton Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Multicolor Cotton Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peach-self-jacquard-silk-kurta-pajama-men</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/qX9_Dlpx.jpg?v=1784746890&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Peach Self-Jacquard Silk Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Peach Self-Jacquard Silk Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/pink-indian-bridal-lehenga-choli-zari-embroidery</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PHOTO-2026-07-19-01-02-21_1.jpg?v=1784746128&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>A woman modeling a traditional Indian lehenga choli set in vibrant magenta pink with intricate gold embroidery, paired with matching gold jewelry against a dark green background.</image:title>
+      <image:caption>Pink Indian Bridal Lehenga Choli with Zari Embroidery - Bridal Lehenga Choli | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-indian-bridal-lehenga-choli-zari-embroidery</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PHOTO-2026-07-19-01-02-19_2.jpg?v=1784745622&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red zari embroidered bridal blouse close up</image:title>
+      <image:caption>Red Indian Bridal Lehenga Choli with Zari Embroidery - Bridal Lehenga Choli | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/rust-brown-chanderi-lehenga-choli-set-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/211902-1.jpg?v=1784745298&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Rust Brown Chanderi Lehenga Choli Set for Women - front view</image:title>
+      <image:caption>Rust Brown Chanderi Lehenga Choli Set for Women for Garba - Designer Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/wine-chanderi-lehenga-choli-golden-zari-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/211901-2.jpg?v=1784745299&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Wine Chanderi Lehenga Choli with Zari for Women - front view</image:title>
+      <image:caption>Wine Chanderi Lehenga Choli with Zari for Women for Garba - Designer Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/olive-green-chanderi-lehenga-choli-set-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/211900.jpg?v=1784745302&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Olive Green Chanderi Lehenga Choli Set for Women - front view</image:title>
+      <image:caption>Olive Green Chanderi Lehenga Choli Set for Women for Navratri - Designer Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/chocolate-brown-chanderi-lehenga-choli-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/211899.jpg?v=1784745304&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Chocolate Brown Chanderi Lehenga Choli for Women - front view</image:title>
+      <image:caption>Chocolate Brown Chanderi Lehenga Choli for Navratri - Designer Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-rayon-lehenga-sleeveless-top-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212799.png?v=1784745296&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor Rayon Lehenga with Sleeveless Top for Women - front view</image:title>
+      <image:caption>Multicolor Rayon Lehenga with Sleeveless Top for Women - Designer Lehenga and Top Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-rayon-lehenga-embroidered-top-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212800.png?v=1784745295&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor Rayon Lehenga with Embroidered Top for Women - front view</image:title>
+      <image:caption>Multicolor Rayon Lehenga with Embroidered Top for Women - Designer Lehenga and Top Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-purple-chanderi-navratri-lehenga-choli-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212816-Copy.jpg?v=1784745292&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Royal Purple Chanderi Navratri Lehenga Choli for Women - front view</image:title>
+      <image:caption>Royal Purple Chanderi Navratri Lehenga Choli for Women - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-rayon-navratri-lehenga-embroidered-jacket-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221608.png?v=1784745289&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Black Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
+      <image:caption>Black Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/ruby-red-chanderi-navratri-lehenga-choli-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212817-1.jpg?v=1784745290&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Ruby Red Chanderi Navratri Lehenga Choli for Women - front view</image:title>
+      <image:caption>Ruby Red Chanderi Navratri Lehenga Choli for Women - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/mustard-rayon-navratri-lehenga-gamthi-jacket</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221609.png?v=1784745284&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Mustard Rayon Navratri Lehenga with Gamthi Jacket - front view</image:title>
+      <image:caption>Mustard Rayon Navratri Lehenga with Gamthi Jacket - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/ivory-white-rayon-navratri-lehenga-jacket-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221611.png?v=1784745279&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Ivory White Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
+      <image:caption>Ivory White Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/hot-pink-rayon-navratri-lehenga-jacket-women</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221610.png?v=1784745281&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Hot Pink Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
+      <image:caption>Hot Pink Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/wine-maroon-color-designer-sequin-embroidery-work-lehenga-choli</loc>
@@ -5956,17 +6236,6 @@
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/H70M_8c116f06-8e47-4f27-8add-0c783c2b37e8.jpg?v=1782927138&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Ivory Gold Silk Lehenga for Indian weddings</image:title>
       <image:caption>Ivory Gold Net Mirror Handwork Reception Cocktail Lehenga - Reception Lehengas | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/ivory-and-soft-net-zardosi-bridal-lehenga-choli-for-designer-trousseau</loc>
-    <lastmod>2026-07-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/JMPDP1_7676193b-ac62-4057-99e8-32dda03a26cd.png?v=1782927102&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Front view of Ivory &amp; Pink Soft Net Zardosi Handwork bridal lehenga choli — full silhouette with handwork detailing</image:title>
-      <image:caption>Ivory &amp; Soft Net Zardosi Bridal Lehenga Choli for Designer Trousseau - Bridal Lehengas | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>

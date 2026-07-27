@@ -8,7 +8,7 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
-const SHOPIFY_API_VERSION = '2025-07';
+const SHOPIFY_API_VERSION = '2025-10';
 const SHOPIFY_ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || '';
 const PAGE_SIZE = 250;
 const PAGE_DELAY_MS = 500;

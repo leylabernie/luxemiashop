@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 
 const SITE_URL = 'https://luxemia.shop';
-const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-07/graphql.json';
+const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 
 // Canonical brand name. Shopify vendor field can drift in casing

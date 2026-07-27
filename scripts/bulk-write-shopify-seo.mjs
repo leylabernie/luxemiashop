@@ -80,7 +80,7 @@ import { join } from 'node:path';
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
-const SHOPIFY_API_VERSION = '2025-07';
+const SHOPIFY_API_VERSION = '2025-10';
 const SHOPIFY_ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || '';
 
 // Length thresholds (warnings, not hard caps unless --force is absent)
