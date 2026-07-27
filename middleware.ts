@@ -94,8 +94,8 @@ function return410(): Response {
     `<title>410 Gone — LuxeMia</title></head><body>` +
     `<h1>410 — This page has been permanently removed.</h1>` +
     `<p>The content you were looking for is no longer available.</p>` +
-    `<p><a href=\"/\">Return to LuxeMia homepage</a> ` +
-    `or <a href=\"/collections\">browse our collections</a>.</p></body></html>`;
+    `<p><a href="/">Return to LuxeMia homepage</a> ` +
+    `or <a href="/collections">browse our collections</a>.</p></body></html>`;
   return new Response(html, {
     status: 410,
     headers: {
@@ -433,7 +433,7 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
   // Determine the correct meta tags for this page
   let title = 'LuxeMia | Ready-to-Ship Indian Ethnic Wear & Sarees';
   let description = 'Shop affordable Indian ethnic wear online at LuxeMia. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!';
-  let canonical = `https://luxemia.shop${pathname}`;
+  const canonical = `https://luxemia.shop${pathname}`;
   let ogType = 'website';
   let ogImage = 'https://luxemia.shop/og-image.jpg';
 
