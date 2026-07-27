@@ -19,6 +19,13 @@ interface ValidationResult {
 const AdminTools = () => {
   const { isAdmin, loading: roleLoading } = useUserRole();
   
+  const [isRegenerating, setIsRegenerating] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [isScraping, setIsScraping] = useState(false);
+  const [isCleaning, setIsCleaning] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  
   // Don't render for non-admins
   if (roleLoading) {
     return (
@@ -38,12 +45,6 @@ const AdminTools = () => {
   if (!isAdmin) {
     return null;
   }
-  const [isRegenerating, setIsRegenerating] = useState(false);
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [isScraping, setIsScraping] = useState(false);
-  const [isCleaning, setIsCleaning] = useState(false);
-  const [isValidating, setIsValidating] = useState(false);
-  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
 
   const handleRegenerateSitemap = async () => {
     setIsRegenerating(true);

@@ -5650,7 +5650,7 @@ export const blogPosts: BlogPost[] = [
       <ul>
         <li><a href="/blog/why-indian-brides-wear-red-cultural-significance">Why Indian Brides Wear Red: Cultural & Astrological Significance</a></li>
         <li><a href="/blog/sabyasachi-mukherjee-designer-profile-handloom-revival">Sabyasachi Mukherjee: The Designer Who Revived Indian Handloom</a></li>
-        <li><a href="/blog/manish-malhotra-bollywood-bridal-designer-profile">Manish Malhotra: Bollywood\'s Bridal Designer of Choice</a></li>
+        <li><a href="/blog/manish-malhotra-bollywood-bridal-designer-profile">Manish Malhotra: Bollywood's Bridal Designer of Choice</a></li>
         <li><a href="/blog/accessorize-indian-ethnic-wear">How to Accessorize Indian Ethnic Wear Like a Pro</a></li>
         <li><a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Complete Guide 2026</a></li>
         <li><a href="/blog/what-to-wear-indian-wedding-guest-2026">What to Wear to an Indian Wedding as a Guest 2026</a></li>
