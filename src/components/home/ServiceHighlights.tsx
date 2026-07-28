@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Free Shipping over $350',
+    title: 'Free Shipping over $150',
     description: 'US tracked shipping after dispatch',
   },
   {

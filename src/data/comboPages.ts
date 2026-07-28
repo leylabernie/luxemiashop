@@ -69,7 +69,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'emerald-green-lehenga-for-wedding-guest',
     title: 'Emerald Green Lehenga for Wedding Guest — Shop Online | LuxeMia',
-    metaDescription: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Emerald Green Lehenga for Wedding Guest',
     heroSubtitle: 'Emerald green is a striking wedding guest color — rich, photogenic, and pairs beautifully with gold jewelry. Shop online emerald green lehengas from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Emerald Green Lehenga for Wedding Guest',
@@ -111,7 +111,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'royal-blue-lehenga-for-wedding-guest',
     title: 'Royal Blue Lehenga for Wedding Guest — Online Styles | LuxeMia',
-    metaDescription: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Royal Blue Lehenga for Wedding Guest',
     heroSubtitle: 'Royal blue is a striking wedding guest color — bold, photogenic, and stands out in a sea of reds and pinks. Shop online royal blue lehengas from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Royal Blue Lehenga for Wedding Guest',
@@ -237,7 +237,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'wine-lehenga-for-wedding-guest',
     title: 'Wine Lehenga for Wedding Guest — Sophisticated & Safe | LuxeMia',
-    metaDescription: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Wine Lehenga for Wedding Guest',
     heroSubtitle: 'Wine is a sophisticated wedding guest color — deep, elegant, and safely distinct from bridal red. Shop online wine lehengas from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Wine Lehenga for Wedding Guest',
@@ -279,7 +279,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'navy-blue-lehenga-for-wedding-guest',
     title: 'Navy Blue Lehenga for Wedding Guest — Elegant & Modern | LuxeMia',
-    metaDescription: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Ready-to-ship from $200-$500 with free U.S. shipping over $150 on orders over $150.',
+    metaDescription: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Priced from $200-$500 with free U.S. shipping over $150 on orders over $150.',
     h1: 'Navy Blue Lehenga for Wedding Guest',
     heroSubtitle: 'Navy blue is an elegant, modern wedding guest color — deep, sophisticated, and photogenic. Shop online navy blue lehengas from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Navy Blue Lehenga for Wedding Guest',
@@ -321,7 +321,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'maroon-lehenga-for-reception',
     title: 'Maroon Lehenga for Reception — Elegant & Photogenic | LuxeMia',
-    metaDescription: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Maroon Lehenga for Reception',
     heroSubtitle: 'Maroon is an elegant choice for a wedding reception — rich, photogenic, and perfect for evening events. Shop online maroon lehengas from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Maroon Lehenga for Reception',
@@ -363,7 +363,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'black-lehenga-for-wedding-guest',
     title: 'Black Lehenga for Wedding Guest — Bold & Modern | LuxeMia',
-    metaDescription: 'Shop black lehengas for Indian wedding guests. Bold, modern, and photogenic. Check invitation first — some weddings welcome black, others consider it inauspicious. Ready-to-ship from $250-500.',
+    metaDescription: 'Shop black lehengas for Indian wedding guests. Bold, modern, and photogenic. Check invitation first — some weddings welcome black, others consider it inauspicious. Priced from $250-500.',
     h1: 'Black Lehenga for Wedding Guest',
     heroSubtitle: 'Black is a bold, modern wedding guest choice — but check the invitation first. Some modern weddings welcome black; traditional weddings consider it inauspicious. Shop online black lehengas from $250-500.',
     breadcrumb: 'Black Lehenga for Wedding Guest',
@@ -405,7 +405,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'pastel-lehenga-for-wedding-guest',
     title: 'Pastel Lehenga for Wedding Guest — Soft & Modern | LuxeMia',
-    metaDescription: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Ready-to-ship from $180-450 with free U.S. shipping over $150.',
+    metaDescription: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Priced from $180-450 with free U.S. shipping over $150.',
     h1: 'Pastel Lehenga for Wedding Guest',
     heroSubtitle: 'Pastels are a modern, romantic wedding guest choice — soft blush, mint, lavender, and peach. Shop online pastel lehengas from $180-450 with free U.S. shipping over $150.',
     breadcrumb: 'Pastel Lehenga for Wedding Guest',
@@ -449,7 +449,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'anarkali-suit-for-mother-of-bride',
     title: 'Anarkali Suit for Mother of Bride — Elegant & Comfortable | LuxeMia',
-    metaDescription: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Anarkali Suit for Mother of Bride',
     heroSubtitle: 'The mother of the bride needs an outfit that is elegant, traditional, and comfortable for long wedding events. Shop anarkali suits from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Anarkali Suit for Mother of Bride',
@@ -491,7 +491,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'lehenga-for-bridesmaid',
     title: 'Lehenga for Bridesmaid — Coordinated & Photogenic | LuxeMia',
-    metaDescription: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Ready-to-ship from $180-450 with free U.S. shipping over $150.',
+    metaDescription: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Priced from $180-450 with free U.S. shipping over $150.',
     h1: 'Lehenga for Bridesmaid',
     heroSubtitle: 'Bridesmaid lehengas need to be coordinated, photogenic, and dance-friendly. Shop online bridesmaid lehengas from $180-450 with free U.S. shipping over $150.',
     breadcrumb: 'Lehenga for Bridesmaid',
@@ -534,7 +534,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'anarkali-suit-for-wedding-guest',
     title: 'Anarkali Suit for Wedding Guest — Easiest Indian Outfit | LuxeMia',
-    metaDescription: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
+    metaDescription: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Priced from $150-400 with free U.S. shipping over $150.',
     h1: 'Anarkali Suit for Wedding Guest',
     heroSubtitle: 'The anarkali suit is the easiest Indian outfit for wedding guests — slips on like a dress, no draping or pinning required. Shop online anarkalis from $150-400 with free U.S. shipping over $150.',
     breadcrumb: 'Anarkali Suit for Wedding Guest',
@@ -576,7 +576,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'saree-for-mother-of-bride',
     title: 'Saree for Mother of Bride — Traditional & Elegant | LuxeMia',
-    metaDescription: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Ready-to-ship from $150-500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Priced from $150-500 with free U.S. shipping over $150.',
     h1: 'Saree for Mother of Bride',
     heroSubtitle: 'The mother of the bride traditionally wears a silk saree for the wedding ceremony — elegant, timeless, and culturally appropriate. Shop online sarees from $150-500 with free U.S. shipping over $150.',
     breadcrumb: 'Saree for Mother of Bride',
@@ -618,7 +618,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'lehenga-for-mother-of-bride',
     title: 'Lehenga for Mother of Bride — Regal & Comfortable | LuxeMia',
-    metaDescription: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Ready-to-ship from $250-600 with free U.S. shipping over $150.',
+    metaDescription: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Priced from $250-600 with free U.S. shipping over $150.',
     h1: 'Lehenga for Mother of Bride',
     heroSubtitle: 'A lehenga for the mother of the bride should be regal, elegant, and comfortable for long wedding events. Shop online lehengas from $250-600 with free U.S. shipping over $150.',
     breadcrumb: 'Lehenga for Mother of Bride',
@@ -659,7 +659,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'sherwani-for-groom',
     title: 'Sherwani for Groom — Traditional & Regal | LuxeMia',
-    metaDescription: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Sherwani for Groom',
     heroSubtitle: 'The sherwani is the traditional wedding outfit for the Indian groom — regal, elegant, and photogenic. Shop online sherwanis from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Sherwani for Groom',
@@ -700,7 +700,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'kurta-for-groom-brother',
     title: 'Kurta for Groom Brother — Stylish & Comfortable | LuxeMia',
-    metaDescription: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Ready-to-ship from $80-250 with free U.S. shipping over $150.',
+    metaDescription: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Priced from $80-250 with free U.S. shipping over $150.',
     h1: 'Kurta for Groom Brother',
     heroSubtitle: 'The groom brother needs an outfit that is stylish, comfortable, and coordinated with the wedding party. Shop online kurtas from $80-250 with free U.S. shipping over $150.',
     breadcrumb: 'Kurta for Groom Brother',
@@ -741,7 +741,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'sharara-for-bride-sister',
     title: 'Sharara for Bride Sister — Trendy & Photogenic | LuxeMia',
-    metaDescription: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Ready-to-ship from $180-400 with free U.S. shipping over $150.',
+    metaDescription: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Priced from $180-400 with free U.S. shipping over $150.',
     h1: 'Sharara for Bride Sister',
     heroSubtitle: 'The sharara is a trendy, photogenic choice for the bride sister — wide-flare pants with a short kurti, perfect for mehendi and sangeet dancing. Shop from $180-400 with free U.S. shipping over $150.',
     breadcrumb: 'Sharara for Bride Sister',
@@ -785,7 +785,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'georgette-saree-for-reception',
     title: 'Georgette Saree for Reception — Flowy & Glamorous | LuxeMia',
-    metaDescription: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
+    metaDescription: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Priced from $150-400 with free U.S. shipping over $150.',
     h1: 'Georgette Saree for Reception',
     heroSubtitle: 'Georgette is the perfect reception saree fabric — flowy, glamorous, and easy to drape. Shop online georgette sarees from $150-400 with free U.S. shipping over $150.',
     breadcrumb: 'Georgette Saree for Reception',
@@ -826,7 +826,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'banarasi-silk-saree-for-wedding',
     title: 'Banarasi Silk Saree for Wedding — Traditional & Auspicious | LuxeMia',
-    metaDescription: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Banarasi Silk Saree for Wedding',
     heroSubtitle: 'A Banarasi silk saree is the most traditional and auspicious choice for an Indian wedding — handwoven in Varanasi with real zari. Shop from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Banarasi Silk Saree for Wedding',
@@ -867,7 +867,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'kanjivaram-saree-for-wedding',
     title: 'Kanjivaram Saree for Wedding — South Indian Bridal Silk | LuxeMia',
-    metaDescription: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    metaDescription: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Kanjivaram Saree for Wedding',
     heroSubtitle: 'The Kanjivaram silk saree is the traditional South Indian bridal saree — handwoven in Tamil Nadu with pure zari. Shop from $200-500 with free U.S. shipping over $150.',
     breadcrumb: 'Kanjivaram Saree for Wedding',
@@ -908,7 +908,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'chiffon-saree-for-wedding-guest',
     title: 'Chiffon Saree for Wedding Guest — Light & Flowy | LuxeMia',
-    metaDescription: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Ready-to-ship from $120-300 with free U.S. shipping over $150.',
+    metaDescription: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Priced from $120-300 with free U.S. shipping over $150.',
     h1: 'Chiffon Saree for Wedding Guest',
     heroSubtitle: 'Chiffon is the lightest, most flowy saree fabric — perfect for summer weddings and daytime events. Shop online chiffon sarees from $120-300 with free U.S. shipping over $150.',
     breadcrumb: 'Chiffon Saree for Wedding Guest',
@@ -949,7 +949,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'silk-saree-for-festival',
     title: 'Silk Saree for Festival — Diwali, Navratri, Pongal | LuxeMia',
-    metaDescription: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
+    metaDescription: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Priced from $150-400 with free U.S. shipping over $150.',
     h1: 'Silk Saree for Festival',
     heroSubtitle: 'A silk saree is the most traditional and auspicious choice for Indian festivals — Diwali, Navratri, Pongal, Onam. Shop from $150-400 with free U.S. shipping over $150.',
     breadcrumb: 'Silk Saree for Festival',
@@ -991,7 +991,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'organza-saree-for-engagement',
     title: 'Organza Saree for Engagement — Modern & Structured | LuxeMia',
-    metaDescription: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Ready-to-ship from $200-450 with free U.S. shipping over $150.',
+    metaDescription: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Priced from $200-450 with free U.S. shipping over $150.',
     h1: 'Organza Saree for Engagement',
     heroSubtitle: 'Organza is a modern, structured saree fabric perfect for engagement ceremonies — crisp, photogenic, and contemporary. Shop from $200-450 with free U.S. shipping over $150.',
     breadcrumb: 'Organza Saree for Engagement',
@@ -1032,7 +1032,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'georgette-saree-for-wedding-guest',
     title: 'Georgette Saree for Wedding Guest — Easy & Elegant | LuxeMia',
-    metaDescription: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Ready-to-ship from $150-350 with free U.S. shipping over $150.',
+    metaDescription: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Priced from $150-350 with free U.S. shipping over $150.',
     h1: 'Georgette Saree for Wedding Guest',
     heroSubtitle: 'Georgette is the easiest saree fabric to drape — perfect for first-time wedding guests. Flowy, elegant, and photogenic. Shop from $150-350 with free U.S. shipping over $150.',
     breadcrumb: 'Georgette Saree for Wedding Guest',

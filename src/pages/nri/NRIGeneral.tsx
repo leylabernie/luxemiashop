@@ -21,7 +21,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'When does shipping become free?',
-          answer: 'Orders over $150 qualify for free shipping to the United States. Orders below $350 are charged $12 flat per order — no weight calculations or hidden fees.',
+          answer: 'Orders over $150 qualify for free shipping to the United States. Orders below $150 are charged $12 flat per order — no weight calculations or hidden fees.',
         },
         {
           question: 'Will I have to pay customs duties?',

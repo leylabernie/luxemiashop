@@ -563,7 +563,7 @@ function buildDescription(product, color, material, productType) {
 
   // Occasion + shipping sentence — adds genuine shopper-relevant detail
   // and keeps every fallback description well above the 150-char floor.
-  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships from LuxeMia within the United States: free over $150, $12 flat below that.');
+  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Shipped to the United States with tracking: free over $150, $12 flat below that.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
@@ -581,15 +581,15 @@ function generateShippingXml() {
       <g:country>US</g:country>
       <g:service>Standard below $150</g:service>
       <g:price>12.00 USD</g:price>
-      <g:min_handling_time>0</g:min_handling_time>
-      <g:max_handling_time>2</g:max_handling_time>
+      <g:min_handling_time>4</g:min_handling_time>
+      <g:max_handling_time>7</g:max_handling_time>
     </g:shipping>
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Free over $150</g:service>
       <g:price>0.00 USD</g:price>
-      <g:min_handling_time>0</g:min_handling_time>
-      <g:max_handling_time>2</g:max_handling_time>
+      <g:min_handling_time>4</g:min_handling_time>
+      <g:max_handling_time>7</g:max_handling_time>
     </g:shipping>`;
 }
 
@@ -625,15 +625,8 @@ function generateReturnsXml() {
   return `
     <g:returns_policy>
       <g:countries>US</g:countries>
-      <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
+      <g:return_policy_category>https://schema.org/MerchantReturnNotPermitted</g:return_policy_category>
       <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
-      <g:life_time_return_window>false</g:life_time_return_window>
-      <g:return_window_days>2</g:return_window_days>
-      <g:return_method>https://schema.org/ReturnByMail</g:return_method>
-      <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
-      <g:return_shipping_fee>
-        <g:price>0.00 USD</g:price>
-      </g:return_shipping_fee>
     </g:returns_policy>`;
 }
 

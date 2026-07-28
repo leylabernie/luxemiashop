@@ -392,7 +392,7 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Less than 2 weeks:</strong> Consider an outfit you already own or buy locally from an Indian boutique.</li>
       </ul>
 
-      <p>LuxeMia offers online items that ship with tracking after dispatch, with delivery to the United States in 2 business days to ship via USPS/UPS or 2 business days via DHL Express. <a href="/collections/diwali-outfits">Browse our Diwali collection</a> — all items are in stock and available online.</p>
+      <p>LuxeMia offers online items that ship with tracking after dispatch, with delivery to the United States in 4-7 business days via USPS/UPS, or faster via DHL Express. <a href="/collections/diwali-outfits">Browse our Diwali collection</a> — all items available online.</p>
 
       <h2>Diwali Outfit Budget Guide</h2>
       <p>Diwali outfits range from $50 to $1,000+. Here is how to choose based on your budget:</p>
@@ -947,7 +947,7 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Measurement submission:</strong> 1-2 days (you send us your measurements)</li>
         <li><strong>Pattern cutting and stitching:</strong> 5-10 business days</li>
         <li><strong>Quality inspection:</strong> 1-2 business days</li>
-        <li><strong>Shipping to USA/Canada/Australia:</strong> 2 business days to ship (USPS/UPS) or 2 business days (DHL Express)</li>
+        <li><strong>Shipping to USA/Canada/Australia:</strong> 4-7 business days (USPS/UPS), or faster (DHL Express)</li>
         <li><strong>Total timeline:</strong> 2-4 weeks from measurement to delivery</li>
       </ul>
 
@@ -1462,7 +1462,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>Colors carry deep meaning in Punjabi wedding traditions. Red is the color of the bride — it represents prosperity, fertility, and marital bliss. Yellow is associated with the haldi ceremony and symbolizes auspiciousness and new beginnings. Green represents fertility and is often worn during the mehendi. Gold (and ivory/cream for the groom) symbolizes purity and divinity. White, while less common at the main ceremony, appears in the choora bangles and in the groom's sherwani.</p>
 
       <h2>NRI Shopping Tips for Punjabi Wedding Outfits</h2>
-      <p>If you are an NRI shopping for a Punjabi wedding from the USA, Canada, or Australia, here are some practical tips. Start shopping at least 8-12 weeks before the wedding to account for shipping and any alterations. Use the <a href="/size-guide">LuxeMia size guide</a> to ensure the right fit — Indian sizing can differ from US/Canadian/Australian sizes. Consider <a href="/online">online options</a> if you are shopping last-minute, as these ship within 1-3 business days. Take advantage of LuxeMia's free U.S. shipping over $150 when purchasing multiple outfits for different ceremonies. For custom alterations, use our <a href="/sizing-measurements-guide">measurements guide</a> and consider working with a local tailor for final adjustments.</p>
+      <p>If you are an NRI shopping for a Punjabi wedding from the USA, Canada, or Australia, here are some practical tips. Start shopping at least 8-12 weeks before the wedding to account for shipping and any alterations. Use the <a href="/size-guide">LuxeMia size guide</a> to ensure the right fit — Indian sizing can differ from US/Canadian/Australian sizes. Consider <a href="/online">online options</a> if you are shopping last-minute, as these ship within 4-7 business days. Take advantage of LuxeMia's free U.S. shipping over $150 when purchasing multiple outfits for different ceremonies. For custom alterations, use our <a href="/sizing-measurements-guide">measurements guide</a> and consider working with a local tailor for final adjustments.</p>
 
       <h2>Frequently Asked Questions</h2>
 
@@ -1637,7 +1637,7 @@ export const pillarBlogPosts: BlogPost[] = [
       </ul>
 
       <h2>Last-Minute Shopping: Online Options</h2>
-      <p>If you are reading this guide with less than 4 weeks before the wedding, do not panic. <a href="/online">LuxeMia's online collection</a> features lehengas, sarees, and suits that ship within 1-3 business days and arrive at your doorstep in the USA, Canada, or Australia within 5-10 business days. This is the perfect solution for NRIs who need quality ethnic wear in a hurry. Since each online order over $350 includes free shipping, you can order multiple ceremony outfits at once.</p>
+      <p>If you are reading this guide with less than 4 weeks before the wedding, do not panic. <a href="/online">LuxeMia's online collection</a> features lehengas, sarees, and suits that ship within 4-7 business days and arrive at your doorstep in the USA, Canada, or Australia within 5-10 business days. This is the perfect solution for NRIs who need quality ethnic wear in a hurry. Since each online order over $150 includes free shipping, you can order multiple ceremony outfits at once.</p>
 
       <h2>Frequently Asked Questions</h2>
 
@@ -1651,7 +1651,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>It depends on your timeline and preferences. Buying in India gives you access to the widest selection and the best prices, but it requires time for shopping, alterations, and any custom work. Buying online before your trip from a store like LuxeMia ensures you have outfits ready when you arrive and can try them on at home for alterations. The best strategy is often a mix — order your key pieces online beforehand and leave room for 1-2 impulse buys in India's legendary wedding markets.</p>
 
       <h3>What should men pack for an Indian wedding from the USA?</h3>
-      <p>Men need 3-5 outfits for a 3-5 day wedding: one <a href="/menswear">sherwani</a> for the main ceremony, one kurta-pajama or Indo-western outfit for the sangeet, one lighter kurta for the mehendi/haldi, and one suit or bandhgala for the reception. Add a pair of mojari shoes, a pocket square, and 1-2 brooches. LuxeMia's <a href="/menswear">menswear collection</a> ships free over $350 to the United States.</p>
+      <p>Men need 3-5 outfits for a 3-5 day wedding: one <a href="/menswear">sherwani</a> for the main ceremony, one kurta-pajama or Indo-western outfit for the sangeet, one lighter kurta for the mehendi/haldi, and one suit or bandhgala for the reception. Add a pair of mojari shoes, a pocket square, and 1-2 brooches. LuxeMia's <a href="/menswear">menswear collection</a> ships free over $150 to the United States.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-22',

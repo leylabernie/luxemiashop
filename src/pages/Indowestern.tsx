@@ -32,7 +32,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Do you ship Indo-Western outfits to the United States?',
-    answer: 'Yes, LuxeMia ships Indo-Western dresses and fusion outfits to the United States. We offer free U.S. shipping over $150 USD. For orders below $150, a flat shipping rate of $25 applies. All orders are carefully packaged and include full tracking and insurance. Standard delivery takes 2 business days to ship after dispatch from India.',
+    answer: 'Yes, LuxeMia ships Indo-Western dresses and fusion outfits to the United States. We offer free U.S. shipping over $150 USD. For orders below $150, a flat shipping rate of $12 applies. All orders are carefully packaged and include full tracking and insurance. Standard delivery takes 4-7 business days to ship after dispatch from India.',
   },
   {
     question: 'What Indo-Western styles are trending right now?',

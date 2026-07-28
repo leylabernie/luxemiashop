@@ -75,7 +75,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Month 6 (1 month out):</strong> Final fitting and alterations. Pick up the outfit 2-3 weeks before the wedding.</li>
         <li><strong>Week of wedding:</strong> Steam/iron the outfit, do a trial drape with the actual dupatta and jewelry.</li>
       </ul>
-      <p>If you are shopping last-minute (under 3 months), look for online options — LuxeMia dispatches readymade lehengas in 2 business days and custom-stitched pieces in confirm timing before ordering, with 7-10 day shipping to the United States.</p>
+      <p>If you are shopping last-minute (under 3 months), look for online options — LuxeMia dispatches readymade lehengas in 4-7 business days and custom-stitched pieces in confirm timing before ordering, with 7-10 day shipping to the United States.</p>
 
       <h2>Fabric Guide: Choosing the Right Material</h2>
       <p>Fabric choice affects comfort, cost, durability, and how the outfit photographs. Here is a quick reference:</p>
@@ -1265,7 +1265,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Sizing Options When Buying Online</h3>
 <p>LuxeMia and most direct-from-India stores offer three sizing options for sharara suits:</p>
 <ul>
-  <li><strong>Semi-Stitched (XS-XXL, free):</strong> The kurti and pants come with open side seams; you have them stitched locally to your measurements. Dispatch: 2 business days. Best for: standard sizes, quick turnaround.</li>
+  <li><strong>Semi-Stitched (XS-XXL, free):</strong> The kurti and pants come with open side seams; you have them stitched locally to your measurements. Dispatch: 4-7 business days. Best for: standard sizes, quick turnaround.</li>
   <li><strong>Ready to Wear (32"-44" bust, +$15):</strong> The kurti and pants are fully stitched to standard measurements. Dispatch: 6-8 business days. Best for: standard sizes, no local tailor available.</li>
   <li><strong>Made to Measure (32"-44" bust, +$25):</strong> You submit 12 body measurements; the workshop stitches to your exact size. Dispatch: 8-10 business days. Best for: non-standard sizes, petite or plus-size brides.</li>
 </ul>
@@ -1808,7 +1808,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Make Your NRI Wedding Wardrobe Unforgettable</h2>
       <p>The beauty of Indian wedding fashion in 2026 lies in its diversity. Whether you choose a traditional red bridal lehenga, a pastel-toned reception saree, or a fusion sharara set for the Sangeet, the key is finding pieces that reflect your personal style while honoring cultural traditions. As an NRI, you have the unique advantage of drawing inspiration from both Indian and global fashion sensibilities.</p>
 
-      <p>At LuxeMia, we offer <strong>free U.S. shipping over $150</strong> to the the USA, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
+      <p>At LuxeMia, we offer <strong>free U.S. shipping over $150</strong> to the USA, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -1897,8 +1897,8 @@ export const blogPosts: BlogPost[] = [
       <h2>Shipping, Returns, and Customer Support for International Buyers</h2>
       <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia addresses every concern:</p>
 
-      <h3>Worldwide Shipping</h3>
-      <p>We ship within the United States at a flat rate of $25 per order, with <strong>free U.S. shipping over $150</strong> to the the USA, and 100+ countries. Standard delivery (USPS/UPS) takes 2 business days to ship transit, with express (DHL) at 2 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
+      <h3>U.S. Shipping</h3>
+      <p>We ship within the United States at a flat rate of $12 per order, with <strong>free U.S. shipping over $150</strong> to the USA, and the United States. Standard delivery (USPS/UPS) takes 4-7 business days to ship transit, with express (DHL) at 4-7 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
 
       <h3>Our Return Policy</h3>
       <p>All sales are final due to the international nature of our shipments. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. We recommend reviewing all product details and using our <a href="/size-guide">Size Guide</a> before ordering. Visit our <a href="/returns">Returns Policy</a> page for full details.</p>
@@ -2022,7 +2022,7 @@ export const blogPosts: BlogPost[] = [
 
       <h3>What We Offer</h3>
       <ul>
-        <li><strong>Free U.S. shipping over $150:</strong> Standard delivery (USPS/UPS) in 2 business days to ship transit to the the USA</li>
+        <li><strong>Free U.S. shipping over $150:</strong> Standard delivery (USPS/UPS) in 4-7 business days to ship transit to the USA</li>
         <li><strong>Express shipping:</strong> 3-5 business day delivery available at checkout</li>
         <li><strong>Ready-to-wear options:</strong> No alterations needed — just open, wear, and celebrate</li>
         <li><strong>Last-minute styling support:</strong> Chat with our team on WhatsApp for quick outfit recommendations</li>
@@ -2521,11 +2521,11 @@ export const blogPosts: BlogPost[] = [
       <p>International shipping takes time — plan ahead, especially for weddings or events.</p>
 
       <ul>
-        <li><strong>Standard delivery to USA:</strong> 2 business days to ship transit (USPS/UPS)</li>
+        <li><strong>Standard delivery to USA:</strong> 4-7 business days to ship transit (USPS/UPS)</li>
         
         
-        <li><strong>Express shipping:</strong> 2 business days transit (DHL, available at checkout)</li>
-        <li><strong>Dispatch time:</strong> Ready-made 2 business days, custom/alterations confirm timing before ordering</li>
+        <li><strong>Express shipping:</strong> 4-7 business days transit (DHL, available at checkout)</li>
+        <li><strong>Dispatch time:</strong> Readymade items dispatch in 4-7 business days, custom/alterations confirm timing before ordering</li>
       </ul>
 
       <p><strong>Rule of thumb:</strong> Order at least 6–8 weeks before your event. For big wedding seasons (November–February), order earlier.</p>
@@ -3027,7 +3027,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: '28',
     slug: 'shipping-indian-clothes-usa-uk-canada-nri-guide',
-    title: `Shipping Indian Clothes to the the USA: Complete NRI Buyer's Guide`,
+    title: `Shipping Indian Clothes to the USA: Complete NRI Buyer's Guide`,
     excerpt: `Everything NRI buyers need to know about buying Indian ethnic wear online — shipping timelines, customs duty, sizing, and how to order from abroad safely.`,
     content: `
 <p>Shopping for Indian ethnic wear from the the USA, or Australia has become dramatically more straightforward over the past decade. But there are still enough friction points — customs duties, sizing mismatches, fabric quality disputes, and unreliable delivery timelines — that NRI buyers deserve a thorough guide.</p>
@@ -3041,7 +3041,7 @@ export const blogPosts: BlogPost[] = [
 <p>Not all online Indian clothing retailers are equal. The market includes everything from established boutiques with rigorous quality control to small operations that use stock photographs and deliver garments that look nothing like what was advertised.</p>
 <h3>What to Look For in a Retailer</h3>
 <p>Look for boutiques with a clearly stated return policy, transparent shipping timelines, and verified customer reviews. Photographs should show the garment on an actual model rather than just a flat lay. Detailed fabric descriptions — not just "silk" but "pure Kanjivaram silk" or "Banarasi brocade with resham embroidery" — are a sign of a retailer that understands its inventory.</p>
-<p><a href="https://luxemia.shop">LuxeMia</a> is an Indian ethnic-wear boutique that specifically serves the NRI market, offering bridal lehengas, wedding sarees, and salwar kameez with custom stitching and US shipping. Their free US shipping threshold of $350 covers most bridal and semi-bridal purchases.</p>
+<p><a href="https://luxemia.shop">LuxeMia</a> is an Indian ethnic-wear boutique that specifically serves the NRI market, offering bridal lehengas, wedding sarees, and salwar kameez with custom stitching and US shipping. Their free U.S. shipping threshold of $150 covers most bridal and semi-bridal purchases.</p>
 <h3>Red Flags to Avoid</h3>
 <p>Retailers with no physical address, no customer service contact, or prices that seem too good to be true warrant caution. Heavily embroidered bridal lehengas require significant handcraft time and carry corresponding price tags. A "bridal lehenga" priced at $50 is almost certainly not what it claims to be.</p>
 <p>---</p>
@@ -3061,7 +3061,7 @@ export const blogPosts: BlogPost[] = [
 <h2>Shipping Timelines: What to Expect</h2>
 <p>Shipping timelines for Indian ethnic wear ordered from India vary based on carrier, destination, and whether the order requires custom stitching.</p>
 <h3>Standard Shipping Timelines</h3>
-<p>Express courier services (DHL, FedEx, Aramex) from India typically deliver to the USA in confirm timing before ordering once the order is dispatched. UK delivery is typically 2 business days. Canada is 6-8 business days. Australia is 2 business days to ship.</p>
+<p>Express courier services (DHL, FedEx, Aramex) from India typically deliver to the USA in confirm timing before ordering once the order is dispatched. UK delivery is typically 4-7 business days. Canada is 6-8 business days. Australia is 4-7 business days to ship.</p>
 <p>Economy shipping options are slower — 14-21 days to most destinations — and may be subject to less predictable customs processing times.</p>
 <h3>Custom Stitching Lead Time</h3>
 <p>If you are ordering a custom-stitched lehenga or salwar kameez, factor in an additional 2-4 weeks for stitching before the order ships. A realistic total timeline for a custom-stitched bridal lehenga delivered to the USA or Canada is 6-8 weeks from order placement to delivery.</p>
@@ -3100,7 +3100,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Can I buy Indian clothes online and ship to the USA without paying import duty?</h3>
 <p>It depends on the declared value of the shipment. The USA previously had a de minimis threshold of $800, below which shipments were generally exempt from duty. Trade policy changes have affected this threshold, so verify the current rules with your retailer or the US Customs and Border Protection website before ordering a high-value item.</p>
 <h3>How long does shipping from supplier fulfillment to the UK take?</h3>
-<p>Shipping from India to the UK via express courier (DHL, FedEx, Aramex) typically takes 2 business days once the order is dispatched. Economy shipping takes 10-20 business days. For custom-stitched orders, add 2-4 weeks of production time before dispatch.</p>
+<p>Shipping from India to the UK via express courier (DHL, FedEx, Aramex) typically takes 4-7 business days once the order is dispatched. Economy shipping takes 10-20 business days. For custom-stitched orders, add 2-4 weeks of production time before dispatch.</p>
 <h3>Do Indian boutiques offer custom stitching for international orders?</h3>
 <p>Yes. Several dedicated NRI boutiques, including <a href="https://luxemia.shop">LuxeMia</a>, offer custom stitching for international orders. You provide your measurements at checkout, and the garment is tailored to your specifications before dispatch. This is especially valuable for blouse-heavy ensembles like lehengas and saree blouses.</p>
 <h3>What is the best way to buy Indian wedding clothes online as an NRI in Canada?</h3>
@@ -3262,7 +3262,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Custom-stitched orders:</strong> Add 7-14 days for tailoring before shipping</li>
       </ul>
       <h3>LuxeMia Shipping Policy</h3>
-      <p>At LuxeMia, we ship from our Philadelphia warehouse, so delivery is much faster than ordering from supplier fulfillment. We offer <strong>free U.S. shipping over $150</strong> and a flat rate of $25 for orders below $150. No waiting weeks for your outfit to arrive — see our <a href="/shipping">shipping policy</a> for full details.</p>
+      <p>At LuxeMia, orders ship from our supplier with tracking to the United States. We offer <strong>free U.S. shipping over $150</strong> and a flat rate of $12 for orders below $150. No waiting weeks for your outfit to arrive — see our <a href="/shipping">shipping policy</a> for full details.</p>
 
       <h2>Customs Duties and Tariffs: The Hidden Cost</h2>
       <p>This is the part most NRI shoppers don't anticipate. As of 2025-2026, the United States imposes tariffs on goods imported from India, and clothing is no exception.</p>
@@ -4814,7 +4814,7 @@ export const blogPosts: BlogPost[] = [
       <p>When you buy a bridal lehenga online from LuxeMia, here's what to expect for US delivery:</p>
       <ul>
         <li><strong>Free US shipping:</strong> Orders over $150 ship free to all US states</li>
-        <li><strong>Delivery time:</strong> 2 business days to ship for ready-to-wear; 4-5 weeks for made-to-measure</li>
+        <li><strong>Delivery time:</strong> 4-7 business days to ship for ready-to-wear; 4-5 weeks for made-to-measure</li>
         <li><strong>Customs duties:</strong> US duties and carrier processing fees may apply; confirm current rules before ordering</li>
         <li><strong>Tracking:</strong> Full tracking via DHL, USPS, or UPS</li>
       </ul>
@@ -4915,7 +4915,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Shipping Timeline for USA Grooms</h2>
       <p>When you order a <a href="/menswear">designer sherwani online in the USA</a>, plan ahead:</p>
       <ul>
-        <li><strong>Ready-to-wear:</strong> Ships in 2 business days, arrives in 7-10 days total</li>
+        <li><strong>Ready-to-wear:</strong> Ships in 4-7 business days, arrives in 7-10 days total</li>
         <li><strong>Made-to-measure:</strong> Ships in 3-4 weeks, arrives in 4-5 weeks total</li>
         <li><strong>Order 2-3 months before the wedding</strong> to allow time for any alterations</li>
       </ul>
@@ -5002,7 +5002,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Shipping and Care for USA Customers</h2>
       <ul>
         <li><strong>Free US shipping:</strong> Orders over $150 ship free to the USA</li>
-        <li><strong>Delivery:</strong> 2 business days to ship for ready-to-wear</li>
+        <li><strong>Delivery:</strong> 4-7 business days to ship for ready-to-wear</li>
         <li><strong>Care:</strong> Dry clean silk and embroidered suits; hand wash cotton</li>
         <li><strong>Customs:</strong> US imports under $800 are duty-free</li>
       </ul>
@@ -7140,7 +7140,7 @@ export const blogPosts: BlogPost[] = [
 <p>A garment that is partially stitched, with open side seams that can be adjusted to the wearer's measurements. Semi-stitched garments are the standard offering for online Indian ethnic wear, allowing buyers to have local tailoring for a custom fit.</p>
 
 <h3>Ready to Wear (रेडी टू वेयर)</h3>
-<p>A garment that is fully stitched to standard measurements and can be worn without additional tailoring. Ready to wear is faster to dispatch (2 business days) but cannot be customized for non-standard sizes.</p>
+<p>A garment that is fully stitched to standard measurements and can be worn without additional tailoring. Ready to wear is faster to dispatch (typically 4-7 business days) but cannot be customized for non-standard sizes.</p>
 
 <h3>Made to Measure (मेड टू मेज़र)</h3>
 <p>A garment stitched to the buyer's exact measurements, based on 12+ body measurements submitted at order. Made to measure is the most expensive option but provides the best fit for non-standard body types. Dispatch: 8-10 business days.</p>
@@ -7791,7 +7791,7 @@ export const blogPosts: BlogPost[] = [
         <li>You can return or exchange if the fit is wrong (always check the return policy before ordering)</li>
         <li>You avoid the overwhelm of walking into an Indian boutique where staff may assume you know what you want</li>
       </ul>
-      <p>At LuxeMia, we ship from supplier fulfillment to the United States with full tracking and insurance. Ready-to-wear items ship with tracking after dispatch; custom-stitched items in confirm timing before ordering; shipping takes 2 business days to ship via USPS/UPS/DHL. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990, email: hello@luxemia.shop) and we regularly help non-Indian guests pick outfits and sizes. Browse our <a href="/collections">full collection</a> or our curated <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> page.</p>
+      <p>At LuxeMia, we ship from supplier fulfillment to the United States with full tracking and insurance. Ready-to-wear items ship with tracking after dispatch; custom-stitched items in confirm timing before ordering; shipping takes 4-7 business days to ship via USPS/UPS/DHL. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990, email: hello@luxemia.shop) and we regularly help non-Indian guests pick outfits and sizes. Browse our <a href="/collections">full collection</a> or our curated <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> page.</p>
 
       <h2>Tips for First-Time Indian Wedding Guests</h2>
       <ul>
@@ -8508,7 +8508,7 @@ export const blogPosts: BlogPost[] = [
         <li>Email the form back to us.</li>
         <li>We custom-stitch the outfit to your exact measurements — bust, waist, hips, shoulder, sleeve length, kurti length, pant length, everything.</li>
         <li>The finished outfit is dispatched in confirm timing before ordering (vs 3-5 days for ready-to-wear).</li>
-        <li>Shipping takes 2 business days to ship to the United States.</li>
+        <li>Shipping takes 4-7 business days to ship to the United States.</li>
       </ol>
       <p>See our <a href="/size-guide">size guide</a> for detailed measurement instructions, or call our USA-based support team at +1-215-341-9990 if you need help.</p>
 

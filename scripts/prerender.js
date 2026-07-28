@@ -621,7 +621,7 @@ const routes = [
       </ul>
       <h2>Shop Lehengas by Price</h2>
       <ul>
-        <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — Ready-to-ship lehengas</li>
+        <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — budget-friendly picks</li>
         <li><a href="/lehengas?sub=premium-300-plus">Premium Lehengas $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
@@ -675,7 +675,7 @@ const routes = [
       </ul>
       <h2>Shop Sarees by Price</h2>
       <ul>
-        <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — Ready-to-ship sarees</li>
+        <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — budget-friendly picks</li>
         <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
@@ -1348,14 +1348,14 @@ const routes = [
   {
     path: '/emerald-green-lehenga-for-wedding-guest',
     title: 'Emerald Green Lehenga for Wedding Guest — Shop Online | LuxeMia',
-    description: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    description: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Emerald Green Lehenga for Wedding Guest',
     content: '<p>Emerald green is a striking wedding guest color — rich, photogenic, and pairs beautifully with gold jewelry. Shop online emerald green lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of emerald green lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/royal-blue-lehenga-for-wedding-guest',
     title: 'Royal Blue Lehenga for Wedding Guest — Online Styles | LuxeMia',
-    description: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    description: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Royal Blue Lehenga for Wedding Guest',
     content: '<p>Royal blue is a striking wedding guest color — bold, photogenic, and stands out in a sea of reds and pinks. Shop online royal blue lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of royal blue lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
@@ -1376,140 +1376,140 @@ const routes = [
   {
     path: '/wine-lehenga-for-wedding-guest',
     title: 'Wine Lehenga for Wedding Guest — Sophisticated & Safe | LuxeMia',
-    description: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    description: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Wine Lehenga for Wedding Guest',
     content: '<p>Wine is a sophisticated wedding guest color — deep, elegant, and safely distinct from bridal red. Shop online wine lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of wine lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/navy-blue-lehenga-for-wedding-guest',
     title: 'Navy Blue Lehenga for Wedding Guest — Elegant & Modern | LuxeMia',
-    description: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Ready-to-ship from $200-$500 with free U.S. shipping over $150 on orders over $150.',
+    description: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Priced from $200-$500 with free U.S. shipping over $150 on orders over $150.',
     h1: 'Navy Blue Lehenga for Wedding Guest',
     content: '<p>Navy blue is an elegant, modern wedding guest color — deep, sophisticated, and photogenic. Shop online navy blue lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of navy blue lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/maroon-lehenga-for-reception',
     title: 'Maroon Lehenga for Reception — Elegant & Photogenic | LuxeMia',
-    description: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
+    description: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Priced from $200-$500 with free U.S. shipping over $150.',
     h1: 'Maroon Lehenga for Reception',
     content: '<p>Maroon is an elegant choice for a wedding reception — rich, photogenic, and perfect for evening events. Shop online maroon lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of maroon lehenga for reception at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/black-lehenga-for-wedding-guest',
     title: 'Black Lehenga for Wedding Guest — Bold & Modern | LuxeMia',
-    description: 'Shop black lehengas for Indian wedding guests. Bold, modern, and photogenic. Check invitation first — some weddings welcome black, others consider it inauspicious. Ready-to-ship from $250-500.',
+    description: 'Shop black lehengas for Indian wedding guests. Bold, modern, and photogenic. Check invitation first — some weddings welcome black, others consider it inauspicious. Priced from $250-500.',
     h1: 'Black Lehenga for Wedding Guest',
     content: '<p>Black is a bold, modern wedding guest choice — but check the invitation first. Some modern weddings welcome black; traditional weddings consider it inauspicious. Shop online black lehengas from $250-500.</p><p>Shop our curated collection of black lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/pastel-lehenga-for-wedding-guest',
     title: 'Pastel Lehenga for Wedding Guest — Soft & Modern | LuxeMia',
-    description: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Ready-to-ship from $180-450 with free U.S. shipping over $150.',
+    description: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Priced from $180-450 with free U.S. shipping over $150.',
     h1: 'Pastel Lehenga for Wedding Guest',
     content: '<p>Pastels are a modern, romantic wedding guest choice — soft blush, mint, lavender, and peach. Shop online pastel lehengas from $180-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of pastel lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/anarkali-suit-for-mother-of-bride',
     title: 'Anarkali Suit for Mother of Bride — Elegant & Comfortable | LuxeMia',
-    description: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    description: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Anarkali Suit for Mother of Bride',
     content: '<p>The mother of the bride needs an outfit that is elegant, traditional, and comfortable for long wedding events. Shop anarkali suits from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of anarkali suit for mother of bride at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/lehenga-for-bridesmaid',
     title: 'Lehenga for Bridesmaid — Coordinated & Photogenic | LuxeMia',
-    description: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Ready-to-ship from $180-450 with free U.S. shipping over $150.',
+    description: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Priced from $180-450 with free U.S. shipping over $150.',
     h1: 'Lehenga for Bridesmaid',
     content: '<p>Bridesmaid lehengas need to be coordinated, photogenic, and dance-friendly. Shop online bridesmaid lehengas from $180-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of lehenga for bridesmaid at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/anarkali-suit-for-wedding-guest',
     title: 'Anarkali Suit for Wedding Guest — Easiest Indian Outfit | LuxeMia',
-    description: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
+    description: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Priced from $150-400 with free U.S. shipping over $150.',
     h1: 'Anarkali Suit for Wedding Guest',
     content: '<p>The anarkali suit is the easiest Indian outfit for wedding guests — slips on like a dress, no draping or pinning required. Shop online anarkalis from $150-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of anarkali suit for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/saree-for-mother-of-bride',
     title: 'Saree for Mother of Bride — Traditional & Elegant | LuxeMia',
-    description: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Ready-to-ship from $150-500 with free U.S. shipping over $150.',
+    description: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Priced from $150-500 with free U.S. shipping over $150.',
     h1: 'Saree for Mother of Bride',
     content: '<p>The mother of the bride traditionally wears a silk saree for the wedding ceremony — elegant, timeless, and culturally appropriate. Shop online sarees from $150-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of saree for mother of bride at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/lehenga-for-mother-of-bride',
     title: 'Lehenga for Mother of Bride — Regal & Comfortable | LuxeMia',
-    description: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Ready-to-ship from $250-600 with free U.S. shipping over $150.',
+    description: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Priced from $250-600 with free U.S. shipping over $150.',
     h1: 'Lehenga for Mother of Bride',
     content: '<p>A lehenga for the mother of the bride should be regal, elegant, and comfortable for long wedding events. Shop online lehengas from $250-600 with free U.S. shipping over $150.</p><p>Shop our curated collection of lehenga for mother of bride at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/sherwani-for-groom',
     title: 'Sherwani for Groom — Traditional & Regal | LuxeMia',
-    description: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    description: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Sherwani for Groom',
     content: '<p>The sherwani is the traditional wedding outfit for the Indian groom — regal, elegant, and photogenic. Shop online sherwanis from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of sherwani for groom at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/kurta-for-groom-brother',
     title: 'Kurta for Groom Brother — Stylish & Comfortable | LuxeMia',
-    description: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Ready-to-ship from $80-250 with free U.S. shipping over $150.',
+    description: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Priced from $80-250 with free U.S. shipping over $150.',
     h1: 'Kurta for Groom Brother',
     content: '<p>The groom brother needs an outfit that is stylish, comfortable, and coordinated with the wedding party. Shop online kurtas from $80-250 with free U.S. shipping over $150.</p><p>Shop our curated collection of kurta for groom brother at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/sharara-for-bride-sister',
     title: 'Sharara for Bride Sister — Trendy & Photogenic | LuxeMia',
-    description: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Ready-to-ship from $180-400 with free U.S. shipping over $150.',
+    description: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Priced from $180-400 with free U.S. shipping over $150.',
     h1: 'Sharara for Bride Sister',
     content: '<p>The sharara is a trendy, photogenic choice for the bride sister — wide-flare pants with a short kurti, perfect for mehendi and sangeet dancing. Shop from $180-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of sharara for bride sister at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/georgette-saree-for-reception',
     title: 'Georgette Saree for Reception — Flowy & Glamorous | LuxeMia',
-    description: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
+    description: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Priced from $150-400 with free U.S. shipping over $150.',
     h1: 'Georgette Saree for Reception',
     content: '<p>Georgette is the perfect reception saree fabric — flowy, glamorous, and easy to drape. Shop online georgette sarees from $150-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of georgette saree for reception at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/banarasi-silk-saree-for-wedding',
     title: 'Banarasi Silk Saree for Wedding — Traditional & Auspicious | LuxeMia',
-    description: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    description: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Banarasi Silk Saree for Wedding',
     content: '<p>A Banarasi silk saree is the most traditional and auspicious choice for an Indian wedding — handwoven in Varanasi with real zari. Shop from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of banarasi silk saree for wedding at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/kanjivaram-saree-for-wedding',
     title: 'Kanjivaram Saree for Wedding — South Indian Bridal Silk | LuxeMia',
-    description: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
+    description: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Priced from $200-500 with free U.S. shipping over $150.',
     h1: 'Kanjivaram Saree for Wedding',
     content: '<p>The Kanjivaram silk saree is the traditional South Indian bridal saree — handwoven in Tamil Nadu with pure zari. Shop from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of kanjivaram saree for wedding at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/chiffon-saree-for-wedding-guest',
     title: 'Chiffon Saree for Wedding Guest — Light & Flowy | LuxeMia',
-    description: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Ready-to-ship from $120-300 with free U.S. shipping over $150.',
+    description: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Priced from $120-300 with free U.S. shipping over $150.',
     h1: 'Chiffon Saree for Wedding Guest',
     content: '<p>Chiffon is the lightest, most flowy saree fabric — perfect for summer weddings and daytime events. Shop online chiffon sarees from $120-300 with free U.S. shipping over $150.</p><p>Shop our curated collection of chiffon saree for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/silk-saree-for-festival',
     title: 'Silk Saree for Festival — Diwali, Navratri, Pongal | LuxeMia',
-    description: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
+    description: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Priced from $150-400 with free U.S. shipping over $150.',
     h1: 'Silk Saree for Festival',
     content: '<p>A silk saree is the most traditional and auspicious choice for Indian festivals — Diwali, Navratri, Pongal, Onam. Shop from $150-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of silk saree for festival at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/organza-saree-for-engagement',
     title: 'Organza Saree for Engagement — Modern & Structured | LuxeMia',
-    description: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Ready-to-ship from $200-450 with free U.S. shipping over $150.',
+    description: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Priced from $200-450 with free U.S. shipping over $150.',
     h1: 'Organza Saree for Engagement',
     content: '<p>Organza is a modern, structured saree fabric perfect for engagement ceremonies — crisp, photogenic, and contemporary. Shop from $200-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of organza saree for engagement at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
   {
     path: '/georgette-saree-for-wedding-guest',
     title: 'Georgette Saree for Wedding Guest — Easy & Elegant | LuxeMia',
-    description: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Ready-to-ship from $150-350 with free U.S. shipping over $150.',
+    description: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Priced from $150-350 with free U.S. shipping over $150.',
     h1: 'Georgette Saree for Wedding Guest',
     content: '<p>Georgette is the easiest saree fabric to drape — perfect for first-time wedding guests. Flowy, elegant, and photogenic. Shop from $150-350 with free U.S. shipping over $150.</p><p>Shop our curated collection of georgette saree for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
   },
@@ -1616,7 +1616,7 @@ const routes = [
   {
     path: '/blog/designer-wedding-dress-under-500',
     title: 'Wedding Dress Under $500 — Online Options | LuxeMia',
-    description: 'Find a wedding dress under $500. Ready-to-ship bridal lehengas, sarees and suits for urgent celebrations.',
+    description: 'Find a wedding dress under $500. Shop bridal lehengas, sarees and suits for upcoming celebrations.',
     h1: 'Designer Wedding Dress Under $500',
     content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver elegance for less.</p>',
   },

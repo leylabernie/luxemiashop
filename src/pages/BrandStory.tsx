@@ -210,7 +210,7 @@ const whyChooseLuxeMia = [
   },
   {
     icon: Truck,
-    title: 'Free Shipping Over $350',
+    title: 'Free Shipping Over $150',
     description:
       'Enjoy free US shipping on all orders over $150 to the United States. Orders below $150 ship for a flat $12. All shipments include full tracking, insurance, and delivery via DHL Express, USPS, or UPS.',
   },
