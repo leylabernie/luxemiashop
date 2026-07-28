@@ -78,8 +78,8 @@ const SOCIAL_LINKS = {
 };
 
 const SEOHead = ({
-  title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-  description = 'Shop ready-to-ship Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits and menswear held in US stock.',
+  title = 'LuxeMia — Ready-to-Ship Indian Ethnic Wear',
+  description = "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
@@ -248,7 +248,6 @@ const SEOHead = ({
 
       {/* Additional Meta */}
       <meta name="author" content="LuxeMia" />
-      <meta name="keywords" content="indian ethnic wear, sarees online, buy sarees online, indian sarees online, sarees online USA, bridal lehengas online, wedding lehenga, lehenga online, salwar kameez online, buy salwar kameez online USA, anarkali suits online, banarasi silk sarees, kanchipuram silk sarees, affordable indian ethnic wear, indian wedding outfits online, indian jewelry online, kundan jewelry online, indo western dresses, indo western outfits, indian clothing online, indian clothes USA, indian ethnic wear Australia, indian clothing Canada, sherwani online, kurta pajama online, buy indian ethnic wear online, best indian ethnic wear store, NRI indian clothing, indian wedding dress online, party wear lehenga online" />
 
       {/* Structured Data — only page-specific schemas (Organization & WebSite are in index.html) */}
       {localBusiness && (

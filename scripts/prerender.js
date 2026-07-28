@@ -474,8 +474,8 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
 const routes = [
   {
     path: '/',
-    title: 'Buy Indian Ethnic Wear Online: Sarees & Lehengas | LuxeMia',
-    description: 'Shop 900+ Indian ethnic wear styles at LuxeMia — bridal lehengas, silk sarees, anarkalis & sherwanis. Free shipping over $350 to USA, Canada & Australia.',
+    title: 'LuxeMia — Ready-to-Ship Indian Ethnic Wear',
+    description: "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
     h1: 'Indian Ethnic Wear, Ready to Ship',
     content: `
       <p>In stock, in the US, and on its way within two business days. For the wedding that's sooner than you'd like.</p>
@@ -2306,7 +2306,7 @@ function generateHtml(template, route, allShopifyProducts) {
       "name": "Luxemia Shop",
       "url": "https://luxemia.shop",
       "logo": "https://luxemia.shop/og-image.jpg",
-      "description": "Ready-to-ship store for South Asian traditional clothing, festive lehengas, kurtis, and sarees held in US stock.",
+      "description": "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
       "image": "https://luxemia.shop/og-image.jpg",
       "category": "Indian Clothing Store",
       "knowsAbout": [

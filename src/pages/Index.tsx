@@ -136,7 +136,7 @@ const Index = () => {
     "name": "LuxeMia",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/og-image.jpg",
-    "description": "Shop 900+ Indian ethnic wear styles online at LuxeMia. Bridal lehengas, silk sarees, anarkali suits & sherwanis. Free shipping to USA, Canada & Australia over $350.",
+    "description": "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
     "image": "https://luxemia.shop/og-image.jpg",
     "category": "Indian Clothing Store",
     "knowsAbout": [
@@ -170,8 +170,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Indian Ethnic Wear Online: Sarees & Lehengas | LuxeMia"
-        description="Shop 900+ Indian ethnic wear styles at LuxeMia — bridal lehengas, silk sarees, anarkalis & sherwanis. Free shipping over $350 to USA, Canada & Australia."
+        title="LuxeMia — Ready-to-Ship Indian Ethnic Wear"
+        description="Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
