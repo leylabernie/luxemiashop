@@ -152,7 +152,7 @@ const MATERIAL_INFO: Record<ProductCategory, MaterialInfo> = {
       { name: 'Silk', description: 'The classic choice for sherwanis and wedding ensembles. Rich luster and natural drape command attention.' },
       { name: 'Jacquard', description: 'Woven patterns that create a textured, regal look without heavy embellishment. Subtle yet sophisticated.' },
       { name: 'Brocade', description: 'Heavy fabric with raised patterns in gold or silver zari. The hallmark of ceremonial and wedding wear.' },
-      { name: 'Art Silk', description: 'Affordable alternative to pure silk with similar sheen and drape. Great for pre-wedding events.' },
+      { name: 'Art Silk', description: 'Practical alternative to pure silk with similar sheen and drape. Great for pre-wedding events.' },
       { name: 'Cotton Silk', description: 'Lighter than pure silk with a matte finish — comfortable for haldi, mehndi, and daytime ceremonies.' },
     ],
     careInstructions: [

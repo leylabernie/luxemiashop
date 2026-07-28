@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Vasantam - Luxury Indian Ethnic Wear Design System
-   Inspired by editorial luxury with soft pastel elegance */
+/* Vasantam - Ready-to-Ship Indian Ethnic Wear Design System
+   Inspired by editorial styling with soft pastel elegance */
 
 @layer base {
   :root {
@@ -49,7 +49,7 @@
 
     --radius: 0.25rem;
 
-    /* Luxury specific tokens */
+    /* Boutique specific tokens */
     --blush-light: 0 60% 96%;
     --blush-medium: 0 68% 93%;
     --rose: 0 73% 82%;
@@ -173,7 +173,7 @@
 }
 
 @layer components {
-  /* Luxury Link Underline Animation */
+  /* Boutique Link Underline Animation */
   .luxury-link {
     @apply relative inline-block;
   }
@@ -212,7 +212,7 @@
 }
 
 @layer utilities {
-  /* Letter spacing for luxury typography */
+  /* Letter spacing for boutique typography */
   .tracking-luxury {
     letter-spacing: 0.2em;
   }

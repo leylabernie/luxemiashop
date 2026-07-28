@@ -184,13 +184,13 @@ const Index = () => {
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
             Kept sr-only (screen-reader only) so visual layout is unchanged
             but search engines see a single, keyword-rich H1. */}
-        <h1 className="sr-only">Indian Ethnic Wear Online — Sarees, Lehengas, Salwar Kameez & Sherwanis | LuxeMia</h1>
+        <h1 className="sr-only">Indian Ethnic Wear, Ready to Ship</h1>
 
         {/* First paragraph of copy — keyword-rich intro for search crawlers.
             sr-only so it doesn't disrupt the visual hero, but crawlers see it
             as the opening body copy. */}
         <p className="sr-only lead">
-          Welcome to LuxeMia — your destination for Indian ethnic wear online, shipped fast to the USA, Canada, and Australia. Shop 900+ styles including bridal lehengas, silk sarees, anarkali suits, and sherwanis. Free shipping on orders over $350.
+          In stock, in the US, and on its way within two business days. For the wedding that's sooner than you'd like.
         </p>
 
         {/* Shipping Info Banner */}

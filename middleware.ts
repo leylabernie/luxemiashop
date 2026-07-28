@@ -431,7 +431,7 @@ async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Re
   let html = spaHtml;
 
   // Determine the correct meta tags for this page
-  let title = 'LuxeMia | Ready-to-Ship Indian Ethnic Wear & Sarees';
+  let title = 'LuxeMia — Ready-to-Ship Indian Ethnic Wear';
   let description = 'Shop affordable Indian ethnic wear online at LuxeMia. Fast USA delivery on trendy sarees, festive lehengas & ready-to-wear salwar kameez. Order today!';
   const canonical = `https://luxemia.shop${pathname}`;
   let ogType = 'website';
@@ -754,7 +754,7 @@ function getBlogMetadataMiddleware(slug: string): { title: string; description: 
     'embroidery-motifs-symbolism-paisley-peacock-lotus': { title: 'The Symbolism of Embroidery Motifs: Paisley, Peacock, and Lotus in Indian Textiles | LuxeMia', description: 'Indian embroidery motifs carry deep symbolism. The paisley (mango/ambi) represents fertility and eternity. The peacock symbolizes beauty and grace. The lotus represents purity and divinity.' },
     'rahul-mishra-designer-profile-paris-haute-couture-sustainable': { title: 'Rahul Mishra: Age, Education & Sustainable Paris Haute Couture | LuxeMia', description: 'Rahul Mishra — NIFT Delhi graduate, India\'s first Paris Haute Couture Week designer. Known for sustainable fashion, handloom textiles, and winning the International Woolmark Prize.' },
     'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Designs 2026: 50+ Stunning Ideas for Your Wedding | LuxeMia Blog', description: 'Explore the latest red bridal lehenga designs for 2026. From classic crimson Banarasi to modern maroon velvet, discover 50+ stunning red lehenga ideas with expert tips on fabric, embroidery, and styling for your Indian wedding.' },
-    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Lehengas Under $500 — Affordable Luxury Guide | LuxeMia', description: 'Beautiful designer wedding lehengas under 500 dollars. Curated picks from top Indian designers. Budget bridal shopping without compromising on style.' },
+    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Lehengas Under $500 — Ready-to-Ship Guide | LuxeMia', description: 'Designer-inspired wedding lehengas under 500 dollars. Curated picks for urgent bridal shopping without compromising on style.' },
     'wedding-guest-outfit-ideas': { title: 'Indian Wedding Guest Outfit Ideas: What to Wear to Every Ceremony | LuxeMia Blog', description: 'Complete Indian wedding guest outfit ideas for every ceremony — mehendi, sangeet, reception. Lehenga, saree, anarkali, and suit options by budget and dress code.' },
     'saree-draping-styles-every-occasion': { title: 'Saree Draping Styles for Every Occasion: 7 Popular Styles Explained | LuxeMia Blog', description: 'Learn 7 saree draping styles — Nivi, Bengali, Gujarati, Maharashtrian, and more. Step-by-step draping guide for weddings, festivals, and daily wear.' },
     'indian-wedding-trends-2026': { title: 'Indian Wedding Fashion Trends 2026: What Brides, Grooms & Guests Are Wearing | LuxeMia Blog', description: 'Top Indian wedding fashion trends for 2026 — pastel bridal lehengas, indo-western sherwanis, sustainable fabrics, and statement jewelry for every ceremony.' },

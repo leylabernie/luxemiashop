@@ -11,12 +11,12 @@ const SEOFooterContent = () => {
           
           <div className="prose prose-sm max-w-none text-muted-foreground font-light leading-relaxed">
             <p className="mb-6">
-              Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for affordable Indian ethnic wear online. 
+              Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for ready-to-ship Indian ethnic wear online. 
               Buy <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
               <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
               <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link>, and 
               <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry</Link> that 
-              blend timeless tradition with contemporary style at affordable prices.
+              are held in a tighter in-stock edit for weddings and festivals coming up soon.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mb-6">
@@ -46,7 +46,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Buy Salwar Kameez Online</h3>
                 <p>
-                  Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> at affordable prices. 
+                  Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> from a ready-to-ship US-stock edit. 
                   Discover elegant <strong className="text-foreground">anarkali suits</strong>, 
                   palazzo sets, and <strong className="text-foreground">sharara suits</strong> perfect for every occasion. 
                   Our collection features quality fabrics like georgette, chanderi silk, and velvet, 
@@ -111,7 +111,7 @@ const SEOFooterContent = () => {
             <div className="text-center mt-8 pt-6 border-t border-border/50">
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
-                LuxeMia offers affordable, stylish Indian ethnic clothing online.
+                LuxeMia offers ready-to-ship Indian ethnic clothing online.
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
 We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to the USA, Canada, and Australia, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 

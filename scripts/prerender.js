@@ -476,9 +476,9 @@ const routes = [
     path: '/',
     title: 'Buy Indian Ethnic Wear Online: Sarees & Lehengas | LuxeMia',
     description: 'Shop 900+ Indian ethnic wear styles at LuxeMia — bridal lehengas, silk sarees, anarkalis & sherwanis. Free shipping over $350 to USA, Canada & Australia.',
-    h1: 'Affordable Indian Ethnic Wear & Traditional Fashion',
+    h1: 'Indian Ethnic Wear, Ready to Ship',
     content: `
-      <p>Welcome to LuxeMia — your destination for affordable traditional clothing and ready-to-ship Indian ethnic wear. Shop trendy sarees, festive lehengas, and ready-to-wear salwar kameez with fast USA delivery.</p>
+      <p>In stock, in the US, and on its way within two business days. For the wedding that's sooner than you'd like.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
@@ -549,7 +549,7 @@ const routes = [
       </ul>
       <h2>Shop Suits by Price</h2>
       <ul>
-        <li><a href="/suits?sub=under-200">Suits Under $200</a> — Affordable premium ethnic wear</li>
+        <li><a href="/suits?sub=under-200">Suits Under $200</a> — Ready-to-ship ethnic wear</li>
         <li><a href="/suits?sub=premium-300-plus">Premium Suits $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
@@ -599,7 +599,7 @@ const routes = [
       </ul>
       <h2>Shop Lehengas by Price</h2>
       <ul>
-        <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — Affordable premium lehengas</li>
+        <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — Ready-to-ship lehengas</li>
         <li><a href="/lehengas?sub=premium-300-plus">Premium Lehengas $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
@@ -632,7 +632,7 @@ const routes = [
       <h2>Shop Sarees by Style</h2>
       <ul>
         <li><a href="/sarees?sub=embroidered">Embroidered Sarees</a> — Hand-embroidered detailing</li>
-        <li><a href="/sarees?sub=printed">Printed Sarees</a> — Affordable & stylish</li>
+        <li><a href="/sarees?sub=printed">Printed Sarees</a> — In-stock and easy to wear</li>
         <li><a href="/sarees?sub=designer">Designer Sarees</a> — Couture-inspired pieces</li>
         <li><a href="/sarees?sub=traditional">Traditional Sarees</a> — Heritage weaves</li>
       </ul>
@@ -653,7 +653,7 @@ const routes = [
       </ul>
       <h2>Shop Sarees by Price</h2>
       <ul>
-        <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — Affordable premium sarees</li>
+        <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — Ready-to-ship sarees</li>
         <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Designer & heavily embellished</li>
       </ul>
     `,
@@ -708,7 +708,7 @@ const routes = [
       </ul>
       <h2>Shop Menswear by Price</h2>
       <ul>
-        <li><a href="/menswear?sub=under-200">Menswear Under $200</a> — Affordable premium ethnic wear</li>
+        <li><a href="/menswear?sub=under-200">Menswear Under $200</a> — Ready-to-ship ethnic wear</li>
         <li><a href="/menswear?sub=premium-300-plus">Premium Menswear $300+</a> — Designer & heavily embellished</li>
       </ul>
       <h2>Sherwanis for Grooms</h2>
@@ -1586,8 +1586,8 @@ const routes = [
   },
   {
     path: '/blog/designer-wedding-dress-under-500',
-    title: 'Wedding Dress Under $500 — Affordable Elegance | LuxeMia',
-    description: 'Find a designer wedding dress under $500. Affordable bridal lehengas, sarees & suits that look expensive without breaking the bank.',
+    title: 'Wedding Dress Under $500 — Ready-to-Ship Options | LuxeMia',
+    description: 'Find a wedding dress under $500. Ready-to-ship bridal lehengas, sarees and suits for urgent celebrations.',
     h1: 'Designer Wedding Dress Under $500',
     content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver elegance for less.</p>',
   },
@@ -2306,12 +2306,12 @@ function generateHtml(template, route, allShopifyProducts) {
       "name": "Luxemia Shop",
       "url": "https://luxemia.shop",
       "logo": "https://luxemia.shop/og-image.jpg",
-      "description": "Affordable e-commerce store for South Asian traditional clothing, festive lehengas, trendy kurtis, and everyday casual sarees.",
+      "description": "Ready-to-ship store for South Asian traditional clothing, festive lehengas, kurtis, and sarees held in US stock.",
       "image": "https://luxemia.shop/og-image.jpg",
       "category": "Indian Clothing Store",
       "knowsAbout": [
         "Indian Ethnic Wear",
-        "Affordable Sarees",
+        "Ready-to-Ship Sarees",
         "Festive Lehengas",
         "Salwar Kameez",
         "South Asian Fashion"

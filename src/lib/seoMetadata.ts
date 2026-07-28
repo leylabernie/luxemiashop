@@ -255,7 +255,7 @@ export function getBlogMetadata(slug: string): PageMetadata | null {
     },
     'designer-wedding-dress-under-500': {
       title: 'Designer Wedding Dress Under $500 | LuxeMia Blog',
-      description: 'Find beautiful designer wedding dresses under $500. Affordable bridal options at LuxeMia.',
+      description: 'Find wedding dresses under $500 with ready-to-ship options at LuxeMia.',
     },
     'nri-wedding-ethnic-wear-trends-2026': {
       title: 'NRI Wedding Ethnic Wear Trends 2026 | LuxeMia Blog',

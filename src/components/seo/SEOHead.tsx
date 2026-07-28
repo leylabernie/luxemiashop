@@ -79,7 +79,7 @@ const SOCIAL_LINKS = {
 
 const SEOHead = ({
   title = 'LuxeMia | Indian Ethnic Wear — Sarees & Lehengas',
-  description = 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia. Affordable prices.',
+  description = 'Shop ready-to-ship Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits and menswear held in US stock.',
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
