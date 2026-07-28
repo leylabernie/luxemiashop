@@ -459,6 +459,21 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function sanitizeShippingAndBoilerplate(text) {
+  return text
+    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Free US shipping over $150. $12 flat below that. In-stock items ship within 2 business days.')
+    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Fast US shipping - free over $150, $12 flat below that, ships within 2 business days')
+    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: Free US shipping over $150. $12 flat below that. Ships within 2 business days')
+    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: Free US shipping over $150. $12 flat below that. Ships within 2 business days')
+    .replace(/Free shipping on orders over \$350/gi, 'Free US shipping over $150')
+    .replace(/free shipping on orders over \$350/gi, 'free US shipping over $150')
+    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'ships within 2 business days in the US')
+    .replace(/USA, Canada, and Australia/gi, 'the United States')
+    .replace(/worldwide shipping/gi, 'US shipping')
+    .replace(/perfect blend of tradition and modernit[y]/gi, 'clear balance of traditional craft and ready-to-wear ease')
+    .slice(0, 5000);
+}
+
 // Build a deterministic, GMC-friendly description (>=150 chars) from product
 // attributes when Shopify's description is missing or too short. Avoids the
 // previous fallback that produced ~110-char strings and triggered GMC
@@ -495,9 +510,9 @@ function buildDescription(product, color, material, productType) {
       const detailsParts = [];
       detailsParts.push(`Color: ${color}`);
       if (material) detailsParts.push(`Fabric: ${material}`);
-      return (original + ' ' + detailsParts.join(' | ')).slice(0, 5000);
+      return sanitizeShippingAndBoilerplate(original + ' ' + detailsParts.join(' | '));
     }
-    return original.slice(0, 5000);
+    return sanitizeShippingAndBoilerplate(original);
   }
 
   const title = product.title || 'Indian ethnic wear';
@@ -543,7 +558,7 @@ function buildDescription(product, color, material, productType) {
   if (out.length < 150) {
     out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery within the United States.`;
   }
-  return out.slice(0, 5000);
+  return sanitizeShippingAndBoilerplate(out);
 }
 
 function generateShippingXml() {

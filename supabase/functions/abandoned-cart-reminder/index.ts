@@ -159,7 +159,7 @@ const generateEmailHtml = (cart: AbandonedCart): string => {
               <p style="margin: 0 0 8px; color: #666; font-size: 14px;">Questions? Reply to this email or contact us at</p>
               <a href="mailto:hello@luxemia.shop" style="color: #d4af37; text-decoration: none;">hello@luxemia.shop</a>
               <p style="margin: 16px 0 0; color: #999; font-size: 12px;">
-                © 2026 LuxeMia. Luxury Indian Ethnic Wear.<br>
+                © 2026 LuxeMia. Ready-to-Ship Indian Ethnic Wear.<br>
                 <a href="https://luxemia.shop/privacy" style="color: #999; text-decoration: underline;">Privacy Policy</a> | 
                 <a href="https://luxemia.shop/terms" style="color: #999; text-decoration: underline;">Terms of Service</a>
               </p>
