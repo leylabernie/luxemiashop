@@ -26,9 +26,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'maroon-lehenga-for-wedding-guest',
     title: 'Maroon Lehenga for Wedding Guest — Ready-to-Ship Styles | LuxeMia',
-    metaDescription: 'Shop maroon lehengas for Indian wedding guests. Ready-to-ship styles from $200-$500 with free shipping to USA, Canada & Australia. Maroon is rich, photogenic and not bridal red — perfect for wedding guests.',
+    metaDescription: 'Shop maroon lehengas for Indian wedding guests. Ready-to-ship styles from $200-$500 with free US shipping over $150. Maroon is rich, photogenic and not bridal red — perfect for wedding guests.',
     h1: 'Maroon Lehenga for Wedding Guest',
-    heroSubtitle: 'Maroon is the perfect wedding guest color — rich, photogenic, and distinct from bridal red. Shop ready-to-ship maroon lehengas from $200-500 with free shipping to USA, Canada & Australia on orders over $350.',
+    heroSubtitle: 'Maroon is the perfect wedding guest color — rich, photogenic, and distinct from bridal red. Shop ready-to-ship maroon lehengas from $200-500 with free US shipping over $150 on orders over $150.',
     breadcrumb: 'Maroon Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -48,7 +48,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a wedding guest lehenga, choose a silhouette that is dance-friendly — you will be on the dance floor at the sangeet and reception. A-line lehengas with 2-3 meters of flare are ideal; circular skirts with 4-6 meters of flare are too heavy for hours of dancing. Look for fabrics like georgette, velvet, or art silk that drape well and photograph richly. Avoid raw silk — it is stiff and unforgiving in photos.',
           'Embellishment should be concentrated at the hem and yoke, not all over. Heavy zardozi across the entire lehenga adds visual weight and gets uncomfortable after 4 hours. Mirror work, sequins, and zari at the borders give you the festive look without the bulk. Pair with a 3/4 sleeve choli (not a crop top) for wedding-guest appropriateness, and drape the dupatta over one shoulder — not both, which adds bulk.',
-          'At LuxeMia, all our maroon wedding guest lehengas are available in Made to Measure at no extra cost. We custom-stitch to your exact measurements, with 5-7 business day dispatch and 7-10 day shipping to the USA, Canada, and Australia. Free shipping on orders over $350.',
+          'At LuxeMia, all our maroon wedding guest lehengas are available in Made to Measure at no extra cost. We custom-stitch to your exact measurements, with confirm timing before ordering and 7-10 day shipping to the United States. Free US shipping over $150.',
         ],
       },
     ],
@@ -69,9 +69,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'emerald-green-lehenga-for-wedding-guest',
     title: 'Emerald Green Lehenga for Wedding Guest — Shop Ready-to-Ship | LuxeMia',
-    metaDescription: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free US shipping over $150.',
     h1: 'Emerald Green Lehenga for Wedding Guest',
-    heroSubtitle: 'Emerald green is a striking wedding guest color — rich, photogenic, and pairs beautifully with gold jewelry. Shop ready-to-ship emerald green lehengas from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Emerald green is a striking wedding guest color — rich, photogenic, and pairs beautifully with gold jewelry. Shop ready-to-ship emerald green lehengas from $200-500 with free US shipping over $150.',
     breadcrumb: 'Emerald Green Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -91,7 +91,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pair emerald green with gold jewelry — kundan necklaces, gold jhumka earrings, and gold bangles. The warm gold tones complement the cool green beautifully. For a dupatta, choose a contrasting color like maroon, pink, or gold to add visual interest. Drape the dupatta over one shoulder (not both) to avoid adding bulk.',
           'For footwear, choose gold or emerald embellished flats — you will be dancing for hours. Avoid heels. For makeup, gold eyeshadow and a nude lip complement the green without competing. A small green or gold bindi completes the look. Budget $40-$120 for jewelry and $30-$80 for footwear.',
-          'At LuxeMia, our emerald green lehengas are available in Made to Measure at no extra cost. Order at least 4-6 weeks before the wedding for custom stitching. Free shipping on orders over $350 to the USA, Canada, and Australia.',
+          'At LuxeMia, our emerald green lehengas are available in Made to Measure at no extra cost. Order at least 4-6 weeks before the wedding for custom stitching. Free US shipping over $150 to the United States.',
         ],
       },
     ],
@@ -111,9 +111,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'royal-blue-lehenga-for-wedding-guest',
     title: 'Royal Blue Lehenga for Wedding Guest — Ready-to-Ship Styles | LuxeMia',
-    metaDescription: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free US shipping over $150.',
     h1: 'Royal Blue Lehenga for Wedding Guest',
-    heroSubtitle: 'Royal blue is a striking wedding guest color — bold, photogenic, and stands out in a sea of reds and pinks. Shop ready-to-ship royal blue lehengas from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Royal blue is a striking wedding guest color — bold, photogenic, and stands out in a sea of reds and pinks. Shop ready-to-ship royal blue lehengas from $200-500 with free US shipping over $150.',
     breadcrumb: 'Royal Blue Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -125,7 +125,7 @@ export const comboPages: ComboPageConfig[] = [
         heading: 'Why Royal Blue is a Wedding Guest Standout',
         paragraphs: [
           'Royal blue is one of the boldest and most photogenic colors for an Indian wedding guest. It stands out in a sea of reds, pinks, and maroons, making it a memorable choice for sangeet and reception events. Royal blue also flatters every skin tone — from fair to deep — and pairs beautifully with both silver and gold jewelry.',
-          'For Indian diaspora weddings in the USA, Canada, and Australia, royal blue has become increasingly popular as a modern alternative to traditional reds and maroons. It photographs beautifully under the warm lighting of evening events and looks striking against gold or silver embellishments. If you want to make a statement without crossing into bridal territory, royal blue is an excellent choice.',
+          'For Indian diaspora weddings in the United States, royal blue has become increasingly popular as a modern alternative to traditional reds and maroons. It photographs beautifully under the warm lighting of evening events and looks striking against gold or silver embellishments. If you want to make a statement without crossing into bridal territory, royal blue is an excellent choice.',
         ],
       },
       {
@@ -133,7 +133,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Royal blue pairs with both gold and silver jewelry. Gold gives a traditional, warm look; silver gives a modern, cool look. For a sangeet, choose silver mirror work and silver jewelry for a fresh, modern aesthetic. For a reception, gold zari and kundan jewelry gives a richer, more traditional look.',
           'For a dupatta, choose a contrasting color like yellow, orange, or pink to add visual interest. Royal blue with a yellow or orange dupatta is a classic Indian color combination. Drape over one shoulder. For footwear, choose silver or gold embellished flats. Avoid black footwear with royal blue.',
-          'At LuxeMia, our royal blue lehengas are available with Made to Measure at no extra cost. Order 4-6 weeks before the wedding for custom stitching. Free shipping on orders over $350.',
+          'At LuxeMia, our royal blue lehengas are available with Made to Measure at no extra cost. Order 4-6 weeks before the wedding for custom stitching. Free US shipping over $150.',
         ],
       },
     ],
@@ -153,9 +153,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'pink-lehenga-for-wedding-guest',
     title: 'Pink Lehenga for Wedding Guest — From Blush to Fuchsia | LuxeMia',
-    metaDescription: 'Shop pink lehengas for Indian wedding guests. From soft blush pink to bold fuchsia, ready-to-ship from $180-$450. Free shipping to USA, Canada & Australia on orders over $350.',
+    metaDescription: 'Shop pink lehengas for Indian wedding guests. From soft blush pink to bold fuchsia, ready-to-ship from $180-$450. Free shipping to the United States on orders over $150.',
     h1: 'Pink Lehenga for Wedding Guest',
-    heroSubtitle: 'Pink is the most versatile wedding guest color — from soft blush to bold fuchsia. Shop ready-to-ship pink lehengas from $180-450 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Pink is the most versatile wedding guest color — from soft blush to bold fuchsia. Shop ready-to-ship pink lehengas from $180-450 with free US shipping over $150.',
     breadcrumb: 'Pink Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -175,7 +175,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pink pairs beautifully with gold jewelry — the warm gold tones complement the cool pink. For blush pink, choose delicate gold jewelry (thin necklaces, small jhumkas). For fuchsia or magenta, choose bolder gold jewelry (statement kundan necklaces, large jhumkas). Silver jewelry also works with pink, especially for a modern look.',
           'For a dupatta, choose a contrasting color — green, gold, or orange create beautiful color combinations with pink. Avoid matching the dupatta to the lehenga. Drape over one shoulder. For footwear, gold or nude embellished flats work best. Avoid black or dark footwear with pink.',
-          'At LuxeMia, our pink lehengas are available in Made to Measure at no extra cost. We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding for custom stitching.',
+          'At LuxeMia, our pink lehengas are available in Made to Measure at no extra cost. We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding for custom stitching.',
         ],
       },
     ],
@@ -195,9 +195,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'purple-lehenga-for-wedding-guest',
     title: 'Purple Lehenga for Wedding Guest — Royal & Photogenic | LuxeMia',
-    metaDescription: 'Shop purple lehengas for Indian wedding guests. From deep eggplant to soft lavender, ready-to-ship from $200-$500. Free shipping to USA, Canada & Australia on orders over $350.',
+    metaDescription: 'Shop purple lehengas for Indian wedding guests. From deep eggplant to soft lavender, ready-to-ship from $200-$500. Free shipping to the United States on orders over $150.',
     h1: 'Purple Lehenga for Wedding Guest',
-    heroSubtitle: 'Purple is a royal, photogenic wedding guest color — from deep eggplant to soft lavender. Shop ready-to-ship purple lehengas from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Purple is a royal, photogenic wedding guest color — from deep eggplant to soft lavender. Shop ready-to-ship purple lehengas from $200-500 with free US shipping over $150.',
     breadcrumb: 'Purple Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -217,7 +217,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Purple pairs best with gold jewelry — kundan necklaces, gold jhumkas, and gold bangles. The warm gold tones complement the cool purple beautifully. Silver jewelry also works, especially with lavender or lilac. Avoid mixing gold and silver; choose one metal and stick with it.',
           'For a dupatta, choose gold or a contrasting color like pink, yellow, or green. Deep purple with a gold dupatta is a classic regal look. Drape over one shoulder. For footwear, gold or purple embellished flats work best. For makeup, purple or plum eyeshadow complements the lehenga without competing.',
-          'At LuxeMia, our purple lehengas are available in Made to Measure at no extra cost. We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding.',
+          'At LuxeMia, our purple lehengas are available in Made to Measure at no extra cost. We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding.',
         ],
       },
     ],
@@ -237,9 +237,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'wine-lehenga-for-wedding-guest',
     title: 'Wine Lehenga for Wedding Guest — Sophisticated & Safe | LuxeMia',
-    metaDescription: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Ready-to-ship from $200-$500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Ready-to-ship from $200-$500 with free US shipping over $150.',
     h1: 'Wine Lehenga for Wedding Guest',
-    heroSubtitle: 'Wine is a sophisticated wedding guest color — deep, elegant, and safely distinct from bridal red. Shop ready-to-ship wine lehengas from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Wine is a sophisticated wedding guest color — deep, elegant, and safely distinct from bridal red. Shop ready-to-ship wine lehengas from $200-500 with free US shipping over $150.',
     breadcrumb: 'Wine Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -259,7 +259,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Wine pairs beautifully with gold jewelry — the warm gold tones bring out the richness of the wine color. Kundan necklaces, gold jhumkas, and gold bangles are all excellent choices. For a modern look, rose gold jewelry also complements wine beautifully. Avoid silver jewelry with wine; it clashes.',
           'For a dupatta, choose gold or a contrasting color like pink, peach, or ivory. Wine with a gold dupatta is a classic, regal look. Drape over one shoulder. For footwear, gold or wine embellished flats. For makeup, a wine or berry lip complements the lehenga beautifully.',
-          'At LuxeMia, our wine lehengas are available in Made to Measure at no extra cost. We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding for custom stitching.',
+          'At LuxeMia, our wine lehengas are available in Made to Measure at no extra cost. We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding for custom stitching.',
         ],
       },
     ],
@@ -279,9 +279,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'navy-blue-lehenga-for-wedding-guest',
     title: 'Navy Blue Lehenga for Wedding Guest — Elegant & Modern | LuxeMia',
-    metaDescription: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Ready-to-ship from $200-$500 with free shipping to USA, Canada & Australia on orders over $350.',
+    metaDescription: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Ready-to-ship from $200-$500 with free US shipping over $150 on orders over $150.',
     h1: 'Navy Blue Lehenga for Wedding Guest',
-    heroSubtitle: 'Navy blue is an elegant, modern wedding guest color — deep, sophisticated, and photogenic. Shop ready-to-ship navy blue lehengas from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Navy blue is an elegant, modern wedding guest color — deep, sophisticated, and photogenic. Shop ready-to-ship navy blue lehengas from $200-500 with free US shipping over $150.',
     breadcrumb: 'Navy Blue Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -301,7 +301,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Navy blue pairs with both gold and silver jewelry. Silver or white gold gives a modern, cool look that complements the navy beautifully. Gold gives a warmer, more traditional look. For a winter wedding, silver is the more seasonal choice. For a summer wedding, gold adds warmth.',
           'For a dupatta, choose silver, white, or a contrasting color like pink, peach, or ivory. Navy with a silver or white dupatta is a classic, elegant look. Drape over one shoulder. For footwear, silver or navy embellished flats. For makeup, silver or champagne eyeshadow complements the navy.',
-          'At LuxeMia, our navy blue lehengas are available in Made to Measure at no extra cost. We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding.',
+          'At LuxeMia, our navy blue lehengas are available in Made to Measure at no extra cost. We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding.',
         ],
       },
     ],
@@ -321,9 +321,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'maroon-lehenga-for-reception',
     title: 'Maroon Lehenga for Reception — Elegant & Photogenic | LuxeMia',
-    metaDescription: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Ready-to-ship from $200-$500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Ready-to-ship from $200-$500 with free US shipping over $150.',
     h1: 'Maroon Lehenga for Reception',
-    heroSubtitle: 'Maroon is an elegant choice for a wedding reception — rich, photogenic, and perfect for evening events. Shop ready-to-ship maroon lehengas from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Maroon is an elegant choice for a wedding reception — rich, photogenic, and perfect for evening events. Shop ready-to-ship maroon lehengas from $200-500 with free US shipping over $150.',
     breadcrumb: 'Maroon Lehenga for Reception',
     category: 'lehengas',
     filters: {
@@ -343,7 +343,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'The key difference between a reception lehenga and a wedding ceremony lehenga is formality. The wedding ceremony is the most formal event — silk sarees, heavily embroidered lehengas, traditional jewelry. The reception is slightly less formal but more glamorous — you can be more fashion-forward, more experimental, more modern.',
           'For a maroon reception lehenga, choose a contemporary silhouette — an A-line skirt with a stylish choli (boat neck, off-shoulder, or 3/4 sleeve), or an indo-western fusion look. Velvet, georgette, and raw silk all work for reception. Avoid the heaviest bridal zardozi — it looks overdressed for a reception. Mirror work, sequins, and zari are all appropriate.',
-          'At LuxeMia, our maroon reception lehengas are available in Made to Measure at no extra cost. Order 4-6 weeks before the wedding. Free shipping on orders over $350 to the USA, Canada, and Australia.',
+          'At LuxeMia, our maroon reception lehengas are available in Made to Measure at no extra cost. Order 4-6 weeks before the wedding. Free US shipping over $150 to the United States.',
         ],
       },
     ],
@@ -385,7 +385,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'If you have confirmed that black is welcome, a black lehenga can be a stunning, modern choice. Pair with heavy gold or kundan jewelry — the warm metals pop beautifully against the black. Gold zari embroidery on black is the classic Indian "cocktail sari" look, elegant and photogenic. Avoid silver jewelry with black; it can look stark.',
           'For a dupatta, choose gold, ivory, or a bright contrasting color like fuchsia or emerald green. Black with a gold dupatta is a timeless, regal look. Drape over one shoulder. For footwear, gold or black embellished flats. For makeup, a bold red or berry lip complements the black beautifully. Avoid all-black everything — the contrasting dupatta and jewelry are what make the look work.',
-          'At LuxeMia, our black lehengas feature heavy gold zari and sequin work that makes them appropriate for cocktail-style wedding events. Available in Made to Measure at no extra cost. Free shipping on orders over $350 to the USA, Canada, and Australia.',
+          'At LuxeMia, our black lehengas feature heavy gold zari and sequin work that makes them appropriate for cocktail-style wedding events. Available in Made to Measure at no extra cost. Free US shipping over $150 to the United States.',
         ],
       },
     ],
@@ -405,9 +405,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'pastel-lehenga-for-wedding-guest',
     title: 'Pastel Lehenga for Wedding Guest — Soft & Modern | LuxeMia',
-    metaDescription: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Ready-to-ship from $180-450 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Ready-to-ship from $180-450 with free US shipping over $150.',
     h1: 'Pastel Lehenga for Wedding Guest',
-    heroSubtitle: 'Pastels are a modern, romantic wedding guest choice — soft blush, mint, lavender, and peach. Shop ready-to-ship pastel lehengas from $180-450 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Pastels are a modern, romantic wedding guest choice — soft blush, mint, lavender, and peach. Shop ready-to-ship pastel lehengas from $180-450 with free US shipping over $150.',
     breadcrumb: 'Pastel Lehenga for Wedding Guest',
     category: 'lehengas',
     filters: {
@@ -427,7 +427,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pastels pair beautifully with delicate gold jewelry — thin necklaces, small jhumkas, and fine bangles. Avoid heavy, chunky jewelry; it overwhelms the soft pastel. For a dupatta, choose a slightly darker shade of the same color or a contrasting pastel. Drape over one shoulder.',
           'For footwear, gold or nude embellished flats. For makeup, keep it soft and natural — nude lips, soft pink blush, and subtle gold eyeshadow. Avoid bold lip colors; they compete with the pastel. A small floral maang tikka or fresh flower in the hair complements the romantic pastel look.',
-          'At LuxeMia, our pastel lehengas are available in Made to Measure at no extra cost. We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding. Pastels are especially popular for spring and summer weddings — order early as they sell out by March.',
+          'At LuxeMia, our pastel lehengas are available in Made to Measure at no extra cost. We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding. Pastels are especially popular for spring and summer weddings — order early as they sell out by March.',
         ],
       },
     ],
@@ -449,9 +449,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'anarkali-suit-for-mother-of-bride',
     title: 'Anarkali Suit for Mother of Bride — Elegant & Comfortable | LuxeMia',
-    metaDescription: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Ready-to-ship from $200-500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Ready-to-ship from $200-500 with free US shipping over $150.',
     h1: 'Anarkali Suit for Mother of Bride',
-    heroSubtitle: 'The mother of the bride needs an outfit that is elegant, traditional, and comfortable for long wedding events. Shop anarkali suits from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The mother of the bride needs an outfit that is elegant, traditional, and comfortable for long wedding events. Shop anarkali suits from $200-500 with free US shipping over $150.',
     breadcrumb: 'Anarkali Suit for Mother of Bride',
     category: 'suits',
     filters: {
@@ -471,7 +471,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For the mother of the bride, choose rich, sophisticated colors — maroon, deep green, royal blue, wine, or deep purple. Avoid pastels (too youthful) and avoid black (inauspicious). Heavy zari embroidery, kundan work, or sequin embellishment is appropriate — the mother of the bride should look regal and elegant.',
           'Pair with statement gold jewelry — a kundan necklace set, gold jhumka earrings, and gold bangles. A maang tikka (forehead ornament) is traditional for the mother of the bride. For footwear, comfortable embellished flats — you will be standing for hours. For the dupatta, drape over one shoulder or pin across the chest for modesty.',
-          'At LuxeMia, we offer Made to Measure on every anarkali at no extra cost — essential for the mother of the bride, who needs a perfect fit. We custom-stitch to your exact measurements with 5-7 business day dispatch and 7-10 day shipping to the USA, Canada, and Australia. Free shipping on orders over $350.',
+          'At LuxeMia, we offer Made to Measure on every anarkali at no extra cost — essential for the mother of the bride, who needs a perfect fit. We custom-stitch to your exact measurements with confirm timing before ordering and 7-10 day shipping to the United States. Free US shipping over $150.',
         ],
       },
     ],
@@ -491,9 +491,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'lehenga-for-bridesmaid',
     title: 'Lehenga for Bridesmaid — Coordinated & Photogenic | LuxeMia',
-    metaDescription: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Ready-to-ship from $180-450 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Ready-to-ship from $180-450 with free US shipping over $150.',
     h1: 'Lehenga for Bridesmaid',
-    heroSubtitle: 'Bridesmaid lehengas need to be coordinated, photogenic, and dance-friendly. Shop ready-to-ship bridesmaid lehengas from $180-450 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Bridesmaid lehengas need to be coordinated, photogenic, and dance-friendly. Shop ready-to-ship bridesmaid lehengas from $180-450 with free US shipping over $150.',
     breadcrumb: 'Lehenga for Bridesmaid',
     category: 'lehengas',
     filters: {
@@ -514,7 +514,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a mehendi bridesmaid, choose yellow, orange, or green — the traditional mehendi colors. For a sangeet bridesmaid, choose jewel tones (emerald, sapphire, ruby, plum) that photograph beautifully under evening lighting. For a reception bridesmaid, coordinate with the bride reception outfit color. Avoid red — it is reserved for the bride.',
           'For fabric, choose georgette, chiffon, or art silk — lightweight, dance-friendly, and photogenic. Avoid heavy velvet (too hot for dancing) and raw silk (too stiff). A-line silhouettes with 2-3 meters of flare are ideal; circular skirts with 4-6 meters are too heavy for hours of dancing.',
-          'At LuxeMia, we offer Made to Measure on every lehenga at no extra cost — essential for bridesmaids who need a coordinated look with consistent fit. We custom-stitch to each bridesmaid measurements. Order 6-8 weeks before the wedding for the full bridal party. Free shipping on orders over $350.',
+          'At LuxeMia, we offer Made to Measure on every lehenga at no extra cost — essential for bridesmaids who need a coordinated look with consistent fit. We custom-stitch to each bridesmaid measurements. Order 6-8 weeks before the wedding for the full bridal party. Free US shipping over $150.',
         ],
       },
     ],
@@ -534,9 +534,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'anarkali-suit-for-wedding-guest',
     title: 'Anarkali Suit for Wedding Guest — Easiest Indian Outfit | LuxeMia',
-    metaDescription: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Ready-to-ship from $150-400 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Ready-to-ship from $150-400 with free US shipping over $150.',
     h1: 'Anarkali Suit for Wedding Guest',
-    heroSubtitle: 'The anarkali suit is the easiest Indian outfit for wedding guests — slips on like a dress, no draping or pinning required. Shop ready-to-ship anarkalis from $150-400 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The anarkali suit is the easiest Indian outfit for wedding guests — slips on like a dress, no draping or pinning required. Shop ready-to-ship anarkalis from $150-400 with free US shipping over $150.',
     breadcrumb: 'Anarkali Suit for Wedding Guest',
     category: 'suits',
     filters: {
@@ -556,7 +556,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a mehendi (daytime, casual), choose a cotton or georgette anarkali in bright colors — yellow, orange, pink, or green. Light embellishment is ideal. Budget $120-$280. For a sangeet (evening, dance-focused), choose a georgette or net anarkali with sequin or mirror work in jewel tones — emerald, sapphire, magenta. Budget $180-$400. For the wedding ceremony (most formal), choose a silk or heavily embroidered anarkali in rich colors — maroon, deep green, royal blue. Budget $200-$450. For a reception (cocktail-style), choose a designer anarkali in a contemporary color — wine, navy, plum. Budget $200-$500.',
           'Pair with gold or kundan jewelry — jhumka earrings, a statement necklace, and bangles. For footwear, embellished flats — you will be standing for hours. For the dupatta, drape over one shoulder or pin across the chest for modesty at religious ceremonies.',
-          'At LuxeMia, all our anarkali suits are available in Made to Measure at no extra cost. We custom-stitch to your exact measurements. Order 4-6 weeks before the wedding. Free shipping on orders over $350 to the USA, Canada, and Australia.',
+          'At LuxeMia, all our anarkali suits are available in Made to Measure at no extra cost. We custom-stitch to your exact measurements. Order 4-6 weeks before the wedding. Free US shipping over $150 to the United States.',
         ],
       },
     ],
@@ -576,9 +576,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'saree-for-mother-of-bride',
     title: 'Saree for Mother of Bride — Traditional & Elegant | LuxeMia',
-    metaDescription: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Ready-to-ship from $150-500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Ready-to-ship from $150-500 with free US shipping over $150.',
     h1: 'Saree for Mother of Bride',
-    heroSubtitle: 'The mother of the bride traditionally wears a silk saree for the wedding ceremony — elegant, timeless, and culturally appropriate. Shop ready-to-ship sarees from $150-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The mother of the bride traditionally wears a silk saree for the wedding ceremony — elegant, timeless, and culturally appropriate. Shop ready-to-ship sarees from $150-500 with free US shipping over $150.',
     breadcrumb: 'Saree for Mother of Bride',
     category: 'sarees',
     filters: {
@@ -598,7 +598,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a North Indian wedding, choose a Banarasi silk saree — handwoven in Varanasi with gold or silver zari borders. Maroon, deep red, or gold Banarasi is the most traditional choice for the mother of the bride. Budget $200-$500. For a South Indian wedding, choose a Kanchipuram silk saree — handwoven in Tamil Nadu with pure zari borders. Maroon, deep green, or royal blue Kanchipuram is traditional. Budget $250-$500.',
           'Pair with a custom-stitched blouse (essential for sarees — the blouse must fit perfectly). Choose gold or kundan jewelry — a statement necklace, jhumka earrings, and gold bangles. A maang tikka is traditional for the mother of the bride. For footwear, comfortable embellished flats — you will be standing for hours.',
-          'At LuxeMia, all our silk sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding for custom blouse stitching.',
+          'At LuxeMia, all our silk sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding for custom blouse stitching.',
         ],
       },
     ],
@@ -618,9 +618,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'lehenga-for-mother-of-bride',
     title: 'Lehenga for Mother of Bride — Regal & Comfortable | LuxeMia',
-    metaDescription: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Ready-to-ship from $250-600 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Ready-to-ship from $250-600 with free US shipping over $150.',
     h1: 'Lehenga for Mother of Bride',
-    heroSubtitle: 'A lehenga for the mother of the bride should be regal, elegant, and comfortable for long wedding events. Shop ready-to-ship lehengas from $250-600 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'A lehenga for the mother of the bride should be regal, elegant, and comfortable for long wedding events. Shop ready-to-ship lehengas from $250-600 with free US shipping over $150.',
     breadcrumb: 'Lehenga for Mother of Bride',
     category: 'lehengas',
     filters: {
@@ -639,7 +639,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Choose rich, sophisticated colors — maroon, deep green, royal blue, wine, gold, or burgundy. Avoid pastels (too youthful), black (inauspicious), and red (reserved for the bride). Heavy zari, kundan, or sequin embellishment is appropriate — the mother of the bride should look regal. Velvet fabric is perfect for winter weddings; silk or georgette for summer.',
           'Pair with a 3/4 sleeve choli (not a crop top), statement gold or kundan jewelry (necklace set, jhumkas, bangles, maang tikka), and the dupatta draped over one shoulder or pinned across the chest for modesty. For footwear, comfortable embellished flats — you will be standing for hours.',
-          'At LuxeMia, we offer Made to Measure on every lehenga at no extra cost — essential for the mother of the bride, who needs a perfect, comfortable fit. We custom-stitch to your exact measurements with 5-7 business day dispatch. Free shipping on orders over $350 to the USA, Canada, and Australia.',
+          'At LuxeMia, we offer Made to Measure on every lehenga at no extra cost — essential for the mother of the bride, who needs a perfect, comfortable fit. We custom-stitch to your exact measurements with confirm timing before ordering. Free US shipping over $150 to the United States.',
         ],
       },
     ],
@@ -659,9 +659,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'sherwani-for-groom',
     title: 'Sherwani for Groom — Traditional & Regal | LuxeMia',
-    metaDescription: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Ready-to-ship from $200-500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Ready-to-ship from $200-500 with free US shipping over $150.',
     h1: 'Sherwani for Groom',
-    heroSubtitle: 'The sherwani is the traditional wedding outfit for the Indian groom — regal, elegant, and photogenic. Shop ready-to-ship sherwanis from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The sherwani is the traditional wedding outfit for the Indian groom — regal, elegant, and photogenic. Shop ready-to-ship sherwanis from $200-500 with free US shipping over $150.',
     breadcrumb: 'Sherwani for Groom',
     category: 'menswear',
     filters: {
@@ -681,7 +681,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For the wedding ceremony, choose a sherwani in ivory, gold, maroon, or deep blue — the traditional groom colors. Ivory and gold are the most popular choices because they complement any bride color. Heavy zardozi or kundan embroidery on the chest and sleeves gives the regal look. Pair with a matching or contrasting dupatta draped over one shoulder, a turban (safa) in a coordinating color, and mojari (embellished flats).',
           'For the reception, the groom can choose a more modern indo-western sherwani — slimmer cut, contemporary colors (wine, navy, charcoal), and less heavy embroidery. Bandhgala jackets and indo-western suits are also popular reception choices. For the mehendi and haldi, a simpler kurta pajama is appropriate.',
-          'At LuxeMia, we offer Made to Measure on every sherwani at no extra cost — essential for the groom, who needs a perfect fit. We custom-stitch to his exact measurements with 5-7 business day dispatch. Free shipping on orders over $350 to the USA, Canada, and Australia. Order 6-8 weeks before the wedding.',
+          'At LuxeMia, we offer Made to Measure on every sherwani at no extra cost — essential for the groom, who needs a perfect fit. We custom-stitch to his exact measurements with confirm timing before ordering. Free US shipping over $150 to the United States. Order 6-8 weeks before the wedding.',
         ],
       },
     ],
@@ -700,9 +700,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'kurta-for-groom-brother',
     title: 'Kurta for Groom Brother — Stylish & Comfortable | LuxeMia',
-    metaDescription: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Ready-to-ship from $80-250 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Ready-to-ship from $80-250 with free US shipping over $150.',
     h1: 'Kurta for Groom Brother',
-    heroSubtitle: 'The groom brother needs an outfit that is stylish, comfortable, and coordinated with the wedding party. Shop ready-to-ship kurtas from $80-250 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The groom brother needs an outfit that is stylish, comfortable, and coordinated with the wedding party. Shop ready-to-ship kurtas from $80-250 with free US shipping over $150.',
     breadcrumb: 'Kurta for Groom Brother',
     category: 'menswear',
     filters: {
@@ -722,7 +722,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'The groom brother should coordinate with the groom and the rest of the wedding party without exactly matching. If the groom is wearing ivory, the brother can wear gold or beige. If the groom is wearing maroon, the brother can wear deep red or wine. The key is to be in the same color family but distinct enough to tell apart in photos.',
           'For footwear, mojari (embellished flats) or juti are traditional. For accessories, a contrasting dupatta draped over one shoulder, a turban (safa) in a coordinating color, and a watch. Avoid heavy jewelry — men Indian jewelry is minimal. A simple kada (bracelet) is the most traditional accessory.',
-          'At LuxeMia, we offer Made to Measure on every kurta at no extra cost. We custom-stitch to his exact measurements with 5-7 business day dispatch. Free shipping on orders over $350 to the USA, Canada, and Australia. Order 4-6 weeks before the wedding.',
+          'At LuxeMia, we offer Made to Measure on every kurta at no extra cost. We custom-stitch to his exact measurements with confirm timing before ordering. Free US shipping over $150 to the United States. Order 4-6 weeks before the wedding.',
         ],
       },
     ],
@@ -741,9 +741,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'sharara-for-bride-sister',
     title: 'Sharara for Bride Sister — Trendy & Photogenic | LuxeMia',
-    metaDescription: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Ready-to-ship from $180-400 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Ready-to-ship from $180-400 with free US shipping over $150.',
     h1: 'Sharara for Bride Sister',
-    heroSubtitle: 'The sharara is a trendy, photogenic choice for the bride sister — wide-flare pants with a short kurti, perfect for mehendi and sangeet dancing. Shop from $180-400 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The sharara is a trendy, photogenic choice for the bride sister — wide-flare pants with a short kurti, perfect for mehendi and sangeet dancing. Shop from $180-400 with free US shipping over $150.',
     breadcrumb: 'Sharara for Bride Sister',
     category: 'suits',
     filters: {
@@ -763,7 +763,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a mehendi bride-sister look, choose a fuchsia or orange sharara with gota patti or mirror work. Pair with oxidized silver jewelry (the traditional mehendi accessory), floral gajra in the hair, and comfortable juti flats. For a sangeet bride-sister look, choose a royal blue or purple sharara with sequin work. Pair with kundan jewelry and embellished flats.',
           'For the dupatta, drape diagonally across the chest for a modern look, or over one shoulder for a traditional look. Avoid draping over both shoulders — it adds bulk. The wide-flare pants should have the flare starting at the hip (not the knee) for the most flattering silhouette.',
-          'At LuxeMia, we offer Made to Measure on every sharara at no extra cost. We custom-stitch to your exact measurements with 5-7 business day dispatch. Free shipping on orders over $350 to the USA, Canada, and Australia. Order 4-6 weeks before the wedding.',
+          'At LuxeMia, we offer Made to Measure on every sharara at no extra cost. We custom-stitch to your exact measurements with confirm timing before ordering. Free US shipping over $150 to the United States. Order 4-6 weeks before the wedding.',
         ],
       },
     ],
@@ -785,9 +785,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'georgette-saree-for-reception',
     title: 'Georgette Saree for Reception — Flowy & Glamorous | LuxeMia',
-    metaDescription: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Ready-to-ship from $150-400 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Ready-to-ship from $150-400 with free US shipping over $150.',
     h1: 'Georgette Saree for Reception',
-    heroSubtitle: 'Georgette is the perfect reception saree fabric — flowy, glamorous, and easy to drape. Shop ready-to-ship georgette sarees from $150-400 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Georgette is the perfect reception saree fabric — flowy, glamorous, and easy to drape. Shop ready-to-ship georgette sarees from $150-400 with free US shipping over $150.',
     breadcrumb: 'Georgette Saree for Reception',
     category: 'sarees',
     filters: {
@@ -807,7 +807,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pair your georgette reception saree with a statement blouse — boat neck, V-neck, or 3/4 sleeve. The blouse should be custom-stitched for a perfect fit (essential for sarees). Choose a blouse color that contrasts with the saree — e.g., a gold blouse with a wine saree, or a silver blouse with a navy saree. Heavy blouse embellishment (sequins, zari) gives the glamorous reception look.',
           'For jewelry, choose statement pieces — a kundan or polki necklace set, chandelier earrings, and bangles. Avoid heavy necklaces if the saree has heavy border work; the necklace and border will compete. For footwear, embellished heels or wedges (receptions are usually indoor, so heels are OK). For the dupatta/pallu, drape over one shoulder for a modern look, or pin across for traditional.',
-          'At LuxeMia, all our georgette sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the reception.',
+          'At LuxeMia, all our georgette sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the United States with free US shipping over $150. Order 4-6 weeks before the reception.',
         ],
       },
     ],
@@ -826,9 +826,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'banarasi-silk-saree-for-wedding',
     title: 'Banarasi Silk Saree for Wedding — Traditional & Auspicious | LuxeMia',
-    metaDescription: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Ready-to-ship from $200-500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Ready-to-ship from $200-500 with free US shipping over $150.',
     h1: 'Banarasi Silk Saree for Wedding',
-    heroSubtitle: 'A Banarasi silk saree is the most traditional and auspicious choice for an Indian wedding — handwoven in Varanasi with real zari. Shop from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'A Banarasi silk saree is the most traditional and auspicious choice for an Indian wedding — handwoven in Varanasi with real zari. Shop from $200-500 with free US shipping over $150.',
     breadcrumb: 'Banarasi Silk Saree for Wedding',
     category: 'sarees',
     filters: {
@@ -848,7 +848,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Authentic Banarasi silk sarees are handwoven in Varanasi and have a GI (Geographical Indication) tag certifying their origin. Look for: (1) pure silk fabric that feels crisp and slightly stiff, (2) real zari borders (gold or silver thread, not metallic synthetic), (3) intricate handwoven motifs on the pallu (the decorative end), and (4) a GI tag or certificate from the weaver.',
           'Avoid "Banarasi-style" or "Banarasi print" sarees — these are machine-made imitations that lack the quality and value of authentic handwoven Banarasi silk. At LuxeMia, we source our Banarasi silk sarees directly from weavers in Varanasi, and each comes with a certificate of authenticity.',
-          'Pair with a custom-stitched blouse (essential for sarees), gold or kundan jewelry (necklace set, jhumkas, bangles), and a maang tikka. For footwear, embellished flats. At LuxeMia, all our Banarasi silk sarees come with a custom-stitched blouse at no extra cost. Free shipping on orders over $350 to the USA, Canada, and Australia.',
+          'Pair with a custom-stitched blouse (essential for sarees), gold or kundan jewelry (necklace set, jhumkas, bangles), and a maang tikka. For footwear, embellished flats. At LuxeMia, all our Banarasi silk sarees come with a custom-stitched blouse at no extra cost. Free US shipping over $150 to the United States.',
         ],
       },
     ],
@@ -867,9 +867,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'kanjivaram-saree-for-wedding',
     title: 'Kanjivaram Saree for Wedding — South Indian Bridal Silk | LuxeMia',
-    metaDescription: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Ready-to-ship from $200-500 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Ready-to-ship from $200-500 with free US shipping over $150.',
     h1: 'Kanjivaram Saree for Wedding',
-    heroSubtitle: 'The Kanjivaram silk saree is the traditional South Indian bridal saree — handwoven in Tamil Nadu with pure zari. Shop from $200-500 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'The Kanjivaram silk saree is the traditional South Indian bridal saree — handwoven in Tamil Nadu with pure zari. Shop from $200-500 with free US shipping over $150.',
     breadcrumb: 'Kanjivaram Saree for Wedding',
     category: 'sarees',
     filters: {
@@ -889,7 +889,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Authentic Kanjivaram silk sarees are handwoven in Kanchipuram, Tamil Nadu, and have a GI (Geographical Indication) tag. Look for: (1) pure mulberry silk fabric that feels heavy and crisp, (2) real zari borders (gold or silver thread), (3) contrasting border and pallu (a hallmark of Kanjivaram — the border and pallu are woven separately and attached), and (4) traditional motifs like temple borders, peacocks, and mango paisleys.',
           'Avoid "Kanjivaram-style" or "Kanjivaram print" sarees — these are machine-made imitations. A real Kanjivaram weighs 600-800 grams and has a distinctive rustle when you move. At LuxeMia, we source our Kanjivaram silk sarees directly from weavers in Kanchipuram, and each comes with a certificate of authenticity.',
-          'Pair with a custom-stitched blouse, temple jewelry (the traditional South Indian bridal jewelry — gold necklaces with red or green stones), and a gajra (flower garland) in the hair. At LuxeMia, all our Kanjivaram sarees come with a custom-stitched blouse at no extra cost. Free shipping on orders over $350.',
+          'Pair with a custom-stitched blouse, temple jewelry (the traditional South Indian bridal jewelry — gold necklaces with red or green stones), and a gajra (flower garland) in the hair. At LuxeMia, all our Kanjivaram sarees come with a custom-stitched blouse at no extra cost. Free US shipping over $150.',
         ],
       },
     ],
@@ -908,9 +908,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'chiffon-saree-for-wedding-guest',
     title: 'Chiffon Saree for Wedding Guest — Light & Flowy | LuxeMia',
-    metaDescription: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Ready-to-ship from $120-300 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Ready-to-ship from $120-300 with free US shipping over $150.',
     h1: 'Chiffon Saree for Wedding Guest',
-    heroSubtitle: 'Chiffon is the lightest, most flowy saree fabric — perfect for summer weddings and daytime events. Shop ready-to-ship chiffon sarees from $120-300 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Chiffon is the lightest, most flowy saree fabric — perfect for summer weddings and daytime events. Shop ready-to-ship chiffon sarees from $120-300 with free US shipping over $150.',
     breadcrumb: 'Chiffon Saree for Wedding Guest',
     category: 'sarees',
     filters: {
@@ -930,7 +930,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pair your chiffon saree with a custom-stitched blouse (essential for sarees). For a modern look, choose a boat neck or 3/4 sleeve blouse in a contrasting color. For a traditional look, choose a matching blouse with elbow sleeves. The blouse should be fitted — chiffon sarees look best with a structured blouse that balances the flowy fabric.',
           'For jewelry, choose pieces that match the formality of the event. For a daytime mehendi, oxidized silver jewelry is traditional and complements the light chiffon. For an evening reception, gold or kundan jewelry is more appropriate. For footwear, embellished flats for daytime events; heels or wedges for evening receptions.',
-          'At LuxeMia, all our chiffon sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding.',
+          'At LuxeMia, all our chiffon sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding.',
         ],
       },
     ],
@@ -949,9 +949,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'silk-saree-for-festival',
     title: 'Silk Saree for Festival — Diwali, Navratri, Pongal | LuxeMia',
-    metaDescription: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Ready-to-ship from $150-400 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Ready-to-ship from $150-400 with free US shipping over $150.',
     h1: 'Silk Saree for Festival',
-    heroSubtitle: 'A silk saree is the most traditional and auspicious choice for Indian festivals — Diwali, Navratri, Pongal, Onam. Shop from $150-400 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'A silk saree is the most traditional and auspicious choice for Indian festivals — Diwali, Navratri, Pongal, Onam. Shop from $150-400 with free US shipping over $150.',
     breadcrumb: 'Silk Saree for Festival',
     category: 'sarees',
     filters: {
@@ -970,7 +970,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For Diwali (October/November), choose a Banarasi or art silk saree in red, gold, deep green, or maroon — the auspicious Diwali colors. Heavy zari border work catches the Diwali diyas beautifully. Budget $150-$400. For Navratri (September/October), choose a silk saree in the day color — orange, white, red, royal blue, yellow, green, grey, purple, or peacock green. Mirror work is traditional for garba. Budget $150-$350.',
           'For Pongal (January, Tamil harvest festival), choose a Kanjivaram silk saree in maroon, deep green, or gold — the traditional Pongal colors. For Onam (August/September, Kerala harvest festival), choose a cream or off-white silk saree with gold border — the traditional Onam saree. For Durga Puja (September/October, Bengali festival), choose a red and white Banarasi saree — the traditional Durga Puja colors.',
-          'At LuxeMia, all our silk sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the festival.',
+          'At LuxeMia, all our silk sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the United States with free US shipping over $150. Order 4-6 weeks before the festival.',
         ],
       },
     ],
@@ -991,9 +991,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'organza-saree-for-engagement',
     title: 'Organza Saree for Engagement — Modern & Structured | LuxeMia',
-    metaDescription: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Ready-to-ship from $200-450 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Ready-to-ship from $200-450 with free US shipping over $150.',
     h1: 'Organza Saree for Engagement',
-    heroSubtitle: 'Organza is a modern, structured saree fabric perfect for engagement ceremonies — crisp, photogenic, and contemporary. Shop from $200-450 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Organza is a modern, structured saree fabric perfect for engagement ceremonies — crisp, photogenic, and contemporary. Shop from $200-450 with free US shipping over $150.',
     breadcrumb: 'Organza Saree for Engagement',
     category: 'sarees',
     filters: {
@@ -1013,7 +1013,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Organza sarees look best with modern blouse designs — boat neck, off-shoulder, or 3/4 sleeve. Choose a blouse color that contrasts with the saree for a contemporary look. The blouse should be structured to balance the stiff organza fabric. Heavy blouse embellishment (sequins, embroidery) gives a glamorous engagement look.',
           'For jewelry, choose statement pieces — a choker necklace, chandelier earrings, and a maang tikka. Avoid heavy long necklaces; they compete with the structured organza. For footwear, heels or wedges (engagements are usually indoor). For the pallu, drape over one shoulder for a modern look, or pin in a contemporary style.',
-          'Popular organza saree colors for engagements include pastel pink, mint green, ivory, and champagne for daytime events; deep jewel tones (emerald, sapphire, wine) for evening events. Floral print organza sarees are also trending for 2026 engagements. At LuxeMia, all our organza sarees come with a custom-stitched blouse at no extra cost. Free shipping on orders over $350.',
+          'Popular organza saree colors for engagements include pastel pink, mint green, ivory, and champagne for daytime events; deep jewel tones (emerald, sapphire, wine) for evening events. Floral print organza sarees are also trending for 2026 engagements. At LuxeMia, all our organza sarees come with a custom-stitched blouse at no extra cost. Free US shipping over $150.',
         ],
       },
     ],
@@ -1032,9 +1032,9 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'georgette-saree-for-wedding-guest',
     title: 'Georgette Saree for Wedding Guest — Easy & Elegant | LuxeMia',
-    metaDescription: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Ready-to-ship from $150-350 with free shipping to USA, Canada & Australia.',
+    metaDescription: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Ready-to-ship from $150-350 with free US shipping over $150.',
     h1: 'Georgette Saree for Wedding Guest',
-    heroSubtitle: 'Georgette is the easiest saree fabric to drape — perfect for first-time wedding guests. Flowy, elegant, and photogenic. Shop from $150-350 with free shipping to USA, Canada & Australia.',
+    heroSubtitle: 'Georgette is the easiest saree fabric to drape — perfect for first-time wedding guests. Flowy, elegant, and photogenic. Shop from $150-350 with free US shipping over $150.',
     breadcrumb: 'Georgette Saree for Wedding Guest',
     category: 'sarees',
     filters: {
@@ -1054,7 +1054,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Georgette sarees are draped in the standard Nivi style (the most common Indian saree drape). If you are a beginner, ask a friend to help you drape, or hire a local Indian beautician to help you get ready. The key steps: (1) wrap the saree around your waist, (2) make 5-7 pleats in the front, (3) drape the pallu (decorative end) over your left shoulder, (4) pin everything in place with safety pins. Georgette holds pleats well, so minimal pinning is needed.',
           'Pair with a custom-stitched blouse (essential for sarees — the blouse must fit perfectly). For a modern look, choose a boat neck or 3/4 sleeve blouse in a contrasting color. For jewelry, choose statement pieces — a kundan or polki necklace, jhumka earrings, and bangles. For footwear, embellished flats for daytime; heels for evening receptions.',
-          'At LuxeMia, all our georgette sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the USA, Canada, and Australia with free shipping on orders over $350. Order 4-6 weeks before the wedding. For complete draping instructions, see our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">non-Indian wedding guest guide</a>.',
+          'At LuxeMia, all our georgette sarees come with a custom-stitched blouse at no extra cost (Made to Measure). We ship to the United States with free US shipping over $150. Order 4-6 weeks before the wedding. For complete draping instructions, see our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">non-Indian wedding guest guide</a>.',
         ],
       },
     ],

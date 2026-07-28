@@ -176,7 +176,7 @@ const ProductDetail = () => {
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: `Readymade items are dispatched within 3-5 business days. Custom/alteration orders are dispatched within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping.`
+      answer: `In-stock ready-to-ship items leave LuxeMia within 2 business days. Free US shipping applies over $150, and a flat $12 rate applies below $150.`
     },
     {
       question: `Can I return the ${product.title} if it doesn't fit?`,
@@ -199,7 +199,7 @@ const ProductDetail = () => {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
             }
             const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
-            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Shipping ($25 flat, free over $350) to USA, Canada and Australia.`;
+            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Free US shipping over $150; $12 flat below that.`;
           })()}
           type="product"
           image={product.images.edges[0]?.node.url}

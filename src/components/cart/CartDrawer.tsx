@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { X, Minus, Plus, Trash2, Loader2, ExternalLink, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
@@ -8,7 +7,9 @@ import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import EmailCaptureModal from './EmailCaptureModal';
 
-const FREE_SHIPPING_THRESHOLD = 350;
+const FREE_SHIPPING_THRESHOLD = 150;
+const FLAT_SHIPPING_RATE = 12;
+const SHIPPING_PROMISE = 'Free US shipping over $150. $12 flat below that. Ships within 2 business days.';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -179,14 +180,14 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   {subtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
-                      You've unlocked free shipping!
+                      You've unlocked free US shipping!
                     </div>
                   ) : (
                     <div className="mb-2">
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
                         <span className="flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5" />
-                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} away from free shipping
+                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} away from free US shipping
                         </span>
                         <span className="font-medium">${FREE_SHIPPING_THRESHOLD}</span>
                       </div>
@@ -208,17 +209,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>
                   </div>
                   <p className="text-xs text-foreground/50 text-center">
-                    Taxes calculated at checkout
+                    {SHIPPING_PROMISE}
                   </p>
                   <p className="text-xs text-foreground/50 text-center">
-                    Customs duties may apply —{' '}
-                    <Link
-                      to="/pages/shipping-customs"
-                      onClick={onClose}
-                      className="underline underline-offset-2 hover:text-foreground transition-colors"
-                    >
-                      see Shipping &amp; Customs
-                    </Link>
+                    Taxes calculated at checkout. US shipping only.
                   </p>
                   <Button
                     variant="luxury"

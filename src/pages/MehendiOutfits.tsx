@@ -34,8 +34,8 @@ const mehendiOutfitFaqs = [
     answer: 'Yes, yellow is considered the most traditional and auspicious color for the bride at her mehendi ceremony. The yellow turmeric (haldi) symbolises prosperity, beauty, and the blessing of the ceremony. Most Indian brides wear a yellow lehenga, yellow salwar kameez, or yellow saree for their mehendi. However, modern brides also choose pastel green, coral, peach, or floral lehengas for a contemporary take on the mehendi look.',
   },
   {
-    question: 'Do you ship mehendi outfits to the USA, Canada, and Australia?',
-    answer: 'LuxeMia currently ships mehendi outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. For wedding functions, order at least 3–4 weeks before the event; standard transit is estimated at 7–10 business days after dispatch.',
+    question: 'Do you ship mehendi outfits to the United States?',
+    answer: 'LuxeMia currently ships mehendi outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. For wedding functions, order at least 3–4 weeks before the event; standard transit is estimated at carrier transit after dispatch after dispatch.',
   },
   {
     question: 'Can guests wear any color other than yellow and green to a mehendi?',
@@ -53,7 +53,7 @@ const MehendiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia"
-        description="Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free shipping to USA, Canada & Australia."
+        description="Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free US shipping over $150."
         canonical="https://luxemia.shop/collections/mehendi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -71,7 +71,7 @@ const MehendiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Mehendi Ceremony Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colors traditionally associated with henna celebrations. Perfect for the bride, bridesmaids, and all guests attending Indian mehendi ceremonies in the USA, Canada, Australia, or anywhere in the world.
+              Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colors traditionally associated with henna celebrations. Perfect for the bride, bridesmaids, and all guests attending Indian mehendi ceremonies in the United States, or anywhere in the world.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const MehendiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong>.
+              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free US shipping over $150.
             </p>
           </div>
         </div>
@@ -157,7 +157,7 @@ const MehendiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Mehendi Outfit</h3>
-                <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+                <p>Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

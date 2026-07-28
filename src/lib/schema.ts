@@ -13,7 +13,7 @@
 export const SITE_URL = 'https://luxemia.shop';
 export const BUSINESS_NAME = 'Glamour Indian Wear';
 export const BRAND_NAME = 'LuxeMia';
-export const SHIPPING_COUNTRIES = ['US', 'CA', 'AU'];
+export const SHIPPING_COUNTRIES = ['US'];
 
 // ─── Price Handling ─────────────────────────────────────────────────────────
 
@@ -42,46 +42,46 @@ export function generateShippingSchema(currency: string) {
   return [
     {
       '@type': 'OfferShippingDetails',
-      name: 'Free Shipping on Orders Over $350 — Readymade',
+      name: 'Free US Shipping Over $150',
       shippingRate: { '@type': 'MonetaryAmount', value: '0', currency },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY', description: 'Readymade dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY', description: 'USPS/UPS/DHL delivery' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
     {
       '@type': 'OfferShippingDetails',
-      name: 'Free Shipping on Orders Over $350 — Custom/Alterations',
+      name: 'Free US Shipping Over $150',
       shippingRate: { '@type': 'MonetaryAmount', value: '0', currency },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 7, unitCode: 'DAY', description: 'Custom/alteration dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY', description: 'USPS/UPS/DHL delivery' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
     {
       '@type': 'OfferShippingDetails',
-      name: 'Flat Rate Shipping $25 — Readymade',
-      shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency },
+      name: 'Flat US Shipping Below $150',
+      shippingRate: { '@type': 'MonetaryAmount', value: '12.00', currency },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY', description: 'Readymade dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY', description: 'USPS/UPS/DHL delivery' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
     {
       '@type': 'OfferShippingDetails',
-      name: 'Flat Rate Shipping $25 — Custom/Alterations',
-      shippingRate: { '@type': 'MonetaryAmount', value: '25.00', currency },
+      name: 'Flat US Shipping Below $150',
+      shippingRate: { '@type': 'MonetaryAmount', value: '12.00', currency },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 7, unitCode: 'DAY', description: 'Custom/alteration dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 7, maxValue: 10, unitCode: 'DAY', description: 'USPS/UPS/DHL delivery' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
   ];
@@ -94,7 +94,7 @@ export function generateReturnPolicySchema() {
     '@type': 'MerchantReturnPolicy',
     '@id': 'https://luxemia.shop/#returnPolicy',
     name: 'LuxeMia Return & Refund Policy',
-    applicableCountry: ['US', 'CA', 'AU'],
+    applicableCountry: 'US',
     returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
     merchantReturnDays: 2,
     description: 'Returns accepted only for damaged or defective items. Made-to-order and customized items are not eligible for returns. Contact support within 48 hours of delivery with photos for damage claims.',
@@ -220,7 +220,7 @@ export function generateOrganizationSchema() {
     alternateName: BRAND_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
-    description: 'Shop Indian ethnic wear at LuxeMia. Bridal lehengas, silk sarees, salwar suits & more. Free shipping on orders over $350 to USA, Canada & Australia.',
+    description: 'Ready-to-ship Indian ethnic wear at LuxeMia. Sarees, lehengas, suits and menswear in stock for US delivery within 2 business days.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',
@@ -231,7 +231,7 @@ export function generateOrganizationSchema() {
       telephone: '+1-215-341-9990',
       contactType: 'customer service',
       email: 'hello@luxemia.shop',
-      areaServed: ['US', 'CA', 'AU'],
+      areaServed: ['US'],
       availableLanguage: ['English', 'Hindi'],
     },
     knowsAbout: [

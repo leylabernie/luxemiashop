@@ -202,7 +202,7 @@ def build_tags(p, idx):
         # Brand + status
         'LuxeMia', 'gender:female', 'women', 'womenswear',
         'new arrival', 'handcrafted', 'premium ethnic wear',
-        'worldwide shipping', 'free shipping over 350',
+        'US shipping', 'free shipping over 350',
         
         # Catalog number for inventory traceability
         f'catalog:{catalog_num}',

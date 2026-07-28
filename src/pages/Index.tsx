@@ -21,8 +21,8 @@ import LazySection from '@/components/ui/LazySection';
 
 const homepageFaqs = [
   {
-    question: "Do you offer international shipping for Indian ethnic wear?",
-    answer: "Yes, LuxeMia ships to the USA, Canada, and Australia. Free shipping on orders over $350 USD, and a flat rate of $25 USD for orders under $350. All shipments include full tracking and insurance. You can find more details on our Shipping Policy page."
+    question: "Where does LuxeMia ship Indian ethnic wear?",
+    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below that. In-stock pieces ship within 2 business days."
   },
   {
     question: "What is your return policy?",
@@ -41,8 +41,8 @@ const homepageFaqs = [
     answer: "We strive for accurate color representation in our product photography. However, slight color variations may occur due to screen settings and lighting. We recommend reviewing all available product images and descriptions."
   },
   {
-    question: "Do I need to pay customs duties or taxes on international orders?",
-    answer: "While LuxeMia offers free shipping, customers are responsible for any customs duties, taxes, or import fees levied by their country of residence. Please check with your local customs office for more information."
+    question: "How much is US shipping?",
+    answer: "US shipping is free over $150. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
@@ -58,7 +58,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Ready-to-ship Indian ethnic wear store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free shipping on orders over $350.",
+    "description": "Ready-to-ship Indian ethnic wear store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free US shipping on orders over $150.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/og-image.jpg",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -198,10 +198,10 @@ const Index = () => {
           <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-sm flex-wrap">
             <span className="flex items-center gap-1.5">
               <Truck className="h-4 w-4 flex-shrink-0" />
-              <span className="font-medium">Free shipping on orders over $350</span>
+              <span className="font-medium">Free US shipping over $150</span>
             </span>
             <span className="hidden sm:inline text-background/40">·</span>
-            <span className="hidden sm:inline text-background/80">$25 flat rate per order to USA, Canada & Australia</span>
+            <span className="hidden sm:inline text-background/80">$12 flat below $150 · Ships within 2 business days</span>
             <span className="hidden sm:inline text-background/40">·</span>
             <Link to="/shipping" className="hidden sm:inline underline underline-offset-2 hover:text-background/80 transition-colors">
               Delivery info

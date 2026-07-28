@@ -68,7 +68,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
         "name": `Does LuxeMia ship ${product.category.toLowerCase()} internationally?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `Yes, LuxeMia ships ${product.category.toLowerCase()} worldwide including USA, Canada, UK, Australia, and UAE. Free shipping on orders over $350.`
+          "text": `LuxeMia currently ships ${product.category.toLowerCase()} to United States addresses only. Free US shipping applies over $150; $12 flat below that.`
         }
       }
     ]
@@ -166,7 +166,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
           <div><dt>Availability:</dt><dd>In Stock</dd></div>
         </dl>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free shipping on orders over $350. Delivery 7-10 business days via DHL/USPS to USA, Canada, and Australia.<br>
+          <strong>Shipping:</strong> Free US shipping over $150. $12 flat below that. Ships within 2 business days.<br>
           <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>

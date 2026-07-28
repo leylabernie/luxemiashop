@@ -5,7 +5,7 @@ const services = [
   {
     icon: Truck,
     title: 'Free Shipping over $350',
-    description: 'Tracked delivery to USA, Canada & Australia',
+    description: 'US shipping within 2 business days',
   },
   {
     icon: ShieldCheck,

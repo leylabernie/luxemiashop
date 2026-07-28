@@ -31,11 +31,11 @@ const diwaliOutfitFaqs = [
   },
   {
     question: 'Should I wear a saree, lehenga, or anarkali for Diwali?',
-    answer: 'All three are excellent Diwali choices depending on the occasion. Lehengas are ideal for Diwali parties and evening get-togethers — glamorous and festive. Anarkali suits are more practical for visiting relatives and daytime celebrations where you need to move freely. Silk sarees are perfect for a traditional Diwali look, especially for elder family gatherings. Indo-western fusion outfits like cape sets or palazzo suits are popular for modern Diwali parties in the USA and Canada.',
+    answer: 'All three are excellent Diwali choices depending on the occasion. Lehengas are ideal for Diwali parties and evening get-togethers — glamorous and festive. Anarkali suits are more practical for visiting relatives and daytime celebrations where you need to move freely. Silk sarees are perfect for a traditional Diwali look, especially for elder family gatherings. Indo-western fusion outfits like cape sets or palazzo suits are popular for modern Diwali parties in the USA and the United States.',
   },
   {
-    question: 'Do you ship Diwali outfits to the USA, Canada, and Australia?',
-    answer: 'LuxeMia currently ships Diwali outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. Order at least 3–4 weeks in advance; standard transit is estimated at 7–10 business days after dispatch.',
+    question: 'Do you ship Diwali outfits to the United States?',
+    answer: 'LuxeMia currently ships Diwali outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. Order at least 3–4 weeks in advance; standard transit is estimated at carrier transit after dispatch after dispatch.',
   },
   {
     question: 'What accessories should I pair with my Diwali outfit?',
@@ -53,7 +53,7 @@ const DiwaliOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia"
-        description="Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free shipping to USA, Canada & Australia."
+        description="Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free US shipping over $150."
         canonical="https://luxemia.shop/collections/diwali-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -74,7 +74,7 @@ const DiwaliOutfits = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Diwali Outfits 2026</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the USA, Canada, and Australia with free shipping on orders over $350.
+              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the United States with free US shipping over $150.
             </p>
           </div>
         </div>
@@ -83,7 +83,7 @@ const DiwaliOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>Diwali lehengas</strong>, <strong>festive anarkali suits</strong>, <strong>silk sarees for Diwali</strong>, <strong>sharara sets</strong>, and <strong>indo-western Diwali outfits</strong> in traditional colors of gold, red, deep green, royal blue, and orange. Delivery is available to the USA, Canada and Australia.
+              Shop <strong>Diwali lehengas</strong>, <strong>festive anarkali suits</strong>, <strong>silk sarees for Diwali</strong>, <strong>sharara sets</strong>, and <strong>indo-western Diwali outfits</strong> in traditional colors of gold, red, deep green, royal blue, and orange. Delivery is available to the United States.
             </p>
           </div>
         </div>
@@ -143,7 +143,7 @@ const DiwaliOutfits = () => {
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
               <p>Diwali, the Hindu festival of lights, is one of the most celebrated occasions in the Indian diaspora — and it calls for your most festive, vibrant ethnic wear. The five-day celebration encompasses Dhanteras, Choti Diwali, the main Diwali day, Govardhan Puja, and Bhai Dooj, each with its own dress code. Diwali 2026 falls on <strong>October 21, 2026</strong> — order your outfits by September 25 to ensure delivery in time.</p>
               <p>For the main Diwali day and Lakshmi Puja, traditional <strong>silk sarees</strong> in red, gold, or green are considered auspicious. For the earlier part of the day, a comfortable but elegant <strong>salwar kameez or anarkali suit</strong> in Banarasi silk or chanderi is ideal for prayer rituals. For the Diwali party or evening celebrations, a heavily embellished <strong>lehenga with mirror work, zari embroidery, or sequin detailing</strong> photographs beautifully against the backdrop of diyas and fairy lights.</p>
-              <p>A <strong>velvet anarkali</strong> in deep jewel tones — emerald green, royal purple, or midnight blue — with gold zari and dupatta is a timeless festive choice. For a modern look, <strong>indo-western cape sets, palazzo suits, or sharara co-ord sets</strong> in metallic fabrics are extremely popular at Diwali parties across the USA and Canada.</p>
+              <p>A <strong>velvet anarkali</strong> in deep jewel tones — emerald green, royal purple, or midnight blue — with gold zari and dupatta is a timeless festive choice. For a modern look, <strong>indo-western cape sets, palazzo suits, or sharara co-ord sets</strong> in metallic fabrics are extremely popular at Diwali parties across the USA and the United States.</p>
               <p><strong>Gold is the quintessential Diwali color</strong> — representing prosperity and the blessing of Goddess Lakshmi. Pair your Diwali outfit with kundan jewelry, jhumka earrings, and gold bangles for the complete festive look.</p>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -160,7 +160,7 @@ const DiwaliOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Diwali Outfit</h3>
-                <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched (Made to Measure) items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia via USPS/UPS/DHL. Free shipping on orders over $350.</p>
+                <p>Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched (Made to Measure) items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States via USPS/UPS/DHL. Free US shipping over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

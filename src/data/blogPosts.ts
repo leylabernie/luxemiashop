@@ -75,7 +75,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Month 6 (1 month out):</strong> Final fitting and alterations. Pick up the outfit 2-3 weeks before the wedding.</li>
         <li><strong>Week of wedding:</strong> Steam/iron the outfit, do a trial drape with the actual dupatta and jewelry.</li>
       </ul>
-      <p>If you are shopping last-minute (under 3 months), look for ready-to-ship options — LuxeMia dispatches readymade lehengas in 3-5 business days and custom-stitched pieces in 5-7 business days, with 7-10 day shipping to USA, Canada, and Australia.</p>
+      <p>If you are shopping last-minute (under 3 months), look for ready-to-ship options — LuxeMia dispatches readymade lehengas in 2 business days and custom-stitched pieces in confirm timing before ordering, with 7-10 day shipping to the United States.</p>
 
       <h2>Fabric Guide: Choosing the Right Material</h2>
       <p>Fabric choice affects comfort, cost, durability, and how the outfit photographs. Here is a quick reference:</p>
@@ -174,7 +174,7 @@ export const blogPosts: BlogPost[] = [
 <p>Yes. A bridal-quality Indian wedding outfit under $500 is achievable if you shop direct-from-artisan brands, choose semi-stitched over made-to-measure, and prioritize fabric and silhouette over heavy embroidery. A well-chosen georgette lehenga with machine-embroidered zardozi from a Tier-2 Indian boutique typically costs <strong>$280 to $450</strong> landed in the US, including duties. For the same budget, a Kanchipuram-art-silk saree with contrast blouse fabric lands at <strong>$180 to $320</strong>. The trick is avoiding the three budget killers: silk-mark certification you do not need, hand-embroidery you cannot see in photos, and rush shipping that adds 30 to 50 percent to the landed cost. This guide breaks down exactly where to spend, where to save, and what to skip for a $500 Indian bridal budget.</p>
 
 <h2>Why $500 Is the Sweet Spot for Indian Bridal Wear in 2026</h2>
-<p>The Indian wedding wear market has bifurcated sharply since 2023. Designer lehengas from Sabyasachi, Manish Malhotra, and Anita Dongre now start at <strong>$2,800</strong> and routinely cross $8,000 for bridal couture. At the same time, direct-from-India e-commerce has compressed the entry-level market: a georgette lehenga choli that retailed for $850 in a US boutique in 2022 now ships from India for $310 to $480, including international courier. The $400 to $500 bracket is the new sweet spot because it sits above the synthetic-fabric junk tier (under $200) and below the designer-collaboration tier (above $900).</p>
+<p>The Indian wedding wear market has bifurcated sharply since 2023. Designer lehengas from Sabyasachi, Manish Malhotra, and Anita Dongre now start at <strong>$2,800</strong> and routinely cross $8,000 for bridal couture. At the same time, direct-from-India e-commerce has compressed the entry-level market: a georgette lehenga choli that retailed for $850 in a US boutique in 2022 now ships from US-held stock for $310 to $480, including international courier. The $400 to $500 bracket is the new sweet spot because it sits above the synthetic-fabric junk tier (under $200) and below the designer-collaboration tier (above $900).</p>
 <p>According to <a href="https://www.statista.com/outlook/cmos/apparel/bridalwear/india" rel="nofollow noopener" target="_blank">Statista's 2025 India Bridalwear Outlook</a>, the average Indian bridal outfit spend is Rs. 35,000 (approximately $420 at the July 2026 exchange rate of Rs. 83 per USD). This means a $500 budget actually exceeds the average Indian bridal spend by 19 percent, giving you meaningful purchasing power if you shop direct.</p>
 
 <h2>Where the $500 Goes: Budget Allocation</h2>
@@ -799,7 +799,7 @@ export const blogPosts: BlogPost[] = [
               <li><a href="/blog/banarasi-silk-saree-guide-authentic">Banarasi Silk Sarees: History & How to Spot a Fake</a></li>
               <li><a href="/blog/kanchipuram-silk-saree-south-indian-wedding-guide">Kanchipuram Silk Sarees: South Indian Wedding Guide</a></li>
               <li><a href="/blog/saree-draping-styles-every-occasion">12 Elegant Saree Draping Styles for Every Occasion</a></li>
-              <li><a href="/blog/buy-authentic-indian-sarees-online-usa-uk">Shopping Authentic Indian Sarees Online from USA/UK</a></li>
+              <li><a href="/blog/buy-authentic-indian-sarees-online-usa-uk">Shopping Authentic Indian Sarees Online from USA</a></li>
             </ul>
     `,
     author: 'LuxeMia Editorial',
@@ -935,7 +935,7 @@ export const blogPosts: BlogPost[] = [
   <li>Choose ivory or pastel lehenga for engagement and reception; reserve red for muhuratham.</li>
   <li>Incorporate handloom textiles (Kanchipuram, Banarasi) for at least one event.</li>
   <li>Consider renting or buying pre-loved for non-muhuratham events.</li>
-  <li>Use LuxeMia's virtual try-on to finalize the lehenga from the US/UK/Canada.</li>
+  <li>Use LuxeMia's virtual try-on to finalize the lehenga from the US.</li>
   <li>Plan a 3-event wedding (mehendi, muhuratham, reception) instead of 5-7 events.</li>
 </ul>
 
@@ -1265,7 +1265,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Sizing Options When Buying Online</h3>
 <p>LuxeMia and most direct-from-India stores offer three sizing options for sharara suits:</p>
 <ul>
-  <li><strong>Semi-Stitched (XS-XXL, free):</strong> The kurti and pants come with open side seams; you have them stitched locally to your measurements. Dispatch: 3-5 business days. Best for: standard sizes, quick turnaround.</li>
+  <li><strong>Semi-Stitched (XS-XXL, free):</strong> The kurti and pants come with open side seams; you have them stitched locally to your measurements. Dispatch: 2 business days. Best for: standard sizes, quick turnaround.</li>
   <li><strong>Ready to Wear (32"-44" bust, +$15):</strong> The kurti and pants are fully stitched to standard measurements. Dispatch: 6-8 business days. Best for: standard sizes, no local tailor available.</li>
   <li><strong>Made to Measure (32"-44" bust, +$25):</strong> You submit 12 body measurements; the workshop stitches to your exact size. Dispatch: 8-10 business days. Best for: non-standard sizes, petite or plus-size brides.</li>
 </ul>
@@ -1303,7 +1303,7 @@ export const blogPosts: BlogPost[] = [
 <p>LuxeMia offers sharara suits engineered for the $120 to $400 bracket, sourcing direct from the same Lucknow and Delhi workshops that supply US boutiques. All pieces are priced using the India-wholesale-times-2.5-divided-by-90 formula, producing retail prices 35 to 55 percent below US-boutique equivalents. Browse the <a href="/suits">sharara and suit collection</a> for current options.</p>
 
 <h3>Kalki Fashion (Premium, US Warehouse)</h3>
-<p>Kalki Fashion operates a US warehouse for faster shipping on premium pieces. Sharara suits range from $280 to $1,200. The "Ready to Ship" section offers dispatch in 3-5 business days; the "Made to Order" section requires 4-6 weeks.</p>
+<p>Kalki Fashion operates a US warehouse for faster shipping on premium pieces. Sharara suits range from $280 to $1,200. The "Ready to Ship" section offers dispatch in 2 business days; the "Made to Order" section requires 4-6 weeks.</p>
 
 <h3>Libas (Mid-Range, India Direct)</h3>
 <p>Libas offers mid-range sharara suits from $120 to $350, focusing on machine-embroidered daily and party wear. Shipping from India: 10-15 business days. Good for budget-conscious buyers who want name-brand quality.</p>
@@ -1385,7 +1385,7 @@ export const blogPosts: BlogPost[] = [
       <article>
       <h2>Why Pakistani Suits Are the Most Versatile Indian Ethnic Wear</h2>
       <p>The <strong>Pakistani suit</strong> has earned its place as one of the most beloved silhouettes in South Asian fashion. Known for its elegant cuts, beautiful embroidery, and comfortable fit, <strong>Pakistani salwar kameez</strong> suits every body type and every occasion — from daily wear to grand celebrations. If you are looking to <strong>buy Pakistani clothes online</strong> in the USA, this guide covers everything from styles and fabrics to sizing and care.</p>
-      <p>At <a href="/suits">LuxeMia</a>, we carry an extensive collection of <strong>designer Pakistani suits</strong>, <strong>anarkali dresses</strong>, and <strong>palazzo suits</strong> shipped directly to your door with free US shipping.</p>
+      <p>At <a href="/suits">LuxeMia</a>, we carry an extensive collection of <strong>designer Pakistani suits</strong>, <strong>anarkali dresses</strong>, and <strong>palazzo suits</strong> shipped to your door with free US shipping.</p>
 
       <h2>Understanding Pakistani Suit Styles</h2>
 
@@ -1445,7 +1445,7 @@ export const blogPosts: BlogPost[] = [
       <p>The dupatta offers endless styling possibilities: classic front drape for formal events, one-shoulder for a modern twist, or wrapped as a hijab for modest styling. Each method transforms the same outfit into a completely different look.</p>
 
       <h2>Shop Pakistani Suits at LuxeMia</h2>
-      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With flat rate shipping worldwide (free on orders over $350) and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless.</p>
+      <p>Explore our curated collection of <strong>Pakistani suits online</strong> and <strong>anarkali dresses</strong> at <a href="/suits">LuxeMia Suits</a>. With US shipping (free over $150; $12 flat below) and <strong>stylish Indian clothes</strong> at affordable prices, we make ethnic shopping effortless.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -1534,7 +1534,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Mid-range $300-$600:</strong> Designer-quality fabrics with detailed hand embroidery — great for bridesmaids and engagement</li>
         <li><strong>Premium $600+:</strong> Heavy bridal pieces with couture-level craftsmanship — for the bride</li>
       </ul>
-      <p>At LuxeMia, our <strong>lehenga choli online USA</strong> collection starts at just $80, with free shipping on orders over $350. Browse our <a href="/lehengas">complete lehenga collection</a>.</p>
+      <p>At LuxeMia, our <strong>lehenga choli online USA</strong> collection starts at just $80, with free US shipping over $150. Browse our <a href="/lehengas">complete lehenga collection</a>.</p>
 
       <h2>Complete Your Lehenga Look</h2>
       <p>The right accessories elevate your lehenga from beautiful to breathtaking. Match heavy lehengas with statement <a href="/collections?category=jewelry">kundan necklace sets</a>, maang tikka, and jhumka earrings. For lighter lehengas, choose delicate polki or pearl pieces. Potli bags and embroidered clutches are the perfect finishing touch.</p>
@@ -1606,12 +1606,12 @@ export const blogPosts: BlogPost[] = [
       <p>Skip the overwhelming in-store experience. <strong>Buy Indian wedding dresses online</strong> from trusted <strong>Indian boutiques online USA</strong> like LuxeMia. We offer:</p>
       <ul>
         <li>Curated collections for every ceremony and budget</li>
-        <li>Free shipping on orders over $350 worldwide</li>
+        <li>Free US shipping over $150</li>
         <li>Detailed size guides for <strong>Indian ethnic wear</strong></li>
-        <li><strong>Readymade Indian clothes</strong> with worldwide tracked delivery</li>
-        <li>Quality inspected before shipping from India</li>
+        <li><strong>Readymade Indian clothes</strong> with tracked US delivery</li>
+        <li>Quality inspected before shipping from US-held stock</li>
       </ul>
-      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia</a>. Free shipping on orders over $350.</p>
+      <p>Start building your <strong>Indian wedding season 2026</strong> wardrobe at <a href="/suits">LuxeMia</a>. Free US shipping over $150.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -1729,7 +1729,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Shop by Fabric at LuxeMia</h2>
-      <p>At LuxeMia, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With flat rate shipping worldwide (free on orders over $350) and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier.</p>
+      <p>At LuxeMia, every product listing includes detailed fabric information so you know exactly what you are getting. Browse our collections: <a href="/suits">Suits in georgette, silk, and net</a>, <a href="/lehengas">Lehengas in every fabric</a>, and <a href="/sarees">Sarees in chiffon and silk</a>. With US shipping (free over $150; $12 flat below) and detailed <a href="/size-guide">size guides</a>, shopping for <strong>Indian clothes online</strong> has never been easier.</p>
       </article>
     `,
     author: 'LuxeMia Editorial',
@@ -1745,7 +1745,7 @@ export const blogPosts: BlogPost[] = [
     id: '17',
     slug: 'nri-wedding-ethnic-wear-trends-2026',
     title: 'Top Indian Ethnic Wear Trends for NRI Weddings in 2026',
-    excerpt: 'Discover the latest NRI wedding ethnic wear trends for 2026 — from pastel bridal lehengas to Indo-Western fusion. Expert styling tips for Indian weddings in the USA, UK & Canada.',
+    excerpt: 'Discover the latest NRI wedding ethnic wear trends for 2026 — from pastel bridal lehengas to Indo-Western fusion. Expert styling tips for Indian weddings in the the USA.',
     content: `
       <article>
       <p>Indian weddings abroad have evolved into magnificent celebrations that beautifully blend traditional roots with contemporary global aesthetics. For <strong>NRI brides and wedding guests in 2026</strong>, the fashion landscape is more exciting than ever — offering styles that honor cultural heritage while embracing modern sensibilities. Whether you are planning a grand wedding in New Jersey, a boutique celebration in London, or an intimate gathering in Toronto, staying ahead of <strong>NRI wedding ethnic wear trends</strong> is essential for looking and feeling your absolute best.</p>
@@ -1808,7 +1808,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Make Your NRI Wedding Wardrobe Unforgettable</h2>
       <p>The beauty of Indian wedding fashion in 2026 lies in its diversity. Whether you choose a traditional red bridal lehenga, a pastel-toned reception saree, or a fusion sharara set for the Sangeet, the key is finding pieces that reflect your personal style while honoring cultural traditions. As an NRI, you have the unique advantage of drawing inspiration from both Indian and global fashion sensibilities.</p>
 
-      <p>At LuxeMia, we offer <strong>free worldwide shipping</strong> to the USA, UK, Canada, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
+      <p>At LuxeMia, we offer <strong>free US shipping over $150</strong> to the the USA, and beyond — making it effortless to access quality Indian ethnic wear from anywhere in the world. Start exploring our curated collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, and <a href="/suits">Suits</a>. For personalized styling advice, our dedicated team is just a WhatsApp message away.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -1829,13 +1829,13 @@ export const blogPosts: BlogPost[] = [
   {
     id: '18',
     slug: 'buy-authentic-indian-sarees-online-usa-uk',
-    title: 'Your Guide to Shopping Authentic Indian Sarees Online from the USA/UK',
-    excerpt: 'A comprehensive guide for NRIs on how to buy authentic Indian sarees online from the USA and UK. Learn what defines authenticity, how to navigate online shopping, and why LuxeMia is the trusted choice.',
+    title: 'Your Guide to Shopping Authentic Indian Sarees Online from the USA',
+    excerpt: 'A comprehensive guide for NRIs on how to buy authentic Indian sarees online from the USA. Learn what defines authenticity, how to navigate online shopping, and why LuxeMia is the trusted choice.',
     content: `
       <article>
       <p>For many NRIs living in the USA and UK, the saree holds a special place in the heart. It is more than a garment — it is a connection to heritage, a reminder of home, and a celebration of Indian style that transcends borders. But <strong>buying authentic Indian sarees online</strong> from thousands of miles away comes with its own set of challenges. How do you know the silk is genuine? Will the colors match what you see on screen? Can you trust the quality without touching the fabric?</p>
 
-      <p>This guide answers all those questions and more, giving you the confidence to <strong>shop for Indian sarees online from the USA and UK</strong> with the same assurance as if you were browsing through a boutique in Varanasi or Kanchipuram.</p>
+      <p>This guide answers all those questions and more, giving you the confidence to <strong>shop for Indian sarees online from the USA</strong> with the same assurance as if you were browsing through a boutique in Varanasi or Kanchipuram.</p>
 
       <h2>What Defines an Authentic Indian Saree?</h2>
       <p>Before you start shopping, understanding what makes a saree truly authentic is crucial. India is home to hundreds of regional weaving traditions, each with distinctive characteristics that set them apart from mass-produced imitations.</p>
@@ -1870,7 +1870,7 @@ export const blogPosts: BlogPost[] = [
       <p>Our product listings include high-resolution photographs taken in natural lighting, close-up shots of embroidery and weave details, accurate fabric descriptions, and exact dimensions. We believe transparency builds trust, especially for customers shopping from abroad.</p>
 
       <h2>Navigating Online Saree Shopping: Tips for NRIs</h2>
-      <p>Shopping for a saree online requires a slightly different approach than browsing in a physical store. Here are expert tips to help you make the right choice when you <strong>buy Indian sarees online from the USA or UK</strong>:</p>
+      <p>Shopping for a saree online requires a slightly different approach than browsing in a physical store. Here are expert tips to help you make the right choice when you <strong>buy Indian sarees online from the USA</strong>:</p>
 
       <h3>Evaluate Product Photography</h3>
       <ul>
@@ -1898,7 +1898,7 @@ export const blogPosts: BlogPost[] = [
       <p>One of the biggest concerns for NRIs shopping for Indian ethnic wear online is the logistics. Here is how LuxeMia addresses every concern:</p>
 
       <h3>Worldwide Shipping</h3>
-      <p>We ship worldwide at a flat rate of $25 per order, with <strong>free shipping on orders over $350</strong> to the USA, UK, Canada, and 100+ countries. Standard delivery (USPS/UPS) takes 7-10 business days transit, with express (DHL) at 3-5 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
+      <p>We ship within the United States at a flat rate of $25 per order, with <strong>free US shipping over $150</strong> to the the USA, and 100+ countries. Standard delivery (USPS/UPS) takes 2 business days to ship transit, with express (DHL) at 2 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
 
       <h3>Our Return Policy</h3>
       <p>All sales are final due to the international nature of our shipments. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. We recommend reviewing all product details and using our <a href="/size-guide">Size Guide</a> before ordering. Visit our <a href="/returns">Returns Policy</a> page for full details.</p>
@@ -1934,10 +1934,10 @@ export const blogPosts: BlogPost[] = [
     id: '19',
     slug: 'styling-indian-ethnic-wear-festive-occasions-abroad',
     title: 'Styling Indian Ethnic Wear for Festive Occasions Abroad: Diwali, Eid & More',
-    excerpt: 'NRI styling guide for festive Indian outfits — Diwali lehengas, Eid suits, and more. Expert tips on accessorizing and choosing the perfect ethnic wear for celebrations in the USA, UK & beyond.',
+    excerpt: 'NRI styling guide for festive Indian outfits — Diwali lehengas, Eid suits, and more. Expert tips on accessorizing and choosing the perfect ethnic wear for celebrations in the USA, the US.',
     content: `
       <article>
-      <p>Living abroad does not mean leaving behind the joy of dressing up for festivals. For millions of NRIs across the USA, UK, Canada, and beyond, <strong>festive occasions like Diwali, Eid, Navratri, and Pongal</strong> are cherished opportunities to reconnect with cultural roots, celebrate with community, and — yes — wear stunning Indian ethnic wear that makes you feel truly special.</p>
+      <p>Living abroad does not mean leaving behind the joy of dressing up for festivals. For millions of NRIs across the the USA, and beyond, <strong>festive occasions like Diwali, Eid, Navratri, and Pongal</strong> are cherished opportunities to reconnect with cultural roots, celebrate with community, and — yes — wear stunning Indian ethnic wear that makes you feel truly special.</p>
 
       <p>But styling Indian outfits for festive gatherings abroad comes with its own unique considerations. The venue might be a community hall in Houston rather than a haveli in Jaipur. The weather could be London drizzle instead of Delhi sunshine. And your audience is often a beautiful mix of people who know every embroidery technique by name and friends discovering Indian fashion for the first time.</p>
 
@@ -2022,7 +2022,7 @@ export const blogPosts: BlogPost[] = [
 
       <h3>What We Offer</h3>
       <ul>
-        <li><strong>Free worldwide shipping:</strong> Standard delivery (USPS/UPS) in 7-10 business days transit to the USA, UK, and Canada</li>
+        <li><strong>Free US shipping over $150:</strong> Standard delivery (USPS/UPS) in 2 business days to ship transit to the the USA</li>
         <li><strong>Express shipping:</strong> 3-5 business day delivery available at checkout</li>
         <li><strong>Ready-to-wear options:</strong> No alterations needed — just open, wear, and celebrate</li>
         <li><strong>Last-minute styling support:</strong> Chat with our team on WhatsApp for quick outfit recommendations</li>
@@ -2038,7 +2038,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Continue Reading</h2>
       <ul>
         <li><a href="/blog/nri-wedding-ethnic-wear-trends-2026">Top Indian Ethnic Wear Trends for NRI Weddings in 2026</a></li>
-        <li><a href="/blog/buy-authentic-indian-sarees-online-usa-uk">Your Guide to Shopping Authentic Indian Sarees Online from the USA/UK</a></li>
+        <li><a href="/blog/buy-authentic-indian-sarees-online-usa-uk">Your Guide to Shopping Authentic Indian Sarees Online from the USA</a></li>
         <li><a href="/blog/indian-wedding-season-2026-outfit-guide">Indian Wedding Season 2026: Complete Outfit Guide</a></li>
       </ul>
       </article>
@@ -2151,9 +2151,9 @@ export const blogPosts: BlogPost[] = [
             <p>If you are between two sizes, always go larger. It is far easier for a local tailor to take in a garment than to let it out. For hand-embroidered pieces, the embroidery is fixed — fabric cannot be added. When in doubt, size up and have the garment tailored down to your exact fit.</p>
 
             <h2>International Size Conversion</h2>
-            <p>Indian sizing doesn't always align with US/UK sizes. Use our <a href="/size-guide">size guide</a> for a detailed conversion chart, but as a quick reference:</p>
+            <p>Indian sizing doesn't always align with US sizes. Use our <a href="/size-guide">size guide</a> for a detailed conversion chart, but as a quick reference:</p>
             <table style="width:100%;border-collapse:collapse;margin:16px 0">
-              <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ddd;text-align:left">US Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">UK Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Indian Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Bust (inches)</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Waist (inches)</th></tr>
+              <tr style="background:#f5f5f5"><th style="padding:8px;border:1px solid #ddd;text-align:left">US Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">US Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Indian Size</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Bust (inches)</th><th style="padding:8px;border:1px solid #ddd;text-align:left">Waist (inches)</th></tr>
               <tr><td style="padding:8px;border:1px solid #ddd">XS (0-2)</td><td style="padding:8px;border:1px solid #ddd">4-6</td><td style="padding:8px;border:1px solid #ddd">32-34</td><td style="padding:8px;border:1px solid #ddd">32-33</td><td style="padding:8px;border:1px solid #ddd">24-25</td></tr>
               <tr><td style="padding:8px;border:1px solid #ddd">S (4-6)</td><td style="padding:8px;border:1px solid #ddd">8-10</td><td style="padding:8px;border:1px solid #ddd">34-36</td><td style="padding:8px;border:1px solid #ddd">34-35</td><td style="padding:8px;border:1px solid #ddd">26-27</td></tr>
               <tr><td style="padding:8px;border:1px solid #ddd">M (8-10)</td><td style="padding:8px;border:1px solid #ddd">12-14</td><td style="padding:8px;border:1px solid #ddd">38-40</td><td style="padding:8px;border:1px solid #ddd">36-37</td><td style="padding:8px;border:1px solid #ddd">28-30</td></tr>
@@ -2332,7 +2332,7 @@ export const blogPosts: BlogPost[] = [
 <p>LuxeMia offers wedding-guest outfits engineered for the $150 to $500 bracket, sourcing direct from the same Surat, Mumbai, and Delhi workshops that supply US boutiques. All pieces are priced using the India-wholesale-times-2.5-divided-by-90 formula, producing retail prices 35 to 55 percent below US-boutique equivalents. Browse the <a href="/lehengas">lehenga collection</a>, <a href="/sarees">saree catalog</a>, and <a href="/suits">suit collection</a> for current options.</p>
 
 <h3>Kalki Fashion (Premium, US Warehouse)</h3>
-<p>Kalki operates a US warehouse for faster shipping on premium pieces. Wedding-guest outfits range from $250 to $800. The "Ready to Ship" section offers dispatch in 3-5 business days.</p>
+<p>Kalki operates a US warehouse for faster shipping on premium pieces. Wedding-guest outfits range from $250 to $800. The "Ready to Ship" section offers dispatch in 2 business days.</p>
 
 <h3>Local US Boutiques (Edison NJ, Fremont CA, Mississauga ON)</h3>
 <p>For in-person fittings, US boutiques in Edison (NJ), Fremont (CA), Jackson Heights (NY), and Mississauga (Ontario) carry wedding-guest outfits at 50-100% markup over Indian retail. The markup pays for in-person tailoring and immediate inspection. Suitable for last-minute purchases or non-standard sizes.</p>
@@ -2499,16 +2499,16 @@ export const blogPosts: BlogPost[] = [
   {
     id: '23',
     slug: 'nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada',
-    title: 'NRI Guide: How to Buy Indian Ethnic Wear Online from USA, UK & Canada',
+    title: 'NRI Guide: How to Buy Indian Ethnic Wear Online from the USA',
     excerpt: 'A practical guide for NRI shoppers — from understanding sizing and duty-free limits to what questions to ask before ordering quality Indian ethnic wear online.',
     content: `
       <h2>Shopping Indian Ethnic Wear from Abroad: What You Need to Know</h2>
-      <p>If you're part of the Indian diaspora in the USA, UK, or Canada, buying ethnic wear online is a different experience from shopping in a local store in India. You can't feel the fabric, you can't try it on, and you're often working across time zones with retailers. But it doesn't have to be stressful.</p>
+      <p>If you're part of the Indian diaspora in the USA, buying ethnic wear online is a different experience from shopping in a local store in India. You can't feel the fabric, you can't try it on, and you're often working across time zones with retailers. But it doesn't have to be stressful.</p>
 
       <p>At <a href="/">LuxeMia</a>, most of our customers are NRI shoppers — and we've built our service around making this experience as smooth and confidence-inspiring as possible. Here's everything you need to know before you buy.</p>
 
       <h2>1. Understand the Sizing Reality</h2>
-      <p>Indian sizing is not the same as US, UK, or Canadian sizing. A "Medium" in India is typically smaller than a US Medium. Never assume your usual size — always go by measurements.</p>
+      <p>Indian sizing is not the same as standard US sizing. A "Medium" in India is typically smaller than a US Medium. Never assume your usual size — always go by measurements.</p>
 
       <ul>
         <li>Use our <a href="/size-guide">size guide</a> with measurement instructions — and measure yourself in inches</li>
@@ -2521,11 +2521,11 @@ export const blogPosts: BlogPost[] = [
       <p>International shipping takes time — plan ahead, especially for weddings or events.</p>
 
       <ul>
-        <li><strong>Standard delivery to USA:</strong> 7–10 business days transit (USPS/UPS)</li>
-        <li><strong>Standard delivery to UK:</strong> 7–10 business days transit (USPS/UPS)</li>
-        <li><strong>Standard delivery to Canada:</strong> 7–10 business days transit (USPS/UPS)</li>
-        <li><strong>Express shipping:</strong> 3–5 business days transit (DHL, available at checkout)</li>
-        <li><strong>Dispatch time:</strong> Ready-made 3–5 business days, custom/alterations 5–7 business days</li>
+        <li><strong>Standard delivery to USA:</strong> 2 business days to ship transit (USPS/UPS)</li>
+        
+        
+        <li><strong>Express shipping:</strong> 2 business days transit (DHL, available at checkout)</li>
+        <li><strong>Dispatch time:</strong> Ready-made 2 business days, custom/alterations confirm timing before ordering</li>
       </ul>
 
       <p><strong>Rule of thumb:</strong> Order at least 6–8 weeks before your event. For big wedding seasons (November–February), order earlier.</p>
@@ -2535,8 +2535,8 @@ export const blogPosts: BlogPost[] = [
 
       <ul>
         <li><strong>USA:</strong> Orders under $800 are generally duty-free (de minimis threshold)</li>
-        <li><strong>UK:</strong> Orders under £135 are VAT-free for personal imports</li>
-        <li><strong>Canada:</strong> Orders under CAD$20 are duty-free; higher thresholds apply depending on country of origin</li>
+        
+        
       </ul>
 
       <p>Note: Thresholds and regulations change. We recommend checking your country's current customs rules. LuxeMia marks packages accurately — we do not under-declare values on customs forms.</p>
@@ -2566,7 +2566,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong><a href="/style-consultation">Free style consultations</a></strong> — tell us your event, budget, and measurements and we'll curate outfits for you</li>
         <li><strong>WhatsApp styling support</strong> at +1-215-341-9990 — we understand NRI event contexts</li>
         <li><strong>Multiple currencies</strong> — browse prices in USD, GBP, CAD, EUR, or AUD</li>
-        <li><strong><a href="/nri">NRI landing pages</a></strong> for USA, UK, and Canada with relevant collection edits</li>
+        <li><strong><a href="/nri">NRI landing pages</a></strong> for the USA with relevant collection edits</li>
         <li><strong>Custom sizing</strong> — all pieces can be made to your exact measurements</li>
       </ul>
 
@@ -2701,13 +2701,13 @@ export const blogPosts: BlogPost[] = [
     title: `How to Choose the Perfect Lehenga for Your Wedding (2026 Buyer's Guide)`,
     excerpt: `A complete guide to choosing your bridal lehenga — from fabric and color to silhouette and budget — for NRI brides in 2026.`,
     content: `
-<p>Choosing a bridal lehenga is one of the most personal decisions a bride makes. The silhouette you wear on your wedding day will be the centerpiece of every photograph, every memory, and every family story told for years afterward. For NRI brides in the USA, UK, Canada, and Australia, the challenge is compounded by distance from the markets of Chandni Chowk, Surat, and Jaipur — but that distance no longer means compromise.</p>
+<p>Choosing a bridal lehenga is one of the most personal decisions a bride makes. The silhouette you wear on your wedding day will be the centerpiece of every photograph, every memory, and every family story told for years afterward. For NRI brides in the United States, the challenge is compounded by distance from the markets of Chandni Chowk, Surat, and Jaipur — but that distance no longer means compromise.</p>
 <p>This guide walks you through every dimension of the decision: fabric, color, silhouette, embroidery, weight, occasion, and budget. By the end, you will know exactly what to look for and how to shop with confidence, whether you are ordering online from Toronto or Sydney.</p>
 <p>---</p>
 <h2>Why the Bridal Lehenga Decision Deserves Serious Thought</h2>
 <p>A bridal lehenga is not a casual purchase. It is a multi-layered ensemble — lehenga skirt, choli blouse, and dupatta — that must work together in terms of color, embroidery, drape, and wearability across what is often a 6- to 8-hour ceremony.</p>
 <p>For NRI brides, there are additional considerations: getting the sizing right without an in-person fitting, understanding customs and duties when importing to countries like the USA or UK, and navigating the difference between unstitched fabric sets and made-to-measure options.</p>
-<p>The good news is that dedicated Indian ethnic-wear boutiques like <a href="https://luxemia.shop">LuxeMia</a> now offer international shipping with custom stitching, which means you can get a lehenga tailored to your exact measurements and delivered to your door, wherever you are in the world.</p>
+<p>The good news is that dedicated Indian ethnic-wear boutiques like <a href="https://luxemia.shop">LuxeMia</a> now offer US shipping with custom stitching, which means you can get a lehenga tailored to your exact measurements and delivered to your door, wherever you are in the world.</p>
 <p>---</p>
 <h2>Understanding Lehenga Silhouettes</h2>
 <p>The silhouette is the first decision to make, because it determines how the lehenga moves, how it photographs, and how comfortable you will be throughout your wedding day.</p>
@@ -2771,7 +2771,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Entry-Level Bridal Lehengas ($200-$500)</h3>
 <p>In this range, expect machine embroidery on georgette or net fabric with moderate embellishments. These lehengas are well-suited for functions like sangeet, mehendi, or haldi, or for a second outfit worn to the reception.</p>
 <h3>Mid-Range Bridal Lehengas ($500-$1,200)</h3>
-<p>This is where most NRI brides find the best balance of quality and value. Silk fabrics, hand embroidery, and custom stitching are typically available in this range. Brands and boutiques like <a href="https://luxemia.shop/collections/lehengas">LuxeMia</a> offer made-to-measure options in this tier with international shipping.</p>
+<p>This is where most NRI brides find the best balance of quality and value. Silk fabrics, hand embroidery, and custom stitching are typically available in this range. Brands and boutiques like <a href="https://luxemia.shop/collections/lehengas">LuxeMia</a> offer made-to-measure options in this tier with US shipping.</p>
 <h3>Premium and Designer Lehengas ($1,200+)</h3>
 <p>At this level, expect handwoven fabrics, extensive zardozi or resham hand embroidery, and bespoke tailoring. Designer lehengas from Sabyasachi, Manish Malhotra, and similar houses occupy this tier, though comparable craftsmanship is available from specialist boutiques at lower price points.</p>
 <p>---</p>
@@ -2787,7 +2787,7 @@ export const blogPosts: BlogPost[] = [
 <p>The reception gives you freedom to experiment with a different color, silhouette, or fabric. Many brides choose a lighter or more contemporary outfit for the reception, having worn the heavier bridal lehenga for the ceremony.</p>
 <p>---</p>
 <h2>Common Mistakes to Avoid When Buying a Bridal Lehenga</h2>
-<p>Ordering too late is the most common and most avoidable mistake. Custom stitching and international shipping require lead time — budget at least 4 to 6 weeks from order to delivery for custom-stitched lehengas.</p>
+<p>Ordering too late is the most common and most avoidable mistake. Custom stitching and US shipping require lead time — budget at least 4 to 6 weeks from order to delivery for custom-stitched lehengas.</p>
 <p>Not ordering fabric swatches is another frequent regret. Colors on screen differ from colors under natural or wedding lighting. Requesting swatches before committing to a full order is worth the extra step.</p>
 <p>Ignoring blouse fit is a detail that undermines an otherwise beautiful ensemble. The choli is the most structural garment in the set and the most likely to require precise tailoring.</p>
 <p>---</p>
@@ -2795,20 +2795,20 @@ export const blogPosts: BlogPost[] = [
 <h3>What is the best lehenga fabric for a summer outdoor wedding?</h3>
 <p>Georgette, chiffon, and lightweight silk are the best choices for outdoor summer weddings. They are breathable, move well in natural light, and do not trap heat the way velvet or heavy brocade do. For destination weddings in warm climates, a georgette lehenga with minimal embroidery keeps you comfortable throughout the day.</p>
 <h3>How far in advance should I order a bridal lehenga from abroad?</h3>
-<p>For NRI brides in the USA, UK, Canada, or Australia ordering custom-stitched lehengas from Indian boutiques, a lead time of 8 to 12 weeks is recommended. This accounts for stitching time (typically 2 to 4 weeks), shipping, and any potential customs clearance delays.</p>
+<p>For NRI brides in the the USA, or Australia ordering custom-stitched lehengas from Indian boutiques, a lead time of 8 to 12 weeks is recommended. This accounts for stitching time (typically 2 to 4 weeks), shipping, and any potential customs clearance delays.</p>
 <h3>Can I get a lehenga custom-stitched to my measurements when ordering online?</h3>
 <p>Yes. Many Indian ethnic-wear boutiques, including <a href="https://luxemia.shop/collections/lehengas">LuxeMia</a>, offer made-to-measure custom stitching for international orders. You provide your measurements at checkout, and the blouse and skirt waistband are tailored accordingly. This eliminates the most common issue with online ethnic wear purchases — a poorly fitting choli.</p>
 <h3>What is the difference between a bridal lehenga and a regular lehenga?</h3>
 <p>A bridal lehenga is distinguished by heavier embroidery, richer fabric, and a more elaborate dupatta. Bridal lehengas typically feature hand embroidery techniques like zardozi, resham, or gota patti, while everyday lehengas rely on machine embroidery or digital prints. The price difference reflects the hours of handwork involved.</p>
 <h3>How do I know what lehenga color will suit my skin tone?</h3>
 <p>As a general rule, warm skin tones are complemented by warm colors — orange, coral, red, and gold. Cool or lighter skin tones look striking in jewel tones like emerald, royal blue, and deep magenta. Dusky or deeper skin tones carry rich, saturated colors like burgundy, navy, and burnt orange beautifully. For a detailed breakdown, see our guide to <a href="https://luxemia.shop/collections/lehengas">best lehenga colors for every skin tone</a>.</p>
-<h3>Is free shipping available for international orders?</h3>
-<p>Many boutiques offer complimentary shipping above a certain order value. LuxeMia offers free shipping on orders over $350, which typically covers the cost of a bridal lehenga set. Check individual product pages for current shipping thresholds.</p>
+<h3>Is free US shipping available for international orders?</h3>
+<p>Many boutiques offer complimentary shipping above a certain order value. LuxeMia offers free US shipping over $150, which typically covers the cost of a bridal lehenga set. Check individual product pages for current shipping thresholds.</p>
 <h3>What occasions beyond the wedding can I wear a bridal lehenga?</h3>
 <p>A lehenga is a versatile garment that works beautifully for Diwali celebrations, Karva Chauth, Navratri, Eid, engagement parties, and formal receptions. Many NRI brides in the USA and Canada re-wear their bridal or semi-bridal lehengas for these occasions throughout the year, making the investment even more worthwhile.</p>
 <p>---</p>
 <h2>Shop the LuxeMia Bridal Lehenga Collection</h2>
-<p>Shop the LuxeMia bridal lehenga collection at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<p>Shop the LuxeMia bridal lehenga collection at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free US shipping over $150 to the United States.</p>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-05-09',
@@ -2825,7 +2825,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: `Lehenga vs sharara vs anarkali — a clear breakdown of each silhouette, who it suits, and when to wear it for NRI brides and wedding guests.`,
     content: `
 <p>If you have spent any time browsing Indian ethnic-wear for a wedding, engagement, sangeet, or Diwali function, you have encountered the same three names repeatedly: lehenga, sharara, and anarkali. Each is a distinct silhouette with its own history, structure, and styling logic — and choosing the wrong one for your body type, occasion, or personal style can be a costly mistake.</p>
-<p>This guide breaks down each silhouette clearly, compares them across the dimensions that matter most — occasion, body type, comfort, and styling versatility — and helps you make a confident decision, whether you are a bride, a guest, or shopping for a special occasion like Karva Chauth, Navratri, Eid, or a wedding reception in the USA, UK, Canada, or Australia.</p>
+<p>This guide breaks down each silhouette clearly, compares them across the dimensions that matter most — occasion, body type, comfort, and styling versatility — and helps you make a confident decision, whether you are a bride, a guest, or shopping for a special occasion like Karva Chauth, Navratri, Eid, or a wedding reception in the the USA, or Australia.</p>
 <p>---</p>
 <h2>What Is a Lehenga?</h2>
 <p>A lehenga — also called a lengha or ghagra choli — is a three-piece ensemble consisting of a skirt (the lehenga), a fitted blouse (the choli), and a long scarf (the dupatta). It is the most formal and elaborate of the three silhouettes and is synonymous with Indian bridal wear.</p>
@@ -2874,7 +2874,7 @@ export const blogPosts: BlogPost[] = [
 <p>| Feature | Lehenga | Sharara | Anarkali | |---|---|---|---| | Formality | High | Medium-High | Medium-High | | Body types suited | Most body types | Pear, hourglass | All body types | | Occasion range | Weddings, receptions | Mehendi, sangeet, Eid | Weddings to semi-formal | | Comfort for long events | Moderate | High | High | | Price range | $200 to $2,000+ | $150 to $800 | $100 to $600 | | Styling complexity | High | Moderate | Low to Moderate |</p>
 <p>---</p>
 <h2>Styling Each Silhouette for NRI Occasions</h2>
-<p>For NRI brides and guests attending Indian weddings in the USA, UK, Canada, and Australia, occasion-appropriate styling differs slightly from choices made in India.</p>
+<p>For NRI brides and guests attending Indian weddings in the United States, occasion-appropriate styling differs slightly from choices made in India.</p>
 <h3>Lehengas for Western Wedding Venues</h3>
 <p>Indian weddings held in banquet halls, hotels, or outdoor venues in North America and the UK often involve more walking, stair-climbing, and mingling than traditional Indian wedding venues accommodate. Choosing a lehenga with a manageable flare (rather than the widest circular silhouettes) and a blouse with comfortable arm movement is a practical consideration.</p>
 <h3>Shararas for Mehendi and Haldi in Compact Spaces</h3>
@@ -2883,8 +2883,8 @@ export const blogPosts: BlogPost[] = [
 <p>For guests who want a single outfit that works across a mehendi-through-reception day, a floor-length anarkali in a rich fabric like silk or georgette is the most practical choice. Pair it with statement jewelry and a stole-style dupatta for effortless transition between events.</p>
 <p>---</p>
 <h2>Where to Shop Lehengas, Shararas, and Anarkalis Online</h2>
-<p>For NRI shoppers in the USA, UK, Canada, and Australia, finding high-quality Indian ethnic wear with reliable international shipping used to require a trip back to India. That is no longer the case.</p>
-<p><a href="https://luxemia.shop">LuxeMia</a> offers a curated selection of bridal lehengas, shararas, anarkalis, and <a href="https://luxemia.shop/collections/salwar-suits">salwar kameez</a> with custom stitching and free shipping on orders over $350. The custom stitching option is particularly valuable for buyers ordering internationally, as it ensures the choli and waistband fit precisely to your measurements.</p>
+<p>For NRI shoppers in the United States, finding high-quality Indian ethnic wear with reliable US shipping used to require a trip back to India. That is no longer the case.</p>
+<p><a href="https://luxemia.shop">LuxeMia</a> offers a curated selection of bridal lehengas, shararas, anarkalis, and <a href="https://luxemia.shop/collections/salwar-suits">salwar kameez</a> with custom stitching and free US shipping over $150. The custom stitching option is particularly valuable for buyers ordering internationally, as it ensures the choli and waistband fit precisely to your measurements.</p>
 <p>You can browse the full <a href="https://luxemia.shop/collections/lehengas">lehenga collection</a> and <a href="https://luxemia.shop/collections/salwar-suits">salwar-suits collection</a> to compare styles before committing.</p>
 <p>---</p>
 <h2>Frequently Asked Questions</h2>
@@ -2895,17 +2895,17 @@ export const blogPosts: BlogPost[] = [
 <h3>Which silhouette is most flattering on a petite frame?</h3>
 <p>An A-line lehenga or a floor-length anarkali is generally most flattering on a petite frame. Both create vertical length and do not add visual bulk at the hips. Shararas with very wide flares can visually reduce height, particularly if the kurta is cropped short.</p>
 <h3>Can a lehenga be worn for non-wedding occasions like Diwali or Navratri?</h3>
-<p>Absolutely. A semi-bridal lehenga in a bright or festive color is a popular choice for Diwali parties, Navratri garba celebrations, Karva Chauth, and Eid gatherings among NRI communities in the USA, UK, Canada, and Australia. Many NRI women invest in a versatile lehenga that can be styled differently for multiple occasions across the year.</p>
+<p>Absolutely. A semi-bridal lehenga in a bright or festive color is a popular choice for Diwali parties, Navratri garba celebrations, Karva Chauth, and Eid gatherings among NRI communities in the United States. Many NRI women invest in a versatile lehenga that can be styled differently for multiple occasions across the year.</p>
 <h3>What is the difference between an anarkali and a salwar kameez?</h3>
 <p>Both feature a top (kurta or kameez) and trousers (salwar or churidar), but the anarkali is defined by its dramatically flared skirt section and typically falls to the floor. A salwar kameez is a more practical, everyday-appropriate garment with a straighter silhouette. The anarkali is a formal subset of the broader salwar kameez category. Browse both styles in <a href="/suits">LuxeMia's suits collection</a>.</p>
 <h3>How do I choose between a lehenga and a gown for a reception?</h3>
 <p>If your reception has a Western or fusion aesthetic, a lehenga gown or an anarkali gown gives you the grandeur of Indian craftsmanship in a silhouette that resonates with both Indian and non-Indian guests. If your reception is a traditional Indian event, a classic bridal lehenga remains the most appropriate and photographically stunning choice.</p>
 <p>---</p>
 <h2>Shop the LuxeMia Collection</h2>
-<p>Shop the LuxeMia lehenga, sharara, and salwar-suits collections at <a href="https://luxemia.shop">https://luxemia.shop</a> — with custom stitching and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<p>Shop the LuxeMia lehenga, sharara, and salwar-suits collections at <a href="https://luxemia.shop">https://luxemia.shop</a> — with custom stitching and free US shipping over $150 to the United States.</p>
 <h2>Shop These Styles</h2>
 <ul>
-  <li>Browse our full <a href="/suits">sharara suits</a> collection — embroidered, sequined, and festive styles ready to ship worldwide</li>
+  <li>Browse our full <a href="/suits">sharara suits</a> collection — embroidered, sequined, and festive styles ready to ship within the United States</li>
   <li>Explore our <a href="/suits">gharara suits</a> — Lucknowi-crafted sets with gota-patti and zari work</li>
   <li>Shop <a href="/suits">anarkali suits</a> in every price range — from casual cotton to bridal silk</li>
   <li>Find your perfect <a href="/lehengas">party wear lehengas</a> for sangeet, reception, and festive celebrations</li>
@@ -2927,7 +2927,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: `Discover the best lehenga colors for fair, wheatish, and dusky Indian skin tones — stylist-recommended picks for 2026 brides and festive wear.`,
     content: `
 <p>Color is the single most immediate and impactful element of a lehenga. Before the embroidery registers, before the fabric quality is noticed, color is what the eye sees first — in the room, in photographs, and on video. Choosing the right color for your skin tone is not about following rigid rules. It is about understanding which tones create a harmonious contrast with your complexion and which ones wash you out or clash with your undertones.</p>
-<p>This guide is written for Indian women with a range of skin tones — from very fair to deep and rich — including NRI brides and shoppers in the USA, UK, Canada, and Australia who are navigating color choices for bridal lehengas, reception outfits, sangeet looks, and festive wear for Diwali, Navratri, Karva Chauth, and Eid.</p>
+<p>This guide is written for Indian women with a range of skin tones — from very fair to deep and rich — including NRI brides and shoppers in the United States who are navigating color choices for bridal lehengas, reception outfits, sangeet looks, and festive wear for Diwali, Navratri, Karva Chauth, and Eid.</p>
 <p>---</p>
 <h2>Understanding Indian Skin Tones and Undertones</h2>
 <p>Before getting into specific color recommendations, it helps to understand the distinction between skin tone (the surface color you see) and undertone (the underlying warmth or coolness that persists regardless of tanning or seasonal variation).</p>
@@ -2977,7 +2977,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Midnight Blue and Ink Navy</h3>
 <p>Deep blue in all its variations remains one of the most consistently popular alternatives to red for bridal lehengas. Midnight blue velvet with silver or gold embroidery is a particularly striking combination for winter weddings and evening receptions.</p>
 <h3>Blush and Rose Gold</h3>
-<p>Blush and rose gold remain perennial favorites, particularly among NRI brides in the USA, UK, Canada, and Australia who are drawn to a softer, more romantic aesthetic. The color photographs well across all lighting conditions and is versatile enough for everything from wedding ceremonies to Diwali parties.</p>
+<p>Blush and rose gold remain perennial favorites, particularly among NRI brides in the United States who are drawn to a softer, more romantic aesthetic. The color photographs well across all lighting conditions and is versatile enough for everything from wedding ceremonies to Diwali parties.</p>
 <p>---</p>
 <h2>Lehenga Colors for Different Wedding Functions</h2>
 <p>Skin tone is one variable; occasion is another. The right color for a mehendi differs from the right color for a wedding ceremony or a reception.</p>
@@ -3009,12 +3009,12 @@ export const blogPosts: BlogPost[] = [
 <h3>What are the trending bridal lehenga colors for 2026?</h3>
 <p>The standout bridal lehenga colors for 2026 include terracotta, midnight blue, sage green, rose gold, and dusty mauve. Classic red and deep pink remain timeless staples. Ivory with heavy gold zari embroidery is gaining ground among brides who want a regal, contemporary look. You can browse current color options at <a href="https://luxemia.shop/collections/lehengas">LuxeMia's lehenga collection</a>.</p>
 <h3>Is red mandatory for an Indian wedding lehenga?</h3>
-<p>No. Red has deep cultural significance in many Hindu wedding traditions and remains the most popular bridal color, but it is not mandatory in any community. NRI brides in the USA, UK, Canada, and Australia have considerable freedom to choose the color that best suits their skin tone, personal aesthetic, and wedding theme. Pink, gold, ivory, and jewel tones are all entirely appropriate bridal choices.</p>
+<p>No. Red has deep cultural significance in many Hindu wedding traditions and remains the most popular bridal color, but it is not mandatory in any community. NRI brides in the United States have considerable freedom to choose the color that best suits their skin tone, personal aesthetic, and wedding theme. Pink, gold, ivory, and jewel tones are all entirely appropriate bridal choices.</p>
 <h3>Can I wear the same lehenga for multiple occasions like Diwali and Navratri?</h3>
 <p>Yes. A well-chosen semi-bridal lehenga in a versatile color — deep pink, royal blue, or gold — can be worn for multiple occasions throughout the year, including Diwali, Navratri garba nights, Karva Chauth, Eid celebrations, and engagement parties. Styling the dupatta differently and changing your jewelry can give the outfit a distinctly different look for each occasion.</p>
 <p>---</p>
 <h2>Shop the LuxeMia Lehenga Collection</h2>
-<p>Shop the LuxeMia lehenga collection at <a href="https://luxemia.shop/collections/lehengas">https://luxemia.shop/collections/lehengas</a> — with custom stitching available and free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<p>Shop the LuxeMia lehenga collection at <a href="https://luxemia.shop/collections/lehengas">https://luxemia.shop/collections/lehengas</a> — with custom stitching available and free US shipping over $150 to the United States.</p>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-05-11',
@@ -3027,25 +3027,25 @@ export const blogPosts: BlogPost[] = [
   {
     id: '28',
     slug: 'shipping-indian-clothes-usa-uk-canada-nri-guide',
-    title: `Shipping Indian Clothes to the USA, UK & Canada: Complete NRI Buyer's Guide`,
+    title: `Shipping Indian Clothes to the the USA: Complete NRI Buyer's Guide`,
     excerpt: `Everything NRI buyers need to know about buying Indian ethnic wear online — shipping timelines, customs duty, sizing, and how to order from abroad safely.`,
     content: `
-<p>Shopping for Indian ethnic wear from the USA, UK, Canada, or Australia has become dramatically more straightforward over the past decade. But there are still enough friction points — customs duties, sizing mismatches, fabric quality disputes, and unreliable delivery timelines — that NRI buyers deserve a thorough guide.</p>
+<p>Shopping for Indian ethnic wear from the the USA, or Australia has become dramatically more straightforward over the past decade. But there are still enough friction points — customs duties, sizing mismatches, fabric quality disputes, and unreliable delivery timelines — that NRI buyers deserve a thorough guide.</p>
 <p>This is that guide. It covers everything from finding a trustworthy retailer to understanding customs regulations, getting custom stitching right without an in-person fitting, and what to do if your order arrives damaged or incorrect. Whether you are buying a bridal lehenga for a wedding in New Jersey, a salwar kameez for Diwali in London, or a wedding saree for a function in Melbourne, the information here applies.</p>
 <p>---</p>
 <h2>Why NRI Women Are Buying Indian Clothes Online</h2>
 <p>The NRI market for Indian ethnic wear is large and growing. In the USA alone, there are over 4 million people of Indian origin, with significant concentrations in New Jersey, California, Texas, and Illinois. The UK has approximately 1.5 million British Indians, concentrated in London, Leicester, and Birmingham. Canada has a rapidly growing South Asian population in the Greater Toronto Area, Vancouver, and Calgary. Australia's Indian diaspora is centered in Melbourne and Sydney.</p>
-<p>For most of these communities, local Indian clothing stores exist but are limited in range, often stocked with mass-produced garments at a significant markup. Ordering directly from India — through boutiques that cater specifically to the diaspora — gives NRI buyers access to a far wider selection, often at better prices, with the added option of custom stitching to exact measurements.</p>
+<p>For most of these communities, local Indian clothing stores exist but are limited in range, often stocked with mass-produced garments at a significant markup. Ordering from US-held stock — through boutiques that cater specifically to the diaspora — gives NRI buyers access to a far wider selection, often at better prices, with the added option of custom stitching to exact measurements.</p>
 <p>---</p>
 <h2>Choosing a Reliable Indian Ethnic Wear Retailer Online</h2>
 <p>Not all online Indian clothing retailers are equal. The market includes everything from established boutiques with rigorous quality control to small operations that use stock photographs and deliver garments that look nothing like what was advertised.</p>
 <h3>What to Look For in a Retailer</h3>
 <p>Look for boutiques with a clearly stated return policy, transparent shipping timelines, and verified customer reviews. Photographs should show the garment on an actual model rather than just a flat lay. Detailed fabric descriptions — not just "silk" but "pure Kanjivaram silk" or "Banarasi brocade with resham embroidery" — are a sign of a retailer that understands its inventory.</p>
-<p><a href="https://luxemia.shop">LuxeMia</a> is an Indian ethnic-wear boutique that specifically serves the NRI market, offering bridal lehengas, wedding sarees, and salwar kameez with custom stitching and international shipping. Their free shipping threshold of $350 covers most bridal and semi-bridal purchases.</p>
+<p><a href="https://luxemia.shop">LuxeMia</a> is an Indian ethnic-wear boutique that specifically serves the NRI market, offering bridal lehengas, wedding sarees, and salwar kameez with custom stitching and US shipping. Their free US shipping threshold of $350 covers most bridal and semi-bridal purchases.</p>
 <h3>Red Flags to Avoid</h3>
 <p>Retailers with no physical address, no customer service contact, or prices that seem too good to be true warrant caution. Heavily embroidered bridal lehengas require significant handcraft time and carry corresponding price tags. A "bridal lehenga" priced at $50 is almost certainly not what it claims to be.</p>
 <p>---</p>
-<h2>Understanding Customs Duty on Indian Clothes: USA, UK, Canada, Australia</h2>
+<h2>Understanding Customs Duty on Indian Clothes: the USA, Australia</h2>
 <p>This is the question that causes the most confusion for first-time international buyers of Indian ethnic wear. The answer depends on the destination country, the declared value of the shipment, and the HS (Harmonized System) tariff code under which the garments are classified.</p>
 <h3>Customs Duty on Indian Clothes in the USA</h3>
 <p>As of 2026, clothing imported to the USA is subject to duties that vary by fiber content and garment type. Woven cotton garments typically attract duties of 8-12%, while silk garments are taxed at 0.9% to 4.5% depending on the specific item. However, the de minimis threshold in the USA was $800 per shipment. Shipments declared below this value were exempt from duty. Buyers should verify current thresholds as US trade policy has been subject to change — confirm with your retailer at the time of purchase.</p>
@@ -3056,12 +3056,12 @@ export const blogPosts: BlogPost[] = [
 <h3>Customs Duty on Indian Clothes in Australia</h3>
 <p>Australia applies a 5% customs duty on most clothing imports, plus a 10% GST (Goods and Services Tax). The low-value threshold is AUD $1,000 — shipments above this value are subject to formal customs assessment. Below $1,000, GST is still typically collected at the point of sale by registered overseas retailers.</p>
 <h3>How Reputable Retailers Handle Customs</h3>
-<p>Established boutiques like <a href="https://luxemia.shop">LuxeMia</a> that specifically serve NRI markets in the USA, UK, Canada, and Australia are familiar with international customs requirements. They typically provide accurate declarations and commercial invoices with the shipment. Buyers should be aware of their local duty thresholds and budget accordingly.</p>
+<p>Established boutiques like <a href="https://luxemia.shop">LuxeMia</a> that specifically serve NRI markets in the United States are familiar with international customs requirements. They typically provide accurate declarations and commercial invoices with the shipment. Buyers should be aware of their local duty thresholds and budget accordingly.</p>
 <p>---</p>
 <h2>Shipping Timelines: What to Expect</h2>
 <p>Shipping timelines for Indian ethnic wear ordered from India vary based on carrier, destination, and whether the order requires custom stitching.</p>
 <h3>Standard Shipping Timelines</h3>
-<p>Express courier services (DHL, FedEx, Aramex) from India typically deliver to the USA in 5-7 business days once the order is dispatched. UK delivery is typically 3-5 business days. Canada is 6-8 business days. Australia is 7-10 business days.</p>
+<p>Express courier services (DHL, FedEx, Aramex) from India typically deliver to the USA in confirm timing before ordering once the order is dispatched. UK delivery is typically 2 business days. Canada is 6-8 business days. Australia is 2 business days to ship.</p>
 <p>Economy shipping options are slower — 14-21 days to most destinations — and may be subject to less predictable customs processing times.</p>
 <h3>Custom Stitching Lead Time</h3>
 <p>If you are ordering a custom-stitched lehenga or salwar kameez, factor in an additional 2-4 weeks for stitching before the order ships. A realistic total timeline for a custom-stitched bridal lehenga delivered to the USA or Canada is 6-8 weeks from order placement to delivery.</p>
@@ -3081,7 +3081,7 @@ export const blogPosts: BlogPost[] = [
 <h3>Accepted Payment Methods</h3>
 <p>Reputable international boutiques accept major credit cards (Visa, Mastercard, American Express), PayPal, and often bank transfers for large orders. Credit card and PayPal payments offer buyer protection, which is an important safety net for international purchases.</p>
 <h3>Currency and Exchange Rates</h3>
-<p>Most international Indian ethnic-wear boutiques price their products in USD or INR. For buyers in the UK, Canada, and Australia, your credit card or PayPal account will handle currency conversion automatically. Be aware of your bank's foreign transaction fee, which is typically 1-3%.</p>
+<p>Most international Indian ethnic-wear boutiques price their products in USD or INR. For buyers in the the USA, and Australia, your credit card or PayPal account will handle currency conversion automatically. Be aware of your bank's foreign transaction fee, which is typically 1-3%.</p>
 <h3>Avoiding Scams</h3>
 <p>Purchase only from boutiques with a verified website, clear contact information, and traceable payment methods. Avoid transferring money via UPI, wire transfer, or informal payment apps to sellers you have not previously transacted with.</p>
 <p>---</p>
@@ -3093,14 +3093,14 @@ export const blogPosts: BlogPost[] = [
 <p>To reduce the risk of an unsatisfactory custom-stitched order, request fabric swatches before ordering, verify the boutique's portfolio of completed custom work, and communicate all preferences in writing so there is a record of what was agreed.</p>
 <p>---</p>
 <h2>Buying Indian Wedding Wear as an NRI: Top Tips Summary</h2>
-<p>Order 10-12 weeks early for wedding-critical outfits. Take measurements precisely and provide them in writing. Request fabric swatches for color-sensitive orders. Factor local customs duties into your total budget. Choose a boutique like <a href="https://luxemia.shop">LuxeMia</a> that specifically serves the NRI market and offers custom stitching and international shipping as standard services.</p>
+<p>Order 10-12 weeks early for wedding-critical outfits. Take measurements precisely and provide them in writing. Request fabric swatches for color-sensitive orders. Factor local customs duties into your total budget. Choose a boutique like <a href="https://luxemia.shop">LuxeMia</a> that specifically serves the NRI market and offers custom stitching and US shipping as standard services.</p>
 <p>Also explore the <a href="https://luxemia.shop/collections/sarees">wedding sarees collection</a> and <a href="https://luxemia.shop/collections/salwar-suits">salwar kameez options</a> if you are shopping for multiple family members or a full wedding wardrobe.</p>
 <p>---</p>
 <h2>Frequently Asked Questions</h2>
 <h3>Can I buy Indian clothes online and ship to the USA without paying import duty?</h3>
 <p>It depends on the declared value of the shipment. The USA previously had a de minimis threshold of $800, below which shipments were generally exempt from duty. Trade policy changes have affected this threshold, so verify the current rules with your retailer or the US Customs and Border Protection website before ordering a high-value item.</p>
-<h3>How long does shipping from India to the UK take?</h3>
-<p>Shipping from India to the UK via express courier (DHL, FedEx, Aramex) typically takes 3-5 business days once the order is dispatched. Economy shipping takes 10-20 business days. For custom-stitched orders, add 2-4 weeks of production time before dispatch.</p>
+<h3>How long does shipping from US-held stock to the UK take?</h3>
+<p>Shipping from India to the UK via express courier (DHL, FedEx, Aramex) typically takes 2 business days once the order is dispatched. Economy shipping takes 10-20 business days. For custom-stitched orders, add 2-4 weeks of production time before dispatch.</p>
 <h3>Do Indian boutiques offer custom stitching for international orders?</h3>
 <p>Yes. Several dedicated NRI boutiques, including <a href="https://luxemia.shop">LuxeMia</a>, offer custom stitching for international orders. You provide your measurements at checkout, and the garment is tailored to your specifications before dispatch. This is especially valuable for blouse-heavy ensembles like lehengas and saree blouses.</p>
 <h3>What is the best way to buy Indian wedding clothes online as an NRI in Canada?</h3>
@@ -3113,7 +3113,7 @@ export const blogPosts: BlogPost[] = [
 <p>In India, you have the advantage of physically examining the garment before purchase and negotiating price at market stores. Online purchases from NRI-focused boutiques are often comparable in price to mid-range Indian stores once you factor in the convenience, custom stitching, and direct shipping. At the premium end, prices are similar. Always factor in import duties when comparing total costs.</p>
 <p>---</p>
 <h2>Shop the LuxeMia Collection</h2>
-<p>Shop the LuxeMia collection of bridal lehengas, wedding sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<p>Shop the LuxeMia collection of bridal lehengas, wedding sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — custom stitching available, with free US shipping over $150 to the United States.</p>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-05-12',
@@ -3127,10 +3127,10 @@ export const blogPosts: BlogPost[] = [
     id: '29',
     slug: 'unstitched-vs-ready-to-wear-vs-made-to-measure',
     title: `Unstitched vs Ready to Wear vs Made to Measure: Which Should You Choose?`,
-    excerpt: `Unstitched, ready to wear, or made to measure — a complete guide to Indian outfit sizing options for NRI buyers in the USA, UK, Canada, and Australia.`,
+    excerpt: `Unstitched, ready to wear, or made to measure — a complete guide to Indian outfit sizing options for NRI buyers in the United States.`,
     content: `
 <p>When you browse Indian ethnic wear online, you will encounter three distinct purchasing formats: unstitched fabric sets, ready-to-wear garments, and made-to-measure (also called custom-stitched) outfits. Each has its own set of advantages, limitations, and ideal use cases — and choosing the wrong format for your situation can mean a garment that sits in your wardrobe unworn.</p>
-<p>For NRI buyers in the USA, UK, Canada, and Australia, this decision carries additional weight. You cannot walk into a boutique, try things on, and hand the garment directly to an alterations tailor in the same shopping trip. You are ordering from thousands of miles away, often with a wedding, Diwali, Navratri, Eid, or another occasion on a fixed deadline.</p>
+<p>For NRI buyers in the United States, this decision carries additional weight. You cannot walk into a boutique, try things on, and hand the garment directly to an alterations tailor in the same shopping trip. You are ordering from thousands of miles away, often with a wedding, Diwali, Navratri, Eid, or another occasion on a fixed deadline.</p>
 <p>This guide gives you a clear, practical breakdown of all three options so you can choose with confidence.</p>
 <p>---</p>
 <h2>What Is an Unstitched Indian Outfit?</h2>
@@ -3185,7 +3185,7 @@ export const blogPosts: BlogPost[] = [
 <li>Whether you want a petticoat or can-can underskirt included</li>
 </ul>
 <h3>Turnaround Time for Custom Stitched Lehengas</h3>
-<p>Custom stitching typically adds 2 to 4 weeks to the order timeline, depending on the complexity of the embroidery and the boutique's current order volume. For bridal lehengas with heavy embellishment, budget 4 weeks for stitching plus 1 week for shipping to reach the USA, UK, Canada, or Australia — and order at least 10-12 weeks before your event date.</p>
+<p>Custom stitching typically adds 2 to 4 weeks to the order timeline, depending on the complexity of the embroidery and the boutique's current order volume. For bridal lehengas with heavy embellishment, budget 4 weeks for stitching plus 1 week for shipping to reach the the USA, or Australia — and order at least 10-12 weeks before your event date.</p>
 <p>---</p>
 <h2>Indian Outfit Sizing Guide for NRI Buyers</h2>
 <p>Getting sizing right for Indian ethnic wear is one of the most common frustrations for NRI buyers. Here is a practical framework.</p>
@@ -3220,10 +3220,10 @@ export const blogPosts: BlogPost[] = [
 <h3>How do I choose between unstitched and ready to wear for a casual occasion?</h3>
 <p>For casual occasions like Diwali, Navratri, Karva Chauth, or Eid, ready-to-wear is generally the better choice if you are ordering close to the event date and your measurements fall within a standard size range. Unstitched is the better choice if you have a preferred local tailor, want a fully customized silhouette, or are buying a coordinating set for multiple family members in different sizes.</p>
 <h3>Do Indian boutiques ship custom stitched outfits internationally?</h3>
-<p>Yes. Dedicated NRI boutiques like <a href="https://luxemia.shop">LuxeMia</a> offer both custom stitching and international shipping as standard services. The custom stitching process is handled remotely — you submit measurements online, the garment is tailored in India, and shipped to your address in the USA, UK, Canada, or Australia via express courier. Free shipping is available on orders over $350.</p>
+<p>Yes. Dedicated NRI boutiques like <a href="https://luxemia.shop">LuxeMia</a> offer both custom stitching and US shipping as standard services. The custom stitching process is handled remotely — you submit measurements online, the garment is tailored in India, and shipped to your address in the the USA, or Australia via express courier. Free US shipping is available on orders over $150.</p>
 <p>---</p>
 <h2>Shop the LuxeMia Collection</h2>
-<p>Shop the LuxeMia collection of custom-stitched lehengas, sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — made-to-measure options available with free shipping on orders over $350 to the USA, UK, Canada, and Australia.</p>
+<p>Shop the LuxeMia collection of custom-stitched lehengas, sarees, and salwar kameez at <a href="https://luxemia.shop">https://luxemia.shop</a> — made-to-measure options available with free US shipping over $150 to the United States.</p>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-05-13',
@@ -3258,11 +3258,11 @@ export const blogPosts: BlogPost[] = [
       <h3>Shipping Times</h3>
       <ul>
         <li><strong>Standard shipping:</strong> 10-15 business days from India</li>
-        <li><strong>Express shipping:</strong> 5-7 business days</li>
+        <li><strong>Express shipping:</strong> confirm timing before ordering</li>
         <li><strong>Custom-stitched orders:</strong> Add 7-14 days for tailoring before shipping</li>
       </ul>
       <h3>LuxeMia Shipping Policy</h3>
-      <p>At LuxeMia, we ship from our Philadelphia warehouse, so delivery is much faster than ordering directly from India. We offer <strong>free shipping on orders over $350</strong> and a flat rate of $25 for orders under $350. No waiting weeks for your outfit to arrive — see our <a href="/shipping">shipping policy</a> for full details.</p>
+      <p>At LuxeMia, we ship from our Philadelphia warehouse, so delivery is much faster than ordering from US-held stock. We offer <strong>free US shipping over $150</strong> and a flat rate of $25 for orders below $150. No waiting weeks for your outfit to arrive — see our <a href="/shipping">shipping policy</a> for full details.</p>
 
       <h2>Customs Duties and Tariffs: The Hidden Cost</h2>
       <p>This is the part most NRI shoppers don't anticipate. As of 2025-2026, the United States imposes tariffs on goods imported from India, and clothing is no exception.</p>
@@ -3273,7 +3273,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Personal use exemption:</strong> You may bring back up to $800 worth of goods per person when traveling</li>
       </ul>
       <h3>How LuxeMia Handles Duties</h3>
-      <p>Because LuxeMia is a US-based business (Glamour Indian Wear DBA LuxeMia, USA-based support), we import in bulk and handle all customs duties on our end. The price you see on our website is the price you pay — no surprise duty bills at your doorstep. This can save you hundreds of dollars compared to ordering directly from Indian retailers.</p>
+      <p>Because LuxeMia is a US-based business (Glamour Indian Wear DBA LuxeMia, USA-based support), we import in bulk and handle all customs duties on our end. The price you see on our website is the price you pay — no surprise duty bills at your doorstep. This can save you hundreds of dollars compared to ordering from US-held stockn retailers.</p>
 
       <h2>Quality Concerns: What You See vs. What You Get</h2>
       <p>One of the biggest fears of online ethnic wear shopping is quality mismatch. The outfit that looked stunning on the model arrives looking like a completely different piece. Here's how to protect yourself:</p>
@@ -3328,7 +3328,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Why LuxeMia Is Built for NRI Shoppers</h2>
       <p>LuxeMia was founded specifically to solve the problems NRIs face when buying Indian clothes. Based in Philadelphia, we stock our inventory in the US, so you get fast delivery without customs surprises. Every product listing includes accurate measurements, fabric details, and close-up photos. Learn more about our mission on our <a href="/brand-story">brand story page</a>.</p>
-      <p>For customers in Canada and Australia, we also ship internationally with transparent pricing. Visit our <a href="/nri/usa">NRI USA shopping page</a> for country-specific information.</p>
+      <p>For customers in the United States, we also ship internationally with transparent pricing. Visit our <a href="/nri/usa">NRI USA shopping page</a> for country-specific information.</p>
 
       <h2>Continue Reading</h2>
       <ul>
@@ -3473,7 +3473,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Banarasi for NRI Brides: Sourcing and Shipping</h2>
-<p>For NRI brides in the US, UK, Canada, and Australia, sourcing a Banarasi saree involves three options: buy during an India trip, order online from a Varanasi showroom, or buy from a US boutique. The landed cost differences are significant:</p>
+<p>For NRI brides in the US, the USA, and Australia, sourcing a Banarasi saree involves three options: buy during an India trip, order online from a Varanasi showroom, or buy from a US boutique. The landed cost differences are significant:</p>
 <ul>
   <li><strong>India trip purchase:</strong> $400 saree + $0 shipping = $400 landed</li>
   <li><strong>Varanasi showroom online order:</strong> $400 saree + $60 DHL + $0 duty (under $800) + $12 foreign-transaction fee = $472 landed</li>
@@ -4123,11 +4123,11 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Indian Fabric Sourcing and the NRI Buyer</h2>
-<p>For NRI buyers in the US, UK, Canada, and Australia, sourcing authentic Indian fabrics involves navigating a complex supply chain. Most online retailers fall into three categories:</p>
+<p>For NRI buyers in the US, the USA, and Australia, sourcing authentic Indian fabrics involves navigating a complex supply chain. Most online retailers fall into three categories:</p>
 <ul>
   <li><strong>Direct-from-India e-commerce (LuxeMia, Kalki Fashion, Pothys, Nalli Silks):</strong> These sites source direct from weaving cooperatives and workshops in India, ship internationally via DHL/FedEx, and price in USD. They offer the best value: 30-55 percent below US boutique prices for identical garments. Shipping: 5-10 business days. Returns: usually 7-15 days for sizing.</li>
   <li><strong>US-based Indian boutiques (Edison NJ, Fremont CA, Jackson Heights NY, Mississauga ON):</strong> These brick-and-mortar stores import finished pieces from India and resell at 50-100 percent markup. They offer in-person inspection, immediate try-on, and on-site tailoring. Best for: last-minute purchases, non-standard sizes, and buyers who want to touch the fabric before buying.</li>
-  <li><strong>Designer e-commerce (Pernia's Pop-Up, Aza Fashions, Ogaan):</strong> These sites sell designer pieces (Sabyasachi, Manish Malhotra, Anita Dongre) at designer prices ($500-$5,000+). They offer authenticity guarantees and ship from India in 2-4 weeks. Best for: bridal and couture pieces where authenticity matters more than price.</li>
+  <li><strong>Designer e-commerce (Pernia's Pop-Up, Aza Fashions, Ogaan):</strong> These sites sell designer pieces (Sabyasachi, Manish Malhotra, Anita Dongre) at designer prices ($500-$5,000+). They offer authenticity guarantees and ship from US-held stock in 2-4 weeks. Best for: bridal and couture pieces where authenticity matters more than price.</li>
 </ul>
 <p>When buying online, always verify the fabric composition in writing before purchasing. Reputable sellers disclose the fiber content (e.g., "100% mulberry silk with real zari border," "polyester georgette with machine embroidery") in the product description. If the description is vague ("silky fabric," "fine material"), ask the seller for clarification before buying — vague descriptions are a red flag for synthetic masquerading as silk.</p>
 
@@ -4355,7 +4355,7 @@ export const blogPosts: BlogPost[] = [
 </ul>
 
 <h2>Kanchipuram for NRI Brides: Sourcing and Shipping</h2>
-<p>For NRI brides in the US, UK, Canada, and Australia, sourcing a Kanchipuram saree involves three options: buy during an India trip, order online from a Chennai showroom, or buy from a US boutique. The landed cost differences are significant:</p>
+<p>For NRI brides in the US, the USA, and Australia, sourcing a Kanchipuram saree involves three options: buy during an India trip, order online from a Chennai showroom, or buy from a US boutique. The landed cost differences are significant:</p>
 <ul>
   <li><strong>India trip purchase:</strong> $420 saree + $0 shipping (in luggage) = $420 landed</li>
   <li><strong>Chennai showroom online order:</strong> $420 saree + $60 DHL shipping + $0 duty (under $800) + $13 foreign transaction fee = $493 landed</li>
@@ -4773,7 +4773,7 @@ export const blogPosts: BlogPost[] = [
       <p>For NRI brides living in the USA, buying a <a href="/lehengas">bridal lehenga online</a> is now the most practical path to a dream wedding outfit. You get access to authentic Indian craftsmanship, designer collections, and custom tailoring — all without flying to India. This guide covers everything you need to know to buy a bridal lehenga online in the USA with confidence.</p>
 
       <h2>Why Buy a Bridal Lehenga Online in the USA?</h2>
-      <p>The traditional approach — flying to India, visiting dozens of boutiques, and shipping your purchase back — is expensive and time-consuming. When you <a href="/lehengas">buy bridal lehengas online</a>, you get the same designer quality, often at better prices, with direct shipping to your US address. LuxeMia ships to all 50 states with free shipping on orders over $350.</p>
+      <p>The traditional approach — flying to India, visiting dozens of boutiques, and shipping your purchase back — is expensive and time-consuming. When you <a href="/lehengas">buy bridal lehengas online</a>, you get the same designer quality, often at better prices, with direct shipping to your US address. LuxeMia ships to all 50 states with free US shipping over $150.</p>
 
       <h3>Advantages of Online Bridal Lehenga Shopping</h3>
       <ul>
@@ -4800,7 +4800,7 @@ export const blogPosts: BlogPost[] = [
       <p>One of the biggest concerns for NRI brides is getting the right fit without an in-person fitting. LuxeMia offers three options:</p>
 
       <h3>Ready-to-Wear Bridal Lehengas</h3>
-      <p>Pre-stitched to standard sizes (32-48 bust). Ships within 3-5 business days. Best if you need your lehenga quickly and your measurements align with standard sizing.</p>
+      <p>Pre-stitched to standard sizes (32-48 bust). Ships within 2 business days. Best if you need your lehenga quickly and your measurements align with standard sizing.</p>
 
       <h3>Made-to-Measure Bridal Lehengas</h3>
       <p>Stitched to your exact body measurements after you submit a measurement form. Takes 3-4 weeks to ship but guarantees a perfect fit. This is the recommended option for brides who want their lehenga to fit flawlessly.</p>
@@ -4813,8 +4813,8 @@ export const blogPosts: BlogPost[] = [
       <h2>Shipping, Customs, and Duties for USA Orders</h2>
       <p>When you buy a bridal lehenga online from LuxeMia, here's what to expect for US delivery:</p>
       <ul>
-        <li><strong>Free shipping:</strong> Orders over $350 ship free to all US states</li>
-        <li><strong>Delivery time:</strong> 7-10 business days for ready-to-wear; 4-5 weeks for made-to-measure</li>
+        <li><strong>Free US shipping:</strong> Orders over $150 ship free to all US states</li>
+        <li><strong>Delivery time:</strong> 2 business days to ship for ready-to-wear; 4-5 weeks for made-to-measure</li>
         <li><strong>Customs duties:</strong> US duties and carrier processing fees may apply; confirm current rules before ordering</li>
         <li><strong>Tracking:</strong> Full tracking via DHL, USPS, or UPS</li>
       </ul>
@@ -4848,7 +4848,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Are the photos on the website accurate?</h3>
       <p>LuxeMia photographs every product in natural light with no color enhancement. However, screen settings vary — we recommend reviewing all available images and reading the fabric description for the most accurate representation.</p>
 
-      <p>Ready to find your dream bridal lehenga? <a href="/lehengas">Browse our full collection</a> of designer bridal lehenga choli, all available with worldwide shipping to the USA.</p>
+      <p>Ready to find your dream bridal lehenga? <a href="/lehengas">Browse our full collection</a> of designer bridal lehenga choli, all available with US shipping to the USA.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-05-01',
@@ -4915,7 +4915,7 @@ export const blogPosts: BlogPost[] = [
       <h2>Shipping Timeline for USA Grooms</h2>
       <p>When you order a <a href="/menswear">designer sherwani online in the USA</a>, plan ahead:</p>
       <ul>
-        <li><strong>Ready-to-wear:</strong> Ships in 3-5 business days, arrives in 7-10 days total</li>
+        <li><strong>Ready-to-wear:</strong> Ships in 2 business days, arrives in 7-10 days total</li>
         <li><strong>Made-to-measure:</strong> Ships in 3-4 weeks, arrives in 4-5 weeks total</li>
         <li><strong>Order 2-3 months before the wedding</strong> to allow time for any alterations</li>
       </ul>
@@ -4930,7 +4930,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Do I need to wear a turban with my sherwani?</h3>
       <p>A turban (safa) is traditional for the groom but optional. If you choose to wear one, it should complement your sherwani color.</p>
 
-      <p>Ready to find your groom sherwani? <a href="/menswear">Shop designer sherwanis for men online</a> with worldwide shipping to the USA.</p>
+      <p>Ready to find your groom sherwani? <a href="/menswear">Shop designer sherwanis for men online</a> with US shipping to the USA.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-05-05',
@@ -4950,7 +4950,7 @@ export const blogPosts: BlogPost[] = [
       <p>The salwar kameez is the most versatile piece in Indian ethnic wear — comfortable enough for everyday wear, elegant enough for festivities. For Indian women in the USA, buying <a href="/suits">salwar kameez online</a> is the easiest way to build an ethnic wardrobe. This guide covers everything from fabric selection to styling.</p>
 
       <h2>Why Salwar Kameez Is Perfect for NRI Women</h2>
-      <p>Unlike lehengas or heavy sarees, salwar kameez suits are practical for daily life. You can wear them to work, to temple, to community gatherings, and to festive celebrations. When you <a href="/suits">buy Indian designer salwar suits online in the USA</a>, you get authentic designs shipped directly to your door.</p>
+      <p>Unlike lehengas or heavy sarees, salwar kameez suits are practical for daily life. You can wear them to work, to temple, to community gatherings, and to festive celebrations. When you <a href="/suits">buy Indian designer salwar suits online in the USA</a>, you get authentic designs shipped to your door.</p>
 
       <h2>Choosing the Right Fabric for the US Climate</h2>
       <h3>Cotton Salwar Kameez</h3>
@@ -5001,8 +5001,8 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Shipping and Care for USA Customers</h2>
       <ul>
-        <li><strong>Free shipping:</strong> Orders over $350 ship free to the USA</li>
-        <li><strong>Delivery:</strong> 7-10 business days for ready-to-wear</li>
+        <li><strong>Free US shipping:</strong> Orders over $150 ship free to the USA</li>
+        <li><strong>Delivery:</strong> 2 business days to ship for ready-to-wear</li>
         <li><strong>Care:</strong> Dry clean silk and embroidered suits; hand wash cotton</li>
         <li><strong>Customs:</strong> US imports under $800 are duty-free</li>
       </ul>
@@ -5017,7 +5017,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Are the colors in the photos accurate?</h3>
       <p>We photograph in natural light without color enhancement, but screen settings vary. Read the fabric and color description for the most accurate representation.</p>
 
-      <p>Ready to build your ethnic wardrobe? <a href="/suits">Shop designer salwar suits online</a> with worldwide shipping to the USA.</p>
+      <p>Ready to build your ethnic wardrobe? <a href="/suits">Shop designer salwar suits online</a> with US shipping to the USA.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-05-10',
@@ -5105,7 +5105,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Can I wear bridal jewelry after the wedding?</h3>
       <p>Yes — simpler pieces like earrings and rings can be worn for festivities and parties. The full necklace set is typically reserved for special occasions.</p>
 
-      <p>Find your perfect bridal jewelry set. <a href="/jewelry">Shop Indian bridal jewelry online</a> with worldwide shipping to the USA.</p>
+      <p>Find your perfect bridal jewelry set. <a href="/jewelry">Shop Indian bridal jewelry online</a> with US shipping to the USA.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-05-15',
@@ -5201,7 +5201,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Can I wear a lehenga to a wedding as a guest?</h3>
       <p>Yes — a lighter lehenga in a non-red color is perfect for wedding guests. Avoid red and maroon, which are traditionally reserved for the bride.</p>
 
-      <p>Find your perfect lehenga choli. <a href="/lehengas">Shop the latest lehenga choli designs</a> with worldwide shipping.</p>
+      <p>Find your perfect lehenga choli. <a href="/lehengas">Shop the latest lehenga choli designs</a> with US shipping.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-05-20',
@@ -6753,7 +6753,7 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Abu Jani-Sandeep Khosla's Impact on Indian Fashion</h2>
 <p>Abu Jani-Sandeep Khosla's influence on Indian fashion spans 40 years and can be measured in three areas where their innovations became industry standards. First, they elevated chikankari from a casual, everyday embroidery to a couture-grade luxury textile. Before Abu-Sandeep's work in the late 1980s and 1990s, chikankari was associated with daily-wear cotton kurtis priced at Rs. 200-500 ($2.40-$6). By combining chikankari with mukaish (silver or gold wire thread work) on couture fabrics like georgette and organza, Abu-Sandeep repositioned chikankari as a luxury embroidery suitable for bridal wear. Today, chikankari couture pieces are stocked at every major Indian designer boutique, with prices reaching Rs. 5 lakh ($6,000) for hand-embroidered bridal lehengas.</p>
-<p>Second, they were among the first Indian designers to champion khadi cotton and handloom silk as luxury fabrics. In the 1990s, when most Indian designers were using imported silk and synthetic fabrics, Abu-Sandeep sourced khadi directly from Indian weaving cooperatives and positioned it as a sustainable luxury fabric. This predated the "sustainable fashion" movement by 20+ years and influenced later designers including Anita Dongre (whose Grassroots line uses khadi), Rahul Mishra (who uses handloom silk), and Sabyasachi Mukherjee (who revived handloom textiles through his flagship stores). The khadi revival Abu-Sandeep pioneered is now a $200+ million segment of the Indian luxury market.</p>
+<p>Second, they were among the first Indian designers to champion khadi cotton and handloom silk as luxury fabrics. In the 1990s, when most Indian designers were using imported silk and synthetic fabrics, Abu-Sandeep sourced khadi from US-held stockn weaving cooperatives and positioned it as a sustainable luxury fabric. This predated the "sustainable fashion" movement by 20+ years and influenced later designers including Anita Dongre (whose Grassroots line uses khadi), Rahul Mishra (who uses handloom silk), and Sabyasachi Mukherjee (who revived handloom textiles through his flagship stores). The khadi revival Abu-Sandeep pioneered is now a $200+ million segment of the Indian luxury market.</p>
 <p>Third, they proved that a designer duo model could succeed in Indian fashion. Before Abu-Sandeep, Indian designer labels were almost exclusively solo ventures (Ritu Kumar, Rohit Bal, J.J. Valaya). The duo's 40-year partnership demonstrated that two designers with complementary skills — Abu Jani's creative vision and client relationships, Sandeep Khosla's technical pattern-making — could build a more resilient business than a solo designer. This paved the way for other Indian designer duos including Hemant-Nandita, Dev-Nil, and Rohit-Rahul.</p>
 <p>Internationally, Abu-Sandeep's V&amp;A exhibition in 2002 and Selfridges stocking in 2004 were the first major international recognition of Indian couture as a luxury category. This predated Sabyasachi's international expansion (2015+), Manish Malhotra's international trunk shows (2018+), and Rahul Mishra's Paris Haute Couture Week debut (2020) by 10-15 years. The international market for Indian couture that Abu-Sandeep pioneered is now worth an estimated $500+ million annually. For clients who want Abu-Sandeep's chikankari-with-mukaish aesthetic at accessible prices, LuxeMia's <a href="/suits">chikankari kurti collection</a> includes hand-embroidered pieces starting at $80, produced by Lucknow artisan cooperatives.</p>
 
@@ -7140,7 +7140,7 @@ export const blogPosts: BlogPost[] = [
 <p>A garment that is partially stitched, with open side seams that can be adjusted to the wearer's measurements. Semi-stitched garments are the standard offering for online Indian ethnic wear, allowing buyers to have local tailoring for a custom fit.</p>
 
 <h3>Ready to Wear (रेडी टू वेयर)</h3>
-<p>A garment that is fully stitched to standard measurements and can be worn without additional tailoring. Ready to wear is faster to dispatch (3-5 business days) but cannot be customized for non-standard sizes.</p>
+<p>A garment that is fully stitched to standard measurements and can be worn without additional tailoring. Ready to wear is faster to dispatch (2 business days) but cannot be customized for non-standard sizes.</p>
 
 <h3>Made to Measure (मेड टू मेज़र)</h3>
 <p>A garment stitched to the buyer's exact measurements, based on 12+ body measurements submitted at order. Made to measure is the most expensive option but provides the best fit for non-standard body types. Dispatch: 8-10 business days.</p>
@@ -7713,7 +7713,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Attending an Indian wedding as a non-Indian guest? Wear a saree, lehenga, or anarkali suit in festive colors (never white or black). Budget $150-$400 USD, order 4-6 weeks ahead, and choose ready-to-ship styles. This guide covers outfit choices by ceremony, color etiquette, sizing help, and where to shop with USA-based support.',
     content: `
       <h2>Quick Answer: What Non-Indian Guests Should Wear to an Indian Wedding</h2>
-      <p>If you have been invited to an Indian wedding and you are not Indian, wear a <strong>saree, lehenga choli, or anarkali suit</strong> in festive colors like deep green, royal blue, maroon, fuchsia, or gold. <strong>Never wear white or black</strong> — white is for funerals in Indian culture, and black is considered inauspicious for celebrations. Budget between $150 and $400 USD for a quality outfit, and order at least 4-6 weeks before the wedding to allow time for shipping from India and any tailoring. If you have never worn Indian clothes before, choose a <strong>pre-draped saree</strong> or an <strong>anarkali suit</strong> — both are easier to wear than a traditional saree and require no special draping skills. At LuxeMia, we ship ready-to-ship Indian ethnic wear to the USA, Canada, and Australia with free shipping on orders over $350, and our USA-based support team can help you pick the right outfit and size.</p>
+      <p>If you have been invited to an Indian wedding and you are not Indian, wear a <strong>saree, lehenga choli, or anarkali suit</strong> in festive colors like deep green, royal blue, maroon, fuchsia, or gold. <strong>Never wear white or black</strong> — white is for funerals in Indian culture, and black is considered inauspicious for celebrations. Budget between $150 and $400 USD for a quality outfit, and order at least 4-6 weeks before the wedding to allow time for shipping from US-held stock and any tailoring. If you have never worn Indian clothes before, choose a <strong>pre-draped saree</strong> or an <strong>anarkali suit</strong> — both are easier to wear than a traditional saree and require no special draping skills. At LuxeMia, we ship ready-to-ship Indian ethnic wear to the United States with free US shipping over $150, and our USA-based support team can help you pick the right outfit and size.</p>
 
       <h2>Understanding Indian Wedding Dress Codes</h2>
       <p>Indian weddings are multi-day affairs with distinct ceremonies, each with its own dress code. As a non-Indian guest, you do not need to attend every event, but the wedding invitation will specify which events you are invited to. The main events you may attend are:</p>
@@ -7791,11 +7791,11 @@ export const blogPosts: BlogPost[] = [
         <li>You can return or exchange if the fit is wrong (always check the return policy before ordering)</li>
         <li>You avoid the overwhelm of walking into an Indian boutique where staff may assume you know what you want</li>
       </ul>
-      <p>At LuxeMia, we ship from India to the USA, Canada, and Australia with full tracking and insurance. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990, email: hello@luxemia.shop) and we regularly help non-Indian guests pick outfits and sizes. Browse our <a href="/collections">full collection</a> or our curated <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> page.</p>
+      <p>At LuxeMia, we ship from US-held stock to the United States with full tracking and insurance. Ready-to-wear items dispatch in 2 business days; custom-stitched items in confirm timing before ordering; shipping takes 2 business days to ship via USPS/UPS/DHL. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990, email: hello@luxemia.shop) and we regularly help non-Indian guests pick outfits and sizes. Browse our <a href="/collections">full collection</a> or our curated <a href="/collections/wedding-guest-outfits">wedding guest outfits</a> page.</p>
 
       <h2>Tips for First-Time Indian Wedding Guests</h2>
       <ul>
-        <li><strong>Order early.</strong> Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door. Custom-stitched items take 3-4 weeks. Order at least 4-6 weeks before the wedding.</li>
+        <li><strong>Order early.</strong> Indian ethnic wear ships from US-held stock — even ready-to-ship items take 10-14 days door-to-door. Custom-stitched items take 3-4 weeks. Order at least 4-6 weeks before the wedding.</li>
         <li><strong>Get help with draping.</strong> If you choose a saree, ask an Indian friend or hire a local Indian beautician to help you drape it. A well-draped saree is stunning; a badly-draped one is a wardrobe malfunction waiting to happen.</li>
         <li><strong>Safety-pin everything.</strong> Indian clothes involve a lot of fabric. Bring 4-5 large safety pins to secure your dupatta, pleats, and pallu.</li>
         <li><strong>Wear makeup that lasts.</strong> Indian weddings are long (4-8 hours) and involve dancing. Use a primer, long-wear foundation, and setting spray.</li>
@@ -7854,7 +7854,7 @@ export const blogPosts: BlogPost[] = [
         <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali: Which to Choose</a></li>
         <li><a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary: 50+ Events, Rituals & Roles</a></li>
         <li><a href="/size-guide">LuxeMia Size Guide — How to Measure for Indian Clothes</a></li>
-        <li><a href="/shipping">Shipping Policy — USA, Canada & Australia</a></li>
+        <li><a href="/shipping">Shipping Policy — the United States</a></li>
       </ul>
     `,
     author: 'LuxeMia Editorial Team',
@@ -7872,11 +7872,11 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Navratri 2026 runs September 22 to October 1. Each of the 9 days has a designated color — Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green. Here is what to wear each night, with shoppable chaniya choli and garba outfit ideas for every color.',
     content: `
       <h2>Quick Answer: Navratri 2026 Dates and 9 Day Color Schedule</h2>
-      <p>Navratri 2026 begins on <strong>Tuesday, September 22, 2026</strong> and ends on <strong>Thursday, October 1, 2026</strong> with Dussehra (Vijayadashami) on October 2. Each of the 9 nights of Navratri is associated with a specific color and a form of Goddess Durga. Wearing the day's color is considered auspicious and is a beloved tradition in Gujarat, Maharashtra, and among Indian diaspora communities worldwide. The 2026 Navratri color schedule is: <strong>Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green</strong>. Below is a day-by-day guide with outfit ideas, fabric recommendations, and shoppable chaniya choli options for each color, all available with free shipping to the USA, Canada, and Australia from LuxeMia.</p>
+      <p>Navratri 2026 begins on <strong>Tuesday, September 22, 2026</strong> and ends on <strong>Thursday, October 1, 2026</strong> with Dussehra (Vijayadashami) on October 2. Each of the 9 nights of Navratri is associated with a specific color and a form of Goddess Durga. Wearing the day's color is considered auspicious and is a beloved tradition in Gujarat, Maharashtra, and among Indian diaspora communities worldwide. The 2026 Navratri color schedule is: <strong>Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green</strong>. Below is a day-by-day guide with outfit ideas, fabric recommendations, and shoppable chaniya choli options for each color, all available with free US shipping to the United States from LuxeMia.</p>
 
       <h2>What Is Navratri and Why Do Colors Matter?</h2>
       <p>Navratri (literally "nine nights" in Sanskrit) is a Hindu festival celebrating the victory of Goddess Durga over the buffalo demon Mahishasura. It is one of the most important festivals in Gujarat, where it is celebrated with nightly garba and dandiya raas dances. Each day of Navratri is dedicated to a different form of Durga (Shailaputri, Brahmacharini, Chandraghanta, Kushmanda, Skandamata, Katyayani, Kalaratri, Mahagauri, Siddhidatri) and is associated with a specific color. The color schedule changes every year because it is tied to the Hindu lunar calendar, but the tradition of wearing the day's color is constant.</p>
-      <p>For Indian diaspora communities in the USA, Canada, and Australia, Navratri is celebrated with community garba nights organized by Gujarati and Indian cultural associations. Most diaspora celebrations happen on the closest weekend to the actual Navratri dates, so check your local Indian community center for the exact garba night schedule. If you are attending a garba event, you will want a different outfit for each night — or at least 2-3 outfits you can rotate. This guide helps you plan your 9-day Navratri wardrobe with the right colors and silhouettes.</p>
+      <p>For Indian diaspora communities in the United States, Navratri is celebrated with community garba nights organized by Gujarati and Indian cultural associations. Most diaspora celebrations happen on the closest weekend to the actual Navratri dates, so check your local Indian community center for the exact garba night schedule. If you are attending a garba event, you will want a different outfit for each night — or at least 2-3 outfits you can rotate. This guide helps you plan your 9-day Navratri wardrobe with the right colors and silhouettes.</p>
 
       <h2>Day 1 (Sept 22, 2026) — Orange: Shailaputri Puja</h2>
       <p>Orange represents energy, warmth, and the rising sun. For Day 1 of Navratri, wear an orange <a href="/lehengas">chaniya choli</a>, anarkali suit, or saree. Orange is one of the easiest Navratri colors to find because it is a festive staple in Indian fashion. Pair orange with gold jewelry and a contrasting dupatta in yellow or pink for a vibrant garba look. <strong>Budget:</strong> $150-$400 for a ready-to-ship orange chaniya choli. <strong>Fabric:</strong> Georgette or art silk for garba (you will be dancing for hours — avoid heavy velvet on Day 1).</p>
@@ -7923,7 +7923,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Where to Buy Navratri Chaniya Choli in the USA</h2>
-      <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the USA, Canada, and Australia with free shipping on orders over $350. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990) and can help you pick the right color and size. Browse our <a href="/lehengas">lehenga collection</a> (many styles work for garba) or our curated <a href="/collections/navratri-outfits">Navratri outfits page</a>.</p>
+      <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from US-held stock — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the United States with free US shipping over $150. Our support team is USA-based (phone and WhatsApp: +1-215-341-9990) and can help you pick the right color and size. Browse our <a href="/lehengas">lehenga collection</a> (many styles work for garba) or our curated <a href="/collections/navratri-outfits">Navratri outfits page</a>.</p>
 
       <h2>Navratri Accessories — What You Need Beyond the Outfit</h2>
       <ul>
@@ -7972,10 +7972,10 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'What to wear for Diwali depends on the setting. For Lakshmi Puja at home, wear a silk saree or cotton salwar kameez. For a Diwali party, choose an embellished lehenga or anarkali. For office Diwali, go indo-western. For community Diwali, wear festive colors. Budget $120-$500 per outfit.',
     content: `
       <h2>Quick Answer: What to Wear for Diwali by Setting</h2>
-      <p>Diwali outfit choices depend on where you are celebrating. For <strong>Lakshmi Puja at home</strong>, wear a traditional silk saree or cotton salwar kameez in auspicious colors (red, gold, deep green). For a <strong>Diwali party</strong>, choose an embellished lehenga or sequin anarkali in jewel tones. For an <strong>office Diwali celebration</strong>, go indo-western — a palazzo suit or contemporary anarkali in festive colors. For a <strong>community Diwali event</strong>, wear festive colors with traditional embellishments. Budget $120-$500 per Diwali outfit. At LuxeMia, we ship ready-to-ship Diwali outfits to the USA, Canada, and Australia with free shipping on orders over $350 — <a href="/collections/diwali-outfits">shop Diwali outfits here</a>.</p>
+      <p>Diwali outfit choices depend on where you are celebrating. For <strong>Lakshmi Puja at home</strong>, wear a traditional silk saree or cotton salwar kameez in auspicious colors (red, gold, deep green). For a <strong>Diwali party</strong>, choose an embellished lehenga or sequin anarkali in jewel tones. For an <strong>office Diwali celebration</strong>, go indo-western — a palazzo suit or contemporary anarkali in festive colors. For a <strong>community Diwali event</strong>, wear festive colors with traditional embellishments. Budget $120-$500 per Diwali outfit. At LuxeMia, we ship ready-to-ship Diwali outfits to the United States with free US shipping over $150 — <a href="/collections/diwali-outfits">shop Diwali outfits here</a>.</p>
 
       <h2>Why Diwali Outfit Choices Matter</h2>
-      <p>Diwali, the Hindu festival of lights, is the most celebrated Indian festival worldwide. Unlike a wedding (one event, one outfit), Diwali typically involves multiple celebrations across 5 days: Dhanteras (Day 1), Choti Diwali (Day 2), main Diwali / Lakshmi Puja (Day 3), Govardhan Puja / Padwa (Day 4), and Bhai Dooj (Day 5). Most Indian diaspora families in the USA, Canada, and Australia celebrate at least 2-3 of these: a home puja, a community celebration, and possibly an office or friend-hosted Diwali party. Each setting has a different dress code — wearing the wrong outfit to the wrong setting is a common mistake. This guide breaks down exactly what to wear for each Diwali setting, with shoppable outfit ideas for every budget and body type.</p>
+      <p>Diwali, the Hindu festival of lights, is the most celebrated Indian festival worldwide. Unlike a wedding (one event, one outfit), Diwali typically involves multiple celebrations across 5 days: Dhanteras (Day 1), Choti Diwali (Day 2), main Diwali / Lakshmi Puja (Day 3), Govardhan Puja / Padwa (Day 4), and Bhai Dooj (Day 5). Most Indian diaspora families in the United States celebrate at least 2-3 of these: a home puja, a community celebration, and possibly an office or friend-hosted Diwali party. Each setting has a different dress code — wearing the wrong outfit to the wrong setting is a common mistake. This guide breaks down exactly what to wear for each Diwali setting, with shoppable outfit ideas for every budget and body type.</p>
 
       <h2>Setting 1: Lakshmi Puja at Home (Most Traditional)</h2>
       <p>The main Diwali day is dedicated to Lakshmi, the goddess of wealth. Families perform a Lakshmi Puja (prayer ceremony) at home in the evening, lighting diyas (oil lamps) and offering sweets. This is the most traditional Diwali setting and calls for authentic Indian ethnic wear.</p>
@@ -7999,7 +7999,7 @@ export const blogPosts: BlogPost[] = [
       <p><strong>Colors:</strong> Anything festive — jewel tones, metallics, deep colors. This is the setting where you can be most fashion-forward. <strong>Embellishment:</strong> The more sparkle, the better. Diwali parties are maximalist — sequins, mirror work, zari all photograph beautifully against diyas and string lights.</p>
 
       <h2>Setting 3: Office Diwali Celebration (Most Modern)</h2>
-      <p>Many workplaces in the USA, Canada, and Australia now celebrate Diwali with an office party, potluck, or cultural event. The dress code is "festive office" — you want to celebrate the holiday but still look professional. This is where indo-western fusion shines.</p>
+      <p>Many workplaces in the United States now celebrate Diwali with an office party, potluck, or cultural event. The dress code is "festive office" — you want to celebrate the holiday but still look professional. This is where indo-western fusion shines.</p>
       <h3>What to Wear for Office Diwali</h3>
       <ul>
         <li><strong>Palazzo suit</strong> in a contemporary color — dusty rose, sage green, navy, ivory with gold print. Budget $120-$280.</li>
@@ -8052,7 +8052,7 @@ export const blogPosts: BlogPost[] = [
       </table>
 
       <h2>When to Order Diwali Outfits</h2>
-      <p>Diwali 2026 falls on <strong>October 21, 2026</strong> (main Diwali night). Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. If you are ordering multiple outfits (for different settings), order them all together to take advantage of free shipping over $350. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+      <p>Diwali 2026 falls on <strong>October 21, 2026</strong> (main Diwali night). Indian ethnic wear ships from US-held stock — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. If you are ordering multiple outfits (for different settings), order them all together to take advantage of free US shipping over $150. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
 
       <h2>Frequently Asked Questions</h2>
       <h3>Can I wear black for Diwali?</h3>
@@ -8184,7 +8184,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>When to Order Your Mehendi Outfit</h2>
-      <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping to the USA, Canada, and Australia.</p>
+      <p>Indian ethnic wear ships from US-held stock — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
 
       <h2>Frequently Asked Questions</h2>
       <h3>Can I wear a lehenga to a mehendi?</h3>
@@ -8223,7 +8223,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Plus size Indian ethnic wear that actually fits and flatters. Best silhouettes for plus size women: A-line lehengas, anarkali suits, wrap-style kurtis, and pre-draped sarees. Fabrics that drape (georgette, chiffon) over fabrics that cling (silk, brocade). Custom stitching is the gold standard. Budget $150-$500.',
     content: `
       <h2>Quick Answer: Plus Size Indian Ethnic Wear That Actually Fits</h2>
-      <p>For plus size women shopping for Indian ethnic wear, the best silhouettes are <strong>A-line lehengas, anarkali suits, wrap-style kurtis, and pre-draped sarees</strong>. Choose fabrics that drape (georgette, chiffon, crepe) over fabrics that cling (raw silk, brocade). Get <strong>custom stitching (Made to Measure)</strong> — off-the-rack Indian clothes rarely fit plus size bodies well because they are cut for standard Indian body proportions. Budget $150-$500 for a quality plus size Indian outfit. At LuxeMia, we offer Made to Measure on every product at no extra cost, and our USA-based support team (+1-215-341-9990) can help you find flattering styles for your body type. We ship to the USA, Canada, and Australia with free shipping over $350.</p>
+      <p>For plus size women shopping for Indian ethnic wear, the best silhouettes are <strong>A-line lehengas, anarkali suits, wrap-style kurtis, and pre-draped sarees</strong>. Choose fabrics that drape (georgette, chiffon, crepe) over fabrics that cling (raw silk, brocade). Get <strong>custom stitching (Made to Measure)</strong> — off-the-rack Indian clothes rarely fit plus size bodies well because they are cut for standard Indian body proportions. Budget $150-$500 for a quality plus size Indian outfit. At LuxeMia, we offer Made to Measure on every product at no extra cost, and our USA-based support team (+1-215-341-9990) can help you find flattering styles for your body type. We ship to the United States with free US shipping over $150.</p>
 
       <h2>The Plus Size Indian Ethnic Wear Problem</h2>
       <p>Finding plus size Indian ethnic wear is genuinely difficult. Most Indian boutiques — both in India and in the USA — stock standard sizes (XS-XL or bust 32-40). Plus size women (US size 16+ or bust 42+) are often told to "lose weight" by Indian boutique staff, or are shown a tiny selection of matronly styles. Online marketplaces like Utsav Fashion and Cbazaar have plus size sections, but the fits are often boxy and unflattering. This guide is written for plus size women who want to wear beautiful Indian ethnic wear that actually flatters their curves — not hide them.</p>
@@ -8323,7 +8323,7 @@ export const blogPosts: BlogPost[] = [
         <li>After ordering, we email you a measurement form.</li>
         <li>You (or a friend, or a local tailor) take your measurements with a soft tape measure. The form takes 10-15 minutes.</li>
         <li>We custom-stitch the outfit to your exact measurements — bust, waist, hips, sleeve length, kurti length, pant length, everything.</li>
-        <li>The finished outfit is dispatched in 5-7 business days.</li>
+        <li>The finished outfit is dispatched in confirm timing before ordering.</li>
       </ol>
       <p>See our <a href="/size-guide">size guide</a> for measurement instructions, or call our USA-based support team at +1-215-341-9990 if you need help measuring.</p>
 
@@ -8368,7 +8368,7 @@ export const blogPosts: BlogPost[] = [
       <p>It depends. Some boutiques in major US cities (New Jersey, Houston, Chicago) have plus size sections, but the selection is often limited. Online shopping with Made to Measure is usually the best option for plus size women because you get custom fit without the boutique experience of being shown only matronly styles.</p>
 
       <h2>Where to Shop Plus Size Indian Ethnic Wear in the USA</h2>
-      <p>At LuxeMia, we offer Made to Measure on every product at no extra cost. Our catalog includes lehengas, sarees, anarkali suits, palazzo suits, and sharara sets — all available in custom plus size fits. We ship from India to the USA, Canada, and Australia with full tracking and insurance. Free shipping on orders over $350. Our support team is USA-based and experienced in helping plus size women find flattering styles. <a href="/collections">Browse our full collection</a> or call us at +1-215-341-9990 for personalized help.</p>
+      <p>At LuxeMia, we offer Made to Measure on every product at no extra cost. Our catalog includes lehengas, sarees, anarkali suits, palazzo suits, and sharara sets — all available in custom plus size fits. We ship from US-held stock to the United States with full tracking and insurance. Free US shipping over $150. Our support team is USA-based and experienced in helping plus size women find flattering styles. <a href="/collections">Browse our full collection</a> or call us at +1-215-341-9990 for personalized help.</p>
 
       <h2>Related Reading</h2>
       <ul>
@@ -8399,7 +8399,7 @@ export const blogPosts: BlogPost[] = [
       <p>Indian clothing uses two sizing systems: alphabetical (XS, S, M, L, XL, XXL) and numerical bust measurements (32, 34, 36, 38, 40, 42, 44). Here is the conversion to US sizes:</p>
 
       <table>
-        <tr><th>Indian Size</th><th>Indian Bust (inches)</th><th>US Dress Size</th><th>US Bust (inches)</th><th>UK Size</th><th>EU Size</th><th>AU Size</th></tr>
+        <tr><th>Indian Size</th><th>Indian Bust (inches)</th><th>US Dress Size</th><th>US Bust (inches)</th><th>US Size</th><th>EU Size</th><th>AU Size</th></tr>
         <tr><td>XS</td><td>32</td><td>0-2</td><td>32-33</td><td>4-6</td><td>32-34</td><td>4-6</td></tr>
         <tr><td>S</td><td>34</td><td>4-6</td><td>34-35</td><td>8-10</td><td>36-38</td><td>8-10</td></tr>
         <tr><td>M</td><td>36</td><td>8-10</td><td>36-37</td><td>12-14</td><td>40-42</td><td>12-14</td></tr>
@@ -8462,7 +8462,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Indian vs US vs UK vs EU vs AU Size Conversion Chart</h2>
-      <p>For our international customers in the USA, Canada, Australia, UK, and Europe, here is the full size conversion chart for women dresses:</p>
+      <p>For our international customers in the United States, UK, and Europe, here is the full size conversion chart for women dresses:</p>
 
       <table>
         <tr><th>Indian</th><th>US</th><th>UK</th><th>EU</th><th>AU</th><th>Bust (inches)</th><th>Waist (inches)</th><th>Hips (inches)</th></tr>
@@ -8507,8 +8507,8 @@ export const blogPosts: BlogPost[] = [
         <li>You take your measurements with a soft tape measure (or have a friend/local tailor help). The form takes 10-15 minutes.</li>
         <li>Email the form back to us.</li>
         <li>We custom-stitch the outfit to your exact measurements — bust, waist, hips, shoulder, sleeve length, kurti length, pant length, everything.</li>
-        <li>The finished outfit is dispatched in 5-7 business days (vs 3-5 days for ready-to-wear).</li>
-        <li>Shipping takes 7-10 business days to the USA, Canada, and Australia.</li>
+        <li>The finished outfit is dispatched in confirm timing before ordering (vs 3-5 days for ready-to-wear).</li>
+        <li>Shipping takes 2 business days to ship to the United States.</li>
       </ol>
       <p>See our <a href="/size-guide">size guide</a> for detailed measurement instructions, or call our USA-based support team at +1-215-341-9990 if you need help.</p>
 

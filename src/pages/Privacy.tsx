@@ -85,7 +85,7 @@ const Privacy = () => {
                 </section>
 
                 <section>
-                  <h2 className="text-xl font-serif text-foreground mb-4">3. Legal Basis for Processing (EU/UK Users)</h2>
+                  <h2 className="text-xl font-serif text-foreground mb-4">3. Legal Basis for Processing (EU Users)</h2>
                   <p>If you are a resident of the European Economic Area (EEA) or the United Kingdom, we process your personal data only when we have a legal basis to do so:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-4">
                     <li><strong>Contractual Necessity:</strong> Processing is necessary to fulfill our contract with you — for example, processing your order, delivering your purchase, and providing customer support.</li>
@@ -115,7 +115,7 @@ const Privacy = () => {
                     LuxeMia is based in the United States and our primary data processing occurs in the US. Your information may be transferred to, stored, and processed in the United States or other countries where our service providers operate. These countries may have data protection laws that differ from your country of residence. By using our Site, you consent to the transfer of your information to these countries. We ensure appropriate safeguards are in place, including Standard Contractual Clauses (SCCs) approved by the European Commission, to protect your data during international transfers.
                   </p>
                   <p className="mt-4">
-                    Additionally, since our products are shipped internationally from India, order and shipping information may be shared with logistics providers operating in India, the United States, the United Kingdom, Canada, the United Arab Emirates, Australia, and other transit countries.
+                    Order and shipping information may be shared with logistics providers operating in the United States as needed to fulfill your order.
                   </p>
                 </section>
 
@@ -241,7 +241,7 @@ const Privacy = () => {
                     <p>WhatsApp: <a href="https://wa.me/12153419990" className="text-primary hover:underline">+1-215-341-9990</a></p>
                   </div>
                   <p className="mt-4">
-                    For EU/UK data protection inquiries, you also have the right to lodge a complaint with your local supervisory authority.
+                    For EU data protection inquiries, you also have the right to lodge a complaint with your local supervisory authority.
                   </p>
                 </section>
               </div>

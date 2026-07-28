@@ -94,11 +94,11 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
   {
     slug: 'nri-shopping',
     name: 'NRI Shopping',
-    shortDescription: 'Buying Indian ethnic wear from USA, Canada & Australia — shipping, customs, sizing & authenticity',
-    longDescription: 'The definitive guide for the NRI diaspora shopping for Indian ethnic wear from abroad. Buying a bridal lehenga from Philadelphia, a wedding saree from Toronto, or a sherwani from Sydney comes with specific challenges — sizing conversion, customs duties, shipping times, authenticity verification, and return policies. Our NRI Shopping guides answer every practical question: how to convert Indian bust sizes to US sizes, what the duty-free limits are for USA/Canada/Australia, how to verify a Banarasi saree is handwoven vs. machine-made, and which online stores ship reliably to your country.',
+    shortDescription: 'Buying Indian ethnic wear from the United States — shipping, customs, sizing & authenticity',
+    longDescription: 'The definitive guide for the NRI diaspora shopping for Indian ethnic wear from abroad. Buying a bridal lehenga from Philadelphia, a wedding saree from Toronto, or a sherwani from Sydney comes with specific challenges — sizing conversion, customs duties, shipping times, authenticity verification, and return policies. Our NRI Shopping guides answer every practical question: how to convert Indian bust sizes to US sizes, what the duty-free limits are for USA, how to verify a Banarasi saree is handwoven vs. machine-made, and which online stores ship reliably to your country.',
     icon: 'Globe',
-    metaTitle: 'NRI Guide: Buy Indian Ethnic Wear Online from USA, Canada & Australia | LuxeMia',
-    metaDescription: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, customs duties, shipping times, authenticity checks, and trusted online stores for USA, Canada & Australia.',
+    metaTitle: 'NRI Guide: Buy Indian Ethnic Wear Online from the United States | LuxeMia',
+    metaDescription: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, customs duties, shipping times, authenticity checks, and trusted online stores for the United States.',
   },
 ];
 

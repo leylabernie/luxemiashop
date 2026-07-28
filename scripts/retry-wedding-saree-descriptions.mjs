@@ -15,7 +15,7 @@ const ZAI = ZAI_MOD.default || ZAI_MOD;
 const products = JSON.parse(await readFile('/tmp/wedding-sarees-final.json', 'utf8'));
 
 // Same system prompt as the original script
-const SYSTEM_PROMPT = `You are an expert SEO + AI-search content writer for LuxeMia, a luxury Indian ethnic wear store shipping to USA, Canada, and Australia. Write Shopify product Body HTML for wedding sarees that ranks on Google, Bing, AND gets cited by AI search engines (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot).
+const SYSTEM_PROMPT = `You are an expert SEO + AI-search content writer for LuxeMia, a luxury Indian ethnic wear store shipping to the United States. Write Shopify product Body HTML for wedding sarees that ranks on Google, Bing, AND gets cited by AI search engines (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot).
 
 AI-SEARCH OPTIMIZATION RULES:
 1. Open with a DIRECT ANSWER paragraph (2-3 sentences) that AI engines can extract verbatim.
@@ -58,8 +58,8 @@ COLLECTION & POSITIONING:
 - Vendor: LuxeMia (luxury Indian ethnic wear, based in Philadelphia, PA)
 - Price: $${Math.round((p.price_inr * 2) / 90)} USD (compare at $${Math.round((p.mrp_inr * 2) / 90)})
 - Target occasions: Wedding, Reception, Engagement, Mehendi, Wedding Guest
-- Target audience: NRI brides and wedding guests in USA, Canada, Australia
-- Shipping: Free over $350, 7-10 business days via DHL/USPS/UPS
+- Target audience: NRI brides and wedding guests in United States
+- Shipping: Free over $350, 2 business days to ship via DHL/USPS/UPS
 
 Return ONLY the HTML.`;
 }

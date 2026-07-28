@@ -275,7 +275,7 @@ const NewVisitorPopup = () => {
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span><strong className="text-foreground">Free shipping</strong> on orders over $350 to USA, Canada & Australia</span>
+                          <span><strong className="text-foreground">Free US shipping</strong> over $150. $12 flat below that.</span>
                         </li>
                       </ul>
 

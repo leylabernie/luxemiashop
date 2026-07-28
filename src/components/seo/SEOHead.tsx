@@ -107,15 +107,9 @@ const SEOHead = ({
   // surfaces a missing-prop bug rather than silently breaking indexing.
   const canonicalUrl = canonical || siteUrl;
 
-  // Hreflang defaults: LuxeMia serves one URL to USA, Canada, and Australia.
-  // If a page doesn't pass explicit hreflang alternates, emit the standard
-  // 4-tag set (en-US, en-CA, en-AU, x-default) pointing at the canonical URL.
-  // Pages with truly different regional URLs (none currently) can override
-  // by passing the `hreflang` prop. Added 2026-07-09 per SEO audit Item #5.
+  // Hreflang defaults: LuxeMia currently serves United States shoppers only.
   const hreflangAlternates = hreflang || [
     { lang: 'en-US', href: canonicalUrl },
-    { lang: 'en-CA', href: canonicalUrl },
-    { lang: 'en-AU', href: canonicalUrl },
     { lang: 'x-default', href: canonicalUrl },
   ];
   
@@ -135,7 +129,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear with delivery to USA, Canada, and Australia.`,
+            : `Shop the ${product.name} at LuxeMia — ready-to-ship Indian ethnic wear for US delivery.`, 
         sku: product.sku || '',
         url: canonicalUrl,
         brand: product.brand,

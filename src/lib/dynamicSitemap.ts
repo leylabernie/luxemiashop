@@ -52,7 +52,6 @@ export const staticPages = [
   // NRI landing pages
   { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'Indian Ethnic Wear for NRIs' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
-  { loc: '/indian-ethnic-wear-canada', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear Canada' },
   // Customer service
   { loc: '/contact', changefreq: 'monthly', priority: '0.5', title: 'Contact' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5', title: 'FAQ' },

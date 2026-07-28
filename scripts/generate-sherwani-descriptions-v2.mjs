@@ -37,7 +37,7 @@ const OCCASIONS = {
   '658055': ['Groom Wedding', 'Haldi'],       // Ivory Raw Silk Resham (disambiguated)
 };
 
-const SYSTEM_PROMPT = `You are an expert SEO + AI-search content writer for LuxeMia, a luxury Indian ethnic wear store shipping to USA, Canada, and Australia. Write Shopify product Body HTML for sherwanis that ranks on Google, Bing, AND gets cited by AI search engines (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot).
+const SYSTEM_PROMPT = `You are an expert SEO + AI-search content writer for LuxeMia, a luxury Indian ethnic wear store shipping to the United States. Write Shopify product Body HTML for sherwanis that ranks on Google, Bing, AND gets cited by AI search engines (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot).
 
 AI-SEARCH OPTIMIZATION RULES (different from traditional SEO):
 1. Open with a DIRECT ANSWER paragraph (2-3 sentences) that AI engines can extract verbatim. Format: "The <color> <fabric> sherwani with <embroidery> is designed for <occasion>. <One specific reason to choose it.> <One specific detail about craftsmanship.>"
@@ -59,8 +59,8 @@ STRUCTURE (use exactly these H3 sections in this order):
 4. <h3>Perfect For These Occasions</h3> — <ul> with 3-4 occasion bullets
 5. <h3>How to Style This <Color> Sherwani</h3> — paragraph with specific accessory / footwear / turban / stole recommendations
 6. <h3>Sherwani Sizing, Care & Shipping</h3> — <ul> with 3 bullets (sizing, care, shipping)
-7. <h3>Frequently Asked Questions</h3> — 3 Q&A pairs using natural-language questions like "What size sherwani should I order from USA?" / "How do I care for raw silk sherwani with zardozi?" / "How long does shipping take to USA, Canada, Australia?"
-8. <h3>The LuxeMia Promise</h3> — 2-sentence closing on hand-selected quality + worldwide shipping
+7. <h3>Frequently Asked Questions</h3> — 3 Q&A pairs using natural-language questions like "What size sherwani should I order from USA?" / "How do I care for raw silk sherwani with zardozi?" / "How long does shipping take to United States?"
+8. <h3>The LuxeMia Promise</h3> — 2-sentence closing on hand-selected quality + US shipping
 
 Length: 500-700 words total. Use clean HTML: <p>, <h3>, <ul><li>, <strong>. No markdown. No CSS.
 
@@ -82,8 +82,8 @@ COLLECTION & POSITIONING:
 - Vendor: LuxeMia (luxury Indian ethnic wear, based in Philadelphia, PA)
 - Price: $310 USD (compare at $399)
 - Target occasions: ${occasions.join(', ')}
-- Target audience: NRI grooms and wedding party members in USA, Canada, Australia
-- Shipping: Free over $350 (so this qualifies), 7-10 business days via DHL/USPS/UPS
+- Target audience: NRI grooms and wedding party members in United States
+- Shipping: Free over $350 (so this qualifies), 2 business days to ship via DHL/USPS/UPS
 
 Return ONLY the HTML.`;
 }
@@ -137,9 +137,9 @@ function generateSeoDescription(item) {
   const occ = item.occasions[0];
   // Mid-tail + long-tail keywords, ≤155 chars
   const candidates = [
-    `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')} for ${occ.toLowerCase()}. Handcrafted for grooms. Free shipping USA, Canada, Australia.`,
-    `${a.color_primary} ${a.fabric} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} — handcrafted for the modern groom. Free shipping over $350 to USA, Canada & Australia.`,
-    `Buy ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} grooms. Premium menswear. Free shipping to USA, Canada, Australia.`,
+    `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')} for ${occ.toLowerCase()}. Handcrafted for grooms. Free shipping United States.`,
+    `${a.color_primary} ${a.fabric} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} — handcrafted for the modern groom. Free US shipping over $150 to the United States.`,
+    `Buy ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} grooms. Premium menswear. Free shipping to United States.`,
   ];
   for (const c of candidates) {
     if (c.length <= 155) return c;

@@ -347,7 +347,7 @@ function extractSalwarAttributes(product, color, material, productType) {
  * 4. Stitching & sizing — readymade/unstitched options, sizes
  * 5. Care — dry cleaning instructions
  * 6. Details line — Color | Fabric | Work | Occasion
- * 7. Shipping — free over $350, flat $25, USA/CA/AU
+ * 7. Shipping — free US shipping over $150, $12 flat below that
  */
 function buildSalwarSuitDescription(product, color, material, productType) {
   const attrs = extractSalwarAttributes(product, color, material, productType);
@@ -439,10 +439,7 @@ function buildSalwarSuitDescription(product, color, material, productType) {
   parts.push(detailsParts.join(' | '));
 
   // ── 7. Shipping ──
-  parts.push(
-    `Free shipping on orders over $350 to the USA, Canada, and Australia. ` +
-    `Flat $25 shipping on orders under $350.`
-  );
+  parts.push('Free US shipping over $150. $12 flat below that. In-stock items ship within 2 business days.');
 
   return parts.join(' ').slice(0, 5000);
 }
@@ -538,74 +535,33 @@ function buildDescription(product, color, material, productType) {
 
   // Occasion + shipping sentence — adds genuine shopper-relevant detail
   // and keeps every fallback description well above the 150-char floor.
-  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships from LuxeMia with a $25 flat rate (free over $350) to the USA, Canada and Australia.');
+  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships from LuxeMia within the United States: free over $150, $12 flat below that.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
   // 150 chars, append a closing line so GMC never sees a sub-150 description.
   if (out.length < 150) {
-    out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery to the USA, Canada and Australia.`;
+    out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery within the United States.`;
   }
   return out.slice(0, 5000);
 }
 
 function generateShippingXml() {
-  // GMC: Shipping for US, CA, AU markets. All prices in USD.
-  // Free shipping on orders over $350, flat rate $25 for orders under $350.
+  // GMC: United States shipping only. All prices in USD.
   return `
     <g:shipping>
       <g:country>US</g:country>
-      <g:service>Standard</g:service>
-      <g:price>25.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
+      <g:service>Standard below $150</g:service>
+      <g:price>12.00 USD</g:price>
+      <g:min_handling_time>0</g:min_handling_time>
+      <g:max_handling_time>2</g:max_handling_time>
     </g:shipping>
     <g:shipping>
       <g:country>US</g:country>
-      <g:service>Free over $350</g:service>
+      <g:service>Free over $150</g:service>
       <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>CA</g:country>
-      <g:service>Standard</g:service>
-      <g:price>25.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>CA</g:country>
-      <g:service>Free over $350</g:service>
-      <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>AU</g:country>
-      <g:service>Standard</g:service>
-      <g:price>25.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>AU</g:country>
-      <g:service>Free over $350</g:service>
-      <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
+      <g:min_handling_time>0</g:min_handling_time>
+      <g:max_handling_time>2</g:max_handling_time>
     </g:shipping>`;
 }
 
@@ -640,7 +596,7 @@ function generateReturnsXml() {
   //   return_window_days, return_method, return_fee, return_shipping_fee
   return `
     <g:returns_policy>
-      <g:countries>US,CA,AU</g:countries>
+      <g:countries>US</g:countries>
       <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
       <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
       <g:life_time_return_window>false</g:life_time_return_window>
@@ -712,7 +668,7 @@ function generateProductHighlights(product, color, material, productType, title)
   }
 
   // Shipping highlight (same for all)
-  highlights.push(`Ready to ship from India in 5-7 business days; flat $25 to USA, free over $350`);
+  highlights.push(`Ships within 2 business days in the US; $12 flat below $150, free over $150`);
 
   // Sizing highlight
   highlights.push(`Available in sizes 32-48 (XS to 5XL) — ready-to-wear and custom-stitched options`);
@@ -949,7 +905,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop quality Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Flat rate shipping $25 per order, free on orders over $350.</description>
+  <description>Shop ready-to-ship Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Free US shipping over $150; $12 flat below that.</description>
   <last_build_date>${new Date().toISOString()}</last_build_date>
 ${itemsXml}
 </channel>

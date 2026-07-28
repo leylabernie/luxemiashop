@@ -113,7 +113,7 @@ const SEOFooterContent = () => {
               <p>
                 LuxeMia offers ready-to-ship Indian ethnic clothing online.
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-We offer <strong className="text-foreground">flat rate shipping ($25/order, free over $350)</strong> to the USA, Canada, and Australia, 
+We offer <strong className="text-foreground">free US shipping over $150 and $12 flat below that</strong>, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
                 how LuxeMia selects Indian ethnic wear for weddings and celebrations.

@@ -4,42 +4,30 @@ import NRILandingPage from './NRILandingPage';
 const Canada = () => (
   <NRILandingPage
     config={{
-      country: 'Canada',
-      countryCode: 'CA',
-      slug: 'indian-ethnic-wear-canada',
-      seoTitle: 'Buy Indian Ethnic Wear Online Canada | Sarees, Lehengas & Suits - LuxeMia',
-      seoDescription: 'Buy Indian ethnic wear online in Canada. Shop sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $25/order, free on orders over $350. 7-10 day standard delivery to Canada.',
-      heroTitle: 'Authentic Indian Ethnic Wear Delivered to Canada',
-      heroSubtitle: 'Shipped from India with Care',
-      shippingTime: '7-10 business days',
-      shippingCost: '$25/order, free on orders over $350',
-      customsNote: 'Canadian orders may be subject to GST/HST, import duties, and carrier processing fees. Charges depend on the province, product classification, value, and current customs rules.',
+      country: 'United States',
+      countryCode: 'US',
+      slug: 'nri',
+      seoTitle: 'United States Shipping Only | LuxeMia',
+      seoDescription: 'LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
+      heroTitle: 'United States Shipping Only',
+      heroSubtitle: 'Ready-to-ship Indian ethnic wear held in US stock',
+      shippingTime: 'Ships within 2 business days',
+      shippingCost: 'Free over $150, $12 flat below that',
+      customsNote: 'LuxeMia currently accepts United States shipping addresses only.',
       faqs: [
         {
-          question: 'How long does shipping to Canada take?',
-          answer: 'Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.',
+          question: 'Does LuxeMia ship outside the United States?',
+          answer: 'No. LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
         },
         {
-          question: 'Is shipping free to Canada?',
-          answer: 'We offer a flat shipping rate of $25 per order, with free shipping on all orders over $350. No coupon code needed — free shipping is applied automatically at checkout.',
-        },
-        {
-          question: 'Will I have to pay customs duties in Canada?',
-          answer: 'Canadian customs may assess GST/HST, duties, and carrier processing fees based on the province, product classification, value, and current rules. These charges are not included unless checkout explicitly states otherwise.',
-        },
-        {
-          question: 'Can I return items from Canada?',
-          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
-        },
-        {
-          question: 'Do you ship to all Canadian provinces?',
-          answer: 'Yes, we deliver to all Canadian provinces and territories including British Columbia, Alberta, Ontario, Quebec, and the Maritime provinces. Remote areas may have slightly longer delivery times.',
+          question: 'How much is US shipping?',
+          answer: 'Free US shipping applies on orders over $150. Orders below $150 ship for a flat $12 rate.',
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Canada Delivery', description: 'Flat rate $25/order, free over $350' },
-        { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
-        { icon: Clock, title: 'Express Available', description: '3-5 day DHL express shipping at checkout' },
+        { icon: Truck, title: 'US Shipping', description: 'Ships within 2 business days' },
+        { icon: Shield, title: 'Tracked Delivery', description: 'Tracking sent after dispatch' },
+        { icon: Clock, title: 'Ready to Ship', description: 'For events coming up soon' },
       ],
     }}
   />

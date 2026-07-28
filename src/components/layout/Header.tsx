@@ -17,10 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const announcements = [
-  'Free shipping over $350 · Delivery to USA, Canada & Australia',
-  'New arrivals just landed — shop the latest styles',
-  'Quality Indian ethnic wear at fair prices',
-  'Flat $25 shipping · Fully tracked delivery',
+  'Free US shipping over $150. $12 flat below that. Ships within 2 business days.',
 ];
 
 // Categories without a mega-menu use plain links.

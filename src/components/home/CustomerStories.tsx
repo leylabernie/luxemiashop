@@ -10,7 +10,7 @@ const reasons = [
   {
     icon: Truck,
     title: 'Tracked Delivery',
-    description: 'Trackable shipping to the US, UK, Canada, and more with standard and express options.',
+    description: 'Trackable US shipping for in-stock pieces that leave within 2 business days.',
   },
   {
     icon: RefreshCcw,

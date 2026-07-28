@@ -15,13 +15,13 @@ const ZAI = ZAI_MOD.default || ZAI_MOD;
 
 const analysis = JSON.parse(await readFile('/tmp/sherwani-analysis.json', 'utf8'));
 
-const SYSTEM_PROMPT = `You are an expert SEO copywriter for LuxeMia, a luxury Indian ethnic wear store for menswear, shipping to USA, Canada, and Australia. Write Shopify product Body HTML for sherwanis that:
+const SYSTEM_PROMPT = `You are an expert SEO copywriter for LuxeMia, a luxury Indian ethnic wear store for menswear, shipping to the United States. Write Shopify product Body HTML for sherwanis that:
 
 1. Opens with a compelling 2-3 sentence narrative paragraph (no marketing fluff like "stunning" or "exquisite" — be specific)
 2. Has an "Why You'll Love This" section with 5 bullet points: fabric, color, embroidery, occasion, craftsmanship
 3. Has a "Styling Suggestions" paragraph (2-3 sentences) with specific accessory / footwear / turban recommendations
 4. Has an "FAQ" section with 3 Q&A pairs covering: sizing, care, delivery time
-5. Closes with "The LuxeMia Promise" paragraph (2 sentences, mention hand-selected quality and worldwide shipping)
+5. Closes with "The LuxeMia Promise" paragraph (2 sentences, mention hand-selected quality and US shipping)
 
 Use clean HTML: <p>, <h3>, <ul><li>, <strong>. No markdown. No CSS. Length: 400-600 words total.
 
@@ -39,7 +39,7 @@ function buildUserPrompt(item) {
 - Vendor: LuxeMia
 - Price range: $249-$349 USD (premium menswear)
 - Target occasions: Wedding (groom, groomsmen, brother of groom), Reception, Engagement, Sangeet
-- Target audience: NRI grooms and wedding party members in USA, Canada, Australia
+- Target audience: NRI grooms and wedding party members in United States
 
 Return ONLY the HTML.`;
 }
@@ -92,7 +92,7 @@ async function main() {
 function generateSeoDescription(item) {
   const a = item.analysis;
   // Generate SEO meta description under 155 chars
-  const base = `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')}. Handcrafted for weddings & receptions. Free shipping to USA, Canada, Australia.`;
+  const base = `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')}. Handcrafted for weddings & receptions. Free shipping to United States.`;
   if (base.length <= 155) return base;
   // Trim if over
   return base.slice(0, 152).trimEnd() + '…';

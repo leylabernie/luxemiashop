@@ -27,7 +27,7 @@ const SizingMeasurementsGuide = () => {
     },
     {
       question: 'What is the difference between ready-to-wear and made-to-measure lehenga sizing?',
-      answer: 'Ready-to-wear lehengas come pre-stitched to standard sizes (32-48 bust) and ship within 5-7 business days. Made-to-measure lehengas are stitched to your exact body measurements and take 3-4 weeks to ship. Ready-to-wear is best for emergency shoppers who need fast delivery; made-to-measure is best for brides who want a perfect fit and have time to wait.'
+      answer: 'Ready-to-wear lehengas come pre-stitched to standard sizes (32-48 bust) and ship within confirm timing before ordering. Made-to-measure lehengas are stitched to your exact body measurements and take 3-4 weeks to ship. Ready-to-wear is best for emergency shoppers who need fast delivery; made-to-measure is best for brides who want a perfect fit and have time to wait.'
     },
     {
       question: 'How accurate do my measurements need to be?',
@@ -70,7 +70,7 @@ const SizingMeasurementsGuide = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | LuxeMia"
-        description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free shipping over $350 to USA."
+        description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free US shipping over $150 to USA."
         canonical="https://luxemia.shop/sizing-measurements-guide"
         faqs={faqs}
         additionalSchemas={[howToMeasureSchema()]}
@@ -112,7 +112,7 @@ const SizingMeasurementsGuide = () => {
               transition={{ delay: 0.3 }}
               className="flex flex-wrap justify-center gap-3 mt-8"
             >
-              <Badge variant="secondary" className="text-sm py-2 px-4">Free shipping over $350 to USA</Badge>
+              <Badge variant="secondary" className="text-sm py-2 px-4">Free US shipping over $150 to USA</Badge>
               <Badge variant="secondary" className="text-sm py-2 px-4">Ready-to-wear ships in 5-7 days</Badge>
               <Badge variant="secondary" className="text-sm py-2 px-4">Custom stitched in 3-4 weeks</Badge>
             </motion.div>
@@ -391,7 +391,7 @@ const SizingMeasurementsGuide = () => {
                       <li>• You live in the USA and need fast delivery</li>
                       <li>• You are between sizes and can size up</li>
                     </ul>
-                    <p className="text-sm text-primary font-medium mt-4">Ships in 5-7 business days</p>
+                    <p className="text-sm text-primary font-medium mt-4">Ships in confirm timing before ordering</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -440,7 +440,7 @@ const SizingMeasurementsGuide = () => {
             </h2>
             <p className="text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
               Shop our ready-to-ship lehengas, designer sarees, and bridal collections. Free shipping on
-              orders over $350 to the USA, Canada, and Australia.
+              orders over $150 to the United States.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link

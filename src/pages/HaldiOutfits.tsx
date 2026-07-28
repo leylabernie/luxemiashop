@@ -38,8 +38,8 @@ const haldiOutfitFaqs = [
     answer: 'Yes, while yellow is the most traditional choice, modern haldi ceremonies are more flexible. Popular non-yellow alternatives include peach, coral, mint green, lavender, and pastel pink. These colors photograph beautifully against the yellow turmeric and marigold decorations. However, avoid black, white, and dark navy. If you\'re unsure, wearing a pastel shade with yellow accessories (dupatta, bangles, or potli bag) is a great compromise that respects tradition while adding your personal style.',
   },
   {
-    question: 'Do you ship haldi ceremony outfits to the USA and Canada?',
-    answer: 'LuxeMia currently ships haldi outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking with estimated transit of 7–10 business days after dispatch. For wedding functions, order at least 4–6 weeks in advance.',
+    question: 'Do you ship haldi ceremony outfits to the USA and the United States?',
+    answer: 'LuxeMia currently ships haldi outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking with estimated transit of carrier transit after dispatch after dispatch. For wedding functions, order at least 4–6 weeks in advance.',
   },
 ];
 
@@ -78,7 +78,7 @@ const HaldiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Haldi Ceremony Outfits | Yellow Lehengas & Suits | LuxeMia"
-        description="Shop haldi ceremony outfits at LuxeMia. Yellow & gold lehengas, pastel suits, and mustard sarees for the bride and guests. Free shipping over $350 to USA."
+        description="Shop haldi ceremony outfits at LuxeMia. Yellow & gold lehengas, pastel suits, and mustard sarees for the bride and guests. Free US shipping over $150 to USA."
         canonical="https://luxemia.shop/collections/haldi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -96,7 +96,7 @@ const HaldiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Haldi Ceremony Outfits — Yellow & Gold Lehengas, Sarees & Suits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets for the bride, bridesmaids, family, and guests. Delivery is available to the USA, Canada and Australia, with free shipping over $350.
+              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets for the bride, bridesmaids, family, and guests. Delivery is available to the United States, with free US shipping over $150.
             </p>
           </div>
         </div>
@@ -105,7 +105,7 @@ const HaldiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>haldi ceremony outfits</strong>, <strong>yellow lehenga for haldi</strong>, <strong>haldi dress for bride</strong>, <strong>gold anarkali suits</strong>, <strong>mustard sarees for haldi</strong>, and <strong>pastel yellow salwar kameez</strong>. Traditional and modern <strong>haldi outfit ideas</strong> for the bride and guests. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong>.
+              Shop <strong>haldi ceremony outfits</strong>, <strong>yellow lehenga for haldi</strong>, <strong>haldi dress for bride</strong>, <strong>gold anarkali suits</strong>, <strong>mustard sarees for haldi</strong>, and <strong>pastel yellow salwar kameez</strong>. Traditional and modern <strong>haldi outfit ideas</strong> for the bride and guests. Free US shipping over $150.
             </p>
           </div>
         </div>
@@ -197,7 +197,7 @@ const HaldiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Haldi Outfit</h3>
-                <p>Indian ethnic wear ships from India — even <strong>ready-to-ship items</strong> take 10-15 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your haldi outfit at least 4-6 weeks before the wedding date.</strong> If you need it faster, browse our <Link to="/ready-to-ship" className="text-primary underline font-medium">ready-to-ship collection</Link> for items that dispatch in 3-5 business days.</p>
+                <p>Indian ethnic wear ships from our US-stock edit — even <strong>ready-to-ship items</strong> take 10-15 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your haldi outfit at least 4-6 weeks before the wedding date.</strong> If you need it faster, browse our <Link to="/ready-to-ship" className="text-primary underline font-medium">ready-to-ship collection</Link> for items that dispatch in 2 business days.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

@@ -146,7 +146,7 @@ def build_tags(item):
     - Fabric (raw silk, brocade + fabric + product combos)
     - Embroidery (zardozi, sequence + work + product combos)
     - Occasion (wedding, groom, reception, engagement, sangeet, mehndi, haldi)
-    - Audience (groom, groomsmen, NRI, USA, Canada, Australia)
+    - Audience (groom, groomsmen, NRI, United States)
     - Collection (out luk vol 144, armani silk, pure heavy)
     - Mid-tail keywords (3-4 word phrases)
     - Long-tail keywords (5-7 word phrases)
@@ -230,7 +230,7 @@ def build_tags(item):
         # Brand + status
         'LuxeMia', 'gender:male', 'men', 'menswear',
         'new arrival', 'handcrafted', 'premium menswear',
-        'worldwide shipping', 'free shipping over 350',
+        'US shipping', 'free shipping over 350',
     ])
 
     # Remove duplicates while preserving order

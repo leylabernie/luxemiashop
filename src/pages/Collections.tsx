@@ -88,7 +88,7 @@ const Collections = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits — sourced directly from India's textile hubs. Free shipping to USA, Canada & Australia on orders over $350.
+              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits — sourced directly from India's textile hubs. Free US shipping over $150.
             </p>
           </motion.div>
         </section>
@@ -226,13 +226,13 @@ const Collections = () => {
           <h2 className="font-serif text-xl mb-4 text-center">Buy Authentic Indian Ethnic Wear Online</h2>
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-3 text-sm leading-relaxed text-center">
             <p>
-              LuxeMia is your destination for <strong>authentic Indian ethnic wear</strong> delivered to the USA, Canada, and Australia. Our complete collection covers every style and occasion — from <strong>bridal lehengas and wedding sarees</strong> to <strong>salwar kameez suits, sherwanis, and Indo-Western fusion outfits</strong>. Every piece is quality-inspected before dispatch.
+              LuxeMia is your destination for <strong>authentic Indian ethnic wear</strong> delivered to the United States. Our complete collection covers every style and occasion — from <strong>bridal lehengas and wedding sarees</strong> to <strong>salwar kameez suits, sherwanis, and Indo-Western fusion outfits</strong>. Every piece is quality-inspected before dispatch.
             </p>
             <p>
               We source directly from India's most celebrated textile regions: <strong>Banarasi silk sarees</strong> from Varanasi, <strong>Kanchipuram silk sarees</strong> from Tamil Nadu, <strong>zardozi embroidered lehengas</strong> from Lucknow, and <strong>gota patti suits</strong> from Jaipur. This direct sourcing means you get genuine craftsmanship at prices far below what Indian boutiques charge in North America.
             </p>
             <p>
-              Popular categories include <strong>bridal lehenga choli</strong> for weddings, <strong>party wear sarees</strong> for festive events, <strong>Anarkali suits</strong> for formal occasions, <strong>sharara sets</strong> for sangeet nights, and <strong>kurta pajama sets</strong> for men. Enjoy <strong>free shipping on orders over $350</strong> to the USA, Canada, and Australia.
+              Popular categories include <strong>bridal lehenga choli</strong> for weddings, <strong>party wear sarees</strong> for festive events, <strong>Anarkali suits</strong> for formal occasions, <strong>sharara sets</strong> for sangeet nights, and <strong>kurta pajama sets</strong> for men. Enjoy <strong>free US shipping over $150</strong> to the United States.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

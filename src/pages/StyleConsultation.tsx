@@ -316,7 +316,7 @@ const StyleConsultation = () => {
                       required
                       value={formData.country}
                       onChange={(e) => updateField('country', e.target.value)}
-                      placeholder="e.g. USA, UK, Canada"
+                      placeholder="e.g. the USA"
                       disabled={isSubmitting}
                     />
                   </div>

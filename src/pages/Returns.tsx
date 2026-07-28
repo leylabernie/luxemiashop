@@ -35,7 +35,7 @@ const Returns = () => {
               <h1 className="text-4xl md:text-5xl font-serif mb-5">Returns, Refunds & Cancellations</h1>
               <p className="text-muted-foreground leading-relaxed">
                 Please read this policy carefully before placing your order. Our products are shipped from India
-                and require international shipping, which means our policies are different from typical retail stores.
+                and are part of a small ready-to-ship inventory, which means our policies are different from typical retail stores.
               </p>
             </motion.div>
           </div>
@@ -53,7 +53,7 @@ const Returns = () => {
               <div>
                 <h2 className="font-bold text-foreground text-lg mb-2 uppercase tracking-wide">⚠ All Sales Are Final — No Returns</h2>
                 <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
-                  Due to the international nature of our shipments and the complexities of international
+                  Due to the ready-to-ship nature of our inventory and the need for careful
                   shipping, <strong className="text-foreground">LuxeMia does not accept returns or issue refunds</strong> for
                   any reason — including sizing issues, color variations, change of mind, or delayed events.
                 </p>
@@ -245,7 +245,7 @@ const Returns = () => {
                   {[
                     { label: 'Rigorous Quality Checks', text: 'Every piece is inspected before packaging — stitching, embellishments, and finish are reviewed.' },
                     { label: 'Accurate Product Representation', text: 'Our photos and descriptions accurately show what you will receive. We note color variations where relevant.' },
-                    { label: 'Premium Secure Packaging', text: 'Garments are packed in tissue, garment bags, and sturdy outer boxes designed for international transit.' },
+                    { label: 'Premium Secure Packaging', text: 'Garments are packed in tissue, garment bags, and sturdy outer boxes designed for protected transit.' },
                     { label: 'Pre-Purchase Support', text: 'Our team answers sizing, fabric, and styling questions before you order — WhatsApp +1-215-341-9990 or email hello@luxemia.shop.' },
                     { label: 'Damage Resolution', text: 'Genuine shipping damage supported by an unboxing video will be reviewed and resolved at our discretion — replacement part, store credit, or partial refund depending on the case.' },
                   ].map((item) => (
@@ -385,7 +385,7 @@ const Returns = () => {
                     Yes — it is the <strong>only</strong> way we can process a damage or missing-item claim. Without
                     video evidence of the package condition on arrival and the moment of opening, we have no way to
                     distinguish transit damage from post-delivery damage. We strongly recommend making this a habit for
-                    every package you receive from any international retailer.
+                    every package you receive from any online retailer.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>

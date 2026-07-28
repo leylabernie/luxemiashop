@@ -46,7 +46,7 @@ const SizeGuide = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Size Guide — LuxeMia"
-        description="Find your perfect fit with the LuxeMia size guide. Measurements for lehengas, sarees, salwar suits, and blouses with US and UK conversions."
+        description="Find your perfect fit with the LuxeMia size guide. Measurements for lehengas, sarees, salwar suits, and blouses with US conversions."
         canonical="https://luxemia.shop/size-guide"
       />
       <Header />

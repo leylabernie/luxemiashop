@@ -835,88 +835,43 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             <div className="p-4 bg-card rounded-sm border border-border">
               <div className="flex items-center gap-2 mb-2">
                 <Truck className="h-4 w-4 text-primary" />
-                <h4 className="font-medium">Express Shipping (DHL)</h4>
+                <h4 className="font-medium">US Shipping</h4>
               </div>
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Transit: 3–5 business days</span>
+                  <span>Free US shipping over $150</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Full tracking included</span>
+                  <span>$12 flat below $150</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Insured delivery to your door</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">$25 flat rate</strong> — <strong className="text-green-600 dark:text-green-400">FREE</strong> on orders over $350</span>
+                  <span>Tracking provided after dispatch</span>
                 </li>
               </ul>
             </div>
             <div className="p-4 bg-card rounded-sm border border-border">
               <div className="flex items-center gap-2 mb-2">
-                <Truck className="h-4 w-4 text-primary" />
-                <h4 className="font-medium">Standard Shipping</h4>
+                <Clock className="h-4 w-4 text-primary" />
+                <h4 className="font-medium">Dispatch Promise</h4>
               </div>
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Transit: 7–10 business days</span>
+                  <span>In-stock items ship within 2 business days</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Tracking provided</span>
+                  <span>United States shipping addresses only</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-foreground">$25 flat rate</strong> — <strong className="text-green-600 dark:text-green-400">FREE</strong> on orders over $350</span>
+                  <span>Carrier delivery time begins after dispatch</span>
                 </li>
               </ul>
             </div>
-          </div>
-
-          {/* Shipping Destinations */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <h4 className="font-medium mb-2">Shipping Destinations</h4>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-              We currently ship to the following countries:
-            </p>
-            <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-background rounded-sm text-center border border-border">
-                <p className="text-sm font-medium text-foreground">🇺🇸 United States</p>
-                <p className="text-xs text-muted-foreground mt-1">3–10 business days</p>
-              </div>
-              <div className="p-3 bg-background rounded-sm text-center border border-border">
-                <p className="text-sm font-medium text-foreground">🇨🇦 Canada</p>
-                <p className="text-xs text-muted-foreground mt-1">5–10 business days</p>
-              </div>
-              <div className="p-3 bg-background rounded-sm text-center border border-border">
-                <p className="text-sm font-medium text-foreground">🇦🇺 Australia</p>
-                <p className="text-xs text-muted-foreground mt-1">5–12 business days</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Dispatch Times */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <h4 className="font-medium mb-2">Dispatch Times</h4>
-            <ul className="text-sm text-muted-foreground space-y-1.5">
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Ready-made / Semi Stitched sizes: 3–5 business days</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Ready to Wear (stitched): 5–7 business days</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Clock className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Made to Measure (bespoke): 7–10 business days</span>
-              </li>
-            </ul>
           </div>
 
           {/* Packaging Note */}
@@ -925,7 +880,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             <ul className="text-sm text-muted-foreground space-y-1.5">
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>All items are quality inspected before shipping from India</span>
+                <span>All items are quality inspected before shipping</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />

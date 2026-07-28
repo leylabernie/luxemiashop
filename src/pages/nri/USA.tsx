@@ -29,7 +29,7 @@ const USA = () => (
         },
         {
           question: 'Can I return items from the USA?',
-          answer: 'All sales are final. Due to the international nature of our shipments, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
+          answer: 'All sales are final. Due to the ready-to-ship nature of our inventory, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
         },
         {
           question: 'Do you offer custom sizing for US customers?',

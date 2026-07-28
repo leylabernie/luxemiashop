@@ -103,7 +103,7 @@ const NewArrivals = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
-        description="Shop the latest Indian ethnic wear online at LuxeMia. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free shipping."
+        description="Shop the latest Indian ethnic wear online at LuxeMia. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free US shipping."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />
@@ -241,7 +241,7 @@ const NewArrivals = () => {
               Our new arrivals are curated weekly from India's leading fabric markets and artisan workshops. Each new drop includes <strong>bridal lehengas</strong>, <strong>embroidered sarees</strong>, <strong>designer salwar kameez sets</strong>, <strong>party wear anarkalis</strong>, and <strong>men's sherwanis</strong> for upcoming wedding and festive seasons. Pieces are sourced from Surat, Varanasi, Jaipur, and Lucknow — the heart of India's textile industry.
             </p>
             <p>
-              Whether you're shopping for a <strong>Diwali outfit</strong>, a <strong>wedding guest look</strong>, or the perfect <strong>bridal ensemble</strong> for a USA or Canada wedding, our new arrivals section is updated regularly with fresh styles at competitive prices. <strong>Free shipping on orders over $350</strong> to the USA, Canada, and Australia.
+              Whether you're shopping for a <strong>Diwali outfit</strong>, a <strong>wedding guest look</strong>, or the perfect <strong>bridal ensemble</strong> for a USA wedding, our new arrivals section is updated regularly with fresh styles at competitive prices. <strong>Free US shipping over $150</strong> to the United States.
             </p>
           </div>
         </div>

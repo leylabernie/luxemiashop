@@ -17,7 +17,7 @@ const organizationSchema = {
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from India to customers in the USA, Canada, and Australia. We source from India\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free shipping on orders over $350.',
+    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from our US-stock edit to customers in the United States. We source from our US-stock edit\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free US shipping over $150.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
@@ -146,7 +146,7 @@ const philosophyPoints = [
     icon: '⊕',
     title: 'Global Reach',
     description:
-      'We ship exclusively to the USA, Canada, and Australia \u2014 the three countries with the largest NRI communities looking for authentic Indian ethnic wear. Free shipping on orders over $350, flat $25 shipping under that, with DHL Express, USPS, and UPS delivery options to your door.',
+      'We ship exclusively to the United States \u2014 the three countries with the largest NRI communities looking for authentic Indian ethnic wear. Free US shipping over $150, $12 flat shipping below that, with DHL Express, USPS, and UPS delivery options to your door.',
   },
   {
     icon: '✦',
@@ -192,9 +192,9 @@ const timelineEvents = [
 const whyChooseLuxeMia = [
   {
     icon: Globe,
-    title: 'Direct from India \u2014 No Middlemen',
+    title: 'Direct from our US-stock edit \u2014 No Middlemen',
     description:
-      'We source directly from India\u2019s renowned textile hubs like Surat, Varanasi, and Jaipur. By cutting out intermediaries, we pass real savings on to you while ensuring artisans receive fair compensation for their craft.',
+      'We source directly from our US-stock edit\u2019s renowned textile hubs like Surat, Varanasi, and Jaipur. By cutting out intermediaries, we pass real savings on to you while ensuring artisans receive fair compensation for their craft.',
   },
   {
     icon: ShieldCheck,
@@ -212,7 +212,7 @@ const whyChooseLuxeMia = [
     icon: Truck,
     title: 'Free Shipping Over $350',
     description:
-      'Enjoy free shipping on all orders over $350 to the USA, Canada, and Australia. Orders under $350 ship for a flat $25. All shipments include full tracking, insurance, and delivery via DHL Express, USPS, or UPS.',
+      'Enjoy free US shipping on all orders over $150 to the United States. Orders below $150 ship for a flat $12. All shipments include full tracking, insurance, and delivery via DHL Express, USPS, or UPS.',
   },
   {
     icon: Headphones,
@@ -318,8 +318,8 @@ const BrandStory = () => {
     <div ref={containerRef} className="min-h-screen bg-background">
       {/* SEO Head with enriched props */}
       <SEOHead
-        title="Our Story \u2014 LuxeMia | Authentic Indian Ethnic Wear for USA, Canada & Australia"
-        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the USA, Canada & Australia. Free shipping over $350."
+        title="Our Story \u2014 LuxeMia | Authentic Indian Ethnic Wear for the United States"
+        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from our US-stock edit\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the United States. Free US shipping over $150."
         canonical="https://luxemia.shop/brand-story"
         image="/images/heroes/hero-bridal-couture.jpg"
         breadcrumbs={[
@@ -388,8 +388,8 @@ const BrandStory = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             We&#39;re a new brand with a clear mission: bringing authentic Indian
             ethnic wear directly to you, with transparency, quality, and care.
-            Sourced from India&#39;s finest textile hubs and delivered to your door
-            in the USA, Canada, and Australia.
+            Sourced from our US-stock edit&#39;s finest textile hubs and delivered to your door
+            in the United States.
           </p>
         </motion.div>
         <motion.div
@@ -405,7 +405,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="LuxeMia was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to change that. LuxeMia is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the USA, Canada, and Australia."
+        content="LuxeMia was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to change that. LuxeMia is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the United States."
         imagePosition="right"
         bgColor="bg-card"
         imageUrl="/images/heroes/hero-bridal-couture.jpg"
@@ -634,7 +634,7 @@ const BrandStory = () => {
               <strong className="text-foreground">Our promise:</strong> We
               may be a new brand, but our team brings decades of combined
               experience in Indian textiles, ethnic fashion, and
-              international e-commerce. We&#39;re based in Pennsylvania, USA
+              ready-to-ship e-commerce. We&#39;re based in Pennsylvania, USA
               with sourcing and fulfillment operations in India. When you
               contact us, you&#39;re talking to real people who know
               ethnic wear — not a call center reading from a script.
@@ -759,9 +759,8 @@ const BrandStory = () => {
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <strong>Shipping from:</strong> India (all orders).<br />
-                <strong>Free shipping:</strong> Orders over $350 (USA, Canada,
-                Australia).<br />
-                <strong>Flat rate:</strong> $25 per order under $350.<br />
+                <strong>Free US shipping:</strong> Orders over $150 (United States only).<br />
+                <strong>Flat rate:</strong> $12 per order below $150.<br />
                 <strong>Ready-made dispatch:</strong> 3&ndash;5 business
                 days.<br />
                 <strong>Custom/alterations dispatch:</strong> 5&ndash;7
@@ -797,7 +796,7 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Return Policy</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Due to the international nature of our shipments, all sales are
+                Due to the ready-to-ship nature of our shipments, all sales are
                 final. We do not accept returns or exchanges. The only exception
                 is genuine shipping damage, which must be documented with photos
                 or an unboxing video and reported within 7 days of delivery. We

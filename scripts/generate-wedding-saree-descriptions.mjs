@@ -16,7 +16,7 @@ const ZAI = ZAI_MOD.default || ZAI_MOD;
 
 const products = JSON.parse(await readFile('/tmp/wedding-sarees-products.json', 'utf8'));
 
-const SYSTEM_PROMPT = `You are an expert SEO + AI-search content writer for LuxeMia, a luxury Indian ethnic wear store shipping to USA, Canada, and Australia. Write Shopify product Body HTML for wedding sarees that ranks on Google, Bing, AND gets cited by AI search engines (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot).
+const SYSTEM_PROMPT = `You are an expert SEO + AI-search content writer for LuxeMia, a luxury Indian ethnic wear store shipping to the United States. Write Shopify product Body HTML for wedding sarees that ranks on Google, Bing, AND gets cited by AI search engines (ChatGPT, Perplexity, Google AI Overviews, Bing Copilot).
 
 AI-SEARCH OPTIMIZATION RULES:
 1. Open with a DIRECT ANSWER paragraph (2-3 sentences) that AI engines can extract verbatim. Format: "The <color> <fabric> saree with <work> is designed for <occasion>. <One specific reason to choose it.> <One specific detail about craftsmanship.>"
@@ -60,8 +60,8 @@ COLLECTION & POSITIONING:
 - Vendor: LuxeMia (luxury Indian ethnic wear, based in Philadelphia, PA)
 - Price: $${Math.round((p.price_inr * 2) / 90)} USD (compare at $${Math.round((p.mrp_inr * 2) / 90)})
 - Target occasions: Wedding, Reception, Engagement, Mehendi, Wedding Guest
-- Target audience: NRI brides and wedding guests in USA, Canada, Australia
-- Shipping: Free over $350, 7-10 business days via DHL/USPS/UPS
+- Target audience: NRI brides and wedding guests in United States
+- Shipping: Free over $350, 2 business days to ship via DHL/USPS/UPS
 
 Return ONLY the HTML.`;
 }
@@ -106,9 +106,9 @@ function generateSeoTitle(p) {
 function generateSeoDescription(p) {
   const usdPrice = Math.round((p.price_inr * 2) / 90);
   const candidates = [
-    `Shop this ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} for brides. Handcrafted. Free shipping USA, Canada, Australia.`,
-    `${p.color} ${p.fabric} saree with ${p.work.toLowerCase()} for weddings — handcrafted for the modern bride. Free shipping over $350 to USA, Canada & Australia.`,
-    `Buy ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} online. Premium ethnic wear for brides. Free shipping to USA, Canada, Australia.`,
+    `Shop this ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} for brides. Handcrafted. Free shipping United States.`,
+    `${p.color} ${p.fabric} saree with ${p.work.toLowerCase()} for weddings — handcrafted for the modern bride. Free US shipping over $150 to the United States.`,
+    `Buy ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} online. Premium ethnic wear for brides. Free shipping to United States.`,
   ];
   for (const c of candidates) {
     if (c.length <= 155) return c;

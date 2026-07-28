@@ -22,15 +22,15 @@ const sortOptions = [
 const readyToShipFaqs = [
   {
     question: 'How fast is ready-to-ship delivery?',
-    answer: 'Ready-to-ship items dispatch from our warehouse in 3-5 business days after your order is placed. Transit time to the USA is 7-10 business days via tracked international shipping. That means your total door-to-door delivery time is approximately 10-15 business days — significantly faster than made-to-order items which require 3-4 weeks for stitching plus shipping. If you have an upcoming event and need your outfit quickly, ready-to-ship is the best option.',
+    answer: 'Ready-to-ship items dispatch from our warehouse in 2 business days after your order is placed. Transit time to the USA is carrier transit after dispatch via tracked US shipping. That means your total door-to-door delivery time is approximately 2 business days to ship — significantly faster than made-to-order items which require 3-4 weeks for stitching plus shipping. If you have an upcoming event and need your outfit quickly, ready-to-ship is the best option.',
   },
   {
-    question: 'Do ready-to-ship items qualify for free shipping?',
-    answer: 'Yes, absolutely. Ready-to-ship items qualify for free shipping on all orders over $350 USD, the same policy that applies to all LuxeMia products. For orders under $350, flat rate shipping of $25 applies. This makes ready-to-ship items even more economical — you get fast delivery AND free shipping when you order $350 or more.',
+    question: 'Do ready-to-ship items qualify for free US shipping?',
+    answer: 'Yes, absolutely. Ready-to-ship items qualify for free US shipping on all orders over $150 USD, the same policy that applies to all LuxeMia products. For orders below $150, flat rate shipping of $12 applies. This makes ready-to-ship items even more economical — you get fast delivery AND free US shipping when you order $350 or more.',
   },
   {
     question: 'What is the difference between ready-to-ship and made-to-order?',
-    answer: 'Ready-to-ship items are already stitched, finished, and sitting in our warehouse ready to dispatch. They ship in 3-5 business days and are available in standard sizes (XS, S, M, L, XL, XXL). Made-to-order items are stitched to your exact measurements after you place your order, which takes 5-7 business days for stitching plus 7-10 days shipping (total 12-17 business days). Ready-to-ship offers speed and convenience; made-to-order offers a more precise custom fit.',
+    answer: 'Ready-to-ship items are already stitched, finished, and sitting in our warehouse ready to dispatch. They ship in 2 business days and are available in standard sizes (XS, S, M, L, XL, XXL). Made-to-order items are stitched to your exact measurements after you place your order, which takes confirm timing before ordering for stitching plus 7-10 days shipping (total 12-17 business days). Ready-to-ship offers speed and convenience; made-to-order offers a more precise custom fit.',
   },
   {
     question: 'Can I get custom sizing on ready-to-ship items?',
@@ -57,7 +57,7 @@ const ReadyToShip = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Ready to Ship Indian Wear | Fast USA Delivery | LuxeMia"
-        description="Shop ready-to-ship Indian ethnic wear with fast USA delivery. Lehengas, sarees, suits & menswear. Free shipping over $350. Dispatch in 3-5 days."
+        description="Shop ready-to-ship Indian ethnic wear with fast USA delivery. Lehengas, sarees, suits & menswear. Free US shipping over $150. Dispatch in 3-5 days."
         canonical="https://luxemia.shop/ready-to-ship"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -74,7 +74,7 @@ const ReadyToShip = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Fast Delivery — In Stock Now</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Ready to Ship Indian Ethnic Wear — Fast USA Delivery</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Need an outfit in a hurry? Shop our <strong>ready-to-ship Indian wear</strong> collection — pre-stitched lehengas, sarees, salwar kameez suits, and menswear that dispatch in 3-5 business days. Every piece is quality-checked, beautifully packaged, and shipped with full tracking to the USA, Canada, and Australia. Perfect for last-minute events, wedding functions, and festival celebrations when you need <strong>fast delivery Indian clothes in the USA</strong>.
+              Need an outfit in a hurry? Shop our <strong>ready-to-ship Indian wear</strong> collection — pre-stitched lehengas, sarees, salwar kameez suits, and menswear that dispatch in 2 business days. Every piece is quality-checked, beautifully packaged, and shipped with full tracking to the United States. Perfect for last-minute events, wedding functions, and festival celebrations when you need <strong>fast delivery Indian clothes in the USA</strong>.
             </p>
           </div>
         </div>
@@ -84,7 +84,7 @@ const ReadyToShip = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <h2 className="font-serif text-xl lg:text-2xl mb-3 text-center">Shop In-Stock Lehengas, Sarees, Suits & Menswear with 3-5 Day Shipping</h2>
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Browse <strong>in stock lehengas in the USA</strong>, ready-to-wear sarees, <strong>ready to ship Indian wear</strong>, <strong>fast delivery Indian clothes USA</strong>, and pre-stitched salwar kameez sets. All items ship from our warehouse in 3-5 business days with tracked international delivery. Free shipping on orders over $350.
+              Browse <strong>in stock lehengas in the USA</strong>, ready-to-wear sarees, <strong>ready to ship Indian wear</strong>, <strong>fast delivery Indian clothes USA</strong>, and pre-stitched salwar kameez sets. All items ship from our warehouse in 2 business days with tracked US delivery. Free US shipping over $150.
             </p>
           </div>
         </div>
@@ -147,7 +147,7 @@ const ReadyToShip = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
             <h2 className="font-serif text-2xl mb-6 text-center">Why Shop Ready to Ship Indian Wear?</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Shopping for <strong>ready to ship Indian wear</strong> is the smartest choice when you have an event coming up and need your outfit fast. Unlike made-to-order items that require 3-4 weeks for stitching, our ready-to-ship collection features pre-stitched garments that dispatch from our warehouse in just 3-5 business days. Combined with 7-10 day tracked shipping to the USA, you can have your outfit delivered to your door in as little as 10-15 business days.</p>
+              <p>Shopping for <strong>ready to ship Indian wear</strong> is the smartest choice when you have an event coming up and need your outfit fast. Unlike made-to-order items that require 3-4 weeks for stitching, our ready-to-ship collection features pre-stitched garments that dispatch from our warehouse in just 2 business days. Combined with 7-10 day tracked shipping to the USA, you can have your outfit delivered to your door in as little as 2 business days to ship.</p>
               <p><strong>Fast delivery Indian clothes in the USA</strong> don't mean compromising on quality. Every ready-to-ship item at LuxeMia undergoes the same rigorous quality checks as our custom-stitched pieces. From hand-embroidered bridal lehengas to lightweight georgette sarees, our in-stock inventory includes the same designer styles, premium fabrics, and intricate craftsmanship that LuxeMia is known for — just ready to go immediately.</p>
               <p>Our <strong>in stock lehengas in the USA</strong> are particularly popular for last-minute wedding guests, bridesmaids, and anyone who needs a beautiful ethnic outfit without the wait. Available in standard sizes from XS to XXL, these lehengas feature popular designs including mirror work, gota patti, zardozi embroidery, and modern pastel palettes that are trending for 2026 Indian weddings.</p>
 
@@ -165,7 +165,7 @@ const ReadyToShip = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Ready-to-Ship vs Made-to-Order: Which Should You Choose?</h3>
-                <p>Choose <strong>ready-to-ship</strong> if your event is less than 4 weeks away, you wear a standard size (XS-XXL), or you want the fastest possible delivery. Choose <strong>made-to-order</strong> if you want a precise custom fit to your measurements, your event is 5+ weeks away, or you need specific customizations like color changes or neckline alterations. Both options come with LuxeMia's quality guarantee and the same $350 free shipping threshold.</p>
+                <p>Choose <strong>ready-to-ship</strong> if your event is less than 4 weeks away, you wear a standard size (XS-XXL), or you want the fastest possible delivery. Choose <strong>made-to-order</strong> if you want a precise custom fit to your measurements, your event is 5+ weeks away, or you need specific customizations like color changes or neckline alterations. Both options come with LuxeMia's quality guarantee and the same $350 free US shipping threshold.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

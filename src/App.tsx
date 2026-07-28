@@ -54,7 +54,6 @@ const WeddingPartyOrders = lazy(() => import("./pages/WeddingPartyOrders"));
 const StyleQuiz = lazy(() => import("./pages/StyleQuiz"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
 const USA = lazy(() => import("./pages/nri/USA"));
-const Canada = lazy(() => import("./pages/nri/Canada"));
 const NRIGeneral = lazy(() => import("./pages/nri/NRIGeneral"));
 // Occasion landing pages — high buyer-intent SEO collection pages
 const DiwaliOutfits = lazy(() => import("./pages/DiwaliOutfits"));
@@ -205,8 +204,8 @@ const App = () => (
                 <Route path="/nri/usa" element={<Navigate to="/indian-ethnic-wear-usa" replace />} />
                 <Route path="/nri/canada" element={<Navigate to="/indian-ethnic-wear-canada" replace />} />
                 <Route path="/indian-ethnic-wear-usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
-                <Route path="/indian-ethnic-wear-canada" element={<Suspense fallback={<PageLoader />}><Canada /></Suspense>} />
-                {/* UK pages redirect to /nri (no longer targeted) */}
+                <Route path="/indian-ethnic-wear-canada" element={<Navigate to="/nri" replace />} />
+                {/* Legacy regional pages redirect to /nri (no longer targeted) */}
                 <Route path="/nri/uk" element={<Navigate to="/nri" replace />} />
                 <Route path="/indian-ethnic-wear-uk" element={<Navigate to="/nri" replace />} />
                 <Route path="/uk-indian-clothing" element={<Navigate to="/nri" replace />} />

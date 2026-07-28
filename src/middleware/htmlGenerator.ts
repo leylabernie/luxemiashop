@@ -36,7 +36,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const seoTitle = product.seo?.title?.trim();
   const seoDescription = product.seo?.description?.trim();
   const title = seoTitle || `${product.title} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
-  const description = (seoDescription || product.description || `Shop ${product.title} at LuxeMia. Premium quality Indian ethnic wear with worldwide shipping.`).slice(0, 160);
+  const description = (seoDescription || product.description || `Shop ${product.title} at LuxeMia. Ready-to-ship Indian ethnic wear for US delivery.`).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
@@ -238,7 +238,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
         </div>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free shipping on orders over $350. Flat rate $25/order for orders under $350. Delivery 7-10 business days via USPS/UPS/DHL to USA, Canada, and Australia.<br>
+          <strong>Shipping:</strong> Free US shipping over $150. $12 flat below that. Ships within 2 business days.<br>
           <strong>Dispatch:</strong> Readymade 3-5 business days | Custom/Alterations 5-7 business days<br>
           <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990

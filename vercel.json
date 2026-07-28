@@ -10,7 +10,12 @@
     },
     {
       "source": "/nri/canada",
-      "destination": "/indian-ethnic-wear-canada",
+      "destination": "/nri",
+      "statusCode": 301
+    },
+    {
+      "source": "/indian-ethnic-wear-canada",
+      "destination": "/nri",
       "statusCode": 301
     },
     {

@@ -124,16 +124,16 @@ def generate_body_html(p):
 <ul>
 <li><strong>Care:</strong> Store in the provided velvet pouch away from moisture and direct sunlight. Avoid contact with perfume, hairspray, and water. Gently wipe with a soft dry cloth after each wear.</li>
 <li><strong>Maintenance:</strong> For deep cleaning, take to a professional jewelry cleaner. Do not use chemical cleaners at home — they can damage the Kundan setting.</li>
-<li><strong>Shipping:</strong> Free DHL/USPS/UPS delivery to USA, Canada, and Australia within 7-10 business days. Each piece ships in a signature gift box.</li>
+<li><strong>Shipping:</strong> Free DHL/USPS/UPS delivery to the United States within 2 business days to ship. Each piece ships in a signature gift box.</li>
 </ul>
 
 <h3>Frequently Asked Questions</h3>
 <p><strong>Is this Kundan jewelry or real diamond jewelry?</strong> Our Kundan jewelry uses traditional Indian stone-setting techniques with glass-based Kundan stones and uncut polki accents. It offers the look of fine diamond jewelry at a fraction of the cost, making it perfect for brides who want a regal appearance without the investment of real diamonds.</p>
 <p><strong>What's included in the set?</strong> This set includes {includes}. The necklace features an adjustable dori (thread) closure for a comfortable fit, and the earrings come with secure push-backs.</p>
-<p><strong>How long does shipping take to USA, Canada, Australia?</strong> We offer express shipping via DHL/USPS/UPS with delivery in 7-10 business days to all three countries. Shipping is free on orders over $350, with a flat $25 rate for orders under $350.</p>
+<p><strong>How long does shipping take to United States?</strong> We offer express shipping via DHL/USPS/UPS with delivery in 2 business days to ship to all three countries. Shipping is free on orders over $150, with a flat $12 rate for orders below $150.</p>
 
 <h3>The LuxeMia Promise</h3>
-<p>Every piece in our Kundan collection is hand-selected for its exceptional craftsmanship, traditional techniques, and timeless appeal. We're proud to offer worldwide shipping directly from our Philadelphia headquarters to your doorstep — bringing authentic Indian bridal jewelry to NRI brides across USA, Canada, and Australia.</p>"""
+<p>Every piece in our Kundan collection is hand-selected for its exceptional craftsmanship, traditional techniques, and timeless appeal. We're proud to offer US shipping directly from our Philadelphia headquarters to your doorstep — bringing authentic Indian bridal jewelry to NRI brides across the United States.</p>"""
     
     return body
 
@@ -168,9 +168,9 @@ def generate_seo_description(p):
     color = a['color_primary'].lower()
     
     candidates = [
-        f"Shop this {color} {stone} {jtype} for weddings. Handcrafted for brides. Free shipping USA, Canada, Australia.",
-        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free shipping over $350 to USA, Canada & Australia.",
-        f"Buy {color} {stone} {jtype} online. Premium bridal jewelry. Free shipping to USA, Canada, Australia.",
+        f"Shop this {color} {stone} {jtype} for weddings. Handcrafted for brides. Free shipping United States.",
+        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free US shipping over $150 to the United States.",
+        f"Buy {color} {stone} {jtype} online. Premium bridal jewelry. Free shipping to United States.",
     ]
     for c in candidates:
         if len(c) <= 155:
@@ -359,7 +359,7 @@ def build_tags(p):
         # Brand + status
         'LuxeMia', 'gender:female', 'women', 'womenswear',
         'new arrival', 'handcrafted', 'premium jewelry',
-        'worldwide shipping', 'free shipping over 350',
+        'US shipping', 'free shipping over 350',
         
         # Catalog number
         f'catalog:{catalog_num}',

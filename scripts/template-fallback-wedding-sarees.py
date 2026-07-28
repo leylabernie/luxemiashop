@@ -84,16 +84,16 @@ def generate_body_html(p):
 <ul>
 <li><strong>Sizing:</strong> Saree length 5.5 meters + 0.8 meter blouse piece. Free Size — fits all body types with adjustable draping</li>
 <li><strong>Care:</strong> {care}</li>
-<li><strong>Shipping:</strong> Free DHL/USPS/UPS delivery to USA, Canada, and Australia within 7-10 business days</li>
+<li><strong>Shipping:</strong> Free DHL/USPS/UPS delivery to the United States within 2 business days to ship</li>
 </ul>
 
 <h3>Frequently Asked Questions</h3>
 <p><strong>What size saree should I order from USA?</strong> Our sarees come in a standard 5.5-meter length that suits all body types. The included blouse piece is unstitched, allowing your local tailor to custom-fit it to your measurements. For the best fit, provide your bust, waist, and shoulder measurements to your tailor.</p>
 <p><strong>How do I care for a {fabric_lower} saree with {work_lower} work?</strong> {care} For the {work_lower} work, never iron directly — always use a pressing cloth or iron on the reverse side.</p>
-<p><strong>How long does shipping take to USA, Canada, Australia?</strong> We offer express shipping via DHL/USPS/UPS with delivery in 7-10 business days to all three countries. Shipping is free on orders over $350, with a flat $25 rate for orders under $350.</p>
+<p><strong>How long does shipping take to United States?</strong> We offer express shipping via DHL/USPS/UPS with delivery in 2 business days to ship to all three countries. Shipping is free on orders over $150, with a flat $12 rate for orders below $150.</p>
 
 <h3>The LuxeMia Promise</h3>
-<p>Every saree in our wedding collection is hand-selected for its exceptional quality, craftsmanship, and timeless appeal. We're proud to offer worldwide shipping directly from our Philadelphia headquarters to your doorstep — bringing authentic Indian bridal wear to NRI brides across USA, Canada, and Australia.</p>"""
+<p>Every saree in our wedding collection is hand-selected for its exceptional quality, craftsmanship, and timeless appeal. We're proud to offer US shipping directly from our Philadelphia headquarters to your doorstep — bringing authentic Indian bridal wear to NRI brides across the United States.</p>"""
     
     return body
 

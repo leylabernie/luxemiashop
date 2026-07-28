@@ -49,7 +49,6 @@ const OCCASION_LINKS: LinkItem[] = [
   { to: "/collections/haldi-outfits", label: "Haldi Ceremony Outfits" },
   { to: "/nri", label: "NRI Shopping Hub" },
   { to: "/nri/usa", label: "Indian Ethnic Wear — USA" },
-  { to: "/nri/canada", label: "Indian Ethnic Wear — Canada" },
 ];
 
 const INFO_LINKS: LinkItem[] = [

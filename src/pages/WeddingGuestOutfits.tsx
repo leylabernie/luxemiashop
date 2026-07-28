@@ -34,8 +34,8 @@ const weddingGuestFaqs = [
     answer: 'Both are excellent choices for an Indian wedding guest. A saree is considered the most elegant and traditional option, and wearing one as a non-Indian guest is deeply appreciated as a sign of cultural respect. A salwar kameez or anarkali suit is easier to wear, more comfortable for all-day celebrations, and just as appropriate. For the sangeet or mehendi ceremony, a colorful salwar suit or lehenga is festive and fun. For the main wedding ceremony and reception, a silk saree or heavily embroidered anarkali is perfect.',
   },
   {
-    question: 'Do you ship Indian wedding guest outfits to the USA, Canada, and Australia?',
-    answer: 'LuxeMia currently ships Indian wedding guest outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. We recommend ordering 3–4 weeks before the wedding; standard transit is estimated at 7–10 business days after dispatch.',
+    question: 'Do you ship Indian wedding guest outfits to the United States?',
+    answer: 'LuxeMia currently ships Indian wedding guest outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. We recommend ordering 3–4 weeks before the wedding; standard transit is estimated at carrier transit after dispatch after dispatch.',
   },
   {
     question: 'Can I wear the same outfit to multiple events at an Indian wedding?',
@@ -53,7 +53,7 @@ const WeddingGuestOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia"
-        description="Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free shipping to USA, Canada & Australia."
+        description="Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free US shipping over $150."
         canonical="https://luxemia.shop/collections/wedding-guest-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -71,7 +71,7 @@ const WeddingGuestOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Wedding Season</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Dress to impress at every Indian wedding ceremony — from the colorful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colors. Whether you are a close family member, a colleague, or attending an Indian wedding for the first time, we have the perfect outfit for you — shipped directly to your door in the USA, Canada, or Australia.
+              Dress to impress at every Indian wedding ceremony — from the colorful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colors. Whether you are a close family member, a colleague, or attending an Indian wedding for the first time, we have the perfect outfit for you — shipped directly to your door in the United States.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const WeddingGuestOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>wedding guest sarees</strong>, <strong>anarkali suits for Indian weddings</strong>, <strong>lehengas for wedding guests</strong>, <strong>salwar kameez for weddings</strong>, and <strong>indo-western outfits for receptions</strong>. Gorgeous colors including pink, teal, gold, purple, and royal blue. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong> on orders over $350.
+              Shop <strong>wedding guest sarees</strong>, <strong>anarkali suits for Indian weddings</strong>, <strong>lehengas for wedding guests</strong>, <strong>salwar kameez for weddings</strong>, and <strong>indo-western outfits for receptions</strong>. Gorgeous colors including pink, teal, gold, purple, and royal blue. Free US shipping over $150.
             </p>
           </div>
         </div>
@@ -142,7 +142,7 @@ const WeddingGuestOutfits = () => {
 
               <div>
                 <h3 className="font-medium text-foreground mb-1">Mehendi Ceremony</h3>
-                <p>The mehendi is a daytime ceremony traditionally associated with the color yellow and green. Guests wear bright, cheerful <Link to="/suits" className="text-primary underline">salwar kameez or anarkali suits</Link>, or simple lehengas in yellow, lime green, orange, or floral prints. Avoid heavily embellished outfits as the mehendi ceremony is casual and fun — you will be sitting for hours while henna is applied. Cotton, georgette, or chiffon fabrics in festive colors are ideal. Budget $120-$250 for a mehendi outfit.</p>
+                <p>The mehendi is a daytime ceremony traditionally associated with the color yellow and green. Guests wear bright, cheerful <Link to="/suits" className="text-primary underline">salwar kameez or anarkali suits</Link>, or simple lehengas in yellow, lime green, orange, or floral prints. Avoid heavily embellished outfits as the mehendi ceremony is casual and fun — you will be sitting for hours while henna is applied. Cotton, georgette, or chiffon fabrics in festive colors are ideal. Budget $120-$120 for a mehendi outfit.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Sangeet Night</h3>
@@ -150,7 +150,7 @@ const WeddingGuestOutfits = () => {
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Wedding Ceremony (Muhurtham)</h3>
-                <p>The main wedding ceremony is the most formal of all events. Guests dress in their most elegant ethnic wear — <Link to="/sarees" className="text-primary underline">silk sarees</Link>, heavily embroidered anarkali gowns, formal lehengas, or sophisticated salwar kameez. <strong>Avoid wearing red</strong> (the traditional bridal color) and white (associated with mourning in Indian culture). Rich jewel tones — emerald, sapphire, maroon, plum — gold, and pastel shades are perfect for the main wedding ceremony. Budget $250-$500.</p>
+                <p>The main wedding ceremony is the most formal of all events. Guests dress in their most elegant ethnic wear — <Link to="/sarees" className="text-primary underline">silk sarees</Link>, heavily embroidered anarkali gowns, formal lehengas, or sophisticated salwar kameez. <strong>Avoid wearing red</strong> (the traditional bridal color) and white (associated with mourning in Indian culture). Rich jewel tones — emerald, sapphire, maroon, plum — gold, and pastel shades are perfect for the main wedding ceremony. Budget $120-$500.</p>
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Reception</h3>
@@ -165,18 +165,18 @@ const WeddingGuestOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Not Indian? Read This First</h3>
-                <p>If you are a non-Indian guest attending your first Indian wedding, the outfit choices can feel overwhelming. The easiest outfit for first-timers is an <Link to="/suits" className="text-primary underline">anarkali suit</Link> — it slips on like a dress, no draping or pinning required. Pre-draped sarees are also a good option if you want the saree look without the draping skill. Budget $150-$400 for a quality outfit, and order at least 4-6 weeks before the wedding to allow time for shipping from India.</p>
+                <p>If you are a non-Indian guest attending your first Indian wedding, the outfit choices can feel overwhelming. The easiest outfit for first-timers is an <Link to="/suits" className="text-primary underline">anarkali suit</Link> — it slips on like a dress, no draping or pinning required. Pre-draped sarees are also a good option if you want the saree look without the draping skill. Budget $150-$400 for a quality outfit, and order at least 4-6 weeks before the wedding to allow time for shipping from our US-stock edit.</p>
                 <p className="mt-2">For the complete step-by-step guide — including sizing help, color etiquette, what to bring, and common mistakes to avoid — read our <Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline font-medium">complete guide for non-Indian wedding guests</Link>. It is the resource we wish we had when our non-Indian friends first asked us for help.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">How Much Should You Spend on an Indian Wedding Guest Outfit?</h3>
-                <p>Budget $150-$400 USD for a quality Indian wedding guest outfit. Cheaper options ($80-$150) exist but often use lower-quality fabrics that photograph poorly and may not survive dry-cleaning. More expensive options ($500+) are usually overkill for a guest — that territory is for bridal outfits. The sweet spot for a beautiful, photogenic outfit you can re-wear to future Indian weddings is $200-$350. At LuxeMia, most of our wedding-guest lehengas, sarees, and anarkali suits fall in this range, and we offer free shipping to the USA, Canada, and Australia on orders over $350.</p>
+                <p>Budget $150-$400 USD for a quality Indian wedding guest outfit. Cheaper options ($80-$150) exist but often use lower-quality fabrics that photograph poorly and may not survive dry-cleaning. More expensive options ($500+) are usually overkill for a guest — that territory is for bridal outfits. The sweet spot for a beautiful, photogenic outfit you can re-wear to future Indian weddings is $200-$350. At LuxeMia, most of our wedding-guest lehengas, sarees, and anarkali suits fall in this range, and we offer free US shipping to the United States on orders over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Indian Wedding Guest Outfit</h3>
-                <p>Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. Last-minute orders often do not arrive in time, and Indian weddings have hard dates that cannot be moved. At LuxeMia, ready-to-wear items dispatch in 3-5 business days and Made to Measure items dispatch in 5-7 business days, with 7-10 day shipping via USPS, UPS, or DHL to the USA, Canada, and Australia.</p>
+                <p>Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. Last-minute orders often do not arrive in time, and Indian weddings have hard dates that cannot be moved. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping via USPS, UPS, or DHL to the United States.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

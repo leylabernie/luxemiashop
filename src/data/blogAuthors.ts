@@ -20,7 +20,7 @@ const EDITORIAL_TEAM: BlogAuthor = {
   name: 'LuxeMia Editorial Team',
   role: 'Indian Wedding & Ethnic Wear Editors',
   credentials: 'Product and shopping guidance reviewed by the LuxeMia team',
-  bio: `The LuxeMia Editorial Team creates practical guides for shopping Indian ethnic wear online. Our articles cover occasion dressing, garment terminology, sizing, care, shipping and styling considerations for customers in the USA, Canada and Australia.
+  bio: `The LuxeMia Editorial Team creates practical guides for shopping Indian ethnic wear online. Our articles cover occasion dressing, garment terminology, sizing, care, shipping and styling considerations for customers in the United States.
 
 We review product details and policy information before publication and update time-sensitive subjects, including customs and delivery guidance, when official information changes. Readers should confirm current customs rules with the relevant government authority before ordering.`,
   expertise: [

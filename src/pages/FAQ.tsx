@@ -45,27 +45,27 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'We currently ship to the USA, Canada, and Australia. Free shipping on orders over $350 USD. A flat rate of $25 USD applies to orders under $350. Delivery times vary by destination — see our Shipping Policy for details.',
+          answer: 'LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below $150. In-stock items ship within 2 business days.',
         },
         {
           question: 'How long does shipping take?',
-          answer: 'Readymade items are dispatched within 3-5 business days, and custom/alteration orders within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping. Delivery times vary by destination.',
+          answer: 'In-stock ready-to-ship items leave LuxeMia within 2 business days. Carrier transit time begins after dispatch and depends on the service shown at checkout.',
         },
         {
           question: 'How can I track my order?',
           answer: 'Once your order ships, you will receive an email with your tracking number and a link to track your package. You can also track your order by logging into your account or contacting our support team.',
         },
         {
-          question: 'Do I have to pay customs duties or taxes?',
-          answer: 'Import duties, customs fees, and local taxes may apply and are not included in our prices unless checkout explicitly states otherwise. Charges depend on the destination, product classification, value, and current customs rules. Please check with your country\'s customs authority for current information before ordering.',
+          question: 'Do I have to pay taxes?',
+          answer: 'Taxes, if applicable, are calculated at checkout. LuxeMia currently ships to United States addresses only.',
         },
         {
           question: 'What if my package is delayed or lost?',
           answer: 'If your package appears delayed, first check the tracking information for updates. For packages significantly delayed or showing no movement, contact us and we will work with the carrier to locate your package. Lost packages will be replaced or refunded after investigation.',
         },
         {
-          question: 'Do you offer free shipping?',
-          answer: 'Yes! We offer free shipping on orders over $350 USD to the USA, Canada, and Australia. A flat rate of $25 USD applies to orders under $350.',
+          question: 'Do you offer free US shipping?',
+          answer: 'Yes. We offer free US shipping on orders over $150. A flat $12 shipping rate applies below $150.',
         },
       ],
     },
@@ -79,7 +79,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer custom sizing?',
-          answer: 'Yes! We offer custom sizing for all our garments. You can submit your measurements through our Size Guide page. Custom orders take an additional 3-4 weeks for production.',
+          answer: 'Yes! We offer custom sizing for all our garments. You can submit your measurements through our Size Guide page. Custom work is not part of the two-business-day ready-to-ship promise.',
         },
         {
           question: 'What if my measurements don\'t fit standard sizes?',
@@ -221,19 +221,19 @@ const FAQ = () => {
     },
     {
       icon: Truck,
-      title: 'Shopping from USA, Canada & Australia',
+      title: 'Shopping from the United States',
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes! LuxeMia specializes in shipping authentic Indian ethnic wear directly to customers in the USA. We offer free shipping on orders over $350 and a flat $25 shipping fee on orders under $350. All shipments are sent via DHL Express, USPS, or UPS with full tracking and insurance. Typical delivery is 6-15 business days for readymade items.',
+          answer: 'Yes. LuxeMia specializes in ready-to-ship Indian ethnic wear for customers in the United States. Free US shipping applies over $150, a flat $12 rate applies below $150, and in-stock items ship within 2 business days.',
         },
         {
-          question: 'Will I have to pay customs duties on my order in the USA?',
-          answer: 'Yes, import duties and local taxes are the responsibility of the customer and are not included in our prices. For US customers, please note that goods from India may be subject to additional tariffs (currently 50% on certain textile categories). Customs fees are collected by your country\'s customs authority upon delivery. Check with your local customs office for current rates.',
+          question: 'Will I have to pay taxes on my order in the USA?',
+          answer: 'Taxes, if applicable, are calculated at checkout. LuxeMia currently ships from US-held stock to United States addresses only.',
         },
         {
-          question: 'Do you ship to Canada and Australia?',
-          answer: 'Yes! We ship to Canada and Australia with the same shipping rates: free on orders over $350 USD, flat $25 USD on orders under $350. Canadian and Australian customers may also be responsible for import duties and local taxes (GST/HST/PST in Canada, GST in Australia). Delivery times are similar: 6-15 business days for readymade items.',
+          question: 'Do you ship outside the United States?',
+          answer: 'No. LuxeMia currently ships to United States addresses only.',
         },
         {
           question: 'How do Indian clothing sizes compare to US sizes?',
@@ -244,8 +244,8 @@ const FAQ = () => {
           answer: 'We strive for accurate color representation in our product photography, but slight variations can occur due to screen settings, lighting conditions, and the nature of handcrafted textiles. Many Indian fabrics also appear different in natural vs. artificial light. We recommend reviewing all available product images and reading the fabric description carefully before purchasing.',
         },
         {
-          question: 'How long does delivery take to the USA, Canada, or Australia?',
-          answer: 'Readymade items are dispatched within 3-5 business days, and custom/alteration orders within 5-7 business days. Delivery takes 3-5 business days via DHL Express, or 7-10 business days via USPS/UPS standard shipping. Total estimated delivery: 6-15 business days (readymade) or 8-17 business days (custom). All shipments include full tracking and insurance.',
+          question: 'How long does US delivery take?',
+          answer: 'In-stock items ship within 2 business days. Carrier transit time begins after dispatch, and tracking is sent by email once the label is created.',
         },
       ],
     },

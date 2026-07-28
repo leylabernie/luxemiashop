@@ -34,8 +34,8 @@ const navratriOutfitFaqs = [
     answer: 'A chaniya choli is the traditional Gujarati and Rajasthani three-piece outfit specifically associated with Navratri and Garba dancing — it features a very full, circular-cut flared skirt designed for movement during Garba, paired with a short fitted choli blouse and dupatta. The skirt is typically made from lightweight fabrics like georgette, cotton, or rayon with mirror work, bandhani prints, or heavy embroidery. A lehenga is a more formal, bridal-style flared skirt that is heavier, more structured, and typically more embellished. For Garba dancing, a chaniya choli is the practical and traditional choice — the lighter fabric and fuller flare allow freedom of movement. For watching Navratri celebrations or attending Navratri events without dancing, a lehenga is equally beautiful.',
   },
   {
-    question: 'Do you ship Navratri outfits to the USA, Canada, and Australia?',
-    answer: 'LuxeMia currently ships Navratri outfits to the USA, Canada, and Australia. Free shipping applies over $350 USD; orders under $350 have a flat $25 rate. Orders include tracking. Order at least 3–4 weeks before the festival; standard transit is estimated at 7–10 business days after dispatch.',
+    question: 'Do you ship Navratri outfits to the United States?',
+    answer: 'LuxeMia currently ships Navratri outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. Order at least 3–4 weeks before the festival; standard transit is estimated at carrier transit after dispatch after dispatch.',
   },
   {
     question: 'What accessories should I wear with a Navratri outfit?',
@@ -53,7 +53,7 @@ const NavratriOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia"
-        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free shipping to USA, Canada & Australia."
+        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free US shipping over $150."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -71,7 +71,7 @@ const NavratriOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Nine Nights of Celebration</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Navratri Outfits — Chaniya Choli & Garba Dress Collection</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colors, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the USA, Canada, or Australia, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
+              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colors, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the United States, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const NavratriOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free shipping to <strong>USA</strong>, <strong>Canada</strong>, and <strong>Australia</strong> on orders over $350.
+              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free US shipping over $150.
             </p>
           </div>
         </div>
@@ -138,8 +138,8 @@ const NavratriOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
             <h2 className="font-serif text-2xl mb-6 text-center">Navratri Outfit Guide — Nine Nights, Nine Colors</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Navratri — meaning "nine nights" in Sanskrit — is one of the most joyful and vibrant Hindu festivals, celebrated twice a year across India and by the Indian diaspora worldwide. The Sharad Navratri (autumn Navratri, typically October) is the most widely celebrated, especially in the states of Gujarat and Maharashtra where Garba and Dandiya Raas dancing are the central traditions.</p>
-              <p>The <strong>chaniya choli</strong> is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with <strong>mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery</strong>. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor. For Indian communities outside India, chaniya cholis have become popular choices for community Garba events in the USA, Canada, UK, and Australia — where entire families participate in the nine-night celebration.</p>
+              <p>Navratri — meaning "nine nights" in Sanskrit — is one of the most joyful and vibrant Hindu festivals, celebrated twice a year across India and by the Indian diaspora across the United States. The Sharad Navratri (autumn Navratri, typically October) is the most widely celebrated, especially in the states of Gujarat and Maharashtra where Garba and Dandiya Raas dancing are the central traditions.</p>
+              <p>The <strong>chaniya choli</strong> is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with <strong>mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery</strong>. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor. For Indian communities outside India, chaniya cholis have become popular choices for community Garba events in the United States — where entire families participate in the nine-night celebration.</p>
               <p>One of the most beloved Navratri traditions is <strong>dressing in the color of the day</strong>. Each of the nine nights is associated with a specific color linked to the nine forms of Goddess Durga worshipped during the festival. Common Navratri color sequences include royal blue, green, grey, orange, white, red, royal blue, pink, and purple — though the exact sequence varies by year according to the Hindu calendar. Many participants plan nine separate Navratri outfits in each day's color — making Navratri one of the biggest ethnic fashion occasions of the year.</p>
               <p>For guests who prefer an alternative to the chaniya choli, <strong>embroidered lehengas, festive anarkali suits, and mirror-work salwar kameez</strong> in bright Navratri colors are equally beautiful choices. Men traditionally wear a white kurta-pyjama with colorful dupattas or embroidered nehru jackets for Garba celebrations.</p>
 
@@ -151,7 +151,7 @@ const NavratriOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Navratri Chaniya Choli</h3>
-                <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from India — even ready-to-ship items take 10-14 days door-to-door, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the USA, Canada, and Australia with free shipping on orders over $350.</p>
+                <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the United States with free US shipping over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

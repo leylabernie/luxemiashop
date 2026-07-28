@@ -68,7 +68,7 @@ const popularTopics = [
   {
     label: 'NRI Shopping Tips',
     link: '/blog',
-    description: 'Buying from USA, Canada & Australia',
+    description: 'Buying from the United States',
     category: 'NRI Fashion',
   },
 ];
@@ -116,7 +116,7 @@ const Blog = () => {
     "@context": "https://schema.org",
     "@type": "Blog",
     "name": "LuxeMia Indian Wedding Dress Guide",
-    "description": "Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends for NRIs in USA, Canada & Australia",
+    "description": "Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends for NRIs in the United States",
     "url": "https://luxemia.shop/blog",
     "inLanguage": "en-US",
     "genre": categories.join(", "),
@@ -187,7 +187,7 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion | LuxeMia"
-        description="Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion for NRIs shopping from USA, Canada & Australia. Get insider tips from top stylists."
+        description="Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion for NRIs shopping from the United States. Get insider tips from top stylists."
         canonical="https://luxemia.shop/blog"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -239,7 +239,7 @@ const Blog = () => {
                 Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion
               </h1>
               <p className="text-lg text-muted-foreground">
-                Expert guides for NRIs shopping from USA, Canada & Australia — bridal lehengas, wedding sarees, styling inspiration & care tips for your perfect look
+                Expert guides for NRIs shopping from the United States — bridal lehengas, wedding sarees, styling inspiration & care tips for your perfect look
               </p>
             </div>
           </div>
@@ -249,7 +249,7 @@ const Blog = () => {
         <section aria-label="Content overview" className="py-6 border-b border-border bg-muted/20">
           <div className="container mx-auto px-4">
             <p className="text-sm text-muted-foreground max-w-3xl mx-auto text-center">
-              Explore our curated guides on Indian wedding fashion, bridal lehengas, saree draping styles, fabric encyclopedias, and ethnic wear care tips. Written specifically for NRIs shopping from the USA, Canada, and Australia. Content is organized into topic clusters covering bridal fashion, wedding planning, styling tips, NRI shopping guides, fabric care, and cultural deep dives.
+              Explore our curated guides on Indian wedding fashion, bridal lehengas, saree draping styles, fabric encyclopedias, and ethnic wear care tips. Written specifically for NRIs shopping from the United States. Content is organized into topic clusters covering bridal fashion, wedding planning, styling tips, NRI shopping guides, fabric care, and cultural deep dives.
             </p>
           </div>
         </section>
@@ -554,7 +554,7 @@ const Blog = () => {
               Stay Updated with Fashion Trends
             </h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              Subscribe to our newsletter for the latest articles on Indian fashion, styling tips, and exclusive offers for NRIs in USA, Canada & Australia.
+              Subscribe to our newsletter for the latest articles on Indian fashion, styling tips, and exclusive offers for NRIs in the United States.
             </p>
             <Link
               to="/#newsletter"
