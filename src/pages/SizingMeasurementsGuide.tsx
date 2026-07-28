@@ -70,7 +70,7 @@ const SizingMeasurementsGuide = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | LuxeMia"
-        description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free US shipping over $150 to USA."
+        description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free U.S. shipping over $150 to USA."
         canonical="https://luxemia.shop/sizing-measurements-guide"
         faqs={faqs}
         additionalSchemas={[howToMeasureSchema()]}
@@ -112,7 +112,7 @@ const SizingMeasurementsGuide = () => {
               transition={{ delay: 0.3 }}
               className="flex flex-wrap justify-center gap-3 mt-8"
             >
-              <Badge variant="secondary" className="text-sm py-2 px-4">Free US shipping over $150 to USA</Badge>
+              <Badge variant="secondary" className="text-sm py-2 px-4">Free U.S. shipping over $150 to USA</Badge>
               <Badge variant="secondary" className="text-sm py-2 px-4">Ready-to-wear ships in 5-7 days</Badge>
               <Badge variant="secondary" className="text-sm py-2 px-4">Custom stitched in 3-4 weeks</Badge>
             </motion.div>
@@ -142,7 +142,7 @@ const SizingMeasurementsGuide = () => {
                 </p>
                 <p>
                   Once you know your measurements, you can confidently order any of our{' '}
-                  <Link to="/lehengas" className="text-primary underline hover:text-primary/80">ready-to-ship lehengas</Link>{' '}
+                  <Link to="/lehengas" className="text-primary underline hover:text-primary/80">online lehengas</Link>{' '}
                   or{' '}
                   <Link to="/sarees" className="text-primary underline hover:text-primary/80">designer sarees</Link>{' '}
                   knowing the fit will be right the first time.
@@ -439,7 +439,7 @@ const SizingMeasurementsGuide = () => {
               Ready to Find Your Perfect Fit?
             </h2>
             <p className="text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-              Shop our ready-to-ship lehengas, designer sarees, and bridal collections. Free shipping on
+              Shop our online lehengas, designer sarees, and bridal collections. Free shipping on
               orders over $150 to the United States.
             </p>
             <div className="flex flex-wrap justify-center gap-4">

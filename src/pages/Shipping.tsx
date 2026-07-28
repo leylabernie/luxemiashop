@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 const FLAT_SHIPPING_RATE = 12;
 const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'Free US shipping over $150. $12 flat below that. Ships within 2 business days.';
+const SHIPPING_PROMISE = 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.';
 
 const Shipping = () => {
   const shippingSchemas = {
@@ -34,7 +34,7 @@ const Shipping = () => {
             minValue: 0,
             maxValue: 2,
             unitCode: 'DAY',
-            description: 'Ships within 2 business days',
+            description: 'Tracking provided after dispatch',
           },
         },
       },
@@ -58,7 +58,7 @@ const Shipping = () => {
             minValue: 0,
             maxValue: 2,
             unitCode: 'DAY',
-            description: 'Ships within 2 business days',
+            description: 'Tracking provided after dispatch',
           },
         },
       },
@@ -68,8 +68,8 @@ const Shipping = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Shipping Policy — Ready-to-Ship US Delivery | LuxeMia"
-        description="Free US shipping over $150. $12 flat below that. In-stock Indian ethnic wear ships within 2 business days from LuxeMia."
+        title="Shipping Policy — Online US Delivery | LuxeMia"
+        description="Free U.S. shipping over $150. $12 flat below that. In-stock Indian ethnic wear tracking provided after dispatch from LuxeMia."
         canonical="https://luxemia.shop/shipping"
       />
       <Helmet>
@@ -123,7 +123,7 @@ const Shipping = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { icon: Truck, title: 'US Only', desc: 'Ships to United States addresses' },
-                { icon: Package, title: 'In Stock', desc: 'No pre-order listed as ready-to-ship' },
+                { icon: Package, title: 'In Stock', desc: 'Browse current online styles' },
                 { icon: Clock, title: '2 Business Days', desc: 'Packed and handed to the carrier quickly' },
                 { icon: ShieldCheck, title: 'Tracked', desc: 'Tracking sent by email after dispatch' },
               ].map((item, index) => (
@@ -167,7 +167,7 @@ const Shipping = () => {
                 <div className="bg-card border border-border rounded-lg p-6">
                   <h3 className="font-semibold mb-3">Timing</h3>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• In-stock items ship within 2 business days</li>
+                    <li>• Online orders ship with tracking after dispatch</li>
                     <li>• Tracking is emailed when the label is created</li>
                     <li>• Carrier transit time starts after dispatch</li>
                     <li>• Delivery speed depends on the service shown at checkout</li>
@@ -200,7 +200,7 @@ const Shipping = () => {
                 </p>
                 <p>
                   Please review the product measurements before ordering. Ready-to-ship speed depends on the item being in stock
-                  and does not mean a custom piece can be produced within two business days.
+                  and does not mean a custom piece can be produced immediately.
                 </p>
               </div>
             </motion.div>
@@ -233,7 +233,7 @@ const Shipping = () => {
                 <AccordionItem value="item-3">
                   <AccordionTrigger>How fast will my order ship?</AccordionTrigger>
                   <AccordionContent>
-                    In-stock ready-to-ship items leave LuxeMia within 2 business days. Carrier transit time begins after dispatch.
+                    In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">

@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const announcements = [
-  'Free US shipping over $150. $12 flat below that. Ships within 2 business days.',
+  'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.',
 ];
 
 // Categories without a mega-menu use plain links.

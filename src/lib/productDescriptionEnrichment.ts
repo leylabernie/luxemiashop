@@ -9,7 +9,7 @@
  * - Site: luxemia.shop — Indian ethnic wear store
  * - Business: Glamour Indian Wear DBA LuxeMia
  * - Ships to: United States only
- * - Free US shipping over $150; $12 flat below that
+ * - Free U.S. shipping over $150; $12 flat below that
  * - Price conversion: INR × 2 ÷ 90 = USD retail price
  *
  * @module productDescriptionEnrichment
@@ -136,7 +136,7 @@ const SPECIFICITY_INDICATORS = [
 
 /** Shipping info paragraph — consistent across all enriched descriptions. */
 const SHIPPING_PARAGRAPH =
-  'Available in sizes S-XXL with custom tailoring options. Free US shipping over $150; $12 flat below that. In-stock pieces ship within 2 business days.';
+  'Available in sizes S-XXL with custom tailoring options. Free U.S. shipping over $150; $12 flat below that. In-stock pieces ship with tracking after dispatch.';
 
 /** Mapping of normalized product types to their template data. */
 const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
@@ -195,7 +195,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'lehenga for reception',
     ],
     categoryDescription:
-      'Explore LuxeMia\'s curated collection of designer lehengas — from bridal masterpieces to festive-ready silhouettes. Handcrafted with intricate embroidery, zari, and sequin work, each lehenga blends traditional Indian artistry with contemporary design. Shop bridal lehengas, wedding lehengas, and festive lehengas online with free US shipping over $150 and $12 flat shipping below that.',
+      'Explore LuxeMia\'s curated collection of designer lehengas — from bridal masterpieces to festive-ready silhouettes. Handcrafted with intricate embroidery, zari, and sequin work, each lehenga blends traditional Indian artistry with contemporary design. Shop bridal lehengas, wedding lehengas, and festive lehengas online with free U.S. shipping over $150 and $12 flat shipping below that.',
   },
 
   saree: {
@@ -247,7 +247,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'saree for Indian wedding',
     ],
     categoryDescription:
-      'Discover LuxeMia\'s handpicked saree collection — from lustrous Banarasi silks to lightweight georgettes. Each saree celebrates India\'s weaving heritage with intricate borders, rich pallus, and artisan craftsmanship. Shop silk sarees, bridal sarees, and festive sarees online with free US shipping over $150 and $12 flat shipping below that.',
+      'Discover LuxeMia\'s handpicked saree collection — from lustrous Banarasi silks to lightweight georgettes. Each saree celebrates India\'s weaving heritage with intricate borders, rich pallus, and artisan craftsmanship. Shop silk sarees, bridal sarees, and festive sarees online with free U.S. shipping over $150 and $12 flat shipping below that.',
   },
 
   suit: {
@@ -299,7 +299,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'Indian suit collection',
     ],
     categoryDescription:
-      'Shop LuxeMia\'s salwar suit collection — elegant anarkali suits, straight-cut kameez, and palazzo sets crafted with fine embroidery and premium fabrics. Perfect for festive gatherings, weddings, and everyday ethnic style. Free US shipping over $150. $12 flat below that.',
+      'Shop LuxeMia\'s salwar suit collection — elegant anarkali suits, straight-cut kameez, and palazzo sets crafted with fine embroidery and premium fabrics. Perfect for festive gatherings, weddings, and everyday ethnic style. Free U.S. shipping over $150. $12 flat below that.',
   },
 
   salwar: {
@@ -351,7 +351,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'Indian suit collection',
     ],
     categoryDescription:
-      'Shop LuxeMia\'s salwar suit collection — elegant anarkali suits, straight-cut kameez, and palazzo sets crafted with fine embroidery and premium fabrics. Perfect for festive gatherings, weddings, and everyday ethnic style. Free US shipping over $150. $12 flat below that.',
+      'Shop LuxeMia\'s salwar suit collection — elegant anarkali suits, straight-cut kameez, and palazzo sets crafted with fine embroidery and premium fabrics. Perfect for festive gatherings, weddings, and everyday ethnic style. Free U.S. shipping over $150. $12 flat below that.',
   },
 
   anarkali: {
@@ -403,7 +403,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'festive anarkali suit',
     ],
     categoryDescription:
-      'Browse LuxeMia\'s anarkali collection — flowing kalidar silhouettes with intricate yoke embroidery, sheer sleeves, and dramatic flares. From intimate ceremonies to grand receptions, find the perfect anarkali suit online. Free US shipping over $150. $12 flat below that.',
+      'Browse LuxeMia\'s anarkali collection — flowing kalidar silhouettes with intricate yoke embroidery, sheer sleeves, and dramatic flares. From intimate ceremonies to grand receptions, find the perfect anarkali suit online. Free U.S. shipping over $150. $12 flat below that.',
   },
 
   sharara: {
@@ -455,7 +455,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'wedding sharara set',
     ],
     categoryDescription:
-      'Discover LuxeMia\'s sharara collection — trendy wide-legged sets with embroidered kurtas and ornate dupattas. Perfect for sangeet, mehndi, and festive celebrations. Shop designer sharara sets online with free US shipping over $150 and $12 flat shipping below that.',
+      'Discover LuxeMia\'s sharara collection — trendy wide-legged sets with embroidered kurtas and ornate dupattas. Perfect for sangeet, mehndi, and festive celebrations. Shop designer sharara sets online with free U.S. shipping over $150 and $12 flat shipping below that.',
   },
 
   sherwani: {
@@ -507,7 +507,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'Indian groom outfit',
     ],
     categoryDescription:
-      'Shop LuxeMia\'s sherwani collection — distinguished wedding sherwanis and festive menswear crafted with intricate embroidery, structured silhouettes, and premium fabrics. From groom-worthy masterpieces to elegant reception looks. Free US shipping over $150. $12 flat below that.',
+      'Shop LuxeMia\'s sherwani collection — distinguished wedding sherwanis and festive menswear crafted with intricate embroidery, structured silhouettes, and premium fabrics. From groom-worthy masterpieces to elegant reception looks. Free U.S. shipping over $150. $12 flat below that.',
   },
 
   kurta: {
@@ -559,7 +559,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'kurta for wedding guest',
     ],
     categoryDescription:
-      'Explore LuxeMia\'s kurta collection — from breezy cotton sets for everyday ethnic style to embroidered silk kurtas for festive occasions. Pair with churidar, pajama, or pants for versatile looks. Free US shipping over $150. $12 flat below that.',
+      'Explore LuxeMia\'s kurta collection — from breezy cotton sets for everyday ethnic style to embroidered silk kurtas for festive occasions. Pair with churidar, pajama, or pants for versatile looks. Free U.S. shipping over $150. $12 flat below that.',
   },
 
   jewelry: {
@@ -611,7 +611,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'gold-plated Indian jewelry',
     ],
     categoryDescription:
-      'Adorn yourself with LuxeMia\'s jewelry collection — handcrafted kundan sets, temple jewelry, polki designs, and statement earrings. Each piece is crafted to complement Indian ethnic wear with timeless artistry. Free US shipping over $150. $12 flat below that.',
+      'Adorn yourself with LuxeMia\'s jewelry collection — handcrafted kundan sets, temple jewelry, polki designs, and statement earrings. Each piece is crafted to complement Indian ethnic wear with timeless artistry. Free U.S. shipping over $150. $12 flat below that.',
   },
 
   'indo-western': {
@@ -663,7 +663,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'contemporary Indian dress',
     ],
     categoryDescription:
-      'Shop LuxeMia\'s indo-western collection — fusion silhouettes that blend traditional Indian craftsmanship with modern design. From drape gowns to jacket sets, find the perfect contemporary ethnic look. Free US shipping over $150. $12 flat below that.',
+      'Shop LuxeMia\'s indo-western collection — fusion silhouettes that blend traditional Indian craftsmanship with modern design. From drape gowns to jacket sets, find the perfect contemporary ethnic look. Free U.S. shipping over $150. $12 flat below that.',
   },
 };
 
@@ -1037,7 +1037,7 @@ export function enrichProductDescription(
  *   'Embroidered Red Bridal Lehenga',
  *   '$149'
  * );
- * // → "Embroidered Red Bridal Lehenga in premium fabric at $149. Shop Indian ethnic wear at LuxeMia. Free US shipping over $150. $12 flat below that."
+ * // → "Embroidered Red Bridal Lehenga in premium fabric at $149. Shop Indian ethnic wear at LuxeMia. Free U.S. shipping over $150. $12 flat below that."
  * ```
  */
 export function generateMetaDescription(
@@ -1069,10 +1069,10 @@ export function generateMetaDescription(
   // Trust + shipping USP — rotate between shipping turnaround & craftsmanship
   // for natural variation across products (deterministic by title hash)
   const trustUsps = [
-    'Ships within 2 business days in the US.',
+    'Tracking provided after dispatch in the US.',
     'Handcrafted by Indian artisans.',
     'Ready-to-ship craftsmanship for US delivery.',
-    'Free US shipping over $150. $12 flat below that.',
+    'Free U.S. shipping over $150. $12 flat below that.',
     'Ready to ship in 3-5 business days.',
   ];
   const uspIndex = hashString(title) % trustUsps.length;
@@ -1103,7 +1103,7 @@ export function generateMetaDescription(
 
   // If too short, pad with the shipping USP for consistency
   if (meta.length < 140) {
-    const padded = `${meta} Free US shipping over $150.`;
+    const padded = `${meta} Free U.S. shipping over $150.`;
     if (padded.length <= 160) {
       meta = padded;
     }
@@ -1153,7 +1153,7 @@ export function getProductCategoryDescription(productType: string): string {
   }
 
   // Generic fallback
-  return 'Shop Indian ethnic wear at LuxeMia. Curated collection of premium lehengas, sarees, suits, and menswear crafted with authentic Indian artistry. Free US shipping over $150. $12 flat below that.';
+  return 'Shop Indian ethnic wear at LuxeMia. Curated collection of premium lehengas, sarees, suits, and menswear crafted with authentic Indian artistry. Free U.S. shipping over $150. $12 flat below that.';
 }
 
 // ---------------------------------------------------------------------------

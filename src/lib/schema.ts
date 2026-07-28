@@ -47,7 +47,7 @@ export function generateShippingSchema(currency: string) {
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
         transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
@@ -58,7 +58,7 @@ export function generateShippingSchema(currency: string) {
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
         transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
@@ -69,7 +69,7 @@ export function generateShippingSchema(currency: string) {
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
         transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
@@ -80,7 +80,7 @@ export function generateShippingSchema(currency: string) {
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Ships within 2 business days' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
         transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
@@ -220,7 +220,7 @@ export function generateOrganizationSchema() {
     alternateName: BRAND_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
-    description: 'Ready-to-ship Indian ethnic wear at LuxeMia. Sarees, lehengas, suits and menswear in stock for US delivery within 2 business days.',
+    description: 'Ready-to-ship Indian ethnic wear at LuxeMia. Sarees, lehengas, suits and menswear available online with tracked U.S. delivery.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',

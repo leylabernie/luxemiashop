@@ -8,16 +8,16 @@ const UK = () => (
       countryCode: 'US',
       slug: 'nri',
       seoTitle: 'United States Shipping Only | LuxeMia',
-      seoDescription: 'LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
+      seoDescription: 'LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
       heroTitle: 'United States Shipping Only',
-      heroSubtitle: 'Ready-to-ship Indian ethnic wear held in US stock',
-      shippingTime: 'Ships within 2 business days',
+      heroSubtitle: 'Indian ethnic wear available online',
+      shippingTime: 'Tracking provided after dispatch',
       shippingCost: 'Free over $150, $12 flat below that',
       customsNote: 'LuxeMia currently accepts United States shipping addresses only.',
       faqs: [
         {
           question: 'Does LuxeMia ship outside the United States?',
-          answer: 'No. LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
+          answer: 'No. LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
         },
         {
           question: 'How much is US shipping?',
@@ -25,9 +25,9 @@ const UK = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'US Shipping', description: 'Ships within 2 business days' },
+        { icon: Truck, title: 'US Shipping', description: 'Tracking provided after dispatch' },
         { icon: Shield, title: 'Tracked Delivery', description: 'Tracking sent after dispatch' },
-        { icon: Clock, title: 'Ready to Ship', description: 'For events coming up soon' },
+        { icon: Clock, title: 'Available Online', description: 'For events coming up soon' },
       ],
     }}
   />

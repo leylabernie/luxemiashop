@@ -347,7 +347,7 @@ function extractSalwarAttributes(product, color, material, productType) {
  * 4. Stitching & sizing — readymade/unstitched options, sizes
  * 5. Care — dry cleaning instructions
  * 6. Details line — Color | Fabric | Work | Occasion
- * 7. Shipping — free US shipping over $150, $12 flat below that
+ * 7. Shipping — free U.S. shipping over $150, $12 flat below that
  */
 function buildSalwarSuitDescription(product, color, material, productType) {
   const attrs = extractSalwarAttributes(product, color, material, productType);
@@ -439,7 +439,7 @@ function buildSalwarSuitDescription(product, color, material, productType) {
   parts.push(detailsParts.join(' | '));
 
   // ── 7. Shipping ──
-  parts.push('Free US shipping over $150. $12 flat below that. In-stock items ship within 2 business days.');
+  parts.push('Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.');
 
   return parts.join(' ').slice(0, 5000);
 }
@@ -459,15 +459,26 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function sanitizeFeedTitle(text) {
+  return text
+    .replace(/\s*\|\s*Ready to Ship/gi, '')
+    .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function sanitizeShippingAndBoilerplate(text) {
   return text
-    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Free US shipping over $150. $12 flat below that. In-stock items ship within 2 business days.')
-    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Fast US shipping - free over $150, $12 flat below that, ships within 2 business days')
-    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: Free US shipping over $150. $12 flat below that. Ships within 2 business days')
-    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: Free US shipping over $150. $12 flat below that. Ships within 2 business days')
-    .replace(/Free shipping on orders over \$350/gi, 'Free US shipping over $150')
-    .replace(/free shipping on orders over \$350/gi, 'free US shipping over $150')
-    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'ships within 2 business days in the US')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: Tracking provided after dispatch')
+    .replace(/ready to ship Indian wear USA/gi, 'Indian ethnic wear online')
+    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Free U.S. shipping over $150. $12 flat below that. Online orders ship with tracking after dispatch.')
+    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Fast US shipping - free over $150, $12 flat below that, tracking provided after dispatch')
+    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free shipping on orders over \$350/gi, 'Free U.S. shipping over $150')
+    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping over $150')
+    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch in the US')
     .replace(/USA, Canada, and Australia/gi, 'the United States')
     .replace(/worldwide shipping/gi, 'US shipping')
     .replace(/perfect blend of tradition and modernit[y]/gi, 'clear balance of traditional craft and ready-to-wear ease')
@@ -683,7 +694,7 @@ function generateProductHighlights(product, color, material, productType, title)
   }
 
   // Shipping highlight (same for all)
-  highlights.push(`Ships within 2 business days in the US; $12 flat below $150, free over $150`);
+  highlights.push(`Tracking provided after dispatch in the US; $12 flat below $150, free over $150`);
 
   // Sizing highlight
   highlights.push(`Available in sizes 32-48 (XS to 5XL) — ready-to-wear and custom-stitched options`);
@@ -828,7 +839,7 @@ function generateProductItemXml(product, titleCounts) {
   // We disambiguate with the full normalized SKU/handle (already unique per
   // product in Shopify) prefixed with the color when available.
   const baseTitle = product.title || '';
-  let displayTitle = baseTitle;
+  let displayTitle = sanitizeFeedTitle(baseTitle);
   if (titleCounts && titleCounts.get(baseTitle) > 1) {
     const uniqueTail = (sku || handle || '').toString();
     if (color && uniqueTail) {
@@ -920,7 +931,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop ready-to-ship Indian ethnic wear - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Free US shipping over $150; $12 flat below that.</description>
+  <description>Shop Indian ethnic wear online - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Free U.S. shipping over $150; $12 flat below that.</description>
   <last_build_date>${new Date().toISOString()}</last_build_date>
 ${itemsXml}
 </channel>

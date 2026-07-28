@@ -8,7 +8,7 @@ const NRIGeneral = () => (
       countryCode: 'WW',
       slug: 'nri',
       seoTitle: 'Buy Indian Ethnic Wear Online | NRI Shopping | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered to the United States. Designer sarees, bridal lehengas, salwar suits & menswear. Free US shipping over $150. 7-10 day delivery.',
+      seoDescription: 'Shop authentic Indian ethnic wear delivered to the United States. Designer sarees, bridal lehengas, salwar suits & menswear. Free U.S. shipping over $150. 7-10 day delivery.',
       heroTitle: 'Authentic Indian Ethnic Wear Delivered to Your Door',
       heroSubtitle: 'Shopping From Abroad? We\'ve Got You Covered',
       shippingTime: 'carrier transit after dispatch',
@@ -17,7 +17,7 @@ const NRIGeneral = () => (
       faqs: [
         {
           question: 'Do you ship internationally?',
-          answer: 'We ship to the United States via DHL Express, USPS, or UPS. Delivery takes carrier transit after dispatch. Ready-made orders dispatch in 2 business days; custom/alteration orders requires timing confirmation before ordering.',
+          answer: 'We ship to the United States via DHL Express, USPS, or UPS. Delivery takes carrier transit after dispatch. Ready-made orders ship with tracking after dispatch; custom/alteration orders requires timing confirmation before ordering.',
         },
         {
           question: 'When does shipping become free?',
@@ -37,9 +37,9 @@ const NRIGeneral = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'Delivery to US, CA & AU', description: 'Free US shipping over $150 — delivered to the United States' },
+        { icon: Truck, title: 'Delivery to US, CA & AU', description: 'Free U.S. shipping over $150 — delivered to the United States' },
         { icon: Shield, title: 'Secure Packaging', description: 'Every piece carefully wrapped to arrive in perfect condition' },
-        { icon: Clock, title: 'Fast Dispatch', description: 'Ready-made orders dispatched within 2 business days' },
+        { icon: Clock, title: 'Tracked Delivery', description: 'Tracking provided after dispatch' },
       ],
     }}
   />

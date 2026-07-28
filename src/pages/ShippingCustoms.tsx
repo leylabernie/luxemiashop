@@ -7,7 +7,7 @@ import SEOHead from '@/components/seo/SEOHead';
 const faqs = [
   {
     question: 'Does LuxeMia ship outside the United States?',
-    answer: 'No. LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
+    answer: 'No. LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
   },
   {
     question: 'How much is US shipping?',
@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     question: 'How fast will my order ship?',
-    answer: 'In-stock ready-to-ship items leave LuxeMia within 2 business days. Carrier transit time begins after dispatch.',
+    answer: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.',
   },
 ];
 
@@ -24,7 +24,7 @@ const ShippingCustoms = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="US Shipping & Taxes | LuxeMia"
-        description="LuxeMia currently ships to United States addresses only. Free US shipping over $150, $12 flat below that, and in-stock items ship within 2 business days."
+        description="LuxeMia currently ships to United States addresses only. Free U.S. shipping over $150, $12 flat below that, and online orders ship with tracking after dispatch."
         canonical="https://luxemia.shop/pages/shipping-customs"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -49,8 +49,8 @@ const ShippingCustoms = () => {
               </nav>
               <h1 className="font-serif text-4xl md:text-5xl mb-4">US Shipping &amp; Taxes</h1>
               <p className="text-lg text-muted-foreground">
-                LuxeMia currently ships to United States addresses only. Free US shipping over $150.
-                $12 flat below that. Ships within 2 business days.
+                LuxeMia currently ships to United States addresses only. Free U.S. shipping over $150.
+                $12 flat below that. Tracking provided after dispatch.
               </p>
             </motion.div>
           </div>
@@ -66,7 +66,7 @@ const ShippingCustoms = () => {
             <div>
               <h2 className="font-serif text-2xl mb-4">Shipping promise</h2>
               <p className="text-base text-foreground/90 leading-relaxed">
-                In-stock ready-to-ship items leave LuxeMia within 2 business days. Tracking is emailed after dispatch,
+                In-stock online items receive tracking after dispatch. Tracking is emailed after dispatch,
                 and carrier transit time starts once the package is handed over.
               </p>
             </div>

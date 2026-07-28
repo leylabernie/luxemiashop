@@ -21,7 +21,7 @@ export const DeliveryEstimate = ({ hasStitching }: DeliveryEstimateProps) => {
               Ready to ship
             </p>
             <p className="text-foreground">
-              Free US shipping over $150. $12 flat below that. Ships within 2 business days.
+              Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.
             </p>
           </div>
         </div>
@@ -30,7 +30,7 @@ export const DeliveryEstimate = ({ hasStitching }: DeliveryEstimateProps) => {
           <div className="flex items-start gap-2">
             <Clock className="h-3.5 w-3.5 mt-0.5 text-amber-600" />
             <p className="text-muted-foreground">
-              Custom work is not part of the two-business-day ready-to-ship promise. Confirm timing with LuxeMia before ordering.
+              Custom work is not part of the two-business-day online promise. Confirm timing with LuxeMia before ordering.
             </p>
           </div>
         )}

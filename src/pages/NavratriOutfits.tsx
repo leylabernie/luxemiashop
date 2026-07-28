@@ -53,7 +53,7 @@ const NavratriOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia"
-        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free US shipping over $150."
+        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free U.S. shipping over $150."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const NavratriOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free US shipping over $150.
+              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free U.S. shipping over $150.
             </p>
           </div>
         </div>
@@ -151,7 +151,7 @@ const NavratriOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Navratri Chaniya Choli</h3>
-                <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship ready-to-ship chaniya cholis to the United States with free US shipping over $150.</p>
+                <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship online chaniya cholis to the United States with free U.S. shipping over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

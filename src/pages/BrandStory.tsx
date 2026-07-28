@@ -17,7 +17,7 @@ const organizationSchema = {
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from our US-stock edit to customers in the United States. We source from our US-stock edit\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free US shipping over $150.',
+    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from our online edit to customers in the United States. We source from our online edit\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free U.S. shipping over $150.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
@@ -146,7 +146,7 @@ const philosophyPoints = [
     icon: '⊕',
     title: 'Global Reach',
     description:
-      'We ship exclusively to the United States \u2014 the three countries with the largest NRI communities looking for authentic Indian ethnic wear. Free US shipping over $150, $12 flat shipping below that, with DHL Express, USPS, and UPS delivery options to your door.',
+      'We ship exclusively to the United States \u2014 the three countries with the largest NRI communities looking for authentic Indian ethnic wear. Free U.S. shipping over $150, $12 flat shipping below that, with DHL Express, USPS, and UPS delivery options to your door.',
   },
   {
     icon: '✦',
@@ -192,9 +192,9 @@ const timelineEvents = [
 const whyChooseLuxeMia = [
   {
     icon: Globe,
-    title: 'Direct from our US-stock edit \u2014 No Middlemen',
+    title: 'Direct from our online edit \u2014 No Middlemen',
     description:
-      'We source directly from our US-stock edit\u2019s renowned textile hubs like Surat, Varanasi, and Jaipur. By cutting out intermediaries, we pass real savings on to you while ensuring artisans receive fair compensation for their craft.',
+      'We source directly from our online edit\u2019s renowned textile hubs like Surat, Varanasi, and Jaipur. By cutting out intermediaries, we pass real savings on to you while ensuring artisans receive fair compensation for their craft.',
   },
   {
     icon: ShieldCheck,
@@ -319,7 +319,7 @@ const BrandStory = () => {
       {/* SEO Head with enriched props */}
       <SEOHead
         title="Our Story \u2014 LuxeMia | Authentic Indian Ethnic Wear for the United States"
-        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from our US-stock edit\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the United States. Free US shipping over $150."
+        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from our online edit\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the United States. Free U.S. shipping over $150."
         canonical="https://luxemia.shop/brand-story"
         image="/images/heroes/hero-bridal-couture.jpg"
         breadcrumbs={[
@@ -388,7 +388,7 @@ const BrandStory = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             We&#39;re a new brand with a clear mission: bringing authentic Indian
             ethnic wear directly to you, with transparency, quality, and care.
-            Sourced from our US-stock edit&#39;s finest textile hubs and delivered to your door
+            Sourced from our online edit&#39;s finest textile hubs and delivered to your door
             in the United States.
           </p>
         </motion.div>
@@ -634,7 +634,7 @@ const BrandStory = () => {
               <strong className="text-foreground">Our promise:</strong> We
               may be a new brand, but our team brings decades of combined
               experience in Indian textiles, ethnic fashion, and
-              ready-to-ship e-commerce. We&#39;re based in Pennsylvania, USA
+              online e-commerce. We&#39;re based in Pennsylvania, USA
               with sourcing and fulfillment operations in India. When you
               contact us, you&#39;re talking to real people who know
               ethnic wear — not a call center reading from a script.
@@ -796,7 +796,7 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Return Policy</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Due to the ready-to-ship nature of our shipments, all sales are
+                Due to the online nature of our shipments, all sales are
                 final. We do not accept returns or exchanges. The only exception
                 is genuine shipping damage, which must be documented with photos
                 or an unboxing video and reported within 7 days of delivery. We

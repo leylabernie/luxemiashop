@@ -239,7 +239,7 @@ const Terms = () => {
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">8.1 All Sales Final</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>Due to the ready-to-ship nature of the catalog and limited inventory, we do not accept returns or offer refunds.</strong></li>
+                        <li><strong>Due to the online nature of the catalog and limited inventory, we do not accept returns or offer refunds.</strong></li>
                         <li>Each piece is crafted specifically for your order based on your measurements and selections.</li>
                         <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>

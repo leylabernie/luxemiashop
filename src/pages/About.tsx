@@ -7,8 +7,8 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="About LuxeMia — Ready-to-Ship Indian Ethnic Wear"
-        description="LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, with a small US-stock edit of Indian ethnic wear for events coming up soon."
+        title="About LuxeMia — Indian Ethnic Wear Online"
+        description="LuxeMia is the online side of CeremonyVerse, run by Bhamini, with a online catalog of Indian ethnic wear for events coming up soon."
         canonical="https://luxemia.shop/about"
       />
       <Header />
@@ -21,7 +21,7 @@ const About = () => {
               Ready-to-ship Indian outfits for the date that is already on the calendar.
             </h1>
             <p className="text-muted-foreground leading-relaxed">
-              LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, whose family has worked
+              LuxeMia is the online side of CeremonyVerse, run by Bhamini, whose family has worked
               in Surat&apos;s fabric trade for three generations.
             </p>
           </div>
@@ -29,7 +29,7 @@ const About = () => {
 
         <section className="container mx-auto px-4 lg:px-8 max-w-3xl py-12 space-y-8 text-muted-foreground leading-relaxed">
           <p>
-            We keep a small, tightly-edited range in stock in the US so you can have it in days rather than months.
+            We keep a curated online range in stock in the US so you can have it in days rather than months.
             LuxeMia is for the guest, sibling, parent, or last-minute event shopper who needs something beautiful,
             finished, and ready to leave quickly.
           </p>
@@ -67,7 +67,7 @@ const About = () => {
               to="/collections"
               className="inline-flex items-center justify-center px-8 py-3 bg-foreground text-background text-sm uppercase tracking-editorial hover:bg-foreground/90 transition-colors"
             >
-              Shop ready-to-ship styles
+              Shop online styles
             </Link>
           </div>
         </section>

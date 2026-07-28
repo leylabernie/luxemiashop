@@ -78,8 +78,8 @@ const SOCIAL_LINKS = {
 };
 
 const SEOHead = ({
-  title = 'LuxeMia — Ready-to-Ship Indian Ethnic Wear',
-  description = "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
+  title = 'LuxeMia — Indian Ethnic Wear Online',
+  description = "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
   canonical,
   image = 'https://luxemia.shop/og-image.jpg',
   type = 'website',
@@ -129,7 +129,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — ready-to-ship Indian ethnic wear for US delivery.`, 
+            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online for US delivery.`, 
         sku: product.sku || '',
         url: canonicalUrl,
         brand: product.brand,

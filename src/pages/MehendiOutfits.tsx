@@ -53,7 +53,7 @@ const MehendiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia"
-        description="Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free US shipping over $150."
+        description="Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free U.S. shipping over $150."
         canonical="https://luxemia.shop/collections/mehendi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const MehendiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free US shipping over $150.
+              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free U.S. shipping over $150.
             </p>
           </div>
         </div>
@@ -157,7 +157,7 @@ const MehendiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Mehendi Outfit</h3>
-                <p>Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
+                <p>Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items ship with tracking after dispatch and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

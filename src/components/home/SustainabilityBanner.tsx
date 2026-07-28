@@ -22,7 +22,7 @@ const values = [
   {
     icon: Truck,
     title: 'Reliable Shipping',
-    description: 'Tracked US delivery for ready-to-ship pieces held in stock.',
+    description: 'Tracked US delivery for online orders available online.',
   },
 ];
 

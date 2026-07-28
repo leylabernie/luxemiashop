@@ -193,9 +193,9 @@ const LEHENGAS: CategoryConfig = {
   heroImage: '/images/banners/lehenga-banner.jpg',
   heroImageWebp: '/images/banners/lehenga-banner.webp',
   heroTitle: 'Lehengas',
-  heroSubtitle: 'In-stock lehengas, shipping within two business days. Every piece here is physically in the US — no pre-order, no six-week wait. Fabric composition and full measurements are listed on each item.',
+  heroSubtitle: 'Lehengas, available with tracked shipping. Every piece here is available online — no pre-order, no six-week wait. Fabric composition and full measurements are listed on each item.',
   seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
-  seoDescription: 'Buy bridal lehengas for Indian brides in USA. Red, maroon, and ivory wedding lehengas with zardozi and embroidery. Custom sizing, 5-day express delivery, free US shipping over $150.',
+  seoDescription: 'Buy bridal lehengas for Indian brides in USA. Red, maroon, and ivory wedding lehengas with zardozi and embroidery. Custom sizing, 5-day express delivery, free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/lehengas',
   ogImage: '/og/og-lehengas.jpg',
   breadcrumbs: [
@@ -207,7 +207,7 @@ const LEHENGAS: CategoryConfig = {
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       seoTitle: 'Bridal Lehengas Online USA | Red & Maroon Wedding Lehengas - LuxeMia',
-      seoDescription: 'Shop bridal lehengas for the Indian bride in USA. Red, maroon, and ivory wedding lehengas with zardozi, zari, and embroidery. Custom sizing, 5-day express delivery, free US shipping over $150.',
+      seoDescription: 'Shop bridal lehengas for the Indian bride in USA. Red, maroon, and ivory wedding lehengas with zardozi, zari, and embroidery. Custom sizing, 5-day express delivery, free U.S. shipping over $150.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest'], {
@@ -291,7 +291,7 @@ const LEHENGAS: CategoryConfig = {
       tagPrefix: 'availability',
       defaultExpanded: false,
       options: [
-        { value: 'ready to ship', label: 'Ready to Ship' },
+        { value: 'available online', label: 'Available Online' },
         { value: 'made to order', label: 'Made to Order' },
       ],
     },
@@ -313,7 +313,7 @@ const LEHENGAS: CategoryConfig = {
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
-      answer: "Ready-to-ship lehengas dispatch in 2 business days, with standard delivery (USPS/UPS) taking 2 business days to ship transit or express (DHL) taking 2 business days transit. Custom/alteration orders requires timing confirmation before ordering. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
+      answer: "Ready-to-ship lehengas ship with tracking after dispatch, with standard delivery (USPS/UPS) taking 2 business days to ship transit or express (DHL) taking 2 business days transit. Custom/alteration orders requires timing confirmation before ordering. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
     },
     {
       question: "Can I customize the color of my lehenga?",
@@ -368,14 +368,14 @@ const LEHENGAS: CategoryConfig = {
       <h3>United States Shipping</h3>
       <p>
         Free US shipping on lehenga orders over $150 to the United States. Ready-to-ship lehengas
-        dispatch in 2 business days; custom-tailored lehengas requires timing confirmation before ordering. Delivery via
+        ship with tracking after dispatch; custom-tailored lehengas requires timing confirmation before ordering. Delivery via
         tracked US carrier service after dispatch.
         See our <a href="/shipping">shipping policy</a> for details.
       </p>
 
-      <h3>Ready-to-Ship Lehengas with Fast USA Delivery</h3>
+      <h3>Online Lehengas with Fast USA Delivery</h3>
       <p>
-        Need your lehenga in a hurry? LuxeMia offers a curated selection of <strong>ready to ship lehengas USA</strong> that dispatch within 2 business days. Our <strong>in stock bridal lehengas with fast delivery</strong> include wedding, festive, and reception styles — all with the same handcrafted quality and free US shipping over $150 to the United States. Browse our <Link to="/ready-to-ship">full ready-to-ship collection</Link> for the quickest delivery options when your event is just weeks away.
+        Need your lehenga in a hurry? LuxeMia offers a curated selection of <strong>available online lehengas USA</strong> that receive tracking after dispatch. Our <strong>bridal lehengas with fast delivery</strong> include wedding, festive, and reception styles — all with the same handcrafted quality and free U.S. shipping over $150 to the United States. Browse our <Link to="/online">full online collection</Link> for the quickest delivery options when your event is just weeks away.
       </p>
 
       <h3>Complete the Couple's Look</h3>
@@ -392,9 +392,9 @@ const SAREES: CategoryConfig = {
   heroImage: '/images/banners/saree-banner.jpg',
   heroImageWebp: '/images/banners/saree-banner.webp',
   heroTitle: 'Sarees',
-  heroSubtitle: 'Banarasi, silk and georgette sarees held in US stock. Blouse sizes are listed as actual measurements, not S/M/L, because the difference matters.',
+  heroSubtitle: 'Banarasi, silk and georgette sarees available online. Blouse sizes are listed as actual measurements, not S/M/L, because the difference matters.',
   seoTitle: 'Buy Banarasi Silk Sarees Online USA | Fast Ship | LuxeMia',
-  seoDescription: 'Shop authentic Banarasi silk sarees online in USA. Handwoven zari borders, traditional motifs. Custom blouse stitching. Free US shipping over $150 to the United States.',
+  seoDescription: 'Shop authentic Banarasi silk sarees online in USA. Handwoven zari borders, traditional motifs. Custom blouse stitching. Free U.S. shipping over $150 to the United States.',
   canonical: 'https://luxemia.shop/sarees',
   ogImage: '/og/og-sarees.jpg',
   breadcrumbs: [
@@ -424,7 +424,7 @@ const SAREES: CategoryConfig = {
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       matchProductType: ['Bridal Saree'],
       seoTitle: 'Bridal Sarees for Indian Brides in USA | Silk & Kanjeevaram - LuxeMia',
-      seoDescription: 'Shop bridal sarees for Indian brides in USA. Silk, Kanjeevaram, and Banarasi bridal sarees with zari and embroidery. Custom stitching, 5-day express delivery, free US shipping over $150.',
+      seoDescription: 'Shop bridal sarees for Indian brides in USA. Silk, Kanjeevaram, and Banarasi bridal sarees with zari and embroidery. Custom stitching, 5-day express delivery, free U.S. shipping over $150.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid'], {
@@ -504,7 +504,7 @@ const SAREES: CategoryConfig = {
       tagPrefix: 'availability',
       defaultExpanded: false,
       options: [
-        { value: 'ready to ship', label: 'Ready to Ship' },
+        { value: 'available online', label: 'Available Online' },
         { value: 'made to order', label: 'Made to Order' },
       ],
     },
@@ -530,7 +530,7 @@ const SAREES: CategoryConfig = {
     },
     {
       question: "Do you ship sarees to the United States?",
-      answer: "Yes, we ship within the United States with free US shipping over $150. In-stock sarees ship within 2 business days with tracking."
+      answer: "Yes, we ship within the United States with free U.S. shipping over $150. Sarees ship with tracking after dispatch with tracking."
     }
   ],
   // SEO editorial content (Item #14)
@@ -578,9 +578,9 @@ const SAREES: CategoryConfig = {
         the hassle.
       </p>
 
-      <h3>Ready-to-Ship Sarees with Fast USA Delivery</h3>
+      <h3>Online Sarees with Fast USA Delivery</h3>
       <p>
-        Short on time before your event? Our <strong>ready to ship sarees</strong> dispatch within 2 business days, so you can have your drape ready well before the celebration. The selection includes <strong>in stock Banarasi sarees with fast delivery</strong>, georgette party-wear sarees, and pre-draped ready-to-wear options. Every saree ships with free delivery on orders over $150 to the United States. Explore our <Link to="/ready-to-ship">full ready-to-ship collection</Link> for the fastest saree delivery options available.
+        Short on time before your event? Our <strong>available online sarees</strong> receive tracking after dispatch, so you can have your drape ready well before the celebration. The selection includes <strong>Banarasi sarees with fast delivery</strong>, georgette party-wear sarees, and pre-draped ready-to-wear options. Every saree ships with free delivery on orders over $150 to the United States. Explore our <Link to="/online">full online collection</Link> for the fastest saree delivery options available.
       </p>
 
       <h3>Custom Blouse Stitching</h3>
@@ -604,9 +604,9 @@ const SUITS: CategoryConfig = {
   heroImage: '/images/banners/suit-banner.jpg',
   heroImageWebp: '/images/banners/suit-banner.webp',
   heroTitle: 'Salwar Kameez & Suits',
-  heroSubtitle: "Anarkalis, shararas and palazzo sets, ready to ship. If you need a specific colour or a set for a group, that's our sister site CeremonyVerse.",
+  heroSubtitle: "Anarkalis, shararas and palazzo sets, available online. If you need a specific colour or a set for a group, that's our sister site CeremonyVerse.",
   seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
-  seoDescription: 'Shop 300+ salwar kameez online. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring. Free US shipping over $150.',
+  seoDescription: 'Shop 300+ salwar kameez online. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/suits',
   ogImage: '/og/og-suits.jpg',
   breadcrumbs: [
@@ -694,7 +694,7 @@ const SUITS: CategoryConfig = {
       tagPrefix: 'availability',
       defaultExpanded: false,
       options: [
-        { value: 'ready to ship', label: 'Ready to Ship' },
+        { value: 'available online', label: 'Available Online' },
         { value: 'made to order', label: 'Made to Order' },
       ],
     },
@@ -731,7 +731,7 @@ const SUITS: CategoryConfig = {
         Shop beautiful <strong>salwar kameez online</strong> at LuxeMia. Our collection includes anarkali suits,
         palazzo sets, sharara suits, and traditional salwar kameez in georgette, silk, cotton, and chinnon
         fabrics. Whether you are attending a wedding, celebrating Eid, or looking for everyday ethnic wear,
-        we have the perfect suit for you — shipped to the United States with free US shipping over $150.
+        we have the perfect suit for you — shipped to the United States with free U.S. shipping over $150.
       </p>
 
       <h3>Anarkali Suits — Elegant &amp; Flattering</h3>
@@ -764,9 +764,9 @@ const SUITS: CategoryConfig = {
         <a href="/collections/wedding-guest-outfits">wedding guest collection</a> for curated options.
       </p>
 
-      <h3>Ready-to-Ship Salwar Kameez with Fast USA Delivery</h3>
+      <h3>Online Salwar Kameez with Fast USA Delivery</h3>
       <p>
-        Have a wedding or festival coming up soon? LuxeMia stocks a rotating selection of <strong>ready to ship salwar kameez</strong> that dispatch in 2 business days. Our <strong>in stock anarkali suits USA</strong> inventory spans bridal, festive, and everyday styles in georgette, silk, and cotton — all with the same artisan craftsmanship. Free US shipping applies on orders over $150 to the United States. Check out our <Link to="/ready-to-ship">full ready-to-ship collection</Link> when you need your outfit delivered quickly.
+        Have a wedding or festival coming up soon? LuxeMia stocks a rotating selection of <strong>available online salwar kameez</strong> that ship with tracking after dispatch. Our <strong>anarkali suits USA</strong> inventory spans bridal, festive, and everyday styles in georgette, silk, and cotton — all with the same artisan craftsmanship. Free US shipping applies on orders over $150 to the United States. Check out our <Link to="/online">full online collection</Link> when you need your outfit delivered quickly.
       </p>
 
       <h3>Custom Tailoring for the Perfect Fit</h3>
@@ -792,7 +792,7 @@ const MENSWEAR: CategoryConfig = {
   heroTitle: 'Menswear',
   heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
   seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
-  seoDescription: 'Shop designer sherwanis for men. Groom sherwanis, kurta pajama sets & indo-western outfits. Custom tailoring available. Free US shipping over $150.',
+  seoDescription: 'Shop designer sherwanis for men. Groom sherwanis, kurta pajama sets & indo-western outfits. Custom tailoring available. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/menswear',
   ogImage: '/og/og-menswear.jpg',
   breadcrumbs: [
@@ -879,7 +879,7 @@ const MENSWEAR: CategoryConfig = {
       tagPrefix: 'availability',
       defaultExpanded: false,
       options: [
-        { value: 'ready to ship', label: 'Ready to Ship' },
+        { value: 'available online', label: 'Available Online' },
         { value: 'made to order', label: 'Made to Order' },
       ],
     },
@@ -915,7 +915,7 @@ const MENSWEAR: CategoryConfig = {
       <p>
         Shop authentic <strong>Indian menswear online</strong> at LuxeMia. Our collection includes sherwanis,
         kurta pajama sets, Nehru jackets, and indo-western outfits for grooms, groomsmen, and wedding guests.
-        Every piece is sourced from US-held stock and shipped to the United States with free
+        Every piece is sourced from supplier fulfillment and shipped to the United States with free
         shipping on orders over $150.
       </p>
 
@@ -964,9 +964,9 @@ const MENSWEAR: CategoryConfig = {
         and our master tailors will stitch the perfect fit. See our <a href="/size-guide">size guide</a> for details.
       </p>
 
-      <h3>Ready-to-Ship Sherwanis with Fast USA Delivery</h3>
+      <h3>Online Sherwanis with Fast USA Delivery</h3>
       <p>
-        Wedding day approaching fast? LuxeMia carries <strong>ready to ship sherwanis</strong> that leave our warehouse within 2 business days — perfect for grooms and guests who need <strong>in stock groom wear with fast delivery</strong>. Our ready-to-ship menswear range includes sherwanis, kurta pajama sets, and Nehru jackets in standard sizes, all with the same quality embroidery and tailoring LuxeMia is known for. Free US shipping over $150 to the United States. Browse the <Link to="/ready-to-ship">full ready-to-ship collection</Link> for the fastest delivery options.
+        Wedding day approaching fast? LuxeMia carries <strong>available online sherwanis</strong> that receive tracking after dispatch — perfect for grooms and guests who need <strong>groom wear with fast delivery</strong>. Our online menswear range includes sherwanis, kurta pajama sets, and Nehru jackets in standard sizes, all with the same quality embroidery and tailoring LuxeMia is known for. Free U.S. shipping over $150 to the United States. Browse the <Link to="/online">full online collection</Link> for the fastest delivery options.
       </p>
 
       <h3>Complete the Couple's Look</h3>
@@ -984,7 +984,7 @@ const JEWELRY: CategoryConfig = {
   heroTitle: 'Bridal Jewelry',
   heroSubtitle: 'Handcrafted Kundan and uncut polki necklace sets for the modern bride — regal statements for your wedding day.',
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-  seoDescription: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free US shipping over $150 to the United States.',
+  seoDescription: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free U.S. shipping over $150 to the United States.',
   canonical: 'https://luxemia.shop/jewelry',
   ogImage: '/og-image.jpg',
   breadcrumbs: [
@@ -1041,7 +1041,7 @@ const JEWELRY: CategoryConfig = {
     },
     {
       question: "Do you ship bridal jewelry to the United States?",
-      answer: "Yes, we ship within the United States with free US shipping over $150. In-stock sarees ship within 2 business days with tracking. Each piece ships in a signature gift box."
+      answer: "Yes, we ship within the United States with free U.S. shipping over $150. Sarees ship with tracking after dispatch with tracking. Each piece ships in a signature gift box."
     }
   ],
 };

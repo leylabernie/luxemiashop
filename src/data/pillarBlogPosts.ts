@@ -70,7 +70,7 @@ export const pillarBlogPosts: BlogPost[] = [
       </ul>
 
       <h2>Choosing Your First Saree</h2>
-      <p>For beginners, we recommend starting with a lightweight fabric like georgette, chiffon, or art silk. These fabrics drape easily, hold pleats well, and are forgiving of mistakes. Heavy silks like Banarasi or Kanjivaram are beautiful but stiffer and harder to pleat for a first-timer. Browse our <a href="/sarees">saree collection</a> for options at every price point, all shipped to the United States with free US shipping over $150.</p>
+      <p>For beginners, we recommend starting with a lightweight fabric like georgette, chiffon, or art silk. These fabrics drape easily, hold pleats well, and are forgiving of mistakes. Heavy silks like Banarasi or Kanjivaram are beautiful but stiffer and harder to pleat for a first-timer. Browse our <a href="/sarees">saree collection</a> for options at every price point, all shipped to the United States with free U.S. shipping over $150.</p>
 
       <h2>Frequently Asked Questions</h2>
       <h3>How long does it take to drape a saree?</h3>
@@ -160,11 +160,11 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Detailed size charts:</strong> Look for stores with inch-by-inch measurements, not just S/M/L. Our <a href="/size-guide">size guide</a> includes bust, waist, and hip measurements for every size.</li>
         <li><strong>Real product photos:</strong> Multiple angles and close-up embroidery shots help you assess quality.</li>
         <li><strong>Custom tailoring:</strong> For the best fit, choose a store that offers made-to-measure options. At LuxeMia, availability and pricing vary by product and should be confirmed before ordering.</li>
-        <li><strong>Clear shipping policies:</strong> Indian ethnic wear ships from US-held stock, so allow 2-3 weeks for delivery. See our <a href="/shipping">shipping policy</a> for details.</li>
+        <li><strong>Clear shipping policies:</strong> Indian ethnic wear ships from supplier fulfillment, so allow 2-3 weeks for delivery. See our <a href="/shipping">shipping policy</a> for details.</li>
         <li><strong>USA-based support:</strong> A local support team means you can call or WhatsApp with questions. LuxeMia offers USA-based styling support at +1-215-341-9990.</li>
       </ul>
 
-      <p>Explore our full <a href="/lehengas">lehenga collection</a> — ready-to-ship and custom-tailored options shipped to the United States with free US shipping over $150.</p>
+      <p>Explore our full <a href="/lehengas">lehenga collection</a> — online and custom-tailored options shipped to the United States with free U.S. shipping over $150.</p>
 
       <h2>Jewelry and Accessory Pairings</h2>
       <p>The right jewelry elevates your lehenga from beautiful to breathtaking. Here are quick pairing rules:</p>
@@ -270,12 +270,12 @@ export const pillarBlogPosts: BlogPost[] = [
       <ul>
         <li><strong>Detailed size charts:</strong> Indian sizing differs from Western sizing. Look for inch-by-inch measurements.</li>
         <li><strong>Real customer photos:</strong> Helps you see how the outfit looks on real people, not just models.</li>
-        <li><strong>Clear shipping timelines:</strong> Most Indian clothes ship from US-held stock, so allow 2-3 weeks.</li>
+        <li><strong>Clear shipping timelines:</strong> Most Indian clothes ship from supplier fulfillment, so allow 2-3 weeks.</li>
         <li><strong>USA-based support:</strong> A local contact number means you can ask questions easily.</li>
         <li><strong>Return policy:</strong> Understand the policy before buying. Many ethnic wear stores have final-sale policies due to the custom nature of the clothing.</li>
       </ul>
 
-      <p><a href="/lehengas">LuxeMia</a> ships to the United States with free US shipping over $150 and offers USA-based styling support via WhatsApp.</p>
+      <p><a href="/lehengas">LuxeMia</a> ships to the United States with free U.S. shipping over $150 and offers USA-based styling support via WhatsApp.</p>
 
       <h2>Cultural Tips for Non-Indian Guests</h2>
       <ul>
@@ -387,12 +387,12 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>Diwali 2026 falls on November 1. Here is the timeline for ordering your outfit online:</p>
       <ul>
         <li><strong>8-10 weeks before (late August):</strong> Ideal for custom-tailored outfits. Allows time for measurement, stitching, and shipping.</li>
-        <li><strong>4-6 weeks before (mid-September):</strong> Good for ready-to-ship outfits with standard delivery.</li>
-        <li><strong>2-3 weeks before (early October):</strong> Last call for ready-to-ship outfits with express delivery.</li>
+        <li><strong>4-6 weeks before (mid-September):</strong> Good for online outfits with standard delivery.</li>
+        <li><strong>2-3 weeks before (early October):</strong> Last call for online outfits with express delivery.</li>
         <li><strong>Less than 2 weeks:</strong> Consider an outfit you already own or buy locally from an Indian boutique.</li>
       </ul>
 
-      <p>LuxeMia offers ready-to-ship items that dispatch in 2 business days, with delivery to the United States in 2 business days to ship via USPS/UPS or 2 business days via DHL Express. <a href="/collections/diwali-outfits">Browse our Diwali collection</a> — all items are in stock and ready to ship.</p>
+      <p>LuxeMia offers online items that ship with tracking after dispatch, with delivery to the United States in 2 business days to ship via USPS/UPS or 2 business days via DHL Express. <a href="/collections/diwali-outfits">Browse our Diwali collection</a> — all items are in stock and available online.</p>
 
       <h2>Diwali Outfit Budget Guide</h2>
       <p>Diwali outfits range from $50 to $1,000+. Here is how to choose based on your budget:</p>
@@ -531,7 +531,7 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Direct sourcing:</strong> Stores that source directly from weaving cooperatives are more likely to sell authentic pieces.</li>
       </ul>
 
-      <p>LuxeMia sources silk sarees directly from weaving families in Kanchipuram and Varanasi. Every saree in our <a href="/sarees">silk saree collection</a> comes with fabric details and care instructions. We ship to the United States with free US shipping over $150.</p>
+      <p>LuxeMia sources silk sarees directly from weaving families in Kanchipuram and Varanasi. Every saree in our <a href="/sarees">silk saree collection</a> comes with fabric details and care instructions. We ship to the United States with free U.S. shipping over $150.</p>
 
       <h2>Final Verdict</h2>
       <p>There is no winner — Kanjivaram and Banarasi serve different purposes and appeal to different aesthetics. If you are building a silk saree wardrobe, consider owning one of each. A red Kanjivaram for traditional ceremonies and a gold Banarasi for elegant evenings will cover most of your ethnic wear needs for years to come.</p>
@@ -661,12 +661,12 @@ export const pillarBlogPosts: BlogPost[] = [
       <ul>
         <li><strong>Detailed size charts:</strong> Look for inch-by-inch measurements, not just S/M/L.</li>
         <li><strong>Multiple product photos:</strong> You should see the outfit from multiple angles and a close-up of the fabric.</li>
-        <li><strong>Clear shipping timelines:</strong> Indian menswear ships from US-held stock, so allow 2-3 weeks.</li>
+        <li><strong>Clear shipping timelines:</strong> Indian menswear ships from supplier fulfillment, so allow 2-3 weeks.</li>
         <li><strong>USA-based support:</strong> A local contact means you can ask questions easily.</li>
         <li><strong>Custom tailoring:</strong> For the best fit, choose a store that offers made-to-measure.</li>
       </ul>
 
-      <p><a href="/menswear">LuxeMia</a> ships menswear to the United States with free US shipping over $150 and offers USA-based styling support at +1-215-341-9990.</p>
+      <p><a href="/menswear">LuxeMia</a> ships menswear to the United States with free U.S. shipping over $150 and offers USA-based styling support at +1-215-341-9990.</p>
 
       <h2>Budget Guide</h2>
       <ul>
@@ -840,7 +840,7 @@ export const pillarBlogPosts: BlogPost[] = [
         <li>Custom tailoring options</li>
         <li>Clear return policies</li>
       </ul>
-      <p><a href="/suits">LuxeMia</a> offers all of the above, plus free US shipping over $150 to the United States.</p>
+      <p><a href="/suits">LuxeMia</a> offers all of the above, plus free U.S. shipping over $150 to the United States.</p>
 
       <h2>Final Tips</h2>
       <ul>
@@ -1022,7 +1022,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>At LuxeMia, custom tailoring is complimentary on most products. Other stores charge $30-100 extra.</p>
 
       <h2>Ready to Order Custom-Tailored Ethnic Wear?</h2>
-      <p>Explore our collections: <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">menswear</a>. All ship to the United States with free US shipping over $150. Questions? Contact our styling team at hello@luxemia.shop or +1-215-341-9990.</p>
+      <p>Explore our collections: <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a>, <a href="/suits">salwar kameez</a>, and <a href="/menswear">menswear</a>. All ship to the United States with free U.S. shipping over $150. Questions? Contact our styling team at hello@luxemia.shop or +1-215-341-9990.</p>
     `,
     author: 'LuxeMia Editorial',
     publishedAt: '2026-07-09',
@@ -1420,7 +1420,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>The Punjabi or Sikh bride is the centerpiece of the wedding, and her outfit reflects the community's love for bold, celebratory fashion. Unlike some other Indian communities where the bride might wear a saree, the vast majority of Punjabi brides choose a <a href="/lehengas">bridal lehenga</a>.</p>
 
       <h3>The Bridal Lehenga</h3>
-      <p>The quintessential Punjabi bridal lehenga is red — a deep, rich crimson or maroon that symbolizes prosperity, fertility, and the sacred bond of marriage. While modern brides sometimes opt for pink, burgundy, or even pastel shades, red remains the gold standard. Expect heavy zardozi or zari embroidery, often featuring floral motifs, peacocks, and intricate border work. A high-quality Punjabi bridal lehenga typically ranges from $500 to $3,000, with designer pieces going even higher. For NRIs, shopping online with <a href="/lehengas">LuxeMia's lehenga collection</a> offers the advantage of browsing curated designs with free US shipping over $150 to the United States.</p>
+      <p>The quintessential Punjabi bridal lehenga is red — a deep, rich crimson or maroon that symbolizes prosperity, fertility, and the sacred bond of marriage. While modern brides sometimes opt for pink, burgundy, or even pastel shades, red remains the gold standard. Expect heavy zardozi or zari embroidery, often featuring floral motifs, peacocks, and intricate border work. A high-quality Punjabi bridal lehenga typically ranges from $500 to $3,000, with designer pieces going even higher. For NRIs, shopping online with <a href="/lehengas">LuxeMia's lehenga collection</a> offers the advantage of browsing curated designs with free U.S. shipping over $150 to the United States.</p>
 
       <h3>The Chunni (Dupatta)</h3>
       <p>No Punjabi bridal look is complete without the chunni — a heavily embroidered dupatta that covers the bride's head during the pheras (circumambulation of the sacred fire). The chunni is typically in a matching or contrasting color and is pinned at the shoulder so it drapes gracefully over the face and head. It is often embellished with the same embroidery as the lehenga and may feature a zari border.</p>
@@ -1462,7 +1462,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>Colors carry deep meaning in Punjabi wedding traditions. Red is the color of the bride — it represents prosperity, fertility, and marital bliss. Yellow is associated with the haldi ceremony and symbolizes auspiciousness and new beginnings. Green represents fertility and is often worn during the mehendi. Gold (and ivory/cream for the groom) symbolizes purity and divinity. White, while less common at the main ceremony, appears in the choora bangles and in the groom's sherwani.</p>
 
       <h2>NRI Shopping Tips for Punjabi Wedding Outfits</h2>
-      <p>If you are an NRI shopping for a Punjabi wedding from the USA, Canada, or Australia, here are some practical tips. Start shopping at least 8-12 weeks before the wedding to account for shipping and any alterations. Use the <a href="/size-guide">LuxeMia size guide</a> to ensure the right fit — Indian sizing can differ from US/Canadian/Australian sizes. Consider <a href="/ready-to-ship">ready-to-ship options</a> if you are shopping last-minute, as these ship within 1-3 business days. Take advantage of LuxeMia's free US shipping over $150 when purchasing multiple outfits for different ceremonies. For custom alterations, use our <a href="/sizing-measurements-guide">measurements guide</a> and consider working with a local tailor for final adjustments.</p>
+      <p>If you are an NRI shopping for a Punjabi wedding from the USA, Canada, or Australia, here are some practical tips. Start shopping at least 8-12 weeks before the wedding to account for shipping and any alterations. Use the <a href="/size-guide">LuxeMia size guide</a> to ensure the right fit — Indian sizing can differ from US/Canadian/Australian sizes. Consider <a href="/online">online options</a> if you are shopping last-minute, as these ship within 1-3 business days. Take advantage of LuxeMia's free U.S. shipping over $150 when purchasing multiple outfits for different ceremonies. For custom alterations, use our <a href="/sizing-measurements-guide">measurements guide</a> and consider working with a local tailor for final adjustments.</p>
 
       <h2>Frequently Asked Questions</h2>
 
@@ -1473,7 +1473,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>Guests should avoid wearing red or bright maroon, as these are traditionally reserved for the bride. White and black are also generally avoided in Hindu wedding contexts, as white is associated with mourning and black is considered inauspicious. Safe, stylish choices include emerald green, royal blue, deep pink, magenta, coral, and peach. For more guidance, see our <a href="/collections/wedding-guest-outfits">wedding guest outfit collection</a>.</p>
 
       <h3>How far in advance should NRIs buy Punjabi wedding outfits?</h3>
-      <p>We recommend shopping 10-12 weeks before the wedding for made-to-order pieces and 4-6 weeks for ready-to-ship items. If you are attending multiple ceremonies (mehendi, haldi, sangeet, reception), you will need 3-5 separate outfits, so plan accordingly. LuxeMia offers <a href="/ready-to-ship">ready-to-ship options</a> that arrive within 5-10 business days in the United States — ideal for last-minute shoppers. Check our <a href="/shipping">shipping page</a> for detailed timelines.</p>
+      <p>We recommend shopping 10-12 weeks before the wedding for made-to-order pieces and 4-6 weeks for online items. If you are attending multiple ceremonies (mehendi, haldi, sangeet, reception), you will need 3-5 separate outfits, so plan accordingly. LuxeMia offers <a href="/online">online options</a> that arrive within 5-10 business days in the United States — ideal for last-minute shoppers. Check our <a href="/shipping">shipping page</a> for detailed timelines.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-22',
@@ -1528,7 +1528,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>For NRIs who may not want to travel with heavy gold jewelry, consider wearing gold-plated or costume temple jewelry for the wedding and purchasing fine gold pieces in India. Alternatively, <a href="/jewelry">LuxeMia's jewelry collection</a> offers temple-inspired bridal jewelry sets that are travel-friendly and still capture the traditional look.</p>
 
       <h2>NRI Considerations for South Indian Wedding Shopping</h2>
-      <p>Shopping for a South Indian wedding from abroad requires some planning. Start 10-14 weeks in advance for made-to-order sarees and blouses. When ordering silk sarees online, verify the Silk Mark or GI tag for authenticity. Remember that Kanchipuram sarees are heavy (600-900g) — factor this into your luggage if you are carrying them back from India. LuxeMia ships to the United States with free US shipping over $150, so you can have your sarees delivered to your home. For last-minute needs, explore our <a href="/ready-to-ship">ready-to-ship saree collection</a>.</p>
+      <p>Shopping for a South Indian wedding from abroad requires some planning. Start 10-14 weeks in advance for made-to-order sarees and blouses. When ordering silk sarees online, verify the Silk Mark or GI tag for authenticity. Remember that Kanchipuram sarees are heavy (600-900g) — factor this into your luggage if you are carrying them back from India. LuxeMia ships to the United States with free U.S. shipping over $150, so you can have your sarees delivered to your home. For last-minute needs, explore our <a href="/online">online saree collection</a>.</p>
 
       <h2>Frequently Asked Questions</h2>
 
@@ -1624,7 +1624,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <h3>Shipping to India or to Your Destination</h3>
       <p><strong>Pros:</strong> Frees up baggage space, professional packing reduces wrinkle risk. <strong>Cons:</strong> Customs duties may apply (though personal clothing is usually duty-free if you declare it), shipping takes 5-15 business days, risk of delivery delays.</p>
       <h3>The Hybrid Approach (Recommended)</h3>
-      <p>Carry your most important outfits (wedding ceremony saree, reception lehenga) in your suitcase. Ship or order additional outfits online to your destination. LuxeMia offers <a href="/ready-to-ship">ready-to-ship options</a> that can be delivered to your home in the USA, Canada, or Australia before you fly, or directly to your Indian address. With free US shipping over $150, you can order multiple outfits at once. Check our <a href="/shipping">shipping page</a> for detailed delivery timelines.</p>
+      <p>Carry your most important outfits (wedding ceremony saree, reception lehenga) in your suitcase. Ship or order additional outfits online to your destination. LuxeMia offers <a href="/online">online options</a> that can be delivered to your home in the USA, Canada, or Australia before you fly, or directly to your Indian address. With free U.S. shipping over $150, you can order multiple outfits at once. Check our <a href="/shipping">shipping page</a> for detailed delivery timelines.</p>
 
       <h2>Packing Tips to Protect Your Ethnic Wear</h2>
       <ul>
@@ -1636,8 +1636,8 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Carry valuables on board:</strong> Never check expensive jewelry or your most important outfit.</li>
       </ul>
 
-      <h2>Last-Minute Shopping: Ready-to-Ship Options</h2>
-      <p>If you are reading this guide with less than 4 weeks before the wedding, do not panic. <a href="/ready-to-ship">LuxeMia's ready-to-ship collection</a> features lehengas, sarees, and suits that ship within 1-3 business days and arrive at your doorstep in the USA, Canada, or Australia within 5-10 business days. This is the perfect solution for NRIs who need quality ethnic wear in a hurry. Since each ready-to-ship order over $350 includes free shipping, you can order multiple ceremony outfits at once.</p>
+      <h2>Last-Minute Shopping: Online Options</h2>
+      <p>If you are reading this guide with less than 4 weeks before the wedding, do not panic. <a href="/online">LuxeMia's online collection</a> features lehengas, sarees, and suits that ship within 1-3 business days and arrive at your doorstep in the USA, Canada, or Australia within 5-10 business days. This is the perfect solution for NRIs who need quality ethnic wear in a hurry. Since each online order over $350 includes free shipping, you can order multiple ceremony outfits at once.</p>
 
       <h2>Frequently Asked Questions</h2>
 
@@ -1681,7 +1681,7 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Embellishment:</strong> Sherwanis range from simple and elegant (minimal embroidery, clean lines) to heavily embellished (full zardozi, zari, or thread work). The level of embellishment typically corresponds to the formality of the event.</li>
         <li><strong>When to wear it:</strong> The sherwani is the standard choice for the wedding ceremony itself. It is also appropriate for the reception, sangeet, and any formal Indian event.</li>
       </ul>
-      <p>Sherwani prices range from $200 for a simple, unembellished piece to $2,000+ for a designer, hand-embroidered creation. At <a href="/menswear">LuxeMia's menswear collection</a>, sherwanis are available in a range of styles and price points with free US shipping over $150 to the United States.</p>
+      <p>Sherwani prices range from $200 for a simple, unembellished piece to $2,000+ for a designer, hand-embroidered creation. At <a href="/menswear">LuxeMia's menswear collection</a>, sherwanis are available in a range of styles and price points with free U.S. shipping over $150 to the United States.</p>
 
       <h2>The Jodhpuri Suit: The Royal Alternative</h2>
       <p>The Jodhpuri suit (also called a Jodhpuri coat or Prince coat) hails from the royal courts of Jodhpur, Rajasthan. It is a shorter, more structured garment than the sherwani — typically hip-length — and is characterized by its distinctive closed collar and the inclusion of matching trousers. Think of it as the Indian equivalent of a Western lounge suit, but with regal Indian aesthetics.</p>
@@ -1736,7 +1736,7 @@ export const pillarBlogPosts: BlogPost[] = [
       </ul>
 
       <h2>NRI Shopping: Getting the Right Fit Online</h2>
-      <p>When ordering Indian menswear online from the USA, Canada, or Australia, accurate measurements are critical. Use <a href="/sizing-measurements-guide">LuxeMia's detailed measurements guide</a> to get your chest, shoulder, waist, and inseam measurements. If you are between sizes, size up — it is easier for a local tailor to take in a garment than to let it out. LuxeMia offers free US shipping over $150, and all <a href="/menswear">menswear</a> comes with a size chart specific to each garment. For made-to-order options, provide your custom measurements for the best fit. See our <a href="/returns">returns policy</a> for exchange details.</p>
+      <p>When ordering Indian menswear online from the USA, Canada, or Australia, accurate measurements are critical. Use <a href="/sizing-measurements-guide">LuxeMia's detailed measurements guide</a> to get your chest, shoulder, waist, and inseam measurements. If you are between sizes, size up — it is easier for a local tailor to take in a garment than to let it out. LuxeMia offers free U.S. shipping over $150, and all <a href="/menswear">menswear</a> comes with a size chart specific to each garment. For made-to-order options, provide your custom measurements for the best fit. See our <a href="/returns">returns policy</a> for exchange details.</p>
 
       <h2>Frequently Asked Questions</h2>
 
@@ -1747,7 +1747,7 @@ export const pillarBlogPosts: BlogPost[] = [
       <p>The terms are often used interchangeably, but technically, a Nehru jacket is a waist-length, hip-length garment (similar to a Western suit jacket but with a mandarin collar), while a bandhgala can range from waist-length to knee-length. In common usage, "bandhgala" is the broader term. The Nehru jacket is named after Jawaharlal Nehru, who popularized the style. Both feature the signature closed-neck (bandh gala) design.</p>
 
       <h3>How much should I budget for an Indian wedding outfit as a groom?</h3>
-      <p>Budget $200 to $800 for a quality sherwani, Jodhpuri suit, or bandhgala from an online store like LuxeMia. Add $50-$150 for accessories (mojari shoes, brooch, pocket square). If you want a designer or heavily hand-embroidered piece, budget $1,000-$2,500. Many grooms buy two outfits — one for the ceremony and one for the reception — bringing the total to $400-$1,600. Remember that LuxeMia offers <a href="/shipping">free US shipping over $150</a> to the United States, so ordering both outfits together saves on shipping.</p>
+      <p>Budget $200 to $800 for a quality sherwani, Jodhpuri suit, or bandhgala from an online store like LuxeMia. Add $50-$150 for accessories (mojari shoes, brooch, pocket square). If you want a designer or heavily hand-embroidered piece, budget $1,000-$2,500. Many grooms buy two outfits — one for the ceremony and one for the reception — bringing the total to $400-$1,600. Remember that LuxeMia offers <a href="/shipping">free U.S. shipping over $150</a> to the United States, so ordering both outfits together saves on shipping.</p>
     `,
     author: 'LuxeMia Editorial Team',
     publishedAt: '2026-07-22',
@@ -1800,7 +1800,7 @@ export const pillarBlogPosts: BlogPost[] = [
         <li><strong>Hand-painted or hand-embroidered tussar (madhubani, kantha, kalamkari):</strong> $150 to $500. These are art pieces that double as wearable heritage.</li>
         <li><strong>Designer tussar with heavy zari or zardozi work:</strong> $300 to $800. These are wedding-worthy pieces with rich embellishments.</li>
       </ul>
-      <p>For NRIs, tussar silk offers exceptional value — you get the luxury of pure silk at a fraction of the price of a Kanchipuram or Banarasi. All <a href="/sarees">LuxeMia sarees</a> ship with free US shipping over $150 to the United States.</p>
+      <p>For NRIs, tussar silk offers exceptional value — you get the luxury of pure silk at a fraction of the price of a Kanchipuram or Banarasi. All <a href="/sarees">LuxeMia sarees</a> ship with free U.S. shipping over $150 to the United States.</p>
 
       <h2>Styling Tussar Silk Sarees</h2>
       <p>Tussar silk's natural golden hue makes it incredibly versatile. Here are styling tips for different occasions:</p>
@@ -1902,7 +1902,7 @@ export const pillarBlogPosts: BlogPost[] = [
 
       <h2>NRI Buying Guide: What to Know Before You Shop</h2>
       <p>For NRIs in the United States, buying Indian bridal jewelry requires some special considerations. First, decide your budget and whether you want fine jewelry (real gold and diamonds) or costume jewelry (gold-plated with glass or cubic zirconia). Fine jewelry is an investment but comes with customs considerations — most countries allow you to bring up to $10,000 in jewelry duty-free for personal use, but check your specific country's rules.</p>
-      <p>Costume kundan and polki-style jewelry is the most practical choice for NRIs — it is affordable, lightweight, travel-friendly, and still captures the traditional bridal look. At <a href="/jewelry">LuxeMia's jewelry collection</a>, you will find kundan and polki-style bridal sets designed for NRI brides, with the convenience of online shopping and free US shipping over $150 to the United States.</p>
+      <p>Costume kundan and polki-style jewelry is the most practical choice for NRIs — it is affordable, lightweight, travel-friendly, and still captures the traditional bridal look. At <a href="/jewelry">LuxeMia's jewelry collection</a>, you will find kundan and polki-style bridal sets designed for NRI brides, with the convenience of online shopping and free U.S. shipping over $150 to the United States.</p>
       <p>When shopping online, look for clear product descriptions that specify whether the stones are glass (kundan), cubic zirconia (polki-style), or real diamonds (polki). Check the base metal — is it gold-plated, silver, or real gold? Read customer reviews and check the return policy. See <a href="/returns">LuxeMia's returns page</a> for our jewelry return policy.</p>
 
       <h2>Frequently Asked Questions</h2>

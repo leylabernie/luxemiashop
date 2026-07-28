@@ -30,7 +30,7 @@ const footerLinks = {
     { name: 'Wedding Sarees', href: '/sarees?sub=bridal' },
     { name: 'Indo-Western', href: '/indowestern' },
     { name: 'Festive Wear', href: '/collections' },
-    { name: 'Ready to Ship', href: '/ready-to-ship' },
+    { name: 'Available Online', href: '/online' },
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
@@ -150,7 +150,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               LuxeMia
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed max-w-xs">
-              Ready-to-ship Indian ethnic wear held in US stock for weddings and festivals coming up soon.
+              Indian ethnic wear available online for weddings and festivals coming up soon.
             </p>
             {/* Social icons */}
             <div className="flex gap-3 mt-6">

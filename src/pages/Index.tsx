@@ -23,7 +23,7 @@ import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below that. In-stock pieces ship within 2 business days."
+    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
   },
   {
     question: "What is your return policy?",
@@ -59,7 +59,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "ClothingStore",
     "name": "LuxeMia",
-    "description": "Ready-to-ship Indian ethnic wear store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free US shipping on orders over $150.",
+    "description": "Indian ethnic wear online store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free US shipping on orders over $150.",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/og-image.jpg",
     "image": "https://luxemia.shop/og/og-lehengas.jpg",
@@ -137,7 +137,7 @@ const Index = () => {
     "name": "LuxeMia",
     "url": "https://luxemia.shop",
     "logo": "https://luxemia.shop/og-image.jpg",
-    "description": "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
+    "description": "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
     "image": "https://luxemia.shop/og-image.jpg",
     "category": "Indian Clothing Store",
     "knowsAbout": [
@@ -171,8 +171,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia — Ready-to-Ship Indian Ethnic Wear"
-        description="Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like."
+        title="LuxeMia — Indian Ethnic Wear Online"
+        description="Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
         localBusiness={localBusinessSchema}
@@ -185,13 +185,13 @@ const Index = () => {
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
             Kept sr-only (screen-reader only) so visual layout is unchanged
             but search engines see a single, keyword-rich H1. */}
-        <h1 className="sr-only">Indian Ethnic Wear, Ready to Ship</h1>
+        <h1 className="sr-only">Indian Ethnic Wear Online</h1>
 
         {/* First paragraph of copy — keyword-rich intro for search crawlers.
             sr-only so it doesn't disrupt the visual hero, but crawlers see it
             as the opening body copy. */}
         <p className="sr-only lead">
-          In stock, in the US, and on its way within two business days. For the wedding that's sooner than you'd like.
+          Available online with tracked U.S. shipping. For the wedding that's sooner than you'd like.
         </p>
 
         {/* Shipping Info Banner */}
@@ -199,10 +199,10 @@ const Index = () => {
           <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-sm flex-wrap">
             <span className="flex items-center gap-1.5">
               <Truck className="h-4 w-4 flex-shrink-0" />
-              <span className="font-medium">Free US shipping over $150</span>
+              <span className="font-medium">Free U.S. shipping over $150</span>
             </span>
             <span className="hidden sm:inline text-background/40">·</span>
-            <span className="hidden sm:inline text-background/80">$12 flat below $150 · Ships within 2 business days</span>
+            <span className="hidden sm:inline text-background/80">$12 flat below $150 · Tracking provided after dispatch</span>
             <span className="hidden sm:inline text-background/40">·</span>
             <Link to="/shipping" className="hidden sm:inline underline underline-offset-2 hover:text-background/80 transition-colors">
               Delivery info

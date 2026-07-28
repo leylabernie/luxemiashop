@@ -11,7 +11,7 @@ const SEOFooterContent = () => {
           
           <div className="prose prose-sm max-w-none text-muted-foreground font-light leading-relaxed">
             <p className="mb-6">
-              Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for ready-to-ship Indian ethnic wear online. 
+              Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for Indian ethnic wear online. 
               Buy <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
               <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
               <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link>, and 
@@ -26,7 +26,7 @@ const SEOFooterContent = () => {
                   Explore our curated range of <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees online</Link> including 
                   <strong className="text-foreground"> Banarasi silk sarees</strong>, 
                   Kanjivaram silk, and <strong className="text-foreground">Organza sarees with gota patti work</strong>. Sourced from India's renowned textile hubs. Perfect for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">NRIs in USA</Link> looking for authentic 
-                  Indian wedding attire with <strong className="text-foreground">ready-to-ship</strong> convenience.
+                  Indian wedding attire with <strong className="text-foreground">online</strong> convenience.
                 </p>
               </div>
 
@@ -46,7 +46,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Buy Salwar Kameez Online</h3>
                 <p>
-                  Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> from a ready-to-ship US-stock edit. 
+                  Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> from a online edit. 
                   Discover elegant <strong className="text-foreground">anarkali suits</strong>, 
                   palazzo sets, and <strong className="text-foreground">sharara suits</strong> perfect for every occasion. 
                   Our collection features quality fabrics like georgette, chanderi silk, and velvet, 
@@ -111,9 +111,9 @@ const SEOFooterContent = () => {
             <div className="text-center mt-8 pt-6 border-t border-border/50">
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
-                LuxeMia offers ready-to-ship Indian ethnic clothing online.
+                LuxeMia offers online Indian ethnic clothing online.
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-We offer <strong className="text-foreground">free US shipping over $150 and $12 flat below that</strong>, 
+We offer <strong className="text-foreground">free U.S. shipping over $150 and $12 flat below that</strong>, 
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
                 how LuxeMia selects Indian ethnic wear for weddings and celebrations.

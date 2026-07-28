@@ -53,7 +53,7 @@ const DiwaliOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia"
-        description="Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free US shipping over $150."
+        description="Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free U.S. shipping over $150."
         canonical="https://luxemia.shop/collections/diwali-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -74,7 +74,7 @@ const DiwaliOutfits = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Diwali Outfits 2026</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the United States with free US shipping over $150.
+              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the United States with free U.S. shipping over $150.
             </p>
           </div>
         </div>
@@ -160,7 +160,7 @@ const DiwaliOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Diwali Outfit</h3>
-                <p>Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched (Made to Measure) items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States via USPS/UPS/DHL. Free US shipping over $150.</p>
+                <p>Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched (Made to Measure) items take 3-4 weeks. <strong>Order your Diwali outfits by September 25, 2026</strong> at the latest. At LuxeMia, ready-to-wear items ship with tracking after dispatch and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States via USPS/UPS/DHL. Free U.S. shipping over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

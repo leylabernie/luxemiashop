@@ -138,7 +138,7 @@ function generateSeoDescription(item) {
   // Mid-tail + long-tail keywords, ≤155 chars
   const candidates = [
     `Shop this ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase().replace(' work', '')} for ${occ.toLowerCase()}. Handcrafted for grooms. Free shipping United States.`,
-    `${a.color_primary} ${a.fabric} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} — handcrafted for the modern groom. Free US shipping over $150 to the United States.`,
+    `${a.color_primary} ${a.fabric} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} — handcrafted for the modern groom. Free U.S. shipping over $150 to the United States.`,
     `Buy ${a.color_primary.toLowerCase()} ${a.fabric.toLowerCase()} sherwani with ${a.embroidery.toLowerCase()} for ${occ.toLowerCase()} grooms. Premium menswear. Free shipping to United States.`,
   ];
   for (const c of candidates) {

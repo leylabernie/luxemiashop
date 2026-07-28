@@ -35,7 +35,7 @@ const SHOP_LINKS: LinkItem[] = [
   { to: "/indowestern", label: "Indo-Western Outfits" },
   { to: "/new-arrivals", label: "New Arrivals" },
   { to: "/bestsellers", label: "Featured Styles" },
-  { to: "/ready-to-ship", label: "Ready to Ship Indian Wear" },
+  { to: "/online", label: "Indian Wear Online" },
   { to: "/jewelry", label: "Bridal & Temple Jewelry" },
   { to: "/collections", label: "All Collections" },
 ];

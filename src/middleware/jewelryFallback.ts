@@ -166,7 +166,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
           <div><dt>Availability:</dt><dd>In Stock</dd></div>
         </dl>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free US shipping over $150. $12 flat below that. Ships within 2 business days.<br>
+          <strong>Shipping:</strong> Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.<br>
           <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>

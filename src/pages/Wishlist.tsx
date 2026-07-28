@@ -62,7 +62,7 @@ const Wishlist = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="My Wishlist — LuxeMia"
-        description="View and manage your LuxeMia wishlist. Save your favorite ready-to-ship Indian ethnic wear pieces for later."
+        description="View and manage your LuxeMia wishlist. Save your favorite Indian ethnic wear online pieces for later."
         canonical="https://luxemia.shop/wishlist"
         noIndex={true}
       />

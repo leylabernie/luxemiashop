@@ -840,7 +840,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Free US shipping over $150</span>
+                  <span>Free U.S. shipping over $150</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -860,7 +860,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>In-stock items ship within 2 business days</span>
+                  <span>Online orders ship with tracking after dispatch</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />

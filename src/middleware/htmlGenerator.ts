@@ -238,7 +238,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
         </div>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free US shipping over $150. $12 flat below that. Ships within 2 business days.<br>
+          <strong>Shipping:</strong> Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.<br>
           <strong>Dispatch:</strong> Readymade 3-5 business days | Custom/Alterations 5-7 business days<br>
           <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990

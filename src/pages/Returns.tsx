@@ -7,7 +7,7 @@ const Returns = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Returns Policy — LuxeMia"
-        description="LuxeMia returns policy for ready-to-ship Indian ethnic wear. Return window and conditions require owner confirmation before launch."
+        description="LuxeMia returns policy for Indian ethnic wear online. Return window and conditions require owner confirmation before launch."
         canonical="https://luxemia.shop/returns"
       />
       <Header />
@@ -18,7 +18,7 @@ const Returns = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">Returns</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Returns Policy</h1>
             <p className="text-muted-foreground leading-relaxed">
-              Please read this policy before ordering. LuxeMia sells a small ready-to-ship inventory, and return terms
+              Please read this policy before ordering. LuxeMia sells a small online inventory, and return terms
               need to be confirmed by the owner before this policy goes live.
             </p>
           </div>

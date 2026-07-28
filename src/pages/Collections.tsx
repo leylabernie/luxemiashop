@@ -88,7 +88,7 @@ const Collections = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits — sourced directly from India's textile hubs. Free US shipping over $150.
+              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits — sourced directly from India's textile hubs. Free U.S. shipping over $150.
             </p>
           </motion.div>
         </section>
@@ -232,7 +232,7 @@ const Collections = () => {
               We source directly from India's most celebrated textile regions: <strong>Banarasi silk sarees</strong> from Varanasi, <strong>Kanchipuram silk sarees</strong> from Tamil Nadu, <strong>zardozi embroidered lehengas</strong> from Lucknow, and <strong>gota patti suits</strong> from Jaipur. This direct sourcing means you get genuine craftsmanship at prices far below what Indian boutiques charge in North America.
             </p>
             <p>
-              Popular categories include <strong>bridal lehenga choli</strong> for weddings, <strong>party wear sarees</strong> for festive events, <strong>Anarkali suits</strong> for formal occasions, <strong>sharara sets</strong> for sangeet nights, and <strong>kurta pajama sets</strong> for men. Enjoy <strong>free US shipping over $150</strong> to the United States.
+              Popular categories include <strong>bridal lehenga choli</strong> for weddings, <strong>party wear sarees</strong> for festive events, <strong>Anarkali suits</strong> for formal occasions, <strong>sharara sets</strong> for sangeet nights, and <strong>kurta pajama sets</strong> for men. Enjoy <strong>free U.S. shipping over $150</strong> to the United States.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

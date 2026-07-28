@@ -53,7 +53,7 @@ const EidOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia"
-        description="Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free US shipping over $150."
+        description="Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping over $150."
         canonical="https://luxemia.shop/collections/eid-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const EidOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chikankari suits for Eid</strong>, <strong>sharara sets for Eid</strong>, <strong>Eid anarkali dresses</strong>, <strong>Pakistani suits for Eid</strong>, <strong>white lehengas for Eid</strong>, and <strong>pastel salwar kameez for Eid celebrations</strong>. Free US shipping over $150.
+              Shop <strong>chikankari suits for Eid</strong>, <strong>sharara sets for Eid</strong>, <strong>Eid anarkali dresses</strong>, <strong>Pakistani suits for Eid</strong>, <strong>white lehengas for Eid</strong>, and <strong>pastel salwar kameez for Eid celebrations</strong>. Free U.S. shipping over $150.
             </p>
           </div>
         </div>
@@ -155,12 +155,12 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Eid Outfit Budget Guide</h3>
-                <p><strong>Eid morning prayers outfit:</strong> $120-$280 (simple salwar kameez or anarkali in cotton or chikankari). <strong>Eid lunch outfit:</strong> $180-$400 (sharara set or pastel lehenga). <strong>Eid dinner/party outfit:</strong> $200-$500 (embellished anarkali or designer suit). <strong>Men Eid outfit:</strong> $100-$300 (kurta pajama or pathani suit). At LuxeMia, we offer free US shipping over $150 to the United States.</p>
+                <p><strong>Eid morning prayers outfit:</strong> $120-$280 (simple salwar kameez or anarkali in cotton or chikankari). <strong>Eid lunch outfit:</strong> $180-$400 (sharara set or pastel lehenga). <strong>Eid dinner/party outfit:</strong> $200-$500 (embellished anarkali or designer suit). <strong>Men Eid outfit:</strong> $100-$300 (kurta pajama or pathani suit). At LuxeMia, we offer free U.S. shipping over $150 to the United States.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
-                <p>Eid Ul-Fitr 2026 falls on <strong>March 20, 2026</strong> (subject to moon sighting). Eid Ul-Adha 2026 falls on <strong>May 27, 2026</strong>. Indian ethnic wear ships from our US-stock edit — even ready-to-ship items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your Eid outfits at least 4-6 weeks before the Eid date.</strong> At LuxeMia, ready-to-wear items dispatch in 2 business days and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
+                <p>Eid Ul-Fitr 2026 falls on <strong>March 20, 2026</strong> (subject to moon sighting). Eid Ul-Adha 2026 falls on <strong>May 27, 2026</strong>. Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your Eid outfits at least 4-6 weeks before the Eid date.</strong> At LuxeMia, ready-to-wear items ship with tracking after dispatch and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

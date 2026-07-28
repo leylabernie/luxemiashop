@@ -45,11 +45,11 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below $150. In-stock items ship within 2 business days.',
+          answer: 'LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below $150. Online orders ship with tracking after dispatch.',
         },
         {
           question: 'How long does shipping take?',
-          answer: 'In-stock ready-to-ship items leave LuxeMia within 2 business days. Carrier transit time begins after dispatch and depends on the service shown at checkout.',
+          answer: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch and depends on the service shown at checkout.',
         },
         {
           question: 'How can I track my order?',
@@ -79,7 +79,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer custom sizing?',
-          answer: 'Yes! We offer custom sizing for all our garments. You can submit your measurements through our Size Guide page. Custom work is not part of the two-business-day ready-to-ship promise.',
+          answer: 'Yes! We offer custom sizing for all our garments. You can submit your measurements through our Size Guide page. Custom work is not part of the two-business-day online promise.',
         },
         {
           question: 'What if my measurements don\'t fit standard sizes?',
@@ -225,11 +225,11 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes. LuxeMia specializes in ready-to-ship Indian ethnic wear for customers in the United States. Free US shipping applies over $150, a flat $12 rate applies below $150, and in-stock items ship within 2 business days.',
+          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free US shipping applies over $150, a flat $12 rate applies below $150, and online orders ship with tracking after dispatch.',
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
-          answer: 'Taxes, if applicable, are calculated at checkout. LuxeMia currently ships from US-held stock to United States addresses only.',
+          answer: 'Taxes, if applicable, are calculated at checkout. LuxeMia currently ships from supplier fulfillment to United States addresses only.',
         },
         {
           question: 'Do you ship outside the United States?',
@@ -245,7 +245,7 @@ const FAQ = () => {
         },
         {
           question: 'How long does US delivery take?',
-          answer: 'In-stock items ship within 2 business days. Carrier transit time begins after dispatch, and tracking is sent by email once the label is created.',
+          answer: 'Online orders ship with tracking after dispatch. Carrier transit time begins after dispatch, and tracking is sent by email once the label is created.',
         },
       ],
     },

@@ -12,8 +12,8 @@
 
 export const SITE_URL = 'https://luxemia.shop';
 export const SITE_NAME = 'LuxeMia';
-export const DEFAULT_TITLE = 'LuxeMia — Ready-to-Ship Indian Ethnic Wear';
-export const DEFAULT_DESCRIPTION = "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.";
+export const DEFAULT_TITLE = 'LuxeMia — Indian Ethnic Wear Online';
+export const DEFAULT_DESCRIPTION = "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.";
 
 export interface PageMetadata {
   title: string;
@@ -29,32 +29,32 @@ export interface PageMetadata {
  */
 export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/': {
-    title: 'LuxeMia — Ready-to-Ship Indian Ethnic Wear',
-    description: "Indian sarees, lehengas, suits and menswear in stock and shipping from the US within two business days. For weddings and festivals that are sooner than you'd like.",
+    title: 'LuxeMia — Indian Ethnic Wear Online',
+    description: "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
     canonical: SITE_URL,
     image: `${SITE_URL}/og-image.jpg`,
   },
   '/sarees': {
     title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: 'Shop 200+ Indian sarees online at LuxeMia. Banarasi silk, Kanchipuram, designer georgette & wedding sarees with custom blouse stitching. Free US shipping over $150; $12 flat below that.',
+    description: 'Shop 200+ Indian sarees online at LuxeMia. Banarasi silk, Kanchipuram, designer georgette & wedding sarees with custom blouse stitching. Free U.S. shipping over $150; $12 flat below that.',
     canonical: `${SITE_URL}/sarees`,
     image: `${SITE_URL}/og/og-sarees.jpg`,
   },
   '/lehengas': {
     title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
-    description: 'Shop 260+ lehengas online at LuxeMia. Bridal, wedding, party wear & festive lehenga choli in silk, net & velvet with hand embroidery. Custom tailoring available. Free US shipping over $150.',
+    description: 'Shop 260+ lehengas online at LuxeMia. Bridal, wedding, party wear & festive lehenga choli in silk, net & velvet with hand embroidery. Custom tailoring available. Free U.S. shipping over $150.',
     canonical: `${SITE_URL}/lehengas`,
     image: `${SITE_URL}/og/og-lehengas.jpg`,
   },
   '/suits': {
     title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
-    description: 'Shop 300+ Indian salwar suits online at LuxeMia. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring available. Free US shipping over $150; $12 flat below that.',
+    description: 'Shop 300+ Indian salwar suits online at LuxeMia. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring available. Free U.S. shipping over $150; $12 flat below that.',
     canonical: `${SITE_URL}/suits`,
     image: `${SITE_URL}/og/og-suits.jpg`,
   },
   '/menswear': {
     title: 'Buy Sherwanis Online — Wedding & Groom Sherwani for Men | LuxeMia',
-    description: 'Shop designer sherwanis for men online at LuxeMia. Groom sherwanis, kurta pajama sets & indo-western menswear with hand embroidery. Custom tailoring available. Free US shipping over $150.',
+    description: 'Shop designer sherwanis for men online at LuxeMia. Groom sherwanis, kurta pajama sets & indo-western menswear with hand embroidery. Custom tailoring available. Free U.S. shipping over $150.',
     canonical: `${SITE_URL}/menswear`,
     image: `${SITE_URL}/og/og-menswear.jpg`,
   },
@@ -66,7 +66,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/collections': {
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
-    description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits & menswear for every occasion. Free US shipping over $150; $12 flat below that.',
+    description: 'Browse all Indian ethnic wear collections at LuxeMia. Lehengas, sarees, suits & menswear for every occasion. Free U.S. shipping over $150; $12 flat below that.',
     canonical: `${SITE_URL}/collections`,
     image: `${SITE_URL}/og-image.jpg`,
   },
@@ -77,8 +77,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     type: 'article',
   },
   '/about': {
-    title: 'About LuxeMia — Ready-to-Ship Indian Ethnic Wear',
-    description: 'LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, with a small US-stock edit for events coming up soon.',
+    title: 'About LuxeMia — Indian Ethnic Wear Online',
+    description: 'LuxeMia is the online side of CeremonyVerse, run by Bhamini, with a online catalog for events coming up soon.',
     canonical: `${SITE_URL}/about`,
   },
   '/brand-story': {
@@ -88,7 +88,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/new-arrivals': {
     title: 'New Arrivals | Latest Indian Ethnic Wear | LuxeMia',
-    description: 'Discover the newest arrivals of Indian ethnic wear at LuxeMia. Fresh designs in lehengas, sarees, suits, and menswear. Free US shipping over $150.',
+    description: 'Discover the newest arrivals of Indian ethnic wear at LuxeMia. Fresh designs in lehengas, sarees, suits, and menswear. Free U.S. shipping over $150.',
     canonical: `${SITE_URL}/new-arrivals`,
   },
   '/bestsellers': {
@@ -98,42 +98,42 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/indowestern': {
     title: 'Indo-Western Collection | Fusion Wear Online | LuxeMia',
-    description: 'Shop trendy indo-western and fusion wear at LuxeMia. Modern silhouettes with traditional craftsmanship. Free US shipping over $150; $12 flat below that.',
+    description: 'Shop trendy indo-western and fusion wear at LuxeMia. Modern silhouettes with traditional craftsmanship. Free U.S. shipping over $150; $12 flat below that.',
     canonical: `${SITE_URL}/indowestern`,
   },
   '/nri': {
     title: 'NRI Indian Ethnic Wear | United States Shipping | LuxeMia',
-    description: 'Shop Indian ethnic wear from abroad. LuxeMia ships authentic lehengas, sarees, and suits to the United States. Free US shipping over $150.',
+    description: 'Shop Indian ethnic wear from abroad. LuxeMia ships authentic lehengas, sarees, and suits to the United States. Free U.S. shipping over $150.',
     canonical: `${SITE_URL}/nri`,
   },
   '/nri/usa': {
     title: 'Indian Ethnic Wear in USA | Shop Online with Fast Shipping | LuxeMia',
-    description: 'Shop authentic Indian ethnic wear online in the USA. Bridal lehengas, silk sarees, salwar suits with free US shipping over $150. Ships within 2 business days.',
+    description: 'Shop authentic Indian ethnic wear online in the USA. Bridal lehengas, silk sarees, salwar suits with free U.S. shipping over $150. Tracking provided after dispatch.',
     canonical: `${SITE_URL}/nri/usa`,
   },
   '/nri/canada': {
     title: 'United States Shipping Only | LuxeMia',
-    description: 'LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
+    description: 'LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
     canonical: `${SITE_URL}/nri/canada`,
   },
   '/indian-ethnic-wear-usa': {
     title: 'Indian Ethnic Wear in USA | Shop Online with Fast Shipping | LuxeMia',
-    description: 'Shop authentic Indian ethnic wear online in the USA. Bridal lehengas, silk sarees, salwar suits with free US shipping over $150.',
+    description: 'Shop authentic Indian ethnic wear online in the USA. Bridal lehengas, silk sarees, salwar suits with free U.S. shipping over $150.',
     canonical: `${SITE_URL}/indian-ethnic-wear-usa`,
   },
   '/indian-ethnic-wear-canada': {
     title: 'United States Shipping Only | LuxeMia',
-    description: 'LuxeMia currently ships ready-to-ship Indian ethnic wear to United States addresses only.',
+    description: 'LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
     canonical: `${SITE_URL}/indian-ethnic-wear-canada`,
   },
   '/shipping': {
     title: 'Shipping Policy | Free Shipping Over $150 | LuxeMia',
-    description: 'LuxeMia ships to the United States. Free US shipping over $150. Flat rate $12 for orders under $150. Standard delivery 7-10 business days.',
+    description: 'LuxeMia ships to the United States. Free U.S. shipping over $150. Flat rate $12 for orders under $150. Standard delivery 7-10 business days.',
     canonical: `${SITE_URL}/shipping`,
   },
   '/pages/shipping-customs': {
     title: 'Shipping & Customs | Import Duties & Local Taxes | LuxeMia',
-    description: 'Learn how LuxeMia US shipping works for ready-to-ship Indian ethnic wear held in stock.',
+    description: 'Learn how LuxeMia US shipping works for Indian ethnic wear online available online.',
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {
@@ -158,7 +158,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/faq': {
     title: 'FAQ | Frequently Asked Questions | LuxeMia',
-    description: 'Answers to common LuxeMia questions on orders, shipping, sizing, fabric care & Indian ethnic wear. Free US shipping over $150; $12 flat below that.',
+    description: 'Answers to common LuxeMia questions on orders, shipping, sizing, fabric care & Indian ethnic wear. Free U.S. shipping over $150; $12 flat below that.',
     canonical: `${SITE_URL}/faq`,
   },
   '/size-guide': {
@@ -260,7 +260,7 @@ export function getBlogMetadata(slug: string): PageMetadata | null {
     },
     'designer-wedding-dress-under-500': {
       title: 'Designer Wedding Dress Under $500 | LuxeMia Blog',
-      description: 'Find wedding dresses under $500 with ready-to-ship options at LuxeMia.',
+      description: 'Find wedding dresses under $500 with online options at LuxeMia.',
     },
     'nri-wedding-ethnic-wear-trends-2026': {
       title: 'NRI Wedding Ethnic Wear Trends 2026 | LuxeMia Blog',

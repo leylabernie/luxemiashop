@@ -84,7 +84,7 @@ def generate_body_html(p):
 <ul>
 <li><strong>Sizing:</strong> Saree length 5.5 meters + 0.8 meter blouse piece. Free Size — fits all body types with adjustable draping</li>
 <li><strong>Care:</strong> {care}</li>
-<li><strong>Shipping:</strong> Free DHL/USPS/UPS delivery to the United States within 2 business days to ship</li>
+<li><strong>Shipping:</strong> Tracked delivery to the United States</li>
 </ul>
 
 <h3>Frequently Asked Questions</h3>

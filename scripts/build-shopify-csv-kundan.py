@@ -124,7 +124,7 @@ def generate_body_html(p):
 <ul>
 <li><strong>Care:</strong> Store in the provided velvet pouch away from moisture and direct sunlight. Avoid contact with perfume, hairspray, and water. Gently wipe with a soft dry cloth after each wear.</li>
 <li><strong>Maintenance:</strong> For deep cleaning, take to a professional jewelry cleaner. Do not use chemical cleaners at home — they can damage the Kundan setting.</li>
-<li><strong>Shipping:</strong> Free DHL/USPS/UPS delivery to the United States within 2 business days to ship. Each piece ships in a signature gift box.</li>
+<li><strong>Shipping:</strong> Tracked delivery to the United States. Each piece ships in a signature gift box.</li>
 </ul>
 
 <h3>Frequently Asked Questions</h3>
@@ -169,7 +169,7 @@ def generate_seo_description(p):
     
     candidates = [
         f"Shop this {color} {stone} {jtype} for weddings. Handcrafted for brides. Free shipping United States.",
-        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free US shipping over $150 to the United States.",
+        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free U.S. shipping over $150 to the United States.",
         f"Buy {color} {stone} {jtype} online. Premium bridal jewelry. Free shipping to United States.",
     ]
     for c in candidates:

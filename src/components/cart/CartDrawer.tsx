@@ -9,7 +9,7 @@ import EmailCaptureModal from './EmailCaptureModal';
 
 const FREE_SHIPPING_THRESHOLD = 150;
 const FLAT_SHIPPING_RATE = 12;
-const SHIPPING_PROMISE = 'Free US shipping over $150. $12 flat below that. Ships within 2 business days.';
+const SHIPPING_PROMISE = 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.';
 
 interface CartDrawerProps {
   isOpen: boolean;

@@ -266,7 +266,7 @@ const StyleQuiz = () => {
     return filtered.slice(0, 8);
   }, [showResult, allProducts, answers.silhouette, answers.budget]);
 
-  // Fallback products if silhouette category empty (show any in-stock items)
+  // Fallback products if silhouette category empty (show any online orders)
   const displayProducts = matchedProducts.length > 0
     ? matchedProducts
     : allProducts.filter(p => p.node.variants.edges[0]?.node.availableForSale !== false).slice(0, 8);
