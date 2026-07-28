@@ -24,6 +24,24 @@ function normalizeWhitespace(value) {
   return value.replace(/\s+/g, ' ').trim();
 }
 
+function sanitizeProductCopy(value) {
+  return (value || '')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
+    .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
+    .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/within two business days/gi, 'with tracked shipping')
+    .replace(/within 2 business days/gi, 'with tracked shipping')
+    .replace(/from the USA/gi, 'with U.S. delivery')
+    .replace(/USA, Canada, and Australia/gi, 'the United States')
+    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping over $150');
+}
+
+function sanitizeProductTitle(value) {
+  return (value || '').replace(/\s*\|\s*Ready to Ship/gi, '').replace(/ready[- ]to[- ]ship/gi, 'available online').replace(/\s+/g, ' ').trim();
+}
+
 function truncateAtWord(value, maxLength) {
   if (value.length <= maxLength) return value;
 
@@ -296,9 +314,9 @@ function buildInitialDataPayload(products, category) {
   const slim = products.map(p => ({
     node: {
       id: p.id,
-      title: p.title,
+      title: sanitizeProductTitle(p.title),
       createdAt: p.createdAt,
-      description: p.description ?? '',
+      description: sanitizeProductCopy(p.description ?? ''),
       handle: p.handle,
       vendor: p.vendor,
       productType: p.productType,
@@ -328,7 +346,7 @@ function generateCollectionProductHtml(products) {
     const isAvailable = p.availableForSale !== false;
     const firstImage = p.images?.edges?.[0]?.node;
     const imgHtml = firstImage
-      ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || p.title || '')}" width="400" height="500" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`
+      ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || sanitizeProductTitle(p.title) || '')}" width="400" height="500" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`
       : '';
 
     let priceHtml = '';
@@ -340,7 +358,7 @@ function generateCollectionProductHtml(products) {
     }
 
     const availability = isAvailable ? 'In Stock' : 'Currently Unavailable';
-    const title = escapeHtml(p.title || p.handle);
+    const title = escapeHtml(sanitizeProductTitle(p.title || p.handle));
     const handle = escapeHtml(p.handle);
 
     return `<div style="display:inline-block;vertical-align:top;width:30%;margin:0 1.5% 24px;min-width:240px">
@@ -375,10 +393,10 @@ function generateItemListJsonLd(products, category, routePath) {
       position: i + 1,
       item: {
         '@type': 'Product',
-        name: p.title,
+        name: sanitizeProductTitle(p.title),
         image,
         url: productUrl,
-        description: (p.description || p.title || '').slice(0, 5000),
+        description: sanitizeProductCopy(p.description || p.title || '').slice(0, 5000),
         sku: (p.id || '').split('/').pop() || p.handle,
         brand: { '@type': 'Brand', name: 'LuxeMia' },
         offers: {
@@ -2209,7 +2227,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
     const isAvailable = p.availableForSale !== false;
     const images = p.images?.edges?.map(e => e.node) || [];
-    const description = (p.description || '').trim();
+    const description = sanitizeProductCopy((p.description || '').trim());
     const productType = (p.productType || '').trim();
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
@@ -2438,8 +2456,8 @@ async function main() {
     // When no Shopify SEO title is set, inject fabric/color USP into the title
     // to carve out high-converting long-tail niches (e.g., "Maroon Raw Silk
     // Bridal Lehenga | Hand Embroidery | LuxeMia") that corporate catalogs lack.
-    const desc = (p.description || '').trim();
-    const baseTitle = p.title || handle;
+    const desc = sanitizeProductCopy((p.description || '').trim());
+    const baseTitle = sanitizeProductTitle(p.title || handle);
     const titleDescLower = `${baseTitle} ${desc}`.toLowerCase();
 
     // Fabric + color detection arrays (shared by title + description generation)
@@ -2478,7 +2496,7 @@ async function main() {
       path: `/product/${handle}`,
       title,
       description,
-      h1: seoTitle || p.title || handle,
+      h1: seoTitle || sanitizeProductTitle(p.title) || handle,
       content: `<p>${escapeHtml(desc || fallbackDesc).slice(0, 1200)}</p>`,
       product: p,
     });

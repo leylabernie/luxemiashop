@@ -228,6 +228,33 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
+function sanitizeShopifyProductCopy(value: string): string {
+  return (value || '')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
+    .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
+    .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/within two business days/gi, 'with tracked shipping')
+    .replace(/within 2 business days/gi, 'with tracked shipping')
+    .replace(/from the USA/gi, 'with U.S. delivery')
+    .replace(/USA, Canada, and Australia/gi, 'the United States')
+    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping over $150');
+}
+
+function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
+  return {
+    ...node,
+    description: sanitizeShopifyProductCopy(node.description || ''),
+    descriptionHtml: node.descriptionHtml ? sanitizeShopifyProductCopy(node.descriptionHtml) : node.descriptionHtml,
+    title: node.title.replace(/\s*\|\s*Ready to Ship/gi, ''),
+  };
+}
+
+function sanitizeProductEdge(edge: ShopifyProduct): ShopifyProduct {
+  return { node: sanitizeProductNode(edge.node) };
+}
+
 const CART_CREATE_MUTATION = `
   mutation cartCreate($input: CartInput!) {
     cartCreate(input: $input) {
@@ -320,7 +347,7 @@ export async function fetchProducts(first: number = 12, query?: string): Promise
   try {
     const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query });
     if (!data) return [];
-    return data.data.products.edges || [];
+    return (data.data.products.edges || []).map(sanitizeProductEdge);
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];
@@ -341,7 +368,7 @@ export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]
       if (!data) break;
 
       const edges = data.data.products.edges || [];
-      allProducts.push(...edges);
+      allProducts.push(...edges.map(sanitizeProductEdge));
 
       const pageInfo = data.data.products.pageInfo;
       hasNextPage = pageInfo?.hasNextPage ?? false;
@@ -361,7 +388,7 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
     // The query now uses `product(handle:)` (replacing the deprecated
     // `productByHandle`) so the response shape is `data.product`, not
     // `data.productByHandle`.
-    return data.data.product || null;
+    return data.data.product ? sanitizeProductNode(data.data.product) : null;
   } catch (error) {
     console.error('Error fetching product:', error);
     return null;
