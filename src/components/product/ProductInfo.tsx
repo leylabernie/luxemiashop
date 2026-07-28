@@ -9,6 +9,7 @@ import { SizeGuideModal } from './SizeGuideModal';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import type { SizeMode } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
+import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
@@ -527,6 +528,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           : 0
         }
       />
+
+      <CeremonyVerseLinkBlock variant="compact" />
 
       <Separator />
 

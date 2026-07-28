@@ -15,6 +15,7 @@ import { NewArrivals } from '@/components/home/NewArrivals';
 import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
 import LazySection from '@/components/ui/LazySection';
+import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
 // HeroSection removed — was duplicating NewArrivalsBanner (two hero carousels stacked)
 // FlashSaleBanner removed — redundant "New Arrivals" bar directly below NewArrivalsBanner
@@ -291,6 +292,7 @@ const Index = () => {
           </div>
         </section>
 
+        <CeremonyVerseLinkBlock />
         <SEOFooterContent />
       </main>
 

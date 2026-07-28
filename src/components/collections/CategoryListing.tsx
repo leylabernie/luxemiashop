@@ -61,6 +61,7 @@ import { useListingFilters } from '@/hooks/useListingFilters';
 import { filterSortAndSubcategorize } from '@/lib/productFilters';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import ProductCard from '@/components/ui/ProductCard';
+import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 import { FilterSidebar, ActiveFilterTags } from './FilterSidebar';
 import type { CategoryConfig } from '@/config/categoryConfig';
 
@@ -452,6 +453,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
         </section>
       )}
 
+      <CeremonyVerseLinkBlock />
       <Footer />
     </div>
   );
