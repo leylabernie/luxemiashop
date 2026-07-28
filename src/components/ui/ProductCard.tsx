@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { cn } from '@/lib/utils';
+import { getShipByLabel } from '@/lib/shipBy';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -254,6 +255,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isAvailable = product.node.variants.edges[0]?.node.availableForSale !== false;
+  const shipByLabel = getShipByLabel(product.node);
 
   // "New" badge — products added within the last 30 days
   const NEW_ARRIVAL_WINDOW_DAYS = 30;
@@ -424,6 +426,11 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             </div>
 
           </div>
+          {shipByLabel && (
+            <p className="text-xs text-green-700 dark:text-green-400 font-medium">
+              {shipByLabel}
+            </p>
+          )}
           {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
             parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) >
             parseFloat(product.node.priceRange.minVariantPrice.amount) && (

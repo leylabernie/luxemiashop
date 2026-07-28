@@ -28,6 +28,8 @@ export interface ShopifyProduct {
     productType?: string;
     tags?: string[];
     availableForSale?: boolean;
+    shipsWithin?: number | null;
+    shipsWithinMetafield?: { value: string | null } | null;
     seo?: { title: string | null; description: string | null };
     metadata?: ProductMetadata;
     priceRange: {
@@ -102,6 +104,7 @@ const STOREFRONT_LISTING_QUERY = `
           productType
           tags
           availableForSale
+          shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
           priceRange {
             minVariantPrice {
               amount
@@ -170,6 +173,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
       vendor
       productType
       tags
+      shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
       priceRange {
         minVariantPrice {
           amount

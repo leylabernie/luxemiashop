@@ -80,6 +80,7 @@ const ALL_PRODUCTS_QUERY = `
       edges {
         node {
           id title description handle vendor productType availableForSale
+          shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
           seo { title description }
           priceRange { minVariantPrice { amount currencyCode } }
           compareAtPriceRange { maxVariantPrice { amount currencyCode } }
@@ -303,6 +304,7 @@ function buildInitialDataPayload(products, category) {
       productType: p.productType,
       tags: p.tags ?? [],
       availableForSale: p.availableForSale,
+      shipsWithinMetafield: p.shipsWithinMetafield || null,
       priceRange: p.priceRange,
       compareAtPriceRange: p.compareAtPriceRange,
       images: p.images,

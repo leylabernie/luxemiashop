@@ -14,6 +14,7 @@ import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { getShipByLabel } from '@/lib/shipBy';
 
 // Utsav-style Stitching Type options with price modifiers
 interface StitchingTypeOption {
@@ -292,6 +293,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
+  const shipByLabel = getShipByLabel(product);
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -780,6 +782,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
       </div>
 
+      {shipByLabel && (
+        <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/30 dark:text-green-300">
+          {shipByLabel}
+        </div>
+      )}
+
       {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
         <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free US shipping over $150</span>
@@ -913,8 +921,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             <Truck className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Ships from India</p>
-            <p className="text-xs text-muted-foreground">DHL Express, USPS & UPS</p>
+            <p className="text-sm font-medium">Ships within the US</p>
+            <p className="text-xs text-muted-foreground">Tracked carrier delivery</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
