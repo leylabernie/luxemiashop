@@ -50,6 +50,7 @@ const STATIC_ROUTES = [
   '/jewelry',
   '/blog',
   '/collections',
+  '/about',
   '/brand-story',
   '/new-arrivals',
   '/bestsellers',

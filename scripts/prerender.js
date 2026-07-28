@@ -1070,6 +1070,13 @@ const routes = [
     `,
   },
   {
+    path: '/about',
+    title: 'About LuxeMia — Ready-to-Ship Indian Ethnic Wear',
+    description: 'LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, with a small US-stock edit for events coming up soon.',
+    h1: 'About LuxeMia',
+    content: '<p>LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, whose family has worked in Surat fabric trade for three generations. We keep a small, tightly-edited range in stock in the US so you can have it in days rather than months.</p><p>Business address: [STREET ADDRESS], Philadelphia, PA [ZIP]. Phone: +1 215-341-9990.</p>',
+  },
+  {
     path: '/brand-story',
     title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
     description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',

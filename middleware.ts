@@ -653,9 +653,13 @@ const STATIC_PAGE_META: Record<string, PageMeta> = {
     title: 'Priya Nair — NRI Shopping & Lifestyle Editor | LuxeMia Blog',
     description: 'Priya Nair is LuxeMia\'s NRI Shopping & Lifestyle Editor based in Philadelphia. 6 years writing about Indian ethnic fashion for diaspora audiences.',
   },
+  '/about': {
+    title: 'About LuxeMia — Ready-to-Ship Indian Ethnic Wear',
+    description: 'LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, with a small US-stock edit for events coming up soon.',
+  },
   '/brand-story': {
     title: 'Our Story — LuxeMia | Authentic Indian Ethnic Wear for the United States',
-    description: 'Discover the LuxeMia story. We source authentic Indian ethnic wear directly from US-held stock\'s textile hubs — Surat, Varanasi, Jaipur — and deliver quality-inspected sarees, lehengas & suits to the United States. Free US shipping over $150.',
+    description: 'Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\'s textile hubs — Surat, Varanasi, Jaipur — and deliver quality-inspected sarees, lehengas & suits to the United States. Free US shipping over $150.',
   },
   '/new-arrivals': {
     title: 'New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia',

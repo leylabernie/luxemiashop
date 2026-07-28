@@ -57,6 +57,7 @@ const staticPages = [
   { loc: '/collections', changefreq: 'daily', priority: '0.9' },
   // NOTE: '/products' removed — it 301-redirects to /collections.
   // Including redirected URLs in the sitemap is a GSC error ("Page with redirect").
+  { loc: '/about', changefreq: 'monthly', priority: '0.6' },
   { loc: '/brand-story', changefreq: 'monthly', priority: '0.6' },
   { loc: '/lookbook', changefreq: 'monthly', priority: '0.7' },
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },

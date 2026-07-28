@@ -10,6 +10,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/jewelry',
   '/blog',
   '/collections',
+  '/about',
   '/brand-story',
   '/new-arrivals',
   '/bestsellers',

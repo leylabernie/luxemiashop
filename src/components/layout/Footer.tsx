@@ -267,6 +267,14 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               <span className="text-xs font-medium">Safe Payments</span>
             </div>
           </div>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs text-foreground/60">
+            <span className="font-medium text-foreground/70">Secure payments:</span>
+            {['Visa', 'Mastercard', 'American Express', 'Discover', 'PayPal', 'Apple Pay', 'Google Pay', 'Shop Pay'].map((method) => (
+              <span key={method} className="rounded-full border border-border bg-background px-3 py-1">
+                {method}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

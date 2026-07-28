@@ -76,6 +76,11 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/blog`,
     type: 'article',
   },
+  '/about': {
+    title: 'About LuxeMia — Ready-to-Ship Indian Ethnic Wear',
+    description: 'LuxeMia is the ready-to-ship side of CeremonyVerse, run by Bhamini, with a small US-stock edit for events coming up soon.',
+    canonical: `${SITE_URL}/about`,
+  },
   '/brand-story': {
     title: 'Our Story | About LuxeMia — Indian Ethnic Wear Brand',
     description: 'Learn about LuxeMia — our passion for authentic Indian ethnic wear, ethical sourcing & quality craftsmanship. Based in Philadelphia, shipping within the United States.',

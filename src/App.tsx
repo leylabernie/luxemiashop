@@ -16,6 +16,7 @@ import Index from "./pages/Index";
 // This is the single biggest FCP/LCP improvement for SPA architectures
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Collections = lazy(() => import("./pages/Collections"));
+const About = lazy(() => import("./pages/About"));
 const BrandStory = lazy(() => import("./pages/BrandStory"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -106,8 +107,8 @@ const App = () => (
                 <Route path="/menswear" element={<Suspense fallback={<PageLoader />}><Menswear /></Suspense>} />
                 <Route path="/jewelry" element={<Suspense fallback={<PageLoader />}><Jewelry /></Suspense>} />
                 <Route path="/our-story" element={<Navigate to="/brand-story" replace />} />
-                <Route path="/about-us" element={<Navigate to="/brand-story" replace />} />
-                <Route path="/about" element={<Navigate to="/brand-story" replace />} />
+                <Route path="/about-us" element={<Navigate to="/about" replace />} />
+                <Route path="/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
                 <Route path="/brand-story" element={<Suspense fallback={<PageLoader />}><BrandStory /></Suspense>} />
                 <Route path="/lookbook" element={<Suspense fallback={<PageLoader />}><Lookbook /></Suspense>} />
                 <Route path="/wishlist" element={<Suspense fallback={<PageLoader />}><Wishlist /></Suspense>} />

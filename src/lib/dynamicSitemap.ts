@@ -45,6 +45,7 @@ export const staticPages = [
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9', title: 'Eid Outfits 2026' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9', title: 'Navratri Outfits — Chaniya Choli & Garba' },
   // Brand & editorial
+  { loc: '/about', changefreq: 'monthly', priority: '0.6', title: 'About LuxeMia' },
   { loc: '/brand-story', changefreq: 'monthly', priority: '0.6', title: 'Brand Story' },
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6', title: 'Artisans' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6', title: 'Sustainability' },

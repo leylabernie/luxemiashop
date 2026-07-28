@@ -155,12 +155,7 @@
     },
     {
       "source": "/about-us",
-      "destination": "/brand-story",
-      "statusCode": 301
-    },
-    {
-      "source": "/about",
-      "destination": "/brand-story",
+      "destination": "/about",
       "statusCode": 301
     },
     {
@@ -555,7 +550,7 @@
     },
     {
       "source": "/pages/about-us",
-      "destination": "/brand-story",
+      "destination": "/about",
       "statusCode": 301
     },
     {
