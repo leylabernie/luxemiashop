@@ -12,12 +12,48 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import esbuild from 'esbuild';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.resolve(__dirname, '..');
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
+
+// ─── TypeScript Data Loader ───────────────────────────────────────────────
+// Bundles a .ts data module (blogPosts.ts, pillarBlogPosts.ts, comboPages.ts)
+// to a temporary ESM file with esbuild and imports it, so this build script
+// (which itself is loaded as JS) can read the SAME source-of-truth arrays
+// that the React app renders from, instead of a hand-maintained duplicate
+// list that can silently drift out of sync (root cause of the 2026-07-29
+// Search Console traffic-drop bug: 27 blog posts + 25 combo pages existed in
+// the app/sitemap but had no prerendered HTML, so Googlebot/Bingbot got a
+// 404 while regular browsers got 200 — a soft-cloaking regression).
+async function loadTsModule(relativeSrcPath) {
+  const entry = path.join(PROJECT_ROOT, relativeSrcPath);
+  const result = await esbuild.build({
+    entryPoints: [entry],
+    bundle: true,
+    format: 'esm',
+    platform: 'node',
+    write: false,
+    logLevel: 'silent',
+    // Type-only imports (e.g. `@/components/combo/ComboPage`) are erased by
+    // esbuild's TS transform, so they never need to resolve at bundle time.
+  });
+  const code = result.outputFiles[0].text;
+  const tmpFile = path.join(
+    PROJECT_ROOT,
+    `.prerender-tmp-${path.basename(relativeSrcPath, '.ts')}-${Date.now()}.mjs`
+  );
+  fs.writeFileSync(tmpFile, code, 'utf-8');
+  try {
+    return await import(`file://${tmpFile}`);
+  } finally {
+    fs.unlinkSync(tmpFile);
+  }
+}
 const FALLBACK_CURRENCY = 'USD';
 
 function normalizeWhitespace(value) {
@@ -1138,6 +1174,18 @@ const routes = [
     `,
   },
   {
+    path: '/ready-to-ship',
+    category: 'all',
+    title: 'Indian Ethnic Wear Online | LuxeMia',
+    description: 'Shop Indian ethnic wear online at LuxeMia: lehengas, sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
+    h1: 'Indian Ethnic Wear Online',
+    content: `
+      <p>Browse LuxeMia's online edit of lehengas, sarees, salwar kameez, menswear and jewelry for weddings, festivals and family celebrations.</p>
+      <h2>Shop the Full Collection</h2>
+      <p>Free U.S. shipping over $150; $12 flat below that. Tracking is provided after dispatch. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days.</p>
+    `,
+  },
+  {
     path: '/indowestern',
     category: 'indowestern',
     title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
@@ -1295,6 +1343,25 @@ const routes = [
         <li><a href="/lehengas">Yellow Lehengas</a> — Traditional bridal mehendi lehengas</li>
         <li><a href="/suits">Floral Anarkali Suits</a> — Light anarkali suits for mehendi</li>
         <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — All wedding ceremony outfits</li>
+      </ul>
+      <p>Free U.S. shipping over $150. Standard delivery 7-10 business days.</p>
+    `,
+  },
+  {
+    path: '/collections/haldi-outfits',
+    title: 'Haldi Ceremony Outfits — Yellow Lehengas & Suits | LuxeMia',
+    description: 'Shop haldi ceremony outfits at LuxeMia. Yellow, gold & mustard lehengas, anarkali suits & salwar kameez. Free U.S. shipping over $150.',
+    h1: 'Haldi Ceremony Outfits',
+    content: `
+      <p>Celebrate the haldi ceremony in bright, cheerful Indian ethnic wear. LuxeMia's haldi collection features yellow and gold lehengas, mustard salwar kameez sets, floral anarkali suits, and lightweight georgette and chiffon sarees — all in the auspicious colours traditionally worn for this joyful pre-wedding ritual.</p>
+      <h2>What Color to Wear for Haldi</h2>
+      <p>Yellow is the traditional and most popular color for haldi ceremonies, symbolising turmeric, auspiciousness, and new beginnings. The bride typically wears yellow, and guests are encouraged to wear yellow, gold, mustard, or pastel tones. Modern haldi ceremonies also welcome peach, coral, mint green, and pastel pink. Avoid white, black, and red — those are reserved for mourning, and the wedding day itself.</p>
+      <h2>Fabric Guide for Haldi</h2>
+      <p>Since the haldi paste can stain fabric, lighter, more affordable materials like georgette, chiffon, cotton, and crepe are popular choices, along with lighter embroidery rather than heavy zardozi or stonework. Comfortable footwear like mojari flats or kolhapuri sandals complete a practical haldi look.</p>
+      <ul>
+        <li><a href="/lehengas">Yellow Lehengas</a> — Bridal and guest haldi lehengas</li>
+        <li><a href="/suits">Anarkali Suits</a> — Yellow and mustard anarkali suits for haldi</li>
+        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Coordinating outfits for the next ceremony</li>
       </ul>
       <p>Free U.S. shipping over $150. Standard delivery 7-10 business days.</p>
     `,
@@ -2424,6 +2491,82 @@ async function main() {
     fs.rmSync(prerenderDir, { recursive: true });
   }
   fs.mkdirSync(prerenderDir, { recursive: true });
+
+  // ─── Auto-cover every blog post + combo page from source data ───────────
+  // CRITICAL SEO FIX (2026-07-29): This script previously only prerendered
+  // whichever /blog/* and combo-page routes had a manually-written entry in
+  // the `routes` array above. Every time an article/combo page was added to
+  // src/data/blogPosts.ts, src/data/pillarBlogPosts.ts, or src/data/comboPages.ts
+  // WITHOUT a matching manual entry here, the route still got registered in
+  // src/lib/autoRoutes.ts (by generate-routes.cjs) — so middleware.ts believed
+  // a prerendered file existed and rewrote bot requests to it. No file existed,
+  // so Googlebot/Bingbot got a 404 while regular browsers (who don't take that
+  // code path) got a normal 200 SPA page. This silently 404'd 27 blog posts and
+  // (before the routing fix) all 25 combo pages for search engines — a soft
+  // cloaking bug that is the most likely cause of the Search Console traffic
+  // drop. Fix: dynamically generate a fallback route entry for ANY blog post
+  // or combo page in the source data that doesn't already have a hardcoded
+  // entry, so prerendered HTML coverage can never drift behind the data files
+  // again. See scripts/verify-prerender-coverage.cjs for the build-time guard
+  // that now also catches any future drift and fails the build loudly.
+  const hardcodedBlogSlugs = new Set(
+    routes
+      .filter(r => r.path.startsWith('/blog/') && r.path.split('/').length === 3)
+      .map(r => r.path.slice('/blog/'.length))
+  );
+  const hardcodedComboSlugs = new Set(
+    routes
+      .filter(r => !r.path.startsWith('/blog/') && !r.path.startsWith('/product/') && !r.path.startsWith('/collections/') && !r.path.startsWith('/authors/'))
+      .map(r => r.path.slice(1))
+  );
+
+  try {
+    const blogModule = await loadTsModule('src/data/blogPosts.ts');
+    const allBlogPosts = blogModule.blogPosts || [];
+    let autoBlogCount = 0;
+    for (const post of allBlogPosts) {
+      if (!post.slug || hardcodedBlogSlugs.has(post.slug)) continue;
+      routes.push({
+        path: `/blog/${post.slug}`,
+        title: `${post.title} | LuxeMia`,
+        description: post.excerpt || `${post.title} — read the full guide on the LuxeMia blog.`,
+        h1: post.title,
+        content: post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`,
+      });
+      autoBlogCount++;
+    }
+    console.log(`[prerender] Auto-generated ${autoBlogCount} blog routes from blogPosts.ts (no manual entry existed)`);
+  } catch (err) {
+    console.error(`[prerender] WARNING: Failed to load src/data/blogPosts.ts for auto-coverage: ${err.message}`);
+    console.error('[prerender] Any blog post without a manual route entry above will NOT be prerendered.');
+  }
+
+  try {
+    const comboModule = await loadTsModule('src/data/comboPages.ts');
+    const allComboPages = comboModule.comboPages || [];
+    let autoComboCount = 0;
+    for (const combo of allComboPages) {
+      if (!combo.slug || hardcodedComboSlugs.has(combo.slug)) continue;
+      const guideHtml = (combo.guideSections || [])
+        .map(section => `<h2>${escapeHtml(section.heading)}</h2>${(section.paragraphs || []).map(p => `<p>${p}</p>`).join('')}`)
+        .join('');
+      const relatedLinksHtml = (combo.relatedLinks || [])
+        .map(link => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`)
+        .join(', ');
+      routes.push({
+        path: `/${combo.slug}`,
+        title: combo.title,
+        description: combo.metaDescription,
+        h1: combo.h1,
+        content: `<p>${escapeHtml(combo.heroSubtitle || '')}</p>${guideHtml}${relatedLinksHtml ? `<p>Related: ${relatedLinksHtml}</p>` : ''}`,
+      });
+      autoComboCount++;
+    }
+    console.log(`[prerender] Auto-generated ${autoComboCount} combo page routes from comboPages.ts (no manual entry existed)`);
+  } catch (err) {
+    console.error(`[prerender] WARNING: Failed to load src/data/comboPages.ts for auto-coverage: ${err.message}`);
+    console.error('[prerender] Any combo page without a manual route entry above will NOT be prerendered.');
+  }
 
   // Pre-fetch live Shopify product data so /product/* prerendered HTML
   // emits valid Product JSON-LD with image, description, and offers.price.

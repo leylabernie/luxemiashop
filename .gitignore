@@ -56,3 +56,4 @@ public/*.csv
 
 # Local test scripts (use real Shopify data, not for commit)
 scripts/
+!scripts/verify-prerender-coverage.cjs
