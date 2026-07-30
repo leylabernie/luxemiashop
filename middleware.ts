@@ -312,6 +312,16 @@ export default async function middleware(request: Request) {
     return rewrite(new URL(prerenderPath, request.url));
   }
 
+  // Preserve SEO equity for legacy size-guide URLs before the bot unknown-route
+  // fallback, so crawlers receive the same 301 as normal visitors.
+  const LEGACY_BLOG_REDIRECTS: Record<string, string> = {
+    '/blog/indian-size-to-us-clothing-size-conversion-guide': '/blog/indian-to-us-clothing-size-conversion-guide',
+    '/blog/indian-size-to-us-size-conversion-chart': '/blog/indian-to-us-clothing-size-conversion-guide',
+  };
+  if (LEGACY_BLOG_REDIRECTS[pathname]) {
+    return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
+  }
+
   // For bots: serve prerendered or dynamically-rendered content
   if (isBot(userAgent)) {
     // 1. Prerendered static routes → serve prerendered HTML
@@ -393,17 +403,6 @@ export default async function middleware(request: Request) {
     if (!REDIRECT_ROUTES.has(pathname)) {
       return return404(request);
     }
-  }
-
-  // Preserve SEO equity for legacy size-guide URLs that were previously indexed
-  // under alternate slugs. Redirect them to the current canonical article instead
-  // of returning a 404 and discarding the impressions/clicks those URLs earned.
-  const LEGACY_BLOG_REDIRECTS: Record<string, string> = {
-    '/blog/indian-size-to-us-clothing-size-conversion-guide': '/blog/indian-to-us-clothing-size-conversion-guide',
-    '/blog/indian-size-to-us-size-conversion-chart': '/blog/indian-to-us-clothing-size-conversion-guide',
-  };
-  if (LEGACY_BLOG_REDIRECTS[pathname]) {
-    return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
   }
 
   // Keep unknown blog URLs consistent for humans and crawlers. The SPA fallback
