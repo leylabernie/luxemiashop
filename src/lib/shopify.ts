@@ -475,8 +475,11 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
         checkoutUrl += '?channel=online_store';
       }
     } else {
-      // Cannot salvage the URL — fall back to the store homepage
-      checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}`;
+      // Do not send customers to the store homepage: that discards their cart
+      // and creates a silent conversion failure. Let the cart UI preserve the
+      // bag and show a retryable checkout error instead.
+      console.error('Unable to normalize Shopify checkout URL');
+      return null;
     }
   }
 
