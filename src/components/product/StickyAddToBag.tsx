@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useCartStore } from '@/stores/cartStore';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import type { ShopifyProduct } from '@/lib/shopify';
 
@@ -12,8 +11,6 @@ interface StickyAddToBagProps {
 
 const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
   const [isVisible, setIsVisible] = useState(false);
-  const addItem = useCartStore(state => state.addItem);
-  const openCart = useCartStore(state => state.openCart);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,25 +20,15 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const firstVariant = product.variants.edges[0]?.node;
-  const isAvailable = firstVariant?.availableForSale !== false;
+  const isAvailable = product.variants.edges.some((edge) => edge.node.availableForSale !== false);
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount
     ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount)
     : null;
   const imageUrl = product.images.edges[0]?.node.url;
 
-  const handleAdd = () => {
-    if (!firstVariant) return;
-    addItem({
-      product: { node: product } as any,
-      variantId: firstVariant.id,
-      variantTitle: firstVariant.title,
-      price: firstVariant.price,
-      quantity: 1,
-      selectedOptions: firstVariant.selectedOptions,
-    });
-    openCart();
+  const handleChooseOptions = () => {
+    document.getElementById('product-purchase')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -77,13 +64,13 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
               </p>
             </div>
             <Button
-              onClick={handleAdd}
+              onClick={handleChooseOptions}
               disabled={!isAvailable}
               data-testid="sticky-add-to-bag"
               className="flex-shrink-0 gap-2 text-sm px-5"
             >
               <ShoppingBag className="w-4 h-4" />
-              {isAvailable ? 'Add to Bag' : 'Sold Out'}
+              {isAvailable ? 'Choose Options' : 'Sold Out'}
             </Button>
           </div>
         </motion.div>

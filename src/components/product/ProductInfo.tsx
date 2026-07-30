@@ -484,7 +484,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div id="product-purchase" className="space-y-6">
       {/* Style No / SKU */}
       {sku && (
         <p className="text-xs tracking-wider text-muted-foreground font-mono">
