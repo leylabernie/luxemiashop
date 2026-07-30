@@ -395,6 +395,17 @@ export default async function middleware(request: Request) {
     }
   }
 
+  // Preserve SEO equity for legacy size-guide URLs that were previously indexed
+  // under alternate slugs. Redirect them to the current canonical article instead
+  // of returning a 404 and discarding the impressions/clicks those URLs earned.
+  const LEGACY_BLOG_REDIRECTS: Record<string, string> = {
+    '/blog/indian-size-to-us-clothing-size-conversion-guide': '/blog/indian-to-us-clothing-size-conversion-guide',
+    '/blog/indian-size-to-us-size-conversion-chart': '/blog/indian-to-us-clothing-size-conversion-guide',
+  };
+  if (LEGACY_BLOG_REDIRECTS[pathname]) {
+    return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
+  }
+
   // Keep unknown blog URLs consistent for humans and crawlers. The SPA fallback
   // would otherwise return 200 to humans while the bot branch above returns 404,
   // recreating a bot-only 404/soft-cloaking signal for stale blog URLs.
