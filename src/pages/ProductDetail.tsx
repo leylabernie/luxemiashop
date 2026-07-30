@@ -201,6 +201,7 @@ const ProductDetail = () => {
             const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
             return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Free U.S. shipping over $150; $12 flat below that.`;
           })()}
+          canonical={`https://luxemia.shop/product/${product.handle}`}
           type="product"
           image={product.images.edges[0]?.node.url}
           product={{
