@@ -23,6 +23,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
+  // Persisted carts can outlive Shopify inventory changes. Block checkout when
+  // the locally stored variant is explicitly unavailable instead of sending a
+  // stale line to Shopify and giving the customer a confusing API error.
+  const unavailableItems = items.filter((item) => {
+    const variant = item.product.node.variants?.edges?.find((edge) => edge.node.id === item.variantId);
+    return variant?.node.availableForSale === false;
+  });
 
   const formatPrice = (amount: number, _currency: string) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
@@ -46,6 +53,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   };
 
   const proceedToCheckout = async () => {
+    if (unavailableItems.length > 0) {
+      return;
+    }
     const checkoutUrl = await createCheckout();
     if (checkoutUrl) {
       window.location.href = checkoutUrl;
@@ -211,12 +221,17 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   <p className="text-xs text-foreground/50 text-center">
                     Taxes calculated at checkout. US shipping only.
                   </p>
+                  {unavailableItems.length > 0 && (
+                    <p className="text-xs text-destructive text-center" role="alert">
+                      One or more items is no longer available. Remove it from your bag to continue.
+                    </p>
+                  )}
                   <Button
                     variant="luxury"
                     size="lg"
                     className="w-full"
                     onClick={handleCheckoutClick}
-                    disabled={isLoading}
+                    disabled={isLoading || unavailableItems.length > 0}
                     data-testid="button-checkout"
                   >
                     {isLoading ? (
