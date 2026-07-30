@@ -69,7 +69,8 @@ const staticPages = [
   { loc: '/bestsellers', changefreq: 'weekly', priority: '0.7' },
   { loc: '/nri', changefreq: 'monthly', priority: '0.8' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'monthly', priority: '0.8' },
-  { loc: '/indian-ethnic-wear-canada', changefreq: 'monthly', priority: '0.8' },
+  // '/indian-ethnic-wear-canada' is intentionally omitted because it 301s to
+  // /nri. Sitemaps must contain final, canonical 200 URLs only.
   { loc: '/artisans', changefreq: 'monthly', priority: '0.6' },
   { loc: '/sustainability', changefreq: 'monthly', priority: '0.6' },
   { loc: '/style-consultation', changefreq: 'monthly', priority: '0.7' },
@@ -167,32 +168,49 @@ function forceJpeg(url) {
 }
 
 // ─── URL Liveness Check ───────────────────────────────────────────────────────
-// HEAD-checks a URL against the live site to ensure it returns 200 OK (not 3xx,
-// not 4xx, not 5xx). Used to filter the sitemap so it ONLY contains canonical,
-// live URLs — which is what Google wants. Dead URLs are collected into
-// dist/dead-product-handles.json so generate-gone-routes.cjs can emit them as
-// 410 Gone routes in middleware.ts on the next build.
+// HEAD-checks a URL against the live site to ensure it returns 200 OK. Confirmed
+// redirects and 404/410 responses are excluded. Timeouts, rate limits, and 5xx
+// responses are treated as inconclusive and kept in the sitemap so a transient
+// build-network problem cannot erase hundreds of valid products.
 //
 // Skip the check entirely by setting SKIP_SITEMAP_LIVENESS_CHECK=1 (useful for
 // local dev or first-time builds where the site isn't live yet).
 async function isUrlLive(url) {
   if (process.env.SKIP_SITEMAP_LIVENESS_CHECK === '1') return true;
-  try {
+
+  const MAX_ATTEMPTS = 2;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-    const resp = await fetch(url, {
-      method: 'HEAD',
-      redirect: 'manual',  // Don't follow — we want to detect redirects
-      signal: controller.signal,
-      headers: { 'User-Agent': 'LuxeMia-Sitemap-Build/1.0' },
-    });
-    clearTimeout(timeout);
-    // Only 200 OK counts as live. 3xx = redirect (shouldn't be in sitemap).
-    // 404/410/500 = dead, exclude from sitemap and mark for 410 in middleware.
-    return resp.status === 200;
-  } catch {
-    return false;  // Network error / timeout → assume dead, exclude from sitemap.
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    try {
+      const resp = await fetch(url, {
+        method: 'HEAD',
+        redirect: 'manual',
+        signal: controller.signal,
+        headers: { 'User-Agent': 'LuxeMia-Sitemap-Build/1.0' },
+      });
+
+      if (resp.status === 200) return true;
+      if ((resp.status >= 300 && resp.status < 400) || resp.status === 404 || resp.status === 410) {
+        return false;
+      }
+
+      console.warn(
+        `[sitemap] Inconclusive liveness response ${resp.status} for ${url} ` +
+        `(attempt ${attempt}/${MAX_ATTEMPTS})`
+      );
+    } catch (error) {
+      console.warn(
+        `[sitemap] Inconclusive liveness check for ${url} ` +
+        `(attempt ${attempt}/${MAX_ATTEMPTS}): ${error.message}`
+      );
+    } finally {
+      clearTimeout(timeout);
+    }
   }
+
+  console.warn(`[sitemap] Keeping ${url} after inconclusive liveness checks.`);
+  return true;
 }
 
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
@@ -297,6 +315,26 @@ ${urls.join('\n')}
 async function main() {
   console.log('[sitemap] Generating dynamic sitemap.xml...');
 
+  // Fail before publishing a sitemap that lists an exact Vercel redirect
+  // source. This catches config drift such as the former
+  // /indian-ethnic-wear-canada entry, which returned 301 from the sitemap.
+  const vercelConfig = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, '../vercel.json'), 'utf8')
+  );
+  const exactRedirectSources = new Set(
+    (vercelConfig.redirects || [])
+      .map((redirect) => redirect.source)
+      .filter((source) => !source.includes(':') && !source.includes('('))
+  );
+  const redirectConflicts = staticPages
+    .map((page) => page.loc)
+    .filter((loc) => exactRedirectSources.has(loc));
+  if (redirectConflicts.length > 0) {
+    throw new Error(
+      `Sitemap contains redirected URL(s): ${redirectConflicts.join(', ')}`
+    );
+  }
+
   let products;
   try {
     products = await fetchAllProducts();
@@ -317,17 +355,17 @@ async function main() {
   }
 
   // ── Liveness filter ────────────────────────────────────────────────────────
-  // HEAD-check every product URL to ensure it returns 200 OK. Excludes dead URLs
-  // from the sitemap (Google penalizes sitemaps with redirects/404s) AND collects
-  // them into dead-product-handles.json so generate-gone-routes.cjs can emit
-  // them as 410 Gone routes in middleware.ts on the next build.
+  // HEAD-check every product URL to ensure it returns 200 OK. Confirmed
+  // redirects/404s are excluded from the sitemap. Because every product in
+  // this loop came from Shopify's active Storefront API, an HTTP failure does
+  // not prove deletion and must never auto-create a 410 Gone rule.
   //
   // Skip with SKIP_SITEMAP_LIVENESS_CHECK=1 for local dev / first-time builds.
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
 
   const liveProducts = [];
-  const deadHandles = [];
+  const excludedHandles = [];
 
   if (process.env.SKIP_SITEMAP_LIVENESS_CHECK === '1') {
     console.log('[sitemap] SKIP_SITEMAP_LIVENESS_CHECK=1 — skipping HEAD checks.');
@@ -346,31 +384,35 @@ async function main() {
       );
       for (const r of results) {
         if (r.live) liveProducts.push(r.product);
-        else deadHandles.push(r.product.handle);
+        else excludedHandles.push(r.product.handle);
       }
       const done = Math.min(i + BATCH_SIZE, products.length);
       if (done % 50 === 0 || done === products.length) {
-        console.log(`[sitemap] Validated ${done}/${products.length} (${deadHandles.length} dead so far)`);
+        console.log(
+          `[sitemap] Validated ${done}/${products.length} ` +
+          `(${excludedHandles.length} confirmed non-200 so far)`
+        );
       }
     }
   }
 
-  if (deadHandles.length > 0) {
-    console.warn(`[sitemap] Excluded ${deadHandles.length} dead product URLs from sitemap.`);
-    const deadListPath = path.join(distDir, 'dead-product-handles.json');
-    fs.writeFileSync(deadListPath, JSON.stringify(deadHandles, null, 2));
-    console.log(`[sitemap] Wrote dead handle list to ${deadListPath}`);
-    console.log(`[sitemap] Next build will auto-populate src/lib/goneRoutes.ts with these handles → 410 Gone responses.`);
-    if (deadHandles.length <= 30) {
-      console.warn(`[sitemap] Dead handles: ${deadHandles.join(', ')}`);
+  if (excludedHandles.length > 0) {
+    console.warn(
+      `[sitemap] Excluded ${excludedHandles.length} confirmed redirect/404 product URLs from sitemap.`
+    );
+    if (excludedHandles.length <= 30) {
+      console.warn(`[sitemap] Excluded handles: ${excludedHandles.join(', ')}`);
     } else {
-      console.warn(`[sitemap] First 20 dead handles: ${deadHandles.slice(0, 20).join(', ')}... (+${deadHandles.length - 20} more)`);
+      console.warn(
+        `[sitemap] First 20 excluded handles: ${excludedHandles.slice(0, 20).join(', ')}... ` +
+        `(+${excludedHandles.length - 20} more)`
+      );
     }
-  } else {
-    // Always write an empty array so generate-gone-routes.cjs has a file to read.
-    const deadListPath = path.join(distDir, 'dead-product-handles.json');
-    fs.writeFileSync(deadListPath, JSON.stringify([], null, 2));
   }
+
+  // Active Storefront API products are never automatically converted to 410.
+  const deadListPath = path.join(distDir, 'dead-product-handles.json');
+  fs.writeFileSync(deadListPath, JSON.stringify([], null, 2));
 
   const sitemap = generateSitemap(liveProducts);
 
@@ -389,6 +431,6 @@ async function main() {
 
 main().catch(err => {
   console.error('[sitemap] Fatal error:', err);
-  console.log('[sitemap] Sitemap generation failed, but build will continue.');
-  process.exit(0);
+  console.error('[sitemap] Build stopped to prevent publishing an invalid sitemap.');
+  process.exit(1);
 });

@@ -98,14 +98,16 @@ const SEOHead = ({
   const siteUrl = SITE_URL;
   const seoTitle = clampTitle(title);
   const seoDescription = clampDescription(description);
-  // CRITICAL SEO FIX: Never derive canonical from window.location.pathname.
-  // Doing so would let trailing slashes, query strings, and URL variants
-  // produce canonicals that disagree with the prerendered HTML — which is
-  // exactly what causes "Duplicate, Google chose different canonical than
-  // user" errors in GSC. Always pass an explicit `canonical` prop from the
-  // page component. Defaulting to the site root is a safe fallback that
-  // surfaces a missing-prop bug rather than silently breaking indexing.
-  const canonicalUrl = canonical || siteUrl;
+  // Canonicals must always resolve to the production apex domain. Using only
+  // the pathname prevents Vercel/Lovable preview hosts, query parameters, and
+  // legacy domains from becoming canonical. Explicit page canonicals remain
+  // preferred; the normalized browser path is a safe fallback for any future
+  // route whose component accidentally omits the prop.
+  const canonicalSource = canonical
+    || (typeof window !== 'undefined' ? window.location.pathname : '/');
+  const canonicalPath = new URL(canonicalSource, `${siteUrl}/`).pathname
+    .replace(/\/+$/, '') || '/';
+  const canonicalUrl = `${siteUrl}${canonicalPath}`;
 
   // Hreflang defaults: LuxeMia currently serves United States shoppers only.
   const hreflangAlternates = hreflang || [

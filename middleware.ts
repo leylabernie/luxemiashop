@@ -1,8 +1,6 @@
 import { rewrite, next } from '@vercel/functions';
-import { isBot } from './src/middleware/botDetection.js';
 import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
-import { generateProductHtml, return404, escapeHtml } from './src/middleware/htmlGenerator.js';
-import { getCachedSpaHtml, setCachedSpaHtml } from './src/middleware/cache.js';
+import { generateProductHtml, return404 } from './src/middleware/htmlGenerator.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
@@ -11,13 +9,9 @@ import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/mid
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
  *
- * Detects search engine bot user agents and serves server-rendered HTML
- * with proper SEO content. Regular users get the normal SPA experience.
- *
- * CRITICAL FIX: For product pages accessed by bots/crawlers (including GMC's
- * page checker), we dynamically fetch product data from Shopify Storefront API
- * and generate complete HTML with meta tags, structured data, and visible content.
- * This fixes the "Product page unavailable" GMC error caused by SPA rendering.
+ * Serves the same prerendered or server-rendered HTML to every user agent.
+ * This prevents crawler-only 404s and metadata differences while retaining
+ * Shopify-backed rendering for products added after the latest deployment.
  */
 
 // ─── Pre-rendered Routes ─────────────────────────────────────────────────────
@@ -25,34 +19,6 @@ import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/mid
 // Includes all static pages and blog posts. Product routes are handled
 // dynamically by the SSR path below, so they are NOT in this Set.
 // See src/lib/autoRoutes.ts for the full list.
-
-// Routes that redirect elsewhere (should not be treated as 404)
-const REDIRECT_ROUTES = new Set([
-  '/our-story',
-  '/lookbook',
-  '/jewelry',
-  '/collections/wedding-sarees',
-  '/collections/bridal-lehengas',
-  '/collections/reception-outfits',
-  '/collections/festive-wear',
-  '/collections/sarees',
-  '/collections/salwar-kameez',
-  '/collections/suits',
-  '/collections/menswear',
-  '/collections/lehengas',
-  '/collections/indo-western',
-  '/collections/bridesmaid-dresses',
-  '/collections/groomsman-outfits',
-  '/collections/sharara-suits',
-  '/collections/gharara-suits',
-  '/collections/anarkali-suits',
-  '/collections/pakistani-suits',
-  '/collections/party-wear-lehengas',
-  '/collections/wedding-lehengas',
-  '/collections/lehenga-choli',
-  '/collections/silk-sarees',
-  '/collections/designer-sarees',
-]);
 
 // Legacy regional pages that must 301 redirect to /nri
 const LEGACY_REGIONAL_REDIRECT_ROUTES = new Set([
@@ -63,10 +29,7 @@ const LEGACY_REGIONAL_REDIRECT_ROUTES = new Set([
 ]);
 
 // Explicit 410 Gone routes — URLs that have been permanently retired and have
-// NO semantic replacement. Adding URLs here tells Google to drop them from the
-// index FAST (much faster than a 404). Maintained manually below AND auto-extended
-// at build time from src/lib/goneRoutes.ts (which reads dist/dead-product-handles.json
-// produced by scripts/generate-sitemap.cjs when it HEAD-checks Shopify product URLs).
+// NO semantic replacement. Only manually confirmed deletions belong here.
 //
 // Format: full pathname starting with '/'.
 // Example: '/collections/some-old-collection', '/some-old-landing-page'
@@ -106,10 +69,33 @@ function return410(): Response {
   });
 }
 
+function withResponseHeader(response: Response, key: string, value: string): Response {
+  const headers = new Headers(response.headers);
+  headers.set(key, value);
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 // ─── Main Middleware ─────────────────────────────────────────────────────────
 
 export default async function middleware(request: Request) {
-  const userAgent = request.headers.get('user-agent') || '';
+  const response = await routeRequest(request);
+  const hostname = new URL(request.url).hostname.toLowerCase();
+
+  // Vercel/Lovable preview URLs remain usable for QA, but can never compete
+  // with luxemia.shop in search. The HTTP directive also covers pages whose
+  // client-side metadata has not hydrated yet.
+  if (hostname !== 'luxemia.shop' && hostname !== 'www.luxemia.shop') {
+    return withResponseHeader(response, 'X-Robots-Tag', 'noindex, nofollow');
+  }
+
+  return response;
+}
+
+async function routeRequest(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const { pathname } = url;
 
@@ -125,6 +111,12 @@ export default async function middleware(request: Request) {
     return Response.redirect(canonical.toString(), 301);
   }
 
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    const canonical = new URL(request.url);
+    canonical.pathname = pathname.replace(/\/+$/, '');
+    return Response.redirect(canonical.toString(), 301);
+  }
+
   // Skip non-page requests (static files, API, etc.)
   if (
     pathname.startsWith('/_prerender') ||
@@ -136,12 +128,14 @@ export default async function middleware(request: Request) {
     return next();
   }
 
-  // STRIP query parameters from collection/category filter URLs for bots.
+  // Strip query parameters from collection/category filter URLs for every
+  // client. Serving the same response to crawlers and shoppers avoids
+  // user-agent-dependent rendering while keeping filtered URLs out of search.
   // URLs like /lehengas?sub=wedding-guest or /sarees?color=red should NOT be
   // indexed as separate pages — they cause duplicate content and waste crawl
   // budget. Serve the canonical category page with a noindex header so Google
   // drops the parameterized URL from the index.
-  if (url.search && isBot(userAgent)) {
+  if (url.search) {
     const cleanPath = pathname; // without query params
     // Only strip params from known category/collection routes
     const CATEGORY_ROUTES = new Set([
@@ -154,7 +148,7 @@ export default async function middleware(request: Request) {
         const prerenderPath = cleanPath === '/'
           ? '/_prerender/index.html'
           : `/_prerender${cleanPath}.html`;
-        const resp = fetch(new URL(prerenderPath, request.url));
+        const resp = await fetch(new URL(prerenderPath, request.url));
         if (resp) {
           const html = await resp.text();
           return new Response(html, {
@@ -167,26 +161,11 @@ export default async function middleware(request: Request) {
           });
         }
       }
-      // For non-prerendered collection routes, just noindex
-      return new Response(
-        `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
-        `<meta name="robots" content="noindex,follow">` +
-        `<link rel="canonical" href="https://luxemia.shop${cleanPath}">` +
-        `<title>Redirecting...</title></head>` +
-        `<body><p>See <a href="https://luxemia.shop${cleanPath}">https://luxemia.shop${cleanPath}</a></p></body></html>`,
-        {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/html; charset=utf-8',
-            'X-Robots-Tag': 'noindex, follow',
-            'Link': `<https://luxemia.shop${cleanPath}>; rel="canonical"`,
-          },
-        }
-      );
+      return return404(request);
     }
   }
 
-  // 410 Gone check — explicit retired URLs (manual + auto-discovered dead handles)
+  // 410 Gone check — explicit, confirmed retired URLs only.
   // Run BEFORE the redirect checks so retired URLs always get 410, not a redirect.
   if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
     return return410();
@@ -244,72 +223,45 @@ export default async function middleware(request: Request) {
     return Response.redirect(new URL(COLLECTION_301_REDIRECTS[pathname], request.url).toString(), 301);
   }
 
-  // Product pages: serve prerendered HTML to ALL visitors (bots and humans) when
-  // a prerendered file exists for this handle. PRERENDERED_PRODUCT_HANDLES is a
-  // Set compiled into the middleware bundle at build time by generate-routes.cjs,
-  // so we avoid any self-HTTP HEAD requests — zero extra latency, zero failure modes.
-  //
-  // Handles NOT in the set (products added to Shopify after the last deploy) fall
-  // through to the bot-SSR path (live Shopify fetch) or — for humans — to a
-  // lightweight Shopify existence check below (kills the soft-404 signal where
-  // SPA returns 200 OK for products that no longer exist in Shopify).
+  // Product pages use one response path for crawlers and shoppers. Existing
+  // prerenders are fastest; products added since the latest deployment fall
+  // back to live Shopify rendering. Missing handles always return a true 404.
   if (pathname.startsWith('/product/')) {
     const handle = pathname.replace('/product/', '');
-    // Hard-reject malformed handles (slashes, empty) with a true 404 — not the SPA.
     if (!handle || handle.includes('/')) {
       return return404(request);
     }
     if (PRERENDERED_PRODUCT_HANDLES.has(handle)) {
       return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
     }
-    // Handle is NOT prerendered. For HUMANS (non-bots), do a Shopify existence
-    // check before serving the SPA. If Shopify returns null, return a true HTTP
-    // 404 — this is the soft-404 fix. (Bots get the same check in the SSR path
-    // below, but we run it once here so the human path is unified.)
-    if (!isBot(userAgent)) {
-      const product = await fetchProductByHandle(handle);
-      if (!product) {
-        return return404(request);
-      }
-      // Product exists → fall through to SPA meta injection.
+
+    const product = await fetchProductByHandle(handle);
+    if (product) {
+      const canonicalUrl = `https://luxemia.shop/product/${handle}`;
+      return new Response(generateProductHtml(product, canonicalUrl), {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+          'X-Robots-Tag': 'index, follow',
+        },
+      });
     }
-  }
 
-  // SPEED FIX: Serve prerendered HTML to ALL visitors (not just bots) for
-  // collection/category routes that benefit most from the embedded
-  // window.__INITIAL_DATA__ payload. This gives humans:
-  //   - Instant correct meta tags (title, description, canonical, OG)
-  //   - Instant product data via window.__INITIAL_DATA__ (skips the 200-800ms
-  //     Shopify Storefront API fetch that useShopifyProducts would otherwise
-  //     do on mount)
-  //   - Visible product cards while JS bundles download and React hydrates
-  // The prerendered HTML includes a MutationObserver that auto-removes the
-  // static cards once React populates #root, so there's no visual duplication.
-  //
-  // LIMITED to collection routes where the speed win is biggest. Blog and
-  // static pages have a different prerender pipeline (some are in prerender.js,
-  // others are not — only 22 of 38 blog posts have a prerendered HTML file).
-  // Serving a non-existent prerendered file would 404, so we let those fall
-  // through to the existing bot/SPA path below.
-  const SPEED_OPTIMIZED_ROUTES = new Set([
-    '/',
-    '/collections',
-    '/sarees',
-    '/lehengas',
-    '/suits',
-    '/menswear',
-    '/jewelry',
-    '/indowestern',
-    '/new-arrivals',
-    '/bestsellers',
-  ]);
-  if (SPEED_OPTIMIZED_ROUTES.has(pathname)) {
-    const prerenderPath =
-      pathname === '/'
-        ? '/_prerender/index.html'
-        : `/_prerender${pathname}.html`;
+    const jewelryProduct = getJewelryProductByHandle(handle);
+    if (jewelryProduct) {
+      const canonicalUrl = `https://luxemia.shop/product/${handle}`;
+      return new Response(generateJewelryProductHtml(jewelryProduct, canonicalUrl), {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+          'X-Robots-Tag': 'index, follow',
+        },
+      });
+    }
 
-    return rewrite(new URL(prerenderPath, request.url));
+    return return404(request);
   }
 
   // Preserve SEO equity for legacy size-guide URLs before the bot unknown-route
@@ -322,485 +274,40 @@ export default async function middleware(request: Request) {
     return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
   }
 
-  // For bots: serve prerendered or dynamically-rendered content
-  if (isBot(userAgent)) {
-    // 1. Prerendered static routes → serve prerendered HTML
-    if (PRERENDERED_ROUTES.has(pathname)) {
-      const prerenderPath =
-        pathname === '/'
-          ? '/_prerender/index.html'
-          : `/_prerender${pathname}.html`;
-
-      return rewrite(new URL(prerenderPath, request.url));
-    }
-
-    // 2. Product pages → DYNAMIC SSR from Shopify API
-    //    This is the CRITICAL FIX for GMC "Product page unavailable" errors.
-    //    Instead of letting bots through to the SPA (which renders empty HTML
-    //    that GMC can't crawl), we fetch product data from Shopify and generate
-    //    complete HTML with meta tags, structured data, and visible content.
-    // NOTE: Desktop GSC positions may lag behind mobile positions because
-    // Google uses mobile-first indexing. The mobile position is the
-    // canonical ranking signal. Desktop position data will converge as
-    // Google re-processes the mobile-first index.
-    if (pathname.startsWith('/product/')) {
-      const handle = pathname.replace('/product/', '');
-
-      // Try fetching from Shopify Storefront API
-      const product = await fetchProductByHandle(handle);
-
-      if (product) {
-        const canonicalUrl = `https://luxemia.shop/product/${handle}`;
-        const html = generateProductHtml(product, canonicalUrl);
-
-        return new Response(html, {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/html; charset=utf-8',
-            'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
-            'X-Robots-Tag': 'index, follow',
-          },
-        });
-      }
-
-      // Jewelry products are NOT in Shopify — they're hardcoded locally.
-      // If Shopify returns null, check the local jewelry product data
-      // before returning 404. This prevents soft-404s for jewelry pages.
-      const jewelryProduct = getJewelryProductByHandle(handle);
-      if (jewelryProduct) {
-        const jewelryHtml = generateJewelryProductHtml(jewelryProduct, `https://luxemia.shop/product/${handle}`);
-        return new Response(jewelryHtml, {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/html; charset=utf-8',
-            'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
-            'X-Robots-Tag': 'index, follow',
-          },
-        });
-      }
-
-      // Product not found in Shopify or local data → return 404 with noindex
-      return return404(request);
-    }
-
-    // 3. Collection/category pages that aren't prerendered — let through to SPA
-    if (pathname.startsWith('/collections/')) {
-      return next();
-    }
-
-    // 4. /admin → noindex
-    if (pathname.startsWith('/admin')) {
-      return new Response(
-        `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Admin | LuxeMia</title></head><body><p>Admin panel — not indexed.</p></body></html>`,
-        {
-          status: 200,
-          headers: { 'Content-Type': 'text/html; charset=utf-8' },
-        }
-      );
-    }
-
-    // 5. Unknown route → proper HTTP 404
-    if (!REDIRECT_ROUTES.has(pathname)) {
-      return return404(request);
-    }
+  // Every public indexable route is served from the same prerendered file to
+  // every user agent. This removes the Googlebot-only branch that caused 52
+  // valid URLs to return 404 after the July 23 migration deployment.
+  if (PRERENDERED_ROUTES.has(pathname)) {
+    const prerenderPath =
+      pathname === '/'
+        ? '/_prerender/index.html'
+        : `/_prerender${pathname}.html`;
+    return rewrite(new URL(prerenderPath, request.url));
   }
 
-  // Keep unknown blog URLs consistent for humans and crawlers. The SPA fallback
-  // would otherwise return 200 to humans while the bot branch above returns 404,
-  // recreating a bot-only 404/soft-cloaking signal for stale blog URLs.
-  if (pathname.startsWith('/blog/') && !PRERENDERED_ROUTES.has(pathname)) {
-    return return404(request);
-  }
-  // Fabricated author profiles were removed; keep their legacy URLs from
-  // falling through to the SPA as misleading 200 pages.
-  if (pathname.startsWith('/authors/')) {
-    return return404(request);
-  }
-
-  // Regular users or redirect routes → inject proper meta tags into SPA HTML
-  // CRITICAL SEO FIX: Previously, ALL non-bot visitors got the SPA shell with
-  // identical homepage meta tags. Now we inject correct title, description,
-  // canonical, and OG tags for every page so that social media scrapers,
-  // browser tabs, and link previews work correctly for ALL visitors.
-  return injectMetaIntoSpa(request, pathname);
-}
-
-// ─── SPA Meta Injection ────────────────────────────────────────────────────
-
-/**
- * Fetch the SPA index.html and inject page-specific meta tags.
- * This ensures ALL visitors (not just bots) see correct title, description,
- * canonical URL, and Open Graph tags in the initial HTML response.
- *
- * This fixes the critical SEO issue where every page appeared identical
- * to social media scrapers and browser previews because the SPA shell
- * had only the homepage's meta tags.
- */
-async function injectMetaIntoSpa(request: Request, pathname: string): Promise<Response> {
-  // Get the SPA HTML (cached)
-  let spaHtml = getCachedSpaHtml();
-  if (!spaHtml) {
-    try {
-      const resp = await fetch(new URL('/index.html', request.url).toString());
-      spaHtml = await resp.text();
-      setCachedSpaHtml(spaHtml);
-    } catch {
-      // Fallback: let the normal SPA through
-      return next();
-    }
+  // Account and administrative pages stay functional but are excluded from
+  // search at the HTTP layer, before any client-side React metadata runs.
+  const PRIVATE_SPA_ROUTES = new Set([
+    '/wishlist',
+    '/auth',
+    '/account',
+    '/admin',
+    '/order-confirmation',
+  ]);
+  if (PRIVATE_SPA_ROUTES.has(pathname) || pathname.startsWith('/admin/')) {
+    return withResponseHeader(next(), 'X-Robots-Tag', 'noindex, nofollow');
   }
 
-  let html = spaHtml;
-
-  // Determine the correct meta tags for this page
-  let title = 'LuxeMia — Indian Ethnic Wear Online';
-  let description = "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.";
-  const canonical = `https://luxemia.shop${pathname}`;
-  let ogType = 'website';
-  let ogImage = 'https://luxemia.shop/og-image.jpg';
-
-  // For product pages: DO NOT call Shopify API for regular users.
-  // The React app handles meta tags client-side via react-helmet-async.
-  // Calling Shopify here adds 200-800ms TTFB for every product page hit.
-  // Bots get full SSR HTML via the bot path above; regular users get
-  // correct meta tags once React hydrates. Social media scrapers that
-  // don't execute JS are caught by the isBot() check above.
-  if (pathname.startsWith('/product/')) {
-    const handle = pathname.replace('/product/', '');
-    // Use a generic product meta tag — React will replace with real data on hydration
-    const productName = handle.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    title = `${productName} | Indian Ethnic Wear | LuxeMia`;
-    description = `Shop ${productName} at LuxeMia. Indian ethnic wear online with free U.S. shipping over $150.`.slice(0, 160);
-    ogType = 'product';
-    // Keep default ogImage — the React app will update it on hydration
-  } else if (pathname.startsWith('/blog/')) {
-    // Blog posts
-    const slug = pathname.replace('/blog/', '');
-    const blogMeta = getBlogMetadataMiddleware(slug);
-    if (blogMeta) {
-      title = blogMeta.title;
-      description = blogMeta.description;
-      ogType = 'article';
-    }
-  } else {
-    // Static pages — use the metadata map
-    const staticMeta = STATIC_PAGE_META[pathname];
-    if (staticMeta) {
-      title = staticMeta.title;
-      description = staticMeta.description;
-      if (staticMeta.image) ogImage = staticMeta.image;
-    }
-  }
-
-  // Inject meta tags into the HTML
-  const escapedTitle = escapeHtml(title);
-  const escapedDesc = escapeHtml(description);
-  const escapedCanonical = escapeHtml(canonical);
-  const escapedOgImage = escapeHtml(ogImage);
-
-  // Replace the title tag
-  html = html.replace(
-    /<title>[^<]*<\/title>/,
-    `<title>${escapedTitle}</title>`
-  );
-
-  // Replace or add meta description
-  if (html.includes('name="description"')) {
-    html = html.replace(
-      /<meta\s+name="description"\s+content="[^"]*"/,
-      `<meta name="description" content="${escapedDesc}"`
-    );
-  } else {
-    html = html.replace(
-      '</head>',
-      `<meta name="description" content="${escapedDesc}">\n</head>`
-    );
-  }
-
-  // Replace or add canonical URL
-  if (html.includes('rel="canonical"')) {
-    html = html.replace(
-      /<link\s+rel="canonical"\s+href="[^"]*"/,
-      `<link rel="canonical" href="${escapedCanonical}"`
-    );
-  } else {
-    html = html.replace(
-      '</head>',
-      `<link rel="canonical" href="${escapedCanonical}">\n</head>`
-    );
-  }
-
-  // Replace or add OG tags
-  const ogReplacements: [RegExp, string][] = [
-    [/property="og:title"\s+content="[^"]*"/, `property="og:title" content="${escapedTitle}"`],
-    [/property="og:description"\s+content="[^"]*"/, `property="og:description" content="${escapedDesc}"`],
-    [/property="og:url"\s+content="[^"]*"/, `property="og:url" content="${escapedCanonical}"`],
-    [/property="og:type"\s+content="[^"]*"/, `property="og:type" content="${ogType}"`],
-    [/property="og:image"\s+content="[^"]*"/, `property="og:image" content="${escapedOgImage}"`],
-    [/name="twitter:title"\s+content="[^"]*"/, `name="twitter:title" content="${escapedTitle}"`],
-    [/name="twitter:description"\s+content="[^"]*"/, `name="twitter:description" content="${escapedDesc}"`],
-    [/name="twitter:url"\s+content="[^"]*"/, `name="twitter:url" content="${escapedCanonical}"`],
-    [/name="twitter:image"\s+content="[^"]*"/, `name="twitter:image" content="${escapedOgImage}"`],
-  ];
-
-  for (const [regex, replacement] of ogReplacements) {
-    if (html.match(regex)) {
-      html = html.replace(regex, replacement);
-    }
-  }
-
-  return new Response(html, {
-    status: 200,
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400',
-    },
-  });
-}
-
-// ─── Static Page Metadata (for SPA meta injection) ──────────────────────────
-
-interface PageMeta {
-  title: string;
-  description: string;
-  image?: string;
-}
-
-const STATIC_PAGE_META: Record<string, PageMeta> = {
-  '/': {
-    title: 'LuxeMia — Indian Ethnic Wear Online',
-    description: "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
-    image: 'https://luxemia.shop/og-image.jpg',
-  },
-  // Occasion landing pages
-  '/collections/diwali-outfits': {
-    title: 'Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia',
-    description: 'Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-lehengas.jpg',
-  },
-  '/collections/wedding-guest-outfits': {
-    title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-lehengas.jpg',
-  },
-  '/collections/mehendi-outfits': {
-    title: 'Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia',
-    description: 'Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-suits.jpg',
-  },
-  '/collections/eid-outfits': {
-    title: 'Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia',
-    description: 'Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-suits.jpg',
-  },
-  '/collections/navratri-outfits': {
-    title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
-    description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colours. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-lehengas.jpg',
-  },
-  '/sarees': {
-    title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: 'Shop 200+ Indian sarees online at LuxeMia. Banarasi silk, Kanchipuram, designer georgette & wedding sarees with custom blouse stitching. Free U.S. shipping over $150 over $150.',
-    image: 'https://luxemia.shop/og/og-sarees.jpg',
-  },
-  '/lehengas': {
-    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
-    description: 'Shop 260+ lehengas online at LuxeMia. Bridal, wedding, party wear & festive lehenga choli in silk, net & velvet with hand embroidery. Custom tailoring available. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-lehengas.jpg',
-  },
-  '/suits': {
-    title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
-    description: 'Shop 300+ Indian salwar suits online at LuxeMia. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring available. Free U.S. shipping over $150 over $150.',
-    image: 'https://luxemia.shop/og/og-suits.jpg',
-  },
-  '/menswear': {
-    title: 'Buy Sherwanis Online — Wedding & Groom Sherwani for Men | LuxeMia',
-    description: 'Shop designer sherwanis for men online at LuxeMia. Groom sherwanis, kurta pajama sets & indo-western menswear with hand embroidery. Custom tailoring available. Free U.S. shipping over $150.',
-    image: 'https://luxemia.shop/og/og-menswear.jpg',
-  },
-  '/collections': {
-    title: 'Buy Indian Ethnic Wear Online | All Collections - LuxeMia',
-    description: 'Buy Indian ethnic wear online at LuxeMia. Shop our complete collection of bridal lehengas, sarees, salwar kameez, jewelry, menswear & indo-western outfits. Free U.S. shipping over $150.',
-  },
-  '/blog': {
-    title: 'Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion | LuxeMia',
-    description: 'Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion for NRIs shopping from the United States. Get insider tips from top stylists.',
-  },
-  '/blog/attires': {
-    title: 'Indian Ethnic Attires — Lehengas, Sarees, Suits & Sherwanis Guide | LuxeMia',
-    description: 'Encyclopedia of Indian ethnic clothing — bridal lehengas, silk sarees, anarkali suits, sharara sets, sherwanis & jewelry. Fabric, fit, color, and styling guides for every attire.',
-  },
-  '/blog/cultural-connections': {
-    title: 'Cultural Significance of Indian Ethnic Wear — Symbolism & Traditions | LuxeMia',
-    description: 'Explore the cultural meaning behind Indian ethnic wear — bindi, sindoor, mangalsutra, bridal colors, regional wedding rituals, and the symbolism of embroidery motifs.',
-  },
-  '/blog/ethnicalley': {
-    title: 'Indian Wedding Ceremonies & Festival Dress Codes — Mehendi to Reception | LuxeMia',
-    description: 'Complete dress code guides for every Indian wedding ceremony — mehendi, haldi, sangeet, pheras, reception. Plus festival outfits for Diwali, Navratri, and Eid.',
-  },
-  '/blog/fashion-cults': {
-    title: 'Indian Ethnic Fashion Designers — Sabyasachi, Manish Malhotra & More | LuxeMia',
-    description: 'Profiles of India\'s top ethnic fashion designers — Sabyasachi, Manish Malhotra, JJ Valaya, Anita Dongre. Their signature styles, iconic collections, and how to shop their looks.',
-  },
-  '/blog/motifs-embroideries': {
-    title: 'Indian Embroidery & Textile Guide — Zari, Chikankari, Banarasi & Kanchipuram | LuxeMia',
-    description: 'Complete guide to Indian textile techniques — zari work, chikankari, zardozi, Banarasi silk, Kanchipuram silk, georgette, chiffon. Authentication, pricing, and care.',
-  },
-  '/blog/weddings-festivals': {
-    title: 'Indian Wedding Guest Outfits & Festival Styling Guide | LuxeMia',
-    description: 'What to wear to an Indian wedding — guest dress codes, bridesmaid outfits, mother of bride sarees, men\'s wedding attire, and festival styling for Diwali, Navratri & Eid.',
-  },
-  '/blog/how-to-care': {
-    title: 'How to Drape Saree, Care for Silk & Measure for Indian Ethnic Wear | LuxeMia',
-    description: 'Step-by-step guides for saree draping, fabric care, measuring for lehengas, custom tailoring, and storing Indian ethnic wear. Practical skills for every ethnic wardrobe.',
-  },
-  '/blog/nri-shopping': {
-    title: 'NRI Guide: Buy Indian Ethnic Wear Online from the United States | LuxeMia',
-    description: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, shipping timing, authenticity checks, and buying online in the United States.',
-  },
-  // Author bio pages — E-E-A-T compliance per Google's AI playbook
-  '/about': {
-    title: 'About LuxeMia — Indian Ethnic Wear Online',
-    description: 'LuxeMia is the online side of CeremonyVerse, run by Bhamini, with a online catalog for events coming up soon.',
-  },
-  '/brand-story': {
-    title: 'Our Story — LuxeMia | Authentic Indian Ethnic Wear for the United States',
-    description: 'Discover the LuxeMia story. We source authentic Indian ethnic wear directly from India\'s textile hubs — Surat, Varanasi, Jaipur — and deliver quality-inspected sarees, lehengas & suits to the United States. Free U.S. shipping over $150.',
-  },
-  '/new-arrivals': {
-    title: 'New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia',
-    description: 'Shop the latest Indian ethnic wear online at LuxeMia. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free US shipping.',
-  },
-  '/bestsellers': {
-    title: 'Bestsellers: Most-Loved Indian Ethnic Wear Online | LuxeMia',
-    description: 'Shop LuxeMia\'s bestselling Indian ethnic wear online. Most-loved bridal lehengas, sarees, salwar kameez & jewelry — trusted by customers within the United States. Free US shipping.',
-  },
-  '/indowestern': {
-    title: 'Buy Indo-Western Dresses Online | Fusion Indian Outfits - LuxeMia',
-    description: 'Buy indo-western dresses online at LuxeMia. Shop fusion Indian outfits combining traditional embroidery with contemporary silhouettes. Perfect for modern occasions. Free U.S. shipping over $150.',
-  },
-  '/nri': {
-    title: 'Buy Indian Ethnic Wear Online | NRI Shopping | LuxeMia',
-    description: 'Shop authentic Indian ethnic wear delivered to the United States. Designer sarees, bridal lehengas, salwar suits & menswear. Free US shipping on orders over $150. 2-business-day delivery.',
-  },
-  '/nri/usa': {
-    title: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
-    description: 'Shop authentic Indian ethnic wear delivered in the United States. Designer sarees, bridal lehengas, salwar suits & menswear. Free U.S. shipping over $150; $12 flat below that. Tracking provided after dispatch.',
-  },
-  '/nri/canada': {
-    title: 'United States Shipping Only | LuxeMia',
-    description: 'Buy Indian ethnic wear online in the United States. Shop sarees, bridal lehengas, salwar suits & menswear. Free U.S. shipping over $150; $12 flat below that. Tracking provided after dispatch.',
-  },
-  '/indian-ethnic-wear-usa': {
-    title: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
-    description: 'Shop authentic Indian ethnic wear delivered in the United States. Designer sarees, bridal lehengas, salwar suits & menswear. Free U.S. shipping over $150; $12 flat below that. Tracking provided after dispatch.',
-  },
-  '/indian-ethnic-wear-canada': {
-    title: 'United States Shipping Only | LuxeMia',
-    description: 'Buy Indian ethnic wear online in the United States. Shop sarees, bridal lehengas, salwar suits & menswear. Free U.S. shipping over $150; $12 flat below that. Tracking provided after dispatch.',
-  },
-  '/shipping': {
-    title: 'Shipping Information — LuxeMia',
-    description: 'Free U.S. shipping over $150. $12 flat below that. In-stock Indian ethnic wear tracking provided after dispatch.',
-  },
-  '/returns': {
-    title: 'Returns, Refunds & Cancellation Policy — LuxeMia',
-    description: 'LuxeMia return, refund, and cancellation policy. All sales final. Damage claims require mandatory unboxing video. Cancellations accepted within 24 hours only.',
-  },
-  '/privacy': {
-    title: 'Privacy Policy — LuxeMia',
-    description: 'LuxeMia Privacy Policy. Learn how we collect, use, share, and protect your personal information when you shop Indian ethnic wear at luxemia.shop.',
-  },
-  '/terms': {
-    title: 'Terms of Service — LuxeMia',
-    description: 'Review the LuxeMia terms of service. Understand our policies on orders, payments, shipping, and returns before shopping.',
-  },
-  '/contact': {
-    title: 'Contact Us — LuxeMia',
-    description: 'Get in touch with LuxeMia. Questions about orders, sizing, or custom tailoring? Reach us via email, phone, or WhatsApp.',
-  },
-  '/faq': {
-    title: 'Frequently Asked Questions — LuxeMia',
-    description: 'Find answers to common questions about LuxeMia orders, shipping, sizing, returns, and product care.',
-  },
-  '/size-guide': {
-    title: 'Size Guide — LuxeMia',
-    description: 'Find your perfect fit with the LuxeMia size guide. Measurements for lehengas, sarees, salwar suits, and blouses with US conversions.',
-  },
-  '/care-guide': {
-    title: 'Garment Care Guide — LuxeMia',
-    description: 'Care instructions for Indian ethnic wear. Learn how to preserve silk sarees, lehengas, and embroidered garments so they stay beautiful for years.',
-  },
-  '/style-consultation': {
-    title: 'Personal Styling Consultation | Book a Session | LuxeMia',
-    description: 'Book a free 30-minute virtual styling consultation with LuxeMia\'s expert stylists. Get personalized recommendations for Indian ethnic wear — sarees, lehengas, suits & more.',
-  },
-  '/style-quiz': {
-    title: 'Find Your Style — LuxeMia Style Quiz',
-    description: 'Take LuxeMia\'s style quiz to discover your perfect Indian ethnic wear look. Get personalised outfit recommendations in 5 quick questions.',
-  },
-};
-
-// Blog metadata for middleware injection
-function getBlogMetadataMiddleware(slug: string): { title: string; description: string } | null {
-  const blogMap: Record<string, { title: string; description: string }> = {
-    'sharara-suit-guide-2026-styles-fabrics': { title: 'Sharara Suit Guide 2026: Styles & Fabrics | LuxeMia Blog', description: 'Complete guide to sharara suits in 2026. Styles, fabrics, and styling tips at LuxeMia.' },
-    'pakistani-suits-anarkali-shopping-guide': { title: 'Pakistani Suits & Anarkali Shopping Guide | LuxeMia Blog', description: 'Shopping guide for Pakistani suits and Anarkali sets at LuxeMia.' },
-    'style-lehenga-choli-every-wedding-event': { title: 'Style Lehenga Choli for Every Wedding Event | LuxeMia Blog', description: 'Style your lehenga choli for every wedding event at LuxeMia.' },
-    'indian-wedding-season-2026-outfit-guide': { title: 'Indian Wedding Season 2026 Outfit Guide | LuxeMia Blog', description: 'Complete outfit guide for Indian wedding season 2026 at LuxeMia.' },
-    'indian-to-us-clothing-size-conversion-guide': { title: 'Indian to US Size Chart: Clothing Conversion Guide | LuxeMia', description: 'Accurate Indian to US clothing size conversion chart for women & men. Convert saree blouse, lehenga, kurta sizes instantly. Free printable guide.' },
-    'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon': { title: 'Fabric Guide: Georgette, Silk & Chiffon | LuxeMia Blog', description: 'Understanding Indian ethnic wear fabrics at LuxeMia.' },
-    'indian-wedding-dress-complete-guide': { title: 'Indian Wedding Dress Guide: Lehenga, Saree & Sherwani Styles 2026 | LuxeMia', description: 'Complete guide to Indian wedding dresses for brides, grooms & guests. Lehengas, sarees, sharara suits, sherwanis — when to wear what. Expert style advice.' },
-    'why-indian-brides-wear-red-cultural-significance': { title: 'Why Indian Brides Wear Red: Cultural, Historical & Astrological Significance | LuxeMia', description: 'Indian brides wear red to symbolize prosperity, fertility, and Goddess Durga. The tradition dates to the Vedic period (1500-500 BCE) and is reinforced by Vedic astrology. 68% of modern brides still choose red.' },
-    'sabyasachi-mukherjee-designer-profile-handloom-revival': { title: 'Sabyasachi Mukherjee: Age, Education & Handloom Revival Legacy | LuxeMia', description: 'Explore Sabyasachi Mukherjee\'s journey — from NIFT education to becoming India\'s iconic bridal couturier. His handloom revival & red bridal lehengas explained.' },
-    'manish-malhotra-bollywood-bridal-designer-profile': { title: 'Manish Malhotra: Bollywood Celebrity Brides & Bridal Designer Story | LuxeMia', description: 'From Bollywood costume designer to India\'s most sought-after bridal couturier. Discover Manish Malhotra\'s celebrity brides, education, and iconic bridal lehengas.' },
-    'bindi-meaning-history-indian-women': { title: 'Bindi Meaning, History & Colors: What Does a Bindi Signify? | LuxeMia', description: 'Discover the true meaning of a bindi — its history, spiritual significance, red vs. black color meanings, and why Indian women wear bindis. Complete guide.' },
-    'jj-valaya-royal-couture-house-of-valaya': { title: 'JJ Valaya: Royal Couture and the House of Valaya | LuxeMia', description: 'JJ Valaya (born 8 October 1967, Jodhpur) graduated from NIFT New Delhi in 1991 and founded his couture label in 1992. Known for royal-inspired Indian couture, Mughal-era embroidery, and the House of Valaya at Jhalamand House in Jodhpur.' },
-    'anita-dongre-sustainable-luxury-grassroots': { title: 'Anita Dongre: Sustainable Luxury and Grassroots Empowerment | LuxeMia', description: 'Anita Dongre (born 3 October 1963, Mumbai) founded House of Anita Dongre in 1995 with two sewing machines. 5 brands: AND, Global Desi, Anita Dongre Couture, Pinkcity, Grassroot. Over 1,000 stores across 114 cities.' },
-    'ritu-kumar-pioneer-indian-textile-revival': { title: 'Ritu Kumar: The Pioneer Who Revived Indian Textile Traditions | LuxeMia', description: 'Ritu Kumar (born 11 November 1944) studied art history at Lady Irwin College (1964) and Briarcliff College New York (1966). Started in Kolkata with hand-block printing. Pioneered boutique culture in India and revived traditional Indian textiles.' },
-    'sindoor-mangalsutra-sacred-symbols-hindu-marriage': { title: 'Sindoor and Mangalsutra: The Sacred Symbols of Hindu Marriage | LuxeMia', description: 'Sindoor (red vermilion) and the mangalsutra (black-beaded gold necklace) are the two most sacred symbols of Hindu marriage. Sindoor is applied to the bride\'s hair parting, the mangalsutra is tied around her neck. Both signify married status.' },
-    'tarun-tahiliani-designer-profile-india-modern-couture': { title: 'Tarun Tahiliani: Biography, Ensemble Store & Modern Indian Couture | LuxeMia', description: 'Tarun Tahiliani — India\'s pioneering fashion designer, founded Ensemble (India\'s first multi-designer store). Known for modern Indian couture, draping, and bridal lehengas.' },
-    'regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari': { title: 'Regional Indian Wedding Rituals: Punjabi, Bengali, Tamil & Marwari Traditions | LuxeMia', description: 'Indian wedding rituals vary by region. Punjabi Sikh weddings feature Anand Karaj (4 circumambulations of Guru Granth Sahib). Bengali weddings center on sindoor daan and shankha-pola. Tamil weddings feature Kashi Yatra and Oonjal.' },
-    'embroidery-motifs-symbolism-paisley-peacock-lotus': { title: 'The Symbolism of Embroidery Motifs: Paisley, Peacock, and Lotus in Indian Textiles | LuxeMia', description: 'Indian embroidery motifs carry deep symbolism. The paisley (mango/ambi) represents fertility and eternity. The peacock symbolizes beauty and grace. The lotus represents purity and divinity.' },
-    'rahul-mishra-designer-profile-paris-haute-couture-sustainable': { title: 'Rahul Mishra: Age, Education & Sustainable Paris Haute Couture | LuxeMia', description: 'Rahul Mishra — NIFT Delhi graduate, India\'s first Paris Haute Couture Week designer. Known for sustainable fashion, handloom textiles, and winning the International Woolmark Prize.' },
-    'red-bridal-lehenga-trends-2026': { title: 'Red Bridal Lehenga Designs 2026: 50+ Stunning Ideas for Your Wedding | LuxeMia Blog', description: 'Explore the latest red bridal lehenga designs for 2026. From classic crimson Banarasi to modern maroon velvet, discover 50+ stunning red lehenga ideas with expert tips on fabric, embroidery, and styling for your Indian wedding.' },
-    'designer-wedding-dress-under-50000': { title: 'Designer Wedding Lehengas Under $500 — Online Guide | LuxeMia', description: 'Designer-inspired wedding lehengas under 500 dollars. Curated picks for urgent bridal shopping without compromising on style.' },
-    'wedding-guest-outfit-ideas': { title: 'Indian Wedding Guest Outfit Ideas: What to Wear to Every Ceremony | LuxeMia Blog', description: 'Complete Indian wedding guest outfit ideas for every ceremony — mehendi, sangeet, reception. Lehenga, saree, anarkali, and suit options by budget and dress code.' },
-    'saree-draping-styles-every-occasion': { title: 'Saree Draping Styles for Every Occasion: 7 Popular Styles Explained | LuxeMia Blog', description: 'Learn 7 saree draping styles — Nivi, Bengali, Gujarati, Maharashtrian, and more. Step-by-step draping guide for weddings, festivals, and daily wear.' },
-    'indian-wedding-trends-2026': { title: 'Indian Wedding Fashion Trends 2026: What Brides, Grooms & Guests Are Wearing | LuxeMia Blog', description: 'Top Indian wedding fashion trends for 2026 — pastel bridal lehengas, indo-western sherwanis, sustainable fabrics, and statement jewelry for every ceremony.' },
-    'indian-wedding-terms-glossary-50-events-rituals-roles': { title: 'Indian Wedding Glossary: 50+ Ceremony Terms, Rituals & Roles | LuxeMia', description: 'Complete Indian wedding glossary — 50+ terms covering every ceremony from Mehendi to Vidaai. Learn the meaning of baraat, pheras, sangeet, mandap, and more.' },
-    'unstitched-vs-ready-to-wear-vs-made-to-measure': { title: 'Unstitched vs Ready to Wear vs Made to Measure: Complete Guide | LuxeMia Blog', description: 'Unstitched, ready to wear, or made to measure — a complete guide to Indian outfit sizing options for NRI buyers. Learn which format is best for lehengas, salwar suits, and sherwanis.' },
-    'lehenga-color-for-dark-skin': { title: 'Best Lehenga Colors for Dark Skin Tones: Expert Color Guide | LuxeMia Blog', description: 'Discover the most flattering lehenga colors for dark skin tones — from royal blue and emerald green to deep maroon and gold, with fabric and occasion recommendations.' },
-    'wedding-saree-for-mother-of-bride': { title: 'How to Choose a Wedding Saree for Mother of the Bride: Complete 2026 Guide | LuxeMia Blog', description: 'Expert guide to choosing the perfect wedding saree for the mother of the bride. Best colors, fabrics, and styles for 2026 Indian weddings — Banarasi silk, Kanchipuram, and chiffon options with styling tips.' },
-    'designer-wedding-dress-under-500': { title: 'Designer Wedding Dress Under $500 | LuxeMia Blog', description: 'Designer wedding dresses under $500 at LuxeMia.' },
-    'nri-wedding-ethnic-wear-trends-2026': { title: 'NRI Wedding Ethnic Wear Trends 2026 | LuxeMia Blog', description: 'NRI wedding ethnic wear trends for 2026 at LuxeMia.' },
-    'buy-authentic-indian-sarees-online-usa-uk': { title: 'How to Buy Authentic Indian Sarees Online | LuxeMia Blog', description: 'Guide to buying authentic Indian sarees online at LuxeMia.' },
-    'styling-indian-ethnic-wear-festive-occasions-abroad': { title: 'Styling Indian Ethnic Wear Abroad | LuxeMia Blog', description: 'Styling Indian ethnic wear for festive occasions abroad at LuxeMia.' },
-    'accessorize-indian-ethnic-wear': { title: 'How to Accessorize Indian Ethnic Wear Like a Pro | LuxeMia Blog', description: 'Complete your ethnic ensemble with the perfect accessories. From traditional jewelry to contemporary additions.' },
-    'caring-for-silk-sarees': { title: 'Expert Tips for Caring for Your Precious Silk Sarees | LuxeMia Blog', description: 'Learn professional techniques to maintain, store, and preserve your silk sarees for generations.' },
-    'how-to-measure-yourself-for-indian-ethnic-wear': { title: 'How to Measure Yourself for Indian Ethnic Wear | LuxeMia Blog', description: 'Step-by-step home measuring guide for lehenga, saree blouse, and salwar kameez by professional tailors.' },
-    'what-to-wear-indian-wedding-guest-2026': { title: 'What to Wear to an Indian Wedding as a Guest 2026 | LuxeMia Blog', description: 'Complete guest outfit guide for Indian weddings — mehendi to reception, by dress code and budget.' },
-    'lehenga-vs-anarkali-which-is-right-for-you': { title: 'Lehenga vs Anarkali: Which Style Suits You Best? | LuxeMia Blog', description: 'Key differences between lehenga choli and anarkali suits for different occasions and body types.' },
-    'nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada': { title: 'NRI Guide: Buy Indian Ethnic Wear Online from the USA | LuxeMia Blog', description: 'Practical guide for NRI shoppers — sizing, duty-free limits, and quality checks for buying Indian ethnic wear online.' },
-    'care-guide-washing-storing-indian-ethnic-wear': { title: 'How to Care for Indian Ethnic Wear: Washing & Storing | LuxeMia Blog', description: 'Special care guide for lehengas, sarees, and salwar kameez with zardozi, mirror work, and silk embroidery.' },
-    'buying-indian-ethnic-wear-online-usa': { title: 'Complete Guide to Buying Indian Ethnic Wear Online from USA | LuxeMia Blog', description: 'Definitive guide for NRIs buying Indian clothes from the USA — sizing, shipping, customs, and authenticity.' },
-    'banarasi-silk-saree-guide-authentic': { title: 'Banarasi Silk Sarees: History & How to Spot a Fake | LuxeMia Blog', description: 'Deep dive into Varanasi weaving traditions, types of Banarasi silk, and tips to identify authentic handloom.' },
-    'how-to-drape-saree-beginner-guide': { title: 'How to Drape a Saree: Step-by-Step Guide for Beginners | LuxeMia Blog', description: 'Master the classic Nivi saree draping style with our beginner-friendly guide including pallu styling tips.' },
-    'indian-wedding-ceremony-outfit-guide': { title: 'Indian Wedding Ceremony Outfit Guide: Mehendi to Reception | LuxeMia Blog', description: 'Per-ceremony outfit guide for Indian weddings — Mehendi, Haldi, Sangeet, Wedding, and Reception.' },
-    'indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry': { title: 'Indian Fashion Glossary: 50 Garment, Fabric & Embroidery Terms | LuxeMia', description: 'Learn 50 essential Indian fashion terms — garments (saree, lehenga, sherwani), fabrics (Banarasi, georgette, chiffon), embroidery (zardozi, chikankari), and jewelry (kundan, polki, jhumka).' },
-    'indian-fabric-types-guide-silk-georgette-chiffon': { title: 'Complete Guide to Indian Fabric Types: Silk, Georgette & More | LuxeMia Blog', description: 'Everything about Indian ethnic wear fabrics — Banarasi, Kanchipuram, georgette, chiffon, velvet, and care tips.' },
-    'anamika-khanna-designer-profile-kolkata-couture': { title: 'Anamika Khanna: Biography, Age, Couture Label & Bridal Lehengas | LuxeMia', description: 'The definitive biography of Anamika Khanna — born 1971, launched her label in 1998. Explore her Kolkata couture, celebrity bridal lehengas, and fashion career.' },
-    'anarkali-suit-styling-guide-2026': { title: 'Anarkali Suit Styling Guide 2026: Casual to Bridal | LuxeMia Blog', description: 'Master styling anarkali suits — floor-length, knee-length, jacket style, with body type guide and dupatta draping.' },
-    'how-to-measure-yourself-indian-ethnic-wear': { title: 'How to Measure Yourself for Indian Ethnic Wear: Sizing Guide | LuxeMia Blog', description: 'Detailed guide to measuring for Indian ethnic wear — bust, waist, hips, shoulder, with international size conversion.' },
-    'kanchipuram-silk-saree-south-indian-wedding-guide': { title: 'Kanchipuram Silk Sarees: South Indian Wedding Guide | LuxeMia Blog', description: 'Complete guide to Kanchipuram (Kanjivaram) silk sarees — history, authentication, pricing, and bridal styling.' },
-    'zari-work-guide-indian-embroidery-gold-silver-thread': { title: 'The Art of Zari Work: Golden Thread Tradition | LuxeMia Blog', description: 'Discover the centuries-old art of zari embroidery — authentic zari identification, styles, and garment care tips.' },
-    'chikankari-embroidery-lucknow-guide': { title: 'Chikankari Embroidery of Lucknow: Shadow Work Guide | LuxeMia Blog', description: 'Explore Lucknowi chikankari embroidery — Mughal origins, 32 stitch types, how to identify authentic handwork vs machine-made, and where to shop chikankari online.' },
-  };
-  return blogMap[slug] || null;
+  // No public route matched: return the same real 404 to shoppers, Googlebot,
+  // social scrapers, and SEO tools. This eliminates remaining soft cloaking.
+  return return404(request);
 }
 
 export const config = {
   matcher: [
+    '/robots.txt',
+    '/sitemap.xml',
+    '/merchant-feed.xml',
     '/((?!_prerender|assets|api|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)).*)',
   ],
 };
