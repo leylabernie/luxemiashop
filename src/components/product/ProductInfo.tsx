@@ -232,7 +232,15 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   // Products with a single Shopify variant do not need an option selection.
   // Keep that variant available even when Shopify returns an option name that
   // is not represented by the tailoring controls shown on this page.
-  const purchasableVariant = selectedVariant ?? (
+  const purchasableVariant = (
+    selectedVariant?.node.availableForSale
+      ? selectedVariant
+      : product.variants.edges.find((edge) =>
+          edge.node.availableForSale && edge.node.selectedOptions.every(
+            (option) => selectedOptions[option.name] === option.value
+          )
+        )
+  ) ?? (
     product.variants.edges.length === 1 ? product.variants.edges[0] : undefined
   );
 

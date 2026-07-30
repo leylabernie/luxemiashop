@@ -187,7 +187,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const firstVariant = product.node.variants.edges[0]?.node;
+    const firstVariant = product.node.variants.edges.find((edge) => edge.node.availableForSale)?.node || product.node.variants.edges[0]?.node;
     if (!firstVariant) return;
 
     addItem({
@@ -254,7 +254,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
 
   const imageUrl = product.node.images.edges[0]?.node.url;
-  const isAvailable = product.node.variants.edges[0]?.node.availableForSale !== false;
+  const isAvailable = product.node.variants.edges.some((edge) => edge.node.availableForSale !== false);
   const shipByLabel = getShipByLabel(product.node);
 
   // "New" badge — products added within the last 30 days
