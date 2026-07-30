@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { trackPurchase } from '@/hooks/useAnalytics';
 
 declare global {
   interface Window {
@@ -108,16 +109,37 @@ const OrderConfirmation = () => {
     };
   }, [orderId, customerEmail, deliveryCountry, optInTriggered]);
 
-  // Track purchase in GA4
+  // Track purchase in GA4 with the cart items that preceded checkout.
+  // Shopify's return URL does not reliably include line items, so recover the
+  // persisted Zustand cart. Deduplicate refreshes using sessionStorage.
   useEffect(() => {
-    if (orderId && orderTotal && typeof window.gtag === 'function') {
-      window.gtag('event', 'purchase', {
-        transaction_id: orderId,
-        currency: 'USD',
-        value: parseFloat(orderTotal),
-        items: [],
-      });
+    if (!orderId || !orderTotal || typeof window.gtag !== 'function') return;
+
+    const dedupeKey = `luxemia-purchase-tracked:${orderId}`;
+    if (sessionStorage.getItem(dedupeKey)) return;
+
+    let items: Array<{ id: string; name: string; price: number; quantity: number; category?: string }> = [];
+    try {
+      const persisted = JSON.parse(localStorage.getItem('shopify-cart') || '{}');
+      const cartItems = persisted?.state?.items || [];
+      items = cartItems.map((item: any) => ({
+        id: item.variantId || item.product?.node?.id || item.product?.node?.handle || 'unknown',
+        name: item.product?.node?.title || item.variantTitle || 'LuxeMia product',
+        price: Number(item.price?.amount || 0),
+        quantity: Number(item.quantity || 1),
+        category: item.product?.node?.productType,
+      }));
+    } catch {
+      // Purchase tracking should never block the confirmation page.
     }
+
+    trackPurchase({
+      transactionId: orderId,
+      value: parseFloat(orderTotal),
+      currency: 'USD',
+      items,
+    });
+    sessionStorage.setItem(dedupeKey, '1');
   }, [orderId, orderTotal]);
 
   return (
