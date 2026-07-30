@@ -649,22 +649,6 @@ const STATIC_PAGE_META: Record<string, PageMeta> = {
     description: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, shipping timing, authenticity checks, and buying online in the United States.',
   },
   // Author bio pages — E-E-A-T compliance per Google's AI playbook
-  '/authors/ananya-iyer': {
-    title: 'Ananya Iyer — Senior Bridal Stylist | LuxeMia Blog',
-    description: 'Ananya Iyer is LuxeMia\'s Senior Bridal Stylist with 8 years of experience in Indian bridal wear, formerly at Kalki Fashion Mumbai. NIFT Mumbai graduate.',
-  },
-  '/authors/meera-kapoor': {
-    title: 'Meera Kapoor — Textile & Embroidery Specialist | LuxeMia Blog',
-    description: 'Meera Kapoor is LuxeMia\'s Textile & Embroidery Specialist with 10 years researching Indian handloom traditions. NID Ahmedabad graduate.',
-  },
-  '/authors/rajesh-sharma': {
-    title: 'Rajesh Sharma — Menswear & Groom Stylist | LuxeMia Blog',
-    description: 'Rajesh Sharma is LuxeMia\'s Menswear & Groom Stylist with 12 years of experience in Indian ethnic menswear, formerly at Manyavar New Delhi.',
-  },
-  '/authors/priya-nair': {
-    title: 'Priya Nair — NRI Shopping & Lifestyle Editor | LuxeMia Blog',
-    description: 'Priya Nair is LuxeMia\'s NRI Shopping & Lifestyle Editor based in Philadelphia. 6 years writing about Indian ethnic fashion for diaspora audiences.',
-  },
   '/about': {
     title: 'About LuxeMia — Indian Ethnic Wear Online',
     description: 'LuxeMia is the online side of CeremonyVerse, run by Bhamini, with a online catalog for events coming up soon.',

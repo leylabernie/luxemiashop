@@ -60,7 +60,7 @@ const SEOFooterContent = () => {
                   Shop <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry online</Link> at LuxeMia. 
                   Discover <strong className="text-foreground">kundan necklace sets</strong>, bridal jewelry, 
                   <strong className="text-foreground"> jhumka earrings</strong>, bangles, and maang tikka. 
-                  Perfect for weddings, festivals, and celebrations. Flat rate shipping $25/order, free on orders over $350.
+                  Perfect for weddings, festivals, and celebrations. Free U.S. shipping on orders over $150; $12 flat below that.
                 </p>
               </div>
             </div>

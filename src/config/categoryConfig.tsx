@@ -212,7 +212,7 @@ const LEHENGAS: CategoryConfig = {
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest'], {
       seoTitle: 'Wedding Guest Lehengas & Bridesmaid Lehengas Online | LuxeMia',
-      seoDescription: 'Shop wedding guest lehengas and bridesmaid lehengas online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Ready to ship from USA, custom fit available.',
+      seoDescription: 'Shop wedding guest lehengas and bridesmaid lehengas online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Available online, custom fit available.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=wedding-guest',
     }),
     occasionSub('reception', 'Reception', ['occasion:reception', 'reception'], {
@@ -222,7 +222,7 @@ const LEHENGAS: CategoryConfig = {
     }),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive'], {
       seoTitle: 'Party Wear Lehengas & Festive Lehenga Choli Online | LuxeMia',
-      seoDescription: 'Shop party wear lehengas and festive lehenga cholis for cocktails, sangeet, and Diwali. Net, georgette, and velvet with sequins, mirror, and beadwork. Ready to ship from USA.',
+      seoDescription: 'Shop party wear lehengas and festive lehenga cholis for cocktails, sangeet, and Diwali. Net, georgette, and velvet with sequins, mirror, and beadwork. Available online.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=party-wear',
     }),
     // By Fabric (simplified — 4 main fabrics)
@@ -313,7 +313,7 @@ const LEHENGAS: CategoryConfig = {
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
-      answer: "Ready-to-ship lehengas ship with tracking after dispatch, with standard delivery (USPS/UPS) taking 2 business days to ship transit or express (DHL) taking 2 business days transit. Custom/alteration orders requires timing confirmation before ordering. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
+      answer: "Lehengas ship with tracking after dispatch. Readymade items typically dispatch within 4-7 business days; custom-stitched or altered pieces take longer, so confirm timing before ordering. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
     },
     {
       question: "Can I customize the color of my lehenga?",
@@ -367,7 +367,7 @@ const LEHENGAS: CategoryConfig = {
 
       <h3>United States Shipping</h3>
       <p>
-        Free US shipping on lehenga orders over $150 to the United States. Ready-to-ship lehengas
+        Free US shipping on lehenga orders over $150 to the United States. Lehengas
         ship with tracking after dispatch; custom-tailored lehengas requires timing confirmation before ordering. Delivery via
         tracked US carrier service after dispatch.
         See our <a href="/shipping">shipping policy</a> for details.
@@ -429,7 +429,7 @@ const SAREES: CategoryConfig = {
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid'], {
       seoTitle: 'Wedding Guest Sarees & Bridesmaid Sarees Online | LuxeMia',
-      seoDescription: 'Shop elegant wedding guest sarees and bridesmaid sarees online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Ready to ship, custom fit available.',
+      seoDescription: 'Shop elegant wedding guest sarees and bridesmaid sarees online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Custom fit available.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=wedding-guest',
     }),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'occasion:reception', 'occasion:festival', 'party wear', 'party', 'reception', 'festive', 'cocktail'], {
@@ -442,7 +442,7 @@ const SAREES: CategoryConfig = {
         'festive', 'occasionwear',
       ],
       seoTitle: 'Party Wear Sarees & Reception Sarees Online | Designer Drapes - LuxeMia',
-      seoDescription: 'Shop party wear sarees, reception sarees, and pre-draped designer sarees. Sequins, beads, and zari work for cocktails, receptions, and festive celebrations. Ready to ship from USA.',
+      seoDescription: 'Shop party wear sarees, reception sarees, and pre-draped designer sarees. Sequins, beads, and zari work for cocktails, receptions, and festive celebrations. Available online.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=party-wear',
     }),
     // By Fabric (simplified — 4 main fabrics)

@@ -18,7 +18,7 @@ export const DeliveryEstimate = ({ hasStitching }: DeliveryEstimateProps) => {
           <Truck className="h-3.5 w-3.5 mt-0.5 text-muted-foreground" />
           <div>
             <p className="text-muted-foreground text-xs uppercase tracking-wide mb-0.5">
-              Ready to ship
+              U.S. Shipping
             </p>
             <p className="text-foreground">
               Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.
