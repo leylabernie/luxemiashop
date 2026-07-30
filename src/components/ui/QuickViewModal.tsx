@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, Plus, Heart, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,6 +22,14 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
   if (!product) return null;
 
   const variants = product.node.variants.edges;
+  const firstAvailableIdx = variants.findIndex((variant) => variant.node.availableForSale !== false);
+
+  useEffect(() => {
+    if (firstAvailableIdx >= 0 && variants[selectedVariantIdx]?.node.availableForSale === false) {
+      setSelectedVariantIdx(firstAvailableIdx);
+    }
+  }, [firstAvailableIdx, selectedVariantIdx, variants]);
+
   const selectedVariant = variants[selectedVariantIdx]?.node;
   const imageUrl = product.node.images.edges[0]?.node.url;
   const title = product.node.title;
@@ -141,11 +149,15 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
                       <button
                         key={v.node.id}
                         data-testid={`quick-view-variant-${idx}`}
-                        onClick={() => setSelectedVariantIdx(idx)}
+                        onClick={() => v.node.availableForSale !== false && setSelectedVariantIdx(idx)}
+                        disabled={v.node.availableForSale === false}
+                        aria-label={`${v.node.selectedOptions?.[0]?.value || v.node.title}${v.node.availableForSale === false ? ' — unavailable' : ''}`}
                         className={`px-3 py-1.5 text-xs border rounded-sm transition-colors ${
                           selectedVariantIdx === idx
                             ? 'border-foreground bg-foreground text-background'
-                            : 'border-border hover:border-foreground/50'
+                            : v.node.availableForSale === false
+                              ? 'border-border/50 text-muted-foreground/50 line-through cursor-not-allowed'
+                              : 'border-border hover:border-foreground/50'
                         }`}
                       >
                         {v.node.selectedOptions?.[0]?.value || v.node.title}
