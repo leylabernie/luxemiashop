@@ -225,7 +225,6 @@ const App = () => (
                 <Route path="/blog/nri-shopping" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
                 {/* Author bio pages — E-E-A-T compliance per Google's AI playbook */}
-                <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />
                 <Route path="/new-arrivals" element={<Suspense fallback={<PageLoader />}><NewArrivals /></Suspense>} />
                 <Route path="/bestsellers" element={<Suspense fallback={<PageLoader />}><Bestsellers /></Suspense>} />
                 <Route path="/indowestern" element={<Suspense fallback={<PageLoader />}><Indowestern /></Suspense>} />

@@ -395,6 +395,18 @@ export default async function middleware(request: Request) {
     }
   }
 
+  // Keep unknown blog URLs consistent for humans and crawlers. The SPA fallback
+  // would otherwise return 200 to humans while the bot branch above returns 404,
+  // recreating a bot-only 404/soft-cloaking signal for stale blog URLs.
+  if (pathname.startsWith('/blog/') && !PRERENDERED_ROUTES.has(pathname)) {
+    return return404(request);
+  }
+  // Fabricated author profiles were removed; keep their legacy URLs from
+  // falling through to the SPA as misleading 200 pages.
+  if (pathname.startsWith('/authors/')) {
+    return return404(request);
+  }
+
   // Regular users or redirect routes → inject proper meta tags into SPA HTML
   // CRITICAL SEO FIX: Previously, ALL non-bot visitors got the SPA shell with
   // identical homepage meta tags. Now we inject correct title, description,

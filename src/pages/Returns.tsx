@@ -7,7 +7,7 @@ const Returns = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Returns Policy — LuxeMia"
-        description="LuxeMia returns policy for Indian ethnic wear online. Return window and conditions require owner confirmation before launch."
+        description="LuxeMia returns policy: all sales are final except verified shipping damage reported within 48 hours with a mandatory unboxing video."
         canonical="https://luxemia.shop/returns"
       />
       <Header />
@@ -18,8 +18,8 @@ const Returns = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">Returns</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Returns Policy</h1>
             <p className="text-muted-foreground leading-relaxed">
-              Please read this policy before ordering. LuxeMia sells a small online inventory, and return terms
-              need to be confirmed by the owner before this policy goes live.
+              Please read this policy before ordering. All sales are final except for verified shipping damage reported
+              within 48 hours of delivery with a mandatory unboxing video.
             </p>
           </div>
         </section>
@@ -27,10 +27,10 @@ const Returns = () => {
         <section className="container mx-auto px-4 lg:px-8 max-w-3xl py-12">
           <div className="prose prose-neutral max-w-none text-muted-foreground">
             <h2 className="text-foreground">Return window</h2>
-            <p>[TODO(owner): confirm return window]</p>
+            <p>All sales are final. We do not accept returns or exchanges for change of mind, sizing, color, fit, or custom-order preferences.</p>
 
             <h2 className="text-foreground">Return conditions</h2>
-            <p>[TODO(owner): confirm return window]</p>
+            <p>For genuine shipping damage, contact us within 48 hours of delivery. Keep the packaging and provide a continuous unboxing video showing the unopened parcel and the damage. Claims without the required video may not be eligible.</p>
 
             <h2 className="text-foreground">How to start a return</h2>
             <p>
