@@ -894,14 +894,14 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       <Separator />
 
-      {/* $30 Fit Guarantee Trust Card */}
-      <div className="flex items-center gap-3 p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-sm border border-emerald-200 dark:border-emerald-800/50">
-        <div className="h-10 w-10 rounded-full bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center flex-shrink-0">
-          <BadgeCheck className="h-5 w-5 text-emerald-700 dark:text-emerald-400" />
+      {/* Fit guidance — no unsupported refund or credit promise. */}
+      <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
+        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+          <BadgeCheck className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <p className="text-sm font-medium text-emerald-900 dark:text-emerald-100">$30 Fit Guarantee</p>
-          <p className="text-xs text-emerald-700 dark:text-emerald-300">Free $30 stitching credit if your readymade size doesn't fit perfectly</p>
+          <p className="text-sm font-medium">Check your measurements before ordering</p>
+          <p className="text-xs text-muted-foreground">All sales are final. Contact our styling team before purchase if you need sizing help.</p>
         </div>
       </div>
 
@@ -940,7 +940,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Damage Protection</p>
-            <p className="text-xs text-muted-foreground">Claims handled within 7 days</p>
+            <p className="text-xs text-muted-foreground">Report shipping damage within 48 hours with a mandatory unboxing video</p>
           </div>
         </div>
       </div>
@@ -954,7 +954,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Package className="h-4 w-4 text-primary" />
-          <span>Premium packaging with <span className="text-foreground font-medium">gift box included</span></span>
+          <span>Carefully packaged for transit</span>
         </div>
       </div>
 

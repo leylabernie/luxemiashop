@@ -1901,7 +1901,7 @@ export const blogPosts: BlogPost[] = [
       <p>We ship within the United States at a flat rate of $12 per order, with <strong>free U.S. shipping over $150</strong> to the USA, and the United States. Standard delivery (USPS/UPS) takes 4-7 business days to ship transit, with express (DHL) at 4-7 business days transit available at checkout for those urgent last-minute occasions. Every package is carefully packed and insured.</p>
 
       <h3>Our Return Policy</h3>
-      <p>All sales are final due to the international nature of our shipments. The only exception is genuine shipping damage, which must be documented with photos or an unboxing video and reported within 7 days of delivery. We recommend reviewing all product details and using our <a href="/size-guide">Size Guide</a> before ordering. Visit our <a href="/returns">Returns Policy</a> page for full details.</p>
+      <p>All sales are final due to the international nature of our shipments. The only exception is genuine shipping damage, which must be documented with a mandatory unboxing video and reported within 48 hours of delivery. We recommend reviewing all product details and using our <a href="/size-guide">Size Guide</a> before ordering. Visit our <a href="/returns">Returns Policy</a> page for full details.</p>
 
       <h3>Personalized Styling Support</h3>
       <p>Not sure which saree to choose for a specific occasion? Our dedicated styling team is available via WhatsApp for personalized recommendations. Whether you need help selecting the right fabric for a summer wedding in Texas or choosing between a Banarasi and Kanchipuram for a London reception, our <a href="/style-consultation">style consultation service</a> has you covered.</p>

@@ -193,7 +193,7 @@ const LEHENGAS: CategoryConfig = {
   heroImage: '/images/banners/lehenga-banner.jpg',
   heroImageWebp: '/images/banners/lehenga-banner.webp',
   heroTitle: 'Lehengas',
-  heroSubtitle: 'Lehengas, available with tracked shipping. Every piece here is available online — no pre-order, no six-week wait. Fabric composition and full measurements are listed on each item.',
+  heroSubtitle: 'Lehengas, available with tracked shipping. Every piece here is available online. Ready-to-wear items dispatch in 3–5 business days; custom or made-to-measure items dispatch in 5–7 business days. Fabric composition and full measurements are listed on each item.',
   seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
   seoDescription: 'Buy bridal lehengas for Indian brides in USA. Red, maroon, and ivory wedding lehengas with zardozi and embroidery. Custom sizing, 5-day express delivery, free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/lehengas',
