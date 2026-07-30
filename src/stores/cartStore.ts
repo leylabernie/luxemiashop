@@ -4,7 +4,6 @@ import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { trackAddToCart, trackBeginCheckout } from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
 
-const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -155,21 +154,16 @@ export const useCartStore = create<CartStore>()(
             return checkoutUrl;
           }
           
-          // If checkoutUrl is null, it means we have fake IDs or Shopify failed
-          console.warn('No checkout URL returned, falling back to product page');
-          const firstItem = items[0];
-          if (firstItem && firstItem.product.node.handle) {
-            toast.info('Redirecting to product page for checkout...');
-            return `https://${SHOPIFY_STORE_DOMAIN}/products/${firstItem.product.node.handle}`;
-          }
-          
-          return `https://${SHOPIFY_STORE_DOMAIN}`;
+          // Never send a customer to an empty Shopify product page when checkout
+          // creation fails: that loses the cart and silently kills the order.
+          console.error('Shopify returned no checkout URL; preserving the cart');
+          toast.error('Checkout could not be created. Your bag is saved — please try again.');
+          return null;
         } catch (error) {
           console.error('Failed to create checkout:', error);
-          toast.error('Checkout is temporarily unavailable. Redirecting to our store...');
-          // Always redirect to Shopify store so the customer can still purchase
-          const fallbackUrl = `https://${SHOPIFY_STORE_DOMAIN}`;
-          return fallbackUrl;
+          toast.error('Checkout is temporarily unavailable. Your bag is saved — please try again.');
+          // Preserve the cart instead of redirecting away and losing the order.
+          return null;
         } finally {
           setLoading(false);
         }
