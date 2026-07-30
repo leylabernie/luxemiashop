@@ -104,8 +104,16 @@ export function CategoryListing({ config }: CategoryListingProps) {
 
   // Apply filters + subcategory + sort
   const filteredProducts = useMemo(() => {
+    // Do not spend merchandising space on products with no purchasable variant.
+    // A product remains eligible when Shopify omits availability (older catalog
+    // records), but an explicit false on every variant means it cannot convert.
+    const purchasableProducts = products.filter((product) => {
+      const variants = product.node.variants?.edges || [];
+      return variants.length > 0 && variants.some((edge) => edge.node.availableForSale !== false);
+    });
+
     return filterSortAndSubcategorize(
-      products,
+      purchasableProducts,
       state.filters,
       state.priceRange,
       state.sortBy,
