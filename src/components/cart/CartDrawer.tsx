@@ -29,12 +29,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   };
 
   const handleCheckoutClick = () => {
-    // If we haven't captured email yet, show the modal
-    if (!capturedEmail) {
-      setShowEmailCapture(true);
-    } else {
-      proceedToCheckout();
-    }
+    // Do not interrupt checkout with email capture. Email capture is optional;
+    // payment intent and order completion take priority for conversion.
+    proceedToCheckout();
   };
 
   const handleEmailSubmitted = (email: string) => {
