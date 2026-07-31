@@ -130,23 +130,88 @@ if (!SHOPIFY_STOREFRONT_TOKEN) {
 
 
 const ALL_PRODUCTS_QUERY = `
-  query GetAllProducts($first: Int!, $after: String) {
-    products(first: $first, after: $after, sortKey: CREATED_AT, reverse: true) {
-      pageInfo { hasNextPage endCursor }
-      edges {
-        node {
-          id title createdAt description handle vendor productType tags availableForSale
-          shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
-          seo { title description }
-          priceRange { minVariantPrice { amount currencyCode } }
-          compareAtPriceRange { maxVariantPrice { amount currencyCode } }
-          images(first: 5) { edges { node { url altText } } }
-          variants(first: 5) { edges { node { sku } } }
-          options { name values }
+query GetAllProducts($first: Int!, $after: String) {
+  products(
+    first: $first
+    after: $after
+    sortKey: CREATED_AT
+    reverse: true
+  ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        title
+        createdAt
+        description
+        handle
+        vendor
+        productType
+        tags
+        availableForSale
+        shipsWithinMetafield: metafield(
+          namespace: "custom"
+          key: "ships_within"
+        ) {
+          value
+        }
+        seo {
+          title
+          description
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+        compareAtPriceRange {
+          maxVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+        images(first: 5) {
+          edges {
+            node {
+              url
+              altText
+            }
+          }
+        }
+        variants(first: 5) {
+          edges {
+            node {
+              id
+              title
+              sku
+              price {
+                amount
+                currencyCode
+              }
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+              availableForSale
+              selectedOptions {
+                name
+                value
+              }
+            }
+          }
+        }
+        options {
+          name
+          values
         }
       }
     }
   }
+}
 `;
 
 function forceJpegForGmc(url) {
@@ -248,13 +313,24 @@ function isMenswearProduct(p) {
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
 
-function filterProductsForCategory(allProducts, category) {
+function filterProductsForCategory(allProducts, category, newestFirst = false) {
   // Global exclusions: old batch + banned titles
   const allowed = allProducts.filter(p => {
     if (isOldBatchProduct(p)) return false;
     if (EXCLUDED_TITLE_KEYWORDS.test(p.title ?? '')) return false;
     return true;
   });
+
+  if (newestFirst) {
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    return allowed
+      .filter(p => {
+        const createdAt = new Date(p.createdAt).getTime();
+        return Number.isFinite(createdAt) && createdAt > cutoff;
+      })
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, MAX_COLLECTION_PRODUCTS);
+  }
 
   if (category === 'all') return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
 
@@ -2353,7 +2429,7 @@ function generateHtml(template, route, allShopifyProducts) {
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.
     const allProducts = Array.from(allShopifyProducts.values());
-    const collectionProducts = filterProductsForCategory(allProducts, route.category);
+    const collectionProducts = filterProductsForCategory(allProducts, route.category, route.path === '/new-arrivals');
     console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
 
     // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
