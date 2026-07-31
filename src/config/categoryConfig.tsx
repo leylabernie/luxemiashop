@@ -89,6 +89,7 @@ export interface CategoryConfig {
   /** Hero banner image path */
   heroImage: string;
   heroImageWebp?: string;
+  heroAlt?: string;
   heroTitle: string;
   heroSubtitle: string;
   /** SEO metadata */
@@ -190,8 +191,9 @@ function audienceSub(slug: string, label: string, matchTags: string[]): Subcateg
 const LEHENGAS: CategoryConfig = {
   slug: 'lehengas',
   name: 'Lehengas',
-  heroImage: '/images/banners/lehenga-banner.jpg',
-  heroImageWebp: '/images/banners/lehenga-banner.webp',
+  heroImage: '/images/campaigns/wedding-lehengas-usa-2026-desktop.jpg',
+  heroImageWebp: '/images/campaigns/wedding-lehengas-usa-2026-desktop.webp',
+  heroAlt: 'Bride wearing a red embroidered lehenga choli with matching dupatta and traditional jewelry',
   heroTitle: 'Lehengas',
   heroSubtitle: 'Lehengas, available with tracked shipping. Every piece here is available online. Ready-to-wear items dispatch in 3–5 business days; custom or made-to-measure items dispatch in 5–7 business days. Fabric composition and full measurements are listed on each item.',
   seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
@@ -601,8 +603,9 @@ const SAREES: CategoryConfig = {
 const SUITS: CategoryConfig = {
   slug: 'suits',
   name: 'Salwar Kameez & Suits',
-  heroImage: '/images/banners/suit-banner.jpg',
-  heroImageWebp: '/images/banners/suit-banner.webp',
+  heroImage: '/images/campaigns/sharara-palazzo-sets-2026-desktop.jpg',
+  heroImageWebp: '/images/campaigns/sharara-palazzo-sets-2026-desktop.webp',
+  heroAlt: 'Woman wearing a sage and navy embroidered sharara and palazzo occasion set with matching dupatta',
   heroTitle: 'Salwar Kameez & Suits',
   heroSubtitle: "Anarkalis, shararas and palazzo sets, available online. If you need a specific colour or a set for a group, that's our sister site CeremonyVerse.",
   seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
@@ -787,8 +790,9 @@ const SUITS: CategoryConfig = {
 const MENSWEAR: CategoryConfig = {
   slug: 'menswear',
   name: 'Menswear',
-  heroImage: '/images/banners/menswear-banner.jpg',
-  heroImageWebp: '/images/banners/menswear-banner.webp',
+  heroImage: '/images/campaigns/indian-menswear-kurta-2026-desktop.jpg',
+  heroImageWebp: '/images/campaigns/indian-menswear-kurta-2026-desktop.webp',
+  heroAlt: 'Man wearing a gray embroidered Indian kurta set for a wedding celebration',
   heroTitle: 'Menswear',
   heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
   seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
@@ -980,7 +984,9 @@ const MENSWEAR: CategoryConfig = {
 const JEWELRY: CategoryConfig = {
   slug: 'jewelry',
   name: 'Bridal Jewelry',
-  heroImage: '/images/banners/jewelry-banner.jpg',
+  heroImage: '/images/campaigns/kundan-bridal-jewelry-2026-desktop.jpg',
+  heroImageWebp: '/images/campaigns/kundan-bridal-jewelry-2026-desktop.webp',
+  heroAlt: 'Gold-tone Kundan bridal necklace, earrings and maang tikka set with pearl details',
   heroTitle: 'Bridal Jewelry',
   heroSubtitle: 'Handcrafted Kundan and uncut polki necklace sets for the modern bride — regal statements for your wedding day.',
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',

@@ -179,7 +179,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
             )}
             <img
               src={getOptimizedImage(config.heroImage, 'hero')}
-              alt={config.name}
+              alt={config.heroAlt || config.name}
               width={1200}
               height={600}
               className="absolute inset-0 w-full h-full object-cover object-top"
