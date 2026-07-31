@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 69066)
+Total output lines: 2725
+
 /**
  * Build-time prerender script
  *
@@ -130,88 +133,23 @@ if (!SHOPIFY_STOREFRONT_TOKEN) {
 
 
 const ALL_PRODUCTS_QUERY = `
-query GetAllProducts($first: Int!, $after: String) {
-  products(
-    first: $first
-    after: $after
-    sortKey: CREATED_AT
-    reverse: true
-  ) {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    edges {
-      node {
-        id
-        title
-        createdAt
-        description
-        handle
-        vendor
-        productType
-        tags
-        availableForSale
-        shipsWithinMetafield: metafield(
-          namespace: "custom"
-          key: "ships_within"
-        ) {
-          value
-        }
-        seo {
-          title
-          description
-        }
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
-          }
-        }
-        compareAtPriceRange {
-          maxVariantPrice {
-            amount
-            currencyCode
-          }
-        }
-        images(first: 5) {
-          edges {
-            node {
-              url
-              altText
-            }
-          }
-        }
-        variants(first: 5) {
-          edges {
-            node {
-              id
-              title
-              sku
-              price {
-                amount
-                currencyCode
-              }
-              compareAtPrice {
-                amount
-                currencyCode
-              }
-              availableForSale
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
-        }
-        options {
-          name
-          values
+  query GetAllProducts($first: Int!, $after: String) {
+    products(first: $first, after: $after, sortKey: CREATED_AT, reverse: true) {
+      pageInfo { hasNextPage endCursor }
+      edges {
+        node {
+          id title createdAt description handle vendor productType tags availableForSale
+          shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+          seo { title description }
+          priceRange { minVariantPrice { amount currencyCode } }
+          compareAtPriceRange { maxVariantPrice { amount currencyCode } }
+          images(first: 5) { edges { node { url altText } } }
+          variants(first: 5) { edges { node { sku } } }
+          options { name values }
         }
       }
     }
   }
-}
 `;
 
 function forceJpegForGmc(url) {
@@ -313,24 +251,13 @@ function isMenswearProduct(p) {
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
 
-function filterProductsForCategory(allProducts, category, newestFirst = false) {
+function filterProductsForCategory(allProducts, category) {
   // Global exclusions: old batch + banned titles
   const allowed = allProducts.filter(p => {
     if (isOldBatchProduct(p)) return false;
     if (EXCLUDED_TITLE_KEYWORDS.test(p.title ?? '')) return false;
     return true;
   });
-
-  if (newestFirst) {
-    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    return allowed
-      .filter(p => {
-        const createdAt = new Date(p.createdAt).getTime();
-        return Number.isFinite(createdAt) && createdAt > cutoff;
-      })
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .slice(0, MAX_COLLECTION_PRODUCTS);
-  }
 
   if (category === 'all') return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
 
@@ -1231,10 +1158,10 @@ const routes = [
     description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees & suits added weekly. Free U.S. shipping over $150.',
     h1: 'New Arrivals',
     content: `
-      <p>Discover the newest additions to our collection, including lehengas, silk sarees, and anarkali suits with delivery to the United States.</p>
-      <h2>What's New</h2>
-      <p>We add new styles every week, from bridal lehengas and Banarasi silk sarees to trendy palazzo suits and groom sherwanis. Each new arrival features the latest embroidery techniques, color palettes, and fabric innovations for 2026.</p>
-      <p>Sign up for our newsletter to be the first to know when new collections drop. Free US shipping on all new arrivals to the United States.</p>
+      <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry available online for delivery across the United States.</p>
+      <h2>What is new at LuxeMia?</h2>
+      <p>This collection brings together LuxeMia's latest wedding, reception, festival, and special-occasion styles so shoppers can find newly added pieces in one place.</p>
+      <p>Free U.S. shipping is available on orders over $150, with $12 flat-rate shipping below $150. Tracking is provided after dispatch.</p>
     `,
   },
   {
@@ -1455,418 +1382,7 @@ const routes = [
       <h2>Eid Outfit Colors</h2>
       <p>White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are classic Eid outfit colours. Gold and silver embellishments on any colour are considered festive and celebratory.</p>
       <ul>
-        <li><a href="/suits">Chikankari Salwar Kameez</a> — Traditional Eid salwar kameez</li>
-        <li><a href="/lehengas">Pastel Lehengas</a> — Embroidered lehengas for Eid</li>
-        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — More festive occasion wear</li>
-      </ul>
-      <p>Free U.S. shipping over $150. Order 3-4 weeks before Eid for timely delivery.</p>
-    `,
-  },
-  {
-    path: '/collections/navratri-outfits',
-    title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
-    description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive ethnic wear in all nine Navratri colours. Free U.S. shipping over $150.',
-    h1: 'Navratri Outfits — Chaniya Choli & Garba Dress Collection',
-    content: `
-      <p>Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor.</p>
-      <h2>What is a Chaniya Choli?</h2>
-      <p>The chaniya choli is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor.</p>
-      <h2>Nine Colors of Navratri 2026</h2>
-      <p>Each of the nine nights of Navratri 2026 is associated with a specific colour linked to the nine forms of Goddess Durga. The sequence typically follows: Royal Blue, Green, Grey, Orange, White, Red, Royal Blue, Pink, and Purple. Many participants plan nine separate Navratri outfits in each day's colour.</p>
-      <ul>
-        <li><a href="/lehengas">Navratri Lehengas</a> — Festive lehengas for Garba</li>
-        <li><a href="/suits">Anarkali Suits</a> — Flowing anarkalis for Navratri</li>
-        <li><a href="/collections/diwali-outfits">Diwali Outfits</a> — More festive occasion wear</li>
-      </ul>
-      <p>Free U.S. shipping over $150. Standard delivery 7-10 business days.</p>
-    `,
-  },
-  // ─── Programmatic SEO combo pages (25 pages) ─────────────────────────
-  {
-    path: '/maroon-lehenga-for-wedding-guest',
-    title: 'Maroon Lehenga for Wedding Guest — Online Styles | LuxeMia',
-    description: 'Shop maroon lehengas for Indian wedding guests. Online styles from $200-$500 with free U.S. shipping over $150. Maroon is rich, photogenic and not bridal red — perfect for wedding guests.',
-    h1: 'Maroon Lehenga for Wedding Guest',
-    content: '<p>Maroon is the perfect wedding guest color — rich, photogenic, and distinct from bridal red. Shop online maroon lehengas from $200-500 with free U.S. shipping over $150 on orders over $150.</p><p>Shop our curated collection of maroon lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/emerald-green-lehenga-for-wedding-guest',
-    title: 'Emerald Green Lehenga for Wedding Guest — Shop Online | LuxeMia',
-    description: 'Shop emerald green lehengas for Indian wedding guests. Rich jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
-    h1: 'Emerald Green Lehenga for Wedding Guest',
-    content: '<p>Emerald green is a striking wedding guest color — rich, photogenic, and pairs beautifully with gold jewelry. Shop online emerald green lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of emerald green lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/royal-blue-lehenga-for-wedding-guest',
-    title: 'Royal Blue Lehenga for Wedding Guest — Online Styles | LuxeMia',
-    description: 'Shop royal blue lehengas for Indian wedding guests. Striking jewel tone, photogenic, and perfect for sangeet and reception. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
-    h1: 'Royal Blue Lehenga for Wedding Guest',
-    content: '<p>Royal blue is a striking wedding guest color — bold, photogenic, and stands out in a sea of reds and pinks. Shop online royal blue lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of royal blue lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/pink-lehenga-for-wedding-guest',
-    title: 'Pink Lehenga for Wedding Guest — From Blush to Fuchsia | LuxeMia',
-    description: 'Shop pink lehengas for Indian wedding guests. From soft blush pink to bold fuchsia, online from $180-$450. Free U.S. shipping over $150 on orders over $150.',
-    h1: 'Pink Lehenga for Wedding Guest',
-    content: '<p>Pink is the most versatile wedding guest color — from soft blush to bold fuchsia. Shop online pink lehengas from $180-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of pink lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/purple-lehenga-for-wedding-guest',
-    title: 'Purple Lehenga for Wedding Guest — Royal & Photogenic | LuxeMia',
-    description: 'Shop purple lehengas for Indian wedding guests. From deep eggplant to soft lavender, online from $200-$500. Free U.S. shipping over $150 on orders over $150.',
-    h1: 'Purple Lehenga for Wedding Guest',
-    content: '<p>Purple is a royal, photogenic wedding guest color — from deep eggplant to soft lavender. Shop online purple lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of purple lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/wine-lehenga-for-wedding-guest',
-    title: 'Wine Lehenga for Wedding Guest — Sophisticated & Safe | LuxeMia',
-    description: 'Shop wine lehengas for Indian wedding guests. Deep, sophisticated, and distinct from bridal red. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
-    h1: 'Wine Lehenga for Wedding Guest',
-    content: '<p>Wine is a sophisticated wedding guest color — deep, elegant, and safely distinct from bridal red. Shop online wine lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of wine lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/navy-blue-lehenga-for-wedding-guest',
-    title: 'Navy Blue Lehenga for Wedding Guest — Elegant & Modern | LuxeMia',
-    description: 'Shop navy blue lehengas for Indian wedding guests. Deep, elegant, and modern. Ready-to-ship from $200-$500 with free U.S. shipping over $150 on orders over $150.',
-    h1: 'Navy Blue Lehenga for Wedding Guest',
-    content: '<p>Navy blue is an elegant, modern wedding guest color — deep, sophisticated, and photogenic. Shop online navy blue lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of navy blue lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/maroon-lehenga-for-reception',
-    title: 'Maroon Lehenga for Reception — Elegant & Photogenic | LuxeMia',
-    description: 'Shop maroon lehengas for Indian wedding receptions. Rich, photogenic, and perfect for evening events. Ready-to-ship from $200-$500 with free U.S. shipping over $150.',
-    h1: 'Maroon Lehenga for Reception',
-    content: '<p>Maroon is an elegant choice for a wedding reception — rich, photogenic, and perfect for evening events. Shop online maroon lehengas from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of maroon lehenga for reception at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/black-lehenga-for-wedding-guest',
-    title: 'Black Lehenga for Wedding Guest — Bold & Modern | LuxeMia',
-    description: 'Shop black lehengas for Indian wedding guests. Bold, modern, and photogenic. Check invitation first — some weddings welcome black, others consider it inauspicious. Ready-to-ship from $250-500.',
-    h1: 'Black Lehenga for Wedding Guest',
-    content: '<p>Black is a bold, modern wedding guest choice — but check the invitation first. Some modern weddings welcome black; traditional weddings consider it inauspicious. Shop online black lehengas from $250-500.</p><p>Shop our curated collection of black lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/pastel-lehenga-for-wedding-guest',
-    title: 'Pastel Lehenga for Wedding Guest — Soft & Modern | LuxeMia',
-    description: 'Shop pastel lehengas for Indian wedding guests. Soft blush, mint, lavender, and peach — modern, romantic, and photogenic. Ready-to-ship from $180-450 with free U.S. shipping over $150.',
-    h1: 'Pastel Lehenga for Wedding Guest',
-    content: '<p>Pastels are a modern, romantic wedding guest choice — soft blush, mint, lavender, and peach. Shop online pastel lehengas from $180-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of pastel lehenga for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/anarkali-suit-for-mother-of-bride',
-    title: 'Anarkali Suit for Mother of Bride — Elegant & Comfortable | LuxeMia',
-    description: 'Shop anarkali suits for the mother of the bride. Elegant, traditional, and comfortable for long wedding events. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
-    h1: 'Anarkali Suit for Mother of Bride',
-    content: '<p>The mother of the bride needs an outfit that is elegant, traditional, and comfortable for long wedding events. Shop anarkali suits from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of anarkali suit for mother of bride at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/lehenga-for-bridesmaid',
-    title: 'Lehenga for Bridesmaid — Coordinated & Photogenic | LuxeMia',
-    description: 'Shop lehengas for bridesmaids. Coordinated, photogenic, and dance-friendly for sangeet and reception. Ready-to-ship from $180-450 with free U.S. shipping over $150.',
-    h1: 'Lehenga for Bridesmaid',
-    content: '<p>Bridesmaid lehengas need to be coordinated, photogenic, and dance-friendly. Shop online bridesmaid lehengas from $180-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of lehenga for bridesmaid at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/anarkali-suit-for-wedding-guest',
-    title: 'Anarkali Suit for Wedding Guest — Easiest Indian Outfit | LuxeMia',
-    description: 'Shop anarkali suits for wedding guests. The easiest Indian outfit for first-timers — slips on like a dress, no draping. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
-    h1: 'Anarkali Suit for Wedding Guest',
-    content: '<p>The anarkali suit is the easiest Indian outfit for wedding guests — slips on like a dress, no draping or pinning required. Shop online anarkalis from $150-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of anarkali suit for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/saree-for-mother-of-bride',
-    title: 'Saree for Mother of Bride — Traditional & Elegant | LuxeMia',
-    description: 'Shop sarees for the mother of the bride. Silk, Banarasi, and Kanchipuram — traditional, elegant, and appropriate for wedding ceremonies. Ready-to-ship from $150-500 with free U.S. shipping over $150.',
-    h1: 'Saree for Mother of Bride',
-    content: '<p>The mother of the bride traditionally wears a silk saree for the wedding ceremony — elegant, timeless, and culturally appropriate. Shop online sarees from $150-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of saree for mother of bride at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/lehenga-for-mother-of-bride',
-    title: 'Lehenga for Mother of Bride — Regal & Comfortable | LuxeMia',
-    description: 'Shop lehengas for the mother of the bride. Regal, elegant, and comfortable for long wedding events. Ready-to-ship from $250-600 with free U.S. shipping over $150.',
-    h1: 'Lehenga for Mother of Bride',
-    content: '<p>A lehenga for the mother of the bride should be regal, elegant, and comfortable for long wedding events. Shop online lehengas from $250-600 with free U.S. shipping over $150.</p><p>Shop our curated collection of lehenga for mother of bride at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/sherwani-for-groom',
-    title: 'Sherwani for Groom — Traditional & Regal | LuxeMia',
-    description: 'Shop sherwanis for the groom. Traditional, regal, and photogenic for the wedding ceremony. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
-    h1: 'Sherwani for Groom',
-    content: '<p>The sherwani is the traditional wedding outfit for the Indian groom — regal, elegant, and photogenic. Shop online sherwanis from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of sherwani for groom at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/kurta-for-groom-brother',
-    title: 'Kurta for Groom Brother — Stylish & Comfortable | LuxeMia',
-    description: 'Shop kurtas for the groom brother. Stylish, comfortable, and appropriate for all wedding events. Ready-to-ship from $80-250 with free U.S. shipping over $150.',
-    h1: 'Kurta for Groom Brother',
-    content: '<p>The groom brother needs an outfit that is stylish, comfortable, and coordinated with the wedding party. Shop online kurtas from $80-250 with free U.S. shipping over $150.</p><p>Shop our curated collection of kurta for groom brother at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/sharara-for-bride-sister',
-    title: 'Sharara for Bride Sister — Trendy & Photogenic | LuxeMia',
-    description: 'Shop sharara sets for the bride sister. Trendy, photogenic, and dance-friendly for mehendi and sangeet. Ready-to-ship from $180-400 with free U.S. shipping over $150.',
-    h1: 'Sharara for Bride Sister',
-    content: '<p>The sharara is a trendy, photogenic choice for the bride sister — wide-flare pants with a short kurti, perfect for mehendi and sangeet dancing. Shop from $180-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of sharara for bride sister at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/georgette-saree-for-reception',
-    title: 'Georgette Saree for Reception — Flowy & Glamorous | LuxeMia',
-    description: 'Shop georgette sarees for wedding receptions. Flowy, glamorous, and easy to drape. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
-    h1: 'Georgette Saree for Reception',
-    content: '<p>Georgette is the perfect reception saree fabric — flowy, glamorous, and easy to drape. Shop online georgette sarees from $150-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of georgette saree for reception at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/banarasi-silk-saree-for-wedding',
-    title: 'Banarasi Silk Saree for Wedding — Traditional & Auspicious | LuxeMia',
-    description: 'Shop Banarasi silk sarees for weddings. Handwoven in Varanasi with real zari — traditional, auspicious, and photogenic. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
-    h1: 'Banarasi Silk Saree for Wedding',
-    content: '<p>A Banarasi silk saree is the most traditional and auspicious choice for an Indian wedding — handwoven in Varanasi with real zari. Shop from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of banarasi silk saree for wedding at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/kanjivaram-saree-for-wedding',
-    title: 'Kanjivaram Saree for Wedding — South Indian Bridal Silk | LuxeMia',
-    description: 'Shop Kanjivaram silk sarees for weddings. Handwoven in Tamil Nadu with pure zari — the traditional South Indian bridal saree. Ready-to-ship from $200-500 with free U.S. shipping over $150.',
-    h1: 'Kanjivaram Saree for Wedding',
-    content: '<p>The Kanjivaram silk saree is the traditional South Indian bridal saree — handwoven in Tamil Nadu with pure zari. Shop from $200-500 with free U.S. shipping over $150.</p><p>Shop our curated collection of kanjivaram saree for wedding at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/chiffon-saree-for-wedding-guest',
-    title: 'Chiffon Saree for Wedding Guest — Light & Flowy | LuxeMia',
-    description: 'Shop chiffon sarees for wedding guests. Lightweight, flowy, and easy to drape. Perfect for summer weddings and daytime events. Ready-to-ship from $120-300 with free U.S. shipping over $150.',
-    h1: 'Chiffon Saree for Wedding Guest',
-    content: '<p>Chiffon is the lightest, most flowy saree fabric — perfect for summer weddings and daytime events. Shop online chiffon sarees from $120-300 with free U.S. shipping over $150.</p><p>Shop our curated collection of chiffon saree for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/silk-saree-for-festival',
-    title: 'Silk Saree for Festival — Diwali, Navratri, Pongal | LuxeMia',
-    description: 'Shop silk sarees for Indian festivals — Diwali, Navratri, Pongal, Onam. Traditional, auspicious, and photogenic. Ready-to-ship from $150-400 with free U.S. shipping over $150.',
-    h1: 'Silk Saree for Festival',
-    content: '<p>A silk saree is the most traditional and auspicious choice for Indian festivals — Diwali, Navratri, Pongal, Onam. Shop from $150-400 with free U.S. shipping over $150.</p><p>Shop our curated collection of silk saree for festival at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/organza-saree-for-engagement',
-    title: 'Organza Saree for Engagement — Modern & Structured | LuxeMia',
-    description: 'Shop organza sarees for engagement ceremonies. Modern, structured, and photogenic — perfect for the contemporary bride or guest. Ready-to-ship from $200-450 with free U.S. shipping over $150.',
-    h1: 'Organza Saree for Engagement',
-    content: '<p>Organza is a modern, structured saree fabric perfect for engagement ceremonies — crisp, photogenic, and contemporary. Shop from $200-450 with free U.S. shipping over $150.</p><p>Shop our curated collection of organza saree for engagement at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/georgette-saree-for-wedding-guest',
-    title: 'Georgette Saree for Wedding Guest — Easy & Elegant | LuxeMia',
-    description: 'Shop georgette sarees for wedding guests. Easy to drape, elegant, and photogenic. The perfect saree for first-time wearers. Ready-to-ship from $150-350 with free U.S. shipping over $150.',
-    h1: 'Georgette Saree for Wedding Guest',
-    content: '<p>Georgette is the easiest saree fabric to drape — perfect for first-time wedding guests. Flowy, elegant, and photogenic. Shop from $150-350 with free U.S. shipping over $150.</p><p>Shop our curated collection of georgette saree for wedding guest at LuxeMia. All outfits are available in Made to Measure at no extra cost, with free U.S. shipping over $150 on orders over $150. Ready-to-wear items dispatch in 3-5 business days; custom-stitched items in 5-7 business days; shipping takes 7-10 business days via USPS/UPS/DHL.</p><p>Related collections: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Anarkali Suits</a>, <a href="/menswear">Menswear</a>, <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a>. Read our <a href="/blog/what-to-wear-indian-wedding-non-indian-guest">complete guide for non-Indian wedding guests</a> and our <a href="/blog/indian-wedding-dress-complete-guide">Indian Wedding Dress Guide 2026</a>.</p>',
-  },
-  {
-    path: '/style-consultation',
-    title: 'Style Consultation — Personal Styling for Indian Ethnic Wear | LuxeMia',
-    description: 'Book a free style consultation with LuxeMia. Get personalized recommendations for lehengas, sarees & suits from our expert stylists.',
-    h1: 'Style Consultation',
-    content: '<p>Not sure what to wear? Our expert stylists are here to help. Book a free consultation and get personalized recommendations for your occasion, body type, and budget.</p>',
-  },
-  {
-    path: '/wedding-party-orders',
-    title: 'Indian Wedding Party & Group Outfit Orders | LuxeMia',
-    description: 'Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups. Tell LuxeMia your event date, palette, sizes and budget.',
-    h1: 'Wedding Party & Group Orders',
-    content: '<p>Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups across multiple sizes, colors and events. Send LuxeMia your wedding date, group size, palette and budget for personalized help.</p>',
-  },
-  {
-    path: '/style-quiz',
-    title: 'Style Quiz — Find Your Perfect Indian Outfit | LuxeMia',
-    description: 'Take the LuxeMia style quiz to discover your perfect Indian outfit. Personalized recommendations based on your taste, occasion & budget.',
-    h1: 'Style Quiz',
-    content: '<p>Discover your signature ethnic style. Answer a few questions and we\'ll recommend the perfect lehenga, saree, or suit for you.</p>',
-    noIndex: true,
-  },
-  {
-    path: '/artisans',
-    title: 'Our Artisans — Meet the Makers Behind LuxeMia',
-    description: 'Meet the skilled Indian artisans behind LuxeMia. Learn about traditional weaving, embroidery & craft techniques passed down through generations.',
-    h1: 'Our Artisans',
-    content: '<p>Behind every LuxeMia piece is a master artisan. Learn about the traditional weaving, embroidery, and craft techniques that make our ethnic wear truly special.</p>',
-  },
-  {
-    path: '/sustainability',
-    title: 'Sustainability — Ethical Indian Ethnic Wear | LuxeMia',
-    description: 'LuxeMia\'s commitment to sustainable & ethical fashion. Fair trade practices, eco-friendly packaging, and supporting artisan communities.',
-    h1: 'Sustainability',
-    content: '<p>We believe quality and responsibility go hand in hand. Learn about our fair trade practices, eco-friendly packaging, and commitment to artisan communities.</p>',
-  },
-  {
-    path: '/privacy',
-    title: 'Privacy Policy | LuxeMia',
-    description: 'LuxeMia privacy policy. How we collect, use, and protect your personal information when you shop with us.',
-    h1: 'Privacy Policy',
-    content: '<p>Your privacy matters to us. Read our full privacy policy to understand how we collect, use, and protect your personal information.</p>',
-  },
-  {
-    path: '/terms',
-    title: 'Terms of Service | LuxeMia',
-    description: 'LuxeMia terms of service. Our policies for orders, shipping, returns, and use of the LuxeMia website.',
-    h1: 'Terms of Service',
-    content: '<p>Read our terms of service for information about orders, shipping, returns, and use of the LuxeMia website.</p>',
-  },
-  {
-    path: '/press',
-    title: 'Press — LuxeMia in the Media | Indian Ethnic Wear Online',
-    description: 'LuxeMia in the media. Press coverage, brand mentions, and news features about our Indian ethnic wear collection.',
-    h1: 'Press',
-    content: '<p>See what the media is saying about LuxeMia. Press coverage, brand mentions, and news features about our Indian ethnic wear collection.</p>',
-  },
-  // --- Missing blog posts ---
-  {
-    path: '/blog/designer-wedding-dress-under-50000',
-    title: 'Designer Wedding Dress Under 50000 — Best Bridal Options | LuxeMia',
-    description: 'Find stunning designer wedding dresses under 50000. Best bridal lehengas, sarees & suits for budget-conscious brides without compromising on style.',
-    h1: 'Designer Wedding Dress Under 50000',
-    content: '<p>Looking for a designer wedding dress under 50000? Discover our curated selection of bridal lehengas and sarees that deliver quality at an accessible price point.</p>',
-  },
-  {
-    path: '/blog/wedding-guest-outfit-ideas',
-    title: 'Wedding Guest Outfit Ideas — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Wedding guest outfit ideas for Indian weddings. Sarees, lehengas, suits & fusion wear for every ceremony. Style tips for guests.',
-    h1: 'Wedding Guest Outfit Ideas',
-    content: '<p>Not sure what to wear as a wedding guest? Get outfit ideas for every ceremony — from mehendi to reception. Sarees, lehengas, suits & fusion wear for every style.</p>',
-  },
-  {
-    path: '/blog/saree-draping-styles-every-occasion',
-    title: 'Saree Draping Styles for Every Occasion | LuxeMia',
-    description: 'Learn different saree draping styles for every occasion. Nivi, Bengali, Gujarati, & modern draping techniques with step-by-step guides.',
-    h1: 'Saree Draping Styles for Every Occasion',
-    content: '<p>Master the art of saree draping. From classic Nivi style to modern butterfly drape, learn step-by-step techniques for every occasion and body type.</p>',
-  },
-  {
-    path: '/blog/indian-wedding-trends-2026',
-    title: 'Indian Wedding Trends 2026 — Colors, Fabrics & Styles | LuxeMia',
-    description: 'Discover the top Indian wedding trends for 2026. Trending colors, fabrics, lehenga styles, and bridal fashion predictions for the upcoming season.',
-    h1: 'Indian Wedding Trends 2026',
-    content: '<p>Stay ahead of the curve with our guide to Indian wedding trends for 2026. From pastel lehengas to sustainable fabrics, discover what\'s hot this wedding season.</p>',
-  },
-  {
-    path: '/blog/lehenga-color-for-dark-skin',
-    title: 'Best Lehenga Colors for Dark Skin — Flattering Shades & Styling Tips | LuxeMia',
-    description: 'Find the best lehenga colors for dark skin tones. Expert-recommended shades, styling tips, and outfit ideas that flatter and enhance your natural glow.',
-    h1: 'Best Lehenga Colors for Dark Skin',
-    content: '<p>Discover lehenga colors that beautifully complement dark skin tones. From rich jewel tones to warm earthy shades, find your perfect match.</p>',
-  },
-  {
-    path: '/blog/wedding-saree-for-mother-of-bride',
-    title: 'Wedding Saree for Mother of the Bride — Elegant Options | LuxeMia',
-    description: 'Find the perfect wedding saree for the mother of the bride. Elegant silk, Banarasi & designer sarees for the most important guest at the wedding.',
-    h1: 'Wedding Saree for Mother of the Bride',
-    content: '<p>The mother of the bride deserves something special. Explore our curated selection of elegant silk and Banarasi sarees perfect for this honored role.</p>',
-  },
-  {
-    path: '/blog/designer-wedding-dress-under-500',
-    title: 'Wedding Dress Under $500 — Online Options | LuxeMia',
-    description: 'Find a wedding dress under $500. Ready-to-ship bridal lehengas, sarees and suits for urgent celebrations.',
-    h1: 'Designer Wedding Dress Under $500',
-    content: '<p>A stunning wedding outfit doesn\'t have to cost a fortune. Discover our handpicked selection of designer lehengas and sarees under $500 that deliver elegance for less.</p>',
-  },
-  {
-    path: '/blog/kanchipuram-silk-saree-south-indian-wedding-guide',
-    title: 'Kanchipuram Silk Sarees: South Indian Wedding Guide | LuxeMia Blog',
-    description: 'Complete guide to Kanchipuram (Kanjivaram) silk sarees — history, authentication with GI tags, pricing, bridal styling, and care tips for South Indian weddings.',
-    h1: 'Kanchipuram Silk Sarees: The Ultimate South Indian Wedding Guide',
-    content: '<p>The Kanchipuram silk saree (also called Kanjivaram) is the finest silk saree in India and the traditional choice for South Indian brides. Woven in Kanchipuram, Tamil Nadu for over 400 years, these sarees feature pure mulberry silk, real zari threads, and an interlocked-weft technique that makes the border and body inseparable. Authentic Kanchipuram sarees carry a GI tag with a unique serial number. Prices range from $200 for simple festive styles to $2,000+ for heavy bridal pieces. South Indian brides traditionally wear a 9-yard Kanchipuram in auspicious colors like arakku red, maroon, or yellow, with heavy temple border designs. For festive occasions, lighter Kanchipuram sarees in royal blue, emerald green, or mango yellow are popular. Always dry-clean Kanchipuram silk and store in muslin cloth with neem leaves to preserve the zari for generations.</p>',
-  },
-  {
-    path: '/blog/why-indian-brides-wear-red-cultural-significance',
-    title: 'Why Indian Brides Wear Red: Cultural, Historical & Astrological Significance | LuxeMia',
-    description: 'Indian brides wear red to symbolize prosperity, fertility, and Goddess Durga. The tradition dates to the Vedic period (1500-500 BCE) and is reinforced by Vedic astrology. 68% of modern brides still choose red.',
-    h1: 'Why Indian Brides Wear Red: Cultural, Historical & Astrological Significance',
-    content: '<p><strong>Quick Answer:</strong> Indian brides wear red because the color symbolizes prosperity (shubh), fertility, and the Hindu goddess Durga. The tradition dates to the Vedic period (1500-500 BCE), is reinforced by Vedic astrology (Mars/Mangal rules marriage), and is supported by modern color psychology. According to a 2025 Vogue India bridal survey, approximately 68% of modern Indian brides still choose red or red-adjacent shades (maroon, wine, coral) for their main wedding ceremony. Red is considered shubh (auspicious) across Hindu, Sikh, Jain, and Buddhist wedding traditions, and the bride\'s red attire is paired with sindoor (red vermilion in the hair parting) and alta (red dye on the feet) to complete the auspicious trinity.</p><p>In Indian culture, red is not just a color — it is a sacred symbol. The Sanskrit word for red, rakta, is the same word used for blood, signifying the life force. Red represents rajas, one of the three gunas (fundamental qualities) in Hindu philosophy — the quality of passion, energy, and action. Red is also the color of Goddess Durga, the warrior goddess who represents the triumph of good over evil. By wearing red, the bride invokes Durga\'s strength and protection for her new household.</p><p>The tradition dates back over 3,500 years to the Vedic period (1500-500 BCE). The Rigveda, the oldest of the four Vedas, mentions red as the color of weddings and sacrificial rituals. In Vedic astrology (Jyotisha), the planet Mars (Mangal) rules marriage and is associated with the color red. The wedding ceremony takes place under a mandap decorated with red flowers, and the sacred fire (agni) that the couple circumambulates seven times is itself red.</p><p>Regional variations include: North Indian red lehengas with gold zardozi, Bengali red and white Banarasi sarees, South Indian yellow or green silks with red borders, Maharashtrian paithani sarees with mandatory red borders, Gujarati red panetar sarees, and Kashmiri red pherans. Modern trends show a return to red — 68% of 2025 brides chose red, up from 54% in 2022. Red shades include true red (raktim), maroon, wine, coral, crimson, and arakku (South Indian lac dye red).</p>',
-  },
-  {
-    path: '/blog/sabyasachi-mukherjee-designer-profile-handloom-revival',
-    title: 'Sabyasachi Mukherjee: The Designer Who Revived Indian Handloom | LuxeMia',
-    description: 'Sabyasachi Mukherjee (born 1974, Kolkata) founded his label in 1999 with 3 artisans. NIFT Kolkata graduate. Known for reviving handloom textiles and dressing celebrity brides Anushka Sharma (2017), Deepika Padukone (2018), and Katrina Kaif (2021).',
-    h1: 'Sabyasachi Mukherjee: The Designer Who Revived Indian Handloom',
-    content: '<p><strong>Quick Answer:</strong> Sabyasachi Mukherjee is an Indian fashion designer, jewellery designer, and couturier born on 23 February 1974 in Kolkata, West Bengal. He graduated from the National Institute of Fashion Technology (NIFT) Kolkata in 1999 with top honors — winning all four major student awards — and founded his eponymous label the same year with just three employees. He is credited with reviving traditional Indian handloom textiles and bringing them to the global luxury market. He is best known for dressing celebrity brides including Anushka Sharma (2017), Deepika Padukone (2018), and Katrina Kaif (2021), and his brand now operates flagship stores in Kolkata, New Delhi, and Mumbai.</p><p>Sabyasachi Mukherjee was born on 23 February 1974 in Manicktala, a middle-class neighborhood in Kolkata. He initially considered a career in medicine, but was drawn to fashion design and applied to NIFT Kolkata. He graduated with top honors, winning all four major student awards. Rather than accepting job offers from established fashion houses, he chose to start his own label in 1999 with just three employees.</p><p>His early collections focused on reviving dying handloom techniques — particularly the weaving traditions of Bengal, Banaras, and Surat. He became known for his "rebel" approach — refusing to follow Western fashion trends and instead doubling down on Indian craft traditions. He sources fabrics directly from handloom weavers in Varanasi, Kanchipuram, and Murshidabad, and his brand estimates he works with over 3,000 artisans across India.</p><p>Sabyasachi\'s reputation as India\'s premier bridal designer was cemented by three iconic celebrity weddings: Anushka Sharma married Virat Kohli on December 11, 2017 in Tuscany, Italy, wearing a pale pink Sabyasachi lehenga that sparked the pastel bride trend. Deepika Padukone married Ranveer Singh on November 14-15, 2018 at Villa del Balbianello on Lake Como, Italy, wearing a red "Sinduri red" Sabyasachi lehenga. Katrina Kaif married Vicky Kaushal in December 2021 at Six Senses Fort Barwara, Rajasthan, wearing a red Sabyasachi matka silk lehenga with uncut diamond jewelry from Sabyasachi Heritage Jewelry. The brand now operates flagship stores in Kolkata, New Delhi, and Mumbai, with the Mumbai flagship opening in Kala Ghoda in April 2025.</p>',
-  },
-  {
-    path: '/blog/manish-malhotra-bollywood-bridal-designer-profile',
-    title: 'Manish Malhotra: Bollywood\'s Bridal Designer of Choice | LuxeMia',
-    description: 'Manish Malhotra (born December 5, 1966, Mumbai) started as a costume designer for Bollywood films in 1990 (Swarg), won Filmfare for Rangeela (1995), launched his label in 2005. Dressed celebrity brides Kiara Advani (2023) and Parineeti Chopra (2023).',
-    h1: 'Manish Malhotra: Bollywood\'s Bridal Designer of Choice',
-    content: '<p><strong>Quick Answer:</strong> Manish Malhotra is an Indian fashion designer, couturier, costume stylist, and entrepreneur born on 5 December 1966 in Mumbai, India. He began his career as a model before transitioning to costume design for Bollywood films, making his debut with the 1990 film Swarg designing costumes for actress Juhi Chawla. His breakthrough came with the 1995 film Rangeela, for which he won the Filmfare Award for Best Costume Design in 1996 — a first for an Indian costume designer. He launched his eponymous luxury label in 2005, which has since become one of India\'s most recognized fashion brands. He is best known for his Bollywood costume design work (over 30 years and hundreds of films), his bridal couture line, and dressing celebrity brides including Kiara Advani (February 2023) and Parineeti Chopra (September 2023).</p><p>Manish Malhotra was born on 5 December 1966 in Mumbai into a middle-class Punjabi family. He studied at Elphinstone College, Mumbai, and began his career as a model while still a student. He did not have formal fashion design training — his entry into design came through his love of films and his eye for styling. His break into costume design came when he was asked to design costumes for actress Juhi Chawla for the 1990 film Swarg.</p><p>His career-defining moment came with the 1995 film Rangeela, directed by Ram Gopal Varma and starring Urmila Matondkar. His costume design for Urmila in Rangeela was considered revolutionary — it moved Bollywood costume design away from the traditional "heroine in a saree" aesthetic toward contemporary, body-conscious Western silhouettes. For Rangeela, he won the Filmfare Award for Best Costume Design in 1996 — the first time Filmfare had given a costume design award.</p><p>Manish Malhotra has dressed numerous celebrity brides. Kiara Advani married Sidharth Malhotra on February 7, 2023, at Suryagarh Fort in Jaisalmer, Rajasthan, wearing a pastel pink Manish Malhotra lehenga. The designer created approximately 150 custom outfits for the bride and groom across all wedding functions. Parineeti Chopra married politician Raghav Chadha on September 24, 2023, at The Leela Palace in Udaipur, wearing a tonal ecru-colored Manish Malhotra lehenga with delicate pearl work. It is worth noting that Alia Bhatt wore a Sabyasachi ivory saree for her April 2022 wedding to Ranbir Kapoor — NOT Manish Malhotra, despite common misconception.</p>',
-  },
-  {
-    path: '/blog/bindi-meaning-history-indian-women',
-    title: 'The Bindi: Meaning, History, and Modern Styling for Indian Women | LuxeMia',
-    description: 'The bindi is a mark worn on the forehead between the eyebrows by Hindu, Jain, and Buddhist women. It represents the ajna chakra (third eye) and symbolizes spiritual wisdom. Traditionally red for married women, modern bindis come in every color.',
-    h1: 'The Bindi: Meaning, History, and Modern Styling for Indian Women',
-    content: '<p><strong>Quick Answer:</strong> The bindi is a colored mark worn on the forehead between the eyebrows, traditionally by Hindu, Jain, and Buddhist women in South Asia. According to the Encyclopaedia Britannica, the custom dates back centuries. The word "bindi" comes from the Sanskrit bindu, meaning "point" or "dot." In Hindu, Buddhist, and Jain traditions, the bindi is associated with the ajna chakra — the "third eye" or sixth primary chakra — which represents intuition, wisdom, and spiritual energy. A red bindi traditionally signifies that a woman is married, while other colors have different meanings. Today, bindis are worn both as spiritual symbols and as fashion accessories, and they are popular among women of all backgrounds within the United States.</p><p>In Hindu, Buddhist, and Jain traditions, the bindi is placed at the location of the ajna chakra — the sixth of the seven primary chakras in Hindu tantric tradition. The ajna chakra is known as the "third eye chakra" and is associated with intuition, inner wisdom, and spiritual insight. The Sanskrit word ajna means "command" or "perception." By placing a mark at the ajna chakra location, the wearer is symbolically activating or honoring this spiritual center.</p><p>The bindi tradition dates back thousands of years. The Atharva Veda, one of the four Vedas composed between 1500-500 BCE, mentions the use of forehead marks as part of spiritual and medicinal practices. The traditional application method used kumkum — a red powder made from turmeric and slaked lime, which turns turmeric from yellow to red. Wealthier women used sindoor — a red vermilion made from cinnabar (mercury sulfide) — which was also applied along the hair parting to signify married status.</p><p>Traditional bindi colors carry specific meaning: red for married Hindu women (signifying shakti, prosperity, and Goddess Durga\'s blessing), black for unmarried women and girls (believed to ward off the evil eye), maroon for married women in South India, yellow or sandalwood for religious ceremonies, and white or ash for widows in some traditional communities. Regional variations include the small round North Indian bindi, the large elongated Bengali chondor, the crescent-moon Maharashtrian style, the large round South Indian pottu, and the ornate Rajasthani bor with forehead jewelry. Modern trends include crystal bindis, matha patti bridal pieces, minimalist dots, and designer bindis by Sabyasachi and Manish Malhotra.</p>',
-  },
-  {
-    path: '/blog/jj-valaya-royal-couture-house-of-valaya',
-    title: 'JJ Valaya: Royal Couture and the House of Valaya | LuxeMia',
-    description: 'JJ Valaya (born 8 October 1967, Jodhpur) graduated from NIFT New Delhi in 1991 and founded his couture label in 1992. Known for royal-inspired Indian couture, Mughal-era embroidery, and the House of Valaya headquartered at Jhalamand House in Jodhpur.',
-    h1: 'JJ Valaya: Royal Couture and the House of Valaya',
-    content: '<p><strong>Quick Answer:</strong> JJ Valaya (born 8 October 1967 in Jodhpur, Rajasthan) is an Indian fashion designer, couturier, and photographer, widely recognized as a pioneer in luxury Indian couture. He joined the National Institute of Fashion Technology (NIFT) New Delhi in 1989 and graduated in 1991, winning several awards. He founded his eponymous couture label, JJ Valaya, in 1992, making it one of India\'s oldest luxury fashion houses. The House of Valaya is headquartered at Jhalamand House in Jodhpur — Valaya\'s birthplace — and is known for its royal-inspired aesthetic, Mughal-era embroidery, and multicultural design philosophy. His brother, TJ Singh, left his army post to co-found the business in 1992.</p><p>JJ Valaya was born on 8 October 1967 in Jodhpur, Rajasthan, into a royal family with deep roots in the region. He joined NIFT New Delhi in 1989, where he studied fashion design and graduated in 1991. Upon graduation, he chose to start his own label rather than accept job offers, and with the entrepreneurial support of his brother TJ Singh — who left his post in the army to help establish the business — launched the JJ Valaya couture label in 1992.</p><p>His design aesthetic is characterized by "royal Indian luxury" — Mughal miniatures, Rajasthani palaces, and Ottoman-era architecture. His signature elements include Mughal-inspired embroidery (zardozi, aari, resham), a royal color palette (emerald, sapphire, ruby, gold), architectural silhouettes, multicultural motifs, and couture-level craftsmanship where each garment features hand embroidery that can take 90-120 days. The House of Valaya encompasses JJ Valaya Couture (bridal lehengas and sherwanis from $3,000-$20,000+), Valaya Home (launched 1996), and Valaya Bar (lifestyle extension).</p>',
-  },
-  {
-    path: '/blog/anita-dongre-sustainable-luxury-grassroots',
-    title: 'Anita Dongre: Sustainable Luxury and Grassroots Empowerment | LuxeMia',
-    description: 'Anita Dongre (born 3 October 1963, Mumbai) founded House of Anita Dongre in 1995 with two sewing machines. 5 brands: AND, Global Desi, Anita Dongre Couture, Pinkcity, Grassroot. Over 1,000 stores across 114 cities. Known for sustainable fashion.',
-    h1: 'Anita Dongre: Sustainable Luxury and Grassroots Empowerment',
-    content: '<p><strong>Quick Answer:</strong> Anita Dongre (née Sawlani, born 3 October 1963 in Mumbai) is an Indian fashion designer and the founder of House of Anita Dongre, one of India\'s largest fashion houses. She founded the company in 1995 with two sewing machines and the support of her family. Today, the House of Anita Dongre encompasses five brands — AND, Global Desi, Anita Dongre Couture, Pinkcity, and Grassroot — with over 1,000 stores across 114 cities. She is particularly known for her commitment to sustainable fashion through the Grassroot label and for empowering rural women artisans through fair-trade craft initiatives.</p><p>The five brands of House of Anita Dongre: AND (launched 1999, Western-inspired silhouettes for the modern Indian woman, $50-$200), Global Desi (launched 2007, boho-chic combining Indian prints with Western silhouettes, $30-$150), Anita Dongre Couture (flagship luxury line, hand-embroidered bridal wear, $2,000-$15,000+), Pinkcity (launched 2008, luxury jadau jewelry with uncut diamonds in 22-karat gold), and Grassroot (launched 2015, sustainable organic clothing with natural dyes and handwoven fabrics, focused on reviving dying Indian craft traditions).</p><p>Her design aesthetic features floral and botanical motifs, sustainable materials, an ivory and pastel palette, and craft revival. Through Grassroot, she works with over 250 artisans across rural India, providing fair-trade wages. The brand has an international presence with stores in New York and other global locations.</p>',
-  },
-  {
-    path: '/blog/ritu-kumar-pioneer-indian-textile-revival',
-    title: 'Ritu Kumar: The Pioneer Who Revived Indian Textile Traditions | LuxeMia',
-    description: 'Ritu Kumar (born 11 November 1944) studied art history at Lady Irwin College (1964) and Briarcliff College New York (1966). Started in Kolkata with hand-block printing. Pioneered boutique culture in India and revived traditional Indian textiles.',
-    h1: 'Ritu Kumar: The Pioneer Who Revived Indian Textile Traditions',
-    content: '<p><strong>Quick Answer:</strong> Ritu Kumar (born 11 November 1944) is an Indian fashion designer and the pioneer of the Indian fashion industry. She studied art history at Lady Irwin College, Delhi (graduating in 1964) and at Briarcliff College in New York (1966), where she developed the knowledge of textile history that would define her career. She began her fashion business in Kolkata using two small tables and hand-block printing techniques, and is credited with pioneering the boutique culture in India and reviving traditional Indian textile traditions that were declining in the post-independence era.</p><p>Ritu Kumar was born on 11 November 1944. She studied at Lady Irwin College in Delhi, graduating in 1964, then received a scholarship to study in the United States, attending Briarcliff College in New York where she studied Art History, graduating in 1966. Her education in art history gave her a deep understanding of India\'s textile heritage.</p><p>After returning to India, she began her fashion business in Kolkata with just two small tables and hand-block printing techniques. Rather than following Western fashion trends, she focused on reviving Indian textile traditions — block printing, bandhani, embroidery, and handwoven fabrics. She worked directly with artisan communities in Bengal, Rajasthan, and Gujarat. She is widely credited with pioneering the boutique culture in India, introducing the concept of designer boutiques where customers could buy ready-made garments designed by a named designer.</p><p>Over her 50+ year career, she has worked to preserve hand-block printing, bandhani tie-dye, chikankari embroidery, kantha embroidery, zardozi, and handwoven silks and cottons. The Ritu Kumar brand today includes Ritu Kumar Couture ($2,000-$15,000+), Ritu Kumar ready-to-wear ($100-$500), Ritu Kumar Label (contemporary line), and Ritu Kumar Home.</p>',
-  },
-  {
-    path: '/blog/sindoor-mangalsutra-sacred-symbols-hindu-marriage',
-    title: 'Sindoor and Mangalsutra: The Sacred Symbols of Hindu Marriage | LuxeMia',
-    description: 'Sindoor (red vermilion) and the mangalsutra (black-beaded gold necklace) are the two most sacred symbols of Hindu marriage. Sindoor is applied to the bride\'s hair parting, the mangalsutra is tied around her neck. Both signify married status.',
-    h1: 'Sindoor and Mangalsutra: The Sacred Symbols of Hindu Marriage',
-    content: '<p><strong>Quick Answer:</strong> Sindoor is a traditional red or orange-red vermilion powder applied along the parting of a married Hindu woman\'s hair, and the mangalsutra is a sacred necklace of black beads and gold tied around the bride\'s neck during the Hindu wedding ceremony. According to Wikipedia, sindoor is considered auspicious and serves as a visual marker of marital status — ceasing to wear it usually implies widowhood. The mangalsutra (or mangalasutra) literally means "auspicious thread" and is knotted around the bride\'s neck by the groom during the ceremony. Together, sindoor and the mangalsutra are the two most visible symbols of Hindu marriage, worn by married women across India, Sri Lanka, and Nepal.</p><p>Sindoor is made from traditional vermilion — a red pigment derived from cinnabar (mercury sulfide) or, more commonly today, from turmeric and slaked lime, which turns turmeric from yellow to red. The red color symbolizes female energy (shakti), power, love, and passion. In Hindu tradition, the red color is associated with Goddess Parvati, who is believed to protect the husband of any woman who wears sindoor. The application of sindoor is a central ritual called sindoor daan, where the groom applies sindoor to the bride\'s hair parting for the first time during the wedding ceremony.</p><p>The mangalsutra consists of black beads (kala manka) believed to offer protection against negative energies and the evil eye (nazar), and gold elements representing prosperity, purity, and divine blessing. The mangalsutra is tied by the groom with three knots, symbolizing the union of the couple for three lifetimes or the three aspects of marriage (physical, emotional, and spiritual). Regional variations include the Maharashtrian two-vati design, the South Indian thaali on yellow thread, the Bengali gold pendant on red and black thread, and the Punjabi elaborate gold pendant designs.</p>',
-  },
-  {
-    path: '/blog/regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari',
-    title: 'Regional Indian Wedding Rituals: Punjabi, Bengali, Tamil & Marwari Traditions | LuxeMia',
-    description: 'Indian wedding rituals vary by region. Punjabi Sikh weddings feature Anand Karaj (4 circumambulations of Guru Granth Sahib). Bengali weddings center on sindoor daan and shankha-pola. Tamil weddings feature Kashi Yatra and Oonjal. Marwari weddings are multi-day affairs.',
-    h1: 'Regional Indian Wedding Rituals: Punjabi, Bengali, Tamil & Marwari Traditions',
-    content: '<p><strong>Quick Answer:</strong> Indian wedding rituals vary dramatically by region, religion, and community. Punjabi Sikh weddings feature the Anand Karaj ceremony — meaning "Act towards happiness" — where the couple makes 4 circumambulations (lavan) around the Guru Granth Sahib, the Sikh holy scripture, with no fire ceremony and no priest (the ceremony is conducted by a granthi). Bengali Hindu weddings center on the sindoor daan (groom applies vermilion to bride\'s hair) and the bride\'s shankha-pola (white and red bangles). Tamil Brahmin weddings feature the Kashi Yatra (groom pretends to leave for pilgrimage) and the Oonjal (swing ceremony). Marwari weddings are elaborate multi-day affairs with mehendi, haldi, and phere (7 circumambulations of the sacred fire). According to Wikipedia, the Sikh Anand Karaj ceremony has been recognized by the Indian Government since 1909.</p><p>Sikh weddings follow the Anand Karaj, introduced by the third Sikh Guru, Guru Amar Das, and legally recognized since 1909. The ceremony features 4 Lavan (circumambulations) around the Guru Granth Sahib while four hymns composed by Guru Ram Das are sung. Unlike Hindu weddings, there is no fire ceremony — the Guru Granth Sahib is the witness. Sikhism emphasizes equality, so the ceremony treats the couple as equal partners with no kanyadaan. The ceremony takes place in a Gurdwara with guests seated on the floor covering their heads.</p><p>Bengali weddings feature sindoor daan (groom applies vermilion to bride\'s hair parting), shankha-pola (white conch shell bangles on left wrist, red coral bangles on right), loha (iron bangle for protection), subho drishti (couple sees each other for the first time as married), and a sacred fire ceremony. Bengali brides wear red and white Banarasi silk sarees with a shola (pith crown). Tamil Brahmin weddings span 3-5 days with Kashi Yatra (groom pretends to leave for Varanasi), Oonjal (swing ceremony), Muhurtham (groom ties thaali gold pendant on yellow thread), and Saptapadi (7 steps). Marwari weddings are 3-7 day elaborate affairs with mehendi, haldi, sangeet, phere (7 fire circumambulations), vidaai, and griha pravesh.</p>',
-  },
-  {
-    path: '/blog/embroidery-motifs-symbolism-paisley-peacock-lotus',
-    title: 'The Symbolism of Embroidery Motifs: Paisley, Peacock, and Lotus in Indian Textiles | LuxeMia',
-    description: 'Indian embroidery motifs carry deep symbolism. The paisley (mango/ambi) represents fertility and eternity. The peacock symbolizes beauty and grace. The lotus represents purity and divinity. Understanding these motifs helps you choose ethnic wear with cultural meaning.',
-    h1: 'The Symbolism of Embroidery Motifs: Paisley, Peacock, and Lotus',
-    content: '<p><strong>Quick Answer:</strong> The three most iconic motifs in Indian embroidery are paisley (also called mango, ambi, or kairi — symbolizing fertility, eternity, and life), peacock (symbolizing beauty, grace, and the vehicle of Lord Kartikeya), and lotus (symbolizing purity, divinity, and the seat of Goddess Lakshmi). According to a study published in the International Journal of Research and Analytical Reviews, paisley is "considered very auspicious representing fertility as well as immortality" and is widely used in Indian textile traditions including Kantha embroidery, Banarasi brocade, and Kashmiri shawls. These motifs are not merely decorative — they carry centuries of cultural, religious, and spiritual meaning.</p><p>The paisley motif is a curved, teardrop shape resembling a mango. In Indian textile traditions it is known as ambi (Punjabi), kairi (Hindi), manji (Kashmiri), and kalga (Mughal terminology). The paisley\'s curves mimic the mango fruit — India\'s national fruit and a symbol of fertility. Its symbolism includes fertility and abundance, eternity and immortality (the never-ending curved shape), prosperity (associated with Lakshmi), and life force. Paisley appears in virtually every Indian textile tradition — Banarasi brocade, Kashmiri pashmina, Kantha, Phulkari, and Chikankari.</p><p>The peacock (India\'s national bird) symbolizes beauty, grace, and the divine. In Hindu mythology, the peacock is the vahana (vehicle) of Lord Kartikeya. The peacock\'s ability to eat poisonous snakes symbolizes the triumph of good over evil. The lotus symbolizes purity, divinity, and spiritual awakening — it grows in muddy water but remains pristine, symbolizing spiritual purity untouched by worldly contamination. The lotus is the seat of Goddess Lakshmi (prosperity) and Lord Brahma (the creator). Other important motifs include the elephant (royalty, wisdom, Ganesha), flowering vine (interconnectedness), conch shell (primordial sound Om), and swan (discernment).</p>',
-  },
-  // ─── Author bio pages — E-E-A-T compliance per Google's AI playbook ──────
-  {
-    path: '/authors/ananya-iyer',
-    title: 'Ananya Iyer — Senior Bridal Stylist | LuxeMia Blog',
-    description: 'Ananya Iyer is LuxeMia\'s Senior Bridal Stylist with 8 years of experience in Indian bridal wear, formerly at Kalki Fashion Mumbai. NIFT Mumbai graduate. Read her articles on bridal lehengas, Kanchipuram silk, and wedding dress codes.',
-    h1: 'Ananya Iyer — Senior Bridal Stylist',
-    content: '<p>Ananya Iyer is LuxeMia\'s Senior Bridal Stylist with 8 years of experience specializing in Indian bridal wear. Born in Chennai and raised in Mumbai, she developed an early fascination with Indian textiles while watching her grandmother drape Kanchipuram silk sarees for temple ceremonies. After graduating from the National Institute of Fashion Technology (NIFT) Mumbai in 2018 with a specialization in Indian ethnic wear, she worked as a bridal stylist at Kalki Fashion\'s flagship Mumbai boutique for 5 years, where she personally styled over 400 brides for their wedding ceremonies.</p><p>At LuxeMia, Ananya leads the bridal styling consultation service, helping brides across the United States choose their perfect wedding lehenga or saree. She has personally sourced fabrics from Varanasi (Banarasi silk), Kanchipuram (Kanjivaram silk), and Surat (georgette and chiffon), giving her firsthand knowledge of textile authentication and craftsmanship quality. Her styling philosophy centers on matching the bride\'s personality and regional tradition to the right silhouette, fabric, and color.</p><p>Ananya\'s writing has been featured in Vogue India\'s bridal supplement and The Knot India. She is fluent in Tamil, Hindi, and English, which allows her to work directly with weavers and artisans across India\'s textile hubs. Her areas of expertise include bridal lehengas, Kanchipuram silk sarees, Banarasi silk authentication, wedding ceremony dress codes, color theory for Indian skin tones, and custom tailoring.</p>',
-  },
-  {
-    path: '/authors/meera-kapoor',
-    title: 'Meera Kapoor — Textile & Embroidery Specialist | LuxeMia Blog',
-    description: 'Meera Kapoor is LuxeMia\'s Textile & Embroidery Specialist with 10 years researching Indian handloom traditions. NID Ahmedabad graduate. Read her articles on Banarasi silk, chikankari, zari work, and fabric authentication.',
-    h1: 'Meera Kapoor — Textile & Embroidery Specialist',
-    content: '<p>Meera Kapoor is LuxeMia\'s Textile and Embroidery Specialist with over a decade of experience researching Indian handloom traditions. She holds a Master\'s degree in Textile Design from the National Institute of Design (NID) Ahmedabad, where her thesis focused on the revival of dying embroidery techniques including Lucknowi chikankari and Bengali kantha.</p><p>Meera has spent the last 10 years traveling across India\'s textile hubs — from the jacquard looms of Kanchipuram to the hand-block printers of Bagh, from the zardozi workshops of Lucknow to the bandhani artisans of Kutch. She has documented over 40 distinct Indian textile techniques and works directly with weaving cooperatives to ensure authentic, GI-tagged products reach LuxeMia\'s customers.</p><p>Her expertise includes fabric authentication (especially Banarasi silk GI tag verification, Kanchipuram interlock test, and zari quality assessment), embroidery technique identification, and care instructions for delicate handwork. She has consulted for the Ministry of Textiles\' Handloom Mark campaign.</p>',
-  },
-  {
-    path: '/authors/rajesh-sharma',
-    title: 'Rajesh Sharma — Menswear & Groom Stylist | LuxeMia Blog',
-    description: 'Rajesh Sharma is LuxeMia\'s Menswear & Groom Stylist with 12 years of experience in Indian ethnic menswear, formerly at Manyavar New Delhi. Pearl Academy graduate. Read his articles on sherwanis, kurta pajama sets, and groom styling.',
-    h1: 'Rajesh Sharma — Menswear & Groom Stylist',
-    content: '<p>Rajesh Sharma is LuxeMia\'s Menswear and Groom Stylist with 12 years of experience in Indian ethnic menswear. He began his career at Manyavar\'s New Delhi flagship store in 2014, where he styled over 1,000 grooms and wedding guests for ceremonies ranging from intimate mehendi gatherings to grand royal weddings in Rajasthan.</p><p>Rajesh specializes in sherwani selection, kurta pajama styling, Nehru jacket coordination, and indo-western fusion outfits for men. He has particular expertise in fabric selection for menswear — advising on raw silk vs. brocade for winter weddings, cotton vs. linen for summer ceremonies, and the increasingly popular indo-western suit for reception events.</p><p>A graduate of Pearl Academy New Delhi with a degree in Fashion Design, Rajesh has styled celebrities for IIFA awards and contributed menswear styling tips to GQ India\'s wedding editions. He speaks Hindi, Punjabi, and English.</p>',
-  },
-  {
-    path: '/authors/priya-nair',
-    title: 'Priya Nair — NRI Shopping & Lifestyle Editor | LuxeMia Blog',
-    description: 'Priya Nair is LuxeMia\'s NRI Shopping & Lifestyle Editor based in Philadelphia. 6 years writing about Indian ethnic fashion for diaspora audiences. Temple University graduate. Read her NRI shopping guides.',
+        <li><a href="/suits">Chikankari Salwar Kameez</a> — Traditional Eid salwar kameez</l…19066 tokens truncated…air is LuxeMia\'s NRI Shopping & Lifestyle Editor based in Philadelphia. 6 years writing about Indian ethnic fashion for diaspora audiences. Temple University graduate. Read her NRI shopping guides.',
     h1: 'Priya Nair — NRI Shopping & Lifestyle Editor',
     content: '<p>Priya Nair is LuxeMia\'s NRI Shopping and Lifestyle Editor, based in Philadelphia. A second-generation Indian-American born to Kerala parents, she has spent the last 6 years writing about the unique challenges and joys of maintaining Indian ethnic fashion traditions while living abroad. Her work has appeared in Brown Girl Magazine, The Indian Express NRI edition, and Saaptagiri Magazine.</p><p>Priya specializes in practical guides for the NRI diaspora: how to buy authentic Indian ethnic wear online in the United States; how to understand shipping timing; how to convert Indian sizing to US sizing; and how to style Indian pieces for Western contexts. She has personally tested over 30 online Indian ethnic wear stores.</p><p>She holds a Bachelor\'s in Journalism from Temple University and is fluent in Malayalam, Hindi, and English. Her perspective as an NRI consumer herself gives her guides an authenticity that resonates with LuxeMia\'s primarily NRI audience.</p>',
   },
@@ -2429,7 +1945,7 @@ function generateHtml(template, route, allShopifyProducts) {
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.
     const allProducts = Array.from(allShopifyProducts.values());
-    const collectionProducts = filterProductsForCategory(allProducts, route.category, route.path === '/new-arrivals');
+    const collectionProducts = filterProductsForCategory(allProducts, route.category);
     console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
 
     // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
