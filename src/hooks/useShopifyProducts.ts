@@ -343,7 +343,7 @@ const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
     },
   }));
 
-export const useShopifyProducts = (category?: string) => {
+export const useShopifyProducts = (category?: string, revalidate = false) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -381,7 +381,7 @@ export const useShopifyProducts = (category?: string) => {
           // Paint the prerendered products immediately, then revalidate from Shopify
           // so newly published products appear without requiring another deployment.
           setIsLoading(false);
-          if (typeof window !== 'undefined' && window.location.pathname === '/new-arrivals') {
+          if (revalidate) {
             try {
               const freshProducts = await fetchAllProducts();
               if (freshProducts.length > 0) {
@@ -396,7 +396,15 @@ export const useShopifyProducts = (category?: string) => {
           return;
         }
         // 2. Existing cache + API fallback (unchanged)
-        const allProducts = await getAllProducts();
+        let allProducts = revalidate ? await fetchAllProducts() : await getAllProducts();
+        if (revalidate) {
+          if (allProducts.length > 0) {
+            cachedProducts = allProducts;
+            storeProducts(allProducts);
+          } else {
+            allProducts = await getAllProducts();
+          }
+        }
         // Apply global filters (old batch exclusion + excluded titles) even when no category
         const globallyFiltered = allProducts.filter(p => {
           if (isOldBatchProduct(p)) return false;
@@ -413,7 +421,7 @@ export const useShopifyProducts = (category?: string) => {
       }
     };
     load();
-  }, [category]);
+  }, [category, revalidate]);
 
   // no-op loadMore since we fetch all at once
   const loadMore = useCallback(() => {}, []);
