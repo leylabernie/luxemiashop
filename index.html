@@ -129,7 +129,7 @@
       [style*="background-color: rgb(245"]{background-color:#f5ead8}
     </style>
 
-    <!-- Structured Data: Organization, LocalBusiness, WebSite, WebPage, Speakable, Returns, Shipping.
+    <!-- Structured Data: Organization, OnlineStore, WebSite, WebPage, Speakable, Returns, Shipping.
          FAQPage schema was REMOVED 2026-07-09 per SEO audit Item #1 — Google Aug-2023
          policy restricts FAQPage rich results to gov/health authority sites only.
          Visible FAQ HTML remains on /faq and homepage for AI search / PAA. -->
@@ -141,7 +141,7 @@
           "@type": "Organization",
           "@id": "https://luxemia.shop/#org",
           "name": "LuxeMia",
-          "alternateName": "Glamour Indian Wear",
+          "legalName": "Glamour Indian Wear",
           "url": "https://luxemia.shop",
           "logo": "https://luxemia.shop/og-image.jpg",
           "image": "https://luxemia.shop/og-image.jpg",
@@ -151,9 +151,7 @@
           "address": {
             "@type": "PostalAddress",
             "addressCountry": "US",
-            "addressRegion": "Pennsylvania",
-            "addressLocality": "Pennsylvania",
-            "postalCode": "19xxx"
+            "addressRegion": "Pennsylvania"
           },
           "contactPoint": {
             "@type": "ContactPoint",
@@ -175,65 +173,37 @@
             "url": "https://luxemia.shop/collections"
           },
           "knowsAbout": ["Indian Ethnic Wear", "Bridal Lehengas", "Sarees", "Salwar Kameez", "Sherwanis", "Anarkali Suits", "Bridal Wear", "Indian Wedding Fashion", "NRI Ethnic Wear Shopping", "Traditional Indian Textiles", "Banarasi Silk", "Kanjivaram Sarees", "Chikankari Embroidery", "Block Printing", "Zardozi Work", "Indian Wedding Guest Attire", "Diwali Outfits", "Mehendi Outfits", "Custom Tailoring Indian Wear"],
-          "founder": {
-            "@type": "Organization",
-            "name": "Glamour Indian Wear",
-            "description": "Glamour Indian Wear is the operating company behind LuxeMia, the e-commerce sister site for US shoppers who need Indian ethnic wear quickly."
-          },
-          "foundingDate": "2025",
-          "numberOfEmployees": {
-            "@type": "QuantitativeValue",
-            "minValue": 5,
-            "maxValue": 15
-          }
+          "foundingDate": "2025"
         },
         {
-          "@type": "LocalBusiness",
-          "@id": "https://luxemia.shop/#localbusiness",
+          "@type": "OnlineStore",
+          "@id": "https://luxemia.shop/#store",
           "name": "LuxeMia",
-          "alternateName": "Glamour Indian Wear",
           "url": "https://luxemia.shop",
           "logo": "https://luxemia.shop/og-image.jpg",
           "image": "https://luxemia.shop/og-image.jpg",
-          "description": "Indian ethnic wear online store. Sarees, lehengas, suits, menswear and indo-western outfits available online. Free U.S. shipping over $150; $12 flat below that. Tracking provided after dispatch.",
+          "description": "Online Indian ethnic wear store serving U.S. shoppers with sarees, lehengas, suits, menswear and indo-western outfits.",
           "telephone": "+1-215-341-9990",
           "email": "hello@luxemia.shop",
-          "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "US",
-            "addressRegion": "Pennsylvania"
-          },
-          "openingHoursSpecification": [
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-              "opens": "10:00",
-              "closes": "19:00"
-            },
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": "Sunday",
-              "opens": "11:00",
-              "closes": "17:00"
-            }
-          ],
-          "priceRange": "$$",
           "currenciesAccepted": "USD",
           "paymentAccepted": "Credit Card, PayPal, Shopify Pay",
           "areaServed": {
-            "@type": "GeoCircle",
-            "geoMidpoint": {
-              "@type": "GeoCoordinates",
-              "latitude": "40.0658",
-              "longitude": "-75.0508"
-            },
-            "geoRadius": "50000"
+            "@type": "Country",
+            "name": "United States"
           },
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "LuxeMia Indian Ethnic Wear",
-            "url": "https://luxemia.shop/collections"
+            "url": "https://luxemia.shop/collections",
+            "itemListElement": [
+              { "@type": "OfferCatalog", "name": "Lehengas", "url": "https://luxemia.shop/lehengas" },
+              { "@type": "OfferCatalog", "name": "Sarees", "url": "https://luxemia.shop/sarees" },
+              { "@type": "OfferCatalog", "name": "Suits", "url": "https://luxemia.shop/suits" },
+              { "@type": "OfferCatalog", "name": "Menswear", "url": "https://luxemia.shop/menswear" },
+              { "@type": "OfferCatalog", "name": "Indo-Western", "url": "https://luxemia.shop/indowestern" }
+            ]
           },
+          "hasMerchantReturnPolicy": { "@id": "https://luxemia.shop/#returnPolicy" },
           "sameAs": [
             "https://www.instagram.com/luxemiashop",
             "https://www.facebook.com/LuxeMia",
@@ -294,14 +264,14 @@
             "@type": "ShippingDeliveryTime",
             "handlingTime": {
               "@type": "QuantitativeValue",
-              "minValue": 0,
-              "maxValue": 2,
+              "minValue": 3,
+              "maxValue": 7,
               "unitCode": "DAY"
             },
             "transitTime": {
               "@type": "QuantitativeValue",
-              "minValue": 0,
-              "maxValue": 0,
+              "minValue": 3,
+              "maxValue": 10,
               "unitCode": "DAY"
             }
           }
@@ -323,14 +293,14 @@
             "@type": "ShippingDeliveryTime",
             "handlingTime": {
               "@type": "QuantitativeValue",
-              "minValue": 0,
-              "maxValue": 2,
+              "minValue": 3,
+              "maxValue": 7,
               "unitCode": "DAY"
             },
             "transitTime": {
               "@type": "QuantitativeValue",
-              "minValue": 0,
-              "maxValue": 0,
+              "minValue": 3,
+              "maxValue": 10,
               "unitCode": "DAY"
             }
           }
@@ -385,7 +355,7 @@
         </ul>
 
         <h2>About LuxeMia</h2>
-        <p>LuxeMia is an Indian ethnic wear boutique founded in 2025 and operated by Glamour Indian Wear. We serve shoppers in the United States with authentic Indian clothing kept in a tightly edited online range. Every piece is sourced directly from skilled Indian artisans and textile hubs — no middlemen, no inflated markups. Our catalog includes bridal lehengas, wedding sarees, salwar kameez suits, sherwanis, and indo-western outfits, with three fit options: Unstitched (DIY), Ready to Wear (standard sizes 32–48), and Made to Measure (custom-stitched to your body measurements).</p>
+        <p>LuxeMia is an online Indian ethnic wear store founded in 2025. We serve shoppers in the United States with a curated catalog of bridal lehengas, wedding sarees, salwar kameez suits, sherwanis, and indo-western outfits from supplier partners in India. Product pages explain available fabric, work, stitching status, sizing, and package contents.</p>
 
         <h2>Shipping &amp; Returns</h2>
         <p><strong>Shipping:</strong> Free U.S. shipping over $150. $12 flat below that. Tracking is provided after dispatch.</p>
@@ -410,7 +380,7 @@
           <li><a href="https://luxemia.shop/nri/usa">Indian Ethnic Wear USA</a></li>
         </ul>
 
-        <p style="margin-top: 32px; font-size: 13px; color: #666;">LuxeMia is owned and operated by Glamour Indian Wear. &copy; 2026 LuxeMia. All rights reserved.</p>
+        <p style="margin-top: 32px; font-size: 13px; color: #666;">LuxeMia is an online-only Indian ethnic wear store with USA-based support. &copy; 2026 LuxeMia. All rights reserved.</p>
       </div>
     </noscript>
   </body>

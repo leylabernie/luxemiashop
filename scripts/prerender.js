@@ -1151,7 +1151,7 @@ const routes = [
     title: 'Shipping Information — the United States | LuxeMia',
     description: 'Free U.S. shipping over $150. $12 flat below that. In-stock Indian ethnic wear tracking provided after dispatch.',
     h1: 'Shipping Information',
-    content: '<p>LuxeMia ships to the United States with full tracking. $12 flat rate below $150. Free US shipping on orders over $150. Standard delivery takes 7-10 business days.</p>',
+    content: '<p>LuxeMia ships to United States addresses with tracking provided after dispatch. Shipping costs $12 below $150 and is free over $150. Dispatch usually takes 3–7 business days depending on stitching status, followed by approximately 3–10 business days in carrier transit.</p>',
   },
   {
     path: '/pages/shipping-customs',
@@ -1159,7 +1159,7 @@ const routes = [
     description: 'Learn how LuxeMia US shipping and checkout taxes work for Indian ethnic wear online.',
     h1: 'Shipping & Customs',
     content: `
-      <p>We ship within the United States to the United States, and beyond, with each order sent directly from our workshop in India.</p>
+      <p>LuxeMia currently ships orders from supplier fulfillment in India to addresses in the United States.</p>
       <h2>Do I have to pay customs duties or import taxes?</h2>
       <p>Depending on your country's import regulations, your order may be subject to customs duties, import taxes, or clearance fees when it arrives. These charges are set by your local customs authority — not by LuxeMia — and are separate from the price you pay at checkout.</p>
       <p>Whether you're charged, and how much, depends on factors like your country's current duty threshold, the declared value of your order, and local trade rules, which can change over time.</p>
@@ -1207,21 +1207,21 @@ const routes = [
   {
     path: '/about',
     title: 'About LuxeMia — Indian Ethnic Wear Online',
-    description: 'LuxeMia is the online side of CeremonyVerse, run by Bhamini, with a online catalog for events coming up soon.',
+    description: 'Learn about LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, and tracked delivery.',
     h1: 'About LuxeMia',
-    content: '<p>LuxeMia is the online side of CeremonyVerse, run by Bhamini, whose family has worked in Surat fabric trade for three generations. We keep a curated online range in stock in the US so you can have it in days rather than months.</p><p>Business address: [STREET ADDRESS], Philadelphia, PA [ZIP]. Phone: +1 215-341-9990.</p>',
+    content: '<p>LuxeMia is an online Indian ethnic wear store serving U.S. shoppers planning weddings, festivals, receptions, and other special occasions. Our catalog is curated from supplier partners in India, and product pages explain available fabric, work, stitching status, sizing, and package contents.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
   },
   {
     path: '/brand-story',
     title: 'Our Story — LuxeMia | Indian Ethnic Wear Online',
-    description: 'Learn about LuxeMia — our mission to bring authentic Indian craftsmanship to the world. Handcrafted ethnic wear from skilled makers.',
+    description: 'Discover LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, support, and tracked delivery.',
     h1: 'Our Story',
     content: `
-      <p>LuxeMia was born from a passion for preserving India's rich textile heritage while making Indian ethnic wear accessible within the United States. We work directly with skilled makers across India to bring you authentic, beautifully made pieces.</p>
+      <p>LuxeMia was created to make Indian ethnic wear easier for U.S. shoppers to understand and order online. We curate styles from supplier partners in India and publish practical fabric, stitching, sizing, and delivery information.</p>
       <h2>Our Mission</h2>
-      <p>We believe every Indian — no matter where they live — deserves access to authentic, handcrafted ethnic wear. Our mission is to bridge the gap between India's master artisans and the global Indian diaspora, delivering museum-quality craftsmanship to your doorstep.</p>
+      <p>Our mission is to give shoppers clear product descriptions, useful measurement guidance, responsive support, and tracked delivery.</p>
       <h2>Why LuxeMia?</h2>
-      <p>Unlike mass-produced fast fashion, each LuxeMia piece supports real artisans and preserves centuries-old techniques. We offer custom sizing, free US shipping on orders over $150, and a curated selection that honors tradition while embracing modern design.</p>
+      <p>We identify available fabric, embroidery or embellishment work, stitching status, included pieces, and size information on product pages. Free U.S. shipping applies over $150.</p>
     `,
   },
   {
@@ -2246,6 +2246,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const hasSale =
       productComparePrice &&
       parseFloat(productComparePrice) > parseFloat(productPrice);
+    const qualifiesForFreeShipping = parseFloat(productPrice) >= 150;
     const productSku = live?.variants?.edges?.[0]?.node?.sku || (live?.id || '').split('/').pop() || handle;
     const productAvailability = live?.availableForSale === false ? 'OutOfStock' : 'InStock';
     const productBrand = (() => {
@@ -2289,28 +2290,21 @@ function generateHtml(template, route, allShopifyProducts) {
         } : {}),
         availability: `https://schema.org/${productAvailability}`,
         itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@type': 'Organization', name: 'Glamour Indian Wear', alternateName: 'LuxeMia' },
+        seller: { '@type': 'Organization', name: 'LuxeMia', legalName: 'Glamour Indian Wear' },
         shippingDetails: [
           {
             '@type': 'OfferShippingDetails',
-            name: 'Free US Shipping Over $150',
-            shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'USD' },
-            shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-            deliveryTime: {
-              '@type': 'ShippingDeliveryTime',
-              handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY' },
-              transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+            name: qualifiesForFreeShipping ? 'Free US Shipping for This Order' : 'Flat US Shipping Below $150',
+            shippingRate: {
+              '@type': 'MonetaryAmount',
+              value: qualifiesForFreeShipping ? '0' : '12.00',
+              currency: productCurrency,
             },
-          },
-          {
-            '@type': 'OfferShippingDetails',
-            name: 'Flat US Shipping Below $150',
-            shippingRate: { '@type': 'MonetaryAmount', value: '12.00', currency: 'USD' },
             shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
             deliveryTime: {
               '@type': 'ShippingDeliveryTime',
-              handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY' },
-              transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+              handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY' },
+              transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10, unitCode: 'DAY' },
             },
           },
         ],

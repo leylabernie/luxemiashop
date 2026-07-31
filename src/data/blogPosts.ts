@@ -1864,7 +1864,7 @@ export const blogPosts: BlogPost[] = [
       <p>We source from established suppliers in India's textile hubs, including Varanasi, Kanchipuram, and other renowned regions. This allows us to offer quality products at fair prices to our customers.</p>
 
       <h3>Quality Verification</h3>
-      <p>Every piece undergoes a multi-step quality check before it reaches our warehouse. We verify fabric authenticity, check for consistent weave quality, inspect zari work, and ensure color fastness. Our detailed product descriptions specify exact fabric composition, weave type, and care instructions — so you always know precisely what you are purchasing.</p>
+      <p>Before dispatch, LuxeMia coordinates a visible product check with supplier and shipping partners. Available fabric, weave, zari or other surface-work details are published on the product page so shoppers can review them before ordering.</p>
 
       <h3>Transparent Product Information</h3>
       <p>Our product listings include high-resolution photographs taken in natural lighting, close-up shots of embroidery and weave details, accurate fabric descriptions, and exact dimensions. We believe transparency builds trust, especially for customers shopping from abroad.</p>
@@ -3262,7 +3262,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Custom-stitched orders:</strong> Add 7-14 days for tailoring before shipping</li>
       </ul>
       <h3>LuxeMia Shipping Policy</h3>
-      <p>At LuxeMia, orders ship from our supplier with tracking to the United States. We offer <strong>free U.S. shipping over $150</strong> and a flat rate of $12 for orders below $150. No waiting weeks for your outfit to arrive — see our <a href="/shipping">shipping policy</a> for full details.</p>
+      <p>At LuxeMia, orders ship from supplier fulfillment with tracking to the United States. We offer <strong>free U.S. shipping over $150</strong> and a flat rate of $12 for orders below $150. Review the dispatch and transit estimates in our <a href="/shipping">shipping policy</a> before ordering for a fixed event date.</p>
 
       <h2>Customs Duties and Tariffs: The Hidden Cost</h2>
       <p>This is the part most NRI shoppers don't anticipate. As of 2025-2026, the United States imposes tariffs on goods imported from India, and clothing is no exception.</p>
@@ -3273,7 +3273,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Personal use exemption:</strong> You may bring back up to $800 worth of goods per person when traveling</li>
       </ul>
       <h3>How LuxeMia Handles Duties</h3>
-      <p>Because LuxeMia is a US-based business (Glamour Indian Wear DBA LuxeMia, USA-based support), we import in bulk and handle all customs duties on our end. The price you see on our website is the price you pay — no surprise duty bills at your doorstep. This can save you hundreds of dollars compared to ordering from supplier fulfillmentn retailers.</p>
+      <p>LuxeMia provides USA-based customer support, while orders may be fulfilled by supplier partners in India. Customs rules and carrier charges can change, so review our <a href="/pages/shipping-customs">Shipping &amp; Customs</a> page and contact us before ordering if you need clarification for a specific order.</p>
 
       <h2>Quality Concerns: What You See vs. What You Get</h2>
       <p>One of the biggest fears of online ethnic wear shopping is quality mismatch. The outfit that looked stunning on the model arrives looking like a completely different piece. Here's how to protect yourself:</p>

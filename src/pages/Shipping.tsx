@@ -31,10 +31,17 @@ const Shipping = () => {
           '@type': 'ShippingDeliveryTime',
           handlingTime: {
             '@type': 'QuantitativeValue',
-            minValue: 0,
-            maxValue: 2,
+            minValue: 3,
+            maxValue: 7,
             unitCode: 'DAY',
-            description: 'Tracking provided after dispatch',
+            description: 'Dispatch time varies by stitching status',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 10,
+            unitCode: 'DAY',
+            description: 'Carrier transit begins after dispatch',
           },
         },
       },
@@ -55,10 +62,17 @@ const Shipping = () => {
           '@type': 'ShippingDeliveryTime',
           handlingTime: {
             '@type': 'QuantitativeValue',
-            minValue: 0,
-            maxValue: 2,
+            minValue: 3,
+            maxValue: 7,
             unitCode: 'DAY',
-            description: 'Tracking provided after dispatch',
+            description: 'Dispatch time varies by stitching status',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 3,
+            maxValue: 10,
+            unitCode: 'DAY',
+            description: 'Carrier transit begins after dispatch',
           },
         },
       },
@@ -111,8 +125,8 @@ const Shipping = () => {
                 <p className="text-sm text-muted-foreground mt-1">US shipping over ${FREE_SHIPPING_THRESHOLD}</p>
               </div>
               <div>
-                <p className="text-3xl font-serif font-semibold text-primary">2</p>
-                <p className="text-sm text-muted-foreground mt-1">business days to ship</p>
+                <p className="text-3xl font-serif font-semibold text-primary">3–7</p>
+                <p className="text-sm text-muted-foreground mt-1">business days to dispatch</p>
               </div>
             </div>
           </div>
