@@ -62,6 +62,8 @@ const staticPages = [
   { loc: '/lookbook', changefreq: 'monthly', priority: '0.7' },
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/menswear', changefreq: 'daily', priority: '0.9' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8' },
