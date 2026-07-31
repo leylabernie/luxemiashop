@@ -2443,49 +2443,6 @@ function generateHtml(template, route, allShopifyProducts) {
       <h2>Products in this Collection</h2>
       ${productCardsHtml}`;
   } else if (route.path === '/') {
-    // Homepage — inject OnlineStore JSON-LD schema to explicitly categorize
-    // Luxemia Shop as a South Asian apparel retailer (disambiguates from the
-    // unrelated sneaker store on luxemia.net).
-    //
-    // Schema.org compliance:
-    // - logo/image use real image URLs (og-image.jpg, verified 200 OK)
-    // - shippingDetails uses @type OfferShippingDetails (not ShippingDeliveryTime)
-    //   because shippingRate is a property of OfferShippingDetails
-    const onlineStoreSchema = {
-      "@context": "https://schema.org",
-      "@type": "OnlineStore",
-      "name": "Luxemia Shop",
-      "url": "https://luxemia.shop",
-      "logo": "https://luxemia.shop/og-image.jpg",
-      "description": "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
-      "image": "https://luxemia.shop/og-image.jpg",
-      "category": "Indian Clothing Store",
-      "knowsAbout": [
-        "Indian Ethnic Wear",
-        "Online Sarees",
-        "Festive Lehengas",
-        "Salwar Kameez",
-        "South Asian Fashion"
-      ],
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "USD",
-        "eligibleRegion": ["US", "CA", "AU"]
-      },
-      "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "shippingRate": {
-          "@type": "MonetaryAmount",
-          "value": "0.00",
-          "currency": "USD"
-        },
-        "shippingDestination": {
-          "@type": "DefinedRegion",
-          "addressCountry": "US"
-        }
-      }
-    };
-    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(onlineStoreSchema)}</script>\n</head>`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
       ${route.content}`;
