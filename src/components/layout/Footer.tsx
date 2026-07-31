@@ -27,10 +27,10 @@ const footerLinks = {
   ],
   collections: [
     { name: 'Bridal Lehengas', href: '/lehengas?sub=bridal' },
-    { name: 'Wedding Sarees', href: '/sarees?sub=bridal' },
-    { name: 'Indo-Western', href: '/indowestern' },
-    { name: 'Festive Wear', href: '/collections' },
-    { name: 'Available Online', href: '/online' },
+    { name: 'Silk Sarees', href: '/collections/silk-sarees' },
+    { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
+    { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
+    { name: 'Bridal Party Outfits', href: '/collections/bridal-party-outfits' },
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
