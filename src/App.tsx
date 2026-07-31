@@ -64,6 +64,7 @@ const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
 const ReadyToShip = lazy(() => import("./pages/ReadyToShip"));
 const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
+const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
 // Programmatic SEO combo pages — 25 long-tail landing pages
 const ComboPageRoute = lazy(() => import("./pages/combo/ComboPageRoute"));
 
@@ -149,7 +150,10 @@ const App = () => (
                 <Route path="/collections/party-wear-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/wedding-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/lehenga-choli" element={<Navigate to="/lehengas" replace />} />
-                <Route path="/collections/silk-sarees" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/silk-sarees" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
+                <Route path="/collections/kanchipuram-sarees" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
+                <Route path="/collections/manthrakodi-sarees" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
+                <Route path="/collections/bridal-party-outfits" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
                 <Route path="/collections/designer-sarees" element={<Navigate to="/sarees" replace />} />
                 <Route path="/blog/designer-wedding-dress-under-50000" element={<Navigate to="/blog/designer-wedding-dress-under-500" replace />} />
                 <Route path="/collections/indo-western" element={<Navigate to="/indowestern" replace />} />

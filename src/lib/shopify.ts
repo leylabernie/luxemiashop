@@ -85,6 +85,16 @@ export interface ShopifyProduct {
   };
 }
 
+export interface ShopifyCollection {
+  id: string;
+  title: string;
+  handle: string;
+  description: string;
+  descriptionHtml: string;
+  image: { url: string; altText: string | null } | null;
+  products: ShopifyProduct[];
+}
+
 const STOREFRONT_LISTING_QUERY = `
   query GetProductsListing($first: Int!, $query: String, $after: String) {
     products(first: $first, query: $query, after: $after, sortKey: CREATED_AT, reverse: true) {
@@ -223,6 +233,60 @@ const PRODUCT_BY_HANDLE_QUERY = `
       options {
         name
         values
+      }
+    }
+  }
+`;
+
+const COLLECTION_BY_HANDLE_QUERY = `
+  query GetCollectionByHandle($handle: String!, $first: Int!) {
+    collection(handle: $handle) {
+      id
+      title
+      handle
+      description
+      descriptionHtml
+      image { url altText }
+      products(first: $first, sortKey: CREATED, reverse: true) {
+        edges {
+          node {
+            id
+            title
+            createdAt
+            description
+            seo { title description }
+            handle
+            vendor
+            productType
+            tags
+            availableForSale
+            shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+            priceRange {
+              minVariantPrice { amount currencyCode }
+            }
+            compareAtPriceRange {
+              minVariantPrice { amount currencyCode }
+              maxVariantPrice { amount currencyCode }
+            }
+            images(first: 1) {
+              edges { node { url altText } }
+            }
+            variants(first: 20) {
+              edges {
+                node {
+                  id
+                  title
+                  sku
+                  price { amount currencyCode }
+                  compareAtPrice { amount currencyCode }
+                  availableForSale
+                  selectedOptions { name value }
+                }
+              }
+            }
+            options { name values }
+          }
+        }
       }
     }
   }
@@ -393,6 +457,36 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
     return data.data.product ? sanitizeProductNode(data.data.product) : null;
   } catch (error) {
     console.error('Error fetching product:', error);
+    return null;
+  }
+}
+
+export async function fetchCollectionByHandle(
+  handle: string,
+  signal?: AbortSignal,
+): Promise<ShopifyCollection | null> {
+  try {
+    const data = await storefrontApiRequest(
+      COLLECTION_BY_HANDLE_QUERY,
+      { handle, first: 250 },
+      signal,
+    );
+    const collection = data?.data?.collection;
+    if (!collection) return null;
+
+    return {
+      id: collection.id,
+      title: collection.title,
+      handle: collection.handle,
+      description: collection.description || '',
+      descriptionHtml: collection.descriptionHtml || '',
+      image: collection.image || null,
+      products: (collection.products?.edges || []).map(sanitizeProductEdge),
+    };
+  } catch (error) {
+    if ((error as Error).name !== 'AbortError') {
+      console.error(`Error fetching collection ${handle}:`, error);
+    }
     return null;
   }
 }

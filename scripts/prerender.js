@@ -314,6 +314,40 @@ function isMenswearProduct(p) {
 const MAX_COLLECTION_PRODUCTS = 50;
 
 function filterProductsForCategory(allProducts, category, newestFirst = false) {
+  if (category.startsWith('collection:')) {
+    const handle = category.slice('collection:'.length);
+    const tagsFor = (product) => new Set((product.tags ?? []).map((tag) => tag.toLowerCase().trim()));
+    const matches = allProducts.filter((product) => {
+      if (EXCLUDED_TITLE_KEYWORDS.test(product.title ?? '')) return false;
+      const productType = (product.productType ?? '').toLowerCase();
+      const title = (product.title ?? '').toLowerCase();
+      const tags = tagsFor(product);
+
+      if (handle === 'silk-sarees') {
+        return productType.includes('saree') && title.includes('silk');
+      }
+      if (handle === 'kanchipuram-sarees') {
+        return ['kanchipuram', 'kanjivaram', 'kanjeevaram'].some((tag) => tags.has(tag));
+      }
+      if (handle === 'manthrakodi-sarees') {
+        return ['manthrakodi', 'manthrokodi', 'kerala-christian-bridal-saree'].some((tag) => tags.has(tag));
+      }
+      if (handle === 'bridal-party-outfits') {
+        return [
+          'bridal-party',
+          'bridal party outfit lehenga',
+          'bridesmaid outfit',
+          'role:bridesmaid',
+          'mother of bride',
+          'groomsman',
+        ].some((tag) => tags.has(tag));
+      }
+      return false;
+    });
+
+    return matches.slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
   // Global exclusions: old batch + banned titles
   const allowed = allProducts.filter(p => {
     if (isOldBatchProduct(p)) return false;
@@ -791,6 +825,58 @@ const routes = [
         <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — Ready-to-ship sarees</li>
         <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Designer & heavily embellished</li>
       </ul>
+    `,
+  },
+  {
+    path: '/collections/silk-sarees',
+    category: 'collection:silk-sarees',
+    title: 'Silk Sarees Online for Weddings & Festivals | LuxeMia',
+    description: 'Shop silk sarees online for Indian weddings, receptions and festivals. Review each listing for its stated weave, fabric composition, blouse details and care instructions.',
+    h1: 'Silk Sarees',
+    content: `
+      <p>Discover silk sarees selected for weddings, receptions, pujas and festive celebrations. Each product page states the supplied fabric details so you can compare drape, finish, work and blouse options before ordering.</p>
+      <h2>How should I choose a silk saree online?</h2>
+      <p>Compare the exact fabric composition, weight, border, embellishment and blouse details on each listing. Silk sarees can use pure silk, blended silk or art-silk fabrics, so LuxeMia states the information supplied for each product.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/style-consultation">ask our styling team</a> for help choosing a wedding saree.</p>
+    `,
+  },
+  {
+    path: '/collections/kanchipuram-sarees',
+    category: 'collection:kanchipuram-sarees',
+    title: 'Kanchipuram Sarees Online | Wedding Sarees | LuxeMia',
+    description: 'Explore Kanchipuram and Kanjivaram sarees for South Indian weddings. Product listings clearly state fabric, weave and zari details available from the maker.',
+    h1: 'Kanchipuram Sarees',
+    content: `
+      <p>This collection is reserved for sarees identified by the supplier as Kanchipuram, Kanjivaram or Kanjeevaram. New pieces are being reviewed before they are added.</p>
+      <h2>How does LuxeMia describe Kanchipuram sarees?</h2>
+      <p>We do not label a product as pure silk, handwoven or genuine zari unless the supplied product information supports that statement. Each listing will state the known fabric, blouse inclusion and work details.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/style-consultation">tell us what you need</a>.</p>
+    `,
+  },
+  {
+    path: '/collections/manthrakodi-sarees',
+    category: 'collection:manthrakodi-sarees',
+    title: 'Manthrakodi Sarees for Kerala Christian Weddings | LuxeMia',
+    description: 'Shop Manthrakodi sarees for Kerala Christian weddings. Browse bridal sarees with clearly stated fabric, border, blouse and product details for U.S. delivery.',
+    h1: 'Manthrakodi Sarees',
+    content: `
+      <p>This collection is being prepared for Manthrakodi sarees suited to Kerala Christian wedding traditions. New styles will be added only after their product details have been reviewed.</p>
+      <h2>What is a Manthrakodi?</h2>
+      <p>In many Kerala Christian wedding traditions, the Manthrakodi is the saree presented to the bride by the groom or his family and blessed as part of the ceremony. Customs differ, so shoppers should follow their own family and church requirements.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/style-consultation">ask for sourcing help</a>.</p>
+    `,
+  },
+  {
+    path: '/collections/bridal-party-outfits',
+    category: 'collection:bridal-party-outfits',
+    title: 'Indian Bridal Party Outfits & Bridesmaid Looks | LuxeMia',
+    description: 'Shop Indian bridal party outfits for bridesmaids, family and wedding attendants. Explore coordinated lehengas, sarees, suits and menswear with styling support.',
+    h1: 'Bridal Party Outfits',
+    content: `
+      <p>Build a coordinated wedding party without requiring every person to wear the identical outfit. Browse lehengas, sarees, suits and menswear selected for bridesmaids, family members and wedding attendants.</p>
+      <h2>How should an Indian bridal party coordinate?</h2>
+      <p>Start with a shared color family, fabric weight or embroidery detail, then choose silhouettes suited to each person and ceremony. Confirm event dates, sizes and availability before ordering for a group.</p>
+      <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/style-consultation">ask our styling team</a> for help.</p>
     `,
   },
   {
@@ -2425,6 +2511,13 @@ function generateHtml(template, route, allShopifyProducts) {
     const allProducts = Array.from(allShopifyProducts.values());
     const collectionProducts = filterProductsForCategory(allProducts, route.category, route.path === '/new-arrivals');
     console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
+
+    if (route.category.startsWith('collection:') && collectionProducts.length === 0) {
+      html = html.replace(
+        /<meta name="robots" content="[^"]*" \/>/,
+        '<meta name="robots" content="noindex, follow" />'
+      );
+    }
 
     // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
     const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);

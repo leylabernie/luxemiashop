@@ -1101,6 +1101,14 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     href: '/sarees',
     groups: [
       { label: 'By Occasion', links: subcatLinks('sarees', SAREES.subcategories, 'occasion') },
+      {
+        label: 'Wedding Traditions',
+        links: [
+          { name: 'Silk Sarees', href: '/collections/silk-sarees' },
+          { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
+          { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
+        ],
+      },
     ],
   },
   {

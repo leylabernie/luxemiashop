@@ -30,8 +30,15 @@ const navLinks = [
 
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
+  { name: 'Bridal Party', href: '/collections/bridal-party-outfits' },
   { name: 'Featured', href: '/bestsellers' },
   { name: 'Blog', href: '/blog' },
+];
+
+const weddingSareeLinks = [
+  { name: 'Silk Sarees', href: '/collections/silk-sarees' },
+  { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
+  { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
 ];
 
 const occasionLinks = [
@@ -269,6 +276,20 @@ const Header = () => {
                     </Link>
                   </div>
                 ))}
+
+                <div className="pt-4 border-t border-border/30">
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Wedding Sarees</p>
+                  {weddingSareeLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      className="flex items-center justify-between py-2 text-sm font-light text-foreground/70 hover:text-foreground transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
 
                 {/* Secondary links */}
                 <div className="pt-4 border-t border-border/30">

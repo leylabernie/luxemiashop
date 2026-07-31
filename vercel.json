@@ -119,11 +119,6 @@
       "statusCode": 301
     },
     {
-      "source": "/collections/silk-sarees",
-      "destination": "/sarees",
-      "statusCode": 301
-    },
-    {
       "source": "/collections/designer-sarees",
       "destination": "/sarees",
       "statusCode": 301
