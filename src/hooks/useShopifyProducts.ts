@@ -45,7 +45,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
-const CACHE_VERSION = 'v10';
+const CACHE_VERSION = 'v11';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
@@ -359,18 +359,39 @@ export const useShopifyProducts = (category?: string) => {
         //    client-side navigations to other collections are fast too.
         const initial = getInitialData(category);
         if (initial) {
+          const applyProducts = (sourceProducts: ShopifyProduct[]) => {
+            const globallyFiltered = sourceProducts.filter(p => {
+              if (isOldBatchProduct(p)) return false;
+              if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
+              return true;
+            });
+            const filtered = category ? filterByCategory(sourceProducts, category) : globallyFiltered;
+            setProducts(enrichProducts(filtered));
+          };
+
           cachedProducts = initial;
-          // Apply the same global filters the API path uses, for safety.
-          const globallyFiltered = initial.filter(p => {
-            if (isOldBatchProduct(p)) return false;
-            if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
-            return true;
-          });
-          const filtered = category ? filterByCategory(initial, category) : globallyFiltered;
-          setProducts(enrichProducts(filtered));
+          applyProducts(initial);
+
           // Clear the payload so a stale one can't leak into a later category navigation.
           if (typeof window !== 'undefined' && window.__INITIAL_DATA__) {
             window.__INITIAL_DATA__ = undefined;
+          }
+
+          // New Arrivals must not remain frozen at the Vercel build-time snapshot.
+          // Paint the prerendered products immediately, then revalidate from Shopify
+          // so newly published products appear without requiring another deployment.
+          setIsLoading(false);
+          if (typeof window !== 'undefined' && window.location.pathname === '/new-arrivals') {
+            try {
+              const freshProducts = await fetchAllProducts();
+              if (freshProducts.length > 0) {
+                cachedProducts = freshProducts;
+                storeProducts(freshProducts);
+                applyProducts(freshProducts);
+              }
+            } catch (refreshError) {
+              console.warn('Unable to refresh New Arrivals from Shopify:', refreshError);
+            }
           }
           return;
         }
