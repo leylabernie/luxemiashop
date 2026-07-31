@@ -6,7 +6,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import type { BlogPost as BlogPostType } from '@/data/blogPosts';
-import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Facebook, Twitter, BookOpen, List, ChevronRight, RefreshCw } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Facebook, Twitter, BookOpen, List, ChevronRight, RefreshCw, MessageCircle, ShoppingBag } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -314,6 +314,7 @@ const BlogPost = () => {
   } : null;
 
   const shareUrl = `https://luxemia.shop/blog/${post.slug}`;
+  const isSizingArticle = /size|measurement|fit|plus-size/i.test(`${post.slug} ${post.title}`);
 
   // Check if updated date differs from published date
   const showUpdatedDate = post.updatedAt && post.updatedAt !== post.publishedAt;
@@ -482,6 +483,37 @@ const BlogPost = () => {
                   {post.excerpt}
                 </p>
               </div>
+
+              <aside className="mb-10 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6" aria-label="Shop LuxeMia new arrivals">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                  {isSizingArticle ? 'Shop with fit confidence' : 'From the LuxeMia edit'}
+                </p>
+                <h2 className="mb-2 text-xl font-display font-semibold text-foreground">
+                  {isSizingArticle ? 'Found your size? See the newest styles.' : 'Turn the inspiration into your next occasion look.'}
+                </h2>
+                <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                  Browse recently added Indian occasionwear with clear size options, product details and tracked U.S. shipping.
+                </p>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button asChild>
+                    <Link to="/new-arrivals" className="gap-2">
+                      <ShoppingBag className="h-4 w-4" />
+                      Shop New Arrivals
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <a
+                      href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20need%20help%20choosing%20a%20size%20before%20I%20order."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="gap-2"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Ask About Sizing
+                    </a>
+                  </Button>
+                </div>
+              </aside>
 
               {/* Table of Contents */}
               {tocItems.length > 0 && (

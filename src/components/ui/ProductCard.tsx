@@ -187,6 +187,10 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (product.node.variants.edges.length > 1) {
+      setIsQuickViewOpen(true);
+      return;
+    }
     const firstVariant = product.node.variants.edges.find((edge) => edge.node.availableForSale)?.node || product.node.variants.edges[0]?.node;
     if (!firstVariant) return;
 
@@ -207,18 +211,11 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const productData = {
-      id: product.node.id,
-      title: product.node.title,
-      handle: product.node.handle,
-      priceRange: product.node.priceRange,
-      images: product.node.images,
-    };
     if (isInWishlist(product.node.id)) {
       removeFromWishlist(product.node.id);
       toast.success('Removed from wishlist');
     } else {
-      addToWishlist(productData as any);
+      addToWishlist(product);
       toast.success('Added to wishlist!');
     }
   };
@@ -255,6 +252,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isAvailable = product.node.variants.edges.some((edge) => edge.node.availableForSale !== false);
+  const requiresOptionSelection = product.node.variants.edges.length > 1;
   const shipByLabel = getShipByLabel(product.node);
 
   // "New" badge — products added within the last 30 days
@@ -375,8 +373,8 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                   size="sm"
                   className="flex-1 py-2 bg-foreground hover:bg-foreground/90 text-background text-xs font-medium"
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" />
-                  Add to Bag
+                  {requiresOptionSelection ? <Eye className="h-3.5 w-3.5 mr-1" /> : <Plus className="h-3.5 w-3.5 mr-1" />}
+                  {requiresOptionSelection ? 'Choose Options' : 'Add to Bag'}
                 </Button>
               )}
             </div>

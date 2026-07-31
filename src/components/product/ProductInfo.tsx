@@ -9,7 +9,6 @@ import { SizeGuideModal } from './SizeGuideModal';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import type { SizeMode } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
-import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
@@ -190,21 +189,21 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const showBottomStyleOption = shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
 
-  // Auto-select options when there's only one value per option (e.g. "Default Title")
+  // Select the first purchasable Shopify variant by default. This keeps the
+  // primary CTA usable on first paint while still showing the selected size or
+  // colour clearly in the option controls.
   const defaultOptions = useMemo(() => {
     const defaults: Record<string, string> = {};
-    const hasRealOptions = product.options.some(
-      (opt) => opt.values.length > 1 || (opt.values.length === 1 && opt.values[0] !== 'Default Title')
-    );
-    if (!hasRealOptions || product.variants.edges.length === 1) {
-      product.options.forEach((opt) => {
-        if (opt.values.length === 1) {
-          defaults[opt.name] = opt.values[0];
-        }
-      });
-    }
+    const firstPurchasable = product.variants.edges.find(
+      (edge) => edge.node.availableForSale !== false
+    ) ?? product.variants.edges[0];
+
+    firstPurchasable?.node.selectedOptions.forEach((option) => {
+      defaults[option.name] = option.value;
+    });
+
     return defaults;
-  }, [product.options, product.variants.edges.length]);
+  }, [product.variants.edges]);
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
   const [quantity, setQuantity] = useState(1);
@@ -268,7 +267,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     }
 
     return bestVar;
-  }, [purchasableVariant, selectedOptions, product.variants.edges]);
+  }, [purchasableVariant, selectedOptions, product]);
 
   // Calculate current price, including stitching option premium if applicable
   const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
@@ -297,6 +296,9 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       currencyCode: basePrice.currencyCode,
     };
   }, [basePrice, stitchingPremium]);
+  const hasAvailableVariant = product.variants.edges.some(
+    (edge) => edge.node.availableForSale !== false
+  );
   const isAvailable = purchasableVariant?.node.availableForSale ?? false;
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
@@ -538,8 +540,6 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           : 0
         }
       />
-
-      <CeremonyVerseLinkBlock variant="compact" />
 
       <Separator />
 
@@ -819,7 +819,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
               className="flex items-center gap-2"
             >
               <ShoppingBag className="h-5 w-5" />
-              {isAvailable ? 'Add to Bag' : 'Out of Stock'}
+              {isAvailable ? 'Add to Bag' : hasAvailableVariant ? 'Select Options' : 'Out of Stock'}
             </motion.span>
             <motion.span
               initial={false}
