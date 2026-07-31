@@ -56,27 +56,19 @@ export const NewArrivals = () => {
     return groups;
   }, [products]);
 
-  // 2. Build the category-ordered list for "All" view
+  // 2. Build a genuinely newest-first list for the homepage. Limit the first
+  // view to ten products so the section stays focused and fast.
   const allOrdered = useMemo(() => {
-    const ordered: typeof products = [];
-    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
-    for (const cat of mainCategories) {
-      if (recentByCategory[cat]) {
-        ordered.push(...recentByCategory[cat]);
-      }
-    }
-    // Append any remaining categories
-    for (const cat of Object.keys(recentByCategory)) {
-      if (!mainCategories.includes(cat)) {
-        ordered.push(...recentByCategory[cat]);
-      }
-    }
-    return ordered;
+    return Object.values(recentByCategory)
+      .flat()
+      .sort(
+        (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
+      );
   }, [recentByCategory]);
 
   // 3. Resolve displayed products based on active tab
   const displayedProducts = useMemo(() => {
-    if (activeCategory === 'all') return allOrdered;
+    if (activeCategory === 'all') return allOrdered.slice(0, 10);
     return recentByCategory[activeCategory] || [];
   }, [activeCategory, allOrdered, recentByCategory]);
 
