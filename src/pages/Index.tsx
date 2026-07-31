@@ -54,83 +54,11 @@ const homepageFaqs = [
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // LocalBusiness Schema for Local SEO
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "ClothingStore",
-    "name": "LuxeMia",
-    "description": "Indian ethnic wear online store for USA shoppers. Designer sarees, sangeet lehengas, temple jewelry sets, and wedding couture with fast delivery across the US, hassle-free sizing, and free US shipping on orders over $150.",
-    "url": "https://luxemia.shop",
-    "logo": "https://luxemia.shop/og-image.jpg",
-    "image": "https://luxemia.shop/og/og-lehengas.jpg",
-    "telephone": "+1-215-341-9990",
-    "email": "hello@luxemia.shop",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "US"
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "10:00",
-        "closes": "19:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Sunday",
-        "opens": "11:00",
-        "closes": "17:00"
-      }
-    ],
-    "priceRange": "$$",
-    "currenciesAccepted": "USD, CAD, AUD",
-    "paymentAccepted": "Credit Card, Debit Card, PayPal, Apple Pay, Google Pay",
-    "sameAs": [
-      "https://www.instagram.com/luxemiashop",
-      "https://www.facebook.com/LuxeMia",
-      "https://www.pinterest.com/luxemiashop",
-      "https://www.tiktok.com/@shopluxemia"
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "LuxeMia Collections",
-      "itemListElement": [
-        {
-          "@type": "OfferCatalog",
-          "name": "Bridal Lehengas"
-        },
-        {
-          "@type": "OfferCatalog",
-          "name": "Silk Sarees"
-        },
-        {
-          "@type": "OfferCatalog",
-          "name": "Anarkali Suits"
-        },
-        {
-          "@type": "OfferCatalog",
-          "name": "Menswear"
-        },
-        {
-          "@type": "OfferCatalog",
-          "name": "Indo-Western"
-        }
-      ]
-    },
-  };
-
   // OnlineStore Schema — explicitly distinguishes LuxeMia as a South Asian
   // apparel retailer (not the unrelated sneaker store on luxemia.net). The
   // knowsAbout array and category field are the key disambiguation signals for
   // AI search engines and entity-based ranking.
   //
-  // Schema.org compliance notes:
-  // - logo/image use real image URLs (og-image.jpg, verified 200 OK)
-  // - shippingDetails uses @type OfferShippingDetails (not ShippingDeliveryTime)
-  //   because shippingRate is a property of OfferShippingDetails, not
-  //   ShippingDeliveryTime. ShippingDeliveryTime is only for transit/processing
-  //   time, not shipping rates.
   const onlineStoreSchema = {
     "@context": "https://schema.org",
     "@type": "OnlineStore",
@@ -149,22 +77,17 @@ const Index = () => {
       "Anarkali Suits",
       "South Asian Fashion"
     ],
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "USD",
-      "eligibleRegion": ["US", "CA", "AU"]
-    },
-    "shippingDetails": {
-      "@type": "OfferShippingDetails",
-      "shippingRate": {
-        "@type": "MonetaryAmount",
-        "value": "0.00",
-        "currency": "USD"
-      },
-      "shippingDestination": {
-        "@type": "DefinedRegion",
-        "addressCountry": "US"
-      }
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "LuxeMia Indian Ethnic Wear",
+      "url": "https://luxemia.shop/collections",
+      "itemListElement": [
+        { "@type": "OfferCatalog", "name": "Lehengas", "url": "https://luxemia.shop/lehengas" },
+        { "@type": "OfferCatalog", "name": "Sarees", "url": "https://luxemia.shop/sarees" },
+        { "@type": "OfferCatalog", "name": "Suits", "url": "https://luxemia.shop/suits" },
+        { "@type": "OfferCatalog", "name": "Menswear", "url": "https://luxemia.shop/menswear" },
+        { "@type": "OfferCatalog", "name": "Indo-Western", "url": "https://luxemia.shop/indowestern" }
+      ]
     }
   };
 
@@ -175,7 +98,6 @@ const Index = () => {
         description="Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
-        localBusiness={localBusinessSchema}
         additionalSchemas={[onlineStoreSchema]}
       />
       <Header />

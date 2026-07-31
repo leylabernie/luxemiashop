@@ -263,7 +263,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       </div>
     </div>
     <footer>
-      <p>&copy; 2026 LuxeMia. All rights reserved. | luxemia.shop is owned and operated by Glamour Indian Wear | USA-based support</p>
+      <p>&copy; 2026 LuxeMia. All rights reserved. | Online Indian ethnic wear | USA-based support</p>
       <p><a href="${SITE_URL}/shipping">Shipping Policy</a> | <a href="${SITE_URL}/returns">Returns</a> | <a href="${SITE_URL}/privacy">Privacy</a> | <a href="${SITE_URL}/terms">Terms</a> | <a href="${SITE_URL}/contact">Contact</a></p>
     </footer>
   </div>

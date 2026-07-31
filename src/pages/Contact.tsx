@@ -153,11 +153,11 @@ const Contact = () => {
                     <div>
                       <h3 className="font-medium mb-1">USA-Based Support</h3>
                       <p className="text-muted-foreground">
-                        Glamour Indian Wear<br />
+                        LuxeMia<br />
                         USA-based support team
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        luxemia.shop is owned and operated by Glamour Indian Wear
+                        Online-only Indian ethnic wear store
                       </p>
                     </div>
                   </div>

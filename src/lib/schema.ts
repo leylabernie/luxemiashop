@@ -11,8 +11,8 @@
  */
 
 export const SITE_URL = 'https://luxemia.shop';
-export const BUSINESS_NAME = 'Glamour Indian Wear';
 export const BRAND_NAME = 'LuxeMia';
+export const LEGAL_BUSINESS_NAME = 'Glamour Indian Wear';
 export const SHIPPING_COUNTRIES = ['US'];
 
 // ─── Price Handling ─────────────────────────────────────────────────────────
@@ -38,50 +38,25 @@ export function getSchemaPrices(priceData: PriceData) {
 
 // ─── Shipping Schema ───────────────────────────────────────────────────────
 
-export function generateShippingSchema(currency: string) {
+export function generateShippingSchema(currency: string, orderAmount: string | number) {
+  const qualifiesForFreeShipping = Number(orderAmount) >= 150;
+
   return [
     {
       '@type': 'OfferShippingDetails',
-      name: 'Free US Shipping Over $150',
-      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency },
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
+      name: qualifiesForFreeShipping
+        ? 'Free US Shipping for This Order'
+        : 'Flat US Shipping Below $150',
+      shippingRate: {
+        '@type': 'MonetaryAmount',
+        value: qualifiesForFreeShipping ? '0' : '12.00',
+        currency,
       },
-    },
-    {
-      '@type': 'OfferShippingDetails',
-      name: 'Free US Shipping Over $150',
-      shippingRate: { '@type': 'MonetaryAmount', value: '0', currency },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
       deliveryTime: {
         '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
-      },
-    },
-    {
-      '@type': 'OfferShippingDetails',
-      name: 'Flat US Shipping Below $150',
-      shippingRate: { '@type': 'MonetaryAmount', value: '12.00', currency },
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
-      },
-    },
-    {
-      '@type': 'OfferShippingDetails',
-      name: 'Flat US Shipping Below $150',
-      shippingRate: { '@type': 'MonetaryAmount', value: '12.00', currency },
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 2, unitCode: 'DAY', description: 'Tracking provided after dispatch' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
+        handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY', description: 'Dispatch time varies by stitching status' },
+        transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
       },
     },
   ];
@@ -95,9 +70,8 @@ export function generateReturnPolicySchema() {
     '@id': 'https://luxemia.shop/#returnPolicy',
     name: 'LuxeMia Return & Refund Policy',
     applicableCountry: 'US',
-    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-    merchantReturnDays: 2,
-    description: 'Returns accepted only for damaged or defective items. Made-to-order and customized items are not eligible for returns. Contact support within 48 hours of delivery with photos for damage claims.',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+    description: 'All sales are final. Genuine shipping damage claims must be reported within 48 hours of delivery with photos and a mandatory unboxing video.',
     url: 'https://luxemia.shop/returns',
   };
 }
@@ -162,8 +136,8 @@ export function generateProductSchema(input: ProductSchemaInput) {
       priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: `https://schema.org/${input.availability}`,
       itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@type': 'Organization', name: BUSINESS_NAME, alternateName: BRAND_NAME },
-      shippingDetails: generateShippingSchema(input.currency),
+      seller: { '@type': 'Organization', name: BRAND_NAME, legalName: LEGAL_BUSINESS_NAME },
+      shippingDetails: generateShippingSchema(input.currency, input.price),
       hasMerchantReturnPolicy: generateReturnPolicySchema(),
     },
   };
@@ -216,8 +190,8 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: BUSINESS_NAME,
-    alternateName: BRAND_NAME,
+    name: BRAND_NAME,
+    legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
     description: 'Ready-to-ship Indian ethnic wear at LuxeMia. Sarees, lehengas, suits and menswear available online with tracked U.S. delivery.',

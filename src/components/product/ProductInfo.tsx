@@ -885,8 +885,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           )}
           <span className="text-muted-foreground">Closure</span>
           <span className="text-foreground">Back Hook-Eye / Zip</span>
-          <span className="text-muted-foreground">Manufacturer</span>
-          <span className="text-foreground">Glamour Indian Wear</span>
+          <span className="text-muted-foreground">Seller</span>
+          <span className="text-foreground">LuxeMia</span>
         </div>
       </div>
 

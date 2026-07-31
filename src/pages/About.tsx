@@ -8,7 +8,7 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="About LuxeMia — Indian Ethnic Wear Online"
-        description="LuxeMia is the online side of CeremonyVerse, run by Bhamini, with a online catalog of Indian ethnic wear for events coming up soon."
+        description="Learn about LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, and tracked delivery."
         canonical="https://luxemia.shop/about"
       />
       <Header />
@@ -18,20 +18,20 @@ const About = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl text-center">
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">About LuxeMia</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">
-              Ready-to-ship Indian outfits for the date that is already on the calendar.
+              Indian outfits for the date that is already on the calendar.
             </h1>
             <p className="text-muted-foreground leading-relaxed">
-              LuxeMia is the online side of CeremonyVerse, run by Bhamini, whose family has worked
-              in Surat&apos;s fabric trade for three generations.
+              LuxeMia is an online Indian ethnic wear store created for U.S. shoppers planning
+              weddings, festivals, receptions, and other special occasions.
             </p>
           </div>
         </section>
 
         <section className="container mx-auto px-4 lg:px-8 max-w-3xl py-12 space-y-8 text-muted-foreground leading-relaxed">
           <p>
-            We keep a curated online range in stock in the US so you can have it in days rather than months.
-            LuxeMia is for the guest, sibling, parent, or last-minute event shopper who needs something beautiful,
-            finished, and ready to leave quickly.
+            Our catalog brings together garments from established supplier partners in India. Each product page
+            states fabric, work, stitching status, available sizes, and dispatch details so you can make an informed
+            decision before ordering.
           </p>
 
           <p>
@@ -49,14 +49,19 @@ const About = () => {
           <div className="bg-card border border-border rounded-lg p-6">
             <h2 className="font-serif text-2xl text-foreground mb-4">Business details</h2>
             <address className="not-italic space-y-2 text-sm">
-              <p>LuxeMia / Glamour Indian Wear</p>
-              <p>[STREET ADDRESS]</p>
-              <p>Philadelphia, PA [ZIP]</p>
-              <p>United States</p>
+              <p className="font-medium text-foreground">LuxeMia</p>
+              <p>Online-only Indian ethnic wear store</p>
+              <p>USA-based customer support</p>
               <p>
                 Phone:{' '}
                 <a href="tel:+12153419990" className="text-foreground underline underline-offset-4 hover:text-primary">
                   +1 215-341-9990
+                </a>
+              </p>
+              <p>
+                Email:{' '}
+                <a href="mailto:hello@luxemia.shop" className="text-foreground underline underline-offset-4 hover:text-primary">
+                  hello@luxemia.shop
                 </a>
               </p>
             </address>

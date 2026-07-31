@@ -11,13 +11,13 @@ import SEOHead from '@/components/seo/SEOHead';
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'Glamour Indian Wear',
-  alternateName: 'LuxeMia',
+  name: 'LuxeMia',
+  legalName: 'Glamour Indian Wear',
   url: 'https://luxemia.shop',
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia (Glamour Indian Wear) is an online Indian ethnic wear store shipping authentic sarees, lehengas, salwar suits, and bridal couture directly from our online edit to customers in the United States. We source from our online edit\u2019s finest textile hubs\u2014Surat, Varanasi, Jaipur, and more\u2014offering quality-inspected ethnic wear at fair prices with free U.S. shipping over $150.',
+    'LuxeMia is an online Indian ethnic wear store serving customers in the United States with sarees, lehengas, salwar suits, and occasion wear from supplier partners in India. Free U.S. shipping applies over $150.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
@@ -27,7 +27,7 @@ const organizationSchema = {
     '@type': 'ContactPoint',
     telephone: '+1-215-341-9990',
     contactType: 'customer service',
-    areaServed: ['US', 'CA', 'AU'],
+    areaServed: ['US'],
     availableLanguage: ['English', 'Hindi'],
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',
@@ -140,19 +140,19 @@ const philosophyPoints = [
     icon: '△',
     title: 'Quality Checks',
     description:
-      'Every piece is inspected before shipping from our facility in India. We check stitching, fabric quality, embellishment security, and sizing accuracy. If something is not right, we fix it before it reaches you \u2014 not after.',
+      'Before dispatch, we coordinate a product check with supplier and shipping partners. The check covers visible stitching, fabric, embellishments, and the ordered size or stitching status.',
   },
   {
     icon: '⊕',
     title: 'Global Reach',
     description:
-      'We ship exclusively to the United States \u2014 the three countries with the largest NRI communities looking for authentic Indian ethnic wear. Free U.S. shipping over $150, $12 flat shipping below that, with DHL Express, USPS, and UPS delivery options to your door.',
+      'We currently ship to addresses in the United States. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch.',
   },
   {
     icon: '✦',
     title: 'Cultural Authenticity',
     description:
-      'We preserve traditional Indian craftsmanship by sourcing directly from the artisans and textile hubs that have been perfecting their craft for generations. From Banarasi weavers in Varanasi to block printers in Jaipur, every piece carries forward centuries of authentic Indian artistry.',
+      'Our catalog highlights Indian silhouettes, textiles, and surface work. Product pages identify the fabric, embroidery or embellishment style, stitching status, and included pieces whenever those details are available.',
   },
 ];
 
@@ -177,48 +177,48 @@ const timelineEvents = [
   },
   {
     year: '2026',
-    title: 'Deepening Our Artisan Partnerships',
+    title: 'Strengthening Supplier Partnerships',
     description:
-      'We expand direct sourcing to new textile hubs \u2014 Lucknow for chikankari, Kanchipuram for silk, and Hyderabad for pearl-embellished pieces. A dedicated quality assurance team is established at our India facility.',
+      'We continue expanding the selection based on customer demand and strengthen pre-dispatch review with supplier and shipping partners.',
   },
   {
     year: '2026',
     title: 'Your Feedback Shapes Our Future',
     description:
-      'We launch a customer advisory panel and introduce a wishlist feature driven by community voting. Every review, suggestion, and critique helps us become the brand you want us to be. This is just the beginning.',
+      'Customer questions and order feedback help us improve product descriptions, sizing guidance, support, and the styles included in future catalog updates.',
   },
 ];
 
 const whyChooseLuxeMia = [
   {
     icon: Globe,
-    title: 'Direct from our online edit \u2014 No Middlemen',
+    title: 'Curated Supplier Selection',
     description:
-      'We source directly from our online edit\u2019s renowned textile hubs like Surat, Varanasi, and Jaipur. By cutting out intermediaries, we pass real savings on to you while ensuring artisans receive fair compensation for their craft.',
+      'We select styles from established supplier partners in India and publish the product information shoppers need: fabric, work, stitching status, size, and package contents.',
   },
   {
     icon: ShieldCheck,
-    title: 'Quality Inspected Before Shipping',
+    title: 'Pre-Dispatch Product Check',
     description:
-      'Every single piece undergoes a thorough quality inspection at our India facility before it ships. We check stitching integrity, embellishment security, fabric quality, and sizing accuracy so you receive exactly what you ordered.',
+      'Before dispatch, we ask supplier and shipping partners to check visible stitching, fabric, embellishments, and ordered specifications. Tracking is provided after dispatch.',
   },
   {
     icon: Scissors,
     title: 'Custom Tailoring Available',
     description:
-      'Select styles can be custom-tailored to your measurements. Our partner tailors in India craft each piece to your specifications, with an additional 2\u20133 business days for production. Perfect fit, no compromise.',
+      'Select styles can be custom-tailored to your measurements. Partner tailors complete approved alterations or made-to-measure work before dispatch; custom orders usually require 5\u20137 business days before carrier transit.',
   },
   {
     icon: Truck,
     title: 'Free Shipping Over $150',
     description:
-      'Enjoy free US shipping on all orders over $150 to the United States. Orders below $150 ship for a flat $12. All shipments include full tracking, insurance, and delivery via DHL Express, USPS, or UPS.',
+      'Enjoy free U.S. shipping on orders over $150. Orders below $150 ship for a flat $12, and tracking is provided after dispatch.',
   },
   {
     icon: Headphones,
     title: 'Dedicated Customer Support',
     description:
-      'Reach us by phone, email, or WhatsApp. Our team responds within 24 hours (usually much sooner) and works with you until you\u2019re satisfied. We\u2019re a small team that genuinely cares about every customer.',
+      'Reach us by phone, email, or WhatsApp for product, sizing, stitching, and order questions. Our USA-based support team will help you understand the available options before ordering.',
   },
 ];
 
@@ -318,8 +318,8 @@ const BrandStory = () => {
     <div ref={containerRef} className="min-h-screen bg-background">
       {/* SEO Head with enriched props */}
       <SEOHead
-        title="Our Story \u2014 LuxeMia | Authentic Indian Ethnic Wear for the United States"
-        description="Discover the LuxeMia story. We source authentic Indian ethnic wear directly from our online edit\u2019s textile hubs \u2014 Surat, Varanasi, Jaipur \u2014 and deliver quality-inspected sarees, lehengas & suits to the United States. Free U.S. shipping over $150."
+        title="Our Story \u2014 LuxeMia | Indian Ethnic Wear Online"
+        description="Discover LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, support, and tracked delivery."
         canonical="https://luxemia.shop/brand-story"
         image="/images/heroes/hero-bridal-couture.jpg"
         breadcrumbs={[
@@ -386,10 +386,9 @@ const BrandStory = () => {
             in Ethnic Fashion
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            We&#39;re a new brand with a clear mission: bringing authentic Indian
-            ethnic wear directly to you, with transparency, quality, and care.
-            Sourced from our online edit&#39;s finest textile hubs and delivered to your door
-            in the United States.
+            We&#39;re a new online brand with a clear mission: make Indian ethnic
+            wear easier for U.S. shoppers to understand and order, with transparent
+            product details, practical sizing guidance, and responsive support.
           </p>
         </motion.div>
         <motion.div
@@ -405,7 +404,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="LuxeMia was born from a genuine frustration shared by NRIs around the world: finding quality Indian ethnic wear online meant navigating confusing sizing that never matched Western equivalents, questionable fabric quality with no way to verify before buying, long and opaque shipping timelines with little to no tracking, and a lack of transparency about where products actually came from. Too many stores offered glamorous photos but delivered disappointment. We decided to change that. LuxeMia is built on the idea that you deserve honest descriptions, real sizing guidance, and customer service that actually responds. All our products are sourced directly from India's established textile hubs and shipped via DHL Express, USPS, or UPS, ensuring reliable tracked delivery to your door in the United States."
+        content="LuxeMia was born from a genuine frustration shared by NRI shoppers: finding Indian ethnic wear online can mean confusing sizing, incomplete fabric details, unclear stitching status, and opaque delivery timelines. We built LuxeMia around honest descriptions, useful measurements, and customer service that responds. Our catalog is curated from supplier partners in India, and tracking is provided after dispatch to addresses in the United States."
         imagePosition="right"
         bgColor="bg-card"
         imageUrl="/images/heroes/hero-bridal-couture.jpg"
@@ -416,7 +415,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Our Approach"
         subtitle="Quality Over Quantity"
-        content="We&#39;re not claiming decades of heritage \u2014 we&#39;re a new team learning and growing every day. What we can promise is careful curation, quality checks on every piece before it ships from our facility in India, and a commitment to partnering with skilled craftspeople. Our team visits textile hubs in Surat (known for embroidered fabrics and synthetic sarees), Varanasi (home of legendary Banarasi silk), Jaipur (famous for block printing and bandhani), and Lucknow (the heart of delicate chikankari embroidery). Each product undergoes a multi-point quality inspection \u2014 checking stitching integrity, embellishment security, fabric consistency, and sizing accuracy \u2014 before it&#39;s packed and dispatched. We ship via DHL Express (3\u20135 business days transit), USPS, or UPS (7\u201310 business days transit), all with full tracking and insurance. We&#39;re transparent about our journey and welcome your feedback as we build this together."
+        content="We&#39;re not claiming decades of heritage \u2014 we&#39;re a new online brand learning and growing every day. What we can promise is careful catalog curation, detailed product information, and a pre-dispatch check coordinated with supplier and shipping partners. We review the visible stitching, embellishments, fabric, ordered size, and stitching status before dispatch whenever possible. Dispatch usually takes 3\u20137 business days depending on the product, followed by approximately 3\u201310 business days in carrier transit. Tracking is provided after dispatch."
         imagePosition="left"
         bgColor="bg-background"
         imageUrl="/images/lookbook/hero-main.jpg"
@@ -538,10 +537,10 @@ const BrandStory = () => {
               Our Styling &amp; Sourcing Team
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Behind every LuxeMia order is a small, dedicated team with deep
-              roots in Indian textiles and ethnic fashion. We combine
-              generations of textile knowledge with modern e-commerce
-              standards to bring you authentic pieces you&#39;ll love.
+              LuxeMia combines supplier product information with practical
+              e-commerce support. Our focus is helping shoppers understand
+              fabrics, embellishments, stitching status, sizing, and delivery
+              before placing an order.
             </p>
           </motion.div>
 
@@ -556,12 +555,11 @@ const BrandStory = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                 <Scissors className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-serif mb-3">Sourcing Specialists</h3>
+              <h3 className="text-lg font-serif mb-3">Catalog Curation</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Our team travels to Surat, Varanasi, Jaipur, and Lucknow to
-                personally select fabrics and partner with weaving families
-                who have practiced their craft for generations. We verify
-                authenticity at the source.
+                We select styles from established supplier partners and review
+                available fabric, work, size, stitching, and package details
+                before creating each product listing.
               </p>
             </motion.div>
 
@@ -575,12 +573,11 @@ const BrandStory = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                 <ShieldCheck className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-serif mb-3">Quality Inspectors</h3>
+              <h3 className="text-lg font-serif mb-3">Pre-Dispatch Checks</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Every garment passes a 5-point inspection: stitching
-                integrity, embellishment security, fabric consistency, sizing
-                accuracy, and overall finish. No piece ships without
-                sign-off from our India facility.
+                Supplier and shipping partners are asked to check visible
+                stitching, embellishments, fabric, ordered size, and overall
+                presentation before dispatch.
               </p>
             </motion.div>
 
@@ -632,12 +629,9 @@ const BrandStory = () => {
           >
             <p className="text-muted-foreground leading-relaxed max-w-3xl mx-auto">
               <strong className="text-foreground">Our promise:</strong> We
-              may be a new brand, but our team brings decades of combined
-              experience in Indian textiles, ethnic fashion, and
-              online e-commerce. We&#39;re based in Pennsylvania, USA
-              with sourcing and fulfillment operations in India. When you
-              contact us, you&#39;re talking to real people who know
-              ethnic wear — not a call center reading from a script.
+              publish the product details available to us, explain stitching
+              and sizing in plain language, and provide USA-based support by
+              email, phone, and WhatsApp.
             </p>
           </motion.div>
         </div>
@@ -742,15 +736,12 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Business Model</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                LuxeMia is an online-only retailer of Indian ethnic wear
-                operated by Glamour Indian Wear. We source our products directly
-                from manufacturers and textile hubs in India &mdash; including
-                Surat (embroidered fabrics), Varanasi (Banarasi silk), Jaipur
-                (block printing &amp; bandhani), and Lucknow (chikankari)
-                &mdash; which allows us to offer authentic craftsmanship at fair
-                prices with no middlemen markup. All orders are shipped from our
-                facility in India via DHL Express, USPS, or UPS with full
-                tracking and insurance.
+                LuxeMia is an online-only Indian ethnic wear store. We curate
+                products from established supplier partners in India and
+                publish available information about fabrics, embellishments,
+                stitching status, measurements, and package contents. Shipping
+                is arranged with delivery partners, and tracking is provided
+                after dispatch.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">
@@ -781,16 +772,12 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Quality Inspection</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Every product undergoes a multi-point quality inspection at our
-                India facility before shipment. We verify: (1) stitching
-                integrity and seam strength, (2) embellishment security
-                &mdash; beads, sequins, and embroidery are checked for
-                looseness, (3) fabric quality and color consistency against our
-                standards, (4) sizing accuracy against our published
-                measurements, and (5) overall finish and presentation. If any
-                issue is found, the piece is either corrected or replaced
-                before shipping. This process adds no extra time to our
-                dispatch windows &mdash; it&#39;s built into our workflow.
+                Before dispatch, we coordinate a product check with supplier
+                and shipping partners. The check covers visible stitching and
+                seam condition, embellishments, fabric and color, ordered size
+                or stitching status, and overall presentation. Product photos
+                and descriptions remain the primary reference for the item
+                ordered.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">
@@ -810,7 +797,7 @@ const BrandStory = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-muted-foreground leading-relaxed">
                 <div>
                   <p className="font-medium text-foreground mb-1">
-                    Glamour Indian Wear
+                    LuxeMia
                   </p>
                   <p>USA-based support</p>
                   <p>

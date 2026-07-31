@@ -207,7 +207,7 @@ const FAQ = () => {
         },
         {
           question: 'Are your products authentic Indian ethnic wear?',
-          answer: 'Yes. All our products are sourced directly from India\'s renowned textile hubs including Surat, Varanasi, Jaipur, and Lucknow. We work with established manufacturers and artisan communities. Every piece undergoes a quality inspection at our India facility before shipping to verify authenticity, stitching quality, and embellishment security.',
+          answer: 'Our catalog is curated from established supplier partners in India. Product pages state the available fabric, embroidery or embellishment work, stitching status, size information, and package contents. Before dispatch, we coordinate a visible product check with supplier and shipping partners.',
         },
         {
           question: 'What is zardozi embroidery?',
