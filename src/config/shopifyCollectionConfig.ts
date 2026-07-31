@@ -90,6 +90,25 @@ const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
       { question: 'Should I order every bridesmaid outfit at once?', answer: 'If exact matching matters, confirm current availability before ordering. Product batches and shades can change, so coordinated orders should be planned as early as possible.' },
     ],
   },
+  'bollywood-inspired-indian-outfits': {
+    handle: 'bollywood-inspired-indian-outfits',
+    name: 'Bollywood-Inspired Indian Outfits',
+    eyebrow: 'Cinema-Inspired Occasion Style',
+    title: 'Bollywood-Inspired Indian Outfits & Sarees | LuxeMia',
+    description: 'Shop Bollywood-inspired Indian outfits, sarees and lehengas influenced by memorable celebrity style moments for weddings, receptions and parties.',
+    canonical: 'https://luxemia.shop/collections/bollywood-inspired-indian-outfits',
+    intro: 'Discover sarees, lehengas and festive outfits selected for their cinematic glamour and contemporary Indian occasion style. Celebrity names describe style inspiration only; LuxeMia is not affiliated with or endorsed by any celebrity.',
+    editorialTitle: 'How to Shop Bollywood-Inspired Indian Fashion',
+    editorial: [
+      'Bollywood-inspired fashion translates memorable screen and red-carpet style directions into wearable Indian occasion looks. Compare fabric, drape, embroidery and included pieces on each listing rather than assuming an exact replica.',
+      'Style references may include looks associated with Alia Bhatt, Deepika Padukone, Madhuri Dixit, Kiara Advani, Katrina Kaif, Rashmika Mandanna, Kareena Kapoor Khan, Kajol and Sonakshi Sinha. Names are used only to describe inspiration; no celebrity affiliation or endorsement is implied.',
+    ],
+    faqs: [
+      { question: 'Are these outfits worn or endorsed by Bollywood celebrities?', answer: 'No. These are independent fashion interpretations inspired by broader Bollywood and red-carpet style directions. LuxeMia is not affiliated with or endorsed by any celebrity.' },
+      { question: 'Are these exact replicas of celebrity outfits?', answer: 'Not necessarily. Review each listing for the exact fabric, color, embroidery and package contents. Product titles describe the available garment, not celebrity ownership or endorsement.' },
+      { question: 'What occasions suit Bollywood-inspired Indian outfits?', answer: 'Depending on the fabric and embellishment, these styles can suit weddings, receptions, sangeet events, festive parties and formal celebrations.' },
+    ],
+  },
 };
 
 export function getShopifyCollectionConfig(handle?: string) {
