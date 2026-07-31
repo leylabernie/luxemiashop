@@ -338,8 +338,9 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
           'bridal party outfit lehenga',
           'bridesmaid outfit',
           'role:bridesmaid',
-          'mother of bride',
-          'groomsman',
+          'maid of honor',
+          'matron of honor',
+          'role:maid-of-honor',
         ].some((tag) => tags.has(tag));
       }
       return false;
@@ -869,13 +870,13 @@ const routes = [
   {
     path: '/collections/bridal-party-outfits',
     category: 'collection:bridal-party-outfits',
-    title: 'Indian Bridal Party Outfits & Bridesmaid Looks | LuxeMia',
-    description: 'Shop Indian bridal party outfits for bridesmaids, family and wedding attendants. Explore coordinated lehengas, sarees, suits and menswear with styling support.',
-    h1: 'Bridal Party Outfits',
+    title: 'Indian Bridesmaid & Maid of Honor Outfits | LuxeMia',
+    description: 'Shop Indian bridesmaid and maid of honor outfits. Explore coordinated lehengas, sarees and suits for the bride’s attendants, with styling support.',
+    h1: 'Bridesmaid & Maid of Honor Outfits',
     content: `
-      <p>Build a coordinated wedding party without requiring every person to wear the identical outfit. Browse lehengas, sarees, suits and menswear selected for bridesmaids, family members and wedding attendants.</p>
-      <h2>How should an Indian bridal party coordinate?</h2>
-      <p>Start with a shared color family, fabric weight or embroidery detail, then choose silhouettes suited to each person and ceremony. Confirm event dates, sizes and availability before ordering for a group.</p>
+      <p>Coordinate the women standing with the bride without requiring everyone to wear the identical outfit. Browse lehengas, sarees and suits selected for bridesmaids and the maid or matron of honor.</p>
+      <h2>How should Indian bridesmaid outfits coordinate?</h2>
+      <p>Start with a shared color family, fabric weight or embroidery detail, then choose silhouettes suited to each bridesmaid. The maid or matron of honor can wear a deeper shade or more detailed border within the same palette.</p>
       <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/style-consultation">ask our styling team</a> for help.</p>
     `,
   },
