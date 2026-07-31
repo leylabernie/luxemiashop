@@ -30,7 +30,7 @@ const navLinks = [
 
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
-  { name: 'Bridal Party', href: '/collections/bridal-party-outfits' },
+  { name: 'Bridesmaids', href: '/collections/bridal-party-outfits' },
   { name: 'Featured', href: '/bestsellers' },
   { name: 'Blog', href: '/blog' },
 ];
