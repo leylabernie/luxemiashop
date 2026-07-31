@@ -30,7 +30,7 @@ const footerLinks = {
     { name: 'Silk Sarees', href: '/collections/silk-sarees' },
     { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
     { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
-    { name: 'Bridal Party Outfits', href: '/collections/bridal-party-outfits' },
+    { name: 'Bridesmaid & Maid of Honor', href: '/collections/bridal-party-outfits' },
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
