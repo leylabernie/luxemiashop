@@ -1231,10 +1231,10 @@ const routes = [
     description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees & suits added weekly. Free U.S. shipping over $150.',
     h1: 'New Arrivals',
     content: `
-      <p>Discover the newest additions to our collection, including lehengas, silk sarees, and anarkali suits with delivery to the United States.</p>
-      <h2>What's New</h2>
-      <p>We add new styles every week, from bridal lehengas and Banarasi silk sarees to trendy palazzo suits and groom sherwanis. Each new arrival features the latest embroidery techniques, color palettes, and fabric innovations for 2026.</p>
-      <p>Sign up for our newsletter to be the first to know when new collections drop. Free US shipping on all new arrivals to the United States.</p>
+      <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry available online for delivery across the United States.</p>
+      <h2>What is new at LuxeMia?</h2>
+      <p>This collection brings together LuxeMia's latest wedding, reception, festival, and special-occasion styles so shoppers can find newly added pieces in one place.</p>
+      <p>Free U.S. shipping is available on orders over $150, with $12 flat-rate shipping below $150. Tracking is provided after dispatch.</p>
     `,
   },
   {
