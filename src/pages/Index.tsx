@@ -54,43 +54,6 @@ const homepageFaqs = [
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // OnlineStore Schema — explicitly distinguishes LuxeMia as a South Asian
-  // apparel retailer (not the unrelated sneaker store on luxemia.net). The
-  // knowsAbout array and category field are the key disambiguation signals for
-  // AI search engines and entity-based ranking.
-  //
-  const onlineStoreSchema = {
-    "@context": "https://schema.org",
-    "@type": "OnlineStore",
-    "name": "LuxeMia",
-    "url": "https://luxemia.shop",
-    "logo": "https://luxemia.shop/og-image.jpg",
-    "description": "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
-    "image": "https://luxemia.shop/og-image.jpg",
-    "category": "Indian Clothing Store",
-    "knowsAbout": [
-      "Indian Ethnic Wear",
-      "Bridal Lehengas",
-      "Silk Sarees",
-      "Salwar Kameez",
-      "Sherwanis",
-      "Anarkali Suits",
-      "South Asian Fashion"
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "LuxeMia Indian Ethnic Wear",
-      "url": "https://luxemia.shop/collections",
-      "itemListElement": [
-        { "@type": "OfferCatalog", "name": "Lehengas", "url": "https://luxemia.shop/lehengas" },
-        { "@type": "OfferCatalog", "name": "Sarees", "url": "https://luxemia.shop/sarees" },
-        { "@type": "OfferCatalog", "name": "Suits", "url": "https://luxemia.shop/suits" },
-        { "@type": "OfferCatalog", "name": "Menswear", "url": "https://luxemia.shop/menswear" },
-        { "@type": "OfferCatalog", "name": "Indo-Western", "url": "https://luxemia.shop/indowestern" }
-      ]
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -98,7 +61,6 @@ const Index = () => {
         description="Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
-        additionalSchemas={[onlineStoreSchema]}
       />
       <Header />
       
