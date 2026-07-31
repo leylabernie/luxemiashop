@@ -103,7 +103,7 @@ const NewArrivals = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
-        description="Shop the latest Indian ethnic wear online at LuxeMia. New arrivals in bridal lehengas, designer sarees, salwar kameez, jewelry & more. Fresh styles added weekly. Free US shipping."
+        description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, sharara sets, menswear and jewelry, with free U.S. shipping on orders over $150."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />
@@ -111,10 +111,25 @@ const NewArrivals = () => {
         {/* Hero Banner */}
         <div className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
           <picture className="absolute inset-0 w-full h-full">
-            <source srcSet="/images/banners/saree-banner.webp" type="image/webp" />
+            <source
+              media="(min-width: 768px)"
+              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp"
+              type="image/webp"
+            />
+            <source
+              media="(min-width: 768px)"
+              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg"
+              type="image/jpeg"
+            />
+            <source
+              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp"
+              type="image/webp"
+            />
             <img
-              src="/images/banners/saree-banner.jpg"
-              alt="New Arrivals Collection"
+              src="/images/campaigns/new-indian-ethnic-wear-2026-mobile.jpg"
+              alt="Woman wearing a blush pink embroidered sharara set from LuxeMia's new Indian ethnic wear collection"
+              width={624}
+              height={936}
               className="absolute inset-0 w-full h-full object-cover object-center"
               fetchPriority="high"
               decoding="async"
@@ -124,13 +139,13 @@ const NewArrivals = () => {
           <div className="relative z-10 text-center px-4 text-white">
             <div className="flex items-center justify-center gap-2 mb-3">
               <Sparkles className="w-5 h-5 text-white" />
-              <span className="text-xs uppercase tracking-widest text-white/70">Just Landed</span>
+              <span className="text-xs uppercase tracking-widest text-white/70">New Indian Ethnic Wear</span>
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
             <p className="text-white/80 font-light max-w-md mx-auto text-sm lg:text-base">
               {isLoading
-                ? 'Loading the latest styles…'
-                : `${totalNew} new ${totalNew === 1 ? 'piece' : 'pieces'} — each category capped at ${MAX_PER_CATEGORY}. Uploads auto-replace the oldest.`
+                ? 'Explore recently added lehengas, sarees, sharara sets, menswear and jewelry for U.S. delivery.'
+                : `Explore ${totalNew} recently added ${totalNew === 1 ? 'style' : 'styles'}, including lehengas, sarees, sharara sets, menswear and jewelry for U.S. delivery.`
               }
             </p>
           </div>
