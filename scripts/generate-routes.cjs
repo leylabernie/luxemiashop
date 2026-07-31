@@ -55,6 +55,7 @@ const STATIC_ROUTES = [
   '/collections/kanchipuram-sarees',
   '/collections/manthrakodi-sarees',
   '/collections/bridal-party-outfits',
+  '/collections/bollywood-inspired-indian-outfits',
   '/about',
   '/brand-story',
   '/new-arrivals',
