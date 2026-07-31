@@ -343,6 +343,9 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
           'role:maid-of-honor',
         ].some((tag) => tags.has(tag));
       }
+      if (handle === 'bollywood-inspired-indian-outfits') {
+        return tags.has('bollywood inspired');
+      }
       return false;
     });
 
@@ -878,6 +881,19 @@ const routes = [
       <h2>How should Indian bridesmaid outfits coordinate?</h2>
       <p>Start with a shared color family, fabric weight or embroidery detail, then choose silhouettes suited to each bridesmaid. The maid or matron of honor can wear a deeper shade or more detailed border within the same palette.</p>
       <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/style-consultation">ask our styling team</a> for help.</p>
+    `,
+  },
+  {
+    path: '/collections/bollywood-inspired-indian-outfits',
+    category: 'collection:bollywood-inspired-indian-outfits',
+    title: 'Bollywood-Inspired Indian Outfits & Sarees | LuxeMia',
+    description: 'Shop Bollywood-inspired Indian outfits, sarees and lehengas influenced by memorable celebrity style moments for weddings, receptions and parties.',
+    h1: 'Bollywood-Inspired Indian Outfits',
+    content: `
+      <p>Discover sarees, lehengas and festive Indian outfits selected for cinematic glamour and contemporary occasion style.</p>
+      <h2>Are these outfits endorsed by Bollywood celebrities?</h2>
+      <p>No. LuxeMia offers independent fashion interpretations inspired by broader Bollywood and red-carpet style directions. Celebrity names describe style inspiration only; no affiliation or endorsement is implied.</p>
+      <p><a href="/sarees">Browse sarees</a>, <a href="/lehengas">browse lehengas</a> or <a href="/style-consultation">ask our styling team</a>.</p>
     `,
   },
   {
