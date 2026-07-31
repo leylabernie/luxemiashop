@@ -28,9 +28,9 @@ const slides: FeaturedSlide[] = [
   {
     id: 1,
     eyebrow: 'New This Week',
-    headline: 'New Indian Ethnic Wear, Just Landed',
+    headline: 'New Sharara & Palazzo Sets Under $75',
     subline:
-      'Fresh lehengas, sharara sets and occasion wear selected for weddings and celebrations across the U.S.',
+      'Fresh chikankari and aari-work occasion sets in sizes L–XXL, with tracked U.S. shipping.',
     cta: 'Shop New Arrivals',
     link: '/new-arrivals',
     image: '/images/campaigns/new-indian-ethnic-wear-2026-mobile',
