@@ -37,7 +37,7 @@ const sortOptions = [
 ];
 
 const NewArrivals = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts(undefined, true);
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
   const [sortBy, setSortBy] = useState('newest');
 
