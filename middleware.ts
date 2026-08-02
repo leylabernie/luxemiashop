@@ -28,6 +28,17 @@ const LEGACY_REGIONAL_REDIRECT_ROUTES = new Set([
   '/uk-designer-sarees',
 ]);
 
+// Confirmed one-to-one replacements for legacy product handles that still earn
+// Google impressions. Run before the 410/404 checks so ranking signals transfer
+// to the same current product instead of being discarded.
+const PRODUCT_301_REDIRECTS: Record<string, string> = {
+  '/product/green-net-sequins-occasion-lehenga-choli': '/product/green-net-sequins-lehenga-choli-with-dupatta',
+  '/product/beads-work-lehenga-choli-in-satin-off-white': '/product/off-white-satin-beads-bridal-lehenga-with-dupatta',
+  '/product/light-pink-net-beads-festive-lehenga-choli': '/product/light-pink-net-beads-bridal-lehenga-with-dupatta',
+  '/product/rust-orange-georgette-embroidery-occasion-lehenga-choli': '/product/rust-orange-georgette-embroidery-lehenga-choli-with-dupatta',
+  '/product/wine-pure-vichitra-embroidery-festive-lehenga-choli': '/product/wine-pure-vichitra-embroidery-lehenga-choli-with-dupatta',
+};
+
 // Explicit 410 Gone routes — URLs that have been permanently retired and have
 // NO semantic replacement. Only manually confirmed deletions belong here.
 //
@@ -165,8 +176,14 @@ async function routeRequest(request: Request): Promise<Response> {
     }
   }
 
+  // Preserve search equity when a legacy product has a confirmed replacement.
+  if (PRODUCT_301_REDIRECTS[pathname]) {
+    return Response.redirect(new URL(PRODUCT_301_REDIRECTS[pathname], request.url).toString(), 301);
+  }
+
   // 410 Gone check — explicit, confirmed retired URLs only.
-  // Run BEFORE the redirect checks so retired URLs always get 410, not a redirect.
+  // Confirmed replacement redirects above take precedence; every remaining
+  // retired URL stays 410 instead of falling through to a generic redirect.
   if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
     return return410();
   }
