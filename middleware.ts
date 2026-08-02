@@ -182,7 +182,8 @@ async function routeRequest(request: Request): Promise<Response> {
   }
 
   // 410 Gone check — explicit, confirmed retired URLs only.
-  // Run BEFORE the redirect checks so retired URLs always get 410, not a redirect.
+  // Confirmed replacement redirects above take precedence; every remaining
+  // retired URL stays 410 instead of falling through to a generic redirect.
   if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
     return return410();
   }
