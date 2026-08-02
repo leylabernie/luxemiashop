@@ -560,6 +560,31 @@ function generateItemListJsonLd(products, category, routePath) {
           availability,
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@type': 'Organization', name: 'LuxeMia' },
+          shippingDetails: [
+            {
+              '@type': 'OfferShippingDetails',
+              name: Number(price) >= 150
+                ? 'Free US Shipping for This Order'
+                : 'Flat US Shipping Below $150',
+              shippingRate: {
+                '@type': 'MonetaryAmount',
+                value: Number(price) >= 150 ? '0' : '12.00',
+                currency,
+              },
+              shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+              deliveryTime: {
+                '@type': 'ShippingDeliveryTime',
+                handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY' },
+                transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10, unitCode: 'DAY' },
+              },
+            },
+          ],
+          hasMerchantReturnPolicy: {
+            '@type': 'MerchantReturnPolicy',
+            applicableCountry: 'US',
+            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+            description: 'All sales are final. LuxeMia does not accept returns or exchanges. Only genuine shipping damage claims are accepted within 48 hours with mandatory unboxing video.',
+          },
         },
       },
     };
@@ -2388,6 +2413,7 @@ function generateHtml(template, route, allShopifyProducts) {
             price: productPrice,
             priceCurrency: productCurrency,
             maxPrice: productComparePrice,
+            validFrom: new Date().toISOString().split('T')[0],
             validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           },
         } : {}),
