@@ -557,6 +557,8 @@ function generateItemListJsonLd(products, category, routePath) {
           url: productUrl,
           price,
           priceCurrency: currency,
+          validFrom: new Date().toISOString(),
+          priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           availability,
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@type': 'Organization', name: 'LuxeMia' },
@@ -2401,6 +2403,7 @@ function generateHtml(template, route, allShopifyProducts) {
         url: canonical,
         price: productPrice,
         priceCurrency: productCurrency,
+        validFrom: new Date().toISOString(),
         priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         // When the product is on sale (compareAtPrice > price), emit a
         // priceSpecification with maxPrice = the regular price. This matches
@@ -2413,8 +2416,8 @@ function generateHtml(template, route, allShopifyProducts) {
             price: productPrice,
             priceCurrency: productCurrency,
             maxPrice: productComparePrice,
-            validFrom: new Date().toISOString().split('T')[0],
-            validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            validFrom: new Date().toISOString(),
+            validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
           },
         } : {}),
         availability: `https://schema.org/${productAvailability}`,
