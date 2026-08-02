@@ -44,6 +44,16 @@ for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:ta
   }
 }
 
+const staleDeliveryPhrases = [
+  'delivered in 7-10 business days via DHL/USPS/UPS to the United States',
+];
+const normalizedXml = xml.toLowerCase();
+for (const stalePhrase of staleDeliveryPhrases) {
+  if (normalizedXml.includes(stalePhrase.toLowerCase())) {
+    throw new Error(`Merchant feed contains stale delivery promise: "${stalePhrase}"`);
+  }
+}
+
 console.log(
   `[merchant-feed] Validated ${itemIds.length} unique product IDs and ${groupIds.length} group IDs; all are 50 characters or fewer`
 );
