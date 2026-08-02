@@ -497,6 +497,13 @@ function sanitizeShippingAndBoilerplate(text) {
 // Add missing details to 194 products." For salwar suit types, we now generate
 // rich multi-paragraph descriptions that include outfit components (kameez +
 // bottom + dupatta), bottom style, work details, stitching options, and care.
+function normalizeFeedDeliveryCopy(xml) {
+  return xml.replace(
+    /delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi,
+    'estimated delivery is 6-17 business days with tracking after dispatch'
+  );
+}
+
 function buildDescription(product, color, material, productType) {
   const original = (product.description || '').trim();
 
@@ -806,8 +813,10 @@ async function main() {
       console.log('[merchant-feed] Using existing feed from public/merchant-feed.xml');
       const distDir = path.resolve(__dirname, '../dist');
       if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-      fs.copyFileSync(existingFeed, path.join(distDir, 'merchant-feed.xml'));
-      console.log('[merchant-feed] Copied existing feed to dist/merchant-feed.xml');
+      const existingXml = fs.readFileSync(existingFeed, 'utf8');
+      const normalizedExistingXml = normalizeFeedDeliveryCopy(existingXml);
+      fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), normalizedExistingXml, 'utf8');
+      console.log('[merchant-feed] Normalized existing feed and copied it to dist/merchant-feed.xml');
       return;
     }
     console.error('[merchant-feed] No fallback feed available. Generating empty feed.');
@@ -830,7 +839,7 @@ async function main() {
     )
     .join('\n');
 
-  const feed = `<?xml version="1.0" encoding="UTF-8"?>
+  const rawFeed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
@@ -840,6 +849,7 @@ async function main() {
 ${itemsXml}
 </channel>
 </rss>`;
+  const feed = normalizeFeedDeliveryCopy(rawFeed);
 
   // Write to dist/ directory (Vercel serves static files from dist/)
   const distDir = path.resolve(__dirname, '../dist');
