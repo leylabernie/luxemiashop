@@ -34,6 +34,7 @@ export const staticPages = [
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9', title: 'Lehengas' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9', title: 'Sarees' },
   { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9', title: 'Silk Sarees' },
+  { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9', title: 'Kanchipuram Sarees' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9', title: 'Bridesmaid & Maid of Honor Outfits' },
   { loc: '/collections/bollywood-inspired-indian-outfits', changefreq: 'daily', priority: '0.9', title: 'Bollywood-Inspired Indian Outfits' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9', title: 'Salwar Kameez & Suits' },
