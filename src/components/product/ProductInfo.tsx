@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -184,17 +185,27 @@ const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
 };
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
+  const [searchParams] = useSearchParams();
+  const requestedVariantId = searchParams.get('variant');
   const isStitchable = isStitchableProduct(product.productType, product.tags);
   const isMenswear = isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
 
-  // Select the first purchasable Shopify variant by default. This keeps the
-  // primary CTA usable on first paint while still showing the selected size or
-  // colour clearly in the option controls.
+  // Honor Merchant Center variant links while preserving the first available
+  // variant as the normal default when no variant query parameter is present.
   const defaultOptions = useMemo(() => {
     const defaults: Record<string, string> = {};
-    const firstPurchasable = product.variants.edges.find(
+    const requestedVariant = requestedVariantId
+      ? product.variants.edges.find((edge) =>
+          edge.node.id === requestedVariantId ||
+          edge.node.id.endsWith(`/${requestedVariantId}`)
+        )
+      : undefined;
+    const requestedPurchasable = requestedVariant?.node.availableForSale !== false
+      ? requestedVariant
+      : undefined;
+    const firstPurchasable = requestedPurchasable ?? product.variants.edges.find(
       (edge) => edge.node.availableForSale !== false
     ) ?? product.variants.edges[0];
 
@@ -203,7 +214,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     });
 
     return defaults;
-  }, [product.variants.edges]);
+  }, [product.variants.edges, requestedVariantId]);
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
   const [quantity, setQuantity] = useState(1);
