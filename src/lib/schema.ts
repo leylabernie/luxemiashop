@@ -123,14 +123,15 @@ export function generateProductSchema(input: ProductSchemaInput) {
       url: input.url,
       price: schemaPrice,
       priceCurrency: input.currency,
+      validFrom: new Date().toISOString(),
       ...(schemaSalePrice && {
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
           priceType: 'https://schema.org/SalePrice',
           price: schemaSalePrice,
           priceCurrency: input.currency,
-          validFrom: new Date().toISOString().split('T')[0],
-          priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          validFrom: new Date().toISOString(),
+          validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
         },
       }),
       priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
