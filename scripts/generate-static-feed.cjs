@@ -669,6 +669,18 @@ async function fetchAllProducts() {
 
 // ─── XML Item Generation ────────────────────────────────────────────────────
 
+// Merchant Center limits both id and item_group_id to 50 characters.
+// Preserve every already-compliant ID so existing approved offers keep their
+// history. Only long handle-based IDs fall back to stable Shopify numeric IDs.
+function fitMerchantId(rawId, stableFallback) {
+  if (rawId.length <= 50) return rawId;
+  if (stableFallback && stableFallback.length <= 50) return stableFallback;
+
+  const hash = Math.abs(hashCode(rawId)).toString(36);
+  const prefixLength = Math.max(1, 49 - hash.length);
+  return `${rawId.slice(0, prefixLength)}-${hash}`.slice(0, 50);
+}
+
 function generateProductItemXml(product, variant, titleCounts) {
   const handle = product.handle;
   const variantId = variant.id?.split('/').pop() || '';
@@ -749,10 +761,16 @@ function generateProductItemXml(product, variant, titleCounts) {
     displayTitle = sanitizeFeedTitle(`${baseTitle} (${sku || handle})`);
   }
 
-  const itemId = isVariantGroup ? `${handle}-${variantId}` : handle;
+  const productId = product.id?.split('/').pop() || '';
+  const rawItemId = isVariantGroup ? `${handle}-${variantId}` : handle;
+  const fallbackItemId = isVariantGroup
+    ? `p${productId}-v${variantId}`
+    : `p${productId}`;
+  const itemId = fitMerchantId(rawItemId, fallbackItemId);
+  const itemGroupId = fitMerchantId(handle, `p${productId}`);
   const groupFields = isVariantGroup
     ? `
-    <g:item_group_id>${escapeXml(handle)}</g:item_group_id>
+    <g:item_group_id>${escapeXml(itemGroupId)}</g:item_group_id>
     <g:item_group_title>${escapeXml(baseTitle)}</g:item_group_title>`
     : '';
 
@@ -782,16 +800,9 @@ function generateProductItemXml(product, variant, titleCounts) {
     ${size ? '<g:size_type>regular</g:size_type>' : ''}
     ${size ? '<g:size_system>US</g:size_system>' : ''}
     <g:identifier_exists>no</g:identifier_exists>
-    <g:target_country>US</g:target_country>
-    <g:content_language>en</g:content_language>
     <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
     ${generateShippingXml()}
     ${generateReturnsXml()}
-    <g:tax>
-      <g:country>US</g:country>
-      <g:rate>0</g:rate>
-      <g:tax_ship>no</g:tax_ship>
-    </g:tax>
   </item>`;
 }
 
