@@ -35,9 +35,12 @@ if (duplicateItemIds.length > 0) {
   throw new Error(`Merchant feed contains ${new Set(duplicateItemIds).size} duplicate product IDs`);
 }
 
-for (const obsoleteTag of ['g:target_country', 'g:content_language', 'g:tax']) {
-  if (xml.includes(`<${obsoleteTag}>`)) {
-    throw new Error(`Merchant feed contains obsolete or source-level attribute <${obsoleteTag}>`);
+// Country, language, tax, and threshold-based shipping are configured at
+// Merchant Center's data-source/account level. Item shipping would override
+// the accurate "$12 below $150, free at $150+" account rule.
+for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:tax', 'g:shipping']) {
+  if (xml.includes(`<${accountManagedTag}>`)) {
+    throw new Error(`Merchant feed contains account-managed attribute <${accountManagedTag}>`);
   }
 }
 
