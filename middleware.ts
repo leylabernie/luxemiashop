@@ -210,6 +210,7 @@ async function routeRequest(request: Request): Promise<Response> {
     '/collections/gharara-suits': '/suits',
     '/collections/anarkali-suits': '/suits',
     '/collections/pakistani-suits': '/suits',
+    '/collections/pakistani-wedding-dresses': '/suits',
     '/collections/party-wear-lehengas': '/lehengas',
     '/collections/wedding-lehengas': '/lehengas',
     '/collections/designer-sarees': '/sarees',
