@@ -474,6 +474,8 @@ function sanitizeShippingAndBoilerplate(text) {
     .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
     .replace(/Free shipping on orders over \$350/gi, 'Free U.S. shipping over $150')
     .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping over $150')
+    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
+    .replace(/delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'estimated delivery is 6-17 business days with tracking after dispatch')
     .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch in the US')
     .replace(/USA, Canada, and Australia/gi, 'the United States')
     .replace(/worldwide shipping/gi, 'US shipping')

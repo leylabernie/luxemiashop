@@ -108,7 +108,20 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
 // Product types that support blouse neckline selection (lehenga, saree)
 const BLOUSE_PRODUCT_TYPES = ['lehenga choli', 'lehenga', 'saree', 'sarees'];
 
+const NON_STITCHABLE_PRODUCT_TYPES = [
+  'jewelry', 'jewellery', 'accessory', 'accessories', 'necklace', 'choker',
+  'earring', 'bangle', 'bracelet', 'ring', 'bag', 'clutch', 'footwear',
+  'jutti', 'mojri',
+];
+
+const isAccessoryProductType = (productType?: string): boolean => {
+  if (!productType) return false;
+  const lower = productType.toLowerCase();
+  return NON_STITCHABLE_PRODUCT_TYPES.some((type) => lower.includes(type));
+};
+
 const isBlouseProductType = (productType?: string, tags?: string[]): boolean => {
+  if (isAccessoryProductType(productType)) return false;
   if (productType && BLOUSE_PRODUCT_TYPES.some((t) => productType.toLowerCase().includes(t)))
     return true;
   if (tags) {
@@ -129,6 +142,7 @@ const STITCHABLE_PRODUCT_TYPES = [
 
 const isStitchableProduct = (productType?: string, tags?: string[]): boolean => {
   if (!productType) return false;
+  if (isAccessoryProductType(productType)) return false;
   const lower = productType.toLowerCase();
   if (STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t))) return true;
   // Also check tags for suit/salwar indicators
@@ -148,6 +162,7 @@ const BOTTOM_STYLE_PRODUCT_TYPES = [
 
 const shouldShowBottomStyle = (productType?: string, tags?: string[]): boolean => {
   if (!productType) return false;
+  if (isAccessoryProductType(productType)) return false;
   const lower = productType.toLowerCase();
   if (BOTTOM_STYLE_PRODUCT_TYPES.some(t => lower.includes(t))) return true;
   if (tags) {
@@ -763,7 +778,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       )}
 
       {/* ─── Custom Alteration Option ─── */}
-      <div className="space-y-3">
+      {(isStitchable || isMenswear) && (
+        <div className="space-y-3">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium uppercase tracking-wide">Custom Alterations</label>
           <span className="text-[10px] text-primary font-medium uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded">Optional</span>
@@ -777,7 +793,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         <p className="text-[11px] text-muted-foreground italic">
           * Our tailors will review your requests. Some complex alterations may incur additional charges.
         </p>
-      </div>
+        </div>
+      )}
 
       {/* Quantity */}
       <div className="space-y-3">
