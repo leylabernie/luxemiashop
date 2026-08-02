@@ -63,7 +63,7 @@ const ALL_PRODUCTS_QUERY = `
               }
             }
           }
-          variants(first: 20) {
+          variants(first: 100) {
             edges {
               node {
                 id
@@ -78,6 +78,10 @@ const ALL_PRODUCTS_QUERY = `
                   currencyCode
                 }
                 availableForSale
+                image {
+                  url
+                  altText
+                }
                 selectedOptions {
                   name
                   value
@@ -147,23 +151,13 @@ function getGoogleProductCategory(productType, title) {
 }
 
 function getSizes(product) {
-  const sizeOption = product.options?.find(
-    o => o.name?.toLowerCase() === 'size' ||
-         o.name?.toLowerCase() === 'bust size' ||
-         o.name?.toLowerCase() === 'chest size'
+  const sizeOption = product.options?.find((option) =>
+    ['size', 'bust size', 'chest size'].includes(option.name?.toLowerCase())
   );
-  if (sizeOption && sizeOption.values.length > 0) {
-    // GMC: Normalize 'Free Size' to 'One Size' (GMC standard)
-    return sizeOption.values.map(v => v.toLowerCase() === 'free size' ? 'One Size' : v);
-  }
-  const pt = (product.productType || '').toLowerCase();
-  const isApparel = pt.includes('lehenga') || pt.includes('saree') || pt.includes('suit') ||
-    pt.includes('salwar') || pt.includes('anarkali') || pt.includes('men') ||
-    pt.includes('sherwani') || pt.includes('kurta') || pt.includes('dress') ||
-    pt.includes('indo western') || pt.includes('sharara') || pt.includes('palazzo');
-  // GMC: 'Free Size' is not a standard size. Use 'One Size' instead.
-  const normalizedSizes = isApparel ? ['S', 'M', 'L', 'XL', 'XXL'] : [];
-  return normalizedSizes;
+  if (!sizeOption) return [];
+  return sizeOption.values
+    .filter(Boolean)
+    .map((value) => value.toLowerCase() === 'free size' ? 'One Size' : value);
 }
 
 function getGender(productType, title) {
@@ -504,14 +498,8 @@ function sanitizeShippingAndBoilerplate(text) {
 function buildDescription(product, color, material, productType) {
   const original = (product.description || '').trim();
 
-  // ── Salwar/Suit enrichment path ──
-  // If this is a salwar suit type, ALWAYS generate a rich description from
-  // extracted attributes — even if the Shopify description is ≥150 chars.
-  // The Shopify descriptions for these products lack components, dupatta,
-  // bottom style, and care details that GMC and shoppers expect.
-  if (isSalwarSuitType(productType)) {
-    return buildSalwarSuitDescription(product, color, material, productType);
-  }
+  // Use Shopify's original product description for every category. Automated
+  // category-wide component claims can contradict the actual package contents.
 
   // For rich descriptions (>=150 chars), append a structured details line
   // with Color if the description doesn't already contain an explicit "Color:" mention.
@@ -550,20 +538,11 @@ function buildDescription(product, color, material, productType) {
     parts.push(detailsParts.join(' | '));
   }
 
-  // Attribute sentence — material, color, category context.
-  const noun = productType ? productType.toLowerCase() : 'piece';
-  const attrPhrases = [];
-  if (material) attrPhrases.push(`crafted in ${material.toLowerCase()}`);
-  if (color) attrPhrases.push(`finished in ${color.toLowerCase()}`);
-  if (attrPhrases.length) {
-    parts.push(`This ${noun}, ${attrPhrases.join(' and ')}, is hand-finished by Indian artisans for a refined drape and lasting wear.`);
-  } else {
-    parts.push(`Hand-finished by Indian artisans for a refined drape and lasting wear.`);
+  if (productType) {
+    parts.push(`Category: ${productType}.`);
   }
-
-  // Occasion + shipping sentence — adds genuine shopper-relevant detail
-  // and keeps every fallback description well above the 150-char floor.
-  parts.push('Ideal for weddings, festivals, receptions and other celebrations. Ships from LuxeMia within the United States: free over $150, $12 flat below that.');
+  parts.push('Review the product page for included components, embellishment details, measurements, and stitching options before ordering.');
+  parts.push('Available for delivery to U.S. addresses. Free shipping over $150; $12 flat below that. Tracking is provided after dispatch.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
@@ -575,139 +554,78 @@ function buildDescription(product, color, material, productType) {
 }
 
 function generateShippingXml() {
-  // GMC: United States shipping only. All prices in USD.
+  // Match the published shipping policy and structured data on /shipping.
   return `
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Standard below $150</g:service>
       <g:price>12.00 USD</g:price>
-      <g:min_handling_time>0</g:min_handling_time>
-      <g:max_handling_time>2</g:max_handling_time>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>7</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
     </g:shipping>
     <g:shipping>
       <g:country>US</g:country>
       <g:service>Free over $150</g:service>
       <g:price>0.00 USD</g:price>
-      <g:min_handling_time>0</g:min_handling_time>
-      <g:max_handling_time>2</g:max_handling_time>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>7</g:max_handling_time>
+      <g:min_transit_time>3</g:min_transit_time>
+      <g:max_transit_time>10</g:max_transit_time>
     </g:shipping>`;
 }
 
-// ─── Returns Policy Block ──────────────────────────────────────────────────
-// GMC requires explicit return policy info per item to satisfy the
-// "return policy" rejection. See:
-// https://support.google.com/merchants/answer/10320582
-//
-// IMPORTANT: The category here MUST match what's on the /returns page.
-// Our website offers damage-claim resolution within 48h (replacement, store
-// credit, or partial refund at our discretion) and cancellations within 24h
-// (full refund). GMC classifies this as "MerchantReturnFiniteReturnWindow"
-// with a 48-hour window, NOT "MerchantReturnNotPermitted".
-//
-// Mismatch between feed and website causes GMC to reject items as
-// "Inconsistent return policy information".
+// Google Merchant Center's current product-feed attribute is <g:returns>,
+// not <g:returns_policy>. LuxeMia does not accept ordinary returns or
+// exchanges; shipping-damage reports are claims under the published policy,
+// not a general two-day free-return window.
 function generateReturnsXml() {
-  // NOTE: Only use sub-attributes defined in Google's g:returns_policy spec.
-  // https://support.google.com/merchants/answer/12100032
-  //
-  // History:
-  //   Jun 30 2026 — Removed 3 invalid sub-attributes (customer_service_link,
-  //     restocking_fee, refund_fee) that were not in Google's spec.
-  //   Jul 9 2026 — Removed the <g:returns> wrapper element. <g:returns> is NOT
-  //     a valid GMC element per https://support.google.com/merchants/answer/12100032
-  //     — <g:returns_policy> must be a direct child of <item>. The invalid
-  //     wrapper caused GMC to throw "Misplaced subattribute" on every item
-  //     even after the sub-attribute cleanup.
-  //
-  // Valid sub-attributes used below:
-  //   countries, return_policy_category, return_policy_url, life_time_return_window,
-  //   return_window_days, return_method, return_fee, return_shipping_fee
   return `
-    <g:returns_policy>
-      <g:countries>US</g:countries>
-      <g:return_policy_category>https://schema.org/MerchantReturnFiniteReturnWindow</g:return_policy_category>
-      <g:return_policy_url>https://luxemia.shop/returns</g:return_policy_url>
-      <g:life_time_return_window>false</g:life_time_return_window>
-      <g:return_window_days>2</g:return_window_days>
-      <g:return_method>https://schema.org/ReturnByMail</g:return_method>
-      <g:return_fee>https://schema.org/FreeReturn</g:return_fee>
-      <g:return_shipping_fee>
-        <g:price>0.00 USD</g:price>
-      </g:return_shipping_fee>
-    </g:returns_policy>`;
+    <g:returns>
+      <g:country>US</g:country>
+      <g:item_condition>NEW</g:item_condition>
+      <g:window_type>NO_RETURNS</g:window_type>
+      <g:method>BY_MAIL</g:method>
+      <g:shipping_fee>0.00 USD</g:shipping_fee>
+      <g:policy_url>https://luxemia.shop/returns</g:policy_url>
+    </g:returns>`;
 }
 
-// ─── Product Highlights ────────────────────────────────────────────────────
-// GMC: 3-5 short bullet highlights per item (max 150 chars each).
-// Derived from color, fabric, work type, stitching options, occasion.
-function generateProductHighlights(product, color, material, productType, title) {
+function generateProductHighlights(product, color, material, productType, title, size) {
   const highlights = [];
-  const t = (title + ' ' + productType).toLowerCase();
+  const source = [
+    title,
+    productType,
+    product.description || '',
+    ...(product.tags || []),
+  ].join(' ').toLowerCase();
 
-  // Color highlight
-  if (color) {
-    highlights.push(`${color} authentic Indian ethnic wear with rich detailing`);
-  }
+  if (color) highlights.push(`Color: ${color}`);
+  if (material) highlights.push(`Material: ${material}`);
 
-  // Fabric/material highlight
-  if (material) {
-    highlights.push(`Premium ${material.toLowerCase()} fabric with comfortable drape and luxury finish`);
-  } else {
-    const fabricPatterns = [
-      { pat: /georgette/i, label: 'Georgette' },
-      { pat: /silk/i, label: 'Silk' },
-      { pat: /net/i, label: 'Net' },
-      { pat: /velvet/i, label: 'Velvet' },
-      { pat: /chiffon/i, label: 'Chiffon' },
-      { pat: /organza/i, label: 'Organza' },
-    ];
-    for (const fp of fabricPatterns) {
-      if (fp.pat.test(t)) {
-        highlights.push(`Premium ${fp.label.toLowerCase()} fabric with comfortable drape and luxury finish`);
-        break;
-      }
-    }
-  }
+  const workTypes = [
+    { pattern: /chikankari/, label: 'Chikankari embroidery' },
+    { pattern: /zardozi|zardosi/, label: 'Zardozi embroidery' },
+    { pattern: /zari/, label: 'Zari work' },
+    { pattern: /sequin/, label: 'Sequin work' },
+    { pattern: /mirror/, label: 'Mirror work' },
+    { pattern: /aari/, label: 'Aari work' },
+    { pattern: /embroider/, label: 'Embroidery' },
+    { pattern: /woven|weaving/, label: 'Woven detailing' },
+    { pattern: /print/, label: 'Printed detailing' },
+  ];
+  const work = workTypes.find(({ pattern }) => pattern.test(source));
+  if (work) highlights.push(`Features ${work.label.toLowerCase()}`);
 
-  // Work type highlight
-  if (/embroider|zardosi|zari|sequin|bead|mirror|stone|cutdana|pearl|kundan|thread/i.test(t)) {
-    if (/zardosi|zari/i.test(t)) {
-      highlights.push(`Hand-applied zardosi/zari gold thread embroidery throughout the garment`);
-    } else if (/sequin/i.test(t)) {
-      highlights.push(`Sparkling sequins work catches light beautifully for evening events`);
-    } else if (/bead|cutdana|pearl/i.test(t)) {
-      highlights.push(`Intricate bead and pearl handwork on every panel of the garment`);
-    } else if (/mirror/i.test(t)) {
-      highlights.push(`Traditional mirror work reflecting festive Indian heritage craftsmanship`);
-    } else {
-      highlights.push(`Handcrafted embroidery with traditional Indian artisanal techniques`);
-    }
-  }
+  if (productType) highlights.push(`Product type: ${productType}`);
+  if (size) highlights.push(`Size option: ${size}`);
+  highlights.push('U.S. delivery with tracking after dispatch; $12 flat below $150, free over $150');
 
-  // Product type / occasion highlight
-  if (t.includes('lehenga')) {
-    highlights.push(`Flared kalidar lehenga construction for statement bridal and wedding guest movement`);
-  } else if (t.includes('saree')) {
-    highlights.push(`Includes unstitched blouse piece so you can tailor the perfect custom fit`);
-  } else if (t.includes('suit') || t.includes('anarkali') || t.includes('salwar') || t.includes('sharara')) {
-    highlights.push(`Three-piece suit set ready for festive occasions, parties, and wedding ceremonies`);
-  } else if (t.includes('necklace') || t.includes('jewelry')) {
-    highlights.push(`Gold-plated finish designed to last through every wedding season`);
-  }
-
-  // Shipping highlight (same for all)
-  highlights.push(`Tracking provided after dispatch in the US; $12 flat below $150, free over $150`);
-
-  // Sizing highlight
-  highlights.push(`Available in sizes 32-48 (XS to 5XL) — ready-to-wear and custom-stitched options`);
-
-  // Cap at 5 highlights, each under 150 chars
-  return highlights.slice(0, 5).map(h => {
-    const trimmed = h.slice(0, 150);
-    return `    <g:product_highlight>${escapeXml(trimmed)}</g:product_highlight>`;
-  }).join('\n');
+  return highlights.slice(0, 5).map((highlight) =>
+    `    <g:product_highlight>${escapeXml(highlight.slice(0, 150))}</g:product_highlight>`
+  ).join('\n');
 }
-
 
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
@@ -751,133 +669,118 @@ async function fetchAllProducts() {
 
 // ─── XML Item Generation ────────────────────────────────────────────────────
 
-function generateProductItemXml(product, titleCounts) {
+function generateProductItemXml(product, variant, titleCounts) {
   const handle = product.handle;
-  const link = `${SITE_URL}/product/${handle}`;
-  const imageUrl = product.images.edges[0]?.node.url
-    ? forceJpeg(product.images.edges[0].node.url)
-    : `${SITE_URL}/og-image.jpg`;
-  const additionalImages = product.images.edges.slice(1, 5).map(e => forceJpeg(e.node.url));
+  const variantId = variant.id?.split('/').pop() || '';
+  const variants = product.variants.edges.map((edge) => edge.node);
+  const isVariantGroup = variants.length > 1;
+  const selectedOptions = variant.selectedOptions || [];
+  const meaningfulOptions = selectedOptions.filter((option) =>
+    option.name?.toLowerCase() !== 'title' &&
+    option.value?.toLowerCase() !== 'default title'
+  );
+  const variantLabel = [...new Set(meaningfulOptions.map((option) => option.value).filter(Boolean))].join(' / ');
 
-  const price = product.priceRange.minVariantPrice.amount;
-  const currency = product.priceRange.minVariantPrice.currencyCode;
-  const compareAtPrice = product.compareAtPriceRange?.maxVariantPrice?.amount;
-  const priceNum = parseFloat(price);
-  const compareNum = compareAtPrice ? parseFloat(compareAtPrice) : 0;
-  const hasDiscount = compareNum > priceNum;
+  const sizeSelection = selectedOptions.find((option) =>
+    ['size', 'bust size', 'chest size'].includes(option.name?.toLowerCase())
+  );
+  const colorSelection = selectedOptions.find((option) =>
+    ['color', 'colour'].includes(option.name?.toLowerCase())
+  );
+  const materialSelection = selectedOptions.find((option) =>
+    ['fabric', 'material'].includes(option.name?.toLowerCase())
+  );
+  const colorOption = product.options?.find((option) =>
+    ['color', 'colour'].includes(option.name?.toLowerCase())
+  );
+  const materialOption = product.options?.find((option) =>
+    ['fabric', 'material'].includes(option.name?.toLowerCase())
+  );
 
-  const googleProductCategory = getGoogleProductCategory(product.productType, product.title);
-  const sizes = getSizes(product);
-  const gender = getGender(product.productType, product.title);
-
-  const colorOption = product.options?.find(o => o.name?.toLowerCase() === 'color');
-  const materialOption = product.options?.find(o => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material');
-  let color = colorOption?.values?.[0] || '';
-
-  // GMC FIX: Extract color from title if no color option exists in Shopify data
-  // Many products have color in the title (e.g. "Rani Pink Embroidery Lehenga")
+  let color = colorSelection?.value || colorOption?.values?.[0] || '';
   if (!color) {
-    const colorKeywords = ['Rani Pink', 'Sky Blue', 'Baby Pink', 'Dusty Pink', 'Dusty Rose', 'Royal Blue', 'Off White', 'Multi Color',
+    const colorKeywords = [
+      'Rani Pink', 'Sky Blue', 'Baby Pink', 'Dusty Pink', 'Dusty Rose', 'Royal Blue',
+      'Off White', 'Multi Color', 'Pista Green', 'Sea Green', 'Emerald Green',
       'Red', 'Maroon', 'Burgundy', 'Wine', 'Pink', 'Rose', 'Fuchsia', 'Magenta',
-      'Blue', 'Navy', 'Teal', 'Peacock', 'Purple', 'Lavender',
-      'Green', 'Emerald', 'Olive', 'Mint', 'Pista Green', 'Sea Green', 'Sage',
-      'Yellow', 'Gold', 'Mustard', 'Amber', 'Saffron', 'Marigold',
-      'Orange', 'Peach', 'Coral', 'Rust', 'Ruby',
-      'Black', 'White', 'Ivory', 'Beige', 'Cream', 'Champagne',
-      'Grey', 'Charcoal', 'Silver',
-      'Mauve', 'Lilac', 'Plum',
-      'Copper', 'Bronze', 'Tan', 'Camel', 'Onion'];
-    const titleLower = product.title.toLowerCase();
-    for (const c of colorKeywords) {
-      if (titleLower.includes(c.toLowerCase())) {
-        color = c;
-        break;
-      }
-    }
+      'Blue', 'Navy', 'Teal', 'Peacock', 'Purple', 'Lavender', 'Green', 'Emerald',
+      'Olive', 'Mint', 'Sage', 'Yellow', 'Gold', 'Mustard', 'Amber', 'Saffron',
+      'Marigold', 'Orange', 'Peach', 'Coral', 'Rust', 'Ruby', 'Black', 'White',
+      'Ivory', 'Beige', 'Cream', 'Champagne', 'Grey', 'Charcoal', 'Silver',
+      'Mauve', 'Lilac', 'Plum', 'Copper', 'Bronze', 'Tan', 'Camel', 'Onion',
+    ];
+    const searchable = `${product.title} ${variantLabel}`.toLowerCase();
+    color = colorKeywords.find((candidate) => searchable.includes(candidate.toLowerCase())) || '';
   }
-  const material = materialOption?.values?.[0] || '';
 
-  const rawSku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
-  const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
+  const material = materialSelection?.value || materialOption?.values?.[0] || '';
+  const size = sizeSelection?.value || '';
+  const link = `${SITE_URL}/product/${handle}${isVariantGroup && variantId ? `?variant=${encodeURIComponent(variantId)}` : ''}`;
+  const primaryImage = variant.image?.url || product.images.edges[0]?.node.url;
+  const imageUrl = primaryImage ? forceJpeg(primaryImage) : `${SITE_URL}/og-image.jpg`;
+  const additionalImages = product.images.edges
+    .map((edge) => edge.node.url)
+    .filter((url) => url && url !== primaryImage)
+    .slice(0, 4)
+    .map(forceJpeg);
 
-  const patternTag = product.tags?.find(t =>
-    t.toLowerCase().includes('embroider') ||
-    t.toLowerCase().includes('work') ||
-    t.toLowerCase().includes('print') ||
-    t.toLowerCase().includes('woven')
-  ) || '';
+  const variantPrice = variant.price || product.priceRange.minVariantPrice;
+  const price = parseFloat(variantPrice.amount);
+  const currency = variantPrice.currencyCode;
+  const compareAt = variant.compareAtPrice?.amount ? parseFloat(variant.compareAtPrice.amount) : 0;
+  const hasDiscount = compareAt > price;
+  const availability = variant.availableForSale === false ? 'out_of_stock' : 'in_stock';
 
   const productType = product.productType || 'Ethnic Wear';
+  const googleProductCategory = getGoogleProductCategory(productType, product.title);
+  const gender = getGender(productType, product.title);
   const description = buildDescription(product, color, material, productType);
+  const rawSku = variant.sku || variantId || '';
+  const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
+  const patternTag = product.tags?.find((tag) =>
+    /embroider|work|print|woven/i.test(tag)
+  ) || '';
 
-  // GMC BEST PRACTICE: One feed item per product with ALL sizes listed in a single <g:size> field.
-  // Creating one item per size variant inflates the feed (92 products → 1,647 items) and causes
-  // duplicate content issues in GMC. Instead, use one item per product with comma-separated sizes.
-  // Product handles are unique and stable in Shopify. SKUs are not reliably
-  // unique in this catalog (some suppliers reuse a base SKU), which caused GMC
-  // to reject otherwise valid products as duplicate IDs.
-  const itemId = handle;
-  const allSizes = sizes.length > 0 ? sizes.join(',') : '';
-
-  // Use the lowest price across variants as the product price
-  const variantPrices = product.variants.edges.map(v => parseFloat(v.node.price.amount));
-  const minPrice = variantPrices.length > 0 ? Math.min(...variantPrices).toFixed(2) : price;
-  const maxCompare = product.variants.edges
-    .map(v => v.node.compareAtPrice?.amount)
-    .filter(Boolean)
-    .map(Number);
-  const bestCompare = maxCompare.length > 0 ? Math.max(...maxCompare).toFixed(2) : compareAtPrice;
-  const hasAnyDiscount = bestCompare && parseFloat(bestCompare) > parseFloat(minPrice);
-
-  // GMC CRITICAL: When discount exists, g:price MUST be the ORIGINAL (higher) price
-  // and g:sale_price MUST be the DISCOUNTED (lower) price.
-  const displayPrice = hasAnyDiscount ? bestCompare : minPrice;
-  const displaySalePrice = hasAnyDiscount ? minPrice : '';
-
-  // Title de-duplication: when Shopify has multiple products sharing the same
-  // title (different colorways or fabric variants), append a deterministic
-  // disambiguator so each feed item has a unique <g:title>. GMC flags duplicate
-  // titles as "limited performance" and they hurt CTR in shopping ads.
-  // We disambiguate with the full normalized SKU/handle (already unique per
-  // product in Shopify) prefixed with the color when available.
   const baseTitle = product.title || '';
   let displayTitle = sanitizeFeedTitle(baseTitle);
-  if (titleCounts && titleCounts.get(baseTitle) > 1) {
-    const uniqueTail = (sku || handle || '').toString();
-    if (color && uniqueTail) {
-      displayTitle = `${baseTitle} — ${color} (${uniqueTail})`;
-    } else if (uniqueTail) {
-      displayTitle = `${baseTitle} (${uniqueTail})`;
-    } else if (color) {
-      displayTitle = `${baseTitle} — ${color}`;
-    }
+  if (variantLabel) {
+    displayTitle = sanitizeFeedTitle(`${baseTitle} — ${variantLabel}`);
+  } else if (titleCounts && titleCounts.get(baseTitle) > 1) {
+    displayTitle = sanitizeFeedTitle(`${baseTitle} (${sku || handle})`);
   }
+
+  const itemId = isVariantGroup ? `${handle}-${variantId}` : handle;
+  const groupFields = isVariantGroup
+    ? `
+    <g:item_group_id>${escapeXml(handle)}</g:item_group_id>
+    <g:item_group_title>${escapeXml(baseTitle)}</g:item_group_title>`
+    : '';
 
   return `
   <item>
-    <g:id>${escapeXml(itemId)}</g:id>
+    <g:id>${escapeXml(itemId)}</g:id>${groupFields}
     <g:title>${escapeXml(displayTitle)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
     <g:link>${escapeXml(link)}</g:link>
     <g:image_link>${escapeXml(imageUrl)}</g:image_link>
-    ${additionalImages.map(img => `<g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`).join('\n    ')}
-    <g:availability>in_stock</g:availability>
-    <g:price>${displayPrice} ${currency}</g:price>
-    ${displaySalePrice ? `<g:sale_price>${displaySalePrice} ${currency}</g:sale_price>` : ''}
-    ${hasAnyDiscount ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
+    ${additionalImages.map((image) => `<g:additional_image_link>${escapeXml(image)}</g:additional_image_link>`).join('\n    ')}
+    <g:availability>${availability}</g:availability>
+    <g:price>${hasDiscount ? compareAt.toFixed(2) : price.toFixed(2)} ${currency}</g:price>
+    ${hasDiscount ? `<g:sale_price>${price.toFixed(2)} ${currency}</g:sale_price>` : ''}
+    ${hasDiscount ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
     <g:condition>new</g:condition>
     <g:brand>${escapeXml(normalizeBrand(product.vendor))}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
     <g:product_type>${escapeXml(productType)}</g:product_type>
-    ${generateProductHighlights(product, color, material, productType, displayTitle)}
+    ${generateProductHighlights(product, color, material, productType, displayTitle, size)}
     <g:gender>${gender}</g:gender>
     <g:age_group>adult</g:age_group>
     <g:color>${escapeXml(color || 'Multi-Color')}</g:color>
     ${material ? `<g:material>${escapeXml(material)}</g:material>` : ''}
     ${patternTag ? `<g:pattern>${escapeXml(patternTag)}</g:pattern>` : ''}
-    ${allSizes ? `<g:size>${escapeXml(allSizes)}</g:size>` : ''}
-    <g:size_type>regular</g:size_type>
-    <g:size_system>US</g:size_system>
+    ${size ? `<g:size>${escapeXml(size)}</g:size>` : ''}
+    ${size ? '<g:size_type>regular</g:size_type>' : ''}
+    ${size ? '<g:size_system>US</g:size_system>' : ''}
     <g:identifier_exists>no</g:identifier_exists>
     <g:target_country>US</g:target_country>
     <g:content_language>en</g:content_language>
@@ -926,7 +829,13 @@ async function main() {
     titleCounts.set(t, (titleCounts.get(t) || 0) + 1);
   }
 
-  const itemsXml = products.map(p => generateProductItemXml(p, titleCounts)).join('\n');
+  const itemsXml = products
+    .flatMap((product) =>
+      product.variants.edges.map((edge) =>
+        generateProductItemXml(product, edge.node, titleCounts)
+      )
+    )
+    .join('\n');
 
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
