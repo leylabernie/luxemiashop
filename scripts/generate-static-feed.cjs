@@ -553,28 +553,9 @@ function buildDescription(product, color, material, productType) {
   return sanitizeShippingAndBoilerplate(out);
 }
 
-function generateShippingXml() {
-  // Match the published shipping policy and structured data on /shipping.
-  return `
-    <g:shipping>
-      <g:country>US</g:country>
-      <g:service>Standard below $150</g:service>
-      <g:price>12.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>7</g:max_handling_time>
-      <g:min_transit_time>3</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>
-    <g:shipping>
-      <g:country>US</g:country>
-      <g:service>Free over $150</g:service>
-      <g:price>0.00 USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>7</g:max_handling_time>
-      <g:min_transit_time>3</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
-    </g:shipping>`;
-}
+// Shipping is intentionally managed at the Merchant Center account level so
+// the $150 free-shipping threshold can be represented accurately. Item-level
+// shipping entries would override that threshold and can make a $12 order look free.
 
 // Google Merchant Center's current product-feed attribute is <g:returns>,
 // not <g:returns_policy>. LuxeMia does not accept ordinary returns or
@@ -801,7 +782,6 @@ function generateProductItemXml(product, variant, titleCounts) {
     ${size ? '<g:size_system>US</g:size_system>' : ''}
     <g:identifier_exists>no</g:identifier_exists>
     <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
-    ${generateShippingXml()}
     ${generateReturnsXml()}
   </item>`;
 }
