@@ -63,6 +63,7 @@ const staticPages = [
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bollywood-inspired-indian-outfits', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
