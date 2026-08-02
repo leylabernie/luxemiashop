@@ -2531,8 +2531,8 @@ function generateHtml(template, route, allShopifyProducts) {
 
     if (route.category.startsWith('collection:') && collectionProducts.length === 0) {
       html = html.replace(
-        /<meta name="robots" content="[^"]*" \/>/,
-        '<meta name="robots" content="noindex, follow" />'
+        /<meta name="(robots|googlebot|bingbot)" content="[^"]*" \/>/g,
+        '<meta name="$1" content="noindex, follow" />'
       );
     }
 
