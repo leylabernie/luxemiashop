@@ -4,42 +4,42 @@ import NRILandingPage from './NRILandingPage';
 const USA = () => (
   <NRILandingPage
     config={{
-      country: 'USA',
+      country: 'the United States',
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
-      seoTitle: 'Buy Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop authentic Indian ethnic wear delivered to USA. Designer sarees, bridal lehengas, salwar suits & menswear. Flat rate shipping $12/order, free on orders over $150. 7-10 day standard delivery.',
-      heroTitle: 'Authentic Indian Ethnic Wear Delivered to the USA',
-      heroSubtitle: 'Shipped from India with Care',
-      shippingTime: '7-10 business days',
-      shippingCost: '$12/order, free on orders over $150',
-      customsNote: 'US imports may be subject to duties, taxes, and carrier processing fees based on the product classification, value, and current customs rules. These charges are not included unless checkout explicitly states otherwise.',
+      seoTitle: 'Indian Ethnic Wear Online USA | LuxeMia',
+      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping over $150; $12 below. Tracking after dispatch.',
+      heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
+      heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
+      shippingTime: 'tracking provided after dispatch',
+      shippingCost: '$12 per order; free over $150',
+      customsNote: 'US imports may be subject to duties, taxes, or carrier processing fees based on product classification, value, and current customs rules. These charges are not included unless checkout explicitly states otherwise.',
       faqs: [
         {
-          question: 'How long does shipping to the USA take?',
-          answer: 'Standard shipping (USPS/UPS) takes 7-10 business days transit. Express shipping (DHL) takes 3-5 business days transit. Ready-made orders dispatch in 3-5 business days; custom/alteration orders dispatch in 5-7 business days.',
+          question: 'How long does shipping to the United States take?',
+          answer: 'Tracking is provided after dispatch, and carrier transit begins after dispatch. Delivery timing depends on the product, any selected tailoring, and the service shown at checkout. Contact LuxeMia before ordering if your event date is time-sensitive.',
         },
         {
-          question: 'Is shipping free to the USA?',
-          answer: 'We offer a flat shipping rate of $12 flat per order, with free shipping on all orders over $150. No coupon code needed — free shipping is applied automatically at checkout.',
+          question: 'Is shipping free to the United States?',
+          answer: 'Shipping is free on orders over $150 and costs $12 below that. The applicable rate is shown at checkout.',
         },
         {
           question: 'Will I have to pay customs duties?',
-          answer: 'Possibly. Duties and taxes depend on the product classification, shipment value, and current US customs rules. They are not included unless checkout explicitly states otherwise. Please review current US Customs and Border Protection guidance before ordering.',
+          answer: 'Possibly. Duties, taxes, and carrier processing fees depend on current rules, product classification, and shipment value. Review current US Customs and Border Protection guidance before ordering.',
         },
         {
-          question: 'Can I return items from the USA?',
-          answer: 'All sales are final. Due to the online nature of our inventory, LuxeMia does not accept returns or exchanges. The only exception is genuine shipping damage, which must be documented with an unboxing video and reported within 48 hours of delivery. Please review our Returns Policy for full details.',
+          question: 'Can I return an item?',
+          answer: 'All sales are final. Genuine shipping damage must be documented with an unboxing video and reported within 48 hours of delivery. Review the Returns Policy for full details.',
         },
         {
-          question: 'Do you offer custom sizing for US customers?',
-          answer: 'Absolutely! All our outfits are available in custom sizing. Provide your measurements during checkout and our tailors will create a perfect fit. Custom orders take an additional 3-4 weeks for production.',
+          question: 'Do you offer custom sizing?',
+          answer: 'Sizing and tailoring options vary by garment. Review the product page and size selector, or contact LuxeMia before ordering if you need measurement help.',
         },
       ],
       benefits: [
-        { icon: Truck, title: 'USA Delivery', description: 'Flat rate $12/order, free over $150' },
-        { icon: Shield, title: 'Insured Delivery', description: 'Every package fully insured and tracked' },
-        { icon: Clock, title: 'Express Available', description: '3-5 day express shipping at checkout' },
+        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free over $150' },
+        { icon: Shield, title: 'Clear Policies', description: 'Shipping and damage-claim terms online' },
+        { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
       ],
     }}
   />
