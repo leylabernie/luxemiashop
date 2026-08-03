@@ -27,7 +27,7 @@ const SizingMeasurementsGuide = () => {
     },
     {
       question: 'What is the difference between ready-to-wear and made-to-measure lehenga sizing?',
-      answer: 'Ready-to-wear lehengas come pre-stitched to standard sizes (32-48 bust) and ship within confirm timing before ordering. Made-to-measure lehengas are stitched to your exact body measurements and take 3-4 weeks to ship. Ready-to-wear is best for emergency shoppers who need fast delivery; made-to-measure is best for brides who want a perfect fit and have time to wait.'
+      answer: 'Use only the sizing and stitching options shown on the selected product page. Ready-to-wear uses the listed standard size, while made-to-measure is available only when shown or confirmed by LuxeMia. Confirm availability and timing before ordering for a fixed event date.'
     },
     {
       question: 'How accurate do my measurements need to be?',
@@ -35,7 +35,7 @@ const SizingMeasurementsGuide = () => {
     },
     {
       question: 'Can I order a lehenga if I do not know my exact measurements?',
-      answer: 'Yes. Order the ready-to-wear option in your closest standard size based on your everyday blouse size. If the fit is not perfect, we offer one complimentary alteration on made-to-measure orders. You can also visit any local tailor to get measured — most tailors will measure you for free or for a small fee.'
+      answer: 'Choose only from the size options shown on the product page and compare them with the Size Guide. For measurement-based tailoring, contact LuxeMia before ordering to confirm the service and required measurements.'
     },
   ];
 
@@ -113,8 +113,8 @@ const SizingMeasurementsGuide = () => {
               className="flex flex-wrap justify-center gap-3 mt-8"
             >
               <Badge variant="secondary" className="text-sm py-2 px-4">Free U.S. shipping over $150 to USA</Badge>
-              <Badge variant="secondary" className="text-sm py-2 px-4">Ready-to-wear ships in 5-7 days</Badge>
-              <Badge variant="secondary" className="text-sm py-2 px-4">Custom stitched in 3-4 weeks</Badge>
+              <Badge variant="secondary" className="text-sm py-2 px-4">Listing-specific sizing</Badge>
+              <Badge variant="secondary" className="text-sm py-2 px-4">Confirm tailoring before ordering</Badge>
             </motion.div>
           </div>
         </section>
@@ -385,13 +385,13 @@ const SizingMeasurementsGuide = () => {
                     <CheckCircle2 className="w-8 h-8 text-primary mb-3" />
                     <h3 className="font-semibold text-foreground mb-3">Choose Ready-to-Wear if:</h3>
                     <ul className="text-sm text-muted-foreground space-y-2">
-                      <li>• You need the outfit within 2 weeks</li>
+                      <li>• You need a standard size shown on the product page</li>
                       <li>• Your measurements fit standard sizes (32-48)</li>
                       <li>• You are a wedding guest, not the bride</li>
-                      <li>• You live in the USA and need fast delivery</li>
+                      <li>• You want the listed ready-to-wear construction</li>
                       <li>• You are between sizes and can size up</li>
                     </ul>
-                    <p className="text-sm text-primary font-medium mt-4">Ships in confirm timing before ordering</p>
+                    <p className="text-sm text-primary font-medium mt-4">Confirm availability and timing before ordering</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -400,12 +400,12 @@ const SizingMeasurementsGuide = () => {
                     <h3 className="font-semibold text-foreground mb-3">Choose Custom Stitched if:</h3>
                     <ul className="text-sm text-muted-foreground space-y-2">
                       <li>• You are the bride or in the wedding party</li>
-                      <li>• You have at least 4 weeks before the event</li>
+                      <li>• You need measurement-based tailoring</li>
                       <li>• Your measurements do not fit standard sizes</li>
                       <li>• You want a specific neckline or sleeve style</li>
                       <li>• You want a perfect, tailored fit</li>
                     </ul>
-                    <p className="text-sm text-primary font-medium mt-4">Ships in 3-4 weeks</p>
+                    <p className="text-sm text-primary font-medium mt-4">Confirm availability and timing before ordering</p>
                   </CardContent>
                 </Card>
               </div>
