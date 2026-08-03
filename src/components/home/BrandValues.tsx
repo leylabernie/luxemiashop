@@ -24,8 +24,6 @@ const values = [
   },
 ];
 
-const BrandValues];
-
 const BrandValues = () => {
   return (
     <section className="py-16 lg:py-20 bg-cream/30 border-y border-border/30">
