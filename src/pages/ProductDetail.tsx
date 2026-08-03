@@ -13,7 +13,7 @@ import { RecentlyViewed } from '@/components/product/RecentlyViewed';
 import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { Skeleton } from '@/components/ui/skeleton';
-import { enrichProductDescription, generateMetaDescription } from '@/lib/productDescriptionEnrichment';
+import { enrichProductDescription, generateMetaDescription, sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
@@ -110,7 +110,12 @@ const ProductDetail = () => {
   // loading, show a loading skeleton or "Product not found" — never stale
   // hardcoded data. This eliminates the stale-title bug entirely, with no
   // Vercel setup or webhook configuration required.
-  const product = shopifyProduct;
+  const product = useMemo(
+    () => shopifyProduct
+      ? { ...shopifyProduct, title: sanitizeProductTitle(shopifyProduct.title) }
+      : shopifyProduct,
+    [shopifyProduct],
+  );
   const isLoading = shopifyLoading;
   const error = shopifyError || (!shopifyLoading && !shopifyProduct ? 'Product not found' : null);
 
@@ -170,8 +175,10 @@ const ProductDetail = () => {
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
   // Falls back to the existing title template + generated meta description.
   // Note: `product.seo` is typed via ShopifyProduct['node'] in src/lib/shopify.ts.
-  const seoTitle = sanitizeSeoTitle(product?.seo?.title);
-  const seoDescription = product?.seo?.description?.trim() || '';
+  const seoTitle = sanitizeProductTitle(sanitizeSeoTitle(product?.seo?.title));
+  // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
+  // copy. The field-backed generator below is the crawler and shopper source.
+  const seoDescription = '';
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
@@ -203,9 +210,7 @@ const ProductDetail = () => {
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
   const sizeAnswer = productSizeValues.length > 0
     ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
-    : isStitchableProductType(product?.productType)
-      ? 'Available stitching and measurement choices are shown on this product page. Review the Size Guide and contact LuxeMia before ordering if you need help.'
-      : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
+    : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
 
   const productFaqs = product ? [
     ...(isJewelryProduct ? [{
@@ -217,9 +222,7 @@ const ProductDetail = () => {
     }]),
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: isJewelryProduct
-        ? 'Delivery timing depends on the item. Tracking is provided after dispatch. Free U.S. shipping applies over $150, and a flat $12 rate applies below $150.'
-        : 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies over $150, and a flat $12 rate applies below $150.'
+      answer: 'Delivery timing depends on the item and selected options. Tracking is provided after dispatch. Free U.S. shipping applies over $150, and a flat $12 rate applies below $150.'
     },
     {
       question: `Can I return the ${product.title}?`,
@@ -239,12 +242,14 @@ const ProductDetail = () => {
         <SEOHead
           title={seoTitle || `${product.title} | ${categoryName} | LuxeMia`}
           description={seoDescription || seoMetaDescription || (() => {
-            const d = (product.description || '').trim();
-            if (d.length >= 70) {
-              return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
-            }
-            const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
-            return `Shop the ${product.title} at LuxeMia — ${productTypeLower} for U.S. customers. Free U.S. shipping over $150; $12 flat below that.`;
+            return generateMetaDescription(
+              '',
+              product.productType || '',
+              product.title,
+              product?.priceRange?.minVariantPrice?.amount,
+              productColor,
+              productMaterial,
+            );
           })()}
           canonical={`https://luxemia.shop/product/${product.handle}`}
           type="product"
