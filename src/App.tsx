@@ -17,7 +17,6 @@ import Index from "./pages/Index";
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Collections = lazy(() => import("./pages/Collections"));
 const About = lazy(() => import("./pages/About"));
-const BrandStory = lazy(() => import("./pages/BrandStory"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Account = lazy(() => import("./pages/Account"));
@@ -35,8 +34,6 @@ const Terms = lazy(() => import("./pages/Terms"));
 const NewArrivals = lazy(() => import("./pages/NewArrivals"));
 const Bestsellers = lazy(() => import("./pages/Bestsellers"));
 const Indowestern = lazy(() => import("./pages/Indowestern"));
-const Artisans = lazy(() => import("./pages/Artisans"));
-const Sustainability = lazy(() => import("./pages/Sustainability"));
 const Press = lazy(() => import("./pages/Press"));
 const SizeGuide = lazy(() => import("./pages/SizeGuide"));
 const SizingMeasurementsGuide = lazy(() => import("./pages/SizingMeasurementsGuide"));
@@ -62,7 +59,6 @@ const WeddingGuestOutfits = lazy(() => import("./pages/WeddingGuestOutfits"));
 const MehendiOutfits = lazy(() => import("./pages/MehendiOutfits"));
 const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
-const ReadyToShip = lazy(() => import("./pages/ReadyToShip"));
 const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
 const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
 // Programmatic SEO combo pages — 25 long-tail landing pages
@@ -107,10 +103,10 @@ const App = () => (
                 <Route path="/suits" element={<Suspense fallback={<PageLoader />}><Suits /></Suspense>} />
                 <Route path="/menswear" element={<Suspense fallback={<PageLoader />}><Menswear /></Suspense>} />
                 <Route path="/jewelry" element={<Suspense fallback={<PageLoader />}><Jewelry /></Suspense>} />
-                <Route path="/our-story" element={<Navigate to="/brand-story" replace />} />
+                <Route path="/our-story" element={<Navigate to="/about" replace />} />
                 <Route path="/about-us" element={<Navigate to="/about" replace />} />
                 <Route path="/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
-                <Route path="/brand-story" element={<Suspense fallback={<PageLoader />}><BrandStory /></Suspense>} />
+                <Route path="/brand-story" element={<Navigate to="/about" replace />} />
                 <Route path="/lookbook" element={<Suspense fallback={<PageLoader />}><Lookbook /></Suspense>} />
                 <Route path="/wishlist" element={<Suspense fallback={<PageLoader />}><Wishlist /></Suspense>} />
                 <Route path="/auth" element={<Suspense fallback={<PageLoader />}><Auth /></Suspense>} />
@@ -126,8 +122,8 @@ const App = () => (
                 <Route path="/terms" element={<Suspense fallback={<PageLoader />}><Terms /></Suspense>} />
                 <Route path="/terms-of-service" element={<Navigate to="/terms" replace />} />
                 
-                <Route path="/artisans" element={<Suspense fallback={<PageLoader />}><Artisans /></Suspense>} />
-                <Route path="/sustainability" element={<Suspense fallback={<PageLoader />}><Sustainability /></Suspense>} />
+                <Route path="/artisans" element={<Navigate to="/about" replace />} />
+                <Route path="/sustainability" element={<Navigate to="/about" replace />} />
                 <Route path="/press" element={<Suspense fallback={<PageLoader />}><Press /></Suspense>} />
                 <Route path="/size-guide" element={<Suspense fallback={<PageLoader />}><SizeGuide /></Suspense>} />
                 <Route path="/sizing-measurements-guide" element={<Suspense fallback={<PageLoader />}><SizingMeasurementsGuide /></Suspense>} />
@@ -163,8 +159,8 @@ const App = () => (
                 <Route path="/collections/eid-outfits" element={<Suspense fallback={<PageLoader />}><EidOutfits /></Suspense>} />
                 <Route path="/collections/navratri-outfits" element={<Suspense fallback={<PageLoader />}><NavratriOutfits /></Suspense>} />
                 <Route path="/collections/haldi-outfits" element={<Suspense fallback={<PageLoader />}><HaldiOutfits /></Suspense>} />
-                <Route path="/ready-to-ship" element={<Suspense fallback={<PageLoader />}><ReadyToShip /></Suspense>} />
-                <Route path="/collections/ready-to-ship" element={<Navigate to="/ready-to-ship" replace />} />
+                <Route path="/ready-to-ship" element={<Navigate to="/collections" replace />} />
+                <Route path="/collections/ready-to-ship" element={<Navigate to="/collections" replace />} />
 
                 {/* Programmatic SEO combo pages — color/silhouette/fabric × occasion/role
                     Per SEO research 2026-07-15: Andaaz Fashion proves these pages rank
@@ -225,7 +221,8 @@ const App = () => (
                 <Route path="/blog/how-to-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/nri-shopping" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
-                {/* Author bio pages — E-E-A-T compliance per Google's AI playbook */}
+                {/* Public author information is organizational and verifiable. */}
+                <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />
                 <Route path="/new-arrivals" element={<Suspense fallback={<PageLoader />}><NewArrivals /></Suspense>} />
                 <Route path="/bestsellers" element={<Suspense fallback={<PageLoader />}><Bestsellers /></Suspense>} />
                 <Route path="/indowestern" element={<Suspense fallback={<PageLoader />}><Indowestern /></Suspense>} />
