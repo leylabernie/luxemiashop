@@ -35,11 +35,11 @@ const Sitemap = () => {
 
   // Group pages by category for display
   const pageCategories = {
-    'Main Pages': staticPages.filter(p => ['/', '/collections', '/brand-story', '/new-arrivals', '/bestsellers'].includes(p.loc)),
-    'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/indowestern'].includes(p.loc)),
+    'Main Pages': staticPages.filter(p => ['/', '/collections', '/about', '/new-arrivals', '/bestsellers'].includes(p.loc)),
+    'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/jewelry', '/indowestern'].includes(p.loc)),
     'Shop by Occasion': staticPages.filter(p => p.loc.startsWith('/collections/')),
     'Customer Service': staticPages.filter(p => ['/contact', '/faq', '/shipping', '/returns', '/size-guide', '/care-guide'].includes(p.loc)),
-    'About Us': staticPages.filter(p => ['/artisans', '/sustainability', '/blog'].includes(p.loc)),
+    'About Us': staticPages.filter(p => ['/blog', '/authors/luxemia-editorial-team'].includes(p.loc)),
     'Legal': staticPages.filter(p => ['/privacy', '/terms'].includes(p.loc)),
   };
 
