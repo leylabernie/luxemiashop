@@ -27,7 +27,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
-          answer: 'Orders can only be modified or cancelled within 24 hours of placement. After this window, your order enters production and cannot be changed. To request a cancellation, email hello@luxemia.shop immediately with your order number.',
+          answer: 'Cancellation requests must be made within 24 hours of placement. After that window, the order cannot be cancelled. Email hello@luxemia.shop immediately with your order number.',
         },
         {
           question: 'How do I apply a discount code?',
@@ -75,7 +75,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'How do I find my size?',
-          answer: 'Use our comprehensive Size Guide to find your perfect fit. We recommend having a professional tailor take your measurements for the most accurate results. All measurements should be in inches.',
+          answer: 'Take your current body measurements and compare them with the size details on the exact product page. Use our printable measurement worksheet and contact LuxeMia before ordering if the listing is unclear.',
         },
         {
           question: 'Do you offer custom sizing?',
@@ -83,7 +83,7 @@ const FAQ = () => {
         },
         {
           question: 'What if my measurements don\'t fit standard sizes?',
-          answer: 'No problem! Simply submit your custom measurements when ordering. Our tailors will create your garment to your exact specifications. Please note that custom-sized items are final sale.',
+          answer: 'Choose only from the size or stitching options shown on the selected product page. If your measurements do not match a listed option, contact LuxeMia before ordering to ask what is available.',
         },
         {
           question: 'Can I return items if they don\'t fit?',
@@ -185,7 +185,7 @@ const FAQ = () => {
         },
         {
           question: 'How can I contact customer service?',
-          answer: 'Email us at hello@luxemia.shop, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. We aim to respond to all inquiries within 24-48 hours.',
+          answer: 'Email us at hello@luxemia.shop, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. Contact details and current support hours are listed below.',
         },
       ],
     },
@@ -498,7 +498,7 @@ const FAQ = () => {
                 <h2 className="text-2xl font-serif mb-4">Still Have Questions?</h2>
                 <p className="text-muted-foreground max-w-lg mx-auto">
                   Our customer care team is here to help. Reach out through any of the channels below 
-                  and we'll get back to you within 24-48 hours.
+                  and include your order number when asking about an existing order.
                 </p>
               </motion.div>
 
