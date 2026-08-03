@@ -86,6 +86,10 @@ const staticPages = [
   { loc: '/privacy', changefreq: 'yearly', priority: '0.3' },
   { loc: '/terms', changefreq: 'yearly', priority: '0.3' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/blog/attires', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/motifs-embroideries', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/weddings-festivals', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/how-to-care', changefreq: 'monthly', priority: '0.7' },
   { loc: '/authors/luxemia-editorial-team', changefreq: 'monthly', priority: '0.4' },
   { loc: '/press', changefreq: 'monthly', priority: '0.5' },
   // Occasion landing pages
