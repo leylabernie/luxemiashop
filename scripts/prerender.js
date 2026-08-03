@@ -917,7 +917,7 @@ const routes = [
       <p>Discover silk sarees selected for weddings, receptions, pujas and festive celebrations. Each product page states the supplied fabric details so you can compare drape, finish, work and blouse options before ordering.</p>
       <h2>How should I choose a silk saree online?</h2>
       <p>Compare the exact fabric composition, weight, border, embellishment and blouse details on each listing. Silk sarees can use pure silk, blended silk or art-silk fabrics, so LuxeMia states the information supplied for each product.</p>
-      <p><a href="/sarees">Browse all sarees</a> or <a href="/style-consultation">ask our styling team</a> for help choosing a wedding saree.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">ask our styling team</a> for help choosing a wedding saree.</p>
     `,
   },
   {
@@ -930,7 +930,7 @@ const routes = [
       <p>This collection is reserved for sarees identified by the supplier as Kanchipuram, Kanjivaram or Kanjeevaram. New pieces are being reviewed before they are added.</p>
       <h2>How does LuxeMia describe Kanchipuram sarees?</h2>
       <p>We do not label a product as pure silk, handwoven or genuine zari unless the supplied product information supports that statement. Each listing will state the known fabric, blouse inclusion and work details.</p>
-      <p><a href="/sarees">Browse all sarees</a> or <a href="/style-consultation">tell us what you need</a>.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">tell us what you need</a>.</p>
     `,
   },
   {
@@ -943,7 +943,7 @@ const routes = [
       <p>This collection is being prepared for Manthrakodi sarees suited to Kerala Christian wedding traditions. New styles will be added only after their product details have been reviewed.</p>
       <h2>What is a Manthrakodi?</h2>
       <p>In many Kerala Christian wedding traditions, the Manthrakodi is the saree presented to the bride by the groom or his family and blessed as part of the ceremony. Customs differ, so shoppers should follow their own family and church requirements.</p>
-      <p><a href="/sarees">Browse all sarees</a> or <a href="/style-consultation">ask for sourcing help</a>.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">ask for sourcing help</a>.</p>
     `,
   },
   {
@@ -956,7 +956,7 @@ const routes = [
       <p>Coordinate the women standing with the bride without requiring everyone to wear the identical outfit. Browse lehengas, sarees and suits selected for bridesmaids and the maid or matron of honor.</p>
       <h2>How should Indian bridesmaid outfits coordinate?</h2>
       <p>Start with a shared color family, fabric weight or embroidery detail, then choose silhouettes suited to each bridesmaid. The maid or matron of honor can wear a deeper shade or more detailed border within the same palette.</p>
-      <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/style-consultation">ask our styling team</a> for help.</p>
+      <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/contact">ask our styling team</a> for help.</p>
     `,
   },
   {
@@ -969,7 +969,7 @@ const routes = [
       <p>Discover sarees, lehengas and festive Indian outfits selected for cinematic glamour and contemporary occasion style.</p>
       <h2>Are these outfits endorsed by Bollywood celebrities?</h2>
       <p>No. LuxeMia offers independent fashion interpretations inspired by broader Bollywood and red-carpet style directions. Celebrity names describe style inspiration only; no affiliation or endorsement is implied.</p>
-      <p><a href="/sarees">Browse sarees</a>, <a href="/lehengas">browse lehengas</a> or <a href="/style-consultation">ask our styling team</a>.</p>
+      <p><a href="/sarees">Browse sarees</a>, <a href="/lehengas">browse lehengas</a> or <a href="/contact">ask our styling team</a>.</p>
     `,
   },
   {
@@ -1526,13 +1526,6 @@ const routes = [
     `,
   },
   // Programmatic SEO combo pages are generated from src/data/comboPages.ts below.
-  {
-    path: '/style-consultation',
-    title: 'Style Consultation — Personal Styling for Indian Ethnic Wear | LuxeMia',
-    description: 'Request product, sizing and occasion help from LuxeMia before ordering lehengas, sarees, suits or group outfits.',
-    h1: 'Style Consultation',
-    content: '<p>Not sure which product fits your occasion, measurements or budget? Request help from the LuxeMia team before ordering.</p>',
-  },
   {
     path: '/wedding-party-orders',
     title: 'Indian Wedding Party & Group Outfit Orders | LuxeMia',
