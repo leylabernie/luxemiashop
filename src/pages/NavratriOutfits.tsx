@@ -27,7 +27,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'What are the nine colors of Navratri 2026?',
-    answer: 'The nine colors of Navratri 2026 are traditionally assigned to each day by the Hindu calendar (Panchang). The sequence typically follows: Day 1 — Royal Blue or Yellow, Day 2 — Green, Day 3 — Grey or Silver, Day 4 — Orange, Day 5 — White, Day 6 — Red, Day 7 — Royal Blue, Day 8 — Pink, Day 9 — Purple or Violet. These colors are associated with the nine forms of Goddess Durga worshipped during Navratri. While the exact color sequence varies slightly by region and year, wearing bright festive colors in the traditional Navratri palette is always appropriate for Garba and Dandiya celebrations.',
+    answer: 'The day-by-day Navratri color sequence can vary by regional calendar and tradition. For outfit planning, common festive choices include orange, white, red, royal blue, yellow, green, grey, purple, pink, and peacock green. Check the calendar followed by your community.',
   },
   {
     question: 'What is the difference between a chaniya choli and a lehenga?',
@@ -35,7 +35,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Do you ship Navratri outfits to the United States?',
-    answer: 'LuxeMia currently ships Navratri outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. Order at least 3–4 weeks before the festival; standard transit is estimated at carrier transit after dispatch after dispatch.',
+    answer: 'LuxeMia ships Navratri outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed festival date.',
   },
   {
     question: 'What accessories should I wear with a Navratri outfit?',
@@ -145,13 +145,13 @@ const NavratriOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Navratri 2026 Dates and 9-Day Color Schedule</h3>
-                <p>Navratri 2026 begins on <strong>Tuesday, September 22, 2026</strong> and ends on <strong>Thursday, October 1, 2026</strong> with Dussehra on October 2. The 2026 Navratri color schedule is: <strong>Day 1 Orange, Day 2 White, Day 3 Red, Day 4 Royal Blue, Day 5 Yellow, Day 6 Green, Day 7 Grey, Day 8 Purple, Day 9 Peacock Green</strong>.</p>
+                <p>Sharad Navratri 2026 begins on <strong>Sunday, October 11</strong> and runs through <strong>Monday, October 19</strong>, with Dussehra on Tuesday, October 20. Day-by-day color traditions vary by regional calendar and community.</p>
                 <p className="mt-2">For the complete day-by-day outfit guide — what to wear each night, fabric recommendations, accessories (dandiya sticks, oxidized silver jewelry, kamarbandh, mojari flats), and how many outfits you actually need — read our <Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline font-medium">Navratri 9 Day Color Guide 2026</Link>.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Navratri Chaniya Choli</h3>
-                <p>For Navratri 2026, order your chaniya choli by <strong>mid-August 2026</strong> at the latest. Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched items take 3-4 weeks. Navratri chaniya cholis are also seasonal — they sell out by early September. At LuxeMia, we ship online chaniya cholis to the United States with free U.S. shipping over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
