@@ -156,7 +156,7 @@ const philosophyPoints = [
   },
 ];
 
-const timelineEventsconst timelineEvents = [
+const timelineEvents = [
   {
     year: '2025',
     title: 'LuxeMia is Founded',
@@ -183,7 +183,7 @@ const timelineEventsconst timelineEvents = [
   },
 ];
 
-const whyChooseLuxeMiaconst whyChooseLuxeMia = [
+const whyChooseLuxeMia = [
   {
     icon: Globe,
     title: 'Listing-Specific Details',
@@ -216,7 +216,7 @@ const whyChooseLuxeMiaconst whyChooseLuxeMia = [
   },
 ];
 
-// ─── ParallaxSection Component// ─── ParallaxSection Component ───────────────────────────────────────────────
+// ─── ParallaxSection Component ───────────────────────────────────────────────
 
 interface ParallaxSectionProps {
   title: string;
