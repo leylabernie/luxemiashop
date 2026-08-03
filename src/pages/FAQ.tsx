@@ -35,7 +35,7 @@ const FAQ = () => {
         },
         {
           question: 'Will I receive an order confirmation?',
-          answer: 'Yes, you will receive an email confirmation immediately after placing your order. This includes your order number, items ordered, and estimated delivery timeline. Check your spam folder if you do not receive it.',
+          answer: 'Yes, you will receive an email confirmation immediately after placing your order. This includes your order number and items ordered. Check your spam folder if you do not receive it.',
         },
       ],
     },
@@ -117,7 +117,7 @@ const FAQ = () => {
         },
         {
           question: 'What if my item arrives damaged?',
-          answer: 'Email us at hello@luxemia.shop within 48 hours of delivery with your order number, unboxing video, and photos of the damage. Claims without video evidence or submitted after 48 hours cannot be processed. Our team will review and respond within 2-3 business days.',
+          answer: 'Email us at hello@luxemia.shop within 48 hours of delivery with your order number, unboxing video, and photos of the damage. Claims without video evidence or submitted after 48 hours cannot be processed. Our team will review the evidence and follow up by email.',
         },
         {
           question: 'Can I cancel my order?',
