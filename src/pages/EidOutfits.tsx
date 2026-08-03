@@ -35,7 +35,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Do you ship Eid outfits to the United States?',
-    answer: 'LuxeMia currently ships Eid outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. Order at least 3–4 weeks before the celebration; standard transit is estimated at carrier transit after dispatch after dispatch.',
+    answer: 'LuxeMia ships Eid outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'Can I wear a lehenga for Eid?',
@@ -52,8 +52,8 @@ const EidOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia"
-        description="Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping over $150."
+        title="Eid Outfits — Indian Ethnic Wear for Eid | LuxeMia"
+        description="Shop Eid outfits at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping over $150."
         canonical="https://luxemia.shop/collections/eid-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -69,7 +69,7 @@ const EidOutfits = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Eid Mubarak</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Eid Outfits 2026</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Eid Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
               Celebrate Eid in elegance with LuxeMia's curated collection of Indian ethnic wear for Eid festivities. From delicate chikankari salwar kameez and embroidered sharara sets to pastel lehengas and georgette anarkali suits, our Eid collection brings together the finest South Asian fashion traditions. Whether you prefer the classic white and ivory aesthetic or prefer jewel tones and pastels, shop Eid outfits with free US shipping to the United States.
             </p>
@@ -160,7 +160,7 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
-                <p>Eid Ul-Fitr 2026 falls on <strong>March 20, 2026</strong> (subject to moon sighting). Eid Ul-Adha 2026 falls on <strong>May 27, 2026</strong>. Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your Eid outfits at least 4-6 weeks before the Eid date.</strong> At LuxeMia, ready-to-wear items ship with tracking after dispatch and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
