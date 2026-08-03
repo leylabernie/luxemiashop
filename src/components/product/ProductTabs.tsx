@@ -543,7 +543,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </div>
                 <h4 className="font-medium text-foreground">Ready to Wear</h4>
               </div>
-              <span className="text-sm font-medium text-foreground">+$15.00</span>
+              <span className="text-sm font-medium text-foreground">Contact for quote</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Fully stitched to standard measurements matching the product image. Select your bust size (28"–52") and we'll tailor it completely — ready to wear right out of the box.
@@ -559,7 +559,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Additional 3 business days for tailoring</span>
+                <span>Confirm tailoring availability and timing before ordering</span>
               </li>
             </ul>
           </div>
@@ -573,7 +573,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </div>
                 <h4 className="font-medium text-foreground">Made to Measure <span className="text-[#D4AF37] text-xs font-medium">(UDesign)</span></h4>
               </div>
-              <span className="text-sm font-medium text-foreground">+$25.00</span>
+              <span className="text-sm font-medium text-foreground">Contact for quote</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Choose from the neckline, sleeve, and bottom-style options shown for this product. Submit your measurements after placing the order so the selected tailoring can be completed.
@@ -597,7 +597,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               </li>
               <li className="flex items-start gap-2">
                 <Clock className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span>Additional 5 business days for bespoke tailoring</span>
+                <span>Confirm tailoring availability and timing before ordering</span>
               </li>
             </ul>
             <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm mt-2">
