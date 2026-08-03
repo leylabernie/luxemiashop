@@ -78,9 +78,11 @@ function sanitizeProductCopy(value) {
 
 function sanitizeProductTitle(value) {
   return (value || '')
-    .replace(/\s*\|\s*Ready to Ship/gi, '')
-    .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
-    .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/^buy\s+/i, '')
+    .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
+    .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
+    .replace(/\bhandcrafted\s+/gi, '')
+    .replace(/\s*[|–—-]\s*$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -110,6 +112,28 @@ function getListedProductAttributes(product) {
     material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
     sizes: jewelry ? [] : sizeValues,
   };
+}
+
+function buildVerifiedProductCopy(product) {
+  if (!product) return '';
+
+  const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
+  const attributes = getListedProductAttributes(product);
+  const parts = [`${title}.`];
+
+  if (product.productType) parts.push(`Category: ${product.productType}.`);
+  if (attributes.color) parts.push(`Color: ${attributes.color}.`);
+  if (attributes.material) parts.push(`Material: ${attributes.material}.`);
+  if (attributes.sizes.length > 0) {
+    parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
+  }
+
+  parts.push(
+    'Review the product images and available options for the exact pieces, measurements, and current availability.',
+    'United States shipping only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is provided after dispatch.'
+  );
+
+  return normalizeWhitespace(parts.join(' '));
 }
 
 function getProductCategoryInfo(productType = '', title = '') {
@@ -523,7 +547,7 @@ function buildInitialDataPayload(products, category) {
       id: p.id,
       title: sanitizeProductTitle(p.title),
       createdAt: p.createdAt,
-      description: sanitizeProductCopy(p.description ?? ''),
+      description: buildVerifiedProductCopy(p),
       handle: p.handle,
       vendor: p.vendor,
       productType: p.productType,
@@ -603,7 +627,7 @@ function generateItemListJsonLd(products, category, routePath) {
         name: sanitizeProductTitle(p.title),
         image,
         url: productUrl,
-        description: sanitizeProductCopy(p.description || p.title || '').slice(0, 5000),
+        description: buildVerifiedProductCopy(p).slice(0, 5000),
         sku: (p.id || '').split('/').pop() || p.handle,
         brand: { '@type': 'Brand', name: 'LuxeMia' },
         offers: {
@@ -1754,7 +1778,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const live = route.product || null;
     const liveImages = live?.images?.edges?.map(e => forceJpegForGmc(e.node.url)).filter(Boolean) || [];
     const productImages = liveImages.length > 0 ? liveImages : [FALLBACK_OG_IMAGE];
-    const productDescription = sanitizeProductCopy(live?.description?.trim() || route.description || '').slice(0, 5000);
+    const productDescription = (live ? buildVerifiedProductCopy(live) : route.description || '').slice(0, 5000);
     const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
     // Extract the compareAtPrice (regular/original price) for sale-price JSON-LD.
@@ -1890,7 +1914,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
     const isAvailable = p.availableForSale !== false;
     const images = p.images?.edges?.map(e => e.node) || [];
-    const description = sanitizeProductCopy((p.description || '').trim());
+    const description = buildVerifiedProductCopy(p);
     const productType = (p.productType || '').trim();
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
@@ -2177,13 +2201,13 @@ async function main() {
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
-    const seoDescription = (p.seo?.description || '').trim();
+    const seoDescription = ''; // Ignore obsolete Shopify SEO copy; use field-backed copy below.
 
     // ─── USP-enhanced title generation ──────────────────────────────────────
     // When no Shopify SEO title is set, inject fabric/color USP into the title
     // to carve out high-converting long-tail niches (e.g., "Maroon Raw Silk
     // Bridal Lehenga | Hand Embroidery | LuxeMia") that corporate catalogs lack.
-    const desc = sanitizeProductCopy((p.description || '').trim());
+    const desc = buildVerifiedProductCopy(p);
     const baseTitle = sanitizeProductTitle(p.title || handle);
     const productIsJewelry = isJewelryProduct(p.productType, baseTitle);
     const titleDescLower = `${baseTitle} ${desc}`.toLowerCase();

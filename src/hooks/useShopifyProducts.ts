@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
+import { sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
 
 // Shopify productType values mapped to category page routes
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
@@ -339,6 +340,7 @@ const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
     node: {
       ...p.node,
       _originalProductType: p.node.productType, // keep original for menswear detection
+      title: sanitizeProductTitle(p.node.title),
       productType: getDisplayCategory(p.node.productType),
     },
   }));

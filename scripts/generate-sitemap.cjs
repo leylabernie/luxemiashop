@@ -170,6 +170,17 @@ const blogPosts = parseBlogSlugs();
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
+function sanitizeProductTitle(value) {
+  return (value || '')
+    .replace(/^buy\s+/i, '')
+    .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
+    .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
+    .replace(/\bhandcrafted\s+/gi, '')
+    .replace(/\s*[|–—-]\s*$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function escapeXml(str) {
   if (!str) return '';
   return str
@@ -306,7 +317,7 @@ function generateSitemap(products) {
     const loc = `${SITE_URL}/product/${escapeXml(product.handle)}`;
     const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : today;
     const imageUrl = product.images?.edges?.[0]?.node?.url;
-    const imageTitle = product.images?.edges?.[0]?.node?.altText || product.title;
+    const imageTitle = sanitizeProductTitle(product.images?.edges?.[0]?.node?.altText || product.title);
 
     let imageTag = '';
     if (imageUrl) {
@@ -314,7 +325,7 @@ function generateSitemap(products) {
     <image:image>
       <image:loc>${escapeXml(forceJpeg(imageUrl))}</image:loc>
       <image:title>${escapeXml(imageTitle)}</image:title>
-      <image:caption>${escapeXml(product.title)} - ${escapeXml(product.productType || 'Ethnic Wear')} | LuxeMia</image:caption>
+      <image:caption>${escapeXml(sanitizeProductTitle(product.title))} - ${escapeXml(product.productType || 'Ethnic Wear')} | LuxeMia</image:caption>
     </image:image>`;
     }
 

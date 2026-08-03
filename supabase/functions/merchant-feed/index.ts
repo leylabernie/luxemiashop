@@ -417,6 +417,17 @@ function getColorFromProduct(
   return matches.join("/");
 }
 
+function sanitizeProductTitle(value: string): string {
+  return value
+    .replace(/^buy\s+/i, "")
+    .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, "")
+    .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, "")
+    .replace(/\bhandcrafted\s+/gi, "")
+    .replace(/\s*[|–—-]\s*$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 // ─── Enriched Description ────────────────────────────────────────────
 
 function enrichDescription(
@@ -472,6 +483,7 @@ function generateItem(
   product: ShopifyProduct,
   variant: ShopifyVariant
 ): string {
+  const listingTitle = sanitizeProductTitle(product.title);
   const variantId = shortenId(variant.id);
   const productId = shortenId(product.id);
   const googleCategory = getGoogleCategory(product.productType, product.title);
@@ -527,7 +539,7 @@ function generateItem(
   const description = enrichDescription(
     product.description,
     product.productType,
-    product.title,
+    listingTitle,
     product.tags,
     size
   );
@@ -536,7 +548,7 @@ function generateItem(
   <item>
     <g:id>${escapeXml(variantId)}</g:id>
     <g:item_group_id>${escapeXml(productId)}</g:item_group_id>
-    <g:title>${escapeXml(product.title)}</g:title>
+    <g:title>${escapeXml(listingTitle)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
     <g:link>${SITE_URL}/product/${escapeXml(product.handle)}</g:link>
     <g:image_link>${escapeXml(mainImageUrl)}</g:image_link>`;
