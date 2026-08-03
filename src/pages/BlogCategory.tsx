@@ -1,10 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useLocation, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import type { BlogPost } from '@/data/blogPosts';
 import { blogPosts } from '@/data/blogPosts';
 import {
   BLOG_CATEGORY_GROUPS,
@@ -20,16 +19,6 @@ const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/
 const BlogCategory = () => {
   const location = useLocation();
   const category = location.pathname.split('/').filter(Boolean).pop();
-  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    import('@/data/blogPosts').then(m => {
-      setAllPosts(m.blogPosts);
-      setIsLoading(false);
-    });
-  }, []);
-
   const categoryGroup = category ? getBlogCategoryBySlug(category) : undefined;
 
   // Get the slugs that belong to this category, then match against loaded posts
@@ -38,16 +27,13 @@ const BlogCategory = () => {
     return new Set(getPostSlugsByCategory(category));
   }, [category]);
 
-  const posts = useMemo(() => {
-    return allPosts.filter(p => categoryPostSlugs.has(p.slug));
-  }, [allPosts, categoryPostSlugs]);
-
-  // Sort by publishedAt descending (newest first)
+  // Filter and sort synchronously from the same published source used by the
+  // blog index and prerenderer. This avoids a loading waterfall and count flash.
   const sortedPosts = useMemo(() => {
-    return [...posts].sort((a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-  }, [posts]);
+    return blogPosts
+      .filter(post => categoryPostSlugs.has(post.slug))
+      .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  }, [categoryPostSlugs]);
 
   if (!categoryGroup) {
     return <Navigate to="/blog" replace />;
@@ -125,7 +111,7 @@ const BlogCategory = () => {
             </p>
           </div>
 
-          {/* Category Navigation (all 8 categories) */}
+          {/* Active category navigation */}
           <div className="mb-12 border-y border-border py-6">
             <div className="flex items-center gap-2 mb-3">
               <BookOpen className="w-4 h-4 text-muted-foreground" />
@@ -149,20 +135,7 @@ const BlogCategory = () => {
           </div>
 
           {/* Posts Grid */}
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3, 4, 5, 6].map(i => (
-                <Card key={i} className="overflow-hidden">
-                  <div className="aspect-[16/9] bg-muted animate-pulse" />
-                  <CardContent className="p-6">
-                    <div className="h-4 bg-muted rounded animate-pulse mb-3" />
-                    <div className="h-6 bg-muted rounded animate-pulse mb-2" />
-                    <div className="h-4 bg-muted rounded animate-pulse w-3/4" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : sortedPosts.length === 0 ? (
+          {sortedPosts.length === 0 ? (
             <div className="text-center py-16">
               <BookOpen className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
               <h2 className="text-2xl font-display font-semibold mb-2">No articles yet</h2>
@@ -222,7 +195,7 @@ const BlogCategory = () => {
           <div className="mt-16 text-center border-t border-border pt-12">
             <h2 className="text-2xl font-display font-semibold mb-4">Explore more categories</h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Browse our complete encyclopedia of Indian ethnic fashion — from attire guides to designer profiles, textile techniques to NRI shopping tips.
+              Browse practical outfit, fabric, wedding, festival, fit and saree how-to guides, each connected to relevant shopping categories.
             </p>
             <Link
               to="/blog"
