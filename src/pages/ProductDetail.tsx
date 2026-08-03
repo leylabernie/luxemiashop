@@ -32,6 +32,17 @@ const isStitchableProductType = (productType?: string): boolean => {
   return STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t));
 };
 
+const JEWELRY_PRODUCT_TYPES = [
+  'jewel', 'necklace', 'choker', 'earring', 'bangle', 'bracelet',
+  'ring', 'maang tikka', 'anklet',
+];
+
+const isJewelryProductType = (productType?: string): boolean => {
+  if (!productType) return false;
+  const lower = productType.toLowerCase();
+  return JEWELRY_PRODUCT_TYPES.some((type) => lower.includes(type));
+};
+
 /**
  * Get Google Product Category using NUMERIC TAXONOMY IDs.
  * GMC accepts both numeric IDs and text paths, but numeric IDs are
@@ -109,7 +120,7 @@ const ProductDetail = () => {
         currency: product.priceRange.minVariantPrice.currencyCode,
         imageUrl: product.images.edges[0]?.node.url || '',
       });
-      
+
       // Track view_item event in GA4
       trackViewItem({
         id: product.id,
@@ -129,15 +140,27 @@ const ProductDetail = () => {
     if (type.includes('saree')) return '/sarees';
     if (type.includes('suit') || type.includes('salwar') || type.includes('anarkali')) return '/suits';
     if (type.includes('sherwani') || type.includes('kurta') || type.includes('menswear')) return '/menswear';
+    if (isJewelryProductType(productType)) return '/jewelry';
     return '/collections';
   };
 
   const categoryUrl = getCategoryUrl(product?.productType);
   const categoryName = product?.productType || 'Collections';
 
-  // Enrich thin product descriptions with SEO-rich content
-  const productColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];
-  const productMaterial = product?.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0];
+  // Enrich thin descriptions only with attributes supported by the listing.
+  // Some legacy jewelry records contain garment option values (for example,
+  // cotton or apparel colors), so omit an attribute unless the product's own
+  // title or description also contains it.
+  const isJewelryProduct = isJewelryProductType(product?.productType);
+  const productText = `${product?.title || ''} ${product?.description || ''}`.toLowerCase();
+  const rawProductColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];
+  const rawProductMaterial = product?.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0];
+  const productColor = rawProductColor && (!isJewelryProduct || productText.includes(rawProductColor.toLowerCase()))
+    ? rawProductColor
+    : undefined;
+  const productMaterial = rawProductMaterial && (!isJewelryProduct || productText.includes(rawProductMaterial.toLowerCase()))
+    ? rawProductMaterial
+    : undefined;
 
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
   // Falls back to the existing title template + generated meta description.
@@ -168,23 +191,38 @@ const ProductDetail = () => {
     );
   }, [product, productColor, productMaterial]);
 
-  // Product-specific FAQs for rich snippets
+  // Product-specific FAQs are also rendered visibly below, so the structured
+  // data and on-page content remain consistent.
+  const productSizeValues = product?.options
+    ?.find((option: any) => ['size', 'bust size'].includes(option.name?.toLowerCase()))
+    ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
+  const sizeAnswer = productSizeValues.length > 0
+    ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
+    : isStitchableProductType(product?.productType)
+      ? 'Available stitching and measurement choices are shown on this product page. Review the Size Guide and contact LuxeMia before ordering if you need help.'
+      : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
+
   const productFaqs = product ? [
-    {
+    ...(isJewelryProduct ? [{
+      question: `What is included with the ${product.title}?`,
+      answer: 'The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.'
+    }] : [{
       question: `What sizes are available for the ${product.title}?`,
-      answer: `The ${product.title} is available in sizes S, M, L, XL, XXL, and Custom sizing. We offer made-to-measure tailoring to ensure a perfect fit. Please refer to our Size Guide for detailed measurements.`
-    },
+      answer: sizeAnswer
+    }]),
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: `In-stock online items receive tracking after dispatch. Free US shipping applies over $150, and a flat $12 rate applies below $150.`
+      answer: 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies over $150, and a flat $12 rate applies below $150.'
     },
     {
-      question: `Can I return the ${product.title} if it doesn't fit?`,
-      answer: `All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues. We recommend using our Size Guide and contacting us before ordering if you have any fit questions. The only exception is genuine shipping damage, which requires a mandatory unboxing video.`
+      question: `Can I return the ${product.title}?`,
+      answer: 'All sales are final. Genuine shipping damage must be reported within 48 hours and requires an unboxing video. Contact LuxeMia before ordering if you have questions about size, set contents, or product details.'
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
-      answer: `We recommend professional dry cleaning for all ethnic wear. Store in a cool, dry place wrapped in muslin cloth. Never iron directly on embroidery or embellishments.`
+      answer: isJewelryProduct
+        ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe it gently after wear and store pieces separately in a soft pouch.'
+        : 'Follow any product-specific care instructions in Product Details. Dry cleaning is recommended for embroidered or embellished ethnic wear; avoid ironing directly over decoration.'
     }
   ] : [];
 
@@ -199,7 +237,7 @@ const ProductDetail = () => {
               return d.length > 155 ? `${d.slice(0, 152).trimEnd()}…` : d;
             }
             const productTypeLower = (product.productType || 'Indian ethnic wear').toLowerCase();
-            return `Shop the ${product.title} at LuxeMia — handcrafted ${productTypeLower}. Free U.S. shipping over $150; $12 flat below that.`;
+            return `Shop the ${product.title} at LuxeMia — ${productTypeLower} for U.S. customers. Free U.S. shipping over $150; $12 flat below that.`;
           })()}
           canonical={`https://luxemia.shop/product/${product.handle}`}
           type="product"
@@ -220,7 +258,7 @@ const ProductDetail = () => {
             })(),
             color: productColor,
             material: productMaterial,
-            sizes: product.options?.find((o: any) => o.name?.toLowerCase() === 'size' || o.name?.toLowerCase() === 'bust size')?.values || [],
+            sizes: isJewelryProduct ? [] : productSizeValues,
             googleProductCategory: getGoogleProductCategory(product.productType, product.title),
           }}
           breadcrumbs={[
@@ -239,7 +277,7 @@ const ProductDetail = () => {
       ) : null}
 
       <Header />
-      
+
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           {/* Breadcrumb */}
@@ -275,24 +313,41 @@ const ProductDetail = () => {
               {/* Product Grid */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
                 {/* Gallery */}
-                <ProductGallery 
-                  images={product.images.edges} 
-                  productTitle={product.title} 
+                <ProductGallery
+                  images={product.images.edges}
+                  productTitle={product.title}
                 />
-                
+
                 {/* Product Info */}
                 <ProductInfo key={product.id} product={product} />
               </div>
 
               {/* Product Tabs */}
               <div className="mb-16">
-                <ProductTabs 
+                <ProductTabs
                   description={enrichedDescription || product.description}
                   productType={product.productType}
                   isStitchable={isStitchableProductType(product.productType)}
                   tags={product.tags ?? undefined}
                 />
               </div>
+
+              {/* Visible FAQs — kept in sync with FAQ structured data above. */}
+              {productFaqs.length > 0 && (
+                <section className="mb-16" aria-labelledby="product-faq-heading">
+                  <h2 id="product-faq-heading" className="text-2xl font-serif mb-6">
+                    Product Questions
+                  </h2>
+                  <div className="divide-y divide-border border-y border-border">
+                    {productFaqs.map((faq) => (
+                      <div key={faq.question} className="py-5">
+                        <h3 className="font-medium text-foreground">{faq.question}</h3>
+                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Customer Reviews */}
               <ReviewsSection
@@ -317,7 +372,7 @@ const ProductDetail = () => {
               </div>
 
               {/* Complete the Look */}
-              <CompleteTheLook 
+              <CompleteTheLook
                 currentProductId={product.id}
                 productType={product.productType}
               />
