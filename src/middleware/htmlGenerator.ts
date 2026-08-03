@@ -15,6 +15,17 @@ function sanitizeSeoTitle(value: string): string {
     .trim();
 }
 
+function sanitizeProductTitle(value: string): string {
+  return (value || '')
+    .replace(/^buy\s+/i, '')
+    .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
+    .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
+    .replace(/\bhandcrafted\s+/gi, '')
+    .replace(/\s*[|–—-]\s*$/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export function escapeHtml(str: string): string {
   return str
     .replace(/&/g, '&amp;')
@@ -77,36 +88,57 @@ function getListedProductAttributes(product: ShopifyProduct) {
   };
 }
 
+function buildVerifiedProductDescription(product: ShopifyProduct): string {
+  const title = sanitizeProductTitle(product.title || 'Indian ethnic wear');
+  const attributes = getListedProductAttributes(product);
+  const parts = [`${title}.`];
+
+  if (product.productType) parts.push(`Category: ${product.productType}.`);
+  if (attributes.color) parts.push(`Color: ${attributes.color}.`);
+  if (attributes.material) parts.push(`Material: ${attributes.material}.`);
+  if (attributes.sizes.length > 0) {
+    parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
+  }
+
+  parts.push(
+    'Review the product images and available options for the exact pieces, measurements, and current availability.',
+    'United States shipping only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is provided after dispatch.'
+  );
+
+  return parts.join(' ').replace(/\s+/g, ' ').trim();
+}
+
 export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): string {
+  const displayTitle = sanitizeProductTitle(product.title);
   // Prefer Shopify admin "Search engine listing" (SEO) fields when set, fall
   // back to a template built from the plain product title/type. This matches
   // the behavior Shopify's own theme uses on the myshopify.com product page
   // and prevents the SEO Title/Description set in admin from being silently
   // ignored.
-  const seoTitle = sanitizeSeoTitle(product.seo?.title || '');
-  const seoDescription = product.seo?.description?.trim();
-  const cleanProductDescription = sanitizeProductCopy(product.description || '');
+  const seoTitle = sanitizeProductTitle(sanitizeSeoTitle(product.seo?.title || ''));
+  // Do not republish historic SEO or supplier descriptions containing obsolete claims.
+  const cleanProductDescription = buildVerifiedProductDescription(product);
   const productAttributes = getListedProductAttributes(product);
-  const title = seoTitle || `${product.title} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
+  const title = seoTitle || `${displayTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
   const fallbackDescription = productAttributes.jewelry
-    ? `Shop ${product.title} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
-    : `Shop ${product.title} at LuxeMia. Indian ethnic wear online with tracked U.S. shipping.`;
-  const description = sanitizeProductCopy(seoDescription || cleanProductDescription || fallbackDescription).slice(0, 160);
+    ? `Shop ${displayTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
+    : `Shop ${displayTitle} at LuxeMia. Indian ethnic wear online with tracked U.S. shipping.`;
+  const description = (cleanProductDescription || fallbackDescription).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
   const imageUrl = product.images.edges[0]?.node.url || `${SITE_URL}/og-image.jpg`;
   const gmcSafeImage = forceJpegForGmc(imageUrl);
-  const categoryUrl = getCategoryUrl(product.productType, product.title);
+  const categoryUrl = getCategoryUrl(product.productType, displayTitle);
   const categoryName = product.productType || 'Collections';
   const availability = product.availableForSale !== false ? 'InStock' : 'OutOfStock';
   const vendor = product.vendor || 'LuxeMia';
 
   const { color, material, sizes } = productAttributes;
   const sku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
-  const googleProductCategory = getGoogleProductCategory(product.productType, product.title);
+  const googleProductCategory = getGoogleProductCategory(product.productType, displayTitle);
 
-  const isMenswear = (product.productType || '').toLowerCase().includes('men') || (product.title || '').toLowerCase().includes('sherwani') || (product.title || '').toLowerCase().includes('kurta pajama');
+  const isMenswear = (product.productType || '').toLowerCase().includes('men') || (displayTitle || '').toLowerCase().includes('sherwani') || (displayTitle || '').toLowerCase().includes('kurta pajama');
   const gender = isMenswear ? 'male' : 'female';
 
   const priceNum = parseFloat(price);
@@ -118,14 +150,14 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
 
   // Generate schema using shared module
   const productSchema = generateProductSchema({
-    name: product.title,
+    name: displayTitle,
     description: description,
     url: canonicalUrl,
     image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))],
     sku,
     brand: vendor,
     category: productAttributes.jewelry
-      ? (/necklace|choker/i.test(`${product.productType} ${product.title}`)
+      ? (/necklace|choker/i.test(`${product.productType} ${displayTitle}`)
         ? 'Apparel & Accessories > Jewelry > Necklaces'
         : 'Apparel & Accessories > Jewelry')
       : (product.productType || 'Clothing > Traditional & Ethnic Wear'),
@@ -142,35 +174,31 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: SITE_URL },
     { name: categoryName, url: `${SITE_URL}${categoryUrl}` },
-    { name: product.title, url: canonicalUrl },
+    { name: displayTitle, url: canonicalUrl },
   ]);
 
   const sizeAnswer = sizes.length > 0
     ? `Available choices shown for this listing are ${sizes.join(', ')}. Review the Size Guide before ordering.`
-    : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
+    : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
   const productFaqs = [
     ...(productAttributes.jewelry ? [{
-      question: `What is included with the ${product.title}?`,
+      question: `What is included with the ${displayTitle}?`,
       answer: 'The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.',
     }] : [{
-      question: `What sizes are available for the ${product.title}?`,
+      question: `What sizes are available for the ${displayTitle}?`,
       answer: sizeAnswer,
     }]),
     {
-      question: `What is the delivery time for the ${product.title}?`,
-      answer: productAttributes.jewelry
-        ? 'Delivery timing depends on the item. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.'
-        : 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.',
+      question: `What is the delivery time for the ${displayTitle}?`,
+      answer: 'Delivery timing depends on the item and selected options. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.',
     },
     {
-      question: `Can I return the ${product.title}?`,
+      question: `Can I return the ${displayTitle}?`,
       answer: 'All sales are final. Genuine shipping damage must be reported within 48 hours and requires an unboxing video.',
     },
     {
-      question: `How should I care for the ${product.title}?`,
-      answer: productAttributes.jewelry
-        ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
-        : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.',
+      question: `How should I care for the ${displayTitle}?`,
+      answer: 'Follow any care instructions stated in Product Details. Contact LuxeMia before ordering if care information is not listed.',
     },
   ];
 
@@ -184,7 +212,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
 
   const allImages = product.images.edges.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
     const imgSrc = forceJpegForGmc(edge.node.url);
-    return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || product.title)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
+    return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || displayTitle)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
   });
 
   const variantOptions = product.variants.edges.slice(0, 5).map((v: { node: { title: string } }) => {
@@ -276,7 +304,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     <nav>
       <a href="${SITE_URL}">Home</a> &rsaquo;
       <a href="${SITE_URL}${categoryUrl}">${escapeHtml(categoryName)}</a> &rsaquo;
-      ${escapeHtml(product.title)}
+      ${escapeHtml(displayTitle)}
     </nav>
     <div class="product-grid">
       <div class="product-images">
@@ -284,7 +312,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         ${allImages.length > 1 ? `<div class="product-thumbs">${allImages.slice(1).join('\n')}</div>` : ''}
       </div>
       <div class="product-info">
-        <h1>${escapeHtml(product.title)}</h1>
+        <h1>${escapeHtml(displayTitle)}</h1>
         <div class="price">
           ${hasDiscount
             ? `<span class="price-sale">${currency} ${price}</span><span class="price-original">${currency} ${compareAtPrice}</span><span class="discount-badge">${discountPercent}% OFF</span>`
