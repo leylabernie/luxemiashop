@@ -83,15 +83,11 @@ const STATIC_ROUTES = [
   '/collections/eid-outfits',
   '/collections/navratri-outfits',
   '/collections/haldi-outfits',
-  // Utsavpedia-style blog category hub routes — 8 top-level categories
+  // Blog topic hubs — each route must contain at least one published article
   '/blog/attires',
-  '/blog/cultural-connections',
-  '/blog/ethnicalley',
-  '/blog/fashion-cults',
   '/blog/motifs-embroideries',
   '/blog/weddings-festivals',
   '/blog/how-to-care',
-  '/blog/nri-shopping',
   // Factual organizational author page
   '/authors/luxemia-editorial-team',
 ];
