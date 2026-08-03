@@ -46,7 +46,7 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
   {
     id: 'made-to-measure',
     label: 'Made to Measure (UDesign)',
-    description: 'Bespoke tailoring with 200+ style combinations. Customize neckline, sleeves, and bottom style. Submit measurements after ordering.',
+    description: 'Made-to-measure tailoring with the neckline, sleeve, and bottom-style choices shown on this page. Submit measurements after ordering.',
     priceModifier: 25,
     requiresMeasurement: true,
     deliveryExtraDays: 5,
@@ -67,9 +67,29 @@ interface ProductInfoProps {
 // Helper to extract product specs from tags
 const extractProductSpecs = (tags?: string[], productType?: string) => {
   const specs: Record<string, string> = {};
-  
+  const lowerProductType = productType?.toLowerCase() || '';
+  const isAccessory = [
+    'jewel', 'accessory', 'necklace', 'choker', 'earring', 'bangle',
+    'bracelet', 'ring', 'bag', 'clutch', 'footwear', 'jutti', 'mojri',
+  ].some((type) => lowerProductType.includes(type));
+
+  if (productType) {
+    specs.type = productType;
+  }
+
   if (!tags) return specs;
-  
+
+  // A closure is displayed only when the catalog explicitly supplies one.
+  const closureTag = tags.find((tag) => tag.toLowerCase().startsWith('closure:'));
+  if (closureTag) {
+    const closure = closureTag.slice(closureTag.indexOf(':') + 1).trim();
+    if (closure) specs.closure = closure;
+  }
+
+  // Legacy accessory tags contain garment attributes on some listings. Avoid
+  // surfacing those as jewelry specifications until the catalog is corrected.
+  if (isAccessory) return specs;
+
   // Common fabric patterns
   const fabricKeywords = ['silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
   // Common work patterns
@@ -78,28 +98,23 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
 
   const lowerTags = tags.map(t => t.toLowerCase());
-  
+
   // Extract fabric
   const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
   if (foundFabric) {
     specs.fabric = foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   }
-  
+
   // Extract work type
   const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
   if (foundWork.length > 0) {
     specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
   }
-  
+
   // Extract colors
   const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
   if (foundColors.length > 0) {
     specs.color = foundColors.slice(0, 2).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' & ');
-  }
-
-  // Product type as occasion
-  if (productType) {
-    specs.type = productType;
   }
 
   return specs;
@@ -327,7 +342,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   );
   const isAvailable = purchasableVariant?.node.availableForSale ?? false;
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
-  
+
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
   const shipByLabel = getShipByLabel(product);
 
@@ -408,12 +423,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       ...prev,
       [optionName]: value,
     }));
-    
+
     // If this is a stitching option, show the size selector and trigger validation
     if (optionName.toLowerCase().includes('stitch') && value.toLowerCase().includes('stitch')) {
       setShowSizeValidation(true);
     }
-    
+
     // Reset stitching size when switching to Unstitched or a non-stitch option
     if (
       value.toLowerCase().startsWith('unstitched') ||
@@ -615,7 +630,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
               <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed outfit with adjustable side seams. Select your standard size for a near-perfect fit. Alterations can be done locally if needed.</p>
               <p><strong className="text-foreground">Ready to Wear:</strong> Fully stitched to your selected size. Choose your bust size and we'll tailor it completely — ready to wear right out of the box.</p>
-              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> Our bespoke tailoring service with 200+ style combinations. Submit your exact measurements after placing the order for a perfect custom fit. You can customize the neckline, sleeves, and bottom style.</p>
+              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> Choose from the neckline, sleeve, and bottom-style options shown on this page. Submit measurements after placing the order.</p>
             </div>
           )}
 
@@ -705,7 +720,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             // For stitchable products, hide the "Stitching" option from Shopify variants
             // since we use our custom Utsav-style selector above instead
             if (isStitchable && option.name.toLowerCase().includes('stitch')) return false;
-            // If product already has numeric sizes and we're showing stitching, 
+            // If product already has numeric sizes and we're showing stitching,
             // don't duplicate the size selector — the StitchingSizeSelector handles it
             if (productHasNumericSizes && option.name.toLowerCase() === 'size') return false;
             return true;
@@ -911,8 +926,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
               <span className="text-foreground">{productSpecs.type}</span>
             </>
           )}
-          <span className="text-muted-foreground">Closure</span>
-          <span className="text-foreground">Back Hook-Eye / Zip</span>
+          {productSpecs.closure && (
+            <>
+              <span className="text-muted-foreground">Closure</span>
+              <span className="text-foreground">{productSpecs.closure}</span>
+            </>
+          )}
           <span className="text-muted-foreground">Seller</span>
           <span className="text-foreground">LuxeMia</span>
         </div>
@@ -924,7 +943,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="space-y-2">
         <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
         <p className="text-muted-foreground leading-relaxed text-sm">
-          {product.description || 'Beautifully made with attention to every detail, this piece features traditional Indian design elements. Perfect for ceremonies, weddings, and special occasions.'}
+          {product.description || 'Review the product images and listed options for the exact color, materials, included pieces, and sizing. Contact LuxeMia before ordering if any detail is unclear.'}
         </p>
       </div>
 
