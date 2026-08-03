@@ -53,11 +53,6 @@ export function generateShippingSchema(currency: string, orderAmount: string | n
         currency,
       },
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 7, unitCode: 'DAY', description: 'Dispatch time varies by stitching status' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 10, unitCode: 'DAY', description: 'Carrier transit begins after dispatch' },
-      },
     },
   ];
 }
@@ -195,7 +190,7 @@ export function generateOrganizationSchema() {
     legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
-    description: 'Ready-to-ship Indian ethnic wear at LuxeMia. Sarees, lehengas, suits and menswear available online with tracked U.S. delivery.',
+    description: 'LuxeMia is an online Indian ethnic wear store serving U.S. shoppers with product details, sizing guidance and tracking after dispatch.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',
