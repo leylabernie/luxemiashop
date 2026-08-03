@@ -987,6 +987,26 @@
       "source": "/blog/zari-work-guide-indian-embroidery-gold-silver-thread",
       "destination": "/blog",
       "statusCode": 301
+    },
+    {
+      "source": "/style-consultation",
+      "destination": "/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-measure-yourself-for-indian-ethnic-wear",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/care-guide-washing-storing-indian-ethnic-wear",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/unstitched-vs-ready-to-wear-vs-made-to-measure",
+      "destination": "/blog",
+      "statusCode": 301
     }
   ],
   "headers": [
