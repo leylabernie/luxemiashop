@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useLocation, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -18,7 +18,8 @@ import { Badge } from '@/components/ui/badge';
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').trim();
 
 const BlogCategory = () => {
-  const { category } = useParams<{ category: string }>();
+  const location = useLocation();
+  const category = location.pathname.split('/').filter(Boolean).pop();
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
