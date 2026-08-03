@@ -87,15 +87,15 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'No. All sales are final and we do not accept returns or exchanges for sizing issues. We strongly recommend using our Size Guide and contacting us before ordering to ensure the correct size. For minor fit adjustments, a local tailor can often help.',
+          answer: 'No. All sales are final and we do not accept returns or exchanges for sizing issues. Use the measurement worksheet, compare the exact listing and contact us before ordering when sizing information is unclear.',
         },
         {
-          question: 'What measurements do I need to provide?',
-          answer: 'Essential measurements include bust, waist, and hips. For blouses, you\'ll also need shoulder width, sleeve length, and armhole. For lehengas, provide length from waist to floor. Our Size Guide has detailed instructions for each measurement.',
+          question: 'Which measurements should I compare?',
+          answer: 'Relevant measurements depend on the garment. Common examples include bust or chest, waist, hips, shoulder, sleeve and garment length. Use the worksheet, then compare only with the exact product listing.',
         },
         {
           question: 'Should I add ease to my measurements?',
-          answer: 'No, please provide your exact body measurements. Our tailors will add the appropriate ease based on the garment style. Adding extra inches yourself may result in a garment that\'s too loose.',
+          answer: 'Record your actual body measurements without adding or subtracting inches unless the selected product instructions specifically tell you to do so. Body and garment measurements are not the same.',
         },
       ],
     },
@@ -135,27 +135,27 @@ const FAQ = () => {
       faqs: [
         {
           question: 'How should I care for my silk garments?',
-          answer: 'Silk should always be dry cleaned by a professional familiar with delicate fabrics. Store in a breathable garment bag away from direct sunlight. Never hang heavy silk garments—fold them with acid-free tissue paper.',
+          answer: 'Follow the exact care label or supplied instructions because silk names can cover different fibers, dyes, weaves, linings and embellishments. If instructions are missing, ask a qualified cleaner before treatment.',
         },
         {
           question: 'How do I store my lehenga?',
-          answer: 'Store flat in a cool, dry place wrapped in muslin or cotton cloth. Add silica gel packets to prevent moisture damage. Refold periodically to prevent permanent creases along fold lines.',
+          answer: 'Follow the product label and store the garment clean, completely dry and away from direct light, heat and damp. Support heavy work so the fabric does not stretch, and use clean, colorfast storage materials.',
         },
         {
           question: 'Can I iron my embroidered garments?',
-          answer: 'Never iron directly on embroidery or embellishments. Iron on the reverse side using low heat with a pressing cloth. For heavily embellished pieces, professional steaming is recommended.',
+          answer: 'Avoid direct heat on embroidery or embellishment. Follow the care label and test any permitted heat on a hidden area. Ask a qualified cleaner when materials or adhesives are uncertain.',
         },
         {
           question: 'How do I care for jewelry?',
-          answer: 'Store each piece separately to prevent scratching. Avoid contact with perfumes, lotions, and water. Wipe gently with a soft, dry cloth after wearing. Store in airtight containers with anti-tarnish strips.',
+          answer: 'Follow any supplied jewelry care instructions. Keep pieces separated and dry, avoid untested cleaners, and ask a qualified jeweler when the finish, stones or materials are uncertain.',
         },
         {
           question: 'What if my garment has a small stain?',
-          answer: 'Do not attempt to remove stains at home—you may damage the fabric or embroidery. Take the garment to a professional dry cleaner immediately. Point out the stain and provide details about what caused it.',
+          answer: 'Follow the care label. Do not rub, heat or apply an untested chemical to a stain. Tell a qualified cleaner what caused it and what treatments have already been attempted.',
         },
         {
           question: 'How often should I dry clean my ethnic wear?',
-          answer: 'Only dry clean when necessary. Over-cleaning can damage delicate fabrics. For occasional wear items, air them out after each use and store properly. Dry clean only when visibly soiled or before long-term storage.',
+          answer: 'Clean only as directed by the care label or a qualified cleaner who has inspected the garment. Allow the item to dry fully before storage and keep the instructions with it.',
         },
       ],
     },
@@ -165,11 +165,11 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Do I need an account to order?',
-          answer: 'No, you can checkout as a guest. However, creating an account allows you to track orders, save your wishlist, store multiple addresses, and access member benefits.',
+          answer: 'No, you can check out as a guest. An account can be used for the account and wishlist features currently shown on the site.',
         },
         {
           question: 'How do I reset my password?',
-          answer: 'Click "Sign In" and then "Forgot Password". Enter your email address and we\'ll send you a link to reset your password. The link expires in 24 hours for security.',
+          answer: 'Click "Sign In" and then "Forgot Password," enter your email address, and follow the instructions in the reset email.',
         },
         {
           question: 'Is my personal information secure?',
@@ -195,7 +195,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is the difference between Banarasi silk and Kanchipuram silk sarees?',
-          answer: 'Banarasi silk sarees originate from Varanasi and are known for their intricate Mughal-inspired motifs, heavy zari work, and brocade weaving. Kanchipuram (Kanjivaram) silk sarees come from Tamil Nadu and feature bold, temple-inspired designs with thick silk and contrast borders. Both are premium choices for weddings — Banarasi for North Indian ceremonies and Kanchipuram for South Indian traditions. Both are available in our saree collection.',
+          answer: 'Banarasi silk sarees originate from Varanasi and are known for their intricate Mughal-inspired motifs, heavy zari work, and brocade weaving. Kanchipuram (Kanjivaram) silk sarees come from Tamil Nadu and feature bold, temple-inspired designs with thick silk and contrast borders. Both are associated with wedding traditions, but the exact fiber, weave and origin claims must be checked on the selected product listing.',
         },
         {
           question: 'What does semi-stitched mean for lehengas and suits?',
@@ -203,7 +203,7 @@ const FAQ = () => {
         },
         {
           question: 'How do I choose the right fabric for my Indian wedding outfit?',
-          answer: 'For winter weddings, choose velvet, raw silk, or Banarasi silk for warmth and richness. For summer weddings, opt for georgette, chiffon, organza, or lightweight cotton silk for comfort. For versatile year-round options, crepe and satin work beautifully. Our fabric guide blog post covers this in detail.',
+          answer: 'Compare the stated fiber, weight, lining, structure and embellishment on the exact listing. Climate, venue and personal comfort matter; our fabric guide explains tradeoffs without assuming every garment has the same composition.',
         },
         {
           question: 'Are your products authentic Indian ethnic wear?',
@@ -211,7 +211,7 @@ const FAQ = () => {
         },
         {
           question: 'What is zardozi embroidery?',
-          answer: 'Zardozi is a traditional Indian embroidery technique that uses metallic threads (usually gold or silver), beads, pearls, and precious stones to create elaborate, raised designs on fabric. It originated in Persia and was popularized during the Mughal era. Zardozi work is commonly found on bridal lehengas, wedding sarees, and sherwanis. It adds significant value and grandeur to any garment.',
+          answer: 'Zardozi refers to raised decorative embroidery often associated with metallic-looking thread and additional embellishment. Materials and technique vary, so use only the work and composition stated on the exact product listing.',
         },
         {
           question: 'Do you sell unstitched fabric or only ready-made outfits?',
@@ -534,7 +534,7 @@ const FAQ = () => {
                     <p className="font-semibold text-sm">Email</p>
                     <p className="text-xs text-muted-foreground">hello@luxemia.shop</p>
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">Response within 24-48 hours</p>
+                  <p className="text-xs text-muted-foreground text-center">Include your order number for order support</p>
                 </a>
 
                 {/* Phone */}
