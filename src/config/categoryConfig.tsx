@@ -358,9 +358,9 @@ const SAREES: CategoryConfig = {
   heroImage: '/images/banners/saree-banner.jpg',
   heroImageWebp: '/images/banners/saree-banner.webp',
   heroTitle: 'Sarees',
-  heroSubtitle: 'Banarasi, silk and georgette sarees available online. Blouse sizes are listed as actual measurements, not S/M/L, because the difference matters.',
-  seoTitle: 'Buy Banarasi Silk Sarees Online USA | Fast Ship | LuxeMia',
-  seoDescription: 'Shop silk, wedding, festive and designer sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping over $150.',
+  heroSubtitle: 'Banarasi, silk and georgette sarees available online. Review each listing for its exact fabric, blouse information, dimensions and stitching status.',
+  seoTitle: 'Buy Banarasi & Silk Sarees Online USA | LuxeMia',
+  seoDescription: 'Shop silk, wedding and festive sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/sarees',
   ogImage: '/og/og-sarees.jpg',
   breadcrumbs: [
@@ -407,7 +407,7 @@ const SAREES: CategoryConfig = {
         'casual wear', 'festival wear', 'festival',
         'festive', 'occasionwear',
       ],
-      seoTitle: 'Party Wear Sarees & Reception Sarees Online | Designer Drapes - LuxeMia',
+      seoTitle: 'Party Wear & Reception Sarees Online | LuxeMia',
       seoDescription: 'Shop party-wear and reception sarees online. Review each listing for its exact fabric, work, blouse details, price and current availability.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=party-wear',
     }),
@@ -643,7 +643,7 @@ const SUITS: CategoryConfig = {
     },
     {
       question: "Are Pakistani suits available?",
-      answer: "Yes, we offer a curated selection of Pakistani-style suits known for their elegant straight cuts, intricate embroidery, and modern aesthetic. These are perfect for NRI customers looking for contemporary ethnic wear."
+      answer: "LuxeMia listings may include Pakistani-style straight-cut suits. Review the exact product page for the supplied silhouette, fabric, work, included pieces and availability."
     },
     {
       question: "Do you offer custom tailoring for suits?",

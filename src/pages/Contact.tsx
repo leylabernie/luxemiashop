@@ -49,7 +49,7 @@ const Contact = () => {
       }
 
       toast.success('Message received!', {
-        description: "We'll get back to you within 24-48 hours.",
+        description: "Your message is in our support queue.",
       });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
@@ -66,7 +66,7 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Contact Us — LuxeMia"
-        description="Get in touch with LuxeMia. Questions about orders, sizing, or custom tailoring? Reach us via email, phone, or WhatsApp."
+        description="Contact LuxeMia with questions about orders, sizing or a product listing. Reach U.S.-based support by email, phone, WhatsApp or the contact form."
         canonical="https://luxemia.shop/contact"
       />
       <Header />
@@ -85,7 +85,7 @@ const Contact = () => {
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Contact Us</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Have questions about an order, need styling advice, or want to learn more about our sourcing? We're here to help.
+                Have questions about an order, sizing or a product listing? Contact LuxeMia before ordering when an important detail is unclear.
               </p>
             </motion.div>
           </div>

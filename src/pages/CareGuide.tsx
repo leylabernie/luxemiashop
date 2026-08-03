@@ -1,287 +1,144 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import SEOHead from "@/components/seo/SEOHead";
-import { motion } from "framer-motion";
-import { Droplets, Wind, Sun, AlertTriangle, Sparkles, Shield } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Link } from 'react-router-dom';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
+import { AlertTriangle, ArrowRight, CheckCircle2, PackageOpen, Sparkles, Tag } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
-const CareGuide = () => {
-  const fabricCare = [
-    {
-      fabric: "Silk (Banarasi, Kanjeevaram, Raw Silk)",
-      icon: Sparkles,
-      tips: [
-        "Always dry clean silk garments to preserve the fabric's luster and integrity",
-        "Store in a muslin cloth bag, never in plastic which can trap moisture",
-        "Air out silk pieces every few months to prevent musty odors",
-        "Iron on low heat with a pressing cloth between the iron and fabric",
-        "Keep away from direct sunlight to prevent color fading",
-        "For minor stains, spot clean with a damp cloth and mild detergent"
-      ]
-    },
-    {
-      fabric: "Velvet",
-      icon: Shield,
-      tips: [
-        "Dry clean only - water can permanently damage velvet's pile",
-        "Hang vertically to prevent crushing; never fold velvet garments",
-        "Use a soft brush to restore the pile direction after wearing",
-        "Steam from the reverse side to remove wrinkles",
-        "Store in a breathable garment bag with enough space",
-        "Avoid sitting on rough surfaces while wearing velvet"
-      ]
-    },
-    {
-      fabric: "Georgette & Chiffon",
-      icon: Wind,
-      tips: [
-        "Hand wash in cold water with mild detergent or dry clean",
-        "Never wring or twist; gently press water out",
-        "Dry flat or hang on a padded hanger",
-        "Iron on low heat while slightly damp for best results",
-        "Store on padded hangers to maintain shape",
-        "Handle with care as these fabrics snag easily"
-      ]
-    },
-    {
-      fabric: "Brocade & Zari Work",
-      icon: Sparkles,
-      tips: [
-        "Always dry clean to protect the metallic threads",
-        "Store with acid-free tissue paper between folds",
-        "Never iron directly on zari work; use a pressing cloth",
-        "Keep away from moisture as zari can tarnish",
-        "Wrap in soft muslin before storing",
-        "Handle gently as zari threads can catch and pull"
-      ]
-    },
-    {
-      fabric: "Cotton & Chanderi",
-      icon: Droplets,
-      tips: [
-        "Can be hand washed in cold water with mild detergent",
-        "Turn inside out before washing to protect embroidery",
-        "Dry in shade to prevent color fading",
-        "Iron while slightly damp for crisp finish",
-        "Store folded with tissue paper between layers",
-        "Pre-treat stains immediately with cold water"
-      ]
-    },
-    {
-      fabric: "Net & Organza",
-      icon: Wind,
-      tips: [
-        "Dry clean recommended for heavy embellishments",
-        "Store flat or rolled to prevent creasing",
-        "Steam to remove wrinkles; avoid direct iron contact",
-        "Handle with care to avoid tears and snags",
-        "Keep away from jewelry and accessories that might catch",
-        "Store in acid-free tissue paper"
-      ]
-    }
-  ];
+const faqs = [
+  {
+    question: 'Should every silk saree be dry cleaned?',
+    answer: 'Not every item uses the same fiber, dye, weave, lining or embellishment. Follow the care label or exact product instructions. If those are missing, ask a cleaner experienced with delicate Indian garments before cleaning.',
+  },
+  {
+    question: 'Can I iron embroidery, sequins or zari?',
+    answer: 'Avoid direct heat on embellishment. Follow the product label and test any permitted heat on a hidden area. A qualified cleaner is the safest option when the materials or adhesives are uncertain.',
+  },
+  {
+    question: 'How should I store a heavy lehenga or saree?',
+    answer: 'Store the item clean and completely dry, away from direct light, heat and damp. Support heavy work so it does not stretch. Use clean, colorfast and breathable storage materials appropriate for the garment.',
+  },
+  {
+    question: 'What should I do if the care instructions are missing?',
+    answer: 'Do not guess based only on the garment category. Contact LuxeMia for any available supplier guidance or take the item to a qualified cleaner who can inspect it in person.',
+  },
+];
 
-  const embellishmentCare = [
-    {
-      type: "Zardozi & Thread Embroidery",
-      care: "Avoid pressing directly on embroidery. Always use a protective cloth. Store flat with tissue paper padding to prevent crushing."
-    },
-    {
-      type: "Sequins & Beadwork",
-      care: "Handle gently as beads can break. Store in soft cloth bags. Avoid friction with other garments that might dislodge embellishments."
-    },
-    {
-      type: "Mirror Work",
-      care: "Keep away from extreme heat which can loosen adhesive. Store flat with mirrors facing up. Clean gently with a soft dry cloth."
-    },
-    {
-      type: "Stone & Kundan Work",
-      care: "Avoid water contact as it can loosen settings. Store separately to prevent scratching. Handle with clean, dry hands."
-    }
-  ];
+const CareGuide = () => (
+  <div className="min-h-screen bg-background">
+    <SEOHead
+      title="Indian Clothing Care Guide — Read the Garment Label First | LuxeMia"
+      description="Care for sarees, lehengas, suits and embellished Indian clothing without one-size-fits-all washing claims. Start with the exact label and product instructions."
+      canonical="https://luxemia.shop/care-guide"
+      faqs={faqs}
+    />
+    <Header />
 
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOHead
-        title="Garment Care Guide — LuxeMia"
-        description="Care instructions for Indian ethnic wear. Learn how to preserve silk sarees, lehengas, and embroidered garments so they stay beautiful for years."
-        canonical="https://luxemia.shop/care-guide"
-      />
-      <Header />
-      
-      <main className="pt-[90px] lg:pt-[132px]">
-        {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-primary/5 to-background">
-          <div className="container mx-auto px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">Care for Your Pieces</span>
-            </motion.div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
-            >
-              Care Guide
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
-            >
-              Your LuxeMia pieces deserve proper care to look beautiful for years to come. 
-              Follow these care instructions to preserve their beauty and quality.
-            </motion.p>
+    <main className="pt-[90px] lg:pt-[132px]">
+      <section className="bg-gradient-to-b from-primary/10 to-background py-16 lg:py-24">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <Sparkles className="h-4 w-4" /> Garment-specific care
           </div>
-        </section>
+          <h1 className="font-display text-4xl text-foreground md:text-5xl lg:text-6xl">Indian Clothing Care Guide</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-lg text-muted-foreground">
+            Fabric names alone do not reveal every fiber, dye, lining, adhesive or embellishment. Begin with the care label and exact product instructions—not a universal washing rule.
+          </p>
+        </div>
+      </section>
 
-        {/* General Tips */}
-        <section className="py-12 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-2xl text-foreground mb-6 text-center">
-                Essential Care Tips
-              </h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <Droplets className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-medium text-foreground mb-2">Dry Clean</h3>
-                  <p className="text-muted-foreground text-sm">Most ethnic wear should be dry cleaned to preserve embroidery and fabric</p>
-                </div>
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <Sun className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-medium text-foreground mb-2">Avoid Sunlight</h3>
-                  <p className="text-muted-foreground text-sm">Store away from direct sunlight to prevent color fading</p>
-                </div>
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <Wind className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-medium text-foreground mb-2">Breathable Storage</h3>
-                  <p className="text-muted-foreground text-sm">Use muslin bags, never plastic, for proper air circulation</p>
-                </div>
-                <div className="bg-card rounded-lg p-4 border border-border text-center">
-                  <AlertTriangle className="w-8 h-8 text-primary mx-auto mb-3" />
-                  <h3 className="font-medium text-foreground mb-2">Handle With Care</h3>
-                  <p className="text-muted-foreground text-sm">Remove jewelry before wearing to avoid snags and pulls</p>
-                </div>
-              </div>
-            </div>
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+            <Card>
+              <CardContent className="pt-6">
+                <Tag className="mb-4 h-8 w-8 text-primary" />
+                <h2 className="font-semibold text-foreground">1. Read the label</h2>
+                <p className="mt-2 text-sm text-muted-foreground">Use the sewn-in label, supplied care card and exact product page when instructions are available.</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <AlertTriangle className="mb-4 h-8 w-8 text-primary" />
+                <h2 className="font-semibold text-foreground">2. Do not assume</h2>
+                <p className="mt-2 text-sm text-muted-foreground">Items called silk, velvet, georgette or embroidered can use different blends, dyes and construction.</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <CheckCircle2 className="mb-4 h-8 w-8 text-primary" />
+                <h2 className="font-semibold text-foreground">3. Ask a specialist</h2>
+                <p className="mt-2 text-sm text-muted-foreground">When instructions are missing or conflict, let a qualified cleaner inspect the garment before treatment.</p>
+              </CardContent>
+            </Card>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Fabric-Specific Care */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Fabric-Specific Care
-            </h2>
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="multiple" className="w-full space-y-4">
-                {fabricCare.map((item, index) => (
-                  <AccordionItem
-                    key={item.fabric}
-                    value={`fabric-${index}`}
-                    className="bg-card rounded-lg border border-border px-6"
-                  >
-                    <AccordionTrigger className="hover:no-underline">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                          <item.icon className="w-5 h-5 text-primary" />
-                        </div>
-                        <span className="font-display text-lg text-foreground">{item.fabric}</span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="space-y-3 pl-14 pb-4">
-                        {item.tips.map((tip, tipIndex) => (
-                          <li key={tipIndex} className="text-muted-foreground flex items-start gap-2">
-                            <span className="text-primary mt-1">•</span>
-                            {tip}
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
-        </section>
-
-        {/* Embellishment Care */}
-        <section className="py-16 bg-primary/5">
-          <div className="container mx-auto px-4">
-            <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Embellishment Care
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {embellishmentCare.map((item, index) => (
-                <motion.div
-                  key={item.type}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-card rounded-lg p-6 border border-border"
-                >
-                  <h3 className="font-display text-lg text-foreground mb-3">{item.type}</h3>
-                  <p className="text-muted-foreground">{item.care}</p>
-                </motion.div>
+      <section className="bg-secondary/30 py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-center font-display text-3xl text-foreground">Before cleaning or storing</h2>
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              {[
+                ['Record the instructions', 'Photograph the care label and keep any supplied care card before the first wear or cleaning.'],
+                ['Check every component', 'The blouse, skirt, dupatta, lining and removable accessories may have different materials or instructions.'],
+                ['Treat a stain cautiously', 'Blot only when the label permits it. Do not rub, apply home chemicals or use heat on an unknown stain.'],
+                ['Store clean and dry', 'Allow the garment to dry fully and keep it away from direct light, damp, pests and sources of heat.'],
+                ['Support weight and shape', 'Heavy embellishment can stretch fabric. Fold or support the garment according to its construction and label.'],
+                ['Test storage materials', 'Use clean, colorfast materials that will not transfer dye, trap moisture or catch on embellishment.'],
+              ].map(([title, body]) => (
+                <div key={title} className="rounded-xl border border-border bg-card p-6">
+                  <h3 className="font-semibold text-foreground">{title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+                </div>
               ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Storage Tips */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-display text-2xl md:text-3xl text-foreground mb-6">
-                Long-Term Storage Tips
-              </h2>
-              <div className="bg-card rounded-lg p-8 border border-border text-left space-y-4">
-                <p className="text-muted-foreground">
-                  <strong className="text-foreground">1. Clean Before Storing:</strong> Always dry clean garments before long-term storage to prevent stains from setting.
-                </p>
-                <p className="text-muted-foreground">
-                  <strong className="text-foreground">2. Use Acid-Free Tissue:</strong> Layer acid-free tissue paper between folds to prevent creasing and color transfer.
-                </p>
-                <p className="text-muted-foreground">
-                  <strong className="text-foreground">3. Muslin Bags:</strong> Store in breathable muslin bags, never in plastic which traps moisture.
-                </p>
-                <p className="text-muted-foreground">
-                  <strong className="text-foreground">4. Cool, Dry Place:</strong> Keep away from humidity, heat sources, and direct sunlight.
-                </p>
-                <p className="text-muted-foreground">
-                  <strong className="text-foreground">5. Regular Airing:</strong> Take out and air your garments every 3-4 months to prevent musty odors.
-                </p>
-                <p className="text-muted-foreground">
-                  <strong className="text-foreground">6. Silica Gel Packets:</strong> Place silica gel packets near stored garments to absorb excess moisture.
-                </p>
-              </div>
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
+              <PackageOpen className="h-9 w-9 text-primary" />
+              <h2 className="mt-4 font-display text-3xl text-foreground">When your order arrives</h2>
+              <p className="mt-4 text-muted-foreground">Record the required unboxing video while opening the shipment. Inspect the item and package contents, then save labels and care information with your order records.</p>
+              <p className="mt-3 text-muted-foreground">Genuine shipping damage must be reported within 48 hours with the unboxing video. Read the final-sale and damage policy before ordering.</p>
+              <Link to="/returns" className="mt-6 inline-flex items-center gap-2 font-medium text-primary hover:underline">Read returns and damage policy <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Contact */}
-        <section className="py-12 bg-secondary/30">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-muted-foreground">
-              Have questions about caring for your LuxeMia garment? Contact our care specialists at{" "}
-              <span className="text-primary">hello@luxemia.com</span>
-            </p>
+      <section className="bg-secondary/30 py-16">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-center font-display text-3xl text-foreground">Care questions</h2>
+            <div className="mt-8 space-y-6">
+              {faqs.map((faq) => (
+                <div key={faq.question} className="border-b border-border pb-6">
+                  <h3 className="text-lg font-semibold text-foreground">{faq.question}</h3>
+                  <p className="mt-2 text-muted-foreground">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <Footer />
-    </div>
-  );
-};
+      <section className="bg-primary py-14 text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-display text-3xl">Check product details before ordering</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/90">Review the exact listing for stated fabric, work, included pieces and any available care information.</p>
+          <Link to="/collections" className="mt-7 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 font-medium text-foreground">Browse collections <ArrowRight className="h-4 w-4" /></Link>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </div>
+);
 
 export default CareGuide;

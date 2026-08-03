@@ -226,7 +226,7 @@ const NewArrivals = () => {
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg mb-2">No new arrivals in this category yet.</p>
-              <p className="text-muted-foreground text-sm">Check back soon — we add fresh styles weekly.</p>
+              <p className="text-muted-foreground text-sm">Check back soon for newly added online styles.</p>
             </div>
           ) : (
             <AnimatePresence mode="wait">
@@ -253,10 +253,10 @@ const NewArrivals = () => {
           <h2 className="font-serif text-xl mb-4">Latest Indian Ethnic Wear — Freshly Arrived at LuxeMia</h2>
           <div className="text-sm text-muted-foreground space-y-3 leading-relaxed">
             <p>
-              Our new arrivals are curated weekly from India's leading fabric markets and artisan workshops. Each new drop includes <strong>bridal lehengas</strong>, <strong>embroidered sarees</strong>, <strong>designer salwar kameez sets</strong>, <strong>party wear anarkalis</strong>, and <strong>men's sherwanis</strong> for upcoming wedding and festive seasons. Pieces are sourced from Surat, Varanasi, Jaipur, and Lucknow — the heart of India's textile industry.
+              This page shows products added to LuxeMia's online catalog during the past 30 days. Browse current <strong>lehengas</strong>, <strong>sarees</strong>, <strong>salwar kameez sets</strong>, <strong>menswear</strong> and <strong>jewelry</strong>, then open the exact listing for fabric, work, sizing, included pieces and availability.
             </p>
             <p>
-              Whether you're shopping for a <strong>Diwali outfit</strong>, a <strong>wedding guest look</strong>, or the perfect <strong>bridal ensemble</strong> for a USA wedding, our new arrivals section is updated regularly with fresh styles at competitive prices. <strong>Free U.S. shipping over $150</strong> to the United States.
+              Whether you are shopping for a <strong>festival outfit</strong>, a <strong>wedding guest look</strong> or a <strong>bridal outfit</strong>, compare the exact listing before ordering. <strong>Free U.S. shipping applies over $150</strong>; shipping is $12 below that.
             </p>
           </div>
         </div>
