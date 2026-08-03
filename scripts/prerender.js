@@ -2127,11 +2127,74 @@ async function main() {
   );
 
   try {
-    const blogModule = await loadTsModule('src/data/blogPosts.ts');
+    const [blogModule, categoryModule] = await Promise.all([
+      loadTsModule('src/data/blogPosts.ts'),
+      loadTsModule('src/data/blogCategories.ts'),
+    ]);
     const allBlogPosts = blogModule.blogPosts || [];
+    const allCategoryGroups = categoryModule.BLOG_CATEGORY_GROUPS || [];
+    const categoryMap = categoryModule.BLOG_POST_CATEGORY_MAP || {};
+    const publishedPaths = new Set(allBlogPosts.map(post => `/blog/${post.slug}`));
+    const knownHubPaths = new Set([
+      '/blog/attires',
+      '/blog/cultural-connections',
+      '/blog/ethnicalley',
+      '/blog/fashion-cults',
+      '/blog/motifs-embroideries',
+      '/blog/weddings-festivals',
+      '/blog/how-to-care',
+      '/blog/nri-shopping',
+    ]);
+
+    // Remove manually maintained article and hub routes that are no longer
+    // present in the published data. This prevents bot-only HTML from linking
+    // to pruned articles or serving empty category hubs.
+    for (let index = routes.length - 1; index >= 0; index--) {
+      const routePath = routes[index].path;
+      if (
+        routePath.startsWith('/blog/') &&
+        (knownHubPaths.has(routePath) || !publishedPaths.has(routePath))
+      ) {
+        routes.splice(index, 1);
+      }
+    }
+
+    const blogIndex = routes.find(route => route.path === '/blog');
+    if (blogIndex) {
+      const guideLinks = allBlogPosts
+        .map(post => `<li><a href="/blog/${escapeHtml(post.slug)}">${escapeHtml(post.title)}</a></li>`)
+        .join('');
+      const hubLinks = allCategoryGroups
+        .map(group => `<li><a href="/blog/${escapeHtml(group.slug)}">${escapeHtml(group.name)}</a></li>`)
+        .join('');
+      blogIndex.content =
+        '<p>Practical guides for choosing Indian occasionwear, comparing silhouettes, preparing measurements and shopping current LuxeMia collections in the United States.</p>' +
+        `<h2>Published Guides</h2><ul>${guideLinks}</ul>` +
+        `<h2>Browse by Topic</h2><ul>${hubLinks}</ul>` +
+        '<p>For exact fabric or materials, included pieces, stitching status, sizes, price and availability, use the individual product listing as the source of truth.</p>';
+    }
+
+    for (const group of allCategoryGroups) {
+      const posts = allBlogPosts.filter(post => categoryMap[post.slug] === group.slug);
+      if (posts.length === 0) continue;
+      const postLinks = posts
+        .map(post => `<li><a href="/blog/${escapeHtml(post.slug)}">${escapeHtml(post.title)}</a></li>`)
+        .join('');
+      routes.push({
+        path: `/blog/${group.slug}`,
+        title: group.metaTitle,
+        description: group.metaDescription,
+        h1: group.name,
+        content:
+          `<p>${escapeHtml(group.longDescription)}</p>` +
+          `<h2>Published Guides</h2><ul>${postLinks}</ul>` +
+          '<p><a href="/collections">Browse current collections</a> or use the category links inside each guide.</p>',
+      });
+    }
+
     let autoBlogCount = 0;
     for (const post of allBlogPosts) {
-      if (!post.slug || hardcodedBlogSlugs.has(post.slug)) continue;
+      if (!post.slug || routes.some(route => route.path === `/blog/${post.slug}`)) continue;
       routes.push({
         path: `/blog/${post.slug}`,
         title: `${post.title} | LuxeMia`,
@@ -2141,10 +2204,10 @@ async function main() {
       });
       autoBlogCount++;
     }
-    console.log(`[prerender] Auto-generated ${autoBlogCount} blog routes from blogPosts.ts (no manual entry existed)`);
+    console.log(`[prerender] Published ${allBlogPosts.length} blog articles, ${allCategoryGroups.length} active hubs, and auto-generated ${autoBlogCount} missing article routes`);
   } catch (err) {
-    console.error(`[prerender] WARNING: Failed to load src/data/blogPosts.ts for auto-coverage: ${err.message}`);
-    console.error('[prerender] Any blog post without a manual route entry above will NOT be prerendered.');
+    console.error(`[prerender] WARNING: Failed to load published blog data: ${err.message}`);
+    console.error('[prerender] Blog output may be incomplete; coverage verification will fail if a registered route is missing.');
   }
 
   try {
