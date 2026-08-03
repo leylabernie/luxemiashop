@@ -74,7 +74,6 @@ const STATIC_ROUTES = [
   '/press',
   '/sizing-measurements-guide',
   '/lookbook',
-  '/style-consultation',
   '/wedding-party-orders',
   '/style-quiz',
   // Occasion landing pages — high buyer-intent SEO pages
