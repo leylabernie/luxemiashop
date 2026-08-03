@@ -697,10 +697,10 @@ const FAQ_PAGE_SCHEMA = {
     },
     {
       '@type': 'Question',
-      name: 'Does LuxeMia offer custom sizing?',
+      name: 'How should I choose a LuxeMia size?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Sizing and tailoring options vary by garment. Review the product page and size selector, and contact LuxeMia before ordering if you need measurement help.',
+        text: 'Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.',
       },
     },
     {
@@ -725,23 +725,23 @@ const FAQ_PAGE_SCHEMA = {
 const MEASUREMENT_HOW_TO_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
-  name: 'How to measure for a custom-stitched Indian outfit',
-  description: 'Measure your bust, waist, hips, garment length, and sleeves for a custom-stitched lehenga choli, saree blouse, anarkali, or salwar kameez.',
+  name: 'How to take body measurements for Indian clothing',
+  description: 'Record the body measurements commonly used when comparing the fit of saree blouses, lehengas, suits, kurtas and sherwanis.',
   totalTime: 'PT10M',
   supply: [
-    { '@type': 'HowToSupply', name: 'Soft measuring tape' },
-    { '@type': 'HowToSupply', name: 'Pen and paper' },
-    { '@type': 'HowToSupply', name: 'A friend to assist, if available' },
+    { '@type': 'HowToSupply', name: 'Measurement worksheet' },
+    { '@type': 'HowToSupply', name: 'Pen or pencil' },
+    { '@type': 'HowToSupply', name: 'A helper, if available' },
   ],
   tool: [{ '@type': 'HowToTool', name: 'Soft measuring tape' }],
   step: [
-    { '@type': 'HowToStep', position: 1, name: 'Measure your bust', text: 'Wear the bra you plan to use with the outfit. Wrap the tape around the fullest part of your bust and keep it level across your back.' },
-    { '@type': 'HowToStep', position: 2, name: 'Measure your waist', text: 'Measure around your natural waist at the narrowest part of your torso without pulling the tape tight.' },
-    { '@type': 'HowToStep', position: 3, name: 'Measure your hips', text: 'Stand with your feet together and measure around the fullest part of your hips, keeping the tape parallel to the floor.' },
-    { '@type': 'HowToStep', position: 4, name: 'Measure the garment length', text: 'Measure from the garment starting point to the desired hem. Wear the shoes you plan to use when measuring a floor-length lehenga or anarkali.' },
-    { '@type': 'HowToStep', position: 5, name: 'Measure sleeve length and circumference', text: 'Measure from the shoulder point to the desired sleeve end, then measure around the arm where the sleeve will finish.' },
+    { '@type': 'HowToStep', position: 1, name: 'Prepare to measure', text: 'Wear the undergarments and shoes planned for the outfit. Stand naturally and ask someone to help with back and length measurements when possible.' },
+    { '@type': 'HowToStep', position: 2, name: 'Measure the upper body', text: 'Measure the bust or chest, underbust, shoulder, armhole, upper arm and sleeve length. Keep the tape level without compressing the body.' },
+    { '@type': 'HowToStep', position: 3, name: 'Measure the waist and hips', text: 'Measure the natural waist, the position where the garment waistband will sit, and the fullest part of the hips.' },
+    { '@type': 'HowToStep', position: 4, name: 'Measure garment lengths', text: 'Measure from the intended starting point to the preferred hem. Wear the planned shoes for floor-length garments.' },
+    { '@type': 'HowToStep', position: 5, name: 'Check the selected product', text: 'Record every measurement twice, then compare the results with the size and construction details on the exact product listing.' },
   ],
-};
+}
 
 // Route definitions with SEO metadata
 const routes = [
@@ -757,7 +757,7 @@ const routes = [
       <nav>
         <ul>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
-          <li><a href="/sarees">Sarees</a> — Banarasi, Kanjeevaram & designer sarees</li>
+          <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
           <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
           <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
         </ul>
@@ -779,7 +779,7 @@ const routes = [
     category: 'suits',
     title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
     description: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping over $150.',
-    h1: 'Salwar Kameez & Designer Suits Collection',
+    h1: 'Salwar Kameez & Suits Collection',
     content: `
       <p>Explore salwar kameez, anarkali, sharara and palazzo sets. Review each product page for the exact fabric, work, included pieces, stitching status, sizing and current availability.</p>
       <h2>Shop Suits by Occasion</h2>
@@ -794,7 +794,7 @@ const routes = [
         <li><a href="/suits?sub=anarkali">Anarkali Suits</a> — Flowing Mughal-inspired silhouette</li>
         <li><a href="/suits?sub=sharara">Sharara Sets</a> — Wide-legged flared pants with short kurti</li>
         <li><a href="/suits?sub=palazzo">Palazzo Suits</a> — Modern wide-leg pants with kurta</li>
-        <li><a href="/suits?sub=pakistani">Pakistani Suits</a> — Elegant straight-cut designer suits</li>
+        <li><a href="/suits?sub=pakistani">Pakistani-Style Suits</a> — Straight-cut options</li>
         <li><a href="/suits?sub=straight-cut">Straight Cut Suits</a> — Classic everyday salwar kameez</li>
       </ul>
       <h2>Shop Suits by Fabric</h2>
@@ -823,7 +823,7 @@ const routes = [
       <h2>Shop Suits by Price</h2>
       <ul>
         <li><a href="/suits?sub=under-200">Suits Under $200</a> — Indian ethnic wear</li>
-        <li><a href="/suits?sub=premium-300-plus">Premium Suits $300+</a> — Designer & heavily embellished</li>
+        <li><a href="/suits?sub=premium-300-plus">Premium Suits $300+</a> — Higher-priced and embellished options</li>
       </ul>
     `,
   },
@@ -832,7 +832,7 @@ const routes = [
     category: 'lehengas',
     title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
     description: 'Shop bridal, wedding guest, reception and festive lehengas online. Compare exact fabric, work, included pieces, sizing and availability. Free U.S. shipping over $150.',
-    h1: 'Designer Lehengas & Bridal Lehenga Collection',
+    h1: 'Lehengas & Bridal Lehenga Collection',
     content: `
       <p>Discover bridal, wedding guest, reception and festive lehengas. Review each product page for the exact fabric, work, included pieces, stitching status, sizing and availability.</p>
       <h2>Shop Lehengas by Occasion</h2>
@@ -850,7 +850,7 @@ const routes = [
       <ul>
         <li><a href="/lehengas?sub=floral">Floral Lehengas</a> — Romantic floral embroidery</li>
         <li><a href="/lehengas?sub=embroidered">Embroidered Lehengas</a> — Review each listing for its stated embroidery and work details</li>
-        <li><a href="/lehengas?sub=designer">Designer Lehengas</a> — Couture-inspired pieces</li>
+        <li><a href="/lehengas?sub=designer">Lehenga Styles</a> — Browse current listed designs</li>
         <li><a href="/lehengas?sub=mirror-work">Mirror Work Lehengas</a> — Traditional Rajasthani mirror work</li>
         <li><a href="/lehengas?sub=jacket-lehenga">Jacket Lehengas</a> — Layered lehenga with jacket</li>
         <li><a href="/lehengas?sub=crop-top">Crop Top & Skirt Lehengas</a> — Modern indo-western silhouette</li>
@@ -873,7 +873,7 @@ const routes = [
       <h2>Shop Lehengas by Price</h2>
       <ul>
         <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — Current styles priced below $200</li>
-        <li><a href="/lehengas?sub=premium-300-plus">Premium Lehengas $300+</a> — Designer & heavily embellished</li>
+        <li><a href="/lehengas?sub=premium-300-plus">Premium Lehengas $300+</a> — Higher-priced and embellished options</li>
       </ul>
     `,
   },
@@ -881,8 +881,8 @@ const routes = [
     path: '/sarees',
     category: 'sarees',
     title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: 'Shop silk, wedding, festive and designer sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping over $150.',
-    h1: 'Designer Sarees — Silk, Banarasi & Wedding Collection',
+    description: 'Shop silk, wedding and festive sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping over $150.',
+    h1: 'Sarees — Silk, Banarasi & Wedding Collection',
     content: `
       <p>Explore sarees for weddings, festivals and special occasions. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability.</p>
       <h2>Shop Sarees by Occasion</h2>
@@ -906,7 +906,7 @@ const routes = [
       <ul>
         <li><a href="/sarees?sub=embroidered">Embroidered Sarees</a> — Review each listing for its stated work details</li>
         <li><a href="/sarees?sub=printed">Printed Sarees</a> — In-stock and easy to wear</li>
-        <li><a href="/sarees?sub=designer">Designer Sarees</a> — Couture-inspired pieces</li>
+        <li><a href="/sarees?sub=designer">Saree Styles</a> — Browse current listed designs</li>
         <li><a href="/sarees?sub=traditional">Traditional Sarees</a> — Heritage weaves</li>
       </ul>
       <h2>Shop Sarees by Color</h2>
@@ -927,7 +927,7 @@ const routes = [
       <h2>Shop Sarees by Price</h2>
       <ul>
         <li><a href="/sarees?sub=under-200">Sarees Under $200</a> — Current styles priced below $200</li>
-        <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Designer & heavily embellished</li>
+        <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Higher-priced and embellished options</li>
       </ul>
     `,
   },
@@ -941,7 +941,7 @@ const routes = [
       <p>Discover silk sarees selected for weddings, receptions, pujas and festive celebrations. Each product page states the supplied fabric details so you can compare drape, finish, work and blouse options before ordering.</p>
       <h2>How should I choose a silk saree online?</h2>
       <p>Compare the exact fabric composition, weight, border, embellishment and blouse details on each listing. Silk sarees can use pure silk, blended silk or art-silk fabrics, so LuxeMia states the information supplied for each product.</p>
-      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">ask our styling team</a> for help choosing a wedding saree.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">contact LuxeMia</a> for help choosing a wedding saree.</p>
     `,
   },
   {
@@ -1254,20 +1254,20 @@ const routes = [
 
   {
     path: '/size-guide',
-    title: 'Size Guide — Indian Ethnic Wear Measurements | LuxeMia',
-    description: 'LuxeMia size guide for Indian ethnic wear. Find your perfect fit with measurement charts for sarees, lehengas & suits. US & international conversions.',
-    h1: 'Size Guide',
-    content: '<p>Find your perfect fit with our detailed measurement charts. Includes bust, waist, and hip measurements with US and international size conversions for all garments including lehengas, sarees, and salwar suits.</p>',
+    title: 'Indian Clothing Size Guide — Compare Product Measurements | LuxeMia',
+    description: 'Choose Indian clothing sizes online by comparing your current body measurements with the exact LuxeMia product listing. Free printable measurement worksheet included.',
+    h1: 'Indian Clothing Size Guide',
+    content: '<p>Indian clothing does not follow one reliable universal conversion. Take current body measurements, then compare every relevant number with the size, stitching and construction details on the exact product page.</p><p><a href="/sizing-measurements-guide">Use the printable measurement worksheet</a> and contact LuxeMia before ordering if the listing is unclear.</p>',
   },
   {
     path: '/sizing-measurements-guide',
-    title: 'How to Measure Blouse Size for Saree | LuxeMia',
-    description: 'Complete guide on how to measure blouse size for saree, lehenga choli & custom ethnic wear. Step-by-step instructions, size charts & tips for the perfect fit.',
-    h1: 'How to Measure Blouse Size for Saree',
+    title: 'Indian Clothing Measurement Guide & Printable Worksheet | LuxeMia',
+    description: 'Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable worksheet. Compare your measurements with the exact product listing before ordering.',
+    h1: 'Indian Clothing Measurement Guide',
     schemas: [MEASUREMENT_HOW_TO_SCHEMA],
-    content: `<p>Learn how to measure yourself accurately for saree blouses, lehenga cholis, and custom-stitched Indian ethnic wear. Use a soft measuring tape, record every measurement in inches, and ask a friend to help when possible.</p>
-      <h2>How do I measure for a custom-stitched Indian outfit?</h2>
-      <p>Take five core measurements while wearing light, close-fitting clothing and the undergarments and shoes you plan to use with the outfit.</p>
+    content: `<p>Record the measurements commonly requested for saree blouses, lehengas, suits, kurtas and sherwanis, then compare them with the exact product listing.</p>
+      <h2>How do I take body measurements for Indian clothing?</h2>
+      <p>Use a soft tape, wear the undergarments and shoes planned for the outfit, and record each measurement twice.</p>
       <ol>
         <li><strong>Measure your bust:</strong> Wrap the tape around the fullest part of your bust and keep it level across your back.</li>
         <li><strong>Measure your waist:</strong> Measure around your natural waist without pulling the tape tight.</li>
@@ -1286,16 +1286,16 @@ const routes = [
   {
     path: '/faq',
     title: 'Frequently Asked Questions | LuxeMia',
-    description: 'Find answers to common questions about LuxeMia — shipping, returns, sizing, custom orders, fabrics & more.',
+    description: 'Find answers to common questions about LuxeMia shipping, cancellations, final-sale policy, sizing, product details and payment.',
     h1: 'Frequently Asked Questions',
     schemas: [FAQ_PAGE_SCHEMA],
-    content: `<p>Find answers to common questions about LuxeMia orders, shipping, returns, sizing, custom stitching, fabrics, and more.</p>
+    content: `<p>Find answers to common questions about LuxeMia orders, shipping, final-sale policy, sizing, product details and payment.</p>
       <h2>Where does LuxeMia ship?</h2>
       <p>LuxeMia currently ships to United States addresses only. Free US shipping applies over $150, and a flat $12 rate applies below $150.</p>
       <h2>How long does LuxeMia shipping take?</h2>
       <p>In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.</p>
-      <h2>Does LuxeMia offer custom sizing?</h2>
-      <p>Sizing and tailoring options vary by garment. Review the product page and size selector, and contact LuxeMia before ordering if you need measurement help.</p>
+      <h2>How should I choose a LuxeMia size?</h2>
+      <p>Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.</p>
       <h2>What is LuxeMia’s return policy?</h2>
       <p>All sales are final. LuxeMia does not accept returns or exchanges for sizing issues, color variations, or change of mind. Genuine shipping damage must be reported within 48 hours with an unboxing video.</p>
       <h2>Can I cancel a LuxeMia order?</h2>
@@ -1310,21 +1310,17 @@ const routes = [
   },
   {
     path: '/pages/shipping-customs',
-    title: 'Shipping & Customs | Import Duties & Local Taxes | LuxeMia',
+    title: 'US Shipping & Taxes | LuxeMia',
     description: 'Learn how LuxeMia US shipping and checkout taxes work for Indian ethnic wear online.',
-    h1: 'Shipping & Customs',
+    h1: 'US Shipping & Taxes',
     content: `
-      <p>LuxeMia currently ships orders from supplier fulfillment in India to addresses in the United States.</p>
-      <h2>Do I have to pay customs duties or import taxes?</h2>
-      <p>Depending on your country's import regulations, your order may be subject to customs duties, import taxes, or clearance fees when it arrives. These charges are set by your local customs authority — not by LuxeMia — and are separate from the price you pay at checkout.</p>
-      <p>Whether you're charged, and how much, depends on factors like your country's current duty threshold, the declared value of your order, and local trade rules, which can change over time.</p>
-      <h2>When would I need to pay?</h2>
-      <p>If applicable, these charges are usually collected by the shipping carrier at the time of delivery, not at checkout. Your carrier will typically contact you directly if any payment is required before your package can be delivered.</p>
-      <h2>Want to check in advance?</h2>
-      <p>Import rules vary by country and can change, so if you'd like to know what to expect before ordering, we recommend checking directly with your local customs office or postal service.</p>
+      <p>LuxeMia currently ships orders from supplier fulfillment in India to addresses in the United States only.</p>
+      <h2>How much is U.S. shipping?</h2>
+      <p>Shipping is free on orders over $150 and costs $12 below that. Tracking is provided after dispatch.</p>
+      <h2>How are taxes handled?</h2>
+      <p>Taxes, when applicable, are calculated during checkout. Review the checkout total before placing the order.</p>
       <h2>Questions?</h2>
-      <p>If you have any questions about your order or shipping, feel free to reach out to us at <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> — we're happy to help.</p>
-      <p>Looking for shipping rates, delivery times, or tracking? See our <a href="/shipping">Shipping Policy</a>.</p>
+      <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a shipping or checkout detail is unclear, or read the <a href="/shipping">Shipping Policy</a>.</p>
     `,
   },
   {
@@ -1337,9 +1333,9 @@ const routes = [
   {
     path: '/contact',
     title: 'Contact Us | LuxeMia',
-    description: 'Get in touch with LuxeMia. Contact us for questions about orders, custom stitching, sizing, or anything else. We\'re here to help.',
+    description: 'Contact LuxeMia with questions about orders, sizing or a product listing. Reach U.S.-based support by email, phone, WhatsApp or the contact form.',
     h1: 'Contact Us',
-    content: '<p>Have questions about your order, sizing, or custom stitching? We\'re here to help. Reach us via email, WhatsApp, or the contact form below.</p>',
+    content: '<p>Have questions about an order, sizing or a product listing? Reach U.S.-based support by email, phone, WhatsApp or the contact form.</p>',
   },
   // --- Additional routes previously missing from prerender ---
   {
@@ -1371,7 +1367,7 @@ const routes = [
     path: '/new-arrivals',
     category: 'all',
     title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
-    description: 'Shop the latest arrivals at LuxeMia. New designer lehengas, sarees & suits added weekly. Free U.S. shipping over $150.',
+    description: 'Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. shipping over $150.',
     h1: 'New Arrivals',
     content: `
       <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry available online for delivery across the United States.</p>
