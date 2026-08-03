@@ -89,7 +89,7 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   // Legacy accessory tags contain garment attributes on some listings. Avoid
   // surfacing those as jewelry specifications until the catalog is corrected.
   if (isAccessory) return specs;
-
+  
   // Common fabric patterns
   const fabricKeywords = ['silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
   // Common work patterns
@@ -98,19 +98,19 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
 
   const lowerTags = tags.map(t => t.toLowerCase());
-
+  
   // Extract fabric
   const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
   if (foundFabric) {
     specs.fabric = foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   }
-
+  
   // Extract work type
   const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
   if (foundWork.length > 0) {
     specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
   }
-
+  
   // Extract colors
   const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
   if (foundColors.length > 0) {
@@ -342,7 +342,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   );
   const isAvailable = purchasableVariant?.node.availableForSale ?? false;
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
-
+  
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
   const shipByLabel = getShipByLabel(product);
 
@@ -423,12 +423,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       ...prev,
       [optionName]: value,
     }));
-
+    
     // If this is a stitching option, show the size selector and trigger validation
     if (optionName.toLowerCase().includes('stitch') && value.toLowerCase().includes('stitch')) {
       setShowSizeValidation(true);
     }
-
+    
     // Reset stitching size when switching to Unstitched or a non-stitch option
     if (
       value.toLowerCase().startsWith('unstitched') ||
@@ -720,7 +720,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
             // For stitchable products, hide the "Stitching" option from Shopify variants
             // since we use our custom Utsav-style selector above instead
             if (isStitchable && option.name.toLowerCase().includes('stitch')) return false;
-            // If product already has numeric sizes and we're showing stitching,
+            // If product already has numeric sizes and we're showing stitching, 
             // don't duplicate the size selector — the StitchingSizeSelector handles it
             if (productHasNumericSizes && option.name.toLowerCase() === 'size') return false;
             return true;
