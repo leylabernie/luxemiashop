@@ -39,7 +39,7 @@ const haldiOutfitFaqs = [
   },
   {
     question: 'Do you ship haldi ceremony outfits to the USA and the United States?',
-    answer: 'LuxeMia currently ships haldi outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking with estimated transit of carrier transit after dispatch after dispatch. For wedding functions, order at least 4–6 weeks in advance.',
+    answer: 'LuxeMia ships haldi ceremony outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
   },
 ];
 
@@ -197,7 +197,7 @@ const HaldiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Haldi Outfit</h3>
-                <p>Indian ethnic wear ships from our online edit — even <strong>online items</strong> take 10-15 days door-to-door, and custom-stitched items take 3-4 weeks. <strong>Order your haldi outfit at least 4-6 weeks before the wedding date.</strong> If you need it faster, browse our <Link to="/online" className="text-primary underline font-medium">online collection</Link> for items that ship with tracking after dispatch.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -206,7 +206,7 @@ const HaldiOutfits = () => {
                   <li><Link to="/collections/mehendi-outfits" className="text-primary underline">Mehendi Ceremony Outfits</Link></li>
                   <li><Link to="/collections/wedding-guest-outfits" className="text-primary underline">Wedding Guest Outfits</Link></li>
                   <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/suits" className="text-primary underline">Shop Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
-                  <li><Link to="/online" className="text-primary underline">Available Online — Fast Delivery</Link></li>
+                  <li><Link to="/online" className="text-primary underline">Online Collection</Link></li>
                   <li><Link to="/blog/mehendi-outfit-by-role" className="text-primary underline">Mehendi Outfit Ideas by Role</Link></li>
                 </ul>
               </div>
