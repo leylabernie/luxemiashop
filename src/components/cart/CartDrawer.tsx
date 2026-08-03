@@ -262,11 +262,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    Quality Checked
+                    U.S.-Based Support
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                     <Award className="w-3.5 h-3.5" />
-                    Authentic
+                    Tracked Shipping
                   </span>
                 </div>
               </div>
