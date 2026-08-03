@@ -24,11 +24,22 @@ const isStitchableType = (productType?: string): boolean => {
 };
 
 // --- Product type classification helpers ---
-type ProductCategory = 'lehenga' | 'saree' | 'suit' | 'menswear' | 'other';
+type ProductCategory = 'lehenga' | 'saree' | 'suit' | 'menswear' | 'jewelry' | 'other';
 
 const classifyProduct = (productType?: string): ProductCategory => {
   if (!productType) return 'other';
   const lower = productType.toLowerCase();
+  if (
+    lower.includes('jewel') ||
+    lower.includes('necklace') ||
+    lower.includes('choker') ||
+    lower.includes('earring') ||
+    lower.includes('bangle') ||
+    lower.includes('bracelet') ||
+    lower.includes('ring') ||
+    lower.includes('maang tikka') ||
+    lower.includes('anklet')
+  ) return 'jewelry';
   if (lower.includes('lehenga')) return 'lehenga';
   if (lower.includes('saree') || lower.includes('sari')) return 'saree';
   if (
@@ -54,38 +65,34 @@ const classifyProduct = (productType?: string): ProductCategory => {
 // --- Product-type-specific detail bullet points ---
 const DETAIL_BULLETS: Record<ProductCategory, string[]> = {
   lehenga: [
-    'Exquisite embroidery with zari, zardozi, or resham thread work handcrafted by artisans',
-    'Flared silhouette with structured can-can or canvas inner for that royal volume',
-    'Perfect for bridal ceremonies, mehndi, sangeet, and reception celebrations',
-    'Comes with matching choli (blouse) and dupatta — complete 3-piece ensemble',
-    'Drawstring or zip closure on lehenga waist for adjustable comfort',
+    'Product Details and images identify the listed pieces, fabric, color, and embellishment',
+    'Available size and tailoring choices are shown on this page',
+    'Choli, dupatta, can-can, and closure details vary by design and are included only when stated',
   ],
   saree: [
-    'Traditional handloom weaving with intricate pallu work and decorative border',
-    'Blouse piece included with matching or contrast embroidery — ready for stitching',
-    'Drape it in Nivi, Bengali, Gujarati, or butterfly style for versatile looks',
-    'Lightweight yet rich fabric that pleats beautifully and stays in place',
-    'Ideal for weddings, festivals, pooja ceremonies, and formal gatherings',
+    'Product Details and images identify the listed fabric, weave, border, and work',
+    'Blouse-piece or pre-stitched options are included only when stated for this design',
+    'Use the listed options and Size Guide before ordering any stitched version',
   ],
   suit: [
-    'Versatile silhouette suitable for casual outings, festivals, and formal occasions',
-    'Available in semi-stitched, ready-to-wear, and made-to-measure options',
-    'Coordinated salwar/kameez/dupatta set for a polished, put-together look',
-    'Comfortable fit with room for alteration — perfect for all body types',
-    'Intricate thread work, sequin detailing, or printed motifs for every style preference',
+    'Product Details and images identify the listed kameez, bottom, dupatta, fabric, and work',
+    'Included pieces and available stitching choices vary by design',
+    'Use the listed options and Size Guide before ordering a stitched version',
   ],
   menswear: [
-    'Regal design crafted for wedding ceremonies, engagement, and festive celebrations',
-    'Premium fabric choices including silk, jacquard, and brocade for a distinguished look',
-    'Tailored or semi-stitched options for the perfect fit and comfort',
-    'Matching stole or dupatta included for a complete traditional ensemble',
-    'Detailed embroidery and embellishments befitting groom and groomsmen',
+    'Product Details and images identify the listed pieces, fabric, color, and work',
+    'Stole, jacket, bottom, and footwear are included only when stated for this design',
+    'Use the listed size and tailoring options before ordering',
+  ],
+  jewelry: [
+    'Product Details and images identify the pieces included with this design',
+    'Finish, stones, color, measurements, and closure are included only when stated',
+    'Keep away from water, perfume, lotion, and household chemicals',
   ],
   other: [
-    'Handcrafted with care and attention to detail by skilled Indian artisans',
-    'Quality construction using time-honored textile traditions',
-    'Beautiful design details that celebrate India\'s rich heritage',
-    'Comfortable and elegant silhouette for a flattering fit',
+    'Product Details and images are the specification for this item',
+    'Included pieces, materials, color, and available variants are included only when stated',
+    'Contact LuxeMia before ordering if any listing detail is unclear',
   ],
 };
 
@@ -164,9 +171,20 @@ const MATERIAL_INFO: Record<ProductCategory, MaterialInfo> = {
       'Air out after wearing before storing to prevent moisture damage',
     ],
   },
+  jewelry: {
+    fabrics: [
+      { name: 'Listed Materials & Finish', description: 'Materials, finish, stones, measurements, and included pieces vary by design. Use Product Details and the images as the specification for this listing.' },
+    ],
+    careInstructions: [
+      'Keep away from water, perfume, lotion, and household chemicals',
+      'Wipe gently with a clean, soft cloth after each wear',
+      'Store pieces separately in a soft pouch to reduce scratching and tangling',
+      'Do not use abrasive cleaners unless the listing specifically recommends one',
+    ],
+  },
   other: {
     fabrics: [
-      { name: 'Premium Blend', description: 'Quality fabric blend designed for comfort and elegance, sourced from India\'s finest textile hubs.' },
+      { name: 'Listed Material', description: 'Materials vary by item. Use Product Details and the images as the specification for this listing.' },
     ],
     careInstructions: [
       'Dry clean recommended for embroidered or embellished items',
@@ -286,9 +304,22 @@ const OCCASION_INFO: Record<ProductCategory, OccasionInfo> = {
     ],
     colorAdvice: 'Ivory and gold sherwanis are the timeless groom\'s choice, while deep maroon and navy offer a bolder statement. For groomsmen, muted tones like sage, steel grey, or powder blue complement without competing. Black remains the failsafe for receptions and evening events.',
   },
+  jewelry: {
+    occasions: [
+      { name: 'Wedding & Reception', description: 'Coordinate the scale and finish of the jewelry with the neckline and embellishment level of your outfit.' },
+      { name: 'Sangeet & Engagement', description: 'Statement necklaces, chokers, earrings, and bangles can anchor an evening celebration look.' },
+      { name: 'Festival & Family Event', description: 'Choose a design that complements the colors and metal tones already present in your outfit.' },
+    ],
+    stylingTips: [
+      'Use a statement necklace with simpler earrings, or statement earrings with a lighter neckline',
+      'Match warm gold-toned finishes with warm outfit accents and cooler finishes with silver-toned details',
+      'Put jewelry on after perfume and cosmetics have dried, and remove it before changing clothes',
+    ],
+    colorAdvice: 'Use the product photos and listed color details to coordinate the finish and stones with your outfit. Screen and lighting differences can slightly change how colors appear.',
+  },
   other: {
     occasions: [
-      { name: 'Wedding & Receptions', description: 'Perfect for wedding celebrations — pair with traditional jewelry and footwear for a complete festive look.' },
+      { name: 'Wedding & Receptions', description: 'Review the product details to decide whether this piece suits the formality and dress code of the event.' },
       { name: 'Festival', description: 'Celebrate Diwali, Navratri, Eid, and more in style with this versatile piece.' },
       { name: 'Party & Social Events', description: 'Make a statement at cocktail parties, engagements, and formal gatherings.' },
     ],
@@ -352,55 +383,58 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
   const detailBullets = DETAIL_BULLETS[category];
   const materialInfo = MATERIAL_INFO[category];
   const occasionInfo = OCCASION_INFO[category];
-  const fabricCare = getFabricCare(tags);
+  const isJewelry = category === 'jewelry';
+  const fabricCare = isJewelry ? null : getFabricCare(tags);
   const parsedTags = parseProductTags(tags);
-  const hasFabricDetails = Object.keys(parsedTags).length > 0;
+  const hasFabricDetails = !isJewelry && Object.keys(parsedTags).length > 0;
 
   return (
     <Tabs defaultValue="details" className="w-full">
       <TabsList className="w-full justify-start h-auto p-0 bg-transparent border-b border-border rounded-none overflow-x-auto">
         {hasFabricDetails && (
-          <TabsTrigger 
-            value="fabric" 
+          <TabsTrigger
+            value="fabric"
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
           >
-            Fabric & Details
+            {isJewelry ? 'Specifications' : 'Fabric & Details'}
           </TabsTrigger>
         )}
-        <TabsTrigger 
-          value="details" 
+        <TabsTrigger
+          value="details"
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           Details
         </TabsTrigger>
         {showTailoringTab && (
-          <TabsTrigger 
-            value="tailoring" 
+          <TabsTrigger
+            value="tailoring"
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
           >
             Tailoring Services
           </TabsTrigger>
         )}
-        <TabsTrigger 
-          value="material" 
+        <TabsTrigger
+          value="material"
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
-          Material & Care
+          {isJewelry ? 'Jewelry Care' : 'Material & Care'}
         </TabsTrigger>
-        <TabsTrigger 
-          value="styling" 
+        <TabsTrigger
+          value="styling"
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           Styling & Occasions
         </TabsTrigger>
-        <TabsTrigger 
-          value="sizing" 
-          className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
-        >
-          Size Guide
-        </TabsTrigger>
-        <TabsTrigger 
-          value="shipping" 
+        {!isJewelry && (
+          <TabsTrigger
+            value="sizing"
+            className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
+          >
+            Size Guide
+          </TabsTrigger>
+        )}
+        <TabsTrigger
+          value="shipping"
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           Shipping & Returns
@@ -412,10 +446,10 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
         <div className="space-y-6">
           <div className="flex items-center gap-2 text-foreground">
             <Sparkles className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-serif font-medium">Fabric & Details</h3>
+            <h3 className="text-lg font-serif font-medium">{isJewelry ? 'Specifications' : 'Fabric & Details'}</h3>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Key specifications for this {productType || 'piece'}. Each attribute is sourced from the product tags verified at the time of listing.
+            Listed specifications for this {productType || 'piece'}. Product Details and images remain the source of truth for included pieces and attributes.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
             {Object.entries(parsedTags).map(([key, value]) => (
@@ -425,20 +459,13 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               </div>
             ))}
           </div>
-          {parsedTags.fabric && fabricCare.length > 0 && (
+          {parsedTags.fabric && fabricCare && (
             <div className="mt-4 p-4 bg-muted/50 rounded-sm border border-border/50">
               <div className="flex items-center gap-2 mb-2 text-foreground">
                 <Droplets className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium">Care Note for {titleCase(parsedTags.fabric)}</span>
               </div>
-              <ul className="space-y-1">
-                {fabricCare.map((tip, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <Shield className="h-3 w-3 text-primary mt-0.5 flex-shrink-0" />
-                    <span>{tip}</span>
-                  </li>
-                ))}
-              </ul>
+              <p className="text-sm text-muted-foreground">{fabricCare.care}</p>
             </div>
           )}
         </div>
@@ -448,9 +475,11 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
       <TabsContent value="details" className="pt-6">
         <div className="prose prose-sm max-w-none text-muted-foreground">
           <p className="leading-relaxed">
-            {description || 
-              "This piece showcases India's rich textile traditions. Each garment brings together classic design and modern styling for a look that stands out."
-            }
+            {description || (
+              isJewelry
+                ? 'Review the product images and listed details for the exact pieces, finish, colors, measurements, and closure.'
+                : 'Review the product images and listed details for the exact pieces, fabric, color, work, and available sizing.'
+            )}
           </p>
           <ul className="mt-4 space-y-2">
             {detailBullets.map((bullet, i) => (
@@ -472,7 +501,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             <h3 className="text-lg font-serif font-medium">Tailoring Services</h3>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            At LuxeMia, we offer three tailoring options so you can choose the level of customization that's right for you. Every stitched garment is finished by our master tailors with decades of experience in Indian ethnic wear.
+            LuxeMia offers the tailoring choices shown on this page. Select the service and measurements that match this product before adding it to your bag.
           </p>
 
           {/* Semi Stitched */}
@@ -547,7 +576,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <span className="text-sm font-medium text-foreground">+$25.00</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Our bespoke tailoring service with 200+ style combinations. Customize the neckline, sleeve style, and bottom style. Submit your exact measurements after placing the order for a perfect custom fit.
+              Choose from the neckline, sleeve, and bottom-style options shown for this product. Submit your measurements after placing the order so the selected tailoring can be completed.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
               <li className="flex items-start gap-2">
@@ -582,7 +611,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           {/* General tailoring note */}
           <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
             <p className="text-sm text-foreground">
-              <strong>Note:</strong> All tailoring is done by our experienced in-house team in India. Stitched items are non-returnable unless there is a manufacturing defect. We recommend checking measurements carefully or opting for Semi Stitched if you're unsure about sizing.
+              <strong>Note:</strong> All sales are final, including stitched items. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
             </p>
           </div>
         </div>
@@ -595,8 +624,13 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           <div>
             <div className="flex items-center gap-2 mb-4 text-foreground">
               <Shirt className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Fabric Guide</h4>
+              <h4 className="font-medium">{isJewelry ? 'Materials & Finish' : 'Category Fabric Reference'}</h4>
             </div>
+            {!isJewelry && (
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                This is a general category reference, not a statement about the fabric of this product. Use Product Details for the listed fabric.
+              </p>
+            )}
             <div className="space-y-4">
               {materialInfo.fabrics.map((fabric, i) => (
                 <div key={i} className="border border-border rounded-sm p-4">
@@ -607,12 +641,16 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             </div>
           </div>
 
-          {/* Embellishments */}
+          {/* General technique reference for apparel only. */}
+          {!isJewelry && (
           <div>
             <div className="flex items-center gap-2 mb-3 text-foreground">
               <Sparkles className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Embellishments & Work</h4>
+              <h4 className="font-medium">Common Embellishments & Work</h4>
             </div>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+              Reference guide only. Product Details identify the work listed for this design.
+            </p>
             <div className="grid sm:grid-cols-2 gap-3">
               {category === 'lehenga' && (
                 <>
@@ -654,6 +692,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               )}
             </div>
           </div>
+          )}
 
           {/* Fabric-Specific Care */}
           {fabricCare && (
@@ -682,16 +721,14 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             </ul>
           </div>
 
-          {/* Source note */}
+          {/* Product-specific details take priority over this category guide. */}
           <div className="p-4 bg-card rounded-sm border border-border">
             <div className="flex items-start gap-2">
               <Sparkle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-sm text-foreground font-medium">Sourced from India&apos;s Finest Textile Hubs</p>
+                <p className="text-sm text-foreground font-medium">Check This Product&apos;s Listed Details</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Our garments are sourced directly from renowned textile centers — Surat (embroidery & synthetics), 
-                  Varanasi (Banarasi silk & brocade), and Jaipur (prints & gota patti). Each piece undergoes 
-                  thorough quality inspection before shipping to ensure you receive nothing but the best.
+                  Materials, included pieces, finish, color, and care can vary by design. Product Details, available options, and images are the specification for this item.
                 </p>
               </div>
             </div>
@@ -754,9 +791,9 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <div>
                 <p className="text-sm text-foreground font-medium">Complete the Look</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Every LuxeMia outfit deserves the right accessories. Pair heavier ensembles with statement jhumkas 
-                  and bangles, while lighter pieces shine with delicate chains and studs. When in doubt, 
-                  gold-toned jewelry complements warm palettes and silver or diamond accents elevate cool tones.
+                  {isJewelry
+                    ? 'Coordinate this piece with the outfit neckline and other accessories. Balance a statement necklace with simpler earrings, or statement earrings with a lighter neckline.'
+                    : 'Pair heavier ensembles with statement jhumkas and bangles, while lighter pieces work well with delicate chains and studs. Coordinate metal tones with the outfit embroidery and other accessories.'}
                 </p>
               </div>
             </div>
@@ -764,7 +801,8 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
         </div>
       </TabsContent>
 
-      {/* ─── Size Guide Tab (unchanged) ─── */}
+      {/* ─── Size Guide Tab — apparel only ─── */}
+      {!isJewelry && (
       <TabsContent value="sizing" className="pt-6">
         <div className="space-y-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -826,6 +864,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           </p>
         </div>
       </TabsContent>
+      )}
 
       {/* ─── Shipping & Returns Tab ─── */}
       <TabsContent value="shipping" className="pt-6">
@@ -904,7 +943,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                   <div>
                     <h5 className="font-medium text-foreground mb-1">All Sales Final</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Due to the handcrafted and often custom nature of our garments, all sales are final. 
+                      All sales are final.
                       We encourage you to carefully review sizing, measurements, and product details before placing your order.
                       Our team is always available to answer any pre-purchase questions.
                     </p>
@@ -952,9 +991,9 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                   <div>
                     <h5 className="font-medium text-foreground mb-1">Quality Inspection Guarantee</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Every single item is personally inspected by our quality team in India before it ships. 
-                      We check stitching, embroidery, fabric quality, and color accuracy to ensure your order 
-                      arrives in perfect condition. Our inspection process is your assurance that what you see 
+                      Every single item is personally inspected by our quality team in India before it ships.
+                      We check stitching, embroidery, fabric quality, and color accuracy to ensure your order
+                      arrives in perfect condition. Our inspection process is your assurance that what you see
                       online is what you receive.
                     </p>
                   </div>
