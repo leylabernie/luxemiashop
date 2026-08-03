@@ -1,11 +1,7 @@
-import { supabase } from "@/integrations/supabase/client";
 import { fetchAllProducts } from "@/lib/shopify";
-// NOTE: jewelryProducts are NOT added to the sitemap because the middleware
-// checks Shopify Storefront API for all /product/{handle} requests.
-// Jewelry products only exist in local data (not in Shopify), so the
-// middleware returns HTTP 404 for them. Including them in the sitemap
-// caused Google to crawl 404 pages (GSC Coverage "Failed" errors).
-// If jewelry is later moved to Shopify, this import can be restored.
+// Product URLs come only from the live Shopify catalog. This keeps the sitemap
+// aligned with middleware, which validates /product/{handle} through Shopify,
+// and excludes local or database-only records that would resolve to 404.
 
 interface SitemapProduct {
   handle: string;
@@ -15,15 +11,6 @@ interface SitemapProduct {
   lastmod?: string;
 }
 
-interface ScrapedProductRow {
-  id: string;
-  source_id: string;
-  title: string;
-  category: string;
-  image_url: string;
-  image_urls: string[] | null;
-  updated_at: string;
-}
 
 // Static pages configuration — only real, indexable pages (no noIndex, no redirects)
 export const staticPages = [
@@ -33,6 +20,7 @@ export const staticPages = [
   // Main category pages
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9', title: 'Lehengas' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9', title: 'Sarees' },
+  { loc: '/jewelry', changefreq: 'daily', priority: '0.9', title: 'Jewelry' },
   { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9', title: 'Silk Sarees' },
   { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9', title: 'Kanchipuram Sarees' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9', title: 'Bridesmaid & Maid of Honor Outfits' },
@@ -50,10 +38,8 @@ export const staticPages = [
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9', title: 'Navratri Outfits — Chaniya Choli & Garba' },
   // Brand & editorial
   { loc: '/about', changefreq: 'monthly', priority: '0.6', title: 'About LuxeMia' },
-  { loc: '/brand-story', changefreq: 'monthly', priority: '0.6', title: 'Brand Story' },
-  { loc: '/artisans', changefreq: 'monthly', priority: '0.6', title: 'Artisans' },
-  { loc: '/sustainability', changefreq: 'monthly', priority: '0.6', title: 'Sustainability' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.7', title: 'Blog' },
+  { loc: '/authors/luxemia-editorial-team', changefreq: 'monthly', priority: '0.4', title: 'LuxeMia Editorial Team' },
   // NRI landing pages
   { loc: '/nri', changefreq: 'monthly', priority: '0.7', title: 'Indian Ethnic Wear for NRIs' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'weekly', priority: '0.8', title: 'Indian Ethnic Wear USA' },
@@ -91,38 +77,7 @@ export const fetchAllSitemapProducts = async (): Promise<SitemapProduct[]> => {
     console.error('dynamicSitemap: Failed to fetch from Shopify:', err);
   }
 
-  // 2. Fetch scraped products from database
-  //    Skip any handle already added from Shopify to avoid duplicate sitemap entries
-  const seenHandles = new Set(products.map(p => p.handle));
-  try {
-    const { data: scrapedProducts, error } = await supabase
-      .from('scraped_products')
-      .select('id, source_id, title, category, image_url, image_urls, updated_at')
-      .eq('is_active', true)
-      .order('created_at', { ascending: false });
-
-    if (!error && scrapedProducts) {
-      scrapedProducts.forEach((p: ScrapedProductRow) => {
-        // Deduplicate: skip if this handle was already added from Shopify
-        if (seenHandles.has(p.source_id)) return;
-        seenHandles.add(p.source_id);
-        const images = p.image_urls && p.image_urls.length > 0 
-          ? p.image_urls 
-          : [p.image_url];
-        
-        products.push({
-          handle: p.source_id,
-          title: p.title,
-          category: p.category,
-          images,
-          lastmod: p.updated_at,
-        });
-      });
-    }
-  } catch (error) {
-    console.error('Error fetching scraped products for sitemap:', error);
-  }
-
+  // Only live Shopify products are included. Database-only scraped records can resolve to 404 in middleware.
   return products;
 };
 
