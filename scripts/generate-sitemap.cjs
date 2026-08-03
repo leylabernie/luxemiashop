@@ -58,10 +58,10 @@ const staticPages = [
   // NOTE: '/products' removed — it 301-redirects to /collections.
   // Including redirected URLs in the sitemap is a GSC error ("Page with redirect").
   { loc: '/about', changefreq: 'monthly', priority: '0.6' },
-  { loc: '/brand-story', changefreq: 'monthly', priority: '0.6' },
   { loc: '/lookbook', changefreq: 'monthly', priority: '0.7' },
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/jewelry', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9' },
@@ -75,11 +75,7 @@ const staticPages = [
   { loc: '/indian-ethnic-wear-usa', changefreq: 'monthly', priority: '0.8' },
   // '/indian-ethnic-wear-canada' is intentionally omitted because it 301s to
   // /nri. Sitemaps must contain final, canonical 200 URLs only.
-  { loc: '/artisans', changefreq: 'monthly', priority: '0.6' },
-  { loc: '/sustainability', changefreq: 'monthly', priority: '0.6' },
-  { loc: '/style-consultation', changefreq: 'monthly', priority: '0.7' },
   { loc: '/wedding-party-orders', changefreq: 'monthly', priority: '0.8' },
-  { loc: '/style-quiz', changefreq: 'monthly', priority: '0.6' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5' },
   { loc: '/shipping', changefreq: 'monthly', priority: '0.4' },
@@ -90,6 +86,7 @@ const staticPages = [
   { loc: '/privacy', changefreq: 'yearly', priority: '0.3' },
   { loc: '/terms', changefreq: 'yearly', priority: '0.3' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/authors/luxemia-editorial-team', changefreq: 'monthly', priority: '0.4' },
   { loc: '/press', changefreq: 'monthly', priority: '0.5' },
   // Occasion landing pages
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9' },
@@ -126,27 +123,49 @@ const staticPages = [
 ];
 
 
-// Parse blogPosts.ts + pillarBlogPosts.ts to extract slug strings for sitemap inclusion.
+// Parse the compact published blogPosts.ts source for sitemap inclusion.
 function parseBlogSlugs() {
-  const files = [
-    path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts'),
-    path.join(__dirname, '..', 'src', 'data', 'pillarBlogPosts.ts'),
-  ];
+  const blogPostsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
+  const files = [blogPostsPath];
   const slugs = [];
+  const excludedSlugs = new Set();
+  const publishedSlugs = new Set();
+
+  if (fs.existsSync(blogPostsPath)) {
+    const blogSource = fs.readFileSync(blogPostsPath, 'utf8');
+    const excludedBlock = blogSource.match(/UNPUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+    if (excludedBlock) {
+      const valueRegex = /['"]([^'"]+)['"]/g;
+      let excludedMatch;
+      while ((excludedMatch = valueRegex.exec(excludedBlock[1])) !== null) {
+        excludedSlugs.add(excludedMatch[1]);
+      }
+    }
+    const publishedBlock = blogSource.match(/PUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+    if (publishedBlock) {
+      const valueRegex = /['"]([^'"]+)['"]/g;
+      let publishedMatch;
+      while ((publishedMatch = valueRegex.exec(publishedBlock[1])) !== null) {
+        publishedSlugs.add(publishedMatch[1]);
+      }
+    }
+  }
   for (const filePath of files) {
     if (!fs.existsSync(filePath)) { continue; }
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+    const slugRegex = /["']?slug["']?\s*:\s*['"]([^'"]+)['"]/g;
     let match;
     while ((match = slugRegex.exec(fileContent)) !== null) {
-      slugs.push(match[1]);
+      if (publishedSlugs.has(match[1]) && !excludedSlugs.has(match[1])) {
+        slugs.push(match[1]);
+      }
     }
   }
-  console.log(`[sitemap] Parsed ${slugs.length} blog slugs from blogPosts.ts + pillarBlogPosts.ts`);
+  console.log(`[sitemap] Parsed ${slugs.length} allowlisted blog slugs`);
   return slugs.map(slug => `/blog/${slug}`);
 }
 
-// Blog posts — auto-parsed from src/data/blogPosts.ts + pillarBlogPosts.ts
+// Blog posts — auto-parsed from src/data/blogPosts.ts
 const blogPosts = parseBlogSlugs();
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -272,7 +291,7 @@ function generateSitemap(products) {
     <priority>${page.priority}</priority>
   </url>`);
   }
-  // Blog posts — uses top-level blogPosts array (parsed from blogPosts.ts + pillarBlogPosts.ts)
+  // Blog posts — uses the compact published blogPosts source
   for (const blogPath of blogPosts) {
     urls.push(`  <url>
     <loc>${SITE_URL}${blogPath}</loc>

@@ -23,24 +23,24 @@ import { sortProducts } from '@/lib/productFilters';
 
 const indowesternFaqs = [
   {
-    question: 'What is Indo-Western fashion?',
-    answer: 'Indo-Western fashion is a fusion style that blends traditional Indian elements — such as hand embroidery, zari work, mirror detailing, and Indian silhouettes — with Western cuts and contemporary tailoring. Popular Indo-Western styles include jacket lehengas, cape-style kurtas, dhoti pants with crop tops, anarkali gowns with western necklines, and fusion co-ord sets. The style bridges the gap between traditional Indian ethnic wear and modern Western aesthetics, making it ideal for women who want a contemporary look without giving up cultural roots.',
+    question: 'What is included with an Indo-Western product?',
+    answer: 'Included pieces vary by design. Review the individual product title and description for the exact garments or accessories included.',
   },
   {
-    question: 'What occasions are Indo-Western outfits suitable for?',
-    answer: 'Indo-Western outfits are incredibly versatile. They are a top choice for cocktail parties, sangeet nights, reception dinners, Diwali parties, Eid celebrations, birthday parties, and festive gatherings. Many women also wear Indo-Western styles to corporate events, destination weddings, and even casual get-togethers where traditional Indian ethnic wear may feel too formal. The fusion design makes them appropriate for a wide range of social occasions across the United States.',
+    question: 'How do I choose a size?',
+    answer: 'Use the size options and measurements shown on the individual product page. Contact our U.S.-based support before ordering if you need help comparing the listing to your measurements.',
   },
   {
-    question: 'Do you ship Indo-Western outfits to the United States?',
-    answer: 'Yes, LuxeMia ships Indo-Western dresses and fusion outfits to the United States. We offer free U.S. shipping over $150 USD. For orders below $150, a flat shipping rate of $12 applies. All orders are carefully packaged and include full tracking and insurance. Standard delivery takes 4-7 business days to ship after dispatch from India.',
+    question: 'Do you ship Indo-Western outfits in the United States?',
+    answer: 'Yes. LuxeMia currently ships to United States addresses only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is emailed after dispatch.',
   },
   {
-    question: 'What Indo-Western styles are trending right now?',
-    answer: 'The most popular Indo-Western styles at LuxeMia include jacket lehengas (a traditional lehenga paired with a structured Western-style jacket), sharara sets with embroidered crop tops, cape-style anarkalis, palazzo suits with asymmetric kurtas, and fusion gowns with Indian embroidery. Dhoti-style pants paired with embellished blouses are also trending, as are co-ord sets that mix Indian fabrics like georgette and organza with modern silhouettes.',
+    question: 'Which fabrics and embellishments are available?',
+    answer: 'Fabrics, colors, and decorative work differ by product. The individual listing is the source of truth for the exact material and details of each available style.',
   },
   {
-    question: 'How are Indo-Western outfits priced compared to traditional ethnic wear?',
-    answer: 'Indo-Western outfits at LuxeMia are competitively priced and typically fall in a similar range to our traditional ethnic wear collections. Prices vary based on fabric quality, embroidery detail, and embellishment work. You can find entry-level fusion pieces starting from $80–$120, and premium heavily-embroidered Indo-Western gowns and jacket lehengas from $200 upwards — significantly more affordable than Indian boutiques in the USA.',
+    question: 'Can I return an Indo-Western outfit?',
+    answer: 'All sales are final. Genuine shipping damage must be reported within 48 hours of delivery with a continuous unboxing video showing the unopened parcel, label, opening, and damage.',
   },
 ];
 
@@ -63,7 +63,7 @@ const Indowestern = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Indo-Western Dresses Online | Fusion Indian Outfits USA | LuxeMia"
-        description="Buy indo-western dresses online at LuxeMia. Shop jacket lehengas, cape kurtas, fusion gowns & palazzo suits with Indian embroidery. Perfect for parties, sangeet & receptions. Free U.S. shipping over $150."
+        description="Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping over $150; $12 below."
         canonical="https://luxemia.shop/indowestern"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -79,7 +79,7 @@ const Indowestern = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Fusion Fashion</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">Indo-Western</h1>
             <p className="text-muted-foreground font-light max-w-xl mx-auto text-sm lg:text-base">
-              Where Indian embroidery meets contemporary silhouettes. Shop jacket lehengas, cape kurtas, fusion gowns, and palazzo sets — perfect for sangeet nights, cocktail parties, and festive celebrations.
+              Browse the Indo-Western and fusion styles currently available. Each listing shows the exact design, included pieces, size options, price, and availability.
             </p>
           </div>
         </div>
@@ -88,7 +88,7 @@ const Indowestern = () => {
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              LuxeMia's Indo-Western collection brings you the best of both worlds — authentic Indian fabrics like georgette, organza, silk, and velvet, tailored into modern Western cuts. Browse <strong>jacket lehengas</strong>, <strong>dhoti pants with crop tops</strong>, <strong>cape-style anarkalis</strong>, <strong>sharara co-ord sets</strong>, and <strong>embroidered fusion gowns</strong> sourced directly from artisan clusters in Surat, Jaipur, and Mumbai. Free U.S. shipping over $150.
+              Compare the live collection using the product cards below, then open a listing for its exact fabric, color, embellishment, included pieces, sizes, and availability. LuxeMia ships to U.S. addresses for $12 on orders under $150 and free on orders over $150.
             </p>
           </div>
         </div>

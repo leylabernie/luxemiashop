@@ -27,23 +27,6 @@ const Shipping = () => {
           '@type': 'DefinedRegion',
           addressCountry: 'US',
         },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 7,
-            unitCode: 'DAY',
-            description: 'Dispatch time varies by stitching status',
-          },
-          transitTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 10,
-            unitCode: 'DAY',
-            description: 'Carrier transit begins after dispatch',
-          },
-        },
       },
       {
         '@type': 'OfferShippingDetails',
@@ -57,23 +40,6 @@ const Shipping = () => {
         shippingDestination: {
           '@type': 'DefinedRegion',
           addressCountry: 'US',
-        },
-        deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
-          handlingTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 7,
-            unitCode: 'DAY',
-            description: 'Dispatch time varies by stitching status',
-          },
-          transitTime: {
-            '@type': 'QuantitativeValue',
-            minValue: 3,
-            maxValue: 10,
-            unitCode: 'DAY',
-            description: 'Carrier transit begins after dispatch',
-          },
         },
       },
     ],
@@ -106,8 +72,8 @@ const Shipping = () => {
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Shipping Policy</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                {SHIPPING_PROMISE} LuxeMia is positioned for customers who need an in-stock outfit quickly,
-                not a made-to-order garment with a long production window.
+                {SHIPPING_PROMISE} Review the exact product page for current availability and any tailoring option.
+                Contact LuxeMia before ordering if your event date is time-sensitive.
               </p>
             </motion.div>
           </div>
@@ -125,8 +91,8 @@ const Shipping = () => {
                 <p className="text-sm text-muted-foreground mt-1">US shipping over ${FREE_SHIPPING_THRESHOLD}</p>
               </div>
               <div>
-                <p className="text-3xl font-serif font-semibold text-primary">3–7</p>
-                <p className="text-sm text-muted-foreground mt-1">business days to dispatch</p>
+                <p className="text-3xl font-serif font-semibold text-primary">TRACKED</p>
+                <p className="text-sm text-muted-foreground mt-1">after dispatch</p>
               </div>
             </div>
           </div>
@@ -138,7 +104,7 @@ const Shipping = () => {
               {[
                 { icon: Truck, title: 'US Only', desc: 'Ships to United States addresses' },
                 { icon: Package, title: 'In Stock', desc: 'Browse current online styles' },
-                { icon: Clock, title: '2 Business Days', desc: 'Packed and handed to the carrier quickly' },
+                { icon: Clock, title: 'Timing Varies', desc: 'Contact us before a time-sensitive event' },
                 { icon: ShieldCheck, title: 'Tracked', desc: 'Tracking sent by email after dispatch' },
               ].map((item, index) => (
                 <motion.div
@@ -213,8 +179,8 @@ const Shipping = () => {
                   Once a label is created, address changes may not be possible.
                 </p>
                 <p>
-                  Please review the product measurements before ordering. Ready-to-ship speed depends on the item being in stock
-                  and does not mean a custom piece can be produced immediately.
+                  Please review the product measurements, availability and any tailoring option before ordering.
+                  Contact LuxeMia before ordering if delivery timing is important for your event.
                 </p>
               </div>
             </motion.div>

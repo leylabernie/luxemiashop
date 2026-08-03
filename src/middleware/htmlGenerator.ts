@@ -158,7 +158,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     }]),
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.',
+      answer: productAttributes.jewelry
+        ? 'Delivery timing depends on the item. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.'
+        : 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.',
     },
     {
       question: `Can I return the ${product.title}?`,

@@ -3,7 +3,10 @@
 // and generates a compliant GMC XML feed with numeric taxonomy IDs
 
 const SHOPIFY_DOMAIN = "lovable-project-zlh0w.myshopify.com";
-const SHOPIFY_STOREFRONT_TOKEN = Deno.env.get("SHOPIFY_STOREFRONT_TOKEN") || "";
+const SHOPIFY_STOREFRONT_TOKEN =
+  process.env.SHOPIFY_STOREFRONT_TOKEN ||
+  process.env.VITE_SHOPIFY_STOREFRONT_TOKEN ||
+  "";
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.error("SHOPIFY_STOREFRONT_TOKEN env var is not set. Feed generation will fail.");
 }
@@ -606,7 +609,7 @@ function generateItem(
 
 // ─── Main Handler ────────────────────────────────────────────────────
 
-Deno.serve(async (req: Request) => {
+async function handleRequest(req: Request): Promise<Response> {
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -683,4 +686,8 @@ Deno.serve(async (req: Request) => {
       },
     });
   }
-});
+}
+
+export default {
+  fetch: handleRequest,
+};

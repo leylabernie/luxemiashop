@@ -195,9 +195,9 @@ const LEHENGAS: CategoryConfig = {
   heroImageWebp: '/images/campaigns/wedding-lehengas-usa-2026-desktop.webp',
   heroAlt: 'Bride wearing a red embroidered lehenga choli with matching dupatta and traditional jewelry',
   heroTitle: 'Lehengas',
-  heroSubtitle: 'Lehengas, available with tracked shipping. Every piece here is available online. Ready-to-wear items dispatch in 3–5 business days; custom or made-to-measure items dispatch in 5–7 business days. Fabric composition and full measurements are listed on each item.',
+  heroSubtitle: 'Lehengas for weddings, receptions and celebrations. Review each product page for its stated fabric, included pieces, stitching status, sizing and availability.',
   seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
-  seoDescription: 'Buy bridal lehengas for Indian brides in USA. Red, maroon, and ivory wedding lehengas with zardozi and embroidery. Custom sizing, 5-day express delivery, free U.S. shipping over $150.',
+  seoDescription: 'Shop bridal, wedding guest and festive lehengas online. Compare exact fabric, work, included pieces, sizing and availability. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/lehengas',
   ogImage: '/og/og-lehengas.jpg',
   breadcrumbs: [
@@ -209,22 +209,22 @@ const LEHENGAS: CategoryConfig = {
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       seoTitle: 'Bridal Lehengas Online USA | Red & Maroon Wedding Lehengas - LuxeMia',
-      seoDescription: 'Shop bridal lehengas for the Indian bride in USA. Red, maroon, and ivory wedding lehengas with zardozi, zari, and embroidery. Custom sizing, 5-day express delivery, free U.S. shipping over $150.',
+      seoDescription: 'Shop bridal lehengas online. Compare current colors, fabric, embroidery, included pieces, available sizing and stitching status. Free U.S. shipping over $150.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest'], {
       seoTitle: 'Wedding Guest Lehengas & Bridesmaid Lehengas Online | LuxeMia',
-      seoDescription: 'Shop wedding guest lehengas and bridesmaid lehengas online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Available online, custom fit available.',
+      seoDescription: 'Shop wedding guest and bridesmaid lehengas online. Compare current colors, fabric, work, included pieces, sizing and availability on each listing.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=wedding-guest',
     }),
     occasionSub('reception', 'Reception', ['occasion:reception', 'reception'], {
       seoTitle: 'Reception Lehengas for Brides | Cocktail & Evening Lehengas - LuxeMia',
-      seoDescription: 'Shop reception lehengas for the bride\'s evening event. Non-bridal colors (blue, green, pink, wine) with heavy embroidery and beadwork. Custom sizing and fast US delivery.',
+      seoDescription: 'Shop reception lehengas online. Compare current colors, fabric, embroidery or embellishment, included pieces, sizing and availability.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=reception',
     }),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'party wear', 'party', 'festive'], {
       seoTitle: 'Party Wear Lehengas & Festive Lehenga Choli Online | LuxeMia',
-      seoDescription: 'Shop party wear lehengas and festive lehenga cholis for cocktails, sangeet, and Diwali. Net, georgette, and velvet with sequins, mirror, and beadwork. Available online.',
+      seoDescription: 'Shop party-wear and festive lehengas online. Review each listing for its exact fabric, work, included pieces, sizing and current availability.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=party-wear',
     }),
     // By Fabric (simplified — 4 main fabrics)
@@ -303,85 +303,49 @@ const LEHENGAS: CategoryConfig = {
   faqs: [
     {
       question: "What types of lehengas are available at LuxeMia?",
-      answer: "LuxeMia offers bridal lehengas, reception lehengas, festive lehengas, and party wear in various fabrics including Net, Silk, Velvet, Georgette, Chinnon, and Roman Silk. Each piece features embroidery, sequins, zari, or mirror work."
+      answer: "LuxeMia offers bridal, reception, festive and party-wear lehengas. Fabrics and work vary by design, so review each product page for the exact supplied details."
     },
     {
       question: "How do I find the right lehenga size?",
-      answer: "We offer sizes S, M, L, XL, XXL, and Custom sizing. For bridal lehengas, we highly recommend custom sizing for a perfect fit. Provide your bust, waist, hip, and height measurements, and our team will prepare your lehenga to your measurements."
+      answer: "Available sizes and tailoring options vary by product. Review the size selector and listing details, use the Size Guide for measurements, and contact LuxeMia before ordering if you need fit help."
     },
     {
       question: "What is included in a lehenga set?",
-      answer: "Every LuxeMia lehenga set includes the lehenga skirt, matching choli (blouse), and dupatta. Bridal sets often include additional accessories like cancan for volume and a matching potli bag."
+      answer: "Included pieces vary by design. Check the product description for the exact skirt, blouse or choli, dupatta, lining, cancan, and accessory details before ordering."
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
-      answer: "Lehengas ship with tracking after dispatch. Readymade items typically dispatch within 4-7 business days; custom-stitched or altered pieces take longer, so confirm timing before ordering. We recommend ordering bridal wear at least 6-8 weeks before your wedding."
+      answer: "Lehengas ship with tracking after dispatch. Timing depends on the product and any selected tailoring, so contact LuxeMia before ordering for a time-sensitive event."
     },
     {
       question: "Can I customize the color of my lehenga?",
-      answer: "Yes! Most of our lehengas can be customized in different colors. Contact our styling team with your color preferences, and we'll confirm availability and any additional timeline requirements."
+      answer: "Color and customization options vary by product. Review the listed variants or contact LuxeMia to ask whether another option is available before ordering."
     }
   ],
   // SEO editorial content (Item #14) — keyword-rich copy below the product grid
-  editorialTitle: 'Buy Lehengas Online in the USA — Bridal, Wedding Guest & Festive',
+  editorialTitle: 'Shop Lehengas Online — Bridal, Wedding Guest & Festive',
   editorialContent: (
     <>
       <p>
-        Shop the finest collection of <strong>lehengas online</strong> at LuxeMia, your destination for
-        authentic Indian ethnic wear shipped to the United States. Our curated catalog includes
-        <strong> bridal lehengas</strong>, wedding guest lehengas, festive lehengas for Diwali and Navratri,
-        and party wear lehengas for every celebration. Each piece is sourced from India's textile
-        hubs and quality-inspected before shipping.
+        Browse bridal, wedding guest, reception and festive lehengas available online at LuxeMia.
+        Each product page states the supplied fabric and work details, stitching status, included pieces,
+        available sizes and current price so you can compare designs accurately.
       </p>
-
-      <h3>Bridal Lehengas for the Modern NRI Bride</h3>
+      <h3>Choose by Occasion and Detail</h3>
       <p>
-        Your wedding day deserves a lehenga as special as the occasion. Our <strong>bridal lehenga collection</strong>
-        features hand-embroidered designs in net, silk, velvet, georgette, and raw silk — with zardozi,
-        sequin, zari, mirror, and thread work. Choose from traditional reds and maroons or modern pastels
-        and ivories. Every bridal lehenga includes the skirt, choli (blouse), and dupatta, with complimentary
-        custom tailoring for the perfect fit.
+        Use the occasion, color, fabric, work and price filters to narrow the collection. Open the exact
+        listing before ordering because materials, embellishment, lining and package contents vary by design.
       </p>
-
-      <h3>Wedding Guest Lehengas</h3>
+      <h3>Sizing and Tailoring</h3>
       <p>
-        Attending an Indian wedding? Our wedding guest lehengas are designed to make you look elegant without
-        upstaging the bride. Choose from royal blue, emerald green, dusty rose, wine, and champagne — colors
-        that photograph beautifully and suit every skin tone. Lightweight fabrics like georgette and net keep
-        you comfortable through long ceremonies.
+        Available sizes and any optional tailoring vary by product. Review the listing and
+        <a href="/size-guide"> size guide</a>, and contact LuxeMia before ordering if your event date is time-sensitive.
       </p>
-
-      <h3>Festival &amp; Party Wear Lehengas</h3>
-      <p>
-        Celebrate Diwali, Navratri, Eid, and Karva Chauth in style. Our festive lehenga collection features
-        vibrant colors, mirror work, and gota patti detailing — perfect for dancing the night away. For
-        cocktail parties and receptions, explore our sequin and embellished lehengas in ivory, champagne,
-        and jewel tones.
-      </p>
-
-      <h3>Custom Tailoring &amp; Sizing</h3>
-      <p>
-        Every lehenga at LuxeMia can be custom-tailored to your exact measurements. We offer sizes S through
-        XXL plus made-to-measure options — simply send us your bust, waist, hip, and height measurements
-        and our master tailors will stitch the perfect fit. See our <a href="/size-guide">size guide</a> for
-        measuring instructions.
-      </p>
-
       <h3>United States Shipping</h3>
       <p>
-        Free US shipping on lehenga orders over $150 to the United States. Lehengas
-        ship with tracking after dispatch; custom-tailored lehengas requires timing confirmation before ordering. Delivery via
-        tracked US carrier service after dispatch.
-        See our <a href="/shipping">shipping policy</a> for details.
+        Free U.S. shipping applies over $150 and shipping is $12 below that. Tracking is provided after dispatch.
+        See the <a href="/shipping">shipping policy</a> for current details.
       </p>
-
-      <h3>Online Lehengas with Fast USA Delivery</h3>
-      <p>
-        Need your lehenga in a hurry? LuxeMia offers a curated selection of <strong>available online lehengas USA</strong> that receive tracking after dispatch. Our <strong>bridal lehengas with fast delivery</strong> include wedding, festive, and reception styles — all with the same handcrafted quality and free U.S. shipping over $150 to the United States. Browse our <Link to="/online">full online collection</Link> for the quickest delivery options when your event is just weeks away.
-      </p>
-
-      <h3>Complete the Couple's Look</h3>
-      <p>Pair your bridal lehenga with a matching <Link to="/menswear">groom sherwani</Link> or <Link to="/menswear?sub=groom">wedding sherwani</Link> for the perfect coordinated couple's look.</p>
     </>
   ),
 };
@@ -396,7 +360,7 @@ const SAREES: CategoryConfig = {
   heroTitle: 'Sarees',
   heroSubtitle: 'Banarasi, silk and georgette sarees available online. Blouse sizes are listed as actual measurements, not S/M/L, because the difference matters.',
   seoTitle: 'Buy Banarasi Silk Sarees Online USA | Fast Ship | LuxeMia',
-  seoDescription: 'Shop authentic Banarasi silk sarees online in USA. Handwoven zari borders, traditional motifs. Custom blouse stitching. Free U.S. shipping over $150 to the United States.',
+  seoDescription: 'Shop silk, wedding, festive and designer sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/sarees',
   ogImage: '/og/og-sarees.jpg',
   breadcrumbs: [
@@ -426,12 +390,12 @@ const SAREES: CategoryConfig = {
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       matchProductType: ['Bridal Saree'],
       seoTitle: 'Bridal Sarees for Indian Brides in USA | Silk & Kanjeevaram - LuxeMia',
-      seoDescription: 'Shop bridal sarees for Indian brides in USA. Silk, Kanjeevaram, and Banarasi bridal sarees with zari and embroidery. Custom stitching, 5-day express delivery, free U.S. shipping over $150.',
+      seoDescription: 'Shop bridal sarees online. Compare each listing\'s stated fabric, weave or work, blouse details, current price and availability. Free U.S. shipping over $150.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid'], {
       seoTitle: 'Wedding Guest Sarees & Bridesmaid Sarees Online | LuxeMia',
-      seoDescription: 'Shop elegant wedding guest sarees and bridesmaid sarees online. Coordinated bridal party looks in georgette, chiffon, and banarasi brocade. Custom fit available.',
+      seoDescription: 'Shop wedding guest and bridesmaid sarees online. Compare current colors, stated fabric, blouse details, price and availability on each listing.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=wedding-guest',
     }),
     occasionSub('party-wear', 'Party Wear', ['occasion:party', 'occasion:reception', 'occasion:festival', 'party wear', 'party', 'reception', 'festive', 'cocktail'], {
@@ -444,7 +408,7 @@ const SAREES: CategoryConfig = {
         'festive', 'occasionwear',
       ],
       seoTitle: 'Party Wear Sarees & Reception Sarees Online | Designer Drapes - LuxeMia',
-      seoDescription: 'Shop party wear sarees, reception sarees, and pre-draped designer sarees. Sequins, beads, and zari work for cocktails, receptions, and festive celebrations. Available online.',
+      seoDescription: 'Shop party-wear and reception sarees online. Review each listing for its exact fabric, work, blouse details, price and current availability.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=party-wear',
     }),
     // By Fabric (simplified — 4 main fabrics)
@@ -516,84 +480,48 @@ const SAREES: CategoryConfig = {
   faqs: [
     {
       question: "What types of sarees are available at LuxeMia?",
-      answer: "LuxeMia offers silk sarees (Banarasi, Kanjeevaram), bridal sarees, designer sarees, georgette sarees, and printed sarees for every occasion including weddings, receptions, and festive celebrations."
+      answer: "LuxeMia offers wedding, festive, silk, georgette and printed sarees. Review each listing for the exact fabric, weave or work, blouse details and availability."
     },
     {
       question: "Do your sarees come with a blouse?",
-      answer: "Most of our sarees come with an unstitched blouse piece. Some premium and designer sarees include a stitched blouse. Check the product description for details, or contact us for blouse stitching options."
+      answer: "Blouse fabric and stitching status vary by product. Check the included-pieces section and contact LuxeMia if the listing does not answer your question."
     },
     {
       question: "Can I get a saree pre-draped?",
-      answer: "Yes! We offer pre-draped saree options for select designs. This is perfect for NRI customers who want the convenience of slipping into a saree without the complexity of draping. Contact us to confirm availability."
+      answer: "Pre-draped or ready-to-wear options may be available when explicitly listed. Use the filters and review the exact stitching status before ordering."
     },
     {
       question: "How should I care for my silk saree?",
-      answer: "Dry clean only for silk sarees. Store in a cool, dry place wrapped in muslin cloth. Avoid direct sunlight and never iron directly on zari or embroidery. Refold the saree every 3-4 months to prevent creasing along the same lines. (Note: many affordable 'silk' options use art silk, a high-quality polyester blend with a silk-like appearance — art silk shares the same dry-clean-only care requirements.)"
+      answer: "Follow the care instructions on the exact product page or label. For delicate silk, zari, embroidery or uncertain materials, ask a qualified cleaner before washing or pressing."
     },
     {
       question: "Do you ship sarees to the United States?",
-      answer: "Yes, we ship within the United States with free U.S. shipping over $150. Sarees ship with tracking after dispatch with tracking."
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch."
     }
   ],
   // SEO editorial content (Item #14)
-  editorialTitle: 'Buy Sarees Online — Silk, Bridal & Designer Sarees Shipped to USA',
+  editorialTitle: 'Shop Sarees Online — Silk, Wedding & Festive Styles',
   editorialContent: (
     <>
       <p>
-        Discover an exquisite collection of <strong>sarees online</strong> at LuxeMia. We offer
-        <strong> silk sarees</strong>, bridal sarees, designer sarees, and festive sarees — all sourced
-        from India's textile hubs in Varanasi, Kanchipuram, and Surat. Whether you are a bride,
-        a wedding guest, or celebrating Diwali, our saree collection has the perfect drape for every occasion.
-        Free US shipping to the United States on orders over $150.
+        Browse sarees for weddings, receptions, festivals and other celebrations. Product pages state the
+        supplied fabric, weave or embellishment details, blouse information, dimensions and current price.
       </p>
-
-      <h3>Silk Sarees — Banarasi, Kanjivaram &amp; More</h3>
+      <h3>Compare Fabric and Weave Details</h3>
       <p>
-        Our <strong>silk saree collection</strong> includes Banarasi silk from Varanasi, Kanjivaram silk
-        from Kanchipuram, and art silk sarees at affordable prices (note: art silk is a high-quality
-        polyester blend with a silk-like appearance and drape). Each silk saree features real zari work,
-        handwoven borders, and traditional motifs. Shop <a href="/sarees?sub=bridal">bridal silk sarees</a> for
-        your wedding or <a href="/sarees?sub=wedding-guest">wedding guest silk sarees</a> for the next
-        celebration you attend.
+        Silk sarees can use pure silk, blended silk or art-silk fabrics. Review the exact composition and
+        product wording on each listing rather than assuming every saree uses the same fiber, zari or weaving method.
       </p>
-
-      <h3>Bridal Sarees for the Traditional Bride</h3>
+      <h3>Blouse and Sizing Details</h3>
       <p>
-        For South Indian and Bengali brides, the saree is the wedding dress of choice. Our bridal saree
-        collection features red and gold Kanjivarams, heavy Banarasi brocades, and contemporary designer
-        sarees. Every bridal saree can be paired with custom blouse stitching and matching jewelry for a
-        complete bridal look.
+        Blouse fabric, stitching status and optional tailoring vary by product. Check the included-pieces section
+        and contact LuxeMia before ordering if you need help with measurements or timing.
       </p>
-
-      <h3>Wedding Guest &amp; Festive Sarees</h3>
+      <h3>United States Shipping</h3>
       <p>
-        Attending an Indian wedding? Choose from our wedding guest sarees in royal blue, emerald green,
-        magenta, and wine — colors that celebrate without overshadowing the bride. For Diwali and Navratri,
-        explore our festive sarees with mirror work, gota patti, and sequin embellishments.
+        Free U.S. shipping applies over $150 and shipping is $12 below that. Tracking is provided after dispatch.
+        See the <a href="/shipping">shipping policy</a> for current details.
       </p>
-
-      <h3>Ready-to-Wear &amp; Pre-Stitched Sarees</h3>
-      <p>
-        New to saree draping? Our <strong>ready-to-wear sarees</strong> (also called pre-stitched or
-        lehenga sarees) give you the look of a saree with the ease of a skirt. Slip it on and go — no
-        draping required. Perfect for beginners and for events where you want to look elegant without
-        the hassle.
-      </p>
-
-      <h3>Online Sarees with Fast USA Delivery</h3>
-      <p>
-        Short on time before your event? Our <strong>available online sarees</strong> receive tracking after dispatch, so you can have your drape ready well before the celebration. The selection includes <strong>Banarasi sarees with fast delivery</strong>, georgette party-wear sarees, and pre-draped ready-to-wear options. Every saree ships with free delivery on orders over $150 to the United States. Explore our <Link to="/online">full online collection</Link> for the fastest saree delivery options available.
-      </p>
-
-      <h3>Custom Blouse Stitching</h3>
-      <p>
-        Every saree deserves a perfectly fitted blouse. LuxeMia offers custom blouse stitching with your
-        choice of neckline, sleeve length, and back design. Send us your measurements and we will tailor
-        a blouse that fits like a glove. See our <a href="/sizing-measurements-guide">measurement guide</a> for details.
-      </p>
-
-      <h3>Complete the Couple's Look</h3>
-      <p>Pair your saree with a matching <Link to="/menswear">groom sherwani</Link> or <Link to="/menswear?sub=groom">wedding sherwani</Link> for a perfectly coordinated couple's look at your next ceremony or reception.</p>
     </>
   ),
 };
@@ -609,7 +537,7 @@ const SUITS: CategoryConfig = {
   heroTitle: 'Salwar Kameez & Suits',
   heroSubtitle: "Anarkalis, shararas and palazzo sets, available online. If you need a specific colour or a set for a group, that's our sister site CeremonyVerse.",
   seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
-  seoDescription: 'Shop 300+ salwar kameez online. Anarkali, palazzo, sharara & Pakistani suits with handcrafted embroidery. Custom tailoring. Free U.S. shipping over $150.',
+  seoDescription: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/suits',
   ogImage: '/og/og-suits.jpg',
   breadcrumbs: [
@@ -707,7 +635,7 @@ const SUITS: CategoryConfig = {
   faqs: [
     {
       question: "What types of salwar kameez and suits are available at LuxeMia?",
-      answer: "LuxeMia offers anarkali suits, sharara sets, palazzo suits, Pakistani suits, and straight-cut salwar kameez in fabrics including georgette, chinnon, silk, cotton, velvet, and net. Each piece is handcrafted with embroidery, sequin, zari, or mirror work."
+      answer: "LuxeMia offers anarkali, sharara, palazzo, Pakistani-style and straight-cut suits. Available fabrics and work vary, so review each product page for exact material, embellishment and included-piece details."
     },
     {
       question: "What is the difference between anarkali and sharara suits?",
@@ -719,68 +647,35 @@ const SUITS: CategoryConfig = {
     },
     {
       question: "Do you offer custom tailoring for suits?",
-      answer: "Yes, we offer made-to-measure tailoring on most suits. Provide your bust, waist, hip, and length measurements, and our team will tailor the suit to your specifications. Custom orders requires timing confirmation before ordering."
+      answer: "Sizing and tailoring options vary by suit. Review the size selector and product page, or contact LuxeMia before ordering if you need measurement help."
     },
     {
       question: "How do I care for my salwar kameez?",
-      answer: "Dry cleaning is recommended for embroidered, sequined, or zari work suits. For cotton and everyday suits, hand wash in cold water with mild detergent. Always iron on reverse side over embroidery. Store in a cool, dry place."
+      answer: "Follow the care instructions on the exact product page or label. For embroidery, sequins, zari or uncertain fabrics, ask a qualified cleaner before washing or pressing."
     }
   ],
   // SEO editorial content (Item #14)
-  editorialTitle: 'Buy Salwar Kameez &amp; Anarkali Suits Online — USA Shipping',
+  editorialTitle: 'Shop Salwar Kameez, Anarkali, Sharara & Palazzo Suits',
   editorialContent: (
     <>
       <p>
-        Shop beautiful <strong>salwar kameez online</strong> at LuxeMia. Our collection includes anarkali suits,
-        palazzo sets, sharara suits, and traditional salwar kameez in georgette, silk, cotton, and chinnon
-        fabrics. Whether you are attending a wedding, celebrating Eid, or looking for everyday ethnic wear,
-        we have the perfect suit for you — shipped to the United States with free U.S. shipping over $150.
+        Browse salwar kameez, anarkali, sharara and palazzo sets for weddings, receptions and festivals.
+        Product pages state the supplied fabric and work details, included pieces, stitching status, sizes and price.
       </p>
-
-      <h3>Anarkali Suits — Elegant &amp; Flattering</h3>
+      <h3>Compare Silhouette and Package Contents</h3>
       <p>
-        <strong>Anarkali suits</strong> are floor-length, frock-style kameez paired with slim churidar pants.
-        They flatter every body type and are perfect for weddings, sangeet ceremonies, and festive events.
-        Our anarkali collection features embroidery, sequin work, and gota patti detailing in both traditional
-        and contemporary designs.
+        Use the style, fabric, color, work and price filters to narrow the collection. Check the exact listing
+        to confirm whether a set includes a kurta or kameez, bottoms, dupatta, lining or other pieces.
       </p>
-
-      <h3>Palazzo Sets — Modern &amp; Comfortable</h3>
+      <h3>Sizing and Tailoring</h3>
       <p>
-        <strong>Palazzo sets</strong> pair a kurti with wide-leg palazzo pants for a modern, comfortable look.
-        Perfect for daytime events, office Diwali parties, and casual ethnic wear. Choose from cotton palazzo
-        sets for everyday or silk palazzo sets for festive occasions.
+        Available sizes and any optional tailoring vary by product. Use the <a href="/size-guide">size guide</a>
+        and contact LuxeMia before ordering if your event date is time-sensitive.
       </p>
-
-      <h3>Sharara Suits — Festive &amp; Traditional</h3>
+      <h3>United States Shipping</h3>
       <p>
-        <strong>Sharara suits</strong> feature wide-flared pants that look like a lehenga, paired with a short
-        kurti and dupatta. A popular choice for mehendi ceremonies and Eid celebrations, sharara suits combine
-        the elegance of a lehenga with the comfort of a salwar kameez.
+        Free U.S. shipping applies over $150 and shipping is $12 below that. Tracking is provided after dispatch.
       </p>
-
-      <h3>Wedding Guest &amp; Festive Salwar Kameez</h3>
-      <p>
-        Attending an Indian wedding? A well-chosen salwar kameez is comfortable, elegant, and appropriate for
-        every ceremony. For mehendi and haldi, choose cotton or georgette suits in bright colors. For sangeet
-        and reception, go for embroidered anarkalis in silk or chinnon. Browse our
-        <a href="/collections/wedding-guest-outfits">wedding guest collection</a> for curated options.
-      </p>
-
-      <h3>Online Salwar Kameez with Fast USA Delivery</h3>
-      <p>
-        Have a wedding or festival coming up soon? LuxeMia stocks a rotating selection of <strong>available online salwar kameez</strong> that ship with tracking after dispatch. Our <strong>anarkali suits USA</strong> inventory spans bridal, festive, and everyday styles in georgette, silk, and cotton — all with the same artisan craftsmanship. Free US shipping applies on orders over $150 to the United States. Check out our <Link to="/online">full online collection</Link> when you need your outfit delivered quickly.
-      </p>
-
-      <h3>Custom Tailoring for the Perfect Fit</h3>
-      <p>
-        Every salwar kameez at LuxeMia can be custom-tailored to your measurements. Choose your kameez length,
-        neckline, sleeve style, and bottom type — we will stitch it to your exact specifications. See our
-        <a href="/sizing-measurements-guide">measurement guide</a> for instructions on how to measure yourself.
-      </p>
-
-      <h3>Complete the Couple's Look</h3>
-      <p>Complete your outfit with a coordinated <Link to="/menswear">groom sherwani</Link> or <Link to="/menswear?sub=groom">wedding sherwani</Link> for the perfect couple's look at weddings, receptions, and festive celebrations.</p>
     </>
   ),
 };
@@ -796,7 +691,7 @@ const MENSWEAR: CategoryConfig = {
   heroTitle: 'Menswear',
   heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
   seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
-  seoDescription: 'Shop designer sherwanis for men. Groom sherwanis, kurta pajama sets & indo-western outfits. Custom tailoring available. Free U.S. shipping over $150.',
+  seoDescription: 'Shop sherwanis, kurta pajama sets and Indo-Western menswear online. Compare exact fabric, included pieces, sizes and availability. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/menswear',
   ogImage: '/og/og-menswear.jpg',
   breadcrumbs: [
@@ -893,88 +788,47 @@ const MENSWEAR: CategoryConfig = {
   faqs: [
     {
       question: "What types of menswear are available at LuxeMia?",
-      answer: "LuxeMia offers sherwanis, kurta pajama sets, Modi jackets, indo-western menswear, and bandhgalas in silk, jacquard, velvet, cotton, and brocade fabrics. Each piece is handcrafted for the modern groom and wedding party."
+      answer: "LuxeMia offers sherwanis, kurta pajama sets, Nehru-style jackets, Indo-Western menswear and bandhgalas. Available fabrics and work vary by product; check the exact listing details."
     },
     {
       question: "What sizes are available for sherwanis?",
-      answer: "We offer chest sizes 38, 40, 42, 44, and 46, with custom tailoring available for the perfect fit. For wedding sherwanis, we highly recommend custom sizing — provide your chest, shoulder, sleeve, and length measurements."
+      answer: "Available chest sizes and any tailoring options vary by product. Review the size selector and measurements on the listing, or contact LuxeMia for help before ordering."
     },
     {
       question: "What's included in a sherwani set?",
-      answer: "Most LuxeMia sherwani sets include the sherwani, matching kurta-pajama or churidar, and a dupatta or stole. Some premium sets also include a matching turban (safa) and mojaris. Check the product description for exact inclusions."
+      answer: "Sherwani package contents vary by design. Check the product description for the exact sherwani, kurta, pajama or churidar, stole, turban and footwear inclusions before ordering."
     },
     {
       question: "Can I order a sherwani for my groomsmen?",
-      answer: "Yes! We offer groomsmen coordination — choose a coordinated color palette and we'll craft matching sherwanis or kurtas for your wedding party. Contact our styling team with your party size and color preferences."
+      answer: "LuxeMia can help you compare currently available menswear for a group order. Send the event date, group size, palette and measurements; product and color availability must be confirmed."
     },
     {
       question: "How should I care for my sherwani?",
-      answer: "Dry clean only for sherwanis with embroidery, zardozi, or sequin work. Store in a breathable garment bag in a cool, dry place. Avoid direct sunlight to prevent color fading. Iron on reverse side over embroidery, or use a pressing cloth."
+      answer: "Follow the care instructions on the exact product page or label. For embroidery, zari, sequins or uncertain fabrics, ask a qualified cleaner before washing or pressing."
     }
   ],
   // SEO editorial content (Item #14)
-  editorialTitle: 'Buy Indian Menswear Online — Sherwanis, Kurtas &amp; Nehru Jackets',
+  editorialTitle: 'Shop Indian Menswear Online — Sherwanis, Kurtas & Nehru Jackets',
   editorialContent: (
     <>
       <p>
-        Shop authentic <strong>Indian menswear online</strong> at LuxeMia. Our collection includes sherwanis,
-        kurta pajama sets, Nehru jackets, and indo-western outfits for grooms, groomsmen, and wedding guests.
-        Every piece is sourced from supplier fulfillment and shipped to the United States with free
-        shipping on orders over $150.
+        Browse sherwanis, kurta pajama sets, Nehru-style jackets and Indo-Western menswear for weddings,
+        receptions and festive events. Product pages state the available fabric, work, included pieces, sizes and price.
       </p>
-
-      <h3>Sherwanis for Grooms &amp; Wedding Guests</h3>
+      <h3>Choose by Occasion and Set Contents</h3>
       <p>
-        A <strong>sherwani</strong> is the most formal Indian menswear garment — a long coat worn over a
-        kurta and churidar. Our sherwani collection features embroidery, zardozi work, and brocade fabrics
-        in ivory, gold, maroon, and deep blue. Perfect for grooms, groomsmen, and guests attending a wedding
-        ceremony.
+        Use the style, occasion, fabric, color and price filters to compare products. Open the exact listing
+        to confirm every included garment or accessory because set contents vary by design.
       </p>
-
-      <h3>Kurta Pajama Sets — Comfortable &amp; Versatile</h3>
+      <h3>Sizing and Tailoring</h3>
       <p>
-        <strong>Kurta pajama sets</strong> are the foundation of every Indian man's wardrobe. A kurta (long
-        tunic) paired with pajama (loose pants) is perfect for mehendi ceremonies, pujas, festivals, and
-        casual ethnic wear. Choose from cotton kurtas for everyday comfort or silk kurtas for festive
-        occasions.
+        Available sizes and any optional tailoring vary by product. Review the listing and
+        <a href="/size-guide"> size guide</a>, and contact LuxeMia before ordering if you need measurement help.
       </p>
-
-      <h3>Nehru Jackets — The Versatile Layer</h3>
+      <h3>United States Shipping</h3>
       <p>
-        A <strong>Nehru jacket</strong> is a sleeveless mandarin-collar vest that adds instant formality to
-        any kurta. Available in brocade, silk, and linen, a Nehru jacket is the most versatile piece in
-        Indian menswear — wear it over a kurta for a wedding or over a Western shirt for an indo-western look.
+        Free U.S. shipping applies over $150 and shipping is $12 below that. Tracking is provided after dispatch.
       </p>
-
-      <h3>Indo-Western Menswear</h3>
-      <p>
-        For a modern take on Indian fashion, explore our <strong>indo-western menswear</strong> collection.
-        Structured blazers with Indian embroidery, kurta-shirt hybrids, and tailored trousers with ethnic
-        detailing — perfect for receptions, cocktail parties, and contemporary celebrations.
-      </p>
-
-      <h3>Wedding Guest Outfits for Men</h3>
-      <p>
-        Attending an Indian wedding? For the mehendi and haldi, a simple cotton kurta pajama in yellow or
-        orange is perfect. For the sangeet, choose a silk kurta with a Nehru jacket. For the wedding ceremony
-        and reception, go for a sherwani or an embroidered indo-western suit. See our
-        <a href="/blog/indian-wedding-guest-outfits-men-usa-guide">complete men's wedding guest guide</a>.
-      </p>
-
-      <h3>Custom Tailoring &amp; Sizing</h3>
-      <p>
-        Every menswear outfit at LuxeMia can be custom-tailored to your measurements. We offer sizes S
-        through XXL plus made-to-measure options. Send us your chest, shoulder, waist, and length measurements
-        and our master tailors will stitch the perfect fit. See our <a href="/size-guide">size guide</a> for details.
-      </p>
-
-      <h3>Online Sherwanis with Fast USA Delivery</h3>
-      <p>
-        Wedding day approaching fast? LuxeMia carries <strong>available online sherwanis</strong> that receive tracking after dispatch — perfect for grooms and guests who need <strong>groom wear with fast delivery</strong>. Our online menswear range includes sherwanis, kurta pajama sets, and Nehru jackets in standard sizes, all with the same quality embroidery and tailoring LuxeMia is known for. Free U.S. shipping over $150 to the United States. Browse the <Link to="/online">full online collection</Link> for the fastest delivery options.
-      </p>
-
-      <h3>Complete the Couple's Look</h3>
-      <p>Pair your sherwani or indo-western outfit with a matching <Link to="/lehengas?sub=bridal">bridal lehenga</Link> for the perfect coordinated couple's look. LuxeMia offers matching sets for weddings, receptions, and all ceremonial events.</p>
     </>
   ),
 };
@@ -988,9 +842,9 @@ const JEWELRY: CategoryConfig = {
   heroImageWebp: '/images/campaigns/kundan-bridal-jewelry-2026-desktop.webp',
   heroAlt: 'Gold-tone Kundan bridal necklace, earrings and maang tikka set with pearl details',
   heroTitle: 'Bridal Jewelry',
-  heroSubtitle: 'Handcrafted Kundan and uncut polki necklace sets for the modern bride — regal statements for your wedding day.',
+  heroSubtitle: 'Kundan-style, polki-style and bridal necklace sets. Review each listing for exact materials, finish, included pieces and measurements.',
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-  seoDescription: 'Shop handcrafted Kundan bridal jewelry and uncut polki necklace sets at LuxeMia. Premium Indian bridal jewelry for weddings. Free U.S. shipping over $150 to the United States.',
+  seoDescription: 'Shop Kundan-style, polki-style and bridal necklace sets online. Compare exact materials, finish, included pieces and measurements. Free U.S. shipping over $150.',
   canonical: 'https://luxemia.shop/jewelry',
   ogImage: '/og-image.jpg',
   breadcrumbs: [
@@ -1031,23 +885,23 @@ const JEWELRY: CategoryConfig = {
   faqs: [
     {
       question: "What types of bridal jewelry are available at LuxeMia?",
-      answer: "LuxeMia offers handcrafted Kundan necklace sets, Kundan with stone bridal sets, uncut polki necklace sets, and full bridal sets (necklace + earrings + maang tikka). Each piece uses traditional Rajasthani stone-setting techniques with 24k gold foil framing."
+      answer: "LuxeMia offers necklace sets, chokers and bridal sets described as Kundan-style or polki-style where applicable. Review the product page for the exact materials, finish and included pieces."
     },
     {
       question: "Is Kundan jewelry real diamond jewelry?",
-      answer: "Our Kundan jewelry uses traditional Indian stone-setting techniques with glass-based Kundan stones and uncut polki accents. It offers the look of fine diamond jewelry at a fraction of the cost, making it perfect for brides who want a regal appearance without the investment of real diamonds."
+      answer: "Do not assume a Kundan-style or polki-style item contains diamonds, precious metal or a particular stone type. The product page states the supplied material and finish details; contact LuxeMia if a detail is not listed."
     },
     {
       question: "What's included in a Kundan necklace set?",
-      answer: "Most LuxeMia Kundan necklace sets include the necklace and matching earrings. Full bridal sets also include a maang tikka. The necklace features an adjustable dori (thread) closure for a comfortable fit, and the earrings come with secure push-backs."
+      answer: "Included pieces and closures vary by set. Check the product description and images for the exact necklace, earrings, maang tikka, chain, dori or other components."
     },
     {
       question: "How should I care for my Kundan jewelry?",
-      answer: "Store in the provided velvet pouch away from moisture and direct sunlight. Avoid contact with perfume, hairspray, and water. Gently wipe with a soft dry cloth after each wear. For deep cleaning, take to a professional jewelry cleaner — do not use chemical cleaners at home as they can damage the Kundan setting."
+      answer: "Keep jewelry dry and away from perfume, hairspray and harsh cleaners. Store pieces separately to reduce scratching, and follow any care instructions supplied with the item."
     },
     {
       question: "Do you ship bridal jewelry to the United States?",
-      answer: "Yes, we ship within the United States with free U.S. shipping over $150. Sarees ship with tracking after dispatch with tracking. Each piece ships in a signature gift box."
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch."
     }
   ],
 };

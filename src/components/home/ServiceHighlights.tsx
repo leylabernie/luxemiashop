@@ -4,33 +4,33 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Free Shipping over $150',
-    description: 'US tracked shipping after dispatch',
+    title: 'U.S. Shipping',
+    description: '$12 below $150; free over $150',
   },
   {
     icon: ShieldCheck,
-    title: 'SSL Secure Checkout',
-    description: '256-bit encryption & Shopify Pay',
+    title: 'Secure Checkout',
+    description: 'Checkout is handled through Shopify',
   },
   {
     icon: Ruler,
-    title: 'Custom Fitting',
-    description: 'Tailored to your measurements — dispatch 5-7 days',
+    title: 'Listing-Specific Sizing',
+    description: 'Available sizes are shown on each product',
   },
   {
     icon: Clock,
-    title: 'Fast Dispatch',
-    description: 'Readymade orders dispatched in 3-5 business days',
+    title: 'Tracking After Dispatch',
+    description: 'Tracking is sent by email after dispatch',
   },
   {
     icon: RefreshCw,
-    title: 'Pre-Purchase Support',
-    description: 'WhatsApp & email support before you buy',
+    title: '24-Hour Cancellation',
+    description: 'Contact support within 24 hours of ordering',
   },
   {
     icon: Sparkles,
-    title: 'Quality Inspected',
-    description: 'Every piece checked before shipping',
+    title: 'U.S.-Based Support',
+    description: 'Product and sizing help before ordering',
   },
 ];
 

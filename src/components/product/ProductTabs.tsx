@@ -894,7 +894,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             <div className="p-4 bg-card rounded-sm border border-border">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="h-4 w-4 text-primary" />
-                <h4 className="font-medium">Dispatch Promise</h4>
+                <h4 className="font-medium">Dispatch &amp; Tracking</h4>
               </div>
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
@@ -913,26 +913,11 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             </div>
           </div>
 
-          {/* Packaging Note */}
-          <div className="p-4 bg-card rounded-sm border border-border">
-            <h4 className="font-medium mb-2">Packaging & Quality</h4>
-            <ul className="text-sm text-muted-foreground space-y-1.5">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>All items are quality inspected before shipping</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
-                <span>Wrapped in tissue paper and placed in our signature gift box</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Returns & Guarantee */}
+          {/* Returns & Damage Claims */}
           <div>
             <div className="flex items-center gap-2 mb-4 text-foreground">
               <RotateCcw className="h-5 w-5 text-primary" />
-              <h4 className="font-medium">Returns & Guarantee</h4>
+              <h4 className="font-medium">Returns &amp; Damage Claims</h4>
             </div>
             <div className="space-y-4">
               <div className="p-4 border border-border rounded-sm">
@@ -983,22 +968,6 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </div>
               </div>
 
-              <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
-                <div className="flex items-start gap-3">
-                  <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h5 className="font-medium text-foreground mb-1">Quality Inspection Guarantee</h5>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Every single item is personally inspected by our quality team in India before it ships. 
-                      We check stitching, embroidery, fabric quality, and color accuracy to ensure your order 
-                      arrives in perfect condition. Our inspection process is your assurance that what you see 
-                      online is what you receive.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

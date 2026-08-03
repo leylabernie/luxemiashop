@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Shield, Award, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
@@ -843,7 +843,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
         <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free U.S. shipping over $150</span>
         <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
-        <span className="flex items-center gap-1"><Award className="h-3.5 w-3.5" />Quality inspected</span>
+        <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
       </div>
 
       {/* Add to Cart */}
@@ -964,11 +964,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="grid grid-cols-2 gap-3 pt-4">
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <Award className="h-5 w-5 text-primary" />
+            <MessageCircle className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Quality Inspected</p>
-            <p className="text-xs text-muted-foreground">Every item checked before shipping</p>
+            <p className="text-sm font-medium">U.S.-Based Support</p>
+            <p className="text-xs text-muted-foreground">Product and sizing help before purchase</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
@@ -1004,8 +1004,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="space-y-3 pt-4">
         {/* Urgency info now shown in DeliveryEstimate component */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Shield className="h-4 w-4 text-primary" />
-          <span>Quality checked by <span className="text-foreground font-medium">LuxeMia team</span></span>
+          <MessageCircle className="h-4 w-4 text-primary" />
+          <span>Contact LuxeMia before ordering for product or sizing help</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Package className="h-4 w-4 text-primary" />

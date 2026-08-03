@@ -46,12 +46,7 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
           { name: `Indian Ethnic Wear ${config.country}`, url: `/${config.slug}` },
         ]}
         faqs={config.faqs}
-        hreflang={[
-          { lang: 'en-US', href: 'https://luxemia.shop/indian-ethnic-wear-usa' },
-          { lang: 'en-GB', href: 'https://luxemia.shop/nri' },
-          { lang: 'en-CA', href: 'https://luxemia.shop/indian-ethnic-wear-canada' },
-          { lang: 'x-default', href: 'https://luxemia.shop/' },
-        ]}
+
       />
       <Header />
 
@@ -71,8 +66,8 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
                 {config.heroTitle}
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Shop stylish sarees, bridal lehengas, salwar suits, jewelry, indo-western outfits, and men's ethnic wear from India's renowned textile regions.
-                Delivered to your door in {config.country}.
+                Shop sarees, lehengas, salwar suits, jewelry, Indo-Western outfits and menswear online.
+                Review each product page for exact details, sizing and current availability.
               </p>
               <Button asChild size="lg" className="px-8">
                 <Link to="/collections">Shop Now</Link>
@@ -140,14 +135,13 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
           </section>
         )}
 
-        {/* Shipping Guarantee */}
+        {/* Shipping details */}
         <section className="py-16">
           <div className="container mx-auto px-4 lg:px-8 max-w-2xl text-center">
             <div className="bg-card rounded-lg p-8 border border-border">
-              <h3 className="font-serif text-xl text-foreground mb-3">Shop With Confidence</h3>
+              <h3 className="font-serif text-xl text-foreground mb-3">Shipping Details</h3>
               <p className="text-muted-foreground">
-                Every order is carefully packaged and shipped with tracking. We offer a flat rate of $12 flat per order for shipping, with free shipping on orders over $150 
-                to {config.country} with delivery in {config.shippingTime.toLowerCase()}. 
+                Shipping to {config.country} costs {config.shippingCost}, with {config.shippingTime.toLowerCase()}.
                 {config.customsNote && ` ${config.customsNote}`}
               </p>
             </div>
@@ -186,14 +180,14 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <h2 className="text-2xl font-serif mb-4">Ready to Shop?</h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Explore our complete collection of Indian ethnic wear, delivered directly to {config.country}.
+              Explore Indian ethnic wear available online for delivery to {config.country}.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="px-8">
                 <Link to="/collections">Shop All Collections</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="px-8">
-                <Link to="/style-consultation">Book a Styling Session</Link>
+                <Link to="/contact">Contact Support</Link>
               </Button>
             </div>
           </div>

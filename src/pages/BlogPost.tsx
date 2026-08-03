@@ -350,7 +350,7 @@ const BlogPost = () => {
         <link rel="preload" as="image" href={post.image} fetchPriority="high" />
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
-        <meta property="article:author" content={post.author} />
+        <meta property="article:author" content="LuxeMia Editorial Team" />
         <meta property="article:section" content={post.category} />
         {post.tags.map(tag => (
           <meta key={tag} property="article:tag" content={tag} />
@@ -416,7 +416,7 @@ const BlogPost = () => {
                     if (authorProfile) {
                       return (
                         <Link to={`/authors/${authorProfile.slug}`} className="hover:text-primary hover:underline transition-colors">
-                          {post.author}
+                          {authorProfile.name}
                         </Link>
                       );
                     }

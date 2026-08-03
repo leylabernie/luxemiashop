@@ -79,7 +79,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer custom sizing?',
-          answer: 'Yes! We offer custom sizing for all our garments. You can submit your measurements through our Size Guide page. Custom work is not part of the two-business-day online promise.',
+          answer: 'Sizing and tailoring options vary by garment. Review the product page and size selector, use the Size Guide for measurements, and contact LuxeMia before ordering if you need fit help.',
         },
         {
           question: 'What if my measurements don\'t fit standard sizes?',
@@ -121,7 +121,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I cancel my order?',
-          answer: 'Orders can be cancelled within 24 hours of placement only. After 24 hours, production begins and the order cannot be cancelled. Contact us immediately at hello@luxemia.shop or WhatsApp +1-215-341-9990.',
+          answer: 'Orders can be cancelled within 24 hours of placement only. After that window, the order cannot be cancelled. Contact us immediately at hello@luxemia.shop or WhatsApp +1-215-341-9990.',
         },
         {
           question: 'Can I exchange for a different size or color?',
@@ -199,7 +199,7 @@ const FAQ = () => {
         },
         {
           question: 'What does semi-stitched mean for lehengas and suits?',
-          answer: 'Semi-stitched means the garment is partially stitched with standard sizing (usually at the waist or bust) but allows room for further customization. You can have it tailored to your exact measurements by a local tailor or use our custom stitching service. This offers a balance between the convenience of readymade and the fit of fully custom.',
+          answer: 'Semi-stitched means part of the garment is assembled while final fitting may still be required. Check the exact listing for stitching status and available options; a local tailor may be needed.',
         },
         {
           question: 'How do I choose the right fabric for my Indian wedding outfit?',
@@ -207,7 +207,7 @@ const FAQ = () => {
         },
         {
           question: 'Are your products authentic Indian ethnic wear?',
-          answer: 'Our catalog is curated from established supplier partners in India. Product pages state the available fabric, embroidery or embellishment work, stitching status, size information, and package contents. Before dispatch, we coordinate a visible product check with supplier and shipping partners.',
+          answer: 'Product pages state the supplied fabric, embroidery or embellishment work, stitching status, size information and package contents when those details are available. Contact LuxeMia if an important detail is not listed.',
         },
         {
           question: 'What is zardozi embroidery?',
@@ -215,7 +215,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you sell unstitched fabric or only ready-made outfits?',
-          answer: 'We offer both. Many of our suits and lehengas come as semi-stitched or unstitched fabric sets, allowing you to have them custom-tailored to your exact measurements. Product listings clearly state whether an item is readymade, semi-stitched, or unstitched. You can also opt for our custom tailoring service during checkout for select styles.',
+          answer: 'The catalog can include readymade, semi-stitched or unstitched items. Check the exact product page for stitching status, included pieces and any tailoring option available for that style.',
         },
       ],
     },
@@ -237,11 +237,11 @@ const FAQ = () => {
         },
         {
           question: 'How do Indian clothing sizes compare to US sizes?',
-          answer: 'Indian ethnic wear sizing differs from Western sizing. Our Size Guide page provides detailed measurement charts in inches that map to our S, M, L, XL, and XXL sizes. We strongly recommend measuring yourself and comparing to our charts rather than guessing. When in doubt, size up — it\'s easier to take in a garment than to let it out. Custom tailoring is also available for a perfect fit.',
+          answer: 'Indian ethnic-wear sizing can differ by product. Measure yourself, compare with the listing and Size Guide, and contact LuxeMia before ordering if you are unsure. Available sizes and tailoring options vary by style.',
         },
         {
           question: 'What if the color looks different in person than on screen?',
-          answer: 'We strive for accurate color representation in our product photography, but slight variations can occur due to screen settings, lighting conditions, and the nature of handcrafted textiles. Many Indian fabrics also appear different in natural vs. artificial light. We recommend reviewing all available product images and reading the fabric description carefully before purchasing.',
+          answer: 'Colors can vary with screen settings, lighting and photography. Review all available images and the product description, and contact LuxeMia before ordering if a specific shade is essential.',
         },
         {
           question: 'How long does US delivery take?',

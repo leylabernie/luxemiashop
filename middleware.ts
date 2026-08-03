@@ -128,6 +128,12 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(canonical.toString(), 301);
   }
 
+  // Merchant Center fetches this stable public URL. Generate the feed from
+  // live Shopify data instead of serving the empty static placeholder.
+  if (pathname === '/merchant-feed.xml') {
+    return rewrite(new URL('/api/merchant-feed', request.url));
+  }
+
   // Skip non-page requests (static files, API, etc.)
   if (
     pathname.startsWith('/_prerender') ||

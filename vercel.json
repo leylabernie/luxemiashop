@@ -145,7 +145,7 @@
     },
     {
       "source": "/our-story",
-      "destination": "/brand-story",
+      "destination": "/about",
       "statusCode": 301
     },
     {
@@ -590,7 +590,422 @@
     },
     {
       "source": "/collections/ready-to-ship",
-      "destination": "/ready-to-ship",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/brand-story",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/artisans",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/sustainability",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/ready-to-ship",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/authors/ananya-iyer",
+      "destination": "/authors/luxemia-editorial-team",
+      "statusCode": 301
+    },
+    {
+      "source": "/authors/meera-kapoor",
+      "destination": "/authors/luxemia-editorial-team",
+      "statusCode": 301
+    },
+    {
+      "source": "/authors/rajesh-sharma",
+      "destination": "/authors/luxemia-editorial-team",
+      "statusCode": 301
+    },
+    {
+      "source": "/authors/priya-nair",
+      "destination": "/authors/luxemia-editorial-team",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-wedding-dress-complete-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-to-wear-indian-wedding-non-indian-guest",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/plus-size-indian-ethnic-wear-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-to-us-clothing-size-conversion-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/buy-authentic-indian-sarees-online-usa-uk",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/banarasi-silk-saree-guide-authentic",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/kanchipuram-silk-saree-south-indian-wedding-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/abu-jani-sandeep-khosla-designer-profile-chikankari-couture",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/anamika-khanna-designer-profile-kolkata-couture",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/anarkali-suit-styling-guide-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/anita-dongre-sustainable-luxury-grassroots",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/best-lehenga-colors-for-indian-skin-tone",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/best-lehenga-styles-indian-wedding-guests-usa-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/bindi-meaning-history-indian-women",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/buy-bridal-lehenga-online-usa-complete-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/buying-indian-ethnic-wear-online-usa",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/caring-for-silk-sarees",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/chikankari-embroidery-lucknow-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/custom-tailoring-indian-ethnic-wear-usa",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/designer-sherwani-online-usa-groom-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/designer-wedding-dress-under-500",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/diwali-outfit-ideas-by-setting",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/diwali-outfit-ideas-nri-women-usa-canada-australia",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/embroidery-motifs-symbolism-paisley-peacock-lotus",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/haldi-vs-mehendi-outfits-complete-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-care-for-silk-sarees-and-lehengas",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-choose-perfect-lehenga-wedding-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-wear-a-saree-step-by-step",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-bridal-jewelry-sets-complete-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-embroidery-glossary-40-terms-zardozi-chikankari-aari",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-fabric-types-guide-silk-georgette-chiffon",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-jewelry-glossary-40-terms-kundan-polki-jhumka-maang-tikka",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-wedding-ceremony-outfit-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-wedding-guest-outfits-men-usa-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-wedding-season-2026-outfit-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-wedding-terms-glossary-50-events-rituals-roles",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/indian-wedding-trends-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/jj-valaya-royal-couture-house-of-valaya",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/kanjivaram-vs-banarasi-silk-sarees",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/kundan-vs-polki-vs-jadau-bridal-jewelry-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lehenga-choli-designer-bridal-party-wear-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lehenga-color-for-dark-skin",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/lehenga-vs-anarkali-which-is-right-for-you",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/manish-malhotra-bollywood-bridal-designer-profile",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mehendi-outfit-by-role",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/navratri-9-day-color-guide-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/neeta-lulla-designer-profile-national-award-costume-bridal",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nri-wedding-ethnic-wear-trends-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/pakistani-suits-anarkali-shopping-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/punjabi-wedding-outfit-guide-nri",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/rahul-mishra-designer-profile-paris-haute-couture-sustainable",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/red-bridal-lehenga-trends-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ritu-kumar-pioneer-indian-textile-revival",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/sabyasachi-mukherjee-designer-profile-handloom-revival",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/salwar-kameez-online-usa-everyday-ethnic-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/saree-draping-styles-every-occasion",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/sharara-suit-guide-2026-styles-fabrics",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/shipping-indian-clothes-usa-uk-canada-nri-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/sindoor-mangalsutra-sacred-symbols-hindu-marriage",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/south-indian-bridal-saree-style-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/style-lehenga-choli-every-wedding-event",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tarun-tahiliani-designer-profile-india-modern-couture",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/tussar-silk-saree-guide-nri",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-to-pack-indian-wedding-from-usa-nri-guide",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-to-wear-indian-wedding-guest-2026",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-to-wear-south-asian-wedding-non-indian-guest",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/why-indian-brides-wear-red-cultural-significance",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/zari-work-guide-indian-embroidery-gold-silver-thread",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/style-consultation",
+      "destination": "/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-measure-yourself-for-indian-ethnic-wear",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/care-guide-washing-storing-indian-ethnic-wear",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/unstitched-vs-ready-to-wear-vs-made-to-measure",
+      "destination": "/blog",
       "statusCode": 301
     }
   ],

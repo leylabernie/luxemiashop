@@ -35,9 +35,8 @@ const footerLinks = {
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
-    { name: 'Our Story', href: '/brand-story' },
+    { name: 'About LuxeMia', href: '/about' },
     { name: 'Style Quiz', href: '/style-quiz' },
-    { name: 'Our Regions', href: '/artisans' },
     { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
   ],
@@ -48,7 +47,6 @@ const footerLinks = {
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'Care Guide', href: '/care-guide' },
-    { name: 'Style Consultation', href: '/style-consultation' },
     { name: 'Wedding Party Orders', href: '/wedding-party-orders' },
   ],
 };
