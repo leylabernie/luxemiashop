@@ -47,7 +47,6 @@ const footerLinks = {
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'Care Guide', href: '/care-guide' },
-    { name: 'Style Consultation', href: '/style-consultation' },
     { name: 'Wedding Party Orders', href: '/wedding-party-orders' },
   ],
 };
