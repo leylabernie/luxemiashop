@@ -980,7 +980,7 @@ const routes = [
       <p>Coordinate the women standing with the bride without requiring everyone to wear the identical outfit. Browse lehengas, sarees and suits selected for bridesmaids and the maid or matron of honor.</p>
       <h2>How should Indian bridesmaid outfits coordinate?</h2>
       <p>Start with a shared color family, fabric weight or embroidery detail, then choose silhouettes suited to each bridesmaid. The maid or matron of honor can wear a deeper shade or more detailed border within the same palette.</p>
-      <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/contact">ask our styling team</a> for help.</p>
+      <p><a href="/wedding-party-orders">Plan a wedding party order</a> or <a href="/contact">contact LuxeMia</a> for help.</p>
     `,
   },
   {
@@ -993,7 +993,7 @@ const routes = [
       <p>Discover sarees, lehengas and festive Indian outfits selected for cinematic glamour and contemporary occasion style.</p>
       <h2>Are these outfits endorsed by Bollywood celebrities?</h2>
       <p>No. LuxeMia offers independent fashion interpretations inspired by broader Bollywood and red-carpet style directions. Celebrity names describe style inspiration only; no affiliation or endorsement is implied.</p>
-      <p><a href="/sarees">Browse sarees</a>, <a href="/lehengas">browse lehengas</a> or <a href="/contact">ask our styling team</a>.</p>
+      <p><a href="/sarees">Browse sarees</a>, <a href="/lehengas">browse lehengas</a> or <a href="/contact">contact LuxeMia</a>.</p>
     `,
   },
   {
@@ -1232,7 +1232,7 @@ const routes = [
   },
   {
     path: '/collections/wedding-sarees',
-    title: 'Wedding Saree Collection | Silk & Designer Sarees | LuxeMia',
+    title: 'Wedding Saree Collection | Silk Sarees | LuxeMia',
     description: 'Shop wedding sarees at LuxeMia. Banarasi silk, Kanjeevaram & designer wedding sarees. Traditional craftsmanship, modern elegance. Free US shipping.',
     h1: 'Wedding Saree Collection',
     content: '<p>Explore our curated wedding saree collection. From Banarasi silk to Kanjeevaram, each saree combines traditional craftsmanship with modern elegance for your special day.</p>',
@@ -1278,10 +1278,10 @@ const routes = [
   },
   {
     path: '/care-guide',
-    title: 'Care Guide — How to Care for Indian Ethnic Wear | LuxeMia',
-    description: 'Expert tips on caring for Indian ethnic wear. Learn how to wash, store & maintain silk sarees, lehengas, and embroidered garments.',
-    h1: 'Care Guide',
-    content: '<p>Learn how to properly care for your precious Indian ethnic wear. Expert tips on washing, storing, and maintaining silk sarees, embroidered lehengas, and delicate fabrics.</p>',
+    title: 'Indian Clothing Care Guide — Read the Garment Label First | LuxeMia',
+    description: 'Care for sarees, lehengas, suits and embellished Indian clothing without one-size-fits-all washing claims. Start with the exact label and product instructions.',
+    h1: 'Indian Clothing Care Guide',
+    content: '<p>Fabric names alone do not reveal every fiber, dye, lining, adhesive or embellishment. Begin with the care label and exact product instructions.</p><p>If instructions are missing or conflict, ask a qualified cleaner to inspect the garment before treatment. Store items clean and completely dry, away from direct light, heat and damp.</p>',
   },
   {
     path: '/faq',
