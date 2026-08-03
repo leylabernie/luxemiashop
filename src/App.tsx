@@ -47,7 +47,6 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Sitemap = lazy(() => import("./pages/Sitemap"));
 const Lookbook = lazy(() => import("./pages/Lookbook"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const StyleConsultation = lazy(() => import("./pages/StyleConsultation"));
 const WeddingPartyOrders = lazy(() => import("./pages/WeddingPartyOrders"));
 const StyleQuiz = lazy(() => import("./pages/StyleQuiz"));
 const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
@@ -192,7 +191,7 @@ const App = () => (
                 <Route path="/georgette-saree-for-wedding-guest" element={<Suspense fallback={<PageLoader />}><ComboPageRoute slug="georgette-saree-for-wedding-guest" /></Suspense>} />
 
                 <Route path="/sitemap" element={<Suspense fallback={<PageLoader />}><Sitemap /></Suspense>} />
-                <Route path="/style-consultation" element={<Suspense fallback={<PageLoader />}><StyleConsultation /></Suspense>} />
+                <Route path="/style-consultation" element={<Navigate to="/contact" replace />} />
                 <Route path="/wedding-party-orders" element={<Suspense fallback={<PageLoader />}><WeddingPartyOrders /></Suspense>} />
                 <Route path="/style-quiz" element={<Suspense fallback={<PageLoader />}><StyleQuiz /></Suspense>} />
                 {/* Order Confirmation — Google Customer Reviews opt-in */}
