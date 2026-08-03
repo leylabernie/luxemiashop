@@ -27,7 +27,6 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
-const PILLAR_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/pillarBlogPosts.ts');
 const COMBO_PAGES_TS = path.join(PROJECT_ROOT, 'src/data/comboPages.ts');
 
 if (!SHOPIFY_STOREFRONT_TOKEN) {
@@ -49,6 +48,7 @@ const STATIC_ROUTES = [
   '/sarees',
   '/menswear',
   '/jewelry',
+  '/jewelry',
   '/blog',
   '/collections',
   '/collections/silk-sarees',
@@ -57,13 +57,11 @@ const STATIC_ROUTES = [
   '/collections/bridal-party-outfits',
   '/collections/bollywood-inspired-indian-outfits',
   '/about',
-  '/brand-story',
   '/new-arrivals',
   '/bestsellers',
   '/indowestern',
   '/nri',
   '/indian-ethnic-wear-usa',
-  '/indian-ethnic-wear-canada',
   '/size-guide',
   '/care-guide',
   '/faq',
@@ -71,8 +69,6 @@ const STATIC_ROUTES = [
   '/pages/shipping-customs',
   '/returns',
   '/contact',
-  '/artisans',
-  '/sustainability',
   '/privacy',
   '/terms',
   '/press',
@@ -88,7 +84,6 @@ const STATIC_ROUTES = [
   '/collections/eid-outfits',
   '/collections/navratri-outfits',
   '/collections/haldi-outfits',
-  '/ready-to-ship',
   // Utsavpedia-style blog category hub routes — 8 top-level categories
   '/blog/attires',
   '/blog/cultural-connections',
@@ -98,7 +93,8 @@ const STATIC_ROUTES = [
   '/blog/weddings-festivals',
   '/blog/how-to-care',
   '/blog/nri-shopping',
-  // Author bio pages — E-E-A-T compliance
+  // Factual organizational author page
+  '/authors/luxemia-editorial-team',
 ];
 
 // ─── Shopify GraphQL ────────────────────────────────────────────────────────
@@ -193,8 +189,30 @@ async function fetchAllProductHandles() {
  * Returns an array of slug strings.
  */
 function parseBlogSlugs() {
-  const files = [BLOG_POSTS_TS, PILLAR_BLOG_POSTS_TS];
+  const files = [BLOG_POSTS_TS];
   const slugs = [];
+  const excludedSlugs = new Set();
+  const publishedSlugs = new Set();
+
+  if (fs.existsSync(BLOG_POSTS_TS)) {
+    const blogSource = fs.readFileSync(BLOG_POSTS_TS, 'utf8');
+    const excludedBlock = blogSource.match(/UNPUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+    if (excludedBlock) {
+      const valueRegex = /['"]([^'"]+)['"]/g;
+      let excludedMatch;
+      while ((excludedMatch = valueRegex.exec(excludedBlock[1])) !== null) {
+        excludedSlugs.add(excludedMatch[1]);
+      }
+    }
+    const publishedBlock = blogSource.match(/PUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+    if (publishedBlock) {
+      const valueRegex = /['"]([^'"]+)['"]/g;
+      let publishedMatch;
+      while ((publishedMatch = valueRegex.exec(publishedBlock[1])) !== null) {
+        publishedSlugs.add(publishedMatch[1]);
+      }
+    }
+  }
 
   for (const filePath of files) {
     if (!fs.existsSync(filePath)) {
@@ -207,15 +225,17 @@ function parseBlogSlugs() {
     const fileContent = fs.readFileSync(filePath, 'utf8');
 
     // Match: slug: 'some-slug' or slug: "some-slug"
-    const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
+    const slugRegex = /["']?slug["']?\s*:\s*['"]([^'"]+)['"]/g;
     let match;
 
     while ((match = slugRegex.exec(fileContent)) !== null) {
-      slugs.push(match[1]);
+      if (publishedSlugs.has(match[1]) && !excludedSlugs.has(match[1])) {
+        slugs.push(match[1]);
+      }
     }
   }
 
-  console.log(`[generate-routes] Parsed ${slugs.length} blog slugs from blogPosts.ts + pillarBlogPosts.ts`);
+  console.log(`[generate-routes] Parsed ${slugs.length} allowlisted blog slugs`);
   return slugs;
 }
 
@@ -311,7 +331,7 @@ async function main() {
     );
   }
 
-  // 2. Parse blog slugs from blogPosts.ts + pillarBlogPosts.ts
+  // 2. Parse blog slugs from the published blogPosts.ts source
   const blogSlugs = parseBlogSlugs();
 
   // 2b. Parse programmatic SEO combo page slugs from comboPages.ts.
