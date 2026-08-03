@@ -120,7 +120,7 @@ const ProductDetail = () => {
         currency: product.priceRange.minVariantPrice.currencyCode,
         imageUrl: product.images.edges[0]?.node.url || '',
       });
-
+      
       // Track view_item event in GA4
       trackViewItem({
         id: product.id,
@@ -277,7 +277,7 @@ const ProductDetail = () => {
       ) : null}
 
       <Header />
-
+      
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           {/* Breadcrumb */}
@@ -313,18 +313,18 @@ const ProductDetail = () => {
               {/* Product Grid */}
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
                 {/* Gallery */}
-                <ProductGallery
-                  images={product.images.edges}
-                  productTitle={product.title}
+                <ProductGallery 
+                  images={product.images.edges} 
+                  productTitle={product.title} 
                 />
-
+                
                 {/* Product Info */}
                 <ProductInfo key={product.id} product={product} />
               </div>
 
               {/* Product Tabs */}
               <div className="mb-16">
-                <ProductTabs
+                <ProductTabs 
                   description={enrichedDescription || product.description}
                   productType={product.productType}
                   isStitchable={isStitchableProductType(product.productType)}
@@ -372,7 +372,7 @@ const ProductDetail = () => {
               </div>
 
               {/* Complete the Look */}
-              <CompleteTheLook
+              <CompleteTheLook 
                 currentProductId={product.id}
                 productType={product.productType}
               />
@@ -419,3 +419,4 @@ const ProductSkeleton = () => (
 );
 
 export default ProductDetail;
+
