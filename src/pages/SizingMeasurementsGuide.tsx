@@ -3,428 +3,237 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { motion } from 'framer-motion';
-import { Ruler, Shirt, Scissors, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ClipboardList, Printer, Ruler, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { howToMeasureSchema } from '@/lib/schema/howTo';
 
+type MeasurementRow = {
+  name: string;
+  instruction: string;
+  note: string;
+};
+
+const measurementGroups: { title: string; rows: MeasurementRow[] }[] = [
+  {
+    title: 'Upper body and blouse',
+    rows: [
+      { name: 'Bust', instruction: 'Measure around the fullest part of the bust with the tape level across the back.', note: 'Wear the undergarment planned for the outfit.' },
+      { name: 'Underbust', instruction: 'Measure directly below the bust where the band sits.', note: 'Keep the tape close, without pulling it tight.' },
+      { name: 'Shoulder', instruction: 'Measure across the back from one shoulder edge to the other.', note: 'A helper makes this measurement more reliable.' },
+      { name: 'Blouse length', instruction: 'Measure from the top of the shoulder to the preferred blouse hem.', note: 'Record the starting and ending points for a tailor.' },
+      { name: 'Armhole', instruction: 'Wrap the tape around the shoulder and underarm.', note: 'Keep the arm relaxed at your side.' },
+      { name: 'Sleeve length', instruction: 'Measure from the shoulder point to the preferred sleeve end.', note: 'Slightly bend the arm for long sleeves.' },
+      { name: 'Upper-arm circumference', instruction: 'Measure around the fullest part of the upper arm.', note: 'Do not flex or pull the tape tight.' },
+    ],
+  },
+  {
+    title: 'Waist, hips and length',
+    rows: [
+      { name: 'Natural waist', instruction: 'Measure around the narrowest part of the torso.', note: 'Breathe normally and keep the tape level.' },
+      { name: 'Low waist', instruction: 'Measure where the lehenga or trouser waistband will sit.', note: 'This may differ from the natural waist.' },
+      { name: 'Hips', instruction: 'Stand with feet together and measure around the fullest part of the hips.', note: 'Check in a mirror that the tape is level.' },
+      { name: 'Waist to floor', instruction: 'Measure from the intended waistband to the floor.', note: 'Wear the shoes planned for the event.' },
+      { name: 'Inseam', instruction: 'Measure from the crotch seam to the preferred trouser hem.', note: 'A well-fitting pair of trousers can be measured flat.' },
+    ],
+  },
+  {
+    title: 'Menswear and full-length garments',
+    rows: [
+      { name: 'Chest', instruction: 'Measure around the fullest part of the chest and shoulder blades.', note: 'Keep arms relaxed and the tape level.' },
+      { name: 'Neck', instruction: 'Measure around the base of the neck.', note: 'Leave comfortable room for one finger.' },
+      { name: 'Kurta or sherwani length', instruction: 'Measure from the top of the shoulder to the preferred hem.', note: 'Compare with the exact product listing.' },
+      { name: 'Outseam', instruction: 'Measure from the intended waistband to the preferred trouser hem.', note: 'Wear the intended shoes if possible.' },
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'How should I measure for Indian clothing ordered online?',
+    answer: 'Use a soft measuring tape, wear the undergarments and shoes planned for the outfit, keep the tape level, and record each measurement twice. Then compare your numbers with the size information on the exact product page.',
+  },
+  {
+    question: 'Can I convert my usual U.S. dress size to an Indian clothing size?',
+    answer: 'Do not rely on a universal conversion. Brand, garment and construction can change the fit. Use your body measurements and the size information shown for the selected product.',
+  },
+  {
+    question: 'Should I add ease to my body measurements?',
+    answer: 'Record your actual body measurements on the worksheet. Do not add or subtract inches unless the product instructions specifically tell you to do so. Garment measurements and body measurements are not the same.',
+  },
+  {
+    question: 'What if I am between two listed sizes?',
+    answer: 'Compare every relevant measurement, not only the bust or waist. Contact LuxeMia before ordering if the listing does not give enough information to choose confidently.',
+  },
+  {
+    question: 'Does completing this worksheet mean tailoring is included?',
+    answer: 'No. This is a free planning worksheet. Choose only the size or stitching options shown on the product page, and confirm any measurement-based service before ordering.',
+  },
+];
+
 const SizingMeasurementsGuide = () => {
-  const [activeTab, setActiveTab] = useState<'blouse' | 'lehenga' | 'saree'>('blouse');
-
-  const faqs = [
-    {
-      question: 'How do I measure blouse size for a saree?',
-      answer: 'To measure your blouse size for a saree, wear a well-fitting bra and use a soft measuring tape. Measure your bust at the fullest part (around the nipples and shoulder blades), under-bust just below the bust line, shoulder width from edge to edge across the back, and blouse length from the shoulder down to where you want the blouse to end. Add 1-2 inches of ease to your actual bust measurement for a comfortable fit. Most Indian blouse sizes correspond to bust measurement in inches (32, 34, 36, 38, 40, 42, 44).'
-    },
-    {
-      question: 'What is the standard blouse size chart in India?',
-      answer: 'Standard Indian blouse sizes run from 32 to 48 in bust measurement. Size 32 = XS, 34 = S, 36 = M, 38 = L, 40 = XL, 42 = XXL, 44 = 3XL, 46 = 4XL, 48 = 5XL. The corresponding under-bust measurements are typically 2-4 inches less than the bust. Shoulder width ranges from 13 inches (size 32) to 16 inches (size 44).'
-    },
-    {
-      question: 'How do I measure for a custom stitched lehenga choli?',
-      answer: 'For a custom stitched lehenga choli, you need seven key measurements: bust, under-bust, waist, hips, shoulder width, blouse length, and skirt length (from waist to desired hem). Also measure armhole depth and sleeve length if you want sleeves. Submit these measurements in inches after checkout via our measurement form. Always measure over light clothing and have someone help you for accuracy.'
-    },
-    {
-      question: 'What is the difference between ready-to-wear and made-to-measure lehenga sizing?',
-      answer: 'Use only the sizing and stitching options shown on the selected product page. Ready-to-wear uses the listed standard size, while made-to-measure is available only when shown or confirmed by LuxeMia. Confirm availability and timing before ordering for a fixed event date.'
-    },
-    {
-      question: 'How accurate do my measurements need to be?',
-      answer: 'Measurements should be accurate to the nearest half-inch. A 1-inch error in bust measurement can result in a blouse that is too tight or too loose. Always measure twice and use a soft, flexible measuring tape (not a metal one). If you are between sizes, size up rather than down — it is easier to take in a blouse than to let it out.'
-    },
-    {
-      question: 'Can I order a lehenga if I do not know my exact measurements?',
-      answer: 'Choose only from the size options shown on the product page and compare them with the Size Guide. For measurement-based tailoring, contact LuxeMia before ordering to confirm the service and required measurements.'
-    },
-  ];
-
-  const blouseMeasurements = [
-    { measurement: 'Bust', howTo: 'Measure around the fullest part of your bust, keeping the tape parallel to the floor across your back', sizeGuide: 'This is your primary blouse size (e.g., 36 inches = size 36)', tip: 'Wear the bra you plan to wear with the saree' },
-    { measurement: 'Under-bust', howTo: 'Measure directly under your bust, where the bra band sits', sizeGuide: 'Should be 2-4 inches less than your bust measurement', tip: 'Do not pull the tape too tight' },
-    { measurement: 'Shoulder width', howTo: 'Measure from the edge of one shoulder to the other, across the back of your neck', sizeGuide: 'Typically 13-15.5 inches for sizes 32-42', tip: 'Have a friend help for accuracy' },
-    { measurement: 'Blouse length', howTo: 'Measure from the nape of your neck (where the shoulder meets the neck) down to where you want the blouse to end', sizeGuide: 'Standard blouse length is 14-16 inches', tip: 'Crop blouses end above the navel; long blouses end at the waist' },
-    { measurement: 'Armhole depth', howTo: 'Measure from the shoulder point down into the armpit', sizeGuide: 'Typically 7-9 inches for sizes 32-42', tip: 'This determines how the sleeve fits' },
-    { measurement: 'Sleeve length', howTo: 'Measure from the shoulder point down the arm to the desired sleeve end', sizeGuide: 'Sleeveless = 0, cap = 3, short = 6, elbow = 14, full = 22 inches', tip: 'Specify if you want sleeves at all' },
-    { measurement: 'Sleeve circumference', howTo: 'Measure around the arm at the point where the sleeve will end', sizeGuide: 'Typically 10-14 inches depending on arm size', tip: 'Add 1 inch for comfort' },
-    { measurement: 'Front neck depth', howTo: 'Measure from the base of the throat down to the desired neckline point', sizeGuide: 'Standard = 7-9 inches; deep = 10-12 inches', tip: 'Specify sweetheart, V, boat, or round neck' },
-    { measurement: 'Back neck depth', howTo: 'Measure from the nape of the neck down to the desired back neckline', sizeGuide: 'Standard = 3-5 inches; deep = 6-10 inches', tip: 'Tie-back, hook, or dori style?' },
-  ];
-
-  const lehengaMeasurements = [
-    { measurement: 'Waist', howTo: 'Measure at the natural waist (the narrowest part of your torso, above the belly button)', sizeGuide: 'This is the skirt waistband size', tip: 'Do not measure over thick clothing' },
-    { measurement: 'Hips', howTo: 'Measure around the fullest part of your hips (about 8 inches below the waist)', sizeGuide: 'Should be 6-10 inches more than waist', tip: 'Stand with feet together' },
-    { measurement: 'Skirt length', howTo: 'Measure from the waist down to the desired hem length', sizeGuide: 'Standard = 40-42 inches; tall = 44-46 inches', tip: 'Add 1 inch for heel height' },
-    { measurement: 'Skirt flare', howTo: 'Not a measurement — choose kali (panel) count: 8, 12, 16, 24, or 36', sizeGuide: 'More kalis = more flare. 36-kali is the most dramatic', tip: '36-kali is best for bridal entry' },
-  ];
-
-  const sareeMeasurements = [
-    { measurement: 'Saree length', howTo: 'Standard saree = 5.5 meters; bridal saree = 6 meters; petite = 5 meters', sizeGuide: 'Most sarees come in standard 5.5m length', tip: 'No measurement needed — choose standard' },
-    { measurement: 'Blouse piece', howTo: 'Most sarees include 0.8-1.0 meters of matching blouse fabric', sizeGuide: 'This is unstitched — you take it to a tailor', tip: 'Check the product description to confirm' },
-    { measurement: 'Petticoat waist', howTo: 'Same as your natural waist measurement', sizeGuide: 'Order the petticoat in your waist size', tip: 'Match the petticoat color to the saree' },
-  ];
-
-  const measurements = activeTab === 'blouse' ? blouseMeasurements : activeTab === 'lehenga' ? lehengaMeasurements : sareeMeasurements;
+  const [unit, setUnit] = useState<'in' | 'cm'>('in');
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="How to Measure Blouse Size for Saree — Step-by-Step Sizing Guide | LuxeMia"
-        description="Complete guide on how to measure blouse size for saree, lehenga choli, and custom stitched Indian ethnic wear. Step-by-step instructions, size charts, and measurement tips for the perfect fit. Free U.S. shipping over $150 to USA."
+        title="Indian Clothing Measurement Guide & Printable Worksheet | LuxeMia"
+        description="Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable worksheet. Compare your measurements with the exact product listing before ordering."
         canonical="https://luxemia.shop/sizing-measurements-guide"
         faqs={faqs}
         additionalSchemas={[howToMeasureSchema()]}
       />
+      <style>{`@media print {
+        header, footer, nav, .no-print, [data-sonner-toaster] { display: none !important; }
+        main { padding-top: 0 !important; }
+        .print-sheet { box-shadow: none !important; border: 0 !important; }
+        .print-break-avoid { break-inside: avoid; }
+        body { background: white !important; color: black !important; }
+      }`}</style>
       <Header />
 
       <main className="pt-[88px] lg:pt-[130px]">
-        {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-primary/5 to-background">
+        <section className="no-print bg-gradient-to-b from-primary/10 to-background py-16 lg:py-24">
           <div className="container mx-auto px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6"
-            >
-              <Ruler className="w-4 h-4" />
-              <span className="text-sm font-medium">Sizing & Custom Measurements Guide</span>
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
-            >
-              How to Measure Blouse Size for Saree
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
-            >
-              Step-by-step instructions for measuring your bust, waist, and blouse length for the perfect
-              Indian ethnic wear fit. Covers saree blouses, lehenga cholis, and custom stitched orders.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-wrap justify-center gap-3 mt-8"
-            >
-              <Badge variant="secondary" className="text-sm py-2 px-4">Free U.S. shipping over $150 to USA</Badge>
-              <Badge variant="secondary" className="text-sm py-2 px-4">Listing-specific sizing</Badge>
-              <Badge variant="secondary" className="text-sm py-2 px-4">Confirm tailoring before ordering</Badge>
-            </motion.div>
+            <Badge variant="secondary" className="mb-5 gap-2 px-4 py-2">
+              <Ruler className="h-4 w-4" /> Free printable fit worksheet
+            </Badge>
+            <h1 className="mx-auto max-w-4xl font-display text-4xl text-foreground md:text-5xl lg:text-6xl">
+              Indian Clothing Measurement Guide
+            </h1>
+            <p className="mx-auto mt-6 max-w-3xl text-lg text-muted-foreground">
+              Record the measurements commonly requested for saree blouses, lehengas, suits, kurtas and sherwanis—then compare them with the exact product listing.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                <Printer className="h-4 w-4" /> Print worksheet
+              </button>
+              <Link
+                to="/size-guide"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-6 py-3 font-medium text-foreground hover:bg-secondary"
+              >
+                View LuxeMia size guide <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* Why Sizing Matters */}
-        <section className="py-16">
+        <section className="no-print py-14">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-6">
-                Why Getting Your Blouse Size Right Matters
-              </h2>
-              <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
-                <p>
-                  The single biggest reason shoppers abandon their cart on an Indian ethnic wear website is
-                  fear that the blouse or lehenga will not fit. A saree can be draped loosely, a skirt can be
-                  pinned at the waist, but a blouse that is even one inch too tight or too loose will ruin
-                  the entire look — and there is rarely time to get it re-stitched before the wedding.
-                </p>
-                <p>
-                  Whether you are a bride shopping for your wedding lehenga, a wedding guest looking for a
-                  ready-to-wear saree, or an NRI family ordering from the USA without access to a local
-                  Indian tailor, this guide will walk you through exactly how to measure yourself for the
-                  perfect fit. Every measurement is in inches (the standard for Indian ethnic wear), and we
-                  have included size charts, tips, and common mistakes to avoid.
-                </p>
-                <p>
-                  Once you know your measurements, you can confidently order any of our{' '}
-                  <Link to="/lehengas" className="text-primary underline hover:text-primary/80">online lehengas</Link>{' '}
-                  or{' '}
-                  <Link to="/sarees" className="text-primary underline hover:text-primary/80">designer sarees</Link>{' '}
-                  knowing the fit will be right the first time.
-                </p>
+            <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
+              <Card>
+                <CardContent className="pt-6">
+                  <Ruler className="mb-3 h-8 w-8 text-primary" />
+                  <h2 className="font-semibold text-foreground">Use a soft tape</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">Keep it flat and level against the body without compressing the skin.</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <Users className="mb-3 h-8 w-8 text-primary" />
+                  <h2 className="font-semibold text-foreground">Ask someone to help</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">Shoulder, back and full-length measurements are easier to take accurately with a helper.</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <CheckCircle2 className="mb-3 h-8 w-8 text-primary" />
+                  <h2 className="font-semibold text-foreground">Measure twice</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">Record actual body measurements. Compare them only with the selected listing.</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-16">
+          <div className="container mx-auto px-4">
+            <div className="print-sheet mx-auto max-w-5xl rounded-2xl border border-border bg-card p-5 shadow-sm md:p-8">
+              <div className="flex flex-col gap-5 border-b border-border pb-6 md:flex-row md:items-start md:justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-medium text-primary">
+                    <ClipboardList className="h-4 w-4" /> LuxeMia measurement worksheet
+                  </div>
+                  <h2 className="mt-2 font-display text-3xl text-foreground">My outfit measurements</h2>
+                  <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+                    Worksheet only—this does not confirm sizing, tailoring availability or fit. Check the product page and ask before ordering when details are unclear.
+                  </p>
+                </div>
+                <div className="no-print flex rounded-full border border-border p-1 text-sm">
+                  <button type="button" onClick={() => setUnit('in')} className={`rounded-full px-4 py-2 ${unit === 'in' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>Inches</button>
+                  <button type="button" onClick={() => setUnit('cm')} className={`rounded-full px-4 py-2 ${unit === 'cm' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}>Centimeters</button>
+                </div>
+                <div className="hidden text-sm print:block">Unit: ________</div>
+              </div>
+
+              <div className="grid gap-4 border-b border-border py-6 sm:grid-cols-2 lg:grid-cols-4">
+                {['Name', 'Event and date', 'Outfit or product', 'Shoes / heel height'].map((label) => (
+                  <label key={label} className="text-sm font-medium text-foreground">
+                    {label}
+                    <input aria-label={label} className="mt-2 w-full border-0 border-b border-border bg-transparent px-1 py-2 font-normal outline-none focus:border-primary" />
+                  </label>
+                ))}
+              </div>
+
+              <div className="space-y-10 pt-8">
+                {measurementGroups.map((group) => (
+                  <div key={group.title} className="print-break-avoid">
+                    <h3 className="font-display text-2xl text-foreground">{group.title}</h3>
+                    <div className="mt-4 overflow-x-auto">
+                      <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+                        <thead>
+                          <tr className="border-b-2 border-border">
+                            <th className="w-[18%] px-3 py-3 font-semibold">Measurement</th>
+                            <th className="w-[40%] px-3 py-3 font-semibold">How to measure</th>
+                            <th className="w-[27%] px-3 py-3 font-semibold">Check</th>
+                            <th className="w-[15%] px-3 py-3 font-semibold">My {unit}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {group.rows.map((row, index) => (
+                            <tr key={row.name} className={index % 2 === 0 ? 'bg-secondary/30' : ''}>
+                              <td className="px-3 py-4 font-medium text-foreground">{row.name}</td>
+                              <td className="px-3 py-4 text-muted-foreground">{row.instruction}</td>
+                              <td className="px-3 py-4 text-muted-foreground">{row.note}</td>
+                              <td className="px-3 py-4">
+                                <input aria-label={`${row.name} in ${unit}`} inputMode="decimal" className="w-full min-w-20 border-0 border-b border-border bg-transparent px-1 py-2 outline-none focus:border-primary" />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-10 grid gap-5 border-t border-border pt-6 md:grid-cols-2">
+                <label className="text-sm font-medium text-foreground">
+                  Product listing size options
+                  <textarea aria-label="Product listing size options" rows={3} className="mt-2 w-full rounded-md border border-border bg-background p-3 font-normal outline-none focus:border-primary" />
+                </label>
+                <label className="text-sm font-medium text-foreground">
+                  Questions to ask before ordering
+                  <textarea aria-label="Questions to ask before ordering" rows={3} className="mt-2 w-full rounded-md border border-border bg-background p-3 font-normal outline-none focus:border-primary" />
+                </label>
               </div>
             </div>
           </div>
         </section>
 
-        {/* What You'll Need */}
-        <section className="py-12 bg-secondary/30">
+        <section className="no-print bg-secondary/30 py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-8 text-center">
-                What You Will Need
-              </h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                <Card className="text-center">
-                  <CardContent className="pt-6">
-                    <Scissors className="w-10 h-10 text-primary mx-auto mb-3" />
-                    <h3 className="font-medium text-foreground mb-2">Soft Measuring Tape</h3>
-                    <p className="text-sm text-muted-foreground">
-                      A flexible tailor's tape measure (not a metal hardware store tape). Available at any
-                      pharmacy or craft store for under $3.
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center">
-                  <CardContent className="pt-6">
-                    <Shirt className="w-10 h-10 text-primary mx-auto mb-3" />
-                    <h3 className="font-medium text-foreground mb-2">A Well-Fitting Bra</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Wear the bra you plan to wear with the saree or lehenga. A padded or unpadded bra will
-                      change your bust measurement by up to an inch.
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center">
-                  <CardContent className="pt-6">
-                    <AlertCircle className="w-10 h-10 text-primary mx-auto mb-3" />
-                    <h3 className="font-medium text-foreground mb-2">A Friend to Help</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Measuring yourself is doable but error-prone. Having a friend or family member help
-                      ensures the tape stays level and measurements are accurate.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Measurement Tabs */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-6 text-center">
-                Step-by-Step Measurement Instructions
-              </h2>
-              <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
-                Select the garment type you are measuring for. Each tab walks you through every measurement
-                you need, what it means, and a pro tip for getting it right.
-              </p>
-
-              {/* Tab Buttons */}
-              <div className="flex justify-center gap-2 mb-10 flex-wrap">
-                <button
-                  onClick={() => setActiveTab('blouse')}
-                  className={`px-6 py-3 rounded-full font-medium transition-colors ${
-                    activeTab === 'blouse'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-foreground hover:bg-secondary/70'
-                  }`}
-                >
-                  Saree Blouse (9 measurements)
-                </button>
-                <button
-                  onClick={() => setActiveTab('lehenga')}
-                  className={`px-6 py-3 rounded-full font-medium transition-colors ${
-                    activeTab === 'lehenga'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-foreground hover:bg-secondary/70'
-                  }`}
-                >
-                  Lehenga Choli (4 measurements)
-                </button>
-                <button
-                  onClick={() => setActiveTab('saree')}
-                  className={`px-6 py-3 rounded-full font-medium transition-colors ${
-                    activeTab === 'saree'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-foreground hover:bg-secondary/70'
-                  }`}
-                >
-                  Saree & Petticoat (3 measurements)
-                </button>
-              </div>
-
-              {/* Measurement Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b-2 border-border">
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">Measurement</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">How to Measure</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground hidden md:table-cell">Size Guide</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground hidden lg:table-cell">Pro Tip</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {measurements.map((m, i) => (
-                      <tr key={m.measurement} className={i % 2 === 0 ? 'bg-secondary/30' : ''}>
-                        <td className="py-4 px-4 font-medium text-foreground align-top">{m.measurement}</td>
-                        <td className="py-4 px-4 text-sm text-muted-foreground align-top">{m.howTo}</td>
-                        <td className="py-4 px-4 text-sm text-muted-foreground align-top hidden md:table-cell">{m.sizeGuide}</td>
-                        <td className="py-4 px-4 text-sm text-muted-foreground align-top hidden lg:table-cell italic">{m.tip}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Standard Size Chart */}
-        <section className="py-16 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-6 text-center">
-                Standard Indian Blouse Size Chart (Inches)
-              </h2>
-              <p className="text-muted-foreground text-center mb-8">
-                If you already know your standard size, use this chart. All LuxeMia ready-to-wear blouses
-                and lehenga cholis follow these measurements.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b-2 border-border bg-primary/10">
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">Size</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">Bust</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">Under-bust</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">Shoulder</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">Blouse Length</th>
-                      <th className="text-left py-3 px-4 font-semibold text-foreground">US Equivalent</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      { size: '32', bust: '32', underBust: '28', shoulder: '13', length: '14', us: 'XS (0-2)' },
-                      { size: '34', bust: '34', underBust: '30', shoulder: '13.5', length: '14.5', us: 'S (4-6)' },
-                      { size: '36', bust: '36', underBust: '32', shoulder: '14', length: '15', us: 'M (8-10)' },
-                      { size: '38', bust: '38', underBust: '34', shoulder: '14.5', length: '15.5', us: 'L (12-14)' },
-                      { size: '40', bust: '40', underBust: '36', shoulder: '15', length: '16', us: 'XL (16-18)' },
-                      { size: '42', bust: '42', underBust: '38', shoulder: '15.5', length: '16.5', us: 'XXL (20-22)' },
-                      { size: '44', bust: '44', underBust: '40', shoulder: '16', length: '17', us: '3XL (24-26)' },
-                      { size: '46', bust: '46', underBust: '42', shoulder: '16.5', length: '17.5', us: '4XL (28-30)' },
-                      { size: '48', bust: '48', underBust: '44', shoulder: '17', length: '18', us: '5XL (32-34)' },
-                    ].map((row, i) => (
-                      <tr key={row.size} className={i % 2 === 0 ? 'bg-background' : 'bg-secondary/20'}>
-                        <td className="py-3 px-4 font-medium text-foreground">{row.size}</td>
-                        <td className="py-3 px-4 text-muted-foreground">{row.bust}"</td>
-                        <td className="py-3 px-4 text-muted-foreground">{row.underBust}"</td>
-                        <td className="py-3 px-4 text-muted-foreground">{row.shoulder}"</td>
-                        <td className="py-3 px-4 text-muted-foreground">{row.length}"</td>
-                        <td className="py-3 px-4 text-muted-foreground">{row.us}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Common Mistakes */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-8 text-center">
-                Common Measurement Mistakes to Avoid
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardContent className="pt-6">
-                    <AlertCircle className="w-8 h-8 text-destructive mb-3" />
-                    <h3 className="font-semibold text-foreground mb-2">Measuring Over Thick Clothing</h3>
-                    <p className="text-sm text-muted-foreground">
-                      A sweater or padded bra can add 1-2 inches to your bust measurement. Always measure
-                      over a thin bra or fitted top.
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-6">
-                    <AlertCircle className="w-8 h-8 text-destructive mb-3" />
-                    <h3 className="font-semibold text-foreground mb-2">Pulling the Tape Too Tight</h3>
-                    <p className="text-sm text-muted-foreground">
-                      The tape should sit flat against your body without digging in. If you can see the tape
-                      indenting your skin, it is too tight. Add 1 inch of ease for comfort.
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-6">
-                    <AlertCircle className="w-8 h-8 text-destructive mb-3" />
-                    <h3 className="font-semibold text-foreground mb-2">Measuring Alone</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Back measurements (shoulder width, back neck depth) are nearly impossible to take
-                      accurately on yourself. Always ask a friend to help.
-                    </p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-6">
-                    <AlertCircle className="w-8 h-8 text-destructive mb-3" />
-                    <h3 className="font-semibold text-foreground mb-2">Not Specifying Neckline & Sleeves</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Even with perfect measurements, a blouse needs neckline and sleeve preferences.
-                      Always specify sweetheart/V/boat neck and sleeveless/cap/elbow/full.
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Ready-to-Wear vs Custom */}
-        <section className="py-16 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-8 text-center">
-                Ready-to-Wear vs Custom Stitched: Which Should You Choose?
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card>
-                  <CardContent className="pt-6">
-                    <CheckCircle2 className="w-8 h-8 text-primary mb-3" />
-                    <h3 className="font-semibold text-foreground mb-3">Choose Ready-to-Wear if:</h3>
-                    <ul className="text-sm text-muted-foreground space-y-2">
-                      <li>• You need a standard size shown on the product page</li>
-                      <li>• Your measurements fit standard sizes (32-48)</li>
-                      <li>• You are a wedding guest, not the bride</li>
-                      <li>• You want the listed ready-to-wear construction</li>
-                      <li>• You are between sizes and can size up</li>
-                    </ul>
-                    <p className="text-sm text-primary font-medium mt-4">Confirm availability and timing before ordering</p>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardContent className="pt-6">
-                    <CheckCircle2 className="w-8 h-8 text-primary mb-3" />
-                    <h3 className="font-semibold text-foreground mb-3">Choose Custom Stitched if:</h3>
-                    <ul className="text-sm text-muted-foreground space-y-2">
-                      <li>• You are the bride or in the wedding party</li>
-                      <li>• You need measurement-based tailoring</li>
-                      <li>• Your measurements do not fit standard sizes</li>
-                      <li>• You want a specific neckline or sleeve style</li>
-                      <li>• You want a perfect, tailored fit</li>
-                    </ul>
-                    <p className="text-sm text-primary font-medium mt-4">Confirm availability and timing before ordering</p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="font-display text-3xl text-foreground mb-8 text-center">
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-6">
-                {faqs.map((faq, i) => (
-                  <div key={i} className="border-b border-border pb-6">
-                    <h3 className="font-semibold text-foreground mb-2 text-lg">{faq.question}</h3>
-                    <p className="text-muted-foreground">{faq.answer}</p>
+            <div className="mx-auto max-w-3xl">
+              <h2 className="text-center font-display text-3xl text-foreground">Measurement questions</h2>
+              <div className="mt-8 space-y-6">
+                {faqs.map((faq) => (
+                  <div key={faq.question} className="border-b border-border pb-6">
+                    <h3 className="text-lg font-semibold text-foreground">{faq.question}</h3>
+                    <p className="mt-2 text-muted-foreground">{faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -432,35 +241,16 @@ const SizingMeasurementsGuide = () => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-16 bg-primary text-primary-foreground">
+        <section className="no-print bg-primary py-16 text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="font-display text-3xl md:text-4xl mb-4">
-              Ready to Find Your Perfect Fit?
-            </h2>
-            <p className="text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-              Shop our online lehengas, designer sarees, and bridal collections. Free shipping on
-              orders over $150 to the United States.
+            <h2 className="font-display text-3xl md:text-4xl">Shop with your measurements ready</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/90">
+              Compare your worksheet with the size and construction details on each listing. U.S. shipping is free over $150 and $12 below that.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                to="/lehengas"
-                className="inline-flex items-center gap-2 bg-background text-foreground px-6 py-3 rounded-full font-medium hover:bg-background/90 transition-colors"
-              >
-                Shop Lehengas <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/sarees"
-                className="inline-flex items-center gap-2 bg-background/20 text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-background/30 transition-colors border border-primary-foreground/30"
-              >
-                Shop Sarees <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/size-guide"
-                className="inline-flex items-center gap-2 bg-background/20 text-primary-foreground px-6 py-3 rounded-full font-medium hover:bg-background/30 transition-colors border border-primary-foreground/30"
-              >
-                View Standard Size Guide <ArrowRight className="w-4 h-4" />
-              </Link>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link to="/lehengas" className="inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 font-medium text-foreground">Shop lehengas <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/sarees" className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 bg-background/15 px-6 py-3 font-medium text-primary-foreground">Shop sarees <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/suits" className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 bg-background/15 px-6 py-3 font-medium text-primary-foreground">Shop suits <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </div>
         </section>
