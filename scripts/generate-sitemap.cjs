@@ -75,7 +75,6 @@ const staticPages = [
   { loc: '/indian-ethnic-wear-usa', changefreq: 'monthly', priority: '0.8' },
   // '/indian-ethnic-wear-canada' is intentionally omitted because it 301s to
   // /nri. Sitemaps must contain final, canonical 200 URLs only.
-  { loc: '/style-consultation', changefreq: 'monthly', priority: '0.7' },
   { loc: '/wedding-party-orders', changefreq: 'monthly', priority: '0.8' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5' },
