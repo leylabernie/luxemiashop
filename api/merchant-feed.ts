@@ -422,6 +422,8 @@ function getColorFromProduct(
 
 // ─── Enriched Description ────────────────────────────────────────────
 
+// Raw Shopify descriptions are intentionally excluded because legacy policy text can conflict with the live store policy.
+
 function enrichDescription(
   _desc: string,
   productType: string,
