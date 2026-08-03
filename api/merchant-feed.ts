@@ -422,8 +422,10 @@ function getColorFromProduct(
 
 // ─── Enriched Description ────────────────────────────────────────────
 
+// Raw Shopify descriptions are intentionally excluded because legacy policy text can conflict with the live store policy.
+
 function enrichDescription(
-  desc: string,
+  _desc: string,
   productType: string,
   title: string,
   tags: string[],
@@ -432,22 +434,16 @@ function enrichDescription(
   const fabric = getMaterialFromProduct({ productType, title, tags, options: [] } as unknown as ShopifyProduct);
   const work = getWorkFromTags(tags);
 
-  let enriched = (desc || title).replace(/\s+/g, " ").trim();
-  enriched = enriched
-    .split(/(?<=[.!?])\s+/)
-    .filter((sentence) => !/(worldwide shipping|flat rate \$25|free shipping on orders over \$350|dispatch:\s*\d|delivery:\s*\d)/i.test(sentence))
-    .join(" ");
+  const details = [`${title}.`];
+  if (productType) details.push(`Category: ${productType}.`);
+  if (fabric) details.push(`Material: ${fabric}.`);
+  if (work) details.push(`Detail: ${work}.`);
+  if (size) details.push(`Selected size: ${size}.`);
+  details.push(
+    "United States shipping only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is provided after dispatch. Review the product page for current availability and exact details."
+  );
 
-  const exactDetails: string[] = [];
-  if (fabric) exactDetails.push(`Material: ${fabric}`);
-  if (work) exactDetails.push(`Detail: ${work}`);
-  if (size) exactDetails.push(`Selected size: ${size}`);
-  if (exactDetails.length) enriched += ` ${exactDetails.join(". ")}.`;
-
-  enriched +=
-    " Store policy: United States shipping only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is provided after dispatch. Review the product page for current availability and exact details.";
-
-  return enriched.slice(0, 5000).trim();
+  return details.join(" ").slice(0, 5000);
 }
 
 // ─── Shipping XML blocks ─────────────────────────────────────────────
