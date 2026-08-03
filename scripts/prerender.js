@@ -1367,7 +1367,7 @@ const routes = [
     path: '/new-arrivals',
     category: 'all',
     title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
-    description: 'Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. shipping over $150.',
+    description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. shipping over $150.",
     h1: 'New Arrivals',
     content: `
       <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry available online for delivery across the United States.</p>
