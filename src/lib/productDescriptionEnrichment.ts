@@ -198,7 +198,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'lehenga for reception',
     ],
     categoryDescription:
-      'Explore LuxeMia\'s curated collection of designer lehengas — from bridal masterpieces to festive-ready silhouettes. Handcrafted with intricate embroidery, zari, and sequin work, each lehenga blends traditional Indian artistry with contemporary design. Shop bridal lehengas, wedding lehengas, and festive lehengas online with free U.S. shipping over $150 and $12 flat shipping below that.',
+      'Explore LuxeMia\'s curated collection of designer lehengas, from bridal styles to festive silhouettes. Review each product page for the exact fabric, embroidery, included pieces, and available sizing. Shop bridal, wedding, and festive lehengas online with free U.S. shipping over $150 and $12 flat shipping below that.',
   },
 
   saree: {
@@ -1185,7 +1185,7 @@ export function getProductCategoryDescription(productType: string): string {
   }
 
   // Generic fallback
-  return 'Shop Indian ethnic wear at LuxeMia. Curated collection of premium lehengas, sarees, suits, and menswear crafted with authentic Indian artistry. Free U.S. shipping over $150. $12 flat below that.';
+  return 'Shop Indian ethnic wear at LuxeMia for U.S. customers. Review each product page for exact materials, included pieces, sizing, and available options. Free U.S. shipping over $150; $12 flat below.';
 }
 
 // ---------------------------------------------------------------------------
