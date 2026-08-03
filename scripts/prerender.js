@@ -741,7 +741,7 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
     { '@type': 'HowToStep', position: 4, name: 'Measure garment lengths', text: 'Measure from the intended starting point to the preferred hem. Wear the planned shoes for floor-length garments.' },
     { '@type': 'HowToStep', position: 5, name: 'Check the selected product', text: 'Record every measurement twice, then compare the results with the size and construction details on the exact product listing.' },
   ],
-}
+};
 
 // Route definitions with SEO metadata
 const routes = [
