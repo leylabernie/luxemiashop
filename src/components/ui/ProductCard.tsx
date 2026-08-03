@@ -400,7 +400,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
             {product.node.productType || 'Collection'}
           </p>
-          <h3 className="font-medium text-sm line-clamp-1 group-hover:text-primary transition-colors">
+          <h3 className="font-medium text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
             {product.node.title}
           </h3>
           <div className="flex items-center justify-between gap-2">
@@ -450,3 +450,4 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;
+

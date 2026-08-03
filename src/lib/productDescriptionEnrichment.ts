@@ -134,9 +134,12 @@ const SPECIFICITY_INDICATORS = [
   'silhouette',
 ];
 
-/** Shipping info paragraph — consistent across all enriched descriptions. */
-const SHIPPING_PARAGRAPH =
-  'Available in sizes S-XXL with custom tailoring options. Free U.S. shipping over $150; $12 flat below that. In-stock pieces ship with tracking after dispatch.';
+/** Shipping copy must not imply apparel sizing or verified dispatch speed. */
+const APPAREL_SHIPPING_PARAGRAPH =
+  'Review the size and tailoring choices shown for this product before ordering. Free U.S. shipping over $150; $12 flat below that. Tracking is provided after dispatch.';
+
+const JEWELRY_SHIPPING_PARAGRAPH =
+  'Free U.S. shipping over $150; $12 flat below that. Tracking is provided after dispatch.';
 
 /** Mapping of normalized product types to their template data. */
 const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
@@ -565,7 +568,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
   jewelry: {
     label: 'jewelry piece',
     adjectives: {
-      primary: ['exquisite', 'dazzling', 'ornate', 'luminous', 'artistic', 'handcrafted'],
+      primary: ['exquisite', 'dazzling', 'ornate', 'luminous', 'artistic', 'statement'],
       secondary: ['intricate', 'radiant', 'timeless', 'statement', 'delicate', 'brilliant'],
     },
     designElements: [
@@ -611,7 +614,7 @@ const CATEGORY_TEMPLATES: Record<string, CategoryTemplate> = {
       'gold-plated Indian jewelry',
     ],
     categoryDescription:
-      'Adorn yourself with LuxeMia\'s jewelry collection — handcrafted kundan sets, temple jewelry, polki designs, and statement earrings. Each piece is crafted to complement Indian ethnic wear with timeless artistry. Free U.S. shipping over $150. $12 flat below that.',
+      'Shop LuxeMia\'s Indian jewelry collection, including kundan-style sets, necklaces, chokers, earrings, and accessories where listed. Review each product page for exact materials, finish, stones, and included pieces. Free U.S. shipping over $150; $12 flat below.',
   },
 
   'indo-western': {
@@ -908,6 +911,21 @@ function buildCareParagraph(
   return `${careTip} ${storageTip}`;
 }
 
+/**
+ * Build conservative jewelry copy without borrowing garment options or
+ * inventing stones, plating, included pieces, or craftsmanship claims.
+ */
+function buildJewelryDescription(description: string, title: string): string {
+  const original = description.trim();
+  const opening = original || `Shop the ${title} at LuxeMia. Review the product images and listed details for the exact pieces, finish, colors, measurements, and closure.`;
+  const hasCare = /avoid\s+(water|perfume)|soft\s+(cloth|pouch)|jewelry\s+care/i.test(original);
+  const care = hasCare
+    ? ''
+    : 'Jewelry care: Keep away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.';
+
+  return [opening, care, JEWELRY_SHIPPING_PARAGRAPH].filter(Boolean).join('\n\n');
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -957,6 +975,12 @@ export function enrichProductDescription(
   material?: string,
   color?: string,
 ): string {
+  const categoryKey = normalizeProductType(productType);
+
+  if (categoryKey === 'jewelry') {
+    return buildJewelryDescription(description, title);
+  }
+
   // If the description is already rich, still append Color/Fabric details
   // if they're missing — GMC requires explicit "Color: X" in descriptions.
   // This addresses the GMC recommendation: "Update product descriptions to
@@ -976,7 +1000,6 @@ export function enrichProductDescription(
     return description;
   }
 
-  const categoryKey = normalizeProductType(productType);
   const inferredMaterial = inferMaterial(title, material, description);
   const inferredColor = inferColor(title, color, description);
   const seed = `${title}-${productType}`;
@@ -1007,7 +1030,7 @@ export function enrichProductDescription(
     '',
     care,
     '',
-    SHIPPING_PARAGRAPH,
+    APPAREL_SHIPPING_PARAGRAPH,
   ].filter(Boolean).join('\n\n');
 
   return enriched;
@@ -1050,6 +1073,16 @@ export function generateMetaDescription(
 ): string {
   const categoryKey = normalizeProductType(productType);
   const template = CATEGORY_TEMPLATES[categoryKey] ?? CATEGORY_TEMPLATES['suit'];
+
+  if (categoryKey === 'jewelry') {
+    const suffix = 'Shop Indian jewelry online at LuxeMia. Free U.S. shipping over $150; $12 flat below.';
+    const full = `${title}. ${suffix}`;
+    if (full.length <= 160) return full;
+    const available = Math.max(35, 160 - suffix.length - 2);
+    const shortTitle = title.slice(0, available).replace(/\s+\S*$/, '').trim();
+    return `${shortTitle}. ${suffix}`;
+  }
+
   const inferredMaterial = inferMaterial(title, material, description);
   const inferredColor = inferColor(title, color, description);
   const label = template.label;
@@ -1069,11 +1102,10 @@ export function generateMetaDescription(
   // Trust + shipping USP — rotate between shipping turnaround & craftsmanship
   // for natural variation across products (deterministic by title hash)
   const trustUsps = [
-    'Tracking provided after dispatch in the US.',
-    'Handcrafted by Indian artisans.',
-    'Ready-to-ship craftsmanship for US delivery.',
+    'Tracking is provided after dispatch in the U.S.',
+    'Online shopping with U.S.-based customer support.',
+    'Review the listed size and product details before ordering.',
     'Free U.S. shipping over $150. $12 flat below that.',
-    'Ready to ship in 3-5 business days.',
   ];
   const uspIndex = hashString(title) % trustUsps.length;
   const trustUsp = trustUsps[uspIndex];
