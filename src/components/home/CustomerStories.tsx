@@ -4,31 +4,31 @@ import { Shield, Truck, RefreshCcw, Headphones } from 'lucide-react';
 const reasons = [
   {
     icon: Shield,
-    title: 'Quality Checked',
-    description: 'Every item is inspected before it ships to you. We catch issues so you don\'t have to.',
+    title: 'Clear Product Details',
+    description: 'Review the available fabric, work, size, and included-piece information before ordering.',
   },
   {
     icon: Truck,
-    title: 'Tracked Delivery',
-    description: 'Trackable U.S. shipping for online orders.',
+    title: 'Tracked U.S. Delivery',
+    description: 'Tracking is provided after dispatch for online orders to U.S. addresses.',
   },
   {
     icon: RefreshCcw,
-    title: 'Quality Guarantee',
-    description: 'Every item inspected before shipping. Damage claims supported with evidence.',
+    title: 'Published Policies',
+    description: 'Shipping, cancellation, final-sale, and damage-claim terms are available before checkout.',
   },
   {
     icon: Headphones,
-    title: 'Real Support',
-    description: 'Have a question about sizing, fabric, or your order? Our team actually responds.',
+    title: 'U.S.-Based Support',
+    description: 'Contact us before ordering with questions about sizing, fabric, product details, or policies.',
   },
   {
-    title: 'Accurate Descriptions',
-    description: 'We tell you exactly what you\'re getting — real fabric info, real measurements, real photos.',
+    title: 'Listing-Specific Options',
+    description: 'Use the photos, product details, available sizes, and selected options shown on each listing.',
   },
   {
-    title: 'Fair Prices',
-    description: 'No inflated "original" prices or fake sales. What you see is what things actually cost.',
+    title: 'Checkout Clarity',
+    description: 'See item prices, the shipping threshold, taxes, and the selected variants before payment.',
   },
 ];
 

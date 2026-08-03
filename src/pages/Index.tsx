@@ -31,7 +31,7 @@ const homepageFaqs = [
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
-    answer: "Absolutely. At LuxeMia, we source our products directly from India's established textile hubs and suppliers, ensuring authentic designs and quality materials at fair prices."
+    answer: "Product pages state the available fabric, embroidery or embellishment work, stitching status, sizes, and package contents when those details are supplied. Contact LuxeMia before ordering if an important detail is not listed."
   },
   {
     question: "Can I get custom sizing or alterations for my outfit?",

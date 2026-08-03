@@ -255,7 +255,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             </div>
             <div className="flex flex-col items-center gap-1.5">
               <Shield className="h-5 w-5 text-foreground/50" />
-              <span className="text-xs font-medium">Quality Guaranteed</span>
+              <span className="text-xs font-medium">Published Policies</span>
             </div>
             <div className="flex flex-col items-center gap-1.5">
               <Truck className="h-5 w-5 text-foreground/50" />

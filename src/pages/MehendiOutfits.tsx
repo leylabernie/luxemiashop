@@ -35,7 +35,7 @@ const mehendiOutfitFaqs = [
   },
   {
     question: 'Do you ship mehendi outfits to the United States?',
-    answer: 'LuxeMia currently ships mehendi outfits to the United States. Free US shipping applies over $150; orders below $150 have a flat $12 rate. Orders include tracking. For wedding functions, order at least 3–4 weeks before the event; standard transit is estimated at carrier transit after dispatch after dispatch.',
+    answer: 'LuxeMia ships mehendi outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'Can guests wear any color other than yellow and green to a mehendi?',
@@ -157,7 +157,7 @@ const MehendiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Mehendi Outfit</h3>
-                <p>Indian ethnic wear ships from our online edit — even online items take 2 business days to ship, and custom-stitched items take 3-4 weeks. <strong>Order your mehendi outfit at least 4-6 weeks before the wedding date.</strong> If you are ordering custom-stitched (Made to Measure), order 6-8 weeks ahead. At LuxeMia, ready-to-wear items ship with tracking after dispatch and Made to Measure items requires timing confirmation before ordering, with 7-10 day shipping to the United States.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

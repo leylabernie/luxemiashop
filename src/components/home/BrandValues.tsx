@@ -4,23 +4,23 @@ import { Gem, Leaf, Heart, Award } from 'lucide-react';
 const values = [
   {
     icon: Gem,
-    title: 'Curated Selection',
-    description: 'Each piece is carefully selected from India\'s textile hubs for quality and style.',
+    title: 'Listing-Specific Details',
+    description: 'Review the available fabric, work, size, and included-piece information on each product page.',
   },
   {
     icon: Leaf,
-    title: 'Honest Value',
-    description: 'Quality Indian ethnic wear at fair prices, with no misleading claims.',
+    title: 'Clear Shipping Cost',
+    description: 'U.S. shipping is $12 below $150 and free over $150, with tracking after dispatch.',
   },
   {
     icon: Heart,
-    title: 'Customer First',
-    description: 'Real support, real photos, and accurate descriptions so you know what you get.',
+    title: 'Customer Support',
+    description: 'Contact our U.S.-based support team before ordering with product, sizing, or policy questions.',
   },
   {
     icon: Award,
-    title: 'Quality Checked',
-    description: 'Every item is inspected before shipping to ensure it meets our standards.',
+    title: 'Published Policies',
+    description: 'Final-sale, cancellation, and shipping-damage terms are available before checkout.',
   },
 ];
 
