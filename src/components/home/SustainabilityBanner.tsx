@@ -26,8 +26,6 @@ const values = [
   },
 ];
 
-const SustainabilityBanner];
-
 const SustainabilityBanner = () => {
   return (
     <section className="py-16 lg:py-24 bg-secondary/30">
