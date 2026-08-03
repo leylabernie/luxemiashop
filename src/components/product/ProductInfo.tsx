@@ -23,7 +23,6 @@ interface StitchingTypeOption {
   description: string;
   priceModifier: number;
   requiresMeasurement: boolean;
-  deliveryExtraDays: number;
 }
 
 const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
@@ -33,7 +32,6 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
     description: 'Pre-constructed with adjustable side seams. Select your standard size for a near-perfect fit.',
     priceModifier: 0,
     requiresMeasurement: false,
-    deliveryExtraDays: 0,
   },
   {
     id: 'ready-to-wear',
@@ -41,7 +39,6 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
     description: 'Fully stitched to standard measurements matching the product image. Select your bust size.',
     priceModifier: 15,
     requiresMeasurement: true,
-    deliveryExtraDays: 3,
   },
   {
     id: 'made-to-measure',
@@ -49,7 +46,6 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
     description: 'Made-to-measure tailoring with the neckline, sleeve, and bottom-style choices shown on this page. Submit measurements after ordering.',
     priceModifier: 25,
     requiresMeasurement: true,
-    deliveryExtraDays: 5,
   },
 ];
 
@@ -573,14 +569,8 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         )}
       </div>
 
-      {/* Estimated Delivery — dynamic based on stitching selection */}
-      <DeliveryEstimate
-        hasStitching={needsStitchingSize}
-        extraTailoringDays={selectedStitchingType
-          ? (STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType)?.deliveryExtraDays || 0)
-          : 0
-        }
-      />
+      {/* Shipping terms — timing is confirmed from the selected product and service */}
+      <DeliveryEstimate hasStitching={needsStitchingSize} />
 
       <Separator />
 
@@ -678,11 +668,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   {option.description}
-                  {option.deliveryExtraDays > 0 && (
-                    <span className="text-amber-600 dark:text-amber-400 ml-1">
-                      (+{option.deliveryExtraDays} days for tailoring)
-                    </span>
-                  )}
+
                 </p>
               </button>
             ))}
