@@ -73,6 +73,18 @@ const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
   ],
 };
 
+const postShopCta: Record<string, { eyebrow: string; heading: string; href: string; label: string }> = {
+  'wedding-saree-for-mother-of-bride': { eyebrow: 'Shop the guide', heading: 'Compare sarees for the celebration.', href: '/sarees', label: 'Shop Sarees' },
+  'wedding-guest-outfit-ideas': { eyebrow: 'Shop wedding guest looks', heading: 'Browse current outfits by ceremony and style.', href: '/collections/wedding-guest-outfits', label: 'Shop Wedding Guest Looks' },
+  'accessorize-indian-ethnic-wear': { eyebrow: 'Complete the look', heading: 'Browse current jewelry styles.', href: '/jewelry', label: 'Shop Jewelry' },
+  'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon': { eyebrow: 'Compare current listings', heading: 'Use each product page to verify the exact fabric.', href: '/collections', label: 'Browse Collections' },
+  'styling-indian-ethnic-wear-festive-occasions-abroad': { eyebrow: 'Shop festive looks', heading: 'Browse current occasionwear for U.S. celebrations.', href: '/collections', label: 'Shop Occasionwear' },
+  'lehenga-vs-sharara-vs-anarkali-comparison': { eyebrow: 'Compare the silhouettes', heading: 'Start with current lehengas and suits.', href: '/lehengas', label: 'Shop Lehengas' },
+  'how-to-drape-saree-beginner-guide': { eyebrow: 'Ready to choose a saree?', heading: 'Browse current sarees and verify included pieces.', href: '/sarees', label: 'Shop Sarees' },
+  'how-to-choose-salwar-kameez-body-type': { eyebrow: 'Shop with fit confidence', heading: 'Compare your measurements with current suit options.', href: '/suits', label: 'Shop Suits' },
+  'sherwani-vs-jodhpuri-vs-bandhgala-groom-guide': { eyebrow: 'Shop the menswear edit', heading: 'Browse current groom and occasion styles.', href: '/menswear', label: 'Shop Menswear' },
+};
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
@@ -214,7 +226,7 @@ const BlogPost = () => {
     "description": post.excerpt,
     "image": {
       "@type": "ImageObject",
-      "url": `https://luxemia.shop${post.image}`,
+      "url": post.image.startsWith("http") ? post.image : `https://luxemia.shop${post.image}`,
       "width": 1200,
       "height": 630
     },
@@ -315,6 +327,12 @@ const BlogPost = () => {
 
   const shareUrl = `https://luxemia.shop/blog/${post.slug}`;
   const isSizingArticle = /size|measurement|fit|plus-size/i.test(`${post.slug} ${post.title}`);
+  const shopCta = postShopCta[post.slug] || {
+    eyebrow: 'Shop the guide',
+    heading: 'Browse current Indian occasionwear.',
+    href: '/collections',
+    label: 'Browse Collections',
+  };
 
   // Check if updated date differs from published date
   const showUpdatedDate = post.updatedAt && post.updatedAt !== post.publishedAt;
@@ -484,32 +502,34 @@ const BlogPost = () => {
                 </p>
               </div>
 
-              <aside className="mb-10 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6" aria-label="Shop LuxeMia new arrivals">
+              <aside className="mb-10 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6" aria-label="Shop LuxeMia styles related to this guide">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                  {isSizingArticle ? 'Shop with fit confidence' : 'From the LuxeMia edit'}
+                  {shopCta.eyebrow}
                 </p>
                 <h2 className="mb-2 text-xl font-display font-semibold text-foreground">
-                  {isSizingArticle ? 'Found your size? See the newest styles.' : 'Turn the inspiration into your next occasion look.'}
+                  {shopCta.heading}
                 </h2>
                 <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                  Browse recently added Indian occasionwear with clear size options, product details and tracked U.S. shipping.
+                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. U.S. shipping is $12 below $150 and free over $150.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button asChild>
-                    <Link to="/new-arrivals" className="gap-2">
+                    <Link to={shopCta.href} className="gap-2">
                       <ShoppingBag className="h-4 w-4" />
-                      Shop New Arrivals
+                      {shopCta.label}
                     </Link>
                   </Button>
                   <Button variant="outline" asChild>
                     <a
-                      href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20need%20help%20choosing%20a%20size%20before%20I%20order."
+                      href={isSizingArticle
+                        ? 'https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20need%20help%20clarifying%20the%20listed%20size%20before%20I%20order.'
+                        : 'https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20have%20a%20question%20about%20a%20product%20before%20I%20order.'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="gap-2"
                     >
                       <MessageCircle className="h-4 w-4" />
-                      Ask About Sizing
+                      {isSizingArticle ? 'Ask About Sizing' : 'Ask Before Ordering'}
                     </a>
                   </Button>
                 </div>
