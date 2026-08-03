@@ -392,35 +392,35 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
     <Tabs defaultValue="details" className="w-full">
       <TabsList className="w-full justify-start h-auto p-0 bg-transparent border-b border-border rounded-none overflow-x-auto">
         {hasFabricDetails && (
-          <TabsTrigger
-            value="fabric"
+          <TabsTrigger 
+            value="fabric" 
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
           >
             {isJewelry ? 'Specifications' : 'Fabric & Details'}
           </TabsTrigger>
         )}
-        <TabsTrigger
-          value="details"
+        <TabsTrigger 
+          value="details" 
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           Details
         </TabsTrigger>
         {showTailoringTab && (
-          <TabsTrigger
-            value="tailoring"
+          <TabsTrigger 
+            value="tailoring" 
             className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
           >
             Tailoring Services
           </TabsTrigger>
         )}
-        <TabsTrigger
-          value="material"
+        <TabsTrigger 
+          value="material" 
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           {isJewelry ? 'Jewelry Care' : 'Material & Care'}
         </TabsTrigger>
-        <TabsTrigger
-          value="styling"
+        <TabsTrigger 
+          value="styling" 
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           Styling & Occasions
@@ -433,8 +433,8 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             Size Guide
           </TabsTrigger>
         )}
-        <TabsTrigger
-          value="shipping"
+        <TabsTrigger 
+          value="shipping" 
           className="rounded-none border-b-2 border-transparent data-[state=active]:border-foreground data-[state=active]:bg-transparent px-6 py-4 text-sm uppercase tracking-wide whitespace-nowrap"
         >
           Shipping & Returns
@@ -991,9 +991,9 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                   <div>
                     <h5 className="font-medium text-foreground mb-1">Quality Inspection Guarantee</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Every single item is personally inspected by our quality team in India before it ships.
-                      We check stitching, embroidery, fabric quality, and color accuracy to ensure your order
-                      arrives in perfect condition. Our inspection process is your assurance that what you see
+                      Every single item is personally inspected by our quality team in India before it ships. 
+                      We check stitching, embroidery, fabric quality, and color accuracy to ensure your order 
+                      arrives in perfect condition. Our inspection process is your assurance that what you see 
                       online is what you receive.
                     </p>
                   </div>
