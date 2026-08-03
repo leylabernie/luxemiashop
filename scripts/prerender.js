@@ -1871,7 +1871,7 @@ function generateHtml(template, route, allShopifyProducts) {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
         { '@type': 'ListItem', position: 2, name: productCategory.label, item: SITE_URL + productCategory.link },
-        { '@type': 'ListItem', position: 3, name: live?.title || route.h1, item: canonical },
+        { '@type': 'ListItem', position: 3, name: sanitizeProductTitle(live?.title || route.h1), item: canonical },
       ],
     };
 
