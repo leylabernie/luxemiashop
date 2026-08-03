@@ -82,11 +82,11 @@ function titleCase(str: string): string {
   return str.replace(/\b\w+/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
 }
 
-export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({ 
-  product, 
-  index = 0, 
+export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
+  product,
+  index = 0,
   showQuickAdd = true,
-  className = '' 
+  className = ''
 }, ref) => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -95,13 +95,13 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const [isPinching, setIsPinching] = useState(false);
   const [pinchOrigin, setPinchOrigin] = useState({ x: 50, y: 50 });
   const [imageError, setImageError] = useState(false);
-  
+
   const cardRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const initialDistanceRef = useRef<number>(0);
   const initialScaleRef = useRef<number>(1);
-  
-  
+
+
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
@@ -154,7 +154,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
       setIsPinching(true);
       initialDistanceRef.current = getDistance(e.touches);
       initialScaleRef.current = pinchScale;
-      
+
       const rect = e.currentTarget.getBoundingClientRect();
       setPinchOrigin(getCenter(e.touches, rect));
     }
@@ -167,7 +167,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
       const scaleChange = currentDistance / initialDistanceRef.current;
       const newScale = Math.min(Math.max(initialScaleRef.current * scaleChange, 1), 3);
       setPinchScale(newScale);
-      
+
       const rect = e.currentTarget.getBoundingClientRect();
       setPinchOrigin(getCenter(e.touches, rect));
     }
@@ -225,17 +225,17 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const lastTapRef = useRef<number>(0);
   const handleDoubleTap = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
     if (e.touches.length !== 1) return;
-    
+
     const now = Date.now();
     const DOUBLE_TAP_DELAY = 300;
-    
+
     if (now - lastTapRef.current < DOUBLE_TAP_DELAY) {
       e.preventDefault();
       const rect = e.currentTarget.getBoundingClientRect();
       const touch = e.touches[0];
       const x = ((touch.clientX - rect.left) / rect.width) * 100;
       const y = ((touch.clientY - rect.top) / rect.height) * 100;
-      
+
       if (pinchScale > 1) {
         setPinchScale(1);
         setPinchOrigin({ x: 50, y: 50 });
@@ -244,7 +244,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
         setPinchOrigin({ x, y });
       }
     }
-    
+
     lastTapRef.current = now;
   }, [pinchScale]);
 
@@ -288,7 +288,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
       className={`group ${className}`}
     >
       <Link to={`/product/${product.node.handle}`}>
-        <div 
+        <div
           ref={imageContainerRef}
           className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card touch-none"
           onTouchStart={(e) => {
@@ -326,11 +326,11 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                   isPinching ? '' : 'transition-all duration-300'
                 )}
                 style={{
-                  transform: isPinching || pinchScale > 1 
-                    ? `scale(${pinchScale})` 
+                  transform: isPinching || pinchScale > 1
+                    ? `scale(${pinchScale})`
                     : 'scale(1)',
-                  transformOrigin: isPinching || pinchScale > 1 
-                    ? `${pinchOrigin.x}% ${pinchOrigin.y}%` 
+                  transformOrigin: isPinching || pinchScale > 1
+                    ? `${pinchOrigin.x}% ${pinchOrigin.y}%`
                     : 'center',
                 }}
               />
@@ -400,7 +400,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
             {product.node.productType || 'Collection'}
           </p>
-          <h3 className="font-medium text-sm line-clamp-1 group-hover:text-primary transition-colors">
+          <h3 className="font-medium text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
             {product.node.title}
           </h3>
           <div className="flex items-center justify-between gap-2">
