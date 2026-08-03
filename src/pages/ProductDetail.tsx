@@ -43,6 +43,11 @@ const isJewelryProductType = (productType?: string): boolean => {
   return JEWELRY_PRODUCT_TYPES.some((type) => lower.includes(type));
 };
 
+const sanitizeSeoTitle = (value?: string): string => (value || '')
+  .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+
 /**
  * Get Google Product Category using NUMERIC TAXONOMY IDs.
  * GMC accepts both numeric IDs and text paths, but numeric IDs are
@@ -165,7 +170,7 @@ const ProductDetail = () => {
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
   // Falls back to the existing title template + generated meta description.
   // Note: `product.seo` is typed via ShopifyProduct['node'] in src/lib/shopify.ts.
-  const seoTitle = product?.seo?.title?.trim() || '';
+  const seoTitle = sanitizeSeoTitle(product?.seo?.title);
   const seoDescription = product?.seo?.description?.trim() || '';
 
   const enrichedDescription = useMemo(() => {

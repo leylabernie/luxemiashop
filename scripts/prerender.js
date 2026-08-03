@@ -77,7 +77,61 @@ function sanitizeProductCopy(value) {
 }
 
 function sanitizeProductTitle(value) {
-  return (value || '').replace(/\s*\|\s*Ready to Ship/gi, '').replace(/ready[- ]to[- ]ship/gi, 'available online').replace(/\s+/g, ' ').trim();
+  return (value || '')
+    .replace(/\s*\|\s*Ready to Ship/gi, '')
+    .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
+    .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const JEWELRY_PRODUCT_PATTERN = /\b(jewel|jewell|necklace|choker|earring|bangle|bracelet|ring|maang\s*tikka|anklet|kundan|polki)\b/i;
+
+function isJewelryProduct(productType = '', title = '') {
+  return JEWELRY_PRODUCT_PATTERN.test(`${productType} ${title}`);
+}
+
+function getListedProductAttributes(product) {
+  const jewelry = isJewelryProduct(product?.productType, product?.title);
+  const listingText = `${product?.title || ''} ${product?.description || ''}`.toLowerCase();
+  const optionValue = (...names) => product?.options
+    ?.find(option => names.includes((option.name || '').toLowerCase()))
+    ?.values?.[0];
+  const rawColor = optionValue('color');
+  const rawMaterial = optionValue('fabric', 'material');
+  const sizeValues = product?.options
+    ?.find(option => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
+    ?.values
+    ?.filter(value => value && value.toLowerCase() !== 'default title') || [];
+
+  return {
+    jewelry,
+    color: rawColor && (!jewelry || listingText.includes(rawColor.toLowerCase())) ? rawColor : undefined,
+    material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
+    sizes: jewelry ? [] : sizeValues,
+  };
+}
+
+function getProductCategoryInfo(productType = '', title = '') {
+  const type = productType.toLowerCase();
+  if (isJewelryProduct(productType, title)) {
+    return {
+      schemaCategory: /necklace|choker/i.test(`${productType} ${title}`)
+        ? 'Apparel & Accessories > Jewelry > Necklaces'
+        : 'Apparel & Accessories > Jewelry',
+      link: '/jewelry',
+      label: 'All Jewelry',
+    };
+  }
+  if (type.includes('lehenga')) return { schemaCategory: productType || 'Lehenga', link: '/lehengas', label: 'All Lehengas' };
+  if (type.includes('saree') || type.includes('sari')) return { schemaCategory: productType || 'Saree', link: '/sarees', label: 'All Sarees' };
+  if (type.includes('suit') || type.includes('kameez') || type.includes('palazzo') || type.includes('sharara') || type.includes('anarkali') || type.includes('patiala')) {
+    return { schemaCategory: productType || 'Indian Suit', link: '/suits', label: 'All Suits' };
+  }
+  if (type.includes('sherwani') || type.includes('kurta') || type.includes('menswear')) {
+    return { schemaCategory: productType || 'Menswear', link: '/menswear', label: 'All Menswear' };
+  }
+  return { schemaCategory: productType || 'Clothing > Traditional & Ethnic Wear', link: '/products', label: 'All Products' };
 }
 
 function truncateAtWord(value, maxLength) {
@@ -2363,7 +2417,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const live = route.product || null;
     const liveImages = live?.images?.edges?.map(e => forceJpegForGmc(e.node.url)).filter(Boolean) || [];
     const productImages = liveImages.length > 0 ? liveImages : [FALLBACK_OG_IMAGE];
-    const productDescription = (live?.description?.trim() || route.description || '').slice(0, 5000);
+    const productDescription = sanitizeProductCopy(live?.description?.trim() || route.description || '').slice(0, 5000);
     const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
     // Extract the compareAtPrice (regular/original price) for sale-price JSON-LD.
@@ -2383,6 +2437,8 @@ function generateHtml(template, route, allShopifyProducts) {
       const v = (live?.vendor || '').trim();
       return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
     })();
+    const productAttributes = getListedProductAttributes(live);
+    const productCategory = getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
     // Product schema — must include image, description, offers.price/priceCurrency
     // for Google Merchant Listings validation.
@@ -2396,7 +2452,10 @@ function generateHtml(template, route, allShopifyProducts) {
       mpn: productSku,
       url: canonical,
       brand: { '@type': 'Brand', name: productBrand },
-      category: 'Clothing > Traditional & Ethnic Wear',
+      category: productCategory.schemaCategory,
+      ...(productAttributes.color ? { color: productAttributes.color } : {}),
+      ...(productAttributes.material ? { material: productAttributes.material } : {}),
+      ...(productAttributes.sizes.length > 0 ? { size: productAttributes.sizes } : {}),
       itemCondition: 'https://schema.org/NewCondition',
       offers: {
         '@type': 'Offer',
@@ -2455,8 +2514,8 @@ function generateHtml(template, route, allShopifyProducts) {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
-        { '@type': 'ListItem', position: 2, name: 'Products', item: SITE_URL + '/products' },
-        { '@type': 'ListItem', position: 3, name: route.h1, item: canonical },
+        { '@type': 'ListItem', position: 2, name: productCategory.label, item: SITE_URL + productCategory.link },
+        { '@type': 'ListItem', position: 3, name: live?.title || route.h1, item: canonical },
       ],
     };
 
@@ -2503,20 +2562,17 @@ function generateHtml(template, route, allShopifyProducts) {
     const productType = (p.productType || '').trim();
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
+    const productAttributes = getListedProductAttributes(p);
+    const productCategory = getProductCategoryInfo(productType, p.title || route.h1);
 
     let priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
     if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
       priceHtml += ` <s style="color:#888">${currency} ${parseFloat(comparePrice).toFixed(2)}</s>`;
     }
 
-    // Category link based on product type
-    const typeLower = productType.toLowerCase();
-    let categoryLink = '/products';
-    let categoryLabel = 'All Products';
-    if (typeLower.includes('lehenga')) { categoryLink = '/lehengas'; categoryLabel = 'All Lehengas'; }
-    else if (typeLower.includes('saree') || typeLower.includes('sari')) { categoryLink = '/sarees'; categoryLabel = 'All Sarees'; }
-    else if (typeLower.includes('suit') || typeLower.includes('kameez') || typeLower.includes('palazzo') || typeLower.includes('sharara') || typeLower.includes('anarkali') || typeLower.includes('patiala')) { categoryLink = '/suits'; categoryLabel = 'All Suits'; }
-    else if (typeLower.includes('sherwani') || typeLower.includes('kurta') || typeLower.includes('menswear')) { categoryLink = '/menswear'; categoryLabel = 'All Menswear'; }
+    // Category link and schema category use the same product classification.
+    const categoryLink = productCategory.link;
+    const categoryLabel = productCategory.label;
 
     const firstImage = images[0];
     const imgHtml = firstImage
@@ -2530,12 +2586,35 @@ function generateHtml(template, route, allShopifyProducts) {
     const detailRows = [
       productType ? `<li><strong>Type:</strong> ${escapeHtml(productType)}</li>` : '',
       `<li><strong>Brand:</strong> ${escapeHtml(brandName)}</li>`,
+      productAttributes.color ? `<li><strong>Color:</strong> ${escapeHtml(productAttributes.color)}</li>` : '',
+      productAttributes.material ? `<li><strong>${productAttributes.jewelry ? 'Material' : 'Fabric'}:</strong> ${escapeHtml(productAttributes.material)}</li>` : '',
+      productAttributes.sizes.length > 0 ? `<li><strong>Available sizes:</strong> ${escapeHtml(productAttributes.sizes.join(', '))}</li>` : '',
       `<li><strong>Availability:</strong> ${isAvailable ? 'In Stock' : 'Currently Unavailable'}</li>`,
       `<li><strong>Ships to:</strong> United States</li>`,
       `<li><strong>Shipping:</strong> Tracking provided after dispatch</li>`,
-      ``,
-      `<li><strong>Custom sizing:</strong> Available on request</li>`,
+      !productAttributes.jewelry && productAttributes.sizes.length === 0
+        ? `<li><strong>Sizing:</strong> Review the options shown for this product before ordering</li>`
+        : '',
     ].filter(Boolean).join('\n        ');
+
+    const sizeAnswer = productAttributes.sizes.length > 0
+      ? `Available choices shown for this listing are ${escapeHtml(productAttributes.sizes.join(', '))}. Review the Size Guide before ordering.`
+      : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
+    const firstQuestion = productAttributes.jewelry
+      ? `<h3>What is included with the ${escapeHtml(p.title || route.h1)}?</h3><p>The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.</p>`
+      : `<h3>What sizes are available?</h3><p>${sizeAnswer}</p>`;
+    const careAnswer = productAttributes.jewelry
+      ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
+      : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
+    const productQuestionsHtml = `
+      <h2>Product Questions</h2>
+      ${firstQuestion}
+      <h3>How is this product shipped?</h3>
+      <p>Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies over $150; a flat $12 rate applies below $150.</p>
+      <h3>What is the return policy?</h3>
+      <p>All sales are final. Genuine shipping damage must be reported within 48 hours and requires an unboxing video.</p>
+      <h3>How should I care for this product?</h3>
+      <p>${careAnswer}</p>`;
 
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
@@ -2546,8 +2625,9 @@ function generateHtml(template, route, allShopifyProducts) {
       <ul>
         ${detailRows}
       </ul>
+      ${productQuestionsHtml}
       <h2>Shipping &amp; Delivery</h2>
-      <p>Free U.S. shipping over $150. $12 flat below that. Online orders ship with tracking after dispatch with tracking.</p>
+      <p>Free U.S. shipping over $150. $12 flat below that. Tracking is provided after dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/products">All Products</a> | <a href="/collections">Collections</a></p>`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals/bestsellers)
@@ -2761,7 +2841,7 @@ async function main() {
     // field is the complete title the user wants shown in search results —
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
-    const seoTitle = (p.seo?.title || '').trim();
+    const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
     const seoDescription = (p.seo?.description || '').trim();
 
     // ─── USP-enhanced title generation ──────────────────────────────────────
@@ -2770,12 +2850,13 @@ async function main() {
     // Bridal Lehenga | Hand Embroidery | LuxeMia") that corporate catalogs lack.
     const desc = sanitizeProductCopy((p.description || '').trim());
     const baseTitle = sanitizeProductTitle(p.title || handle);
+    const productIsJewelry = isJewelryProduct(p.productType, baseTitle);
     const titleDescLower = `${baseTitle} ${desc}`.toLowerCase();
 
     // Fabric + color detection arrays (shared by title + description generation)
     const fabrics = ['raw silk', 'banarasi silk', 'kanchipuram silk', 'kanjivaram', 'georgette', 'chiffon', 'velvet', 'organza', 'chinnon', 'chinon', 'crepe', 'net', 'cotton', 'satin', 'taffeta', 'jacquard', 'tussar', 'brocade', 'silk', 'art silk'];
     const colors = ['maroon', 'wine', 'burgundy', 'red', 'pink', 'rani pink', 'baby pink', 'dusty rose', 'blue', 'navy', 'royal blue', 'sky blue', 'teal', 'green', 'emerald', 'olive', 'mint', 'sage', 'yellow', 'gold', 'mustard', 'orange', 'peach', 'coral', 'rust', 'purple', 'lavender', 'plum', 'mauve', 'lilac', 'white', 'ivory', 'cream', 'beige', 'black', 'grey', 'gray', 'champagne', 'copper', 'bronze'];
-    const foundFabric = fabrics.find(f => titleDescLower.includes(f));
+    const foundFabric = productIsJewelry ? undefined : fabrics.find(f => titleDescLower.includes(f));
     const foundColor = colors.find(c => titleDescLower.includes(c));
 
     let title;
@@ -2802,13 +2883,15 @@ async function main() {
     // products with thin Shopify descriptions get unique, keyword-rich meta.
     const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
-    const fallbackDesc = `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with delivery to the United States; free U.S. shipping over $150.`;
+    const fallbackDesc = productIsJewelry
+      ? `Shop ${baseTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
+      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with delivery to the United States; free U.S. shipping over $150.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,
       title,
       description,
-      h1: seoTitle || sanitizeProductTitle(p.title) || handle,
+      h1: sanitizeProductTitle(p.title) || handle,
       content: `<p>${escapeHtml(desc || fallbackDesc).slice(0, 1200)}</p>`,
       product: p,
     });
