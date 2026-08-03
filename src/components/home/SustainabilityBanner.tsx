@@ -6,25 +6,27 @@ import { Button } from '@/components/ui/button';
 const values = [
   {
     icon: Package,
-    title: 'Quality Packaging',
-    description: 'Every order is carefully packed to ensure your outfit arrives in perfect condition.',
+    title: 'Order Packaging',
+    description: 'Orders are packaged for transit. Keep the packaging if you need to report shipping damage.',
   },
   {
     icon: Headphones,
-    title: 'Real Customer Support',
-    description: 'Our team responds to your questions and helps with sizing, returns, and orders.',
+    title: 'U.S.-Based Support',
+    description: 'Contact us before ordering with questions about sizing, products, or policies.',
   },
   {
     icon: Shield,
-    title: 'What You See Is What You Get',
-    description: 'We provide accurate descriptions and real photos so there are no surprises.',
+    title: 'Listing Details',
+    description: 'Review the available photos, product attributes, sizes, and included pieces before ordering.',
   },
   {
     icon: Truck,
-    title: 'Reliable Shipping',
-    description: 'Tracked US delivery for online orders available online.',
+    title: 'Tracked U.S. Shipping',
+    description: 'Tracking is provided after dispatch for online orders to U.S. addresses.',
   },
 ];
+
+const SustainabilityBanner];
 
 const SustainabilityBanner = () => {
   return (
@@ -45,9 +47,9 @@ const SustainabilityBanner = () => {
               Honest Service, Real Value
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              At LuxeMia, we keep it straightforward. We source beautiful Indian ethnic wear 
-              from established suppliers and manufacturers, and we sell it at fair prices. No 
-              inflated claims, no fake stories — just good products and honest service.
+              LuxeMia is an online Indian ethnic wear store for U.S. shoppers. We publish the available
+              product details, shipping costs, final-sale terms, and damage-claim requirements so
+              customers can review them before ordering.
             </p>
 
             {/* Values Grid */}
@@ -95,21 +97,21 @@ const SustainabilityBanner = () => {
             <div className="grid grid-cols-1 gap-6">
               <div className="text-center">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  We source from India's well-known textile regions and established manufacturers. 
-                  Our focus is on offering well-made ethnic wear at prices that work for everyday customers.
+                  Product pages show the available fabric, work, size, stitching, and included-piece
+                  information supplied for each listing.
                 </p>
               </div>
               <div className="text-center">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  We are committed to being upfront about what we sell. If something is machine-made, 
-                  we say so. If it is art silk, not pure silk, we say that too.
+                  When an attribute is available, we publish it. If an important detail is not listed,
+                  contact LuxeMia before ordering.
                 </p>
               </div>
             </div>
 
             <div className="mt-8 pt-8 border-t border-border">
               <p className="text-center text-sm text-muted-foreground italic">
-                "Good clothes, honest prices, and a team that actually answers your questions."
+                "Clear product details, published policies, and support before you order."
               </p>
             </div>
           </motion.div>
