@@ -12,8 +12,6 @@ const SHOPIFY_API_VERSION = "2025-10";
 const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 const SITE_URL = "https://luxemia.shop";
-const BRAND = "LuxeMia";
-
 const corsHeaders: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -38,6 +36,7 @@ interface ShopifyVariant {
   availableForSale: boolean;
   price: { amount: string; currencyCode: string };
   compareAtPrice: { amount: string; currencyCode: string } | null;
+  barcode: string | null;
   selectedOptions: ShopifySelectedOption[];
   image?: { url: string } | null;
 }
@@ -101,7 +100,7 @@ query FetchProducts($first: Int!, $after: String) {
             }
           }
         }
-        variants(first: 10) {
+        variants(first: 100) {
           edges {
             node {
               id
@@ -109,6 +108,7 @@ query FetchProducts($first: Int!, $after: String) {
               availableForSale
               price { amount currencyCode }
               compareAtPrice { amount currencyCode }
+              barcode
               selectedOptions {
                 name
                 value
@@ -195,51 +195,37 @@ async function fetchAllProducts(): Promise<ShopifyProduct[]> {
 // ─── Google Product Category (NUMERIC IDs) ──────────────────────────
 
 function getGoogleCategory(productType: string, title: string): number {
-  const t = title.toLowerCase();
-  const pt = productType.toLowerCase();
+  const text = `${productType} ${title}`.toLowerCase();
 
-  // Men's products first
-  if (
-    pt.includes("men") ||
-    t.includes("sherwani") ||
-    t.includes("kurta pajama")
-  ) {
-    if (t.includes("sherwani")) return 5598;
-    if (t.includes("kurta")) return 5600;
-    return 5006;
+  if (/(jewelry|jewellery|necklace|choker|earring|bangle|bracelet|ring)/.test(text)) {
+    if (/(set|combo)/.test(text)) return 6463; // Jewelry Sets
+    if (/(necklace|choker)/.test(text)) return 196; // Necklaces
+    if (/earring/.test(text)) return 194; // Earrings
+    if (/(bangle|bracelet)/.test(text)) return 191; // Bracelets
+    if (/ring/.test(text)) return 200; // Rings
+    return 188; // Jewelry
   }
-  if (pt.includes("lehenga")) return 2275;
-  if (pt.includes("saree")) return 5424;
-  if (pt.includes("necklace")) return 193;
-  if (pt.includes("earring")) return 194;
-  if (pt.includes("bangle") || pt.includes("bracelet")) return 200;
-  if (pt.includes("jewel")) return 188;
-  if (
-    pt.includes("suit") ||
-    pt.includes("anarkali") ||
-    pt.includes("sharara") ||
-    pt.includes("palazzo") ||
-    pt.includes("salwar")
-  ) {
-    return 2275;
+
+  if (/(saree|sari|lehenga)/.test(text)) return 8248; // Saris & Lehengas
+  if (/(sherwani|kurta|salwar|anarkali|sharara|gharara|palazzo|traditional)/.test(text)) {
+    return 5388; // Traditional & Ceremonial Clothing
   }
-  return 1604;
+
+  return 1604; // Clothing
 }
 
 // ─── Gender Mapping ──────────────────────────────────────────────────
 
 function getGender(productType: string, title: string): string {
-  const t = title.toLowerCase();
-  const pt = productType.toLowerCase();
-  if (
-    pt.includes("men") ||
-    t.includes("sherwani") ||
-    t.includes("kurta") ||
-    t.includes("groom wear")
-  ) {
+  const text = `${productType} ${title}`.toLowerCase();
+
+  if (/(^|\b)(men|mens|men's|male|groom|sherwani|kurta pajama|nehru)(\b|$)/.test(text)) {
     return "male";
   }
-  return "female";
+  if (/(^|\b)(women|womens|women's|female|saree|sari|lehenga|choli|blouse|anarkali|salwar|sharara|gharara|palazzo)(\b|$)/.test(text)) {
+    return "female";
+  }
+  return "";
 }
 
 // ─── Size Extraction ─────────────────────────────────────────────────
@@ -257,9 +243,7 @@ function getSizeFromVariant(
     }
   }
 
-  // Default sizes based on gender
-  const gender = getGender(productType, title);
-  return gender === "male" ? "40" : "S";
+  return "";
 }
 
 // ─── Force JPEG on image URLs ────────────────────────────────────────
@@ -347,7 +331,7 @@ function getWorkFromTags(tags: string[]): string {
       }
     }
   }
-  return "Embroidered";
+  return "";
 }
 
 // ─── Extract material/fabric from product options or title ───────────
@@ -387,24 +371,50 @@ function getMaterialFromProduct(
       return fabric;
     }
   }
-  return "Mixed";
+  return "";
 }
 
 // ─── Extract color from product options ──────────────────────────────
 
-function getColorFromProduct(product: ShopifyProduct): string {
-  // Check product options for Color option
-  for (const option of product.options) {
-    if (
-      option.name.toLowerCase() === "color" ||
-      option.name.toLowerCase() === "colour"
-    ) {
-      if (option.values.length > 0) {
-        return option.values[0];
-      }
-    }
+function getColorFromProduct(
+  product: ShopifyProduct,
+  selectedOptions: ShopifySelectedOption[]
+): string {
+  const selectedColor = selectedOptions.find((option) =>
+    ["color", "colour"].includes(option.name.toLowerCase())
+  );
+  if (selectedColor?.value) return selectedColor.value;
+
+  const productColor = product.options.find((option) =>
+    ["color", "colour"].includes(option.name.toLowerCase())
+  );
+  if (productColor?.values.length === 1) return productColor.values[0];
+
+  for (const tag of product.tags) {
+    const match = tag.match(/^colou?r\s*:\s*(.+)$/i);
+    if (match?.[1]) return match[1].trim();
   }
-  return "Multi";
+
+  const colorNames = [
+    "off white", "rose gold", "royal blue", "navy blue", "sky blue",
+    "dusty rose", "baby pink", "hot pink", "emerald green", "olive green",
+    "mint green", "lime green", "sage green", "bottle green", "mustard yellow",
+    "burnt orange", "champagne", "lavender", "lilac", "maroon", "burgundy",
+    "fuchsia", "magenta", "turquoise", "teal", "aqua", "ivory", "cream",
+    "beige", "brown", "copper", "gold", "silver", "black", "white", "grey",
+    "gray", "red", "pink", "orange", "yellow", "green", "blue", "purple"
+  ];
+  const title = product.title.toLowerCase();
+  const matches: string[] = [];
+  for (const color of colorNames) {
+    const pattern = new RegExp(`\\b${color.replace(" ", "\\s+")}\\b`, "i");
+    if (pattern.test(title) && !matches.some((existing) => existing.includes(color) || color.includes(existing))) {
+      matches.push(color.replace(/\b\w/g, (letter) => letter.toUpperCase()));
+    }
+    if (matches.length === 3) break;
+  }
+
+  return matches.join("/");
 }
 
 // ─── Enriched Description ────────────────────────────────────────────
@@ -416,60 +426,40 @@ function enrichDescription(
   tags: string[],
   size: string
 ): string {
-  const gender = getGender(productType, title);
-  const fabric = getMaterialFromProduct({ productType, title, tags } as ShopifyProduct);
+  const fabric = getMaterialFromProduct({ productType, title, tags, options: [] } as unknown as ShopifyProduct);
   const work = getWorkFromTags(tags);
 
-  let enriched = desc ? desc.trim() : title;
+  let enriched = (desc || title).replace(/\s+/g, " ").trim();
+  enriched = enriched
+    .split(/(?<=[.!?])\s+/)
+    .filter((sentence) => !/(worldwide shipping|flat rate \$25|free shipping on orders over \$350|dispatch:\s*\d|delivery:\s*\d)/i.test(sentence))
+    .join(" ");
 
-  enriched += ` Fabric: ${fabric}. Work: ${work}.`;
-
-  if (gender === "male") {
-    enriched += ` Available in chest sizes 36-44 inches. Size: ${size}.`;
-  } else {
-    enriched += ` Available in sizes S, M, L, XL, XXL. Custom tailoring available on request. Size: ${size}.`;
-  }
+  const exactDetails: string[] = [];
+  if (fabric) exactDetails.push(`Material: ${fabric}`);
+  if (work) exactDetails.push(`Detail: ${work}`);
+  if (size) exactDetails.push(`Selected size: ${size}`);
+  if (exactDetails.length) enriched += ` ${exactDetails.join(". ")}.`;
 
   enriched +=
-    " Care: Dry clean only. Shipping: Flat rate $25 per order worldwide. Free shipping on orders over $350. Dispatch: 3-5 business days (readymade), 5-7 business days (custom). Delivery: 3-5 business days via DHL Express, 7-10 business days via USPS/UPS.";
+    " Store policy: United States shipping only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is provided after dispatch. Review the product page for current availability and exact details.";
 
-  return enriched.trim();
+  return enriched.slice(0, 5000).trim();
 }
 
 // ─── Shipping XML blocks ─────────────────────────────────────────────
 
 function getShippingBlocks(): string {
-  const countries = [
-    { code: "US", stdPrice: "25.00", expPrice: "39.95" },
-    { code: "CA", stdPrice: "25.00", expPrice: "39.95" },
-    { code: "GB", stdPrice: "25.00", expPrice: "44.95" },
-    { code: "AE", stdPrice: "25.00", expPrice: "39.95" },
-    { code: "AU", stdPrice: "25.00", expPrice: "49.95" },
-  ];
-
-  return countries
-    .map(
-      (c) => `
+  return `
     <g:shipping>
-      <g:country>${c.code}</g:country>
+      <g:country>US</g:country>
       <g:service>Standard</g:service>
-      <g:price>${c.stdPrice} USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>7</g:min_transit_time>
-      <g:max_transit_time>10</g:max_transit_time>
+      <g:price>12.00 USD</g:price>
     </g:shipping>
-    <g:shipping>
-      <g:country>${c.code}</g:country>
-      <g:service>Express</g:service>
-      <g:price>${c.expPrice} USD</g:price>
-      <g:min_handling_time>3</g:min_handling_time>
-      <g:max_handling_time>5</g:max_handling_time>
-      <g:min_transit_time>3</g:min_transit_time>
-      <g:max_transit_time>5</g:max_transit_time>
-    </g:shipping>`
-    )
-    .join("\n");
+    <g:free_shipping_threshold>
+      <g:country>US</g:country>
+      <g:price_threshold>150.00 USD</g:price_threshold>
+    </g:free_shipping_threshold>`;
 }
 
 // ─── Shorten Shopify GID ─────────────────────────────────────────────
@@ -497,10 +487,14 @@ function generateItem(
     product.productType,
     product.title
   );
-  const color = getColorFromProduct(product);
+  const color = getColorFromProduct(product, variant.selectedOptions);
   const material = getMaterialFromProduct(product);
   const work = getWorkFromTags(product.tags);
   const availability = variant.availableForSale ? "in_stock" : "out_of_stock";
+  const currencyCode = variant.price.currencyCode || "USD";
+  const barcode = variant.barcode?.trim() || "";
+  const brand = product.vendor?.trim() || "";
+  const isApparel = [1604, 5388, 8248].includes(googleCategory);
 
   // Price handling
   const price = parseFloat(variant.price.amount);
@@ -521,6 +515,9 @@ function generateItem(
     mainImageUrl = allImages[0].url;
   }
   mainImageUrl = forceJpeg(mainImageUrl);
+  if (!mainImageUrl) {
+    throw new Error(`No product image for variant ${variant.id}`);
+  }
 
   // Additional images (exclude the main one)
   const additionalImages = allImages
@@ -550,41 +547,58 @@ function generateItem(
     <g:link>${SITE_URL}/product/${escapeXml(product.handle)}</g:link>
     <g:image_link>${escapeXml(mainImageUrl)}</g:image_link>`;
 
-  if (additionalImages.length > 0) {
+  for (const imageUrl of additionalImages) {
     xml += `
-    <g:additional_image_link>${additionalImages.map((url) => escapeXml(url)).join(",")}</g:additional_image_link>`;
+    <g:additional_image_link>${escapeXml(imageUrl)}</g:additional_image_link>`;
   }
 
   xml += `
     <g:availability>${availability}</g:availability>
-    <g:price>${hasSale ? compareAtPrice!.toFixed(2) : price.toFixed(2)} USD</g:price>`;
+    <g:price>${hasSale ? compareAtPrice!.toFixed(2) : price.toFixed(2)} ${currencyCode}</g:price>`;
 
   if (hasSale) {
     xml += `
-    <g:sale_price>${price.toFixed(2)} USD</g:sale_price>`;
+    <g:sale_price>${price.toFixed(2)} ${currencyCode}</g:sale_price>`;
   }
 
   xml += `
     <g:condition>new</g:condition>
-    <g:brand>${BRAND}</g:brand>
-    <g:google_product_category>${googleCategory}</g:google_product_category>
-    <g:product_type>${escapeXml(product.productType)}</g:product_type>
-    <g:gender>${gender}</g:gender>
-    <g:age_group>adult</g:age_group>
-    <g:color>${escapeXml(color)}</g:color>
-    <g:material>${escapeXml(material)}</g:material>
-    <g:pattern>${escapeXml(work)}</g:pattern>
+    <g:google_product_category>${googleCategory}</g:google_product_category>`;
+
+  if (product.productType) xml += `
+    <g:product_type>${escapeXml(product.productType)}</g:product_type>`;
+  if (gender) xml += `
+    <g:gender>${gender}</g:gender>`;
+  if (isApparel) xml += `
+    <g:age_group>adult</g:age_group>`;
+  if (color) xml += `
+    <g:color>${escapeXml(color)}</g:color>`;
+  if (material) xml += `
+    <g:material>${escapeXml(material)}</g:material>`;
+  if (work) xml += `
+    <g:pattern>${escapeXml(work)}</g:pattern>`;
+  if (size) {
+    xml += `
     <g:size>${escapeXml(size)}</g:size>
     <g:size_type>regular</g:size_type>
-    <g:size_system>US</g:size_system>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:custom_label_0>${escapeXml(product.productType)}</g:custom_label_0>
+    <g:size_system>US</g:size_system>`;
+  }
+
+  if (barcode) {
+    xml += `
+    <g:gtin>${escapeXml(barcode)}</g:gtin>`;
+    if (brand) xml += `
+    <g:brand>${escapeXml(brand)}</g:brand>`;
+  } else {
+    xml += `
+    <g:identifier_exists>no</g:identifier_exists>`;
+  }
+
+  if (product.productType) xml += `
+    <g:custom_label_0>${escapeXml(product.productType)}</g:custom_label_0>`;
+
+  xml += `
     ${getShippingBlocks()}
-    <g:tax>
-      <g:country>US</g:country>
-      <g:rate>0</g:rate>
-      <g:tax_ship>no</g:tax_ship>
-    </g:tax>
   </item>`;
 
   return xml;
@@ -631,8 +645,7 @@ Deno.serve(async (req: Request) => {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop quality Indian ethnic wear at LuxeMia. Bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry. Flat rate shipping $25, free over $350.</description>
-  <g:google_product_category>1604</g:google_product_category>${items.join("\n")}
+  <description>Current LuxeMia product listings for delivery to United States addresses. Shipping is $12 under $150 and free over $150.</description>${items.join("\n")}
 </channel>
 </rss>`;
 
