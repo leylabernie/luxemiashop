@@ -39,18 +39,11 @@ const OrderConfirmation = () => {
   const deliveryDate = searchParams.get('delivery_date') || '';
   const orderTotal = searchParams.get('total_price') || '';
 
-  // Calculate estimated delivery date if not provided (10 business days from now)
-  const getEstimatedDeliveryDate = (): string => {
-    if (deliveryDate) return deliveryDate;
-    const date = new Date();
-    // Add ~14 calendar days to account for 10 business days
-    date.setDate(date.getDate() + 14);
-    return date.toISOString().split('T')[0]; // YYYY-MM-DD format
-  };
-
   // Trigger Google Customer Reviews opt-in
   useEffect(() => {
-    if (optInTriggered || !orderId) return;
+    // Google requires a real order email and estimated delivery date. If
+    // Shopify does not provide them, skip the survey instead of inventing data.
+    if (optInTriggered || !orderId || !customerEmail || !deliveryDate) return;
 
     // Load the Google platform.js script ONLY on this page (not globally)
     const existingScript = document.querySelector('script[src*="apis.google.com/js/platform.js"]');
@@ -69,7 +62,7 @@ const OrderConfirmation = () => {
           order_id: orderId,
           email: customerEmail,
           delivery_country: deliveryCountry,
-          estimated_delivery_date: getEstimatedDeliveryDate(),
+          estimated_delivery_date: deliveryDate,
         });
         setOptInTriggered(true);
       } else if (window.renderOptIn) {
@@ -83,7 +76,7 @@ const OrderConfirmation = () => {
               order_id: orderId,
               email: customerEmail,
               delivery_country: deliveryCountry,
-              estimated_delivery_date: getEstimatedDeliveryDate(),
+              estimated_delivery_date: deliveryDate,
             });
           });
         };
@@ -107,7 +100,7 @@ const OrderConfirmation = () => {
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [orderId, customerEmail, deliveryCountry, optInTriggered]);
+  }, [orderId, customerEmail, deliveryCountry, deliveryDate, optInTriggered]);
 
   // Track purchase in GA4 with the cart items that preceded checkout.
   // Shopify's return URL does not reliably include line items, so recover the
@@ -188,24 +181,26 @@ const OrderConfirmation = () => {
               </div>
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-6 h-6 bg-[#d4a574] text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                <p>Your order will be carefully prepared and packaged within 3-5 business days.</p>
+                <p>We’ll prepare your order and email you when its status changes.</p>
               </div>
               <div className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-6 h-6 bg-[#d4a574] text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                <p>Standard delivery takes 7-10 business days after dispatch. You'll receive tracking details by email.</p>
+                <p>Tracking details will be emailed after your order dispatches.</p>
               </div>
             </div>
           </div>
 
-          {/* Google Customer Reviews notice */}
-          <div className="bg-blue-50 rounded-lg p-4 mb-8 text-sm text-blue-800">
-            <p className="flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-              </svg>
-              You may see a Google Customer Reviews survey after your order is delivered. Your feedback helps us improve!
-            </p>
-          </div>
+          {/* Only promise the Google survey when the required order data exists. */}
+          {customerEmail && deliveryDate && (
+            <div className="bg-blue-50 rounded-lg p-4 mb-8 text-sm text-blue-800">
+              <p className="flex items-center justify-center gap-2">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+                You may see a Google Customer Reviews survey after delivery.
+              </p>
+            </div>
+          )}
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
