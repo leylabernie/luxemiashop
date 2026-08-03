@@ -35,9 +35,8 @@ const footerLinks = {
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
-    { name: 'Our Story', href: '/brand-story' },
+    { name: 'About LuxeMia', href: '/about' },
     { name: 'Style Quiz', href: '/style-quiz' },
-    { name: 'Our Regions', href: '/artisans' },
     { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
   ],
