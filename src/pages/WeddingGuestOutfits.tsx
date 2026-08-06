@@ -35,7 +35,7 @@ const weddingGuestFaqs = [
   },
   {
     question: 'Do you ship Indian wedding guest outfits to the United States?',
-    answer: 'LuxeMia ships Indian wedding guest outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships Indian wedding guest outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'Can I wear the same outfit to multiple events at an Indian wedding?',
@@ -53,7 +53,7 @@ const WeddingGuestOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia"
-        description="Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free U.S. shipping over $150."
+        description="Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez perfect for Indian weddings. Free U.S. shipping at $150 and above."
         canonical="https://luxemia.shop/collections/wedding-guest-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const WeddingGuestOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>wedding guest sarees</strong>, <strong>anarkali suits for Indian weddings</strong>, <strong>lehengas for wedding guests</strong>, <strong>salwar kameez for weddings</strong>, and <strong>indo-western outfits for receptions</strong>. Gorgeous colors including pink, teal, gold, purple, and royal blue. Free U.S. shipping over $150.
+              Shop <strong>wedding guest sarees</strong>, <strong>anarkali suits for Indian weddings</strong>, <strong>lehengas for wedding guests</strong>, <strong>salwar kameez for weddings</strong>, and <strong>indo-western outfits for receptions</strong>. Gorgeous colors including pink, teal, gold, purple, and royal blue. Free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -166,26 +166,24 @@ const WeddingGuestOutfits = () => {
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Not Indian? Read This First</h3>
                 <p>If you are a non-Indian guest attending your first Indian wedding, an <Link to="/suits" className="text-primary underline">anarkali suit</Link> can be straightforward to wear, while a pre-draped saree offers the saree look without traditional draping. Review the listed sizes and included pieces, and confirm timing before ordering for the wedding date.</p>
-                <p className="mt-2">For the complete step-by-step guide — including sizing help, color etiquette, what to bring, and common mistakes to avoid — read our <Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline font-medium">complete guide for non-Indian wedding guests</Link>. It is the resource we wish we had when our non-Indian friends first asked us for help.</p>
+                <p className="mt-2">For more ceremony-by-ceremony ideas, read our <Link to="/blog/wedding-guest-outfit-ideas" className="text-primary underline font-medium">Indian wedding guest outfit guide</Link>.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">How Much Should You Spend on an Indian Wedding Guest Outfit?</h3>
-                <p>Set your budget before browsing and compare the current prices, product details, included pieces, and available sizes shown on each listing. U.S. shipping is free over $150 and costs a flat $12 below that.</p>
+                <p>Set your budget before browsing and compare the current prices, product details, included pieces, and available sizes shown on each listing. U.S. shipping is free at $150 and above and costs a flat $12 below that.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Indian Wedding Guest Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest — Complete Guide</Link></li>
-                  <li><Link to="/blog/indian-wedding-dress-complete-guide" className="text-primary underline">Indian Wedding Dress Guide 2026: Bridal Lehenga vs Saree</Link></li>
+                  <li><Link to="/blog/wedding-guest-outfit-ideas" className="text-primary underline">Indian Wedding Guest Outfit Guide 2026</Link></li>
                   <li><Link to="/blog/lehenga-vs-sharara-vs-anarkali-comparison" className="text-primary underline">Lehenga vs Sharara vs Anarkali: Which to Choose</Link></li>
-                  <li><Link to="/blog/indian-wedding-terms-glossary-50-events-rituals-roles" className="text-primary underline">Indian Wedding Terms Glossary: 50+ Events, Rituals & Roles</Link></li>
                   <li><Link to="/size-guide" className="text-primary underline">Size Guide — How to Measure for Indian Ethnic Wear</Link></li>
                 </ul>
               </div>

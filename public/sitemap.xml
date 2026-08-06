@@ -3,883 +3,1023 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://luxemia.shop/</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/about</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/brand-story</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lookbook</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lehengas</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sarees</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/jewelry</loc>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/silk-sarees</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/collections/kanchipuram-sarees</loc>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/bridal-party-outfits</loc>
-    <lastmod>2026-07-31</lastmod>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/collections/bollywood-inspired-indian-outfits</loc>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/suits</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/menswear</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indowestern</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/new-arrivals</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/bestsellers</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/nri</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/indian-ethnic-wear-usa</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/indian-ethnic-wear-canada</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/artisans</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/sustainability</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/style-consultation</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/wedding-party-orders</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/style-quiz</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://luxemia.shop/contact</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/faq</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/shipping</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/returns</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/size-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sizing-measurements-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/care-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/privacy</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/terms</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://luxemia.shop/blog/attires</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/motifs-embroideries</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/weddings-festivals</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/blog/how-to-care</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/authors/luxemia-editorial-team</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://luxemia.shop/press</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/diwali-outfits</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/wedding-guest-outfits</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/mehendi-outfits</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/eid-outfits</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/collections/navratri-outfits</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/maroon-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/emerald-green-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/royal-blue-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/pink-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/purple-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/wine-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/navy-blue-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/maroon-lehenga-for-reception</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/black-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/pastel-lehenga-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/anarkali-suit-for-mother-of-bride</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lehenga-for-bridesmaid</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/anarkali-suit-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/saree-for-mother-of-bride</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/lehenga-for-mother-of-bride</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sherwani-for-groom</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/kurta-for-groom-brother</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/sharara-for-bride-sister</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/georgette-saree-for-reception</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/banarasi-silk-saree-for-wedding</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/kanjivaram-saree-for-wedding</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/chiffon-saree-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/silk-saree-for-festival</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/organza-saree-for-engagement</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/georgette-saree-for-wedding-guest</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/blog/indian-wedding-dress-complete-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/red-bridal-lehenga-trends-2026</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/designer-wedding-dress-under-500</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/lehenga-color-for-dark-skin</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://luxemia.shop/blog/wedding-saree-for-mother-of-bride</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/wedding-guest-outfit-ideas</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/saree-draping-styles-every-occasion</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-wedding-trends-2026</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/accessorize-indian-ethnic-wear</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/caring-for-silk-sarees</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/sharara-suit-guide-2026-styles-fabrics</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/pakistani-suits-anarkali-shopping-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/style-lehenga-choli-every-wedding-event</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-wedding-season-2026-outfit-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/nri-wedding-ethnic-wear-trends-2026</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/buy-authentic-indian-sarees-online-usa-uk</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/styling-indian-ethnic-wear-festive-occasions-abroad</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/how-to-measure-yourself-for-indian-ethnic-wear</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/what-to-wear-indian-wedding-guest-2026</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/lehenga-vs-anarkali-which-is-right-for-you</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/care-guide-washing-storing-indian-ethnic-wear</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/how-to-choose-perfect-lehenga-wedding-2026</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/lehenga-vs-sharara-vs-anarkali-comparison</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/best-lehenga-colors-for-indian-skin-tone</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/shipping-indian-clothes-usa-uk-canada-nri-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/unstitched-vs-ready-to-wear-vs-made-to-measure</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/buying-indian-ethnic-wear-online-usa</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/banarasi-silk-saree-guide-authentic</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-drape-saree-beginner-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-wedding-ceremony-outfit-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-fabric-types-guide-silk-georgette-chiffon</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/anarkali-suit-styling-guide-2026</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/kanchipuram-silk-saree-south-indian-wedding-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/zari-work-guide-indian-embroidery-gold-silver-thread</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/chikankari-embroidery-lucknow-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/buy-bridal-lehenga-online-usa-complete-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/designer-sherwani-online-usa-groom-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/salwar-kameez-online-usa-everyday-ethnic-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-bridal-jewelry-sets-complete-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/lehenga-choli-designer-bridal-party-wear-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/why-indian-brides-wear-red-cultural-significance</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/sabyasachi-mukherjee-designer-profile-handloom-revival</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/manish-malhotra-bollywood-bridal-designer-profile</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/bindi-meaning-history-indian-women</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/jj-valaya-royal-couture-house-of-valaya</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/anita-dongre-sustainable-luxury-grassroots</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/ritu-kumar-pioneer-indian-textile-revival</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/sindoor-mangalsutra-sacred-symbols-hindu-marriage</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/regional-indian-wedding-rituals-punjabi-bengali-tamil-marwari</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/embroidery-motifs-symbolism-paisley-peacock-lotus</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/tarun-tahiliani-designer-profile-india-modern-couture</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/rahul-mishra-designer-profile-paris-haute-couture-sustainable</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/anamika-khanna-designer-profile-kolkata-couture</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/abu-jani-sandeep-khosla-designer-profile-chikankari-couture</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/neeta-lulla-designer-profile-national-award-costume-bridal</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-fashion-glossary-50-terms-garments-fabrics-embroidery-jewelry</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-jewelry-glossary-40-terms-kundan-polki-jhumka-maang-tikka</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-wedding-terms-glossary-50-events-rituals-roles</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-embroidery-glossary-40-terms-zardozi-chikankari-aari</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/what-to-wear-indian-wedding-non-indian-guest</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/navratri-9-day-color-guide-2026</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/diwali-outfit-ideas-by-setting</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/mehendi-outfit-by-role</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/plus-size-indian-ethnic-wear-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-to-us-clothing-size-conversion-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/how-to-wear-a-saree-step-by-step</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/best-lehenga-styles-indian-wedding-guests-usa-2026</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/what-to-wear-south-asian-wedding-non-indian-guest</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/diwali-outfit-ideas-nri-women-usa-canada-australia</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/kanjivaram-vs-banarasi-silk-sarees</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/indian-wedding-guest-outfits-men-usa-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/how-to-choose-salwar-kameez-body-type</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/custom-tailoring-indian-ethnic-wear-usa</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/haldi-vs-mehendi-outfits-complete-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/how-to-care-for-silk-sarees-and-lehengas</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/punjabi-wedding-outfit-guide-nri</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/south-indian-bridal-saree-style-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/blog/what-to-pack-indian-wedding-from-usa-nri-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luxemia.shop/blog/sherwani-vs-jodhpuri-vs-bandhgala-groom-guide</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://luxemia.shop/blog/tussar-silk-saree-guide-nri</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://luxemia.shop/product/celestial-floral-embroidered-georgette-lehenga-choli</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/celestial-sky-blue-floral-georgette-lehenga-front.jpg?v=1785504275&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Sky blue floral embroidered georgette lehenga choli with matching net dupatta</image:title>
+      <image:caption>Floral Zari &amp; Sequin Georgette Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/blog/kundan-vs-polki-vs-jadau-bridal-jewelry-guide</loc>
-    <lastmod>2026-07-28</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://luxemia.shop/product/palum-pazhamum-gandaberunda-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/C58F0E1A-AB01-4D5B-B338-22C34EF2769B.jpg?v=1785523780&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Palum Pazhamum Gandaberunda Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Palum Pazhamum Gandaberunda Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/deep-green-vairaoosi-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/24B1C1C3-77F6-41A0-A5FF-BBB7379FEE30.jpg?v=1785523776&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Deep Green Vairaoosi Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Deep Green Vairaoosi Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/rust-and-blue-jari-oosi-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/8D58DE40-0759-43A4-BBB3-56A85E078303.jpg?v=1785523772&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Rust &amp; Blue Jari Oosi Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Rust &amp; Blue Jari Oosi Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/orange-and-emerald-green-korvai-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/9A589A4D-B61C-4671-8F9C-1613A459ED87.jpg?v=1785523766&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Orange &amp; Emerald Green Korvai Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Orange &amp; Emerald Green Korvai Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/deep-blue-and-rani-pink-korvai-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/8B071F58-B83A-4A0D-B050-74070E78C2A9.jpg?v=1785523754&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Deep Blue &amp; Rani Pink Korvai Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Deep Blue &amp; Rani Pink Korvai Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/arakku-red-kattam-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/A1E58C73-AF34-4BE4-B07A-37A2C08622A5.jpg?v=1785523750&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Arakku Red Kattam Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Arakku Red Kattam Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/deep-purple-yazhi-and-mayil-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/6EDF5536-859E-4260-B0A0-80028FAAB905.jpg?v=1785523744&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Deep Purple Yazhi &amp; Mayil Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Deep Purple Yazhi &amp; Mayil Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-blue-peacock-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/58FA39E1-8996-452E-831D-22B86324FD3E.jpg?v=1785523740&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Royal Blue Peacock Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Royal Blue Peacock Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/jamun-purple-mayil-chakram-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CE8418D4-4097-4788-9E18-5E33364FA8ED.jpg?v=1785523736&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Jamun Purple Mayil Chakram Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Jamun Purple Mayil Chakram Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/yellow-and-black-korvai-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/A481F3AC-41BA-44BC-B700-A9961AC1D5B7.jpg?v=1785523722&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Yellow &amp; Black Korvai Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Yellow &amp; Black Korvai Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/azure-and-navy-blue-korvai-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/0D2D1B5F-906B-4720-8391-B13E07A8DE7F.jpg?v=1785523718&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Azure &amp; Navy Blue Korvai Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Azure &amp; Navy Blue Korvai Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/bottle-green-and-maroon-korvai-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/96D8DB05-2A27-454A-9A42-4C8141E863DB.jpg?v=1785523713&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Bottle Green &amp; Maroon Korvai Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Bottle Green &amp; Maroon Korvai Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/vadamalli-pink-gold-butta-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/B153FA13-39A7-42B9-8AE6-02E0BA8C43CF.jpg?v=1785523708&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Vadamalli Pink Gold Butta Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Vadamalli Pink Gold Butta Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/purple-and-lavender-borderless-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/37E821A6-091A-43F7-B32C-FEAC2E8E3F44.jpg?v=1785523703&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Purple &amp; Lavender Borderless Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Purple &amp; Lavender Borderless Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/deep-purple-gold-butta-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CEEBEE0A-ECD6-4E1A-A9AF-6222C71DB413.jpg?v=1785523690&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Deep Purple Gold Butta Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Deep Purple Gold Butta Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/green-and-magenta-mayil-chakram-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/0515E7EA-BE74-4EEF-8102-9C9574BA3D50.jpg?v=1785523666&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Green &amp; Magenta Mayil Chakram Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Green &amp; Magenta Mayil Chakram Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-and-baby-pink-borderless-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/98A03987-2FF1-4BB5-840B-3B9E73474E16.jpg?v=1785523658&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red &amp; Baby Pink Borderless Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Red &amp; Baby Pink Borderless Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/bottle-green-and-magenta-butta-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/5771EE51-A626-4E0C-A8B7-93E347019D38.jpg?v=1785523654&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Bottle Green &amp; Magenta Butta Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Bottle Green &amp; Magenta Butta Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/pista-green-and-lotus-pink-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/15DBA3B6-C9A3-455D-B6D1-823B8FE2D64A.jpg?v=1785523650&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Pista Green &amp; Lotus Pink Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Pista Green &amp; Lotus Pink Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-and-magenta-rettai-kili-kanjivaram-silk-saree</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/6E9F7629-231C-4698-8D43-41FE06873BB3.jpg?v=1785523517&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Black &amp; Magenta Rettai Kili Kanjivaram Silk Saree – view 1</image:title>
+      <image:caption>Black &amp; Magenta Rettai Kili Pure Kanjivaram Silk Saree - Kanchipuram Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/tina-soft-silk-sequin-saree-with-stitched-blouse</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-20-1.jpg?v=1785541023&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Tina Soft Silk Sequin Saree with Stitched Blouse – product view 1</image:title>
+      <image:caption>Tina Soft Silk Sequin Saree with Stitched Blouse - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/madhuri-masakali-crepe-mirror-work-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-10-1.jpg?v=1785540369&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Madhuri Masakali Crepe Mirror-Work Saree – product view 1</image:title>
+      <image:caption>Madhuri Masakali Crepe Mirror-Work Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/kangana-inspired-floral-polka-dot-georgette-chiffon-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-02-1.jpg?v=1785540036&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Kangana-Inspired Floral Polka-Dot Georgette Chiffon Saree – product view 1</image:title>
+      <image:caption>Kangana-Inspired Floral Polka-Dot Georgette Chiffon Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/kt-148-red-dola-silk-foil-print-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-19-1.jpg?v=1785540974&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>KT-148 Red Dola Silk Foil-Print Saree – product view 1</image:title>
+      <image:caption>KT-148 Red Dola Silk Foil-Print Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/madhuri-dixit-inspired-rangoli-silk-sequin-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-18-1.jpg?v=1785540920&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Madhuri Dixit–Inspired Rangoli Silk Sequin Saree – product view 1</image:title>
+      <image:caption>Madhuri Dixit–Inspired Rangoli Silk Sequin Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/bollywood-inspired-georgette-diamond-mirror-work-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-17-1.jpg?v=1785540864&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Bollywood-Inspired Georgette Diamond &amp; Mirror-Work Saree – product view 1</image:title>
+      <image:caption>Bollywood-Inspired Georgette Diamond &amp; Mirror-Work Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/deepika-inspired-georgette-digital-print-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-16-1.jpg?v=1785540814&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Deepika-Inspired Georgette Digital-Print Saree – product view 1</image:title>
+      <image:caption>Deepika-Inspired Georgette Digital-Print Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/lichi-silk-jacquard-saree-with-brocade-blouse</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-15-1.jpg?v=1785540750&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Lichi Silk Jacquard Saree with Brocade Blouse – product view 1</image:title>
+      <image:caption>Lichi Silk Jacquard Saree with Brocade Blouse - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-banarasi-silk-golden-zari-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-14-1.jpg?v=1785540641&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Black Banarasi Silk Golden-Zari Saree – product view 1</image:title>
+      <image:caption>Black Banarasi Silk Golden-Zari Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/anjali-bagru-print-muslin-cotton-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-13-1.jpg?v=1785540588&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Anjali Bagru-Print Muslin Cotton Saree – product view 1</image:title>
+      <image:caption>Anjali Bagru-Print Muslin Cotton Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/soft-silk-paithani-saree-with-gold-zari</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-12-1_e6b8b910-cc3a-4dc6-9f03-814c190d31bf.jpg?v=1785540530&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Soft Silk Paithani Saree with Gold Zari – product view 1</image:title>
+      <image:caption>Soft Silk Paithani Saree with Gold Zari - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/rashmika-inspired-black-banarasi-silk-zari-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-11-1.jpg?v=1785540425&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Rashmika-Inspired Black Banarasi Silk Zari Saree – product view 1</image:title>
+      <image:caption>Rashmika-Inspired Black Banarasi Silk Zari Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/shiny-bollywood-inspired-full-sequin-party-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-09-1.jpg?v=1785540337&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Shiny Bollywood-Inspired Full-Sequin Party Saree – product view 1</image:title>
+      <image:caption>Shiny Bollywood-Inspired Full-Sequin Party Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/sonakshi-sinha-inspired-red-silk-gold-zari-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-08-1.jpg?v=1785540291&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Sonakshi Sinha–Inspired Red Silk Gold-Zari Saree – product view 1</image:title>
+      <image:caption>Sonakshi Sinha–Inspired Red Silk Gold-Zari Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/kajol-inspired-georgette-digital-print-sequin-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-07-1.jpg?v=1785540236&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Kajol-Inspired Georgette Digital-Print Sequin Saree – product view 1</image:title>
+      <image:caption>Kajol-Inspired Georgette Digital-Print Sequin Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/kareena-kapoor-khan-inspired-chinnon-mirror-work-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-06-1.jpg?v=1785540195&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Kareena Kapoor Khan–Inspired Chinnon Mirror-Work Saree – product view 1</image:title>
+      <image:caption>Kareena Kapoor Khan–Inspired Chinnon Mirror-Work Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/rashmika-mandanna-inspired-off-white-silk-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-05-1.jpg?v=1785540139&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Rashmika Mandanna–Inspired Off-White Silk Saree – product view 1</image:title>
+      <image:caption>Rashmika Mandanna–Inspired Off-White Silk Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/farzana-bollywood-inspired-dual-sequin-party-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-04-1.jpg?v=1785540102&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Farzana Bollywood-Inspired Dual-Sequin Party Saree – product view 1</image:title>
+      <image:caption>Farzana Bollywood-Inspired Dual-Sequin Party Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/katrina-kaif-inspired-red-georgette-sequin-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-03-1.jpg?v=1785540067&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Katrina Kaif–Inspired Red Georgette Sequin Saree – product view 1</image:title>
+      <image:caption>Katrina Kaif–Inspired Red Georgette Sequin Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/naira-bollywood-inspired-full-sequin-party-saree</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lm-bol-01-1.jpg?v=1785539959&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Naira Bollywood-Inspired Full-Sequin Party Saree – product view 1</image:title>
+      <image:caption>Naira Bollywood-Inspired Full-Sequin Party Saree - Bollywood-Inspired Saree | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/blush-pink-chikankari-georgette-sharara-set-arzaa-2141</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/arzaa-2141-blush-pink-chikankari-georgette-sharara-set-front.jpg?v=1785504984&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Blush pink chikankari embroidered georgette sharara set with matching dupatta</image:title>
+      <image:caption>Blush Pink Chikankari Georgette Sharara Set – Arzaa 2141 - Sharara Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/dusty-mauve-chikankari-georgette-sharara-set-arzaa-2140</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/arzaa-2140-dusty-mauve-chikankari-georgette-sharara-set-front.jpg?v=1785504941&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Dusty mauve chikankari embroidered georgette sharara set with matching dupatta</image:title>
+      <image:caption>Dusty Mauve Chikankari Georgette Sharara Set – Arzaa 2140 - Sharara Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-navy-aari-work-crepe-silk-palazzo-set-sayuri-20003</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/sayuri-20003-multicolor-navy-crepe-silk-palazzo-set-front.jpg?v=1785504720&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor and navy printed crepe silk palazzo set with matching dupatta</image:title>
+      <image:caption>Multicolor &amp; Navy Aari Work Crepe Silk Palazzo Set – Sayuri 20003 - Palazzo Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/magenta-teal-aari-work-crepe-silk-palazzo-set-sayuri-20002</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/sayuri-20002-magenta-teal-crepe-silk-palazzo-set-front.jpg?v=1785504681&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Magenta and teal printed crepe silk palazzo set with coordinated dupatta</image:title>
+      <image:caption>Magenta &amp; Teal Aari Work Crepe Silk Palazzo Set – Sayuri 20002 - Palazzo Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/sage-navy-aari-work-crepe-silk-palazzo-set-sayuri-20001</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/sayuri-20001-sage-navy-crepe-silk-palazzo-set-front.jpg?v=1785504647&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Sage and navy printed crepe silk palazzo set with Aari and gota patti work</image:title>
+      <image:caption>Sage &amp; Navy Aari Work Crepe Silk Palazzo Set – Sayuri 20001 - Palazzo Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-moonga-silk-navratri-lehenga-choli-set</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-1776-navy-moonga-silk-lehenga-hero.jpg?v=1785459781&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Navy Moonga silk Navratri lehenga choli set</image:title>
+      <image:caption>Navy Moonga Silk Navratri Lehenga Choli Set - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/kora-cotton-navratri-lehenga-kurti-set</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-ka5077-blue-kora-cotton-lehenga-hero.jpg?v=1785459681&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Blue Kora cotton Navratri lehenga kurti set</image:title>
+      <image:caption>Kora Cotton Navratri Lehenga Kurti Set - Navratri Lehenga Kurti Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/yellow-vichitra-silk-navratri-lehenga-choli-shrug</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-592-yellow-magenta-vichitra-silk-lehenga-hero.jpg?v=1785459579&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Yellow and magenta Vichitra silk Navratri lehenga choli set</image:title>
+      <image:caption>Yellow Vichitra Silk Navratri Lehenga Choli with Shrug - Navratri Lehenga Choli with Shrug | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/italian-silk-mirror-work-navratri-blouse</loc>
+    <lastmod>2026-07-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-nvratri022-black-mirror-work-blouse.jpg?v=1785459478&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Black Italian silk mirror-work Navratri blouse</image:title>
+      <image:caption>Italian Silk Mirror Work Navratri Blouse - Women&apos;s Ready-to-Wear Blouse | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/hot-pink-rayon-navratri-lehenga-jacket-women</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221610.png?v=1784745281&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Hot Pink Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
+      <image:caption>Hot Pink Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-rayon-lehenga-sleeveless-top-women</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212799.png?v=1784745296&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor Rayon Lehenga with Sleeveless Top for Women - front view</image:title>
+      <image:caption>Multicolor Rayon Lehenga with Sleeveless Top for Women - Designer Lehenga and Top Set | LuxeMia</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/navy-blue-cotton-jacquard-wedding-kurta-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -889,118 +1029,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/grey-cotton-jacquard-festive-kurta-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/KSKLCvsl.jpg?v=1784746922&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Grey Cotton Jacquard Festive Kurta Set for Men - front view</image:title>
-      <image:caption>Grey Cotton Jacquard Festive Kurta Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/peach-pink-cotton-jacquard-kurta-pajama-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CtErHmMk.jpg?v=1784746917&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Peach Pink Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Peach Pink Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/red-cotton-jacquard-kurta-pajama-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/yCIyhZnX.jpg?v=1784746914&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Red Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Red Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/navy-blue-cotton-jacquard-kurta-pajama-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gbp3zJ0z_fa74f691-2a88-4f2a-b679-f6ce5a9ab636.jpg?v=1784746912&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Navy Blue Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Navy Blue Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/light-mint-cotton-jacquard-pathani-kurta-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lYchJB3Z.jpg?v=1784746905&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Light Mint Cotton Jacquard Pathani Kurta Set for Men - front view</image:title>
-      <image:caption>Light Mint Cotton Jacquard Pathani Kurta Set for Men - Men&apos;s Pathani Kurta Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/grey-cotton-jacquard-kurta-pajama-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CpMHRDCt.jpg?v=1784746899&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Grey Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Grey Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/beige-chiku-cotton-jacquard-kurta-pajama-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/DEMQdLi5.jpg?v=1784746896&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Beige Chiku Cotton Jacquard Kurta Pajama for Men - front view</image:title>
-      <image:caption>Beige Chiku Cotton Jacquard Kurta Pajama for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/peach-cotton-jacquard-kurta-pajama-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PZ8_wrDH.jpg?v=1784746902&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Peach Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Peach Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/navy-blue-cotton-kurta-pajama-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/mdbXUWe8.jpg?v=1784746894&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Navy Blue Cotton Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Navy Blue Cotton Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/multicolor-cotton-kurta-pajama-set-men</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PBNKroJe.jpg?v=1784746892&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Multicolor Cotton Kurta Pajama Set for Men - front view</image:title>
-      <image:caption>Multicolor Cotton Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/peach-self-jacquard-silk-kurta-pajama-men</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1011,7 +1041,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/pink-indian-bridal-lehenga-choli-zari-embroidery</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1021,19 +1051,107 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/red-indian-bridal-lehenga-choli-zari-embroidery</loc>
-    <lastmod>2026-07-22</lastmod>
+    <loc>https://luxemia.shop/product/ruby-red-chanderi-navratri-lehenga-choli-women</loc>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PHOTO-2026-07-19-01-02-19_2.jpg?v=1784745622&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Red zari embroidered bridal blouse close up</image:title>
-      <image:caption>Red Indian Bridal Lehenga Choli with Zari Embroidery - Bridal Lehenga Choli | LuxeMia</image:caption>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212817-1.jpg?v=1784745290&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Ruby Red Chanderi Navratri Lehenga Choli for Women - front view</image:title>
+      <image:caption>Ruby Red Chanderi Navratri Lehenga Choli for Women - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/black-rayon-navratri-lehenga-embroidered-jacket-women</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221608.png?v=1784745289&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Black Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
+      <image:caption>Black Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/grey-cotton-jacquard-festive-kurta-set-men</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/KSKLCvsl.jpg?v=1784746922&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Grey Cotton Jacquard Festive Kurta Set for Men - front view</image:title>
+      <image:caption>Grey Cotton Jacquard Festive Kurta Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/beige-chiku-cotton-jacquard-kurta-pajama-men</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/DEMQdLi5.jpg?v=1784746896&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Beige Chiku Cotton Jacquard Kurta Pajama for Men - front view</image:title>
+      <image:caption>Beige Chiku Cotton Jacquard Kurta Pajama for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/peach-pink-cotton-jacquard-kurta-pajama-men</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CtErHmMk.jpg?v=1784746917&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Peach Pink Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Peach Pink Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-cotton-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/mdbXUWe8.jpg?v=1784746894&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Navy Blue Cotton Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Navy Blue Cotton Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/navy-blue-cotton-jacquard-kurta-pajama-men</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gbp3zJ0z_fa74f691-2a88-4f2a-b679-f6ce5a9ab636.jpg?v=1784746912&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Navy Blue Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Navy Blue Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/royal-purple-chanderi-navratri-lehenga-choli-women</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212816-Copy.jpg?v=1784745292&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Royal Purple Chanderi Navratri Lehenga Choli for Women - front view</image:title>
+      <image:caption>Royal Purple Chanderi Navratri Lehenga Choli for Women - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-rayon-lehenga-embroidered-top-women</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212800.png?v=1784745295&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor Rayon Lehenga with Embroidered Top for Women - front view</image:title>
+      <image:caption>Multicolor Rayon Lehenga with Embroidered Top for Women - Designer Lehenga and Top Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://luxemia.shop/product/rust-brown-chanderi-lehenga-choli-set-women</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1043,8 +1161,74 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/red-indian-bridal-lehenga-choli-zari-embroidery</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PHOTO-2026-07-19-01-02-19_2.jpg?v=1784745622&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red zari embroidered bridal blouse close up</image:title>
+      <image:caption>Red Indian Bridal Lehenga Choli with Zari Embroidery - Bridal Lehenga Choli | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/mustard-rayon-navratri-lehenga-gamthi-jacket</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221609.png?v=1784745284&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Mustard Rayon Navratri Lehenga with Gamthi Jacket - front view</image:title>
+      <image:caption>Mustard Rayon Navratri Lehenga with Gamthi Jacket - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/light-mint-cotton-jacquard-pathani-kurta-set-men</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lYchJB3Z.jpg?v=1784746905&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Light Mint Cotton Jacquard Pathani Kurta Set for Men - front view</image:title>
+      <image:caption>Light Mint Cotton Jacquard Pathani Kurta Set for Men - Men&apos;s Pathani Kurta Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/grey-cotton-jacquard-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/CpMHRDCt.jpg?v=1784746899&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Grey Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Grey Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/multicolor-cotton-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PBNKroJe.jpg?v=1784746892&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Multicolor Cotton Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Multicolor Cotton Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://luxemia.shop/product/red-cotton-jacquard-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/yCIyhZnX.jpg?v=1784746914&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Red Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Red Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/wine-chanderi-lehenga-choli-golden-zari-women</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1055,7 +1239,7 @@
   </url>
   <url>
     <loc>https://luxemia.shop/product/olive-green-chanderi-lehenga-choli-set-women</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1065,8 +1249,19 @@
     </image:image>
   </url>
   <url>
+    <loc>https://luxemia.shop/product/peach-cotton-jacquard-kurta-pajama-set-men</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/PZ8_wrDH.jpg?v=1784746902&amp;format=jpg&amp;width=1200</image:loc>
+      <image:title>Peach Cotton Jacquard Kurta Pajama Set for Men - front view</image:title>
+      <image:caption>Peach Cotton Jacquard Kurta Pajama Set for Men - Men&apos;s Kurta Pajama Set | LuxeMia</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://luxemia.shop/product/chocolate-brown-chanderi-lehenga-choli-women</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1076,311 +1271,14 @@
     </image:image>
   </url>
   <url>
-    <loc>https://luxemia.shop/product/multicolor-rayon-lehenga-sleeveless-top-women</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212799.png?v=1784745296&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Multicolor Rayon Lehenga with Sleeveless Top for Women - front view</image:title>
-      <image:caption>Multicolor Rayon Lehenga with Sleeveless Top for Women - Designer Lehenga and Top Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/multicolor-rayon-lehenga-embroidered-top-women</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212800.png?v=1784745295&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Multicolor Rayon Lehenga with Embroidered Top for Women - front view</image:title>
-      <image:caption>Multicolor Rayon Lehenga with Embroidered Top for Women - Designer Lehenga and Top Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/royal-purple-chanderi-navratri-lehenga-choli-women</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212816-Copy.jpg?v=1784745292&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Royal Purple Chanderi Navratri Lehenga Choli for Women - front view</image:title>
-      <image:caption>Royal Purple Chanderi Navratri Lehenga Choli for Women - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/black-rayon-navratri-lehenga-embroidered-jacket-women</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221608.png?v=1784745289&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Black Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
-      <image:caption>Black Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/ruby-red-chanderi-navratri-lehenga-choli-women</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/212817-1.jpg?v=1784745290&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Ruby Red Chanderi Navratri Lehenga Choli for Women - front view</image:title>
-      <image:caption>Ruby Red Chanderi Navratri Lehenga Choli for Women - Navratri Lehenga Choli with Dupatta | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/mustard-rayon-navratri-lehenga-gamthi-jacket</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221609.png?v=1784745284&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Mustard Rayon Navratri Lehenga with Gamthi Jacket - front view</image:title>
-      <image:caption>Mustard Rayon Navratri Lehenga with Gamthi Jacket - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://luxemia.shop/product/ivory-white-rayon-navratri-lehenga-jacket-women</loc>
-    <lastmod>2026-07-22</lastmod>
+    <lastmod>2026-07-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221611.png?v=1784745279&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Ivory White Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
       <image:caption>Ivory White Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/hot-pink-rayon-navratri-lehenga-jacket-women</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/221610.png?v=1784745281&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Hot Pink Rayon Navratri Lehenga with Jacket for Women - front view</image:title>
-      <image:caption>Hot Pink Rayon Navratri Lehenga with Jacket for Women - Navratri Lehenga Choli with Jacket | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/wine-maroon-color-designer-sequin-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/19CD9061-88B8-4185-A0D4-778E92BA45A3.jpg?v=1784504352&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Wine Maroon Color Designer Sequin Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Wine Maroon Color Designer Sequin Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/teal-green-color-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/78D5E1C5-0D18-4A4E-8811-681E8F512B26.jpg?v=1784504350&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Teal Green Color Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Teal Green Color Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/soft-peach-color-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/5C0FDB16-AB8E-485B-947F-E1C115C449E9.jpg?v=1784504348&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Soft Peach Color Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Soft Peach Color Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/sky-blue-color-designer-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/BBECDF30-0316-4F7D-B718-8CD177D3EE4D.jpg?v=1784504346&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Sky Blue Color Designer Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Sky Blue Color Designer Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/royal-ice-blue-color-beads-sequin-embroidery-work-sharara-set</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/14399C6C-0A88-4E3C-80F9-C514F8BEC5B8.jpg?v=1784504344&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Royal Ice Blue Color Beads Sequin Embroidery Work Sharara Set</image:title>
-      <image:caption>Royal Ice Blue Color Beads Sequin Embroidery Work Sharara Set - Sharara Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/pink-color-designer-sequin-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/301B246E-B967-4B26-9E48-2C6F8E911816.jpg?v=1784504342&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Pink Color Designer Sequin Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Pink Color Designer Sequin Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/pink-color-beads-embroidery-work-sharara-set</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/53625749-6586-48EE-B837-DE066F1E37E5.jpg?v=1784504341&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Pink Color Beads Embroidery Work Sharara Set</image:title>
-      <image:caption>Pink Color Beads Embroidery Work Sharara Set - Sharara Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/off-white-color-designer-sequin-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/4BB675E5-1EB3-4D67-8C8C-EFAEB869CF55.jpg?v=1784504339&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Off-White Color Designer Sequin Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Off-White Color Designer Sequin Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/multi-color-designer-beads-embroidery-work-lehenga-choli-1</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/39F004A6-F0FF-437C-B9DD-A085AB4604E6.jpg?v=1784504337&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Multi-Color Designer Beads Embroidery Work Classic Lehenga Choli</image:title>
-      <image:caption>Multi-Color Designer Beads Embroidery Work Classic Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/multi-color-designer-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/D75DD200-0433-4D9D-BC6F-7A20BD633A5E.jpg?v=1784504335&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Multi-Color Designer Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Multi-Color Designer Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/golden-color-beads-embroidery-work-sharara-set</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/B40D3074-B7A7-4473-AF81-478934A00E1A.jpg?v=1784504333&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Golden Color Beads Embroidery Work Sharara Set</image:title>
-      <image:caption>Golden Color Beads Embroidery Work Sharara Set - Sharara Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/firozi-color-hand-embroidery-work-designer-lehenga-choli-for-wedding-function</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/994CF3DA-0E8B-471F-BD7E-24D97477E511.jpg?v=1784504331&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Firozi Color Hand Embroidery Work Designer Lehenga Choli for Wedding Function</image:title>
-      <image:caption>Firozi Color Hand Embroidery Work Designer Lehenga Choli for Wedding Function - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/dusty-sky-blue-color-zari-thread-work-designer-wedding-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/09359AC5-35B7-41FB-A29E-BDD8C8398F96.jpg?v=1784504330&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dusty Sky Blue Color Zari Thread Work Designer Wedding Lehenga Choli</image:title>
-      <image:caption>Dusty Sky Blue Color Zari Thread Work Designer Wedding Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/dusty-purple-color-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/5A3E970F-9F76-43E1-B4F6-C497D5C071BE.jpg?v=1784504328&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dusty Purple Color Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Dusty Purple Color Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/dusty-peach-color-designer-beads-embroidery-work-lehenga-choli-1</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/FD7A2C7B-EDB8-4851-9EC2-E2B3831D0B80.jpg?v=1784504326&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dusty Peach Color Designer Beads Embroidery Work Premium Lehenga Choli</image:title>
-      <image:caption>Dusty Peach Color Designer Beads Embroidery Work Premium Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/dusty-peach-color-designer-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/7B197916-3D69-4E14-83F1-100810091500.jpg?v=1784504324&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dusty Peach Color Designer Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Dusty Peach Color Designer Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/dusty-peach-color-beads-embroidery-work-sharara-set</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/9A391D23-F102-464C-B0C9-60CA5FC5E1B2.jpg?v=1784504322&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dusty Peach Color Beads Embroidery Work Sharara Set</image:title>
-      <image:caption>Dusty Peach Color Beads Embroidery Work Sharara Set - Sharara Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/brown-color-sequin-embroidery-work-sharara</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/7895C4DB-40F6-448B-ACF1-78A2C667A529.png?v=1784504320&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Brown Color Sequin Embroidery Work Sharara</image:title>
-      <image:caption>Brown Color Sequin Embroidery Work Sharara - Sharara Set | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/dusty-mauve-lavender-color-designer-beads-embroidery-work-lehenga-choli</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/37030E44-A07F-49E2-8FC9-B55B0EC3F1AD.jpg?v=1784504320&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Dusty Mauve Lavender Color Designer Beads Embroidery Work Lehenga Choli</image:title>
-      <image:caption>Dusty Mauve Lavender Color Designer Beads Embroidery Work Lehenga Choli - Lehenga Choli | LuxeMia</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://luxemia.shop/product/baby-pink-color-beads-embroidery-work-sharara-set</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/FB6B8B8D-FA5B-4956-9F27-7E379202A12D.jpg?v=1784504317&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Baby Pink Color Beads Embroidery Work Sharara Set</image:title>
-      <image:caption>Baby Pink Color Beads Embroidery Work Sharara Set - Sharara Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -1391,7 +1289,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7770693367_3am5.jpg?v=1782927151&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Mustard &amp; Emerald Green Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Buy Mustard Lehenga Choli Set - Sangeet | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Mustard Lehenga Choli Set - Sangeet - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -1677,7 +1575,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7750461720_hlnx_63ae4e22-9bd4-4186-bfa8-11b3e82eca5f.jpg?v=1782927130&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Crimson Ruffle Satin Saree - Saree for Indian wedding</image:title>
-      <image:caption>Crimson Georgette Saree - Wedding Guest | Ready to Ship - Saree | LuxeMia</image:caption>
+      <image:caption>Crimson Georgette Saree - Wedding Guest - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -2392,7 +2290,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7771219930_d9f0_e61834c5-e44e-4a92-97ef-0f80d2a9895d.jpg?v=1782927120&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Bridesmaid Lehenga for Indian Wedding - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Buy Teal Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Teal Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -2414,7 +2312,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7975362473_m34k.jpg?v=1782927113&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Ready to Wear Indian Saree - Saree for Indian wedding</image:title>
-      <image:caption>Buy Dusty Blue Georgette Saree - Wedding Guest Outfit - Saree | LuxeMia</image:caption>
+      <image:caption>Dusty Blue Georgette Saree - Wedding Guest Outfit - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -2425,7 +2323,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7715406048_rtbn.jpg?v=1782927155&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Gray Rust Silk Lehenga Choli | Wedding Guest Outfit | Custom Made | Indian Dress - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Rust Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Rust Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -2601,7 +2499,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7763092589_18mn_2e9004dd-c7c2-4abc-ad15-b4ca309b36b3.jpg?v=1782927157&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Mint Green Tulle net Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Green Tulle net Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Green Tulle net Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -2876,7 +2774,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.8231443895_k398.jpg?v=1782927140&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Moss Green Lehenga Saree - Saree for Indian wedding</image:title>
-      <image:caption>Green Georgette Lehenga Saree - Bridesmaid | Ready to Ship - Lehenga Saree | LuxeMia</image:caption>
+      <image:caption>Green Georgette Lehenga Saree - Bridesmaid - Lehenga Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3074,7 +2972,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7770847073_1m08_120ba44a-dd28-4338-92aa-949a739ab04b.jpg?v=1782927151&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Ivory Teal Silk Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Ivory Banarasi brocade Lehenga Choli Set - Sangeet | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Ivory Banarasi brocade Lehenga Choli Set - Sangeet - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3085,7 +2983,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7726293768_9iza_a504ee28-4e7d-46fc-a1b4-5de7164f7f9d.jpg?v=1782927147&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Olive Green Satin Lehenga Choli: Indian Wedding Guest Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Olive Satin Lehenga Choli Set - Sangeet | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Olive Satin Lehenga Choli Set - Sangeet - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3338,7 +3236,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7725932332_m678.jpg?v=1782927150&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Midnight Blue Lehenga Choli for Wedding Guest - Brocade Kalidar Skirt &amp; Satin Blouse Set - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Midnight Satin Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Midnight Satin Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3503,7 +3401,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7866852890_s56w_11dd5521-238f-40f8-99ed-c7741594371b.jpg?v=1782927118&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Custom Tailored Taupe Lehenga Choli with Gold Zari Embroidery – US Based Indian Wedding Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Taupe Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Taupe Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3591,7 +3489,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7763379638_qqd2_9a38858d-24cb-46cb-a6bd-9f0fc495ca3a.jpg?v=1782927125&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Maroon Floral Organza Lehenga – Custom Fit Indian Party Wear Sangeet Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Maroon Organza Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Maroon Organza Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3624,7 +3522,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7763529613_gafs_aeb346a1-7350-43ec-9684-723413eb964b.jpg?v=1782927153&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Lavender Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Lavender Georgette Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Lavender Georgette Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3635,7 +3533,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7784465543_3b8l.jpg?v=1782927145&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Black Jacquard Silk Lehenga Choli Set | Indian Wedding Guest Dress | Gold Buti Dupatta - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Black Jacquard Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Black Jacquard Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3789,7 +3687,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7722718686_cgvl_68fe743f-528e-4e82-af0e-993437e86a3c.jpg?v=1782927152&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Sarees Online USA - Saree for Indian wedding</image:title>
-      <image:caption>Periwinkle Banarasi brocade Saree - Wedding Guest | Ready to Ship - Saree | LuxeMia</image:caption>
+      <image:caption>Periwinkle Banarasi brocade Saree - Wedding Guest - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -3866,7 +3764,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7753274934_dcei_a528762d-f0fc-4d1e-aabb-6b91a5bde259.jpg?v=1782927121&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Lilac Lehenga Set - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Chanderi silk Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Chanderi silk Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -4020,7 +3918,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7798363167_bbxi_d43d34aa-6fee-4e3d-9468-c8adef8f1b89.jpg?v=1782928211&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Lime Green Banarasi Brocade Lehenga Set - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Parrot Green Banarasi Brocade Lehenga Choli Set - Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Parrot Green Banarasi Brocade Lehenga Choli Set - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -4053,7 +3951,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.8183498948_gvcn_e4aa7161-8e11-404c-8038-7d61401a4cdb.jpg?v=1782927141&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Turquoise Lehenga Choli Set - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Turquoise Jacquard Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Turquoise Jacquard Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -4108,7 +4006,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7763333747_1w9m_0fb555fa-5d11-47e1-b1cd-a30f59d679e0.jpg?v=1782927155&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Ice Blue Tulle net Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Silver Tulle net Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Silver Tulle net Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -4218,7 +4116,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7774209803_82f0_cc87a4e1-81c2-4727-bc1e-d1728ed17461.jpg?v=1782927147&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Salmon Satin Lehenga Choli Set - Indian Wedding Guest Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Salmon Satin Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Salmon Satin Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -4306,7 +4204,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7715182970_ob3v_6b434eb7-2fdc-4133-ba05-950fd7669c85.jpg?v=1782927156&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Powder Blue Tulle net Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>White Tulle net Lehenga Choli Set - Sangeet | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>White Tulle net Lehenga Choli Set - Sangeet - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -4360,7 +4258,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-284_1.jpg?v=1782934324&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Yellow Viscose Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Yellow Viscose Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Yellow Viscose Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4393,7 +4291,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-315_1.jpg?v=1782934304&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Yellow Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Yellow Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Yellow Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4415,7 +4313,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-283_1.jpg?v=1782934325&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Wine Viscose Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Wine Viscose Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Wine Viscose Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4437,7 +4335,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658068.jpg?v=1782934576&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Wine Brocade sherwani with Sequence Work for Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Wine Brocade sherwani with Sequence Work for Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Wine Brocade Sherwani with Sequence Work for Wedding - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4481,7 +4379,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Turquiose--Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-314_1.jpg?v=1782934306&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Turquiose Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Turquiose Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Turquiose Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4514,7 +4412,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-282_1.jpg?v=1782934327&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Yellow Viscose Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Yellow Viscose Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Yellow Viscose Silk Wedding Embroidery Saree - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4547,7 +4445,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8804_1.jpg?v=1782934289&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Yellow Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Yellow Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Yellow Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4558,7 +4456,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-311_1.jpg?v=1782934311&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Yellow Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Yellow Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Yellow Dola Silk Wedding Saree Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4580,7 +4478,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Wine-Pure-Crepe-Silk-Occasional-Wear-Aaari-Work-Readymade-Saree-N500STB_1.jpg?v=1782934298&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Wine Pure Crepe Silk wedding saree with Aari — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Wine Pure Crepe Silk wedding saree with Aari — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Wine Pure Crepe Silk Wedding Saree with Aari - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4624,7 +4522,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8811_1.jpg?v=1782934276&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Sky Blue Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Sky Blue Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Sky Blue Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4646,7 +4544,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Turquiose--Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-287_1.jpg?v=1782934319&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Turquiose Viscose Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Turquiose Viscose Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Turquiose Viscose Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4690,7 +4588,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Sky-Blue-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-310_1.jpg?v=1782934313&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Sky Blue Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Sky Blue Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Sky Blue Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4701,7 +4599,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rust-Orange-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8801_1.jpg?v=1782934294&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Rust Orange Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Rust Orange Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Rust Orange Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4712,7 +4610,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658091.jpg?v=1782934574&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Royal Blue Brocade sherwani with Zardozi for Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Royal Blue Brocade sherwani with Zardozi for Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Royal Blue Brocade Sherwani with Zardozi for Wedding - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4866,7 +4764,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Rani-Pink-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-318_1.jpg?v=1782934300&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Rani Pink Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Rani Pink Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Rani Pink Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4877,7 +4775,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-286_1.jpg?v=1782934320&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Purple Viscose Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Purple Viscose Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Purple Viscose Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4888,7 +4786,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8807_1.jpg?v=1782934283&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Purple Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Purple Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Purple Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -4954,7 +4852,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Purple-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-313_1.jpg?v=1782934307&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Purple Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Purple Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Purple Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5009,7 +4907,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Pink-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-285_1.jpg?v=1782934322&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Pink Viscose Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Pink Viscose Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Pink Viscose Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5020,7 +4918,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Pink-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8808_1.jpg?v=1782934282&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Pink Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Pink Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Pink Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5108,7 +5006,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Pink-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-309_1.jpg?v=1782934314&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Pink Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Pink Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Pink Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5119,7 +5017,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Olive-Green-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8802_1.jpg?v=1782934292&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Olive Green Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Olive Green Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Olive Green Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5185,7 +5083,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Orange-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8810_1.jpg?v=1782934278&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Orange Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Orange Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Orange Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5196,7 +5094,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658071-1.jpg?v=1782934567&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Navy Blue Brocade sherwani with Sequence Work for Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Navy Blue Brocade sherwani with Sequence Work for Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Navy Blue Brocade Sherwani with Sequence Work for Wedding - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5306,7 +5204,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Magenta-Pure-Crepe-Silk-Occasional-Wear-Aaari-Work-Readymade-Saree-N8436STB_1.jpg?v=1782934296&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Magenta Pure Crepe Silk wedding saree with Aari — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Magenta Pure Crepe Silk wedding saree with Aari — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Magenta Pure Crepe Silk Wedding Saree with Aari - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5317,7 +5215,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658089.jpg?v=1782934573&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Ivory Raw Silk sherwani with Resham Thread for Groom Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Ivory Raw Silk sherwani with Resham Thread for Groom Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Ivory Raw Silk Sherwani with Resham Thread for Groom Wedding - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5328,7 +5226,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658077.jpg?v=1782934569&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Ivory Raw Silk sherwani with Zardozi for Groom Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Ivory Raw Silk sherwani with Zardozi for Groom Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Ivory Raw Silk Sherwani with Zardozi for Groom Wedding - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5372,7 +5270,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658063.jpg?v=1782934575&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Ivory Raw Silk sherwani with Zardozi for Engagement groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Ivory Raw Silk sherwani with Zardozi for Engagement groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Ivory Raw Silk Sherwani with Zardozi for Engagement - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5394,7 +5292,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658055.jpg?v=1782934577&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Ivory Raw Silk sherwani with Resham Thread for Groom Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Ivory Raw Silk sherwani with Resham Thread for Groom Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Ivory Raw Silk Sherwani with Resham Thread for Haldi - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5405,7 +5303,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658067.jpg?v=1782934575&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Ivory Brocade sherwani with Zardozi for Groom Wedding groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Ivory Brocade sherwani with Zardozi for Groom Wedding groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Ivory Brocade Sherwani with Zardozi for Groom Wedding - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5416,7 +5314,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/658088.jpg?v=1782934571&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Grey Raw Silk sherwani with Zardozi for Engagement groom — handcrafted Indian menswear by LuxeMia</image:title>
+      <image:title>Grey Raw Silk sherwani with Zardozi for Engagement groom — Indian menswear by LuxeMia</image:title>
       <image:caption>Grey Raw Silk Sherwani with Zardozi for Engagement - Sherwani | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5427,7 +5325,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Tissue-Silk-Occasional-Wear-Embroidery-Work-Saree-Sulakshmi-8809_1.jpg?v=1782934280&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Green Tissue Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Green Tissue Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Green Tissue Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5482,7 +5380,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-312_1.jpg?v=1782934309&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Green Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Green Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Green Dola Silk Wedding Saree Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -5493,7 +5391,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Green-Dola-Silk-Festival-Wear-Embroidery-Work-Saree-Baisaa--SA-317_1.jpg?v=1782934302&amp;format=jpg&amp;width=1200</image:loc>
-      <image:title>Green Dola Silk wedding saree with Embroidery — handcrafted Indian ethnic wear by LuxeMia</image:title>
+      <image:title>Green Dola Silk wedding saree with Embroidery — Indian ethnic wear by LuxeMia</image:title>
       <image:caption>Green Dola Silk Wedding Saree with Embroidery - Wedding Saree | LuxeMia</image:caption>
     </image:image>
   </url>
@@ -6495,7 +6393,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7798054885_c49j_8f45c00b-e031-4de7-86ad-8e8346fc6c07.jpg?v=1782927127&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Ready-to-Wear Yellow Chiffon Saree with White Banarasi Blouse - Saree for Indian wedding</image:title>
-      <image:caption>Yellow Banarasi brocade Saree - Haldi | Ready to Ship - Saree | LuxeMia</image:caption>
+      <image:caption>Yellow Banarasi brocade Saree - Haldi - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6506,7 +6404,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7761113943_bwey.jpg?v=1782927107&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Indian Wedding Guest Kurta Set - Kurta Set for Indian wedding</image:title>
-      <image:caption>Lavender Kurta with Nehru Jacket - Groomsmen | Ready to Ship - Men&apos;s Kurta | LuxeMia</image:caption>
+      <image:caption>Lavender Kurta with Nehru Jacket - Groomsmen - Men&apos;s Kurta | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6550,7 +6448,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7986017965_g08h.jpg?v=1782927112&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Men&apos;s Indian Wedding Kurta Set - Sherwani for Indian wedding</image:title>
-      <image:caption>Ivory Kurta with Nehru Jacket - Wedding Guest | Ready to Ship - Men&apos;s Kurta | LuxeMia</image:caption>
+      <image:caption>Ivory Kurta with Nehru Jacket - Wedding Guest - Men&apos;s Kurta | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6583,7 +6481,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7742820026_1olh_8508dea7-32c0-4b61-b995-dc1dbd7c3e47.jpg?v=1782928213&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Pink Satin Kurta Pajama with Fuchsia Banarasi Nehru Jacket - Sherwani for Indian wedding</image:title>
-      <image:caption>Fuchsia Banarasi Brocade Kurta with Nehru Jacket - Ready to Ship - Men&apos;s Kurta | LuxeMia</image:caption>
+      <image:caption>Fuchsia Banarasi Brocade Kurta with Nehru Jacket - Men&apos;s Kurta | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6594,7 +6492,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7722781510_9a93_2c1fe10d-51e0-4c57-983a-8215d086e422.jpg?v=1782927150&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Metallic Grey Satin Kurta Dhoti Set - Sherwani for Indian wedding</image:title>
-      <image:caption>Grey Satin Kurta Dhoti Set - Wedding Guest | Ready to Ship - Men&apos;s Kurta | LuxeMia</image:caption>
+      <image:caption>Grey Satin Kurta Dhoti Set - Wedding Guest - Men&apos;s Kurta | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6605,7 +6503,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7742770380_6idk.jpg?v=1782927126&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Men&apos;s Grey Kurta Pajama Set - Kurta Pajama Set for Indian wedding</image:title>
-      <image:caption>Grey Kurta Pajama Set - Wedding Guest | Ready to Ship - Men&apos;s Kurta | LuxeMia</image:caption>
+      <image:caption>Grey Kurta Pajama Set - Wedding Guest - Men&apos;s Kurta | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6616,7 +6514,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7797921383_t4dy.jpg?v=1782927140&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Eggplant Ruffled Chiffon Saree - Saree for Indian wedding</image:title>
-      <image:caption>Eggplant Chiffon Saree - Wedding Guest | Ready to Ship - Saree | LuxeMia</image:caption>
+      <image:caption>Eggplant Chiffon Saree - Wedding Guest - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6627,7 +6525,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7798163227_c2sh_445f3c92-227f-42e1-96ec-a0b5c845f55d.jpg?v=1782927139&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Men&apos;s Cotton Silk Kurta Pajama Set with Banarasi Vest - Sherwani for Indian wedding</image:title>
-      <image:caption>Cotton silk Kurta with Nehru Jacket - Wedding Guest | Ready to Ship - Men&apos;s Kurta | LuxeMia</image:caption>
+      <image:caption>Cotton silk Kurta with Nehru Jacket - Wedding Guest - Men&apos;s Kurta | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6748,7 +6646,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7914887641_a9by_967d0f24-f5f6-49d4-88d9-19ea4333952b.jpg?v=1782927117&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Mocha Bridesmaid Lehenga Choli – Custom Tailored Georgette Indian Wedding Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Mocha Georgette Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Mocha Georgette Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -6858,7 +6756,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7764091407_a9lc.jpg?v=1782927153&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Teal Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Teal Satin Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Teal Satin Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -7001,7 +6899,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.8015201079_a448.jpg?v=1782927110&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Indian Wedding Guest Lehenga - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Banarasi brocade Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Banarasi brocade Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -7518,7 +7416,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7982197395_fovq_aaf24346-4942-49e8-88d1-93f23d258cc3.jpg?v=1782927112&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Indian Wedding Guest Saree - Saree for Indian wedding</image:title>
-      <image:caption>Buy Mauve Satin Saree - Wedding Guest | Ready to Ship - Saree | LuxeMia</image:caption>
+      <image:caption>Mauve Satin Saree - Wedding Guest - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -7529,7 +7427,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7811484073_gfrc.jpg?v=1782927123&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Emerald Green Mirror Work Lehenga Choli - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Buy Green Lehenga Choli Set - Bridesmaid | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Green Lehenga Choli Set - Bridesmaid - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -7683,7 +7581,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7726065550_5coy_8fc18775-0df8-4179-9fb0-8fe1b16b6acb.jpg?v=1782927116&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Blush Pink Gaji Silk Lehenga Choli – Custom Tailored Indian Wedding Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Blush Gaji silk Lehenga Choli Set - Wedding Guest | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Blush Gaji silk Lehenga Choli Set - Wedding Guest - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -7716,7 +7614,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7743142354_pyxu_d16513ba-a5d9-48d0-90ad-100d1d429253.jpg?v=1782927119&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Sapphire Blue Chanderi Silk Lehenga – Custom Tailored Indian Wedding Outfit - Lehenga Choli Set for Indian wedding</image:title>
-      <image:caption>Sapphire Chanderi silk Lehenga Choli Set - Sangeet | Ready to Ship - Lehenga Choli Set | LuxeMia</image:caption>
+      <image:caption>Sapphire Chanderi silk Lehenga Choli Set - Sangeet - Lehenga Choli Set | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>
@@ -7771,7 +7669,7 @@
     <image:image>
       <image:loc>https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7760570563_82cr_ecd769b2-f6cd-4a96-84c4-3298946a65a9.jpg?v=1782927108&amp;format=jpg&amp;width=1200</image:loc>
       <image:title>Indian Wedding Guest Saree - Saree for Indian wedding</image:title>
-      <image:caption>Buy Banarasi brocade Saree - Bridesmaid | Ready to Ship - Saree | LuxeMia</image:caption>
+      <image:caption>Banarasi brocade Saree - Bridesmaid - Saree | LuxeMia</image:caption>
     </image:image>
   </url>
   <url>

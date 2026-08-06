@@ -827,7 +827,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
-        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free U.S. shipping over $150</span>
+        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free U.S. shipping at $150 and above</span>
         <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
         <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
       </div>
@@ -981,7 +981,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Damage Protection</p>
-            <p className="text-xs text-muted-foreground">Report shipping damage within 48 hours with a mandatory unboxing video</p>
+            <p className="text-xs text-muted-foreground">Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with clear photos and the required continuous unboxing/opening video.</p>
           </div>
         </div>
       </div>

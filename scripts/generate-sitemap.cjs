@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * Generate dynamic sitemap.xml with ALL active Shopify product URLs.
+ * Generate sitemap.xml within the approved live URL inventory.
  *
  * This script fetches all products from the Shopify Storefront API and
  * generates a complete sitemap.xml including:
  * - All static pages (home, category, info, legal, blog)
- * - All product pages from Shopify (with product images)
+ * - Approved product pages that are still present in Shopify and this build
  * - All blog post URLs
  *
  * Run: node scripts/generate-sitemap.cjs
@@ -18,8 +18,12 @@ const path = require('path');
 const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
+const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
+const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
+const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
+const EXPECTED_SITEMAP_URL_COUNT = 779;
 if (!SHOPIFY_STOREFRONT_TOKEN) {
-  console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN env var is not set. Product URLs will be missing from sitemap.');
+  console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
 
 // Minimal query — we only need handle, title, image, and updatedAt for sitemap
@@ -205,50 +209,48 @@ function forceJpeg(url) {
   return url;
 }
 
-// ─── URL Liveness Check ───────────────────────────────────────────────────────
-// HEAD-checks a URL against the live site to ensure it returns 200 OK. Confirmed
-// redirects and 404/410 responses are excluded. Timeouts, rate limits, and 5xx
-// responses are treated as inconclusive and kept in the sitemap so a transient
-// build-network problem cannot erase hundreds of valid products.
-//
-// Skip the check entirely by setting SKIP_SITEMAP_LIVENESS_CHECK=1 (useful for
-// local dev or first-time builds where the site isn't live yet).
-async function isUrlLive(url) {
-  if (process.env.SKIP_SITEMAP_LIVENESS_CHECK === '1') return true;
+// ─── Built-output validation ────────────────────────────────────────────────
 
-  const MAX_ATTEMPTS = 2;
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
-    try {
-      const resp = await fetch(url, {
-        method: 'HEAD',
-        redirect: 'manual',
-        signal: controller.signal,
-        headers: { 'User-Agent': 'LuxeMia-Sitemap-Build/1.0' },
-      });
+function prerenderFileForPath(routePath) {
+  if (routePath === '/') return path.join(PRERENDER_DIR, 'index.html');
+  return path.join(PRERENDER_DIR, `${routePath.slice(1)}.html`);
+}
 
-      if (resp.status === 200) return true;
-      if ((resp.status >= 300 && resp.status < 400) || resp.status === 404 || resp.status === 410) {
-        return false;
-      }
+function expectedCanonical(routePath) {
+  return routePath === '/' ? `${SITE_URL}/` : `${SITE_URL}${routePath}`;
+}
 
-      console.warn(
-        `[sitemap] Inconclusive liveness response ${resp.status} for ${url} ` +
-        `(attempt ${attempt}/${MAX_ATTEMPTS})`
-      );
-    } catch (error) {
-      console.warn(
-        `[sitemap] Inconclusive liveness check for ${url} ` +
-        `(attempt ${attempt}/${MAX_ATTEMPTS}): ${error.message}`
-      );
-    } finally {
-      clearTimeout(timeout);
-    }
+function validatePrerenderedRoute(routePath, manifestRoutes, exactRedirectSources) {
+  if (exactRedirectSources.has(routePath)) {
+    throw new Error(`Sitemap route is an exact redirect source: ${routePath}`);
+  }
+  if (!manifestRoutes.has(routePath)) {
+    throw new Error(`Sitemap route is missing from the newly built prerender manifest: ${routePath}`);
   }
 
-  console.warn(`[sitemap] Keeping ${url} after inconclusive liveness checks.`);
-  return true;
+  const htmlPath = prerenderFileForPath(routePath);
+  if (!fs.existsSync(htmlPath)) {
+    throw new Error(`Sitemap route has no newly built prerender file: ${routePath}`);
+  }
+
+  const html = fs.readFileSync(htmlPath, 'utf8');
+  const canonicals = [...html.matchAll(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)["'][^>]*>/gi)]
+    .map((match) => match[1]);
+  const robots = [...html.matchAll(/<meta\s+name=["']robots["']\s+content=["']([^"']+)["'][^>]*>/gi)]
+    .map((match) => match[1]);
+
+  if (canonicals.length !== 1 || canonicals[0] !== expectedCanonical(routePath)) {
+    throw new Error(
+      `Sitemap route must have one self-canonical (${expectedCanonical(routePath)}): ${routePath} ` +
+      `(found ${canonicals.join(', ') || 'none'})`
+    );
+  }
+  if (robots.length !== 1 || /noindex/i.test(robots[0])) {
+    throw new Error(
+      `Sitemap route must have one indexable robots directive: ${routePath} ` +
+      `(found ${robots.join(', ') || 'none'})`
+    );
+  }
 }
 
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
@@ -274,11 +276,13 @@ async function fetchAllProducts() {
     });
 
     if (!response.ok) {
-      console.error(`[sitemap] Shopify API error: ${response.status} ${response.statusText}`);
-      break;
+      throw new Error(`[sitemap] Shopify API error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
+    if (data?.errors?.length) {
+      throw new Error(`[sitemap] Shopify GraphQL error: ${JSON.stringify(data.errors)}`);
+    }
     const edges = data?.data?.products?.edges || [];
     allProducts.push(...edges.map(e => e.node));
 
@@ -353,6 +357,23 @@ ${urls.join('\n')}
 async function main() {
   console.log('[sitemap] Generating dynamic sitemap.xml...');
 
+  if (!fs.existsSync(APPROVED_INVENTORY_PATH)) {
+    throw new Error(`Approved sitemap inventory is missing: ${APPROVED_INVENTORY_PATH}`);
+  }
+  const approvedInventory = JSON.parse(fs.readFileSync(APPROVED_INVENTORY_PATH, 'utf8'));
+  const approvedPaths = Array.isArray(approvedInventory.paths) ? approvedInventory.paths : [];
+  const approvedPathSet = new Set(approvedPaths);
+  if (
+    approvedInventory.urlCount !== EXPECTED_SITEMAP_URL_COUNT ||
+    approvedPaths.length !== EXPECTED_SITEMAP_URL_COUNT ||
+    approvedPathSet.size !== EXPECTED_SITEMAP_URL_COUNT
+  ) {
+    throw new Error(
+      `Approved sitemap inventory must contain exactly ${EXPECTED_SITEMAP_URL_COUNT} unique paths ` +
+      `(found declared=${approvedInventory.urlCount}, paths=${approvedPaths.length}, unique=${approvedPathSet.size}).`
+    );
+  }
+
   // Fail before publishing a sitemap that lists an exact Vercel redirect
   // source. This catches config drift such as the former
   // /indian-ethnic-wear-canada entry, which returned 301 from the sitemap.
@@ -373,80 +394,72 @@ async function main() {
     );
   }
 
-  let products;
-  try {
-    products = await fetchAllProducts();
-  } catch (error) {
-    console.error('[sitemap] Failed to fetch from Shopify API:', error);
-    // Fallback: use existing sitemap if API fails
-    const existingSitemap = path.resolve(__dirname, '../public/sitemap.xml');
-    if (fs.existsSync(existingSitemap)) {
-      console.log('[sitemap] Using existing sitemap.xml from public/');
-      const distDir = path.resolve(__dirname, '../dist');
-      if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-      fs.copyFileSync(existingSitemap, path.join(distDir, 'sitemap.xml'));
-      console.log('[sitemap] Copied existing sitemap to dist/sitemap.xml');
-      return;
-    }
-    console.error('[sitemap] No fallback sitemap available. Generating minimal sitemap.');
-    products = [];
+  if (!fs.existsSync(PRERENDER_MANIFEST_PATH)) {
+    throw new Error(
+      `Newly built prerender manifest is missing: ${PRERENDER_MANIFEST_PATH}. ` +
+      'Run scripts/prerender.js before sitemap generation.'
+    );
+  }
+  const prerenderManifest = JSON.parse(fs.readFileSync(PRERENDER_MANIFEST_PATH, 'utf8'));
+  const manifestRoutes = new Set(prerenderManifest.routes || []);
+  if (manifestRoutes.size === 0) {
+    throw new Error('Newly built prerender manifest contains no routes.');
   }
 
-  // ── Liveness filter ────────────────────────────────────────────────────────
-  // HEAD-check every product URL to ensure it returns 200 OK. Confirmed
-  // redirects/404s are excluded from the sitemap. Because every product in
-  // this loop came from Shopify's active Storefront API, an HTTP failure does
-  // not prove deletion and must never auto-create a 410 Gone rule.
-  //
-  // Skip with SKIP_SITEMAP_LIVENESS_CHECK=1 for local dev / first-time builds.
+  const products = await fetchAllProducts();
+
+  // Validate sitemap candidates against this build's own output. Checking the
+  // prior production deployment here can approve stale routes or reject newly
+  // fixed ones, so production HTTP responses are intentionally not consulted.
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
 
-  const liveProducts = [];
-  const excludedHandles = [];
-
-  if (process.env.SKIP_SITEMAP_LIVENESS_CHECK === '1') {
-    console.log('[sitemap] SKIP_SITEMAP_LIVENESS_CHECK=1 — skipping HEAD checks.');
-    liveProducts.push(...products);
-  } else {
-    console.log(`[sitemap] HEAD-checking ${products.length} product URLs (this may take a few minutes)...`);
-    const BATCH_SIZE = 10;
-    for (let i = 0; i < products.length; i += BATCH_SIZE) {
-      const batch = products.slice(i, i + BATCH_SIZE);
-      const results = await Promise.all(
-        batch.map(async (p) => {
-          const url = `${SITE_URL}/product/${p.handle}`;
-          const live = await isUrlLive(url);
-          return { product: p, live };
-        })
-      );
-      for (const r of results) {
-        if (r.live) liveProducts.push(r.product);
-        else excludedHandles.push(r.product.handle);
-      }
-      const done = Math.min(i + BATCH_SIZE, products.length);
-      if (done % 50 === 0 || done === products.length) {
-        console.log(
-          `[sitemap] Validated ${done}/${products.length} ` +
-          `(${excludedHandles.length} confirmed non-200 so far)`
-        );
-      }
-    }
-  }
-
-  if (excludedHandles.length > 0) {
-    console.warn(
-      `[sitemap] Excluded ${excludedHandles.length} confirmed redirect/404 product URLs from sitemap.`
+  const productByPath = new Map(
+    products.map((product) => [`/product/${product.handle}`, product])
+  );
+  const approvedProductPaths = approvedPaths.filter((routePath) => routePath.startsWith('/product/'));
+  const missingApprovedProducts = approvedProductPaths.filter((routePath) => !productByPath.has(routePath));
+  if (missingApprovedProducts.length > 0) {
+    throw new Error(
+      `Approved sitemap product(s) are missing from the current Shopify response: ` +
+      `${missingApprovedProducts.slice(0, 20).join(', ')}` +
+      (missingApprovedProducts.length > 20 ? ` (+${missingApprovedProducts.length - 20} more)` : '')
     );
-    if (excludedHandles.length <= 30) {
-      console.warn(`[sitemap] Excluded handles: ${excludedHandles.join(', ')}`);
-    } else {
-      console.warn(
-        `[sitemap] First 20 excluded handles: ${excludedHandles.slice(0, 20).join(', ')}... ` +
-        `(+${excludedHandles.length - 20} more)`
-      );
-    }
   }
+  const liveProducts = approvedProductPaths.map((routePath) => productByPath.get(routePath));
+  const excludedCandidateCount = products.length - liveProducts.length;
+  console.log(
+    `[sitemap] Approved inventory retained ${liveProducts.length} products; ` +
+    `excluded ${excludedCandidateCount} Shopify candidate product(s) outside the approved/live sitemap scope.`
+  );
+  const sitemapPaths = [
+    ...staticPages.map((page) => page.loc),
+    ...blogPosts,
+    ...liveProducts.map((product) => `/product/${product.handle}`),
+  ];
+  const sitemapPathSet = new Set(sitemapPaths);
+  const missingApprovedPaths = approvedPaths.filter((routePath) => !sitemapPathSet.has(routePath));
+  const unexpectedPaths = sitemapPaths.filter((routePath) => !approvedPathSet.has(routePath));
+  if (
+    sitemapPaths.length !== EXPECTED_SITEMAP_URL_COUNT ||
+    sitemapPathSet.size !== EXPECTED_SITEMAP_URL_COUNT ||
+    missingApprovedPaths.length > 0 ||
+    unexpectedPaths.length > 0
+  ) {
+    throw new Error(
+      `Generated sitemap scope must exactly match the ${EXPECTED_SITEMAP_URL_COUNT}-URL approved/live inventory. ` +
+      `Generated=${sitemapPaths.length}, unique=${sitemapPathSet.size}, ` +
+      `missing=${missingApprovedPaths.join(', ') || 'none'}, ` +
+      `unexpected=${unexpectedPaths.join(', ') || 'none'}.`
+    );
+  }
+  for (const routePath of sitemapPaths) {
+    validatePrerenderedRoute(routePath, manifestRoutes, exactRedirectSources);
+  }
+  console.log(
+    `[sitemap] Validated ${sitemapPaths.length} URLs against the newly built prerender manifest: ` +
+    'all have a prerendered response, one indexable robots directive, one self-canonical, and no exact redirect conflict.'
+  );
 
   // Active Storefront API products are never automatically converted to 410.
   const deadListPath = path.join(distDir, 'dead-product-handles.json');

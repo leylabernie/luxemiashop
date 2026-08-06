@@ -34,7 +34,7 @@ const ShopifyCollectionPage = () => {
   if (!config) return <Navigate to="/collections" replace />;
 
   const visibleProducts = purchasableProducts.slice(0, visibleCount);
-  const noIndex = !isLoading && purchasableProducts.length === 0;
+  const noIndexFollow = !isLoading && purchasableProducts.length === 0;
   const collectionItems = purchasableProducts.slice(0, 30).map((product) => ({
     id: product.node.id,
     name: product.node.title,
@@ -51,7 +51,7 @@ const ShopifyCollectionPage = () => {
         description={config.description}
         canonical={config.canonical}
         type="collection"
-        noIndex={noIndex}
+        noIndexFollow={noIndexFollow}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -127,7 +127,7 @@ const ShopifyCollectionPage = () => {
                 We have not published a qualifying product in this collection yet. Tell us your event date, preferred color and budget, and we will help review suitable options.
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <Button asChild><Link to="/style-consultation">Ask a Stylist</Link></Button>
+                <Button asChild><Link to="/contact">Ask LuxeMia for Help</Link></Button>
                 <Button asChild variant="outline">
                   <a href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20am%20looking%20for%20a%20wedding%20saree." target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
                 </Button>

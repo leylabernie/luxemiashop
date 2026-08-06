@@ -5,7 +5,7 @@ const services = [
   {
     icon: Truck,
     title: 'U.S. Shipping',
-    description: '$12 below $150; free over $150',
+    description: '$12 below $150; free at $150 and above',
   },
   {
     icon: ShieldCheck,

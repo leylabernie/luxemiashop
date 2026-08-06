@@ -58,6 +58,7 @@ interface SEOHeadProps {
   breadcrumbs?: Array<{ name: string; url: string }>;
   faqs?: FAQItem[];
   noIndex?: boolean;
+  noIndexFollow?: boolean;
   localBusiness?: Record<string, any>;
   /**
    * Additional JSON-LD schemas to inject (each rendered as its own
@@ -91,6 +92,7 @@ const SEOHead = ({
   breadcrumbs,
   faqs,
   noIndex = false,
+  noIndexFollow = false,
   localBusiness,
   additionalSchemas,
   hreflang,
@@ -143,7 +145,7 @@ const SEOHead = ({
         price: product.price,
         compareAtPrice: product.originalPrice || null,
         currency: product.currency || 'USD',
-        availability: product.availability === 'OutOfStock' ? 'OutOfStock' : 'InStock',
+        availability: product.availability === 'InStock' ? 'InStock' : 'OutOfStock',
       })
     : null;
 
@@ -162,7 +164,6 @@ const SEOHead = ({
     url: canonicalUrl,
     title: seoTitle,
     description: seoDescription,
-    breadcrumbs: breadcrumbs || undefined,
   });
 
   // SiteNavigationElement Schema — helps Google understand site structure for sitelinks
@@ -182,7 +183,8 @@ const SEOHead = ({
       <meta name="title" content={seoTitle} />
       <meta name="description" content={seoDescription} />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
-      {!noIndex && <meta name="robots" content="index, follow" />}
+      {!noIndex && noIndexFollow && <meta name="robots" content="noindex, follow" />}
+      {!noIndex && !noIndexFollow && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
 
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />

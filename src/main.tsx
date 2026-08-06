@@ -2,9 +2,21 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-// Direct bot requests receive build-time JSON-LD in prerendered HTML. Remove
-// those temporary copies before React Helmet mounts the equivalent route schema
-// so JavaScript-enabled crawlers never see duplicate FAQPage or HowTo blocks.
+// Non-JavaScript crawlers receive complete route metadata and structured data
+// from the prerendered HTML. Before React Helmet mounts, remove only the
+// prerendered route-scoped copies so the hydrated page has one authoritative
+// canonical, description, robots directive, social set, and route schema.
+document.querySelectorAll([
+  'link[rel="canonical"]',
+  'link[rel="alternate"][hreflang]',
+  'meta[name="description"]',
+  'meta[name="robots"]',
+  'meta[name="author"]',
+  'meta[name^="twitter:"]',
+  'meta[property^="og:"]',
+  'meta[property^="product:"]',
+].join(',')).forEach((element) => element.remove());
+
 document
   .querySelectorAll('script[data-prerender-schema]')
   .forEach((schema) => schema.remove());

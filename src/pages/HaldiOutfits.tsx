@@ -39,7 +39,7 @@ const haldiOutfitFaqs = [
   },
   {
     question: 'Do you ship haldi ceremony outfits to the USA and the United States?',
-    answer: 'LuxeMia ships haldi ceremony outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships haldi ceremony outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
   },
 ];
 
@@ -78,7 +78,7 @@ const HaldiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Haldi Ceremony Outfits | Yellow Lehengas & Suits | LuxeMia"
-        description="Shop haldi ceremony outfits at LuxeMia. Yellow & gold lehengas, pastel suits, and mustard sarees for the bride and guests. Free U.S. shipping over $150 to USA."
+        description="Shop haldi ceremony outfits at LuxeMia. Yellow & gold lehengas, pastel suits, and mustard sarees for the bride and guests. Free U.S. shipping at $150 and above to USA."
         canonical="https://luxemia.shop/collections/haldi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -96,7 +96,7 @@ const HaldiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Haldi Ceremony Outfits — Yellow & Gold Lehengas, Sarees & Suits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets for the bride, bridesmaids, family, and guests. Delivery is available to the United States, with free U.S. shipping over $150.
+              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets for the bride, bridesmaids, family, and guests. Delivery is available to the United States, with free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -105,7 +105,7 @@ const HaldiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>haldi ceremony outfits</strong>, <strong>yellow lehenga for haldi</strong>, <strong>haldi dress for bride</strong>, <strong>gold anarkali suits</strong>, <strong>mustard sarees for haldi</strong>, and <strong>pastel yellow salwar kameez</strong>. Traditional and modern <strong>haldi outfit ideas</strong> for the bride and guests. Free U.S. shipping over $150.
+              Shop <strong>haldi ceremony outfits</strong>, <strong>yellow lehenga for haldi</strong>, <strong>haldi dress for bride</strong>, <strong>gold anarkali suits</strong>, <strong>mustard sarees for haldi</strong>, and <strong>pastel yellow salwar kameez</strong>. Traditional and modern <strong>haldi outfit ideas</strong> for the bride and guests. Free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -197,7 +197,7 @@ const HaldiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Haldi Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -207,7 +207,7 @@ const HaldiOutfits = () => {
                   <li><Link to="/collections/wedding-guest-outfits" className="text-primary underline">Wedding Guest Outfits</Link></li>
                   <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/suits" className="text-primary underline">Shop Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
                   <li><Link to="/online" className="text-primary underline">Online Collection</Link></li>
-                  <li><Link to="/blog/mehendi-outfit-by-role" className="text-primary underline">Mehendi Outfit Ideas by Role</Link></li>
+                  <li><Link to="/collections/mehendi-outfits" className="text-primary underline">Mehendi Ceremony Outfits</Link></li>
                 </ul>
               </div>
             </div>

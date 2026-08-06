@@ -35,7 +35,7 @@ const diwaliOutfitFaqs = [
   },
   {
     question: 'Do you ship Diwali outfits to the United States?',
-    answer: 'LuxeMia ships Diwali outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Diwali outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'What accessories should I pair with my Diwali outfit?',
@@ -53,7 +53,7 @@ const DiwaliOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia"
-        description="Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free U.S. shipping over $150."
+        description="Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits, sarees & salwar kameez in gold, red & festive colors. Free U.S. shipping at $150 and above."
         canonical="https://luxemia.shop/collections/diwali-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -74,7 +74,7 @@ const DiwaliOutfits = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Diwali Outfits 2026</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the United States with free U.S. shipping over $150.
+              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the United States with free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -149,7 +149,7 @@ const DiwaliOutfits = () => {
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Diwali Outfit by Setting — Which One Are You Attending?</h3>
                 <p>What you wear for Diwali depends heavily on the setting. For <strong>Lakshmi Puja at home</strong>, a silk saree or cotton salwar kameez in auspicious colors (red, gold, deep green) is ideal — natural fibers are preferred for religious ceremonies. For a <strong>Diwali party</strong>, choose an embellished lehenga or sequin anarkali in jewel tones (emerald, sapphire, plum) — the more sparkle, the better. For an <strong>office Diwali celebration</strong>, go indo-western — a palazzo suit or contemporary anarkali in muted festive colors. For a <strong>community Diwali event</strong>, anarkalis or salwar kameez with comfortable flats are practical for 4-6 hour events.</p>
-                <p className="mt-2">For the complete setting-by-setting guide with budget breakdowns ($80-$500), fabric recommendations, and color meanings, read our <Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline font-medium">Diwali Outfit Ideas by Setting guide</Link>.</p>
+                <p className="mt-2">For more practical ideas for celebrating abroad, read our <Link to="/blog/styling-indian-ethnic-wear-festive-occasions-abroad" className="text-primary underline font-medium">festive Indian outfit styling guide</Link>.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -160,15 +160,15 @@ const DiwaliOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Diwali Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline">Diwali Outfit Ideas by Setting: Puja, Party, Office & Community — 2026 Guide</Link></li>
-                  <li><Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline">Navratri 9 Day Color Guide 2026</Link></li>
-                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest</Link></li>
+                  <li><Link to="/blog/styling-indian-ethnic-wear-festive-occasions-abroad" className="text-primary underline">Festive Indian Outfit Styling Guide</Link></li>
+                  <li><Link to="/collections/navratri-outfits" className="text-primary underline">Navratri Outfits</Link></li>
+                  <li><Link to="/blog/wedding-guest-outfit-ideas" className="text-primary underline">Indian Wedding Guest Outfit Guide 2026</Link></li>
                   <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link> | <Link to="/suits" className="text-primary underline">Shop Anarkali Suits</Link></li>
                 </ul>
               </div>

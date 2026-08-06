@@ -60,7 +60,7 @@ const INFO_LINKS: LinkItem[] = [
   { to: "/returns", label: "Returns & Cancellations" },
   { to: "/faq", label: "Frequently Asked Questions" },
   { to: "/contact", label: "Contact Us" },
-  { to: "/style-consultation", label: "Book a Styling Consultation" },
+  { to: "/contact", label: "Ask LuxeMia for Help" },
   { to: "/style-quiz", label: "Find Your Style — Quiz" },
 ];
 

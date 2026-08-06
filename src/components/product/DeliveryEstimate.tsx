@@ -16,7 +16,7 @@ export const DeliveryEstimate = ({ hasStitching }: DeliveryEstimateProps) => (
         <Truck className="h-3.5 w-3.5 mt-0.5 text-muted-foreground" />
         <div>
           <p className="text-foreground">
-            Free U.S. shipping over $150. $12 flat below that.
+            Free U.S. shipping at $150 and above. $12 flat below that.
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Delivery timing depends on the item and selected options. Tracking is provided after dispatch.

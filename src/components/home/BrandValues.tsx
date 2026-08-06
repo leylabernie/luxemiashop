@@ -10,7 +10,7 @@ const values = [
   {
     icon: Leaf,
     title: 'Clear Shipping Cost',
-    description: 'U.S. shipping is $12 below $150 and free over $150, with tracking after dispatch.',
+    description: 'U.S. shipping is $12 below $150 and free at $150 and above, with tracking after dispatch.',
   },
   {
     icon: Heart,

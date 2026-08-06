@@ -8,11 +8,11 @@ const USA = () => (
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
       seoTitle: 'Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping over $150; $12 below. Tracking after dispatch.',
+      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping at $150 and above; $12 below. Tracking after dispatch.',
       heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
       shippingTime: 'tracking provided after dispatch',
-      shippingCost: '$12 per order; free over $150',
+      shippingCost: '$12 per order; free at $150 and above',
       customsNote: 'US imports may be subject to duties, taxes, or carrier processing fees based on product classification, value, and current customs rules. These charges are not included unless checkout explicitly states otherwise.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const USA = () => (
         },
         {
           question: 'Is shipping free to the United States?',
-          answer: 'Shipping is free on orders over $150 and costs $12 below that. The applicable rate is shown at checkout.',
+          answer: 'Shipping is free at $150 and above and costs $12 below that. The applicable rate is shown at checkout.',
         },
         {
           question: 'Will I have to pay customs duties?',
@@ -29,7 +29,7 @@ const USA = () => (
         },
         {
           question: 'Can I return an item?',
-          answer: 'All sales are final. Genuine shipping damage must be documented with an unboxing video and reported within 48 hours of delivery. Review the Returns Policy for full details.',
+          answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
         },
         {
           question: 'Do you offer custom sizing?',
@@ -37,7 +37,7 @@ const USA = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free over $150' },
+        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free at $150 and above' },
         { icon: Shield, title: 'Clear Policies', description: 'Shipping and damage-claim terms online' },
         { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
       ],

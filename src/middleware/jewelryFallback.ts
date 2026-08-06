@@ -68,7 +68,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
         "name": `Does LuxeMia ship ${product.category.toLowerCase()} internationally?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `LuxeMia currently ships ${product.category.toLowerCase()} to United States addresses only. Free US shipping applies over $150; $12 flat below that.`
+          "text": `LuxeMia currently ships ${product.category.toLowerCase()} to United States addresses only. Free US shipping applies at $150 and above; $12 flat below that.`
         }
       }
     ]
@@ -101,6 +101,17 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
     ]
   };
 
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonicalUrl}#webpage`,
+    "url": canonicalUrl,
+    "name": title,
+    "description": description,
+    "isPartOf": { "@id": `${SITE_URL}/#website` },
+    "inLanguage": "en-US"
+  };
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,6 +135,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   <meta property="product:condition" content="new">
   <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
+  <script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -166,8 +178,8 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
           <div><dt>Availability:</dt><dd>In Stock</dd></div>
         </dl>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.<br>
-          <strong>Returns:</strong> All sales final. Damage claims within 48h with unboxing video.<br>
+          <strong>Shipping:</strong> Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.<br>
+          <strong>Returns:</strong> All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>
       </div>

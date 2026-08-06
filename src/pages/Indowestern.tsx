@@ -32,7 +32,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Do you ship Indo-Western outfits in the United States?',
-    answer: 'Yes. LuxeMia currently ships to United States addresses only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is emailed after dispatch.',
+    answer: 'Yes. LuxeMia currently ships to United States addresses only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is emailed after dispatch.',
   },
   {
     question: 'Which fabrics and embellishments are available?',
@@ -40,7 +40,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Can I return an Indo-Western outfit?',
-    answer: 'All sales are final. Genuine shipping damage must be reported within 48 hours of delivery with a continuous unboxing video showing the unopened parcel, label, opening, and damage.',
+    answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
   },
 ];
 
@@ -63,7 +63,7 @@ const Indowestern = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Indo-Western Dresses Online | Fusion Indian Outfits USA | LuxeMia"
-        description="Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping over $150; $12 below."
+        description="Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping at $150 and above; $12 below."
         canonical="https://luxemia.shop/indowestern"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -88,7 +88,7 @@ const Indowestern = () => {
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Compare the live collection using the product cards below, then open a listing for its exact fabric, color, embellishment, included pieces, sizes, and availability. LuxeMia ships to U.S. addresses for $12 on orders under $150 and free on orders over $150.
+              Compare the live collection using the product cards below, then open a listing for its exact fabric, color, embellishment, included pieces, sizes, and availability. LuxeMia ships to U.S. addresses for $12 on orders below $150 and free at $150 and above.
             </p>
           </div>
         </div>

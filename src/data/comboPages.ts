@@ -26,7 +26,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'maroon-lehenga-for-wedding-guest',
     title: 'Maroon Lehenga for Wedding Guest — Online Styles | LuxeMia',
-    metaDescription: 'Shop maroon Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop maroon Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Maroon Lehenga for Wedding Guest',
     heroSubtitle: 'Browse maroon Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Maroon Lehenga for Wedding Guest',
@@ -48,7 +48,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a wedding guest lehenga, choose a silhouette that is dance-friendly — you will be on the dance floor at the sangeet and reception. A-line lehengas with 2-3 meters of flare are ideal; circular skirts with 4-6 meters of flare are too heavy for hours of dancing. Look for fabrics like georgette, velvet, or art silk that drape well and photograph richly. Avoid raw silk — it is stiff and unforgiving in photos.',
           'Embellishment should be concentrated at the hem and yoke, not all over. Heavy zardozi across the entire lehenga adds visual weight and gets uncomfortable after 4 hours. Mirror work, sequins, and zari at the borders give you the festive look without the bulk. Pair with a 3/4 sleeve choli (not a crop top) for wedding-guest appropriateness, and drape the dupatta over one shoulder — not both, which adds bulk.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -63,22 +63,22 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest — Complete Guide', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian to US Clothing Size Conversion Guide', url: '/blog/indian-to-us-clothing-size-conversion-guide' },
+      { label: 'Indian Clothing Measurement Guide', url: '/sizing-measurements-guide' },
     ],
   },
 
   {
     slug: 'emerald-green-lehenga-for-wedding-guest',
     title: 'Emerald Green Lehenga for Wedding Guest — Shop Online | LuxeMia',
-    metaDescription: 'Shop emerald Green Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop emerald Green Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Emerald Green Lehenga for Wedding Guest',
     heroSubtitle: 'Browse emerald Green Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Emerald Green Lehenga for Wedding Guest',
@@ -100,7 +100,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pair emerald green with gold jewelry — kundan necklaces, gold jhumka earrings, and gold bangles. The warm gold tones complement the cool green beautifully. For a dupatta, choose a contrasting color like maroon, pink, or gold to add visual interest. Drape the dupatta over one shoulder (not both) to avoid adding bulk.',
           'For footwear, choose gold or emerald embellished flats — you will be dancing for hours. Avoid heels. For makeup, gold eyeshadow and a nude lip complement the green without competing. A small green or gold bindi completes the look. Budget $40-$120 for jewelry and $30-$80 for footwear.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -115,12 +115,12 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
     ],
@@ -129,7 +129,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'royal-blue-lehenga-for-wedding-guest',
     title: 'Royal Blue Lehenga for Wedding Guest — Online Styles | LuxeMia',
-    metaDescription: 'Shop royal Blue Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop royal Blue Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Royal Blue Lehenga for Wedding Guest',
     heroSubtitle: 'Browse royal Blue Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Royal Blue Lehenga for Wedding Guest',
@@ -151,7 +151,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Royal blue pairs with both gold and silver jewelry. Gold gives a traditional, warm look; silver gives a modern, cool look. For a sangeet, choose silver mirror work and silver jewelry for a fresh, modern aesthetic. For a reception, gold zari and kundan jewelry gives a richer, more traditional look.',
           'For a dupatta, choose a contrasting color like yellow, orange, or pink to add visual interest. Royal blue with a yellow or orange dupatta is a classic Indian color combination. Drape over one shoulder. For footwear, choose silver or gold embellished flats. Avoid black footwear with royal blue.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -166,21 +166,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'pink-lehenga-for-wedding-guest',
     title: 'Pink Lehenga for Wedding Guest — From Blush to Fuchsia | LuxeMia',
-    metaDescription: 'Shop pink Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop pink Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Pink Lehenga for Wedding Guest',
     heroSubtitle: 'Browse pink Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Pink Lehenga for Wedding Guest',
@@ -202,7 +202,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pink pairs beautifully with gold jewelry — the warm gold tones complement the cool pink. For blush pink, choose delicate gold jewelry (thin necklaces, small jhumkas). For fuchsia or magenta, choose bolder gold jewelry (statement kundan necklaces, large jhumkas). Silver jewelry also works with pink, especially for a modern look.',
           'For a dupatta, choose a contrasting color — green, gold, or orange create beautiful color combinations with pink. Avoid matching the dupatta to the lehenga. Drape over one shoulder. For footwear, gold or nude embellished flats work best. Avoid black or dark footwear with pink.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -217,21 +217,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Mehendi Outfit Ideas by Role', url: '/blog/mehendi-outfit-by-role' },
+      { label: 'Mehendi Ceremony Outfits', url: '/collections/mehendi-outfits' },
     ],
   },
 
   {
     slug: 'purple-lehenga-for-wedding-guest',
     title: 'Purple Lehenga for Wedding Guest — Royal & Photogenic | LuxeMia',
-    metaDescription: 'Shop purple Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop purple Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Purple Lehenga for Wedding Guest',
     heroSubtitle: 'Browse purple Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Purple Lehenga for Wedding Guest',
@@ -253,7 +253,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Purple pairs best with gold jewelry — kundan necklaces, gold jhumkas, and gold bangles. The warm gold tones complement the cool purple beautifully. Silver jewelry also works, especially with lavender or lilac. Avoid mixing gold and silver; choose one metal and stick with it.',
           'For a dupatta, choose gold or a contrasting color like pink, yellow, or green. Deep purple with a gold dupatta is a classic regal look. Drape over one shoulder. For footwear, gold or purple embellished flats work best. For makeup, purple or plum eyeshadow complements the lehenga without competing.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -268,21 +268,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'wine-lehenga-for-wedding-guest',
     title: 'Wine Lehenga for Wedding Guest — Sophisticated & Safe | LuxeMia',
-    metaDescription: 'Shop wine Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop wine Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Wine Lehenga for Wedding Guest',
     heroSubtitle: 'Browse wine Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Wine Lehenga for Wedding Guest',
@@ -304,7 +304,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Wine pairs beautifully with gold jewelry — the warm gold tones bring out the richness of the wine color. Kundan necklaces, gold jhumkas, and gold bangles are all excellent choices. For a modern look, rose gold jewelry also complements wine beautifully. Avoid silver jewelry with wine; it clashes.',
           'For a dupatta, choose gold or a contrasting color like pink, peach, or ivory. Wine with a gold dupatta is a classic, regal look. Drape over one shoulder. For footwear, gold or wine embellished flats. For makeup, a wine or berry lip complements the lehenga beautifully.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -319,21 +319,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'navy-blue-lehenga-for-wedding-guest',
     title: 'Navy Blue Lehenga for Wedding Guest — Elegant & Modern | LuxeMia',
-    metaDescription: 'Shop navy Blue Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop navy Blue Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Navy Blue Lehenga for Wedding Guest',
     heroSubtitle: 'Browse navy Blue Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Navy Blue Lehenga for Wedding Guest',
@@ -355,7 +355,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Navy blue pairs with both gold and silver jewelry. Silver or white gold gives a modern, cool look that complements the navy beautifully. Gold gives a warmer, more traditional look. For a winter wedding, silver is the more seasonal choice. For a summer wedding, gold adds warmth.',
           'For a dupatta, choose silver, white, or a contrasting color like pink, peach, or ivory. Navy with a silver or white dupatta is a classic, elegant look. Drape over one shoulder. For footwear, silver or navy embellished flats. For makeup, silver or champagne eyeshadow complements the navy.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -370,21 +370,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'maroon-lehenga-for-reception',
     title: 'Maroon Lehenga for Reception — Elegant & Photogenic | LuxeMia',
-    metaDescription: 'Shop maroon Lehenga for Reception online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop maroon Lehenga for Reception online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Maroon Lehenga for Reception',
     heroSubtitle: 'Browse maroon Lehenga for Reception available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Maroon Lehenga for Reception',
@@ -406,7 +406,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'The key difference between a reception lehenga and a wedding ceremony lehenga is formality. The wedding ceremony is the most formal event — silk sarees, heavily embroidered lehengas, traditional jewelry. The reception is slightly less formal but more glamorous — you can be more fashion-forward, more experimental, more modern.',
           'For a maroon reception lehenga, choose a contemporary silhouette — an A-line skirt with a stylish choli (boat neck, off-shoulder, or 3/4 sleeve), or an indo-western fusion look. Velvet, georgette, and raw silk all work for reception. Avoid the heaviest bridal zardozi — it looks overdressed for a reception. Mirror work, sequins, and zari are all appropriate.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -421,21 +421,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'black-lehenga-for-wedding-guest',
     title: 'Black Lehenga for Wedding Guest — Bold & Modern | LuxeMia',
-    metaDescription: 'Shop black Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop black Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Black Lehenga for Wedding Guest',
     heroSubtitle: 'Browse black Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Black Lehenga for Wedding Guest',
@@ -457,7 +457,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'If you have confirmed that black is welcome, a black lehenga can be a stunning, modern choice. Pair with heavy gold or kundan jewelry — the warm metals pop beautifully against the black. Gold zari embroidery on black is the classic Indian "cocktail sari" look, elegant and photogenic. Avoid silver jewelry with black; it can look stark.',
           'For a dupatta, choose gold, ivory, or a bright contrasting color like fuchsia or emerald green. Black with a gold dupatta is a timeless, regal look. Drape over one shoulder. For footwear, gold or black embellished flats. For makeup, a bold red or berry lip complements the black beautifully. Avoid all-black everything — the contrasting dupatta and jewelry are what make the look work.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -472,21 +472,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'pastel-lehenga-for-wedding-guest',
     title: 'Pastel Lehenga for Wedding Guest — Soft & Modern | LuxeMia',
-    metaDescription: 'Shop pastel Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop pastel Lehenga for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Pastel Lehenga for Wedding Guest',
     heroSubtitle: 'Browse pastel Lehenga for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Pastel Lehenga for Wedding Guest',
@@ -508,7 +508,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pastels pair beautifully with delicate gold jewelry — thin necklaces, small jhumkas, and fine bangles. Avoid heavy, chunky jewelry; it overwhelms the soft pastel. For a dupatta, choose a slightly darker shade of the same color or a contrasting pastel. Drape over one shoulder.',
           'For footwear, gold or nude embellished flats. For makeup, keep it soft and natural — nude lips, soft pink blush, and subtle gold eyeshadow. Avoid bold lip colors; they compete with the pastel. A small floral maang tikka or fresh flower in the hair complements the romantic pastel look.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -523,12 +523,12 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
-      { label: 'Mehendi Outfit Ideas by Role', url: '/blog/mehendi-outfit-by-role' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
+      { label: 'Mehendi Ceremony Outfits', url: '/collections/mehendi-outfits' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
     ],
@@ -539,7 +539,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'anarkali-suit-for-mother-of-bride',
     title: 'Anarkali Suit for Mother of Bride — Elegant & Comfortable | LuxeMia',
-    metaDescription: 'Shop anarkali Suit for Mother of Bride online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop anarkali Suit for Mother of Bride online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Anarkali Suit for Mother of Bride',
     heroSubtitle: 'Browse anarkali Suit for Mother of Bride available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Anarkali Suit for Mother of Bride',
@@ -561,7 +561,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For the mother of the bride, choose rich, sophisticated colors — maroon, deep green, royal blue, wine, or deep purple. Avoid pastels (too youthful) and avoid black (inauspicious). Heavy zari embroidery, kundan work, or sequin embellishment is appropriate — the mother of the bride should look regal and elegant.',
           'Pair with statement gold jewelry — a kundan necklace set, gold jhumka earrings, and gold bangles. A maang tikka (forehead ornament) is traditional for the mother of the bride. For footwear, comfortable embellished flats — you will be standing for hours. For the dupatta, drape over one shoulder or pin across the chest for modesty.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -576,21 +576,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'Plus Size Indian Ethnic Wear Guide', url: '/blog/plus-size-indian-ethnic-wear-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
+      { label: 'Choose Salwar Kameez for Your Body Type', url: '/blog/how-to-choose-salwar-kameez-body-type' },
       { label: 'Shop All Anarkali Suits', url: '/suits' },
-      { label: 'Indian to US Clothing Size Conversion Guide', url: '/blog/indian-to-us-clothing-size-conversion-guide' },
+      { label: 'Indian Clothing Measurement Guide', url: '/sizing-measurements-guide' },
     ],
   },
 
   {
     slug: 'lehenga-for-bridesmaid',
     title: 'Lehenga for Bridesmaid — Coordinated & Photogenic | LuxeMia',
-    metaDescription: 'Shop lehenga for Bridesmaid online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop lehenga for Bridesmaid online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Lehenga for Bridesmaid',
     heroSubtitle: 'Browse lehenga for Bridesmaid available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Lehenga for Bridesmaid',
@@ -613,7 +613,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a mehendi bridesmaid, choose yellow, orange, or green — the traditional mehendi colors. For a sangeet bridesmaid, choose jewel tones (emerald, sapphire, ruby, plum) that photograph beautifully under evening lighting. For a reception bridesmaid, coordinate with the bride reception outfit color. Avoid red — it is reserved for the bride.',
           'For fabric, choose georgette, chiffon, or art silk — lightweight, dance-friendly, and photogenic. Avoid heavy velvet (too hot for dancing) and raw silk (too stiff). A-line silhouettes with 2-3 meters of flare are ideal; circular skirts with 4-6 meters are too heavy for hours of dancing.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -628,21 +628,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'Mehendi Outfit Ideas by Role', url: '/blog/mehendi-outfit-by-role' },
+      { label: 'Mehendi Ceremony Outfits', url: '/collections/mehendi-outfits' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'anarkali-suit-for-wedding-guest',
     title: 'Anarkali Suit for Wedding Guest — Easiest Indian Outfit | LuxeMia',
-    metaDescription: 'Shop anarkali Suit for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop anarkali Suit for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Anarkali Suit for Wedding Guest',
     heroSubtitle: 'Browse anarkali Suit for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Anarkali Suit for Wedding Guest',
@@ -664,7 +664,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a mehendi (daytime, casual), choose a cotton or georgette anarkali in bright colors — yellow, orange, pink, or green. Light embellishment is ideal. Budget $120-$280. For a sangeet (evening, dance-focused), choose a georgette or net anarkali with sequin or mirror work in jewel tones — emerald, sapphire, magenta. Budget $180-$400. For the wedding ceremony (most formal), choose a silk or heavily embroidered anarkali in rich colors — maroon, deep green, royal blue. Budget $200-$450. For a reception (cocktail-style), choose a designer anarkali in a contemporary color — wine, navy, plum. Budget $200-$500.',
           'Pair with gold or kundan jewelry — jhumka earrings, a statement necklace, and bangles. For footwear, embellished flats — you will be standing for hours. For the dupatta, drape over one shoulder or pin across the chest for modesty at religious ceremonies.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -679,11 +679,11 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
       { label: 'Shop All Suits', url: '/suits' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
@@ -693,7 +693,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'saree-for-mother-of-bride',
     title: 'Saree for Mother of Bride — Traditional & Elegant | LuxeMia',
-    metaDescription: 'Shop saree for Mother of Bride online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop saree for Mother of Bride online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Saree for Mother of Bride',
     heroSubtitle: 'Browse saree for Mother of Bride available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Saree for Mother of Bride',
@@ -715,7 +715,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a North Indian wedding, choose a Banarasi silk saree — handwoven in Varanasi with gold or silver zari borders. Maroon, deep red, or gold Banarasi is the most traditional choice for the mother of the bride. Budget $200-$500. For a South Indian wedding, choose a Kanchipuram silk saree — handwoven in Tamil Nadu with pure zari borders. Maroon, deep green, or royal blue Kanchipuram is traditional. Budget $250-$500.',
           'Pair with a custom-stitched blouse (essential for sarees — the blouse must fit perfectly). Choose gold or kundan jewelry — a statement necklace, jhumka earrings, and gold bangles. A maang tikka is traditional for the mother of the bride. For footwear, comfortable embellished flats — you will be standing for hours.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -730,21 +730,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
       { label: 'Shop All Sarees', url: '/sarees' },
-      { label: 'Indian to US Clothing Size Conversion Guide', url: '/blog/indian-to-us-clothing-size-conversion-guide' },
-      { label: 'Plus Size Indian Ethnic Wear Guide', url: '/blog/plus-size-indian-ethnic-wear-guide' },
+      { label: 'Indian Clothing Measurement Guide', url: '/sizing-measurements-guide' },
+      { label: 'Choose Salwar Kameez for Your Body Type', url: '/blog/how-to-choose-salwar-kameez-body-type' },
     ],
   },
 
   {
     slug: 'lehenga-for-mother-of-bride',
     title: 'Lehenga for Mother of Bride — Regal & Comfortable | LuxeMia',
-    metaDescription: 'Shop lehenga for Mother of Bride online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop lehenga for Mother of Bride online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Lehenga for Mother of Bride',
     heroSubtitle: 'Browse lehenga for Mother of Bride available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Lehenga for Mother of Bride',
@@ -765,7 +765,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Choose rich, sophisticated colors — maroon, deep green, royal blue, wine, gold, or burgundy. Avoid pastels (too youthful), black (inauspicious), and red (reserved for the bride). Heavy zari, kundan, or sequin embellishment is appropriate — the mother of the bride should look regal. Velvet fabric is perfect for winter weddings; silk or georgette for summer.',
           'Pair with a 3/4 sleeve choli (not a crop top), statement gold or kundan jewelry (necklace set, jhumkas, bangles, maang tikka), and the dupatta draped over one shoulder or pinned across the chest for modesty. For footwear, comfortable embellished flats — you will be standing for hours.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -780,21 +780,21 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'Plus Size Indian Ethnic Wear Guide', url: '/blog/plus-size-indian-ethnic-wear-guide' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
+      { label: 'Choose Salwar Kameez for Your Body Type', url: '/blog/how-to-choose-salwar-kameez-body-type' },
       { label: 'Shop All Lehengas', url: '/lehengas' },
-      { label: 'Indian to US Clothing Size Conversion Guide', url: '/blog/indian-to-us-clothing-size-conversion-guide' },
+      { label: 'Indian Clothing Measurement Guide', url: '/sizing-measurements-guide' },
     ],
   },
 
   {
     slug: 'sherwani-for-groom',
     title: 'Sherwani for Groom — Traditional & Regal | LuxeMia',
-    metaDescription: 'Shop sherwani for Groom online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop sherwani for Groom online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Sherwani for Groom',
     heroSubtitle: 'Browse sherwani for Groom available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Sherwani for Groom',
@@ -816,7 +816,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For the wedding ceremony, choose a sherwani in ivory, gold, maroon, or deep blue — the traditional groom colors. Ivory and gold are the most popular choices because they complement any bride color. Heavy zardozi or kundan embroidery on the chest and sleeves gives the regal look. Pair with a matching or contrasting dupatta draped over one shoulder, a turban (safa) in a coordinating color, and mojari (embellished flats).',
           'For the reception, the groom can choose a more modern indo-western sherwani — slimmer cut, contemporary colors (wine, navy, charcoal), and less heavy embroidery. Bandhgala jackets and indo-western suits are also popular reception choices. For the mehendi and haldi, a simpler kurta pajama is appropriate.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -831,20 +831,19 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Menswear', url: '/menswear' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'Indian Wedding Terms Glossary', url: '/blog/indian-wedding-terms-glossary-50-events-rituals-roles' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'kurta-for-groom-brother',
     title: 'Kurta for Groom Brother — Stylish & Comfortable | LuxeMia',
-    metaDescription: 'Shop kurta for Groom Brother online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop kurta for Groom Brother online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Kurta for Groom Brother',
     heroSubtitle: 'Browse kurta for Groom Brother available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Kurta for Groom Brother',
@@ -866,7 +865,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'The groom brother should coordinate with the groom and the rest of the wedding party without exactly matching. If the groom is wearing ivory, the brother can wear gold or beige. If the groom is wearing maroon, the brother can wear deep red or wine. The key is to be in the same color family but distinct enough to tell apart in photos.',
           'For footwear, mojari (embellished flats) or juti are traditional. For accessories, a contrasting dupatta draped over one shoulder, a turban (safa) in a coordinating color, and a watch. Avoid heavy jewelry — men Indian jewelry is minimal. A simple kada (bracelet) is the most traditional accessory.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -881,20 +880,20 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Menswear', url: '/menswear' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'Mehendi Outfit Ideas by Role', url: '/blog/mehendi-outfit-by-role' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
+      { label: 'Mehendi Ceremony Outfits', url: '/collections/mehendi-outfits' },
     ],
   },
 
   {
     slug: 'sharara-for-bride-sister',
     title: 'Sharara for Bride Sister — Trendy & Photogenic | LuxeMia',
-    metaDescription: 'Shop sharara for Bride Sister online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop sharara for Bride Sister online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Sharara for Bride Sister',
     heroSubtitle: 'Browse sharara for Bride Sister available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Sharara for Bride Sister',
@@ -916,7 +915,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For a mehendi bride-sister look, choose a fuchsia or orange sharara with gota patti or mirror work. Pair with oxidized silver jewelry (the traditional mehendi accessory), floral gajra in the hair, and comfortable juti flats. For a sangeet bride-sister look, choose a royal blue or purple sharara with sequin work. Pair with kundan jewelry and embellished flats.',
           'For the dupatta, drape diagonally across the chest for a modern look, or over one shoulder for a traditional look. Avoid draping over both shoulders — it adds bulk. The wide-flare pants should have the flare starting at the hip (not the knee) for the most flattering silhouette.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -931,11 +930,11 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'Mehendi Outfit Ideas by Role', url: '/blog/mehendi-outfit-by-role' },
+      { label: 'Mehendi Ceremony Outfits', url: '/collections/mehendi-outfits' },
       { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
       { label: 'Shop All Suits', url: '/suits' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
@@ -947,7 +946,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'georgette-saree-for-reception',
     title: 'Georgette Saree for Reception — Flowy & Glamorous | LuxeMia',
-    metaDescription: 'Shop georgette Saree for Reception online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop georgette Saree for Reception online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Georgette Saree for Reception',
     heroSubtitle: 'Browse georgette Saree for Reception available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Georgette Saree for Reception',
@@ -969,7 +968,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pair your georgette reception saree with a statement blouse — boat neck, V-neck, or 3/4 sleeve. The blouse should be custom-stitched for a perfect fit (essential for sarees). Choose a blouse color that contrasts with the saree — e.g., a gold blouse with a wine saree, or a silver blouse with a navy saree. Heavy blouse embellishment (sequins, zari) gives the glamorous reception look.',
           'For jewelry, choose statement pieces — a kundan or polki necklace set, chandelier earrings, and bangles. Avoid heavy necklaces if the saree has heavy border work; the necklace and border will compete. For footwear, embellished heels or wedges (receptions are usually indoor, so heels are OK). For the dupatta/pallu, drape over one shoulder for a modern look, or pin across for traditional.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -984,20 +983,20 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Sarees', url: '/sarees' },
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'banarasi-silk-saree-for-wedding',
     title: 'Banarasi Silk Saree for Wedding — Traditional & Auspicious | LuxeMia',
-    metaDescription: 'Shop banarasi Silk Saree for Wedding online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop banarasi Silk Saree for Wedding online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Banarasi Silk Saree for Wedding',
     heroSubtitle: 'Browse banarasi Silk Saree for Wedding available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Banarasi Silk Saree for Wedding',
@@ -1019,7 +1018,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'If documented handloom origin or fiber composition matters to you, look for explicit manufacturer or seller documentation. Photos and marketing terms alone cannot confirm pure silk, precious-metal zari, handloom production or GI origin.',
           'Banarasi-style and printed sarees can be legitimate lower-cost design options, but they are not the same claim as a documented handwoven Banarasi saree. LuxeMia states the supplied product details on each listing and does not imply certification when none is listed.',
-          'Pair the saree with the blouse and accessories that suit your event. Blouse fabric, blouse stitching and included pieces vary by product; review the exact listing before ordering. Free U.S. shipping applies over $150.',
+          'Pair the saree with the blouse and accessories that suit your event. Blouse fabric, blouse stitching and included pieces vary by product; review the exact listing before ordering. Free U.S. shipping applies at $150 and above.',
         ],
       },
     ],
@@ -1034,20 +1033,19 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Sarees', url: '/sarees' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'Indian Wedding Terms Glossary', url: '/blog/indian-wedding-terms-glossary-50-events-rituals-roles' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'kanjivaram-saree-for-wedding',
     title: 'Kanjivaram Saree for Wedding — South Indian Bridal Silk | LuxeMia',
-    metaDescription: 'Shop kanjivaram Saree for Wedding online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop kanjivaram Saree for Wedding online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Kanjivaram Saree for Wedding',
     heroSubtitle: 'Browse kanjivaram Saree for Wedding available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Kanjivaram Saree for Wedding',
@@ -1069,7 +1067,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'If documented handloom origin or fiber composition matters to you, look for explicit manufacturer or seller documentation. Weight, photos and marketing terms alone cannot confirm pure silk, precious-metal zari, handloom production or GI origin.',
           'Kanjivaram-style and printed sarees can be legitimate lower-cost design options, but they are not the same claim as a documented handwoven Kanchipuram saree. LuxeMia states the supplied product details on each listing and does not imply certification when none is listed.',
-          'Pair the saree with the blouse and accessories that suit your event. Blouse fabric, blouse stitching and included pieces vary by product; review the exact listing before ordering. Free U.S. shipping applies over $150.',
+          'Pair the saree with the blouse and accessories that suit your event. Blouse fabric, blouse stitching and included pieces vary by product; review the exact listing before ordering. Free U.S. shipping applies at $150 and above.',
         ],
       },
     ],
@@ -1084,20 +1082,19 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Sarees', url: '/sarees' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'Indian Wedding Terms Glossary', url: '/blog/indian-wedding-terms-glossary-50-events-rituals-roles' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
     ],
   },
 
   {
     slug: 'chiffon-saree-for-wedding-guest',
     title: 'Chiffon Saree for Wedding Guest — Light & Flowy | LuxeMia',
-    metaDescription: 'Shop chiffon Saree for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop chiffon Saree for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Chiffon Saree for Wedding Guest',
     heroSubtitle: 'Browse chiffon Saree for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Chiffon Saree for Wedding Guest',
@@ -1119,7 +1116,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Pair your chiffon saree with a custom-stitched blouse (essential for sarees). For a modern look, choose a boat neck or 3/4 sleeve blouse in a contrasting color. For a traditional look, choose a matching blouse with elbow sleeves. The blouse should be fitted — chiffon sarees look best with a structured blouse that balances the flowy fabric.',
           'For jewelry, choose pieces that match the formality of the event. For a daytime mehendi, oxidized silver jewelry is traditional and complements the light chiffon. For an evening reception, gold or kundan jewelry is more appropriate. For footwear, embellished flats for daytime events; heels or wedges for evening receptions.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -1134,20 +1131,20 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Sarees', url: '/sarees' },
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
-      { label: 'Mehendi Outfit Ideas by Role', url: '/blog/mehendi-outfit-by-role' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
+      { label: 'Mehendi Ceremony Outfits', url: '/collections/mehendi-outfits' },
     ],
   },
 
   {
     slug: 'silk-saree-for-festival',
     title: 'Silk Saree for Festival — Diwali, Navratri, Pongal | LuxeMia',
-    metaDescription: 'Shop silk Saree for Festival online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop silk Saree for Festival online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Silk Saree for Festival',
     heroSubtitle: 'Browse silk Saree for Festival available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Silk Saree for Festival',
@@ -1168,7 +1165,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'For Diwali (October/November), choose a Banarasi or art silk saree in red, gold, deep green, or maroon — the auspicious Diwali colors. Heavy zari border work catches the Diwali diyas beautifully. Budget $150-$400. For Navratri (September/October), choose a silk saree in the day color — orange, white, red, royal blue, yellow, green, grey, purple, or peacock green. Mirror work is traditional for garba. Budget $150-$350.',
           'For Pongal (January, Tamil harvest festival), choose a Kanjivaram silk saree in maroon, deep green, or gold — the traditional Pongal colors. For Onam (August/September, Kerala harvest festival), choose a cream or off-white silk saree with gold border — the traditional Onam saree. For Durga Puja (September/October, Bengali festival), choose a red and white Banarasi saree — the traditional Durga Puja colors.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -1183,12 +1180,12 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'Diwali Outfit Ideas by Setting', url: '/blog/diwali-outfit-ideas-by-setting' },
-      { label: 'Navratri 9 Day Color Guide 2026', url: '/blog/navratri-9-day-color-guide-2026' },
+      { label: 'Festive Indian Outfit Styling Guide', url: '/blog/styling-indian-ethnic-wear-festive-occasions-abroad' },
+      { label: 'Navratri Outfits', url: '/collections/navratri-outfits' },
       { label: 'Shop All Sarees', url: '/sarees' },
       { label: 'Shop Diwali Outfits', url: '/collections/diwali-outfits' },
       { label: 'Shop Navratri Outfits', url: '/collections/navratri-outfits' },
@@ -1198,7 +1195,7 @@ export const comboPages: ComboPageConfig[] = [
   {
     slug: 'organza-saree-for-engagement',
     title: 'Organza Saree for Engagement — Modern & Structured | LuxeMia',
-    metaDescription: 'Shop organza Saree for Engagement online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop organza Saree for Engagement online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Organza Saree for Engagement',
     heroSubtitle: 'Browse organza Saree for Engagement available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Organza Saree for Engagement',
@@ -1220,7 +1217,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Organza sarees look best with modern blouse designs — boat neck, off-shoulder, or 3/4 sleeve. Choose a blouse color that contrasts with the saree for a contemporary look. The blouse should be structured to balance the stiff organza fabric. Heavy blouse embellishment (sequins, embroidery) gives a glamorous engagement look.',
           'For jewelry, choose statement pieces — a choker necklace, chandelier earrings, and a maang tikka. Avoid heavy long necklaces; they compete with the structured organza. For footwear, heels or wedges (engagements are usually indoor). For the pallu, drape over one shoulder for a modern look, or pin in a contemporary style.',
-          'Pastel and jewel-tone organza sarees are common engagement options. Review the exact listing for fabric composition, transparency, blouse fabric or stitching, included pieces and current availability. Free U.S. shipping applies over $150.',
+          'Pastel and jewel-tone organza sarees are common engagement options. Review the exact listing for fabric composition, transparency, blouse fabric or stitching, included pieces and current availability. Free U.S. shipping applies at $150 and above.',
         ],
       },
     ],
@@ -1235,20 +1232,20 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
       { label: 'Shop All Sarees', url: '/sarees' },
-      { label: 'Indian Wedding Dress Guide 2026', url: '/blog/indian-wedding-dress-complete-guide' },
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Lehenga vs Sharara vs Anarkali Comparison', url: '/blog/lehenga-vs-sharara-vs-anarkali-comparison' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
     ],
   },
 
   {
     slug: 'georgette-saree-for-wedding-guest',
     title: 'Georgette Saree for Wedding Guest — Easy & Elegant | LuxeMia',
-    metaDescription: 'Shop georgette Saree for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping over $150.',
+    metaDescription: 'Shop georgette Saree for Wedding Guest online at LuxeMia. Compare current styles, exact product details, sizes and availability. Free U.S. shipping at $150 and above.',
     h1: 'Georgette Saree for Wedding Guest',
     heroSubtitle: 'Browse georgette Saree for Wedding Guest available online. Review each listing for current price, exact details, included pieces, sizing and availability.',
     breadcrumb: 'Georgette Saree for Wedding Guest',
@@ -1270,7 +1267,7 @@ export const comboPages: ComboPageConfig[] = [
         paragraphs: [
           'Georgette sarees are draped in the standard Nivi style (the most common Indian saree drape). If you are a beginner, ask a friend to help you drape, or hire a local Indian beautician to help you get ready. The key steps: (1) wrap the saree around your waist, (2) make 5-7 pleats in the front, (3) drape the pallu (decorative end) over your left shoulder, (4) pin everything in place with safety pins. Georgette holds pleats well, so minimal pinning is needed.',
           'Pair with a custom-stitched blouse (essential for sarees — the blouse must fit perfectly). For a modern look, choose a boat neck or 3/4 sleeve blouse in a contrasting color. For jewelry, choose statement pieces — a kundan or polki necklace, jhumka earrings, and bangles. For footwear, embellished flats for daytime; heels for evening receptions.',
-          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies over $150; $12 flat below that. Tracking is provided after dispatch.',
+          'At LuxeMia, review each product page for its stated fabric or materials, included pieces, available sizes, and any tailoring options. If your event date is time-sensitive, contact us before ordering. Free U.S. shipping applies at $150 and above; $12 flat below that. Tracking is provided after dispatch.',
         ],
       },
     ],
@@ -1285,14 +1282,14 @@ export const comboPages: ComboPageConfig[] = [
       },
       {
         question: 'How does United States shipping work?',
-        answer: 'Shipping is free over $150 and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
+        answer: 'Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.',
       },
     ],
     relatedLinks: [
-      { label: 'What to Wear to an Indian Wedding as a Non-Indian Guest', url: '/blog/what-to-wear-indian-wedding-non-indian-guest' },
+      { label: 'Indian Wedding Guest Outfit Guide 2026', url: '/blog/wedding-guest-outfit-ideas' },
       { label: 'Shop All Sarees', url: '/sarees' },
       { label: 'Shop All Wedding Guest Outfits', url: '/collections/wedding-guest-outfits' },
-      { label: 'Indian to US Clothing Size Conversion Guide', url: '/blog/indian-to-us-clothing-size-conversion-guide' },
+      { label: 'Indian Clothing Measurement Guide', url: '/sizing-measurements-guide' },
     ],
   },
 ];

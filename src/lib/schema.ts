@@ -36,27 +36,6 @@ export function getSchemaPrices(priceData: PriceData) {
   };
 }
 
-// ─── Shipping Schema ───────────────────────────────────────────────────────
-
-export function generateShippingSchema(currency: string, orderAmount: string | number) {
-  const qualifiesForFreeShipping = Number(orderAmount) >= 150;
-
-  return [
-    {
-      '@type': 'OfferShippingDetails',
-      name: qualifiesForFreeShipping
-        ? 'Free US Shipping for This Order'
-        : 'Flat US Shipping Below $150',
-      shippingRate: {
-        '@type': 'MonetaryAmount',
-        value: qualifiesForFreeShipping ? '0' : '12.00',
-        currency,
-      },
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: SHIPPING_COUNTRIES },
-    },
-  ];
-}
-
 // ─── Return Policy Schema ──────────────────────────────────────────────────
 
 export function generateReturnPolicySchema() {
@@ -66,7 +45,7 @@ export function generateReturnPolicySchema() {
     name: 'LuxeMia Return & Refund Policy',
     applicableCountry: 'US',
     returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-    description: 'All sales are final. Genuine shipping damage claims must be reported within 48 hours of delivery with photos and a mandatory unboxing video.',
+    description: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
     url: 'https://luxemia.shop/returns',
   };
 }
@@ -133,7 +112,6 @@ export function generateProductSchema(input: ProductSchemaInput) {
       availability: `https://schema.org/${input.availability}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: BRAND_NAME, legalName: LEGAL_BUSINESS_NAME },
-      shippingDetails: generateShippingSchema(input.currency, input.price),
       hasMerchantReturnPolicy: generateReturnPolicySchema(),
     },
   };
@@ -202,7 +180,7 @@ export function generateOrganizationSchema() {
       contactType: 'customer service',
       email: 'hello@luxemia.shop',
       areaServed: ['US'],
-      availableLanguage: ['English', 'Hindi'],
+      availableLanguage: ['English'],
     },
     knowsAbout: [
       'Indian Ethnic Wear',

@@ -23,11 +23,11 @@ import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
+    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
   },
   {
     question: "What is your return policy?",
-    answer: "All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, color variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video. Please refer to our Returns Policy page for full details."
+    answer: "All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
   },
   {
     question: "Are your products authentic Indian ethnic wear?",
@@ -43,7 +43,7 @@ const homepageFaqs = [
   },
   {
     question: "How much is US shipping?",
-    answer: "US shipping is free over $150. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
+    answer: "US shipping is free at $150 and above. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
@@ -83,7 +83,7 @@ const Index = () => {
           <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-sm flex-wrap">
             <span className="flex items-center gap-1.5">
               <Truck className="h-4 w-4 flex-shrink-0" />
-              <span className="font-medium">Free U.S. shipping over $150</span>
+              <span className="font-medium">Free U.S. shipping at $150 and above</span>
             </span>
             <span className="hidden sm:inline text-background/40">·</span>
             <span className="hidden sm:inline text-background/80">$12 flat below $150 · Tracking provided after dispatch</span>

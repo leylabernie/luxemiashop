@@ -36,8 +36,7 @@ const SEOFooterContent = () => {
                   Find your dream <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline">bridal lehenga online</Link> in our extensive collection. 
                   From <strong className="text-foreground">traditional red bridal lehengas</strong> to <strong className="text-foreground">minimalist pastel lehengas</strong>, we offer 
                   <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> lehenga choli</Link> sets 
-                  with beautiful embroidery and zardozi work. Ideal for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">weddings in the USA</Link> and
-                  <Link to="/indian-ethnic-wear-canada" className="text-foreground hover:text-primary transition-colors underline">Canadian celebrations</Link>.
+                  with beautiful embroidery and zardozi work. Ideal for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">weddings in the USA</Link>.
                 </p>
               </div>
             </div>
@@ -60,7 +59,7 @@ const SEOFooterContent = () => {
                   Shop <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry online</Link> at LuxeMia. 
                   Discover <strong className="text-foreground">kundan necklace sets</strong>, bridal jewelry, 
                   <strong className="text-foreground"> jhumka earrings</strong>, bangles, and maang tikka. 
-                  Perfect for weddings, festivals, and celebrations. Free U.S. shipping on orders over $150; $12 flat below that.
+                  Perfect for weddings, festivals, and celebrations. Free U.S. shipping at $150 and above; $12 flat below that.
                 </p>
               </div>
             </div>
@@ -113,7 +112,7 @@ const SEOFooterContent = () => {
               <p>
                 LuxeMia offers online Indian ethnic clothing online.
                 Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-We offer <strong className="text-foreground">free U.S. shipping over $150 and $12 flat below that</strong>, 
+We offer <strong className="text-foreground">free U.S. shipping at $150 and above and $12 flat below that</strong>,
                 custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
                 how LuxeMia selects Indian ethnic wear for weddings and celebrations.

@@ -1,8 +1,14 @@
-# LuxeMia — Full Page Inventory for AI Crawlers
+# LuxeMia — Current Canonical Page Inventory for AI Crawlers
 # https://luxemia.shop/llms-full.txt
 #
-# This file lists all crawlable pages on luxemia.shop for AI search engines
-# (Perplexity, ChatGPT, Claude, Gemini, Copilot). Updated automatically on build.
+# Every URL below is a current, direct LuxeMia URL. Redirect sources and retired
+# pages are intentionally excluded.
+#
+# Shipping policy: United States addresses only. Shipping is $12 for orders
+# below $150 and free at $150 and above. All sales are final. For genuine
+# shipping damage, an incorrect item, or a missing item, contact LuxeMia within
+# 48 hours of delivery with clear photos and a continuous unboxing/opening video
+# showing the unopened package, shipping label, and item condition.
 
 ## Homepage
 
@@ -15,9 +21,14 @@
 - https://luxemia.shop/suits
 - https://luxemia.shop/menswear
 - https://luxemia.shop/indowestern
+- https://luxemia.shop/jewelry
 - https://luxemia.shop/new-arrivals
 - https://luxemia.shop/bestsellers
 - https://luxemia.shop/collections
+- https://luxemia.shop/collections/silk-sarees
+- https://luxemia.shop/collections/kanchipuram-sarees
+- https://luxemia.shop/collections/bridal-party-outfits
+- https://luxemia.shop/collections/bollywood-inspired-indian-outfits
 
 ## Occasion Landing Pages
 
@@ -32,25 +43,23 @@
 - https://luxemia.shop/sizing-measurements-guide
 - https://luxemia.shop/size-guide
 - https://luxemia.shop/care-guide
-- https://luxemia.shop/style-consultation
-- https://luxemia.shop/style-quiz
 
 ## Brand & Content
 
-- https://luxemia.shop/brand-story
+- https://luxemia.shop/about
 - https://luxemia.shop/lookbook
 - https://luxemia.shop/blog
 - https://luxemia.shop/press
-- https://luxemia.shop/artisans
-- https://luxemia.shop/sustainability
+- https://luxemia.shop/blog/attires
+- https://luxemia.shop/blog/motifs-embroideries
+- https://luxemia.shop/blog/weddings-festivals
+- https://luxemia.shop/blog/how-to-care
+- https://luxemia.shop/authors/luxemia-editorial-team
 
 ## NRI Landing Pages
 
 - https://luxemia.shop/nri
-- https://luxemia.shop/nri/usa
-- https://luxemia.shop/nri/canada
 - https://luxemia.shop/indian-ethnic-wear-usa
-- https://luxemia.shop/indian-ethnic-wear-canada
 
 ## Customer Service Pages
 
@@ -63,11 +72,15 @@
 
 ## Blog Posts
 
-- https://luxemia.shop/blog/sharara-suit-guide-2026-styles-fabrics
-- https://luxemia.shop/blog/pakistani-suits-anarkali-shopping-guide
-- https://luxemia.shop/blog/style-lehenga-choli-every-wedding-event
-- https://luxemia.shop/blog/banarasi-silk-saree-buying-guide
-- https://luxemia.shop/blog/indian-wedding-guest-outfit-ideas
+- https://luxemia.shop/blog/wedding-saree-for-mother-of-bride
+- https://luxemia.shop/blog/wedding-guest-outfit-ideas
+- https://luxemia.shop/blog/accessorize-indian-ethnic-wear
+- https://luxemia.shop/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon
+- https://luxemia.shop/blog/styling-indian-ethnic-wear-festive-occasions-abroad
+- https://luxemia.shop/blog/lehenga-vs-sharara-vs-anarkali-comparison
+- https://luxemia.shop/blog/how-to-drape-saree-beginner-guide
+- https://luxemia.shop/blog/how-to-choose-salwar-kameez-body-type
+- https://luxemia.shop/blog/sherwani-vs-jodhpuri-vs-bandhgala-groom-guide
 
 ## Structured Data & Feeds
 

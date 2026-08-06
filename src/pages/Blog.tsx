@@ -121,7 +121,6 @@ const Blog = () => {
     "inLanguage": "en-US",
     "genre": categories.join(", "),
     "mainEntityOfPage": {
-      "@type": "WebPage",
       "@id": "https://luxemia.shop/blog"
     },
     "publisher": {
@@ -145,15 +144,6 @@ const Blog = () => {
       },
       "url": `https://luxemia.shop/blog/${post.slug}`
     }))
-  };
-
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://luxemia.shop' },
-      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://luxemia.shop/blog' },
-    ],
   };
 
   const clearFilters = () => {
@@ -197,9 +187,6 @@ const Blog = () => {
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify(blogSchema)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
         </script>
       </Helmet>
       <Header />

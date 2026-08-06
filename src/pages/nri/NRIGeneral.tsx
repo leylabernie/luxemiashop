@@ -8,11 +8,11 @@ const NRIGeneral = () => (
       countryCode: 'US',
       slug: 'nri',
       seoTitle: 'Indian Ethnic Wear Online for U.S. Shoppers | LuxeMia',
-      seoDescription: 'Shop Indian ethnic wear online for U.S. delivery. Compare exact product details, sizing and availability. Free shipping over $150; tracking after dispatch.',
+      seoDescription: 'Shop Indian ethnic wear online for U.S. delivery. Compare exact product details, sizing and availability. Free shipping at $150 and above; tracking after dispatch.',
       heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
       heroSubtitle: 'Compare Exact Product Details Before Ordering',
       shippingTime: 'tracking provided after dispatch',
-      shippingCost: '$12 per order; free over $150',
+      shippingCost: '$12 per order; free at $150 and above',
       customsNote: 'Duties, taxes, or carrier processing fees may apply unless checkout explicitly states otherwise. Review current US customs guidance before ordering.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'When does shipping become free?',
-          answer: 'Orders over $150 qualify for free U.S. shipping. Orders below $150 cost $12 per order.',
+          answer: 'Orders at $150 and above qualify for free U.S. shipping. Orders below $150 cost $12 per order.',
         },
         {
           question: 'Will I have to pay customs duties?',
@@ -33,11 +33,11 @@ const NRIGeneral = () => (
         },
         {
           question: 'What if my item arrives damaged?',
-          answer: 'Record an unboxing video and report genuine shipping damage within 48 hours of delivery. Review the Returns Policy for the required evidence and terms.',
+          answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
         },
       ],
       benefits: [
-        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free over $150' },
+        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free at $150 and above' },
         { icon: Shield, title: 'Clear Product Details', description: 'Review materials, sizing and included pieces' },
         { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
       ],

@@ -341,7 +341,7 @@ function extractSalwarAttributes(product, color, material, productType) {
  * 4. Stitching & sizing — readymade/unstitched options, sizes
  * 5. Care — dry cleaning instructions
  * 6. Details line — Color | Fabric | Work | Occasion
- * 7. Shipping — free U.S. shipping over $150, $12 flat below that
+ * 7. Shipping — free U.S. shipping at $150 and above, $12 flat below that
  */
 function buildSalwarSuitDescription(product, color, material, productType) {
   const attrs = extractSalwarAttributes(product, color, material, productType);
@@ -433,7 +433,7 @@ function buildSalwarSuitDescription(product, color, material, productType) {
   parts.push(detailsParts.join(' | '));
 
   // ── 7. Shipping ──
-  parts.push('Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.');
+  parts.push('Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.');
 
   return parts.join(' ').slice(0, 5000);
 }
@@ -463,18 +463,18 @@ function sanitizeFeedTitle(text) {
 
 function sanitizeShippingAndBoilerplate(text) {
   return text
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: Tracking provided after dispatch')
     .replace(/ready to ship Indian wear USA/gi, 'Indian ethnic wear online')
-    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Free U.S. shipping over $150. $12 flat below that. Online orders ship with tracking after dispatch.')
-    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Fast US shipping - free over $150, $12 flat below that, tracking provided after dispatch')
-    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free shipping on orders over \$350/gi, 'Free U.S. shipping over $150')
-    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping over $150')
-    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping over $150. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
+    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Online orders ship with tracking after dispatch.')
+    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Fast US shipping - free at $150 and above, $12 flat below that, tracking provided after dispatch')
+    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free shipping on orders over \$350/gi, 'Free U.S. shipping at $150 and above')
+    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping at $150 and above')
+    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping at $150 and above. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
     .replace(/delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'estimated delivery is 6-17 business days with tracking after dispatch')
     .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch in the US')
     .replace(/USA, Canada, and Australia/gi, 'the United States')
@@ -551,7 +551,7 @@ function buildDescription(product, color, material, productType) {
     parts.push(`Category: ${productType}.`);
   }
   parts.push('Review the product page for included components, embellishment details, measurements, and stitching options before ordering.');
-  parts.push('Available for delivery to U.S. addresses. Free shipping over $150; $12 flat below that. Tracking is provided after dispatch.');
+  parts.push('Available for delivery to U.S. addresses. Free shipping at $150 and above; $12 flat below that. Tracking is provided after dispatch.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
@@ -610,7 +610,7 @@ function generateProductHighlights(product, color, material, productType, title,
 
   if (productType) highlights.push(`Product type: ${productType}`);
   if (size) highlights.push(`Size option: ${size}`);
-  highlights.push('U.S. delivery with tracking after dispatch; $12 flat below $150, free over $150');
+  highlights.push('U.S. delivery with tracking after dispatch; $12 flat below $150, free at $150 and above');
 
   return highlights.slice(0, 5).map((highlight) =>
     `    <g:product_highlight>${escapeXml(highlight.slice(0, 150))}</g:product_highlight>`
@@ -844,7 +844,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop Indian ethnic wear online - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Free U.S. shipping over $150; $12 flat below that.</description>
+  <description>Shop Indian ethnic wear online - bridal lehengas, wedding sarees, sherwanis, anarkali suits, and jewelry at LuxeMia. Free U.S. shipping at $150 and above; $12 flat below that.</description>
   <last_build_date>${new Date().toISOString()}</last_build_date>
 ${itemsXml}
 </channel>

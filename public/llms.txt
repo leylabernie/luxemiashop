@@ -1,6 +1,6 @@
 # LuxeMia
 
-> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry, with sizing and styling support for customers in the USA, Canada and Australia.
+> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry for delivery to United States addresses only.
 
 ## Store information
 
@@ -8,8 +8,8 @@
 - Customer support: Philadelphia, Pennsylvania, USA
 - WhatsApp: +1-215-341-9990
 - Email: hello@luxemia.shop
-- Destinations currently listed in our shipping policy: USA, Canada and Australia
-- Shipping: $25 USD per order; free for orders over $350 USD
+- Shipping destination: United States addresses only
+- Shipping: $12 USD for orders below $150 USD; free at $150 USD and above
 - Fit options vary by product and may include semi-stitched, ready-to-wear and made-to-measure
 
 ## Shopping categories
@@ -27,28 +27,26 @@
 ## Customer guidance
 
 - Shipping policy: https://luxemia.shop/shipping
-- Returns and cancellations: https://luxemia.shop/returns
+- Returns policy: https://luxemia.shop/returns
 - Size guide: https://luxemia.shop/size-guide
 - Measurement guide: https://luxemia.shop/sizing-measurements-guide
-- Style consultation: https://luxemia.shop/style-consultation
 - FAQ: https://luxemia.shop/faq
 - Contact: https://luxemia.shop/contact
 
 ## Important policy information
 
-- Dispatch and transit times depend on the product, tailoring option and destination.
-- Customs duties, taxes and carrier processing fees may apply. They depend on destination, product classification, value and current rules, and are not included unless checkout explicitly states otherwise.
-- Standard-size, tailored and damaged-item eligibility differs. Review the current returns policy before purchasing.
+- Dispatch and transit times depend on the product and tailoring option.
+- All sales are final.
+- For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.
 - Product availability, price, size and delivery information on the product page and at checkout take priority over summaries in guides.
 
 ## Regional pages
 
 - NRI shopping hub: https://luxemia.shop/nri
 - USA: https://luxemia.shop/indian-ethnic-wear-usa
-- Canada: https://luxemia.shop/indian-ethnic-wear-canada
 
 ## Editorial policy
 
-LuxeMia articles are published by the LuxeMia Editorial Team. Time-sensitive customs, tax and shipping information should be confirmed with the relevant government authority. LuxeMia does not present unverified customer counts, sales rankings or individual staff credentials.
+LuxeMia articles are published by the LuxeMia Editorial Team. Time-sensitive tax and shipping information should be confirmed with the relevant authority. LuxeMia does not present unverified customer counts, sales rankings or individual staff credentials.
 
 Full page inventory: https://luxemia.shop/llms-full.txt
