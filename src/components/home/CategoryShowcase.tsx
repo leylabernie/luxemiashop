@@ -14,7 +14,7 @@ const categories = [
   {
     name: 'Sarees',
     subtitle: 'Timeless Elegance',
-    description: 'Handpicked silk and elegant drape sarees for every occasion',
+    description: 'Silk and elegant drape sarees for weddings and special occasions',
     href: '/sarees',
     image: '/images/categories/category-sarees.jpg',
     tag: 'New Collection',
@@ -50,11 +50,11 @@ const CategoryShowcase = () => {
           className="text-center mb-12 lg:mb-16"
         >
           <p className="text-xs tracking-luxury uppercase text-muted-foreground mb-3">
-            Curated Collections
+            Featured Collections
           </p>
           <h2 className="font-serif text-3xl lg:text-5xl mb-4">Shop by Category</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Explore our handpicked collections of authentic Indian ethnic wear
+            Explore Indian ethnic wear for weddings, festivals, and special occasions
           </p>
         </motion.div>
 

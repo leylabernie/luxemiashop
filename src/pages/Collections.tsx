@@ -88,7 +88,7 @@ const Collections = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits — sourced directly from India's textile hubs. Free U.S. shipping over $150.
+              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. shipping at $150 and above.
             </p>
           </motion.div>
         </section>
@@ -223,16 +223,16 @@ const Collections = () => {
       {/* SEO editorial footer — keyword-rich content for crawlers */}
       <section className="border-t border-border/50 bg-card/20 py-12">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-          <h2 className="font-serif text-xl mb-4 text-center">Buy Authentic Indian Ethnic Wear Online</h2>
+          <h2 className="font-serif text-xl mb-4 text-center">Buy Indian Ethnic Wear Online</h2>
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-3 text-sm leading-relaxed text-center">
             <p>
-              LuxeMia is your destination for <strong>authentic Indian ethnic wear</strong> delivered to the United States. Our complete collection covers every style and occasion — from <strong>bridal lehengas and wedding sarees</strong> to <strong>salwar kameez suits, sherwanis, and Indo-Western fusion outfits</strong>. Every piece is quality-inspected before dispatch.
+              LuxeMia is an online Indian ethnic-wear store for United States shoppers. Browse <strong>bridal and party-wear lehengas</strong>, <strong>silk and wedding sarees</strong>, <strong>Anarkali, sharara and gharara suits</strong>, sherwanis, and Indo-Western outfits.
             </p>
             <p>
-              We source directly from India's most celebrated textile regions: <strong>Banarasi silk sarees</strong> from Varanasi, <strong>Kanchipuram silk sarees</strong> from Tamil Nadu, <strong>zardozi embroidered lehengas</strong> from Lucknow, and <strong>gota patti suits</strong> from Jaipur. This direct sourcing means you get genuine craftsmanship at prices far below what Indian boutiques charge in North America.
+              Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
             </p>
             <p>
-              Popular categories include <strong>bridal lehenga choli</strong> for weddings, <strong>party wear sarees</strong> for festive events, <strong>Anarkali suits</strong> for formal occasions, <strong>sharara sets</strong> for sangeet nights, and <strong>kurta pajama sets</strong> for men. Enjoy <strong>free U.S. shipping over $150</strong> to the United States.
+              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to United States addresses only, with <strong>free U.S. shipping at $150 and above</strong> and a $12 flat rate below $150.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

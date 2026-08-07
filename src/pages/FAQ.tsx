@@ -27,7 +27,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
-          answer: 'Cancellation requests must be made within 24 hours of placement. After that window, the order cannot be cancelled. Email hello@luxemia.shop immediately with your order number.',
+          answer: 'Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.',
         },
         {
           question: 'How do I apply a discount code?',
@@ -45,7 +45,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below $150. Online orders ship with tracking after dispatch.',
+          answer: 'LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below $150. Online orders ship with tracking after dispatch.',
         },
         {
           question: 'How long does shipping take?',
@@ -65,7 +65,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer free US shipping?',
-          answer: 'Yes. We offer free US shipping on orders over $150. A flat $12 shipping rate applies below $150.',
+          answer: 'Yes. We offer free US shipping at $150 and above. A flat $12 shipping rate applies below $150.',
         },
       ],
     },
@@ -105,23 +105,19 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, color variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video recorded before and during package opening.',
+          answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
         },
         {
           question: 'Why do I need an unboxing video?',
-          answer: 'The unboxing video is the only way we can process a damage or missing-item claim. Without video evidence of the package condition on arrival and the moment of opening, we have no way to verify transit damage. Claims without a valid unboxing video cannot be processed.',
+          answer: 'The continuous unboxing/opening video is required to verify genuine shipping damage, an incorrect item, or a missing item. It must show the unopened package, shipping label, opening process, contents, and item condition.',
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'All items are final sale with no exceptions other than genuine shipping damage supported by an unboxing video. This includes sizing issues, color variations, change of mind, and event cancellations.',
+          answer: 'All items are final sale. Covered claims are limited to genuine shipping damage, an incorrect item, or a missing item reported within 48 hours with the required photos and continuous video.',
         },
         {
-          question: 'What if my item arrives damaged?',
-          answer: 'Email us at hello@luxemia.shop within 48 hours of delivery with your order number, unboxing video, and photos of the damage. Claims without video evidence or submitted after 48 hours cannot be processed. Our team will review the evidence and follow up by email.',
-        },
-        {
-          question: 'Can I cancel my order?',
-          answer: 'Orders can be cancelled within 24 hours of placement only. After that window, the order cannot be cancelled. Contact us immediately at hello@luxemia.shop or WhatsApp +1-215-341-9990.',
+          question: 'What if my order arrives damaged, incorrect, or incomplete?',
+          answer: 'Email hello@luxemia.shop within 48 hours of delivery with your order number, clear photos, and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.',
         },
         {
           question: 'Can I exchange for a different size or color?',
@@ -206,7 +202,7 @@ const FAQ = () => {
           answer: 'Compare the stated fiber, weight, lining, structure and embellishment on the exact listing. Climate, venue and personal comfort matter; our fabric guide explains tradeoffs without assuming every garment has the same composition.',
         },
         {
-          question: 'Are your products authentic Indian ethnic wear?',
+          question: 'Where can I confirm a product\'s materials and details?',
           answer: 'Product pages state the supplied fabric, embroidery or embellishment work, stitching status, size information and package contents when those details are available. Contact LuxeMia if an important detail is not listed.',
         },
         {
@@ -225,7 +221,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free US shipping applies over $150, a flat $12 rate applies below $150, and online orders ship with tracking after dispatch.',
+          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free US shipping applies at $150 and above, a flat $12 rate applies below $150, and online orders ship with tracking after dispatch.',
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',

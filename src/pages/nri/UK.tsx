@@ -12,7 +12,7 @@ const UK = () => (
       heroTitle: 'United States Shipping Only',
       heroSubtitle: 'Indian ethnic wear available online',
       shippingTime: 'Tracking provided after dispatch',
-      shippingCost: 'Free over $150, $12 flat below that',
+      shippingCost: 'Free at $150 and above, $12 flat below that',
       customsNote: 'LuxeMia currently accepts United States shipping addresses only.',
       faqs: [
         {
@@ -21,7 +21,7 @@ const UK = () => (
         },
         {
           question: 'How much is US shipping?',
-          answer: 'Free US shipping applies on orders over $150. Orders below $150 ship for a flat $12 rate.',
+          answer: 'Free US shipping applies at $150 and above. Orders below $150 ship for a flat $12 rate.',
         },
       ],
       benefits: [

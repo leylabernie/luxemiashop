@@ -17,7 +17,7 @@ const organizationSchema = {
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia is an online Indian ethnic wear store serving U.S. shoppers with sarees, lehengas, salwar suits, and occasion wear. Free U.S. shipping applies over $150.',
+    'LuxeMia is an online Indian ethnic wear store serving U.S. shoppers with sarees, lehengas, salwar suits, and occasion wear. Free U.S. shipping applies at $150 and above.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
@@ -62,7 +62,6 @@ const organizationSchema = {
     'Indian Wedding Guest Attire',
     'Diwali Outfits',
     'Mehendi Outfits',
-    'Custom Tailoring Indian Wear',
   ],
   sameAs: [
     'https://www.instagram.com/luxemiashop',
@@ -146,7 +145,7 @@ const philosophyPoints = [
     icon: '⊕',
     title: 'U.S. Shipping',
     description:
-      'Shipping is available to U.S. addresses only. It is free over $150 and costs a flat $12 below that, with tracking after dispatch.',
+      'Shipping is available to U.S. addresses only. It is free at $150 and above and costs a flat $12 below that, with tracking after dispatch.',
   },
   {
     icon: '✦',
@@ -204,9 +203,9 @@ const whyChooseLuxeMia = [
   },
   {
     icon: Truck,
-    title: 'Free Shipping Over $150',
+    title: 'Free Shipping at $150+',
     description:
-      'U.S. shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch.',
+      'U.S. shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch.',
   },
   {
     icon: Headphones,
@@ -510,10 +509,7 @@ const BrandStory = () => {
         </div>
       </section>
 
-      {/* Expert Styling Team Section — E-E-A-T signal (SEO audit Item #9)
-          Shows expertise and authority without naming individual founders.
-          Demonstrates to Google's E-E-A-T evaluators that LuxeMia has
-          genuine fashion expertise behind the brand. */}
+      {/* Customer support and listing-specific service details. */}
       <section className="py-32 px-4 bg-background">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -527,10 +523,10 @@ const BrandStory = () => {
               Expertise You Can Trust
             </p>
             <h2 className="text-4xl md:text-5xl font-serif mb-8">
-              Our Styling &amp; Sourcing Team
+              Product Information &amp; Customer Support
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              LuxeMia combines supplier product information with practical
+              LuxeMia combines current product information with practical
               e-commerce support. Our focus is helping shoppers understand
               fabrics, embellishments, stitching status, sizing, and delivery
               before placing an order.
@@ -550,9 +546,8 @@ const BrandStory = () => {
               </div>
               <h3 className="text-lg font-serif mb-3">Catalog Curation</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                We select styles from established supplier partners and review
-                available fabric, work, size, stitching, and package details
-                before creating each product listing.
+                We publish the available fabric, work, size, stitching, and
+                package details for each current product listing.
               </p>
             </motion.div>
 
@@ -583,12 +578,11 @@ const BrandStory = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                 <Headphones className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-serif mb-3">Styling Advisors</h3>
+              <h3 className="text-lg font-serif mb-3">Customer Support</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Our USA-based styling team speaks English and Hindi, available
-                via WhatsApp, phone, and email. We help you choose the right
-                outfit for your occasion, body type, and budget — before and
-                after your purchase.
+                Contact LuxeMia in English or Hindi by WhatsApp, phone, or
+                email for questions about current listings, sizing, stitching,
+                shipping, policies, or an existing order.
               </p>
             </motion.div>
 
@@ -602,12 +596,11 @@ const BrandStory = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                 <Globe className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-serif mb-3">Master Tailors</h3>
+              <h3 className="text-lg font-serif mb-3">Listing-Specific Stitching</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                For made-to-measure orders, our master tailors in India
-                stitch each piece to your exact measurements. They
-                specialize in lehenga choli fitting, saree blouse
-                construction, and sherwani tailoring.
+                Ready-to-wear, semi-stitched, and made-to-measure options vary
+                by product. Use only the options shown on the selected listing
+                and contact LuxeMia before ordering if a detail is unclear.
               </p>
             </motion.div>
           </div>
@@ -739,7 +732,7 @@ const BrandStory = () => {
                 Shipping &amp; Delivery
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong>Free US shipping:</strong> Orders over $150 (United States only).<br />
+                <strong>Free US shipping:</strong> Orders at $150 and above (United States only).<br />
                 <strong>Flat rate:</strong> $12 per order below $150.<br />
                 <strong>Delivery timing:</strong> Depends on the product and selected options.<br />
                 <strong>Tracking:</strong> Provided after dispatch.<br />

@@ -76,7 +76,7 @@ const Terms = () => {
                   <a href="#cancellation" className="text-muted-foreground hover:text-primary transition-colors">6. Order Cancellation</a>
                   <a href="#shipping" className="text-muted-foreground hover:text-primary transition-colors">7. Shipping & Delivery</a>
                   <a href="#returns" className="text-muted-foreground hover:text-primary transition-colors">8. Returns & Exchanges</a>
-                  <a href="#warranty" className="text-muted-foreground hover:text-primary transition-colors">9. Warranty & Quality</a>
+                  <a href="#warranty" className="text-muted-foreground hover:text-primary transition-colors">9. Product Care and Variations</a>
                   <a href="#ip" className="text-muted-foreground hover:text-primary transition-colors">10. Intellectual Property</a>
                   <a href="#accounts" className="text-muted-foreground hover:text-primary transition-colors">11. User Accounts</a>
                   <a href="#privacy" className="text-muted-foreground hover:text-primary transition-colors">12. Privacy & Data</a>
@@ -206,24 +206,16 @@ const Terms = () => {
                       🕐 24-Hour Cancellation Window
                     </p>
                   </div>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Orders may only be cancelled within 24 hours of placement.</strong></li>
-                    <li>To cancel, you must contact our customer service team immediately at hello@luxemia.shop with your order number.</li>
-                    <li>After the 24-hour window, cancellation requests will not be accepted as production may have already begun.</li>
-                    <li>If cancellation is approved within the window, a full refund will be processed within 5-7 business days.</li>
-                    <li>Custom orders that have entered production cannot be cancelled under any circumstances.</li>
-                    <li>We reserve the right to charge a 10% processing fee for approved cancellations.</li>
-                  </ul>
+                  <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
                 </section>
 
                 <section id="shipping">
                   <h2 className="text-xl font-serif text-foreground mb-4">7. Shipping and Delivery</h2>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>Shipping times and costs vary by destination. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for detailed information.</li>
-                    <li>Delivery estimates are not guaranteed and may be affected by customs processing, weather, or carrier delays.</li>
-                    <li>LuxeMia is not responsible for delays caused by customs, weather, or carrier issues.</li>
+                    <li>LuxeMia ships to United States addresses only. Shipping is $12 below $150 and free at $150 and above. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
+                    <li>Delivery estimates are not guaranteed and may be affected by weather or carrier delays.</li>
+                    <li>LuxeMia is not responsible for delays caused by weather or carrier issues.</li>
                     <li>Risk of loss passes to you upon delivery to the carrier.</li>
-                    <li>Import duties, taxes, and fees are the customer's responsibility and are not included in the product price.</li>
                     <li>Customers are responsible for providing accurate shipping addresses. Reshipment due to incorrect addresses will incur additional charges.</li>
                   </ul>
                 </section>
@@ -245,19 +237,11 @@ const Terms = () => {
                       </ul>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.2 Manufacturing Defects</h3>
+                      <h3 className="font-semibold text-foreground mb-2">8.2 Covered Order Issues</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>Manufacturing defects are reviewed on a case-by-case basis with photo evidence.</li>
-                        <li>Contact us within 48 hours of delivery with clear photos of any defects.</li>
-                        <li>Size/fit issues due to customer-provided measurements are NOT considered defects.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.3 Order Cancellation</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>Order cancellations may be possible within 24 hours of placing your order.</li>
-                        <li>After production begins, cancellations are not possible.</li>
-                        <li>Contact hello@luxemia.shop immediately if you need to cancel.</li>
+                        <li>For genuine shipping damage, an incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
+                        <li>Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</li>
+                        <li>Keep the item and all packaging until LuxeMia reviews the claim.</li>
                       </ul>
                     </div>
                     <p className="text-sm">
@@ -267,11 +251,9 @@ const Terms = () => {
                 </section>
 
                 <section id="warranty">
-                  <h2 className="text-xl font-serif text-foreground mb-4">9. Warranty and Quality Guarantee</h2>
+                  <h2 className="text-xl font-serif text-foreground mb-4">9. Product Care and Variations</h2>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>All products are inspected for quality before shipment.</li>
-                    <li>We guarantee against manufacturing defects for 30 days from delivery date.</li>
-                    <li>Normal wear and tear, damage from misuse, or improper care are not covered.</li>
                     <li>Embroidered items may have minor variations which are characteristic of this type of work and not defects.</li>
                     <li>Please follow care instructions to maintain product quality.</li>
                   </ul>

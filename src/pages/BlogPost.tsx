@@ -246,7 +246,6 @@ const BlogPost = () => {
       }
     },
     "mainEntityOfPage": {
-      "@type": "WebPage",
       "@id": `https://luxemia.shop/blog/${post.slug}`
     },
     "keywords": post.tags.join(", "),
@@ -510,7 +509,7 @@ const BlogPost = () => {
                   {shopCta.heading}
                 </h2>
                 <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. U.S. shipping is $12 below $150 and free over $150.
+                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. U.S. shipping is $12 below $150 and free at $150 and above.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button asChild>

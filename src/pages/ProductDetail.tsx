@@ -156,6 +156,9 @@ const ProductDetail = () => {
 
   const categoryUrl = getCategoryUrl(product?.productType);
   const categoryName = product?.productType || 'Collections';
+  const productIsAvailable = product
+    ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
+    : false;
 
   // Enrich thin descriptions only with attributes supported by the listing.
   // Some legacy jewelry records contain garment option values (for example,
@@ -222,11 +225,11 @@ const ProductDetail = () => {
     }]),
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: 'Delivery timing depends on the item and selected options. Tracking is provided after dispatch. Free U.S. shipping applies over $150, and a flat $12 rate applies below $150.'
+      answer: 'Delivery timing depends on the item and selected options. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above, and a flat $12 rate applies below $150.'
     },
     {
       question: `Can I return the ${product.title}?`,
-      answer: 'All sales are final. Genuine shipping damage must be reported within 48 hours and requires an unboxing video. Contact LuxeMia before ordering if you have questions about size, set contents, or product details.'
+      answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.'
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
@@ -260,7 +263,7 @@ const ProductDetail = () => {
             currency: product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
             description: enrichedDescription || product.description || '',
-            availability: 'InStock',
+            availability: productIsAvailable ? 'InStock' : 'OutOfStock',
             sku: product.id,
             originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
             category: product.productType || 'Ethnic Wear',
@@ -431,4 +434,3 @@ const ProductSkeleton = () => (
 );
 
 export default ProductDetail;
-

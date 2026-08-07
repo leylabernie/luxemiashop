@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import { Truck, Clock, Package, FileText, ShoppingBag, ShieldCheck } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -8,55 +7,16 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 const FLAT_SHIPPING_RATE = 12;
 const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.';
+const SHIPPING_PROMISE = 'Free U.S. shipping at $150 and above. $12 flat below $150. Tracking provided after dispatch.';
 
 const Shipping = () => {
-  const shippingSchemas = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsFreeUS',
-        name: 'Free US Shipping Over $150',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
-          currency: 'USD',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'US',
-        },
-      },
-      {
-        '@type': 'OfferShippingDetails',
-        '@id': 'https://luxemia.shop/#shippingDetailsFlatUS',
-        name: 'Flat US Shipping Below $150',
-        shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '12.00',
-          currency: 'USD',
-        },
-        shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'US',
-        },
-      },
-    ],
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Shipping Policy — Online US Delivery | LuxeMia"
-        description="Free U.S. shipping over $150. $12 flat below that. In-stock Indian ethnic wear tracking provided after dispatch from LuxeMia."
+        description="Free U.S. shipping at $150 and above. $12 flat below $150. In-stock Indian ethnic wear tracking provided after dispatch from LuxeMia."
         canonical="https://luxemia.shop/shipping"
       />
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(shippingSchemas)}
-        </script>
-      </Helmet>
       <Header />
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
@@ -88,7 +48,7 @@ const Shipping = () => {
               </div>
               <div>
                 <p className="text-3xl font-serif font-semibold text-green-600 dark:text-green-400">FREE</p>
-                <p className="text-sm text-muted-foreground mt-1">US shipping over ${FREE_SHIPPING_THRESHOLD}</p>
+                <p className="text-sm text-muted-foreground mt-1">US shipping at ${FREE_SHIPPING_THRESHOLD} and above</p>
               </div>
               <div>
                 <p className="text-3xl font-serif font-semibold text-primary">TRACKED</p>
@@ -138,7 +98,7 @@ const Shipping = () => {
                 <div className="bg-card border border-border rounded-lg p-6">
                   <h3 className="font-semibold mb-3">Rates</h3>
                   <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>• Free US shipping on orders over ${FREE_SHIPPING_THRESHOLD}</li>
+                    <li>• Free US shipping at ${FREE_SHIPPING_THRESHOLD} and above</li>
                     <li>• ${FLAT_SHIPPING_RATE} flat rate below ${FREE_SHIPPING_THRESHOLD}</li>
                     <li>• No weight calculation or per-item surcharge</li>
                     <li>• Taxes, if applicable, are calculated at checkout</li>
@@ -206,7 +166,7 @@ const Shipping = () => {
                 <AccordionItem value="item-2">
                   <AccordionTrigger>How much is shipping?</AccordionTrigger>
                   <AccordionContent>
-                    Free US shipping applies on orders over ${FREE_SHIPPING_THRESHOLD}. Orders below ${FREE_SHIPPING_THRESHOLD}
+                    Free US shipping applies at ${FREE_SHIPPING_THRESHOLD} and above. Orders below ${FREE_SHIPPING_THRESHOLD}
                     ship for a ${FLAT_SHIPPING_RATE} flat rate.
                   </AccordionContent>
                 </AccordionItem>

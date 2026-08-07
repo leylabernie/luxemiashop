@@ -23,19 +23,19 @@ import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies on orders over $150, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
+    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
   },
   {
     question: "What is your return policy?",
-    answer: "All sales are final. LuxeMia does not accept returns or exchanges for any reason, including sizing issues, color variations, or change of mind. The only exception is genuine shipping damage, which must be supported by a mandatory unboxing video. Please refer to our Returns Policy page for full details."
+    answer: "All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
   },
   {
-    question: "Are your products authentic Indian ethnic wear?",
+    question: "Where can I confirm a product's materials and details?",
     answer: "Product pages state the available fabric, embroidery or embellishment work, stitching status, sizes, and package contents when those details are supplied. Contact LuxeMia before ordering if an important detail is not listed."
   },
   {
     question: "Can I get custom sizing or alterations for my outfit?",
-    answer: "We understand the importance of a perfect fit. While many of our items are ready-to-wear, we do offer custom alteration services for select products. Please contact our styling assistance team for more information."
+    answer: "Sizing, stitching, and made-to-measure options vary by product. Use only the options shown on the selected product page, and contact LuxeMia before ordering if a size or stitching detail is unclear."
   },
   {
     question: "How can I ensure the color of the outfit is accurate when viewing online?",
@@ -43,11 +43,11 @@ const homepageFaqs = [
   },
   {
     question: "How much is US shipping?",
-    answer: "US shipping is free over $150. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
+    answer: "US shipping is free at $150 and above. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
-    answer: "Our dedicated styling assistance team is here to help! You can chat with us directly via WhatsApp for personalized recommendations and expert advice."
+    answer: "Contact LuxeMia by WhatsApp with your occasion, date, preferred color, size, and budget. We can help you compare current listings, but the exact product page controls availability, included pieces, sizing, and stitching options."
   },
 ];
 
@@ -83,7 +83,7 @@ const Index = () => {
           <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-sm flex-wrap">
             <span className="flex items-center gap-1.5">
               <Truck className="h-4 w-4 flex-shrink-0" />
-              <span className="font-medium">Free U.S. shipping over $150</span>
+              <span className="font-medium">Free U.S. shipping at $150 and above</span>
             </span>
             <span className="hidden sm:inline text-background/40">·</span>
             <span className="hidden sm:inline text-background/80">$12 flat below $150 · Tracking provided after dispatch</span>

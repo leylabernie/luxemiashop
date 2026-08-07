@@ -451,7 +451,7 @@ function enrichDescription(
   if (work) details.push(`Detail: ${work}.`);
   if (size) details.push(`Selected size: ${size}.`);
   details.push(
-    "United States shipping only. Shipping is $12 for orders under $150 and free for orders over $150. Tracking is provided after dispatch. Review the product page for current availability and exact details."
+    "United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided after dispatch. Review the product page for current availability and exact details."
   );
 
   return details.join(" ").slice(0, 5000);
@@ -656,7 +656,7 @@ async function handleRequest(req: Request): Promise<Response> {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Current LuxeMia product listings for delivery to United States addresses. Shipping is $12 under $150 and free over $150.</description>${items.join("\n")}
+  <description>Current LuxeMia product listings for delivery to United States addresses. Shipping is $12 below $150 and free at $150 and above.</description>${items.join("\n")}
 </channel>
 </rss>`;
 

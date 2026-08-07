@@ -35,11 +35,11 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Do you ship Eid outfits to the United States?',
-    answer: 'LuxeMia ships Eid outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Eid outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'Can I wear a lehenga for Eid?',
-    answer: 'Yes, lehengas are a popular choice for Eid celebrations, especially for evening gatherings, Eid parties, and special family functions. A heavily embroidered or embellished lehenga in white, ivory, pastel pink, or mint green looks stunning for Eid. Sharara sets — a traditional alternative to lehengas with wide-leg flared pants — are also an extremely popular Eid outfit choice in Pakistani and North Indian Muslim fashion traditions. Choose delicate zari, gota patti, or chikankari embroidery for an authentic Eid aesthetic.',
+    answer: 'Yes, lehengas are a popular choice for Eid celebrations, especially for evening gatherings, Eid parties, and special family functions. A heavily embroidered or embellished lehenga in white, ivory, pastel pink, or mint green can suit an Eid gathering. Sharara sets — a traditional alternative to lehengas with wide-leg flared pants — are also a popular Eid outfit choice in Pakistani and North Indian Muslim fashion traditions. Compare the exact listing for its stated zari, gota patti, chikankari-style work, fabric, and included pieces.',
   },
 ];
 
@@ -53,7 +53,7 @@ const EidOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Eid Outfits — Indian Ethnic Wear for Eid | LuxeMia"
-        description="Shop Eid outfits at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping over $150."
+        description="Shop Eid outfits at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping at $150 and above."
         canonical="https://luxemia.shop/collections/eid-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const EidOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chikankari suits for Eid</strong>, <strong>sharara sets for Eid</strong>, <strong>Eid anarkali dresses</strong>, <strong>Pakistani suits for Eid</strong>, <strong>white lehengas for Eid</strong>, and <strong>pastel salwar kameez for Eid celebrations</strong>. Free U.S. shipping over $150.
+              Shop <strong>chikankari suits for Eid</strong>, <strong>sharara sets for Eid</strong>, <strong>Eid anarkali dresses</strong>, <strong>Pakistani suits for Eid</strong>, <strong>white lehengas for Eid</strong>, and <strong>pastel salwar kameez for Eid celebrations</strong>. Free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -155,20 +155,20 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Eid Outfit Budget Guide</h3>
-                <p><strong>Eid morning prayers outfit:</strong> $120-$280 (simple salwar kameez or anarkali in cotton or chikankari). <strong>Eid lunch outfit:</strong> $180-$400 (sharara set or pastel lehenga). <strong>Eid dinner/party outfit:</strong> $200-$500 (embellished anarkali or designer suit). <strong>Men Eid outfit:</strong> $100-$300 (kurta pajama or pathani suit). At LuxeMia, we offer free U.S. shipping over $150 to the United States.</p>
+                <p><strong>Eid morning prayers outfit:</strong> $120-$280 (simple salwar kameez or anarkali in cotton or chikankari). <strong>Eid lunch outfit:</strong> $180-$400 (sharara set or pastel lehenga). <strong>Eid dinner/party outfit:</strong> $200-$500 (embellished anarkali or designer suit). <strong>Men Eid outfit:</strong> $100-$300 (kurta pajama or pathani suit). At LuxeMia, we offer free U.S. shipping at $150 and above to the United States.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline">Diwali Outfit Ideas by Setting (similar festival structure)</Link></li>
-                  <li><Link to="/blog/indian-to-us-clothing-size-conversion-guide" className="text-primary underline">Indian to US Clothing Size Conversion Guide</Link></li>
-                  <li><Link to="/blog/plus-size-indian-ethnic-wear-guide" className="text-primary underline">Plus Size Indian Ethnic Wear Guide</Link></li>
+                  <li><Link to="/blog/styling-indian-ethnic-wear-festive-occasions-abroad" className="text-primary underline">Festive Indian Outfit Styling Guide</Link></li>
+                  <li><Link to="/sizing-measurements-guide" className="text-primary underline">Indian Clothing Measurement Guide</Link></li>
+                  <li><Link to="/blog/how-to-choose-salwar-kameez-body-type" className="text-primary underline">Choose Salwar Kameez for Your Body Type</Link></li>
                   <li><Link to="/suits" className="text-primary underline">Shop Salwar Kameez & Anarkali</Link> | <Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/indowestern" className="text-primary underline">Shop Indo-Western</Link></li>
                 </ul>
               </div>

@@ -35,7 +35,7 @@ const mehendiOutfitFaqs = [
   },
   {
     question: 'Do you ship mehendi outfits to the United States?',
-    answer: 'LuxeMia ships mehendi outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships mehendi outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'Can guests wear any color other than yellow and green to a mehendi?',
@@ -53,7 +53,7 @@ const MehendiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia"
-        description="Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free U.S. shipping over $150."
+        description="Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez for mehendi functions. Free U.S. shipping at $150 and above."
         canonical="https://luxemia.shop/collections/mehendi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const MehendiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free U.S. shipping over $150.
+              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -146,7 +146,6 @@ const MehendiOutfits = () => {
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Mehendi Outfit by Role — Bride, Sister, Bridesmaid, or Guest?</h3>
                 <p>What you wear to a mehendi depends on your role in the wedding. <strong>The bride</strong> wears yellow, orange, or green (traditional mehendi colors) — yellow is the most traditional, representing turmeric and joy. <strong>The bride sister</strong> wears a contrasting color (fuchsia, royal blue, or purple) — fuchsia is the most popular because it photographs beautifully against the bride yellow. <strong>Bridesmaids</strong> coordinate in a matching palette chosen by the bride. <strong>Guests</strong> wear festive casual in bright colors (yellow, orange, pink, green) — avoid heavy lehengas and avoid red (reserved for the wedding ceremony).</p>
-                <p className="mt-2">For the complete role-by-role guide with budget breakdowns ($120-$800), fabric recommendations, accessory list (floral gajra, oxidized silver jewelry, mojari flats), and what NOT to wear, read our <Link to="/blog/mehendi-outfit-by-role" className="text-primary underline font-medium">Mehendi Outfit Ideas by Role guide</Link>.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -157,15 +156,14 @@ const MehendiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Mehendi Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><Link to="/blog/mehendi-outfit-by-role" className="text-primary underline">Mehendi Outfit Ideas by Role: Bride, Sister, Bridesmaid, Guest — 2026 Guide</Link></li>
-                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest</Link></li>
-                  <li><Link to="/blog/indian-wedding-dress-complete-guide" className="text-primary underline">Indian Wedding Dress Guide 2026</Link></li>
+                  <li><Link to="/blog/wedding-guest-outfit-ideas" className="text-primary underline">Indian Wedding Guest Outfit Guide 2026</Link></li>
+                  <li><Link to="/blog/lehenga-vs-sharara-vs-anarkali-comparison" className="text-primary underline">Lehenga vs Sharara vs Anarkali Comparison</Link></li>
                   <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/suits" className="text-primary underline">Shop Anarkali Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
                 </ul>
               </div>

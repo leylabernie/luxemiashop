@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     question: 'How much is US shipping?',
-    answer: 'Free US shipping applies on orders over $150. Orders below $150 ship for a flat $12 rate.',
+    answer: 'Free US shipping applies at $150 and above. Orders below $150 ship for a flat $12 rate.',
   },
   {
     question: 'How fast will my order ship?',
@@ -24,7 +24,7 @@ const ShippingCustoms = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="US Shipping & Taxes | LuxeMia"
-        description="LuxeMia currently ships to United States addresses only. Free U.S. shipping over $150, $12 flat below that, and online orders ship with tracking after dispatch."
+        description="LuxeMia currently ships to United States addresses only. Free U.S. shipping at $150 and above, $12 flat below that, and online orders ship with tracking after dispatch."
         canonical="https://luxemia.shop/pages/shipping-customs"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -49,7 +49,7 @@ const ShippingCustoms = () => {
               </nav>
               <h1 className="font-serif text-4xl md:text-5xl mb-4">US Shipping &amp; Taxes</h1>
               <p className="text-lg text-muted-foreground">
-                LuxeMia currently ships to United States addresses only. Free U.S. shipping over $150.
+                LuxeMia currently ships to United States addresses only. Free U.S. shipping at $150 and above.
                 $12 flat below that. Tracking provided after dispatch.
               </p>
             </motion.div>

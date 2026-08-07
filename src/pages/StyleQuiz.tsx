@@ -477,8 +477,8 @@ const StyleQuiz = () => {
 
                   <p className="text-center text-xs text-muted-foreground mt-6">
                     Want expert help?{' '}
-                    <Link to="/style-consultation" className="underline hover:text-foreground">
-                      Book a free style consultation
+                    <Link to="/contact" className="underline hover:text-foreground">
+                      Contact LuxeMia for help
                     </Link>{' '}
                     with our team.
                   </p>

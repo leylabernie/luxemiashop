@@ -12,8 +12,8 @@ Disallow: /api/
 Disallow: /order-confirmation
 # Block SPA-only system paths that should never be indexed
 Disallow: /_prerender/
-# Block old /products/* pattern — 301-redirected to /product/ but don't crawl
-# redirect sources unnecessarily (saves crawl budget).
+# Legacy /products URLs remain crawlable so search engines can discover their
+# redirects to the current /product and /collections URLs.
 # Block URL parameter crawl traps (search, sort, filter) — saves crawl budget
 Disallow: /*?q=
 Disallow: /*?sort=

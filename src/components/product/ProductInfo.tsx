@@ -778,21 +778,21 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         />
       )}
 
-      {/* ─── Custom Alteration Option ─── */}
+      {/* ─── Optional Fit Request ─── */}
       {(isStitchable || isMenswear) && (
         <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium uppercase tracking-wide">Custom Alterations</label>
+          <label className="text-sm font-medium uppercase tracking-wide">Optional Fit Request</label>
           <span className="text-[10px] text-primary font-medium uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded">Optional</span>
         </div>
         <textarea
           value={customAlteration}
           onChange={(e) => setCustomAlteration(e.target.value)}
-          placeholder="e.g., Add sleeves, change length, or specific fit requests..."
+          placeholder="Describe a fit request you would like LuxeMia to review..."
           className="w-full min-h-[80px] p-3 text-sm bg-background border border-border rounded-sm focus:border-primary outline-none transition-colors resize-none"
         />
         <p className="text-[11px] text-muted-foreground italic">
-          * Our tailors will review your requests. Some complex alterations may incur additional charges.
+          * Requests are not guaranteed. Contact LuxeMia before ordering to confirm feasibility, timing, and any additional charge.
         </p>
         </div>
       )}
@@ -827,7 +827,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
-        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free U.S. shipping over $150</span>
+        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Free U.S. shipping at $150 and above</span>
         <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
         <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
       </div>
@@ -942,7 +942,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
         <div>
           <p className="text-sm font-medium">Check your measurements before ordering</p>
-          <p className="text-xs text-muted-foreground">All sales are final. Contact our styling team before purchase if you need sizing help.</p>
+          <p className="text-xs text-muted-foreground">All sales are final. Contact LuxeMia before purchase if you need sizing help.</p>
         </div>
       </div>
 
@@ -981,7 +981,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Damage Protection</p>
-            <p className="text-xs text-muted-foreground">Report shipping damage within 48 hours with a mandatory unboxing video</p>
+            <p className="text-xs text-muted-foreground">Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with clear photos and the required continuous unboxing/opening video.</p>
           </div>
         </div>
       </div>

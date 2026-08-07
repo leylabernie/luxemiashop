@@ -142,7 +142,7 @@ export const NewArrivals = () => {
             New Arrivals
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            {totalNew} new {totalNew === 1 ? 'piece' : 'pieces'} across {Object.keys(recentByCategory).length} {Object.keys(recentByCategory).length === 1 ? 'category' : 'categories'} — fresh from India&rsquo;s textile hubs.
+            {totalNew} recently added {totalNew === 1 ? 'style' : 'styles'} across {Object.keys(recentByCategory).length} {Object.keys(recentByCategory).length === 1 ? 'category' : 'categories'}. Review each listing for exact product details and availability.
           </p>
         </motion.div>
 

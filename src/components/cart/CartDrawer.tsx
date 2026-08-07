@@ -6,10 +6,14 @@ import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import EmailCaptureModal from './EmailCaptureModal';
+import {
+  isRakshaBandhanCampaignActive,
+  RAKSHA_BANDHAN_CAMPAIGN,
+} from '@/config/rakshaBandhanCampaign';
 
 const FREE_SHIPPING_THRESHOLD = 150;
 const FLAT_SHIPPING_RATE = 12;
-const SHIPPING_PROMISE = 'Free U.S. shipping over $150. $12 flat below that. Tracking provided after dispatch.';
+const SHIPPING_PROMISE = 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -23,6 +27,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
+  const isRakhiSaleActive = isRakshaBandhanCampaignActive();
+  const amountUntilRakhiDiscount = Math.max(
+    0,
+    RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal - subtotal,
+  );
   // Persisted carts can outlive Shopify inventory changes. Block checkout when
   // the locally stored variant is explicitly unavailable instead of sending a
   // stale line to Shopify and giving the customer a confusing API error.
@@ -211,6 +220,30 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 </div>
 
                 <div className="px-6 pb-4 space-y-3">
+                  {isRakhiSaleActive && (
+                    <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
+                      {amountUntilRakhiDiscount === 0 ? (
+                        <p className="text-xs leading-relaxed text-foreground">
+                          Raksha Bandhan offer unlocked. Enter{' '}
+                          <strong className="font-semibold tracking-wide">
+                            {RAKSHA_BANDHAN_CAMPAIGN.code}
+                          </strong>{' '}
+                          at checkout for {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off.
+                        </p>
+                      ) : (
+                        <p className="text-xs leading-relaxed text-foreground">
+                          Add {formatPrice(amountUntilRakhiDiscount, currencyCode)} more, then enter{' '}
+                          <strong className="font-semibold tracking-wide">
+                            {RAKSHA_BANDHAN_CAMPAIGN.code}
+                          </strong>{' '}
+                          at checkout for {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off.
+                        </p>
+                      )}
+                      <p className="mt-1 text-[11px] text-muted-foreground">
+                        Ends {RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Cannot be combined with other discounts.
+                      </p>
+                    </div>
+                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground/70">Subtotal</span>
                     <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>

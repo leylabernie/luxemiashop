@@ -122,8 +122,8 @@ const MATERIAL_INFO: Record<ProductCategory, MaterialInfo> = {
   },
   saree: {
     fabrics: [
-      { name: 'Banarasi Silk', description: 'Handwoven in Varanasi with rich brocades and gold/silver zari. The quintessential wedding saree fabric.' },
-      { name: 'Kanchipuram Silk', description: 'South India\'s legendary temple silk — dense, durable, and opulent with contrasting borders.' },
+      { name: 'Banarasi Silk', description: 'A listing may use Banarasi for a weaving tradition, brocade look, or Banarasi-style fabric. Check Product Details for the exact fiber, weave, origin, and zari wording.' },
+      { name: 'Kanchipuram Silk', description: 'A listing may use Kanchipuram or Kanjivaram for a weaving tradition or style. Check Product Details for the exact fiber, weave, origin, and certification wording.' },
       { name: 'Georgette', description: 'Lightweight and easy to drape. Ideal for party wear and pre-wedding functions with sequin or thread work.' },
       { name: 'Chiffon', description: 'Sheer, floaty, and effortlessly elegant. A go-to for cocktail parties and evening receptions.' },
       { name: 'Cotton Silk', description: 'Breathable with a subtle sheen — perfect for daytime events, pooja, and festival wear.' },
@@ -344,6 +344,21 @@ interface ParsedTags {
   sleeve?: string;
 }
 
+const PARSED_TAG_KEYS = new Set<keyof ParsedTags>([
+  'color',
+  'fabric',
+  'work',
+  'occasion',
+  'style',
+  'silhouette',
+  'length',
+  'sleeve',
+]);
+
+function isParsedTagKey(value: string): value is keyof ParsedTags {
+  return PARSED_TAG_KEYS.has(value as keyof ParsedTags);
+}
+
 function parseProductTags(tags?: string[]): ParsedTags {
   const result: ParsedTags = {};
   (tags ?? []).forEach((tag) => {
@@ -351,8 +366,8 @@ function parseProductTags(tags?: string[]): ParsedTags {
     if (idx > 0) {
       const key = tag.slice(0, idx).toLowerCase().trim();
       const val = tag.slice(idx + 1).trim();
-      if (val && key in result) {
-        (result as any)[key] = val;
+      if (val && isParsedTagKey(key)) {
+        result[key] = val;
       }
     }
   });
@@ -879,7 +894,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Free U.S. shipping over $150</span>
+                  <span>Free U.S. shipping at $150 and above</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -942,22 +957,22 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                     <Shield className="h-4 w-4 text-green-600 dark:text-green-400" />
                   </div>
                   <div>
-                    <h5 className="font-medium text-foreground mb-1">Damage Protection</h5>
+                    <h5 className="font-medium text-foreground mb-1">Covered Order Issues</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      If your item arrives damaged, we&apos;ve got you covered. To file a damage claim:
+                      For genuine shipping damage, an incorrect item, or a missing item:
                     </p>
                     <ul className="text-sm text-muted-foreground mt-2 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span><strong className="text-foreground">Record an unboxing video</strong> — This is required for all damage claims</span>
+                        <span><strong className="text-foreground">Record one continuous unboxing/opening video</strong> showing the unopened package, shipping label, opening process, contents, and item condition</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span><strong className="text-foreground">Submit your claim within 48 hours</strong> of delivery — claims after 48 hours cannot be accepted</span>
+                        <span><strong className="text-foreground">Contact us within 48 hours</strong> of delivery</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>Include clear photos of the damage alongside your unboxing video</span>
+                        <span>Include clear photos alongside the required video</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />

@@ -35,7 +35,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Do you ship Navratri outfits to the United States?',
-    answer: 'LuxeMia ships Navratri outfits to U.S. addresses only. Shipping is free over $150 and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed festival date.',
+    answer: 'LuxeMia ships Navratri outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed festival date.',
   },
   {
     question: 'What accessories should I wear with a Navratri outfit?',
@@ -53,7 +53,7 @@ const NavratriOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia"
-        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free U.S. shipping over $150."
+        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free U.S. shipping at $150 and above."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -80,7 +80,7 @@ const NavratriOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free U.S. shipping over $150.
+              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>
@@ -146,12 +146,11 @@ const NavratriOutfits = () => {
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Navratri 2026 Dates and 9-Day Color Schedule</h3>
                 <p>Sharad Navratri 2026 begins on <strong>Sunday, October 11</strong> and runs through <strong>Monday, October 19</strong>, with Dussehra on Tuesday, October 20. Day-by-day color traditions vary by regional calendar and community.</p>
-                <p className="mt-2">For the complete day-by-day outfit guide — what to wear each night, fabric recommendations, accessories (dandiya sticks, oxidized silver jewelry, kamarbandh, mojari flats), and how many outfits you actually need — read our <Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline font-medium">Navratri 9 Day Color Guide 2026</Link>.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Navratri Chaniya Choli</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free over $150.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -162,9 +161,8 @@ const NavratriOutfits = () => {
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Related Guides</h3>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><Link to="/blog/navratri-9-day-color-guide-2026" className="text-primary underline">Navratri 9 Day Color Guide 2026: What to Wear Each Night of Garba</Link></li>
-                  <li><Link to="/blog/diwali-outfit-ideas-by-setting" className="text-primary underline">Diwali Outfit Ideas by Setting</Link></li>
-                  <li><Link to="/blog/what-to-wear-indian-wedding-non-indian-guest" className="text-primary underline">What to Wear to an Indian Wedding as a Non-Indian Guest</Link></li>
+                  <li><Link to="/blog/styling-indian-ethnic-wear-festive-occasions-abroad" className="text-primary underline">Festive Indian Outfit Styling Guide</Link></li>
+                  <li><Link to="/blog/wedding-guest-outfit-ideas" className="text-primary underline">Indian Wedding Guest Outfit Guide 2026</Link></li>
                   <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas & Chaniya Choli</Link> | <Link to="/suits" className="text-primary underline">Shop Anarkali Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
                 </ul>
               </div>

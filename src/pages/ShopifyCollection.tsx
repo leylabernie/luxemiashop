@@ -34,7 +34,7 @@ const ShopifyCollectionPage = () => {
   if (!config) return <Navigate to="/collections" replace />;
 
   const visibleProducts = purchasableProducts.slice(0, visibleCount);
-  const noIndex = !isLoading && purchasableProducts.length === 0;
+  const noIndexFollow = !isLoading && purchasableProducts.length === 0;
   const collectionItems = purchasableProducts.slice(0, 30).map((product) => ({
     id: product.node.id,
     name: product.node.title,
@@ -51,7 +51,7 @@ const ShopifyCollectionPage = () => {
         description={config.description}
         canonical={config.canonical}
         type="collection"
-        noIndex={noIndex}
+        noIndexFollow={noIndexFollow}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -122,12 +122,12 @@ const ShopifyCollectionPage = () => {
             </>
           ) : (
             <div className="rounded-lg border border-border bg-card/30 px-6 py-14 text-center">
-              <h2 className="font-serif text-2xl">New styles are being reviewed</h2>
+              <h2 className="font-serif text-2xl">No current listings in this collection</h2>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-                We have not published a qualifying product in this collection yet. Tell us your event date, preferred color and budget, and we will help review suitable options.
+                We have not published a qualifying product in this collection. Tell us your event date, preferred color and budget, and we can help you compare currently published listings.
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
-                <Button asChild><Link to="/style-consultation">Ask a Stylist</Link></Button>
+                <Button asChild><Link to="/contact">Ask LuxeMia for Help</Link></Button>
                 <Button asChild variant="outline">
                   <a href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20am%20looking%20for%20a%20wedding%20saree." target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
                 </Button>
