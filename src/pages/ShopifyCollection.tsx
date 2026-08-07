@@ -122,9 +122,9 @@ const ShopifyCollectionPage = () => {
             </>
           ) : (
             <div className="rounded-lg border border-border bg-card/30 px-6 py-14 text-center">
-              <h2 className="font-serif text-2xl">New styles are being reviewed</h2>
+              <h2 className="font-serif text-2xl">No current listings in this collection</h2>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-                We have not published a qualifying product in this collection yet. Tell us your event date, preferred color and budget, and we will help review suitable options.
+                We have not published a qualifying product in this collection. Tell us your event date, preferred color and budget, and we can help you compare currently published listings.
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
                 <Button asChild><Link to="/contact">Ask LuxeMia for Help</Link></Button>

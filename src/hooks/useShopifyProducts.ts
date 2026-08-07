@@ -168,6 +168,13 @@ function isOldBatchProduct(product: ShopifyProduct): boolean {
 
 // Title keywords for products to ALWAYS exclude from the site (not ethnic wear)
 const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
+const SAREE_TITLE_KEYWORDS = /\b(saree|sari)\b/i;
+const STANDALONE_BLOUSE_TITLE_KEYWORDS = /\b(blouse|choli)\b/i;
+
+function isStandaloneBlouseProduct(product: ShopifyProduct): boolean {
+  const title = product.node.title ?? '';
+  return STANDALONE_BLOUSE_TITLE_KEYWORDS.test(title) && !SAREE_TITLE_KEYWORDS.test(title);
+}
 
 // Keywords that identify menswear products — used to exclude from women's pages
 // IMPORTANT: Use word-boundary matching (not includes()) to prevent 'male' matching 'female'
@@ -301,6 +308,10 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     // Extra safety: skip any product with men's-related tags even after isMenswear filter
     if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear')) return false;
     if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
+    // Some standalone blouses were imported with a saree product type. Keep
+    // sarees that mention an included blouse, but do not merchandise a blouse-
+    // only listing as a saree when its title contains no saree/sari signal.
+    if (category === 'sarees' && isStandaloneBlouseProduct(p)) return false;
 
     // 1. Exact match against known types (fastest, most precise)
     if (types.some(t => t.toLowerCase() === pt)) return true;

@@ -29,9 +29,9 @@ const About = () => {
 
         <section className="container mx-auto px-4 lg:px-8 max-w-3xl py-12 space-y-8 text-muted-foreground leading-relaxed">
           <p>
-            Our catalog brings together garments from established supplier partners in India. Each product page
-            states the available fabric, work, stitching status, sizes, and shipping terms so you can make an informed
-            decision before ordering.
+            Our catalog brings together Indian ethnic-wear listings for weddings, festivals, receptions, and other
+            special occasions. Each product page states the available fabric, work, stitching status, sizes, and
+            shipping terms so you can make an informed decision before ordering.
           </p>
 
           <p>

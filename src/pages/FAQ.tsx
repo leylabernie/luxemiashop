@@ -202,7 +202,7 @@ const FAQ = () => {
           answer: 'Compare the stated fiber, weight, lining, structure and embellishment on the exact listing. Climate, venue and personal comfort matter; our fabric guide explains tradeoffs without assuming every garment has the same composition.',
         },
         {
-          question: 'Are your products authentic Indian ethnic wear?',
+          question: 'Where can I confirm a product\'s materials and details?',
           answer: 'Product pages state the supplied fabric, embroidery or embellishment work, stitching status, size information and package contents when those details are available. Contact LuxeMia if an important detail is not listed.',
         },
         {

@@ -74,7 +74,7 @@ const DiwaliOutfits = () => {
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Diwali Outfits 2026</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, color, and tradition of this cherished celebration. Discover rich fabrics like Banarasi silk, velvet, and georgette adorned with zari work, mirror detailing, and sequin embellishments — sourced directly from India's textile artisans. We ship to the United States with free U.S. shipping at $150 and above.
+              Celebrate the festival of lights with current festive Indian ethnic-wear listings, from embroidered lehengas and Anarkali suits to silk sarees and salwar kameez. Product pages state the supplied fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to United States addresses only, with free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>

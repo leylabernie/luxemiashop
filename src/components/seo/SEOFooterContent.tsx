@@ -25,8 +25,7 @@ const SEOFooterContent = () => {
                 <p>
                   Explore our curated range of <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees online</Link> including 
                   <strong className="text-foreground"> Banarasi silk sarees</strong>, 
-                  Kanjivaram silk, and <strong className="text-foreground">Organza sarees with gota patti work</strong>. Sourced from India's renowned textile hubs. Perfect for <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">NRIs in USA</Link> looking for authentic 
-                  Indian wedding attire with <strong className="text-foreground">online</strong> convenience.
+                  Kanjivaram silk, and <strong className="text-foreground">organza sarees with gota patti work</strong>. Review the exact listing for fiber, weave, work, blouse details, dimensions, and availability. Browse online from the <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">United States</Link>.
                 </p>
               </div>
 
@@ -45,11 +44,10 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Buy Salwar Kameez Online</h3>
                 <p>
-                  Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> from a online edit. 
+                  Buy <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez online</Link> from the current online collection.
                   Discover elegant <strong className="text-foreground">anarkali suits</strong>, 
                   palazzo sets, and <strong className="text-foreground">sharara suits</strong> perfect for every occasion. 
-                  Our collection features quality fabrics like georgette, chanderi silk, and velvet, 
-                  adorned with thread work, mirror work, and contemporary prints.
+                  Listings may include georgette, chanderi silk, velvet, thread work, mirror work, and contemporary prints; use the exact product page for supplied details.
                 </p>
               </div>
 
@@ -110,12 +108,9 @@ const SEOFooterContent = () => {
             <div className="text-center mt-8 pt-6 border-t border-border/50">
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
-                LuxeMia offers online Indian ethnic clothing online.
-                Every piece in our collection is sourced from India's established textile suppliers and manufacturers. 
-We offer <strong className="text-foreground">free U.S. shipping at $150 and above and $12 flat below that</strong>,
-                custom sizing, and friendly styling assistance to help you find the perfect outfit for every occasion. 
+                LuxeMia offers Indian ethnic clothing online for United States shoppers. Review each listing for its stated fabric or materials, included pieces, available sizes, stitching options, price, and current availability. We offer <strong className="text-foreground">free U.S. shipping at $150 and above and $12 flat below that</strong>, with support by WhatsApp, phone, and email for questions before ordering.
                 <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
-                how LuxeMia selects Indian ethnic wear for weddings and celebrations.
+                how LuxeMia presents Indian ethnic wear for weddings and celebrations.
               </p>
             </div>
           </div>

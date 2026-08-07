@@ -336,6 +336,13 @@ const LEHENGAS: CategoryConfig = {
         Use the occasion, color, fabric, work and price filters to narrow the collection. Open the exact
         listing before ordering because materials, embellishment, lining and package contents vary by design.
       </p>
+      <h3>Bridal, Reception and Party-Wear Lehengas</h3>
+      <p>
+        Compare bridal lehengas with reception and party-wear styles by weight, work, included pieces and
+        stitching status. For related occasion ideas, see the <a href="/maroon-lehenga-for-reception">reception lehenga guide</a>,
+        the <a href="/lehenga-for-bridesmaid">bridesmaid lehenga guide</a> and the
+        <a href="/lehenga-for-mother-of-bride"> mother-of-the-bride lehenga guide</a>.
+      </p>
       <h3>Sizing and Tailoring</h3>
       <p>
         Available sizes and any optional tailoring vary by product. Review the listing and
@@ -512,6 +519,13 @@ const SAREES: CategoryConfig = {
         Silk sarees can use pure silk, blended silk or art-silk fabrics. Review the exact composition and
         product wording on each listing rather than assuming every saree uses the same fiber, zari or weaving method.
       </p>
+      <h3>Silk, Kanchipuram and Kanjivaram Sarees</h3>
+      <p>
+        Browse the <a href="/collections/silk-sarees">silk saree collection</a> and the
+        <a href="/collections/kanchipuram-sarees"> Kanchipuram and Kanjivaram collection</a>, then compare the stated
+        fiber, weave, border, blouse details and availability on each listing. The
+        <a href="/kanjivaram-saree-for-wedding"> Kanjivaram wedding saree guide</a> explains additional shopping considerations.
+      </p>
       <h3>Blouse and Sizing Details</h3>
       <p>
         Blouse fabric, stitching status and optional tailoring vary by product. Check the included-pieces section
@@ -666,6 +680,13 @@ const SUITS: CategoryConfig = {
       <p>
         Use the style, fabric, color, work and price filters to narrow the collection. Check the exact listing
         to confirm whether a set includes a kurta or kameez, bottoms, dupatta, lining or other pieces.
+      </p>
+      <h3>Anarkali, Sharara and Gharara Styles</h3>
+      <p>
+        Anarkali suits use a flared kurta, while sharara and gharara sets use wide or structured flared bottoms;
+        the exact cut varies by product. Compare the <a href="/anarkali-suit-for-wedding-guest">wedding-guest Anarkali guide</a>,
+        the <a href="/anarkali-suit-for-mother-of-bride">mother-of-the-bride Anarkali guide</a> and the
+        <a href="/sharara-for-bride-sister"> sharara guide</a>, then return to the current listings for availability.
       </p>
       <h3>Sizing and Tailoring</h3>
       <p>

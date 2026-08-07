@@ -650,7 +650,7 @@
     },
     {
       "source": "/blog/indian-to-us-clothing-size-conversion-guide",
-      "destination": "/blog",
+      "destination": "/sizing-measurements-guide",
       "statusCode": 301
     },
     {
@@ -745,12 +745,12 @@
     },
     {
       "source": "/blog/diwali-outfit-ideas-by-setting",
-      "destination": "/blog",
+      "destination": "/collections/diwali-outfits",
       "statusCode": 301
     },
     {
       "source": "/blog/diwali-outfit-ideas-nri-women-usa-canada-australia",
-      "destination": "/blog",
+      "destination": "/collections/diwali-outfits",
       "statusCode": 301
     },
     {
@@ -870,7 +870,7 @@
     },
     {
       "source": "/blog/navratri-9-day-color-guide-2026",
-      "destination": "/blog",
+      "destination": "/collections/navratri-outfits",
       "statusCode": 301
     },
     {
