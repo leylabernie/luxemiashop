@@ -26,6 +26,8 @@ interface FeaturedSlide {
   alt: string;
   width: number;
   height: number;
+  imageFit?: 'cover' | 'contain';
+  mobileContentPosition?: 'top' | 'bottom';
 }
 
 const evergreenSlides: FeaturedSlide[] = [
@@ -79,6 +81,13 @@ const rakshaBandhanSlide: FeaturedSlide = {
   subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. U.S. shipping only; delivery timing varies by item.`,
   cta: 'Shop Festive Styles',
   link: '/collections',
+  image: '/images/campaigns/raksha-bandhan-2026-mobile',
+  desktopImage: '/images/campaigns/raksha-bandhan-2026-desktop',
+  alt: 'Raksha Bandhan gift, rakhi bracelet, brass diya and marigolds on burgundy silk',
+  width: 1122,
+  height: 1402,
+  imageFit: 'cover',
+  mobileContentPosition: 'top',
 };
 
 const AUTO_PLAY_MS = 6000;
@@ -165,7 +174,7 @@ const NewArrivalsBanner = () => {
       <div className="absolute inset-0">
         {slides.map((slide, slideIndex) => {
           const isActive = slideIndex === index;
-          const preservesFullImage = Boolean(slide.desktopImage);
+          const preservesFullImage = Boolean(slide.desktopImage && slide.imageFit !== 'cover');
 
           return (
             <div
@@ -231,9 +240,11 @@ const NewArrivalsBanner = () => {
                   loading={slideIndex === 0 ? 'eager' : 'lazy'}
                   fetchPriority={slideIndex === 0 ? 'high' : 'auto'}
                   className={`absolute inset-0 h-full w-full transition-transform ease-out ${
-                    preservesFullImage
-                      ? 'object-contain object-top sm:object-center'
-                      : 'object-cover object-[center_15%] sm:object-[center_20%]'
+                    slide.imageFit === 'cover'
+                      ? 'object-cover object-center'
+                      : preservesFullImage
+                        ? 'object-contain object-top sm:object-center'
+                        : 'object-cover object-[center_15%] sm:object-[center_20%]'
                   }`}
                   style={{
                     transform: isActive ? 'scale(1)' : 'scale(1.08)',
@@ -257,7 +268,13 @@ const NewArrivalsBanner = () => {
                 }}
               />
 
-              <div className="relative z-10 flex h-full items-end px-6 pb-[130px] sm:items-center sm:px-[6vw] sm:pb-0">
+              <div
+                className={`relative z-10 flex h-full px-6 sm:items-center sm:px-[6vw] sm:pb-0 sm:pt-0 ${
+                  slide.mobileContentPosition === 'top'
+                    ? 'items-start pb-0 pt-[112px]'
+                    : 'items-end pb-[130px] pt-0'
+                }`}
+              >
                 <div
                   data-hero-content
                   className={`max-w-[560px] transition-all delay-300 duration-700 ease-out ${

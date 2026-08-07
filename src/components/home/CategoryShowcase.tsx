@@ -1,39 +1,62 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 
 const categories = [
   {
     name: 'Lehengas',
     subtitle: 'Bridal & Festive',
-    description: 'Lehengas with beautiful embroidery on quality fabrics',
+    description: 'Bridal, wedding guest and festive lehengas for current celebrations.',
     href: '/lehengas',
-    image: '/images/categories/category-lehengas.jpg',
-    tag: 'Most Popular',
+    image: FEATURED_CATEGORY_PRODUCTS.lehengas.image,
+    imageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
+    imageAlt: FEATURED_CATEGORY_PRODUCTS.lehengas.alt,
   },
   {
     name: 'Sarees',
     subtitle: 'Timeless Elegance',
-    description: 'Silk and elegant drape sarees for weddings and special occasions',
+    description: 'Kanjivaram, Banarasi, wedding and festive sarees available online.',
     href: '/sarees',
-    image: '/images/categories/category-sarees.jpg',
-    tag: 'New Collection',
+    image: FEATURED_CATEGORY_PRODUCTS.sarees.image,
+    imageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
+    imageAlt: FEATURED_CATEGORY_PRODUCTS.sarees.alt,
   },
   {
     name: 'Salwar Kameez',
     subtitle: 'Classic Grace',
-    description: 'Elegant salwar kameez and anarkali sets in quality organza silk',
+    description: 'Anarkali, sharara, palazzo and salwar kameez styles.',
     href: '/suits',
-    image: '/images/categories/category-suits.jpg',
-    tag: 'Trending Now',
+    image: FEATURED_CATEGORY_PRODUCTS.suits.image,
+    imageWebp: FEATURED_CATEGORY_PRODUCTS.suits.imageWebp,
+    imageAlt: FEATURED_CATEGORY_PRODUCTS.suits.alt,
   },
   {
     name: 'Menswear',
     subtitle: 'Classic Style',
-    description: 'Sherwanis, kurta sets and Indo-western outfits for grooms',
+    description: 'Sherwanis, kurta pajama sets and wedding menswear.',
     href: '/menswear',
-    image: '/images/categories/category-menswear.jpg',
-    tag: 'New Arrivals',
+    image: FEATURED_CATEGORY_PRODUCTS.menswear.image,
+    imageWebp: FEATURED_CATEGORY_PRODUCTS.menswear.imageWebp,
+    imageAlt: FEATURED_CATEGORY_PRODUCTS.menswear.alt,
+  },
+  {
+    name: 'Indo-Western',
+    subtitle: 'Modern Fusion',
+    description: 'Contemporary Indian silhouettes for weddings and parties.',
+    href: '/indowestern',
+    image: FEATURED_CATEGORY_PRODUCTS.indowestern.image,
+    imageWebp: FEATURED_CATEGORY_PRODUCTS.indowestern.imageWebp,
+    imageAlt: FEATURED_CATEGORY_PRODUCTS.indowestern.alt,
+  },
+  {
+    name: 'Bridal Jewelry',
+    subtitle: 'Finishing Touches',
+    description: 'Kundan-style, polki-style and bridal necklace sets.',
+    href: '/jewelry',
+    image: FEATURED_CATEGORY_PRODUCTS.jewelry.image,
+    imageWebp: FEATURED_CATEGORY_PRODUCTS.jewelry.imageWebp,
+    imageAlt: FEATURED_CATEGORY_PRODUCTS.jewelry.alt,
   },
 ];
 
@@ -58,8 +81,8 @@ const CategoryShowcase = () => {
           </p>
         </motion.div>
 
-        {/* Category Grid - 2x2 on desktop, stacked on mobile */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        {/* Six verified category images — one current Shopify product per category. */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {categories.map((category, index) => (
             <motion.div
               key={category.name}
@@ -78,12 +101,12 @@ const CategoryShowcase = () => {
                 <div className="absolute inset-0 overflow-hidden">
                   <picture>
                     <source
-                      srcSet={category.image.replace(/\.jpg$/, '.webp')}
+                      srcSet={category.imageWebp}
                       type="image/webp"
                     />
                     <img 
                       src={category.image}
-                      alt={`${category.name} collection - ${category.description}`}
+                      alt={category.imageAlt}
                       width={300} height={400}
                       loading="lazy"
                       decoding="async"
@@ -94,13 +117,6 @@ const CategoryShowcase = () => {
 
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-                {/* Tag Badge */}
-                <div className="absolute top-4 left-4">
-                  <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm text-foreground text-xs font-medium tracking-wide rounded-sm">
-                    {category.tag}
-                  </span>
-                </div>
 
                 {/* Content Overlay */}
                 <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6">

@@ -59,9 +59,9 @@ import {
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import { useListingFilters } from '@/hooks/useListingFilters';
 import { filterSortAndSubcategorize } from '@/lib/productFilters';
-import { getOptimizedImage } from '@/lib/imageUtils';
 import ProductCard from '@/components/ui/ProductCard';
 import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
+import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
 import { FilterSidebar, ActiveFilterTags } from './FilterSidebar';
 import type { CategoryConfig } from '@/config/categoryConfig';
 
@@ -172,37 +172,14 @@ export function CategoryListing({ config }: CategoryListingProps) {
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         {/* Hero Banner — hidden when a subcategory is active (no occasion-specific banners) */}
         {!activeSubcategory && (
-        <section className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
-          <picture className="absolute inset-0 w-full h-full">
-            {config.heroImageWebp && (
-              <source srcSet={config.heroImageWebp} type="image/webp" />
-            )}
-            <img
-              src={getOptimizedImage(config.heroImage, 'hero')}
-              alt={config.heroAlt || config.name}
-              width={1200}
-              height={600}
-              className="absolute inset-0 w-full h-full object-cover object-top"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 text-center px-4 text-white"
-          >
-            <p className="text-sm tracking-luxury uppercase text-white/70 mb-4">
-              Explore Our
-            </p>
-            <h1 className="text-3xl md:text-4xl font-serif mb-4">{config.heroTitle}</h1>
-            <p className="text-white/80 max-w-lg mx-auto">
-              {config.heroSubtitle}
-            </p>
-          </motion.div>
-        </section>
+          <ImageCategoryHero
+            image={config.heroImage}
+            imageWebp={config.heroImageWebp}
+            alt={config.heroAlt || config.name}
+            eyebrow="Explore Our"
+            title={config.heroTitle}
+            description={config.heroSubtitle}
+          />
         )}
 
         {/* Breadcrumbs */}

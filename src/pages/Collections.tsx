@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/sheet';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { filterAndSortProducts } from '@/lib/productFilters';
+import { FEATURED_CATEGORY_PRODUCT_LIST } from '@/config/featuredCategoryProducts';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -76,18 +77,37 @@ const Collections = () => {
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
         {/* Hero Banner */}
-        <section className="relative h-64 md:h-80 flex items-center justify-center bg-gradient-to-b from-secondary to-background overflow-hidden">
+        <section className="relative flex h-72 items-center justify-center overflow-hidden bg-[#211410] md:h-96">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 grid grid-cols-3 grid-rows-2 md:grid-cols-6 md:grid-rows-1"
+          >
+            {FEATURED_CATEGORY_PRODUCT_LIST.map((product) => (
+              <picture key={product.handle} className="relative block min-h-0 overflow-hidden">
+                <source srcSet={product.imageWebp} type="image/webp" />
+                <img
+                  src={product.image}
+                  alt=""
+                  width={900}
+                  height={1200}
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                  decoding="async"
+                />
+              </picture>
+            ))}
+          </div>
+          <div className="absolute inset-0 bg-black/70 md:bg-black/65" />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center px-4"
+            className="relative z-10 px-4 text-center text-white"
           >
-            <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
+            <p className="mb-4 text-sm uppercase tracking-luxury text-[#e4c58e]">
               Explore Our
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
               Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. shipping at $150 and above.
             </p>
           </motion.div>
