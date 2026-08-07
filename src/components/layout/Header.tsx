@@ -10,13 +10,17 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/hooks/useAuth';
 import {
+  isRakshaBandhanCampaignActive,
+  RAKSHA_BANDHAN_CAMPAIGN,
+} from '@/config/rakshaBandhanCampaign';
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const announcements = [
+const shippingAnnouncements = [
   'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.',
 ];
 
@@ -54,6 +58,14 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
+  const isRakhiSaleActive = isRakshaBandhanCampaignActive();
+  const announcements = isRakhiSaleActive
+    ? [
+        `${RAKSHA_BANDHAN_CAMPAIGN.code}: ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
+        ...shippingAnnouncements,
+      ]
+    : shippingAnnouncements;
+  const displayedAnnouncement = announcements[announcementIdx % announcements.length];
 
   const wishlistItems = useWishlistStore(state => state.items);
   const loadFromDatabase = useWishlistStore(state => state.loadFromDatabase);
@@ -78,7 +90,7 @@ const Header = () => {
       setAnnouncementIdx(i => (i + 1) % announcements.length);
     }, 4000);
     return () => clearInterval(id);
-  }, []);
+  }, [announcements.length]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -100,7 +112,7 @@ const Header = () => {
                 willChange: 'opacity',
               }}
             >
-              {announcements[announcementIdx]}
+              {displayedAnnouncement}
             </p>
           </div>
         </div>
