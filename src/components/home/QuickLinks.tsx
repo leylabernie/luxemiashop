@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const quickLinks = [
-  { label: 'Featured Styles', href: '/bestsellers', featured: true },
+  { label: 'New Arrivals', href: '/new-arrivals', featured: true },
   { label: 'Bridal Lehengas', href: '/lehengas', featured: true },
   { label: 'Wedding Sarees', href: '/sarees', featured: false },
   { label: 'Indo-Western', href: '/indowestern', featured: false },

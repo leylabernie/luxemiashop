@@ -32,7 +32,6 @@ const Returns = lazy(() => import("./pages/Returns"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NewArrivals = lazy(() => import("./pages/NewArrivals"));
-const Bestsellers = lazy(() => import("./pages/Bestsellers"));
 const Indowestern = lazy(() => import("./pages/Indowestern"));
 const Press = lazy(() => import("./pages/Press"));
 const SizeGuide = lazy(() => import("./pages/SizeGuide"));
@@ -219,7 +218,7 @@ const App = () => (
                 {/* Public author information is organizational and verifiable. */}
                 <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />
                 <Route path="/new-arrivals" element={<Suspense fallback={<PageLoader />}><NewArrivals /></Suspense>} />
-                <Route path="/bestsellers" element={<Suspense fallback={<PageLoader />}><Bestsellers /></Suspense>} />
+                <Route path="/bestsellers" element={<Navigate to="/new-arrivals" replace />} />
                 <Route path="/indowestern" element={<Suspense fallback={<PageLoader />}><Indowestern /></Suspense>} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />

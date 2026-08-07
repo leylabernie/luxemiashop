@@ -4,6 +4,11 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/bestsellers",
+      "destination": "/new-arrivals",
+      "statusCode": 301
+    },
+    {
       "source": "/nri/usa",
       "destination": "/indian-ethnic-wear-usa",
       "statusCode": 301

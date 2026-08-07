@@ -262,7 +262,6 @@ const Collections = () => {
             <Link to="/menswear" className="hover:text-foreground transition-colors underline underline-offset-2">Men's Sherwanis</Link>
             <Link to="/indowestern" className="hover:text-foreground transition-colors underline underline-offset-2">Indo-Western</Link>
             <Link to="/new-arrivals" className="hover:text-foreground transition-colors underline underline-offset-2">New Arrivals</Link>
-            <Link to="/bestsellers" className="hover:text-foreground transition-colors underline underline-offset-2">Featured Styles</Link>
           </div>
         </div>
       </section>

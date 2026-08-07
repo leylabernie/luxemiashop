@@ -14,8 +14,21 @@ function getPrerenderedProducts(handle: string): ShopifyProduct[] | null {
   return data.products;
 }
 
+function isBridalPartyProduct(product: ShopifyProduct): boolean {
+  const title = product.node.title ?? '';
+  return /\b(bridesmaids?|maid of hono(?:u)?r|matron of hono(?:u)?r)\b/i.test(title);
+}
+
+function filterCollectionProducts(handle: string, products: ShopifyProduct[]): ShopifyProduct[] {
+  if (handle !== 'bridal-party-outfits') return products;
+  return products.filter(isBridalPartyProduct);
+}
+
 export function useShopifyCollection(handle: string) {
-  const initialProducts = getPrerenderedProducts(handle);
+  const rawInitialProducts = getPrerenderedProducts(handle);
+  const initialProducts = rawInitialProducts
+    ? filterCollectionProducts(handle, rawInitialProducts)
+    : null;
   const [products, setProducts] = useState<ShopifyProduct[]>(initialProducts || []);
   const [collection, setCollection] = useState<ShopifyCollection | null>(null);
   const [isLoading, setIsLoading] = useState(initialProducts === null);
@@ -23,7 +36,10 @@ export function useShopifyCollection(handle: string) {
 
   useEffect(() => {
     const controller = new AbortController();
-    const prerendered = getPrerenderedProducts(handle);
+    const rawPrerendered = getPrerenderedProducts(handle);
+    const prerendered = rawPrerendered
+      ? filterCollectionProducts(handle, rawPrerendered)
+      : null;
 
     setProducts(prerendered || []);
     setIsLoading(prerendered === null);
@@ -37,7 +53,12 @@ export function useShopifyCollection(handle: string) {
         return;
       }
       setCollection(result);
-      setProducts(result.products);
+      const liveProducts = filterCollectionProducts(handle, result.products);
+
+      // The build-time collection payload is already scoped to this collection.
+      // Do not erase it when Shopify temporarily returns an empty collection
+      // response after hydration (the visible Bridesmaid page regression).
+      setProducts(liveProducts.length > 0 ? liveProducts : (prerendered || []));
       setIsLoading(false);
     });
 

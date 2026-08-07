@@ -399,6 +399,21 @@ function getCrawlerSafeTags(tags) {
   return (tags ?? []).filter(tag => !OBSOLETE_POLICY_TAG_PATTERN.test(String(tag)));
 }
 
+function getDisplayCategory(productType) {
+  if (!productType) return 'Designer Wear';
+  const value = productType.toLowerCase();
+
+  if (/kurta pajama|sherwani|jodhpuri|men.*ethnic|men.*indian|men.*suit|modi jacket|menswear|bandi|pathani|achkan/.test(value)) return 'Menswear';
+  if (/\bmen\b/.test(value)) return 'Menswear';
+  if (/lehenga|lehnga|lehena/.test(value)) return 'Lehengas';
+  if (/saree|sari/.test(value)) return 'Sarees';
+  if (/pakistani|salwar|kameez|sharara|anarkali|plazzo|palazzo|gharara|gown|kurti|churidar|patiala/.test(value)) return 'Salwar Kameez';
+  if (/indo.?western|fusion|jumpsuit|cape set|coord set|co.?ord/.test(value)) return 'Indo Western';
+  if (/kundan|polki|jewelry|jewellery|necklace set|bridal set|choker necklace|maang tikka/.test(value)) return 'Jewelry';
+
+  return productType;
+}
+
 // Server-side mirror of filterByCategory() from useShopifyProducts.ts.
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
@@ -423,15 +438,9 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
         return ['manthrakodi', 'manthrokodi', 'kerala-christian-bridal-saree'].some((tag) => tags.has(tag));
       }
       if (handle === 'bridal-party-outfits') {
-        return [
-          'bridal-party',
-          'bridal party outfit lehenga',
-          'bridesmaid outfit',
-          'role:bridesmaid',
-          'maid of honor',
-          'matron of honor',
-          'role:maid-of-honor',
-        ].some((tag) => tags.has(tag));
+        // Catalog role tags are shared by many bridal, guest, and jewelry
+        // products, so require an explicit attendant role in the title.
+        return /\b(bridesmaids?|maid of hono(?:u)?r|matron of hono(?:u)?r)\b/i.test(product.title ?? '');
       }
       if (handle === 'bollywood-inspired-indian-outfits') {
         return tags.has('bollywood inspired');
@@ -451,13 +460,38 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
 
   if (newestFirst) {
     const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    return allowed
+    const recentProducts = allowed
       .filter(p => {
         const createdAt = new Date(p.createdAt).getTime();
         return Number.isFinite(createdAt) && createdAt > cutoff;
       })
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .slice(0, MAX_COLLECTION_PRODUCTS);
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    // Match src/pages/NewArrivals.tsx so the first-byte product grid is not an
+    // unfiltered duplicate of All Collections before React hydrates.
+    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
+    const groups = new Map();
+    for (const product of recentProducts) {
+      const displayCategory = getDisplayCategory(product.productType);
+      const group = groups.get(displayCategory) ?? [];
+      group.push(product);
+      groups.set(displayCategory, group);
+    }
+
+    const cappedGroups = new Map();
+    for (const [displayCategory, products] of groups) {
+      cappedGroups.set(displayCategory, products.slice(0, mainCategories.includes(displayCategory) ? 5 : 3));
+    }
+
+    const ordered = [];
+    for (const displayCategory of mainCategories) {
+      ordered.push(...(cappedGroups.get(displayCategory) ?? []));
+    }
+    for (const [displayCategory, products] of cappedGroups) {
+      if (!mainCategories.includes(displayCategory)) ordered.push(...products);
+    }
+
+    return ordered.slice(0, MAX_COLLECTION_PRODUCTS);
   }
 
   if (category === 'all') return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
@@ -1377,20 +1411,6 @@ const routes = [
     `,
   },
   {
-    path: '/bestsellers',
-    category: 'all',
-    title: 'Featured Indian Ethnic Wear | LuxeMia',
-    description: 'Explore featured lehengas, sarees, suits, menswear and jewelry selected by the LuxeMia team for weddings and celebrations.',
-    h1: 'Featured Styles',
-    content: `
-      <p>Browse an editorial selection of lehengas, sarees, suits, menswear and jewelry chosen for their design and occasion-ready details.</p>
-      <h2>How Featured Styles Are Selected</h2>
-      <p>The LuxeMia team highlights pieces based on design, fabric information, occasion suitability and current availability. This page does not claim a sales ranking.</p>
-      <p>Shipping is free at $150 and above to the United States. A $12 flat rate below $150 applies otherwise. Review each product and policy page before ordering.</p>
-    `,
-  },
-
-  {
     path: '/indowestern',
     category: 'indowestern',
     title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
@@ -2005,7 +2025,7 @@ function generateHtml(template, route, allShopifyProducts) {
       <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking is provided after dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
-    // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals/bestsellers)
+    // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)
     // Inject REAL Shopify products so Googlebot sees a fully populated category page on
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.

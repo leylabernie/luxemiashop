@@ -81,7 +81,7 @@ let cachePromise: Promise<ShopifyProduct[]> | null = null;
 // ─── Prerendered initial data ─────────────────────────────────────────────────
 // Build-time prerender (scripts/prerender.js) injects a JSON payload as
 // window.__INITIAL_DATA__ on collection routes (/sarees, /lehengas, /suits,
-// /menswear, /indowestern, /collections, /new-arrivals, /bestsellers).
+// /menswear, /indowestern, /collections, /new-arrivals).
 // Reading it on hydration lets React paint product cards instantly with zero
 // client-side Shopify fetch — the SEO fix for the 100 → 7 impression drop.
 // On routes without prerendered data (e.g. client-side navigations) this returns

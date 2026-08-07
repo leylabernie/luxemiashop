@@ -58,7 +58,6 @@ const STATIC_ROUTES = [
   '/collections/bollywood-inspired-indian-outfits',
   '/about',
   '/new-arrivals',
-  '/bestsellers',
   '/indowestern',
   '/nri',
   '/indian-ethnic-wear-usa',

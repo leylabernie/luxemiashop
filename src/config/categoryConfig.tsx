@@ -983,7 +983,6 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
         links: [
           { name: 'Silk Sarees', href: '/collections/silk-sarees' },
           { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-          { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
         ],
       },
     ],

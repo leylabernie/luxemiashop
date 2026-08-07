@@ -36,14 +36,12 @@ const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bridesmaids', href: '/collections/bridal-party-outfits' },
   { name: 'Bollywood-Inspired', href: '/collections/bollywood-inspired-indian-outfits' },
-  { name: 'Featured', href: '/bestsellers' },
   { name: 'Blog', href: '/blog' },
 ];
 
 const weddingSareeLinks = [
   { name: 'Silk Sarees', href: '/collections/silk-sarees' },
   { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-  { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
 ];
 
 const occasionLinks = [

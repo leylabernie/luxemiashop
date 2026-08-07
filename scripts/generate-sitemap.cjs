@@ -21,7 +21,7 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const EXPECTED_SITEMAP_URL_COUNT = 779;
+const EXPECTED_SITEMAP_URL_COUNT = 778;
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
@@ -74,7 +74,6 @@ const staticPages = [
   { loc: '/menswear', changefreq: 'daily', priority: '0.9' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8' },
   { loc: '/new-arrivals', changefreq: 'daily', priority: '0.8' },
-  { loc: '/bestsellers', changefreq: 'weekly', priority: '0.7' },
   { loc: '/nri', changefreq: 'monthly', priority: '0.8' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'monthly', priority: '0.8' },
   // '/indian-ethnic-wear-canada' is intentionally omitted because it 301s to
