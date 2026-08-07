@@ -9,6 +9,10 @@ import {
 } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import {
+  isRakshaBandhanCampaignActive,
+  RAKSHA_BANDHAN_CAMPAIGN,
+} from '@/config/rakshaBandhanCampaign';
 
 interface FeaturedSlide {
   id: number;
@@ -24,7 +28,7 @@ interface FeaturedSlide {
   height: number;
 }
 
-const slides: FeaturedSlide[] = [
+const evergreenSlides: FeaturedSlide[] = [
   {
     id: 1,
     eyebrow: 'Recently Added',
@@ -68,10 +72,22 @@ const slides: FeaturedSlide[] = [
   },
 ];
 
+const rakshaBandhanSlide: FeaturedSlide = {
+  ...evergreenSlides[0],
+  eyebrow: 'Raksha Bandhan Sale',
+  headline: `${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% Off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+`,
+  subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. U.S. shipping only; delivery timing varies by item.`,
+  cta: 'Shop Festive Styles',
+  link: '/collections',
+};
+
 const AUTO_PLAY_MS = 6000;
 const padSlideNumber = (value: number) => String(value).padStart(2, '0');
 
 const NewArrivalsBanner = () => {
+  const slides = isRakshaBandhanCampaignActive()
+    ? [rakshaBandhanSlide, ...evergreenSlides.slice(1)]
+    : evergreenSlides;
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocusWithin, setIsFocusWithin] = useState(false);
@@ -82,11 +98,11 @@ const NewArrivalsBanner = () => {
 
   const next = useCallback(() => {
     setIndex((current) => (current + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   const prev = useCallback(() => {
     setIndex((current) => (current - 1 + slides.length) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
