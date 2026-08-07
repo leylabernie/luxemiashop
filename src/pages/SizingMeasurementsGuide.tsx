@@ -147,6 +147,22 @@ const SizingMeasurementsGuide = () => {
                 </CardContent>
               </Card>
             </div>
+
+            <div className="mx-auto mt-14 max-w-4xl">
+              <h2 className="font-display text-3xl text-foreground">How to measure for an Indian saree blouse</h2>
+              <p className="mt-4 text-muted-foreground">
+                Wear the undergarment you plan to use with the blouse, keep the tape level, and record your actual body measurements without adding ease. Compare the results with the exact product listing; this guide does not mean stitching or tailoring is included.
+              </p>
+              <ol className="mt-6 grid gap-4 text-muted-foreground md:grid-cols-2">
+                <li><strong className="text-foreground">1. Bust:</strong> Measure around the fullest part of the bust with the tape level across the back.</li>
+                <li><strong className="text-foreground">2. Underbust:</strong> Measure directly below the bust where the blouse band will sit.</li>
+                <li><strong className="text-foreground">3. Shoulder:</strong> Measure across the back from one shoulder edge to the other.</li>
+                <li><strong className="text-foreground">4. Blouse length:</strong> Measure from the top of the shoulder to the preferred blouse hem.</li>
+                <li><strong className="text-foreground">5. Armhole:</strong> Wrap the tape around the shoulder and underarm while the arm rests naturally.</li>
+                <li><strong className="text-foreground">6. Sleeve length:</strong> Measure from the shoulder point to the preferred sleeve end.</li>
+                <li><strong className="text-foreground">7. Upper-arm circumference:</strong> Measure around the fullest part of the relaxed upper arm without pulling the tape tight.</li>
+              </ol>
+            </div>
           </div>
         </section>
 

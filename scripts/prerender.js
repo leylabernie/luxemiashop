@@ -365,6 +365,9 @@ const CATEGORY_PRODUCT_TYPES = {
 const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
 const MENSWEAR_TAGS_EXACT = new Set(['mens', "men's", 'groom', 'groomsmen', 'groomsman', 'boys', 'male', 'menswear', 'indian-menswear', 'men', 'man', 'gender:male', 'gender:men']);
 const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
+const SAREE_TITLE_KEYWORDS = /\b(saree|sari)\b/i;
+const STANDALONE_BLOUSE_TITLE_KEYWORDS = /\b(blouse|choli)\b/i;
+const OBSOLETE_POLICY_TAG_PATTERN = /\b(canada|australia)\b|\b(worldwide|international|global)\s+(shipping|delivery)\b|\bfree\s+(worldwide\s+)?shipping\b|\bshipping\b.{0,30}(\$|usd|over|above|below|under)/i;
 const HIDE_OLD_PRODUCTS = true;
 const HIDE_PRODUCTS_BEFORE_DATE = new Date('2026-04-09T00:00:00Z');
 
@@ -387,6 +390,15 @@ function isMenswearProduct(p) {
   return false;
 }
 
+function isStandaloneBlouseProduct(product) {
+  const title = product?.title ?? '';
+  return STANDALONE_BLOUSE_TITLE_KEYWORDS.test(title) && !SAREE_TITLE_KEYWORDS.test(title);
+}
+
+function getCrawlerSafeTags(tags) {
+  return (tags ?? []).filter(tag => !OBSOLETE_POLICY_TAG_PATTERN.test(String(tag)));
+}
+
 // Server-side mirror of filterByCategory() from useShopifyProducts.ts.
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
@@ -402,7 +414,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       const tags = tagsFor(product);
 
       if (handle === 'silk-sarees') {
-        return productType.includes('saree') && title.includes('silk');
+        return productType.includes('saree') && title.includes('silk') && !isStandaloneBlouseProduct(product);
       }
       if (handle === 'kanchipuram-sarees') {
         return ['kanchipuram', 'kanjivaram', 'kanjeevaram'].some((tag) => tags.has(tag));
@@ -516,6 +528,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
     const title = (p.title ?? '').toLowerCase();
     if (tags.some(t => t === 'men' || t === 'mens' || t === 'male' || t === 'boys' || t === 'menswear')) return false;
     if (title.includes('sherwani') || title.includes('kurta pajama') || title.includes('for men')) return false;
+    if (category === 'sarees' && isStandaloneBlouseProduct(p)) return false;
     if (types.some(t => t.toLowerCase() === pt)) return true;
     if (category === 'lehengas') return /lehenga|lehnga|lehena/.test(pt);
     if (category === 'sarees') return /saree|sari/.test(pt);
@@ -551,7 +564,10 @@ function buildInitialDataPayload(products, category) {
       handle: p.handle,
       vendor: p.vendor,
       productType: p.productType,
-      tags: p.tags ?? [],
+      // Keep merchandising attributes needed by client-side filters, while
+      // preventing obsolete shipping regions and thresholds from being
+      // republished inside the crawlable hydration payload.
+      tags: getCrawlerSafeTags(p.tags),
       availableForSale: p.availableForSale,
       shipsWithinMetafield: p.shipsWithinMetafield || null,
       priceRange: p.priceRange,
@@ -777,8 +793,10 @@ const routes = [
       </ul>
       <h2>Shop Suits by Style</h2>
       <ul>
-        <li><a href="/suits?sub=anarkali">Anarkali Suits</a> — Flowing Mughal-inspired silhouette</li>
-        <li><a href="/suits?sub=sharara">Sharara Sets</a> — Wide-legged flared pants with short kurti</li>
+        <li><a href="/anarkali-suit-for-wedding-guest">Anarkali Suits for Wedding Guests</a> — Compare current flared-kurta styles</li>
+        <li><a href="/anarkali-suit-for-mother-of-bride">Anarkali Suits for the Mother of the Bride</a> — Occasion and fit considerations</li>
+        <li><a href="/sharara-for-bride-sister">Sharara Sets for the Bride's Sister</a> — Compare current wide-leg styles</li>
+        <li><strong>Gharara Suits</strong> — Review the style filters and exact listing for the supplied bottom silhouette</li>
         <li><a href="/suits?sub=palazzo">Palazzo Suits</a> — Modern wide-leg pants with kurta</li>
         <li><a href="/suits?sub=pakistani">Pakistani-Style Suits</a> — Straight-cut options</li>
         <li><a href="/suits?sub=straight-cut">Straight Cut Suits</a> — Classic everyday salwar kameez</li>
@@ -832,6 +850,12 @@ const routes = [
         <li><a href="/lehengas?sub=sangeet">Sangeet Lehengas</a> — Dance-ready lehengas for the sangeet</li>
         <li><a href="/lehengas?sub=party-wear">Party Wear Lehengas</a> — Stunning lehengas for festive occasions</li>
       </ul>
+      <h2>Compare Reception and Wedding-Party Lehengas</h2>
+      <ul>
+        <li><a href="/maroon-lehenga-for-reception">Reception Lehengas</a> — Compare fabric, work, included pieces and stitching status</li>
+        <li><a href="/lehenga-for-bridesmaid">Bridesmaid Lehengas</a> — Current coordination and sizing considerations</li>
+        <li><a href="/lehenga-for-mother-of-bride">Mother-of-the-Bride Lehengas</a> — Compare current occasion styles</li>
+      </ul>
       <h2>Shop Lehengas by Style</h2>
       <ul>
         <li><a href="/lehengas?sub=floral">Floral Lehengas</a> — Romantic floral embroidery</li>
@@ -881,9 +905,10 @@ const routes = [
       </ul>
       <h2>Shop Sarees by Fabric</h2>
       <ul>
-        <li><a href="/sarees?sub=silk">Silk Sarees</a> — Premium silk sarees</li>
+        <li><a href="/collections/silk-sarees">Silk Sarees</a> — Check each listing for exact fiber and weave details</li>
         <li><a href="/sarees?sub=banarasi">Banarasi Sarees</a> — Check each listing for exact weave and origin details</li>
-        <li><a href="/sarees?sub=kanjeevaram">Kanjeevaram Sarees</a> — Premium South Indian silk</li>
+        <li><a href="/collections/kanchipuram-sarees">Kanchipuram &amp; Kanjivaram Sarees</a> — Review current listed fabric, weave and zari details</li>
+        <li><a href="/kanjivaram-saree-for-wedding">Kanjivaram Wedding Saree Guide</a> — Compare wedding-shopping considerations</li>
         <li><a href="/sarees?sub=georgette">Georgette Sarees</a> — Lightweight & elegant</li>
         <li><a href="/sarees?sub=chiffon">Chiffon Sarees</a> — Flowy & comfortable</li>
         <li><a href="/sarees?sub=organza">Organza Sarees</a> — Modern sheer fabric</li>
@@ -924,7 +949,7 @@ const routes = [
     description: 'Shop silk sarees online for Indian weddings, receptions and festivals. Review each listing for its stated weave, fabric composition, blouse details and care instructions.',
     h1: 'Silk Sarees',
     content: `
-      <p>Discover silk sarees selected for weddings, receptions, pujas and festive celebrations. Each product page states the supplied fabric details so you can compare drape, finish, work and blouse options before ordering.</p>
+      <p>Browse silk sarees listed for weddings, receptions, pujas and festive celebrations. Each product page states the supplied fabric details so you can compare drape, finish, work and blouse options before ordering.</p>
       <h2>How should I choose a silk saree online?</h2>
       <p>Compare the exact fabric composition, weight, border, embellishment and blouse details on each listing. Silk sarees can use pure silk, blended silk or art-silk fabrics, so LuxeMia states the information supplied for each product.</p>
       <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">contact LuxeMia</a> for help choosing a wedding saree.</p>
@@ -934,10 +959,10 @@ const routes = [
     path: '/collections/kanchipuram-sarees',
     category: 'collection:kanchipuram-sarees',
     title: 'Kanchipuram Sarees Online | Wedding Sarees | LuxeMia',
-    description: 'Explore Kanchipuram and Kanjivaram sarees for South Indian weddings. Product listings clearly state fabric, weave and zari details available from the maker.',
+    description: 'Explore Kanchipuram and Kanjivaram sarees for South Indian weddings. Review each product listing for its stated fabric, weave, zari, blouse and availability details.',
     h1: 'Kanchipuram Sarees',
     content: `
-      <p>This collection is reserved for sarees identified by the supplier as Kanchipuram, Kanjivaram or Kanjeevaram. New pieces are being reviewed before they are added.</p>
+      <p>This collection shows sarees whose current product information identifies them as Kanchipuram, Kanjivaram or Kanjeevaram. Review the exact listing before ordering.</p>
       <h2>How does LuxeMia describe Kanchipuram sarees?</h2>
       <p>We do not label a product as pure silk, handwoven or genuine zari unless the supplied product information supports that statement. Each listing will state the known fabric, blouse inclusion and work details.</p>
       <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">tell us what you need</a>.</p>
@@ -950,10 +975,10 @@ const routes = [
     description: 'Shop Manthrakodi sarees for Kerala Christian weddings. Browse bridal sarees with clearly stated fabric, border, blouse and product details for U.S. delivery.',
     h1: 'Manthrakodi Sarees',
     content: `
-      <p>This collection is being prepared for Manthrakodi sarees suited to Kerala Christian wedding traditions. New styles will be added only after their product details have been reviewed.</p>
+      <p>This collection shows current listings identified for Manthrakodi sarees associated with Kerala Christian wedding traditions. Review each product page for the exact fabric, border, blouse and availability details.</p>
       <h2>What is a Manthrakodi?</h2>
       <p>In many Kerala Christian wedding traditions, the Manthrakodi is the saree presented to the bride by the groom or his family and blessed as part of the ceremony. Customs differ, so shoppers should follow their own family and church requirements.</p>
-      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">ask for sourcing help</a>.</p>
+      <p><a href="/sarees">Browse all sarees</a> or <a href="/contact">ask for help comparing current listings</a>.</p>
     `,
   },
   {
@@ -1114,7 +1139,7 @@ const routes = [
     title: 'Indian Wedding Ceremonies & Festival Dress Codes — Mehendi to Reception | LuxeMia',
     description: 'Complete dress code guides for every Indian wedding ceremony — mehendi, haldi, sangeet, pheras, reception. Plus festival outfits for Diwali, Navratri, and Eid.',
     h1: 'Ethnicalley — Indian Wedding Ceremonies & Festival Dress Codes',
-    content: '<p>Step into the ethnicalley of Indian celebrations. Every Indian wedding is a multi-day affair with distinct ceremonies — mehendi, haldi, sangeet, pheras, vidaai, reception — each with its own dress code, color palette, and styling conventions. Our ethnicalley guides walk you through what to wear to each ceremony, the difference between Haldi and Mehendi outfits, how to dress for a South Indian muhurtham vs a Punjabi sangeet, and how NRI women can celebrate Diwali, Navratri, and Eid with authentic ethnic style.</p><h2>What You\'ll Find in This Category</h2><ul><li>Complete Indian wedding ceremony outfit guides — mehendi, haldi, sangeet, pheras, reception</li><li>The difference between Haldi and Mehendi dress codes</li><li>Indian wedding season 2026 outfit planning</li><li>Diwali, Navratri, and Eid outfit ideas for NRI women</li><li>Regional wedding ceremony differences — North vs South India</li><li>What to wear to each ceremony as a guest, bridesmaid, or family member</li></ul><p>Browse all articles below to plan your wedding wardrobe ceremony by ceremony.</p>',
+    content: '<p>Step into the ethnicalley of Indian celebrations. Every Indian wedding is a multi-day affair with distinct ceremonies — mehendi, haldi, sangeet, pheras, vidaai, reception — each with its own dress code, color palette, and styling conventions. Our ethnicalley guides walk you through what to wear to each ceremony, the difference between Haldi and Mehendi outfits, how to dress for a South Indian muhurtham vs a Punjabi sangeet, and how U.S. shoppers can plan outfits for Diwali, Navratri, and Eid.</p><h2>What You\'ll Find in This Category</h2><ul><li>Complete Indian wedding ceremony outfit guides — mehendi, haldi, sangeet, pheras, reception</li><li>The difference between Haldi and Mehendi dress codes</li><li>Indian wedding season 2026 outfit planning</li><li>Diwali, Navratri, and Eid outfit ideas for U.S. shoppers</li><li>Regional wedding ceremony differences — North vs South India</li><li>What to wear to each ceremony as a guest, bridesmaid, or family member</li></ul><p>Browse all articles below to plan your wedding wardrobe ceremony by ceremony.</p>',
   },
   {
     path: '/blog/fashion-cults',
@@ -1126,9 +1151,9 @@ const routes = [
   {
     path: '/blog/motifs-embroideries',
     title: 'Indian Embroidery & Textile Guide — Zari, Chikankari, Banarasi & Kanchipuram | LuxeMia',
-    description: 'Complete guide to Indian textile techniques — zari work, chikankari, zardozi, Banarasi silk, Kanchipuram silk, georgette, chiffon. Authentication, pricing, and care.',
+    description: 'Background guides to Indian textile terms including zari, chikankari, zardozi, Banarasi, Kanchipuram, georgette, and chiffon.',
     h1: 'Motifs & Embroideries — Indian Textile Techniques Encyclopedia',
-    content: '<p>Decode the artistry of Indian textiles. The motifs and embroideries on Indian ethnic wear are centuries-old techniques, each with a regional origin and a specific method. Zari is real gold-wrapped thread from Varanasi, chikankari is white shadow-work from Lucknow, zardozi is metallic embroidery once reserved for Mughal royalty, Kanchipuram silk is handwoven on jacquard looms in Tamil Nadu, and Banarasi brocade carries a GI tag protecting its authenticity.</p><h2>What You\'ll Find in This Category</h2><ul><li>Zari work guide — gold and silver thread embroidery techniques</li><li>Chikankari embroidery of Lucknow — shadow work, stitch types, authentication</li><li>Banarasi silk sarees — history, GI tag verification, how to spot a fake</li><li>Kanchipuram (Kanjivaram) silk — South Indian bridal saree encyclopedia</li><li>Fabric comparison guides — silk vs georgette vs chiffon vs net vs velvet</li><li>Indian fabric types reference — pricing, durability, and care for each</li></ul><p>Browse all articles below to understand what you are buying and how to verify authenticity.</p>',
+    content: '<p>Explore background guides to the names, motifs, and techniques associated with Indian textiles. A textile name can describe a tradition, motif, process, material, or style; the name alone does not prove fiber content, handloom construction, precious-metal content, geographic origin, or certification. For any LuxeMia item, use the exact Product Details and images as the specification for that listing.</p><h2>What You\'ll Find in This Category</h2><ul><li>Zari terminology and metallic-thread techniques</li><li>Chikankari traditions, stitch terms, and regional context</li><li>Banarasi textile history and common brocade terminology</li><li>Kanchipuram and Kanjivaram saree traditions</li><li>Fabric comparison guides — silk, georgette, chiffon, net, and velvet</li><li>Care considerations to confirm against the exact product listing</li></ul><p>Use these articles for general textile background and the current product page for listing-specific materials, construction, origin, and care information.</p>',
   },
   {
     path: '/blog/weddings-festivals',
@@ -1146,10 +1171,10 @@ const routes = [
   },
   {
     path: '/blog/nri-shopping',
-    title: 'NRI Guide: Buy Indian Ethnic Wear Online from the United States | LuxeMia',
-    description: 'Complete NRI shopping guide for Indian ethnic wear — sizing conversion, customs duties, shipping times, authenticity checks, and trusted online stores for the United States.',
+    title: 'U.S. Guide: Buy Indian Ethnic Wear Online | LuxeMia',
+    description: 'Shopping guides for U.S. customers buying Indian ethnic wear online, including sizing, measurements, delivery, product details, and order policies.',
     h1: 'Shopping — Buy Indian Ethnic Wear in the United States',
-    content: '<p>The definitive guide for the NRI diaspora shopping for Indian ethnic wear from abroad. Buying a bridal lehenga from Philadelphia, a wedding saree from Toronto, or a sherwani from Sydney comes with specific challenges — sizing conversion, customs duties, shipping times, authenticity verification, and return policies. Our NRI Shopping guides answer every practical question: how to convert Indian bust sizes to US sizes, what the duty-free limits are for US, how to verify a Banarasi saree is handwoven vs. machine-made, and which online stores ship reliably to your country.</p><h2>What You\'ll Find in This Category</h2><ul><li>NRI guide to buying Indian ethnic wear online from USA, the USA</li><li>How to buy authentic Indian sarees online internationally</li><li>Shipping Indian clothes to USA, the USA — customs and duty guide</li><li>Complete guide to buying Indian ethnic wear online from USA</li><li>NRI wedding ethnic wear trends for 2026</li></ul><p>Browse all articles below to shop with confidence from abroad.</p>',
+    content: '<p>Browse practical guides for U.S. shoppers buying Indian ethnic wear online. Compare garment measurements, stitching terms, listing details, delivery information, and order policies before placing an order. LuxeMia currently ships within the United States.</p><h2>What You\'ll Find in This Category</h2><ul><li>How to compare Indian garment measurements with U.S. sizing</li><li>Questions to ask before buying sarees, lehengas, suits, or menswear online</li><li>U.S. shipping and delivery information</li><li>How to read listing-specific fabric, work, stitching, and package details</li><li>Wedding and special-occasion shopping guides for U.S. customers</li></ul><p>Use each current product page for exact materials, construction, included pieces, sizing options, availability, and care information.</p>',
   },
 
 
@@ -1237,6 +1262,17 @@ const routes = [
         <li><strong>Measure your hips:</strong> Stand with your feet together and measure around the fullest part of your hips.</li>
         <li><strong>Measure the garment length:</strong> Measure to the desired hem while wearing the shoes planned for a floor-length outfit.</li>
         <li><strong>Measure sleeves:</strong> Record sleeve length from the shoulder and the arm circumference where the sleeve will end.</li>
+      </ol>
+      <h2>How to measure for an Indian saree blouse</h2>
+      <p>Wear the undergarment you plan to use with the blouse, keep the tape level, and record your actual body measurements without adding ease. Compare the results with the exact product listing; this guide does not mean stitching or tailoring is included.</p>
+      <ol>
+        <li><strong>Bust:</strong> Measure around the fullest part of the bust with the tape level across the back.</li>
+        <li><strong>Underbust:</strong> Measure directly below the bust where the blouse band will sit.</li>
+        <li><strong>Shoulder:</strong> Measure across the back from one shoulder edge to the other.</li>
+        <li><strong>Blouse length:</strong> Measure from the top of the shoulder to the preferred blouse hem.</li>
+        <li><strong>Armhole:</strong> Wrap the tape around the shoulder and underarm while the arm rests naturally.</li>
+        <li><strong>Sleeve length:</strong> Measure from the shoulder point to the preferred sleeve end.</li>
+        <li><strong>Upper-arm circumference:</strong> Measure around the fullest part of the relaxed upper arm without pulling the tape tight.</li>
       </ol>`,
   },
   {
@@ -1324,7 +1360,7 @@ const routes = [
     title: 'About LuxeMia — Indian Ethnic Wear Online',
     description: 'Learn about LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, and tracked delivery.',
     h1: 'About LuxeMia',
-    content: '<p>LuxeMia is an online Indian ethnic wear store serving U.S. shoppers planning weddings, festivals, receptions, and other special occasions. Our catalog is curated from supplier partners in India, and product pages explain available fabric, work, stitching status, sizing, and package contents.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
+    content: '<p>LuxeMia is an online Indian ethnic wear store serving U.S. shoppers planning weddings, festivals, receptions, and other special occasions. Product pages explain the available fabric, work, stitching status, sizing, and package contents for each listing.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
   },
 
   {

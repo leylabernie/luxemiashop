@@ -30,12 +30,12 @@ const homepageFaqs = [
     answer: "All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
   },
   {
-    question: "Are your products authentic Indian ethnic wear?",
+    question: "Where can I confirm a product's materials and details?",
     answer: "Product pages state the available fabric, embroidery or embellishment work, stitching status, sizes, and package contents when those details are supplied. Contact LuxeMia before ordering if an important detail is not listed."
   },
   {
     question: "Can I get custom sizing or alterations for my outfit?",
-    answer: "We understand the importance of a perfect fit. While many of our items are ready-to-wear, we do offer custom alteration services for select products. Please contact our styling assistance team for more information."
+    answer: "Sizing, stitching, and made-to-measure options vary by product. Use only the options shown on the selected product page, and contact LuxeMia before ordering if a size or stitching detail is unclear."
   },
   {
     question: "How can I ensure the color of the outfit is accurate when viewing online?",
@@ -47,7 +47,7 @@ const homepageFaqs = [
   },
   {
     question: "How can I get styling advice for a specific occasion?",
-    answer: "Our dedicated styling assistance team is here to help! You can chat with us directly via WhatsApp for personalized recommendations and expert advice."
+    answer: "Contact LuxeMia by WhatsApp with your occasion, date, preferred color, size, and budget. We can help you compare current listings, but the exact product page controls availability, included pieces, sizing, and stitching options."
   },
 ];
 

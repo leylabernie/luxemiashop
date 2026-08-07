@@ -27,10 +27,10 @@ interface FeaturedSlide {
 const slides: FeaturedSlide[] = [
   {
     id: 1,
-    eyebrow: 'New This Week',
-    headline: 'New Sharara & Palazzo Sets Under $75',
+    eyebrow: 'Recently Added',
+    headline: 'New Sharara & Palazzo Sets',
     subline:
-      'Fresh chikankari and aari-work occasion sets in sizes L–XXL, with tracked U.S. shipping.',
+      'Browse current occasion sets and review each listing for exact fabric, work, sizes, included pieces, price, and availability.',
     cta: 'Shop New Arrivals',
     link: '/new-arrivals',
     image: '/images/campaigns/new-indian-ethnic-wear-2026-mobile',

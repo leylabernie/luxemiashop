@@ -122,8 +122,8 @@ const MATERIAL_INFO: Record<ProductCategory, MaterialInfo> = {
   },
   saree: {
     fabrics: [
-      { name: 'Banarasi Silk', description: 'Handwoven in Varanasi with rich brocades and gold/silver zari. The quintessential wedding saree fabric.' },
-      { name: 'Kanchipuram Silk', description: 'South India\'s legendary temple silk — dense, durable, and opulent with contrasting borders.' },
+      { name: 'Banarasi Silk', description: 'A listing may use Banarasi for a weaving tradition, brocade look, or Banarasi-style fabric. Check Product Details for the exact fiber, weave, origin, and zari wording.' },
+      { name: 'Kanchipuram Silk', description: 'A listing may use Kanchipuram or Kanjivaram for a weaving tradition or style. Check Product Details for the exact fiber, weave, origin, and certification wording.' },
       { name: 'Georgette', description: 'Lightweight and easy to drape. Ideal for party wear and pre-wedding functions with sequin or thread work.' },
       { name: 'Chiffon', description: 'Sheer, floaty, and effortlessly elegant. A go-to for cocktail parties and evening receptions.' },
       { name: 'Cotton Silk', description: 'Breathable with a subtle sheen — perfect for daytime events, pooja, and festival wear.' },
@@ -344,6 +344,21 @@ interface ParsedTags {
   sleeve?: string;
 }
 
+const PARSED_TAG_KEYS = new Set<keyof ParsedTags>([
+  'color',
+  'fabric',
+  'work',
+  'occasion',
+  'style',
+  'silhouette',
+  'length',
+  'sleeve',
+]);
+
+function isParsedTagKey(value: string): value is keyof ParsedTags {
+  return PARSED_TAG_KEYS.has(value as keyof ParsedTags);
+}
+
 function parseProductTags(tags?: string[]): ParsedTags {
   const result: ParsedTags = {};
   (tags ?? []).forEach((tag) => {
@@ -351,8 +366,8 @@ function parseProductTags(tags?: string[]): ParsedTags {
     if (idx > 0) {
       const key = tag.slice(0, idx).toLowerCase().trim();
       const val = tag.slice(idx + 1).trim();
-      if (val && key in result) {
-        (result as any)[key] = val;
+      if (val && isParsedTagKey(key)) {
+        result[key] = val;
       }
     }
   });

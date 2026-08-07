@@ -60,12 +60,12 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
         "name": `What material is the ${product.name} made of?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `The ${product.name} is crafted with ${product.material}. Each piece undergoes quality inspection before shipping.`
+          "text": `The ${product.name} listing states ${product.material}. Review the product description and images for the exact finish, stones or accents, included pieces, and measurements.`
         }
       },
       {
         "@type": "Question",
-        "name": `Does LuxeMia ship ${product.category.toLowerCase()} internationally?`,
+        "name": `Where does LuxeMia ship ${product.category.toLowerCase()}?`,
         "acceptedAnswer": {
           "@type": "Answer",
           "text": `LuxeMia currently ships ${product.category.toLowerCase()} to United States addresses only. Free US shipping applies at $150 and above; $12 flat below that.`

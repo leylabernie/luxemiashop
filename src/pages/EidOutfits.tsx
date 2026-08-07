@@ -39,7 +39,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Can I wear a lehenga for Eid?',
-    answer: 'Yes, lehengas are a popular choice for Eid celebrations, especially for evening gatherings, Eid parties, and special family functions. A heavily embroidered or embellished lehenga in white, ivory, pastel pink, or mint green looks stunning for Eid. Sharara sets — a traditional alternative to lehengas with wide-leg flared pants — are also an extremely popular Eid outfit choice in Pakistani and North Indian Muslim fashion traditions. Choose delicate zari, gota patti, or chikankari embroidery for an authentic Eid aesthetic.',
+    answer: 'Yes, lehengas are a popular choice for Eid celebrations, especially for evening gatherings, Eid parties, and special family functions. A heavily embroidered or embellished lehenga in white, ivory, pastel pink, or mint green can suit an Eid gathering. Sharara sets — a traditional alternative to lehengas with wide-leg flared pants — are also a popular Eid outfit choice in Pakistani and North Indian Muslim fashion traditions. Compare the exact listing for its stated zari, gota patti, chikankari-style work, fabric, and included pieces.',
   },
 ];
 
