@@ -46,7 +46,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
-const CACHE_VERSION = 'v11';
+const CACHE_VERSION = 'v12';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
@@ -106,7 +106,7 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
   // 1. In-memory: instant — same session, already fetched
   if (cachedProducts) return cachedProducts;
 
-  // 2. localStorage: fast — persists across page reloads and new tabs for 30 min
+  // 2. localStorage: fast — persists across page reloads and new tabs for 5 min
   const stored = getStoredProducts();
   if (stored) {
     cachedProducts = stored;
@@ -368,8 +368,9 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
       setError(null);
       try {
         // 1. Prerendered initial data — instant hydration. Set by scripts/prerender.js
-        //    for collection routes. Also populates the in-memory cache so subsequent
-        //    client-side navigations to other collections are fast too.
+        //    for collection routes. This payload is route-scoped and must never be
+        //    stored as the full catalog: doing so makes the next category filter the
+        //    previous category's products and can render zero or mixed products.
         const initial = getInitialData(category);
         if (initial) {
           const applyProducts = (sourceProducts: ShopifyProduct[]) => {
@@ -382,7 +383,6 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
             setProducts(enrichProducts(filtered));
           };
 
-          cachedProducts = initial;
           applyProducts(initial);
 
           // Clear the payload so a stale one can't leak into a later category navigation.

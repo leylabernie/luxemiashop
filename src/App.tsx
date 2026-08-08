@@ -1,9 +1,9 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, useLayoutEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigationType } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
@@ -74,6 +74,18 @@ const queryClient = new QueryClient();
 // Component to handle page tracking inside router context
 const PageTracker = ({ children }: { children: React.ReactNode }) => {
   usePageTracking();
+  const location = useLocation();
+  const navigationType = useNavigationType();
+
+  // React Router keeps the previous document scroll position during client-side
+  // navigation. Always reset product routes before paint so every product open —
+  // including direct loads and browser back/forward — starts at the image gallery.
+  // Preserve history restoration and explicit anchor navigation on other routes.
+  useLayoutEffect(() => {
+    const isProductRoute = location.pathname.startsWith('/product/');
+    if (!isProductRoute && (navigationType === 'POP' || location.hash)) return;
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.hash, location.key, location.pathname, navigationType]);
 
   // Check for Shopify order confirmation in URL (conversion tracking)
   useEffect(() => {

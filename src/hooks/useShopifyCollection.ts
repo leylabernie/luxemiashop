@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  fetchAllProducts,
   fetchCollectionByHandle,
   type ShopifyCollection,
   type ShopifyProduct,
@@ -45,22 +46,34 @@ export function useShopifyCollection(handle: string) {
     setIsLoading(prerendered === null);
     setError(false);
 
-    fetchCollectionByHandle(handle, controller.signal).then((result) => {
+    const loadCollection = async () => {
+      const result = await fetchCollectionByHandle(handle, controller.signal);
       if (controller.signal.aborted) return;
-      if (!result) {
-        setError(true);
-        setIsLoading(false);
-        return;
-      }
+
       setCollection(result);
-      const liveProducts = filterCollectionProducts(handle, result.products);
+      let liveProducts = filterCollectionProducts(handle, result?.products || []);
+
+      // The Bridesmaid page is a curated storefront view. On client-side
+      // navigation there is no route-specific prerender payload, and Shopify's
+      // collection handle can temporarily return no products. Resolve that case
+      // from the live catalog, then apply the same strict attendant-title filter;
+      // never substitute the unfiltered catalog.
+      if (handle === 'bridal-party-outfits' && liveProducts.length === 0) {
+        const catalogProducts = await fetchAllProducts();
+        if (controller.signal.aborted) return;
+        liveProducts = filterCollectionProducts(handle, catalogProducts);
+      }
 
       // The build-time collection payload is already scoped to this collection.
       // Do not erase it when Shopify temporarily returns an empty collection
       // response after hydration (the visible Bridesmaid page regression).
-      setProducts(liveProducts.length > 0 ? liveProducts : (prerendered || []));
+      const resolvedProducts = liveProducts.length > 0 ? liveProducts : (prerendered || []);
+      setProducts(resolvedProducts);
+      setError(!result && resolvedProducts.length === 0);
       setIsLoading(false);
-    });
+    };
+
+    void loadCollection();
 
     return () => controller.abort();
   }, [handle]);
