@@ -84,7 +84,18 @@ const PageTracker = ({ children }: { children: React.ReactNode }) => {
   useLayoutEffect(() => {
     const isProductRoute = location.pathname.startsWith('/product/');
     if (!isProductRoute && (navigationType === 'POP' || location.hash)) return;
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    };
+
+    resetScroll();
+
+    // Browser history restoration can run after layout effects on POP
+    // navigation. Reset once more on the next frame so reopening a product
+    // through Back/Forward cannot restore an old product-page scroll offset.
+    const animationFrame = window.requestAnimationFrame(resetScroll);
+    return () => window.cancelAnimationFrame(animationFrame);
   }, [location.hash, location.key, location.pathname, navigationType]);
 
   // Check for Shopify order confirmation in URL (conversion tracking)
