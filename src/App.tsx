@@ -1,9 +1,9 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, useLayoutEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigationType } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
@@ -32,7 +32,6 @@ const Returns = lazy(() => import("./pages/Returns"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NewArrivals = lazy(() => import("./pages/NewArrivals"));
-const Bestsellers = lazy(() => import("./pages/Bestsellers"));
 const Indowestern = lazy(() => import("./pages/Indowestern"));
 const Press = lazy(() => import("./pages/Press"));
 const SizeGuide = lazy(() => import("./pages/SizeGuide"));
@@ -75,6 +74,29 @@ const queryClient = new QueryClient();
 // Component to handle page tracking inside router context
 const PageTracker = ({ children }: { children: React.ReactNode }) => {
   usePageTracking();
+  const location = useLocation();
+  const navigationType = useNavigationType();
+
+  // React Router keeps the previous document scroll position during client-side
+  // navigation. Always reset product routes before paint so every product open —
+  // including direct loads and browser back/forward — starts at the image gallery.
+  // Preserve history restoration and explicit anchor navigation on other routes.
+  useLayoutEffect(() => {
+    const isProductRoute = location.pathname.startsWith('/product/');
+    if (!isProductRoute && (navigationType === 'POP' || location.hash)) return;
+
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    };
+
+    resetScroll();
+
+    // Browser history restoration can run after layout effects on POP
+    // navigation. Reset once more on the next frame so reopening a product
+    // through Back/Forward cannot restore an old product-page scroll offset.
+    const animationFrame = window.requestAnimationFrame(resetScroll);
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [location.hash, location.key, location.pathname, navigationType]);
 
   // Check for Shopify order confirmation in URL (conversion tracking)
   useEffect(() => {
@@ -219,7 +241,7 @@ const App = () => (
                 {/* Public author information is organizational and verifiable. */}
                 <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />
                 <Route path="/new-arrivals" element={<Suspense fallback={<PageLoader />}><NewArrivals /></Suspense>} />
-                <Route path="/bestsellers" element={<Suspense fallback={<PageLoader />}><Bestsellers /></Suspense>} />
+                <Route path="/bestsellers" element={<Navigate to="/new-arrivals" replace />} />
                 <Route path="/indowestern" element={<Suspense fallback={<PageLoader />}><Indowestern /></Suspense>} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />

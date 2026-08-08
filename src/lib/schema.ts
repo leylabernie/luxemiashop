@@ -258,7 +258,6 @@ export function generateSiteNavigationSchema() {
     { name: 'Menswear', url: '/menswear' },
     { name: 'Indo-Western', url: '/indowestern' },
     { name: 'New Arrivals', url: '/new-arrivals' },
-    { name: 'Featured Styles', url: '/bestsellers' },
     { name: 'Collections', url: '/collections' },
     { name: 'Blog', url: '/blog' },
     { name: 'Brand Story', url: '/brand-story' },

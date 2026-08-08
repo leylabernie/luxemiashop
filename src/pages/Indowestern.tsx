@@ -20,6 +20,8 @@ import {
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
+import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
+import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 
 const indowesternFaqs = [
   {
@@ -74,15 +76,14 @@ const Indowestern = () => {
       <Header />
       <main className="pt-[88px] lg:pt-[130px]">
         {/* Hero Banner */}
-        <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Fusion Fashion</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-3">Indo-Western</h1>
-            <p className="text-muted-foreground font-light max-w-xl mx-auto text-sm lg:text-base">
-              Browse the Indo-Western and fusion styles currently available. Each listing shows the exact design, included pieces, size options, price, and availability.
-            </p>
-          </div>
-        </div>
+        <ImageCategoryHero
+          image={FEATURED_CATEGORY_PRODUCTS.indowestern.image}
+          imageWebp={FEATURED_CATEGORY_PRODUCTS.indowestern.imageWebp}
+          alt={FEATURED_CATEGORY_PRODUCTS.indowestern.alt}
+          eyebrow="Fusion Fashion"
+          title="Indo-Western"
+          description="Browse the Indo-Western and fusion styles currently available. Each listing shows the exact design, included pieces, size options, price, and availability."
+        />
 
         {/* Keyword-rich intro — helps Google understand page topic */}
         <div className="bg-background border-b border-border/20 py-6">

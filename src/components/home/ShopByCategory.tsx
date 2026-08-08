@@ -11,38 +11,13 @@ import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
 
-type TabType = 'new' | 'bestsellers' | 'ready';
+type TabType = 'new' | 'ready';
 
 const ShopByCategory = () => {
   const [activeTab, setActiveTab] = useState<TabType>('new');
   const { products, isLoading } = useShopifyProducts();
   const addToCart = useCartStore((state) => state.addItem);
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
-
-  // Build a balanced mix of products from women's categories only
-  const getBalancedMix = (source: ShopifyProduct[], count: number): ShopifyProduct[] => {
-    const suits = source.filter(p => p.node.productType === 'Salwar Kameez');
-    const lehengas = source.filter(p => p.node.productType === 'Lehengas');
-    const sarees = source.filter(p => p.node.productType === 'Sarees');
-    const indowestern = source.filter(p => p.node.productType === 'Indo Western');
-
-    // Target mix: 3 suits, 2 lehengas, 2 sarees, 1 indo western (total 8)
-    const picks: ShopifyProduct[] = [
-      ...suits.slice(0, 3),
-      ...lehengas.slice(0, 2),
-      ...sarees.slice(0, 2),
-      ...indowestern.slice(0, 1),
-    ];
-
-    // If we don't have enough from a category, fill from others
-    if (picks.length < count) {
-      const usedIds = new Set(picks.map(p => p.node.id));
-      const remaining = source.filter(p => !usedIds.has(p.node.id) && p.node.productType !== 'Menswear');
-      picks.push(...remaining.slice(0, count - picks.length));
-    }
-
-    return picks.slice(0, count);
-  };
 
   // Get products based on active tab
   // IMPORTANT: Only show women's products here — menswear has its own dedicated section
@@ -58,16 +33,15 @@ const ShopByCategory = () => {
         return [...womensProducts]
           .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
           .slice(0, 8);
-      case 'bestsellers':
-        // Bestsellers — balanced mix across women's categories, offset from "new" to show different products
-        return getBalancedMix(womensProducts, 8);
       case 'ready':
         // Available Online — products that are in stock and can ship quickly (sarees & suits)
         return womensProducts
           .filter(p => p.node.productType === 'Sarees' || p.node.productType === 'Salwar Kameez')
           .slice(0, 8);
       default:
-        return getBalancedMix(womensProducts, 8);
+        return [...womensProducts]
+          .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
+          .slice(0, 8);
     }
   };
 
@@ -113,7 +87,6 @@ const ShopByCategory = () => {
 
   const tabs = [
     { id: 'new' as TabType, label: 'New Arrivals' },
-    { id: 'bestsellers' as TabType, label: 'Featured' },
     { id: 'ready' as TabType, label: 'Available Online' },
   ];
 
@@ -215,11 +188,6 @@ const ShopByCategory = () => {
                       {activeTab === 'new' && (
                         <span className="absolute top-3 left-3 px-2 py-1 bg-foreground text-background text-xs font-medium rounded-sm">
                           New
-                        </span>
-                      )}
-                      {activeTab === 'bestsellers' && (
-                        <span className="absolute top-3 left-3 px-2 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-sm">
-                          Featured
                         </span>
                       )}
                     </div>

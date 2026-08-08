@@ -128,6 +128,12 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(canonical.toString(), 301);
   }
 
+  // Featured duplicated New Arrivals product-for-product. Consolidate the old
+  // URL so shoppers and search engines have one current discovery page.
+  if (pathname === '/bestsellers') {
+    return Response.redirect(new URL('/new-arrivals', request.url).toString(), 301);
+  }
+
   // Merchant Center fetches this stable public URL. Generate the feed from
   // live Shopify data instead of serving the empty static placeholder.
   if (pathname === '/merchant-feed.xml') {
@@ -157,7 +163,7 @@ async function routeRequest(request: Request): Promise<Response> {
     // Only strip params from known category/collection routes
     const CATEGORY_ROUTES = new Set([
       '/lehengas', '/sarees', '/suits', '/menswear', '/jewelry',
-      '/indowestern', '/new-arrivals', '/bestsellers', '/collections',
+      '/indowestern', '/new-arrivals', '/collections',
     ]);
     if (CATEGORY_ROUTES.has(cleanPath) || cleanPath.startsWith('/collections/')) {
       // Return the clean URL's content but with noindex to drop the param URL

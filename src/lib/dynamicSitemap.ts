@@ -29,7 +29,6 @@ export const staticPages = [
   { loc: '/menswear', changefreq: 'daily', priority: '0.9', title: 'Menswear' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8', title: 'Indo-Western' },
   { loc: '/new-arrivals', changefreq: 'daily', priority: '0.8', title: 'New Arrivals' },
-  { loc: '/bestsellers', changefreq: 'weekly', priority: '0.8', title: 'Featured Styles' },
   // Occasion landing pages — high buyer-intent SEO
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9', title: 'Diwali Outfits 2026' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9', title: 'Indian Wedding Guest Outfits' },

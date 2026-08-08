@@ -33,7 +33,6 @@ Allow: /suits
 Allow: /menswear
 Allow: /indowestern
 Allow: /new-arrivals
-Allow: /bestsellers
 Allow: /nri
 Allow: /merchant-feed.xml
 Disallow: /admin

@@ -13,6 +13,7 @@
 
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -191,9 +192,9 @@ function audienceSub(slug: string, label: string, matchTags: string[]): Subcateg
 const LEHENGAS: CategoryConfig = {
   slug: 'lehengas',
   name: 'Lehengas',
-  heroImage: '/images/campaigns/wedding-lehengas-usa-2026-desktop.jpg',
-  heroImageWebp: '/images/campaigns/wedding-lehengas-usa-2026-desktop.webp',
-  heroAlt: 'Bride wearing a red embroidered lehenga choli with matching dupatta and traditional jewelry',
+  heroImage: FEATURED_CATEGORY_PRODUCTS.lehengas.image,
+  heroImageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
+  heroAlt: FEATURED_CATEGORY_PRODUCTS.lehengas.alt,
   heroTitle: 'Lehengas',
   heroSubtitle: 'Lehengas for weddings, receptions and celebrations. Review each product page for its stated fabric, included pieces, stitching status, sizing and availability.',
   seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
@@ -362,8 +363,9 @@ const LEHENGAS: CategoryConfig = {
 const SAREES: CategoryConfig = {
   slug: 'sarees',
   name: 'Sarees',
-  heroImage: '/images/banners/saree-banner.jpg',
-  heroImageWebp: '/images/banners/saree-banner.webp',
+  heroImage: FEATURED_CATEGORY_PRODUCTS.sarees.image,
+  heroImageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
+  heroAlt: FEATURED_CATEGORY_PRODUCTS.sarees.alt,
   heroTitle: 'Sarees',
   heroSubtitle: 'Banarasi, silk and georgette sarees available online. Review each listing for its exact fabric, blouse information, dimensions and stitching status.',
   seoTitle: 'Buy Banarasi & Silk Sarees Online USA | LuxeMia',
@@ -545,9 +547,9 @@ const SAREES: CategoryConfig = {
 const SUITS: CategoryConfig = {
   slug: 'suits',
   name: 'Salwar Kameez & Suits',
-  heroImage: '/images/campaigns/sharara-palazzo-sets-2026-desktop.jpg',
-  heroImageWebp: '/images/campaigns/sharara-palazzo-sets-2026-desktop.webp',
-  heroAlt: 'Woman wearing a sage and navy embroidered sharara and palazzo occasion set with matching dupatta',
+  heroImage: FEATURED_CATEGORY_PRODUCTS.suits.image,
+  heroImageWebp: FEATURED_CATEGORY_PRODUCTS.suits.imageWebp,
+  heroAlt: FEATURED_CATEGORY_PRODUCTS.suits.alt,
   heroTitle: 'Salwar Kameez & Suits',
   heroSubtitle: "Anarkalis, shararas and palazzo sets, available online. If you need a specific colour or a set for a group, that's our sister site CeremonyVerse.",
   seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
@@ -706,9 +708,9 @@ const SUITS: CategoryConfig = {
 const MENSWEAR: CategoryConfig = {
   slug: 'menswear',
   name: 'Menswear',
-  heroImage: '/images/campaigns/indian-menswear-kurta-2026-desktop.jpg',
-  heroImageWebp: '/images/campaigns/indian-menswear-kurta-2026-desktop.webp',
-  heroAlt: 'Man wearing a gray embroidered Indian kurta set for a wedding celebration',
+  heroImage: FEATURED_CATEGORY_PRODUCTS.menswear.image,
+  heroImageWebp: FEATURED_CATEGORY_PRODUCTS.menswear.imageWebp,
+  heroAlt: FEATURED_CATEGORY_PRODUCTS.menswear.alt,
   heroTitle: 'Menswear',
   heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
   seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
@@ -859,9 +861,9 @@ const MENSWEAR: CategoryConfig = {
 const JEWELRY: CategoryConfig = {
   slug: 'jewelry',
   name: 'Bridal Jewelry',
-  heroImage: '/images/campaigns/kundan-bridal-jewelry-2026-desktop.jpg',
-  heroImageWebp: '/images/campaigns/kundan-bridal-jewelry-2026-desktop.webp',
-  heroAlt: 'Gold-tone Kundan bridal necklace, earrings and maang tikka set with pearl details',
+  heroImage: FEATURED_CATEGORY_PRODUCTS.jewelry.image,
+  heroImageWebp: FEATURED_CATEGORY_PRODUCTS.jewelry.imageWebp,
+  heroAlt: FEATURED_CATEGORY_PRODUCTS.jewelry.alt,
   heroTitle: 'Bridal Jewelry',
   heroSubtitle: 'Kundan-style, polki-style and bridal necklace sets. Review each listing for exact materials, finish, included pieces and measurements.',
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
@@ -981,7 +983,6 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
         links: [
           { name: 'Silk Sarees', href: '/collections/silk-sarees' },
           { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-          { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
         ],
       },
     ],

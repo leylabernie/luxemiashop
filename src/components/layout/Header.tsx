@@ -36,14 +36,12 @@ const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Bridesmaids', href: '/collections/bridal-party-outfits' },
   { name: 'Bollywood-Inspired', href: '/collections/bollywood-inspired-indian-outfits' },
-  { name: 'Featured', href: '/bestsellers' },
   { name: 'Blog', href: '/blog' },
 ];
 
 const weddingSareeLinks = [
   { name: 'Silk Sarees', href: '/collections/silk-sarees' },
   { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-  { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
 ];
 
 const occasionLinks = [
@@ -61,7 +59,7 @@ const Header = () => {
   const isRakhiSaleActive = isRakshaBandhanCampaignActive();
   const announcements = isRakhiSaleActive
     ? [
-        `${RAKSHA_BANDHAN_CAMPAIGN.code}: ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
+        `Raksha Bandhan Sale — ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ with code ${RAKSHA_BANDHAN_CAMPAIGN.code}. Ends ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
         ...shippingAnnouncements,
       ]
     : shippingAnnouncements;
@@ -101,11 +99,18 @@ const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
         {/* Rotating Announcement Bar — CSS-only fade (PSI 2026-07-22: removed framer-motion) */}
-        <div className="bg-foreground text-background overflow-hidden" style={{ height: '32px' }}>
+        <div
+          className={`overflow-hidden border-b ${
+            isRakhiSaleActive
+              ? 'border-[#d4b078]/35 bg-gradient-to-r from-[#4a0f24] via-[#741d3a] to-[#4a0f24] text-[#fff8e7]'
+              : 'border-transparent bg-foreground text-background'
+          }`}
+          style={{ height: '32px' }}
+        >
           <div className="container mx-auto px-4 h-full flex items-center justify-center relative">
             <p
               key={announcementIdx}
-              className="text-xs tracking-wide text-center absolute"
+              className="absolute px-2 text-center text-[10px] tracking-wide sm:text-xs"
               data-testid="announcement-bar"
               style={{
                 animation: 'announcementFade 0.35s ease-out',

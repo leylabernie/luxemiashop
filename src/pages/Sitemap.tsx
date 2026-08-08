@@ -35,7 +35,7 @@ const Sitemap = () => {
 
   // Group pages by category for display
   const pageCategories = {
-    'Main Pages': staticPages.filter(p => ['/', '/collections', '/about', '/new-arrivals', '/bestsellers'].includes(p.loc)),
+    'Main Pages': staticPages.filter(p => ['/', '/collections', '/about', '/new-arrivals'].includes(p.loc)),
     'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/jewelry', '/indowestern'].includes(p.loc)),
     'Shop by Occasion': staticPages.filter(p => p.loc.startsWith('/collections/')),
     'Customer Service': staticPages.filter(p => ['/contact', '/faq', '/shipping', '/returns', '/size-guide', '/care-guide'].includes(p.loc)),

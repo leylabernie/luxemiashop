@@ -18,7 +18,6 @@ declare global {
 const footerLinks = {
   shop: [
     { name: 'New Arrivals', href: '/new-arrivals' },
-    { name: 'Featured', href: '/bestsellers' },
     { name: 'Sarees', href: '/sarees' },
     { name: 'Lehengas', href: '/lehengas' },
     { name: 'Suits', href: '/suits' },
@@ -29,7 +28,6 @@ const footerLinks = {
     { name: 'Bridal Lehengas', href: '/lehengas?sub=bridal' },
     { name: 'Silk Sarees', href: '/collections/silk-sarees' },
     { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-    { name: 'Manthrakodi Sarees', href: '/collections/manthrakodi-sarees' },
     { name: 'Bridesmaid & Maid of Honor', href: '/collections/bridal-party-outfits' },
     { name: 'Bollywood-Inspired', href: '/collections/bollywood-inspired-indian-outfits' },
     { name: 'Jewelry', href: '/jewelry' },

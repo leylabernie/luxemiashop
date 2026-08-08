@@ -86,11 +86,6 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     description: "See the products most recently added to LuxeMia. Open each listing for exact product details, available sizes, price and current availability.",
     canonical: `${SITE_URL}/new-arrivals`,
   },
-  '/bestsellers': {
-    title: 'Featured Indian Ethnic Wear | LuxeMia',
-    description: "Explore featured sarees, lehengas, suits, menswear and jewelry selected from LuxeMia's current online catalog.",
-    canonical: `${SITE_URL}/bestsellers`,
-  },
   '/indowestern': {
     title: 'Indo-Western Collection | Fusion Wear Online | LuxeMia',
     description: "Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping at $150 and above; $12 below.",
