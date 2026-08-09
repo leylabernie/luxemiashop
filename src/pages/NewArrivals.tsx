@@ -103,11 +103,11 @@ const NewArrivals = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
-        description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, sharara sets, menswear and jewelry, with free U.S. shipping at $150 and above."
+        description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, co-ord sets, menswear and jewelry, with free U.S. shipping at $150 and above."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />
-      <main className="pt-[88px] lg:pt-[130px]">
+      <main className="pt-[88px] lg:pt-[124px]">
         {/* Hero Banner */}
         <div className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
           <picture className="absolute inset-0 w-full h-full">
@@ -127,7 +127,7 @@ const NewArrivals = () => {
             />
             <img
               src="/images/campaigns/new-indian-ethnic-wear-2026-mobile.jpg"
-              alt="Woman wearing a blush pink embroidered sharara set from LuxeMia's new Indian ethnic wear collection"
+              alt="Woman wearing a blush pink embroidered co-ord set from LuxeMia's new Indian ethnic wear collection"
               width={624}
               height={936}
               className="absolute inset-0 w-full h-full object-cover object-top"
@@ -144,8 +144,8 @@ const NewArrivals = () => {
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
             <p className="text-white/80 font-light max-w-md mx-auto text-sm lg:text-base">
               {isLoading
-                ? 'Explore recently added lehengas, sarees, sharara sets, menswear and jewelry for U.S. delivery.'
-                : `Explore ${totalNew} recently added ${totalNew === 1 ? 'style' : 'styles'}, including lehengas, sarees, sharara sets, menswear and jewelry for U.S. delivery.`
+                ? 'Explore recently added lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.'
+                : `Explore ${totalNew} recently added ${totalNew === 1 ? 'style' : 'styles'}, including lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.`
               }
             </p>
           </div>

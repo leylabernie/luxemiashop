@@ -33,6 +33,9 @@ verify_jwt = false
 [functions.submit-email]
 verify_jwt = false
 
+[functions.submit-consultation]
+verify_jwt = false
+
 [functions.validate-images]
 verify_jwt = false
 

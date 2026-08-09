@@ -34,14 +34,14 @@ const evergreenSlides: FeaturedSlide[] = [
   {
     id: 1,
     eyebrow: 'Recently Added',
-    headline: 'New Sharara & Palazzo Sets',
+    headline: 'New Co-ord Sets',
     subline:
-      'Browse current occasion sets and review each listing for exact fabric, work, sizes, included pieces, price, and availability.',
+      'Browse current co-ord and occasion sets, then review each listing for exact fabric, work, sizes, included pieces, price, and availability.',
     cta: 'Shop New Arrivals',
     link: '/new-arrivals',
     image: '/images/campaigns/new-indian-ethnic-wear-2026-mobile',
     desktopImage: '/images/campaigns/new-indian-ethnic-wear-2026-desktop',
-    alt: 'Woman wearing a blush pink embroidered sharara set with matching dupatta',
+    alt: 'Woman wearing a blush pink embroidered co-ord set with matching dupatta',
     width: 624,
     height: 936,
   },

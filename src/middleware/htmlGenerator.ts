@@ -127,7 +127,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
-  const imageUrl = product.images.edges[0]?.node.url || `${SITE_URL}/og-image.jpg`;
+  const imageUrl = product.images.edges[0]?.node.url || `${SITE_URL}/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg`;
   const gmcSafeImage = forceJpegForGmc(imageUrl);
   const categoryUrl = getCategoryUrl(product.productType, displayTitle);
   const categoryName = product.productType || 'Collections';
