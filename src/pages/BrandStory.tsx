@@ -64,7 +64,7 @@ const organizationSchema = {
     'Mehendi Outfits',
   ],
   sameAs: [
-    'https://www.instagram.com/luxemiashop',
+    'https://www.instagram.com/luxemiausa',
     'https://www.facebook.com/LuxeMia',
     'https://www.pinterest.com/luxemiashop',
     'https://www.tiktok.com/@shopluxemia',

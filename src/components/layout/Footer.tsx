@@ -152,7 +152,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             </p>
             {/* Social icons */}
             <div className="flex gap-3 mt-6">
-              <a href="https://www.instagram.com/luxemiashop" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Instagram">
+              <a href="https://www.instagram.com/luxemiausa" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Instagram">
                 <Instagram className="w-4 h-4" />
               </a>
               <a href="https://www.facebook.com/LuxeMia" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-background hover:bg-primary/10 rounded-full transition-colors" aria-label="Follow us on Facebook">
