@@ -869,7 +869,7 @@ const JEWELRY: CategoryConfig = {
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
   seoDescription: 'Shop Kundan-style, polki-style and bridal necklace sets online. Compare exact materials, finish, included pieces and measurements. Free U.S. shipping at $150 and above.',
   canonical: 'https://luxemia.shop/jewelry',
-  ogImage: '/og-image.jpg',
+  ogImage: '/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   breadcrumbs: [
     { name: 'Home', url: '/' },
     { name: 'Collections', url: '/collections' },

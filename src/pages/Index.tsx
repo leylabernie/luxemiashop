@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Truck, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -64,7 +64,7 @@ const Index = () => {
       />
       <Header />
       
-      <main id="main-content" className="pt-[88px] lg:pt-[130px]">
+      <main id="main-content" className="pt-[88px] lg:pt-[124px]">
         <NewArrivalsBanner />
         {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
             Kept sr-only (screen-reader only) so visual layout is unchanged
@@ -79,14 +79,9 @@ const Index = () => {
         </p>
 
         {/* Shipping Info Banner */}
-        <div className="bg-foreground text-background py-3">
-          <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-sm flex-wrap">
-            <span className="flex items-center gap-1.5">
-              <Truck className="h-4 w-4 flex-shrink-0" />
-              <span className="font-medium">Free U.S. shipping at $150 and above</span>
-            </span>
-            <span className="hidden sm:inline text-background/40">·</span>
-            <span className="hidden sm:inline text-background/80">$12 flat below $150 · Tracking provided after dispatch</span>
+        <div className="bg-foreground text-background py-2.5">
+          <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-center text-sm flex-wrap">
+            <span className="font-medium">U.S.-Based Support • Tracked U.S. Shipping • Free Shipping $150+</span>
             <span className="hidden sm:inline text-background/40">·</span>
             <Link to="/shipping" className="hidden sm:inline underline underline-offset-2 hover:text-background/80 transition-colors">
               Delivery info

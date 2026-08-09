@@ -32,7 +32,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     title: 'LuxeMia — Indian Ethnic Wear Online',
     description: "Shop the Indian sarees, lehengas, suits, menswear and jewelry currently listed at LuxeMia. Exact details, prices, sizes and availability are shown online.",
     canonical: SITE_URL,
-    image: `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg`,
   },
   '/sarees': {
     title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
@@ -62,13 +62,13 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     title: "Indian Jewelry Sets & Necklaces | LuxeMia",
     description: "Browse currently listed Indian jewelry sets, necklaces, chokers, earrings and bracelets at LuxeMia. Each listing shows its exact components, finish, price and availability.",
     canonical: `${SITE_URL}/jewelry`,
-    image: `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg`,
   },
   '/collections': {
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
     description: "Browse LuxeMia's live collections of sarees, lehengas, suits, menswear and jewelry. Open any product for its exact details, sizes, price and availability.",
     canonical: `${SITE_URL}/collections`,
-    image: `${SITE_URL}/og-image.jpg`,
+    image: `${SITE_URL}/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg`,
   },
   '/blog': {
     title: 'Blog | Indian Fashion Tips & Ethnic Wear Guides | LuxeMia',

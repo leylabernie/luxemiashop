@@ -82,7 +82,7 @@ const SEOHead = ({
   title = 'LuxeMia — Indian Ethnic Wear Online',
   description = "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
   canonical,
-  image = 'https://luxemia.shop/og-image.jpg',
+  image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   type = 'website',
   product,
   // `collection` prop is intentionally not destructured here. It remains in the
@@ -200,15 +200,15 @@ const SEOHead = ({
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={seoDescription} />
       <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
-      {/* og:image dimensions — declared as 1200x630 to match the brand OG
-          (public/og-image.jpg) per the 2026-07-09 SEO audit Item #4. This
+      {/* og:image dimensions — declared as 1600x900 to match the evergreen
+          campaign image used as the non-product social fallback. This
           fixes WhatsApp/LinkedIn/Twitter share card rendering and removes
           the "og:image dimensions missing" warning from social card
           validators. Product pages may serve a product image; the dimensions
           meta is a hint, not a constraint, so crawlers will fall back to
           the actual image if it differs. */}
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      <meta property="og:image:width" content="1600" />
+      <meta property="og:image:height" content="900" />
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
