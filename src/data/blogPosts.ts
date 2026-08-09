@@ -1,3 +1,9 @@
+export interface BlogSource {
+  title: string;
+  url: string;
+  publisher: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -7,235 +13,739 @@ export interface BlogPost {
   author: string;
   publishedAt: string;
   updatedAt: string;
+  factCheckedAt: string;
   category: string;
   tags: string[];
   image: string;
+  imagePresentation?: 'photo' | 'editorial';
   readTime: number;
+  sources: BlogSource[];
 }
 
+/**
+ * Publishing standard
+ * -------------------
+ * Only articles that have been reviewed against the sources attached to the
+ * post belong in this allowlist. Advice is labelled as guidance, cultural
+ * practices are never presented as universal rules, and a product listing is
+ * always the source of truth for a LuxeMia item's materials, construction,
+ * included pieces, sizing and availability.
+ */
 export const PUBLISHED_BLOG_SLUGS = [
-  "wedding-saree-for-mother-of-bride",
-  "wedding-guest-outfit-ideas",
-  "accessorize-indian-ethnic-wear",
-  "fabric-guide-indian-ethnic-wear-georgette-silk-chiffon",
-  "styling-indian-ethnic-wear-festive-occasions-abroad",
-  "lehenga-vs-sharara-vs-anarkali-comparison",
-  "how-to-drape-saree-beginner-guide",
-  "how-to-choose-salwar-kameez-body-type",
-  "sherwani-vs-jodhpuri-vs-bandhgala-groom-guide"
+  'indian-to-us-clothing-size-conversion-guide',
+  'wedding-guest-outfit-ideas',
+  'wedding-saree-for-mother-of-bride',
+  'accessorize-indian-ethnic-wear',
+  'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
+  'styling-indian-ethnic-wear-festive-occasions-abroad',
+  'lehenga-vs-sharara-vs-anarkali-comparison',
+  'how-to-drape-saree-beginner-guide',
+  'how-to-choose-salwar-kameez-body-type',
+  'sherwani-vs-jodhpuri-vs-bandhgala-groom-guide',
+  'anamika-khanna-designer-profile-kolkata-couture',
+  'bindi-meaning-history-indian-women',
+  'tarun-tahiliani-designer-profile-india-modern-couture',
+  'rahul-mishra-designer-profile-paris-haute-couture-sustainable',
+  'navratri-9-day-color-guide-2026',
+  'sabyasachi-mukherjee-designer-profile-handloom-revival',
 ] as const;
+
+const FACT_CHECKED_AT = '2026-08-08';
+const EDITORIAL_TEAM = 'LuxeMia Editorial Team';
+
+const source = (title: string, url: string, publisher: string): BlogSource => ({
+  title,
+  url,
+  publisher,
+});
+
+const SOURCES = {
+  nistSizing: source(
+    'Body Dimensions for Apparel',
+    'https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir5411.pdf',
+    'National Institute of Standards and Technology',
+  ),
+  ftcTextiles: source(
+    'Clothing and Textiles: Labeling Guidance',
+    'https://www.ftc.gov/business-guidance/industry/clothing-and-textiles',
+    'U.S. Federal Trade Commission',
+  ),
+  ftcCare: source(
+    'Care Labeling of Textile Wearing Apparel',
+    'https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text',
+    'U.S. Federal Trade Commission',
+  ),
+  vaIndianTextiles: source(
+    'Indian Textiles',
+    'https://www.vam.ac.uk/articles/indian-textiles',
+    'Victoria and Albert Museum',
+  ),
+  vaSariDraping: source(
+    'Slippery Sari Sagas and Delightful Draping',
+    'https://www.vam.ac.uk/blog/caring-for-our-collections/slippery-sari-sagas-and-delightful-draping',
+    'Victoria and Albert Museum',
+  ),
+  romSherwani: source(
+    'Sherwani: A Fashion Dialogue Between East and West',
+    'https://www.rom.on.ca/magazine/sherwani',
+    'Royal Ontario Museum',
+  ),
+  incredibleIndiaNavratri: source(
+    'Navratri: Nine Nights of Divine Celebration',
+    'https://www.incredibleindia.gov.in/en/festivals-and-events/navratri',
+    'Incredible India, Ministry of Tourism',
+  ),
+  navratri2026: source(
+    '2026 Shardiya Navratri Calendar',
+    'https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html',
+    'Drik Panchang',
+  ),
+  bindi: source(
+    'The Purpose of the Bindi',
+    'https://www.hinduamerican.org/blog/the-purpose-of-the-bindi/',
+    'Hindu American Foundation',
+  ),
+  anamikaOfficial: source(
+    'Anamika Khanna Official Website',
+    'https://anamikakhanna.com/',
+    'Anamika Khanna',
+  ),
+  anamikaBof: source(
+    'Anamika Khanna, BoF 500',
+    'https://www.businessoffashion.com/people/anamika-khanna/',
+    'The Business of Fashion',
+  ),
+  tarunOfficial: source(
+    'Tarun Tahiliani: Legacy',
+    'https://taruntahiliani.com/pages/legacy',
+    'Tarun Tahiliani',
+  ),
+  rahulOfficial: source(
+    'Rahul Mishra: About Us',
+    'https://rahulmishra.in/pages/about-us',
+    'Rahul Mishra',
+  ),
+  rahulWoolmark: source(
+    "Rahul Mishra's Parisian Love",
+    'https://www.woolmark.com/fashion/rahul-mishras-parisian-love/',
+    'The Woolmark Company',
+  ),
+  sabyasachiOfficial: source(
+    'Sabyasachi: History',
+    'https://sabyasachi.com/pages/history',
+    'Sabyasachi',
+  ),
+  luxemiaSizing: source(
+    'Sizing and Measurement Guide',
+    'https://luxemia.shop/sizing-measurements-guide',
+    'LuxeMia',
+  ),
+  luxemiaShipping: source(
+    'U.S. Shipping Policy',
+    'https://luxemia.shop/shipping',
+    'LuxeMia',
+  ),
+};
+
+const editorialNote = `
+  <aside>
+    <p><strong>Editorial standard:</strong> This guide was fact-checked on August 8, 2026. Documented facts are tied to the sources shown below. Styling ideas are optional suggestions, not cultural rules. For a LuxeMia product, use the individual listing for exact materials, included pieces, stitching, measurements, price and availability.</p>
+  </aside>
+`;
 
 export const blogPosts: BlogPost[] = [
   {
-    "id": "6",
-    "slug": "wedding-saree-for-mother-of-bride",
-    "title": "How to Choose Wedding Saree for Mother of Bride: Complete Guide",
-    "excerpt": "Making Mom Look Her Best The mother of the bride deserves to look absolutely stunning on her daughter's wedding day. Choosing the right saree involves balancing elegance, comfort, and complement to the bride's outfit. Here's your complete…",
-    "content": "\n      <h2>Making Mom Look Her Best</h2>\n      <p>The mother of the bride deserves to look absolutely stunning on her daughter's wedding day. Choosing the right saree involves balancing elegance, comfort, and complement to the bride's outfit. Here's your complete guide.</p>\n      \n      <h2>Coordinating with the Bride (Without Matching)</h2>\n      <p>The mother's outfit should complement, not compete with the bride:</p>\n      <ul>\n        <li><strong>Different color family:</strong> If bride wears red, consider maroon, wine, or plum</li>\n        <li><strong>Complementary tones:</strong> Pink bride pairs with peach/coral mother</li>\n        <li><strong>Similar formality:</strong> Match the level of embellishment</li>\n        <li><strong>Avoid exact matches:</strong> It's not a wedding party—individuality is beautiful</li>\n      </ul>\n      \n      <h2>Best Colors for Mother of the Bride</h2>\n      \n      <h3>For Day Ceremonies</h3>\n      <ul>\n        <li><strong>Pastel pink or peach:</strong> Soft and elegant</li>\n        <li><strong>Champagne gold:</strong> Sophisticated and festive</li>\n        <li><strong>Mint green:</strong> Fresh and modern</li>\n        <li><strong>Lavender:</strong> Gentle and graceful</li>\n      </ul>\n      \n      <h3>For Evening/Reception</h3>\n      <ul>\n        <li><strong>Navy blue:</strong> Regal and slimming</li>\n        <li><strong>Maroon:</strong> Rich and traditional</li>\n        <li><strong>Teal:</strong> Unique and flattering</li>\n        <li><strong>Deep purple:</strong> Luxurious statement</li>\n      </ul>\n      \n      <h2>Fabric Choices for Comfort</h2>\n      <p>Mother will be on her feet all day, so comfort matters:</p>\n      <ul>\n        <li><strong>Georgette:</strong> Lightweight, drapes beautifully, easy to manage</li>\n        <li><strong>Crepe silk:</strong> Elegant with good structure, not too heavy</li>\n        <li><strong>Chiffon:</strong> Flowy and comfortable for long events</li>\n        <li><strong>Avoid:</strong> Very heavy silk or velvet (tiring to wear all day)</li>\n      </ul>\n      \n      <h2>Age-Appropriate Styling</h2>\n      <ul>\n        <li>Choose subtle embroidery over heavy sequins</li>\n        <li>Opt for classic blouse designs (avoid deep backs or sleeveless)</li>\n        <li>Three-quarter sleeves are elegant and flattering</li>\n        <li>Moderate pallu length for easy management</li>\n      </ul>\n      \n      <h2>Jewelry Recommendations</h2>\n      <p>Less is more for an elegant mother-of-bride look:</p>\n      <ul>\n        <li>One statement necklace or layered delicate chains</li>\n        <li>Elegant jhumkas or chandbalis</li>\n        <li>Simple bangles or a statement cuff</li>\n        <li>Consider family heirlooms for sentimental value</li>\n      </ul>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-01-05",
-    "updatedAt": "2026-01-07",
-    "category": "Wedding Guide",
-    "tags": [
-      "mother of bride saree",
-      "wedding saree",
-      "family wedding outfit",
-      "saree for mothers",
-      "wedding fashion"
-    ],
-    "image": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-282_1.jpg?v=1782934327&width=1200&height=675&crop=center",
-    "readTime": 2
+    id: '67',
+    slug: 'indian-to-us-clothing-size-conversion-guide',
+    title: 'Indian to U.S. Clothing Sizes: Why Measurements Matter More Than Conversion Charts',
+    excerpt: 'There is no universal Indian-to-U.S. clothing-size conversion. Compare your body measurements with the exact garment or variant chart instead of relying on XS, M, 38, or a U.S. dress-size label alone.',
+    content: `
+      ${editorialNote}
+      <h2>The factual answer: there is no universal conversion</h2>
+      <p>Indian and U.S. apparel labels are not one standardized system. Two brands can assign different measurements to the same letter or number. A label such as M, U.S. 8, or 38 is therefore not enough to predict fit across retailers or garments.</p>
+      <p>NIST's apparel-sizing work describes sizing systems through body dimensions and measurement definitions. The practical conclusion for online shopping is simple: use inches or centimeters, not a country-to-country conversion claim.</p>
+
+      <h2>Measurements to compare</h2>
+      <table>
+        <thead><tr><th>Garment</th><th>Measurements commonly needed</th><th>What else to verify</th></tr></thead>
+        <tbody>
+          <tr><td>Saree blouse or choli</td><td>Bust, under-bust, shoulder, armhole, upper arm, sleeve and blouse length</td><td>Finished-garment measurements, margin and closure</td></tr>
+          <tr><td>Lehenga</td><td>Waist, hip and desired skirt length</td><td>Waistband type, drawstring or zip, and alteration margin</td></tr>
+          <tr><td>Kurta, salwar suit or anarkali</td><td>Bust, waist, hip, shoulder, sleeve and garment length</td><td>Ease, lining and the measurements of each included piece</td></tr>
+          <tr><td>Men's kurta, jacket or sherwani</td><td>Chest, waist, shoulder, sleeve and garment length</td><td>Whether the chart lists body or finished-garment measurements</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Body measurement versus garment measurement</h2>
+      <p>A body measurement is taken on the wearer. A finished-garment measurement is taken on the clothing. They should not be treated as interchangeable because garments usually need some room for movement, and the appropriate amount depends on the cut, fabric and wearer's preference.</p>
+      <p>When a listing does not say which type of measurement it provides, ask before ordering. Do not assume that a 38-inch garment is intended for a 38-inch body.</p>
+
+      <h2>How to measure</h2>
+      <ol>
+        <li>Use a flexible measuring tape and keep it level rather than pulling it tight.</li>
+        <li>Measure over the undergarments or light clothing you expect to wear with the outfit.</li>
+        <li>Record the number without deliberately reducing it.</li>
+        <li>Repeat the measurement, and ask another person to help with shoulders, back and length when possible.</li>
+        <li>Compare the result with the exact product's current chart or request clarification from LuxeMia before checkout.</li>
+      </ol>
+
+      <h2>What LuxeMia does and does not promise</h2>
+      <p>Available sizes, stitching status, margins and customization options vary by product. A general guide cannot guarantee fit. Review the exact listing and the <a href="/sizing-measurements-guide">LuxeMia measurement guide</a>; for a final-sale order, ask about any unclear measurement before purchasing.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-15',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Fit Guide',
+    tags: ['indian to us size', 'indian size chart', 'clothing measurements', 'lehenga sizing', 'saree blouse size'],
+    image: '/images/blog/blog-004-ivory-shimmer.webp',
+    readTime: 5,
+    sources: [SOURCES.nistSizing, SOURCES.luxemiaSizing],
   },
   {
-    "id": "10",
-    "slug": "wedding-guest-outfit-ideas",
-    "title": "What to Wear to an Indian Wedding: Guest Outfit Guide 2026",
-    "excerpt": "Decoding Indian Wedding Guest Dress Code Indian weddings are elaborate affairs with multiple ceremonies, each requiring a different outfit. As a guest, you want to look festive without overshadowing the bride. Here's your complete guide to…",
-    "content": "\n      <h2>Decoding Indian Wedding Guest Dress Code</h2>\n      <p>Indian weddings are elaborate affairs with multiple ceremonies, each requiring a different outfit. As a guest, you want to look festive without overshadowing the bride. Here's your complete guide to wedding guest fashion.</p>\n      \n      <h2>Ceremony-by-Ceremony Guide</h2>\n      \n      <h3>Mehendi & Haldi</h3>\n      <p>These are casual, colorful affairs. Opt for comfortable yet stylish options:</p>\n      <ul>\n        <li>Cotton or georgette suits in bright yellows, greens, or pinks</li>\n        <li>Simple printed sarees that you don't mind getting stained</li>\n        <li>Sharara sets or palazzo suits for comfort</li>\n      </ul>\n      \n      <h3>Sangeet/Cocktail</h3>\n      <p>This is your time to shine! Go for:</p>\n      <ul>\n        <li>Sequined sarees or gowns</li>\n        <li>Trendy Indo-western outfits</li>\n        <li>Statement lehengas (but lighter than bridal)</li>\n        <li>Dramatic sleeves and contemporary silhouettes</li>\n      </ul>\n      \n      <h3>Wedding Ceremony</h3>\n      <p>Elegant and traditional is the way to go:</p>\n      <ul>\n        <li>Silk sarees or dressy suits</li>\n        <li>Avoid white, black, and red (reserved for bride)</li>\n        <li>Jewel tones like emerald, royal blue, and magenta work beautifully</li>\n        <li>Heavy embroidery is welcome, but don't compete with bridal wear</li>\n      </ul>\n      \n      <h3>Reception</h3>\n      <p>Semi-formal with a glamorous touch:</p>\n      <ul>\n        <li>Embroidered sarees, dressy suits, or elegant gowns</li>\n        <li>Lighter colors like pastels, champagne, or ivory</li>\n        <li>Contemporary silhouettes like draped sarees or cape styles</li>\n      </ul>\n      \n      <h2>Colors to Embrace</h2>\n      <p><strong>Safe bets:</strong> Emerald green, royal blue, mustard, teal, coral, magenta</p>\n      <p><strong>Avoid:</strong> Red (bride's color), pure white (inauspicious), black (unless it's a reception or cocktail)</p>\n      \n      <h2>Accessories That Complete the Look</h2>\n      <ul>\n        <li>Statement jhumkas or chandbalis</li>\n        <li>Elegant clutch or potli bag</li>\n        <li>Comfortable yet stylish footwear (you'll be dancing!)</li>\n        <li>Light layered necklaces or one statement piece</li>\n      </ul>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-01-02",
-    "updatedAt": "2026-08-03",
-    "category": "Styling Tips",
-    "tags": [
-      "wedding guest outfit",
-      "indian wedding",
-      "what to wear",
-      "wedding fashion",
-      "ethnic wear"
-    ],
-    "image": "/images/blog/gdrive/bridesmaid-green-outfit.webp",
-    "readTime": 2
+    id: '10',
+    slug: 'wedding-guest-outfit-ideas',
+    title: 'What to Wear to an Indian Wedding: A Fact-Checked Guest Guide',
+    excerpt: 'Indian and South Asian weddings are diverse. Use the invitation and the hosts as the authority on ceremony names, formality, color requests and religious-venue requirements.',
+    content: `
+      ${editorialNote}
+      <h2>Start with the invitation, not an internet rule</h2>
+      <p>There is no single dress code shared by every Indian wedding. Families may follow different regional, religious and personal customs, and two events with the same name may have different levels of formality. The invitation, wedding website or host is the most reliable source for the event you are attending.</p>
+
+      <h2>Questions to confirm</h2>
+      <ul>
+        <li>Which events are you invited to, and are they indoors, outdoors or at a religious venue?</li>
+        <li>Does the couple specify formal, cocktail, traditional, fusion or another dress code?</li>
+        <li>Are any colors reserved or requested? Do not assume that red, black or white is universally forbidden.</li>
+        <li>Will the venue require covered shoulders, a head covering, removal of shoes or another practice?</li>
+        <li>How long will you be standing, sitting on the floor or dancing?</li>
+      </ul>
+
+      <h2>Common outfit categories</h2>
+      <p>Sarees, lehengas, salwar suits, anarkalis, shararas, kurtas, bandhgala-style jackets and fusion outfits are all used for celebrations, but none is automatically correct for every event. Choose only after checking the host's guidance and the garment's comfort and movement.</p>
+
+      <h2>Practical shopping guidance</h2>
+      <p>Confirm the exact fabric or materials, lining, included pieces, stitching status, measurements and care instructions on the listing. If you need an outfit for a fixed date, contact LuxeMia before ordering; the site does not promise a universal delivery time or guaranteed event-date arrival.</p>
+
+      <h2>Respectful guest etiquette</h2>
+      <p>When a custom or garment term is unfamiliar, asking the hosts is more respectful than treating a generalized online checklist as a rule. A guest does not need to imitate a specific regional or religious tradition to participate thoughtfully.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-01-02',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Wedding Guide',
+    tags: ['indian wedding guest', 'wedding guest outfit', 'south asian wedding', 'guest dress code', 'ethnic wear'],
+    image: '/images/blog/gdrive/bridesmaid-green-outfit.webp',
+    readTime: 4,
+    sources: [SOURCES.vaIndianTextiles, SOURCES.ftcTextiles],
   },
   {
-    "id": "4",
-    "slug": "accessorize-indian-ethnic-wear",
-    "title": "How to Accessorize Indian Ethnic Wear Like a Pro",
-    "excerpt": "Understanding the Art of Accessorizing The right accessories can elevate a simple outfit to extraordinary heights, while wrong choices can overwhelm even the most beautiful ensemble. The key is balance, proportion, and harmony. Jewelry…",
-    "content": "\n      <h2>Understanding the Art of Accessorizing</h2>\n      <p>The right accessories can elevate a simple outfit to extraordinary heights, while wrong choices can overwhelm even the most beautiful ensemble. The key is balance, proportion, and harmony.</p>\n      \n      <h2>Jewelry Guidelines by Outfit Type</h2>\n      \n      <h3>For Sarees</h3>\n      <p>Let the saree's neckline guide your jewelry choice:</p>\n      <ul>\n        <li><strong>Deep necklines:</strong> Long necklaces or layered chains</li>\n        <li><strong>High necklines:</strong> Statement earrings, skip the necklace</li>\n        <li><strong>Sweetheart necklines:</strong> Chokers or short necklaces</li>\n      </ul>\n      \n      <h3>For Lehengas</h3>\n      <p>Bridal lehengas call for statement jewelry, but follow the \"one statement piece\" rule. If your lehenga is heavily embroidered, opt for elegant but subtle jewelry. For simpler lehengas, go bold with your accessories.</p>\n      \n      <h3>For Salwar Suits</h3>\n      <p>The dupatta styling affects your jewelry visibility. For draped dupattas, earrings become the focal point. For pinned dupattas, necklaces get their moment to shine.</p>\n      \n      <h2>Essential Jewelry Pieces</h2>\n      \n      <h3>Maang Tikka</h3>\n      <p>The centerpiece of Indian bridal jewelry. Choose the size based on your forehead width and hairstyle. Mathapatti styles are trending for brides wanting maximum impact.</p>\n      \n      <h3>Chandbalis</h3>\n      <p>These moon-shaped earrings complement almost every face shape. They're versatile enough for weddings and festive occasions alike.</p>\n      \n      <h3>Jhumkas</h3>\n      <p>The quintessential Indian earring, jhumkas come in various sizes and styles. Small jhumkas for casual wear, elaborate ones for celebrations.</p>\n      \n      <h3>Statement Rings</h3>\n      <p>Stack them or wear a single statement piece. Cocktail rings add instant glamour to any ethnic outfit.</p>\n      \n      <h2>The Art of Layering</h2>\n      <p>Layering necklaces and bangles requires skill:</p>\n      <ul>\n        <li>Vary the lengths for necklace layering</li>\n        <li>Mix metals thoughtfully</li>\n        <li>Combine different textures and sizes for bangles</li>\n        <li>Keep one layer as the focal point</li>\n      </ul>\n      \n      <h2>Bags and Clutches</h2>\n      <p>Complete your look with the right bag:</p>\n      <ul>\n        <li><strong>Potli bags:</strong> Traditional and practical</li>\n        <li><strong>Box clutches:</strong> Elegant and modern</li>\n        <li><strong>Embroidered clutches:</strong> Adds texture to simple outfits</li>\n        <li><strong>Metallic clutches:</strong> Versatile for any color palette</li>\n      </ul>\n      \n      <h2>Footwear Choices</h2>\n      <p>Your feet deserve attention too:</p>\n      <ul>\n        <li><strong>Juttis:</strong> Comfortable and traditional</li>\n        <li><strong>Stilettos:</strong> For lehengas and modern looks</li>\n        <li><strong>Block heels:</strong> Practical for long ceremonies</li>\n        <li><strong>Kolhapuris:</strong> Casual ethnic occasions</li>\n      </ul>\n      \n      <h2>Hair Accessories</h2>\n      <p>Don't forget your hair:</p>\n      <ul>\n        <li>Fresh flowers for a traditional touch</li>\n        <li>Decorative pins and combs</li>\n        <li>Hair chains (juda pins)</li>\n        <li>Embellished headbands for modern looks</li>\n      </ul>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2025-12-15",
-    "updatedAt": "2025-12-28",
-    "category": "Styling Tips",
-    "tags": [
-      "accessories",
-      "jewelry",
-      "styling tips",
-      "ethnic fashion"
-    ],
-    "image": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/M-640.jpg?v=1783368953&width=1200&height=675&crop=center",
-    "readTime": 2
+    id: '6',
+    slug: 'wedding-saree-for-mother-of-bride',
+    title: 'Choosing a Wedding Saree for the Mother of the Bride: A Practical Guide',
+    excerpt: 'There is no universal age, color or blouse rule for a mother of the bride. Start with the family dress code, the wearer’s preferences, accurate measurements and the exact product details.',
+    content: `
+      ${editorialNote}
+      <h2>No universal mother-of-the-bride formula</h2>
+      <p>A mother's saree does not have to follow a particular color, sleeve length, embellishment level or definition of “age appropriate.” Those choices belong to the wearer and the family. If outfits are being coordinated, confirm the plan directly rather than inferring it from generalized wedding advice.</p>
+
+      <h2>What to decide before shopping</h2>
+      <ul>
+        <li><strong>Dress code:</strong> Ask about requested colors, level of formality and any venue requirements.</li>
+        <li><strong>Comfort:</strong> Consider event length, weather, walking, stairs, sitting and dancing.</li>
+        <li><strong>Drape preference:</strong> Sarees can be draped in different ways; the preferred drape affects petticoat, blouse and footwear choices.</li>
+        <li><strong>Blouse fit:</strong> Compare bust, shoulder, armhole, sleeve and blouse length with the exact listing.</li>
+        <li><strong>Care:</strong> Follow the garment's care label or listing rather than assuming every silk-like or embellished textile has the same cleaning method.</li>
+      </ul>
+
+      <h2>Fabric names are not complete specifications</h2>
+      <p>Cotton and silk have long histories in Indian textiles, but modern sarees may use natural, manufactured or blended fibers. A name such as “silk saree” should not be interpreted as pure silk unless the listing or label verifies the fiber content. The FTC requires most textiles sold in the United States to disclose fiber content and country of origin.</p>
+
+      <h2>Optional styling guidance</h2>
+      <p>Jewelry, blouse neckline, footwear and bag are personal styling decisions. If the saree is visually detailed, some wearers prefer fewer accessories; others prefer a layered ceremonial look. Neither is a factual rule. Choose what suits the wearer, event and host guidance.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-01-05',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Wedding Guide',
+    tags: ['mother of bride saree', 'wedding saree', 'saree measurements', 'family wedding outfit'],
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Yellow-Viscose-Silk-Occasional-Wear-Embroidery-Work-Saree-PREMIKA-282_1.jpg?v=1782934327&width=1200&height=675&crop=center',
+    readTime: 4,
+    sources: [SOURCES.vaIndianTextiles, SOURCES.ftcTextiles, SOURCES.ftcCare],
   },
   {
-    "id": "16",
-    "slug": "fabric-guide-indian-ethnic-wear-georgette-silk-chiffon",
-    "title": "Fabric Guide for Indian Ethnic Wear: Georgette vs Silk vs Chiffon — Which Is Best?",
-    "excerpt": "Why Fabric Choice Makes or Breaks Your Ethnic Outfit When you buy Indian dresses online , the fabric is everything. The same design in georgette versus silk can look and feel completely different. Understanding fabrics helps you choose the…",
-    "content": "\n      <article>\n      <h2>Why Fabric Choice Makes or Breaks Your Ethnic Outfit</h2>\n      <p>When you <strong>buy Indian dresses online</strong>, the fabric is everything. The same design in georgette versus silk can look and feel completely different. Understanding fabrics helps you choose the right <strong>Indian ethnic wear</strong> for the occasion, season, and your personal comfort. This comprehensive fabric guide covers every major textile used in <strong>salwar kameez</strong>, <strong>lehenga choli</strong>, <strong>sarees</strong>, and <strong>sharara suits</strong> — so you can shop with confidence.</p>\n\n      <h2>Georgette: The Versatile Favorite</h2>\n      <h3>What Is Georgette?</h3>\n      <p>Georgette is a lightweight, slightly crinkled fabric with a beautiful matte finish and subtle texture. Available as pure georgette (silk-based) and faux georgette (polyester-based), it is the most popular fabric for <strong>Indian ethnic wear online</strong>. A <strong>georgette suit</strong> drapes beautifully, takes embroidery well, and works across seasons.</p>\n      <h3>Best For</h3>\n      <ul>\n        <li><strong>Sharara suits</strong> — the fabric creates that signature flowing movement in flared pants</li>\n        <li><strong>Anarkali dresses</strong> — gorgeous for the full, swirling skirt</li>\n        <li><strong>Summer wedding Indian outfits</strong> — breathable yet elegant</li>\n        <li><strong>Embroidered Indian dresses</strong> — holds thread work, <strong>sequin</strong>, and <strong>zari work</strong> beautifully</li>\n      </ul>\n      <h3>Pros and Cons</h3>\n      <p>Pros: Lightweight, excellent drape, wrinkle-resistant, affordable, works for all seasons. Cons: Can snag easily, faux georgette may feel synthetic in extreme heat. Browse <a href=\"/suits\">current suits</a> and confirm the listed fabric, lining and care details on each product page.</p>\n\n      <h2>Silk: The Luxury Standard</h2>\n      <h3>Types of Silk in Ethnic Wear</h3>\n      <p><strong>Silk ethnic wear</strong> comes in many varieties, each with distinct characteristics:</p>\n      <ul>\n        <li><strong>Art silk (artificial silk):</strong> Budget-friendly with a silk-like sheen — great for <strong>affordable Indian ethnic wear</strong></li>\n        <li><strong>Chinnon silk:</strong> Lightweight with beautiful fluidity — popular for <strong>Pakistani suits</strong> and <strong>sharara sets</strong></li>\n        <li><strong>Banarasi silk:</strong> Heavy, intricately woven with gold/silver zari — the gold standard for bridal wear</li>\n        <li><strong>Chanderi silk:</strong> Lightweight with a golden sheen — perfect for festive <strong>salwar kameez</strong></li>\n        <li><strong>Raw silk:</strong> Textured, slightly rough — creates structured, regal silhouettes</li>\n        <li><strong>Tussar silk:</strong> Natural golden tone with a rich texture — ideal for earthy, elegant looks</li>\n      </ul>\n      <h3>Best For</h3>\n      <ul>\n        <li><strong>Bridal lehengas</strong> — the weight and sheen create a grand, royal look</li>\n        <li><strong>Wedding ceremony</strong> outfits — pure silk is the traditional choice for auspicious occasions</li>\n        <li><strong>Winter weddings</strong> — heavier silks provide warmth and structure</li>\n        <li><strong>Quality pieces</strong> — silk ethnic wear lasts years with proper care</li>\n      </ul>\n      <h3>Pros and Cons</h3>\n      <p>Pros: Luxurious feel, natural sheen, excellent for embroidery, temperature-regulating, ages beautifully. Cons: More expensive, requires careful cleaning (most need dry cleaning), heavier to wear. Explore <a href=\"/lehengas\">current lehengas</a> and verify the exact fabric, work and included pieces on each listing.</p>\n\n      <h2>Chiffon: The Ethereal Choice</h2>\n      <h3>What Is Chiffon?</h3>\n      <p>Chiffon is an ultra-lightweight, sheer fabric with a soft, romantic drape. <strong>Chiffon salwar kameez</strong> and chiffon sarees are prized for their effortless elegance. The fabric practically floats on the body, creating an ethereal silhouette.</p>\n      <h3>Best For</h3>\n      <ul>\n        <li><strong>Sarees</strong> — chiffon is the most popular saree fabric for its easy draping</li>\n        <li><strong>Pakistani chiffon suits</strong> — creates the flowing, elegant look Pakistani fashion is known for</li>\n        <li><strong>Summer and destination wedding</strong> outfits — extremely lightweight and breathable</li>\n        <li><strong>Dupatta fabric</strong> — chiffon dupattas drape beautifully over any outfit</li>\n      </ul>\n      <h3>Pros and Cons</h3>\n      <p>Pros: Feather-light, gorgeous drape, perfect for warm weather, takes dye beautifully. Cons: Very sheer (always needs lining), fragile, can be tricky to handle, wrinkles easily.</p>\n\n      <h2>Net: The Glamour Fabric</h2>\n      <h3>When to Choose Net</h3>\n      <p>A <strong>net sharara suit</strong> or net lehenga creates a dimensional, layered look that is pure glamour. Net fabric is typically used as an overlay — embroidered or embellished net layered over a solid silk or satin lining. The result is a textured, rich appearance that catches light beautifully at evening events.</p>\n      <h3>Best For</h3>\n      <ul>\n        <li><strong>Evening and party wear</strong> — the texture catches event lighting</li>\n        <li><strong>Engagement lehengas</strong> — romantic and dreamy</li>\n        <li><strong>Reception outfits</strong> — modern and glamorous</li>\n        <li><strong>Overlay dupattas</strong> — adds dimension to any outfit</li>\n      </ul>\n\n      <h2>Velvet: The Winter Wedding Star</h2>\n      <p>Velvet brings unmatched richness to <strong><a href=\"/collections\">Indian festive wear</a></strong> and winter wedding outfits. A velvet <strong>bridal lehenga</strong> or velvet <strong>anarkali suit</strong> exudes old-world luxury. The fabric has a natural depth of color that photographs beautifully, making it a favorite for winter <strong>Indian wedding dresses</strong>.</p>\n      <p>Best for: Winter weddings, evening events, bridal wear, statement pieces. Avoid for: Summer events, outdoor daytime functions.</p>\n\n      <h2>Cotton and Cotton Blends</h2>\n      <p>Do not overlook cotton for <strong>Indian ethnic wear</strong>. Cotton <strong>salwar kameez</strong>, cotton kurtis, and <strong>Pakistani lawn suits</strong> are perfect for everyday wear, casual gatherings, and hot-weather events. Cotton blends (cotton-silk, cotton-georgette) offer the best of both worlds — comfort plus structure.</p>\n\n      <h2>Fabric Comparison Chart</h2>\n      <table>\n        <tr><th>Fabric</th><th>Weight</th><th>Best Season</th><th>Occasions</th><th>Care Level</th><th>Price Range</th></tr>\n        <tr><td>Georgette</td><td>Light-Medium</td><td>All seasons</td><td>Wedding, festive, party</td><td>Easy</td><td>$$</td></tr>\n        <tr><td>Silk</td><td>Medium-Heavy</td><td>Winter/All</td><td>Wedding, bridal, ceremony</td><td>High</td><td>$$$</td></tr>\n        <tr><td>Chiffon</td><td>Very Light</td><td>Summer/Spring</td><td>Casual, festive, daily</td><td>Medium</td><td>$$</td></tr>\n        <tr><td>Net</td><td>Light</td><td>All seasons</td><td>Party, reception, evening</td><td>Medium</td><td>$$</td></tr>\n        <tr><td>Velvet</td><td>Heavy</td><td>Winter</td><td>Wedding, bridal, formal</td><td>High</td><td>$$$</td></tr>\n        <tr><td>Cotton</td><td>Light-Medium</td><td>Summer/Spring</td><td>Daily, casual, daytime</td><td>Easy</td><td>$</td></tr>\n      </table>\n\n      <h2>How to Care for Each Fabric</h2>\n      <h3>Georgette Care</h3>\n      <p>Hand wash in cold water with mild detergent or dry clean. Air dry flat — never wring. Steam to remove wrinkles. Store hanging to maintain shape.</p>\n      <h3>Silk Care</h3>\n      <p>Always dry clean pure silk. Store in muslin cloth (never plastic). Keep away from direct sunlight to prevent color fading. Air out periodically.</p>\n      <h3>Chiffon Care</h3>\n      <p>Hand wash gently or dry clean. Roll in a towel to remove excess water — never wring or twist. Iron on low heat with a cloth barrier.</p>\n      <h3>Net Care</h3>\n      <p>Dry clean to protect embellishments. Store flat to prevent snagging. Keep away from sharp jewelry or velcro.</p>\n\n      <h2>Choosing the Right Fabric When Shopping Online</h2>\n      <p>When you <strong>buy Indian clothes online USA</strong>, you cannot feel the fabric. Here is how to make the right choice:</p>\n      <ul>\n        <li>Read fabric descriptions carefully and use the individual product listing as the source of truth for the exact fabric</li>\n        <li>Check the weight (GSM) if listed — lighter GSM means more fluid drape</li>\n        <li>Look at video content showing how the fabric moves</li>\n        <li>Consider the season and venue — outdoor summer events need breathable fabrics</li>\n        <li>Check lining details — construction varies by product, so confirm whether a lining is listed</li>\n      </ul>\n\n      <h2>Shop by Fabric at LuxeMia</h2>\n      \n      </article>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-04-08",
-    "updatedAt": "2026-08-03",
-    "category": "Shopping Guide",
-    "tags": [
-      "georgette suit",
-      "silk ethnic wear",
-      "chiffon salwar kameez",
-      "fabric guide",
-      "Indian dress fabric",
-      "net sharara suit",
-      "velvet lehenga",
-      "cotton salwar kameez",
-      "Indian clothes online",
-      "ethnic wear care tips"
-    ],
-    "image": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/TEAL-GREEN-Shimmer-Silk-Occasional-Wear-Embroidery-Work-Readymade-Plazzo-Suit-VERONICA-003_1.jpg?v=1780590910&width=1200&height=675&crop=center",
-    "readTime": 5
+    id: '4',
+    slug: 'accessorize-indian-ethnic-wear',
+    title: 'How to Accessorize Indian Ethnic Wear Without Inventing Rules',
+    excerpt: 'Accessories are a styling choice, not a fixed formula. Match scale and comfort to the outfit and event, and verify materials instead of assuming that terms such as kundan, polki or gold describe precious contents.',
+    content: `
+      ${editorialNote}
+      <h2>Accessorizing is optional guidance</h2>
+      <p>There is no factual “one statement piece” rule and no neckline-to-necklace formula that applies to everyone. Jewelry visibility changes with the neckline, dupatta or pallu placement and hairstyle, but the final choice is personal.</p>
+
+      <h2>Verify what a jewelry listing actually says</h2>
+      <p>Design terms can describe an appearance or tradition without proving precious-metal content, natural stones, diamonds, hand-setting or a specific production method. For each LuxeMia item, verify the listed materials, finish, stones or accents, closures, measurements and included pieces. Do not infer them from the product title or photograph.</p>
+
+      <h2>Practical considerations</h2>
+      <ul>
+        <li>Check earring weight and closure if the event will last several hours.</li>
+        <li>Check whether a necklace sits above, inside or over the garment neckline.</li>
+        <li>Confirm that rings, bangles, bags and garment embellishment will not snag delicate fabric.</li>
+        <li>Choose footwear for the actual venue and hem length; comfort cannot be predicted from heel type alone.</li>
+        <li>For heirloom or religious pieces, follow the family's handling and wearing practices.</li>
+      </ul>
+
+      <h2>Optional visual approaches</h2>
+      <p>Some wearers repeat one color or metal tone across accessories. Others intentionally mix them. Some balance a detailed outfit with quieter accessories, while others build a layered ceremonial look. These are styling approaches—not claims about what is correct.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2025-12-15',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Styling Guide',
+    tags: ['indian jewelry styling', 'ethnic wear accessories', 'necklace styling', 'wedding accessories'],
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/M-640.jpg?v=1783368953&width=1200&height=675&crop=center',
+    readTime: 3,
+    sources: [SOURCES.ftcTextiles],
   },
   {
-    "id": "19",
-    "slug": "styling-indian-ethnic-wear-festive-occasions-abroad",
-    "title": "Styling Indian Ethnic Wear for Festive Occasions Abroad: Diwali, Eid & More",
-    "excerpt": "Living abroad does not mean leaving behind the joy of dressing up for festivals. For millions of NRIs across the the USA, and beyond, festive occasions like Diwali, Eid, Navratri, and Pongal are cherished opportunities to reconnect with…",
-    "content": "\n      <article>\n      <p>Living abroad does not mean leaving behind the joy of dressing up for festivals. For Indian and South Asian families across the United States, <strong>festive occasions like Diwali, Eid, Navratri, and Pongal</strong> are cherished opportunities to reconnect with cultural roots, celebrate with community, and — yes — wear stunning Indian ethnic wear that makes you feel truly special.</p>\n\n      <p>But styling Indian outfits for festive gatherings abroad comes with its own unique considerations. The venue might be a community hall in Houston rather than a haveli in Jaipur. The weather could be a chilly evening in Chicago instead of Delhi sunshine. And your audience is often a beautiful mix of people who know every embroidery technique by name and friends discovering Indian fashion for the first time.</p>\n\n      <p>This guide is your complete resource for styling <strong>festive Indian outfits as an NRI</strong> — covering everything from Diwali glamour to Eid elegance, with practical tips for accessorizing and looking your best at celebrations across the United States.</p>\n\n      <h2>1. Diwali Glam: Lehengas and Anarkalis</h2>\n      <p>Diwali is the festival of lights, and your outfit should shine just as brightly. For NRIs, Diwali celebrations often include community events, office Diwali parties, intimate family dinners, and grand Diwali galas. Each calls for a slightly different approach to styling.</p>\n\n      <h3>For Grand Diwali Galas and Community Events</h3>\n      <p>This is your moment to go all out. A <a href=\"/lehengas\">lehenga</a> in rich jewel tones — deep emerald, royal blue, or classic maroon — creates a show-stopping entrance. Look for pieces with heavy embroidery, sequin work, or mirror embellishments that catch the light beautifully. Pair with a statement kundan or polki necklace set and metallic heels.</p>\n\n      <h3>For Office Diwali Celebrations</h3>\n      <p>An Anarkali suit is the perfect choice — elegant, comfortable, and unmistakably festive without being over the top. Choose a rich color like wine, teal, or mustard in a flowing fabric like georgette or silk. Browse <a href=\"/suits\">current suits</a> and check each listing for silhouette, fabric, size options and included pieces. Keep jewelry minimal — statement earrings and a delicate bracelet are enough.</p>\n\n      <h3>For Intimate Family Dinners</h3>\n      <p>A beautiful saree in a warm tone — think burnt orange, dusty rose, or champagne gold — is ideal for smaller gatherings. These tones create a festive mood without feeling overdressed. Browse <a href=\"/sarees\">current sarees</a> and confirm the exact listed fabric and included pieces before ordering.</p>\n\n      <h3>Diwali Styling Tips</h3>\n      <ul>\n        <li><strong>Metallics are your friend:</strong> Gold, rose gold, and copper accents in fabric and accessories scream Diwali</li>\n        <li><strong>Layer your lighting:</strong> If your outfit has sequins or mirror work, it will look even more spectacular under warm, ambient lighting</li>\n        <li><strong>Comfortable footwear:</strong> Embellished juttis or block heels — you will likely be on your feet for rangoli and puja</li>\n        <li><strong>Weather-proof your look:</strong> In colder climates, a velvet or silk shawl doubles as warmth and style</li>\n      </ul>\n\n      <h2>2. Eid Elegance: Sharara and Palazzo Suits</h2>\n      <p>Eid celebrations call for outfits that balance elegance with comfort — after all, you want to look stunning for family gatherings and Eid prayers while feeling at ease throughout the day. <strong>Sharara suits and palazzo sets</strong> are the top choice for <strong>Eid salwar suit styling</strong> in 2026, offering a modern twist on traditional silhouettes.</p>\n\n      <h3>Sharara Sets for Eid</h3>\n      <p>The sharara — with its wide-flared bottoms and fitted kurta — is inherently graceful and photograph-ready. For Eid, choose lighter fabrics like georgette, chiffon, or chinon in soft pastels or classic whites and ivories. Delicate thread work, pearl detailing, or subtle sequin borders add festive sparkle without overwhelming the look. Browse <a href=\"/suits\">current suits</a> and use the product title and details to confirm the silhouette.</p>\n\n      <h3>Palazzo Suits for Comfort and Style</h3>\n      <p>Palazzo suits offer maximum comfort with their relaxed, wide-leg silhouette. They are particularly popular among NRIs for their versatility — dress them up with heavy dupattas and statement jewelry for main Eid celebrations, or keep them simple with light accessories for casual gatherings. Fabrics like cotton silk and chanderi work beautifully for daytime Eid events.</p>\n\n      <h3>Eid Color Palette 2026</h3>\n      <ul>\n        <li><strong>Classic whites and ivories:</strong> Timeless, clean, and always appropriate</li>\n        <li><strong>Soft pastels:</strong> Mint green, powder blue, and blush pink feel fresh and festive</li>\n        <li><strong>Muted jewel tones:</strong> Dusty teal, sage green, and mauve for evening celebrations</li>\n        <li><strong>Rich emerald:</strong> A standout choice that photographs beautifully</li>\n      </ul>\n\n      <h2>3. Beyond the Big Festivals: Other Celebrations</h2>\n      <p>NRI life is filled with smaller but equally meaningful celebrations — Karva Chauth, Lohri, Pongal, Onam, Baisakhi, Raksha Bandhan, and cultural programs at community centers. These events often call for outfits that are festive but not overly formal.</p>\n\n      <h3>Community Cultural Programs</h3>\n      <p>A well-chosen <a href=\"/suits\">suit</a> in a vibrant print or solid color with embroidered details is versatile enough for dance performances, cultural presentations, and social gatherings. Opt for ready-to-wear options that do not require extensive draping or fitting.</p>\n\n      <h3>Smaller Family Celebrations</h3>\n      <p>Pre-draped sarees and ready-to-wear <a href=\"/lehengas\">lehenga sets</a> are game-changers for quick, effortless styling. These pieces give you the traditional look without the time investment of draping from scratch — perfect for busy NRI lifestyles.</p>\n\n      <h3>Kids' School Cultural Events</h3>\n      <p>When representing Indian culture at your children's school events, choose pieces that are easy to explain and visually striking. A well-draped saree or a colorful Anarkali creates a beautiful visual impression while sparking conversations about Indian textile traditions.</p>\n\n      <h2>4. Accessorizing and Personal Touches</h2>\n      <p>The right accessories can transform a simple outfit into a festive masterpiece. Here is how to accessorize your Indian ethnic wear for celebrations abroad:</p>\n\n      <h3>Jewelry</h3>\n      <ul>\n        <li><strong>Statement earrings:</strong> The single most impactful accessory — jhumkas, chandbalis, or contemporary studs</li>\n        <li><strong>Layered bangles:</strong> Mix gold, glass, and thread bangles for texture</li>\n        <li><strong>Minimalist maang tikka:</strong> A subtle headpiece adds festive elegance without feeling costume-like</li>\n        <li><strong>Versatile pendant necklace:</strong> Choose one that works with both Indian and Western outfits</li>\n      </ul>\n\n      <h3>Hair and Makeup</h3>\n      <ul>\n        <li><strong>Fresh flowers:</strong> Gajra (jasmine strings) for a traditional touch — many NRI cities have Indian grocery stores that stock them</li>\n        <li><strong>Soft glam makeup:</strong> Dewy skin, kohl-lined eyes, and a bold lip work with every outfit</li>\n        <li><strong>Braided hairstyles:</strong> Side braids with accessories look beautiful and are practical for active celebrations</li>\n      </ul>\n\n      <h3>Footwear</h3>\n      <ul>\n        <li><strong>Embellished juttis:</strong> Traditional Punjabi juttis with modern embroidery</li>\n        <li><strong>Block heels:</strong> Comfortable for standing, walking, and dancing</li>\n        <li><strong>Kolhapuri chappals:</strong> Casual elegance for daytime events</li>\n      </ul>\n\n      <h2>5. Shopping Online for U.S. Celebrations</h2>\n      <p>When shopping at LuxeMia, use the product page as the source of truth for current price, fabric or materials, included pieces, sizes, tailoring options and availability. Free U.S. shipping applies at $150 and above; shipping is $12 below that, and tracking is provided after dispatch.</p><h2>Continue Reading</h2>\n      <ul>\n        <li><a href=\"/blog/wedding-guest-outfit-ideas\">What to Wear to an Indian Wedding</a></li>\n        <li><a href=\"/blog/accessorize-indian-ethnic-wear\">How to Accessorize Indian Ethnic Wear</a></li>\n        <li><a href=\"/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon\">Fabric Guide for Indian Ethnic Wear</a></li>\n      </ul>\n      </article>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-04-09",
-    "updatedAt": "2026-08-03",
-    "category": "NRI Fashion",
-    "tags": [
-      "festive Indian outfits NRI",
-      "Diwali ethnic wear ideas USA",
-      "Eid salwar suit styling UK",
-      "NRI festive fashion",
-      "Indian outfit abroad",
-      "Diwali lehenga",
-      "sharara suit Eid",
-      "festival dressing NRI"
-    ],
-    "image": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/1A7A0218Final.jpg?v=1783383907&width=1200&height=675&crop=center",
-    "readTime": 6
+    id: '16',
+    slug: 'fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
+    title: 'Indian Ethnic-Wear Fabric Guide: Fiber, Weave and Product Claims',
+    excerpt: 'Georgette, chiffon and satin describe fabric structures or finishes, while silk, cotton and polyester identify fibers. One term does not reveal the full composition, weight, lining, care or performance of a garment.',
+    content: `
+      ${editorialNote}
+      <h2>Fiber and fabric are not the same thing</h2>
+      <p>Silk, cotton and polyester are fiber terms. Georgette and chiffon describe fabric constructions that can be produced from different fibers. Satin describes a weave structure rather than one specific fiber. Therefore, “satin,” “georgette” or “chiffon” alone does not prove whether a garment is silk or manufactured fiber.</p>
+
+      <h2>Common terms</h2>
+      <table>
+        <thead><tr><th>Term</th><th>What it tells you</th><th>What it does not prove</th></tr></thead>
+        <tbody>
+          <tr><td>Silk</td><td>A fiber claim that should be supported by the product information or label</td><td>Weave, weight, geographic origin, handloom status or care method</td></tr>
+          <tr><td>Georgette</td><td>A lightweight, textured fabric category</td><td>Pure silk, breathability, exact weight or snag resistance</td></tr>
+          <tr><td>Chiffon</td><td>A light, sheer fabric category</td><td>Fiber content, opacity after lining or durability</td></tr>
+          <tr><td>Satin</td><td>A smooth-faced weave category</td><td>That the fiber is silk</td></tr>
+          <tr><td>Net</td><td>An open structure commonly used alone or as an overlay</td><td>Fiber, softness, lining or embellishment method</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What to verify on a listing</h2>
+      <ul>
+        <li>Fiber content and whether different pieces use different fabrics</li>
+        <li>Lining, opacity and stretch</li>
+        <li>Embroidery, sequins or other surface work exactly as stated</li>
+        <li>Care instructions for the complete garment</li>
+        <li>Country of origin and the business responsible for the textile label</li>
+      </ul>
+
+      <h2>Care facts</h2>
+      <p>Do not assign one cleaning method to every garment with the same fabric name. Construction, dye, lining and embellishment can change the appropriate care. Follow the permanent care label or the product-specific instruction. The FTC's Care Labeling Rule requires a reasonable basis for the care instructions supplied with covered garments.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-12',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Fabric Guide',
+    tags: ['indian fabric guide', 'georgette fabric', 'chiffon fabric', 'silk fiber', 'textile labels'],
+    image: '/images/blog/gdrive/banarasi-saree-blue-gold.webp',
+    readTime: 5,
+    sources: [SOURCES.vaIndianTextiles, SOURCES.ftcTextiles, SOURCES.ftcCare],
   },
   {
-    "id": "26",
-    "slug": "lehenga-vs-sharara-vs-anarkali-comparison",
-    "title": "Lehenga vs Sharara vs Anarkali: Which Indian Outfit Is Right for You?",
-    "excerpt": "If you have spent any time browsing Indian ethnic-wear for a wedding, engagement, sangeet, or Diwali function, you have encountered the same three names repeatedly: lehenga, sharara, and anarkali. Each is a distinct silhouette with its own…",
-    "content": "\n<p>If you have spent any time browsing Indian ethnic-wear for a wedding, engagement, sangeet, or Diwali function, you have encountered the same three names repeatedly: lehenga, sharara, and anarkali. Each is a distinct silhouette with its own history, structure, and styling logic — and choosing the wrong one for your body type, occasion, or personal style can be a costly mistake.</p>\n<p>This guide breaks down each silhouette clearly, compares them across the dimensions that matter most — occasion, body type, comfort, and styling versatility — and helps you make a confident decision, whether you are a bride, a guest, or shopping for a special occasion like Karva Chauth, Navratri, Eid, or a wedding reception in the United States.</p>\n<p>---</p>\n<h2>What Is a Lehenga?</h2>\n<p>A lehenga — also called a lengha or ghagra choli — is a three-piece ensemble consisting of a skirt (the lehenga), a fitted blouse (the choli), and a long scarf (the dupatta). It is the most formal and elaborate of the three silhouettes and is synonymous with Indian bridal wear.</p>\n<h3>Structure and Construction</h3>\n<p>The lehenga skirt is a floor-length garment with a waistband, typically fastened with a drawstring or hook. The volume of the skirt is determined by the amount of fabric used in its construction — a fully circular lehenga can use 5 to 8 meters of fabric, while a panel lehenga uses considerably less.</p>\n<h3>When to Wear a Lehenga</h3>\n<p>Lehengas are the appropriate choice for the most formal occasions: weddings, receptions, engagement ceremonies, Karva Chauth, and formal festival events like Diwali parties and Navratri garba celebrations. For sangeet and mehendi functions, lighter versions in cotton or georgette are standard choices.</p>\n<h3>Who a Lehenga Suits Best</h3>\n<p>Lehengas are flattering across most body types. A-line and panel lehengas work well on petite frames and apple-shaped body types by creating the illusion of a defined waist. Circular and flared lehengas suit tall and pear-shaped figures, balancing proportions and allowing for dramatic movement.</p>\n<p>---</p>\n<h2>What Is a Sharara?</h2>\n<p>A sharara is a wide-legged, flared trouser that is usually paired with a short kurta (tunic) and a dupatta. The silhouette falls from the hips downward in a dramatic flare that resembles a skirt when the wearer is standing still. It is rooted in Mughal court fashion and has seen a strong revival in contemporary Indian bridal and festive wear.</p>\n<h3>Structure and Construction</h3>\n<p>Shararas are essentially two-legged garments, even though they often look like a skirt. The wide flare begins at or just below the knee, creating a striking visual effect. They are typically made in luxurious fabrics like silk, velvet, or georgette and are often heavily embellished with zari or sequin work.</p>\n<h3>When to Wear a Sharara</h3>\n<p>Shararas occupy a sweet spot between formal and festive. They are well-suited for mehendi, haldi, and sangeet functions, engagement parties, and Eid celebrations. In recent years, brides have increasingly chosen shararas for their main wedding ceremony, particularly those drawn to Mughal-inspired or Indo-western aesthetics.</p>\n<h3>Who a Sharara Suits Best</h3>\n<p>Shararas are most flattering on pear-shaped and hourglass figures. The voluminous flare balances wider hips, while the fitted kurta draws attention to the waist. They work well on tall women but can visually shorten the frame of petite women unless styled carefully with heels and a shorter kurta.</p>\n<p>---</p>\n<h2>What Is an Anarkali?</h2>\n<p>An anarkali is a long, flared kurta or dress with a fitted bodice and a flared or tiered skirt section. Named after the legendary Mughal courtesan Anarkali, this silhouette is one of the most graceful and universally flattering in Indian ethnic wear. It is typically paired with churidar (fitted) trousers or a straight salwar, and finished with a dupatta.</p>\n<h3>Structure and Construction</h3>\n<p>Anarkalis range from short (knee-length) to full floor-length gowns. The silhouette is defined by its fitted bust and waist with a dramatic flare at the skirt. Unlike a lehenga, the anarkali is a single garment — the bodice and skirt are attached — which generally makes it easier to wear and manage.</p>\n<h3>When to Wear an Anarkali</h3>\n<p>Anarkalis are extremely versatile. Floor-length anarkalis are appropriate for weddings and formal receptions. Mid-length anarkalis work well for mehendi, sangeet, engagement functions, Diwali parties, and Eid celebrations. Short anarkalis can even transition into semi-casual contexts.</p>\n<h3>Who an Anarkali Suits Best</h3>\n<p>Anarkalis are arguably the most universally flattering silhouette in Indian ethnic wear. The fitted bodice creates the appearance of a defined waist, while the flared skirt section accommodates and flatters a wide range of hip sizes. They are particularly good choices for apple and rectangular body shapes that may not be suited to the separate two-piece lehenga structure.</p>\n<p>---</p>\n<h2>Lehenga vs Sharara: Key Differences</h2>\n<p>The primary difference between a lehenga and a sharara is construction: a lehenga is a skirt, while a sharara is a wide-legged trouser. When standing still, they can look nearly identical, but the sharara's two-legged structure becomes apparent when the wearer moves or climbs stairs.</p>\n<h3>Comfort and Mobility</h3>\n<p>Shararas generally offer more freedom of movement than heavily embellished lehengas. The waistband construction is typically less structured, and there is no risk of the skirt shifting or twisting. However, very wide shararas can be unwieldy on staircases, escalators, or in crowds.</p>\n<h3>Formality</h3>\n<p>A bridal lehenga in heavy silk with extensive zardozi embroidery sits at a higher formality level than most shararas. For the main wedding ceremony, lehengas remain the dominant choice among Indian brides. Shararas are increasingly popular as the second outfit for receptions or for the mehendi function.</p>\n<h3>Price Range</h3>\n<p>Shararas, particularly those in lighter fabrics with moderate embellishment, tend to be priced lower than comparable bridal lehengas. The difference narrows considerably when comparing heavily embellished, custom-stitched versions of both.</p>\n<p>---</p>\n<h2>Anarkali vs Lehenga: Key Differences</h2>\n<p>The anarkali and the lehenga represent two distinct approaches to formal Indian ethnic wear. The lehenga is more dramatic, more traditional, and carries heavier bridal associations. The anarkali is more graceful, easier to wear, and more versatile across occasions.</p>\n<h3>The Role of the Dupatta</h3>\n<p>In a lehenga ensemble, the dupatta is a significant visual element — often as heavily embroidered as the skirt — and is styled in multiple ways (over the head, across both shoulders, or pinned to the choli). In an anarkali ensemble, the dupatta is lighter and functions more as an accessory.</p>\n<h3>Difference Between Lehenga and Gown</h3>\n<p>A common question from NRI brides in Western countries is how an Indian lehenga or anarkali compares to a Western gown. The key distinction is that a lehenga is a separate two-piece (or three-piece) ensemble, while a gown is a single connected garment. Some full-length anarkalis bridge this gap and are sometimes marketed as \"fusion gowns\" or \"anarkali gowns\" — they carry the silhouette of a gown but are constructed and styled in the Indian tradition.</p>\n<p>---</p>\n<h2>Indian Outfit Comparison: Quick-Reference Table</h2>\n\n<p>---</p>\n<h2>Styling Each Silhouette for NRI Occasions</h2>\n<p>For NRI brides and guests attending Indian weddings in the United States, occasion-appropriate styling differs slightly from choices made in India.</p>\n<h3>Lehengas for Western Wedding Venues</h3>\n<p>Indian weddings held in banquet halls, hotels, or outdoor venues in the United States often involve more walking, stair-climbing, and mingling than traditional Indian wedding venues accommodate. Choosing a lehenga with a manageable flare (rather than the widest circular silhouettes) and a blouse with comfortable arm movement is a practical consideration.</p>\n<h3>Shararas for Mehendi and Haldi in Compact Spaces</h3>\n<p>If your mehendi or haldi is hosted in a private home or a small studio, a sharara in a bright color — yellow, green, or coral — is an ideal choice. It photographs beautifully, is easy to move in, and brings the right festive energy without the complexity of a full bridal lehenga.</p>\n<h3>Anarkalis for Multi-Function Wedding Days</h3>\n<p>For guests who want a single outfit that works across a mehendi-through-reception day, a floor-length anarkali in a rich fabric like silk or georgette is the most practical choice. Pair it with statement jewelry and a stole-style dupatta for effortless transition between events.</p>\n<p>---</p>\n<h2>Where to Shop Lehengas, Shararas, and Anarkalis Online</h2>\n<p>U.S. shoppers can compare current styles online, but the individual product listing must be the source of truth for fabric, work, included pieces, stitching status, size options and availability.</p>\n\n<p>You can browse the full <a href=\"/lehengas\">lehenga collection</a> and <a href=\"/suits\">salwar-suits collection</a> to compare styles before committing.</p>\n<p>---</p>\n<h2>Frequently Asked Questions</h2>\n<h3>What is the difference between a lehenga and a sharara?</h3>\n<p>A lehenga is a floor-length skirt worn with a fitted choli blouse and dupatta. A sharara is a wide-legged trouser with a dramatic flare from the knee or thigh, paired with a short kurta and dupatta. When standing, they can look similar, but their construction and movement are different. Shararas tend to be slightly more comfortable for extended wear and movement.</p>\n<h3>Is an anarkali appropriate for a wedding as a guest?</h3>\n<p>Yes. A floor-length anarkali in a rich fabric like silk or georgette is an entirely appropriate choice for a wedding guest in both Indian and diaspora settings. The silhouette is formal enough for the occasion without competing with bridal outfits. Wedding customs differ, so ask the couple or host if the invitation does not make the dress code clear.</p>\n<h3>Which silhouette is most flattering on a petite frame?</h3>\n<p>An A-line lehenga or a floor-length anarkali is generally most flattering on a petite frame. Both create vertical length and do not add visual bulk at the hips. Shararas with very wide flares can visually reduce height, particularly if the kurta is cropped short.</p>\n<h3>Can a lehenga be worn for non-wedding occasions like Diwali or Navratri?</h3>\n<p>Absolutely. A semi-bridal lehenga in a bright or festive color is a popular choice for Diwali parties, Navratri garba celebrations, Karva Chauth, and Eid gatherings among NRI communities in the United States. Many NRI women invest in a versatile lehenga that can be styled differently for multiple occasions across the year.</p>\n<h3>What is the difference between an anarkali and a salwar kameez?</h3>\n<p>Both feature a top (kurta or kameez) and trousers (salwar or churidar), but the anarkali is defined by its dramatically flared skirt section and typically falls to the floor. A salwar kameez is a more practical, everyday-appropriate garment with a straighter silhouette. The anarkali is a formal subset of the broader salwar kameez category. Browse both styles in <a href=\"/suits\">LuxeMia's suits collection</a>.</p>\n<h3>How do I choose between a lehenga and a gown for a reception?</h3>\n<p>If your reception has a Western or fusion aesthetic, a lehenga gown or an anarkali gown gives you the grandeur of Indian craftsmanship in a silhouette that resonates with both Indian and non-Indian guests. If your reception is a traditional Indian event, a classic bridal lehenga remains the most appropriate and photographically stunning choice.</p>\n<p>---</p>\n<h2>Shop These Silhouettes</h2>\n<ul>\n  <li>Browse <a href=\"/suits\">current suits</a> and confirm whether each listing is a sharara, gharara, anarkali or another silhouette.</li>\n  <li>Browse <a href=\"/lehengas\">current lehengas</a> for wedding guest, reception and festive options.</li>\n  <li>Use each product page to verify fabric, work, included pieces, stitching status, size options, price and availability before checkout.</li>\n</ul>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-05-10",
-    "updatedAt": "2026-08-03",
-    "category": "Style Tips",
-    "tags": [
-      "lehenga vs sharara",
-      "anarkali vs lehenga",
-      "sharara guide",
-      "anarkali guide",
-      "indian outfit comparison",
-      "wedding outfit",
-      "ethnic wear"
-    ],
-    "image": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Gemini_Generated_Image_x58jfvx58jfvx58j.png?v=1783446419&width=1200&height=675&crop=center",
-    "readTime": 10
+    id: '17',
+    slug: 'styling-indian-ethnic-wear-festive-occasions-abroad',
+    title: 'Styling Indian Ethnic Wear for U.S. Festivals: A Practical, Respectful Guide',
+    excerpt: 'Festival practices and dress vary by family, region, faith and event. Confirm the organizer’s expectations, then choose the garment for venue, weather, movement and the exact listing details.',
+    content: `
+      ${editorialNote}
+      <h2>Festival names do not create one dress code</h2>
+      <p>Diwali, Eid, Navratri and other celebrations are observed by diverse communities. A temple program, family dinner, community garba and formal fundraiser can require different clothing even when held for the same festival. Use the invitation or organizer's instructions as the authority.</p>
+
+      <h2>Plan for the actual event</h2>
+      <ul>
+        <li><strong>Venue:</strong> Confirm footwear, head-covering and modesty expectations directly with the venue or host.</li>
+        <li><strong>Movement:</strong> For garba, dancing or children's activities, check hem length, closures and whether jewelry can snag fabric.</li>
+        <li><strong>Weather:</strong> U.S. climates differ widely. Plan layers and outerwear for the city and date rather than relying on the season in India.</li>
+        <li><strong>Transit:</strong> Consider stairs, public transportation, parking and garment storage.</li>
+      </ul>
+
+      <h2>Ordering from LuxeMia</h2>
+      <p>LuxeMia currently ships to United States addresses. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided, but “tracked” does not mean guaranteed arrival by an event date. If timing is important, contact LuxeMia before ordering.</p>
+
+      <h2>Optional styling suggestions</h2>
+      <p>You may coordinate with a family color palette, repeat a garment color in one accessory or choose footwear for dancing. These are optional styling decisions, not festival requirements. Religious or family practices should come from the people hosting the event.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-12',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Festival Guide',
+    tags: ['festival outfits usa', 'indian ethnic wear usa', 'diwali outfit', 'navratri outfit', 'event planning'],
+    image: '/images/blog/gdrive/bride-blue-lehenga-festive.webp',
+    readTime: 4,
+    sources: [SOURCES.incredibleIndiaNavratri, SOURCES.luxemiaShipping],
   },
   {
-    "id": "15",
-    "slug": "how-to-drape-saree-beginner-guide",
-    "title": "How to Drape a Saree: Step-by-Step Guide for Beginners",
-    "excerpt": "Quick Answer: How Do You Drape a Saree for the First Time? To drape a saree for the first time, you need five things: a petticoat (waist-to-ankle underskirt tied tightly at the waist), a fitted blouse, the saree itself (5.5 to 6 meters for…",
-    "content": "<h2>Quick Answer: How Do You Drape a Saree for the First Time?</h2>\n<p>To drape a saree for the first time, you need five things: a petticoat (waist-to-ankle underskirt tied tightly at the waist), a fitted blouse, the saree itself (5.5 to 6 meters for a standard drape, 9 yards for a Maharashtrian nauvari), 8 to 10 safety pins, and a pair of flat or low-heel shoes (the petticoat length must match the shoe height). The standard Nivi drape (the most common Indian saree drape) takes 10 to 15 minutes for a beginner and breaks into 7 steps: (1) tuck the plain end into the petticoat at the right hip, (2) wrap once around the waist to the left, (3) tuck at the left hip, (4) make 5 to 7 pleats in the pallu end, (5) pin the pleats over the left shoulder, (6) make 5 to 7 pleats in the front panel below the navel, (7) tuck the front pleats into the petticoat. This guide covers the Nivi drape in detail, plus 4 regional variations and 3 common beginner mistakes to avoid.</p>\n\n<h2>What You Need Before You Start</h2>\n<p>Before you begin draping, gather all the items below. A missing item mid-drape will force you to start over, which is the most common beginner frustration.</p>\n<ul>\n  <li><strong>Petticoat:</strong> A waist-to-ankle cotton underskirt with a drawstring waist. The color should match the saree (or be white/cream for light-colored sarees). The petticoat's hem length determines the saree's hem length, so wear the shoes you plan to wear with the saree when measuring.</li>\n  \n  <li><strong>The saree:</strong> 5.5 to 6 meters for a standard Nivi drape. Heavier fabrics (silk, brocade) are harder for beginners; georgette and chiffon are easiest.</li>\n  <li><strong>Safety pins:</strong> 8 to 10 size-2 (1.5 inch) safety pins. Use rust-proof pins; cheap pins leave rust stains on silk and georgette.</li>\n  <li><strong>Shoes:</strong> The shoes you will wear with the saree. The petticoat must touch the floor when you are wearing the shoes, so the saree hem clears the floor by 1 inch.</li>\n  <li><strong>A full-length mirror:</strong> You cannot drape a saree without seeing your full body. A small bathroom mirror will leave you guessing at the back.</li>\n  <li><strong>Optional: decorative waist belt (kamarbandh)</strong> to hide the petticoat drawstring and add structure.</li>\n</ul>\n\n<h2>The 7-Step Nivi Drape (Most Common Indian Saree Drape)</h2>\n<p>The Nivi drape originated in Andhra Pradesh (the Nivi are a sub-group of Telugu women) and became the standard Indian saree drape in the 20th century. It is the drape you see in Bollywood movies, wedding photography, and most online listings. Follow these 7 steps:</p>\n\n<h3>Step 1: Tuck the Plain End at the Right Hip</h3>\n<p>Hold the saree with the decorative pallu end (the heavily embellished end) in your left hand and the plain end in your right hand. The pallu will fall over your left shoulder, so the plain end starts at your right hip. Tuck the top edge of the plain end into the petticoat drawstring at your right hip, with 1 inch of fabric going into the petticoat. The bottom edge of the saree should be 1 inch above the floor (or 1 inch above the petticoat hem — they should be the same length).</p>\n\n<h3>Step 2: Wrap Once Around the Waist to the Left</h3>\n<p>Bring the saree around your waist from right to left, keeping the top edge tucked into the petticoat. The fabric should be taut (not tight) around your waist. Wrap until you return to the front, with about 1 meter of fabric in front of you and the remaining 4.5+ meters (including the pallu) in your left hand.</p>\n\n<h3>Step 3: Tuck at the Left Hip (Optional Second Tuck)</h3>\n<p>For a more secure drape, tuck a small fold of fabric at the left hip. This creates a second anchor point and prevents the saree from sliding down during the day. Skip this tuck if you are using a waist belt.</p>\n\n<h3>Step 4: Make 5 to 7 Pleats in the Pallu End</h3>\n<p>Take the remaining fabric in your left hand and measure approximately 1 meter (the pallu length). Make 5 to 7 even pleats (each pleat is about 4-5 inches wide) by folding the fabric back and forth like an accordion. Pinch the pleats at the top edge and smooth them flat. The pallu pleats should hang evenly with the folded edges facing outward.</p>\n\n<h3>Step 5: Pin the Pallu Pleats Over the Left Shoulder</h3>\n<p>Bring the pleated pallu over your left shoulder, with the pallu hanging down your back. The pallu should reach your waistline at the back (or your knees, for a longer pallu). Pin the pallu pleats to the left shoulder seam of your blouse with a safety pin. The pallu should fall gracefully from your shoulder, not bunch up.</p>\n\n<h3>Step 6: Make 5 to 7 Pleats in the Front Panel Below the Navel</h3>\n<p>Now return to the front fabric below your navel. Make 5 to 7 even pleats (each about 4-5 inches wide) by folding the fabric back and forth like an accordion. The pleats should all face the same direction (typically left) and should be centered below your navel. Pinch the pleats at the top edge and smooth them flat.</p>\n\n<h3>Step 7: Tuck the Front Pleats Into the Petticoat</h3>\n<p>Tuck the top edge of the front pleats into the petticoat drawstring, centered below your navel. The pleats should hang straight down, opening naturally at the knee. Pin the pleats to the petticoat with a safety pin for security. Adjust the pleat direction so they fall evenly.</p>\n\n<h3>Final Adjustments</h3>\n<p>Check the drape in the mirror:</p>\n<ul>\n  <li>The hem should clear the floor by 1 inch (you should not trip on the saree when walking)</li>\n  <li>The pallu should hang at the same height on both sides of your shoulder</li>\n  <li>The front pleats should be centered and even</li>\n  <li>The saree should not gap at the waist (if it does, tighten the petticoat drawstring)</li>\n  <li>The saree should not slide down when you raise your arms (if it does, add another safety pin at the shoulder and waist)</li>\n</ul>\n\n<h2>Common Beginner Mistakes (and How to Fix Them)</h2>\n\n<h3>Mistake 1: Petricoat Too Loose</h3>\n<p>The single most common beginner mistake is a loose petticoat. The saree's entire weight hangs from the petticoat drawstring; if it is loose, the saree slides down within an hour. Fix: tie the petticoat drawstring as tight as you can comfortably breathe with, then add a knot. The petticoat should not rotate around your waist when you twist.</p>\n\n<h3>Mistake 2: Uneven Pleats</h3>\n<p>Uneven pleats (some 3 inches wide, others 6 inches) make the drape look messy. Fix: measure each pleat against your hand width. A standard hand-width (4 inches) is a good pleat size. Take the time to make even pleats — it is the difference between a polished look and a beginner look.</p>\n\n<h3>Mistake 3: Hem Too Long (or Too Short)</h3>\n<p>A hem that drags on the floor gets dirty, torn, and is a tripping hazard. A hem that is too short looks awkward and shows the petticoat. Fix: wear the shoes you plan to wear with the saree, then measure the petticoat hem to touch the floor. The saree hem should clear the floor by 1 inch.</p>\n\n<h3>Mistake 4: Pallu Pinned Too Tight</h3>\n<p>If the pallu is pinned too tight to the shoulder, it pulls the saree across your chest and restricts arm movement. Fix: pin the pallu so it falls loosely from the shoulder, with a 2-3 inch drop between the shoulder pin and where the pallu leaves the shoulder.</p>\n\n<h3>Mistake 5: No Safety Pins (or Cheap Pins That Rust)</h3>\n<p>Going pinless looks elegant but is risky — the pallu will slide off the shoulder during photos or dancing. Cheap pins leave rust stains on silk and georgette. Fix: use 8 to 10 size-2 rust-proof safety pins (stainless steel or brass). Pin the pallu to the shoulder, the front pleats to the petticoat, and the side tucks to the petticoat.</p>\n\n<h2>4 Regional Saree Drapes Beyond the Nivi</h2>\n\n<h3>Bengali Drape (Atpoure)</h3>\n<p>The Bengali drape uses a saree with a red border (laal paar) and features the pallu draped over both shoulders (not just the left). The pallu is pleated and pinned at the right shoulder, then brought across the back to fall over the left shoulder. A key bunch (gach kuchi) is traditionally tucked into the pallu. The Bengali drape is suitable for Durga Puja, Bengali weddings, and cultural events. Difficulty: intermediate (takes 20-25 minutes).</p>\n\n<h3>Maharashtrian Nauvari Drape</h3>\n<p>The Maharashtrian nauvari uses a 9-yard saree (instead of the standard 5.5-6 yard) and is draped like a dhoti, with the fabric going between the legs and tucked at the back. This drape allows full leg movement and is traditionally worn by Maharashtrian women for weddings, Gudi Padwa, and Navratri. The drape does not require a petticoat. Difficulty: advanced (takes 30-40 minutes).</p>\n\n<h3>Gujarati Seedha Pallu Drape</h3>\n<p>The Gujarati seedha pallu drape features the pallu draped over the right shoulder (instead of the left), with the pallu hanging in front of the body (not behind). The pallu is pleated and pinned at the right shoulder, then spreads across the chest to the left hip. This drape shows off heavily embroidered pallus and is suitable for Gujarati weddings, Garba, and Navratri. Difficulty: beginner (takes 10-15 minutes).</p>\n\n<h3>South Indian Half-Saree Drape</h3>\n<p>The South Indian half-saree drape (also called the davani drape) is for young unmarried girls wearing a half-saree (langa davani). It uses a 4-yard saree draped over the left shoulder with the pallu falling to the knee in front. The drape is similar to the Nivi but with a shorter pallu and a more youthful appearance. Suitable for: coming-of-age ceremonies, puberty celebrations, and young girls attending weddings. Difficulty: beginner.</p>\n\n<h2>Choosing the Right Saree Fabric for Your Skill Level</h2>\n\n<h3>Beginner-Friendly Fabrics</h3>\n<p>For your first 5-10 saree drapes, choose fabrics that hold pleats easily and slide less:</p>\n<ul>\n  <li><strong>Georgette:</strong> Soft, slightly grippy, holds pleats well, and is forgiving of mistakes. The best beginner fabric.</li>\n  <li><strong>Chiffon:</strong> Lighter than georgette, slightly more slippery, but still manageable for beginners.</li>\n  <li><strong>Cotton-silk blend:</strong> Has enough body to hold pleats without being slippery. Heavier than georgette.</li>\n  <li><strong>Crepe:</strong> Similar to georgette but with a pebbly texture that helps pleats stay in place.</li>\n</ul>\n\n<h3>Intermediate Fabrics</h3>\n<p>Once you are comfortable with the Nivi drape, try:</p>\n<ul>\n  <li><strong>Art silk (viscose):</strong> Drapey and lightweight but more slippery than georgette.</li>\n  <li><strong>Chanderi silk:</strong> Lightweight silk-cotton blend, slightly sheer, holds pleats well.</li>\n  <li><strong>Linen-silk blend:</strong> Crisp, holds pleats sharply, suitable for summer events.</li>\n</ul>\n\n<h3>Advanced Fabrics (Not for Beginners)</h3>\n<p>Heavy silk and brocade require experience to drape well because they are stiff and do not hold pleats naturally:</p>\n<ul>\n  <li><strong>Kanchipuram silk:</strong> Heavy, stiff, requires precise pleating and pinning. See our <a href=\"/blog\">Kanchipuram guide</a> for fabric-specific draping tips.</li>\n  <li><strong>Banarasi brocade silk:</strong> Heavy brocade does not pleat cleanly; the pallu often falls open.</li>\n  <li><strong>Tissue and organza:</strong> Crisp and slippery, requires multiple safety pins and precise pleating.</li>\n</ul>\n\n<h2>How Long Does It Take to Learn?</h3>\n<p>The learning curve for saree draping is steeper than other Indian ethnic wear because there is no \"putting it on\" — you are constructing the garment on your body. Typical progression:</p>\n<ul>\n  <li><strong>First 5 drapes:</strong> 25-35 minutes per drape, frequent mistakes, requires a mirror and helper</li>\n  <li><strong>Drapes 6-15:</strong> 15-20 minutes per drape, occasional mistakes, can drape without a helper</li>\n  <li><strong>Drapes 16-30:</strong> 10-12 minutes per drape, rarely makes mistakes, can drape in a hotel room</li>\n  <li><strong>Drapes 30+:</strong> 7-8 minutes per drape, can drape in a moving car or airplane lavatory</li>\n</ul>\n<p>Practice at home 3-4 times before wearing a saree to an event. The most common reason beginners dislike sarees is they tried to wear one to a wedding without practicing first, and spent the event adjusting the drape instead of enjoying it.</p>\n\n<h2>Pre-Draped Sarees: The Modern Alternative</h3>\n\n\n<h2>Accessories That Complete the Saree Look</h2>\n\n<h3>Jewelry</h3>\n<p>The saree leaves the midriff and arms bare, so jewelry is essential to complete the look:</p>\n<ul>\n  <li><strong>Necklace:</strong> A choker (16-18 inches) or princess-length (18-20 inches) necklace. For bridal wear, layer a choker with a longer rani-haar (24-28 inches).</li>\n  <li><strong>Earrings:</strong> Chandbali (crescent moon shape), jhumka (bell shape), or kundan chand. Match the necklace metal and style.</li>\n  <li><strong>Maang tikka:</strong> A forehead ornament that hangs from the part in your hair. Essential for bridal and engagement looks.</li>\n  <li><strong>Bangles:</strong> A stack of glass bangles (2 dozen) or a single kada (rigid bracelet) on each wrist.</li>\n  <li><strong>Waist belt (kamarbandh):</strong> Optional but adds polish, especially with a fitted drape.</li>\n  <li><strong>Anklets (payal):</strong> Silver or gold-tone chain anklets with small bells.</li>\n</ul>\n\n<h3>Footwear</h3>\n<ul>\n  <li><strong>Juttis (mojaris):</strong> Flat embroidered slip-on shoes from Rajasthan and Punjab. Best for weddings and traditional events.</li>\n  <li><strong>Kolhapuri chappals:</strong> Flat leather sandals from Maharashtra. Best for casual and daytime events.</li>\n  <li><strong>Block heels (2-3 inches):</strong> Best for reception and cocktail events where you want height but cannot walk in stilettos in a saree.</li>\n  <li><strong>Avoid stilettos:</strong> The saree hem catches on stiletto heels, causing trips and fabric tears.</li>\n</ul>\n\n<h3>Bag</h3>\n<ul>\n  <li><strong>Potli bag:</strong> A drawstring pouch in silk or velvet, embroidered to match the saree.</li>\n  <li><strong>Mina bag:</strong> A small rectangular clutch with enamel (meena) work.</li>\n  <li><strong>Avoid Western clutches:</strong> They clash with the traditional saree silhouette.</li>\n</ul>\n\n<h2>Common Questions About Saree Draping</h2>\n\n<h3>How long should a saree be?</h3>\n<p>A standard saree is 5.5 to 6 meters (6 to 6.5 yards) long and 1.1 to 1.2 meters wide. The 9-yard saree (nauvari) is used for the Maharashtrian drape. The 4-yard saree (davani) is used for the South Indian half-saree. For a standard Nivi drape, 5.5 to 6 meters is correct.</p>\n\n<h3>Do I need a petticoat?</h3>\n<p>Yes, for the Nivi, Gujarati, and Bengali drapes. The petticoat provides the waist anchor for the saree and determines the hem length. The Maharashtrian nauvari drape does not require a petticoat (the saree is draped like a dhoti). Pre-draped sarees have a built-in petticoat.</p>\n\n<h3>Can I wear a saree if I am plus-size?</h3>\n<p>Absolutely. The saree is one of the most flattering garments for plus-size bodies because it defines the waist and skims the hips. Tips for plus-size saree draping: choose georgette or chiffon (not stiff silk), make wider pleats (5-6 inches instead of 4), use a waist belt to define the waist, and avoid heavily embellished borders that add visual bulk.</p>\n\n<h3>How do I keep the saree from sliding down?</h3>\n<p>Three things keep the saree in place: (1) a tight petticoat drawstring (tie it as tight as you can comfortably breathe), (2) multiple safety pins (one at the shoulder, one at each side tuck, one at the front pleats), and (3) a waist belt (kamarbandh) that anchors the saree at the waist.</p>\n\n<h3>Can I wear a saree without showing my midriff?</h3>\n<p>Yes. The standard Nivi drape shows the midriff between the blouse and the petticoat, but you can wear a longer blouse that tucks into the petticoat (kurti-style blouse) for full coverage. You can also drape the pallu across the front to cover the midriff. Both options are culturally acceptable and increasingly common in 2026.</p>\n\n<h2>Related Reading</h2>\n<p>For deeper exploration of topics covered in this article, see these related LuxeMia guides:</p>\n<ul>\n    <li><a href=\"/blog\">saree draping styles for every occasion</a> (in our Attires section)</li>\n    <li><a href=\"/blog\">how to care for silk sarees</a> (in our How To Care section)</li>\n    <li><a href=\"/blog\">Kanchipuram silk saree guide</a> (in our Attires section)</li>\n</ul>\n\n\n<h2>Final Checklist Before Your First Saree</h2>\n<ul>\n  <li>Petticoat in matching color, hemmed to the right shoe height</li>\n  <li>Fitted blouse ending at the underbust or midriff</li>\n  <li>Beginner-friendly fabric (georgette or chiffon for the first drape)</li>\n  <li>8 to 10 rust-proof size-2 safety pins</li>\n  <li>Full-length mirror at home</li>\n  <li>Practice draping 3 to 4 times before wearing to an event</li>\n  <li>Allow 25 to 35 minutes for your first drape (10 to 15 minutes once you are experienced)</li>\n  <li>Wear the shoes you plan to wear with the saree when measuring the petticoat length</li>\n  <li>Jewelry, footwear, and bag selected before draping (you cannot easily add jewelry after the pallu is pinned)</li>\n</ul>\n<p>The saree is the most rewarding Indian garment to wear — and the most frustrating to learn. Practice at home, start with georgette, and do not be discouraged if your first drape takes 35 minutes. By your 10th drape, you will be draping in 10 minutes and fielding compliments all night. Browse LuxeMia's <a href=\"/sarees\">saree catalog</a> for beginner-friendly georgette and chiffon sarees, or read our <a href=\"/blog\">how-to guides</a> for more on Indian ethnic wear care and styling.</p>",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-02-10",
-    "updatedAt": "2026-07-13",
-    "category": "How-To & Care",
-    "tags": [
-      "how to drape saree",
-      "saree draping beginner",
-      "nivi drape",
-      "saree pleats",
-      "bengali saree drape",
-      "gujarati seedha pallu",
-      "maharashtrian nauvari",
-      "saree petticoat",
-      "saree safety pins",
-      "pre-draped saree",
-      "saree for beginners",
-      "saree styling tips"
-    ],
-    "image": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/01copy_9217b9de-b7c7-4e2e-9262-691db8dbac93.jpg?v=1783383919&width=1200&height=675&crop=center",
-    "readTime": 14
+    id: '18',
+    slug: 'lehenga-vs-sharara-vs-anarkali-comparison',
+    title: 'Lehenga, Sharara and Anarkali: What the Garment Terms Mean',
+    excerpt: 'A lehenga is built around a separate skirt, a sharara around flared divided bottoms, and an anarkali around a long flared top. Retail use varies, so the included pieces and measurements on the listing are decisive.',
+    content: `
+      ${editorialNote}
+      <h2>Basic silhouette differences</h2>
+      <table>
+        <thead><tr><th>Term</th><th>Typical structure</th><th>Listing details to verify</th></tr></thead>
+        <tbody>
+          <tr><td>Lehenga</td><td>A separate skirt, commonly paired with a blouse or choli and sometimes a dupatta</td><td>Included pieces, waist closure, skirt length, lining and blouse stitching</td></tr>
+          <tr><td>Sharara</td><td>Separated trousers that flare through the leg, paired with a top and often a dupatta</td><td>Where the flare begins, waistband, rise, inseam, top length and included pieces</td></tr>
+          <tr><td>Anarkali</td><td>A long, flared kurta or dress-like top, usually worn with bottoms and sometimes a dupatta</td><td>Bodice measurements, flare, lining, garment length, bottoms and dupatta</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Terms vary in retail use</h2>
+      <p>Product naming is not perfectly standardized. A retailer may use “gharara” and “sharara” differently, or describe a coordinated skirt set as a lehenga-style outfit. Photographs and the exact list of included pieces are more reliable than the category name alone.</p>
+
+      <h2>How to compare the three</h2>
+      <ul>
+        <li>Compare body and finished-garment measurements.</li>
+        <li>Check whether the garment is ready to wear, semi-stitched, unstitched or offered with a listed stitching option.</li>
+        <li>Check the fabric or materials for each piece, not only the main garment.</li>
+        <li>Consider sitting, walking and dancing in the actual venue.</li>
+        <li>Do not choose by a claimed “best body type”; fit depends on the garment measurements and wearer's preference.</li>
+      </ul>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-12',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Outfit Guide',
+    tags: ['lehenga vs sharara', 'anarkali guide', 'indian outfit terms', 'sharara suit', 'lehenga choli'],
+    image: '/images/blog/gdrive/anarkali-gold-mint.webp',
+    readTime: 4,
+    sources: [SOURCES.vaIndianTextiles, SOURCES.luxemiaSizing],
   },
   {
-    "id": "p7",
-    "slug": "how-to-choose-salwar-kameez-body-type",
-    "title": "How to Choose the Right Salwar Kameez for Your Body Type",
-    "excerpt": "The salwar kameez is one of the most versatile garments in Indian fashion — comfortable, elegant, and flattering on every body type. But with so many silhouettes, fabrics, and styles available, choosing the right one for your body shape…",
-    "content": "\n      <p>The salwar kameez is one of the most versatile garments in Indian fashion — comfortable, elegant, and flattering on every body type. But with so many silhouettes, fabrics, and styles available, choosing the right one for your body shape can feel overwhelming. This guide breaks down the best salwar kameez styles for each body type, with practical fit tips and styling advice so you can shop with confidence.</p>\n\n      <h2>Understanding Your Body Type</h2>\n      <p>Before choosing a salwar kameez, identify your body type. Most women fall into one of five categories:</p>\n      <ul>\n        <li><strong>Pear:</strong> Hips wider than shoulders. Weight carried in lower body.</li>\n        <li><strong>Apple:</strong> Shoulders wider than hips. Weight carried in midsection.</li>\n        <li><strong>Hourglass:</strong> Shoulders and hips aligned with defined waist.</li>\n        <li><strong>Rectangle:</strong> Shoulders, waist, and hips roughly the same width.</li>\n        <li><strong>Petite:</strong> Small frame, under 5'3\". Proportions matter more than shape.</li>\n      </ul>\n\n      <h2>Best Salwar Kameez Styles for Each Body Type</h2>\n      <h3>Pear Body Type</h3>\n      <p>Goal: Balance the lower body by drawing attention upward.</p>\n      <ul>\n        <li><strong>Best styles:</strong> A-line kameez, anarkali, straight-cut with boat neck</li>\n        <li><strong>Best bottoms:</strong> Churidar (fitted) or palazzo (wide-leg)</li>\n        <li><strong>Best fabrics:</strong> Flowy fabrics like georgette and chiffon that skim over hips</li>\n        <li><strong>Avoid:</strong> Patiala salwar (adds volume to hips), short kameez that hits at the widest part of hips</li>\n        <li><strong>Styling tip:</strong> Choose kameez with embellishment around the neckline or yoke to draw eyes upward.</li>\n      </ul>\n\n      <h3>Apple Body Type</h3>\n      <p>Goal: Elongate the torso and define the waist.</p>\n      <ul>\n        <li><strong>Best styles:</strong> Long anarkali, A-line kameez with V-neck, empire waist</li>\n        <li><strong>Best bottoms:</strong> Straight-cut pajama or churidar</li>\n        <li><strong>Best fabrics:</strong> Soft, draping fabrics that do not add bulk — chiffon, georgette, crepe</li>\n        <li><strong>Avoid:</strong> Stiff fabrics like organza or heavy silk, short kameez, belts at the natural waist</li>\n        <li><strong>Styling tip:</strong> Choose kameez with vertical embroidery or prints to elongate the torso.</li>\n      </ul>\n\n      <h3>Hourglass Body Type</h3>\n      <p>Goal: Highlight your natural proportions.</p>\n      <ul>\n        <li><strong>Best styles:</strong> Fitted kameez, anarkali with defined waist, straight-cut</li>\n        <li><strong>Best bottoms:</strong> Churidar or fitted pajama</li>\n        <li><strong>Best fabrics:</strong> Any fabric works — silk, cotton, georgette, velvet</li>\n        <li><strong>Avoid:</strong> Shapeless or boxy kameez that hide your waist</li>\n        <li><strong>Styling tip:</strong> Add a belt or sash at the waist to accentuate your shape.</li>\n      </ul>\n\n      <h3>Rectangle Body Type</h3>\n      <p>Goal: Create the illusion of curves.</p>\n      <ul>\n        <li><strong>Best styles:</strong> Anarkali (creates volume), peplum-style kameez, layered looks</li>\n        <li><strong>Best bottoms:</strong> Patiala salwar or palazzo (adds volume to lower body)</li>\n        <li><strong>Best fabrics:</strong> Stiffer fabrics that hold their shape — organza, raw silk, brocade</li>\n        <li><strong>Avoid:</strong> Straight-cut kameez in flowy fabrics (emphasizes straightness)</li>\n        <li><strong>Styling tip:</strong> Choose kameez with horizontal embellishment or color-blocking to create curves.</li>\n      </ul>\n\n      <h3>Petite Body Type</h3>\n      <p>Goal: Elongate your frame.</p>\n      <ul>\n        <li><strong>Best styles:</strong> Short kameez (knee-length), straight-cut, fitted silhouettes</li>\n        <li><strong>Best bottoms:</strong> Churidar or slim pajama</li>\n        <li><strong>Best fabrics:</strong> Lightweight fabrics — chiffon, georgette, cotton</li>\n        <li><strong>Avoid:</strong> Long anarkali (overwhelms petite frames), Patiala salwar (too much volume)</li>\n        <li><strong>Styling tip:</strong> Choose kameez with vertical prints and high slits to elongate your legs.</li>\n      </ul>\n\n      <h2>Neckline Guide</h2>\n      <p>The neckline dramatically affects how a salwar kameez looks on you. Choose based on your face shape and bust size:</p>\n      <ul>\n        <li><strong>V-neck:</strong> Flattering on almost everyone. Elongates the neck and slims the face.</li>\n        <li><strong>Boat neck:</strong> Broadens shoulders — great for pear shapes. Elegant and sophisticated.</li>\n        <li><strong>Square neck:</strong> Modern and structured. Works well for hourglass figures.</li>\n        <li><strong>Round neck:</strong> Classic and simple. Best for smaller busts.</li>\n        <li><strong>Halter neck:</strong> Shows off shoulders. Great for slim or athletic builds.</li>\n        <li><strong>High collar:</strong> Elegant and formal. Can be unflattering on short necks.</li>\n      </ul>\n\n      <h2>Fabric Guide by Body Type</h2>\n      <h3>Flowy Fabrics (Georgette, Chiffon, Crepe)</h3>\n      <p>Best for: Pear, apple, and petite body types. These fabrics skim over curves without adding bulk.</p>\n\n      <h3>Stiff Fabrics (Organza, Raw Silk, Brocade)</h3>\n      <p>Best for: Rectangle and hourglass body types. These fabrics hold their shape and create structure.</p>\n\n      <h3>Soft Fabrics (Cotton, Linen, Art Silk)</h3>\n      <p>Best for: All body types. Comfortable and versatile. Choose cotton for casual wear and art silk for festive occasions.</p>\n\n      <h3>Heavy Fabrics (Velvet, Heavy Silk)</h3>\n      <p>Best for: Hourglass and rectangle body types. These fabrics add visual weight — avoid if you are self-conscious about size.</p>\n\n      <h2>Sleeve Length Guide</h2>\n      <ul>\n        <li><strong>Full sleeves:</strong> Elegant and formal. Slims the arms. Great for winter events.</li>\n        <li><strong>3/4 sleeves:</strong> The most flattering length for most women. Shows off wrists and bangles.</li>\n        <li><strong>Short sleeves:</strong> Casual and comfortable. Best for slim arms.</li>\n        <li><strong>Sleeveless:</strong> Modern and bold. Best for toned arms and warm-weather events.</li>\n      </ul>\n\n      <h2>Kameez Length Guide</h2>\n      <ul>\n        <li><strong>Short (knee-length):</strong> Modern and youthful. Great for petite women.</li>\n        <li><strong>Medium (mid-calf):</strong> The most versatile length. Works for most body types.</li>\n        <li><strong>Long (ankle-length):</strong> Traditional and elegant. Can overwhelm petite frames.</li>\n        <li><strong>Floor-length (anarkali):</strong> Formal and dramatic. Best for taller women.</li>\n      </ul>\n\n      <h2>Bottom Styles Explained</h2>\n      <h3>Churidar</h3>\n      <p>Fitted pants that gather at the ankle. The most flattering bottom for most body types. Works with any kameez length.</p>\n\n      <h3>Patiala</h3>\n      <p>Voluminous pants with many pleats. Adds volume to the lower body — great for rectangle shapes, avoid for pear shapes.</p>\n\n      <h3>Straight Pajama</h3>\n      <p>Simple straight-leg pants. A versatile choice that works with any kameez.</p>\n\n      <h3>Palazzo</h3>\n      <p>Wide-leg pants that look like a long skirt. Modern and comfortable. Pairs well with short kameez.</p>\n\n      <h3>Sharara</h3>\n      <p>Wide-flared pants that look like a lehenga. Formal and dramatic. Pairs with short kameez.</p>\n\n      <h2>Common Fit Mistakes</h2>\n      <ul>\n        <li><strong>Kameez too tight:</strong> If it pulls at the buttons or rides up when you walk, it is too tight.</li>\n        <li><strong>Kameez too loose:</strong> If it looks like a tent, it is too loose. Tailoring can fix this.</li>\n        <li><strong>Armhole too tight:</strong> You should be able to move your arms freely. If you cannot raise them above shoulder height, size up.</li>\n        <li><strong>Churidar too long:</strong> The gathers should sit at the ankle, not bunch up above it.</li>\n        <li><strong>Wrong bra:</strong> A ill-fitting bra ruins the line of a kameez. Get professionally fitted.</li>\n      </ul>\n\n      <h2>Where to Shop Salwar Kameez Online</h2>\n      <p>When shopping online, look for stores that offer:</p>\n      <ul>\n        <li>Detailed size charts with inch measurements</li>\n        <li>Multiple photos from different angles</li>\n        <li>Fabric descriptions (not just \"synthetic\")</li>\n        <li>Exact stitching status and variant measurements</li>\n        <li>A clearly stated final-sale and damage policy</li>\n      </ul>\n      \n\n      <h2>Final Tips</h2>\n      <ul>\n        <li><strong>Get measured:</strong> Use our <a href=\"/size-guide\">size guide</a> or visit a tailor for accurate measurements.</li>\n        <li><strong>Compare measurements:</strong> Match your body measurements to the exact size or variant details instead of relying only on a letter size.</li>\n        <li><strong>Confirm stitching status:</strong> Ready-to-wear, semi-stitched and unstitched pieces require different fit planning.</li>\n        <li><strong>Try before the event:</strong> Do not wait until the day of — try your outfit on as soon as it arrives.</li>\n      </ul>\n\n      <p>Ready to compare options? <a href=\"/suits\">Shop current suits</a> and contact U.S.-based support if a listing's size, fabric, included pieces or stitching status needs clarification before you order.</p>\n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-07-09",
-    "updatedAt": "2026-08-03",
-    "category": "Style Guide",
-    "tags": [
-      "salwar kameez body type",
-      "salwar kameez fit guide",
-      "anarkali suit",
-      "indian outfits body shape",
-      "salwar kameez styling"
-    ],
-    "image": "/images/blog/blog-007-champagne-rose-net.jpg",
-    "readTime": 6
+    id: '19',
+    slug: 'how-to-drape-saree-beginner-guide',
+    title: 'How to Drape a Saree: One Beginner Method, Not a Universal Rule',
+    excerpt: 'Sarees are worn in many regional and personal drapes. This guide explains a common pleated front-and-shoulder method while recognizing that it is only one approach.',
+    content: `
+      ${editorialNote}
+      <h2>There is more than one saree drape</h2>
+      <p>A saree is an unstitched length of textile that can be draped in many ways. Regional methods differ in direction, pleats, pallu placement and whether the cloth passes between the legs. The steps below describe one common modern approach; they do not define the only correct way to wear a saree.</p>
+
+      <h2>Before starting</h2>
+      <ul>
+        <li>Confirm saree length, blouse fit and whether a petticoat or another support garment is needed for the chosen drape.</li>
+        <li>Put on the footwear you expect to wear before setting the hem.</li>
+        <li>Use pins only where they will not damage the fabric or embellishment, and keep sharp points away from skin.</li>
+      </ul>
+
+      <h2>A common beginner sequence</h2>
+      <ol>
+        <li>Secure the plain end at the waist and wrap once around the body, checking that the lower edge is even.</li>
+        <li>Create a group of front pleats and tuck them securely at the waist. The number and width are personal and depend on the saree.</li>
+        <li>Bring the remaining fabric around the body and place the pallu over the shoulder.</li>
+        <li>Leave the pallu open or pleat it, according to preference and the fabric.</li>
+        <li>Walk, sit and raise your arms to confirm that the drape is secure before leaving.</li>
+      </ol>
+
+      <h2>Fabric and care</h2>
+      <p>Different textiles respond differently to folding and pinning. A museum's draping method for display is not a garment-care instruction for consumers. Follow the care label and avoid assuming that all silk-like or embellished sarees tolerate steam, washing or direct ironing.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-13',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'How-To Guide',
+    tags: ['how to drape saree', 'beginner saree drape', 'saree pleats', 'saree guide'],
+    image: '/images/blog/gdrive/kanchipuram-saree-brass-lamps.webp',
+    readTime: 4,
+    sources: [SOURCES.vaSariDraping, SOURCES.ftcCare],
   },
   {
-    "id": "74",
-    "slug": "sherwani-vs-jodhpuri-vs-bandhgala-groom-guide",
-    "title": "Sherwani vs Jodhpuri vs Bandhgala: Which Groom Suit Is Right for You?",
-    "excerpt": "Choosing the right outfit for your Indian wedding is one of the most important sartorial decisions a groom will make. While brides have a seemingly infinite variety of lehengas and sarees to choose from, grooms typically choose from three…",
-    "content": "\n      <p>Choosing the right outfit for your Indian wedding is one of the most important sartorial decisions a groom will make. While brides have a seemingly infinite variety of lehengas and sarees to choose from, grooms typically choose from three main silhouettes: the sherwani, the Jodhpuri suit, and the bandhgala. Each has a distinct personality, a different level of formality, and a unique historical lineage. This guide breaks down everything you need to know to choose the right one for your wedding, reception, or any formal Indian event.</p>\n\n      <h2>The Sherwani: The King of Indian Wedding Wear</h2>\n      <p>The sherwani is the most popular and widely recognized Indian groom outfit. It is a long, coat-like garment that extends to just below the knee, typically worn over a churidar (tapered trousers), dhoti, or shalwar. The sherwani originated as a fusion of Mughal and British military coats in the 18th century and has since become the gold standard for Indian grooms.</p>\n\n      <h3>What Makes a Sherwani Distinctive</h3>\n      <ul>\n        <li><strong>Silhouette:</strong> Long, structured, and fitted through the body with a flared bottom. It has a high collar (mandarin or stand collar) and buttons down the front.</li>\n        <li><strong>Fabrics:</strong> Rich fabrics like raw silk, brocade, velvet, and jacquard. Winter weddings call for velvet or wool-blend sherwanis, while summer weddings are better suited to raw silk or cotton silk.</li>\n        <li><strong>Embellishment:</strong> Sherwanis range from simple and elegant (minimal embroidery, clean lines) to heavily embellished (full zardozi, zari, or thread work). The level of embellishment typically corresponds to the formality of the event.</li>\n        <li><strong>When to wear it:</strong> The sherwani is the standard choice for the wedding ceremony itself. It is also appropriate for the reception, sangeet, and any formal Indian event.</li>\n      </ul>\n      \n\n      <h2>The Jodhpuri Suit: The Royal Alternative</h2>\n      <p>The Jodhpuri suit (also called a Jodhpuri coat or Prince coat) hails from the royal courts of Jodhpur, Rajasthan. It is a shorter, more structured garment than the sherwani — typically hip-length — and is characterized by its distinctive closed collar and the inclusion of matching trousers. Think of it as the Indian equivalent of a Western lounge suit, but with regal Indian aesthetics.</p>\n\n      <h3>What Makes a Jodhpuri Suit Distinctive</h3>\n      <ul>\n        <li><strong>Silhouette:</strong> Shorter than a sherwani (hip-length), with a structured, tailored fit. The coat has a high, closed collar and often features contrasting lapels or piping.</li>\n        <li><strong>Fabrics:</strong> Similar to sherwanis — raw silk, brocade, and jacquard are common. The trousers are usually in the same fabric as the coat, sometimes with a contrasting stripe down the side.</li>\n        <li><strong>Embellishment:</strong> Generally less embellished than a sherwani. Jodhpuri suits rely more on the quality of the fabric, the cut, and subtle embroidery rather than heavy ornamental work.</li>\n        <li><strong>When to wear it:</strong> The Jodhpuri suit is versatile — perfect for the reception, engagement, or a formal evening event. It can also work for the wedding ceremony, though it is less traditional than the sherwani for Hindu weddings. It is an excellent choice for Muslim and Christian Indian weddings.</li>\n      </ul>\n      \n\n      <h2>The Bandhgala: The Sleek Formal Choice</h2>\n      <p>The bandhgala (also called a Nehru jacket when shorter, or an achkan in some regions) is the most streamlined of the three. It is a closed-neck, collarless or mandarin-collar coat that is fitted and elegant. The bandhgala is often compared to a Western tuxedo in terms of formality and sleekness.</p>\n\n      <h3>What Makes a Bandhgala Distinctive</h3>\n      <ul>\n        <li><strong>Silhouette:</strong> Fitted, structured, and clean. The bandhgala has no lapels — it features a high, closed neck (bandh = closed, gala = neck). Length varies from waist-length (Nehru jacket style) to knee-length (achkan style).</li>\n        <li><strong>Fabrics:</strong> Wool blends, linen, cotton, raw silk, and velvet. For weddings, raw silk or velvet bandhgalas are preferred. For summer events, linen bandhgalas look sharp and keep you cool.</li>\n        <li><strong>Embellishment:</strong> Minimalist by nature. A well-made bandhgala relies on cut, fabric quality, and perhaps a subtle embroidered motif or button detail rather than heavy ornamentation.</li>\n        <li><strong>When to wear it:</strong> The bandhgala is perfect for the reception, cocktail parties, and formal dinners. It is also an excellent choice for grooms who prefer a modern, minimalist look. In some communities, a bandhgala is worn for the engagement ceremony.</li>\n      </ul>\n      \n\n      <h2>Side-by-Side Comparison</h2>\n      <ul>\n        <li><strong>Length:</strong> Sherwani (below knee) > Bandhgala (waist to knee) > Jodhpuri (hip-length)</li>\n        <li><strong>Formality:</strong> Sherwani (most formal) > Jodhpuri > Bandhgala (most versatile)</li>\n        <li><strong>Embellishment level:</strong> Sherwani (heaviest) > Jodhpuri > Bandhgala (lightest)</li>\n        <li><strong>Best for wedding ceremony:</strong> Sherwani</li>\n        <li><strong>Best for reception:</strong> Any of the three — Jodhpuri and bandhgala are especially popular</li>\n        <li><strong>Best for hot weather:</strong> Bandhgala in linen or cotton silk</li>\n        <li><strong>Best for a royal look:</strong> Sherwani with a turban, or Jodhpuri suit</li>\n      </ul>\n\n      <h2>Body Type Guide: Which Silhouette Suits You</h2>\n      <h3>Tall and Lean</h3>\n      <p>You can carry any of the three silhouettes well. A long sherwani will look regal and proportional. A bandhgala in a darker color creates a sharp, tailored look. Avoid overly flared sherwanis — they can make you look even taller and thinner.</p>\n      <h3>Broad and Muscular</h3>\n      <p>A Jodhpuri suit or a bandhgala is ideal — the shorter length and structured fit complement a broader frame. Avoid heavily padded sherwanis, which can add unnecessary bulk. Choose fabrics with subtle texture rather than shiny, stiff materials.</p>\n      <h3>Shorter Stature</h3>\n      <p>A well-fitted bandhgala or Jodhpuri suit is your best bet — the shorter length elongates your silhouette. If you prefer a sherwani, choose one that ends at the mid-thigh rather than below the knee. Avoid voluminous fabrics and heavy embroidery that can overwhelm a smaller frame.</p>\n      <h3>Larger Build</h3>\n      <p>A structured bandhgala in a dark color creates a clean, streamlined look. Choose a fabric with a bit of stretch for comfort. Avoid stiff brocades and heavy zardozi work, which add visual weight. A Jodhpuri suit with a subtle pattern can also be flattering.</p>\n\n      <h2>Styling Tips for Each Outfit</h2>\n      <ul>\n        <li><strong>Sherwani:</strong> Pair with a churidar, mojari shoes, a brooch at the lapel, and a turban (pagdi/safa) for the ceremony. Add a pocket square for the reception.</li>\n        <li><strong>Jodhpuri suit:</strong> Wear with matching trousers, an embroidered mojari, and a statement watch. A pocket square in a contrasting color adds polish.</li>\n        <li><strong>Bandhgala:</strong> Keep accessories minimal — a silk pocket square, polished shoes (oxfords or mojari), and perhaps a single lapel pin. The bandhgala's strength is in its simplicity.</li>\n      </ul>\n\n      <h2>U.S. Shopping: Getting the Right Fit Online</h2>\n      <p>Start with your current body measurements, then compare them with the exact size or variant details on the product page. Confirm the listed fabric, included pieces, stitching status and availability before ordering. If a listing is unclear, contact LuxeMia support before checkout.</p>\n\n      <h2>Frequently Asked Questions</h2>\n\n      <h3>Can I wear a bandhgala for the main wedding ceremony?</h3>\n      <p>Yes, but it depends on the community and the formality of the wedding. In Hindu and Sikh weddings, the sherwani is more traditional and expected. However, for Muslim, Christian, and interfaith Indian weddings, a bandhgala is perfectly appropriate for the ceremony. Many modern couples also opt for a sherwani for the ceremony and a bandhgala for the reception, giving the groom two distinct looks. Browse <a href=\"/menswear\">LuxeMia's current menswear selection</a> and use each listing to confirm the exact garment type and included pieces.</p>\n\n      <h3>What is the difference between a Nehru jacket and a bandhgala?</h3>\n      <p>The terms are often used interchangeably, but technically, a Nehru jacket is a waist-length, hip-length garment (similar to a Western suit jacket but with a mandarin collar), while a bandhgala can range from waist-length to knee-length. In common usage, \"bandhgala\" is the broader term. The Nehru jacket is named after Jawaharlal Nehru, who popularized the style. Both feature the signature closed-neck (bandh gala) design.</p>\n\n      <h3>How much should I budget for an Indian wedding outfit as a groom?</h3>\n      <p>Use the current product price rather than a generic market estimate. Include any tailoring selected for that listing and U.S. shipping: $12 below a $150 order total and free at $150 and above.</p>\n      \n    ",
-    "author": "LuxeMia Editorial Team",
-    "publishedAt": "2026-07-22",
-    "updatedAt": "2026-08-03",
-    "category": "attires",
-    "tags": [
-      "sherwani vs jodhpuri",
-      "bandhgala suit",
-      "groom outfit guide",
-      "indian menswear comparison",
-      "wedding sherwani styles",
-      "jodhpuri suit guide"
-    ],
-    "image": "/images/blog/sherwani-vs-jodhpuri-vs-bandhgala.webp",
-    "readTime": 6
-  }
+    id: '20',
+    slug: 'how-to-choose-salwar-kameez-body-type',
+    title: 'How to Choose a Salwar Kameez by Measurements, Not Body-Type Rules',
+    excerpt: 'Body-shape labels do not determine which salwar kameez someone may wear. Compare the exact garment measurements, cut, included pieces and your own fit preference.',
+    content: `
+      ${editorialNote}
+      <h2>Why this guide no longer prescribes “flattering” body types</h2>
+      <p>Terms such as apple, pear or hourglass do not supply the measurements needed to fit a garment. They also turn personal style into a rule. A useful fit guide compares the wearer's measurements with the exact garment and states where the design is fitted, straight or flared.</p>
+
+      <h2>Measurements to check</h2>
+      <ul>
+        <li>Bust, waist and hip</li>
+        <li>Shoulder width, armhole, upper arm and sleeve length</li>
+        <li>Kurta length and side-slit height</li>
+        <li>Bottom waist, hip, rise, thigh, inseam and hem opening as applicable</li>
+        <li>Dupatta dimensions if coverage or draping is important</li>
+      </ul>
+
+      <h2>Understand the listed cut</h2>
+      <p>A straight kurta, anarkali, short kurti, palazzo, churidar, salwar and sharara use different garment shapes. Those terms help describe construction, but they do not guarantee fit. Check whether the size chart gives body measurements or finished-garment measurements and ask how much ease is built into the item.</p>
+
+      <h2>Practical fit preferences</h2>
+      <p>Some wearers prefer a close bodice and others prefer more movement. Sleeve length, neckline, slit height and garment length are similarly personal. Record the preference separately from the body measurement so a seller or tailor does not have to guess.</p>
+
+      <h2>Before a final-sale purchase</h2>
+      <p>Confirm the included pieces, stitching status, measurements and available margin on the exact listing. If any field is unclear, contact LuxeMia before ordering rather than relying on the label alone.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-13',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Fit Guide',
+    tags: ['salwar kameez fit', 'anarkali measurements', 'suit sizing', 'indian clothing measurements'],
+    image: '/images/blog/gdrive/anarkali-gold-mint.webp',
+    readTime: 4,
+    sources: [SOURCES.nistSizing, SOURCES.luxemiaSizing],
+  },
+  {
+    id: '21',
+    slug: 'sherwani-vs-jodhpuri-vs-bandhgala-groom-guide',
+    title: 'Sherwani, Jodhpuri and Bandhgala: A Factual Menswear Comparison',
+    excerpt: 'Retail terminology overlaps, especially for Jodhpuri and bandhgala styles. Use the product construction, length, included pieces and measurements rather than assuming the name guarantees a specific outfit.',
+    content: `
+      ${editorialNote}
+      <h2>Typical retail meanings</h2>
+      <table>
+        <thead><tr><th>Term</th><th>Common description</th><th>What to verify</th></tr></thead>
+        <tbody>
+          <tr><td>Sherwani</td><td>A long, structured coat worn over lower garments</td><td>Coat length, closure, lining and whether kurta, trousers or accessories are included</td></tr>
+          <tr><td>Bandhgala</td><td>A closed-neck jacket or coat with a standing collar</td><td>Jacket length, vents, trouser inclusion and exact fabric</td></tr>
+          <tr><td>Jodhpuri suit</td><td>A term often used for a bandhgala-style jacket with trousers</td><td>Because usage overlaps, rely on the actual pieces and photographs</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Names do not guarantee construction</h2>
+      <p>Historical garments and modern retail categories are not identical, and sellers may apply these terms differently. The safest comparison is the listing's garment length, collar, closure, lining, vents, lower garment and included accessories.</p>
+
+      <h2>Fit measurements</h2>
+      <p>Compare chest, waist, shoulder, sleeve and garment length. For trousers, compare waist, hip, rise and inseam. Ask whether a chart lists body or finished-garment measurements and do not assume a Western jacket size converts directly.</p>
+
+      <h2>Optional event guidance</h2>
+      <p>A longer coat may be chosen for a wedding ceremony and a shorter jacket for another event, but that is not a universal cultural rule. Follow the couple's dress code, venue requirements and the wearer's comfort.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-13',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Menswear Guide',
+    tags: ['sherwani vs bandhgala', 'jodhpuri suit', 'groom menswear', 'indian menswear terms'],
+    image: '/images/blog/gdrive/groomsmen-lavender-pink-turbans.webp',
+    readTime: 4,
+    sources: [SOURCES.romSherwani, SOURCES.nistSizing],
+  },
+  {
+    id: '48',
+    slug: 'anamika-khanna-designer-profile-kolkata-couture',
+    title: 'Anamika Khanna: A Source-Based Designer Profile',
+    excerpt: 'Anamika Khanna is an Indian fashion designer working from Kolkata. This profile limits itself to claims supported by her official site and an established industry profile.',
+    content: `
+      ${editorialNote}
+      <h2>Verified profile</h2>
+      <p>Anamika Khanna's official site identifies her work through current collections and public fashion appearances. The Business of Fashion profile describes her approach as combining Indian textiles and techniques with Western silhouettes and tailoring, and identifies her with Kolkata.</p>
+
+      <h2>What the source record supports</h2>
+      <ul>
+        <li>She is an Indian fashion designer associated with a Kolkata-based studio.</li>
+        <li>Her work uses Indian textile and decorative traditions alongside contemporary tailoring and silhouettes.</li>
+        <li>Her official site documents current couture and occasionwear work.</li>
+      </ul>
+
+      <h2>Claims intentionally left out</h2>
+      <p>This revised profile does not repeat unsupported birth details, “first Indian designer” claims, celebrity-wedding claims, prices, awards or descriptions such as “invented the dhoti sari” unless a cited source establishes the exact statement. It also does not imply that LuxeMia sells, represents or is affiliated with Anamika Khanna.</p>
+
+      <h2>How to use a designer profile</h2>
+      <p>A designer profile provides fashion-history context. It is not evidence that a separate retailer's product is made by, inspired by or connected with that designer. LuxeMia product pages should be read only for the facts stated on that exact listing.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-14',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Designer Profile',
+    tags: ['anamika khanna', 'indian fashion designer', 'kolkata fashion', 'indian couture'],
+    image: '/og-image.jpg',
+    imagePresentation: 'editorial',
+    readTime: 3,
+    sources: [SOURCES.anamikaOfficial, SOURCES.anamikaBof],
+  },
+  {
+    id: 'cc2',
+    slug: 'bindi-meaning-history-indian-women',
+    title: 'The Bindi: Meanings, Names and Respectful Context',
+    excerpt: 'Bindi comes from the Sanskrit bindu, meaning a point or dot. Meanings and practices vary across religions, regions, families and occasions, so no single explanation applies to every wearer.',
+    content: `
+      ${editorialNote}
+      <h2>What the word means</h2>
+      <p>The Hindu American Foundation traces “bindi” to the Sanskrit word <em>bindu</em>, meaning a point, drop or particle. Related forehead marks and names vary by language, region and practice.</p>
+
+      <h2>Why one explanation is not enough</h2>
+      <p>Bindis can carry religious, cultural, marital, regional, family or decorative meaning. A red bindi should not automatically be described as proof of marital status, and a decorative sticker should not be assumed to have the same meaning for every wearer.</p>
+
+      <h2>Bindi and tilak are not always interchangeable</h2>
+      <p>English-language explanations sometimes collapse different forehead marks into one category. Materials, shapes, placement, wearers and ritual contexts differ. When discussing a specific practice, use the name supplied by the community or person involved.</p>
+
+      <h2>Respectful use and styling</h2>
+      <p>A bindi can be part of an outfit, but it should not be reduced to a costume prop or presented with invented spiritual claims. If attending a religious or family ceremony, ask the hosts whether a forehead mark is expected, offered to guests or best left to participants in the practice.</p>
+
+      <h2>Editorial boundary</h2>
+      <p>This article describes documented context; it does not tell a reader what every Hindu, Jain, Buddhist, South Asian or diaspora community believes. Individual and community meanings take priority over a general guide.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-12',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Cultural Guide',
+    tags: ['bindi meaning', 'bindu', 'forehead mark', 'south asian culture', 'bindi context'],
+    image: '/og-image.jpg',
+    imagePresentation: 'editorial',
+    readTime: 4,
+    sources: [SOURCES.bindi],
+  },
+  {
+    id: '46',
+    slug: 'tarun-tahiliani-designer-profile-india-modern-couture',
+    title: 'Tarun Tahiliani: A Source-Based Designer Profile',
+    excerpt: 'Tarun Tahiliani’s official chronology records the 1987 founding of Ensemble, fashion study at FIT, participation in founding FDCI in 1999 and a 2003 Milan Fashion Week presentation.',
+    content: `
+      ${editorialNote}
+      <h2>Early career and Ensemble</h2>
+      <p>Tarun Tahiliani's official legacy page states that he and Sailaja Tahiliani co-founded Ensemble in Mumbai in 1987 as a multi-brand fashion boutique. It says he later studied at the Fashion Institute of Technology in New York and held a solo show at London's Dorchester Hotel in 1994.</p>
+
+      <h2>Industry milestones in the official chronology</h2>
+      <ul>
+        <li>The official page lists Tahiliani among the group that formed the Fashion Design Council of India in 1999.</li>
+        <li>It records a Milan Fashion Week presentation in September 2003.</li>
+        <li>His current official store includes womenswear, menswear and accessories, including lehenga, saree, kurta, sherwani and bandhgala categories.</li>
+      </ul>
+
+      <h2>Design language</h2>
+      <p>The house describes its work through Indian craft, drape, tailoring and lightness. Those are the brand's own descriptions of its practice; they should not be converted into unsupported claims that Tahiliani invented a construction method or that another seller's item is connected with his label.</p>
+
+      <h2>No LuxeMia affiliation</h2>
+      <p>This independent editorial profile does not imply endorsement, representation, collaboration or product affiliation between Tarun Tahiliani and LuxeMia.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-14',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Designer Profile',
+    tags: ['tarun tahiliani', 'ensemble boutique', 'fdci', 'indian fashion designer'],
+    image: '/og-image.jpg',
+    imagePresentation: 'editorial',
+    readTime: 4,
+    sources: [SOURCES.tarunOfficial],
+  },
+  {
+    id: '47',
+    slug: 'rahul-mishra-designer-profile-paris-haute-couture-sustainable',
+    title: 'Rahul Mishra: Woolmark, Paris Couture and Craft—With Sources',
+    excerpt: 'Rahul Mishra’s official biography records his 2014 International Woolmark Prize and Paris Haute Couture Week participation. The brand describes its work through craft-community participation and the “3 E’s.”',
+    content: `
+      ${editorialNote}
+      <h2>Verified milestones</h2>
+      <p>Rahul Mishra's official biography states that he won the International Woolmark Prize in 2014 and became the first Indian designer invited to show at Paris Haute Couture Week. The Woolmark Company separately records the 2014 prize in Milan and later Paris Fashion Week collections.</p>
+
+      <h2>How the house describes its work</h2>
+      <p>The Rahul Mishra house says its design philosophy centers on Environment, Employment and Empowerment. It describes hand embroidery, weaving and artisanal craft as part of its process and presents fashion as participation in craft communities.</p>
+
+      <h2>Attributed claims versus independent facts</h2>
+      <p>Artisan counts, livelihood impacts and sustainability outcomes are difficult to verify from a retailer's page alone. This article therefore attributes those statements to the brand instead of presenting them as independently audited results. “Sustainable” is not used here as a blanket certification.</p>
+
+      <h2>No LuxeMia affiliation</h2>
+      <p>LuxeMia does not claim that its products are made by, licensed by, inspired by or affiliated with Rahul Mishra. This profile is included for documented fashion-industry context only.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-14',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Designer Profile',
+    tags: ['rahul mishra', 'woolmark prize', 'paris haute couture', 'indian fashion designer'],
+    image: '/og-image.jpg',
+    imagePresentation: 'editorial',
+    readTime: 4,
+    sources: [SOURCES.rahulOfficial, SOURCES.rahulWoolmark],
+  },
+  {
+    id: '63',
+    slug: 'navratri-9-day-color-guide-2026',
+    title: 'Navratri 2026 Dates, Garba Clothing and the Truth About Color Lists',
+    excerpt: 'Sharad Navratri begins October 11, 2026, with Maha Navami on October 19 and Vijayadashami on October 20 in the cited New Delhi calendar. Dates and practices can vary by location and tradition.',
+    content: `
+      ${editorialNote}
+      <h2>Verified 2026 dates</h2>
+      <p>Incredible India explains Navratri as “nine nights” honoring forms of Goddess Durga. For New Delhi, the cited 2026 panchang places the start of Sharad Navratri on Sunday, October 11, Maha Navami on Monday, October 19, and Vijayadashami on Tuesday, October 20. Religious-calendar observances can vary by location, tithi and community, so confirm dates with your temple or event organizer.</p>
+
+      <h2>Are the nine colors universal?</h2>
+      <p>No single nine-color list should be presented as a rule followed by every Navratri observer. Published color calendars can depend on the year and source, while families and organizations may use different themes or no daily color schedule. The previous LuxeMia article incorrectly used 2025 dates as 2026 dates; this revision corrects that error.</p>
+
+      <h2>What to wear for garba</h2>
+      <p>Garba clothing varies. Chaniya choli, kediyu-style garments, kurtas, lehengas and other festive outfits may be worn, but the event organizer's dress code is the authority. For dancing, check garment security, hem length, footwear, jewelry weight and whether mirrors, sequins or other work can snag nearby clothing.</p>
+
+      <h2>Ordering for an event</h2>
+      <p>LuxeMia ships only to United States addresses. Shipping is $12 below $150 and free at $150 and above. The store does not promise that every item will arrive by a particular Navratri event. Contact support before ordering when the date is important.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-15',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Festival Guide',
+    tags: ['navratri 2026', 'navratri dates', 'garba outfit', 'navratri colors', 'chaniya choli'],
+    image: '/images/blog/blog-006-teal-green-net.webp',
+    readTime: 4,
+    sources: [SOURCES.incredibleIndiaNavratri, SOURCES.navratri2026, SOURCES.luxemiaShipping],
+  },
+  {
+    id: 'fc1',
+    slug: 'sabyasachi-mukherjee-designer-profile-handloom-revival',
+    title: 'Sabyasachi: A Source-Based History of the Fashion House',
+    excerpt: 'Sabyasachi’s official chronology records the founder’s NIFT Kolkata graduation, the start of the label with three workers, fashion-week milestones and later expansion into bridalwear, jewelry and accessories.',
+    content: `
+      ${editorialNote}
+      <h2>Starting the label</h2>
+      <p>The Sabyasachi house's official history says Sabyasachi Mukherjee graduated from the National Institute of Fashion Technology in Kolkata and started the eponymous label six months later with a workforce of three.</p>
+
+      <h2>Milestones documented by the house</h2>
+      <ul>
+        <li>The chronology records a Lakmé Fashion Week debut with the collection “Kashgaar Bazaar.”</li>
+        <li>It records later presentations in Milan and New York.</li>
+        <li>It documents the house's expansion into bridalwear, jewelry, accessories and international retail.</li>
+        <li>It describes recurring use of Indian craft, handwoven textiles and heritage references in the brand's work.</li>
+      </ul>
+
+      <h2>How claims are handled here</h2>
+      <p>Because the main source is the fashion house's own chronology, statements about influence, “firsts,” commercial records and cultural impact must be understood as brand claims unless corroborated independently. This revision removes unsupported revenue estimates, employee totals and claims that one celebrity event caused an industry-wide trend.</p>
+
+      <h2>No LuxeMia affiliation</h2>
+      <p>LuxeMia does not claim to sell Sabyasachi products or to be affiliated with the designer or fashion house. The name must not be attached to a LuxeMia product unless an authentic commercial relationship and product provenance are documented.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-07-12',
+    updatedAt: FACT_CHECKED_AT,
+    factCheckedAt: FACT_CHECKED_AT,
+    category: 'Designer Profile',
+    tags: ['sabyasachi', 'sabyasachi history', 'indian fashion house', 'indian couture'],
+    image: '/og-image.jpg',
+    imagePresentation: 'editorial',
+    readTime: 4,
+    sources: [SOURCES.sabyasachiOfficial],
+  },
 ];
 
-export const getPostBySlug = (slug: string): BlogPost | undefined => {
-  return blogPosts.find((post) => post.slug === slug);
-};
+export const getPostBySlug = (slug: string): BlogPost | undefined =>
+  blogPosts.find(post => post.slug === slug);
 
-export const getRelatedPosts = (currentPost: BlogPost, limit: number = 3): BlogPost[] => {
-  return blogPosts
-    .filter((post) => post.id !== currentPost.id)
-    .filter(
-      (post) =>
-        post.category === currentPost.category ||
-        post.tags.some((tag) => currentPost.tags.includes(tag))
-    )
+export const getRelatedPosts = (currentPost: BlogPost, limit: number = 3): BlogPost[] =>
+  blogPosts
+    .filter(post => post.id !== currentPost.id)
+    .sort((a, b) => {
+      const sameCategoryA = a.category === currentPost.category ? 1 : 0;
+      const sameCategoryB = b.category === currentPost.category ? 1 : 0;
+      return sameCategoryB - sameCategoryA;
+    })
     .slice(0, limit);
-};

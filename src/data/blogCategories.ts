@@ -52,6 +52,24 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
     metaTitle: 'Indian Ethnic-Wear Fit & Saree How-To Guides | LuxeMia',
     metaDescription: 'Use LuxeMia fit and saree how-to guides, then compare your measurements with exact product and variant details before ordering.',
   },
+  {
+    slug: 'designer-profiles',
+    name: 'Designer Profiles',
+    shortDescription: 'Source-based profiles of Indian designers and fashion houses',
+    longDescription: 'Read concise profiles based on official histories and established industry sources. Brand-owned claims are attributed, unsupported milestones are omitted, and no profile implies that LuxeMia sells or is affiliated with the named designer.',
+    icon: 'Crown',
+    metaTitle: 'Fact-Checked Indian Fashion Designer Profiles | LuxeMia',
+    metaDescription: 'Source-based profiles of Anamika Khanna, Tarun Tahiliani, Rahul Mishra and Sabyasachi, with citations and clear affiliation disclaimers.',
+  },
+  {
+    slug: 'cultural-context',
+    name: 'Cultural Context',
+    shortDescription: 'Careful background on terms and practices without universalizing them',
+    longDescription: 'These guides explain documented cultural context while recognizing differences among regions, religions, families and individuals. They do not turn one source or community practice into a universal rule.',
+    icon: 'Globe',
+    metaTitle: 'Indian Clothing and Cultural Context Guides | LuxeMia',
+    metaDescription: 'Source-based cultural context for Indian clothing and adornment, written without presenting diverse practices as universal rules.',
+  },
 ];
 
 /** Every published article belongs to exactly one active hub. */
@@ -65,6 +83,13 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'styling-indian-ethnic-wear-festive-occasions-abroad': 'weddings-festivals',
   'how-to-drape-saree-beginner-guide': 'how-to-care',
   'how-to-choose-salwar-kameez-body-type': 'how-to-care',
+  'indian-to-us-clothing-size-conversion-guide': 'how-to-care',
+  'anamika-khanna-designer-profile-kolkata-couture': 'designer-profiles',
+  'tarun-tahiliani-designer-profile-india-modern-couture': 'designer-profiles',
+  'rahul-mishra-designer-profile-paris-haute-couture-sustainable': 'designer-profiles',
+  'sabyasachi-mukherjee-designer-profile-handloom-revival': 'designer-profiles',
+  'bindi-meaning-history-indian-women': 'cultural-context',
+  'navratri-9-day-color-guide-2026': 'weddings-festivals',
 };
 
 export function getBlogCategoryGroup(slug: string): BlogCategoryGroup | undefined {

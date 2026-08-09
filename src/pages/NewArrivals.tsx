@@ -130,7 +130,7 @@ const NewArrivals = () => {
               alt="Woman wearing a blush pink embroidered sharara set from LuxeMia's new Indian ethnic wear collection"
               width={624}
               height={936}
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className="absolute inset-0 w-full h-full object-cover object-top"
               fetchPriority="high"
               decoding="async"
             />

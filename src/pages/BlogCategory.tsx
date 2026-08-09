@@ -13,6 +13,7 @@ import {
 import { Calendar, Clock, ArrowRight, BookOpen, ChevronRight, Home } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import BlogPostVisual from '@/components/blog/BlogPostVisual';
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').trim();
 
@@ -152,12 +153,7 @@ const BlogCategory = () => {
                 <Link key={post.slug} to={`/blog/${post.slug}`} className="group">
                   <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow">
                     <div className="aspect-[16/9] overflow-hidden bg-muted">
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                      <BlogPostVisual post={post} />
                     </div>
                     <CardContent className="p-6">
                       <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">

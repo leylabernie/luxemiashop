@@ -18,19 +18,19 @@ export interface BlogAuthor {
 const EDITORIAL_TEAM: BlogAuthor = {
   slug: 'luxemia-editorial-team',
   name: 'LuxeMia Editorial Team',
-  role: 'Indian Wedding & Ethnic Wear Editors',
-  credentials: 'Product and shopping guidance reviewed by the LuxeMia team',
-  bio: `The LuxeMia Editorial Team creates practical guides for shopping Indian ethnic wear online. Our articles cover occasion dressing, garment terminology, sizing, care, shipping and styling considerations for customers in the United States.
+  role: 'Editorial and Source Review',
+  credentials: 'Source-based guides reviewed against cited references and current LuxeMia policies',
+  bio: `LuxeMia publishes practical guides for shopping Indian ethnic wear online. Articles cover garment terminology, measurements, textiles, cultural context, care, shipping and optional styling considerations for customers in the United States.
 
-We review product details and policy information before publication and update time-sensitive subjects, including customs and delivery guidance, when official information changes. Readers should confirm current customs rules with the relevant government authority before ordering.`,
+Every published guide identifies its sources and review date. Brand-owned sources are attributed as brand claims, cultural practices are not presented as universal rules, and styling suggestions are labelled as guidance. Individual product listings remain the source of truth for materials, included pieces, stitching, measurements, price and availability. No unnamed individual credentials are claimed for the team.`,
   expertise: [
-    'Indian Wedding Attire',
-    'Ethnic Wear Sizing',
-    'Occasion Styling',
-    'Garment Care',
-    'Online Shopping Guidance',
+    'Source Review',
+    'Clothing Measurements',
+    'Textile Terminology',
+    'Cultural Context',
+    'Shopping Guidance',
   ],
-  location: 'Philadelphia, USA',
+  location: 'United States',
   publishedAt: '2026-01-05',
 };
 

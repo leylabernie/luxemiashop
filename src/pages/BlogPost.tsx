@@ -6,12 +6,13 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import type { BlogPost as BlogPostType } from '@/data/blogPosts';
-import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Facebook, Twitter, BookOpen, List, ChevronRight, RefreshCw, MessageCircle, ShoppingBag } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Facebook, Twitter, BookOpen, List, ChevronRight, RefreshCw, MessageCircle, ShoppingBag, BadgeCheck, ExternalLink } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import RelatedArticles from '@/components/blog/RelatedArticles';
+import BlogPostVisual from '@/components/blog/BlogPostVisual';
 import { getBlogCategoryGroup } from '@/data/blogCategories';
 import { getAuthorByName } from '@/data/blogAuthors';
 
@@ -21,6 +22,12 @@ interface TocItem {
 }
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim();
+
+const formatDateOnly = (date: string) => new Date(`${date}T12:00:00`).toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+});
 
 const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
   'Bridal Guide': [
@@ -252,7 +259,14 @@ const BlogPost = () => {
     "inLanguage": "en-US",
     "genre": post.category,
     "wordCount": wordCount,
-    "articleBody": articleBody
+    "articleBody": articleBody,
+    "citation": post.sources.map(source => source.url),
+    "isBasedOn": post.sources.map(source => ({
+      "@type": "CreativeWork",
+      "name": source.title,
+      "publisher": source.publisher,
+      "url": source.url
+    }))
   };
 
   const breadcrumbSchema = {
@@ -363,10 +377,13 @@ const BlogPost = () => {
             {JSON.stringify(faqSchema)}
           </script>
         )}
-        {/* Preload hero image for LCP optimization */}
-        <link rel="preload" as="image" href={post.image} fetchPriority="high" />
+        {/* Preload real hero photos for LCP. Editorial cards use CSS only. */}
+        {post.imagePresentation !== 'editorial' && (
+          <link rel="preload" as="image" href={post.image} fetchPriority="high" />
+        )}
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
+        <meta name="last-reviewed" content={post.factCheckedAt} />
         <meta property="article:author" content="LuxeMia Editorial Team" />
         <meta property="article:section" content={post.category} />
         {post.tags.map(tag => (
@@ -457,11 +474,7 @@ const BlogPost = () => {
                 })()}
                 <span className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  })}
+                  {formatDateOnly(post.publishedAt)}
                 </span>
                 <span className="flex items-center gap-2">
                   <Clock className="w-4 h-4" />
@@ -472,25 +485,18 @@ const BlogPost = () => {
               {showUpdatedDate && (
                 <p className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
                   <RefreshCw className="w-3.5 h-3.5" />
-                  Last updated: {new Date(post.updatedAt).toLocaleDateString('en-US', { 
-                    month: 'long', 
-                    day: 'numeric', 
-                    year: 'numeric' 
-                  })}
+                  Last updated: {formatDateOnly(post.updatedAt)}
                 </p>
               )}
 
+              <p className="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
+                <BadgeCheck className="h-4 w-4 text-primary" />
+                Fact-checked against the sources below on {formatDateOnly(post.factCheckedAt)}
+              </p>
+
               {/* Featured Image */}
               <div className="aspect-[16/9] rounded-lg overflow-hidden mb-6">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  width={1200}
-                  height={675}
-                  fetchPriority="high"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                />
+                <BlogPostVisual post={post} variant="hero" />
               </div>
 
               {/* Article Summary Box */}
@@ -572,6 +578,36 @@ const BlogPost = () => {
                 className="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-h2:text-2xl prose-h3:text-xl prose-p:text-muted-foreground prose-li:text-muted-foreground prose-a:text-primary prose-strong:text-foreground"
                 dangerouslySetInnerHTML={{ __html: contentWithIds }}
               />
+
+              <section className="mt-10 rounded-xl border border-border bg-muted/20 p-5 sm:p-6" aria-labelledby="article-sources-heading">
+                <div className="mb-3 flex items-center gap-2">
+                  <BadgeCheck className="h-5 w-5 text-primary" />
+                  <h2 id="article-sources-heading" className="text-xl font-display font-semibold text-foreground">
+                    Sources and review basis
+                  </h2>
+                </div>
+                <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+                  Sources were checked on {formatDateOnly(post.factCheckedAt)}. Brand-owned sources are identified by publisher and are attributed as brand claims in the article.
+                </p>
+                <ul className="space-y-3">
+                  {post.sources.map(source => (
+                    <li key={source.url}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-start gap-2 text-sm font-medium text-primary hover:underline"
+                      >
+                        <span>
+                          {source.title}
+                          <span className="block font-normal text-muted-foreground">{source.publisher}</span>
+                        </span>
+                        <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
 
               {/* Tags */}
               <div className="mt-10 pt-8 border-t border-border">

@@ -21,7 +21,7 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const EXPECTED_SITEMAP_URL_COUNT = 778;
+const EXPECTED_SITEMAP_URL_COUNT = 787;
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
@@ -93,6 +93,8 @@ const staticPages = [
   { loc: '/blog/motifs-embroideries', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog/weddings-festivals', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog/how-to-care', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/designer-profiles', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/cultural-context', changefreq: 'monthly', priority: '0.7' },
   { loc: '/authors/luxemia-editorial-team', changefreq: 'monthly', priority: '0.4' },
   { loc: '/press', changefreq: 'monthly', priority: '0.5' },
   // Occasion landing pages

@@ -9,8 +9,12 @@ import { BLOG_CATEGORY_GROUPS, getCategoryPostCounts, getPostSlugsByCategory } f
 import { Calendar, Clock, User, ArrowRight, BookOpen, Sparkles, ChevronRight, Home, Layers, Compass, GraduationCap, Palette, Globe, Heart, Crown, Shirt } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import BlogPostVisual from '@/components/blog/BlogPostVisual';
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
+
+const formatDateOnly = (date: string, options: Intl.DateTimeFormatOptions) =>
+  new Date(`${date}T12:00:00`).toLocaleDateString('en-US', options);
 
 // Map BLOG_CATEGORY_GROUPS to lucide icons (icon names are stored as strings in blogCategories.ts)
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -37,39 +41,36 @@ const topicClusters = BLOG_CATEGORY_GROUPS.map(group => ({
   shopLabel: 'Shop Collection',
 }));
 
-const popularTopics = [
+const guideTopics = [
   {
-    label: 'Bridal Lehengas',
-    link: '/lehengas',
-    description: 'Shopping guides & styling tips',
+    label: 'Fit & Measurements',
+    link: '/blog/how-to-care',
+    description: 'Measurement and draping guides',
   },
   {
-    label: 'Wedding Sarees',
-    link: '/sarees',
-    description: 'Draping, fabrics & care',
+    label: 'Fabric Guides',
+    link: '/blog/motifs-embroideries',
+    description: 'Fiber, fabric and care terms',
   },
   {
-    label: 'Salwar Suits & Anarkalis',
-    link: '/suits',
-    description: 'Latest styles & trends',
+    label: 'Outfit Comparisons',
+    link: '/blog/attires',
+    description: 'Silhouettes and listing details',
   },
   {
-    label: 'Wedding Guest Outfits',
-    link: '/blog',
-    description: 'What to wear to every ceremony',
-    category: 'Styling Tips',
+    label: 'Weddings & Festivals',
+    link: '/blog/weddings-festivals',
+    description: 'Host-led occasion guidance',
   },
   {
-    label: 'Fabric & Care Guides',
-    link: '/blog',
-    description: 'Maintain your ethnic wardrobe',
-    category: 'Care Guide',
+    label: 'Designer Profiles',
+    link: '/blog/designer-profiles',
+    description: 'Attributed official histories',
   },
   {
-    label: 'NRI Shopping Tips',
-    link: '/blog',
-    description: 'Buying from the United States',
-    category: 'NRI Fashion',
+    label: 'Cultural Context',
+    link: '/blog/cultural-context',
+    description: 'Practices without universal rules',
   },
 ];
 
@@ -115,8 +116,8 @@ const Blog = () => {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "LuxeMia Indian Wedding Dress Guide",
-    "description": "Expert guides on Indian wedding dresses, bridal lehengas, saree styling, and ethnic fashion trends for NRIs in the United States",
+    "name": "LuxeMia Fact-Checked Indian Ethnic Wear Guides",
+    "description": "Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear for customers in the United States",
     "url": "https://luxemia.shop/blog",
     "inLanguage": "en-US",
     "genre": categories.join(", "),
@@ -138,9 +139,9 @@ const Blog = () => {
       "datePublished": post.publishedAt,
       "dateModified": post.updatedAt,
       "author": {
-        "@type": "Person",
+        "@type": "Organization",
         "name": post.author,
-        "url": "https://luxemia.shop/about"
+        "url": "https://luxemia.shop/authors/luxemia-editorial-team"
       },
       "url": `https://luxemia.shop/blog/${post.slug}`
     }))
@@ -176,8 +177,8 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion | LuxeMia"
-        description="Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion for NRIs shopping from the United States. Get insider tips from top stylists."
+        title="Fact-Checked Indian Ethnic Wear Guides | LuxeMia"
+        description="Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear. Product-specific facts remain on each LuxeMia listing."
         canonical="https://luxemia.shop/blog"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -223,10 +224,10 @@ const Blog = () => {
                 {blogPosts.length} Articles
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
-                Indian Ethnic Wear Blog — Bridal Lehengas, Saree Styles & Wedding Fashion
+                Fact-Checked Indian Ethnic Wear Guides
               </h1>
               <p className="text-lg text-muted-foreground">
-                Expert guides for NRIs shopping from the United States — bridal lehengas, wedding sarees, styling inspiration & care tips for your perfect look
+                Source-based background on clothing terms, measurements, textiles, cultural context and occasionwear for U.S. customers
               </p>
             </div>
           </div>
@@ -236,7 +237,7 @@ const Blog = () => {
         <section aria-label="Content overview" className="py-6 border-b border-border bg-muted/20">
           <div className="container mx-auto px-4">
             <p className="text-sm text-muted-foreground max-w-3xl mx-auto text-center">
-              Explore our curated guides on Indian wedding fashion, bridal lehengas, saree draping styles, fabric encyclopedias, and ethnic wear care tips. Written specifically for NRIs shopping from the United States. Content is organized into topic clusters covering bridal fashion, wedding planning, styling tips, NRI shopping guides, fabric care, and cultural deep dives.
+              Every published article identifies its sources and review date. Styling suggestions are labelled as guidance, cultural practices are not presented as universal rules, and each product listing remains the source of truth for that item's materials, included pieces, sizing, price and availability.
             </p>
           </div>
         </section>
@@ -305,7 +306,7 @@ const Blog = () => {
           </div>
         </section>
 
-        {/* Featured Post + Popular Topics Layout */}
+        {/* Featured post and guide-topic layout */}
         <section className="py-12 lg:py-16">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-[1fr_300px] gap-8 lg:gap-12">
@@ -346,7 +347,7 @@ const Blog = () => {
                               </span>
                               <span className="flex items-center gap-1">
                                 <Calendar className="w-4 h-4" />
-                                {new Date(displayFeatured.publishedAt).toLocaleDateString('en-US', {
+                                {formatDateOnly(displayFeatured.publishedAt, {
                                   month: 'long',
                                   day: 'numeric',
                                   year: 'numeric'
@@ -374,7 +375,7 @@ const Blog = () => {
                 {/* Posts Grid */}
                 {displayFeatured && filteredPosts.length > 0 && (
                   <div className="mt-12">
-                    <h2 className="text-2xl font-display font-semibold mb-8">Latest Articles</h2>
+                    <h2 className="text-2xl font-display font-semibold mb-8">Published Articles</h2>
                   </div>
                 )}
                 {filteredPosts.length > 0 ? (
@@ -383,13 +384,7 @@ const Blog = () => {
                       <Link key={post.id} to={`/blog/${post.slug}`} className="group">
                         <Card className="h-full overflow-hidden border hover:shadow-lg transition-all">
                           <div className="aspect-[16/10] overflow-hidden">
-                            <img
-                              src={post.image}
-                              alt={post.title}
-                              loading="lazy"
-                              decoding="async"
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
+                            <BlogPostVisual post={post} />
                           </div>
                           <CardContent className="p-5">
                             <div className="flex items-center gap-2 mb-3">
@@ -408,7 +403,7 @@ const Blog = () => {
                             <div className="flex items-center justify-between text-xs text-muted-foreground">
                               <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
-                                {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                                {formatDateOnly(post.publishedAt, {
                                   month: 'short',
                                   day: 'numeric'
                                 })}
@@ -440,20 +435,20 @@ const Blog = () => {
                 )}
               </div>
 
-              {/* Popular Topics Sidebar */}
+              {/* Guide topics sidebar */}
               <aside className="hidden lg:block">
                 <div className="sticky top-[150px] space-y-4">
                   <Card>
                     <CardContent className="p-6">
                       <h3 className="text-lg font-display font-semibold text-foreground mb-1 flex items-center gap-2">
                         <Sparkles className="w-5 h-5 text-primary" />
-                        Popular Topics
+                        Browse Guides
                       </h3>
                       <p className="text-xs text-muted-foreground mb-4">
                         Explore by category
                       </p>
-                      <nav aria-label="Popular blog topics" className="space-y-1">
-                        {popularTopics.map(topic => (
+                      <nav aria-label="Blog guide topics" className="space-y-1">
+                        {guideTopics.map(topic => (
                           <Link
                             key={topic.label}
                             to={topic.link}
@@ -508,16 +503,16 @@ const Blog = () => {
               </aside>
             </div>
 
-            {/* Mobile Popular Topics */}
+            {/* Mobile guide topics */}
             <div className="lg:hidden mt-12">
               <Card>
                 <CardContent className="p-6">
                   <h3 className="text-lg font-display font-semibold text-foreground mb-4 flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-primary" />
-                    Popular Topics
+                    Browse Guides
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
-                    {popularTopics.map(topic => (
+                    {guideTopics.map(topic => (
                       <Link
                         key={topic.label}
                         to={topic.link}

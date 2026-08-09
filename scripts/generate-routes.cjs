@@ -87,6 +87,8 @@ const STATIC_ROUTES = [
   '/blog/motifs-embroideries',
   '/blog/weddings-festivals',
   '/blog/how-to-care',
+  '/blog/designer-profiles',
+  '/blog/cultural-context',
   // Factual organizational author page
   '/authors/luxemia-editorial-team',
 ];
