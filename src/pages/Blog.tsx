@@ -9,6 +9,7 @@ import { BLOG_CATEGORY_GROUPS, getCategoryPostCounts, getPostSlugsByCategory } f
 import { Calendar, Clock, User, ArrowRight, BookOpen, Sparkles, ChevronRight, Home, Layers, Compass, GraduationCap, Palette, Globe, Heart, Crown, Shirt } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import BlogPostVisual from '@/components/blog/BlogPostVisual';
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
 
@@ -383,13 +384,7 @@ const Blog = () => {
                       <Link key={post.id} to={`/blog/${post.slug}`} className="group">
                         <Card className="h-full overflow-hidden border hover:shadow-lg transition-all">
                           <div className="aspect-[16/10] overflow-hidden">
-                            <img
-                              src={post.image}
-                              alt={post.title}
-                              loading="lazy"
-                              decoding="async"
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
+                            <BlogPostVisual post={post} />
                           </div>
                           <CardContent className="p-5">
                             <div className="flex items-center gap-2 mb-3">

@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import type { BlogPost } from '@/data/blogPosts';
 import { blogPosts } from '@/data/blogPosts';
+import BlogPostVisual from '@/components/blog/BlogPostVisual';
 import { BLOG_AUTHORS, getAuthorBySlug } from '@/data/blogAuthors';
 import { getBlogCategoryGroup } from '@/data/blogCategories';
 import { Calendar, Clock, MapPin, BadgeCheck, BookOpen, ChevronRight, Home, ArrowRight } from 'lucide-react';
@@ -184,12 +185,7 @@ const AuthorBio = () => {
                     <Link key={post.slug} to={`/blog/${post.slug}`} className="group">
                       <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow">
                         <div className="aspect-[16/9] overflow-hidden bg-muted">
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            loading="lazy"
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
+                          <BlogPostVisual post={post} />
                         </div>
                         <CardContent className="p-4">
                           {categoryGroup && (

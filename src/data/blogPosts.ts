@@ -17,6 +17,7 @@ export interface BlogPost {
   category: string;
   tags: string[];
   image: string;
+  imagePresentation?: 'photo' | 'editorial';
   readTime: number;
   sources: BlogSource[];
 }
@@ -569,6 +570,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Designer Profile',
     tags: ['anamika khanna', 'indian fashion designer', 'kolkata fashion', 'indian couture'],
     image: '/og-image.jpg',
+    imagePresentation: 'editorial',
     readTime: 3,
     sources: [SOURCES.anamikaOfficial, SOURCES.anamikaBof],
   },
@@ -601,6 +603,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Cultural Guide',
     tags: ['bindi meaning', 'bindu', 'forehead mark', 'south asian culture', 'bindi context'],
     image: '/og-image.jpg',
+    imagePresentation: 'editorial',
     readTime: 4,
     sources: [SOURCES.bindi],
   },
@@ -634,6 +637,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Designer Profile',
     tags: ['tarun tahiliani', 'ensemble boutique', 'fdci', 'indian fashion designer'],
     image: '/og-image.jpg',
+    imagePresentation: 'editorial',
     readTime: 4,
     sources: [SOURCES.tarunOfficial],
   },
@@ -663,6 +667,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Designer Profile',
     tags: ['rahul mishra', 'woolmark prize', 'paris haute couture', 'indian fashion designer'],
     image: '/og-image.jpg',
+    imagePresentation: 'editorial',
     readTime: 4,
     sources: [SOURCES.rahulOfficial, SOURCES.rahulWoolmark],
   },
@@ -726,6 +731,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Designer Profile',
     tags: ['sabyasachi', 'sabyasachi history', 'indian fashion house', 'indian couture'],
     image: '/og-image.jpg',
+    imagePresentation: 'editorial',
     readTime: 4,
     sources: [SOURCES.sabyasachiOfficial],
   },

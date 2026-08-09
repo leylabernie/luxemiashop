@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import RelatedArticles from '@/components/blog/RelatedArticles';
+import BlogPostVisual from '@/components/blog/BlogPostVisual';
 import { getBlogCategoryGroup } from '@/data/blogCategories';
 import { getAuthorByName } from '@/data/blogAuthors';
 
@@ -376,8 +377,10 @@ const BlogPost = () => {
             {JSON.stringify(faqSchema)}
           </script>
         )}
-        {/* Preload hero image for LCP optimization */}
-        <link rel="preload" as="image" href={post.image} fetchPriority="high" />
+        {/* Preload real hero photos for LCP. Editorial cards use CSS only. */}
+        {post.imagePresentation !== 'editorial' && (
+          <link rel="preload" as="image" href={post.image} fetchPriority="high" />
+        )}
         <meta property="article:published_time" content={post.publishedAt} />
         <meta property="article:modified_time" content={post.updatedAt} />
         <meta name="last-reviewed" content={post.factCheckedAt} />
@@ -493,15 +496,7 @@ const BlogPost = () => {
 
               {/* Featured Image */}
               <div className="aspect-[16/9] rounded-lg overflow-hidden mb-6">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  width={1200}
-                  height={675}
-                  fetchPriority="high"
-                  decoding="async"
-                  className="w-full h-full object-cover"
-                />
+                <BlogPostVisual post={post} variant="hero" />
               </div>
 
               {/* Article Summary Box */}
