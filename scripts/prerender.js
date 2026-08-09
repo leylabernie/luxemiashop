@@ -1125,90 +1125,13 @@ const routes = [
   },
   {
     path: '/blog',
-    title: 'Blog | Indian Fashion Tips & Ethnic Wear Guides | LuxeMia',
-    description: 'Expert guides on Indian wedding dresses, bridal lehengas, saree styles & ethnic fashion. Get insider tips from top stylists. Read now!',
-    h1: 'LuxeMia Blog — Indian Wedding & Ethnic Fashion Guide',
+    title: 'Fact-Checked Indian Ethnic Wear Guides | LuxeMia',
+    description: 'Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear for U.S. customers.',
+    h1: 'Fact-Checked Indian Ethnic Wear Guides',
     content: `
-      <p>Current guides to Indian wedding clothing, saree styling, fabrics, accessories, fit, and garment care.</p>
-      <h2>Current Articles</h2>
-      <ul>
-        <li><a href="/blog/wedding-saree-for-mother-of-bride">Wedding Sarees for the Mother of the Bride</a></li>
-        <li><a href="/blog/wedding-guest-outfit-ideas">Indian Wedding Guest Outfit Ideas</a></li>
-        <li><a href="/blog/accessorize-indian-ethnic-wear">How to Accessorize Indian Ethnic Wear</a></li>
-        <li><a href="/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon">Fabric Guide: Indian Ethnic Wear — Georgette, Silk & Chiffon</a></li>
-        <li><a href="/blog/styling-indian-ethnic-wear-festive-occasions-abroad">Styling Indian Ethnic Wear for Festive Occasions Abroad</a></li>
-        <li><a href="/blog/lehenga-vs-sharara-vs-anarkali-comparison">Lehenga vs Sharara vs Anarkali: Complete Comparison</a></li>
-        <li><a href="/blog/how-to-drape-saree-beginner-guide">How to Drape a Saree: Beginner Guide</a></li>
-        <li><a href="/blog/how-to-choose-salwar-kameez-body-type">How to Choose a Salwar Kameez for Your Body Type</a></li>
-        <li><a href="/blog/sherwani-vs-jodhpuri-vs-bandhgala-groom-guide">Sherwani vs Jodhpuri vs Bandhgala: Groom Guide</a></li>
-      </ul>
-      <h2>Browse by Category</h2>
-      <ul>
-        <li><a href="/blog/attires">Attires — Lehengas, Sarees, Suits & Sherwanis</a></li>
-        <li><a href="/blog/motifs-embroideries">Motifs & Embroideries — Textile Techniques</a></li>
-        <li><a href="/blog/weddings-festivals">Weddings & Festivals — Guest Outfits & Regional Traditions</a></li>
-        <li><a href="/blog/how-to-care">How-To & Care — Draping, Care & Tailoring</a></li>
-      </ul>
+      <p>Source-reviewed guides to Indian clothing terms, measurements, textiles, cultural context and occasionwear for U.S. customers.</p>
+      <p>The current article and topic lists are generated from the same published data used by the site.</p>
     `,
-  },
-  // ─── Utsavpedia-style blog category hub pages ─────────────────────────────
-  // 8 top-level categories covering the full topical map of Indian ethnic fashion.
-  // Each category page lists all posts in that category with proper CollectionPage schema.
-  {
-    path: '/blog/attires',
-    title: 'Indian Ethnic Attires — Lehengas, Sarees, Suits & Sherwanis Guide | LuxeMia',
-    description: 'Encyclopedia of Indian ethnic clothing — bridal lehengas, silk sarees, anarkali suits, sharara sets, sherwanis & jewelry. Fabric, fit, color, and styling guides for every attire.',
-    h1: 'Attires — Encyclopedia of Indian Ethnic Clothing',
-    content: '<p>Explore the complete encyclopedia of Indian ethnic attires. From the regal bridal lehenga to the timeless Banarasi saree, from sharara suits to designer sherwanis — each garment has a history, a regional tradition, and a specific ceremony it belongs to. Our attires guides cover fabric choices, silhouette comparisons, color theory for skin tones, budget allocation, and styling for every body type.</p><h2>What You\'ll Find in This Category</h2><ul><li>Bridal lehenga guides — color trends, fabric choices, budget planning, and online buying tips</li><li>Saree encyclopedias — Banarasi, Kanchipuram, georgette, and designer wedding sarees</li><li>Suit comparisons — anarkali vs palazzo vs sharara vs Pakistani suits</li><li>Sherwani and menswear guides for grooms and wedding guests</li><li>Jewelry guides — bridal necklace sets, Kundan, polki, and temple jewelry</li><li>Color theory for Indian skin tones — lehenga colors for every complexion</li></ul><p>Browse all 19 articles below, or jump to a specific attire guide using the category navigation.</p>',
-  },
-  {
-    path: '/blog/cultural-connections',
-    title: 'Cultural Significance of Indian Ethnic Wear — Symbolism & Traditions | LuxeMia',
-    description: 'Explore the cultural meaning behind Indian ethnic wear — bindi, sindoor, mangalsutra, bridal colors, regional wedding rituals, and the symbolism of embroidery motifs.',
-    h1: 'Cultural Connections — Symbolism & Traditions of Indian Ethnic Wear',
-    content: '<p>Discover the deep cultural significance behind Indian ethnic wear. Every garment, color, and accessory carries meaning — the red of a bridal lehenga symbolizes prosperity, the bindi marks the ajna chakra, sindoor signals married status, and the mangalsutra is a sacred bond. Our Cultural Connections guides explore the symbolism, rituals, and regional traditions that give Indian ethnic fashion its soul.</p><h2>What You\'ll Find in This Category</h2><ul><li>The symbolism of bridal colors — why red, maroon, and yellow are auspicious</li><li>Regional wedding rituals — Punjabi, Bengali, Tamil, Marwari, Malayali traditions</li><li>The meaning behind the bindi, sindoor, mangalsutra, and kalire</li><li>Mehendi ceremony traditions and the significance of henna patterns</li><li>The cultural importance of specific embroidery motifs — paisley, peacock, lotus</li><li>How NRI families preserve cultural traditions through ethnic fashion</li></ul><p>This category is currently being developed. Check back soon for our first articles, or explore our other categories below.</p>',
-  },
-  {
-    path: '/blog/ethnicalley',
-    title: 'Indian Wedding Ceremonies & Festival Dress Codes — Mehendi to Reception | LuxeMia',
-    description: 'Complete dress code guides for every Indian wedding ceremony — mehendi, haldi, sangeet, pheras, reception. Plus festival outfits for Diwali, Navratri, and Eid.',
-    h1: 'Ethnicalley — Indian Wedding Ceremonies & Festival Dress Codes',
-    content: '<p>Step into the ethnicalley of Indian celebrations. Every Indian wedding is a multi-day affair with distinct ceremonies — mehendi, haldi, sangeet, pheras, vidaai, reception — each with its own dress code, color palette, and styling conventions. Our ethnicalley guides walk you through what to wear to each ceremony, the difference between Haldi and Mehendi outfits, how to dress for a South Indian muhurtham vs a Punjabi sangeet, and how U.S. shoppers can plan outfits for Diwali, Navratri, and Eid.</p><h2>What You\'ll Find in This Category</h2><ul><li>Complete Indian wedding ceremony outfit guides — mehendi, haldi, sangeet, pheras, reception</li><li>The difference between Haldi and Mehendi dress codes</li><li>Indian wedding season 2026 outfit planning</li><li>Diwali, Navratri, and Eid outfit ideas for U.S. shoppers</li><li>Regional wedding ceremony differences — North vs South India</li><li>What to wear to each ceremony as a guest, bridesmaid, or family member</li></ul><p>Browse all articles below to plan your wedding wardrobe ceremony by ceremony.</p>',
-  },
-  {
-    path: '/blog/fashion-cults',
-    title: 'Indian Ethnic Fashion Designers — Sabyasachi, Manish Malhotra & More | LuxeMia',
-    description: 'Profiles of India\'s top ethnic fashion designers — Sabyasachi, Manish Malhotra, JJ Valaya, Anita Dongre. Their signature styles, iconic collections, and how to shop their looks.',
-    h1: 'Fashion Cults — Designer Profiles of Indian Ethnic Fashion',
-    content: '<p>Meet the designers who shaped modern Indian ethnic fashion. From Sabyasachi Mukherjee\'s revival of handloom textiles to Manish Malhotra\'s Bollywood bridal aesthetic, from JJ Valaya\'s royal couture to Anita Dongre\'s sustainable luxury — each designer has defined a movement. Our Fashion Cults profiles trace their journeys, signature styles, iconic bridal collections, and the cultural moments that made them.</p><h2>What You\'ll Find in This Category</h2><ul><li>Sabyasachi Mukherjee — the revival of handloom and the royal bridal aesthetic</li><li>Manish Malhotra — Bollywood\'s favorite designer and his bridal signature</li><li>JJ Valaya — royal couture and the house of Valaya</li><li>Anita Dongre — sustainable luxury and grassroots empowerment</li><li>Ritu Kumar — the pioneer of Indian fashion revival</li><li>How to shop designer-inspired looks on a budget</li></ul><p>This category is currently being developed. Check back soon for our first designer profiles.</p>',
-  },
-  {
-    path: '/blog/motifs-embroideries',
-    title: 'Indian Embroidery & Textile Guide — Zari, Chikankari, Banarasi & Kanchipuram | LuxeMia',
-    description: 'Background guides to Indian textile terms including zari, chikankari, zardozi, Banarasi, Kanchipuram, georgette, and chiffon.',
-    h1: 'Motifs & Embroideries — Indian Textile Techniques Encyclopedia',
-    content: '<p>Explore background guides to the names, motifs, and techniques associated with Indian textiles. A textile name can describe a tradition, motif, process, material, or style; the name alone does not prove fiber content, handloom construction, precious-metal content, geographic origin, or certification. For any LuxeMia item, use the exact Product Details and images as the specification for that listing.</p><h2>What You\'ll Find in This Category</h2><ul><li>Zari terminology and metallic-thread techniques</li><li>Chikankari traditions, stitch terms, and regional context</li><li>Banarasi textile history and common brocade terminology</li><li>Kanchipuram and Kanjivaram saree traditions</li><li>Fabric comparison guides — silk, georgette, chiffon, net, and velvet</li><li>Care considerations to confirm against the exact product listing</li></ul><p>Use these articles for general textile background and the current product page for listing-specific materials, construction, origin, and care information.</p>',
-  },
-  {
-    path: '/blog/weddings-festivals',
-    title: 'Indian Wedding Guest Outfits & Festival Styling Guide | LuxeMia',
-    description: 'What to wear to an Indian wedding — guest dress codes, bridesmaid outfits, mother of bride sarees, men\'s wedding attire, and festival styling for Diwali, Navratri & Eid.',
-    h1: 'Weddings & Festivals — Guest Outfits & Regional Wedding Traditions',
-    content: '<p>Your complete guide to dressing for Indian weddings and festivals. Whether you are a guest at a multi-day Indian wedding, a bridesmaid choosing a cohesive look, a mother of the bride selecting an elegant saree, or an NRI family celebrating Diwali abroad — our Weddings & Festivals guides cover every scenario. Learn the difference between a Punjabi wedding and a Tamil wedding, what men should wear to each ceremony, how to dress for a South Asian wedding as a non-Indian guest, and the latest 2026 wedding fashion trends.</p><h2>What You\'ll Find in This Category</h2><ul><li>What to wear to an Indian wedding as a guest — complete dress code guide</li><li>Wedding guest outfit ideas for every ceremony</li><li>How to style lehenga choli for every wedding event</li><li>Indian wedding trends for 2026</li><li>What non-Indian guests should wear to a South Asian wedding</li><li>Diwali outfit ideas for NRI women in the United States</li><li>Indian wedding guest outfits for men — complete USA guide</li><li>Styling Indian ethnic wear for festive occasions abroad</li></ul><p>Browse all articles below to plan your wedding and festival wardrobe.</p>',
-  },
-  {
-    path: '/blog/how-to-care',
-    title: 'How to Drape Saree, Care for Silk & Measure for Indian Ethnic Wear | LuxeMia',
-    description: 'Practical guides to saree draping, garment care, measurements, stitching terms and shopping Indian ethnic wear online.',
-    h1: 'How-To & Care — Draping, Measuring, Tailoring & Fabric Care',
-    content: '<p>Browse practical guides to saree draping, garment care, measurements, stitching terms and shopping Indian ethnic wear online. Product-specific care and sizing details should always be confirmed on the exact listing.</p><h2>What You\'ll Find in This Category</h2><ul><li>Saree draping terminology and methods</li><li>How to take garment measurements</li><li>Unstitched, semi-stitched and ready-to-wear definitions</li><li>Fabric-care considerations</li><li>Questions to ask before ordering online</li></ul>',
-  },
-  {
-    path: '/blog/nri-shopping',
-    title: 'U.S. Guide: Buy Indian Ethnic Wear Online | LuxeMia',
-    description: 'Shopping guides for U.S. customers buying Indian ethnic wear online, including sizing, measurements, delivery, product details, and order policies.',
-    h1: 'Shopping — Buy Indian Ethnic Wear in the United States',
-    content: '<p>Browse practical guides for U.S. shoppers buying Indian ethnic wear online. Compare garment measurements, stitching terms, listing details, delivery information, and order policies before placing an order. LuxeMia currently ships within the United States.</p><h2>What You\'ll Find in This Category</h2><ul><li>How to compare Indian garment measurements with U.S. sizing</li><li>Questions to ask before buying sarees, lehengas, suits, or menswear online</li><li>U.S. shipping and delivery information</li><li>How to read listing-specific fabric, work, stitching, and package details</li><li>Wedding and special-occasion shopping guides for U.S. customers</li></ul><p>Use each current product page for exact materials, construction, included pieces, sizing options, availability, and care information.</p>',
   },
 
 
@@ -1921,7 +1844,8 @@ function generateHtml(template, route, allShopifyProducts) {
 
   // Blog routes need article-specific schema in the initial HTML. The author
   // is the real editorial team; individual credentials are not implied.
-  if (route.path.startsWith('/blog/') && route.path.split('/').length === 3) {
+  if (route.blogPost) {
+    const { publishedAt, updatedAt, factCheckedAt, sources = [] } = route.blogPost;
     const articleSchema = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
@@ -1929,10 +1853,23 @@ function generateHtml(template, route, allShopifyProducts) {
       description: route.description,
       url: SITE_URL + route.path,
       mainEntityOfPage: SITE_URL + route.path,
+      datePublished: publishedAt,
+      dateModified: updatedAt,
       author: { '@type': 'Organization', name: 'LuxeMia Editorial Team', url: SITE_URL + '/authors/luxemia-editorial-team' },
       publisher: { '@type': 'Organization', name: 'LuxeMia', url: SITE_URL },
+      citation: sources.map(source => source.url),
+      isBasedOn: sources.map(source => ({
+        '@type': 'CreativeWork',
+        name: source.title,
+        publisher: source.publisher,
+        url: source.url,
+      })),
     };
-    html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(articleSchema)}</script>\n</head>`);
+    const reviewMeta = `
+    <meta property="article:published_time" content="${escapeHtml(publishedAt)}" />
+    <meta property="article:modified_time" content="${escapeHtml(updatedAt)}" />
+    <meta name="last-reviewed" content="${escapeHtml(factCheckedAt)}" />`;
+    html = html.replace('</head>', `${reviewMeta}\n    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(articleSchema)}</script>\n</head>`);
   }
 
   // Inject SEO content into the body. This content is visible to search engine crawlers
@@ -2171,16 +2108,9 @@ async function main() {
     const allCategoryGroups = categoryModule.BLOG_CATEGORY_GROUPS || [];
     const categoryMap = categoryModule.BLOG_POST_CATEGORY_MAP || {};
     const publishedPaths = new Set(allBlogPosts.map(post => `/blog/${post.slug}`));
-    const knownHubPaths = new Set([
-      '/blog/attires',
-      '/blog/cultural-connections',
-      '/blog/ethnicalley',
-      '/blog/fashion-cults',
-      '/blog/motifs-embroideries',
-      '/blog/weddings-festivals',
-      '/blog/how-to-care',
-      '/blog/nri-shopping',
-    ]);
+    const knownHubPaths = new Set(
+      allCategoryGroups.map(group => `/blog/${group.slug}`)
+    );
 
     // Remove manually maintained article and hub routes that are no longer
     // present in the published data. This prevents bot-only HTML from linking
@@ -2204,7 +2134,7 @@ async function main() {
         .map(group => `<li><a href="/blog/${escapeHtml(group.slug)}">${escapeHtml(group.name)}</a></li>`)
         .join('');
       blogIndex.content =
-        '<p>Practical guides for choosing Indian occasionwear, comparing silhouettes, preparing measurements and shopping current LuxeMia collections in the United States.</p>' +
+        '<p>Source-reviewed guides to Indian clothing terms, measurements, textiles, cultural context and occasionwear for U.S. customers.</p>' +
         `<h2>Published Guides</h2><ul>${guideLinks}</ul>` +
         `<h2>Browse by Topic</h2><ul>${hubLinks}</ul>` +
         '<p>For exact fabric or materials, included pieces, stitching status, sizes, price and availability, use the individual product listing as the source of truth.</p>';
@@ -2231,12 +2161,26 @@ async function main() {
     let autoBlogCount = 0;
     for (const post of allBlogPosts) {
       if (!post.slug || routes.some(route => route.path === `/blog/${post.slug}`)) continue;
+      const sourceItems = (post.sources || [])
+        .map(source =>
+          `<li><a href="${escapeHtml(source.url)}">${escapeHtml(source.title)}</a> — ${escapeHtml(source.publisher)}</li>`
+        )
+        .join('');
+      const sourceReview = sourceItems
+        ? `<section aria-labelledby="prerender-sources"><h2 id="prerender-sources">Sources and review basis</h2><p>Sources were checked on ${escapeHtml(post.factCheckedAt)}. Brand-owned sources are identified by publisher and attributed in the article.</p><ul>${sourceItems}</ul></section>`
+        : '';
       routes.push({
         path: `/blog/${post.slug}`,
         title: `${post.title} | LuxeMia`,
         description: post.excerpt || `${post.title} — read the full guide on the LuxeMia blog.`,
         h1: post.title,
-        content: post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`,
+        content: `${post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`}${sourceReview}`,
+        blogPost: {
+          publishedAt: post.publishedAt,
+          updatedAt: post.updatedAt,
+          factCheckedAt: post.factCheckedAt,
+          sources: post.sources || [],
+        },
       });
       autoBlogCount++;
     }

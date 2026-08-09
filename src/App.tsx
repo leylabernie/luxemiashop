@@ -237,6 +237,8 @@ const App = () => (
                 <Route path="/blog/motifs-embroideries" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/weddings-festivals" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/how-to-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/designer-profiles" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/cultural-context" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
                 {/* Public author information is organizational and verifiable. */}
                 <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />

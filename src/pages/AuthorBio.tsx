@@ -8,11 +8,17 @@ import type { BlogPost } from '@/data/blogPosts';
 import { blogPosts } from '@/data/blogPosts';
 import { BLOG_AUTHORS, getAuthorBySlug } from '@/data/blogAuthors';
 import { getBlogCategoryGroup } from '@/data/blogCategories';
-import { Calendar, Clock, MapPin, Award, BookOpen, ChevronRight, Home, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, MapPin, BadgeCheck, BookOpen, ChevronRight, Home, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').trim();
+
+const formatDateOnly = (date: string) => new Date(`${date}T12:00:00`).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
 
 const AuthorBio = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -44,19 +50,14 @@ const AuthorBio = () => {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     "mainEntity": {
-      "@type": "Person",
+      "@type": "Organization",
       "name": author.name,
-      "jobTitle": author.role,
       "description": author.credentials + '. ' + author.bio.slice(0, 300),
       "url": `https://luxemia.shop/authors/${author.slug}`,
-      "worksFor": {
-        "@type": "Organization",
-        "name": "LuxeMia"
-      },
       "knowsAbout": author.expertise,
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": author.location
+        "addressCountry": "US"
       }
     }
   };
@@ -118,7 +119,7 @@ const AuthorBio = () => {
                 </h1>
                 <p className="text-xl text-primary font-medium mb-3">{author.role}</p>
                 <p className="text-muted-foreground mb-4 flex items-center gap-2">
-                  <Award className="w-4 h-4" />
+                  <BadgeCheck className="w-4 h-4" />
                   {author.credentials}
                 </p>
                 <p className="text-muted-foreground mb-4 flex items-center gap-2">
@@ -209,7 +210,7 @@ const AuthorBio = () => {
                           <div className="flex items-center gap-3 text-xs text-muted-foreground">
                             <span className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
-                              {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                              {formatDateOnly(post.publishedAt)}
                             </span>
                             <span className="flex items-center gap-1">
                               <Clock className="w-3 h-3" />
@@ -225,27 +226,28 @@ const AuthorBio = () => {
             )}
           </div>
 
-          {/* Other Authors */}
-          <div className="mt-16 border-t border-border pt-12">
-            <h2 className="text-2xl font-display font-semibold mb-6">Meet all LuxeMia experts</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {BLOG_AUTHORS.filter(a => a.slug !== author.slug).map(otherAuthor => (
-                <Link
-                  key={otherAuthor.slug}
-                  to={`/authors/${otherAuthor.slug}`}
-                  className="group p-4 border border-border rounded-lg hover:border-primary hover:shadow-sm transition-all"
-                >
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-3">
-                    <span className="text-sm font-display font-bold text-primary">
-                      {otherAuthor.name.split(' ').map(n => n[0]).join('')}
-                    </span>
-                  </div>
-                  <p className="font-semibold text-sm group-hover:text-primary transition-colors">{otherAuthor.name}</p>
-                  <p className="text-xs text-muted-foreground">{otherAuthor.role}</p>
-                </Link>
-              ))}
+          {BLOG_AUTHORS.length > 1 && (
+            <div className="mt-16 border-t border-border pt-12">
+              <h2 className="text-2xl font-display font-semibold mb-6">Editorial contributors</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {BLOG_AUTHORS.filter(a => a.slug !== author.slug).map(otherAuthor => (
+                  <Link
+                    key={otherAuthor.slug}
+                    to={`/authors/${otherAuthor.slug}`}
+                    className="group p-4 border border-border rounded-lg hover:border-primary hover:shadow-sm transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-3">
+                      <span className="text-sm font-display font-bold text-primary">
+                        {otherAuthor.name.split(' ').map(n => n[0]).join('')}
+                      </span>
+                    </div>
+                    <p className="font-semibold text-sm group-hover:text-primary transition-colors">{otherAuthor.name}</p>
+                    <p className="text-xs text-muted-foreground">{otherAuthor.role}</p>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </main>
       <Footer />

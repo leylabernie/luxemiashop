@@ -296,8 +296,8 @@ async function routeRequest(request: Request): Promise<Response> {
   // Preserve SEO equity for legacy size-guide URLs before the bot unknown-route
   // fallback, so crawlers receive the same 301 as normal visitors.
   const LEGACY_BLOG_REDIRECTS: Record<string, string> = {
-    '/blog/indian-size-to-us-clothing-size-conversion-guide': '/sizing-measurements-guide',
-    '/blog/indian-size-to-us-size-conversion-chart': '/sizing-measurements-guide',
+    '/blog/indian-size-to-us-clothing-size-conversion-guide': '/blog/indian-to-us-clothing-size-conversion-guide',
+    '/blog/indian-size-to-us-size-conversion-chart': '/blog/indian-to-us-clothing-size-conversion-guide',
   };
   if (LEGACY_BLOG_REDIRECTS[pathname]) {
     return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
