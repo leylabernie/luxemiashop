@@ -412,6 +412,10 @@ Deno.serve(async (req) => {
         {
           success: false,
           deliveryStatus: delivery.status,
+          providerStatus:
+            delivery.status === "failed"
+              ? delivery.providerStatus || null
+              : null,
           error: "We could not email your code just now. Please try again.",
         },
         503,
