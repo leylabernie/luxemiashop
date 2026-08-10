@@ -793,8 +793,8 @@ const BrandStory = () => {
                   <p className="font-medium text-foreground mb-1">
                     Customer Service Hours
                   </p>
-                  <p>Monday &ndash; Saturday: 10:00 AM &ndash; 7:00 PM EST</p>
-                  <p>Sunday: 11:00 AM &ndash; 5:00 PM EST</p>
+                  <p>Monday &ndash; Saturday: 10:00 AM &ndash; 7:00 PM ET</p>
+                  <p>Sunday: 11:00 AM &ndash; 5:00 PM ET</p>
                   <p className="mt-2">
                     Average response time: within 24 hours (usually sooner
                     during business hours)

@@ -181,7 +181,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               </a>
               <div className="flex items-start gap-2">
                 <Clock className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Mon-Sat 10am-7pm EST<br />Sun 11am-5pm EST</span>
+                <span>Mon-Sat 10am-7pm ET<br />Sun 11am-5pm ET</span>
               </div>
             </div>
           </div>
