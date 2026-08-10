@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
+import { submitConsultation } from '@/lib/submitConsultation';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,22 +24,16 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Store contact requests in the existing protected lead pipeline. This
+      // Store contact requests in the isolated protected lead pipeline. This
       // replaces the previous simulated success that discarded every message.
-      const { data, error } = await supabase.functions.invoke('submit-consultation', {
-        body: {
-          name: formData.name.trim(),
-          email: formData.email.trim().toLowerCase(),
-          phone: 'Not provided — website contact form',
-          country: 'Not provided',
-          occasion: `Contact form: ${formData.subject.trim()}`,
-          requirements: formData.message.trim(),
-        },
+      await submitConsultation({
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: 'Not provided — website contact form',
+        country: 'Not provided',
+        occasion: `Contact form: ${formData.subject.trim()}`,
+        requirements: formData.message.trim(),
       });
-
-      if (error || data?.error) {
-        throw new Error(data?.error || error?.message || 'Unable to save message');
-      }
 
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'generate_lead', {
