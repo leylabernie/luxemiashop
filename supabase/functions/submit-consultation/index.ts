@@ -25,6 +25,11 @@ interface ConsultationLead {
 
 type AdminClient = ReturnType<typeof createClient>;
 
+type NotificationOutcome =
+  | { status: "accepted"; providerStatus: number; providerId: string | null }
+  | { status: "not_configured" }
+  | { status: "failed"; providerStatus?: number };
+
 function responseHeaders(req: Request): Record<string, string> {
   const origin = req.headers.get("origin");
   const allowedOrigin = origin && ALLOWED_ORIGINS.has(origin)
@@ -239,40 +244,82 @@ async function checkRateLimit(
   return { allowed: true, violationCount: 0 };
 }
 
-async function notifyTeam(lead: ConsultationLead): Promise<void> {
+async function notifyTeam(
+  lead: ConsultationLead,
+): Promise<NotificationOutcome> {
   const apiKey = Deno.env.get("RESEND_API_KEY");
   if (!apiKey) {
-    console.warn("Lead saved; RESEND_API_KEY is not configured");
-    return;
+    console.error(JSON.stringify({
+      event: "consultation_notification",
+      status: "not_configured",
+    }));
+    return { status: "not_configured" };
   }
 
   const subject = (lead.occasion || "Website enquiry").replace(/[\r\n]+/g, " ");
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "LuxeMia Leads <hello@luxemia.shop>",
-      to: ["hello@luxemia.shop"],
-      reply_to: lead.email,
-      subject: `New LuxeMia lead: ${subject}`,
-      html: `<h2>New website lead</h2>
-        <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
-        <p><strong>Phone:</strong> ${escapeHtml(lead.phone)}</p>
-        <p><strong>Country:</strong> ${escapeHtml(lead.country)}</p>
-        <p><strong>Occasion:</strong> ${escapeHtml(lead.occasion)}</p>
-        <p><strong>Preferred date:</strong> ${escapeHtml(lead.preferred_date)}</p>
-        <p><strong>Budget:</strong> ${escapeHtml(lead.budget)}</p>
-        <p><strong>Requirements:</strong><br>${escapeHtml(lead.requirements).replaceAll("\n", "<br>")}</p>`,
-    }),
-  });
+  let response: Response;
+
+  try {
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "LuxeMia Leads <hello@luxemia.shop>",
+        to: ["lab.bhamini@gmail.com"],
+        reply_to: lead.email,
+        subject: `New LuxeMia lead: ${subject}`,
+        html: `<h2>New website lead</h2>
+          <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
+          <p><strong>Phone:</strong> ${escapeHtml(lead.phone)}</p>
+          <p><strong>Country:</strong> ${escapeHtml(lead.country)}</p>
+          <p><strong>Occasion:</strong> ${escapeHtml(lead.occasion)}</p>
+          <p><strong>Preferred date:</strong> ${escapeHtml(lead.preferred_date)}</p>
+          <p><strong>Budget:</strong> ${escapeHtml(lead.budget)}</p>
+          <p><strong>Requirements:</strong><br>${escapeHtml(lead.requirements).replaceAll("\\n", "<br>")}</p>`,
+      }),
+    });
+  } catch {
+    console.error(JSON.stringify({
+      event: "consultation_notification",
+      status: "failed",
+      failureType: "provider_unreachable",
+    }));
+    return { status: "failed" };
+  }
+
+  const responseBody = await response.text();
+  let providerId: string | null = null;
+  try {
+    const parsed = JSON.parse(responseBody) as { id?: unknown };
+    providerId = typeof parsed.id === "string" ? parsed.id : null;
+  } catch {
+    // A non-JSON provider response is handled by the HTTP status below.
+  }
 
   if (!response.ok) {
-    throw new Error(`Lead notification failed with status ${response.status}`);
+    console.error(JSON.stringify({
+      event: "consultation_notification",
+      status: "failed",
+      providerStatus: response.status,
+    }));
+    return { status: "failed", providerStatus: response.status };
   }
+
+  console.log(JSON.stringify({
+    event: "consultation_notification",
+    status: "accepted",
+    providerStatus: response.status,
+    providerId,
+  }));
+  return {
+    status: "accepted",
+    providerStatus: response.status,
+    providerId,
+  };
 }
 
 Deno.serve(async (req) => {
@@ -349,10 +396,15 @@ Deno.serve(async (req) => {
     if (error) throw error;
     console.log("Consultation lead stored");
 
+    let notificationStatus: NotificationOutcome["status"] = "failed";
     try {
-      await notifyTeam(lead);
-    } catch (notificationError) {
-      console.error("Consultation notification error:", notificationError);
+      notificationStatus = (await notifyTeam(lead)).status;
+    } catch {
+      console.error(JSON.stringify({
+        event: "consultation_notification",
+        status: "failed",
+        failureType: "unexpected_error",
+      }));
     }
 
     return jsonResponse(
@@ -360,6 +412,7 @@ Deno.serve(async (req) => {
       {
         success: true,
         message: "Your request was received.",
+        notificationStatus,
       },
       200,
     );
