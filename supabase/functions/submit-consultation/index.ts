@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2.112.2";
 const ALLOWED_ORIGINS = new Set([
   "https://luxemia.shop",
   "https://www.luxemia.shop",
+  "https://luxemiashop-git-agent-contact-334564-labbhamini-7947s-projects.vercel.app",
 ]);
 
 const RATE_LIMIT = 3;
