@@ -33,7 +33,17 @@ interface SignupPayload {
 type WelcomeEmailOutcome =
   | { status: "accepted"; providerId: string | null }
   | { status: "not_configured" }
-  | { status: "failed"; providerStatus?: number };
+  | {
+      status: "failed";
+      providerStatus?: number;
+      providerReason:
+        | "domain_not_verified"
+        | "testing_recipient_restricted"
+        | "invalid_api_key"
+        | "provider_rate_limited"
+        | "provider_rejected"
+        | "provider_unreachable";
+    };
 
 function responseHeaders(req: Request): Record<string, string> {
   const origin = req.headers.get("origin");
@@ -272,7 +282,7 @@ async function sendWelcomeEmail(email: string): Promise<WelcomeEmailOutcome> {
         failureType: "provider_unreachable",
       }),
     );
-    return { status: "failed" };
+    return { status: "failed", providerReason: "provider_unreachable" };
   }
 
   const responseBody = await response.text();
@@ -285,14 +295,31 @@ async function sendWelcomeEmail(email: string): Promise<WelcomeEmailOutcome> {
   }
 
   if (!response.ok) {
+    const normalizedError = responseBody.toLowerCase();
+    const providerReason = normalizedError.includes("api key is invalid")
+      ? "invalid_api_key"
+      : normalizedError.includes("only send testing emails")
+        ? "testing_recipient_restricted"
+        : normalizedError.includes("domain") &&
+            normalizedError.includes("not verified")
+          ? "domain_not_verified"
+          : response.status === 429
+            ? "provider_rate_limited"
+            : "provider_rejected";
+
     console.error(
       JSON.stringify({
         event: "welcome_email",
         status: "failed",
         providerStatus: response.status,
+        providerReason,
       }),
     );
-    return { status: "failed", providerStatus: response.status };
+    return {
+      status: "failed",
+      providerStatus: response.status,
+      providerReason,
+    };
   }
 
   console.log(
@@ -416,6 +443,8 @@ Deno.serve(async (req) => {
             delivery.status === "failed"
               ? delivery.providerStatus || null
               : null,
+          providerReason:
+            delivery.status === "failed" ? delivery.providerReason : null,
           error: "We could not email your code just now. Please try again.",
         },
         503,
