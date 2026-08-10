@@ -351,6 +351,13 @@ const LEHENGAS: CategoryConfig = {
         Confirm the selected size, included pieces and product-specific shipping estimate before ordering,
         especially when shopping for a fixed wedding date.
       </p>
+      <h3>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h3>
+      <p>
+        Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are
+        comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a
+        sangeet or reception, open the exact product page to confirm the waist allowance, stitching status,
+        included pieces and dispatch timing.
+      </p>
       <h3>Sizing and Tailoring</h3>
       <p>
         Available sizes and any optional tailoring vary by product. Review the listing and
@@ -860,6 +867,13 @@ const MENSWEAR: CategoryConfig = {
       <p>
         Available sizes and any optional tailoring vary by product. Review the listing and
         <a href="/size-guide"> size guide</a>, and contact LuxeMia before ordering if you need measurement help.
+      </p>
+      <h3>Custom Plus-Size Kurta Pajama and Nehru-Jacket Sets</h3>
+      <p>
+        Select active listings state plus-size custom stitching and include a kurta, pajama and Nehru jacket.
+        When comparing a men's plus-size kurta pajama with matching jacket for a wedding guest or cocktail
+        night, or a big-and-tall Nehru-jacket look, confirm the exact fabric, measurement process, set contents
+        and event timing on the product page before ordering.
       </p>
       <h3>United States Shipping</h3>
       <p>

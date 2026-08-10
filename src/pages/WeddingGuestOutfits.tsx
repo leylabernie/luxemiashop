@@ -154,7 +154,7 @@ const WeddingGuestOutfits = () => {
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">Reception</h3>
-                <p>The reception is an evening cocktail-style event and the most flexible in terms of dress code. Semi-formal to formal ethnic or <Link to="/indowestern" className="text-primary underline">indo-western outfits</Link> are appropriate. This is a great occasion to wear an elegant silk saree, a fusion indo-western gown, or a formal anarkali. The reception is also where non-Indian guests often feel most comfortable in a Western-style ethnic fusion outfit.</p>
+                <p>The reception is an evening cocktail-style event and the most flexible in terms of dress code. Semi-formal to formal ethnic or <Link to="/indowestern" className="text-primary underline">Indo-Western outfits</Link> are appropriate. This is a great occasion to wear an elegant silk saree, an Indo-Western dress, or a formal anarkali. The reception is also where non-Indian guests often feel most comfortable in a contemporary ethnic fusion outfit.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

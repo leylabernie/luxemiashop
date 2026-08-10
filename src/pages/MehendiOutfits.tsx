@@ -71,7 +71,7 @@ const MehendiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Mehendi Ceremony Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colors traditionally associated with henna celebrations. Perfect for the bride, bridesmaids, and all guests attending Indian mehendi ceremonies in the United States, or anywhere in the world.
+              Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colors traditionally associated with henna celebrations. Browse options for the bride, bridesmaids, the bride's sister, and guests attending Indian mehendi ceremonies in the United States.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const MehendiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>bridal mehendi outfits</strong>. Light fabrics in festive colors — perfect for outdoor garden celebrations. Free U.S. shipping at $150 and above.
+              Shop <strong>yellow lehengas for mehendi</strong>, <strong>green salwar kameez for mehendi functions</strong>, <strong>floral anarkali suits</strong>, <strong>mehendi ceremony sarees</strong>, and <strong>yellow mehendi outfits for the bride's sister</strong>. Review the exact listing for fabric, sizing, and availability. Free U.S. shipping at $150 and above.
             </p>
           </div>
         </div>

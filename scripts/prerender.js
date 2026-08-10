@@ -895,6 +895,8 @@ const routes = [
       <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter only for listings explicitly tagged that way, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
       <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
       <p>The Ready to Ship availability filter requires an explicit catalog tag and an available variant. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
+      <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
+      <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
       <h2>Shop Lehengas by Occasion</h2>
       <ul>
         <li><a href="/lehengas?sub=bridal">Bridal Lehengas</a> — Heavily embroidered lehenga choli for your wedding day</li>
@@ -1071,6 +1073,8 @@ const routes = [
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
     content: `
       <p>Discover sherwanis, kurta sets and Indo-Western menswear. Review each product page for the exact fabric, work, included pieces, sizes, tailoring options and current availability.</p>
+      <h2>Custom Plus-Size Kurta Pajama and Nehru-Jacket Sets</h2>
+      <p>Select active listings state plus-size custom stitching and include a kurta, pajama and Nehru jacket. When comparing a men's plus-size kurta pajama with matching jacket for a wedding guest or cocktail night, or a big-and-tall Nehru-jacket look, confirm the exact fabric, measurement process, set contents and event timing on the product page before ordering.</p>
       <h2>Shop Menswear by Style</h2>
       <ul>
         <li><a href="/menswear?sub=sherwani">Sherwanis</a> — Regal wedding sherwanis for the groom</li>
@@ -1365,7 +1369,7 @@ const routes = [
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>
       <h2>Fusion Style</h2>
       <p>Our Indo-Western collection blends the elegance of Indian craftsmanship with contemporary global fashion. Think asymmetrical hemlines, cape-style dupattas, dhoti pants paired with crop tops, and jacket-style anarkalis.</p>
-      <p>Perfect for sangeet nights, cocktail parties, and modern wedding celebrations where you want to stand out with a unique fusion look. Free US shipping at $150 and above to the United States.</p>
+      <p>Compare Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. Free U.S. shipping applies at $150 and above.</p>
     `,
   },
   {
@@ -1403,6 +1407,7 @@ const routes = [
       <p>Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration.</p>
       <h2>What to Wear for Diwali</h2>
       <p>Diwali calls for your most festive, vibrant ethnic wear. For the main Diwali day and Lakshmi Puja, traditional silk sarees in red, gold, or green are considered auspicious. For Diwali parties and evening celebrations, a heavily embellished lehenga with mirror work, zari embroidery, or sequin detailing photographs beautifully against the backdrop of diyas and fairy lights.</p>
+      <p>For an office Diwali party, compare current Indo-Western dresses, palazzo suits and contemporary anarkalis, then confirm the exact fabric, included pieces and available sizes on the product page.</p>
       <h2>Diwali Outfit Colors</h2>
       <p>Gold is the quintessential Diwali color — representing prosperity and the blessing of Goddess Lakshmi. Red, deep green, royal purple, burnt orange, and navy blue are also widely worn. Fabrics with gold zari work, sequin embellishments, or mirror details catch the Diwali diyas beautifully.</p>
       <h2>Shop Diwali Outfits</h2>
@@ -1422,6 +1427,7 @@ const routes = [
     h1: 'Indian Wedding Guest Outfits',
     content: `
       <p>Dress to impress at every Indian wedding ceremony — from the colourful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colours.</p>
+      <p>For an American wedding guest comparing a fusion look, browse current Indo-Western dresses and open the exact listing for its fabric, included pieces, sizing and availability.</p>
       <h2>What to Wear to Each Indian Wedding Ceremony</h2>
       <p>The mehendi is a daytime ceremony calling for bright, cheerful outfits in yellow, lime green, orange, or floral prints. The sangeet is the most festive ceremony — wear your most glamorous embellished lehengas or sequin anarkalis. The main wedding ceremony is the most formal — avoid red (the bridal colour) and white. The reception is the most flexible — semi-formal to formal ethnic or indo-western outfits are appropriate.</p>
       <h2>Shop by Ceremony</h2>
@@ -1441,6 +1447,7 @@ const routes = [
     h1: 'Mehendi Ceremony Outfits',
     content: `
       <p>Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colours traditionally associated with henna celebrations.</p>
+      <p>For a yellow mehendi outfit for the bride's sister, compare current yellow sarees, sharara or palazzo suits and Indo-Western sets, then review the exact listing for fabric, sizing and availability.</p>
       <h2>Mehendi Ceremony Colours</h2>
       <p>Yellow and green are the signature colours of mehendi ceremonies in most Indian cultures — yellow representing turmeric (haldi) and new beginnings, green representing the mehendi plant itself. Mustard, saffron orange, lime green, coral, and floral prints are all popular choices for mehendi guests.</p>
       <h2>Fabric Guide for Mehendi</h2>
