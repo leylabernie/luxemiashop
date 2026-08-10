@@ -256,10 +256,17 @@ export function applyProductFiltersV2(
 
           if (valueLower.includes('ready')) {
             const hasAvailable = variants.some(v => v.node.availableForSale);
-            const hasReadyTag = tags.some(tag =>
-              tag.includes('ready') || tag.includes('in stock') || tag.includes('readymade')
-            );
-            return hasAvailable || hasReadyTag;
+            const hasReadyTag = tags.some(tag => [
+              'ready to ship',
+              'ready-to-ship',
+              'availability:ready to ship',
+              'availability:ready-to-ship',
+            ].includes(tag));
+            return hasAvailable && hasReadyTag;
+          }
+
+          if (valueLower.includes('available online')) {
+            return variants.some(v => v.node.availableForSale);
           }
 
           if (valueLower.includes('made to order') || valueLower.includes('custom')) {

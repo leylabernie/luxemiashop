@@ -29,7 +29,7 @@
  *   /lehengas?sub=bridal&color=red,pink&fabric=silk&price=0-500&sort=price-asc
  */
 
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -124,7 +124,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
 
   // Reset visible count when filters change (so user doesn't have to scroll
   // past stale "loaded more" content)
-  useMemo(() => {
+  useEffect(() => {
     setVisibleCount(PRODUCTS_PER_PAGE);
   }, [state.filters, state.priceRange, state.sortBy, state.subcategory]);
 
@@ -169,7 +169,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
       />
       <Header />
 
-      <main className="pt-[90px] lg:pt-[132px] pb-16">
+      <main id="main-content" className="pt-[90px] lg:pt-[132px] pb-16">
         {/* Hero Banner — hidden when a subcategory is active (no occasion-specific banners) */}
         {!activeSubcategory && (
           <ImageCategoryHero
@@ -184,7 +184,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
 
         {/* Breadcrumbs */}
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6">
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground">
             {config.breadcrumbs.map((crumb, i) => (
               <span key={crumb.url} className="flex items-center gap-2">
                 {i > 0 && <span>/</span>}
@@ -386,7 +386,6 @@ export function CategoryListing({ config }: CategoryListingProps) {
             </div>
           </div>
         </div>
-      </main>
 
       {/* Editorial / SEO Content Section — shown below the product grid
           for keyword-rich content that helps search engines understand the
@@ -439,6 +438,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
       )}
 
       <CeremonyVerseLinkBlock />
+      </main>
       <Footer />
     </div>
   );

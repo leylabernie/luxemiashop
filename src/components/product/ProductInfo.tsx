@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -80,6 +80,28 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
   if (closureTag) {
     const closure = closureTag.slice(closureTag.indexOf(':') + 1).trim();
     if (closure) specs.closure = closure;
+  }
+
+  // Included pieces must come from an explicit catalog tag. Do not infer a
+  // dupatta, blouse, bottom, jewelry piece, or accessory from the product type.
+  const includedPiecePrefixes = [
+    'included:',
+    'included pieces:',
+    'pieces:',
+    'set includes:',
+    'package includes:',
+  ];
+  const includedPiecesTag = tags.find((tag) =>
+    includedPiecePrefixes.some((prefix) => tag.toLowerCase().startsWith(prefix)),
+  );
+  if (includedPiecesTag) {
+    const matchedPrefix = includedPiecePrefixes.find((prefix) =>
+      includedPiecesTag.toLowerCase().startsWith(prefix),
+    );
+    const includedPieces = matchedPrefix
+      ? includedPiecesTag.slice(matchedPrefix.length).trim()
+      : '';
+    if (includedPieces) specs.includedPieces = includedPieces;
   }
 
   // Legacy accessory tags contain garment attributes on some listings. Avoid
@@ -341,6 +363,17 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   
   const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
   const shipByLabel = getShipByLabel(product);
+  const listedSizeOptions = useMemo(() => {
+    const sizeOption = product.options.find((option) =>
+      ['size', 'bust size', 'stitching size'].includes(option.name.toLowerCase()),
+    );
+    if (!sizeOption) return null;
+
+    const values = sizeOption.values.filter((value) =>
+      value.trim() && value.toLowerCase() !== 'default title',
+    );
+    return values.length > 0 ? values.join(', ') : null;
+  }, [product.options]);
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -884,54 +917,74 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       <Separator />
 
-      {/* Product Specifications */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-medium uppercase tracking-wide">Product Details</h3>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+      {/* Standard product specification template. Each field is either sourced
+          from the current listing or uses a clear, non-invented fallback. */}
+      <section aria-labelledby="product-specifications-heading" className="space-y-4">
+        <h2 id="product-specifications-heading" className="font-serif text-2xl">Product Specifications</h2>
+        <dl className="grid grid-cols-[minmax(8rem,0.8fr)_minmax(0,1.2fr)] gap-x-6 gap-y-3 text-sm">
+          <dt className="font-medium text-foreground">Fabric Details</dt>
+          <dd className="text-muted-foreground">
+            {productSpecs.fabric || 'Review the product description for the fabric supplied with this listing.'}
+          </dd>
+
+          <dt className="font-medium text-foreground">Included Pieces</dt>
+          <dd className="text-muted-foreground">
+            {productSpecs.includedPieces || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.'}
+          </dd>
+
+          <dt className="font-medium text-foreground">Sizing & Chart</dt>
+          <dd className="text-muted-foreground">
+            {listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
+            <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
+              View the sizing chart
+            </Link>
+          </dd>
+
+          <dt className="font-medium text-foreground">Shipping Estimate</dt>
+          <dd className="text-muted-foreground">
+            {shipByLabel
+              ? `${shipByLabel}. Tracking details are emailed when the shipping label is created for dispatch.`
+              : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.'}
+          </dd>
+
           {productSpecs.color && (
             <>
-              <span className="text-muted-foreground">Color</span>
-              <span className="text-foreground">{productSpecs.color}</span>
-            </>
-          )}
-          {productSpecs.fabric && (
-            <>
-              <span className="text-muted-foreground">Fabric</span>
-              <span className="text-foreground">{productSpecs.fabric}</span>
+              <dt className="font-medium text-foreground">Color</dt>
+              <dd className="text-muted-foreground">{productSpecs.color}</dd>
             </>
           )}
           {productSpecs.work && (
             <>
-              <span className="text-muted-foreground">Work</span>
-              <span className="text-foreground">{productSpecs.work}</span>
+              <dt className="font-medium text-foreground">Work</dt>
+              <dd className="text-muted-foreground">{productSpecs.work}</dd>
             </>
           )}
           {productSpecs.type && (
             <>
-              <span className="text-muted-foreground">Type</span>
-              <span className="text-foreground">{productSpecs.type}</span>
+              <dt className="font-medium text-foreground">Type</dt>
+              <dd className="text-muted-foreground">{productSpecs.type}</dd>
             </>
           )}
           {productSpecs.closure && (
             <>
-              <span className="text-muted-foreground">Closure</span>
-              <span className="text-foreground">{productSpecs.closure}</span>
+              <dt className="font-medium text-foreground">Closure</dt>
+              <dd className="text-muted-foreground">{productSpecs.closure}</dd>
             </>
           )}
-          <span className="text-muted-foreground">Seller</span>
-          <span className="text-foreground">LuxeMia</span>
-        </div>
-      </div>
+          <dt className="font-medium text-foreground">Seller</dt>
+          <dd className="text-muted-foreground">LuxeMia</dd>
+        </dl>
+      </section>
 
       <Separator />
 
       {/* Description */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium uppercase tracking-wide">Product Speciality</h3>
+      <section aria-labelledby="product-description-heading" className="space-y-2">
+        <h2 id="product-description-heading" className="font-serif text-2xl">Product Description</h2>
         <p className="text-muted-foreground leading-relaxed text-sm">
           {product.description || 'Review the product images and listed options for the exact color, materials, included pieces, and sizing. Contact LuxeMia before ordering if any detail is unclear.'}
         </p>
-      </div>
+      </section>
 
       <Separator />
 

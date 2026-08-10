@@ -105,12 +105,32 @@ function getListedProductAttributes(product) {
     ?.find(option => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values
     ?.filter(value => value && value.toLowerCase() !== 'default title') || [];
+  const includedPiecePrefixes = [
+    'included:',
+    'included pieces:',
+    'pieces:',
+    'set includes:',
+    'package includes:',
+  ];
+  const includedPiecesTag = (product?.tags || []).find(tag =>
+    includedPiecePrefixes.some(prefix => String(tag).toLowerCase().startsWith(prefix))
+  );
+  const includedPiecesPrefix = includedPiecesTag
+    ? includedPiecePrefixes.find(prefix => String(includedPiecesTag).toLowerCase().startsWith(prefix))
+    : null;
+  const includedPieces = includedPiecesTag && includedPiecesPrefix
+    ? String(includedPiecesTag).slice(includedPiecesPrefix.length).trim()
+    : undefined;
+  const rawShipsWithin = product?.shipsWithinMetafield?.value;
+  const shipsWithinDays = rawShipsWithin ? Number.parseInt(String(rawShipsWithin), 10) : null;
 
   return {
     jewelry,
     color: rawColor && (!jewelry || listingText.includes(rawColor.toLowerCase())) ? rawColor : undefined,
     material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
     sizes: jewelry ? [] : sizeValues,
+    includedPieces: includedPieces || undefined,
+    shipsWithinDays: Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? shipsWithinDays : null,
   };
 }
 
@@ -130,7 +150,7 @@ function buildVerifiedProductCopy(product) {
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided after dispatch.'
+    'United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.'
   );
 
   return normalizeWhitespace(parts.join(' '));
@@ -783,11 +803,11 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia — Indian Ethnic Wear Online',
-    description: "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
-    h1: 'Indian Ethnic Wear Online',
+    title: 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
+    description: 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
+    h1: 'Premium Indian Ethnic Wear with Tracked U.S. Shipping',
     content: `
-      <p>Available online with tracked U.S. shipping. For the wedding that's sooner than you'd like.</p>
+      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry for U.S. delivery. Browse Indian wedding guest outfits with tracked shipping across the United States.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
@@ -807,7 +827,7 @@ const routes = [
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
-      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.</p>
+      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking details are emailed when the shipping label is created for dispatch.</p>
     `,
   },
   {
@@ -868,11 +888,13 @@ const routes = [
   {
     path: '/lehengas',
     category: 'lehengas',
-    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
-    description: 'Shop bridal, wedding guest, reception and festive lehengas online. Compare exact fabric, work, included pieces, sizing and availability. Free U.S. shipping at $150 and above.',
-    h1: 'Lehengas & Bridal Lehenga Collection',
+    title: 'Bridal & Ready-to-Ship Lehengas USA | LuxeMia',
+    description: 'Shop bridal and wedding guest lehengas online in the USA. Use the Ready to Ship filter for eligible listings; compare fabric, included pieces, sizing and tracked U.S. shipping.',
+    h1: 'Bridal, Wedding Guest & Ready-to-Ship Lehengas in the USA',
     content: `
-      <p>Discover bridal, wedding guest, reception and festive lehengas. Review each product page for the exact fabric, work, included pieces, stitching status, sizing and availability.</p>
+      <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter only for listings explicitly tagged that way, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
+      <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
+      <p>The Ready to Ship availability filter requires an explicit catalog tag and an available variant. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
       <h2>Shop Lehengas by Occasion</h2>
       <ul>
         <li><a href="/lehengas?sub=bridal">Bridal Lehengas</a> — Heavily embroidered lehenga choli for your wedding day</li>
@@ -924,11 +946,11 @@ const routes = [
   {
     path: '/sarees',
     category: 'sarees',
-    title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: 'Shop silk, wedding and festive sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping at $150 and above.',
-    h1: 'Sarees — Silk, Banarasi & Wedding Collection',
+    title: 'Buy Indian Wedding Sarees Online in the U.S. | LuxeMia',
+    description: 'Buy Indian wedding, silk and festive sarees online in the U.S. Compare each listing’s exact fabric, weave or work, blouse details, availability and tracked shipping.',
+    h1: 'Buy Indian Wedding Sarees Online in the U.S.',
     content: `
-      <p>Explore sarees for weddings, festivals and special occasions. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability.</p>
+      <p>Explore wedding, silk and festive sarees for U.S. delivery. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
       <h2>Shop Sarees by Occasion</h2>
       <ul>
         <li><a href="/sarees?sub=bridal">Bridal Sarees</a> — Heavily embellished sarees for the bride</li>
@@ -1260,10 +1282,10 @@ const routes = [
   },
   {
     path: '/shipping',
-    title: 'Shipping Information — the United States | LuxeMia',
-    description: 'Free U.S. shipping at $150 and above. $12 flat below that. In-stock Indian ethnic wear tracking provided after dispatch.',
-    h1: 'Shipping Information',
-    content: '<p>LuxeMia ships to United States addresses with tracking provided after dispatch. Shipping costs $12 below $150 and is free at $150 and above. Contact LuxeMia before ordering if your event date is time-sensitive.</p>',
+    title: 'Shipping Policy — Online US Delivery | LuxeMia',
+    description: 'LuxeMia U.S. shipping: free at $150 and above, $12 flat below $150. Tracking details are emailed when the shipping label is created for dispatch.',
+    h1: 'Shipping Policy',
+    content: '<h2>Shipping at a Glance</h2><dl><div><dt>Orders below $150</dt><dd>$12 flat</dd></div><div><dt>Orders at $150 and above</dt><dd>Free U.S. shipping</dd></div><div><dt>After the label is created</dt><dd>Tracking details are emailed for dispatch</dd></div></dl><h2>Timing</h2><p>Delivery timing depends on the item and selected options. Carrier transit time begins after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.</p>',
   },
   {
     path: '/pages/shipping-customs',
@@ -1912,18 +1934,26 @@ function generateHtml(template, route, allShopifyProducts) {
       ? `<h2>Product Description</h2><p>${escapeHtml(description).slice(0, 2000)}</p>`
       : '';
 
+    const fabricDetails = productAttributes.material
+      || 'Review the product description for the fabric or material supplied with this listing.';
+    const includedPieces = productAttributes.includedPieces
+      || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.';
+    const sizingDetails = productAttributes.sizes.length > 0
+      ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
+      : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
+    const shippingEstimate = productAttributes.shipsWithinDays
+      ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
+      : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
     const detailRows = [
-      productType ? `<li><strong>Type:</strong> ${escapeHtml(productType)}</li>` : '',
-      `<li><strong>Brand:</strong> ${escapeHtml(brandName)}</li>`,
-      productAttributes.color ? `<li><strong>Color:</strong> ${escapeHtml(productAttributes.color)}</li>` : '',
-      productAttributes.material ? `<li><strong>${productAttributes.jewelry ? 'Material' : 'Fabric'}:</strong> ${escapeHtml(productAttributes.material)}</li>` : '',
-      productAttributes.sizes.length > 0 ? `<li><strong>Available sizes:</strong> ${escapeHtml(productAttributes.sizes.join(', '))}</li>` : '',
-      `<li><strong>Availability:</strong> ${isAvailable ? 'In Stock' : 'Currently Unavailable'}</li>`,
-      `<li><strong>Ships to:</strong> United States</li>`,
-      `<li><strong>Shipping:</strong> Tracking provided after dispatch</li>`,
-      !productAttributes.jewelry && productAttributes.sizes.length === 0
-        ? `<li><strong>Sizing:</strong> Review the options shown for this product before ordering</li>`
-        : '',
+      `<div><dt>Fabric Details</dt><dd>${escapeHtml(fabricDetails)}</dd></div>`,
+      `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>`,
+      `<div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizingDetails)}</dd></div>`,
+      `<div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>`,
+      productType ? `<div><dt>Type</dt><dd>${escapeHtml(productType)}</dd></div>` : '',
+      `<div><dt>Brand</dt><dd>${escapeHtml(brandName)}</dd></div>`,
+      productAttributes.color ? `<div><dt>Color</dt><dd>${escapeHtml(productAttributes.color)}</dd></div>` : '',
+      `<div><dt>Availability</dt><dd>${isAvailable ? 'In Stock' : 'Currently Unavailable'}</dd></div>`,
+      `<div><dt>Ships to</dt><dd>United States</dd></div>`,
     ].filter(Boolean).join('\n        ');
 
     const sizeAnswer = productAttributes.sizes.length > 0
@@ -1936,8 +1966,8 @@ function generateHtml(template, route, allShopifyProducts) {
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
     const deliveryAnswer = productAttributes.jewelry
-      ? 'Delivery timing depends on the item. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.'
-      : 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.';
+      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.'
+      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.';
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
       ${firstQuestion}
@@ -1953,13 +1983,13 @@ function generateHtml(template, route, allShopifyProducts) {
       <p>Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p>
       ${imgHtml}
       ${descHtml}
-      <h2>Product Details</h2>
-      <ul>
+      <h2>Product Specifications</h2>
+      <dl>
         ${detailRows}
-      </ul>
+      </dl>
       ${productQuestionsHtml}
       <h2>Shipping &amp; Delivery</h2>
-      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking is provided after dispatch.</p>
+      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking details are emailed when the shipping label is created for dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)

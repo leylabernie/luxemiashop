@@ -19,7 +19,7 @@ export const DeliveryEstimate = ({ hasStitching }: DeliveryEstimateProps) => (
             Free U.S. shipping at $150 and above. $12 flat below that.
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Delivery timing depends on the item and selected options. Tracking is provided after dispatch.
+            Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.
           </p>
         </div>
       </div>
