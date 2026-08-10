@@ -21,7 +21,7 @@ create table public.newsletter_subscribers (
 
 alter table public.newsletter_subscribers enable row level security;
 
-revoke all on table public.newsletter_subscribers from public, anon, authenticated;
+revoke all on table public.newsletter_subscribers from public, anon, authenticated, service_role;
 grant select, insert, update on table public.newsletter_subscribers to service_role;
 
 create policy "Service role manages newsletter subscribers"
