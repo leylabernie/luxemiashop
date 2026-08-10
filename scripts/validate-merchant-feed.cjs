@@ -3,10 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 
+const requestedFeedPath = process.argv[2] ? path.resolve(process.argv[2]) : null;
 const candidates = [
+  requestedFeedPath,
   path.resolve(__dirname, '../dist/merchant-feed.xml'),
   path.resolve(__dirname, '../public/merchant-feed.xml'),
-];
+].filter(Boolean);
 const feedPath = candidates.find((candidate) => fs.existsSync(candidate));
 
 if (!feedPath) {
@@ -16,6 +18,20 @@ if (!feedPath) {
 const xml = fs.readFileSync(feedPath, 'utf8');
 const itemIds = [...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map((match) => match[1]);
 const groupIds = [...xml.matchAll(/<g:item_group_id>([^<]+)<\/g:item_group_id>/g)].map((match) => match[1]);
+const gtins = [...xml.matchAll(/<g:gtin>([^<]+)<\/g:gtin>/g)].map((match) => match[1]);
+
+function isValidGtin(gtin) {
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(gtin)) return false;
+
+  let sum = 0;
+  let weight = 3;
+  for (let index = gtin.length - 2; index >= 0; index--) {
+    sum += Number(gtin[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+
+  return Number(gtin.at(-1)) === (10 - (sum % 10)) % 10;
+}
 
 if (itemIds.length === 0) {
   throw new Error('Merchant feed contains no product IDs');
@@ -35,6 +51,11 @@ if (duplicateItemIds.length > 0) {
   throw new Error(`Merchant feed contains ${new Set(duplicateItemIds).size} duplicate product IDs`);
 }
 
+const invalidGtins = gtins.filter((gtin) => !isValidGtin(gtin));
+if (invalidGtins.length > 0) {
+  throw new Error(`Merchant feed contains ${invalidGtins.length} invalid GTIN values`);
+}
+
 // Country, language, tax, and threshold-based shipping are configured at
 // Merchant Center's data-source/account level. Item shipping would override
 // the accurate "$12 below $150, free at $150+" account rule.
@@ -50,5 +71,5 @@ if (legacyDeliveryCopy.test(xml)) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique product IDs and ${groupIds.length} group IDs; all are 50 characters or fewer`
+  `[merchant-feed] Validated ${itemIds.length} unique product IDs, ${groupIds.length} group IDs, and ${gtins.length} valid GTINs`
 );

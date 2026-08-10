@@ -477,6 +477,24 @@ function shortenId(gid: string): string {
   return gid.replace("gid://shopify/", "").replace(/\//g, "-");
 }
 
+// Google accepts only GS1 GTIN-8, UPC-A (GTIN-12), EAN-13, and GTIN-14
+// values with a valid check digit. Supplier/catalog numbers must not be
+// promoted to GTINs merely because Shopify stores them in the barcode field.
+function normalizeValidGtin(value: string | null): string {
+  const gtin = value?.trim() || "";
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(gtin)) return "";
+
+  let sum = 0;
+  let weight = 3;
+  for (let index = gtin.length - 2; index >= 0; index--) {
+    sum += Number(gtin[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+
+  const expectedCheckDigit = (10 - (sum % 10)) % 10;
+  return Number(gtin.at(-1)) === expectedCheckDigit ? gtin : "";
+}
+
 // ─── Generate XML item for a product variant ─────────────────────────
 
 function generateItem(
@@ -498,7 +516,7 @@ function generateItem(
   const work = getWorkFromTags(product.tags);
   const availability = variant.availableForSale ? "in_stock" : "out_of_stock";
   const currencyCode = variant.price.currencyCode || "USD";
-  const barcode = variant.barcode?.trim() || "";
+  const gtin = normalizeValidGtin(variant.barcode);
   const brand = product.vendor?.trim() || "";
   const isApparel = [1604, 5388, 8248].includes(googleCategory);
 
@@ -590,9 +608,9 @@ function generateItem(
     <g:size_system>US</g:size_system>`;
   }
 
-  if (barcode) {
+  if (gtin) {
     xml += `
-    <g:gtin>${escapeXml(barcode)}</g:gtin>`;
+    <g:gtin>${escapeXml(gtin)}</g:gtin>`;
     if (brand) xml += `
     <g:brand>${escapeXml(brand)}</g:brand>`;
   } else {
