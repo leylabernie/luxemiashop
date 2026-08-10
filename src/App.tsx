@@ -9,6 +9,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
+import DelayedWelcomePopup from "./components/home/DelayedWelcomePopup";
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
 
@@ -250,6 +251,7 @@ const App = () => (
               </Routes>
               <MobileBottomNav />
               <WhatsAppButton />
+              <DelayedWelcomePopup />
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>

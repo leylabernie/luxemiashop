@@ -10,6 +10,8 @@ const RATE_WINDOW_MINUTES = 1; // 1 minute
 const VIOLATION_THRESHOLD = 3; // violations before blocking
 const BLOCK_DURATION_MINUTES = 60; // initial block duration
 const MAX_BLOCK_DURATION_HOURS = 24; // maximum block duration
+const WELCOME_DISCOUNT_CODE = "WELCOME10";
+const WELCOME_DISCOUNT_PERCENT = 10;
 
 interface RateLimitRecord {
   id: string;
@@ -244,13 +246,53 @@ function validateEmail(email: string): { valid: boolean; error?: string } {
   return { valid: true };
 }
 
-function generateDiscountCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "LUXE15-";
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
+type WelcomeEmailOutcome =
+  | { status: "accepted"; providerId: string | null }
+  | { status: "not_configured" }
+  | { status: "failed" };
+
+async function sendWelcomeEmail(email: string): Promise<WelcomeEmailOutcome> {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  if (!apiKey) {
+    console.warn("Welcome signup saved but RESEND_API_KEY is not configured");
+    return { status: "not_configured" };
   }
-  return code;
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "LuxeMia <hello@luxemia.shop>",
+      to: [email],
+      reply_to: "hello@luxemia.shop",
+      subject: "Your LuxeMia welcome code",
+      html: `<!doctype html>
+        <html lang="en">
+          <body style="margin:0;background:#f6f1ea;color:#2d211d;font-family:Arial,sans-serif;">
+            <div style="max-width:560px;margin:0 auto;padding:40px 24px;">
+              <p style="margin:0 0 18px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#8b5e3c;">Welcome to LuxeMia</p>
+              <h1 style="margin:0 0 16px;font-family:Georgia,serif;font-size:32px;font-weight:500;line-height:1.2;">A little something for your first order</h1>
+              <p style="margin:0 0 24px;font-size:16px;line-height:1.65;">Thank you for joining us. Enjoy ${WELCOME_DISCOUNT_PERCENT}% off your first LuxeMia order with the code below.</p>
+              <p style="margin:0 0 28px;padding:16px;border:1px solid #c9a274;text-align:center;font-size:22px;font-weight:700;letter-spacing:3px;">${WELCOME_DISCOUNT_CODE}</p>
+              <p style="margin:0 0 28px;"><a href="https://luxemia.shop/collections" style="display:inline-block;background:#7a3f2b;color:#ffffff;padding:14px 24px;text-decoration:none;font-weight:700;">Shop LuxeMia</a></p>
+              <p style="margin:0 0 14px;font-size:14px;line-height:1.6;">We select premium Indian ethnic wear with a focus on product detail, quality, and attentive customer support. Questions? Reply to this email and we’ll be glad to help.</p>
+              <p style="margin:0;font-size:12px;line-height:1.6;color:#6b625d;">For customers with no prior LuxeMia purchase. One use per customer; cannot be combined with other discounts. U.S. orders only.</p>
+            </div>
+          </body>
+        </html>`,
+    }),
+  });
+
+  if (!response.ok) {
+    console.error("Welcome email delivery failed", response.status, await response.text());
+    return { status: "failed" };
+  }
+
+  const payload = await response.json().catch(() => ({})) as { id?: string };
+  return { status: "accepted", providerId: payload.id || null };
 }
 
 Deno.serve(async (req) => {
@@ -360,39 +402,40 @@ Deno.serve(async (req) => {
     const sanitizedEmail = email.trim().toLowerCase();
 
     if (type === "newsletter") {
-      const discountCode = generateDiscountCode();
-      
-      const { error } = await supabase.from("newsletter_subscribers").insert({
+      const { error } = await supabase.from("newsletter_subscribers").upsert({
         email: sanitizedEmail,
         source: body.source || "popup",
-        discount_code: discountCode,
+        discount_code: WELCOME_DISCOUNT_CODE,
+      }, {
+        onConflict: "email",
       });
 
       if (error) {
-        if (error.code === "23505") {
-          console.log(`Duplicate newsletter subscription attempt: ${sanitizedEmail}`);
-          return new Response(
-            JSON.stringify({ 
-              success: true, 
-              message: "Already subscribed",
-              duplicate: true 
-            }),
-            {
-              status: 200,
-              headers: { ...corsHeaders, "Content-Type": "application/json" },
-            }
-          );
-        }
         console.error("Newsletter subscription error:", error);
         throw error;
+      }
+
+      const delivery = await sendWelcomeEmail(sanitizedEmail);
+      if (delivery.status !== "accepted") {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            deliveryStatus: delivery.status,
+            error: "We could not email your code just now. Please try again.",
+          }),
+          {
+            status: 503,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
       }
 
       console.log(`Newsletter subscription successful: ${sanitizedEmail}`);
       return new Response(
         JSON.stringify({ 
-          success: true, 
-          discountCode,
-          message: "Subscription successful" 
+          success: true,
+          deliveryStatus: delivery.status,
+          message: "Welcome email accepted for delivery",
         }),
         {
           status: 200,
