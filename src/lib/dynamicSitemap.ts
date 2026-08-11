@@ -35,6 +35,7 @@ export const staticPages = [
   { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Mehendi Ceremony Outfits' },
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9', title: 'Eid Outfits 2026' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9', title: 'Navratri Outfits — Chaniya Choli & Garba' },
+  { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Haldi Ceremony Outfits' },
   // Brand & editorial
   { loc: '/about', changefreq: 'monthly', priority: '0.6', title: 'About LuxeMia' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.7', title: 'Blog' },

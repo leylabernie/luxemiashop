@@ -9,6 +9,131 @@
       "statusCode": 301
     },
     {
+      "source": "/maroon-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/emerald-green-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/royal-blue-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/pink-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/purple-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/wine-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/navy-blue-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/maroon-lehenga-for-reception",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/black-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/pastel-lehenga-for-wedding-guest",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/lehenga-for-bridesmaid",
+      "destination": "/collections/bridal-party-outfits",
+      "statusCode": 301
+    },
+    {
+      "source": "/lehenga-for-mother-of-bride",
+      "destination": "/lehengas",
+      "statusCode": 301
+    },
+    {
+      "source": "/anarkali-suit-for-mother-of-bride",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/anarkali-suit-for-wedding-guest",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/sharara-for-bride-sister",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/sherwani-for-groom",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/kurta-for-groom-brother",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/saree-for-mother-of-bride",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/georgette-saree-for-reception",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/banarasi-silk-saree-for-wedding",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/kanjivaram-saree-for-wedding",
+      "destination": "/collections/kanchipuram-sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/chiffon-saree-for-wedding-guest",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/silk-saree-for-festival",
+      "destination": "/collections/silk-sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/organza-saree-for-engagement",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/georgette-saree-for-wedding-guest",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
       "source": "/nri/usa",
       "destination": "/indian-ethnic-wear-usa",
       "statusCode": 301

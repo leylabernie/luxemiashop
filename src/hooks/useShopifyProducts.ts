@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 import { sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
+import occasionSignals from '@/data/occasionSignals.json';
 
 // Shopify productType values mapped to category page routes
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
@@ -12,6 +13,24 @@ const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
   jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
+};
+
+const escapeRegex = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const matchesOccasion = (product: ShopifyProduct, occasion: string): boolean => {
+  const signals = (occasionSignals as Record<string, string[]>)[occasion];
+  if (!signals || product.node.availableForSale === false) return false;
+
+  const searchableValues = [
+    product.node.title || '',
+    product.node.productType || '',
+    ...(product.node.tags || []),
+  ].map((value) => value.toLowerCase());
+
+  return signals.some((signal) => {
+    const pattern = new RegExp(`\\b${escapeRegex(signal.toLowerCase())}\\b`, 'i');
+    return searchableValues.some((value) => pattern.test(value));
+  });
 };
 
 // Map Shopify productType to display category names
@@ -224,6 +243,11 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   });
 
   if (category === 'all') return allowed;
+
+  if (category.startsWith('occasion:')) {
+    const occasion = category.slice('occasion:'.length);
+    return allowed.filter((product) => matchesOccasion(product, occasion));
+  }
 
   const types = CATEGORY_PRODUCT_TYPES[category];
   if (!types) return allowed;

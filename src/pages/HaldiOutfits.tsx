@@ -22,20 +22,20 @@ const sortOptions = [
 
 const haldiOutfitFaqs = [
   {
-    question: 'What color should I wear to a haldi ceremony?',
-    answer: 'Yellow is the traditional and most popular color for haldi ceremonies, symbolising turmeric, auspiciousness, and new beginnings. The bride typically wears yellow — a yellow lehenga, yellow salwar kameez, or yellow saree. Guests are also encouraged to wear yellow, gold, mustard, pastel yellow, or warm gold tones. However, modern haldi ceremonies also see guests in peach, coral, mint green, and pastel pink. Avoid white (inauspicious), black (mourning), and red (reserved for the wedding day) for the haldi function.',
+    question: 'How should I choose a color for a haldi ceremony?',
+    answer: 'Follow the invitation and ask the couple, host, or family when a palette is unclear. Customs and event themes vary, so LuxeMia does not apply a universal color rule.',
   },
   {
-    question: 'What should guests wear to a haldi ceremony?',
-    answer: 'Guests should wear bright, cheerful ethnic wear in yellow, gold, mustard, or pastel shades. Popular choices include anarkali suits in yellow, salwar kameez sets in gold or mustard, lightweight lehengas in pastel yellow, and simple chiffon or georgette sarees. The haldi is a daytime, pre-wedding ceremony that is more casual than the main wedding — so opt for lighter fabrics (georgette, chiffon, cotton, crepe) and lighter embroidery rather than heavy zardozi or stonework. Comfortable footwear like mojari flats or kolhapuri sandals complete the look.',
+    question: 'Which products appear in this haldi collection?',
+    answer: 'This page shows currently available products whose catalog title, product type, or tags explicitly mention haldi or turmeric. Open the exact product page to confirm fabric, work, included pieces, sizes, and availability.',
   },
   {
-    question: 'What does the bride wear for her haldi ceremony?',
-    answer: 'The bride traditionally wears a yellow outfit for her haldi ceremony — this is one of the most iconic and photographed looks of an Indian wedding. Popular choices include a yellow lehenga with floral embroidery, a yellow anarkali suit with gota patti work, or a yellow saree (often chiffon or georgette for comfort during the ceremony). The bride is usually draped in a paste of turmeric (haldi) during the ritual, so many brides choose an outfit they don\'t mind getting slightly stained, or wear a simple draping cloth over their outfit during the haldi application.',
+    question: 'How do I choose between a lehenga, suit, and saree?',
+    answer: 'Compare the exact listing for fabric, included pieces, work, size options, measurements, and availability. Choose the silhouette that fits the event guidance and activities.',
   },
   {
-    question: 'Can I wear a non-yellow color to a haldi ceremony?',
-    answer: 'Yes, while yellow is the most traditional choice, modern haldi ceremonies are more flexible. Popular non-yellow alternatives include peach, coral, mint green, lavender, and pastel pink. These colors photograph beautifully against the yellow turmeric and marigold decorations. However, avoid black, white, and dark navy. If you\'re unsure, wearing a pastel shade with yellow accessories (dupatta, bangles, or potli bag) is a great compromise that respects tradition while adding your personal style.',
+    question: 'How do I confirm what comes with an outfit?',
+    answer: 'Use the included-pieces details and images on the exact product page. Jewelry and accessories are not included unless the listing explicitly says so.',
   },
   {
     question: 'Do you ship haldi ceremony outfits to the USA and the United States?',
@@ -43,12 +43,12 @@ const haldiOutfitFaqs = [
   },
 ];
 
-// Keywords to match in product title, tags, or productType for haldi-appropriate items
+// Keep the rendered grid aligned with the catalog-backed server filter.
 const HALDI_COLOR_KEYWORDS = /\b(yellow|gold|mustard|pastel|turmeric|marigold|canary|sunflower|amber|saffron)\b/i;
 const HALDI_TAG_KEYWORDS = ['haldi', 'occasion:haldi', 'mehendi haldi', 'mehendi-haldi'];
 
 const HaldiOutfits = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts('occasion:haldi');
   const [sortBy, setSortBy] = useState('featured');
 
   // Filter products with haldi-related tags OR yellow/gold/pastel colors
@@ -56,8 +56,6 @@ const HaldiOutfits = () => {
     return products.filter(p => {
       const tags = (p.node.tags ?? []).map((t: string) => t.toLowerCase());
       const title = (p.node.title ?? '').toLowerCase();
-      const productType = (p.node.productType ?? '').toLowerCase();
-
       // Match haldi-specific tags
       if (tags.some((t: string) => HALDI_TAG_KEYWORDS.some(ht => t.includes(ht)))) return true;
 
@@ -77,8 +75,8 @@ const HaldiOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Haldi Ceremony Outfits | Yellow Lehengas & Suits | LuxeMia"
-        description="Shop haldi ceremony outfits at LuxeMia. Yellow & gold lehengas, pastel suits, and mustard sarees for the bride and guests. Free U.S. shipping at $150 and above to USA."
+        title="Haldi Ceremony Outfits — Current Listings | LuxeMia"
+        description="Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms."
         canonical="https://luxemia.shop/collections/haldi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -94,9 +92,9 @@ const HaldiOutfits = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Haldi Ceremony Outfits — Yellow & Gold Lehengas, Sarees & Suits</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Haldi Ceremony Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              The haldi ceremony is one of the most radiant and joyful pre-wedding rituals in Indian culture — a celebration of turmeric, blessings, and new beginnings. Our <strong>haldi ceremony outfits</strong> collection features yellow lehengas, gold anarkali suits, mustard sarees, and pastel salwar kameez sets for the bride, bridesmaids, family, and guests. Delivery is available to the United States, with free U.S. shipping at $150 and above.
+              Browse currently available products explicitly marked in the catalog for haldi or turmeric. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to United States addresses only.
             </p>
           </div>
         </div>
@@ -105,7 +103,7 @@ const HaldiOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>haldi ceremony outfits</strong>, <strong>yellow lehenga for haldi</strong>, <strong>haldi dress for bride</strong>, <strong>gold anarkali suits</strong>, <strong>mustard sarees for haldi</strong>, and <strong>pastel yellow salwar kameez</strong>. Traditional and modern <strong>haldi outfit ideas</strong> for the bride and guests. Free U.S. shipping at $150 and above.
+              Products appear here only when their current catalog title, product type, or tags explicitly mention haldi or turmeric. Review the exact listing before ordering.
             </p>
           </div>
         </div>
@@ -172,27 +170,17 @@ const HaldiOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
             <h2 className="font-serif text-2xl mb-6 text-center">Haldi Ceremony Outfit Guide</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>The haldi ceremony is one of the most beautiful and intimate pre-wedding rituals in Indian culture. A paste of turmeric (haldi), sandalwood, and rose water is applied to the bride and groom by family members — a tradition believed to purify the couple before marriage, bless them with glowing skin, and ward off evil spirits. The ceremony is filled with music, laughter, and yellow — everywhere you look, from the marigold decorations to the outfits of everyone attending.</p>
-              <p><strong>Yellow is the defining color of the haldi ceremony.</strong> It represents turmeric (haldi), which is considered sacred and auspicious in Hindu tradition. The color symbolises prosperity, new beginnings, and the warmth of family blessings. When choosing your <strong>haldi ceremony outfit</strong>, yellow, gold, mustard, and pastel yellow are the most traditional and photograph-perfect choices.</p>
+              <p>Use the invitation and host guidance for dress code, color, and formality. Haldi event formats vary, so ask the couple, host, or family when a detail is unclear.</p>
+              <p>Compare the current listings above by fabric, included pieces, work, size options, measurements, price, and availability. The collection name does not add tailoring, jewelry, or accessories that the exact listing does not state.</p>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">Haldi Outfit Ideas for the Bride</h3>
-                <p>The bride is the centre of attention at her haldi ceremony, and her outfit sets the tone for the entire event. The most popular <strong>haldi dress for bride</strong> options include:</p>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li><strong>Yellow lehenga</strong> — The most iconic bride haldi look. Choose a lightweight georgette or chiffon lehenga with floral embroidery, gota patti, or mirror work. A yellow lehenga for haldi photographs beautifully against marigold decorations.</li>
-                  <li><strong>Yellow anarkali suit</strong> — Elegant and comfortable, especially if the haldi ceremony involves sitting for extended periods. Flowing silhouettes with delicate embroidery are perfect.</li>
-                  <li><strong>Yellow saree</strong> — A chiffon, georgette, or organza saree in mustard or turmeric yellow. Pre-draped ready-to-wear sarees are a practical choice for the haldi since the bride will be covered in turmeric paste.</li>
-                </ul>
+                <h3 className="font-medium text-foreground mb-2">Check the Exact Listing</h3>
+                <p>Product images and listed options are authoritative. Contact LuxeMia before ordering if the supplied pieces, measurements, or timing are unclear.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">What Guests Should Wear to a Haldi</h3>
-                <p>As a guest at a haldi ceremony, you want to look festive while respecting the yellow color theme. <strong>Haldi ceremony outfits for guests</strong> include anarkali suits in yellow or gold, salwar kameez in mustard or pastel shades, lightweight lehengas, and simple sarees. Avoid heavy formal wear — the haldi is a relaxed, daytime celebration. Light fabrics like georgette, chiffon, and cotton are ideal. Pair your outfit with gold jhumka earrings, bangles, and comfortable mojari flats.</p>
-              </div>
-
-              <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">Haldi Color Traditions Across India</h3>
-                <p>While yellow is universal, haldi color traditions vary by region. In North India, bright turmeric yellow and marigold orange dominate. In South India, mustard yellow and gold are preferred, often with temple jewellery. In Gujarati and Rajasthani weddings, the haldi features bold yellow with contrasting green or fuchsia accents. In Bengali weddings, the gaye holud (haldi equivalent) features bright yellow with white and red touches. Regardless of region, the common thread is yellow — the color of turmeric, blessing, and celebration.</p>
+                <h3 className="font-medium text-foreground mb-2">Color Guidance</h3>
+                <p>Do not rely on a universal color rule. Follow the invitation and ask the host or family when a requested palette is unclear.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -206,8 +194,6 @@ const HaldiOutfits = () => {
                   <li><Link to="/collections/mehendi-outfits" className="text-primary underline">Mehendi Ceremony Outfits</Link></li>
                   <li><Link to="/collections/wedding-guest-outfits" className="text-primary underline">Wedding Guest Outfits</Link></li>
                   <li><Link to="/lehengas" className="text-primary underline">Shop Lehengas</Link> | <Link to="/suits" className="text-primary underline">Shop Suits</Link> | <Link to="/sarees" className="text-primary underline">Shop Sarees</Link></li>
-                  <li><Link to="/online" className="text-primary underline">Online Collection</Link></li>
-                  <li><Link to="/collections/mehendi-outfits" className="text-primary underline">Mehendi Ceremony Outfits</Link></li>
                 </ul>
               </div>
             </div>

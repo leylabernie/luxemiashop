@@ -20,9 +20,12 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
+const OCCASION_SIGNALS = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/occasionSignals.json'), 'utf8')
+);
 
 // ─── TypeScript Data Loader ───────────────────────────────────────────────
-// Bundles a .ts data module (blogPosts.ts or comboPages.ts)
+// Bundles a TypeScript data module
 // to a temporary ESM file with esbuild and imports it, so this build script
 // (which itself is loaded as JS) can read the SAME source-of-truth arrays
 // that the React app renders from, instead of a hand-maintained duplicate
@@ -39,8 +42,7 @@ async function loadTsModule(relativeSrcPath) {
     platform: 'node',
     write: false,
     logLevel: 'silent',
-    // Type-only imports (e.g. `@/components/combo/ComboPage`) are erased by
-    // esbuild's TS transform, so they never need to resolve at bundle time.
+    // Type-only imports are erased by esbuild's TS transform.
   });
   const code = result.outputFiles[0].text;
   const tmpFile = path.join(
@@ -101,6 +103,16 @@ function getListedProductAttributes(product) {
     ?.values?.[0];
   const rawColor = optionValue('color');
   const rawMaterial = optionValue('fabric', 'material');
+  const prefixedTagValue = (...prefixes) => {
+    const matchedTag = (product?.tags || []).find((tag) => {
+      const normalizedTag = String(tag).toLowerCase();
+      return prefixes.some((prefix) => normalizedTag.startsWith(`${prefix}:`));
+    });
+    return matchedTag ? String(matchedTag).slice(String(matchedTag).indexOf(':') + 1).trim() : undefined;
+  };
+  const taggedColor = prefixedTagValue('color');
+  const taggedMaterial = prefixedTagValue('fabric', 'material');
+  const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
   const sizeValues = product?.options
     ?.find(option => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values
@@ -126,8 +138,13 @@ function getListedProductAttributes(product) {
 
   return {
     jewelry,
-    color: rawColor && (!jewelry || listingText.includes(rawColor.toLowerCase())) ? rawColor : undefined,
-    material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
+    color: (rawColor || taggedColor) && (!jewelry || listingText.includes((rawColor || taggedColor).toLowerCase()))
+      ? (rawColor || taggedColor)
+      : undefined,
+    material: (rawMaterial || taggedMaterial) && (!jewelry || listingText.includes((rawMaterial || taggedMaterial).toLowerCase()))
+      ? (rawMaterial || taggedMaterial)
+      : undefined,
+    work: !jewelry ? taggedWork : undefined,
     sizes: jewelry ? [] : sizeValues,
     includedPieces: includedPieces || undefined,
     shipsWithinDays: Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? shipsWithinDays : null,
@@ -144,8 +161,13 @@ function buildVerifiedProductCopy(product) {
   if (product.productType) parts.push(`Category: ${product.productType}.`);
   if (attributes.color) parts.push(`Color: ${attributes.color}.`);
   if (attributes.material) parts.push(`Material: ${attributes.material}.`);
+  if (attributes.work) parts.push(`Work: ${attributes.work}.`);
+  if (attributes.includedPieces) parts.push(`Included pieces: ${attributes.includedPieces}.`);
   if (attributes.sizes.length > 0) {
     parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
+  }
+  if (attributes.shipsWithinDays) {
+    parts.push(`Catalog shipping estimate: ${attributes.shipsWithinDays} business day${attributes.shipsWithinDays === 1 ? '' : 's'} before carrier transit.`);
   }
 
   parts.push(
@@ -438,7 +460,35 @@ function getDisplayCategory(productType) {
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function matchesOccasionProduct(product, occasion) {
+  const signals = OCCASION_SIGNALS[occasion];
+  if (!signals || product.availableForSale === false) return false;
+
+  const searchableValues = [
+    product.title || '',
+    product.productType || '',
+    ...(product.tags || []),
+  ].map((value) => String(value).toLowerCase());
+
+  return signals.some((signal) => {
+    const pattern = new RegExp(`\\b${escapeRegex(String(signal).toLowerCase())}\\b`, 'i');
+    return searchableValues.some((value) => pattern.test(value));
+  });
+}
+
 function filterProductsForCategory(allProducts, category, newestFirst = false) {
+  if (category.startsWith('occasion:')) {
+    const occasion = category.slice('occasion:'.length);
+    return allProducts
+      .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
+      .filter((product) => matchesOccasionProduct(product, occasion))
+      .slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
   if (category.startsWith('collection:')) {
     const handle = category.slice('collection:'.length);
     const tagsFor = (product) => new Set((product.tags ?? []).map((tag) => tag.toLowerCase().trim()));
@@ -1400,124 +1450,116 @@ const routes = [
 
   {
     path: '/collections/diwali-outfits',
-    title: 'Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia',
-    description: 'Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits & sarees in gold, red & festive colors. Free U.S. shipping at $150 and above.',
-    h1: 'Diwali Outfits 2026',
+    category: 'occasion:diwali',
+    title: 'Diwali Outfits — Current Festive Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for Diwali or festive occasions. Review exact product details and U.S. shipping terms.',
+    h1: 'Diwali Outfits',
     content: `
-      <p>Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration.</p>
-      <h2>What to Wear for Diwali</h2>
-      <p>Diwali calls for your most festive, vibrant ethnic wear. For the main Diwali day and Lakshmi Puja, traditional silk sarees in red, gold, or green are considered auspicious. For Diwali parties and evening celebrations, a heavily embellished lehenga with mirror work, zari embroidery, or sequin detailing photographs beautifully against the backdrop of diyas and fairy lights.</p>
-      <p>For an office Diwali party, compare current Indo-Western dresses, palazzo suits and contemporary anarkalis, then confirm the exact fabric, included pieces and available sizes on the product page.</p>
-      <h2>Diwali Outfit Colors</h2>
-      <p>Gold is the quintessential Diwali color — representing prosperity and the blessing of Goddess Lakshmi. Red, deep green, royal purple, burnt orange, and navy blue are also widely worn. Fabrics with gold zari work, sequin embellishments, or mirror details catch the Diwali diyas beautifully.</p>
-      <h2>Shop Diwali Outfits</h2>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Diwali, festive, or festival.</p>
+      <h2>How to Choose</h2>
+      <p>Use the guidance for your specific gathering, family, or community because customs and dress expectations vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
+      <h2>Browse Related Categories</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Embellished lehengas perfect for Diwali</li>
-        <li><a href="/sarees">Silk Sarees</a> — Banarasi and silk sarees for Diwali puja</li>
-        <li><a href="/suits">Anarkali Suits</a> — Festive anarkali suits for Diwali celebrations</li>
-        <li><a href="/indowestern">Indo-Western</a> — Modern Diwali party outfits</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/sarees">Sarees</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/indowestern">Indo-Western</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/wedding-guest-outfits',
+    category: 'occasion:wedding-guest',
     title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez. Free U.S. shipping at $150 and above.',
+    description: 'Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms.',
     h1: 'Indian Wedding Guest Outfits',
     content: `
-      <p>Dress to impress at every Indian wedding ceremony — from the colourful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colours.</p>
-      <p>For an American wedding guest comparing a fusion look, browse current Indo-Western dresses and open the exact listing for its fabric, included pieces, sizing and availability.</p>
-      <h2>What to Wear to Each Indian Wedding Ceremony</h2>
-      <p>The mehendi is a daytime ceremony calling for bright, cheerful outfits in yellow, lime green, orange, or floral prints. The sangeet is the most festive ceremony — wear your most glamorous embellished lehengas or sequin anarkalis. The main wedding ceremony is the most formal — avoid red (the bridal colour) and white. The reception is the most flexible — semi-formal to formal ethnic or indo-western outfits are appropriate.</p>
-      <h2>Shop by Ceremony</h2>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception.</p>
+      <h2>How to Choose</h2>
+      <p>Use the invitation and host guidance for dress code, color, and formality because wedding customs vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
+      <h2>Browse Related Categories</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Wedding guest lehengas for the main ceremony</li>
-        <li><a href="/sarees">Silk Sarees</a> — Wedding guest sarees for formal ceremonies</li>
-        <li><a href="/suits">Anarkali Suits</a> — Versatile suits for multiple wedding ceremonies</li>
-        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Bright and festive mehendi ceremony wear</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/sarees">Sarees</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/mehendi-outfits',
-    title: 'Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia',
-    description: 'Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez. Free U.S. shipping at $150 and above.',
+    category: 'occasion:mehendi',
+    title: 'Mehendi Ceremony Outfits — Current Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for mehendi or mehndi. Review exact product details and U.S. shipping terms.',
     h1: 'Mehendi Ceremony Outfits',
     content: `
-      <p>Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colours traditionally associated with henna celebrations.</p>
-      <p>For a yellow mehendi outfit for the bride's sister, compare current yellow sarees, sharara or palazzo suits and Indo-Western sets, then review the exact listing for fabric, sizing and availability.</p>
-      <h2>Mehendi Ceremony Colours</h2>
-      <p>Yellow and green are the signature colours of mehendi ceremonies in most Indian cultures — yellow representing turmeric (haldi) and new beginnings, green representing the mehendi plant itself. Mustard, saffron orange, lime green, coral, and floral prints are all popular choices for mehendi guests.</p>
-      <h2>Fabric Guide for Mehendi</h2>
-      <p>Since mehendi ceremonies are often held outdoors, light breathable fabrics like georgette, chiffon, cotton, crepe, and rayon are ideal. Look for light embroidery, gota patti work, mirror detailing, and block print rather than heavy zari for a mehendi-appropriate outfit.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention mehendi or mehndi.</p>
+      <h2>How to Choose</h2>
+      <p>Use the invitation and host guidance for dress code, color, and formality because event formats vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Yellow Lehengas</a> — Traditional bridal mehendi lehengas</li>
-        <li><a href="/suits">Floral Anarkali Suits</a> — Light anarkali suits for mehendi</li>
-        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — All wedding ceremony outfits</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/haldi-outfits',
-    title: 'Haldi Ceremony Outfits — Yellow Lehengas & Suits | LuxeMia',
-    description: 'Shop haldi ceremony outfits at LuxeMia. Yellow, gold & mustard lehengas, anarkali suits & salwar kameez. Free U.S. shipping at $150 and above.',
+    category: 'occasion:haldi',
+    title: 'Haldi Ceremony Outfits — Current Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms.',
     h1: 'Haldi Ceremony Outfits',
     content: `
-      <p>Celebrate the haldi ceremony in bright, cheerful Indian ethnic wear. LuxeMia's haldi collection features yellow and gold lehengas, mustard salwar kameez sets, floral anarkali suits, and lightweight georgette and chiffon sarees — all in the auspicious colours traditionally worn for this joyful pre-wedding ritual.</p>
-      <h2>What Color to Wear for Haldi</h2>
-      <p>Yellow is the traditional and most popular color for haldi ceremonies, symbolising turmeric, auspiciousness, and new beginnings. The bride typically wears yellow, and guests are encouraged to wear yellow, gold, mustard, or pastel tones. Modern haldi ceremonies also welcome peach, coral, mint green, and pastel pink. Avoid white, black, and red — those are reserved for mourning, and the wedding day itself.</p>
-      <h2>Fabric Guide for Haldi</h2>
-      <p>Since the haldi paste can stain fabric, lighter, more affordable materials like georgette, chiffon, cotton, and crepe are popular choices, along with lighter embroidery rather than heavy zardozi or stonework. Comfortable footwear like mojari flats or kolhapuri sandals complete a practical haldi look.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention haldi or turmeric.</p>
+      <h2>How to Choose</h2>
+      <p>Use the invitation and host guidance for dress code, color, and formality because event formats vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Yellow Lehengas</a> — Bridal and guest haldi lehengas</li>
-        <li><a href="/suits">Anarkali Suits</a> — Yellow and mustard anarkali suits for haldi</li>
-        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Coordinating outfits for the next ceremony</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/eid-outfits',
-    title: 'Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia',
-    description: 'Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white. Free U.S. shipping at $150 and above.',
-    h1: 'Eid Outfits 2026',
+    category: 'occasion:eid',
+    title: 'Eid Outfits — Current Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms.',
+    h1: 'Eid Outfits',
     content: `
-      <p>Celebrate Eid in elegance with LuxeMia's curated collection of Indian ethnic wear for Eid festivities. From delicate chikankari salwar kameez and embroidered sharara sets to pastel lehengas and georgette anarkali suits, our Eid collection brings together the finest South Asian fashion traditions.</p>
-      <h2>What to Wear for Eid</h2>
-      <p>Eid is celebrated twice a year — Eid Ul-Fitr (marking the end of Ramadan) and Eid Ul-Adha. For Eid morning prayers, a modest and elegant salwar kameez or anarkali suit in white, cream, or pastel shades is most appropriate. For afternoon and evening celebrations, more embellished outfits are worn. Chikankari embroidery — the intricate shadow-work embroidery from Lucknow — is considered the quintessential Eid fabric.</p>
-      <h2>Eid Outfit Colors</h2>
-      <p>White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are classic Eid outfit colours. Gold and silver embellishments on any colour are considered festive and celebratory.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Eid, Ramadan, or chikankari.</p>
+      <h2>How to Choose</h2>
+      <p>Use the guidance for your specific gathering, mosque, family, or community because dress expectations vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/suits">Chikankari Salwar Kameez</a> — Traditional Eid salwar kameez</li>
-        <li><a href="/lehengas">Pastel Lehengas</a> — Embroidered lehengas for Eid</li>
-        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — More festive occasion wear</li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
-      <p>Free U.S. shipping at $150 and above. Order 3-4 weeks before Eid for timely delivery.</p>
+      <p>U.S. shipping is $12 below $150 and free at $150 and above. Confirm timing before ordering for a fixed date.</p>
     `,
   },
   {
     path: '/collections/navratri-outfits',
-    title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
-    description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive ethnic wear in all nine Navratri colours. Free U.S. shipping at $150 and above.',
-    h1: 'Navratri Outfits — Chaniya Choli & Garba Dress Collection',
+    category: 'occasion:navratri',
+    title: 'Navratri Outfits — Current Garba Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for Navratri, Garba, chaniya, or dandiya. Review exact product details and U.S. shipping terms.',
+    h1: 'Navratri Outfits',
     content: `
-      <p>Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor.</p>
-      <h2>What is a Chaniya Choli?</h2>
-      <p>The chaniya choli is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor.</p>
-      <h2>Nine Colors of Navratri 2026</h2>
-      <p>Each of the nine nights of Navratri 2026 is associated with a specific colour linked to the nine forms of Goddess Durga. The sequence typically follows: Royal Blue, Green, Grey, Orange, White, Red, Royal Blue, Pink, and Purple. Many participants plan nine separate Navratri outfits in each day's colour.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
+      <h2>How to Choose</h2>
+      <p>Use the organizer or community guidance for the event schedule, requested color, dress, and venue because practices vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Navratri Lehengas</a> — Festive lehengas for Garba</li>
-        <li><a href="/suits">Anarkali Suits</a> — Flowing anarkalis for Navratri</li>
-        <li><a href="/collections/diwali-outfits">Diwali Outfits</a> — More festive occasion wear</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/diwali-outfits">Diwali Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
-  // Programmatic SEO combo pages are generated from src/data/comboPages.ts below.
   {
     path: '/wedding-party-orders',
     title: 'Indian Wedding Party & Group Outfit Orders | LuxeMia',
@@ -2007,21 +2049,23 @@ function generateHtml(template, route, allShopifyProducts) {
     const collectionProducts = filterProductsForCategory(allProducts, route.category, route.path === '/new-arrivals');
     console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
 
-    if (route.category.startsWith('collection:') && collectionProducts.length === 0) {
+    if (collectionProducts.length === 0) {
       html = html.replace(
         /<meta name="(robots|googlebot|bingbot)" content="[^"]*" \/>/g,
         '<meta name="$1" content="noindex, follow" />'
       );
     }
 
-    // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
-    const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
-    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+    if (collectionProducts.length > 0) {
+      // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
+      const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
+      html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
 
-    // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
-    // and skips the client-side Shopify fetch entirely on first paint.
-    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
-    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+      // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
+      // and skips the client-side Shopify fetch entirely on first paint.
+      const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
+      html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+    }
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
     const productCardsHtml = generateCollectionProductHtml(collectionProducts);
@@ -2030,10 +2074,19 @@ function generateHtml(template, route, allShopifyProducts) {
       ${route.content}
       <h2>Products in this Collection</h2>
       ${productCardsHtml}`;
-  } else if (route.path === '/') {
+  } else if (route.path === '/' && allShopifyProducts && allShopifyProducts.size > 0) {
+    const homepageProducts = filterProductsForCategory(
+      Array.from(allShopifyProducts.values()),
+      'all',
+      true,
+    ).slice(0, 12);
+    const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'all', route.path);
+    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}`;
+      ${route.content}
+      <h2>Recently Added Indian Ethnic Wear</h2>
+      ${generateCollectionProductHtml(homepageProducts)}`;
   } else {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
@@ -2108,34 +2161,14 @@ async function main() {
   }
   fs.mkdirSync(prerenderDir, { recursive: true });
 
-  // ─── Auto-cover every blog post + combo page from source data ───────────
-  // CRITICAL SEO FIX (2026-07-29): This script previously only prerendered
-  // whichever /blog/* and combo-page routes had a manually-written entry in
-  // the `routes` array above. Every time an article/combo page was added to
-  // src/data/blogPosts.ts or src/data/comboPages.ts
-  // WITHOUT a matching manual entry here, the route still got registered in
-  // src/lib/autoRoutes.ts (by generate-routes.cjs) — so middleware.ts believed
-  // a prerendered file existed and rewrote bot requests to it. No file existed,
-  // so Googlebot/Bingbot got a 404 while regular browsers (who don't take that
-  // code path) got a normal 200 SPA page. This silently 404'd 27 blog posts and
-  // (before the routing fix) all 25 combo pages for search engines — a soft
-  // cloaking bug that is the most likely cause of the Search Console traffic
-  // drop. Fix: dynamically generate a fallback route entry for ANY blog post
-  // or combo page in the source data that doesn't already have a hardcoded
-  // entry, so prerendered HTML coverage can never drift behind the data files
-  // again. See scripts/verify-prerender-coverage.cjs for the build-time guard
-  // that now also catches any future drift and fails the build loudly.
+  // Auto-cover every published blog post and topic hub from source data.
+  // This keeps bot-facing HTML synchronized with the routes registered by the
+  // build and prevents missing prerender files from becoming bot-only 404s.
   const hardcodedBlogSlugs = new Set(
     routes
       .filter(r => r.path.startsWith('/blog/') && r.path.split('/').length === 3)
       .map(r => r.path.slice('/blog/'.length))
   );
-  const hardcodedComboSlugs = new Set(
-    routes
-      .filter(r => !r.path.startsWith('/blog/') && !r.path.startsWith('/product/') && !r.path.startsWith('/collections/') && !r.path.startsWith('/authors/'))
-      .map(r => r.path.slice(1))
-  );
-
   try {
     const [blogModule, categoryModule] = await Promise.all([
       loadTsModule('src/data/blogPosts.ts'),
@@ -2225,33 +2258,6 @@ async function main() {
   } catch (err) {
     console.error(`[prerender] WARNING: Failed to load published blog data: ${err.message}`);
     console.error('[prerender] Blog output may be incomplete; coverage verification will fail if a registered route is missing.');
-  }
-
-  try {
-    const comboModule = await loadTsModule('src/data/comboPages.ts');
-    const allComboPages = comboModule.comboPages || [];
-    let autoComboCount = 0;
-    for (const combo of allComboPages) {
-      if (!combo.slug || hardcodedComboSlugs.has(combo.slug)) continue;
-      const guideHtml = (combo.guideSections || [])
-        .map(section => `<h2>${escapeHtml(section.heading)}</h2>${(section.paragraphs || []).map(p => `<p>${p}</p>`).join('')}`)
-        .join('');
-      const relatedLinksHtml = (combo.relatedLinks || [])
-        .map(link => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`)
-        .join(', ');
-      routes.push({
-        path: `/${combo.slug}`,
-        title: combo.title,
-        description: combo.metaDescription,
-        h1: combo.h1,
-        content: `<p>${escapeHtml(combo.heroSubtitle || '')}</p>${guideHtml}${relatedLinksHtml ? `<p>Related: ${relatedLinksHtml}</p>` : ''}`,
-      });
-      autoComboCount++;
-    }
-    console.log(`[prerender] Auto-generated ${autoComboCount} combo page routes from comboPages.ts (no manual entry existed)`);
-  } catch (err) {
-    console.error(`[prerender] WARNING: Failed to load src/data/comboPages.ts for auto-coverage: ${err.message}`);
-    console.error('[prerender] Any combo page without a manual route entry above will NOT be prerendered.');
   }
 
   // Pre-fetch live Shopify product data so /product/* prerendered HTML

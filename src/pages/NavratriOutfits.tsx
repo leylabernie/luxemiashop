@@ -22,29 +22,29 @@ const sortOptions = [
 
 const navratriOutfitFaqs = [
   {
-    question: 'What should I wear for Navratri and Garba?',
-    answer: 'Navratri is a nine-night Hindu festival celebrated with Garba and Dandiya Raas dancing, and the traditional dress for Navratri is the chaniya choli — a three-piece outfit consisting of a flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya choli is traditionally made in bright, vibrant colors with mirror work, bandhani prints, embroidery, or gota patti detailing. Each of the nine nights of Navratri is traditionally associated with a specific color, and many participants dress according to the day\'s color. Lehengas, anarkali suits, and salwar kameez in festive colors are also popular alternatives for Navratri guests who prefer a less traditional look.',
+    question: 'Which products appear in this Navratri collection?',
+    answer: 'This page shows currently available products whose catalog title, product type, or tags explicitly mention Navratri, Garba, chaniya, or dandiya. Open a product page to confirm every product detail.',
   },
   {
-    question: 'What are the nine colors of Navratri 2026?',
-    answer: 'The day-by-day Navratri color sequence can vary by regional calendar and tradition. For outfit planning, common festive choices include orange, white, red, royal blue, yellow, green, grey, purple, pink, and peacock green. Check the calendar followed by your community.',
+    question: 'How do I check the Navratri color schedule?',
+    answer: 'Day-by-day color practices can vary by calendar, region, and community. Use the schedule followed by your own organizer or community rather than a universal list on a shopping page.',
   },
   {
-    question: 'What is the difference between a chaniya choli and a lehenga?',
-    answer: 'A chaniya choli is the traditional Gujarati and Rajasthani three-piece outfit specifically associated with Navratri and Garba dancing — it features a very full, circular-cut flared skirt designed for movement during Garba, paired with a short fitted choli blouse and dupatta. The skirt is typically made from lightweight fabrics like georgette, cotton, or rayon with mirror work, bandhani prints, or heavy embroidery. A lehenga is a more formal, bridal-style flared skirt that is heavier, more structured, and typically more embellished. For Garba dancing, a chaniya choli is the practical and traditional choice — the lighter fabric and fuller flare allow freedom of movement. For watching Navratri celebrations or attending Navratri events without dancing, a lehenga is equally beautiful.',
+    question: 'How do I compare a chaniya choli and a lehenga listing?',
+    answer: 'Compare the exact listing for included pieces, fabric, work, measurements, available sizes, and weight or construction details when stated. Do not infer those details from the collection name.',
   },
   {
     question: 'Do you ship Navratri outfits to the United States?',
     answer: 'LuxeMia ships Navratri outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed festival date.',
   },
   {
-    question: 'What accessories should I wear with a Navratri outfit?',
-    answer: 'Traditional Navratri accessories include heavy oxidised silver or gold jewellery — large jhumka earrings, layered necklaces, stacked bangles, and a maang tikka. Mirror-work jewellery, tribal silver, and polki stone sets complement chaniya cholis beautifully. For Garba dancing, avoid heavy necklaces that may get caught during spinning. Kolhapuri sandals or traditional mojari shoes are the classic Navratri footwear. Many participants also carry dandiya sticks — decorated wooden sticks used in Dandiya Raas — which are often color-matched to the outfit.',
+    question: 'How do I confirm what comes with an outfit?',
+    answer: 'Use the included-pieces details and images on the exact product page. Jewelry and accessories are not included unless the listing explicitly says so.',
   },
 ];
 
 const NavratriOutfits = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts('occasion:navratri');
   const [sortBy, setSortBy] = useState('featured');
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
@@ -52,8 +52,8 @@ const NavratriOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia"
-        description="Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive Indian ethnic wear in all nine Navratri colors. Free U.S. shipping at $150 and above."
+        title="Navratri Outfits — Current Garba Listings | LuxeMia"
+        description="Browse currently available LuxeMia products explicitly marked for Navratri, Garba, chaniya, or dandiya. Review exact product details and U.S. shipping terms."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -69,9 +69,9 @@ const NavratriOutfits = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Nine Nights of Celebration</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Navratri Outfits — Chaniya Choli & Garba Dress Collection</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Navratri Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colors, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor. Whether you are dressing for Garba in Gujarat, a community Navratri event in the United States, or simply celebrating the festival with family, our collection brings the spirit of Navratri to the global Indian diaspora.
+              Browse currently available products explicitly marked in the catalog for Navratri, Garba, chaniya, or dandiya. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to United States addresses only.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const NavratriOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chaniya choli for Navratri</strong>, <strong>garba dress 2026</strong>, <strong>Navratri lehengas in nine colors</strong>, <strong>mirror work chaniya choli</strong>, <strong>bandhani print outfits</strong>, and <strong>festive anarkali suits for Garba</strong>. Free U.S. shipping at $150 and above.
+              Products appear here only when their current catalog title, product type, or tags explicitly mention Navratri, Garba, chaniya, or dandiya. Review the exact listing before ordering.
             </p>
           </div>
         </div>
@@ -136,16 +136,14 @@ const NavratriOutfits = () => {
         {/* About section */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-            <h2 className="font-serif text-2xl mb-6 text-center">Navratri Outfit Guide — Nine Nights, Nine Colors</h2>
+            <h2 className="font-serif text-2xl mb-6 text-center">How to Choose a Navratri Outfit</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Navratri — meaning "nine nights" in Sanskrit — is one of the most joyful and vibrant Hindu festivals, celebrated twice a year across India and by the Indian diaspora across the United States. The Sharad Navratri (autumn Navratri, typically October) is the most widely celebrated, especially in the states of Gujarat and Maharashtra where Garba and Dandiya Raas dancing are the central traditions.</p>
-              <p>The <strong>chaniya choli</strong> is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with <strong>mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery</strong>. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor. For Indian communities outside India, chaniya cholis have become popular choices for community Garba events in the United States — where entire families participate in the nine-night celebration.</p>
-              <p>One of the most beloved Navratri traditions is <strong>dressing in the color of the day</strong>. Each of the nine nights is associated with a specific color linked to the nine forms of Goddess Durga worshipped during the festival. Common Navratri color sequences include royal blue, green, grey, orange, white, red, royal blue, pink, and purple — though the exact sequence varies by year according to the Hindu calendar. Many participants plan nine separate Navratri outfits in each day's color — making Navratri one of the biggest ethnic fashion occasions of the year.</p>
-              <p>For guests who prefer an alternative to the chaniya choli, <strong>embroidered lehengas, festive anarkali suits, and mirror-work salwar kameez</strong> in bright Navratri colors are equally beautiful choices. Men traditionally wear a white kurta-pyjama with colorful dupattas or embroidered nehru jackets for Garba celebrations.</p>
+              <p>Use the organizer or community guidance for the event schedule, requested color, dress, and venue. Practices vary by calendar, region, and community.</p>
+              <p>Compare the current listings above by fabric, included pieces, work, size options, measurements, price, and availability. The collection name does not add tailoring, jewelry, or accessories that the exact listing does not state.</p>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">Navratri 2026 Dates and 9-Day Color Schedule</h3>
-                <p>Sharad Navratri 2026 begins on <strong>Sunday, October 11</strong> and runs through <strong>Monday, October 19</strong>, with Dussehra on Tuesday, October 20. Day-by-day color traditions vary by regional calendar and community.</p>
+                <h3 className="font-medium text-foreground mb-2">Check the Exact Listing</h3>
+                <p>Product images and listed options are authoritative. Contact LuxeMia before ordering if the supplied pieces, measurements, or timing are unclear.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -154,8 +152,8 @@ const NavratriOutfits = () => {
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">How Many Navratri Outfits Do You Need?</h3>
-                <p>You do not need 9 different outfits. Most diaspora garba events happen on 2-4 nights, not all 9. <strong>1-2 garba nights:</strong> buy 1-2 outfits in those colors (most popular: red Day 3, royal blue Day 4, green Day 6). <strong>3-4 garba nights:</strong> buy 3 outfits and mix-and-match dupattas. <strong>All 9 nights:</strong> invest in 5-6 outfits and rotate. No one expects you to have 9 outfits.</p>
+                <h3 className="font-medium text-foreground mb-2">Color Schedule</h3>
+                <p>Use the calendar and color schedule followed by your own organizer or community. LuxeMia does not publish a universal day-by-day schedule on this shopping page.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
