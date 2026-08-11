@@ -4,28 +4,28 @@ import NRILandingPage from './NRILandingPage';
 const Canada = () => (
   <NRILandingPage
     config={{
-      country: 'United States',
-      countryCode: 'US',
-      slug: 'nri',
-      seoTitle: 'United States Shipping Only | LuxeMia',
-      seoDescription: 'LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
-      heroTitle: 'United States Shipping Only',
+      country: 'Canada',
+      countryCode: 'CA',
+      slug: 'indian-ethnic-wear-canada',
+      seoTitle: 'Indian Ethnic Wear Online in Canada | LuxeMia',
+      seoDescription: 'Shop Indian ethnic wear online for delivery to Canada. International standard shipping is $14.99 below $300 and free at $300 and above.',
+      heroTitle: 'Indian Ethnic Wear Online in Canada',
       heroSubtitle: 'Indian ethnic wear available online',
       shippingTime: 'Tracking provided after dispatch',
-      shippingCost: 'Free at $150 and above, $12 flat below that',
-      customsNote: 'LuxeMia currently accepts United States shipping addresses only.',
+      shippingCost: '$14.99 below $300 and free at $300 and above',
+      customsNote: 'Duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
       faqs: [
         {
           question: 'Does LuxeMia ship outside the United States?',
-          answer: 'No. LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
+          answer: 'Yes. LuxeMia currently accepts Canadian shipping addresses.',
         },
         {
-          question: 'How much is US shipping?',
-          answer: 'Free US shipping applies at $150 and above. Orders below $150 ship for a flat $12 rate.',
+          question: 'How much is shipping to Canada?',
+          answer: 'International standard shipping is $14.99 below $300 and free at $300 and above. Checkout shows the final available service and charge.',
         },
       ],
       benefits: [
-        { icon: Truck, title: 'US Shipping', description: 'Tracking provided after dispatch' },
+        { icon: Truck, title: 'Canada Shipping', description: 'Tracking provided after dispatch' },
         { icon: Shield, title: 'Tracked Delivery', description: 'Tracking sent after dispatch' },
         { icon: Clock, title: 'Available Online', description: 'For events coming up soon' },
       ],

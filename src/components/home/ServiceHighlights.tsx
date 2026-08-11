@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'U.S. Shipping',
-    description: '$12 below $150; free at $150 and above',
+    title: '7-Country Shipping',
+    description: 'U.S. and six international destinations',
   },
   {
     icon: ShieldCheck,

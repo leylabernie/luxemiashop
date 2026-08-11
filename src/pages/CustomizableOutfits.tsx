@@ -33,7 +33,7 @@ const customizableFaqs = [
   },
   {
     question: 'Where does LuxeMia currently ship these outfits?',
-    answer: 'The current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch. Additional countries are under review but are not active. If LuxeMia confirms that an item will be fulfilled cross-border, the applicable import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.',
+    answer: 'Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout. Duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
   },
   {
     question: 'Can a custom order be returned?',
@@ -142,8 +142,8 @@ const CustomizableOutfits = () => {
           <div className="container mx-auto max-w-4xl px-4 lg:px-8">
             <h2 className="text-center font-serif text-2xl">Ordering, shipping, and final-sale terms</h2>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>The current LuxeMia checkout accepts U.S. addresses only. U.S. shipping is $12 for orders below $150 and free at $150 and above. Tracking is emailed after dispatch. Additional country-specific shipping is under review and is not active. If LuxeMia confirms that an item will be fulfilled cross-border, the applicable import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</p>
-              <p>Custom orders are final sale, subject to applicable law. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering. Do not assume customs, duties, or import charges are included for any future international destination; those terms must be confirmed country by country before checkout is enabled.</p>
+              <p>LuxeMia checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.</p>
+              <p>Custom orders are final sale, subject to applicable law. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.</p>
               <p>Need help? Use <Link to="/contact" className="text-primary underline underline-offset-4">LuxeMia contact options</Link> or WhatsApp with the exact product link, requested color, measurements question, event date, and country.</p>
             </div>
             <nav aria-label="Related collections" className="mt-8 flex flex-wrap justify-center gap-3">

@@ -101,17 +101,17 @@ function normalizeWhitespace(value) {
 function sanitizeProductCopy(value) {
   return (value || '')
     .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
     .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
-    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping at $150 and above');
+    .replace(/USA, Canada, and Australia/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
+    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
 function sanitizeProductTitle(value) {
@@ -192,7 +192,7 @@ function buildVerifiedProductCopy(product) {
 
   if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
     const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product.handle);
-    return `${getCustomProductDescription(matched.title)} Current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.`;
+    return `${getCustomProductDescription(matched.title)} Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.`;
   }
 
   const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
@@ -213,7 +213,7 @@ function buildVerifiedProductCopy(product) {
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.'
+    'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.'
   );
 
   return normalizeWhitespace(parts.join(' '));
@@ -812,7 +812,7 @@ function generateItemListJsonLd(products, category, routePath) {
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'US',
             returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-            description: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+            description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
           },
         },
       },
@@ -838,7 +838,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'Where does LuxeMia ship?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below $150.',
+        text: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.',
       },
     },
     {
@@ -862,7 +862,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'What is LuxeMia’s return policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+        text: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
       },
     },
     {
@@ -1297,7 +1297,7 @@ const routes = [
       </ol>
       <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
       <h2>Current shipping availability</h2>
-      <p>The current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch. Additional countries are under review but are not active. If LuxeMia confirms that an item will be fulfilled cross-border, the applicable import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</p>
+      <p>Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout. Duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.</p>
       <p><a href="/contact">Contact LuxeMia</a> | <a href="/sizing-measurements-guide">Measurement guide</a> | <a href="/returns">Returns policy</a></p>
     `,
   },
@@ -1310,7 +1310,7 @@ const routes = [
       <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free US shipping at $150 and above.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Pieces ship with tracking to the United States. Free US shipping applies to orders of $150 and above.</p>
+      <p>Pieces ship with tracking to seven supported countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout.</p>
     `,
   },
   {
@@ -1392,35 +1392,35 @@ const routes = [
     schemas: [FAQ_PAGE_SCHEMA],
     content: `<p>Find answers to common questions about LuxeMia orders, shipping, final-sale policy, sizing, product details and payment.</p>
       <h2>Where does LuxeMia ship?</h2>
-      <p>LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below $150.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.</p>
       <h2>How long does LuxeMia shipping take?</h2>
       <p>In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.</p>
       <h2>How should I choose a LuxeMia size?</h2>
       <p>Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.</p>
       <h2>What is LuxeMia’s return policy?</h2>
-      <p>All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+      <p>Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
       <h2>Can I cancel a LuxeMia order?</h2>
       <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
 `,
   },
   {
     path: '/shipping',
-    title: 'Shipping Policy — Online US Delivery | LuxeMia',
-    description: 'LuxeMia U.S. shipping: free at $150 and above, $12 flat below $150. Tracking details are emailed when the shipping label is created for dispatch.',
+    title: 'Shipping Policy — U.S. & International Delivery | LuxeMia',
+    description: 'LuxeMia ships to the U.S., Canada, UK, Australia, New Zealand, South Africa and Mauritius. Review current rates, timing, tracking and customs guidance.',
     h1: 'Shipping Policy',
-    content: '<h2>Shipping at a Glance</h2><dl><div><dt>Orders below $150</dt><dd>$12 flat</dd></div><div><dt>Orders at $150 and above</dt><dd>Free U.S. shipping</dd></div><div><dt>After the label is created</dt><dd>Tracking details are emailed for dispatch</dd></div></dl><h2>Timing</h2><p>Delivery timing depends on the item and selected options. Carrier transit time begins after dispatch. Contact LuxeMia before ordering if your event date is time-sensitive.</p>',
+    content: '<h2>Shipping destinations</h2><p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p><h2>Rates</h2><p>U.S. standard shipping is $12 below $150 and free at $150 and above. International standard shipping is $14.99 below $300 and free at $300 and above; express shipping is $25 below $300 and free at $300 and above. Carrier-calculated services may also appear at checkout.</p><h2>Timing</h2><p>Standard delivery is generally estimated at 4–30 business days, including handling and transit. Product, tailoring, destination, customs, and carrier conditions can change the estimate.</p>',
   },
   {
     path: '/pages/shipping-customs',
-    title: 'US Shipping & Taxes | LuxeMia',
-    description: 'Learn how LuxeMia US shipping and checkout taxes work for Indian ethnic wear online.',
-    h1: 'US Shipping & Taxes',
+    title: 'Shipping, Customs & Taxes | LuxeMia',
+    description: 'Shipping, customs and tax guidance for LuxeMia customers in seven supported countries.',
+    h1: 'Shipping, Customs & Taxes',
     content: `
-      <p>LuxeMia currently ships orders from supplier fulfillment in India to addresses in the United States only.</p>
-      <h2>How much is U.S. shipping?</h2>
-      <p>Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch.</p>
-      <h2>How are taxes handled?</h2>
-      <p>Taxes, when applicable, are calculated during checkout. Review the checkout total before placing the order.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p>
+      <h2>How much is shipping?</h2>
+      <p>U.S. standard shipping is free at $150 and above and costs $12 below that. International standard shipping is $14.99 below $300 and free at $300 and above; express shipping is $25 below $300 and free at $300 and above. Checkout controls the final available service and charge.</p>
+      <h2>How are customs and taxes handled?</h2>
+      <p>Taxes collected by LuxeMia, if applicable, are calculated during checkout. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.</p>
       <h2>Questions?</h2>
       <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a shipping or checkout detail is unclear, or read the <a href="/shipping">Shipping Policy</a>.</p>
     `,
@@ -1428,9 +1428,9 @@ const routes = [
   {
     path: '/returns',
     title: 'Returns, Refunds & Cancellations | LuxeMia',
-    description: 'All LuxeMia sales are final. Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with the required photos and continuous unboxing video.',
+    description: 'LuxeMia final-sale and covered-order-issue policy, subject to mandatory consumer rights under applicable law.',
     h1: 'Returns, Refunds & Cancellations',
-    content: '<p>All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>',
+    content: '<p>Sales are final to the extent permitted by applicable law. Nothing in this policy limits mandatory consumer rights or remedies that cannot legally be excluded. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>',
   },
   {
     path: '/contact',
@@ -1950,7 +1950,7 @@ function generateHtml(template, route, allShopifyProducts) {
           '@type': 'MerchantReturnPolicy',
           applicableCountry: 'US',
           returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-          description: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
         },
       },
     };
@@ -2097,8 +2097,8 @@ function generateHtml(template, route, allShopifyProducts) {
     const deliveryAnswer = isCustomizable
       ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
       : productAttributes.jewelry
-      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.'
-      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.';
+      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.'
+      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.';
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
       ${firstQuestion}
@@ -2106,7 +2106,7 @@ function generateHtml(template, route, allShopifyProducts) {
       <h3>How is this product shipped?</h3>
       <p>${deliveryAnswer}</p>
       <h3>What is the return policy?</h3>
-      <p>All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+      <p>Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
       <h3>How should I care for this product?</h3>
       <p>${careAnswer}</p>`;
 
@@ -2121,7 +2121,7 @@ function generateHtml(template, route, allShopifyProducts) {
       </dl>
       ${productQuestionsHtml}
       <h2>Shipping &amp; Delivery</h2>
-      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <p>Shipping is available to seven countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout. Tracking details are emailed when the shipping label is created for dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)
@@ -2414,7 +2414,7 @@ async function main() {
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
     const fallbackDesc = productIsJewelry
       ? `Shop ${baseTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
-      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with delivery to the United States; free U.S. shipping at $150 and above.`;
+      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to seven countries; destination-specific rates are shown at checkout.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,

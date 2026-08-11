@@ -17,7 +17,7 @@ const organizationSchema = {
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia is an online Indian ethnic wear store serving U.S. shoppers with sarees, lehengas, salwar suits, and occasion wear. Free U.S. shipping applies at $150 and above.',
+    'LuxeMia is an online Indian ethnic wear store shipping sarees, lehengas, salwar suits, and occasion wear to seven countries.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
@@ -27,7 +27,7 @@ const organizationSchema = {
     '@type': 'ContactPoint',
     telephone: '+1-215-341-9990',
     contactType: 'customer service',
-    areaServed: ['US'],
+    areaServed: ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'],
     availableLanguage: ['English', 'Hindi'],
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',
@@ -143,9 +143,9 @@ const philosophyPoints = [
   },
   {
     icon: '⊕',
-    title: 'U.S. Shipping',
+    title: 'Seven-Country Shipping',
     description:
-      'Shipping is available to U.S. addresses only. It is free at $150 and above and costs a flat $12 below that, with tracking after dispatch.',
+      'Shipping is available to the U.S., Canada, UK, Australia, New Zealand, South Africa, and Mauritius. Destination-specific rates appear at checkout.',
   },
   {
     icon: '✦',
@@ -732,7 +732,7 @@ const BrandStory = () => {
                 Shipping &amp; Delivery
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong>Free US shipping:</strong> Orders at $150 and above (United States only).<br />
+                <strong>Free U.S. standard shipping:</strong> Orders at $150 and above. International rates are shown at checkout.<br />
                 <strong>Flat rate:</strong> $12 per order below $150.<br />
                 <strong>Delivery timing:</strong> Depends on the product and selected options.<br />
                 <strong>Tracking:</strong> Provided after dispatch.<br />

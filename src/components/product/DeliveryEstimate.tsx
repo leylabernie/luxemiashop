@@ -9,7 +9,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false }: Delive
   <div className="bg-card/50 border border-border/50 rounded-sm p-4 space-y-3">
     <div className="flex items-center gap-2 text-sm">
       <Truck className="h-4 w-4 text-primary" />
-      <span className="font-medium">U.S. Shipping</span>
+      <span className="font-medium">Shipping</span>
     </div>
 
     <div className="space-y-2 text-sm">
@@ -17,7 +17,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false }: Delive
         <Truck className="h-3.5 w-3.5 mt-0.5 text-muted-foreground" />
         <div>
           <p className="text-foreground">
-            Free U.S. shipping at $150 and above. $12 flat below that.
+            U.S. standard shipping is free at $150 and above and $12 below. International rates are shown at checkout.
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.

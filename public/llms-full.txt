@@ -4,8 +4,10 @@
 # Every URL below is a current, direct LuxeMia URL. Redirect sources and retired
 # pages are intentionally excluded.
 #
-# Shipping policy: United States addresses only. Shipping is $12 for orders
-# below $150 and free at $150 and above. All sales are final. For genuine
+# Shipping destinations: United States, Canada, United Kingdom, Australia,
+# New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below
+# $150 and free at $150 and above. International rates are shown at checkout.
+# Sales are final to the extent permitted by applicable law. For genuine
 # shipping damage, an incorrect item, or a missing item, contact LuxeMia within
 # 48 hours of delivery with clear photos and a continuous unboxing/opening video
 # showing the unopened package, shipping label, and item condition.

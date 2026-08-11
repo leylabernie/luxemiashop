@@ -34,7 +34,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Do you ship Indo-Western outfits in the United States?',
-    answer: 'Yes. LuxeMia currently ships to United States addresses only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is emailed after dispatch.',
+    answer: 'Yes. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.',
   },
   {
     question: 'Which fabrics and embellishments are available?',
@@ -42,7 +42,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Can I return an Indo-Western outfit?',
-    answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+    answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
   },
 ];
 

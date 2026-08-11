@@ -22,6 +22,7 @@ import {
 
 const shippingAnnouncements = [
   'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.',
+  'Now shipping to Canada, the UK, Australia, New Zealand, South Africa, and Mauritius.',
 ];
 
 // Categories without a mega-menu use plain links.

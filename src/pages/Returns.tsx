@@ -7,7 +7,7 @@ const Returns = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Returns Policy — LuxeMia"
-        description="All LuxeMia sales are final. Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with the required photos and continuous unboxing video."
+        description="LuxeMia final-sale and covered-order-issue policy, subject to mandatory consumer rights under applicable law."
         canonical="https://luxemia.shop/returns"
       />
       <Header />
@@ -18,7 +18,7 @@ const Returns = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">Returns</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Returns Policy</h1>
             <p className="text-muted-foreground leading-relaxed">
-              Please read this policy before ordering. All sales are final. Covered order issues must be reported
+              Please read this policy before ordering. Sales are final to the extent permitted by applicable law. Covered order issues must be reported
               within 48 hours of delivery with the required photos and continuous unboxing/opening video.
             </p>
           </div>
@@ -27,7 +27,10 @@ const Returns = () => {
         <section className="container mx-auto px-4 lg:px-8 max-w-3xl py-12">
           <div className="prose prose-neutral max-w-none text-muted-foreground">
             <h2 className="text-foreground">Return window</h2>
-            <p>All sales are final. We do not accept returns or exchanges for change of mind, sizing, color, fit, or custom-order preferences.</p>
+            <p>Sales are final to the extent permitted by applicable law. We do not accept returns or exchanges for change of mind, sizing, color, fit, or custom-order preferences where the law permits that restriction.</p>
+
+            <h2 className="text-foreground">Mandatory rights</h2>
+            <p>Nothing in this policy limits consumer rights or remedies that cannot legally be excluded in the customer&apos;s jurisdiction.</p>
 
             <h2 className="text-foreground">Covered order issues</h2>
             <p>For genuine shipping damage, an incorrect item, or a missing item, contact us within 48 hours of delivery. Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</p>

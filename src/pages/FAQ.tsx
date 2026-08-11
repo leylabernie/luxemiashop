@@ -45,7 +45,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below $150. Online orders ship with tracking after dispatch.',
+          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.',
         },
         {
           question: 'How long does shipping take?',
@@ -57,7 +57,7 @@ const FAQ = () => {
         },
         {
           question: 'Do I have to pay taxes?',
-          answer: 'Taxes, if applicable, are calculated at checkout. LuxeMia currently ships to United States addresses only.',
+          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
         },
         {
           question: 'What if my package is delayed or lost?',
@@ -87,7 +87,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'No. All sales are final and we do not accept returns or exchanges for sizing issues. Use the measurement worksheet, compare the exact listing and contact us before ordering when sizing information is unclear.',
+          answer: 'To the extent permitted by applicable law, sales are final and we do not accept returns or exchanges for sizing issues. Use the measurement worksheet, compare the exact listing and contact us before ordering when sizing information is unclear.',
         },
         {
           question: 'Which measurements should I compare?',
@@ -105,7 +105,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
         },
         {
           question: 'Why do I need an unboxing video?',
@@ -121,7 +121,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'No. All sales are final and we do not accept exchanges. We recommend using our detailed Size Guide and contacting us before ordering with any questions about sizing, fit, or color.',
+          answer: 'To the extent permitted by applicable law, sales are final and we do not accept exchanges. We recommend using our detailed Size Guide and contacting us before ordering with any questions about sizing, fit, or color.',
         },
       ],
     },
@@ -225,11 +225,11 @@ const FAQ = () => {
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
-          answer: 'Taxes, if applicable, are calculated at checkout. LuxeMia currently ships from supplier fulfillment to United States addresses only.',
+          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
         },
         {
           question: 'Do you ship outside the United States?',
-          answer: 'No. LuxeMia currently ships to United States addresses only.',
+          answer: 'Yes. LuxeMia ships to Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, in addition to the United States.',
         },
         {
           question: 'How do Indian clothing sizes compare to US sizes?',

@@ -7,14 +7,18 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 const FLAT_SHIPPING_RATE = 12;
 const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'Free U.S. shipping at $150 and above. $12 flat below $150. Tracking details are emailed as soon as the shipping label is created for dispatch.';
+const INTERNATIONAL_STANDARD_RATE = 14.99;
+const INTERNATIONAL_EXPRESS_RATE = 25;
+const INTERNATIONAL_FREE_SHIPPING_THRESHOLD = 300;
+const SHIPPING_DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
+const SHIPPING_PROMISE = `LuxeMia ships to ${SHIPPING_DESTINATIONS}. U.S. standard shipping is free at $150 and above and $12 below $150. International rates are shown at checkout.`;
 
 const Shipping = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Shipping Policy — Online US Delivery | LuxeMia"
-        description="LuxeMia U.S. shipping: free at $150 and above, $12 flat below $150. Tracking details are emailed when the shipping label is created for dispatch."
+        title="Shipping Policy — U.S. & International Delivery | LuxeMia"
+        description="LuxeMia ships to the U.S., Canada, UK, Australia, New Zealand, South Africa and Mauritius. Review current rates, timing, tracking and customs guidance."
         canonical="https://luxemia.shop/shipping"
       />
       <Header />
@@ -42,18 +46,18 @@ const Shipping = () => {
         <aside aria-labelledby="shipping-at-a-glance" className="py-10 border-y border-border bg-card">
           <div className="container mx-auto px-4 lg:px-8">
             <h2 id="shipping-at-a-glance" className="sr-only">Shipping at a glance</h2>
-            <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center max-w-3xl mx-auto">
+            <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center max-w-4xl mx-auto">
               <div>
-                <dt className="text-sm text-muted-foreground">Orders below ${FREE_SHIPPING_THRESHOLD}</dt>
-                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">${FLAT_SHIPPING_RATE} flat</dd>
+                <dt className="text-sm text-muted-foreground">U.S. standard below ${FREE_SHIPPING_THRESHOLD}</dt>
+                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">${FLAT_SHIPPING_RATE}</dd>
               </div>
               <div>
-                <dt className="text-sm text-muted-foreground">Orders at ${FREE_SHIPPING_THRESHOLD} and above</dt>
-                <dd className="mt-1 text-3xl font-serif font-semibold text-green-600 dark:text-green-400">Free U.S. shipping</dd>
+                <dt className="text-sm text-muted-foreground">International standard below ${INTERNATIONAL_FREE_SHIPPING_THRESHOLD}</dt>
+                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">${INTERNATIONAL_STANDARD_RATE}</dd>
               </div>
               <div>
-                <dt className="text-sm text-muted-foreground">After the label is created</dt>
-                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">Tracking emailed</dd>
+                <dt className="text-sm text-muted-foreground">Standard at qualifying thresholds</dt>
+                <dd className="mt-1 text-3xl font-serif font-semibold text-green-600 dark:text-green-400">Free</dd>
               </div>
             </dl>
           </div>
@@ -63,7 +67,7 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: Truck, title: 'US Checkout', desc: 'Currently accepts United States addresses' },
+                { icon: Truck, title: '7 Countries', desc: 'U.S. plus six international destinations' },
                 { icon: Package, title: 'In Stock', desc: 'Browse current online styles' },
                 { icon: Clock, title: 'Timing Varies', desc: 'Contact us before a time-sensitive event' },
                 { icon: ShieldCheck, title: 'Tracked', desc: 'Tracking emailed when the label is created for dispatch' },
@@ -97,21 +101,21 @@ const Shipping = () => {
               </div>
               <div className="grid md:grid-cols-2 gap-6 mt-8">
                 <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-3">Rates</h3>
+                  <h3 className="font-semibold mb-3">United States</h3>
                   <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-                    <li>Free US shipping at ${FREE_SHIPPING_THRESHOLD} and above</li>
-                    <li>${FLAT_SHIPPING_RATE} flat rate below ${FREE_SHIPPING_THRESHOLD}</li>
-                    <li>No weight calculation or per-item surcharge</li>
+                    <li>Free standard shipping at ${FREE_SHIPPING_THRESHOLD} and above</li>
+                    <li>${FLAT_SHIPPING_RATE} standard shipping below ${FREE_SHIPPING_THRESHOLD}</li>
                     <li>Taxes, if applicable, are calculated at checkout</li>
+                    <li>Tracking is emailed when the shipping label is created for dispatch</li>
                   </ul>
                 </div>
                 <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-semibold mb-3">Timing</h3>
+                  <h3 className="font-semibold mb-3">International</h3>
                   <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-                    <li>Tracking details are emailed as soon as the shipping label is created for dispatch</li>
-                    <li>Carrier transit time starts after dispatch</li>
-                    <li>Delivery speed depends on the service shown at checkout</li>
-                    <li>Contact LuxeMia before ordering when an event date is time-sensitive</li>
+                    <li>${INTERNATIONAL_STANDARD_RATE} standard shipping below ${INTERNATIONAL_FREE_SHIPPING_THRESHOLD}</li>
+                    <li>${INTERNATIONAL_EXPRESS_RATE} express shipping below ${INTERNATIONAL_FREE_SHIPPING_THRESHOLD}</li>
+                    <li>Standard and express shipping are free at ${INTERNATIONAL_FREE_SHIPPING_THRESHOLD} and above</li>
+                    <li>Carrier-calculated services may also appear; checkout controls the available rate</li>
                   </ul>
                 </div>
               </div>
@@ -131,17 +135,15 @@ const Shipping = () => {
                 <h2 className="text-2xl font-serif">Important Notes</h2>
               </div>
               <div className="bg-card border border-border rounded-lg p-6 mt-8 text-sm text-muted-foreground space-y-3">
+                <p>LuxeMia currently accepts shipping addresses in {SHIPPING_DESTINATIONS}. Kenya is not an active destination.</p>
                 <p>
-                  LuxeMia currently accepts orders for United States shipping addresses only. If you need a specific colour,
-                  measurements for a group, or full wedding-party coordination, use our sister site CeremonyVerse instead.
+                  Standard delivery is generally estimated at 4–30 business days, including handling and carrier transit. Product,
+                  tailoring, destination, customs, and carrier conditions can change the estimate. The product page and checkout are
+                  authoritative, and delivery dates are not guaranteed.
                 </p>
                 <p>
-                  Additional country-specific shipping is under review and is not active. No international rate, delivery promise,
-                  customs treatment, or returns process should be assumed until it is published for the destination country.
-                </p>
-                <p>
-                  If LuxeMia confirms that an item will be fulfilled cross-border, any applicable import-charge treatment must be
-                  confirmed in writing before the order is accepted; do not assume duty-free delivery from the shipping rate alone.
+                  International duties, import taxes, brokerage, or carrier processing fees may apply unless checkout explicitly
+                  states otherwise. A shipping charge does not mean that delivery is duty paid.
                 </p>
                 <p>
                   If an address needs to be corrected, email <span className="text-primary">hello@luxemia.shop</span> within 24 hours.
@@ -169,21 +171,22 @@ const Shipping = () => {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Where does LuxeMia ship?</AccordionTrigger>
                   <AccordionContent>
-                    LuxeMia currently ships to United States addresses only. Additional countries are under review but are not active.
+                    LuxeMia ships to {SHIPPING_DESTINATIONS}.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
                   <AccordionTrigger>How much is shipping?</AccordionTrigger>
                   <AccordionContent>
-                    Free US shipping applies at ${FREE_SHIPPING_THRESHOLD} and above. Orders below ${FREE_SHIPPING_THRESHOLD}
-                    ship for a ${FLAT_SHIPPING_RATE} flat rate.
+                    U.S. standard shipping is free at ${FREE_SHIPPING_THRESHOLD} and above and costs ${FLAT_SHIPPING_RATE} below it.
+                    International standard shipping costs ${INTERNATIONAL_STANDARD_RATE} below ${INTERNATIONAL_FREE_SHIPPING_THRESHOLD}
+                    and is free at ${INTERNATIONAL_FREE_SHIPPING_THRESHOLD} and above. Checkout shows the final available services.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
                   <AccordionTrigger>How fast will my order ship?</AccordionTrigger>
                   <AccordionContent>
-                    Timing depends on the item and selected options. Tracking details are emailed as soon as the shipping
-                    label is created for dispatch, and carrier transit time begins after dispatch.
+                    Standard delivery is generally estimated at 4–30 business days, including handling and transit. Timing depends
+                    on the product, selected options, destination, customs, and carrier. Contact LuxeMia before ordering for a fixed event date.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">

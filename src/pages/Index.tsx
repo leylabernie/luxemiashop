@@ -23,11 +23,11 @@ import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
+    answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout."
   },
   {
     question: "What is your return policy?",
-    answer: "All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
+    answer: "Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
   },
   {
     question: "Where can I confirm a product's materials and details?",
@@ -85,6 +85,7 @@ const Index = () => {
             <aside aria-label="United States shipping summary" className="shrink-0 border-l-2 border-primary pl-4">
               <p className="font-medium">Free U.S. shipping at $150+</p>
               <p className="mt-1 text-sm text-muted-foreground">$12 flat below $150 · Tracking emailed after dispatch</p>
+              <p className="mt-1 text-sm text-muted-foreground">International shipping to six additional countries</p>
               <Link
                 to="/shipping"
                 className="mt-2 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"

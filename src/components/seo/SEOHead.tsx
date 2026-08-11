@@ -111,7 +111,8 @@ const SEOHead = ({
     .replace(/\/+$/, '') || '/';
   const canonicalUrl = `${siteUrl}${canonicalPath}`;
 
-  // Hreflang defaults: LuxeMia currently serves United States shoppers only.
+  // The current default locale remains en-US; x-default covers shoppers in
+  // the six additional English-language shipping destinations.
   const hreflangAlternates = hreflang || [
     { lang: 'en-US', href: canonicalUrl },
     { lang: 'x-default', href: canonicalUrl },
@@ -133,7 +134,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online for US delivery.`, 
+            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with shipping to seven countries.`,
         sku: product.sku || '',
         url: canonicalUrl,
         brand: product.brand,

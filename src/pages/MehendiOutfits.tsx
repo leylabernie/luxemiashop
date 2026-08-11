@@ -35,7 +35,7 @@ const mehendiOutfitFaqs = [
   },
   {
     question: 'Do you ship mehendi outfits to the United States?',
-    answer: 'LuxeMia ships mehendi outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships mehendi outfits to seven countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'How do I confirm what comes with an outfit?',
@@ -71,7 +71,7 @@ const MehendiOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Pre-Wedding Celebrations</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Mehendi Ceremony Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Browse currently available products explicitly marked in the catalog for mehendi or mehndi. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to United States addresses only.
+              Browse currently available products explicitly marked in the catalog for mehendi or mehndi. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to seven countries.
             </p>
           </div>
         </div>
@@ -153,7 +153,7 @@ const MehendiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Mehendi Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to seven countries with tracking after dispatch; destination-specific rates are shown at checkout.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
