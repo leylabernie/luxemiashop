@@ -101,7 +101,7 @@ const Index = () => {
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Verified made-to-order selection</p>
               <h2 id="customizable-home-heading" className="mt-2 font-serif text-2xl sm:text-3xl">Customizable Indian Outfits</h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Browse selected designs verified for a custom color and tailoring from confirmed measurements. Production is approximately 3–5 weeks after required details and fabric availability are confirmed; carrier transit follows dispatch.
+                Browse selected designs verified for a custom color and tailoring from confirmed measurements. Use approximately 4–5 weeks as a total planning window; production time and carrier transit are confirmed separately before ordering.
               </p>
             </div>
             <Link

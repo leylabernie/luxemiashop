@@ -523,7 +523,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         { key: 'Made to Order', value: 'Yes — confirmation required' },
         { key: 'Requested Custom Color', value: `${requestedCustomColor.trim()} — pending LuxeMia confirmation` },
         { key: 'Measurements', value: 'Required after order' },
-        { key: 'Production Estimate', value: 'Approximately 3–5 weeks after details are confirmed' },
+        { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
       );
     }
     if (isStitchable && selectedStitchingType) {
@@ -632,7 +632,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
             <li>This design can be made in a custom color, subject to fabric availability.</li>
             <li>The outfit is made from measurements confirmed with LuxeMia after ordering.</li>
-            <li>Production normally takes approximately 3–5 weeks after color, measurements, and fabric availability are confirmed. Carrier transit begins after dispatch.</li>
+            <li>Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the color, measurements, fabric availability, and delivery address are known.</li>
             <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
             <li>If LuxeMia confirms that this item will be fulfilled cross-border, import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
             <li>Custom orders are final sale, subject to applicable law.</li>
@@ -1010,7 +1010,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           <dt className="font-medium text-foreground">Shipping Estimate</dt>
           <dd className="text-muted-foreground">
             {customizableProduct
-              ? 'Production normally takes approximately 3–5 weeks after required details are confirmed. Carrier transit begins after dispatch.'
+              ? 'Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the required details and delivery address are known.'
               : shipByLabel
               ? `${shipByLabel}. Tracking details are emailed when the shipping label is created for dispatch.`
               : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.'}

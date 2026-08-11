@@ -29,7 +29,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false }: Delive
         <div className="flex items-start gap-2">
           <Clock className="h-3.5 w-3.5 mt-0.5 text-amber-600" />
           <p className="text-muted-foreground">
-            Made-to-order production normally takes approximately 3–5 weeks after LuxeMia confirms your requested color, measurements, and fabric availability. Carrier transit begins after dispatch and is separate from production time.
+            Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately after your requested color, measurements, fabric availability, and delivery address are known.
           </p>
         </div>
       )}

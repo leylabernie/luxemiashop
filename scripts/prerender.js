@@ -29,16 +29,22 @@ const CUSTOMIZABLE_PRODUCTS = JSON.parse(
 const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
   CUSTOMIZABLE_PRODUCTS.map((product) => [product.handle, product])
 );
-const CUSTOM_PRODUCT_DESCRIPTION = 'Made to order from your confirmed measurements, with a custom color available for this design. Production normally takes approximately 3–5 weeks after LuxeMia confirms your requested color, measurements, and fabric availability; carrier transit starts after dispatch. Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.';
+const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
+
+function getCustomProductDescription(title) {
+  return `${title}. Made to order from measurements confirmed with LuxeMia, with a custom color available for this design. ${CUSTOM_PRODUCT_TIMING} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
+}
 
 function applyCustomizableProductDetails(product) {
   const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product?.handle);
   if (!matched) return product;
 
+  const description = getCustomProductDescription(matched.title);
+
   return {
     ...product,
     title: matched.title,
-    description: CUSTOM_PRODUCT_DESCRIPTION,
+    description,
     tags: [
       ...(product.tags || []).filter((tag) => !/ready[- ]?to[- ]?ship|ships? within|worldwide|canada|australia|dhl|ddp/i.test(String(tag))),
       'customizable',
@@ -49,7 +55,7 @@ function applyCustomizableProductDetails(product) {
     shipsWithinMetafield: null,
     seo: {
       title: `${matched.title} | LuxeMia`,
-      description: CUSTOM_PRODUCT_DESCRIPTION,
+      description,
     },
   };
 }
@@ -185,7 +191,8 @@ function buildVerifiedProductCopy(product) {
   if (!product) return '';
 
   if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
-    return `${CUSTOM_PRODUCT_DESCRIPTION} Current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.`;
+    const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product.handle);
+    return `${getCustomProductDescription(matched.title)} Current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.`;
   }
 
   const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
@@ -1278,7 +1285,7 @@ const routes = [
     path: '/collections/customizable-indian-outfits',
     category: 'customizable',
     title: 'Customizable Indian Outfits | Custom Color & Measurements | LuxeMia',
-    description: 'Shop verified made-to-order Indian outfits with a custom color and sizing from your confirmed measurements. Review 3–5 week production guidance before ordering.',
+    description: 'Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering.',
     h1: 'Customizable Indian Outfits',
     content: `
       <p>These selected lehengas, sarees, kurta sets, and wedding outfits are verified for a custom color and made-to-order construction from measurements confirmed with LuxeMia.</p>
@@ -1286,7 +1293,7 @@ const routes = [
       <ol>
         <li>Send the exact product link, requested color, event date, and delivery country.</li>
         <li>LuxeMia confirms fabric availability, timing, and the measurements required for that design.</li>
-        <li>Production normally takes approximately 3–5 weeks after all required details are confirmed. Carrier transit begins after dispatch.</li>
+        <li>Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after all required details and the delivery address are known.</li>
       </ol>
       <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
       <h2>Current shipping availability</h2>
@@ -2060,7 +2067,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
     const shippingEstimate = isCustomizable
-      ? 'Production normally takes approximately 3–5 weeks after LuxeMia confirms the requested color, measurements, and fabric availability. Carrier transit begins after dispatch.'
+      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
       : productAttributes.shipsWithinDays
       ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
       : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
@@ -2088,7 +2095,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
     const deliveryAnswer = isCustomizable
-      ? 'Production normally takes approximately 3–5 weeks after LuxeMia confirms the requested color, measurements, and fabric availability. Carrier transit begins after dispatch and is separate from production time. Contact LuxeMia before ordering for a fixed event date.'
+      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
       : productAttributes.jewelry
       ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.'
       : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.';

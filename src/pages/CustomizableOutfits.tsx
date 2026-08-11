@@ -29,7 +29,7 @@ const customizableFaqs = [
   },
   {
     question: 'How long does a made-to-order outfit take?',
-    answer: 'Production normally takes approximately 3–5 weeks after the requested color, measurements, and fabric availability are confirmed. Carrier transit begins after dispatch and is separate from production time. Rush delivery is not guaranteed.',
+    answer: 'Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Timing and rush delivery are not guaranteed unless confirmed in writing.',
   },
   {
     question: 'Where does LuxeMia currently ship these outfits?',
@@ -56,7 +56,7 @@ const CustomizableOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Customizable Indian Outfits | Custom Color & Measurements | LuxeMia"
-        description="Shop verified made-to-order Indian outfits with a custom color and sizing from your confirmed measurements. Review 3–5 week production guidance before ordering."
+        description="Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering."
         canonical="https://luxemia.shop/collections/customizable-indian-outfits"
         type="collection"
         breadcrumbs={[
@@ -97,7 +97,7 @@ const CustomizableOutfits = () => {
             </div>
             <div>
               <h2 className="font-serif text-xl">3. Production, then transit</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Allow approximately 3–5 weeks for production after confirmation. Carrier transit begins after dispatch; contact LuxeMia before ordering for a fixed event date.</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after the required details and delivery address are known.</p>
             </div>
           </div>
         </section>

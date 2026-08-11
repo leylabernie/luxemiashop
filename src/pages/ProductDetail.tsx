@@ -242,7 +242,7 @@ const ProductDetail = () => {
     {
       question: `What is the delivery time for the ${product.title}?`,
       answer: customizableProduct
-        ? 'Production normally takes approximately 3–5 weeks after LuxeMia confirms the requested color, measurements, and fabric availability. Carrier transit begins after dispatch and is separate from production time. Contact LuxeMia before ordering for a fixed event date.'
+        ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
         : 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above, and a flat $12 rate applies below $150.'
     },
     ...(customizableProduct ? [{
