@@ -38,17 +38,17 @@ export function escapeHtml(str: string): string {
 function sanitizeProductCopy(value: string): string {
   return (value || '')
     .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
     .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
-    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping at $150 and above');
+    .replace(/USA, Canada, and Australia/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
+    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
 const JEWELRY_PRODUCT_PATTERN = /\b(jewel|jewell|necklace|choker|earring|bangle|bracelet|ring|maang\s*tikka|anklet|kundan|polki)\b/i;
@@ -79,12 +79,34 @@ function getListedProductAttributes(product: ShopifyProduct) {
   const sizeValues = product.options
     ?.find((option: { name?: string }) => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
+  const includedPiecePrefixes = [
+    'included:',
+    'included pieces:',
+    'pieces:',
+    'set includes:',
+    'package includes:',
+  ];
+  const includedPiecesTag = (product.tags || []).find((tag) =>
+    includedPiecePrefixes.some((prefix) => tag.toLowerCase().startsWith(prefix)),
+  );
+  const includedPiecesPrefix = includedPiecesTag
+    ? includedPiecePrefixes.find((prefix) => includedPiecesTag.toLowerCase().startsWith(prefix))
+    : null;
+  const includedPieces = includedPiecesTag && includedPiecesPrefix
+    ? includedPiecesTag.slice(includedPiecesPrefix.length).trim()
+    : undefined;
+  const rawShipsWithin = product.shipsWithinMetafield?.value;
+  const shipsWithinDays = rawShipsWithin ? Number.parseInt(rawShipsWithin, 10) : null;
 
   return {
     jewelry,
     color: rawColor && (!jewelry || listingText.includes(rawColor.toLowerCase())) ? rawColor : undefined,
     material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
     sizes: jewelry ? [] : sizeValues,
+    includedPieces: includedPieces || undefined,
+    shipsWithinDays: Number.isFinite(shipsWithinDays) && Number(shipsWithinDays) > 0
+      ? Number(shipsWithinDays)
+      : null,
   };
 }
 
@@ -102,7 +124,7 @@ function buildVerifiedProductDescription(product: ShopifyProduct): string {
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided after dispatch.'
+    'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.'
   );
 
   return parts.join(' ').replace(/\s+/g, ' ').trim();
@@ -136,7 +158,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     : 'OutOfStock';
   const vendor = product.vendor || 'LuxeMia';
 
-  const { color, material, sizes } = productAttributes;
+  const { color, includedPieces, material, shipsWithinDays, sizes } = productAttributes;
   const sku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
   const googleProductCategory = getGoogleProductCategory(product.productType, displayTitle);
 
@@ -197,11 +219,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     }]),
     {
       question: `What is the delivery time for the ${displayTitle}?`,
-      answer: 'Delivery timing depends on the item and selected options. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.',
+      answer: 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.',
     },
     {
       question: `Can I return the ${displayTitle}?`,
-      answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+      answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
     },
     {
       question: `How should I care for the ${displayTitle}?`,
@@ -329,14 +351,17 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         </div>
         <p class="description">${escapeHtml(cleanProductDescription.slice(0, 500) || '')}</p>
         ${variantOptions ? `<div style="margin-bottom:16px;">${variantOptions}</div>` : ''}
+        <h2 style="font-size:22px;margin:24px 0 12px;">Product Specifications</h2>
         <dl class="details">
-          ${vendor ? `<div><dt>Brand:</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
-          ${color ? `<div><dt>Color:</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
-          ${material ? `<div><dt>${productAttributes.jewelry ? 'Material' : 'Fabric'}:</dt><dd>${escapeHtml(material)}</dd></div>` : ''}
-          ${sizes.length > 0 ? `<div><dt>Available Sizes:</dt><dd>${escapeHtml(sizes.join(', '))}</dd></div>` : ''}
-          <div><dt>Gender:</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>
-          <div><dt>Condition:</dt><dd>New</dd></div>
-          <div><dt>Availability:</dt><dd>${availability === 'InStock' ? 'In Stock' : 'Out of Stock'}</dd></div>
+          <div><dt>Fabric Details</dt><dd>${escapeHtml(material || 'Review the product description for the fabric or material supplied with this listing.')}</dd></div>
+          <div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.')}</dd></div>
+          <div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizes.length > 0 ? `Listed options: ${sizes.join(', ')}. Review the Size Guide before ordering.` : 'Available sizing varies by product. Review the listed options and Size Guide before ordering.')}</dd></div>
+          <div><dt>Shipping Estimate</dt><dd>${escapeHtml(shipsWithinDays ? `Ships within ${shipsWithinDays} business day${shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.` : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.')}</dd></div>
+          ${vendor ? `<div><dt>Brand</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
+          ${color ? `<div><dt>Color</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
+          <div><dt>Gender</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>
+          <div><dt>Condition</dt><dd>New</dd></div>
+          <div><dt>Availability</dt><dd>${availability === 'InStock' ? 'In Stock' : 'Out of Stock'}</dd></div>
         </dl>
         <div class="trust-badges">
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>SSL Secure</div>
@@ -344,9 +369,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
         </div>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.<br>
-          <strong>Tracking:</strong> Provided after dispatch. Custom timing is confirmed before ordering.<br>
-          <strong>Returns:</strong> All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.<br>
+          <strong>Shipping:</strong> Seven countries supported. U.S. standard shipping is free at $150 and above; international rates are shown at checkout.<br>
+          <strong>Tracking:</strong> Emailed when the shipping label is created for dispatch. Contact LuxeMia before ordering when an event date is time-sensitive.<br>
+          <strong>Returns:</strong> Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>
       </div>

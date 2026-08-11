@@ -191,7 +191,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">5.3 Custom Order Terms</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Custom and made-to-measure orders are final sale.</li>
-                        <li>Production time for custom orders is typically 5–7 business days plus shipping time.</li>
+                        <li>Use approximately 4–5 weeks as a total planning window for verified customizable designs. LuxeMia confirms production and carrier timing after the requested color, measurements, fabric availability, and delivery address are known.</li>
                         <li>Custom orders require full payment upfront before production begins.</li>
                         <li>Customization requests (color changes, design modifications) must be specified at order placement and may incur additional charges.</li>
                       </ul>
@@ -212,7 +212,7 @@ const Terms = () => {
                 <section id="shipping">
                   <h2 className="text-xl font-serif text-foreground mb-4">7. Shipping and Delivery</h2>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>LuxeMia ships to United States addresses only. Shipping is $12 below $150 and free at $150 and above. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
+                    <li>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
                     <li>Delivery estimates are not guaranteed and may be affected by weather or carrier delays.</li>
                     <li>LuxeMia is not responsible for delays caused by weather or carrier issues.</li>
                     <li>Risk of loss passes to you upon delivery to the carrier.</li>
@@ -224,14 +224,14 @@ const Terms = () => {
                   <h2 className="text-xl font-serif text-foreground mb-4">8. No Returns Policy</h2>
                   <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
                     <p className="font-semibold text-destructive">
-                      ⚠️ ALL SALES ARE FINAL - NO RETURNS OR REFUNDS
+                      ⚠️ ALL SALES ARE FINAL, SUBJECT TO APPLICABLE LAW
                     </p>
                   </div>
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">8.1 All Sales Final</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>Due to the online nature of the catalog and limited inventory, we do not accept returns or offer refunds.</strong></li>
+                        <li><strong>To the extent permitted by applicable law, we do not accept returns or offer refunds for change of mind, sizing, color, fit, or custom-order preferences.</strong></li>
                         <li>Each piece is crafted specifically for your order based on your measurements and selections.</li>
                         <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>
@@ -247,6 +247,7 @@ const Terms = () => {
                     <p className="text-sm">
                       For complete details, please refer to our <a href="/returns" className="text-primary hover:underline">No Returns Policy</a>.
                     </p>
+                    <p className="text-sm">Nothing in these terms limits mandatory consumer rights or remedies that cannot legally be excluded.</p>
                   </div>
                 </section>
 

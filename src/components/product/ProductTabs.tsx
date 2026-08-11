@@ -626,7 +626,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           {/* General tailoring note */}
           <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
             <p className="text-sm text-foreground">
-              <strong>Note:</strong> All sales are final, including stitched items. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
+              <strong>Note:</strong> Sales are final to the extent permitted by applicable law, including stitched items. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
             </p>
           </div>
         </div>
@@ -889,7 +889,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             <div className="p-4 bg-card rounded-sm border border-border">
               <div className="flex items-center gap-2 mb-2">
                 <Truck className="h-4 w-4 text-primary" />
-                <h4 className="font-medium">US Shipping</h4>
+                <h4 className="font-medium">Shipping</h4>
               </div>
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
@@ -903,6 +903,10 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>Tracking provided after dispatch</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>International rates are shown at checkout</span>
                 </li>
               </ul>
             </div>
@@ -918,7 +922,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>United States shipping addresses only</span>
+                  <span>Shipping to seven supported countries</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -943,7 +947,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                   <div>
                     <h5 className="font-medium text-foreground mb-1">All Sales Final</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      All sales are final.
+                      Sales are final to the extent permitted by applicable law.
                       We encourage you to carefully review sizing, measurements, and product details before placing your order.
                       Our team is always available to answer any pre-purchase questions.
                     </p>

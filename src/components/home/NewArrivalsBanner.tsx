@@ -78,7 +78,7 @@ const rakshaBandhanSlide: FeaturedSlide = {
   ...evergreenSlides[0],
   eyebrow: 'Raksha Bandhan Sale',
   headline: `${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% Off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+`,
-  subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. U.S. shipping only; delivery timing varies by item.`,
+  subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Shipping to seven countries; delivery timing varies by item.`,
   cta: 'Shop Festive Styles',
   link: '/collections',
   image: '/images/campaigns/raksha-bandhan-2026-mobile',

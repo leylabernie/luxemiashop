@@ -23,11 +23,11 @@ import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below that. In-stock pieces ship with tracking after dispatch."
+    answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout."
   },
   {
     question: "What is your return policy?",
-    answer: "All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
+    answer: "Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
   },
   {
     question: "Where can I confirm a product's materials and details?",
@@ -57,37 +57,64 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="LuxeMia — Indian Ethnic Wear Online"
-        description="Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like."
+        title="Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia"
+        description="Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping."
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
       />
       <Header />
       
       <main id="main-content" className="pt-[88px] lg:pt-[124px]">
-        <NewArrivalsBanner />
-        {/* Semantic H1 for SEO — the carousel uses h2 for slide titles.
-            Kept sr-only (screen-reader only) so visual layout is unchanged
-            but search engines see a single, keyword-rich H1. */}
-        <h1 className="sr-only">Indian Ethnic Wear Online</h1>
+        <section
+          aria-labelledby="homepage-heading"
+          className="border-b border-primary/20 bg-gradient-to-r from-primary/10 via-background to-primary/5"
+        >
+          <div className="container mx-auto flex max-w-7xl flex-col gap-5 px-4 py-7 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-9">
+            <div className="max-w-3xl">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                Premium Indian occasionwear for the United States
+              </p>
+              <h1 id="homepage-heading" className="font-serif text-3xl leading-tight sm:text-4xl lg:text-5xl">
+                Premium Indian Ethnic Wear with Tracked U.S. Shipping
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry for U.S. delivery.
+                Browse Indian wedding guest outfits with tracked shipping across the United States.
+              </p>
+            </div>
+            <aside aria-label="United States shipping summary" className="shrink-0 border-l-2 border-primary pl-4">
+              <p className="font-medium">Free U.S. shipping at $150+</p>
+              <p className="mt-1 text-sm text-muted-foreground">$12 flat below $150 · Tracking emailed after dispatch</p>
+              <p className="mt-1 text-sm text-muted-foreground">International shipping to six additional countries</p>
+              <Link
+                to="/shipping"
+                className="mt-2 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"
+              >
+                View delivery details
+              </Link>
+            </aside>
+          </div>
+        </section>
 
-        {/* First paragraph of copy — keyword-rich intro for search crawlers.
-            sr-only so it doesn't disrupt the visual hero, but crawlers see it
-            as the opening body copy. */}
-        <p className="sr-only lead">
-          Available online with tracked U.S. shipping. For the wedding that's sooner than you'd like.
-        </p>
-
-        {/* Shipping Info Banner */}
-        <div className="bg-foreground text-background py-2.5">
-          <div className="container mx-auto px-4 flex items-center justify-center gap-2 sm:gap-4 text-center text-sm flex-wrap">
-            <span className="font-medium">U.S.-Based Support • Tracked U.S. Shipping • Free Shipping $150+</span>
-            <span className="hidden sm:inline text-background/40">·</span>
-            <Link to="/shipping" className="hidden sm:inline underline underline-offset-2 hover:text-background/80 transition-colors">
-              Delivery info
+        <section className="border-b border-border/30 bg-background" aria-labelledby="customizable-home-heading">
+          <div className="container mx-auto flex max-w-7xl flex-col gap-4 px-4 py-7 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Verified made-to-order selection</p>
+              <h2 id="customizable-home-heading" className="mt-2 font-serif text-2xl sm:text-3xl">Customizable Indian Outfits</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Browse selected designs verified for a custom color and tailoring from confirmed measurements. Use approximately 4–5 weeks as a total planning window; production time and carrier transit are confirmed separately before ordering.
+              </p>
+            </div>
+            <Link
+              to="/collections/customizable-indian-outfits"
+              className="inline-flex shrink-0 items-center justify-center rounded-sm bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Shop customizable outfits
             </Link>
           </div>
-        </div>
+        </section>
+
+        <NewArrivalsBanner />
 
         {/* PSI 2026-07-22: Sections wrapped in LazySection (IntersectionObserver)
             to defer JS execution for below-fold content. These components import

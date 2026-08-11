@@ -296,17 +296,17 @@ const COLLECTION_BY_HANDLE_QUERY = `
 function sanitizeShopifyProductCopy(value: string): string {
   return (value || '')
     .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
     .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
-    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping at $150 and above');
+    .replace(/USA, Canada, and Australia/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
+    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
 function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {

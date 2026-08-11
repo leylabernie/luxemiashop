@@ -120,6 +120,15 @@ const Collections = () => {
             <span>/</span>
             <span className="text-foreground">Collections</span>
           </nav>
+          <div className="mt-6 flex flex-col gap-3 rounded-sm border border-primary/25 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="font-serif text-xl">Need a custom color and made-to-order fit?</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Browse designs verified for a custom color and tailoring from confirmed measurements.</p>
+            </div>
+            <Link to="/collections/customizable-indian-outfits" className="shrink-0 text-sm font-medium text-primary underline underline-offset-4">
+              Shop customizable outfits
+            </Link>
+          </div>
         </div>
 
         {/* Main Content */}
@@ -252,12 +261,13 @@ const Collections = () => {
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
             </p>
             <p>
-              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to United States addresses only, with <strong>free U.S. shipping at $150 and above</strong> and a $12 flat rate below $150.
+              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to seven countries, with <strong>free U.S. standard shipping at $150 and above</strong> and international rates shown at checkout.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">
             <Link to="/lehengas" className="hover:text-foreground transition-colors underline underline-offset-2">Bridal Lehengas</Link>
             <Link to="/sarees" className="hover:text-foreground transition-colors underline underline-offset-2">Sarees</Link>
+            <Link to="/collections/customizable-indian-outfits" className="hover:text-foreground transition-colors underline underline-offset-2">Customizable Indian Outfits</Link>
             <Link to="/suits" className="hover:text-foreground transition-colors underline underline-offset-2">Salwar Kameez</Link>
             <Link to="/menswear" className="hover:text-foreground transition-colors underline underline-offset-2">Men's Sherwanis</Link>
             <Link to="/indowestern" className="hover:text-foreground transition-colors underline underline-offset-2">Indo-Western</Link>

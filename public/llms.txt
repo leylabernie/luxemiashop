@@ -1,6 +1,6 @@
 # LuxeMia
 
-> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry for delivery to United States addresses only.
+> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry for delivery to seven countries.
 
 ## Store information
 
@@ -8,8 +8,9 @@
 - Customer support: Philadelphia, Pennsylvania, USA
 - WhatsApp: +1-215-341-9990
 - Email: hello@luxemia.shop
-- Shipping destination: United States addresses only
-- Shipping: $12 USD for orders below $150 USD; free at $150 USD and above
+- Shipping destinations: United States, Canada, United Kingdom, Australia, New Zealand, South Africa, and Mauritius
+- U.S. standard shipping: $12 USD below $150 USD; free at $150 USD and above
+- International shipping: standard $14.99 USD and express $25 USD below $300 USD; free at $300 USD and above; carrier-calculated services may also appear at checkout
 - Fit options vary by product and may include semi-stitched, ready-to-wear and made-to-measure
 
 ## Shopping categories
@@ -35,7 +36,8 @@
 ## Important policy information
 
 - Dispatch and transit times depend on the product and tailoring option.
-- All sales are final.
+- Sales are final to the extent permitted by applicable law; mandatory consumer rights are not limited.
+- International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.
 - For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.
 - Product availability, price, size and delivery information on the product page and at checkout take priority over summaries in guides.
 

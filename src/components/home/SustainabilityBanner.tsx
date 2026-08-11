@@ -21,8 +21,8 @@ const values = [
   },
   {
     icon: Truck,
-    title: 'Tracked U.S. Shipping',
-    description: 'Tracking is provided after dispatch for online orders to U.S. addresses.',
+    title: 'Tracked Shipping',
+    description: 'Tracking is provided after dispatch for orders to seven supported countries.',
   },
 ];
 

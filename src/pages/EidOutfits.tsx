@@ -22,29 +22,29 @@ const sortOptions = [
 
 const eidOutfitFaqs = [
   {
-    question: 'What should I wear for Eid?',
-    answer: 'Eid is a joyous Islamic festival celebrated with prayer, family gatherings, feasting, and visiting friends. The traditional dress code for Eid calls for clean, elegant, and festive Indian ethnic wear. Popular choices include salwar kameez, anarkali suits, sharara sets, lehengas, and georgette or silk sarees. Light, embellished fabrics in pastel shades, pastels, whites, and jewel tones are all Eid-appropriate. For Eid prayer in the morning, a simple but elegant salwar kameez or abaya-style outfit is most appropriate. For the afternoon and evening celebrations, more embellished outfits are worn.',
+    question: 'Which products appear in this Eid collection?',
+    answer: 'This page shows currently available products whose catalog title, product type, or tags explicitly mention Eid, Ramadan, or chikankari. Open a product page to confirm every product detail.',
   },
   {
-    question: 'What colors are popular for Eid outfits?',
-    answer: 'White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are all classic Eid outfit colors. Gold and silver embellishments on any color are considered festive and celebratory. In South Asian Muslim communities, red, royal blue, and emerald green are also widely worn for Eid, especially for evening gatherings. Pakistani and Indian fashion-influenced Eid outfits often feature heavy chikankari embroidery, gota patti work, and delicate sequin embellishments on pastel or white fabrics.',
+    question: 'How should I choose a color for Eid?',
+    answer: 'Follow the guidance for your specific gathering, mosque, family, or community because customs and dress expectations vary. Product images and listed color options are the source of truth for each item.',
   },
   {
-    question: 'What style of Indian outfit is best for Eid?',
-    answer: 'Salwar kameez and sharara sets are among the most popular choices for Eid, combining elegance with comfort for a full day of celebrations. Chikankari embroidery on white or pastel fabric is considered quintessentially Eid-appropriate in South Asian fashion. Pakistani-style straight cut kameez with palazzo or cigarette pants, Anarkali suits in georgette, and embroidered gharara sets are also very popular. For Eid Ul-Adha which may involve outdoor gatherings, lighter and more practical outfits like cotton or chanderi salwar kameez sets are the most comfortable choice.',
+    question: 'How do I compare the available outfit styles?',
+    answer: 'Compare the exact listing for fabric, included pieces, work, size options, measurements, price, and availability. Choose a silhouette that fits the guidance and activities for your gathering.',
   },
   {
     question: 'Do you ship Eid outfits to the United States?',
-    answer: 'LuxeMia ships Eid outfits to U.S. addresses only. Shipping is free at $150 and above and costs a flat $12 below that. Tracking is provided after dispatch. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Eid outfits to seven countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout. Confirm timing before ordering for a fixed celebration date.',
   },
   {
-    question: 'Can I wear a lehenga for Eid?',
-    answer: 'Yes, lehengas are a popular choice for Eid celebrations, especially for evening gatherings, Eid parties, and special family functions. A heavily embroidered or embellished lehenga in white, ivory, pastel pink, or mint green can suit an Eid gathering. Sharara sets — a traditional alternative to lehengas with wide-leg flared pants — are also a popular Eid outfit choice in Pakistani and North Indian Muslim fashion traditions. Compare the exact listing for its stated zari, gota patti, chikankari-style work, fabric, and included pieces.',
+    question: 'How do I confirm what comes with an outfit?',
+    answer: 'Use the included-pieces details and images on the exact product page. Jewelry and accessories are not included unless the listing explicitly says so.',
   },
 ];
 
 const EidOutfits = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading } = useShopifyProducts('occasion:eid');
   const [sortBy, setSortBy] = useState('featured');
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
@@ -53,7 +53,7 @@ const EidOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Eid Outfits — Indian Ethnic Wear for Eid | LuxeMia"
-        description="Shop Eid outfits at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white for Eid celebrations. Free U.S. shipping at $150 and above."
+        description="Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms."
         canonical="https://luxemia.shop/collections/eid-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -71,7 +71,7 @@ const EidOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Eid Mubarak</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Eid Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Celebrate Eid in elegance with LuxeMia's curated collection of Indian ethnic wear for Eid festivities. From delicate chikankari salwar kameez and embroidered sharara sets to pastel lehengas and georgette anarkali suits, our Eid collection brings together the finest South Asian fashion traditions. Whether you prefer the classic white and ivory aesthetic or prefer jewel tones and pastels, shop Eid outfits with free US shipping to the United States.
+              Browse currently available products explicitly marked in the catalog for Eid, Ramadan, or chikankari. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to seven countries.
             </p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const EidOutfits = () => {
         <div className="bg-background border-b border-border/20 py-5">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Shop <strong>chikankari suits for Eid</strong>, <strong>sharara sets for Eid</strong>, <strong>Eid anarkali dresses</strong>, <strong>Pakistani suits for Eid</strong>, <strong>white lehengas for Eid</strong>, and <strong>pastel salwar kameez for Eid celebrations</strong>. Free U.S. shipping at $150 and above.
+              Products appear here only when their current catalog title, product type, or tags explicitly mention Eid, Ramadan, or chikankari. Review the exact listing before ordering.
             </p>
           </div>
         </div>
@@ -136,31 +136,29 @@ const EidOutfits = () => {
         {/* About section */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-            <h2 className="font-serif text-2xl mb-6 text-center">Eid Outfit Guide — What to Wear for Eid Celebrations</h2>
+            <h2 className="font-serif text-2xl mb-6 text-center">How to Choose an Eid Outfit</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Eid is celebrated twice a year — Eid Ul-Fitr (marking the end of Ramadan) and Eid Ul-Adha — and both are occasions for new clothes, family gatherings, and joyful celebrations. In South Asian Muslim culture, wearing new Indian ethnic wear for Eid is a deeply cherished tradition.</p>
-              <p>For Eid morning prayers, a <strong>modest and elegant salwar kameez or anarkali suit</strong> in white, cream, or pastel shades is the most appropriate choice. After prayers, many families change into more embellished celebration outfits for family visits and Eid lunch or dinner gatherings. <strong>Chikankari embroidery</strong> — the intricate shadow-work embroidery from Lucknow — is considered the quintessential Eid fabric, traditionally done on white or pastel muslin, cotton, or georgette.</p>
-              <p><strong>Sharara sets</strong> — wide-leg flared pants paired with embroidered kurtas and dupattas — have long been a signature Eid outfit in Pakistani and North Indian Muslim fashion. They offer a graceful, traditional silhouette that is both comfortable and elegant for all-day celebrations. <strong>Pastel lehengas</strong> in mint green, baby pink, lavender, and sky blue are equally popular for Eid evening gatherings.</p>
-              <p>For Eid Ul-Adha, which often involves outdoor activities, lighter and more practical fabrics like <strong>cotton, chanderi, or light georgette</strong> in simple embroidery are most comfortable. Gold and silver zari border work on pastel fabrics creates a beautifully festive look without excessive embellishment.</p>
+              <p>Use the guidance for your specific gathering, mosque, family, or community. Dress expectations vary, so ask the organizer when a detail is unclear.</p>
+              <p>Compare the current listings above by fabric, included pieces, work, size options, measurements, price, and availability. The collection name does not add tailoring, jewelry, or accessories that the exact listing does not state.</p>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">Eid Outfit by Setting — Prayers, Lunch, or Dinner?</h3>
-                <p>What you wear for Eid depends on the time of day and the setting. For <strong>Eid morning prayers</strong> at the mosque, a modest and elegant salwar kameez or anarkali suit in white, cream, or pastel shades is most appropriate — cover your head with a dupatta and avoid revealing silhouettes. For <strong>Eid lunch with family</strong>, change into a more embellished celebration outfit — a sharara set, pastel lehenga, or chikankari anarkali. For <strong>Eid dinner or evening parties</strong>, you can go more glamorous — heavier embroidery, richer colors (deep green, royal blue, wine), and statement jewelry.</p>
+                <h3 className="font-medium text-foreground mb-2">Check the Exact Listing</h3>
+                <p>Product images and listed options are authoritative. Contact LuxeMia before ordering if the supplied pieces, measurements, or timing are unclear.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">Eid Outfit Color Etiquette</h3>
-                <p><strong>Best colors for Eid:</strong> White (purity, traditional for Eid prayers), cream/ivory (elegance), pastel pink/mint/lavender (modern festive), mint green (associated with Islam), royal blue, deep green, wine, gold. <strong>Avoid:</strong> Black (some interpretations consider black inauspicious for Eid celebrations, though it is acceptable for evening parties), bright red (reserved for Hindu bridal wear — choose wine or maroon instead), pure black for morning prayers.</p>
+                <h3 className="font-medium text-foreground mb-2">Color and Dress Guidance</h3>
+                <p>Do not rely on a universal color or dress rule. Follow local guidance for the specific gathering or place of prayer.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
-                <h3 className="font-medium text-foreground mb-2">Eid Outfit Budget Guide</h3>
-                <p><strong>Eid morning prayers outfit:</strong> $120-$280 (simple salwar kameez or anarkali in cotton or chikankari). <strong>Eid lunch outfit:</strong> $180-$400 (sharara set or pastel lehenga). <strong>Eid dinner/party outfit:</strong> $200-$500 (embellished anarkali or designer suit). <strong>Men Eid outfit:</strong> $100-$300 (kurta pajama or pathani suit). At LuxeMia, we offer free U.S. shipping at $150 and above to the United States.</p>
+                <h3 className="font-medium text-foreground mb-2">Compare Current Prices</h3>
+                <p>Use the live price on each product page. Shipping is $12 below $150 and free at $150 and above for United States addresses.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. Orders ship to U.S. addresses only with tracking after dispatch. Shipping is $12 below $150 and free at $150 and above.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to seven countries with tracking after dispatch; destination-specific rates are shown at checkout.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

@@ -25,6 +25,7 @@ const footerLinks = {
     { name: 'Menswear', href: '/menswear' },
   ],
   collections: [
+    { name: 'Customizable Indian Outfits', href: '/collections/customizable-indian-outfits' },
     { name: 'Bridal Lehengas', href: '/lehengas?sub=bridal' },
     { name: 'Silk Sarees', href: '/collections/silk-sarees' },
     { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },

@@ -34,7 +34,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Do you ship Indo-Western outfits in the United States?',
-    answer: 'Yes. LuxeMia currently ships to United States addresses only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is emailed after dispatch.',
+    answer: 'Yes. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.',
   },
   {
     question: 'Which fabrics and embellishments are available?',
@@ -42,7 +42,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Can I return an Indo-Western outfit?',
-    answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+    answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
   },
 ];
 
@@ -89,7 +89,7 @@ const Indowestern = () => {
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Compare the live collection using the product cards below, then open a listing for its exact fabric, color, embellishment, included pieces, sizes, and availability. LuxeMia ships to U.S. addresses for $12 on orders below $150 and free at $150 and above.
+              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to U.S. addresses for $12 on orders below $150 and free at $150 and above.
             </p>
           </div>
         </div>

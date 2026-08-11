@@ -25,6 +25,7 @@ export const staticPages = [
   { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9', title: 'Kanchipuram Sarees' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9', title: 'Bridesmaid & Maid of Honor Outfits' },
   { loc: '/collections/bollywood-inspired-indian-outfits', changefreq: 'daily', priority: '0.9', title: 'Bollywood-Inspired Indian Outfits' },
+  { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9', title: 'Customizable Indian Outfits' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9', title: 'Salwar Kameez & Suits' },
   { loc: '/menswear', changefreq: 'daily', priority: '0.9', title: 'Menswear' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8', title: 'Indo-Western' },
@@ -35,6 +36,7 @@ export const staticPages = [
   { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Mehendi Ceremony Outfits' },
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9', title: 'Eid Outfits 2026' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9', title: 'Navratri Outfits — Chaniya Choli & Garba' },
+  { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9', title: 'Haldi Ceremony Outfits' },
   // Brand & editorial
   { loc: '/about', changefreq: 'monthly', priority: '0.6', title: 'About LuxeMia' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.7', title: 'Blog' },

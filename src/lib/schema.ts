@@ -13,7 +13,7 @@
 export const SITE_URL = 'https://luxemia.shop';
 export const BRAND_NAME = 'LuxeMia';
 export const LEGAL_BUSINESS_NAME = 'Glamour Indian Wear';
-export const SHIPPING_COUNTRIES = ['US'];
+export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 
 // ─── Price Handling ─────────────────────────────────────────────────────────
 
@@ -45,7 +45,7 @@ export function generateReturnPolicySchema() {
     name: 'LuxeMia Return & Refund Policy',
     applicableCountry: 'US',
     returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-    description: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+    description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
     url: 'https://luxemia.shop/returns',
   };
 }
@@ -168,7 +168,7 @@ export function generateOrganizationSchema() {
     legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
-    description: 'LuxeMia is an online Indian ethnic wear store serving U.S. shoppers with product details, sizing guidance and tracking after dispatch.',
+    description: 'LuxeMia is an online Indian ethnic wear store shipping to seven countries with product details, sizing guidance and tracking after dispatch.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',
@@ -179,7 +179,7 @@ export function generateOrganizationSchema() {
       telephone: '+1-215-341-9990',
       contactType: 'customer service',
       email: 'hello@luxemia.shop',
-      areaServed: ['US'],
+      areaServed: SHIPPING_COUNTRIES,
       availableLanguage: ['English'],
     },
     knowsAbout: [

@@ -13,7 +13,7 @@ import {
 
 const FREE_SHIPPING_THRESHOLD = 150;
 const FLAT_SHIPPING_RATE = 12;
-const SHIPPING_PROMISE = 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.';
+const SHIPPING_PROMISE = 'U.S. standard shipping is free at $150 and above and $12 below. International fixed rates are free at $300 and above; checkout shows available services.';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -252,7 +252,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     {SHIPPING_PROMISE}
                   </p>
                   <p className="text-xs text-foreground/50 text-center">
-                    Taxes calculated at checkout. US shipping only.
+                    Taxes and destination-specific shipping are calculated at checkout. Seven countries supported.
                   </p>
                   {unavailableItems.length > 0 && (
                     <p className="text-xs text-destructive text-center" role="alert">

@@ -59,14 +59,14 @@ interface SEOHeadProps {
   faqs?: FAQItem[];
   noIndex?: boolean;
   noIndexFollow?: boolean;
-  localBusiness?: Record<string, any>;
+  localBusiness?: Record<string, unknown>;
   /**
    * Additional JSON-LD schemas to inject (each rendered as its own
    * <script type="application/ld+json"> block). Use for page-specific schemas
    * that don't fit the localBusiness/product/breadcrumb/faq pattern, e.g.
    * OnlineStore, ItemList, etc.
    */
-  additionalSchemas?: Record<string, any>[];
+  additionalSchemas?: Record<string, unknown>[];
   hreflang?: HreflangAlternate[];
 }
 
@@ -79,8 +79,8 @@ const SOCIAL_LINKS = {
 };
 
 const SEOHead = ({
-  title = 'LuxeMia — Indian Ethnic Wear Online',
-  description = "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
+  title = 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
+  description = 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
   canonical,
   image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   type = 'website',
@@ -111,7 +111,8 @@ const SEOHead = ({
     .replace(/\/+$/, '') || '/';
   const canonicalUrl = `${siteUrl}${canonicalPath}`;
 
-  // Hreflang defaults: LuxeMia currently serves United States shoppers only.
+  // The current default locale remains en-US; x-default covers shoppers in
+  // the six additional English-language shipping destinations.
   const hreflangAlternates = hreflang || [
     { lang: 'en-US', href: canonicalUrl },
     { lang: 'x-default', href: canonicalUrl },
@@ -133,7 +134,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online for US delivery.`, 
+            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with shipping to seven countries.`,
         sku: product.sku || '',
         url: canonicalUrl,
         brand: product.brand,
@@ -285,4 +286,3 @@ const SEOHead = ({
 };
 
 export default SEOHead;
-export { SOCIAL_LINKS };

@@ -17,7 +17,7 @@ const NRIGeneral = () => (
       faqs: [
         {
           question: 'Where does LuxeMia ship?',
-          answer: 'LuxeMia currently ships to United States addresses only. Tracking is provided after dispatch.',
+          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Tracking is provided after dispatch.',
         },
         {
           question: 'When does shipping become free?',
@@ -33,7 +33,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'What if my item arrives damaged?',
-          answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
         },
       ],
       benefits: [

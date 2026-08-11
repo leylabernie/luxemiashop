@@ -18,6 +18,10 @@ import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
 import StickyAddToBag from '@/components/product/StickyAddToBag';
+import {
+  applyCustomizableProductDetails,
+  getCustomizableProduct,
+} from '@/lib/customizableProducts';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -112,10 +116,14 @@ const ProductDetail = () => {
   // Vercel setup or webhook configuration required.
   const product = useMemo(
     () => shopifyProduct
-      ? { ...shopifyProduct, title: sanitizeProductTitle(shopifyProduct.title) }
+      ? applyCustomizableProductDetails({
+          ...shopifyProduct,
+          title: sanitizeProductTitle(shopifyProduct.title),
+        })
       : shopifyProduct,
     [shopifyProduct],
   );
+  const customizableProduct = getCustomizableProduct(product?.handle);
   const isLoading = shopifyLoading;
   const error = shopifyError || (!shopifyLoading && !shopifyProduct ? 'Product not found' : null);
 
@@ -154,8 +162,12 @@ const ProductDetail = () => {
     return '/collections';
   };
 
-  const categoryUrl = getCategoryUrl(product?.productType);
-  const categoryName = product?.productType || 'Collections';
+  const categoryUrl = customizableProduct
+    ? '/collections/customizable-indian-outfits'
+    : getCategoryUrl(product?.productType);
+  const categoryName = customizableProduct
+    ? 'Customizable Indian Outfits'
+    : product?.productType || 'Collections';
   const productIsAvailable = product
     ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
     : false;
@@ -166,8 +178,10 @@ const ProductDetail = () => {
   // title or description also contains it.
   const isJewelryProduct = isJewelryProductType(product?.productType);
   const productText = `${product?.title || ''} ${product?.description || ''}`.toLowerCase();
-  const rawProductColor = (product as any)?.options?.find((o: any) => o.name?.toLowerCase() === 'color')?.values?.[0];
-  const rawProductMaterial = product?.options?.find((o: any) => o.name?.toLowerCase() === 'fabric' || o.name?.toLowerCase() === 'material')?.values?.[0];
+  const rawProductColor = product?.options?.find((option) => option.name.toLowerCase() === 'color')?.values?.[0];
+  const rawProductMaterial = product?.options?.find((option) =>
+    ['fabric', 'material'].includes(option.name.toLowerCase()),
+  )?.values?.[0];
   const productColor = rawProductColor && (!isJewelryProduct || productText.includes(rawProductColor.toLowerCase()))
     ? rawProductColor
     : undefined;
@@ -209,9 +223,11 @@ const ProductDetail = () => {
   // Product-specific FAQs are also rendered visibly below, so the structured
   // data and on-page content remain consistent.
   const productSizeValues = product?.options
-    ?.find((option: any) => ['size', 'bust size'].includes(option.name?.toLowerCase()))
+    ?.find((option) => ['size', 'bust size'].includes(option.name.toLowerCase()))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
-  const sizeAnswer = productSizeValues.length > 0
+  const sizeAnswer = customizableProduct
+    ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+    : productSizeValues.length > 0
     ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
     : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
 
@@ -225,11 +241,17 @@ const ProductDetail = () => {
     }]),
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: 'Delivery timing depends on the item and selected options. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above, and a flat $12 rate applies below $150.'
+      answer: customizableProduct
+        ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
+        : 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.'
     },
+    ...(customizableProduct ? [{
+      question: `Can I request another color for the ${product.title}?`,
+      answer: 'Yes. A custom color is available for this verified design. Contact LuxeMia with the product link and requested color so fabric availability can be confirmed before ordering. Other design changes are not promised unless LuxeMia confirms them in writing.',
+    }] : []),
     {
       question: `Can I return the ${product.title}?`,
-      answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.'
+      answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.'
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
@@ -265,10 +287,10 @@ const ProductDetail = () => {
             description: enrichedDescription || product.description || '',
             availability: productIsAvailable ? 'InStock' : 'OutOfStock',
             sku: product.id,
-            originalPrice: (product as any).compareAtPriceRange?.maxVariantPrice?.amount,
+            originalPrice: product.compareAtPriceRange?.maxVariantPrice?.amount,
             category: product.productType || 'Ethnic Wear',
             brand: (() => {
-              const v = ((product as any).vendor || '').trim();
+              const v = (product.vendor || '').trim();
               return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
             })(),
             color: productColor,
@@ -293,10 +315,10 @@ const ProductDetail = () => {
 
       <Header />
       
-      <main className="pt-[90px] lg:pt-[132px] pb-16">
+      <main id="main-content" className="pt-[90px] lg:pt-[132px] pb-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
             <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
             <ChevronRight className="h-4 w-4" />
             <Link to={categoryUrl} className="hover:text-foreground transition-colors">{categoryName}</Link>

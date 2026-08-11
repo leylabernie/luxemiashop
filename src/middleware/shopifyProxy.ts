@@ -13,6 +13,7 @@ export interface ShopifyProduct {
   id: string; title: string; description: string; handle: string;
   vendor?: string; productType?: string; tags?: string[];
   availableForSale?: boolean;
+  shipsWithinMetafield?: { value: string | null } | null;
   seo?: { title?: string | null; description?: string | null };
   priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
   compareAtPriceRange: { minVariantPrice: { amount: string; currencyCode: string } };
@@ -27,6 +28,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
   query GetProductByHandle($handle: String!) {
     product(handle: $handle) {
       id title description handle vendor productType tags availableForSale
+      shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
       seo { title description }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount currencyCode } }

@@ -196,9 +196,9 @@ const LEHENGAS: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.lehengas.alt,
   heroTitle: 'Lehengas',
-  heroSubtitle: 'Lehengas for weddings, receptions and celebrations. Review each product page for its stated fabric, included pieces, stitching status, sizing and availability.',
-  seoTitle: 'Bridal Lehengas Online USA | Red & Maroon | LuxeMia',
-  seoDescription: 'Shop bridal, wedding guest and festive lehengas online. Compare exact fabric, work, included pieces, sizing and availability. Free U.S. shipping at $150 and above.',
+  heroSubtitle: 'Bridal, wedding guest and festive lehengas for U.S. delivery. Use the Ready to Ship filter for listings explicitly tagged that way, then confirm fabric, included pieces, sizing and shipping timing on the product page.',
+  seoTitle: 'Bridal & Ready-to-Ship Lehengas USA | LuxeMia',
+  seoDescription: 'Shop bridal and wedding guest lehengas online in the USA. Use the Ready to Ship filter for eligible listings; compare fabric, included pieces, sizing and tracked U.S. shipping.',
   canonical: 'https://luxemia.shop/lehengas',
   ogImage: '/og/og-lehengas.jpg',
   breadcrumbs: [
@@ -210,7 +210,7 @@ const LEHENGAS: CategoryConfig = {
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       seoTitle: 'Bridal Lehengas Online USA | Red & Maroon Wedding Lehengas - LuxeMia',
-      seoDescription: 'Shop bridal lehengas online. Compare current colors, fabric, embroidery, included pieces, available sizing and stitching status. Free U.S. shipping at $150 and above.',
+      seoDescription: 'Shop bridal lehengas online in the USA. Use the Ready to Ship filter for eligible listings, then compare colors, fabric, included pieces, sizing and tracked U.S. shipping.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest'], {
@@ -294,6 +294,7 @@ const LEHENGAS: CategoryConfig = {
       tagPrefix: 'availability',
       defaultExpanded: false,
       options: [
+        { value: 'ready to ship', label: 'Ready to Ship' },
         { value: 'available online', label: 'Available Online' },
         { value: 'made to order', label: 'Made to Order' },
       ],
@@ -344,6 +345,19 @@ const LEHENGAS: CategoryConfig = {
         the <a href="/lehenga-for-bridesmaid">bridesmaid lehenga guide</a> and the
         <a href="/lehenga-for-mother-of-bride"> mother-of-the-bride lehenga guide</a>.
       </p>
+      <h3>Ready-to-Ship Bridal Lehengas in the USA</h3>
+      <p>
+        Use the Ready to Ship availability filter to view only listings explicitly tagged for that status.
+        Confirm the selected size, included pieces and product-specific shipping estimate before ordering,
+        especially when shopping for a fixed wedding date.
+      </p>
+      <h3>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h3>
+      <p>
+        Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are
+        comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a
+        sangeet or reception, open the exact product page to confirm the waist allowance, stitching status,
+        included pieces and dispatch timing.
+      </p>
       <h3>Sizing and Tailoring</h3>
       <p>
         Available sizes and any optional tailoring vary by product. Review the listing and
@@ -367,9 +381,9 @@ const SAREES: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.sarees.alt,
   heroTitle: 'Sarees',
-  heroSubtitle: 'Banarasi, silk and georgette sarees available online. Review each listing for its exact fabric, blouse information, dimensions and stitching status.',
-  seoTitle: 'Buy Banarasi & Silk Sarees Online USA | LuxeMia',
-  seoDescription: 'Shop silk, wedding and festive sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping at $150 and above.',
+  heroSubtitle: 'Shop Banarasi-style, silk, georgette, wedding and festive sarees online in the U.S. Review each listing for its exact fabric, blouse information, dimensions and stitching status.',
+  seoTitle: 'Buy Indian Wedding Sarees Online in the U.S. | LuxeMia',
+  seoDescription: 'Buy Indian wedding, silk and festive sarees online in the U.S. Compare each listing’s exact fabric, weave or work, blouse details, availability and tracked shipping.',
   canonical: 'https://luxemia.shop/sarees',
   ogImage: '/og/og-sarees.jpg',
   breadcrumbs: [
@@ -515,6 +529,12 @@ const SAREES: CategoryConfig = {
       <p>
         Browse sarees for weddings, receptions, festivals and other celebrations. Product pages state the
         supplied fabric, weave or embellishment details, blouse information, dimensions and current price.
+      </p>
+      <h3>Buy Indian Wedding Sarees Online in the U.S.</h3>
+      <p>
+        Compare wedding and festive sarees by their stated fabric, weave or work, blouse details and availability.
+        LuxeMia does not treat a style name as proof of fiber, weaving method or origin; use the exact product details
+        as the specification for each saree.
       </p>
       <h3>Compare Fabric and Weave Details</h3>
       <p>
@@ -847,6 +867,13 @@ const MENSWEAR: CategoryConfig = {
       <p>
         Available sizes and any optional tailoring vary by product. Review the listing and
         <a href="/size-guide"> size guide</a>, and contact LuxeMia before ordering if you need measurement help.
+      </p>
+      <h3>Custom Plus-Size Kurta Pajama and Nehru-Jacket Sets</h3>
+      <p>
+        Select active listings state plus-size custom stitching and include a kurta, pajama and Nehru jacket.
+        When comparing a men's plus-size kurta pajama with matching jacket for a wedding guest or cocktail
+        night, or a big-and-tall Nehru-jacket look, confirm the exact fabric, measurement process, set contents
+        and event timing on the product page before ordering.
       </p>
       <h3>United States Shipping</h3>
       <p>

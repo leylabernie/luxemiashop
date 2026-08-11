@@ -7,15 +7,15 @@ import SEOHead from '@/components/seo/SEOHead';
 const faqs = [
   {
     question: 'Does LuxeMia ship outside the United States?',
-    answer: 'No. LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
+    answer: 'Yes. LuxeMia currently ships to Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, in addition to the United States.',
   },
   {
     question: 'How much is US shipping?',
     answer: 'Free US shipping applies at $150 and above. Orders below $150 ship for a flat $12 rate.',
   },
   {
-    question: 'How fast will my order ship?',
-    answer: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.',
+    question: 'How much is international shipping?',
+    answer: 'Standard shipping is $14.99 below $300 and free at $300 and above. Express shipping is $25 below $300 and free at $300 and above. Carrier-calculated services may also appear at checkout.',
   },
 ];
 
@@ -23,12 +23,12 @@ const ShippingCustoms = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="US Shipping & Taxes | LuxeMia"
-        description="LuxeMia currently ships to United States addresses only. Free U.S. shipping at $150 and above, $12 flat below that, and online orders ship with tracking after dispatch."
+        title="Shipping, Customs & Taxes | LuxeMia"
+        description="LuxeMia shipping, customs and tax guidance for the U.S., Canada, UK, Australia, New Zealand, South Africa and Mauritius."
         canonical="https://luxemia.shop/pages/shipping-customs"
         breadcrumbs={[
           { name: 'Home', url: '/' },
-          { name: 'US Shipping & Taxes', url: '/pages/shipping-customs' },
+          { name: 'Shipping, Customs & Taxes', url: '/pages/shipping-customs' },
         ]}
         faqs={faqs}
       />
@@ -45,12 +45,12 @@ const ShippingCustoms = () => {
               <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
                 <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
                 <span>/</span>
-                <span className="text-foreground">US Shipping &amp; Taxes</span>
+                <span className="text-foreground">Shipping, Customs &amp; Taxes</span>
               </nav>
-              <h1 className="font-serif text-4xl md:text-5xl mb-4">US Shipping &amp; Taxes</h1>
+              <h1 className="font-serif text-4xl md:text-5xl mb-4">Shipping, Customs &amp; Taxes</h1>
               <p className="text-lg text-muted-foreground">
-                LuxeMia currently ships to United States addresses only. Free U.S. shipping at $150 and above.
-                $12 flat below that. Tracking provided after dispatch.
+                LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa,
+                and Mauritius. Rates and available services are confirmed at checkout.
               </p>
             </motion.div>
           </div>
@@ -66,16 +66,21 @@ const ShippingCustoms = () => {
             <div>
               <h2 className="font-serif text-2xl mb-4">Shipping promise</h2>
               <p className="text-base text-foreground/90 leading-relaxed">
-                In-stock online items receive tracking after dispatch. Tracking is emailed after dispatch,
-                and carrier transit time starts once the package is handed over.
+                U.S. standard shipping is $12 below $150 and free at $150 and above. International standard shipping is
+                $14.99 below $300 and free at $300 and above; express shipping is $25 below $300 and free at $300 and above.
+                Carrier-calculated services may also appear. Checkout controls the final available service and charge.
               </p>
             </div>
 
             <div>
               <h2 className="font-serif text-2xl mb-4">Taxes</h2>
               <p className="text-base text-foreground/90 leading-relaxed">
-                Taxes, if applicable, are calculated at checkout. LuxeMia does not currently accept orders for delivery
-                addresses outside the United States.
+                Taxes collected by LuxeMia, if applicable, are calculated at checkout. For international orders, duties,
+                import taxes, brokerage, or carrier processing fees may still be charged by the destination country or carrier
+                unless checkout explicitly states otherwise.
+              </p>
+              <p className="mt-3 text-base text-foreground/90 leading-relaxed">
+                Do not assume duty-paid delivery from the shipping rate alone. Customs processing can also affect delivery timing.
               </p>
             </div>
 

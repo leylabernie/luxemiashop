@@ -21,7 +21,7 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const EXPECTED_SITEMAP_URL_COUNT = 787;
+const EXPECTED_SITEMAP_URL_COUNT = 764;
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
@@ -70,6 +70,7 @@ const staticPages = [
   { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bollywood-inspired-indian-outfits', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/menswear', changefreq: 'daily', priority: '0.9' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8' },
@@ -103,32 +104,7 @@ const staticPages = [
   { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
-  // Programmatic SEO combo pages — 25 long-tail landing pages
-  { loc: '/maroon-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/emerald-green-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/royal-blue-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/pink-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/purple-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/wine-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/navy-blue-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/maroon-lehenga-for-reception', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/black-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/pastel-lehenga-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/anarkali-suit-for-mother-of-bride', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/lehenga-for-bridesmaid', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/anarkali-suit-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/saree-for-mother-of-bride', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/lehenga-for-mother-of-bride', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/sherwani-for-groom', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/kurta-for-groom-brother', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/sharara-for-bride-sister', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/georgette-saree-for-reception', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/banarasi-silk-saree-for-wedding', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/kanjivaram-saree-for-wedding', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/chiffon-saree-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/silk-saree-for-festival', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/organza-saree-for-engagement', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/georgette-saree-for-wedding-guest', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
 ];
 
 

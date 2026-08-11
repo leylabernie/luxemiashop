@@ -20,9 +20,48 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
+const OCCASION_SIGNALS = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/occasionSignals.json'), 'utf8')
+);
+const CUSTOMIZABLE_PRODUCTS = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/customizableProducts.json'), 'utf8')
+);
+const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
+  CUSTOMIZABLE_PRODUCTS.map((product) => [product.handle, product])
+);
+const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
+
+function getCustomProductDescription(title) {
+  return `${title}. Made to order from measurements confirmed with LuxeMia, with a custom color available for this design. ${CUSTOM_PRODUCT_TIMING} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
+}
+
+function applyCustomizableProductDetails(product) {
+  const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product?.handle);
+  if (!matched) return product;
+
+  const description = getCustomProductDescription(matched.title);
+
+  return {
+    ...product,
+    title: matched.title,
+    description,
+    tags: [
+      ...(product.tags || []).filter((tag) => !/ready[- ]?to[- ]?ship|ships? within|worldwide|canada|australia|dhl|ddp/i.test(String(tag))),
+      'customizable',
+      'made to order',
+      'custom color',
+      'custom measurements',
+    ],
+    shipsWithinMetafield: null,
+    seo: {
+      title: `${matched.title} | LuxeMia`,
+      description,
+    },
+  };
+}
 
 // ─── TypeScript Data Loader ───────────────────────────────────────────────
-// Bundles a .ts data module (blogPosts.ts or comboPages.ts)
+// Bundles a TypeScript data module
 // to a temporary ESM file with esbuild and imports it, so this build script
 // (which itself is loaded as JS) can read the SAME source-of-truth arrays
 // that the React app renders from, instead of a hand-maintained duplicate
@@ -39,8 +78,7 @@ async function loadTsModule(relativeSrcPath) {
     platform: 'node',
     write: false,
     logLevel: 'silent',
-    // Type-only imports (e.g. `@/components/combo/ComboPage`) are erased by
-    // esbuild's TS transform, so they never need to resolve at bundle time.
+    // Type-only imports are erased by esbuild's TS transform.
   });
   const code = result.outputFiles[0].text;
   const tmpFile = path.join(
@@ -63,17 +101,17 @@ function normalizeWhitespace(value) {
 function sanitizeProductCopy(value) {
   return (value || '')
     .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
     .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
-    .replace(/free shipping on orders over \$350/gi, 'free U.S. shipping at $150 and above');
+    .replace(/USA, Canada, and Australia/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
+    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
 function sanitizeProductTitle(value) {
@@ -101,21 +139,61 @@ function getListedProductAttributes(product) {
     ?.values?.[0];
   const rawColor = optionValue('color');
   const rawMaterial = optionValue('fabric', 'material');
+  const prefixedTagValue = (...prefixes) => {
+    const matchedTag = (product?.tags || []).find((tag) => {
+      const normalizedTag = String(tag).toLowerCase();
+      return prefixes.some((prefix) => normalizedTag.startsWith(`${prefix}:`));
+    });
+    return matchedTag ? String(matchedTag).slice(String(matchedTag).indexOf(':') + 1).trim() : undefined;
+  };
+  const taggedColor = prefixedTagValue('color');
+  const taggedMaterial = prefixedTagValue('fabric', 'material');
+  const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
   const sizeValues = product?.options
     ?.find(option => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values
     ?.filter(value => value && value.toLowerCase() !== 'default title') || [];
+  const includedPiecePrefixes = [
+    'included:',
+    'included pieces:',
+    'pieces:',
+    'set includes:',
+    'package includes:',
+  ];
+  const includedPiecesTag = (product?.tags || []).find(tag =>
+    includedPiecePrefixes.some(prefix => String(tag).toLowerCase().startsWith(prefix))
+  );
+  const includedPiecesPrefix = includedPiecesTag
+    ? includedPiecePrefixes.find(prefix => String(includedPiecesTag).toLowerCase().startsWith(prefix))
+    : null;
+  const includedPieces = includedPiecesTag && includedPiecesPrefix
+    ? String(includedPiecesTag).slice(includedPiecesPrefix.length).trim()
+    : undefined;
+  const rawShipsWithin = product?.shipsWithinMetafield?.value;
+  const shipsWithinDays = rawShipsWithin ? Number.parseInt(String(rawShipsWithin), 10) : null;
 
   return {
     jewelry,
-    color: rawColor && (!jewelry || listingText.includes(rawColor.toLowerCase())) ? rawColor : undefined,
-    material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
+    color: (rawColor || taggedColor) && (!jewelry || listingText.includes((rawColor || taggedColor).toLowerCase()))
+      ? (rawColor || taggedColor)
+      : undefined,
+    material: (rawMaterial || taggedMaterial) && (!jewelry || listingText.includes((rawMaterial || taggedMaterial).toLowerCase()))
+      ? (rawMaterial || taggedMaterial)
+      : undefined,
+    work: !jewelry ? taggedWork : undefined,
     sizes: jewelry ? [] : sizeValues,
+    includedPieces: includedPieces || undefined,
+    shipsWithinDays: Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? shipsWithinDays : null,
   };
 }
 
 function buildVerifiedProductCopy(product) {
   if (!product) return '';
+
+  if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
+    const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product.handle);
+    return `${getCustomProductDescription(matched.title)} Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.`;
+  }
 
   const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
   const attributes = getListedProductAttributes(product);
@@ -124,13 +202,18 @@ function buildVerifiedProductCopy(product) {
   if (product.productType) parts.push(`Category: ${product.productType}.`);
   if (attributes.color) parts.push(`Color: ${attributes.color}.`);
   if (attributes.material) parts.push(`Material: ${attributes.material}.`);
+  if (attributes.work) parts.push(`Work: ${attributes.work}.`);
+  if (attributes.includedPieces) parts.push(`Included pieces: ${attributes.includedPieces}.`);
   if (attributes.sizes.length > 0) {
     parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
+  }
+  if (attributes.shipsWithinDays) {
+    parts.push(`Catalog shipping estimate: ${attributes.shipsWithinDays} business day${attributes.shipsWithinDays === 1 ? '' : 's'} before carrier transit.`);
   }
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided after dispatch.'
+    'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.'
   );
 
   return normalizeWhitespace(parts.join(' '));
@@ -336,7 +419,7 @@ async function fetchAllShopifyProducts() {
       if (!data) break;
       for (const edge of data.edges || []) {
         const p = edge.node;
-        if (p?.handle) map.set(p.handle, p);
+        if (p?.handle) map.set(p.handle, applyCustomizableProductDetails(p));
       }
       if (!data.pageInfo?.hasNextPage) break;
       cursor = data.pageInfo.endCursor;
@@ -418,7 +501,42 @@ function getDisplayCategory(productType) {
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function matchesOccasionProduct(product, occasion) {
+  const signals = OCCASION_SIGNALS[occasion];
+  if (!signals || product.availableForSale === false) return false;
+
+  const searchableValues = [
+    product.title || '',
+    product.productType || '',
+    ...(product.tags || []),
+  ].map((value) => String(value).toLowerCase());
+
+  return signals.some((signal) => {
+    const pattern = new RegExp(`\\b${escapeRegex(String(signal).toLowerCase())}\\b`, 'i');
+    return searchableValues.some((value) => pattern.test(value));
+  });
+}
+
 function filterProductsForCategory(allProducts, category, newestFirst = false) {
+  if (category === 'customizable') {
+    return allProducts
+      .filter((product) => product.availableForSale !== false)
+      .filter((product) => CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle))
+      .slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
+  if (category.startsWith('occasion:')) {
+    const occasion = category.slice('occasion:'.length);
+    return allProducts
+      .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
+      .filter((product) => matchesOccasionProduct(product, occasion))
+      .slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
   if (category.startsWith('collection:')) {
     const handle = category.slice('collection:'.length);
     const tagsFor = (product) => new Set((product.tags ?? []).map((tag) => tag.toLowerCase().trim()));
@@ -694,7 +812,7 @@ function generateItemListJsonLd(products, category, routePath) {
             '@type': 'MerchantReturnPolicy',
             applicableCountry: 'US',
             returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-            description: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+            description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
           },
         },
       },
@@ -720,7 +838,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'Where does LuxeMia ship?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below $150.',
+        text: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.',
       },
     },
     {
@@ -744,7 +862,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'What is LuxeMia’s return policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+        text: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
       },
     },
     {
@@ -783,15 +901,16 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
 const routes = [
   {
     path: '/',
-    title: 'LuxeMia — Indian Ethnic Wear Online',
-    description: "Indian sarees, lehengas, suits and menswear available online with tracked U.S. shipping. For weddings and festivals that are sooner than you'd like.",
-    h1: 'Indian Ethnic Wear Online',
+    title: 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
+    description: 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
+    h1: 'Premium Indian Ethnic Wear with Tracked U.S. Shipping',
     content: `
-      <p>Available online with tracked U.S. shipping. For the wedding that's sooner than you'd like.</p>
+      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry for U.S. delivery. Browse Indian wedding guest outfits with tracked shipping across the United States.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
         <ul>
+          <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
           <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
@@ -807,7 +926,7 @@ const routes = [
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
-      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.</p>
+      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking details are emailed when the shipping label is created for dispatch.</p>
     `,
   },
   {
@@ -868,11 +987,15 @@ const routes = [
   {
     path: '/lehengas',
     category: 'lehengas',
-    title: 'Buy Bridal Lehengas Online | Wedding & Festive Lehenga Choli — LuxeMia',
-    description: 'Shop bridal, wedding guest, reception and festive lehengas online. Compare exact fabric, work, included pieces, sizing and availability. Free U.S. shipping at $150 and above.',
-    h1: 'Lehengas & Bridal Lehenga Collection',
+    title: 'Bridal & Ready-to-Ship Lehengas USA | LuxeMia',
+    description: 'Shop bridal and wedding guest lehengas online in the USA. Use the Ready to Ship filter for eligible listings; compare fabric, included pieces, sizing and tracked U.S. shipping.',
+    h1: 'Bridal, Wedding Guest & Ready-to-Ship Lehengas in the USA',
     content: `
-      <p>Discover bridal, wedding guest, reception and festive lehengas. Review each product page for the exact fabric, work, included pieces, stitching status, sizing and availability.</p>
+      <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter only for listings explicitly tagged that way, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
+      <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
+      <p>The Ready to Ship availability filter requires an explicit catalog tag and an available variant. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
+      <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
+      <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
       <h2>Shop Lehengas by Occasion</h2>
       <ul>
         <li><a href="/lehengas?sub=bridal">Bridal Lehengas</a> — Heavily embroidered lehenga choli for your wedding day</li>
@@ -924,11 +1047,11 @@ const routes = [
   {
     path: '/sarees',
     category: 'sarees',
-    title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: 'Shop silk, wedding and festive sarees online. Compare exact fabric, weave or work, blouse details and availability. Free U.S. shipping at $150 and above.',
-    h1: 'Sarees — Silk, Banarasi & Wedding Collection',
+    title: 'Buy Indian Wedding Sarees Online in the U.S. | LuxeMia',
+    description: 'Buy Indian wedding, silk and festive sarees online in the U.S. Compare each listing’s exact fabric, weave or work, blouse details, availability and tracked shipping.',
+    h1: 'Buy Indian Wedding Sarees Online in the U.S.',
     content: `
-      <p>Explore sarees for weddings, festivals and special occasions. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability.</p>
+      <p>Explore wedding, silk and festive sarees for U.S. delivery. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
       <h2>Shop Sarees by Occasion</h2>
       <ul>
         <li><a href="/sarees?sub=bridal">Bridal Sarees</a> — Heavily embellished sarees for the bride</li>
@@ -1049,6 +1172,8 @@ const routes = [
     h1: 'Indian Menswear — Sherwanis & Kurta Collection',
     content: `
       <p>Discover sherwanis, kurta sets and Indo-Western menswear. Review each product page for the exact fabric, work, included pieces, sizes, tailoring options and current availability.</p>
+      <h2>Custom Plus-Size Kurta Pajama and Nehru-Jacket Sets</h2>
+      <p>Select active listings state plus-size custom stitching and include a kurta, pajama and Nehru jacket. When comparing a men's plus-size kurta pajama with matching jacket for a wedding guest or cocktail night, or a big-and-tall Nehru-jacket look, confirm the exact fabric, measurement process, set contents and event timing on the product page before ordering.</p>
       <h2>Shop Menswear by Style</h2>
       <ul>
         <li><a href="/menswear?sub=sherwani">Sherwanis</a> — Regal wedding sherwanis for the groom</li>
@@ -1157,6 +1282,26 @@ const routes = [
     `,
   },
   {
+    path: '/collections/customizable-indian-outfits',
+    category: 'customizable',
+    title: 'Customizable Indian Outfits | Custom Color & Measurements | LuxeMia',
+    description: 'Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering.',
+    h1: 'Customizable Indian Outfits',
+    content: `
+      <p>These selected lehengas, sarees, kurta sets, and wedding outfits are verified for a custom color and made-to-order construction from measurements confirmed with LuxeMia.</p>
+      <h2>How does a LuxeMia custom order work?</h2>
+      <ol>
+        <li>Send the exact product link, requested color, event date, and delivery country.</li>
+        <li>LuxeMia confirms fabric availability, timing, and the measurements required for that design.</li>
+        <li>Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after all required details and the delivery address are known.</li>
+      </ol>
+      <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
+      <h2>Current shipping availability</h2>
+      <p>Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout. Duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.</p>
+      <p><a href="/contact">Contact LuxeMia</a> | <a href="/sizing-measurements-guide">Measurement guide</a> | <a href="/returns">Returns policy</a></p>
+    `,
+  },
+  {
     path: '/products',
     title: 'All Products | Shop Indian Ethnic Wear Online | LuxeMia',
     description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free U.S. shipping at $150 and above.',
@@ -1165,7 +1310,7 @@ const routes = [
       <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free US shipping at $150 and above.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Pieces ship with tracking to the United States. Free US shipping applies to orders of $150 and above.</p>
+      <p>Pieces ship with tracking to seven supported countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout.</p>
     `,
   },
   {
@@ -1247,35 +1392,35 @@ const routes = [
     schemas: [FAQ_PAGE_SCHEMA],
     content: `<p>Find answers to common questions about LuxeMia orders, shipping, final-sale policy, sizing, product details and payment.</p>
       <h2>Where does LuxeMia ship?</h2>
-      <p>LuxeMia currently ships to United States addresses only. Free US shipping applies at $150 and above, and a flat $12 rate applies below $150.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.</p>
       <h2>How long does LuxeMia shipping take?</h2>
       <p>In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.</p>
       <h2>How should I choose a LuxeMia size?</h2>
       <p>Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.</p>
       <h2>What is LuxeMia’s return policy?</h2>
-      <p>All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+      <p>Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
       <h2>Can I cancel a LuxeMia order?</h2>
       <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
 `,
   },
   {
     path: '/shipping',
-    title: 'Shipping Information — the United States | LuxeMia',
-    description: 'Free U.S. shipping at $150 and above. $12 flat below that. In-stock Indian ethnic wear tracking provided after dispatch.',
-    h1: 'Shipping Information',
-    content: '<p>LuxeMia ships to United States addresses with tracking provided after dispatch. Shipping costs $12 below $150 and is free at $150 and above. Contact LuxeMia before ordering if your event date is time-sensitive.</p>',
+    title: 'Shipping Policy — U.S. & International Delivery | LuxeMia',
+    description: 'LuxeMia ships to the U.S., Canada, UK, Australia, New Zealand, South Africa and Mauritius. Review current rates, timing, tracking and customs guidance.',
+    h1: 'Shipping Policy',
+    content: '<h2>Shipping destinations</h2><p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p><h2>Rates</h2><p>U.S. standard shipping is $12 below $150 and free at $150 and above. International standard shipping is $14.99 below $300 and free at $300 and above; express shipping is $25 below $300 and free at $300 and above. Carrier-calculated services may also appear at checkout.</p><h2>Timing</h2><p>Standard delivery is generally estimated at 4–30 business days, including handling and transit. Product, tailoring, destination, customs, and carrier conditions can change the estimate.</p>',
   },
   {
     path: '/pages/shipping-customs',
-    title: 'US Shipping & Taxes | LuxeMia',
-    description: 'Learn how LuxeMia US shipping and checkout taxes work for Indian ethnic wear online.',
-    h1: 'US Shipping & Taxes',
+    title: 'Shipping, Customs & Taxes | LuxeMia',
+    description: 'Shipping, customs and tax guidance for LuxeMia customers in seven supported countries.',
+    h1: 'Shipping, Customs & Taxes',
     content: `
-      <p>LuxeMia currently ships orders from supplier fulfillment in India to addresses in the United States only.</p>
-      <h2>How much is U.S. shipping?</h2>
-      <p>Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch.</p>
-      <h2>How are taxes handled?</h2>
-      <p>Taxes, when applicable, are calculated during checkout. Review the checkout total before placing the order.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p>
+      <h2>How much is shipping?</h2>
+      <p>U.S. standard shipping is free at $150 and above and costs $12 below that. International standard shipping is $14.99 below $300 and free at $300 and above; express shipping is $25 below $300 and free at $300 and above. Checkout controls the final available service and charge.</p>
+      <h2>How are customs and taxes handled?</h2>
+      <p>Taxes collected by LuxeMia, if applicable, are calculated during checkout. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.</p>
       <h2>Questions?</h2>
       <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a shipping or checkout detail is unclear, or read the <a href="/shipping">Shipping Policy</a>.</p>
     `,
@@ -1283,9 +1428,9 @@ const routes = [
   {
     path: '/returns',
     title: 'Returns, Refunds & Cancellations | LuxeMia',
-    description: 'All LuxeMia sales are final. Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with the required photos and continuous unboxing video.',
+    description: 'LuxeMia final-sale and covered-order-issue policy, subject to mandatory consumer rights under applicable law.',
     h1: 'Returns, Refunds & Cancellations',
-    content: '<p>All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>',
+    content: '<p>Sales are final to the extent permitted by applicable law. Nothing in this policy limits mandatory consumer rights or remedies that cannot legally be excluded. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>',
   },
   {
     path: '/contact',
@@ -1343,7 +1488,7 @@ const routes = [
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>
       <h2>Fusion Style</h2>
       <p>Our Indo-Western collection blends the elegance of Indian craftsmanship with contemporary global fashion. Think asymmetrical hemlines, cape-style dupattas, dhoti pants paired with crop tops, and jacket-style anarkalis.</p>
-      <p>Perfect for sangeet nights, cocktail parties, and modern wedding celebrations where you want to stand out with a unique fusion look. Free US shipping at $150 and above to the United States.</p>
+      <p>Compare Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. Free U.S. shipping applies at $150 and above.</p>
     `,
   },
   {
@@ -1374,121 +1519,116 @@ const routes = [
 
   {
     path: '/collections/diwali-outfits',
-    title: 'Diwali Outfits for Women 2026 — Indian Ethnic Wear for Diwali | LuxeMia',
-    description: 'Shop Diwali outfits for women at LuxeMia. Lehengas, anarkali suits & sarees in gold, red & festive colors. Free U.S. shipping at $150 and above.',
-    h1: 'Diwali Outfits 2026',
+    category: 'occasion:diwali',
+    title: 'Diwali Outfits — Current Festive Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for Diwali or festive occasions. Review exact product details and U.S. shipping terms.',
+    h1: 'Diwali Outfits',
     content: `
-      <p>Celebrate the festival of lights in style with LuxeMia's festive Indian ethnic wear. From gold-embroidered lehengas and embellished anarkali suits to silk sarees and festive salwar kameez, our Diwali collection captures the warmth, colour, and tradition of this cherished celebration.</p>
-      <h2>What to Wear for Diwali</h2>
-      <p>Diwali calls for your most festive, vibrant ethnic wear. For the main Diwali day and Lakshmi Puja, traditional silk sarees in red, gold, or green are considered auspicious. For Diwali parties and evening celebrations, a heavily embellished lehenga with mirror work, zari embroidery, or sequin detailing photographs beautifully against the backdrop of diyas and fairy lights.</p>
-      <h2>Diwali Outfit Colors</h2>
-      <p>Gold is the quintessential Diwali color — representing prosperity and the blessing of Goddess Lakshmi. Red, deep green, royal purple, burnt orange, and navy blue are also widely worn. Fabrics with gold zari work, sequin embellishments, or mirror details catch the Diwali diyas beautifully.</p>
-      <h2>Shop Diwali Outfits</h2>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Diwali, festive, or festival.</p>
+      <h2>How to Choose</h2>
+      <p>Use the guidance for your specific gathering, family, or community because customs and dress expectations vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
+      <h2>Browse Related Categories</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Embellished lehengas perfect for Diwali</li>
-        <li><a href="/sarees">Silk Sarees</a> — Banarasi and silk sarees for Diwali puja</li>
-        <li><a href="/suits">Anarkali Suits</a> — Festive anarkali suits for Diwali celebrations</li>
-        <li><a href="/indowestern">Indo-Western</a> — Modern Diwali party outfits</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/sarees">Sarees</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/indowestern">Indo-Western</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/wedding-guest-outfits',
+    category: 'occasion:wedding-guest',
     title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Shop Indian wedding guest outfits at LuxeMia. Sarees, anarkali suits, lehengas & salwar kameez. Free U.S. shipping at $150 and above.',
+    description: 'Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms.',
     h1: 'Indian Wedding Guest Outfits',
     content: `
-      <p>Dress to impress at every Indian wedding ceremony — from the colourful mehendi and vibrant sangeet to the elegant wedding day and glamorous reception. LuxeMia's wedding guest collection features silk sarees, embroidered anarkali suits, festive lehengas, and salwar kameez sets in celebration-worthy fabrics and colours.</p>
-      <h2>What to Wear to Each Indian Wedding Ceremony</h2>
-      <p>The mehendi is a daytime ceremony calling for bright, cheerful outfits in yellow, lime green, orange, or floral prints. The sangeet is the most festive ceremony — wear your most glamorous embellished lehengas or sequin anarkalis. The main wedding ceremony is the most formal — avoid red (the bridal colour) and white. The reception is the most flexible — semi-formal to formal ethnic or indo-western outfits are appropriate.</p>
-      <h2>Shop by Ceremony</h2>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception.</p>
+      <h2>How to Choose</h2>
+      <p>Use the invitation and host guidance for dress code, color, and formality because wedding customs vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
+      <h2>Browse Related Categories</h2>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a> — Wedding guest lehengas for the main ceremony</li>
-        <li><a href="/sarees">Silk Sarees</a> — Wedding guest sarees for formal ceremonies</li>
-        <li><a href="/suits">Anarkali Suits</a> — Versatile suits for multiple wedding ceremonies</li>
-        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Bright and festive mehendi ceremony wear</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/sarees">Sarees</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/mehendi-outfits',
-    title: 'Mehendi Ceremony Outfits — Yellow, Green & Festive Indian Ethnic Wear | LuxeMia',
-    description: 'Shop mehendi ceremony outfits at LuxeMia. Yellow & green lehengas, anarkali suits & salwar kameez. Free U.S. shipping at $150 and above.',
+    category: 'occasion:mehendi',
+    title: 'Mehendi Ceremony Outfits — Current Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for mehendi or mehndi. Review exact product details and U.S. shipping terms.',
     h1: 'Mehendi Ceremony Outfits',
     content: `
-      <p>Celebrate the joyful mehendi ceremony in vibrant, festive Indian ethnic wear. Our mehendi collection features bright yellow and green lehengas, floral salwar kameez sets, embroidered anarkali suits, and light georgette sarees — all in the cheerful colours traditionally associated with henna celebrations.</p>
-      <h2>Mehendi Ceremony Colours</h2>
-      <p>Yellow and green are the signature colours of mehendi ceremonies in most Indian cultures — yellow representing turmeric (haldi) and new beginnings, green representing the mehendi plant itself. Mustard, saffron orange, lime green, coral, and floral prints are all popular choices for mehendi guests.</p>
-      <h2>Fabric Guide for Mehendi</h2>
-      <p>Since mehendi ceremonies are often held outdoors, light breathable fabrics like georgette, chiffon, cotton, crepe, and rayon are ideal. Look for light embroidery, gota patti work, mirror detailing, and block print rather than heavy zari for a mehendi-appropriate outfit.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention mehendi or mehndi.</p>
+      <h2>How to Choose</h2>
+      <p>Use the invitation and host guidance for dress code, color, and formality because event formats vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Yellow Lehengas</a> — Traditional bridal mehendi lehengas</li>
-        <li><a href="/suits">Floral Anarkali Suits</a> — Light anarkali suits for mehendi</li>
-        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — All wedding ceremony outfits</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/haldi-outfits',
-    title: 'Haldi Ceremony Outfits — Yellow Lehengas & Suits | LuxeMia',
-    description: 'Shop haldi ceremony outfits at LuxeMia. Yellow, gold & mustard lehengas, anarkali suits & salwar kameez. Free U.S. shipping at $150 and above.',
+    category: 'occasion:haldi',
+    title: 'Haldi Ceremony Outfits — Current Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms.',
     h1: 'Haldi Ceremony Outfits',
     content: `
-      <p>Celebrate the haldi ceremony in bright, cheerful Indian ethnic wear. LuxeMia's haldi collection features yellow and gold lehengas, mustard salwar kameez sets, floral anarkali suits, and lightweight georgette and chiffon sarees — all in the auspicious colours traditionally worn for this joyful pre-wedding ritual.</p>
-      <h2>What Color to Wear for Haldi</h2>
-      <p>Yellow is the traditional and most popular color for haldi ceremonies, symbolising turmeric, auspiciousness, and new beginnings. The bride typically wears yellow, and guests are encouraged to wear yellow, gold, mustard, or pastel tones. Modern haldi ceremonies also welcome peach, coral, mint green, and pastel pink. Avoid white, black, and red — those are reserved for mourning, and the wedding day itself.</p>
-      <h2>Fabric Guide for Haldi</h2>
-      <p>Since the haldi paste can stain fabric, lighter, more affordable materials like georgette, chiffon, cotton, and crepe are popular choices, along with lighter embroidery rather than heavy zardozi or stonework. Comfortable footwear like mojari flats or kolhapuri sandals complete a practical haldi look.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention haldi or turmeric.</p>
+      <h2>How to Choose</h2>
+      <p>Use the invitation and host guidance for dress code, color, and formality because event formats vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Yellow Lehengas</a> — Bridal and guest haldi lehengas</li>
-        <li><a href="/suits">Anarkali Suits</a> — Yellow and mustard anarkali suits for haldi</li>
-        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a> — Coordinating outfits for the next ceremony</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
     path: '/collections/eid-outfits',
-    title: 'Eid Outfits 2026 — Indian Ethnic Wear for Eid | LuxeMia',
-    description: 'Shop Eid outfits 2026 at LuxeMia. Chikankari suits, sharara sets, anarkali & lehengas in pastel & white. Free U.S. shipping at $150 and above.',
-    h1: 'Eid Outfits 2026',
+    category: 'occasion:eid',
+    title: 'Eid Outfits — Current Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms.',
+    h1: 'Eid Outfits',
     content: `
-      <p>Celebrate Eid in elegance with LuxeMia's curated collection of Indian ethnic wear for Eid festivities. From delicate chikankari salwar kameez and embroidered sharara sets to pastel lehengas and georgette anarkali suits, our Eid collection brings together the finest South Asian fashion traditions.</p>
-      <h2>What to Wear for Eid</h2>
-      <p>Eid is celebrated twice a year — Eid Ul-Fitr (marking the end of Ramadan) and Eid Ul-Adha. For Eid morning prayers, a modest and elegant salwar kameez or anarkali suit in white, cream, or pastel shades is most appropriate. For afternoon and evening celebrations, more embellished outfits are worn. Chikankari embroidery — the intricate shadow-work embroidery from Lucknow — is considered the quintessential Eid fabric.</p>
-      <h2>Eid Outfit Colors</h2>
-      <p>White, pastels, and light shades are traditionally associated with Eid as symbols of purity and new beginnings. Ivory, cream, baby pink, mint green, sky blue, lilac, and peach are classic Eid outfit colours. Gold and silver embellishments on any colour are considered festive and celebratory.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Eid, Ramadan, or chikankari.</p>
+      <h2>How to Choose</h2>
+      <p>Use the guidance for your specific gathering, mosque, family, or community because dress expectations vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/suits">Chikankari Salwar Kameez</a> — Traditional Eid salwar kameez</li>
-        <li><a href="/lehengas">Pastel Lehengas</a> — Embroidered lehengas for Eid</li>
-        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> — More festive occasion wear</li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
-      <p>Free U.S. shipping at $150 and above. Order 3-4 weeks before Eid for timely delivery.</p>
+      <p>U.S. shipping is $12 below $150 and free at $150 and above. Confirm timing before ordering for a fixed date.</p>
     `,
   },
   {
     path: '/collections/navratri-outfits',
-    title: 'Navratri Outfits 2026 — Chaniya Choli & Garba Dress Collection | LuxeMia',
-    description: 'Shop Navratri outfits 2026 at LuxeMia. Chaniya choli, garba lehengas & festive ethnic wear in all nine Navratri colours. Free U.S. shipping at $150 and above.',
-    h1: 'Navratri Outfits — Chaniya Choli & Garba Dress Collection',
+    category: 'occasion:navratri',
+    title: 'Navratri Outfits — Current Garba Listings | LuxeMia',
+    description: 'Browse currently available LuxeMia products explicitly marked for Navratri, Garba, chaniya, or dandiya. Review exact product details and U.S. shipping terms.',
+    h1: 'Navratri Outfits',
     content: `
-      <p>Celebrate nine nights of Garba and Dandiya Raas in the most vibrant Indian ethnic wear. LuxeMia's Navratri collection features traditional chaniya cholis in mirror work and bandhani prints, festive lehengas in all nine Navratri colours, embroidered salwar kameez, and anarkali suits that move beautifully on the dance floor.</p>
-      <h2>What is a Chaniya Choli?</h2>
-      <p>The chaniya choli is the quintessential Navratri outfit — a three-piece set comprising a circular flared skirt (chaniya), a fitted blouse (choli), and a dupatta. The chaniya is traditionally cut in a full circle to allow maximum flare during spinning, and is adorned with mirror work (shisha embroidery), bandhani tie-dye prints, gota patti, or heavy embroidery. Lightweight fabrics like georgette, rayon, cotton, and net are preferred for the dance floor.</p>
-      <h2>Nine Colors of Navratri 2026</h2>
-      <p>Each of the nine nights of Navratri 2026 is associated with a specific colour linked to the nine forms of Goddess Durga. The sequence typically follows: Royal Blue, Green, Grey, Orange, White, Red, Royal Blue, Pink, and Purple. Many participants plan nine separate Navratri outfits in each day's colour.</p>
+      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
+      <h2>How to Choose</h2>
+      <p>Use the organizer or community guidance for the event schedule, requested color, dress, and venue because practices vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Navratri Lehengas</a> — Festive lehengas for Garba</li>
-        <li><a href="/suits">Anarkali Suits</a> — Flowing anarkalis for Navratri</li>
-        <li><a href="/collections/diwali-outfits">Diwali Outfits</a> — More festive occasion wear</li>
+        <li><a href="/lehengas">Lehengas</a></li>
+        <li><a href="/suits">Suits</a></li>
+        <li><a href="/collections/diwali-outfits">Diwali Outfits</a></li>
       </ul>
       <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
     `,
   },
-  // Programmatic SEO combo pages are generated from src/data/comboPages.ts below.
   {
     path: '/wedding-party-orders',
     title: 'Indian Wedding Party & Group Outfit Orders | LuxeMia',
@@ -1760,7 +1900,9 @@ function generateHtml(template, route, allShopifyProducts) {
       return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
     })();
     const productAttributes = getListedProductAttributes(live);
-    const productCategory = getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
+    const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(handle)
+      ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+      : getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
     // Product schema — must include image, description, offers.price/priceCurrency
     // for Google Merchant Listings validation.
@@ -1808,7 +1950,7 @@ function generateHtml(template, route, allShopifyProducts) {
           '@type': 'MerchantReturnPolicy',
           applicableCountry: 'US',
           returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-          description: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
         },
       },
     };
@@ -1882,6 +2024,7 @@ function generateHtml(template, route, allShopifyProducts) {
   let mainBodyContent;
   if (route.path.startsWith('/product/') && route.product) {
     const p = route.product;
+    const isCustomizable = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle);
     const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
     const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
@@ -1892,7 +2035,9 @@ function generateHtml(template, route, allShopifyProducts) {
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
     const productAttributes = getListedProductAttributes(p);
-    const productCategory = getProductCategoryInfo(productType, p.title || route.h1);
+    const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle)
+      ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+      : getProductCategoryInfo(productType, p.title || route.h1);
 
     let priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
     if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
@@ -1912,21 +2057,35 @@ function generateHtml(template, route, allShopifyProducts) {
       ? `<h2>Product Description</h2><p>${escapeHtml(description).slice(0, 2000)}</p>`
       : '';
 
+    const fabricDetails = productAttributes.material
+      || 'Review the product description for the fabric or material supplied with this listing.';
+    const includedPieces = productAttributes.includedPieces
+      || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.';
+    const sizingDetails = isCustomizable
+      ? 'Made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+      : productAttributes.sizes.length > 0
+      ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
+      : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
+    const shippingEstimate = isCustomizable
+      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
+      : productAttributes.shipsWithinDays
+      ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
+      : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
     const detailRows = [
-      productType ? `<li><strong>Type:</strong> ${escapeHtml(productType)}</li>` : '',
-      `<li><strong>Brand:</strong> ${escapeHtml(brandName)}</li>`,
-      productAttributes.color ? `<li><strong>Color:</strong> ${escapeHtml(productAttributes.color)}</li>` : '',
-      productAttributes.material ? `<li><strong>${productAttributes.jewelry ? 'Material' : 'Fabric'}:</strong> ${escapeHtml(productAttributes.material)}</li>` : '',
-      productAttributes.sizes.length > 0 ? `<li><strong>Available sizes:</strong> ${escapeHtml(productAttributes.sizes.join(', '))}</li>` : '',
-      `<li><strong>Availability:</strong> ${isAvailable ? 'In Stock' : 'Currently Unavailable'}</li>`,
-      `<li><strong>Ships to:</strong> United States</li>`,
-      `<li><strong>Shipping:</strong> Tracking provided after dispatch</li>`,
-      !productAttributes.jewelry && productAttributes.sizes.length === 0
-        ? `<li><strong>Sizing:</strong> Review the options shown for this product before ordering</li>`
-        : '',
+      `<div><dt>Fabric Details</dt><dd>${escapeHtml(fabricDetails)}</dd></div>`,
+      `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>`,
+      `<div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizingDetails)}</dd></div>`,
+      `<div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>`,
+      productType ? `<div><dt>Type</dt><dd>${escapeHtml(productType)}</dd></div>` : '',
+      `<div><dt>Brand</dt><dd>${escapeHtml(brandName)}</dd></div>`,
+      productAttributes.color ? `<div><dt>Color</dt><dd>${escapeHtml(productAttributes.color)}</dd></div>` : '',
+      `<div><dt>Availability</dt><dd>${isAvailable ? 'In Stock' : 'Currently Unavailable'}</dd></div>`,
+      `<div><dt>Ships to</dt><dd>United States</dd></div>`,
     ].filter(Boolean).join('\n        ');
 
-    const sizeAnswer = productAttributes.sizes.length > 0
+    const sizeAnswer = isCustomizable
+      ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+      : productAttributes.sizes.length > 0
       ? `Available choices shown for this listing are ${escapeHtml(productAttributes.sizes.join(', '))}. Review the Size Guide before ordering.`
       : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
     const firstQuestion = productAttributes.jewelry
@@ -1935,16 +2094,19 @@ function generateHtml(template, route, allShopifyProducts) {
     const careAnswer = productAttributes.jewelry
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
-    const deliveryAnswer = productAttributes.jewelry
-      ? 'Delivery timing depends on the item. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.'
-      : 'Delivery timing depends on the item and any selected tailoring. Tracking is provided after dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.';
+    const deliveryAnswer = isCustomizable
+      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
+      : productAttributes.jewelry
+      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.'
+      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.';
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
       ${firstQuestion}
+      ${isCustomizable ? `<h3>Can I request another color?</h3><p>Yes. A custom color is available for this verified design, subject to fabric availability. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.</p>` : ''}
       <h3>How is this product shipped?</h3>
       <p>${deliveryAnswer}</p>
       <h3>What is the return policy?</h3>
-      <p>All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+      <p>Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
       <h3>How should I care for this product?</h3>
       <p>${careAnswer}</p>`;
 
@@ -1953,13 +2115,13 @@ function generateHtml(template, route, allShopifyProducts) {
       <p>Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p>
       ${imgHtml}
       ${descHtml}
-      <h2>Product Details</h2>
-      <ul>
+      <h2>Product Specifications</h2>
+      <dl>
         ${detailRows}
-      </ul>
+      </dl>
       ${productQuestionsHtml}
       <h2>Shipping &amp; Delivery</h2>
-      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking is provided after dispatch.</p>
+      <p>Shipping is available to seven countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout. Tracking details are emailed when the shipping label is created for dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)
@@ -1970,21 +2132,23 @@ function generateHtml(template, route, allShopifyProducts) {
     const collectionProducts = filterProductsForCategory(allProducts, route.category, route.path === '/new-arrivals');
     console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
 
-    if (route.category.startsWith('collection:') && collectionProducts.length === 0) {
+    if (collectionProducts.length === 0) {
       html = html.replace(
         /<meta name="(robots|googlebot|bingbot)" content="[^"]*" \/>/g,
         '<meta name="$1" content="noindex, follow" />'
       );
     }
 
-    // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
-    const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
-    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+    if (collectionProducts.length > 0) {
+      // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
+      const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
+      html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
 
-    // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
-    // and skips the client-side Shopify fetch entirely on first paint.
-    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
-    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+      // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
+      // and skips the client-side Shopify fetch entirely on first paint.
+      const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
+      html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+    }
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
     const productCardsHtml = generateCollectionProductHtml(collectionProducts);
@@ -1993,10 +2157,19 @@ function generateHtml(template, route, allShopifyProducts) {
       ${route.content}
       <h2>Products in this Collection</h2>
       ${productCardsHtml}`;
-  } else if (route.path === '/') {
+  } else if (route.path === '/' && allShopifyProducts && allShopifyProducts.size > 0) {
+    const homepageProducts = filterProductsForCategory(
+      Array.from(allShopifyProducts.values()),
+      'all',
+      true,
+    ).slice(0, 12);
+    const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'all', route.path);
+    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}`;
+      ${route.content}
+      <h2>Recently Added Indian Ethnic Wear</h2>
+      ${generateCollectionProductHtml(homepageProducts)}`;
   } else {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
@@ -2012,6 +2185,7 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/sarees">Sarees</a> |
         <a href="/suits">Suits</a> |
         <a href="/menswear">Menswear</a> |
+        <a href="/collections/customizable-indian-outfits">Customizable Outfits</a> |
         <a href="/blog">Blog</a> |
         <a href="/collections">Collections</a> |
         <a href="/contact">Contact</a>
@@ -2071,34 +2245,14 @@ async function main() {
   }
   fs.mkdirSync(prerenderDir, { recursive: true });
 
-  // ─── Auto-cover every blog post + combo page from source data ───────────
-  // CRITICAL SEO FIX (2026-07-29): This script previously only prerendered
-  // whichever /blog/* and combo-page routes had a manually-written entry in
-  // the `routes` array above. Every time an article/combo page was added to
-  // src/data/blogPosts.ts or src/data/comboPages.ts
-  // WITHOUT a matching manual entry here, the route still got registered in
-  // src/lib/autoRoutes.ts (by generate-routes.cjs) — so middleware.ts believed
-  // a prerendered file existed and rewrote bot requests to it. No file existed,
-  // so Googlebot/Bingbot got a 404 while regular browsers (who don't take that
-  // code path) got a normal 200 SPA page. This silently 404'd 27 blog posts and
-  // (before the routing fix) all 25 combo pages for search engines — a soft
-  // cloaking bug that is the most likely cause of the Search Console traffic
-  // drop. Fix: dynamically generate a fallback route entry for ANY blog post
-  // or combo page in the source data that doesn't already have a hardcoded
-  // entry, so prerendered HTML coverage can never drift behind the data files
-  // again. See scripts/verify-prerender-coverage.cjs for the build-time guard
-  // that now also catches any future drift and fails the build loudly.
+  // Auto-cover every published blog post and topic hub from source data.
+  // This keeps bot-facing HTML synchronized with the routes registered by the
+  // build and prevents missing prerender files from becoming bot-only 404s.
   const hardcodedBlogSlugs = new Set(
     routes
       .filter(r => r.path.startsWith('/blog/') && r.path.split('/').length === 3)
       .map(r => r.path.slice('/blog/'.length))
   );
-  const hardcodedComboSlugs = new Set(
-    routes
-      .filter(r => !r.path.startsWith('/blog/') && !r.path.startsWith('/product/') && !r.path.startsWith('/collections/') && !r.path.startsWith('/authors/'))
-      .map(r => r.path.slice(1))
-  );
-
   try {
     const [blogModule, categoryModule] = await Promise.all([
       loadTsModule('src/data/blogPosts.ts'),
@@ -2190,33 +2344,6 @@ async function main() {
     console.error('[prerender] Blog output may be incomplete; coverage verification will fail if a registered route is missing.');
   }
 
-  try {
-    const comboModule = await loadTsModule('src/data/comboPages.ts');
-    const allComboPages = comboModule.comboPages || [];
-    let autoComboCount = 0;
-    for (const combo of allComboPages) {
-      if (!combo.slug || hardcodedComboSlugs.has(combo.slug)) continue;
-      const guideHtml = (combo.guideSections || [])
-        .map(section => `<h2>${escapeHtml(section.heading)}</h2>${(section.paragraphs || []).map(p => `<p>${p}</p>`).join('')}`)
-        .join('');
-      const relatedLinksHtml = (combo.relatedLinks || [])
-        .map(link => `<a href="${escapeHtml(link.url)}">${escapeHtml(link.label)}</a>`)
-        .join(', ');
-      routes.push({
-        path: `/${combo.slug}`,
-        title: combo.title,
-        description: combo.metaDescription,
-        h1: combo.h1,
-        content: `<p>${escapeHtml(combo.heroSubtitle || '')}</p>${guideHtml}${relatedLinksHtml ? `<p>Related: ${relatedLinksHtml}</p>` : ''}`,
-      });
-      autoComboCount++;
-    }
-    console.log(`[prerender] Auto-generated ${autoComboCount} combo page routes from comboPages.ts (no manual entry existed)`);
-  } catch (err) {
-    console.error(`[prerender] WARNING: Failed to load src/data/comboPages.ts for auto-coverage: ${err.message}`);
-    console.error('[prerender] Any combo page without a manual route entry above will NOT be prerendered.');
-  }
-
   // Pre-fetch live Shopify product data so /product/* prerendered HTML
   // emits valid Product JSON-LD with image, description, and offers.price.
   const productMap = await fetchAllShopifyProducts();
@@ -2287,7 +2414,7 @@ async function main() {
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
     const fallbackDesc = productIsJewelry
       ? `Shop ${baseTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
-      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with delivery to the United States; free U.S. shipping at $150 and above.`;
+      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to seven countries; destination-specific rates are shown at checkout.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,
