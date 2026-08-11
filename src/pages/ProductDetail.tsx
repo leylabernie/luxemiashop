@@ -18,6 +18,10 @@ import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
 import StickyAddToBag from '@/components/product/StickyAddToBag';
+import {
+  applyCustomizableProductDetails,
+  getCustomizableProduct,
+} from '@/lib/customizableProducts';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -112,10 +116,14 @@ const ProductDetail = () => {
   // Vercel setup or webhook configuration required.
   const product = useMemo(
     () => shopifyProduct
-      ? { ...shopifyProduct, title: sanitizeProductTitle(shopifyProduct.title) }
+      ? applyCustomizableProductDetails({
+          ...shopifyProduct,
+          title: sanitizeProductTitle(shopifyProduct.title),
+        })
       : shopifyProduct,
     [shopifyProduct],
   );
+  const customizableProduct = getCustomizableProduct(product?.handle);
   const isLoading = shopifyLoading;
   const error = shopifyError || (!shopifyLoading && !shopifyProduct ? 'Product not found' : null);
 
@@ -154,8 +162,12 @@ const ProductDetail = () => {
     return '/collections';
   };
 
-  const categoryUrl = getCategoryUrl(product?.productType);
-  const categoryName = product?.productType || 'Collections';
+  const categoryUrl = customizableProduct
+    ? '/collections/customizable-indian-outfits'
+    : getCategoryUrl(product?.productType);
+  const categoryName = customizableProduct
+    ? 'Customizable Indian Outfits'
+    : product?.productType || 'Collections';
   const productIsAvailable = product
     ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
     : false;
@@ -213,7 +225,9 @@ const ProductDetail = () => {
   const productSizeValues = product?.options
     ?.find((option) => ['size', 'bust size'].includes(option.name.toLowerCase()))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
-  const sizeAnswer = productSizeValues.length > 0
+  const sizeAnswer = customizableProduct
+    ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+    : productSizeValues.length > 0
     ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
     : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
 
@@ -227,8 +241,14 @@ const ProductDetail = () => {
     }]),
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above, and a flat $12 rate applies below $150.'
+      answer: customizableProduct
+        ? 'Production normally takes approximately 3–5 weeks after LuxeMia confirms the requested color, measurements, and fabric availability. Carrier transit begins after dispatch and is separate from production time. Contact LuxeMia before ordering for a fixed event date.'
+        : 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above, and a flat $12 rate applies below $150.'
     },
+    ...(customizableProduct ? [{
+      question: `Can I request another color for the ${product.title}?`,
+      answer: 'Yes. A custom color is available for this verified design. Contact LuxeMia with the product link and requested color so fabric availability can be confirmed before ordering. Other design changes are not promised unless LuxeMia confirms them in writing.',
+    }] : []),
     {
       question: `Can I return the ${product.title}?`,
       answer: 'All sales are final. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.'

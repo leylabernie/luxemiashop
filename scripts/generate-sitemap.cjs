@@ -21,7 +21,7 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const EXPECTED_SITEMAP_URL_COUNT = 763;
+const EXPECTED_SITEMAP_URL_COUNT = 764;
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
@@ -70,6 +70,7 @@ const staticPages = [
   { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bollywood-inspired-indian-outfits', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/menswear', changefreq: 'daily', priority: '0.9' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8' },

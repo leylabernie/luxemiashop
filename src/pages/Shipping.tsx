@@ -28,7 +28,7 @@ const Shipping = () => {
               transition={{ duration: 0.6 }}
             >
               <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">
-                United States shipping only
+                Current shipping availability
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Shipping Policy</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -63,7 +63,7 @@ const Shipping = () => {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: Truck, title: 'US Only', desc: 'Ships to United States addresses' },
+                { icon: Truck, title: 'US Checkout', desc: 'Currently accepts United States addresses' },
                 { icon: Package, title: 'In Stock', desc: 'Browse current online styles' },
                 { icon: Clock, title: 'Timing Varies', desc: 'Contact us before a time-sensitive event' },
                 { icon: ShieldCheck, title: 'Tracked', desc: 'Tracking emailed when the label is created for dispatch' },
@@ -136,6 +136,14 @@ const Shipping = () => {
                   measurements for a group, or full wedding-party coordination, use our sister site CeremonyVerse instead.
                 </p>
                 <p>
+                  Additional country-specific shipping is under review and is not active. No international rate, delivery promise,
+                  customs treatment, or returns process should be assumed until it is published for the destination country.
+                </p>
+                <p>
+                  If LuxeMia confirms that an item will be fulfilled cross-border, any applicable import-charge treatment must be
+                  confirmed in writing before the order is accepted; do not assume duty-free delivery from the shipping rate alone.
+                </p>
+                <p>
                   If an address needs to be corrected, email <span className="text-primary">hello@luxemia.shop</span> within 24 hours.
                   Once a label is created, address changes may not be possible.
                 </p>
@@ -161,7 +169,7 @@ const Shipping = () => {
                 <AccordionItem value="item-1">
                   <AccordionTrigger>Where does LuxeMia ship?</AccordionTrigger>
                   <AccordionContent>
-                    LuxeMia currently ships to United States addresses only.
+                    LuxeMia currently ships to United States addresses only. Additional countries are under review but are not active.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">

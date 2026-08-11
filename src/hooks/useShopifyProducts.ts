@@ -2,6 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 import { sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
 import occasionSignals from '@/data/occasionSignals.json';
+import {
+  applyCustomizableProductDetails,
+  CUSTOMIZABLE_PRODUCT_HANDLES,
+} from '@/lib/customizableProducts';
 
 // Shopify productType values mapped to category page routes
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
@@ -244,6 +248,10 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
 
   if (category === 'all') return allowed;
 
+  if (category === 'customizable') {
+    return allowed.filter((product) => CUSTOMIZABLE_PRODUCT_HANDLES.has(product.node.handle));
+  }
+
   if (category.startsWith('occasion:')) {
     const occasion = category.slice('occasion:'.length);
     return allowed.filter((product) => matchesOccasion(product, occasion));
@@ -371,14 +379,17 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
 
 // Enrich products with display category — preserve original productType for filtering
 const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
-  products.map(p => ({
-    node: {
-      ...p.node,
-      _originalProductType: p.node.productType, // keep original for menswear detection
-      title: sanitizeProductTitle(p.node.title),
-      productType: getDisplayCategory(p.node.productType),
-    },
-  }));
+  products.map((p) => {
+    const verifiedNode = applyCustomizableProductDetails(p.node);
+    return {
+      node: {
+        ...verifiedNode,
+        _originalProductType: verifiedNode.productType, // keep original for menswear detection
+        title: sanitizeProductTitle(verifiedNode.title),
+        productType: getDisplayCategory(verifiedNode.productType),
+      },
+    };
+  });
 
 export const useShopifyProducts = (category?: string, revalidate = false) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);

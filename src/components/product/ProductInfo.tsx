@@ -15,6 +15,7 @@ import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelect
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
+import { getCustomizableProduct } from '@/lib/customizableProducts';
 
 // Utsav-style Stitching Type options with price modifiers
 interface StitchingTypeOption {
@@ -235,9 +236,10 @@ const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
-  const isStitchable = isStitchableProduct(product.productType, product.tags);
-  const isMenswear = isMenswearProduct(product.productType, product.tags);
-  const showBottomStyleOption = shouldShowBottomStyle(product.productType, product.tags);
+  const customizableProduct = getCustomizableProduct(product.handle);
+  const isStitchable = !customizableProduct && isStitchableProduct(product.productType, product.tags);
+  const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
+  const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
 
   // Honor Merchant Center variant links while preserving the first available
@@ -273,6 +275,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedBottomStyle, setSelectedBottomStyle] = useState<BottomStyleOption | null>(null);
   const [selectedSleeveStyle, setSelectedSleeveStyle] = useState<SleeveStyleOption | null>(null);
   const [customAlteration, setCustomAlteration] = useState('');
+  const [requestedCustomColor, setRequestedCustomColor] = useState('');
   const [selectedStitchingType, setSelectedStitchingType] = useState<string | null>(
     isStitchable ? 'semi-stitched' : null
   );
@@ -487,6 +490,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       return;
     }
 
+    if (customizableProduct && !requestedCustomColor.trim()) {
+      toast.error('Enter your requested custom color');
+      return;
+    }
+
     // For stitchable products, require stitching type
     if (isStitchable && !selectedStitchingType) {
       toast.error('Please select a stitching type');
@@ -510,6 +518,14 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     setIsAdding(true);
 
     const customAttributes: Array<{ key: string; value: string }> = [];
+    if (customizableProduct) {
+      customAttributes.push(
+        { key: 'Made to Order', value: 'Yes — confirmation required' },
+        { key: 'Requested Custom Color', value: `${requestedCustomColor.trim()} — pending LuxeMia confirmation` },
+        { key: 'Measurements', value: 'Required after order' },
+        { key: 'Production Estimate', value: 'Approximately 3–5 weeks after details are confirmed' },
+      );
+    }
     if (isStitchable && selectedStitchingType) {
       const stitchingOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
       customAttributes.push({ key: 'Stitching Type', value: stitchingOption?.label || selectedStitchingType });
@@ -603,9 +619,57 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </div>
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate hasStitching={needsStitchingSize} />
+      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={Boolean(customizableProduct)} />
 
       <Separator />
+
+      {customizableProduct && (
+        <section className="space-y-4 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="made-to-order-heading">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Verified made-to-order design</p>
+            <h2 id="made-to-order-heading" className="mt-1 font-serif text-2xl">Custom color and measurements</h2>
+          </div>
+          <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+            <li>This design can be made in a custom color, subject to fabric availability.</li>
+            <li>The outfit is made from measurements confirmed with LuxeMia after ordering.</li>
+            <li>Production normally takes approximately 3–5 weeks after color, measurements, and fabric availability are confirmed. Carrier transit begins after dispatch.</li>
+            <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
+            <li>If LuxeMia confirms that this item will be fulfilled cross-border, import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
+            <li>Custom orders are final sale, subject to applicable law.</li>
+          </ul>
+          <p className="text-sm text-foreground">
+            Before ordering for a fixed event date, send the product link, requested color, event date, and country to LuxeMia for confirmation.
+          </p>
+          <div className="space-y-2">
+            <label htmlFor="requested-custom-color" className="text-sm font-medium">Requested color</label>
+            <input
+              id="requested-custom-color"
+              value={requestedCustomColor}
+              onChange={(event) => setRequestedCustomColor(event.target.value)}
+              placeholder="For example: emerald green"
+              className="w-full rounded-sm border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary"
+            />
+            <p className="text-xs text-muted-foreground">Your request is subject to fabric availability and is not final until LuxeMia confirms it.</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                const message = encodeURIComponent(`Hi LuxeMia, I would like to confirm a custom color and measurements for ${product.title} (${window.location.href}). My requested color is: `);
+                window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
+              }}
+              className="inline-flex items-center gap-2 rounded-sm bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              <MessageCircle className="h-4 w-4" /> Confirm custom details
+            </button>
+            <Link to="/contact" className="inline-flex items-center rounded-sm border border-border px-4 py-2.5 text-sm font-medium hover:border-primary">
+              Contact options
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {customizableProduct && <Separator />}
 
       {/* ─── Utsav-style "Customize" Section ─── */}
       {showCustomizeHeader && (
@@ -736,6 +800,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           .filter((option) => {
             // Hide "Default Title" single-value options
             if (option.values.length === 1 && option.values[0] === 'Default Title') return false;
+            if (customizableProduct && option.name.toLowerCase() === 'size' && option.values.length === 1 && option.values[0].toLowerCase() === 'custom') return false;
             // For stitchable products, hide the "Stitching" option from Shopify variants
             // since we use our custom Utsav-style selector above instead
             if (isStitchable && option.name.toLowerCase().includes('stitch')) return false;
@@ -934,7 +999,9 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
           <dt className="font-medium text-foreground">Sizing & Chart</dt>
           <dd className="text-muted-foreground">
-            {listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
+            {customizableProduct
+              ? 'Made to order from measurements confirmed with LuxeMia. '
+              : listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
             <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
               View the sizing chart
             </Link>
@@ -942,7 +1009,9 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
           <dt className="font-medium text-foreground">Shipping Estimate</dt>
           <dd className="text-muted-foreground">
-            {shipByLabel
+            {customizableProduct
+              ? 'Production normally takes approximately 3–5 weeks after required details are confirmed. Carrier transit begins after dispatch.'
+              : shipByLabel
               ? `${shipByLabel}. Tracking details are emailed when the shipping label is created for dispatch.`
               : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.'}
           </dd>

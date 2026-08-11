@@ -7,7 +7,7 @@ import SEOHead from '@/components/seo/SEOHead';
 const faqs = [
   {
     question: 'Does LuxeMia ship outside the United States?',
-    answer: 'No. LuxeMia currently ships Indian ethnic wear online to United States addresses only.',
+    answer: 'Not currently. LuxeMia checkout accepts United States addresses only. Additional countries are under review but are not active.',
   },
   {
     question: 'How much is US shipping?',
@@ -75,7 +75,12 @@ const ShippingCustoms = () => {
               <h2 className="font-serif text-2xl mb-4">Taxes</h2>
               <p className="text-base text-foreground/90 leading-relaxed">
                 Taxes, if applicable, are calculated at checkout. LuxeMia does not currently accept orders for delivery
-                addresses outside the United States.
+                addresses outside the United States. Additional country-specific shipping is under review and is not active;
+                do not assume international duties, taxes, delivery times, or returns terms until they are published for that country.
+              </p>
+              <p className="mt-3 text-base text-foreground/90 leading-relaxed">
+                If LuxeMia confirms that an item will be fulfilled cross-border, any applicable import-charge treatment must be
+                confirmed in writing before the order is accepted; do not assume duty-free delivery from the shipping rate alone.
               </p>
             </div>
 

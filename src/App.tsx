@@ -59,6 +59,7 @@ const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
 const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
 const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
+const CustomizableOutfits = lazy(() => import("./pages/CustomizableOutfits"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
 const PageLoader = () => (
@@ -171,6 +172,7 @@ const App = () => (
                 <Route path="/collections/indo-western" element={<Navigate to="/indowestern" replace />} />
                 <Route path="/collections/bridesmaid-dresses" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/groomsman-outfits" element={<Navigate to="/menswear" replace />} />
+                <Route path="/collections/customizable-indian-outfits" element={<Suspense fallback={<PageLoader />}><CustomizableOutfits /></Suspense>} />
                 {/* Occasion landing pages */}
                 <Route path="/collections/diwali-outfits" element={<Suspense fallback={<PageLoader />}><DiwaliOutfits /></Suspense>} />
                 <Route path="/collections/wedding-guest-outfits" element={<Suspense fallback={<PageLoader />}><WeddingGuestOutfits /></Suspense>} />

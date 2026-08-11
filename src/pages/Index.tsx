@@ -95,6 +95,24 @@ const Index = () => {
           </div>
         </section>
 
+        <section className="border-b border-border/30 bg-background" aria-labelledby="customizable-home-heading">
+          <div className="container mx-auto flex max-w-7xl flex-col gap-4 px-4 py-7 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Verified made-to-order selection</p>
+              <h2 id="customizable-home-heading" className="mt-2 font-serif text-2xl sm:text-3xl">Customizable Indian Outfits</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Browse selected designs verified for a custom color and tailoring from confirmed measurements. Production is approximately 3–5 weeks after required details and fabric availability are confirmed; carrier transit follows dispatch.
+              </p>
+            </div>
+            <Link
+              to="/collections/customizable-indian-outfits"
+              className="inline-flex shrink-0 items-center justify-center rounded-sm bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Shop customizable outfits
+            </Link>
+          </div>
+        </section>
+
         <NewArrivalsBanner />
 
         {/* PSI 2026-07-22: Sections wrapped in LazySection (IntersectionObserver)

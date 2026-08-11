@@ -55,6 +55,7 @@ const STATIC_ROUTES = [
   '/collections/manthrakodi-sarees',
   '/collections/bridal-party-outfits',
   '/collections/bollywood-inspired-indian-outfits',
+  '/collections/customizable-indian-outfits',
   '/about',
   '/new-arrivals',
   '/indowestern',

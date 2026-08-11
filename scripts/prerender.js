@@ -23,6 +23,36 @@ const FALLBACK_PRICE = '299.00';
 const OCCASION_SIGNALS = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/occasionSignals.json'), 'utf8')
 );
+const CUSTOMIZABLE_PRODUCTS = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/customizableProducts.json'), 'utf8')
+);
+const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
+  CUSTOMIZABLE_PRODUCTS.map((product) => [product.handle, product])
+);
+const CUSTOM_PRODUCT_DESCRIPTION = 'Made to order from your confirmed measurements, with a custom color available for this design. Production normally takes approximately 3–5 weeks after LuxeMia confirms your requested color, measurements, and fabric availability; carrier transit starts after dispatch. Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.';
+
+function applyCustomizableProductDetails(product) {
+  const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product?.handle);
+  if (!matched) return product;
+
+  return {
+    ...product,
+    title: matched.title,
+    description: CUSTOM_PRODUCT_DESCRIPTION,
+    tags: [
+      ...(product.tags || []).filter((tag) => !/ready[- ]?to[- ]?ship|ships? within|worldwide|canada|australia|dhl|ddp/i.test(String(tag))),
+      'customizable',
+      'made to order',
+      'custom color',
+      'custom measurements',
+    ],
+    shipsWithinMetafield: null,
+    seo: {
+      title: `${matched.title} | LuxeMia`,
+      description: CUSTOM_PRODUCT_DESCRIPTION,
+    },
+  };
+}
 
 // ─── TypeScript Data Loader ───────────────────────────────────────────────
 // Bundles a TypeScript data module
@@ -153,6 +183,10 @@ function getListedProductAttributes(product) {
 
 function buildVerifiedProductCopy(product) {
   if (!product) return '';
+
+  if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
+    return `${CUSTOM_PRODUCT_DESCRIPTION} Current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.`;
+  }
 
   const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
   const attributes = getListedProductAttributes(product);
@@ -378,7 +412,7 @@ async function fetchAllShopifyProducts() {
       if (!data) break;
       for (const edge of data.edges || []) {
         const p = edge.node;
-        if (p?.handle) map.set(p.handle, p);
+        if (p?.handle) map.set(p.handle, applyCustomizableProductDetails(p));
       }
       if (!data.pageInfo?.hasNextPage) break;
       cursor = data.pageInfo.endCursor;
@@ -481,6 +515,13 @@ function matchesOccasionProduct(product, occasion) {
 }
 
 function filterProductsForCategory(allProducts, category, newestFirst = false) {
+  if (category === 'customizable') {
+    return allProducts
+      .filter((product) => product.availableForSale !== false)
+      .filter((product) => CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle))
+      .slice(0, MAX_COLLECTION_PRODUCTS);
+  }
+
   if (category.startsWith('occasion:')) {
     const occasion = category.slice('occasion:'.length);
     return allProducts
@@ -862,6 +903,7 @@ const routes = [
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
         <ul>
+          <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
           <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
@@ -1230,6 +1272,26 @@ const routes = [
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
       </ul>
+    `,
+  },
+  {
+    path: '/collections/customizable-indian-outfits',
+    category: 'customizable',
+    title: 'Customizable Indian Outfits | Custom Color & Measurements | LuxeMia',
+    description: 'Shop verified made-to-order Indian outfits with a custom color and sizing from your confirmed measurements. Review 3–5 week production guidance before ordering.',
+    h1: 'Customizable Indian Outfits',
+    content: `
+      <p>These selected lehengas, sarees, kurta sets, and wedding outfits are verified for a custom color and made-to-order construction from measurements confirmed with LuxeMia.</p>
+      <h2>How does a LuxeMia custom order work?</h2>
+      <ol>
+        <li>Send the exact product link, requested color, event date, and delivery country.</li>
+        <li>LuxeMia confirms fabric availability, timing, and the measurements required for that design.</li>
+        <li>Production normally takes approximately 3–5 weeks after all required details are confirmed. Carrier transit begins after dispatch.</li>
+      </ol>
+      <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
+      <h2>Current shipping availability</h2>
+      <p>The current checkout accepts United States addresses only. U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch. Additional countries are under review but are not active. If LuxeMia confirms that an item will be fulfilled cross-border, the applicable import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</p>
+      <p><a href="/contact">Contact LuxeMia</a> | <a href="/sizing-measurements-guide">Measurement guide</a> | <a href="/returns">Returns policy</a></p>
     `,
   },
   {
@@ -1831,7 +1893,9 @@ function generateHtml(template, route, allShopifyProducts) {
       return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
     })();
     const productAttributes = getListedProductAttributes(live);
-    const productCategory = getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
+    const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(handle)
+      ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+      : getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
     // Product schema — must include image, description, offers.price/priceCurrency
     // for Google Merchant Listings validation.
@@ -1953,6 +2017,7 @@ function generateHtml(template, route, allShopifyProducts) {
   let mainBodyContent;
   if (route.path.startsWith('/product/') && route.product) {
     const p = route.product;
+    const isCustomizable = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle);
     const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
     const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
@@ -1963,7 +2028,9 @@ function generateHtml(template, route, allShopifyProducts) {
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
     const productAttributes = getListedProductAttributes(p);
-    const productCategory = getProductCategoryInfo(productType, p.title || route.h1);
+    const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle)
+      ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+      : getProductCategoryInfo(productType, p.title || route.h1);
 
     let priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
     if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
@@ -1987,10 +2054,14 @@ function generateHtml(template, route, allShopifyProducts) {
       || 'Review the product description for the fabric or material supplied with this listing.';
     const includedPieces = productAttributes.includedPieces
       || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.';
-    const sizingDetails = productAttributes.sizes.length > 0
+    const sizingDetails = isCustomizable
+      ? 'Made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+      : productAttributes.sizes.length > 0
       ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
-    const shippingEstimate = productAttributes.shipsWithinDays
+    const shippingEstimate = isCustomizable
+      ? 'Production normally takes approximately 3–5 weeks after LuxeMia confirms the requested color, measurements, and fabric availability. Carrier transit begins after dispatch.'
+      : productAttributes.shipsWithinDays
       ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
       : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
     const detailRows = [
@@ -2005,7 +2076,9 @@ function generateHtml(template, route, allShopifyProducts) {
       `<div><dt>Ships to</dt><dd>United States</dd></div>`,
     ].filter(Boolean).join('\n        ');
 
-    const sizeAnswer = productAttributes.sizes.length > 0
+    const sizeAnswer = isCustomizable
+      ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+      : productAttributes.sizes.length > 0
       ? `Available choices shown for this listing are ${escapeHtml(productAttributes.sizes.join(', '))}. Review the Size Guide before ordering.`
       : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
     const firstQuestion = productAttributes.jewelry
@@ -2014,12 +2087,15 @@ function generateHtml(template, route, allShopifyProducts) {
     const careAnswer = productAttributes.jewelry
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
-    const deliveryAnswer = productAttributes.jewelry
+    const deliveryAnswer = isCustomizable
+      ? 'Production normally takes approximately 3–5 weeks after LuxeMia confirms the requested color, measurements, and fabric availability. Carrier transit begins after dispatch and is separate from production time. Contact LuxeMia before ordering for a fixed event date.'
+      : productAttributes.jewelry
       ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.'
       : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Free U.S. shipping applies at $150 and above; a flat $12 rate applies below $150.';
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
       ${firstQuestion}
+      ${isCustomizable ? `<h3>Can I request another color?</h3><p>Yes. A custom color is available for this verified design, subject to fabric availability. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.</p>` : ''}
       <h3>How is this product shipped?</h3>
       <p>${deliveryAnswer}</p>
       <h3>What is the return policy?</h3>
@@ -2102,6 +2178,7 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/sarees">Sarees</a> |
         <a href="/suits">Suits</a> |
         <a href="/menswear">Menswear</a> |
+        <a href="/collections/customizable-indian-outfits">Customizable Outfits</a> |
         <a href="/blog">Blog</a> |
         <a href="/collections">Collections</a> |
         <a href="/contact">Contact</a>
