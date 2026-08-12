@@ -61,6 +61,8 @@ const unsupportedClaimPatterns = [
   /LuxeMia currently ships to (?:the )?United States addresses/i,
   /United States addresses only/i,
   /previous LuxeMia article incorrectly/i,
+  /luxemias\.shop/i,
+  /Sabyasachi[- ]inspired/i,
 ];
 
 for (const post of blogPosts) {

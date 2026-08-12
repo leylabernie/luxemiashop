@@ -47,6 +47,8 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/blog/attires',
   '/blog/bindi-meaning-history-indian-women',
   '/blog/cultural-context',
+  '/blog/custom-bridesmaid-wedding-guest-lehenga-online-usa',
+  '/blog/custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa',
   '/blog/designer-profiles',
   '/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon',
   '/blog/how-to-care',

@@ -48,10 +48,13 @@ export const PUBLISHED_BLOG_SLUGS = [
   'rahul-mishra-designer-profile-paris-haute-couture-sustainable',
   'navratri-9-day-color-guide-2026',
   'sabyasachi-mukherjee-designer-profile-handloom-revival',
+  'custom-bridesmaid-wedding-guest-lehenga-online-usa',
+  'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa',
 ] as const;
 
 const FACT_CHECKED_AT = '2026-08-08';
 const POLICY_REVIEWED_AT = '2026-08-11';
+const CONTENT_REVIEWED_AT = '2026-08-12';
 const EDITORIAL_TEAM = 'LuxeMia Editorial Team';
 
 const source = (title: string, url: string, publisher: string): BlogSource => ({
@@ -146,6 +149,21 @@ const SOURCES = {
     'https://luxemia.shop/shipping',
     'LuxeMia',
   ),
+  luxemiaCustomizableCollection: source(
+    'Customizable Indian Outfits',
+    'https://luxemia.shop/collections/customizable-indian-outfits',
+    'LuxeMia',
+  ),
+  luxemiaLavenderBridesmaid: source(
+    'Lavender Georgette Lehenga Choli — Custom Indian Bridesmaid Outfit',
+    'https://luxemia.shop/product/handcrafted-lavender-georgette-lehenga-choli-set-bridesmaid-ready-to-ship',
+    'LuxeMia',
+  ),
+  luxemiaPeriwinkleSaree: source(
+    'Lavender Blue Banarasi Brocade Saree — Custom-Fit Wedding Guest Outfit',
+    'https://luxemia.shop/product/handcrafted-periwinkle-banarasi-brocade-saree-wedding-guest-ready-to-ship',
+    'LuxeMia',
+  ),
 };
 
 const editorialNoteFor = (reviewDate: string) => `
@@ -155,6 +173,7 @@ const editorialNoteFor = (reviewDate: string) => `
 `;
 const editorialNote = editorialNoteFor('August 8, 2026');
 const policyEditorialNote = editorialNoteFor('August 11, 2026');
+const contentEditorialNote = editorialNoteFor('August 12, 2026');
 
 export const blogPosts: BlogPost[] = [
   {
@@ -737,6 +756,127 @@ export const blogPosts: BlogPost[] = [
     imagePresentation: 'editorial',
     readTime: 4,
     sources: [SOURCES.sabyasachiOfficial],
+  },
+  {
+    id: '68',
+    slug: 'custom-bridesmaid-wedding-guest-lehenga-online-usa',
+    title: 'Custom Bridesmaid & Wedding Guest Lehenga Online USA',
+    excerpt: 'Selected LuxeMia occasionwear can be ordered with the customization shown on its current product page. Confirm measurements, color availability, included pieces and the event timeline before checkout.',
+    content: `
+      ${contentEditorialNote}
+      <h2>Can you order a custom bridesmaid or wedding guest lehenga online in the USA?</h2>
+      <p>Yes, for selected LuxeMia designs that are currently identified as customizable. This is not a promise that every lehenga, saree or suit can be changed in every way. The <a href="/collections/customizable-indian-outfits">Customizable Indian Outfits collection</a> and the individual product page are the current sources of truth.</p>
+      <p>For example, the current lavender georgette lehenga-choli listing is presented as a custom Indian bridesmaid outfit, while a current periwinkle wedding-guest saree is presented with custom-fit ordering. Those examples establish that customization exists on selected products; they do not extend the same options to the rest of the catalog.</p>
+
+      <h2>What to verify before ordering</h2>
+      <table>
+        <thead><tr><th>Detail</th><th>What to confirm</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td>Included pieces</td><td>Whether the listing includes a skirt, blouse or choli, dupatta, saree blouse piece, lining or other component</td><td>Outfit names do not always describe every piece in the package.</td></tr>
+          <tr><td>Measurements</td><td>Which body measurements are required and how LuxeMia wants them supplied</td><td>Letter sizes and country conversion charts do not replace product-specific measurements.</td></tr>
+          <tr><td>Color</td><td>Whether a requested color is offered for that exact design</td><td>Product photography, screens, dye lots and fabric availability can affect the result.</td></tr>
+          <tr><td>Construction</td><td>Fabric, lining, closure, sleeve, neckline, hem and embellishment details shown on the current listing</td><td>These details vary by product and should not be inferred from another outfit.</td></tr>
+          <tr><td>Event date</td><td>The current production estimate and carrier timing in writing</td><td>A planning estimate is not a delivery guarantee.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Measurements matter more than a U.S. size conversion</h2>
+      <p>NIST apparel-sizing research describes sizing through defined body dimensions. In practical terms, a label such as Small, U.S. 8 or 38 cannot predict fit across every maker. Follow the <a href="/sizing-measurements-guide">LuxeMia sizing and measurement guide</a> and answer any product-specific measurement request accurately.</p>
+      <p>For a lehenga set, measurements commonly discussed can include bust, under-bust, shoulder, armhole, upper arm, blouse length, waist, hip and skirt length. That list is planning guidance, not a substitute for the fields requested for the exact product. Also clarify whether a number describes the body or the finished garment.</p>
+
+      <h2>Planning coordinated bridesmaid outfits</h2>
+      <ol>
+        <li>Choose a currently customizable design rather than assuming a standard listing can be altered.</li>
+        <li>Contact LuxeMia before checkout with the number of people, requested color, individual measurements, destination country and event date.</li>
+        <li>Ask which details can be coordinated and which can vary because of fabric, embellishment or production availability.</li>
+        <li>Have each wearer confirm her own measurements. Do not copy one person's size to another order.</li>
+        <li>Keep LuxeMia's written confirmation with the order details.</li>
+      </ol>
+
+      <h2>Timing and shipping</h2>
+      <p>The verified customizable collection advises allowing approximately four to five weeks for planning, but current production and carrier timing must be confirmed separately and delivery by a particular event is not guaranteed. LuxeMia currently ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.</p>
+
+      <h2>Does LuxeMia alter an outfit you already own?</h2>
+      <p>The reviewed store pages do not establish a mail-in alteration service for customer-owned garments. Do not send an existing lehenga, saree or blouse unless LuxeMia support first confirms that service and its terms in writing. The verified offer covered here is customization on selected products sold by LuxeMia.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: CONTENT_REVIEWED_AT,
+    updatedAt: CONTENT_REVIEWED_AT,
+    factCheckedAt: CONTENT_REVIEWED_AT,
+    category: 'Wedding Style',
+    tags: ['custom bridesmaid lehenga USA', 'wedding guest lehenga online', 'custom indian outfit', 'made to measure lehenga', 'bridesmaid outfit'],
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7763529613_gafs_aeb346a1-7350-43ec-9684-723413eb964b.jpg?v=1782927153',
+    readTime: 6,
+    sources: [
+      SOURCES.nistSizing,
+      SOURCES.luxemiaSizing,
+      SOURCES.luxemiaCustomizableCollection,
+      SOURCES.luxemiaLavenderBridesmaid,
+      SOURCES.luxemiaPeriwinkleSaree,
+      SOURCES.luxemiaShipping,
+    ],
+  },
+  {
+    id: '69',
+    slug: 'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa',
+    title: 'Custom Deep Neckline Elbow Sleeve Saree Blouse Online USA',
+    excerpt: 'A deep neckline and elbow sleeve are product-specific design requests, not universal LuxeMia options. Use the exact listing and written confirmation to verify the cut, measurements, coverage and event timeline.',
+    content: `
+      ${contentEditorialNote}
+      <h2>Can you order this exact blouse combination?</h2>
+      <p>A custom saree blouse with a deep neckline and elbow-length sleeves may be possible only when those choices are offered or confirmed for a specific LuxeMia product. The reviewed catalog does not establish those details as universal options. Before ordering, use the <a href="/collections/customizable-indian-outfits">current customizable collection</a> and obtain written confirmation for the exact neckline, sleeve and fit request.</p>
+      <p>A current LuxeMia periwinkle wedding-guest saree is labeled as a custom-fit product. That verifies a selected custom-fit offering, but it does not prove that every blouse shape can be made with that saree or that the same request applies to every listing.</p>
+
+      <h2>Define “deep neckline” with measurements</h2>
+      <p>“Deep” is subjective. A reference photo can help explain the shape, but it does not define the finished depth on a different body. If LuxeMia confirms the request, record the front neck depth and back neck depth using the measurement method the seller specifies. Also state the desired front and back shape, closure position and coverage preference.</p>
+      <p>Do not rely on a designer name, celebrity reference or the phrase “inspired by” to define construction. Those labels are imprecise and can imply an affiliation that does not exist. Describe the physical details you want and use LuxeMia's written confirmation instead.</p>
+
+      <h2>Measurements commonly relevant to a saree blouse</h2>
+      <ul>
+        <li>Bust and under-bust</li>
+        <li>Shoulder width and armhole</li>
+        <li>Upper-arm circumference</li>
+        <li>Sleeve length, measured to the requested elbow area</li>
+        <li>Blouse length</li>
+        <li>Front and back neck depth, when the seller requests them</li>
+      </ul>
+      <p>These are common planning points, not a universal measurement form. NIST's apparel-sizing work supports using defined body dimensions, and the <a href="/sizing-measurements-guide">LuxeMia measurement guide</a> explains the store's general approach. The product-specific instructions still take priority.</p>
+
+      <h2>Questions to put in writing before checkout</h2>
+      <ol>
+        <li>Is the requested front and back neckline shape available for this exact product?</li>
+        <li>Can the sleeve finish at the requested elbow point, and which arm measurements are needed?</li>
+        <li>What blouse or blouse-piece material is included, if any?</li>
+        <li>What closure, lining, cups, padding, margin or fastening is included? Do not assume any of these features.</li>
+        <li>Can the requested color be made for this design?</li>
+        <li>What is the current production estimate, and is there enough time before the event?</li>
+      </ol>
+
+      <h2>Fabric and care claims come from the listing and label</h2>
+      <p>The FTC explains that textile products generally require accurate fiber, business and country-of-origin labeling, and that care information matters for clothing. For an order, rely on the current product page and the garment label for material and care details. Do not infer a fabric from a photograph or from another blouse with a similar color.</p>
+
+      <h2>Fit, movement and coverage</h2>
+      <p>Custom measurements reduce guesswork but do not guarantee fit. A low neckline also involves personal movement and coverage preferences that measurements alone may not capture. Explain how the blouse will be worn, ask how the requested depth is measured, and confirm any support or coverage requirement before the order is placed.</p>
+
+      <h2>Timing and U.S. delivery</h2>
+      <p>The verified customizable collection advises allowing approximately four to five weeks for planning. Current production and carrier timing should be confirmed separately, especially for a fixed wedding date. LuxeMia ships to seven countries, including the United States; U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.</p>
+    `,
+    author: EDITORIAL_TEAM,
+    publishedAt: CONTENT_REVIEWED_AT,
+    updatedAt: CONTENT_REVIEWED_AT,
+    factCheckedAt: CONTENT_REVIEWED_AT,
+    category: 'Fit Guide',
+    tags: ['custom saree blouse USA', 'deep neckline blouse', 'elbow sleeve saree blouse', 'custom fit blouse', 'saree blouse measurements'],
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7722718686_cgvl_68fe743f-528e-4e82-af0e-993437e86a3c.jpg?v=1782927152',
+    readTime: 6,
+    sources: [
+      SOURCES.nistSizing,
+      SOURCES.ftcTextiles,
+      SOURCES.luxemiaSizing,
+      SOURCES.luxemiaCustomizableCollection,
+      SOURCES.luxemiaPeriwinkleSaree,
+      SOURCES.luxemiaShipping,
+    ],
   },
 ];
 

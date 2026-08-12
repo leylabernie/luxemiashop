@@ -90,6 +90,8 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'sabyasachi-mukherjee-designer-profile-handloom-revival': 'designer-profiles',
   'bindi-meaning-history-indian-women': 'cultural-context',
   'navratri-9-day-color-guide-2026': 'weddings-festivals',
+  'custom-bridesmaid-wedding-guest-lehenga-online-usa': 'weddings-festivals',
+  'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa': 'how-to-care',
 };
 
 export function getBlogCategoryGroup(slug: string): BlogCategoryGroup | undefined {
