@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import { trackConsultationSubmission } from '@/hooks/useAnalytics';
+import { submitConsultation } from '@/lib/submitConsultation';
 
 const WeddingPartyOrders = () => {
   const { toast } = useToast();
@@ -30,14 +30,16 @@ const WeddingPartyOrders = () => {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase.functions.invoke('submit-consultation', {
-        body: {
-          name, email, phone, country, preferredDate, budget,
-          occasion: `Wedding Party / Group Order — ${role}`,
-          requirements: `Group size: ${groupSize}\n${details}`,
-        },
+      await submitConsultation({
+        name,
+        email,
+        phone,
+        country,
+        preferredDate,
+        budget,
+        occasion: `Wedding Party / Group Order — ${role}`,
+        requirements: `Group size: ${groupSize}\n${details}`,
       });
-      if (error) throw error;
       trackConsultationSubmission({ name, email, phone, country, occasion: 'wedding_party_group_order', budget });
       setSubmitted(true);
       toast({ title: 'Enquiry received', description: 'LuxeMia will review your requirements and contact you shortly.' });
