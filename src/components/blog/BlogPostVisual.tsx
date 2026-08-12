@@ -17,7 +17,6 @@ const BlogPostVisual = ({ post, variant = 'card' }: BlogPostVisualProps) => {
         width={isHero ? 1200 : 640}
         height={isHero ? 675 : 360}
         loading={isHero ? 'eager' : 'lazy'}
-        fetchPriority={isHero ? 'high' : 'auto'}
         decoding="async"
         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
       />

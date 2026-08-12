@@ -37,6 +37,13 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
   '/product/light-pink-net-beads-festive-lehenga-choli': '/product/light-pink-net-beads-bridal-lehenga-with-dupatta',
   '/product/rust-orange-georgette-embroidery-occasion-lehenga-choli': '/product/rust-orange-georgette-embroidery-lehenga-choli-with-dupatta',
   '/product/wine-pure-vichitra-embroidery-festive-lehenga-choli': '/product/wine-pure-vichitra-embroidery-lehenga-choli-with-dupatta',
+  '/product/chinon-silk-pink-occasional-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-pink-chinon-silk-embroidery-work-occasional-wear-sharara-suit',
+  '/product/faux-satin-silk-rani-pink-casual-wear-embroidery-work-readymade-sharara-suit-2': '/product/luxemia-baby-pink-faux-satin-silk-embroidery-work38-40-42-44-casual-wear-sharara-suit',
+  '/product/viscose-jacquard-purple-festival-wear-jacquard-work-readymade-sharara-suit': '/product/luxemia-purple-viscose-jacquard-jacquard-work-festival-wear-sharara-suit',
+  '/product/net-orange-festival-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-orange-net-embroidery-work-festival-wear-sharara-suit',
+  '/product/net-turquoise-festival-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-turquoise-net-embroidery-work-festival-wear-sharara-suit',
+  '/product/net-pink-festival-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-pink-net-embroidery-work-festival-wear-sharara-suit',
+  '/product/chinon-silk-yellow-occasional-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-yellow-chinon-silk-embroidery-work-occasional-wear-sharara-suit',
 };
 
 // Explicit 410 Gone routes — URLs that have been permanently retired and have
