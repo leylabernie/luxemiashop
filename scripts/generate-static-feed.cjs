@@ -2,13 +2,11 @@
 /**
  * Generate STATIC Google Merchant Center XML Product Feed at build time.
  *
- * WHY: The Vercel serverless function at /api/merchant-feed returns 403 Forbidden
- * due to Vercel Deployment Protection / WAF / function routing issues.
- * Generating a static XML file at build time completely eliminates the serverless
- * function dependency — Vercel's CDN serves the static file with zero 403 risk.
+ * WHY: Build a validated feed artifact that is available as a fallback and can be
+ * compared with the live Shopify-backed Vercel feed during release verification.
  *
  * Feed URL: https://luxemia.shop/merchant-feed.xml
- * Also available at: https://luxemia.shop/api/merchant-feed (via serverless function, if working)
+ * Live Shopify-backed route: https://luxemia.shop/api/merchant-feed
  *
  * Run: node scripts/generate-static-feed.cjs
  * Automatically run during: npm run build
