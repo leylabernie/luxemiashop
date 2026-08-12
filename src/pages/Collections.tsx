@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -39,12 +39,6 @@ const Collections = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState('featured');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [collectionSlug, setCollectionSlug] = useState('');
-
-  useEffect(() => {
-    const slug = window.location.pathname.replace('/collections/', '');
-    setCollectionSlug(slug);
-  }, []);
 
   const filteredProducts = useMemo(() => {
     return filterAndSortProducts(products, activeFilters, priceRange, sortBy);

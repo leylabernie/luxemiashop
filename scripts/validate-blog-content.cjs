@@ -57,6 +57,10 @@ const unsupportedClaimPatterns = [
   /made[- ]to[- ]measure (?:on|for) every/i,
   /customi[sz](?:e|ation|ed)[\s\S]{0,40}no extra cost/i,
   /LuxeMia (?:is|are) (?:an )?(?:authorized|official) (?:dealer|retailer|partner)/i,
+  /LuxeMia ships only to (?:the )?United States/i,
+  /LuxeMia currently ships to (?:the )?United States addresses/i,
+  /United States addresses only/i,
+  /previous LuxeMia article incorrectly/i,
 ];
 
 for (const post of blogPosts) {

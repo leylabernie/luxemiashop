@@ -115,7 +115,6 @@ const Lookbook = () => {
                 subtitle={collection.subtitle}
                 description={collection.description}
                 products={sectionProducts}
-                index={index}
                 layout={index % 2 === 0 ? 'left' : 'right'}
               />
             );

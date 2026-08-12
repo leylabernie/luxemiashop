@@ -70,14 +70,6 @@ interface SEOHeadProps {
   hreflang?: HreflangAlternate[];
 }
 
-// Unified social media links — single source of truth
-const SOCIAL_LINKS = {
-  instagram: 'https://www.instagram.com/luxemiausa',
-  facebook: 'https://www.facebook.com/LuxeMia',
-  pinterest: 'https://www.pinterest.com/luxemiashop',
-  tiktok: 'https://www.tiktok.com/@shopluxemia',
-};
-
 const SEOHead = ({
   title = 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
   description = 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',

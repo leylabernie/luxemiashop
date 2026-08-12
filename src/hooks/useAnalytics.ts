@@ -7,8 +7,12 @@ const GA_MEASUREMENT_ID = 'G-D1NN0TC3Y0';
 
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
+    gtag?: (
+      command: 'config' | 'event',
+      targetIdOrEventName: string,
+      params?: Record<string, unknown>,
+    ) => void;
+    dataLayer: unknown[];
   }
 }
 

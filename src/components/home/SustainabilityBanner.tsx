@@ -45,7 +45,7 @@ const SustainabilityBanner = () => {
               Honest Service, Real Value
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              LuxeMia is an online Indian ethnic wear store for U.S. shoppers. We publish the available
+              LuxeMia is an online Indian ethnic wear store shipping to seven countries. We publish the available
               product details, shipping costs, final-sale terms, and damage-claim requirements so
               customers can review them before ordering.
             </p>

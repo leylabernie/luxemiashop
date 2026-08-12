@@ -30,7 +30,6 @@
  */
 
 import { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -234,7 +233,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
                 onPriceChange={setPriceRange}
                 onClearAll={clearAll}
                 activeFilterCount={activeFilterCount}
-                activeSubSlug={state.subcategory}
+                activeSubSlug={state.subcategory ?? undefined}
               />
             </div>
 
@@ -283,7 +282,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
                           onPriceChange={setPriceRange}
                           onClearAll={clearAll}
                           activeFilterCount={activeFilterCount}
-                          activeSubSlug={state.subcategory}
+                          activeSubSlug={state.subcategory ?? undefined}
                         />
                       </div>
                     </SheetContent>

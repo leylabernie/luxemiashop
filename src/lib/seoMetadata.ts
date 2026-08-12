@@ -107,13 +107,13 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/indian-ethnic-wear-usa`,
   },
   '/shipping': {
-    title: 'Shipping Policy | Free at $150 and Above | LuxeMia',
-    description: "LuxeMia currently ships to United States addresses. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is emailed after dispatch.",
+    title: 'Shipping Policy | U.S. & International Delivery | LuxeMia',
+    description: 'LuxeMia ships to the U.S., Canada, UK, Australia, New Zealand, South Africa and Mauritius. Review current rates, timing, tracking and customs guidance.',
     canonical: `${SITE_URL}/shipping`,
   },
   '/pages/shipping-customs': {
-    title: "U.S. Shipping Information | LuxeMia",
-    description: "Review LuxeMia's current United States shipping rates, tracking policy and address requirements before ordering.",
+    title: 'Shipping, Customs & Taxes | LuxeMia',
+    description: "Review LuxeMia's U.S. and international shipping rates, tracking, customs and tax guidance before ordering.",
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {

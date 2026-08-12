@@ -153,7 +153,7 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Compare Current Prices</h3>
-                <p>Use the live price on each product page. Shipping is $12 below $150 and free at $150 and above for United States addresses.</p>
+                <p>Use the live price on each product page. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

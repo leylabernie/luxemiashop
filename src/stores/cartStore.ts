@@ -5,6 +5,11 @@ import { trackAddToCart, trackBeginCheckout } from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
 
 
+export interface CartAttribute {
+  key: string;
+  value: string;
+}
+
 export interface CartItem {
   product: ShopifyProduct;
   variantId: string;
@@ -18,10 +23,7 @@ export interface CartItem {
     name: string;
     value: string;
   }>;
-  customAttributes?: Array<{
-    key: string;
-    value: string;
-  }>;
+  customAttributes?: CartAttribute[];
 }
 
 interface CartStore {
@@ -32,8 +34,8 @@ interface CartStore {
   isCartOpen: boolean;
 
   addItem: (item: CartItem) => void;
-  updateQuantity: (variantId: string, quantity: number, customAttributes?: any[]) => void;
-  removeItem: (variantId: string, customAttributes?: any[]) => void;
+  updateQuantity: (variantId: string, quantity: number, customAttributes?: CartAttribute[]) => void;
+  removeItem: (variantId: string, customAttributes?: CartAttribute[]) => void;
   clearCart: () => void;
   setCartId: (cartId: string) => void;
   setCheckoutUrl: (url: string) => void;

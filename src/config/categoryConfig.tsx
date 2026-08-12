@@ -12,7 +12,6 @@
  */
 
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
@@ -181,10 +180,6 @@ function styleSub(slug: string, label: string, matchTags: string[]): Subcategory
 
 function priceSub(slug: string, label: string, priceMin: number, priceMax: number): Subcategory {
   return { slug, label, group: 'price', matchTags: [], priceMin, priceMax };
-}
-
-function audienceSub(slug: string, label: string, matchTags: string[]): Subcategory {
-  return { slug, label, group: 'audience', matchTags };
 }
 
 // ─── Lehengas ──────────────────────────────────────────────────────────────

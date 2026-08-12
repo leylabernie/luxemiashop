@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
@@ -47,7 +47,7 @@ const isJewelryProductType = (productType?: string): boolean => {
   return JEWELRY_PRODUCT_TYPES.some((type) => lower.includes(type));
 };
 
-const sanitizeSeoTitle = (value?: string): string => (value || '')
+const sanitizeSeoTitle = (value?: string | null): string => (value || '')
   .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
   .replace(/\s+/g, ' ')
   .trim();
@@ -352,11 +352,18 @@ const ProductDetail = () => {
                 {/* Gallery */}
                 <ProductGallery 
                   images={product.images.edges} 
-                  productTitle={product.title} 
+                  productTitle={sanitizeProductTitle(product.title)}
                 />
                 
                 {/* Product Info */}
-                <ProductInfo key={product.id} product={product} />
+                <ProductInfo
+                  key={product.id}
+                  product={{
+                    ...product,
+                    title: sanitizeProductTitle(product.title),
+                    description: enrichedDescription || product.description,
+                  }}
+                />
               </div>
 
               {/* Product Tabs */}

@@ -12,7 +12,6 @@ import {
 } from '@/config/rakshaBandhanCampaign';
 
 const FREE_SHIPPING_THRESHOLD = 150;
-const FLAT_SHIPPING_RATE = 12;
 const SHIPPING_PROMISE = 'U.S. standard shipping is free at $150 and above and $12 below. International fixed rates are free at $300 and above; checkout shows available services.';
 
 interface CartDrawerProps {
@@ -23,7 +22,6 @@ interface CartDrawerProps {
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const { items, isLoading, updateQuantity, removeItem, createCheckout } = useCartStore();
   const [showEmailCapture, setShowEmailCapture] = useState(false);
-  const [capturedEmail, setCapturedEmail] = useState<string | null>(null);
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
@@ -50,8 +48,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     proceedToCheckout();
   };
 
-  const handleEmailSubmitted = (email: string) => {
-    setCapturedEmail(email);
+  const handleEmailSubmitted = (_email: string) => {
     setShowEmailCapture(false);
     proceedToCheckout();
   };

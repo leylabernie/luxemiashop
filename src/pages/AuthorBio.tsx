@@ -5,7 +5,6 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import type { BlogPost } from '@/data/blogPosts';
-import { blogPosts } from '@/data/blogPosts';
 import BlogPostVisual from '@/components/blog/BlogPostVisual';
 import { BLOG_AUTHORS, getAuthorBySlug } from '@/data/blogAuthors';
 import { getBlogCategoryGroup } from '@/data/blogCategories';

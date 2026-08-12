@@ -27,7 +27,7 @@ const Terms = () => {
                 <span className="text-sm font-medium">Legal Agreement</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-serif mb-6">Terms of Service</h1>
-              <p className="text-muted-foreground">Last updated: January 2, 2026</p>
+              <p className="text-muted-foreground">Last updated: August 11, 2026</p>
               <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
                 Please read these terms carefully before making a purchase. By using our services, 
                 you agree to be legally bound by these terms.
@@ -129,8 +129,8 @@ const Terms = () => {
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">3.2 Product Accuracy</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>Product images are for illustration purposes only. Actual colors, textures, and embroidery patterns may vary slightly due to photography, monitor settings, and the nature of our products.</li>
-                        <li>Minor variations in handwork are characteristic of these products and are not considered defects.</li>
+                        <li>Colors and apparent textures can vary with photography, lighting, and display settings. Review all available images and contact LuxeMia before ordering if a specific detail is essential.</li>
+                        <li>Use the exact product listing for stated materials, included pieces, measurements, stitching status, and available options.</li>
                         <li>We make every effort to display accurate product descriptions but do not warrant that descriptions are error-free.</li>
                       </ul>
                     </div>
@@ -152,8 +152,8 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">4.2 Payment Terms</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Full payment is required at the time of order placement.</li>
-                        <li>We accept major credit cards (Visa, MasterCard, American Express), PayPal, and other payment methods displayed at checkout.</li>
-                        <li>All payment information is processed securely through encrypted payment gateways.</li>
+                        <li>The payment methods currently available for an order are displayed at checkout and may vary by location, device, currency, or checkout provider.</li>
+                        <li>Payment information is handled by the checkout and payment providers identified during checkout.</li>
                         <li>Orders will not be processed until payment is successfully completed.</li>
                       </ul>
                     </div>
@@ -232,7 +232,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">8.1 All Sales Final</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li><strong>To the extent permitted by applicable law, we do not accept returns or offer refunds for change of mind, sizing, color, fit, or custom-order preferences.</strong></li>
-                        <li>Each piece is crafted specifically for your order based on your measurements and selections.</li>
+                        <li>Sizing, color, fit, and other selection preferences are not covered order issues.</li>
                         <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>
                     </div>
@@ -252,11 +252,11 @@ const Terms = () => {
                 </section>
 
                 <section id="warranty">
-                  <h2 className="text-xl font-serif text-foreground mb-4">9. Product Care and Variations</h2>
+                  <h2 className="text-xl font-serif text-foreground mb-4">9. Product Information and Care</h2>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>All products are inspected for quality before shipment.</li>
-                    <li>Embroidered items may have minor variations which are characteristic of this type of work and not defects.</li>
-                    <li>Please follow care instructions to maintain product quality.</li>
+                    <li>Review the exact listing for the product details supplied for that item.</li>
+                    <li>Follow the care label or product-specific instructions provided with the item.</li>
+                    <li>Report genuine shipping damage, an incorrect item, or a missing item under Section 8.</li>
                   </ul>
                 </section>
 

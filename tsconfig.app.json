@@ -29,5 +29,19 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/components/ui/alert-dialog.tsx",
+    "src/components/ui/aspect-ratio.tsx",
+    "src/components/ui/avatar.tsx",
+    "src/components/ui/context-menu.tsx",
+    "src/components/ui/hover-card.tsx",
+    "src/components/ui/menubar.tsx",
+    "src/components/ui/navigation-menu.tsx",
+    "src/components/ui/popover.tsx",
+    "src/components/ui/radio-group.tsx",
+    "src/components/ui/scroll-area.tsx",
+    "src/components/ui/toggle-group.tsx",
+    "src/components/ui/toggle.tsx"
   ]
 }

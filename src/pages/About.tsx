@@ -8,7 +8,7 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="About LuxeMia — Indian Ethnic Wear Online"
-        description="Learn about LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, and tracked delivery."
+        description="Learn about LuxeMia, an online Indian ethnic wear store with clear product details, sizing guidance, U.S.-based support, and shipping to seven countries."
         canonical="https://luxemia.shop/about"
       />
       <Header />
@@ -21,8 +21,8 @@ const About = () => {
               Indian outfits for the date that is already on the calendar.
             </h1>
             <p className="text-muted-foreground leading-relaxed">
-              LuxeMia is an online Indian ethnic wear store created for U.S. shoppers planning
-              weddings, festivals, receptions, and other special occasions.
+              LuxeMia is an online Indian ethnic wear store for shoppers planning weddings,
+              festivals, receptions, and other special occasions in its seven supported shipping countries.
             </p>
           </div>
         </section>

@@ -18,7 +18,7 @@ export interface ScrapedProduct {
   color: string | null;
   work: string | null;
   occasion: string | null;
-  tags: string[];
+  tags: string[] | null;
   created_at: string;
   is_active: boolean;
 }

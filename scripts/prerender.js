@@ -905,7 +905,7 @@ const routes = [
     description: 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
     h1: 'Premium Indian Ethnic Wear with Tracked U.S. Shipping',
     content: `
-      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry for U.S. delivery. Browse Indian wedding guest outfits with tracked shipping across the United States.</p>
+      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with shipping to seven countries. Browse Indian wedding guest outfits with U.S.-based support and tracked shipping.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
@@ -1251,10 +1251,10 @@ const routes = [
   {
     path: '/blog',
     title: 'Fact-Checked Indian Ethnic Wear Guides | LuxeMia',
-    description: 'Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear for U.S. customers.',
+    description: 'Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear for shoppers in LuxeMia’s supported countries.',
     h1: 'Fact-Checked Indian Ethnic Wear Guides',
     content: `
-      <p>Source-reviewed guides to Indian clothing terms, measurements, textiles, cultural context and occasionwear for U.S. customers.</p>
+      <p>Source-reviewed guides to Indian clothing terms, measurements, textiles, cultural context and occasionwear for shoppers in LuxeMia’s supported countries.</p>
       <p>The current article and topic lists are generated from the same published data used by the site.</p>
     `,
   },
@@ -1460,9 +1460,9 @@ const routes = [
   {
     path: '/about',
     title: 'About LuxeMia — Indian Ethnic Wear Online',
-    description: 'Learn about LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, and tracked delivery.',
+    description: 'Learn about LuxeMia, an online Indian ethnic wear store with clear product details, U.S.-based support, and shipping to seven countries.',
     h1: 'About LuxeMia',
-    content: '<p>LuxeMia is an online Indian ethnic wear store serving U.S. shoppers planning weddings, festivals, receptions, and other special occasions. Product pages explain the available fabric, work, stitching status, sizing, and package contents for each listing.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
+    content: '<p>LuxeMia is an online Indian ethnic wear store shipping to seven countries. Product pages explain the available fabric, work, stitching status, sizing, and package contents for each listing.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
   },
 
   {
@@ -1472,7 +1472,7 @@ const routes = [
     description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. shipping at $150 and above.",
     h1: 'New Arrivals',
     content: `
-      <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry available online for delivery across the United States.</p>
+      <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry with shipping to seven countries.</p>
       <h2>What is new at LuxeMia?</h2>
       <p>This collection brings together LuxeMia's latest wedding, reception, festival, and special-occasion styles so shoppers can find newly added pieces in one place.</p>
       <p>Free U.S. shipping is available at $150 and above, with $12 flat-rate shipping below $150. Tracking is provided after dispatch.</p>
@@ -1689,9 +1689,9 @@ const routes = [
   {
     path: '/authors/luxemia-editorial-team',
     title: 'LuxeMia Editorial Team | Product & Shopping Guides',
-    description: 'Meet the LuxeMia Editorial Team behind our product, sizing, care, shipping and occasion-shopping guides for U.S. customers.',
+    description: 'Meet the LuxeMia Editorial Team behind our product, sizing, care, shipping and occasion-shopping guides for shoppers in supported countries.',
     h1: 'LuxeMia Editorial Team',
-    content: '<p>The LuxeMia Editorial Team creates practical guides for shopping Indian ethnic wear online. Articles cover garment terminology, sizing, care, shipping and occasion planning for customers in the United States.</p><p>Product and policy details are reviewed by the LuxeMia team. Time-sensitive customs and delivery guidance should be confirmed with the relevant carrier or government authority.</p>',
+    content: '<p>The LuxeMia Editorial Team creates practical guides for shopping Indian ethnic wear online. Articles cover garment terminology, sizing, care, shipping and occasion planning for shoppers in LuxeMia’s supported countries.</p><p>Product and policy details are reviewed by the LuxeMia team. Time-sensitive customs and delivery guidance should be confirmed with the relevant carrier or government authority.</p>',
   },
 
 
@@ -2288,7 +2288,7 @@ async function main() {
         .map(group => `<li><a href="/blog/${escapeHtml(group.slug)}">${escapeHtml(group.name)}</a></li>`)
         .join('');
       blogIndex.content =
-        '<p>Source-reviewed guides to Indian clothing terms, measurements, textiles, cultural context and occasionwear for U.S. customers.</p>' +
+        '<p>Source-reviewed guides to Indian clothing terms, measurements, textiles, cultural context and occasionwear for shoppers in LuxeMia’s supported countries.</p>' +
         `<h2>Published Guides</h2><ul>${guideLinks}</ul>` +
         `<h2>Browse by Topic</h2><ul>${hubLinks}</ul>` +
         '<p>For exact fabric or materials, included pieces, stitching status, sizes, price and availability, use the individual product listing as the source of truth.</p>';
@@ -2413,7 +2413,7 @@ async function main() {
     const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
     const fallbackDesc = productIsJewelry
-      ? `Shop ${baseTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
+      ? `Shop ${baseTitle} at LuxeMia. Indian jewelry with shipping to seven countries. Review the listing for exact materials, finish, stones, and included pieces.`
       : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to seven countries; destination-specific rates are shown at checkout.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({

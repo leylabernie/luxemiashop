@@ -16,8 +16,8 @@ const NotFound = () => {
 
   useEffect(() => {
     // Log 404s to GA4 for monitoring broken-link sources
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'page_404', {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'page_404', {
         page_path: location.pathname,
         page_referrer: document.referrer,
         page_title: '404 — Page Not Found',

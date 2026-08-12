@@ -29,8 +29,16 @@ const useValidatedImages = (images: ProductGalleryProps['images']) => {
     }
 
     setIsValidating(true);
+    let isActive = true;
     const validated: ProductGalleryProps['images'] = [];
     let loadedCount = 0;
+
+    const finishValidation = () => {
+      if (isActive && loadedCount === images.length) {
+        setValidatedImages(validated.filter(Boolean));
+        setIsValidating(false);
+      }
+    };
 
     images.forEach((image, index) => {
       const img = new Image();
@@ -39,19 +47,12 @@ const useValidatedImages = (images: ProductGalleryProps['images']) => {
       img.onload = () => {
         validated[index] = image;
         loadedCount++;
-        if (loadedCount === images.length) {
-          // Filter out undefined entries (failed images)
-          setValidatedImages(validated.filter(Boolean));
-          setIsValidating(false);
-        }
+        finishValidation();
       };
       
       img.onerror = () => {
         loadedCount++;
-        if (loadedCount === images.length) {
-          setValidatedImages(validated.filter(Boolean));
-          setIsValidating(false);
-        }
+        finishValidation();
       };
       
       img.src = optimizedUrl;
@@ -59,13 +60,16 @@ const useValidatedImages = (images: ProductGalleryProps['images']) => {
 
     // Timeout fallback - don't wait forever
     const timeout = setTimeout(() => {
-      if (isValidating) {
+      if (isActive) {
         setValidatedImages(validated.filter(Boolean));
         setIsValidating(false);
       }
     }, 5000);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      isActive = false;
+      clearTimeout(timeout);
+    };
   }, [images]);
 
   return { validatedImages, isValidating };
@@ -184,7 +188,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   }, [displayImages.length]);
 
   // Handle swipe gestures
-  const handleDragEnd = (_: any, info: PanInfo) => {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const threshold = 50;
     if (info.offset.x < -threshold) {
       handleNextImage();
@@ -208,7 +212,7 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
     });
   };
 
-  const handleLightboxPan = (_: any, info: PanInfo) => {
+  const handleLightboxPan = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (lightboxZoom > 1) {
       setLightboxPan((prev) => ({
         x: prev.x + info.delta.x,

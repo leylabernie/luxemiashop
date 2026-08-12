@@ -160,7 +160,7 @@ const timelineEvents = [
     year: '2025',
     title: 'LuxeMia is Founded',
     description:
-      'LuxeMia begins as an online Indian ethnic wear store serving U.S. shoppers.',
+      'LuxeMia begins as an online Indian ethnic wear store with U.S.-based support.',
   },
   {
     year: '2025',
@@ -178,7 +178,7 @@ const timelineEvents = [
     year: '2026',
     title: 'Expanding Search Discovery',
     description:
-      'LuxeMia strengthens collection pages, merchant listings, and educational content for U.S. shoppers.',
+      'LuxeMia strengthens collection pages, merchant listings, and source-reviewed educational content.',
   },
 ];
 
@@ -312,7 +312,7 @@ const BrandStory = () => {
       {/* SEO Head with enriched props */}
       <SEOHead
         title="Our Story \u2014 LuxeMia | Indian Ethnic Wear Online"
-        description="Discover LuxeMia, an online Indian ethnic wear store serving U.S. shoppers with clear product details, sizing guidance, support, and tracked delivery."
+        description="Discover LuxeMia, an online Indian ethnic wear store with clear product details, sizing guidance, U.S.-based support, and shipping to seven countries."
         canonical="https://luxemia.shop/brand-story"
         image="/images/heroes/hero-bridal-couture.jpg"
         breadcrumbs={[
@@ -380,7 +380,7 @@ const BrandStory = () => {
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             We&#39;re a new online brand with a clear mission: make Indian ethnic
-            wear easier for U.S. shoppers to understand and order, with transparent
+            wear easier to understand and order, with transparent
             product details, practical sizing guidance, and responsive support.
           </p>
         </motion.div>
@@ -397,7 +397,7 @@ const BrandStory = () => {
       <ParallaxSection
         title="Why We Started"
         subtitle="Fresh Perspective, 2025"
-        content="LuxeMia was created to make Indian ethnic wear easier to review online for U.S. shoppers. We focus on listing-specific product details, sizing guidance, published policies, and support before purchase. Tracking is provided after dispatch to U.S. addresses."
+        content="LuxeMia was created to make Indian ethnic wear easier to review online. We focus on listing-specific product details, sizing guidance, published policies, and support before purchase. Tracking is provided after dispatch to supported destinations."
         imagePosition="right"
         bgColor="bg-card"
         imageUrl="/images/heroes/hero-bridal-couture.jpg"
@@ -721,8 +721,8 @@ const BrandStory = () => {
             <div className="p-6 bg-background border border-border/50 rounded-lg">
               <h3 className="font-serif text-lg mb-3">Business Model</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                LuxeMia is an online-only Indian ethnic wear store serving U.S.
-                shoppers. We publish the available information about fabrics,
+                LuxeMia is an online-only Indian ethnic wear store with shipping
+                to seven countries. We publish the available information about fabrics,
                 embellishments, stitching status, measurements, and package
                 contents. Tracking is provided after dispatch.
               </p>

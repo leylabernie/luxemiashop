@@ -9,6 +9,23 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+interface ShopifyLineItemEdge {
+  node: {
+    title: string;
+    quantity: number;
+    variant?: { image?: { url: string } | null } | null;
+    originalUnitPriceSet?: {
+      shopMoney?: { amount: string; currencyCode: string } | null;
+    } | null;
+  };
+}
+
+interface ShopifyFulfillment {
+  status: string;
+  createdAt: string;
+  trackingInfo?: Array<{ number: string; url: string }> | null;
+}
+
 // Validate JWT and return user claims
 const validateAuth = async (req: Request) => {
   const authHeader = req.headers.get('Authorization');
@@ -226,13 +243,13 @@ Deno.serve(async (req: Request) => {
         province: order.shippingAddress.province,
         country: order.shippingAddress.country,
       } : null,
-      lineItems: order.lineItems?.edges?.map((edge: any) => ({
+      lineItems: order.lineItems?.edges?.map((edge: ShopifyLineItemEdge) => ({
         title: edge.node.title,
         quantity: edge.node.quantity,
         image: edge.node.variant?.image?.url,
         price: edge.node.originalUnitPriceSet?.shopMoney,
       })) || [],
-      fulfillments: order.fulfillments?.map((f: any) => ({
+      fulfillments: order.fulfillments?.map((f: ShopifyFulfillment) => ({
         status: f.status,
         createdAt: f.createdAt,
         tracking: f.trackingInfo?.[0] || null,

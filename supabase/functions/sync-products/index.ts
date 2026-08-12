@@ -227,7 +227,7 @@ const parseProducts = (markdown: string, category: string, minPrice: number): Sc
   const products: ScrapedProduct[] = [];
   
   // Match product patterns: image URL, title, prices
-  const productRegex = /\[\!\[(.*?)\]\((https:\/\/kesimg\.b-cdn\.net[^\)]+)\).*?\\\\?\s*([^\\]+?)\\\\?\s*INR\s*(\d+)\s*INR\s*(\d+)/gs;
+  const productRegex = /\[!\[(.*?)\]\((https:\/\/kesimg\.b-cdn\.net[^)]+)\).*?\\\\?\s*([^\\]+?)\\\\?\s*INR\s*(\d+)\s*INR\s*(\d+)/gs;
   
   let match;
   while ((match = productRegex.exec(markdown)) !== null) {

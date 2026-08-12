@@ -19,16 +19,15 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
   const addItem = useCartStore(state => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  if (!product) return null;
-
-  const variants = product.node.variants.edges;
+  const productId = product?.node.id;
+  const variants = product?.node.variants.edges ?? [];
   const firstAvailableIdx = variants.findIndex((variant) => variant.node.availableForSale !== false);
 
   useEffect(() => {
-    if (firstAvailableIdx >= 0 && variants[selectedVariantIdx]?.node.availableForSale === false) {
-      setSelectedVariantIdx(firstAvailableIdx);
-    }
-  }, [firstAvailableIdx, selectedVariantIdx, variants]);
+    setSelectedVariantIdx(firstAvailableIdx >= 0 ? firstAvailableIdx : 0);
+  }, [firstAvailableIdx, productId]);
+
+  if (!product) return null;
 
   const selectedVariant = variants[selectedVariantIdx]?.node;
   const imageUrl = product.node.images.edges[0]?.node.url;
@@ -53,18 +52,11 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
   };
 
   const handleWishlist = () => {
-    const productData = {
-      id: product.node.id,
-      title: product.node.title,
-      handle: product.node.handle,
-      priceRange: product.node.priceRange,
-      images: product.node.images,
-    };
     if (inWishlist) {
       removeFromWishlist(product.node.id);
       toast.success('Removed from wishlist');
     } else {
-      addToWishlist(productData as any);
+      addToWishlist(product);
       toast.success('Added to wishlist!');
     }
   };

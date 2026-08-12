@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -63,7 +63,7 @@ interface ConsultationLead {
 }
 
 async function isIPBlocked(
-  supabase: any,
+  supabase: SupabaseClient,
   ipAddress: string
 ): Promise<boolean> {
   try {
@@ -81,7 +81,7 @@ async function isIPBlocked(
 }
 
 async function blockIP(
-  supabase: any,
+  supabase: SupabaseClient,
   ipAddress: string,
   violationCount: number
 ): Promise<void> {
@@ -110,7 +110,7 @@ async function blockIP(
 }
 
 async function checkAndUpdateRateLimit(
-  supabase: any,
+  supabase: SupabaseClient,
   identifier: string
 ): Promise<{ allowed: boolean; violationCount: number }> {
   try {
@@ -169,7 +169,7 @@ async function checkAndUpdateRateLimit(
   }
 }
 
-function validateConsultationData(data: any): { valid: boolean; error?: string } {
+function validateConsultationData(data: Record<string, unknown>): { valid: boolean; error?: string } {
   if (!data.name || typeof data.name !== 'string' || data.name.trim().length === 0) {
     return { valid: false, error: 'Name is required' };
   }

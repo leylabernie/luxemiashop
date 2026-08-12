@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, forwardRef, useMemo, memo } from 'react';
+import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Plus, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -101,6 +101,8 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const initialDistanceRef = useRef<number>(0);
   const initialScaleRef = useRef<number>(1);
+
+  useImperativeHandle(ref, () => cardRef.current!);
   
   
   const addItem = useCartStore((state) => state.addItem);
@@ -275,15 +277,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
   return (
     <motion.div
-      ref={(node) => {
-        // Merge external ref with internal cardRef
-        cardRef.current = node;
-        if (typeof ref === 'function') {
-          ref(node);
-        } else if (ref) {
-          ref.current = node;
-        }
-      }}
+      ref={cardRef}
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: animationDelay }}

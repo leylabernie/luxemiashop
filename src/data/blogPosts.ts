@@ -51,6 +51,7 @@ export const PUBLISHED_BLOG_SLUGS = [
 ] as const;
 
 const FACT_CHECKED_AT = '2026-08-08';
+const POLICY_REVIEWED_AT = '2026-08-11';
 const EDITORIAL_TEAM = 'LuxeMia Editorial Team';
 
 const source = (title: string, url: string, publisher: string): BlogSource => ({
@@ -141,17 +142,19 @@ const SOURCES = {
     'LuxeMia',
   ),
   luxemiaShipping: source(
-    'U.S. Shipping Policy',
+    'Shipping Policy — U.S. and International Delivery',
     'https://luxemia.shop/shipping',
     'LuxeMia',
   ),
 };
 
-const editorialNote = `
+const editorialNoteFor = (reviewDate: string) => `
   <aside>
-    <p><strong>Editorial standard:</strong> This guide was fact-checked on August 8, 2026. Documented facts are tied to the sources shown below. Styling ideas are optional suggestions, not cultural rules. For a LuxeMia product, use the individual listing for exact materials, included pieces, stitching, measurements, price and availability.</p>
+    <p><strong>Editorial standard:</strong> This guide was fact-checked on ${reviewDate}. Documented facts are tied to the sources shown below. Styling ideas are optional suggestions, not cultural rules. For a LuxeMia product, use the individual listing for exact materials, included pieces, stitching, measurements, price and availability.</p>
   </aside>
 `;
+const editorialNote = editorialNoteFor('August 8, 2026');
+const policyEditorialNote = editorialNoteFor('August 11, 2026');
 
 export const blogPosts: BlogPost[] = [
   {
@@ -360,7 +363,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Styling Indian Ethnic Wear for U.S. Festivals: A Practical, Respectful Guide',
     excerpt: 'Festival practices and dress vary by family, region, faith and event. Confirm the organizer’s expectations, then choose the garment for venue, weather, movement and the exact listing details.',
     content: `
-      ${editorialNote}
+      ${policyEditorialNote}
       <h2>Festival names do not create one dress code</h2>
       <p>Diwali, Eid, Navratri and other celebrations are observed by diverse communities. A temple program, family dinner, community garba and formal fundraiser can require different clothing even when held for the same festival. Use the invitation or organizer's instructions as the authority.</p>
 
@@ -373,15 +376,15 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Ordering from LuxeMia</h2>
-      <p>LuxeMia currently ships to United States addresses. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided, but “tracked” does not mean guaranteed arrival by an event date. If timing is important, contact LuxeMia before ordering.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Tracking does not guarantee arrival by an event date, so contact LuxeMia before ordering when timing is important.</p>
 
       <h2>Optional styling suggestions</h2>
       <p>You may coordinate with a family color palette, repeat a garment color in one accessory or choose footwear for dancing. These are optional styling decisions, not festival requirements. Religious or family practices should come from the people hosting the event.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-12',
-    updatedAt: FACT_CHECKED_AT,
-    factCheckedAt: FACT_CHECKED_AT,
+    updatedAt: POLICY_REVIEWED_AT,
+    factCheckedAt: POLICY_REVIEWED_AT,
     category: 'Festival Guide',
     tags: ['festival outfits usa', 'indian ethnic wear usa', 'diwali outfit', 'navratri outfit', 'event planning'],
     image: '/images/blog/gdrive/bride-blue-lehenga-festive.webp',
@@ -677,23 +680,23 @@ export const blogPosts: BlogPost[] = [
     title: 'Navratri 2026 Dates, Garba Clothing and the Truth About Color Lists',
     excerpt: 'Sharad Navratri begins October 11, 2026, with Maha Navami on October 19 and Vijayadashami on October 20 in the cited New Delhi calendar. Dates and practices can vary by location and tradition.',
     content: `
-      ${editorialNote}
+      ${policyEditorialNote}
       <h2>Verified 2026 dates</h2>
       <p>Incredible India explains Navratri as “nine nights” honoring forms of Goddess Durga. For New Delhi, the cited 2026 panchang places the start of Sharad Navratri on Sunday, October 11, Maha Navami on Monday, October 19, and Vijayadashami on Tuesday, October 20. Religious-calendar observances can vary by location, tithi and community, so confirm dates with your temple or event organizer.</p>
 
       <h2>Are the nine colors universal?</h2>
-      <p>No single nine-color list should be presented as a rule followed by every Navratri observer. Published color calendars can depend on the year and source, while families and organizations may use different themes or no daily color schedule. The previous LuxeMia article incorrectly used 2025 dates as 2026 dates; this revision corrects that error.</p>
+      <p>No single nine-color list should be presented as a rule followed by every Navratri observer. Published color calendars can depend on the year and source, while families and organizations may use different themes or no daily color schedule.</p>
 
       <h2>What to wear for garba</h2>
       <p>Garba clothing varies. Chaniya choli, kediyu-style garments, kurtas, lehengas and other festive outfits may be worn, but the event organizer's dress code is the authority. For dancing, check garment security, hem length, footwear, jewelry weight and whether mirrors, sequins or other work can snag nearby clothing.</p>
 
       <h2>Ordering for an event</h2>
-      <p>LuxeMia ships only to United States addresses. Shipping is $12 below $150 and free at $150 and above. The store does not promise that every item will arrive by a particular Navratri event. Contact support before ordering when the date is important.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Delivery by a particular Navratri event is not guaranteed, so contact support before ordering when the date is important.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-15',
-    updatedAt: FACT_CHECKED_AT,
-    factCheckedAt: FACT_CHECKED_AT,
+    updatedAt: POLICY_REVIEWED_AT,
+    factCheckedAt: POLICY_REVIEWED_AT,
     category: 'Festival Guide',
     tags: ['navratri 2026', 'navratri dates', 'garba outfit', 'navratri colors', 'chaniya choli'],
     image: '/images/blog/blog-006-teal-green-net.webp',

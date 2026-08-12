@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Crown, Users, Sparkles, Star, Feather, Zap, Diamond, Palette, ArrowRight, RotateCcw, Check } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -25,6 +26,21 @@ type Profile = {
   emoji: string;
   gradient: string;
   primaryHref: string;
+};
+
+type QuizOption = {
+  value: string;
+  label: string;
+  desc: string;
+  icon?: LucideIcon;
+  swatch?: string[];
+};
+
+type QuizStep = {
+  id: keyof Answers;
+  question: string;
+  subtitle: string;
+  options: QuizOption[];
 };
 
 // Map silhouette answer → Shopify productType keywords
@@ -72,7 +88,7 @@ const filterByBudget = (products: ShopifyProduct[], budget: string): ShopifyProd
   });
 };
 
-const STEPS = [
+const STEPS: QuizStep[] = [
   {
     id: 'occasion',
     question: "What's the occasion?",
@@ -358,14 +374,14 @@ const StyleQuiz = () => {
                             )}
                             {'swatch' in opt && (
                               <div className="flex gap-1 mb-3">
-                                {(opt as any).swatch.map((c: string, i: number) => (
+                                {opt.swatch?.map((c, i) => (
                                   <div key={i} className="w-5 h-5 rounded-full border border-white/20" style={{ backgroundColor: c }} />
                                 ))}
                               </div>
                             )}
-                            {'icon' in opt && (opt as any).icon && (
+                            {opt.icon && (
                               <div className={`mb-3 ${isSelected ? 'text-background' : 'text-primary'}`}>
-                                {(() => { const Icon = (opt as any).icon; return <Icon className="w-5 h-5" />; })()}
+                                <opt.icon className="w-5 h-5" />
                               </div>
                             )}
                             <p className={`font-semibold text-sm mb-1 ${isSelected ? 'text-background' : 'text-foreground'}`}>

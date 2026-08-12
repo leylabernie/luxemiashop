@@ -27,6 +27,16 @@ export interface ScrapedProduct {
   shopify_variant_ids: string[] | null;
 }
 
+type ImportedShopifyProduct = Pick<
+  ShopifyProduct['node'],
+  'id' | 'title' | 'description' | 'handle' | 'variants' | 'options'
+> & Partial<
+  Pick<
+    ShopifyProduct['node'],
+    'createdAt' | 'vendor' | 'tags' | 'priceRange' | 'compareAtPriceRange' | 'images'
+  >
+>;
+
 // Generate better titles from the image URL
 const generateBetterTitle = (imageUrl: string, category: string, color: string | null, fabric: string | null): string => {
   // Extract meaningful parts from URL like "Cherry-Natural-Silk-Bridal-Wear"
@@ -144,7 +154,10 @@ const getCorrectProductType = (product: ScrapedProduct): string => {
 };
 
 // Convert scraped product to Shopify format for display
-export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?: any): ShopifyProduct => {
+export const convertToShopifyFormat = (
+  product: ScrapedProduct,
+  shopifyProduct?: ImportedShopifyProduct,
+): ShopifyProduct => {
   const betterTitle = generateBetterTitle(
     product.image_url, 
     product.category, 
@@ -156,6 +169,17 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
   const hasRealShopifyIds = product.shopify_product_id && product.shopify_variant_ids && product.shopify_variant_ids.length > 0;
   
   const sizeOptions = ['S', 'M', 'L', 'XL', 'XXL', 'Custom'];
+  const currentPriceRange = {
+    minVariantPrice: {
+      amount: product.price_usd.toString(),
+      currencyCode: 'USD',
+    },
+  };
+  const comparisonAmount = (product.original_price_usd ?? product.price_usd).toString();
+  const compareAtPriceRange = {
+    minVariantPrice: { amount: comparisonAmount, currencyCode: 'USD' },
+    maxVariantPrice: { amount: comparisonAmount, currencyCode: 'USD' },
+  };
   
   // If we have a real Shopify product, use its variants and options directly
   if (shopifyProduct && shopifyProduct.variants && shopifyProduct.options) {
@@ -165,6 +189,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
     return {
       node: {
         id: shopifyId,
+        createdAt: shopifyProduct.createdAt ?? product.created_at,
         title: shopifyProduct.title || product.title || betterTitle,
         description: shopifyProduct.description || product.description,
         handle: shopifyProduct.handle || product.source_id,
@@ -178,12 +203,8 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
           tags: product.tags,
           priceInr: product.price_inr,
         },
-        priceRange: shopifyProduct.priceRange || {
-          minVariantPrice: {
-            amount: product.price_usd.toString(),
-            currencyCode: 'USD'
-          }
-        },
+        priceRange: shopifyProduct.priceRange || currentPriceRange,
+        compareAtPriceRange: shopifyProduct.compareAtPriceRange || compareAtPriceRange,
         images: shopifyProduct.images || {
           edges: (() => {
             const imageList = product.image_urls && product.image_urls.length > 0 
@@ -233,6 +254,7 @@ export const convertToShopifyFormat = (product: ScrapedProduct, shopifyProduct?:
   return {
     node: {
       id: product.shopify_product_id || product.id,
+      createdAt: product.created_at,
       title: product.title || betterTitle,
       description: product.description,
       handle: product.source_id,
@@ -331,7 +353,7 @@ export const useScrapedProducts = (category?: string) => {
           return;
         }
 
-        const formattedProducts = (data || []).map(convertToShopifyFormat);
+        const formattedProducts = (data || []).map(product => convertToShopifyFormat(product));
         setProducts(formattedProducts);
         setHasMore((data || []).length > PAGE_SIZE);
       } catch (err) {
@@ -370,7 +392,7 @@ export const useScrapedProducts = (category?: string) => {
         return;
       }
 
-      const formattedProducts = (data || []).map(convertToShopifyFormat);
+      const formattedProducts = (data || []).map(product => convertToShopifyFormat(product));
       setProducts((prev) => [...prev, ...formattedProducts]);
       setHasMore((data || []).length > PAGE_SIZE);
       setPage(nextPage);
