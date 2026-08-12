@@ -227,7 +227,7 @@ const generateEmailHtml = (
       
       <div style="text-align: center; color: #888; font-size: 14px;">
         <p style="margin: 0 0 8px 0;">Thank you for shopping with LuxeMia</p>
-        <p style="margin: 0;">Questions? Contact us at support@luxemia.shop</p>
+        <p style="margin: 0;">Questions? Contact us at hello@luxemia.shop</p>
       </div>
     </body>
     </html>
@@ -296,10 +296,11 @@ Deno.serve(async (req: Request) => {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Error processing webhook:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: message }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

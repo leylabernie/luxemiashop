@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
-let componentTagger: (() => any) | undefined;
+let componentTagger: (() => Plugin) | undefined;
 try {
   componentTagger = (await import("lovable-tagger")).componentTagger;
 } catch {
@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: isReplit ? "0.0.0.0" : "localhost",
     port: isReplit ? 5000 : 8080,
-    allowedHosts: isReplit ? (true as true) : undefined,
+    allowedHosts: isReplit ? true : undefined,
   },
   plugins: [react(), mode === "development" && componentTagger?.(), deferCssPlugin()].filter(Boolean),
   resolve: {

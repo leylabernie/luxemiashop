@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight, ChevronDown } from 'lucide-react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 import ProductSearch from '../search/ProductSearch';
@@ -46,14 +46,6 @@ const weddingSareeLinks = [
   { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
 ];
 
-const occasionLinks = [
-  { name: 'Diwali Outfits', href: '/collections/diwali-outfits' },
-  { name: 'Wedding Guest', href: '/collections/wedding-guest-outfits' },
-  { name: 'Mehendi Ceremony', href: '/collections/mehendi-outfits' },
-  { name: 'Eid Outfits', href: '/collections/eid-outfits' },
-  { name: 'Navratri & Garba', href: '/collections/navratri-outfits' },
-];
-
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -77,8 +69,6 @@ const Header = () => {
 
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     if (user) loadFromDatabase(user.id);

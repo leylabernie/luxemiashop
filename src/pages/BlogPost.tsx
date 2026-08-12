@@ -7,7 +7,6 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import type { BlogPost as BlogPostType } from '@/data/blogPosts';
 import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Facebook, Twitter, BookOpen, List, ChevronRight, RefreshCw, MessageCircle, ShoppingBag, BadgeCheck, ExternalLink } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
@@ -95,7 +94,6 @@ const postShopCta: Record<string, { eyebrow: string; heading: string; href: stri
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const [readingProgress, setReadingProgress] = useState(0);
   const [tocOpen, setTocOpen] = useState(true);
@@ -105,9 +103,6 @@ const BlogPost = () => {
       if (slug) {
         const found = m.getPostBySlug(slug);
         setPost(found);
-        if (found) {
-          setRelatedPosts(m.getRelatedPosts(found));
-        }
       }
       setIsDataLoading(false);
     });

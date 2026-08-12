@@ -229,8 +229,8 @@ def build_tags(item):
 
         # Brand + status
         'LuxeMia', 'gender:male', 'men', 'menswear',
-        'new arrival', 'handcrafted', 'premium menswear',
-        'US shipping', 'free shipping over 350',
+        'new arrival', 'menswear',
+        'US shipping', 'international shipping',
     ])
 
     # Remove duplicates while preserving order

@@ -17,6 +17,21 @@ declare global {
   }
 }
 
+interface PersistedCartItem {
+  variantId?: string;
+  variantTitle?: string;
+  price?: { amount?: string };
+  quantity?: number;
+  product?: {
+    node?: {
+      id?: string;
+      handle?: string;
+      title?: string;
+      productType?: string;
+    };
+  };
+}
+
 /**
  * Order Confirmation Page
  *
@@ -113,9 +128,11 @@ const OrderConfirmation = () => {
 
     let items: Array<{ id: string; name: string; price: number; quantity: number; category?: string }> = [];
     try {
-      const persisted = JSON.parse(localStorage.getItem('shopify-cart') || '{}');
-      const cartItems = persisted?.state?.items || [];
-      items = cartItems.map((item: any) => ({
+      const persisted = JSON.parse(localStorage.getItem('shopify-cart') || '{}') as {
+        state?: { items?: PersistedCartItem[] };
+      };
+      const cartItems = persisted.state?.items ?? [];
+      items = cartItems.map((item) => ({
         id: item.variantId || item.product?.node?.id || item.product?.node?.handle || 'unknown',
         name: item.product?.node?.title || item.variantTitle || 'LuxeMia product',
         price: Number(item.price?.amount || 0),

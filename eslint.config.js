@@ -19,7 +19,22 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "react-refresh/only-export-components": ["warn", {
+        allowConstantExport: true,
+        // Stable helpers/hooks intentionally colocated with their shadcn-style
+        // components. Whitelisting the named exports keeps Fast Refresh checks
+        // active for every other non-component export.
+        allowExportNames: [
+          "badgeVariants",
+          "buttonVariants",
+          "navigationMenuTriggerStyle",
+          "toast",
+          "toggleVariants",
+          "useAuth",
+          "useFormField",
+          "useSidebar",
+        ],
+      }],
       "@typescript-eslint/no-unused-vars": "off",
     },
   },

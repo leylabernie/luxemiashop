@@ -128,7 +128,7 @@ const OrderTracking = () => {
   const getStatusBadge = (status: string) => {
     const statusLower = status?.toLowerCase() || '';
     let variant: 'default' | 'secondary' | 'destructive' | 'outline' = 'secondary';
-    let label = status?.replace(/_/g, ' ') || 'Unknown';
+    const label = status?.replace(/_/g, ' ') || 'Unknown';
 
     if (statusLower.includes('fulfilled') || statusLower.includes('delivered') || statusLower.includes('paid')) {
       variant = 'default';

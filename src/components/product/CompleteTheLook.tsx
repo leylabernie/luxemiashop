@@ -24,6 +24,7 @@ const isJewelleryProduct = (productType: string): boolean => {
 const convertJewelryToShopify = (product: JewelryProduct): ShopifyProduct => ({
   node: {
     id: product.id,
+    createdAt: '1970-01-01T00:00:00.000Z',
     title: product.name,
     description: product.description,
     handle: product.id,
@@ -31,6 +32,16 @@ const convertJewelryToShopify = (product: JewelryProduct): ShopifyProduct => ({
     tags: ['jewellery', product.category.toLowerCase()],
     priceRange: {
       minVariantPrice: {
+        amount: product.price.toString(),
+        currencyCode: 'USD',
+      },
+    },
+    compareAtPriceRange: {
+      minVariantPrice: {
+        amount: product.price.toString(),
+        currencyCode: 'USD',
+      },
+      maxVariantPrice: {
         amount: product.price.toString(),
         currencyCode: 'USD',
       },
@@ -55,6 +66,7 @@ const convertJewelryToShopify = (product: JewelryProduct): ShopifyProduct => ({
               amount: product.price.toString(),
               currencyCode: 'USD',
             },
+            compareAtPrice: null,
             availableForSale: true,
             selectedOptions: [],
           },
@@ -116,7 +128,7 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
     // Shuffle and take first 4
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 4);
-  }, [shopifyRecs, isJewellery]);
+  }, [shopifyRecs, isJewellery, jewelryProducts]);
 
   const handleQuickAdd = (product: ShopifyProduct, e: React.MouseEvent) => {
     e.preventDefault();

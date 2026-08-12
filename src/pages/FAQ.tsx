@@ -19,11 +19,11 @@ const FAQ = () => {
       faqs: [
         {
           question: 'How do I place an order?',
-          answer: 'Simply browse our collections, select your desired items, choose your size and preferences, and add them to your cart. Proceed to checkout where you can enter your shipping details and complete payment using credit/debit card, PayPal, or other available methods.',
+          answer: 'Browse the collections, select the available size or options shown for the item, and add it to your cart. At checkout, enter your shipping details and use one of the payment methods currently displayed there.',
         },
         {
           question: 'What payment methods do you accept?',
-          answer: 'We accept all major credit cards (Visa, MasterCard, American Express, Discover), PayPal, Apple Pay, and Google Pay. All transactions are secured with SSL encryption. Please note that we do not offer installment or buy-now-pay-later payment options at this time.',
+          answer: 'The payment methods currently available for your order are displayed at checkout. Availability can vary by device, location, currency, and the checkout provider.',
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
@@ -35,7 +35,7 @@ const FAQ = () => {
         },
         {
           question: 'Will I receive an order confirmation?',
-          answer: 'Yes, you will receive an email confirmation immediately after placing your order. This includes your order number and items ordered. Check your spam folder if you do not receive it.',
+          answer: 'After checkout accepts the order, an order confirmation is sent to the email address provided. Check your spam folder and contact hello@luxemia.shop if it does not arrive.',
         },
       ],
     },
@@ -53,7 +53,7 @@ const FAQ = () => {
         },
         {
           question: 'How can I track my order?',
-          answer: 'Once your order ships, you will receive an email with your tracking number and a link to track your package. You can also track your order by logging into your account or contacting our support team.',
+          answer: 'Tracking details are sent by email when the shipping label is created for dispatch. If you cannot find the message, contact hello@luxemia.shop with your order number.',
         },
         {
           question: 'Do I have to pay taxes?',
@@ -61,7 +61,7 @@ const FAQ = () => {
         },
         {
           question: 'What if my package is delayed or lost?',
-          answer: 'If your package appears delayed, first check the tracking information for updates. For packages significantly delayed or showing no movement, contact us and we will work with the carrier to locate your package. Lost packages will be replaced or refunded after investigation.',
+          answer: 'Check the carrier tracking first. If the package is significantly delayed or shows no movement, contact hello@luxemia.shop with your order number so LuxeMia can review the shipment and carrier information. Any resolution depends on that review and the applicable policy.',
         },
         {
           question: 'Do you offer free US shipping?',
@@ -169,7 +169,7 @@ const FAQ = () => {
         },
         {
           question: 'Is my personal information secure?',
-          answer: 'Yes, we use industry-standard SSL encryption to protect all data. We never store credit card information on our servers. Read our Privacy Policy for detailed information on how we protect your data.',
+          answer: 'Read the Privacy Policy for the current description of how LuxeMia and its service providers collect, use, store, and protect information. No internet transmission or storage method is completely secure.',
         },
         {
           question: 'Do you have a loyalty program?',

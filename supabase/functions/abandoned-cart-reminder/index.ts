@@ -148,7 +148,7 @@ const generateEmailHtml = (cart: AbandonedCart): string => {
               </table>
               
               <p style="margin: 24px 0 0; color: #999; font-size: 14px; text-align: center;">
-                Product availability may change. Free shipping on orders over $350.
+                Product availability may change. Shipping rates and delivery estimates are shown at checkout.
               </p>
             </td>
           </tr>
@@ -317,9 +317,10 @@ const handler = async (req: Request): Promise<Response> => {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Error in abandoned-cart-reminder:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: message }), {
       status: 500,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });

@@ -86,7 +86,7 @@ export const forceJpegFormat = (url: string): string => {
   if (!url) return url;
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
     // Remove existing format param and re-add as jpg
-    let clean = url.replace(/[&?]format=\w+/g, '');
+    const clean = url.replace(/[&?]format=\w+/g, '');
     const sep = clean.includes('?') ? '&' : '?';
     return `${clean}${sep}format=jpg`;
   }

@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Clock, Package } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { getOptimizedImage } from '@/lib/imageUtils';
 
@@ -12,7 +11,6 @@ interface RecentlyViewedProps {
 export const RecentlyViewed = ({ currentProductId }: RecentlyViewedProps) => {
   const getRecentProducts = useRecentlyViewedStore((state) => state.getRecentProducts);
   const removeProduct = useRecentlyViewedStore((state) => state.removeProduct);
-  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   // Filter out products with empty image URLs (stale/broken entries)
   const recentProducts = getRecentProducts(currentProductId, 6).filter(
@@ -21,15 +19,8 @@ export const RecentlyViewed = ({ currentProductId }: RecentlyViewedProps) => {
 
   // Auto-remove products whose images fail to load (cleans up stale localStorage entries)
   const handleImageError = (productId: string) => {
-    setImageErrors((prev) => new Set(prev).add(productId));
-    // Also remove from the store so it doesn't show up on next page load
     removeProduct(productId);
   };
-
-  // Re-render if products change (e.g. after removal)
-  useEffect(() => {
-    // no-op — just triggers re-render when imageErrors changes
-  }, [imageErrors]);
 
   if (recentProducts.length === 0) {
     return null;

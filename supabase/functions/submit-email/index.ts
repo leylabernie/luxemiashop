@@ -1,4 +1,4 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -29,8 +29,13 @@ interface BlockedIP {
   blocked_until: string;
 }
 
+interface PostgrestErrorLike {
+  code?: string;
+  message?: string;
+}
+
 async function isIPBlocked(
-  supabase: any,
+  supabase: SupabaseClient,
   ipAddress: string
 ): Promise<{ blocked: boolean; blockedUntil?: string }> {
   try {
@@ -39,7 +44,7 @@ async function isIPBlocked(
       .select('*')
       .eq('ip_address', ipAddress)
       .gte('blocked_until', new Date().toISOString())
-      .single() as { data: BlockedIP | null; error: any };
+      .single() as { data: BlockedIP | null; error: PostgrestErrorLike | null };
 
     if (error && error.code !== 'PGRST116') {
       console.error('Block check error:', error);
@@ -58,7 +63,7 @@ async function isIPBlocked(
 }
 
 async function blockIP(
-  supabase: any,
+  supabase: SupabaseClient,
   ipAddress: string,
   violationCount: number
 ): Promise<void> {
@@ -95,7 +100,7 @@ async function blockIP(
 }
 
 async function recordViolation(
-  supabase: any,
+  supabase: SupabaseClient,
   identifier: string,
   endpoint: string
 ): Promise<number> {
@@ -106,7 +111,7 @@ async function recordViolation(
       .select('violation_count')
       .eq('identifier', identifier)
       .eq('endpoint', endpoint)
-      .single() as { data: { violation_count: number } | null; error: any };
+      .single() as { data: { violation_count: number } | null; error: PostgrestErrorLike | null };
 
     const currentCount = data?.violation_count || 0;
     const newCount = currentCount + 1;
@@ -126,7 +131,7 @@ async function recordViolation(
 }
 
 async function checkAndUpdateRateLimit(
-  supabase: any,
+  supabase: SupabaseClient,
   identifier: string,
   endpoint: string
 ): Promise<{ allowed: boolean; remaining: number; shouldBlock: boolean; violationCount: number }> {
@@ -140,7 +145,7 @@ async function checkAndUpdateRateLimit(
       .eq('identifier', identifier)
       .eq('endpoint', endpoint)
       .gte('window_start', windowStart)
-      .single() as { data: RateLimitRecord | null; error: any };
+      .single() as { data: RateLimitRecord | null; error: PostgrestErrorLike | null };
     
     if (selectError && selectError.code !== 'PGRST116') {
       console.error('Rate limit check error:', selectError);

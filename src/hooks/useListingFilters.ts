@@ -60,7 +60,7 @@ function parseUrlState(
 
   // Sort
   const sort = searchParams.get('sort');
-  const sortBy = SORT_OPTIONS.includes(sort as any) ? (sort as string) : 'featured';
+  const sortBy = sort && SORT_OPTIONS.some(option => option === sort) ? sort : 'featured';
 
   return { subcategory, filters, priceRange, sortBy };
 }

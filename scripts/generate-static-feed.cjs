@@ -457,7 +457,10 @@ function sanitizeFeedTitle(text) {
   return text
     .replace(/\s*\|\s*Ready to Ship/gi, '')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/\b(?:buy|shop now)\b/gi, '')
+    .replace(/\b(?:handcrafted|artisan[- ]made|authentic)\b/gi, '')
     .replace(/\s+/g, ' ')
+    .replace(/^[-–—|:;,\s]+|[-–—|:;,\s]+$/g, '')
     .trim();
 }
 
@@ -504,54 +507,101 @@ function normalizeFeedDeliveryCopy(xml) {
   );
 }
 
-function buildDescription(product, color, material, productType) {
-  const original = (product.description || '').trim();
+function normalizeFeedWhitespace(xml) {
+  return `${xml.replace(/[ \t]+$/gm, '').trim()}\n`;
+}
 
-  // Use Shopify's original product description for every category. Automated
-  // category-wide component claims can contradict the actual package contents.
+function decodeXml(text) {
+  return (text || '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&');
+}
 
-  // For rich descriptions (>=150 chars), append a structured details line
-  // with Color if the description doesn't already contain an explicit "Color:" mention.
-  if (original.length >= 150) {
-    // Check if description already has explicit Color: mention
-    const hasExplicitColor = /\bColor\s*:/i.test(original);
-    if (!hasExplicitColor && color) {
-      // Append structured product details line
-      const detailsParts = [];
-      detailsParts.push(`Color: ${color}`);
-      if (material) detailsParts.push(`Fabric: ${material}`);
-      return sanitizeShippingAndBoilerplate(original + ' ' + detailsParts.join(' | '));
+function readItemTag(itemXml, tagName) {
+  const match = itemXml.match(new RegExp(`<${tagName}>([\\s\\S]*?)<\\/${tagName}>`, 'i'));
+  return decodeXml(match?.[1] || '').trim();
+}
+
+function sanitizeExistingFeedXml(xml) {
+  const saleStart = new Date().toISOString().split('T')[0];
+  const saleEnd = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  let itemCount = 0;
+
+  let sanitized = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
+    itemCount += 1;
+    const title = sanitizeFeedTitle(readItemTag(itemXml, 'g:title') || 'Indian ethnic wear');
+    const productType = readItemTag(itemXml, 'g:product_type') || 'Ethnic Wear';
+    const color = readItemTag(itemXml, 'g:color');
+    const material = readItemTag(itemXml, 'g:material');
+    const size = readItemTag(itemXml, 'g:size');
+    const description = buildDescription({ title, tags: [] }, color, material, productType);
+    const highlights = generateProductHighlights({ tags: [] }, color, material, productType, title, size);
+
+    let item = itemXml
+      .replace(/<g:title>[\s\S]*?<\/g:title>/i, `<g:title>${escapeXml(title)}</g:title>`)
+      .replace(/<g:description>[\s\S]*?<\/g:description>/i, `<g:description>${escapeXml(description)}</g:description>`)
+      .replace(/\s*<g:product_highlight>[\s\S]*?<\/g:product_highlight>/gi, '')
+      .replace(
+        /<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi,
+        `<g:sale_price_effective_date>${saleStart}T00:00:00+00:00/${saleEnd}T23:59:59+00:00</g:sale_price_effective_date>`
+      );
+
+    if (/<g:gender>/i.test(item)) {
+      item = item.replace(/\s*<g:gender>/i, `\n${highlights}\n    <g:gender>`);
+    } else {
+      item = item.replace(/\s*<\/item>/i, `\n${highlights}\n  </item>`);
     }
-    return sanitizeShippingAndBoilerplate(original);
+    return item;
+  });
+
+  if (itemCount === 0) {
+    throw new Error('Fallback merchant feed contains no products');
   }
 
-  const title = product.title || 'Indian ethnic wear';
+  sanitized = sanitized
+    .replace(
+      /<description>[\s\S]*?<\/description>/i,
+      '<description>Shop Indian ethnic wear online at LuxeMia with shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</description>'
+    )
+    .replace(/<last_build_date>[\s\S]*?<\/last_build_date>/i, `<last_build_date>${new Date().toISOString()}</last_build_date>`);
+
+  return normalizeFeedWhitespace(normalizeFeedDeliveryCopy(sanitized));
+}
+
+function writeFallbackFeed() {
+  const existingFeed = path.resolve(__dirname, '../public/merchant-feed.xml');
+  if (!fs.existsSync(existingFeed)) return false;
+
+  console.log('[merchant-feed] Rebuilding safe descriptions from existing public/merchant-feed.xml');
+  const safeXml = sanitizeExistingFeedXml(fs.readFileSync(existingFeed, 'utf8'));
+  const distDir = path.resolve(__dirname, '../dist');
+  if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
+  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), safeXml, 'utf8');
+  fs.writeFileSync(existingFeed, safeXml, 'utf8');
+  console.log('[merchant-feed] Wrote sanitized fallback feed to dist/ and public/');
+  return true;
+}
+
+function buildDescription(product, color, material, productType) {
+  // Merchant descriptions are rebuilt from structured catalog fields. Shopify
+  // prose is intentionally excluded because old marketing and policy claims can
+  // otherwise re-enter the feed long after the storefront copy is corrected.
+  const title = sanitizeFeedTitle(product.title || 'Indian ethnic wear');
   const parts = [];
+  parts.push(`${title} from LuxeMia.`);
 
-  // Lead sentence: prefer keeping any short Shopify description, otherwise
-  // open with a descriptive sentence built from product attributes.
-  if (original) {
-    parts.push(original.replace(/\s+$/, '').replace(/[.!?]$/, '') + '.');
-  } else {
-    const colorPhrase = color ? `${color} ` : '';
-    const materialPhrase = material ? `${material.toLowerCase()} ` : '';
-    parts.push(`Shop the ${colorPhrase}${materialPhrase}${title} at LuxeMia.`);
-  }
-
-  // GMC FIX: Add structured details line with Color, Fabric
-  // This directly addresses the GMC recommendation to include color details
   const detailsParts = [];
   if (color) detailsParts.push(`Color: ${color}`);
-  if (material) detailsParts.push(`Fabric: ${material}`);
+  if (material) detailsParts.push(`Material: ${material}`);
+  if (productType) detailsParts.push(`Category: ${productType}`);
   if (detailsParts.length > 0) {
-    parts.push(detailsParts.join(' | '));
+    parts.push(`${detailsParts.join(' | ')}.`);
   }
-
-  if (productType) {
-    parts.push(`Category: ${productType}.`);
-  }
-  parts.push('Review the product page for included components, embellishment details, measurements, and stitching options before ordering.');
-  parts.push('Available for delivery to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $150 and above; international rates are shown at checkout. Tracking is provided after dispatch.');
+  parts.push('Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering.');
+  parts.push('Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Tracking is provided after dispatch.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
@@ -584,11 +634,13 @@ function generateReturnsXml() {
 
 function generateProductHighlights(product, color, material, productType, title, size) {
   const highlights = [];
+  const safeTags = (product.tags || []).filter((tag) =>
+    !/(?:ship|deliver|return|refund|free|worldwide|guarantee|authentic|artisan|handmade|headquarter|USA|United States|Canada|Australia|DHL|USPS|UPS|FedEx)/i.test(tag)
+  );
   const source = [
     title,
     productType,
-    product.description || '',
-    ...(product.tags || []),
+    ...safeTags,
   ].join(' ').toLowerCase();
 
   if (color) highlights.push(`Color: ${color}`);
@@ -610,7 +662,7 @@ function generateProductHighlights(product, color, material, productType, title,
 
   if (productType) highlights.push(`Product type: ${productType}`);
   if (size) highlights.push(`Size option: ${size}`);
-  highlights.push('U.S. delivery with tracking after dispatch; $12 flat below $150, free at $150 and above');
+  highlights.push('Shipping to seven countries; destination-specific rates are shown at checkout');
 
   return highlights.slice(0, 5).map((highlight) =>
     `    <g:product_highlight>${escapeXml(highlight.slice(0, 150))}</g:product_highlight>`
@@ -761,7 +813,7 @@ function generateProductItemXml(product, variant, titleCounts) {
   const groupFields = isVariantGroup
     ? `
     <g:item_group_id>${escapeXml(itemGroupId)}</g:item_group_id>
-    <g:item_group_title>${escapeXml(baseTitle)}</g:item_group_title>`
+    <g:item_group_title>${escapeXml(sanitizeFeedTitle(baseTitle))}</g:item_group_title>`
     : '';
 
   return `
@@ -805,22 +857,13 @@ async function main() {
     products = await fetchAllProducts();
   } catch (error) {
     console.error('[merchant-feed] Failed to fetch from Shopify API:', error);
-    console.log('[merchant-feed] Attempting to use fallback product data...');
-
-    // Fallback: try to use the existing generated feed
-    const existingFeed = path.resolve(__dirname, '../public/merchant-feed.xml');
-    if (fs.existsSync(existingFeed)) {
-      console.log('[merchant-feed] Using existing feed from public/merchant-feed.xml');
-      const distDir = path.resolve(__dirname, '../dist');
-      if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-      const existingXml = fs.readFileSync(existingFeed, 'utf8');
-      const normalizedExistingXml = normalizeFeedDeliveryCopy(existingXml);
-      fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), normalizedExistingXml, 'utf8');
-      console.log('[merchant-feed] Normalized existing feed and copied it to dist/merchant-feed.xml');
-      return;
-    }
-    console.error('[merchant-feed] No fallback feed available. Generating empty feed.');
     products = [];
+  }
+
+  if (products.length === 0) {
+    console.log('[merchant-feed] Shopify returned no usable products; attempting the checked-in fallback feed.');
+    if (writeFallbackFeed()) return;
+    throw new Error('Shopify returned no products and no fallback feed is available');
   }
 
   // Pre-compute title occurrence counts so duplicates can be disambiguated
@@ -849,7 +892,7 @@ async function main() {
 ${itemsXml}
 </channel>
 </rss>`;
-  const feed = normalizeFeedDeliveryCopy(rawFeed);
+  const feed = normalizeFeedWhitespace(normalizeFeedDeliveryCopy(rawFeed));
 
   // Write to dist/ directory (Vercel serves static files from dist/)
   const distDir = path.resolve(__dirname, '../dist');
@@ -870,8 +913,5 @@ ${itemsXml}
 
 main().catch(err => {
   console.error('[merchant-feed] Fatal error:', err);
-  // Don't exit with error code — build should still succeed even if feed fails
-  // The feed will be regenerated on the next successful build
-  console.log('[merchant-feed] Feed generation failed, but build will continue.');
-  process.exit(0);
+  process.exit(1);
 });

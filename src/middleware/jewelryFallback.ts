@@ -49,7 +49,6 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   const price = product.price;
   const originalPrice = product.originalPrice;
   const hasDiscount = originalPrice ? originalPrice > price : false;
-  const discountPercent = hasDiscount ? Math.round((1 - price / originalPrice!) * 100) : 0;
 
   const faqSchema = {
     "@context": "https://schema.org",

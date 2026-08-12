@@ -38,6 +38,13 @@ interface ShopifyProductResponse {
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_API_VERSION = '2025-10';
 
+const escapeHtml = (value: string): string => value
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
+
 // Check if a product with the same title already exists in Shopify
 async function checkProductExistsInShopify(title: string, accessToken: string): Promise<number | null> {
   try {
@@ -160,38 +167,29 @@ function generateSEOTitle(product: ScrapedProduct): string {
 // Generate SEO-optimized description for Shopify
 function generateSEODescription(product: ScrapedProduct): string {
   const { color, fabric, work, category } = product;
-  
-  const occasionMap: Record<string, string[]> = {
-    lehengas: ['wedding', 'bridal', 'sangeet', 'reception', 'engagement'],
-    sarees: ['wedding', 'party', 'festive', 'puja', 'celebration'],
-    suits: ['party', 'festive', 'casual', 'office', 'celebration'],
-    menswear: ['wedding', 'festive', 'puja', 'celebration', 'party'],
-    indowestern: ['party', 'festive', 'cocktail', 'reception', 'celebration']
+  const categoryNames: Record<string, string> = {
+    lehengas: 'lehenga',
+    sarees: 'saree',
+    suits: 'suit',
+    menswear: 'menswear outfit',
+    indowestern: 'Indo-Western outfit',
   };
-  
-  const occasions = occasionMap[category] || ['special occasion'];
-  
+  const categoryName = categoryNames[category] || 'Indian outfit';
+  const details = [
+    color ? `<li><strong>Color:</strong> ${escapeHtml(color)}</li>` : '',
+    fabric ? `<li><strong>Fabric:</strong> ${escapeHtml(fabric)}</li>` : '',
+    work ? `<li><strong>Work:</strong> ${escapeHtml(work)}</li>` : '',
+  ].filter(Boolean).join('\n');
+
   return `
-<p><strong>Elevate your style</strong> with this stunning ${color} ${fabric} ${category === 'lehengas' ? 'lehenga' : category === 'sarees' ? 'saree' : category === 'suits' ? 'suit' : 'kurta set'}. Expertly crafted with ${work}, this piece combines traditional artistry with contemporary elegance.</p>
+<p>${escapeHtml(product.title || categoryName)}</p>
 
-<h3>Product Highlights</h3>
+<h3>Listing Details</h3>
 <ul>
-<li><strong>Fabric:</strong> Premium ${fabric} for ultimate comfort and drape</li>
-<li><strong>Color:</strong> Rich ${color} shade that complements all skin tones</li>
-<li><strong>Work:</strong> Exquisite ${work} by skilled artisans</li>
-<li><strong>Occasion:</strong> Perfect for ${occasions.slice(0, 3).join(', ')}</li>
+${details}
 </ul>
 
-<h3>Why Choose LuxeMia?</h3>
-<ul>
-<li>✓ Authentic Indian craftsmanship</li>
-<li>✓ Premium quality fabrics</li>
-<li>✓ Custom sizing available</li>
-<li>✓ Worldwide shipping</li>
-<li>✓ Easy returns within 14 days</li>
-</ul>
-
-<p><em>Each piece is carefully inspected before shipping to ensure you receive only the finest quality ethnic wear.</em></p>
+<p>Review the product images, available variants and checkout details before ordering. Shipping rates and delivery estimates are shown at checkout. All sales are final; eligible damage, defect, incorrect-item or missing-item claims must follow the published returns policy.</p>
 `.trim();
 }
 

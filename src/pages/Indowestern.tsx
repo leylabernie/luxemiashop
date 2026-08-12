@@ -89,7 +89,7 @@ const Indowestern = () => {
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to U.S. addresses for $12 on orders below $150 and free at $150 and above.
+              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. Open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to seven countries; U.S. standard shipping is $12 below $150 and free at $150 and above, while international rates are shown at checkout.
             </p>
           </div>
         </div>

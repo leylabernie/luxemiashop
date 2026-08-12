@@ -49,6 +49,39 @@ if (legacyDeliveryCopy.test(xml)) {
   throw new Error('Merchant feed contains outdated 7-10 business day delivery copy');
 }
 
+const descriptions = [...xml.matchAll(/<g:description>([\s\S]*?)<\/g:description>/gi)].map((match) => match[1]);
+const highlights = [...xml.matchAll(/<g:product_highlight>([\s\S]*?)<\/g:product_highlight>/gi)].map((match) => match[1]);
+if (descriptions.length !== itemIds.length) {
+  throw new Error(`Merchant feed has ${descriptions.length} descriptions for ${itemIds.length} products`);
+}
+
+const shortDescriptions = descriptions.filter((description) => description.replace(/&[^;]+;/g, ' ').trim().length < 150);
+if (shortDescriptions.length > 0) {
+  throw new Error(`Merchant feed contains ${shortDescriptions.length} descriptions shorter than 150 characters`);
+}
+
+const staleClaimPatterns = [
+  /(?:free shipping|free delivery)[^<]{0,80}\$350/i,
+  /7[–-]10 business days/i,
+  /15[ -]day return/i,
+  /Philadelphia headquarters?/i,
+  /authentic Indian ethnic wear/i,
+  /highest standards?/i,
+  /flatter(?:s|ing)? (?:all|every) bod(?:y|ies)/i,
+  /guaranteed fit/i,
+  /free worldwide shipping/i,
+  /USA, Canada (?:&amp;|&|and) Australia/i,
+  /ships? within 1[–-]2 business days from the USA/i,
+  /5-day express delivery/i,
+  /artisan[- ]made|handcrafted/i,
+];
+const generatedCopy = [...descriptions, ...highlights].join('\n');
+for (const pattern of staleClaimPatterns) {
+  if (pattern.test(generatedCopy)) {
+    throw new Error(`Merchant feed contains blocked stale or unsupported copy matching ${pattern}`);
+  }
+}
+
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique product IDs and ${groupIds.length} group IDs; all are 50 characters or fewer`
+  `[merchant-feed] Validated ${itemIds.length} unique products, ${groupIds.length} group IDs, and current policy-safe descriptions/highlights`
 );

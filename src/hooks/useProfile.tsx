@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { useToast } from './use-toast';
@@ -20,16 +20,7 @@ export const useProfile = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      fetchProfile();
-    } else {
-      setProfile(null);
-      setLoading(false);
-    }
-  }, [user]);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -51,16 +42,33 @@ export const useProfile = () => {
           .single();
         
         if (insertError) throw insertError;
-        setProfile(newProfile);
+        setProfile({
+          ...newProfile,
+          newsletter_subscribed: newProfile.newsletter_subscribed ?? false,
+          preferred_currency: newProfile.preferred_currency ?? 'USD',
+        });
       } else {
-        setProfile(data);
+        setProfile({
+          ...data,
+          newsletter_subscribed: data.newsletter_subscribed ?? false,
+          preferred_currency: data.preferred_currency ?? 'USD',
+        });
       }
     } catch (error) {
       console.error('Error fetching profile:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      void fetchProfile();
+    } else {
+      setProfile(null);
+      setLoading(false);
+    }
+  }, [fetchProfile, user]);
 
   const updateProfile = async (updates: Partial<Pick<Profile, 'full_name' | 'phone' | 'newsletter_subscribed' | 'preferred_currency'>>) => {
     if (!user || !profile) return { error: new Error('Not authenticated') };

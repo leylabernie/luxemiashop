@@ -152,15 +152,6 @@ const Blog = () => {
     setActiveCluster(null);
   };
 
-  const handleClusterClick = (clusterId: string) => {
-    if (activeCluster === clusterId) {
-      setActiveCluster(null);
-    } else {
-      setActiveCluster(clusterId);
-      setActiveCategory(null);
-    }
-  };
-
   const handleCategoryClick = (category: string) => {
     if (activeCategory === category) {
       setActiveCategory(null);
@@ -227,7 +218,7 @@ const Blog = () => {
                 Fact-Checked Indian Ethnic Wear Guides
               </h1>
               <p className="text-lg text-muted-foreground">
-                Source-based background on clothing terms, measurements, textiles, cultural context and occasionwear for U.S. customers
+                Source-based background on clothing terms, measurements, textiles, cultural context and occasionwear for shoppers in LuxeMia&apos;s supported countries
               </p>
             </div>
           </div>

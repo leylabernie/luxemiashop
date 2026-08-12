@@ -20,7 +20,7 @@ const EDITORIAL_TEAM: BlogAuthor = {
   name: 'LuxeMia Editorial Team',
   role: 'Editorial and Source Review',
   credentials: 'Source-based guides reviewed against cited references and current LuxeMia policies',
-  bio: `LuxeMia publishes practical guides for shopping Indian ethnic wear online. Articles cover garment terminology, measurements, textiles, cultural context, care, shipping and optional styling considerations for customers in the United States.
+  bio: `LuxeMia publishes practical guides for shopping Indian ethnic wear online. Articles cover garment terminology, measurements, textiles, cultural context, care, shipping and optional styling considerations for customers in LuxeMia's supported shipping countries.
 
 Every published guide identifies its sources and review date. Brand-owned sources are attributed as brand claims, cultural practices are not presented as universal rules, and styling suggestions are labelled as guidance. Individual product listings remain the source of truth for materials, included pieces, stitching, measurements, price and availability. No unnamed individual credentials are claimed for the team.`,
   expertise: [

@@ -67,24 +67,7 @@ def get_image_url(filename):
     return None
 
 
-# ─── Template-based body HTML generator ─────────────────────────────────────
-# Per-color styling recommendations
-COLOR_STYLING = {
-    'Clear': ('a red, maroon, or wine bridal lehenga for classic contrast', 'gold jhumkas or chandbalis as secondary earrings'),
-    'Pearl White': ('an ivory, cream, or pastel lehenga for a soft romantic look', 'pearl-detailed kaleeras and a pearl-embroidered potli bag'),
-    'Multicolor': ('a multi-colored or pastel bridal lehenga that picks up the stone colors', 'minimal additional jewelry to let the necklace be the statement piece'),
-    'Green': ('a red, maroon, or pink bridal lehenga for complementary contrast', 'green-stone kaleeras and a matching emerald ring'),
-    'Red': ('a gold, cream, or ivory bridal lehenga to let the red stones pop', 'gold bangles and a delicate nose ring for traditional polish'),
-}
-
-# Per-stone-type craftsmanship description
-STONE_CRAFT = {
-    'kundan with stone': 'hand-set Kundan stones framed with uncut polki accents, using traditional Rajasthani setting techniques passed down through generations of master jewelers',
-    'kundan': 'hand-set Kundan stones using traditional Rajasthani setting techniques, where each stone is framed in 24k gold foil and set by master jewelers',
-    'uncut polki': 'natural uncut polki diamonds set in traditional Indian style, with each stone hand-selected for its unique character and fire',
-    'mixed': 'a combination of Kundan stones, uncut polki, and accent stones, set using traditional Rajasthani techniques',
-}
-
+# ─── Field-backed body HTML generator ───────────────────────────────────────
 def generate_body_html(p):
     a = p['analysis']
     color = a.get('color_primary', 'Clear')
@@ -92,48 +75,24 @@ def generate_body_html(p):
     stone_clean = stone.replace(' with stone', ' with Stone').title()
     jtype = a.get('jewelry_type', 'necklace set')
     jtype_clean = jtype.replace('_', ' ').title()
-    style_notes = a.get('style_notes', '')
     metal = a.get('metal_color', 'gold')
     occasion = a.get('occasion', 'bridal').title()
-    has_maang_tikka = 'maang tikka' in style_notes.lower() or jtype == 'full bridal set'
-    
-    includes = 'necklace, matching earrings, and maang tikka' if has_maang_tikka else 'necklace and matching earrings'
-    craft = STONE_CRAFT.get(stone, STONE_CRAFT['kundan with stone'])
-    styling_outfit, styling_acc = COLOR_STYLING.get(color, COLOR_STYLING['Clear'])
-    
-    body = f"""<p>The {color.lower()} {stone.lower()} {jtype.lower()} is designed for the modern NRI bride who wants to make a regal statement on her wedding day. This handcrafted piece includes {includes}, with each stone set by master jewelers using traditional Indian techniques. {style_notes.capitalize() if style_notes else 'The intricate detailing photographs beautifully in both natural daylight and evening lighting.'}</p>
 
-<h3>Why Brides Choose {stone_clean} {jtype_clean}</h3>
-<p>{stone_clean} jewelry has been a cornerstone of Indian bridal adornment for centuries, prized for its regal appearance and the way it catches light from every angle. The {metal} setting complements a wide range of bridal lehengas and sarees, while the {color.lower()} stones flatter most skin tones and pair effortlessly with both gold and diamond accent jewelry. Brides love {stone_clean.lower()} for its versatility — equally appropriate for the main wedding ceremony, the reception, or pre-wedding events like the mehendi and sangeet.</p>
+    body = f"""<p>{color} {stone_clean} {jtype_clean} from LuxeMia. Review the product images and final listing for the exact finish, materials, included pieces, dimensions, closure, price, and availability before ordering.</p>
 
-<h3>What Makes This {stone_clean} Piece Special</h3>
-<p>Each piece in our Kundan collection features {craft}. The setting uses fine metal work and traditional techniques passed down through generations of Indian artisans. Every motif is intentional — drawing from Mughal-era florals, paisley patterns, and geometric borders that have graced Indian bridal jewelry for centuries. The result is a piece that feels both deeply traditional and refreshingly modern.</p>
-
-<h3>Perfect For These Occasions</h3>
+<h3>Catalog Details</h3>
 <ul>
-<li><strong>Wedding ceremonies</strong> — The rich stone work and intricate detailing make it ideal for the main wedding day</li>
-<li><strong>Reception parties</strong> — Statement piece that photographs beautifully under evening lighting</li>
-<li><strong>Engagement functions</strong> — Sophisticated choice for this intimate pre-wedding celebration</li>
-<li><strong>Sangeet and mehendi</strong> — Stand out at every pre-wedding celebration</li>
+<li><strong>Color:</strong> {color}</li>
+<li><strong>Listed style:</strong> {stone_clean} {jtype_clean}</li>
+<li><strong>Metal color:</strong> {metal}</li>
+<li><strong>Occasion category:</strong> {occasion}</li>
 </ul>
 
-<h3>How to Style This {color} Kundan Necklace</h3>
-<p>Pair this {color.lower()} {stone.lower()} {jtype.lower()} with {styling_outfit}. Complete the look with {styling_acc}. For footwear, choose embroidered mojaris or heels in gold or nude tones. Add a fresh flower gajra in your hair for traditional ceremonies, or opt for a maang tikka and jhoomar for a more regal reception look.</p>
+<h3>Before Ordering</h3>
+<p>Use the final product page as the source for composition, package contents, measurements, care instructions, and any other item-specific detail. Contact LuxeMia before ordering if an important detail is not listed.</p>
 
-<h3>Jewelry Care & Shipping</h3>
-<ul>
-<li><strong>Care:</strong> Store in the provided velvet pouch away from moisture and direct sunlight. Avoid contact with perfume, hairspray, and water. Gently wipe with a soft dry cloth after each wear.</li>
-<li><strong>Maintenance:</strong> For deep cleaning, take to a professional jewelry cleaner. Do not use chemical cleaners at home — they can damage the Kundan setting.</li>
-<li><strong>Shipping:</strong> Tracked delivery to the United States. Each piece ships in a signature gift box.</li>
-</ul>
-
-<h3>Frequently Asked Questions</h3>
-<p><strong>Is this Kundan jewelry or real diamond jewelry?</strong> Our Kundan jewelry uses traditional Indian stone-setting techniques with glass-based Kundan stones and uncut polki accents. It offers the look of fine diamond jewelry at a fraction of the cost, making it perfect for brides who want a regal appearance without the investment of real diamonds.</p>
-<p><strong>What's included in the set?</strong> This set includes {includes}. The necklace features an adjustable dori (thread) closure for a comfortable fit, and the earrings come with secure push-backs.</p>
-<p><strong>How long does shipping take to United States?</strong> We offer express shipping via DHL/USPS/UPS with delivery in 2 business days to ship to all three countries. Shipping is free on orders over $150, with a flat $12 rate for orders below $150.</p>
-
-<h3>The LuxeMia Promise</h3>
-<p>Every piece in our Kundan collection is hand-selected for its exceptional craftsmanship, traditional techniques, and timeless appeal. We're proud to offer US shipping directly from our Philadelphia headquarters to your doorstep — bringing authentic Indian bridal jewelry to NRI brides across the United States.</p>"""
+<h3>Shipping</h3>
+<p>Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout, and tracking is provided after dispatch.</p>"""
     
     return body
 
@@ -358,8 +317,8 @@ def build_tags(p):
         
         # Brand + status
         'LuxeMia', 'gender:female', 'women', 'womenswear',
-        'new arrival', 'handcrafted', 'premium jewelry',
-        'US shipping', 'free shipping over 350',
+        'new arrival', 'jewelry',
+        'US shipping', 'international shipping',
         
         # Catalog number
         f'catalog:{catalog_num}',

@@ -9,8 +9,8 @@ const reasons = [
   },
   {
     icon: Truck,
-    title: 'Tracked U.S. Delivery',
-    description: 'Tracking is provided after dispatch for online orders to U.S. addresses.',
+    title: 'Tracked Shipping',
+    description: 'Tracking is provided after dispatch for online orders to supported destinations.',
   },
   {
     icon: RefreshCcw,

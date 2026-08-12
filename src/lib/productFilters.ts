@@ -365,7 +365,6 @@ export function applySubcategory(
 
   return products.filter(p => {
     const titleLower = (p.node.title || '').toLowerCase();
-    const descLower = (p.node.description || '').toLowerCase();
     const matches = matchSubcategory(p.node, sub);
     if (!matches) return false;
 

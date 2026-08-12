@@ -259,8 +259,8 @@ def build_tags(item, catalog_num=None):
 
         # Brand + status
         'LuxeMia', 'gender:male', 'men', 'menswear',
-        'new arrival', 'handcrafted', 'premium menswear',
-        'US shipping', 'free shipping over 350',
+        'new arrival', 'menswear',
+        'US shipping', 'international shipping',
     ])
 
     # Add catalog number as a tag for searchability
