@@ -451,25 +451,10 @@ function enrichDescription(
   if (work) details.push(`Detail: ${work}.`);
   if (size) details.push(`Selected size: ${size}.`);
   details.push(
-    "United States shipping only. Shipping is $12 for orders below $150 and free at $150 and above. Tracking is provided after dispatch. Review the product page for current availability and exact details."
+    "Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Tracking is provided after dispatch. Review the product page for current availability and exact details."
   );
 
   return details.join(" ").slice(0, 5000);
-}
-
-// ─── Shipping XML blocks ─────────────────────────────────────────────
-
-function getShippingBlocks(): string {
-  return `
-    <g:shipping>
-      <g:country>US</g:country>
-      <g:service>Standard</g:service>
-      <g:price>12.00 USD</g:price>
-    </g:shipping>
-    <g:free_shipping_threshold>
-      <g:country>US</g:country>
-      <g:price_threshold>150.00 USD</g:price_threshold>
-    </g:free_shipping_threshold>`;
 }
 
 // ─── Shorten Shopify GID ─────────────────────────────────────────────
@@ -609,7 +594,6 @@ function generateItem(
     <g:custom_label_0>${escapeXml(product.productType)}</g:custom_label_0>`;
 
   xml += `
-    ${getShippingBlocks()}
   </item>`;
 
   return xml;
@@ -656,7 +640,7 @@ async function handleRequest(req: Request): Promise<Response> {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Current LuxeMia product listings for delivery to United States addresses. Shipping is $12 below $150 and free at $150 and above.</description>${items.join("\n")}
+  <description>Current LuxeMia product listings with delivery to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</description>${items.join("\n")}
 </channel>
 </rss>`;
 

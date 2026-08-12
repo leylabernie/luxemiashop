@@ -6,6 +6,7 @@ const path = require('path');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const roots = [
   'index.html',
+  'api',
   'src/components',
   'src/data',
   'src/pages',
@@ -37,6 +38,9 @@ const blockedPatterns = [
   /We currently ship to (?:the )?United States addresses only/i,
   /currently serves? United States shoppers only/i,
   /United States addresses only/i,
+  /United States shipping only/i,
+  /Current LuxeMia product listings for delivery to United States addresses/i,
+  /free (?:for orders )?over \$150/i,
   /U\.S\. Shipping Policy/i,
   /(?:free shipping|free delivery)[^\n<]{0,100}\$?350/i,
   /(?:delivered|delivery) (?:in|within) 7[–-]10 business days/i,
