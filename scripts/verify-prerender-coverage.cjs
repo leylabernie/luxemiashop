@@ -29,6 +29,11 @@
 const fs = require('fs');
 const path = require('path');
 
+// This guard already runs immediately after prerender.js. Sanitize the actual
+// error document first so every successful build also enforces consistent
+// 404 crawler directives, removes canonical URLs, and strips page schema.
+require('./postprocess-error-pages.cjs');
+
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const PRERENDER_DIR = path.join(PROJECT_ROOT, 'dist/_prerender');
