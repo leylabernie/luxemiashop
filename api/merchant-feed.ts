@@ -408,7 +408,7 @@ function getColorFromProduct(
   const title = product.title.toLowerCase();
   const matches: string[] = [];
   for (const color of colorNames) {
-    const pattern = new RegExp(`\b${color.replace(" ", "\s+")}\b`, "i");
+    const pattern = new RegExp(`\\b${color.replace(" ", "\\s+")}\\b`, "i");
     if (pattern.test(title) && !matches.some((existing) => existing.includes(color) || color.includes(existing))) {
       matches.push(color.replace(/\b\w/g, (letter) => letter.toUpperCase()));
     }
