@@ -17,7 +17,7 @@ const CANDIDATES = [
   path.join(PROJECT_ROOT, 'dist', '_prerender', '404.html'),
   path.join(PROJECT_ROOT, 'dist', '404.html'),
 ];
-const ERROR_DIRECTIVE = 'noindex, follow, noarchive';
+const ERROR_DIRECTIVE = 'noindex, follow';
 
 function upsertCrawlerDirective(html, crawler) {
   const pattern = new RegExp(
@@ -77,9 +77,9 @@ function assertSanitized(filePath, html) {
     [!/<link\s+rel=["']canonical["']/i.test(html), 'canonical link remains'],
     [!/<script\s+type=["']application\/ld\+json["']/i.test(html), 'JSON-LD remains'],
     [!/<meta\s+(?:property=["']og:url["']|name=["']twitter:url["'])/i.test(html), 'page URL social metadata remains'],
-    [/<meta\s+name=["']robots["']\s+content=["']noindex, follow, noarchive["']>/i.test(html), 'robots directive is missing or inconsistent'],
-    [/<meta\s+name=["']googlebot["']\s+content=["']noindex, follow, noarchive["']>/i.test(html), 'googlebot directive is missing or inconsistent'],
-    [/<meta\s+name=["']bingbot["']\s+content=["']noindex, follow, noarchive["']>/i.test(html), 'bingbot directive is missing or inconsistent'],
+    [/<meta\s+name=["']robots["']\s+content=["']noindex, follow["']>/i.test(html), 'robots directive is missing or inconsistent'],
+    [/<meta\s+name=["']googlebot["']\s+content=["']noindex, follow["']>/i.test(html), 'googlebot directive is missing or inconsistent'],
+    [/<meta\s+name=["']bingbot["']\s+content=["']noindex, follow["']>/i.test(html), 'bingbot directive is missing or inconsistent'],
   ];
 
   const failures = checks.filter(([ok]) => !ok).map(([, message]) => message);
