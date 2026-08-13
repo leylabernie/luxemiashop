@@ -234,9 +234,7 @@ function getGender(productType: string, title: string): string {
 // ─── Size Extraction ─────────────────────────────────────────────────
 
 function getSizeFromVariant(
-  selectedOptions: ShopifySelectedOption[],
-  productType: string,
-  title: string
+  selectedOptions: ShopifySelectedOption[]
 ): string {
   const sizeOptionNames = ["Size", "Bust Size", "Chest Size"];
 
@@ -478,11 +476,7 @@ function generateItem(
   const productId = shortenId(product.id);
   const googleCategory = getGoogleCategory(product.productType, product.title);
   const gender = getGender(product.productType, product.title);
-  const size = getSizeFromVariant(
-    variant.selectedOptions,
-    product.productType,
-    product.title
-  );
+  const size = getSizeFromVariant(variant.selectedOptions);
   const color = getColorFromProduct(product, variant.selectedOptions);
   const material = getMaterialFromProduct(product);
   const work = getWorkFromTags(product.tags);
