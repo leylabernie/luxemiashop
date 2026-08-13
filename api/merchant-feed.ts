@@ -234,9 +234,7 @@ function getGender(productType: string, title: string): string {
 // ─── Size Extraction ─────────────────────────────────────────────────
 
 function getSizeFromVariant(
-  selectedOptions: ShopifySelectedOption[],
-  productType: string,
-  title: string
+  selectedOptions: ShopifySelectedOption[]
 ): string {
   const sizeOptionNames = ["Size", "Bust Size", "Chest Size"];
 
@@ -410,7 +408,7 @@ function getColorFromProduct(
   const title = product.title.toLowerCase();
   const matches: string[] = [];
   for (const color of colorNames) {
-    const pattern = new RegExp(`\\b${color.replace(" ", "\\s+")}\\b`, "i");
+    const pattern = new RegExp(`\b${color.replace(" ", "\s+")}\b`, "i");
     if (pattern.test(title) && !matches.some((existing) => existing.includes(color) || color.includes(existing))) {
       matches.push(color.replace(/\b\w/g, (letter) => letter.toUpperCase()));
     }
@@ -478,11 +476,7 @@ function generateItem(
   const productId = shortenId(product.id);
   const googleCategory = getGoogleCategory(product.productType, product.title);
   const gender = getGender(product.productType, product.title);
-  const size = getSizeFromVariant(
-    variant.selectedOptions,
-    product.productType,
-    product.title
-  );
+  const size = getSizeFromVariant(variant.selectedOptions);
   const color = getColorFromProduct(product, variant.selectedOptions);
   const material = getMaterialFromProduct(product);
   const work = getWorkFromTags(product.tags);
