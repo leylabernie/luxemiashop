@@ -141,13 +141,8 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(new URL('/new-arrivals', request.url).toString(), 301);
   }
 
-  // Merchant Center fetches this stable public URL. Generate the feed from
-  // live Shopify data instead of serving the empty static placeholder.
-  if (pathname === '/merchant-feed.xml') {
-    return rewrite(new URL('/api/merchant-feed', request.url));
-  }
-
-  // Skip non-page requests (static files, API, etc.)
+  // Static assets and machine-readable files (including merchant-feed.xml) are
+  // served directly by Vercel. The feed is generated and validated at build time.
   if (
     pathname.startsWith('/_prerender') ||
     pathname.startsWith('/assets') ||
@@ -343,7 +338,6 @@ export const config = {
   matcher: [
     '/robots.txt',
     '/sitemap.xml',
-    '/merchant-feed.xml',
     '/((?!_prerender|assets|api|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)).*)',
   ],
 };
