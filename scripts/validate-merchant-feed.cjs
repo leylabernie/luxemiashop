@@ -14,11 +14,15 @@ if (!feedPath) {
 }
 
 const xml = fs.readFileSync(feedPath, 'utf8');
+const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) => match[1]);
 const itemIds = [...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map((match) => match[1]);
 const groupIds = [...xml.matchAll(/<g:item_group_id>([^<]+)<\/g:item_group_id>/g)].map((match) => match[1]);
 
 if (itemIds.length === 0) {
   throw new Error('Merchant feed contains no product IDs');
+}
+if (itemBlocks.length !== itemIds.length) {
+  throw new Error(`Merchant feed has ${itemBlocks.length} item blocks for ${itemIds.length} product IDs`);
 }
 
 const longItemIds = itemIds.filter((id) => id.length > 50);
@@ -33,6 +37,28 @@ if (longGroupIds.length > 0) {
 }
 if (duplicateItemIds.length > 0) {
   throw new Error(`Merchant feed contains ${new Set(duplicateItemIds).size} duplicate product IDs`);
+}
+
+// Every offer must use a real product image. Generic storefront campaign or OG
+// images can keep an otherwise incomplete Shopify product in the feed while
+// showing shoppers the wrong item. Fail the deployment instead of publishing
+// that mismatch to Merchant Center.
+const imageFailures = [];
+for (const item of itemBlocks) {
+  const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
+  const image = item.match(/<g:image_link>([\s\S]*?)<\/g:image_link>/i)?.[1]?.trim() || '';
+  const normalizedImage = image.replace(/&amp;/g, '&');
+  const isHttpUrl = /^https:\/\//i.test(normalizedImage);
+  const isGenericFallback = /luxemia\.shop\/(?:og-image\.jpg|images\/campaigns\/|placeholder(?:[-_.\/]|$))/i.test(normalizedImage);
+
+  if (!isHttpUrl || isGenericFallback) {
+    imageFailures.push(`${id}: ${image || '(missing)'}`);
+  }
+}
+if (imageFailures.length > 0) {
+  throw new Error(
+    `Merchant feed contains ${imageFailures.length} offer(s) without a product-specific HTTPS image: ${imageFailures.slice(0, 10).join('; ')}`
+  );
 }
 
 // Country, language, tax, and threshold-based shipping are configured at
@@ -83,5 +109,5 @@ for (const pattern of staleClaimPatterns) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique products, ${groupIds.length} group IDs, and current policy-safe descriptions/highlights`
+  `[merchant-feed] Validated ${itemIds.length} unique products, ${groupIds.length} group IDs, product-specific HTTPS images, and current policy-safe descriptions/highlights`
 );
