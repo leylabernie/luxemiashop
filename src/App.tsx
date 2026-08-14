@@ -112,6 +112,8 @@ const App = () => (
             <PageTracker>
               <Routes>
                 <Route path="/" element={<Index />} />
+                {/* Verified retired product URL: preserve the shopper journey to the live menswear edit. */}
+                <Route path="/product/ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809" element={<Navigate to="/menswear" replace />} />
                 <Route path="/product/:handle" element={<Suspense fallback={<PageLoader />}><ProductDetail /></Suspense>} />
                 <Route path="/collections" element={<Suspense fallback={<PageLoader />}><Collections /></Suspense>} />
                 <Route path="/lehengas" element={<Suspense fallback={<PageLoader />}><Lehengas /></Suspense>} />
@@ -206,6 +208,8 @@ const App = () => (
                 <Route path="/blog/how-to-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/designer-profiles" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/cultural-context" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                {/* Verified retired designer-profile URL: redirect to the live designer category. */}
+                <Route path="/blog/jj-valaya-royal-couture-house-of-valaya" element={<Navigate to="/blog/designer-profiles" replace />} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
                 {/* Public author information is organizational and verifiable. */}
                 <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />
