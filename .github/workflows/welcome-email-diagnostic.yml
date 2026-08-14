@@ -1,0 +1,80 @@
+name: Diagnose WELCOME10 delivery failure
+
+on:
+  push:
+    branches:
+      - agent/catalog-conversion-integrity-20260813
+
+permissions:
+  contents: write
+
+concurrency:
+  group: welcome-email-diagnostic-20260813
+  cancel-in-progress: false
+
+jobs:
+  diagnose-and-clean-up:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/catalog-conversion-integrity-20260813
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Capture sanitized function response
+        shell: bash
+        run: |
+          set -euo pipefail
+          http_status="$(curl --silent --show-error \
+            --output welcome-response.json \
+            --write-out '%{http_code}' \
+            --request POST \
+            --header 'Origin: https://luxemia.shop' \
+            --header 'Content-Type: application/json' \
+            --data '{"email":"luxemia.shop@gmail.com","type":"newsletter","source":"welcome_popup_10_percent"}' \
+            'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email')"
+          printf '%s\n' "${http_status}" > welcome-status.txt
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('welcome-response.json').read_text(encoding='utf-8'))
+          allowed = {
+              'success', 'deliveryStatus', 'providerStatus', 'providerReason',
+              'discountCode', 'discountPercent', 'duplicate', 'message', 'error'
+          }
+          sanitized = {key: value for key, value in payload.items() if key in allowed}
+          Path('welcome-response.json').write_text(
+              json.dumps(sanitized, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(sanitized, sort_keys=True))
+          PY
+
+      - name: Upload diagnostic result
+        uses: actions/upload-artifact@v4
+        with:
+          name: welcome-email-diagnostic
+          path: |
+            welcome-response.json
+            welcome-status.txt
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Remove temporary workflow
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/welcome-email-diagnostic.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Remove welcome-email diagnostic workflow"
+          git push origin HEAD:agent/catalog-conversion-integrity-20260813
