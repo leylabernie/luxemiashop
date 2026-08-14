@@ -20,14 +20,16 @@ declare global {
 interface PersistedCartItem {
   variantId?: string;
   variantTitle?: string;
-  price?: { amount?: string };
+  price?: { amount?: string; currencyCode?: string };
   quantity?: number;
+  customAttributes?: Array<{ key?: string; value?: string }>;
   product?: {
     node?: {
       id?: string;
       handle?: string;
       title?: string;
       productType?: string;
+      metadata?: { occasion?: string | null };
     };
   };
 }
@@ -52,7 +54,9 @@ const OrderConfirmation = () => {
   const customerEmail = searchParams.get('email') || '';
   const deliveryCountry = searchParams.get('country') || 'US';
   const deliveryDate = searchParams.get('delivery_date') || '';
+  const deliveryState = searchParams.get('state') || '';
   const orderTotal = searchParams.get('total_price') || '';
+  const orderCurrency = searchParams.get('currency') || '';
 
   // Trigger Google Customer Reviews opt-in
   useEffect(() => {
@@ -126,18 +130,36 @@ const OrderConfirmation = () => {
     const dedupeKey = `luxemia-purchase-tracked:${orderId}`;
     if (sessionStorage.getItem(dedupeKey)) return;
 
-    let items: Array<{ id: string; name: string; price: number; quantity: number; category?: string }> = [];
+    let items: Array<{
+      id: string;
+      name: string;
+      price: number;
+      quantity: number;
+      category?: string;
+      variant?: string;
+      productGroupId?: string;
+      tailoringOption?: string;
+      occasion?: string;
+    }> = [];
+    let cartCurrency = '';
     try {
       const persisted = JSON.parse(localStorage.getItem('shopify-cart') || '{}') as {
         state?: { items?: PersistedCartItem[] };
       };
       const cartItems = persisted.state?.items ?? [];
+      cartCurrency = cartItems[0]?.price?.currencyCode || '';
       items = cartItems.map((item) => ({
         id: item.variantId || item.product?.node?.id || item.product?.node?.handle || 'unknown',
         name: item.product?.node?.title || item.variantTitle || 'LuxeMia product',
         price: Number(item.price?.amount || 0),
         quantity: Number(item.quantity || 1),
         category: item.product?.node?.productType,
+        variant: item.variantTitle && item.variantTitle !== 'Default Title' ? item.variantTitle : undefined,
+        productGroupId: item.product?.node?.id,
+        tailoringOption: item.customAttributes
+          ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key || ''))
+          ?.value,
+        occasion: item.product?.node?.metadata?.occasion || undefined,
       }));
     } catch {
       // Purchase tracking should never block the confirmation page.
@@ -146,11 +168,13 @@ const OrderConfirmation = () => {
     trackPurchase({
       transactionId: orderId,
       value: parseFloat(orderTotal),
-      currency: 'USD',
+      currency: orderCurrency || cartCurrency || 'USD',
+      shippingCountry: deliveryCountry,
+      shippingState: deliveryState || undefined,
       items,
     });
     sessionStorage.setItem(dedupeKey, '1');
-  }, [orderId, orderTotal]);
+  }, [deliveryCountry, deliveryState, orderCurrency, orderId, orderTotal]);
 
   return (
     <div className="min-h-screen bg-background">

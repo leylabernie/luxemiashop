@@ -1,9 +1,13 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
-import { trackAddToCart, trackBeginCheckout } from '@/hooks/useAnalytics';
+import {
+  AnalyticsItem,
+  trackAddToCart,
+  trackBeginCheckout,
+  trackRemoveFromCart,
+} from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
-
 
 export interface CartAttribute {
   key: string;
@@ -45,6 +49,29 @@ interface CartStore {
   createCheckout: () => Promise<string | null>;
 }
 
+const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[]) => (
+  JSON.stringify(left || []) === JSON.stringify(right || [])
+);
+
+const getTailoringOption = (item: CartItem) => item.customAttributes
+  ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key))
+  ?.value;
+
+const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => ({
+  // A Shopify variant is the purchasable inventory unit. Use it as the GA4 item
+  // key, with the product ID retained for parent-product rollups.
+  id: item.variantId || item.product.node.id,
+  name: item.product.node.title,
+  price: Number(item.price.amount),
+  quantity,
+  currency: item.price.currencyCode,
+  category: item.product.node.productType,
+  variant: item.variantTitle !== 'Default Title' ? item.variantTitle : undefined,
+  productGroupId: item.product.node.id,
+  tailoringOption: getTailoringOption(item),
+  occasion: item.product.node.metadata?.occasion || undefined,
+});
+
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
@@ -56,32 +83,23 @@ export const useCartStore = create<CartStore>()(
 
       addItem: (item) => {
         const { items } = get();
-        // Check if an item with the same variant AND same custom attributes already exists
-        const existingItem = items.find(i => {
-          const sameVariant = i.variantId === item.variantId;
-          const sameAttributes = JSON.stringify(i.customAttributes) === JSON.stringify(item.customAttributes);
-          return sameVariant && sameAttributes;
-        });
-        
-        // Track add_to_cart event in GA4
-        trackAddToCart({
-          id: item.product.node.id,
-          name: item.product.node.title,
-          price: parseFloat(item.price.amount),
-          quantity: item.quantity,
-          currency: item.price.currencyCode,
-          category: item.product.node.productType,
-        });
-        
+        const existingItem = items.find((current) => (
+          current.variantId === item.variantId
+          && sameAttributes(current.customAttributes, item.customAttributes)
+        ));
+
+        // Fire only after a valid cart action. Variant ID, selected variant, and
+        // tailoring option are preserved for item-level GA4 analysis.
+        trackAddToCart(toAnalyticsItem(item));
+
         if (existingItem) {
           set({
-            items: items.map(i => {
-              const sameVariant = i.variantId === item.variantId;
-              const sameAttributes = JSON.stringify(i.customAttributes) === JSON.stringify(item.customAttributes);
-              return sameVariant && sameAttributes
-                ? { ...i, quantity: i.quantity + item.quantity }
-                : i;
-            })
+            items: items.map((current) => (
+              current.variantId === item.variantId
+              && sameAttributes(current.customAttributes, item.customAttributes)
+                ? { ...current, quantity: current.quantity + item.quantity }
+                : current
+            )),
           });
         } else {
           set({ items: [...items, item] });
@@ -89,27 +107,45 @@ export const useCartStore = create<CartStore>()(
       },
 
       updateQuantity: (variantId, quantity, customAttributes) => {
+        const current = get().items.find((item) => (
+          item.variantId === variantId
+          && sameAttributes(item.customAttributes, customAttributes)
+        ));
+        if (!current) return;
+
         if (quantity <= 0) {
           get().removeItem(variantId, customAttributes);
           return;
         }
-        
+
+        const quantityDelta = quantity - current.quantity;
+        if (quantityDelta > 0) {
+          trackAddToCart(toAnalyticsItem(current, quantityDelta));
+        } else if (quantityDelta < 0) {
+          trackRemoveFromCart(toAnalyticsItem(current, Math.abs(quantityDelta)));
+        }
+
         set({
-          items: get().items.map(item => {
-            const sameVariant = item.variantId === variantId;
-            const sameAttributes = JSON.stringify(item.customAttributes) === JSON.stringify(customAttributes);
-            return sameVariant && sameAttributes ? { ...item, quantity } : item;
-          })
+          items: get().items.map((item) => (
+            item.variantId === variantId && sameAttributes(item.customAttributes, customAttributes)
+              ? { ...item, quantity }
+              : item
+          )),
         });
       },
 
       removeItem: (variantId, customAttributes) => {
+        const itemToRemove = get().items.find((item) => (
+          item.variantId === variantId
+          && sameAttributes(item.customAttributes, customAttributes)
+        ));
+        if (itemToRemove) trackRemoveFromCart(toAnalyticsItem(itemToRemove));
+
         set({
-          items: get().items.filter(item => {
-            const sameVariant = item.variantId === variantId;
-            const sameAttributes = JSON.stringify(item.customAttributes) === JSON.stringify(customAttributes);
-            return !(sameVariant && sameAttributes);
-          })
+          items: get().items.filter((item) => !(
+            item.variantId === variantId
+            && sameAttributes(item.customAttributes, customAttributes)
+          )),
         });
       },
 
@@ -127,49 +163,43 @@ export const useCartStore = create<CartStore>()(
         const { items, setLoading, setCheckoutUrl } = get();
         if (items.length === 0) return null;
 
-        // Track begin_checkout event in GA4
-        const totalValue = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
+        const totalValue = items.reduce(
+          (sum, item) => sum + Number(item.price.amount) * item.quantity,
+          0,
+        );
         trackBeginCheckout(
-          items.map(item => ({
-            id: item.product.node.id,
-            name: item.product.node.title,
-            price: parseFloat(item.price.amount),
-            quantity: item.quantity,
-          })),
+          items.map((item) => toAnalyticsItem(item)),
           totalValue,
-          items[0]?.price.currencyCode
+          items[0]?.price.currencyCode,
         );
 
         setLoading(true);
         try {
           const checkoutUrl = await createStorefrontCheckout(
-            items.map(item => ({
+            items.map((item) => ({
               variantId: item.variantId,
               quantity: item.quantity,
               handle: item.product.node.handle,
               customAttributes: item.customAttributes,
-            }))
+            })),
           );
-          
+
           if (checkoutUrl) {
             setCheckoutUrl(checkoutUrl);
             return checkoutUrl;
           }
-          
-          // Never send a customer to an empty Shopify product page when checkout
-          // creation fails: that loses the cart and silently kills the order.
+
           console.error('Shopify returned no checkout URL; preserving the cart');
           toast.error('Checkout could not be created. Your bag is saved — please try again.');
           return null;
         } catch (error) {
           console.error('Failed to create checkout:', error);
           toast.error('Checkout is temporarily unavailable. Your bag is saved — please try again.');
-          // Preserve the cart instead of redirecting away and losing the order.
           return null;
         } finally {
           setLoading(false);
         }
-      }
+      },
     }),
     {
       name: 'shopify-cart',
@@ -180,8 +210,6 @@ export const useCartStore = create<CartStore>()(
         checkoutUrl: state.checkoutUrl,
       }),
       onRehydrateStorage: () => (state) => {
-        // Clear persisted cart data if it contains stale checkout URLs from
-        // a previous hosting provider. Broken URLs would prevent checkout.
         if (state) {
           const serialized = JSON.stringify(state.items) + (state.checkoutUrl || '');
           if (serialized.includes('lovable.app')) {
@@ -191,6 +219,6 @@ export const useCartStore = create<CartStore>()(
           }
         }
       },
-    }
-  )
+    },
+  ),
 );

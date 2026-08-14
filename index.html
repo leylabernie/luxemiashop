@@ -173,6 +173,8 @@
             "name": "LuxeMia Indian Ethnic Wear",
             "url": "https://luxemia.shop/collections"
           },
+          "hasMerchantReturnPolicy": { "@id": "https://luxemia.shop/#returnPolicy" },
+          "hasShippingService": { "@id": "https://luxemia.shop/#us-standard-shipping" },
           "knowsAbout": ["Indian Ethnic Wear", "Lehengas", "Sarees", "Salwar Kameez", "Sherwanis", "Anarkali Suits", "Indian Wedding Fashion", "Indian Wedding Guest Attire", "Diwali Outfits", "Mehendi Outfits", "Indian Jewelry"]
         },
         {
@@ -235,8 +237,28 @@
           "@id": "https://luxemia.shop/#returnPolicy",
           "name": "LuxeMia Return Policy",
           "applicableCountry": "US",
+          "returnPolicyCountry": "US",
           "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
           "description": "Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video."
+        },
+        {
+          "@type": "ShippingService",
+          "@id": "https://luxemia.shop/#us-standard-shipping",
+          "name": "LuxeMia U.S. Standard Shipping",
+          "shippingConditions": [
+            {
+              "@type": "ShippingConditions",
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+              "orderValue": { "@type": "MonetaryAmount", "minValue": 0, "maxValue": 149.99, "currency": "USD" },
+              "shippingRate": { "@type": "MonetaryAmount", "value": 12, "currency": "USD" }
+            },
+            {
+              "@type": "ShippingConditions",
+              "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+              "orderValue": { "@type": "MonetaryAmount", "minValue": 150, "currency": "USD" },
+              "shippingRate": { "@type": "MonetaryAmount", "value": 0, "currency": "USD" }
+            }
+          ]
         }
       ]
     }

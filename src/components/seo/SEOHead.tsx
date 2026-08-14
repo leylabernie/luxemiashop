@@ -208,7 +208,7 @@ const SEOHead = ({
       {/* Product-specific Open Graph */}
       {product && (
         <>
-          <meta property="product:price:amount" content={product.originalPrice || product.price} />
+          <meta property="product:price:amount" content={product.price} />
           <meta property="product:price:currency" content={product.currency} />
           {product.originalPrice && product.originalPrice !== product.price && (
             <meta property="product:sale_price:amount" content={product.price} />

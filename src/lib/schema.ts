@@ -26,11 +26,13 @@ interface PriceData {
 export function getSchemaPrices(priceData: PriceData) {
   const priceNum = parseFloat(priceData.price);
   const compareNum = priceData.compareAtPrice ? parseFloat(priceData.compareAtPrice) : 0;
-  const hasDiscount = compareNum > priceNum;
+  const hasDiscount = Number.isFinite(priceNum) && compareNum > priceNum;
 
   return {
-    schemaPrice: hasDiscount ? priceData.compareAtPrice! : priceData.price,
-    schemaSalePrice: hasDiscount ? priceData.price : undefined,
+    // Merchant listings require the active price. A compare-at price is an
+    // internal merchandising reference, not the current purchasable price.
+    schemaPrice: priceData.price,
+    compareAtPrice: hasDiscount ? priceData.compareAtPrice! : undefined,
     hasDiscount,
     discountPercent: hasDiscount ? Math.round((1 - priceNum / compareNum) * 100) : 0,
   };
@@ -41,12 +43,47 @@ export function getSchemaPrices(priceData: PriceData) {
 export function generateReturnPolicySchema() {
   return {
     '@type': 'MerchantReturnPolicy',
-    '@id': 'https://luxemia.shop/#returnPolicy',
+    '@id': `${SITE_URL}/#returnPolicy`,
     name: 'LuxeMia Return & Refund Policy',
     applicableCountry: 'US',
+    returnPolicyCountry: 'US',
     returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
     description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
-    url: 'https://luxemia.shop/returns',
+    url: `${SITE_URL}/returns`,
+  };
+}
+
+// Standard U.S. shipping terms are defined once at the Organization level.
+// Product-level shippingDetails should be added only for documented SKU-specific
+// exceptions, rather than copying policy data into every offer.
+export function generateUsShippingServiceSchema() {
+  return {
+    '@type': 'ShippingService',
+    '@id': `${SITE_URL}/#us-standard-shipping`,
+    name: 'LuxeMia U.S. Standard Shipping',
+    shippingConditions: [
+      {
+        '@type': 'ShippingConditions',
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+        orderValue: {
+          '@type': 'MonetaryAmount',
+          minValue: 0,
+          maxValue: 149.99,
+          currency: 'USD',
+        },
+        shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
+      },
+      {
+        '@type': 'ShippingConditions',
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+        orderValue: {
+          '@type': 'MonetaryAmount',
+          minValue: 150,
+          currency: 'USD',
+        },
+        shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
+      },
+    ],
   };
 }
 
@@ -71,7 +108,7 @@ export interface ProductSchemaInput {
 }
 
 export function generateProductSchema(input: ProductSchemaInput) {
-  const { schemaPrice, schemaSalePrice } = getSchemaPrices({
+  const { schemaPrice } = getSchemaPrices({
     price: input.price,
     compareAtPrice: input.compareAtPrice,
     currency: input.currency,
@@ -80,11 +117,11 @@ export function generateProductSchema(input: ProductSchemaInput) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': `${input.url}#product`,
     name: input.name,
     image: input.image,
     description: input.description,
-    sku: input.sku,
-    mpn: input.sku,
+    ...(input.sku && { sku: input.sku, mpn: input.sku }),
     url: input.url,
     brand: { '@type': 'Brand', name: input.brand || BRAND_NAME },
     category: input.category || 'Clothing > Traditional & Ethnic Wear',
@@ -94,25 +131,16 @@ export function generateProductSchema(input: ProductSchemaInput) {
     ...(input.sizes && input.sizes.length > 0 && { size: input.sizes.length === 1 ? input.sizes[0] : input.sizes.join('/') }),
     offers: {
       '@type': 'Offer',
+      '@id': `${input.url}#offer`,
       url: input.url,
+      // Always expose the current purchasable price. Do not manufacture sale
+      // windows: terms are only valid when backed by a real promotion schedule.
       price: schemaPrice,
       priceCurrency: input.currency,
-      validFrom: new Date().toISOString(),
-      ...(schemaSalePrice && {
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          priceType: 'https://schema.org/SalePrice',
-          price: schemaSalePrice,
-          priceCurrency: input.currency,
-          validFrom: new Date().toISOString(),
-          validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
-        },
-      }),
-      priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: `https://schema.org/${input.availability}`,
       itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@type': 'Organization', name: BRAND_NAME, legalName: LEGAL_BUSINESS_NAME },
-      hasMerchantReturnPolicy: generateReturnPolicySchema(),
+      seller: { '@id': `${SITE_URL}/#org` },
+      hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
     },
   };
 }
@@ -164,6 +192,7 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${SITE_URL}/#org`,
     name: BRAND_NAME,
     legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
@@ -203,6 +232,8 @@ export function generateOrganizationSchema() {
       'Mehendi Outfits',
       'Custom Tailoring Indian Wear',
     ],
+    hasMerchantReturnPolicy: generateReturnPolicySchema(),
+    hasShippingService: generateUsShippingServiceSchema(),
     sameAs: [
       'https://www.instagram.com/luxemiausa',
       'https://www.facebook.com/LuxeMia',

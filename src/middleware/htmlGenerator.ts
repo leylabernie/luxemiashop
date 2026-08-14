@@ -6,7 +6,7 @@
  */
 
 import type { ShopifyProduct } from './shopifyProxy.js';
-import { forceJpegForGmc, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
+import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -153,10 +153,13 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const compareNum = compareAtPrice ? parseFloat(compareAtPrice) : 0;
   const hasDiscount = compareNum > priceNum;
   const discountPercent = hasDiscount ? Math.round((1 - priceNum / compareNum) * 100) : 0;
-  const schemaPrice = hasDiscount ? compareAtPrice! : price;
+  // Social/meta price fields must use the current purchasable price, just like
+  // Product/Offer JSON-LD. The compare-at value is displayed separately.
+  const activePrice = price;
   const schemaSalePrice = hasDiscount ? price : undefined;
 
   // Generate schema using shared module
+  const organizationSchema = generateOrganizationSchema();
   const productSchema = generateProductSchema({
     name: displayTitle,
     description: description,
@@ -257,7 +260,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="LuxeMia">
   <meta property="og:locale" content="en_US">
-  <meta property="product:price:amount" content="${escapeHtml(schemaPrice)}">
+  <meta property="product:price:amount" content="${escapeHtml(activePrice)}">
   <meta property="product:price:currency" content="${escapeHtml(currency)}">
   ${schemaSalePrice ? `<meta property="product:sale_price:amount" content="${escapeHtml(schemaSalePrice)}">` : ''}
   ${schemaSalePrice ? `<meta property="product:sale_price:currency" content="${escapeHtml(currency)}">` : ''}
@@ -271,6 +274,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <meta name="twitter:image" content="${escapeHtml(gmcSafeImage)}">
+  <script type="application/ld+json">${JSON.stringify(organizationSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
   <script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>

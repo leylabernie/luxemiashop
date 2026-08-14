@@ -803,17 +803,10 @@ function generateItemListJsonLd(products, category, routePath) {
           url: productUrl,
           price,
           priceCurrency: currency,
-          validFrom: new Date().toISOString(),
-          priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           availability,
           itemCondition: 'https://schema.org/NewCondition',
-          seller: { '@type': 'Organization', name: 'LuxeMia' },
-          hasMerchantReturnPolicy: {
-            '@type': 'MerchantReturnPolicy',
-            applicableCountry: 'US',
-            returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-            description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
-          },
+          seller: { '@id': `${SITE_URL}/#org` },
+          hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
         },
       },
     };
@@ -1881,16 +1874,6 @@ function generateHtml(template, route, allShopifyProducts) {
     const productDescription = (live ? buildVerifiedProductCopy(live) : route.description || '').slice(0, 5000);
     const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
-    // Extract the compareAtPrice (regular/original price) for sale-price JSON-LD.
-    // The merchant feed (generate-static-feed.cjs) emits this as g:price when a
-    // discount exists, with g:sale_price carrying the lower (current) price.
-    // Without priceSpecification in the JSON-LD, Google Merchant Center sees a
-    // mismatch between the feed (g:price=$193.70) and the landing page
-    // (offers.price=$149.00) and disapproves the product.
-    const productComparePrice = live?.compareAtPriceRange?.maxVariantPrice?.amount || null;
-    const hasSale =
-      productComparePrice &&
-      parseFloat(productComparePrice) > parseFloat(productPrice);
     const productSku = live?.variants?.edges?.[0]?.node?.sku || (live?.id || '').split('/').pop() || handle;
     const productAvailability = live?.availableForSale === true || live?.variants?.edges?.some((variant) => variant.node.availableForSale)
       ? 'InStock'
@@ -1909,11 +1892,11 @@ function generateHtml(template, route, allShopifyProducts) {
     const productSchema = {
       '@context': 'https://schema.org',
       '@type': 'Product',
+      '@id': `${canonical}#product`,
       name: route.h1,
       image: productImages,
       description: productDescription,
-      sku: productSku,
-      mpn: productSku,
+      ...(productSku ? { sku: productSku, mpn: productSku } : {}),
       url: canonical,
       brand: { '@type': 'Brand', name: productBrand },
       category: productCategory.schemaCategory,
@@ -1923,35 +1906,17 @@ function generateHtml(template, route, allShopifyProducts) {
       itemCondition: 'https://schema.org/NewCondition',
       offers: {
         '@type': 'Offer',
+        '@id': `${canonical}#offer`,
         url: canonical,
+        // Product markup must expose the active price. The compare-at price is
+        // handled by the merchant feed and visible merchandising, not an
+        // invented ninety-day schema promotion window.
         price: productPrice,
         priceCurrency: productCurrency,
-        validFrom: new Date().toISOString(),
-        priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        // When the product is on sale (compareAtPrice > price), emit a
-        // priceSpecification with maxPrice = the regular price. This matches
-        // the merchant feed's g:price (regular) / g:sale_price (sale) pair,
-        // resolving the GMC "Price mismatch" disapproval.
-        // See: https://developers.google.com/search/docs/appearance/structured-data/product
-        ...(hasSale ? {
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: productPrice,
-            priceCurrency: productCurrency,
-            maxPrice: productComparePrice,
-            validFrom: new Date().toISOString(),
-            validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
-          },
-        } : {}),
         availability: `https://schema.org/${productAvailability}`,
         itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@type': 'Organization', name: 'LuxeMia', legalName: 'Glamour Indian Wear' },
-        hasMerchantReturnPolicy: {
-          '@type': 'MerchantReturnPolicy',
-          applicableCountry: 'US',
-          returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-          description: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video.',
-        },
+        seller: { '@id': `${SITE_URL}/#org` },
+        hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
       },
     };
 

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, lazy, Suspense } from "react";
+import { useLayoutEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigationType } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./hooks/useAuth";
-import { usePageTracking, trackShopifyOrderFromURL } from "./hooks/useAnalytics";
+import { usePageTracking } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
 // Eagerly loaded: Homepage is the most visited page
@@ -97,10 +97,6 @@ const PageTracker = ({ children }: { children: React.ReactNode }) => {
     return () => window.cancelAnimationFrame(animationFrame);
   }, [location.hash, location.key, location.pathname, navigationType]);
 
-  // Check for Shopify order confirmation in URL (conversion tracking)
-  useEffect(() => {
-    trackShopifyOrderFromURL();
-  }, []);
 
   return <>{children}</>;
 };

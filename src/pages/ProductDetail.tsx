@@ -139,13 +139,19 @@ const ProductDetail = () => {
         imageUrl: product.images.edges[0]?.node.url || '',
       });
       
-      // Track view_item event in GA4
+      // Track the actual default purchasable variant. The parent product ID is
+      // retained separately for product-group reporting across color/size options.
+      const defaultVariant = product.variants.edges.find((edge) => edge.node.availableForSale)
+        || product.variants.edges[0];
       trackViewItem({
-        id: product.id,
+        id: defaultVariant?.node.id || product.id,
         name: product.title,
-        price: parseFloat(product.priceRange.minVariantPrice.amount),
-        currency: product.priceRange.minVariantPrice.currencyCode,
+        price: parseFloat(defaultVariant?.node.price.amount || product.priceRange.minVariantPrice.amount),
+        currency: defaultVariant?.node.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
         category: product.productType,
+        variant: defaultVariant?.node.title !== 'Default Title' ? defaultVariant?.node.title : undefined,
+        productGroupId: product.id,
+        occasion: product.metadata?.occasion || undefined,
       });
     }
   }, [product, addToRecentlyViewed]);
