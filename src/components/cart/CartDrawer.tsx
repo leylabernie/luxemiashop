@@ -221,7 +221,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
                       {amountUntilRakhiDiscount === 0 ? (
                         <p className="text-xs leading-relaxed text-foreground">
-                          Raksha Bandhan offer unlocked. Enter{' '}
+                          Your offer is unlocked. Enter{' '}
                           <strong className="font-semibold tracking-wide">
                             {RAKSHA_BANDHAN_CAMPAIGN.code}
                           </strong>{' '}

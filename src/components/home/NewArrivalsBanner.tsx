@@ -74,20 +74,18 @@ const evergreenSlides: FeaturedSlide[] = [
   },
 ];
 
-const rakshaBandhanSlide: FeaturedSlide = {
-  ...evergreenSlides[0],
-  eyebrow: 'Raksha Bandhan Sale',
+const launchOfferSlide: FeaturedSlide = {
+  ...evergreenSlides[1],
+  eyebrow: '72-Hour Offer',
   headline: `${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% Off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+`,
-  subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Shipping to seven countries; delivery timing varies by item.`,
-  cta: 'Shop Festive Styles',
-  link: '/collections',
-  image: '/images/campaigns/raksha-bandhan-2026-mobile',
-  desktopImage: '/images/campaigns/raksha-bandhan-2026-desktop',
-  alt: 'Raksha Bandhan gift, rakhi bracelet, brass diya and marigolds on burgundy silk',
-  width: 1122,
-  height: 1402,
-  imageFit: 'cover',
-  mobileContentPosition: 'top',
+  subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Explore wedding-guest and celebration styles, then review each listing for timing and available options.`,
+  cta: 'Shop Wedding-Guest Styles',
+  link: '/collections/wedding-guest-outfits',
+  image: '/images/campaigns/wedding-lehengas-usa-2026-mobile',
+  desktopImage: '/images/campaigns/wedding-lehengas-usa-2026-desktop',
+  alt: 'Woman wearing a red embroidered lehenga choli with matching dupatta and traditional jewelry',
+  width: 900,
+  height: 1206,
 };
 
 const AUTO_PLAY_MS = 6000;
@@ -95,7 +93,7 @@ const padSlideNumber = (value: number) => String(value).padStart(2, '0');
 
 const NewArrivalsBanner = () => {
   const slides = isRakshaBandhanCampaignActive()
-    ? [rakshaBandhanSlide, ...evergreenSlides.slice(1)]
+    ? [launchOfferSlide, ...evergreenSlides.slice(1)]
     : evergreenSlides;
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);

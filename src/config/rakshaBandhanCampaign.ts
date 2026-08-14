@@ -1,13 +1,13 @@
-// Keep public campaign copy disabled until its code and eligibility are verified
-// against an active Shopify discount. Never advertise an unredeemable code.
+// Short-lived campaign configuration. Public copy must match the active Shopify
+// discount exactly; disable this flag before any code is removed or expires.
 export const RAKSHA_BANDHAN_CAMPAIGN = {
-  enabled: false,
-  code: 'RAKHI15',
-  discountPercent: 15,
+  enabled: true,
+  code: 'LUXE10',
+  discountPercent: 10,
   minimumSubtotal: 150,
-  startsAt: '2026-08-07T16:20:00Z',
-  endsAt: '2026-08-17T03:59:59Z',
-  displayEndDate: 'August 16',
+  startsAt: '2026-08-14T15:43:33Z',
+  endsAt: '2026-08-17T15:43:33Z',
+  displayEndDate: 'August 17 at 11:43 AM EDT',
 } as const;
 
 export const isRakshaBandhanCampaignActive = (now = Date.now()) => {

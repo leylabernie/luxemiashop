@@ -62,6 +62,7 @@ const NewVisitorPopup = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [discountCode, setDiscountCode] = useState<string | null>(null);
   const triggeredRef = useRef(false);
 
   useEffect(() => {
@@ -167,6 +168,7 @@ const NewVisitorPopup = () => {
         toast.success('Welcome to LuxeMia! Your discount code is ready.');
 
         if (data?.discountCode) {
+          setDiscountCode(data.discountCode);
           navigator.clipboard.writeText(data.discountCode).catch(() => {});
         }
       }
@@ -349,7 +351,7 @@ const NewVisitorPopup = () => {
                         <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
                       </motion.div>
 
-                      <h3 className="font-serif text-2xl mb-2">You're In! 🎉</h3>
+                      <h3 className="font-serif text-2xl mb-2">You're In</h3>
 
                       <p className="text-sm text-foreground/60 mb-4">
                         Your exclusive <strong className="text-foreground">15% off</strong> code is ready:
@@ -357,12 +359,12 @@ const NewVisitorPopup = () => {
 
                       <div className="bg-muted px-6 py-3 rounded-md inline-block mb-4 border-2 border-dashed border-primary/30">
                         <span className="font-mono text-lg font-semibold tracking-wider text-primary">
-                          LUXE15-XXXXXX
+                          {discountCode || 'Check your inbox'}
                         </span>
                       </div>
 
                       <p className="text-xs text-foreground/50 mb-6">
-                        Code copied to clipboard! Apply at checkout.
+                        {discountCode ? 'Code copied to clipboard! Apply at checkout.' : 'Check your inbox for your welcome code.'}
                       </p>
 
                       <Button

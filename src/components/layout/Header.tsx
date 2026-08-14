@@ -53,7 +53,7 @@ const Header = () => {
   const isRakhiSaleActive = isRakshaBandhanCampaignActive();
   const announcements = isRakhiSaleActive
     ? [
-        `Raksha Bandhan Sale — ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ with code ${RAKSHA_BANDHAN_CAMPAIGN.code}. Ends ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
+        `72-Hour Offer — ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ with code ${RAKSHA_BANDHAN_CAMPAIGN.code}. Ends ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
         ...shippingAnnouncements,
       ]
     : shippingAnnouncements;
