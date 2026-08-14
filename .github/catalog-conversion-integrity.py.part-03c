@@ -1,0 +1,4 @@
+    "popup code placeholder",
+)
+write("src/components/home/NewVisitorPopup.tsx", popup)
+
