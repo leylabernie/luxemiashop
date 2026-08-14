@@ -1,7 +1,0 @@
-{
-  "success": false,
-  "deliveryStatus": "failed",
-  "providerStatus": 403,
-  "providerReason": "domain_not_verified",
-  "error": "We could not email your code just now. Please try again."
-}
