@@ -1,8 +1,0 @@
-edge_function_parts = sorted((ROOT / ".github").glob("submit-email.ts.part-*"))
-if not edge_function_parts:
-    raise RuntimeError("submit-email function parts are missing")
-write(
-    "supabase/functions/submit-email/index.ts",
-    "".join(part.read_text(encoding="utf-8") for part in edge_function_parts),
-)
-

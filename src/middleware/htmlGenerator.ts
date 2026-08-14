@@ -153,8 +153,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const compareNum = compareAtPrice ? parseFloat(compareAtPrice) : 0;
   const hasDiscount = compareNum > priceNum;
   const discountPercent = hasDiscount ? Math.round((1 - priceNum / compareNum) * 100) : 0;
-  const schemaPrice = hasDiscount ? compareAtPrice! : price;
-  const schemaSalePrice = hasDiscount ? price : undefined;
+  const schemaPrice = price;
 
   // Generate schema using shared module
   const productSchema = generateProductSchema({
@@ -259,8 +258,6 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta property="og:locale" content="en_US">
   <meta property="product:price:amount" content="${escapeHtml(schemaPrice)}">
   <meta property="product:price:currency" content="${escapeHtml(currency)}">
-  ${schemaSalePrice ? `<meta property="product:sale_price:amount" content="${escapeHtml(schemaSalePrice)}">` : ''}
-  ${schemaSalePrice ? `<meta property="product:sale_price:currency" content="${escapeHtml(currency)}">` : ''}
   <meta property="product:original_price:amount" content="${escapeHtml(hasDiscount ? compareAtPrice! : price)}">
   <meta property="product:original_price:currency" content="${escapeHtml(currency)}">
   <meta property="product:availability" content="${availability === 'InStock' ? 'in stock' : 'out of stock'}">

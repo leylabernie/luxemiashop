@@ -126,9 +126,8 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   <meta property="og:description" content="${description.replace(/"/g, '&quot;')}">
   <meta property="og:image" content="${product.image}">
   <meta property="og:site_name" content="LuxeMia">
-  <meta property="product:price:amount" content="${hasDiscount ? originalPrice : price}">
+  <meta property="product:price:amount" content="${price}">
   <meta property="product:price:currency" content="USD">
-  ${hasDiscount ? `<meta property="product:sale_price:amount" content="${price}">` : ''}
   <meta property="product:availability" content="in stock">
   <meta property="product:brand" content="LuxeMia">
   <meta property="product:condition" content="new">

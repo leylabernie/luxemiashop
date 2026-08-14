@@ -1,9 +1,0 @@
-analytics = read("src/hooks/useAnalytics.ts")
-analytics = replace_once(
-    analytics,
-    "    dataLayer: unknown[];\n",
-    "    dataLayer: unknown[];\n    __luxemiaAnalyticsReady?: boolean;\n",
-    "analytics readiness global",
-)
-write("src/hooks/useAnalytics.ts", analytics)
-

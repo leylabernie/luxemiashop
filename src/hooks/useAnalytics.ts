@@ -13,20 +13,40 @@ declare global {
       params?: Record<string, unknown>,
     ) => void;
     dataLayer: unknown[];
+    __luxemiaAnalyticsReady?: boolean;
   }
 }
 
-// Track page views for SPA navigation
+// Track one explicit page_view for the initial route and every SPA navigation.
+// The base tag is configured once with send_page_view:false in index.html.
 export const usePageTracking = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (typeof window.gtag === 'function') {
-      window.gtag('config', GA_MEASUREMENT_ID, {
-        page_path: location.pathname + location.search,
+    let animationFrame: number | null = null;
+
+    const sendPageView = () => {
+      animationFrame = window.requestAnimationFrame(() => {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', 'page_view', {
+          page_path: location.pathname + location.search,
+          page_location: window.location.href,
+          page_title: document.title,
+        });
       });
+    };
+
+    if (window.__luxemiaAnalyticsReady) {
+      sendPageView();
+    } else {
+      window.addEventListener('luxemia:analytics-ready', sendPageView, { once: true });
     }
-  }, [location]);
+
+    return () => {
+      window.removeEventListener('luxemia:analytics-ready', sendPageView);
+      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
+    };
+  }, [location.pathname, location.search]);
 };
 
 // E-commerce event helpers
@@ -171,28 +191,20 @@ export const trackShopifyOrderFromURL = () => {
   }
 };
 
-// Consultation lead tracking
+// Consultation lead tracking. Never send names, email addresses, phone
+// numbers, or other user-provided contact data to Google Analytics.
 export const trackConsultationSubmission = (data: {
-  name: string;
-  email: string;
-  phone: string;
   country: string;
   occasion?: string;
-  budget?: string;
 }) => {
   if (typeof window.gtag === 'function') {
     window.gtag('event', 'generate_lead', {
       currency: 'USD',
-      value: 0, // Lead value can be set based on budget
+      value: 0,
       lead_category: 'styling_consultation',
       event_category: 'engagement',
       event_label: data.occasion || 'styling_consultation',
-      user_data: {
-        phone_number: data.phone,
-        address: {
-          country: data.country,
-        },
-      },
+      lead_country: data.country,
     });
   }
 };
