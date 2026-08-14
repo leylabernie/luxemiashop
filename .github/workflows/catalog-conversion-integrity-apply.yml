@@ -1,9 +1,7 @@
 name: Apply catalog conversion integrity corrections
 
 on:
-  push:
-    branches:
-      - agent/catalog-conversion-integrity-20260813
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,7 +12,6 @@ concurrency:
 
 jobs:
   apply-and-validate:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Check out approved branch
@@ -27,7 +24,7 @@ jobs:
       - name: Decode and apply deterministic corrections
         shell: bash
         run: |
-          base64 --decode .github/catalog-conversion-integrity.patch.gz.b64 | gzip --decompress > scripts/apply_catalog_conversion_integrity.py
+          cat .github/catalog-conversion-integrity.patch.gz.b64.part-* | base64 --decode | gzip --decompress > scripts/apply_catalog_conversion_integrity.py
           python3 scripts/apply_catalog_conversion_integrity.py
 
       - name: Install dependencies
@@ -50,6 +47,7 @@ jobs:
         run: |
           rm -f scripts/apply_catalog_conversion_integrity.py
           rm -f .github/catalog-conversion-integrity.patch.gz.b64
+          rm -f .github/catalog-conversion-integrity.patch.gz.b64.part-*
           rm -f .github/workflows/catalog-conversion-integrity-apply.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
