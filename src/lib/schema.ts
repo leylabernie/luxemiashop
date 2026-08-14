@@ -26,11 +26,11 @@ interface PriceData {
 export function getSchemaPrices(priceData: PriceData) {
   const priceNum = parseFloat(priceData.price);
   const compareNum = priceData.compareAtPrice ? parseFloat(priceData.compareAtPrice) : 0;
-  const hasDiscount = compareNum > priceNum;
+  const hasDiscount = Number.isFinite(priceNum) && Number.isFinite(compareNum) && compareNum > priceNum;
 
   return {
-    schemaPrice: hasDiscount ? priceData.compareAtPrice! : priceData.price,
-    schemaSalePrice: hasDiscount ? priceData.price : undefined,
+    schemaPrice: priceData.price,
+    schemaStrikethroughPrice: hasDiscount ? priceData.compareAtPrice! : undefined,
     hasDiscount,
     discountPercent: hasDiscount ? Math.round((1 - priceNum / compareNum) * 100) : 0,
   };
@@ -71,7 +71,7 @@ export interface ProductSchemaInput {
 }
 
 export function generateProductSchema(input: ProductSchemaInput) {
-  const { schemaPrice, schemaSalePrice } = getSchemaPrices({
+  const { schemaPrice, schemaStrikethroughPrice } = getSchemaPrices({
     price: input.price,
     compareAtPrice: input.compareAtPrice,
     currency: input.currency,
@@ -97,18 +97,14 @@ export function generateProductSchema(input: ProductSchemaInput) {
       url: input.url,
       price: schemaPrice,
       priceCurrency: input.currency,
-      validFrom: new Date().toISOString(),
-      ...(schemaSalePrice && {
+      ...(schemaStrikethroughPrice && {
         priceSpecification: {
           '@type': 'UnitPriceSpecification',
-          priceType: 'https://schema.org/SalePrice',
-          price: schemaSalePrice,
+          priceType: 'https://schema.org/StrikethroughPrice',
+          price: schemaStrikethroughPrice,
           priceCurrency: input.currency,
-          validFrom: new Date().toISOString(),
-          validThrough: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
         },
       }),
-      priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       availability: `https://schema.org/${input.availability}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: BRAND_NAME, legalName: LEGAL_BUSINESS_NAME },

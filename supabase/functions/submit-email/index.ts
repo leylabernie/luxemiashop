@@ -1,466 +1,521 @@
-import { createClient, type SupabaseClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.112.2";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+const ALLOWED_ORIGINS = new Set([
+  "https://luxemia.shop",
+  "https://www.luxemia.shop",
+]);
 
-const RATE_LIMIT = 5; // requests per window
-const RATE_WINDOW_MINUTES = 1; // 1 minute
-const VIOLATION_THRESHOLD = 3; // violations before blocking
-const BLOCK_DURATION_MINUTES = 60; // initial block duration
-const MAX_BLOCK_DURATION_HOURS = 24; // maximum block duration
+const ALLOWED_VERCEL_PREVIEW =
+  /^https:\/\/luxemiashop-[a-z0-9-]+-labbhamini-7947s-projects\.vercel\.app$/;
+
+const ENDPOINT = "submit-email";
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MINUTES = 10;
+const VIOLATION_THRESHOLD = 3;
+const BLOCK_DURATION_MINUTES = 60;
+const MAX_BODY_BYTES = 2_048;
+const WELCOME_DISCOUNT_CODE = "WELCOME10";
+const WELCOME_DISCOUNT_PERCENT = 10;
+const SIGNUP_SOURCE = "welcome_popup_10_percent";
+const LEGACY_SIGNUP_SOURCE = "welcome_popup";
+
+type AdminClient = ReturnType<typeof createClient>;
 
 interface RateLimitRecord {
   id: string;
-  identifier: string;
-  endpoint: string;
   request_count: number;
-  window_start: string;
   violation_count: number;
 }
 
-interface BlockedIP {
-  id: string;
-  ip_address: string;
-  reason: string;
-  violation_count: number;
-  blocked_at: string;
-  blocked_until: string;
+interface SignupPayload {
+  email: string;
+  type: "newsletter";
+  source: typeof SIGNUP_SOURCE;
 }
 
-interface PostgrestErrorLike {
-  code?: string;
-  message?: string;
+type WelcomeEmailOutcome =
+  | { status: "accepted"; providerId: string | null }
+  | { status: "not_configured" }
+  | {
+      status: "failed";
+      providerStatus?: number;
+      providerReason:
+        | "domain_not_verified"
+        | "testing_recipient_restricted"
+        | "invalid_api_key"
+        | "provider_rate_limited"
+        | "provider_rejected"
+        | "provider_unreachable";
+    };
+
+function isAllowedOrigin(origin: string | null): boolean {
+  return (
+    !origin ||
+    ALLOWED_ORIGINS.has(origin) ||
+    ALLOWED_VERCEL_PREVIEW.test(origin)
+  );
 }
 
-async function isIPBlocked(
-  supabase: SupabaseClient,
-  ipAddress: string
-): Promise<{ blocked: boolean; blockedUntil?: string }> {
-  try {
-    const { data, error } = await supabase
-      .from('blocked_ips')
-      .select('*')
-      .eq('ip_address', ipAddress)
-      .gte('blocked_until', new Date().toISOString())
-      .single() as { data: BlockedIP | null; error: PostgrestErrorLike | null };
+function responseHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get("origin");
+  const allowedOrigin =
+    origin && isAllowedOrigin(origin) ? origin : "https://luxemia.shop";
 
-    if (error && error.code !== 'PGRST116') {
-      console.error('Block check error:', error);
-      return { blocked: false }; // Fail open on DB errors
-    }
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Max-Age": "86400",
+    "Content-Type": "application/json",
+    Vary: "Origin",
+  };
+}
 
-    if (data) {
-      return { blocked: true, blockedUntil: data.blocked_until };
-    }
+function jsonResponse(
+  req: Request,
+  body: Record<string, unknown>,
+  status: number,
+  extraHeaders: Record<string, string> = {},
+): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...responseHeaders(req), ...extraHeaders },
+  });
+}
 
-    return { blocked: false };
-  } catch (error) {
-    console.error('Block check exception:', error);
-    return { blocked: false };
+function getAdminKey(): string {
+  const legacyKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (legacyKey) return legacyKey;
+
+  const encodedKeys = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (encodedKeys) {
+    const keys = JSON.parse(encodedKeys) as Record<string, string>;
+    if (keys.default) return keys.default;
   }
+
+  throw new Error("Supabase server key is not configured");
 }
 
-async function blockIP(
-  supabase: SupabaseClient,
-  ipAddress: string,
-  violationCount: number
+function validatePayload(payload: unknown): SignupPayload {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    throw new Error("Invalid request body");
+  }
+
+  const input = payload as Record<string, unknown>;
+  if (input.type !== "newsletter") {
+    throw new Error("Invalid submission type");
+  }
+
+  if (
+    input.source !== SIGNUP_SOURCE &&
+    input.source !== LEGACY_SIGNUP_SOURCE
+  ) {
+    throw new Error("Invalid submission source");
+  }
+
+  if (typeof input.email !== "string") {
+    throw new Error("Email is required");
+  }
+
+  const email = input.email.trim().toLowerCase();
+  if (
+    email.length < 3 ||
+    email.length > 254 ||
+    email.includes("\u0000") ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
+    throw new Error("Please enter a valid email address");
+  }
+
+  return { email, type: "newsletter", source: SIGNUP_SOURCE };
+}
+
+async function hashIdentifier(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function clientIdentifier(req: Request): Promise<string> {
+  const clientIp =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip")?.trim() ||
+    "unknown";
+  return hashIdentifier(clientIp);
+}
+
+async function isBlocked(
+  supabase: AdminClient,
+  identifier: string,
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("blocked_ips")
+    .select("identifier")
+    .eq("identifier", identifier)
+    .gte("blocked_until", new Date().toISOString())
+    .maybeSingle();
+
+  if (error) throw error;
+  return Boolean(data);
+}
+
+async function blockIdentifier(
+  supabase: AdminClient,
+  identifier: string,
+  violationCount: number,
 ): Promise<void> {
-  try {
-    // Calculate escalating block duration based on violation count
-    const multiplier = Math.min(violationCount, 10); // Cap at 10x
-    const blockMinutes = Math.min(
-      BLOCK_DURATION_MINUTES * multiplier,
-      MAX_BLOCK_DURATION_HOURS * 60
-    );
-    const blockedUntil = new Date(Date.now() + blockMinutes * 60 * 1000).toISOString();
+  const multiplier = Math.min(violationCount, 10);
+  const blockMinutes = Math.min(BLOCK_DURATION_MINUTES * multiplier, 24 * 60);
+  const blockedUntil = new Date(
+    Date.now() + blockMinutes * 60 * 1_000,
+  ).toISOString();
 
-    // Upsert the block record
+  const { error } = await supabase.from("blocked_ips").upsert(
+    {
+      identifier,
+      reason: "welcome_email_spam",
+      violation_count: violationCount,
+      blocked_at: new Date().toISOString(),
+      blocked_until: blockedUntil,
+    },
+    { onConflict: "identifier" },
+  );
+
+  if (error) throw error;
+}
+
+async function checkRateLimit(
+  supabase: AdminClient,
+  identifier: string,
+): Promise<{ allowed: boolean; remaining: number; violationCount: number }> {
+  const windowStart = new Date(
+    Date.now() - RATE_WINDOW_MINUTES * 60 * 1_000,
+  ).toISOString();
+
+  const { data: existing, error: lookupError } = await supabase
+    .from("rate_limits")
+    .select("id,request_count,violation_count")
+    .eq("identifier", identifier)
+    .eq("endpoint", ENDPOINT)
+    .gte("window_start", windowStart)
+    .maybeSingle<RateLimitRecord>();
+
+  if (lookupError) throw lookupError;
+
+  if (existing) {
+    if (existing.request_count >= RATE_LIMIT) {
+      const violationCount = (existing.violation_count || 0) + 1;
+      const { error } = await supabase
+        .from("rate_limits")
+        .update({ violation_count: violationCount })
+        .eq("id", existing.id);
+      if (error) throw error;
+      return { allowed: false, remaining: 0, violationCount };
+    }
+
+    const requestCount = existing.request_count + 1;
     const { error } = await supabase
-      .from('blocked_ips')
-      .upsert({
-        ip_address: ipAddress,
-        reason: 'rate_limit_abuse',
-        violation_count: violationCount,
-        blocked_at: new Date().toISOString(),
-        blocked_until: blockedUntil,
-      }, {
-        onConflict: 'ip_address'
-      });
+      .from("rate_limits")
+      .update({ request_count: requestCount })
+      .eq("id", existing.id);
+    if (error) throw error;
 
-    if (error) {
-      console.error('Block IP error:', error);
-    } else {
-      console.log(`Blocked IP ${ipAddress} until ${blockedUntil} (violation #${violationCount})`);
-    }
-  } catch (error) {
-    console.error('Block IP exception:', error);
+    return {
+      allowed: true,
+      remaining: Math.max(0, RATE_LIMIT - requestCount),
+      violationCount: existing.violation_count || 0,
+    };
   }
+
+  const { error } = await supabase.from("rate_limits").upsert(
+    {
+      identifier,
+      endpoint: ENDPOINT,
+      request_count: 1,
+      violation_count: 0,
+      window_start: new Date().toISOString(),
+    },
+    { onConflict: "identifier,endpoint" },
+  );
+
+  if (error) throw error;
+  return { allowed: true, remaining: RATE_LIMIT - 1, violationCount: 0 };
 }
 
-async function recordViolation(
-  supabase: SupabaseClient,
-  identifier: string,
-  endpoint: string
-): Promise<number> {
+async function sendWelcomeEmail(email: string): Promise<WelcomeEmailOutcome> {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  if (!apiKey) {
+    console.error(
+      JSON.stringify({
+        event: "welcome_email",
+        status: "not_configured",
+      }),
+    );
+    return { status: "not_configured" };
+  }
+
+  let response: Response;
   try {
-    // Get current violation count and increment
-    const { data, error } = await supabase
-      .from('rate_limits')
-      .select('violation_count')
-      .eq('identifier', identifier)
-      .eq('endpoint', endpoint)
-      .single() as { data: { violation_count: number } | null; error: PostgrestErrorLike | null };
-
-    const currentCount = data?.violation_count || 0;
-    const newCount = currentCount + 1;
-
-    // Update violation count
-    await supabase
-      .from('rate_limits')
-      .update({ violation_count: newCount })
-      .eq('identifier', identifier)
-      .eq('endpoint', endpoint);
-
-    return newCount;
-  } catch (error) {
-    console.error('Record violation error:', error);
-    return 1;
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "LuxeMia <hello@luxemia.shop>",
+        to: [email],
+        reply_to: "hello@luxemia.shop",
+        subject: "Your LuxeMia welcome code",
+        html: `<!doctype html>
+          <html lang="en">
+            <body style="margin:0;background:#f6f1ea;color:#2d211d;font-family:Arial,sans-serif;">
+              <div style="max-width:560px;margin:0 auto;padding:40px 24px;">
+                <p style="margin:0 0 18px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#8b5e3c;">Welcome to LuxeMia</p>
+                <h1 style="margin:0 0 16px;font-family:Georgia,serif;font-size:32px;font-weight:500;line-height:1.2;">A little something for your first order</h1>
+                <p style="margin:0 0 24px;font-size:16px;line-height:1.65;">Thank you for joining us. Enjoy ${WELCOME_DISCOUNT_PERCENT}% off your first LuxeMia order with the code below.</p>
+                <p style="margin:0 0 28px;padding:16px;border:1px solid #c9a274;text-align:center;font-size:22px;font-weight:700;letter-spacing:3px;">${WELCOME_DISCOUNT_CODE}</p>
+                <p style="margin:0 0 28px;"><a href="https://luxemia.shop/collections" style="display:inline-block;background:#7a3f2b;color:#ffffff;padding:14px 24px;text-decoration:none;font-weight:700;">Shop LuxeMia</a></p>
+                <p style="margin:0 0 14px;font-size:14px;line-height:1.6;">We select premium Indian ethnic wear with a focus on product detail, quality, and attentive customer support. Questions? Reply to this email and we’ll be glad to help.</p>
+                <p style="margin:0;font-size:12px;line-height:1.6;color:#6b625d;">For customers with no prior LuxeMia purchase. One use per customer; cannot be combined with other discounts. Shipping is available to seven countries; rates and services are shown at checkout.</p>
+              </div>
+            </body>
+          </html>`,
+      }),
+    });
+  } catch {
+    console.error(
+      JSON.stringify({
+        event: "welcome_email",
+        status: "failed",
+        failureType: "provider_unreachable",
+      }),
+    );
+    return { status: "failed", providerReason: "provider_unreachable" };
   }
-}
 
-async function checkAndUpdateRateLimit(
-  supabase: SupabaseClient,
-  identifier: string,
-  endpoint: string
-): Promise<{ allowed: boolean; remaining: number; shouldBlock: boolean; violationCount: number }> {
+  const responseBody = await response.text();
+  let providerId: string | null = null;
   try {
-    const windowStart = new Date(Date.now() - RATE_WINDOW_MINUTES * 60 * 1000).toISOString();
-    
-    // Check existing rate limit record within current window
-    const { data: existing, error: selectError } = await supabase
-      .from('rate_limits')
-      .select('*')
-      .eq('identifier', identifier)
-      .eq('endpoint', endpoint)
-      .gte('window_start', windowStart)
-      .single() as { data: RateLimitRecord | null; error: PostgrestErrorLike | null };
-    
-    if (selectError && selectError.code !== 'PGRST116') {
-      console.error('Rate limit check error:', selectError);
-      return { allowed: true, remaining: RATE_LIMIT - 1, shouldBlock: false, violationCount: 0 };
-    }
-    
-    if (existing) {
-      // Record exists within window
-      if (existing.request_count >= RATE_LIMIT) {
-        // Record this violation
-        const violationCount = await recordViolation(supabase, identifier, endpoint);
-        const shouldBlock = violationCount >= VIOLATION_THRESHOLD;
-        
-        return { 
-          allowed: false, 
-          remaining: 0, 
-          shouldBlock, 
-          violationCount 
-        };
-      }
-      
-      // Increment counter
-      const { error: updateError } = await supabase
-        .from('rate_limits')
-        .update({ request_count: existing.request_count + 1 })
-        .eq('id', existing.id);
-      
-      if (updateError) {
-        console.error('Rate limit update error:', updateError);
-      }
-      
-      return { 
-        allowed: true, 
-        remaining: RATE_LIMIT - existing.request_count - 1, 
-        shouldBlock: false, 
-        violationCount: existing.violation_count 
-      };
-    }
-    
-    // No record exists or record is outside window - upsert new one
-    const { error: upsertError } = await supabase
-      .from('rate_limits')
-      .upsert({
-        identifier,
-        endpoint,
-        request_count: 1,
-        window_start: new Date().toISOString(),
-        violation_count: 0
-      }, {
-        onConflict: 'identifier,endpoint'
-      });
-    
-    if (upsertError) {
-      console.error('Rate limit upsert error:', upsertError);
-    }
-    
-    // Clean up old entries occasionally (1% chance per request)
-    if (Math.random() < 0.01) {
-      try {
-        await supabase.rpc('cleanup_old_rate_limits');
-        await supabase.rpc('cleanup_expired_blocks');
-      } catch (cleanupErr) {
-        console.log('Cleanup error (non-critical):', cleanupErr);
-      }
-    }
-    
-    return { allowed: true, remaining: RATE_LIMIT - 1, shouldBlock: false, violationCount: 0 };
-  } catch (error) {
-    console.error('Rate limit error:', error);
-    return { allowed: true, remaining: RATE_LIMIT - 1, shouldBlock: false, violationCount: 0 };
-  }
-}
-
-function validateEmail(email: string): { valid: boolean; error?: string } {
-  if (!email || typeof email !== "string") {
-    return { valid: false, error: "Email is required" };
+    const parsed = JSON.parse(responseBody) as { id?: unknown };
+    providerId = typeof parsed.id === "string" ? parsed.id : null;
+  } catch {
+    // The HTTP status below controls non-JSON provider responses.
   }
 
-  const trimmed = email.trim();
+  if (!response.ok) {
+    const normalizedError = responseBody.toLowerCase();
+    const providerReason = normalizedError.includes("api key is invalid")
+      ? "invalid_api_key"
+      : normalizedError.includes("only send testing emails")
+        ? "testing_recipient_restricted"
+        : normalizedError.includes("domain") &&
+            normalizedError.includes("not verified")
+          ? "domain_not_verified"
+          : response.status === 429
+            ? "provider_rate_limited"
+            : "provider_rejected";
 
-  if (trimmed.length === 0) {
-    return { valid: false, error: "Email is required" };
+    console.error(
+      JSON.stringify({
+        event: "welcome_email",
+        status: "failed",
+        providerStatus: response.status,
+        providerReason,
+      }),
+    );
+    return {
+      status: "failed",
+      providerStatus: response.status,
+      providerReason,
+    };
   }
 
-  if (trimmed.length > 255) {
-    return { valid: false, error: "Email must be less than 255 characters" };
-  }
-
-  // Basic email regex
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(trimmed)) {
-    return { valid: false, error: "Please enter a valid email address" };
-  }
-
-  // Check for injection attempts
-  const injectionPattern = /<|>|script|javascript|on\w+=/i;
-  if (injectionPattern.test(trimmed)) {
-    return { valid: false, error: "Invalid characters in email" };
-  }
-
-  return { valid: true };
-}
-
-function generateDiscountCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "LUXE15-";
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
+  console.log(
+    JSON.stringify({
+      event: "welcome_email",
+      status: "accepted",
+      providerStatus: response.status,
+      providerId,
+    }),
+  );
+  return { status: "accepted", providerId };
 }
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight
+  if (!isAllowedOrigin(req.headers.get("origin"))) {
+    return jsonResponse(req, { error: "Origin not allowed" }, 403);
+  }
+
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { status: 204, headers: responseHeaders(req) });
   }
 
   if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method not allowed" }), {
-      status: 405,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    return jsonResponse(req, { error: "Method not allowed" }, 405, {
+      Allow: "POST, OPTIONS",
     });
   }
 
-  // Initialize Supabase client with service role for admin operations
-  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (
+    !req.headers
+      .get("content-type")
+      ?.toLowerCase()
+      .startsWith("application/json")
+  ) {
+    return jsonResponse(
+      req,
+      { error: "Content-Type must be application/json" },
+      415,
+    );
+  }
 
   try {
-    // Get client IP for rate limiting
-    const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-                     req.headers.get("x-real-ip") ||
-                     "unknown";
+    const rawBody = await req.text();
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      return jsonResponse(req, { error: "Request body is too large" }, 413);
+    }
 
-    // Check if IP is blocked
-    const blockStatus = await isIPBlocked(supabase, clientIP);
-    if (blockStatus.blocked) {
-      console.log(`Blocked IP attempted access: ${clientIP}`);
-      return new Response(
-        JSON.stringify({ 
-          error: "Access temporarily blocked due to repeated abuse.",
-          blockedUntil: blockStatus.blockedUntil
-        }),
-        {
-          status: 403,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        }
+    const payload = validatePayload(JSON.parse(rawBody));
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL") || "",
+      getAdminKey(),
+      { auth: { persistSession: false, autoRefreshToken: false } },
+    );
+    const identifier = await clientIdentifier(req);
+
+    if (await isBlocked(supabase, identifier)) {
+      return jsonResponse(
+        req,
+        { error: "Access temporarily blocked due to repeated abuse." },
+        403,
       );
     }
 
-    // Check persistent rate limit
-    const rateLimit = await checkAndUpdateRateLimit(supabase, clientIP, "submit-email");
-    
+    const rateLimit = await checkRateLimit(supabase, identifier);
     if (!rateLimit.allowed) {
-      // If this is the violation that triggers blocking, block the IP
-      if (rateLimit.shouldBlock) {
-        await blockIP(supabase, clientIP, rateLimit.violationCount);
-        console.log(`IP ${clientIP} has been blocked after ${rateLimit.violationCount} violations`);
-        
-        return new Response(
-          JSON.stringify({ 
-            error: "Access temporarily blocked due to repeated abuse. Please try again later.",
-          }),
-          {
-            status: 403,
-            headers: {
-              ...corsHeaders,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      if (rateLimit.violationCount >= VIOLATION_THRESHOLD) {
+        await blockIdentifier(supabase, identifier, rateLimit.violationCount);
       }
-      
-      console.log(`Rate limit exceeded for IP: ${clientIP} (violation #${rateLimit.violationCount + 1})`);
-      return new Response(
-        JSON.stringify({ 
-          error: "Too many requests. Please try again later.",
-          retryAfter: 60
-        }),
-        {
-          status: 429,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-            "Retry-After": "60",
-            "X-RateLimit-Remaining": "0",
-          },
-        }
+
+      return jsonResponse(
+        req,
+        { error: "Too many requests. Please try again later." },
+        429,
+        { "Retry-After": String(RATE_WINDOW_MINUTES * 60) },
       );
     }
 
-    const body = await req.json();
-    const { email, type, cartItems, cartTotal, currency } = body;
+    const { data: existing, error: lookupError } = await supabase
+      .from("newsletter_subscribers")
+      .select("welcome_email_sent_at")
+      .eq("email", payload.email)
+      .maybeSingle<{ welcome_email_sent_at: string | null }>();
 
-    // Validate email
-    const emailValidation = validateEmail(email);
-    if (!emailValidation.valid) {
-      return new Response(JSON.stringify({ error: emailValidation.error }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    if (lookupError) throw lookupError;
 
-    // Validate type
-    if (!type || !["newsletter", "cart"].includes(type)) {
-      return new Response(JSON.stringify({ error: "Invalid submission type" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const sanitizedEmail = email.trim().toLowerCase();
-
-    if (type === "newsletter") {
-      const discountCode = generateDiscountCode();
-      
-      const { error } = await supabase.from("newsletter_subscribers").insert({
-        email: sanitizedEmail,
-        source: body.source || "popup",
-        discount_code: discountCode,
-      });
-
-      if (error) {
-        if (error.code === "23505") {
-          console.log(`Duplicate newsletter subscription attempt: ${sanitizedEmail}`);
-          return new Response(
-            JSON.stringify({ 
-              success: true, 
-              message: "Already subscribed",
-              duplicate: true 
-            }),
-            {
-              status: 200,
-              headers: { ...corsHeaders, "Content-Type": "application/json" },
-            }
-          );
-        }
-        console.error("Newsletter subscription error:", error);
-        throw error;
-      }
-
-      console.log(`Newsletter subscription successful: ${sanitizedEmail}`);
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          discountCode,
-          message: "Subscription successful" 
-        }),
+    if (existing?.welcome_email_sent_at) {
+      return jsonResponse(
+        req,
         {
-          status: 200,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-            "X-RateLimit-Remaining": String(rateLimit.remaining),
-          },
-        }
+          success: true,
+          duplicate: true,
+          deliveryStatus: "accepted",
+          discountCode: WELCOME_DISCOUNT_CODE,
+          discountPercent: WELCOME_DISCOUNT_PERCENT,
+          message: "You are already subscribed. Your welcome code is ready.",
+        },
+        200,
+        { "X-RateLimit-Remaining": String(rateLimit.remaining) },
       );
     }
 
-    if (type === "cart") {
-      // Validate cart data
-      if (!Array.isArray(cartItems)) {
-        return new Response(JSON.stringify({ error: "Invalid cart data" }), {
-          status: 400,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-
-      const { error } = await supabase.from("abandoned_carts").insert({
-        email: sanitizedEmail,
-        cart_items: cartItems,
-        cart_total: cartTotal || 0,
-        currency: currency || "USD",
-        status: "pending",
-      });
-
-      if (error) {
-        console.error("Cart save error:", error);
-        throw error;
-      }
-
-      console.log(`Abandoned cart saved for: ${sanitizedEmail}`);
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: "Cart saved successfully" 
-        }),
+    const { error: saveError } = await supabase
+      .from("newsletter_subscribers")
+      .upsert(
         {
-          status: 200,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-            "X-RateLimit-Remaining": String(rateLimit.remaining),
-          },
-        }
+          email: payload.email,
+          source: payload.source,
+          discount_code: WELCOME_DISCOUNT_CODE,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "email" },
+      );
+
+    if (saveError) throw saveError;
+
+    const delivery = await sendWelcomeEmail(payload.email);
+    if (delivery.status !== "accepted") {
+      return jsonResponse(
+        req,
+        {
+          success: false,
+          deliveryStatus: delivery.status,
+          providerStatus:
+            delivery.status === "failed"
+              ? delivery.providerStatus || null
+              : null,
+          providerReason:
+            delivery.status === "failed" ? delivery.providerReason : null,
+          error: "We could not email your code just now. Please try again.",
+        },
+        503,
       );
     }
 
-    return new Response(JSON.stringify({ error: "Invalid request" }), {
-      status: 400,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error("Error in submit-email function:", error);
-    return new Response(
-      JSON.stringify({ error: "An error occurred. Please try again." }),
+    const { error: deliveryUpdateError } = await supabase
+      .from("newsletter_subscribers")
+      .update({
+        welcome_email_sent_at: new Date().toISOString(),
+        provider_message_id: delivery.providerId,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("email", payload.email);
+
+    if (deliveryUpdateError) {
+      console.error(
+        JSON.stringify({
+          event: "welcome_email_record_update",
+          status: "failed",
+        }),
+      );
+    }
+
+    return jsonResponse(
+      req,
       {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
+        success: true,
+        duplicate: false,
+        deliveryStatus: "accepted",
+        discountCode: WELCOME_DISCOUNT_CODE,
+        discountPercent: WELCOME_DISCOUNT_PERCENT,
+        message: "Welcome email accepted for delivery",
+      },
+      200,
+      { "X-RateLimit-Remaining": String(rateLimit.remaining) },
+    );
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return jsonResponse(req, { error: "Invalid JSON body" }, 400);
+    }
+
+    if (
+      error instanceof Error &&
+      /required|invalid|source|submission/i.test(error.message)
+    ) {
+      return jsonResponse(req, { error: error.message }, 400);
+    }
+
+    console.error("submit-email failed:", error);
+    return jsonResponse(
+      req,
+      { error: "We could not process your signup. Please try again." },
+      500,
     );
   }
 });

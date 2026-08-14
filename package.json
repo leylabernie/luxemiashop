@@ -5,14 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs",
+    "build": "npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-schema && npm run validate:conversion-integrity && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "validate:merchant-feed": "node scripts/validate-merchant-feed.cjs",
     "validate:blog": "node scripts/validate-blog-content.cjs",
     "validate:policy-copy": "node scripts/validate-current-policy-copy.cjs",
-    "validate:legacy-redirects": "node scripts/validate-legacy-redirects.cjs"
+    "validate:legacy-redirects": "node scripts/validate-legacy-redirects.cjs",
+    "validate:product-schema": "node scripts/validate-product-schema.cjs",
+    "validate:conversion-integrity": "node scripts/validate-conversion-integrity.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

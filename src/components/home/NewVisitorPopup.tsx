@@ -28,6 +28,9 @@ const emailSchema = z.object({
 const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 3;
+const WELCOME_DISCOUNT_CODE = 'WELCOME10';
+const WELCOME_DISCOUNT_PERCENT = 10;
+const WELCOME_SIGNUP_SOURCE = 'welcome_popup_10_percent';
 
 const checkRateLimit = (): boolean => {
   const now = Date.now();
@@ -62,6 +65,8 @@ const NewVisitorPopup = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [discountCode, setDiscountCode] = useState(WELCOME_DISCOUNT_CODE);
+  const [discountPercent, setDiscountPercent] = useState(WELCOME_DISCOUNT_PERCENT);
   const triggeredRef = useRef(false);
 
   useEffect(() => {
@@ -146,7 +151,7 @@ const NewVisitorPopup = () => {
         body: {
           email: email.toLowerCase().trim(),
           type: 'newsletter',
-          source: 'welcome_popup',
+          source: WELCOME_SIGNUP_SOURCE,
         },
       });
 
@@ -160,16 +165,18 @@ const NewVisitorPopup = () => {
         throw new Error(data.error);
       }
 
-      if (data?.duplicate) {
-        toast.info('You\'re already subscribed! Check your email for your discount code.');
-      } else {
-        setIsSuccess(true);
-        toast.success('Welcome to LuxeMia! Your discount code is ready.');
+      const returnedCode = typeof data?.discountCode === 'string'
+        ? data.discountCode
+        : WELCOME_DISCOUNT_CODE;
+      const returnedPercent = typeof data?.discountPercent === 'number'
+        ? data.discountPercent
+        : WELCOME_DISCOUNT_PERCENT;
 
-        if (data?.discountCode) {
-          navigator.clipboard.writeText(data.discountCode).catch(() => {});
-        }
-      }
+      setDiscountCode(returnedCode);
+      setDiscountPercent(returnedPercent);
+      setIsSuccess(true);
+      toast.success(data?.message || 'Welcome to LuxeMia! Your discount code is ready.');
+      navigator.clipboard.writeText(returnedCode).catch(() => {});
     } catch (error) {
       console.error('Subscription error:', error);
       toast.error('Something went wrong. Please try again.');
@@ -239,7 +246,7 @@ const NewVisitorPopup = () => {
                       transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
                       className="bg-primary text-primary-foreground rounded-full w-20 h-20 sm:w-24 sm:h-24 flex flex-col items-center justify-center shadow-lg"
                     >
-                      <span className="font-serif text-2xl sm:text-3xl font-bold leading-none">15%</span>
+                      <span className="font-serif text-2xl sm:text-3xl font-bold leading-none">{WELCOME_DISCOUNT_PERCENT}%</span>
                       <span className="text-[10px] sm:text-xs uppercase tracking-wider mt-1">OFF</span>
                     </motion.div>
                   </div>
@@ -260,7 +267,7 @@ const NewVisitorPopup = () => {
 
                       {/* Main headline — specific and benefit-driven */}
                       <h3 className="font-serif text-2xl sm:text-3xl text-center sm:text-left mb-3 leading-tight">
-                        Get <span className="text-primary font-bold">15% Off</span> Your First Indian Ethnic Wear Order
+                        Get <span className="text-primary font-bold">{WELCOME_DISCOUNT_PERCENT}% Off</span> Your First Indian Ethnic Wear Order
                       </h3>
 
                       {/* Benefit bullets — what they get, specifically */}
@@ -319,7 +326,7 @@ const NewVisitorPopup = () => {
                               Unlocking...
                             </span>
                           ) : (
-                            'Claim My 15% Off Code →'
+                            `Claim My ${WELCOME_DISCOUNT_PERCENT}% Off Code →`
                           )}
                         </Button>
                       </form>
@@ -352,12 +359,12 @@ const NewVisitorPopup = () => {
                       <h3 className="font-serif text-2xl mb-2">You're In! 🎉</h3>
 
                       <p className="text-sm text-foreground/60 mb-4">
-                        Your exclusive <strong className="text-foreground">15% off</strong> code is ready:
+                        Your exclusive <strong className="text-foreground">{discountPercent}% off</strong> code is ready:
                       </p>
 
                       <div className="bg-muted px-6 py-3 rounded-md inline-block mb-4 border-2 border-dashed border-primary/30">
                         <span className="font-mono text-lg font-semibold tracking-wider text-primary">
-                          LUXE15-XXXXXX
+                          {discountCode}
                         </span>
                       </div>
 
