@@ -1,0 +1,101 @@
+
+    if (existing?.welcome_email_sent_at) {
+      return jsonResponse(
+        req,
+        {
+          success: true,
+          duplicate: true,
+          deliveryStatus: "accepted",
+          discountCode: WELCOME_DISCOUNT_CODE,
+          discountPercent: WELCOME_DISCOUNT_PERCENT,
+          message: "You are already subscribed. Your welcome code is ready.",
+        },
+        200,
+        { "X-RateLimit-Remaining": String(rateLimit.remaining) },
+      );
+    }
+
+    const { error: saveError } = await supabase
+      .from("newsletter_subscribers")
+      .upsert(
+        {
+          email: payload.email,
+          source: payload.source,
+          discount_code: WELCOME_DISCOUNT_CODE,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "email" },
+      );
+
+    if (saveError) throw saveError;
+
+    const delivery = await sendWelcomeEmail(payload.email);
+    if (delivery.status !== "accepted") {
+      return jsonResponse(
+        req,
+        {
+          success: false,
+          deliveryStatus: delivery.status,
+          providerStatus:
+            delivery.status === "failed"
+              ? delivery.providerStatus || null
+              : null,
+          providerReason:
+            delivery.status === "failed" ? delivery.providerReason : null,
+          error: "We could not email your code just now. Please try again.",
+        },
+        503,
+      );
+    }
+
+    const { error: deliveryUpdateError } = await supabase
+      .from("newsletter_subscribers")
+      .update({
+        welcome_email_sent_at: new Date().toISOString(),
+        provider_message_id: delivery.providerId,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("email", payload.email);
+
+    if (deliveryUpdateError) {
+      console.error(
+        JSON.stringify({
+          event: "welcome_email_record_update",
+          status: "failed",
+        }),
+      );
+    }
+
+    return jsonResponse(
+      req,
+      {
+        success: true,
+        duplicate: false,
+        deliveryStatus: "accepted",
+        discountCode: WELCOME_DISCOUNT_CODE,
+        discountPercent: WELCOME_DISCOUNT_PERCENT,
+        message: "Welcome email accepted for delivery",
+      },
+      200,
+      { "X-RateLimit-Remaining": String(rateLimit.remaining) },
+    );
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return jsonResponse(req, { error: "Invalid JSON body" }, 400);
+    }
+
+    if (
+      error instanceof Error &&
+      /required|invalid|source|submission/i.test(error.message)
+    ) {
+      return jsonResponse(req, { error: error.message }, 400);
+    }
+
+    console.error("submit-email failed:", error);
+    return jsonResponse(
+      req,
+      { error: "We could not process your signup. Please try again." },
+      500,
+    );
+  }
+});

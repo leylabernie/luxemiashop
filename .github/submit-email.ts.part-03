@@ -1,0 +1,105 @@
+        ? "testing_recipient_restricted"
+        : normalizedError.includes("domain") &&
+            normalizedError.includes("not verified")
+          ? "domain_not_verified"
+          : response.status === 429
+            ? "provider_rate_limited"
+            : "provider_rejected";
+
+    console.error(
+      JSON.stringify({
+        event: "welcome_email",
+        status: "failed",
+        providerStatus: response.status,
+        providerReason,
+      }),
+    );
+    return {
+      status: "failed",
+      providerStatus: response.status,
+      providerReason,
+    };
+  }
+
+  console.log(
+    JSON.stringify({
+      event: "welcome_email",
+      status: "accepted",
+      providerStatus: response.status,
+      providerId,
+    }),
+  );
+  return { status: "accepted", providerId };
+}
+
+Deno.serve(async (req) => {
+  if (!isAllowedOrigin(req.headers.get("origin"))) {
+    return jsonResponse(req, { error: "Origin not allowed" }, 403);
+  }
+
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: responseHeaders(req) });
+  }
+
+  if (req.method !== "POST") {
+    return jsonResponse(req, { error: "Method not allowed" }, 405, {
+      Allow: "POST, OPTIONS",
+    });
+  }
+
+  if (
+    !req.headers
+      .get("content-type")
+      ?.toLowerCase()
+      .startsWith("application/json")
+  ) {
+    return jsonResponse(
+      req,
+      { error: "Content-Type must be application/json" },
+      415,
+    );
+  }
+
+  try {
+    const rawBody = await req.text();
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      return jsonResponse(req, { error: "Request body is too large" }, 413);
+    }
+
+    const payload = validatePayload(JSON.parse(rawBody));
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL") || "",
+      getAdminKey(),
+      { auth: { persistSession: false, autoRefreshToken: false } },
+    );
+    const identifier = await clientIdentifier(req);
+
+    if (await isBlocked(supabase, identifier)) {
+      return jsonResponse(
+        req,
+        { error: "Access temporarily blocked due to repeated abuse." },
+        403,
+      );
+    }
+
+    const rateLimit = await checkRateLimit(supabase, identifier);
+    if (!rateLimit.allowed) {
+      if (rateLimit.violationCount >= VIOLATION_THRESHOLD) {
+        await blockIdentifier(supabase, identifier, rateLimit.violationCount);
+      }
+
+      return jsonResponse(
+        req,
+        { error: "Too many requests. Please try again later." },
+        429,
+        { "Retry-After": String(RATE_WINDOW_MINUTES * 60) },
+      );
+    }
+
+    const { data: existing, error: lookupError } = await supabase
+      .from("newsletter_subscribers")
+      .select("welcome_email_sent_at")
+      .eq("email", payload.email)
+      .maybeSingle<{ welcome_email_sent_at: string | null }>();
+
+    if (lookupError) throw lookupError;

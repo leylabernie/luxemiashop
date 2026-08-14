@@ -1,0 +1,105 @@
+import { createClient } from "npm:@supabase/supabase-js@2.112.2";
+
+const ALLOWED_ORIGINS = new Set([
+  "https://luxemia.shop",
+  "https://www.luxemia.shop",
+]);
+
+const ALLOWED_VERCEL_PREVIEW =
+  /^https:\/\/luxemiashop-[a-z0-9-]+-labbhamini-7947s-projects\.vercel\.app$/;
+
+const ENDPOINT = "submit-email";
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MINUTES = 10;
+const VIOLATION_THRESHOLD = 3;
+const BLOCK_DURATION_MINUTES = 60;
+const MAX_BODY_BYTES = 2_048;
+const WELCOME_DISCOUNT_CODE = "WELCOME10";
+const WELCOME_DISCOUNT_PERCENT = 10;
+const SIGNUP_SOURCE = "welcome_popup_10_percent";
+const LEGACY_SIGNUP_SOURCE = "welcome_popup";
+
+type AdminClient = ReturnType<typeof createClient>;
+
+interface RateLimitRecord {
+  id: string;
+  request_count: number;
+  violation_count: number;
+}
+
+interface SignupPayload {
+  email: string;
+  type: "newsletter";
+  source: typeof SIGNUP_SOURCE;
+}
+
+type WelcomeEmailOutcome =
+  | { status: "accepted"; providerId: string | null }
+  | { status: "not_configured" }
+  | {
+      status: "failed";
+      providerStatus?: number;
+      providerReason:
+        | "domain_not_verified"
+        | "testing_recipient_restricted"
+        | "invalid_api_key"
+        | "provider_rate_limited"
+        | "provider_rejected"
+        | "provider_unreachable";
+    };
+
+function isAllowedOrigin(origin: string | null): boolean {
+  return (
+    !origin ||
+    ALLOWED_ORIGINS.has(origin) ||
+    ALLOWED_VERCEL_PREVIEW.test(origin)
+  );
+}
+
+function responseHeaders(req: Request): Record<string, string> {
+  const origin = req.headers.get("origin");
+  const allowedOrigin =
+    origin && isAllowedOrigin(origin) ? origin : "https://luxemia.shop";
+
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers":
+      "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Max-Age": "86400",
+    "Content-Type": "application/json",
+    Vary: "Origin",
+  };
+}
+
+function jsonResponse(
+  req: Request,
+  body: Record<string, unknown>,
+  status: number,
+  extraHeaders: Record<string, string> = {},
+): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...responseHeaders(req), ...extraHeaders },
+  });
+}
+
+function getAdminKey(): string {
+  const legacyKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (legacyKey) return legacyKey;
+
+  const encodedKeys = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (encodedKeys) {
+    const keys = JSON.parse(encodedKeys) as Record<string, string>;
+    if (keys.default) return keys.default;
+  }
+
+  throw new Error("Supabase server key is not configured");
+}
+
+function validatePayload(payload: unknown): SignupPayload {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    throw new Error("Invalid request body");
+  }
+
+  const input = payload as Record<string, unknown>;

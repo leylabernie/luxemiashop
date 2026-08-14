@@ -1,0 +1,105 @@
+  if (input.type !== "newsletter") {
+    throw new Error("Invalid submission type");
+  }
+
+  if (
+    input.source !== SIGNUP_SOURCE &&
+    input.source !== LEGACY_SIGNUP_SOURCE
+  ) {
+    throw new Error("Invalid submission source");
+  }
+
+  if (typeof input.email !== "string") {
+    throw new Error("Email is required");
+  }
+
+  const email = input.email.trim().toLowerCase();
+  if (
+    email.length < 3 ||
+    email.length > 254 ||
+    email.includes("\u0000") ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
+    throw new Error("Please enter a valid email address");
+  }
+
+  return { email, type: "newsletter", source: SIGNUP_SOURCE };
+}
+
+async function hashIdentifier(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
+  return Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function clientIdentifier(req: Request): Promise<string> {
+  const clientIp =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip")?.trim() ||
+    "unknown";
+  return hashIdentifier(clientIp);
+}
+
+async function isBlocked(
+  supabase: AdminClient,
+  identifier: string,
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("blocked_ips")
+    .select("identifier")
+    .eq("identifier", identifier)
+    .gte("blocked_until", new Date().toISOString())
+    .maybeSingle();
+
+  if (error) throw error;
+  return Boolean(data);
+}
+
+async function blockIdentifier(
+  supabase: AdminClient,
+  identifier: string,
+  violationCount: number,
+): Promise<void> {
+  const multiplier = Math.min(violationCount, 10);
+  const blockMinutes = Math.min(BLOCK_DURATION_MINUTES * multiplier, 24 * 60);
+  const blockedUntil = new Date(
+    Date.now() + blockMinutes * 60 * 1_000,
+  ).toISOString();
+
+  const { error } = await supabase.from("blocked_ips").upsert(
+    {
+      identifier,
+      reason: "welcome_email_spam",
+      violation_count: violationCount,
+      blocked_at: new Date().toISOString(),
+      blocked_until: blockedUntil,
+    },
+    { onConflict: "identifier" },
+  );
+
+  if (error) throw error;
+}
+
+async function checkRateLimit(
+  supabase: AdminClient,
+  identifier: string,
+): Promise<{ allowed: boolean; remaining: number; violationCount: number }> {
+  const windowStart = new Date(
+    Date.now() - RATE_WINDOW_MINUTES * 60 * 1_000,
+  ).toISOString();
+
+  const { data: existing, error: lookupError } = await supabase
+    .from("rate_limits")
+    .select("id,request_count,violation_count")
+    .eq("identifier", identifier)
+    .eq("endpoint", ENDPOINT)
+    .gte("window_start", windowStart)
+    .maybeSingle<RateLimitRecord>();
+
+  if (lookupError) throw lookupError;
+
+  if (existing) {
