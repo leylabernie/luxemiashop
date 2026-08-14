@@ -169,16 +169,6 @@
       "statusCode": 301
     },
     {
-      "source": "/collections/wedding-sarees",
-      "destination": "/sarees",
-      "statusCode": 301
-    },
-    {
-      "source": "/collections/bridal-lehengas",
-      "destination": "/lehengas",
-      "statusCode": 301
-    },
-    {
       "source": "/collections/reception-outfits",
       "destination": "/collections",
       "statusCode": 301
@@ -214,21 +204,6 @@
       "statusCode": 301
     },
     {
-      "source": "/collections/sharara-suits",
-      "destination": "/suits",
-      "statusCode": 301
-    },
-    {
-      "source": "/collections/gharara-suits",
-      "destination": "/suits",
-      "statusCode": 301
-    },
-    {
-      "source": "/collections/anarkali-suits",
-      "destination": "/suits",
-      "statusCode": 301
-    },
-    {
       "source": "/collections/pakistani-suits",
       "destination": "/suits",
       "statusCode": 301
@@ -246,11 +221,6 @@
     {
       "source": "/collections/lehenga-choli",
       "destination": "/lehengas",
-      "statusCode": 301
-    },
-    {
-      "source": "/collections/designer-sarees",
-      "destination": "/sarees",
       "statusCode": 301
     },
     {

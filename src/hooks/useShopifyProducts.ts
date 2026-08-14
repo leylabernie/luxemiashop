@@ -17,6 +17,12 @@ const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
   jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
+  'wedding-sarees': ['Wedding Saree', 'Bridal Saree'],
+  'bridal-lehengas': ['Bridal Lehenga', 'Bridal Lehenga Choli', 'Bridal Lehengas', 'Bridal Lehnga', 'Bridal Lehnga Choli'],
+  'sharara-suits': ['Sharara Suit', 'Sharara', 'Sharara Set'],
+  'gharara-suits': ['Gharara Suit', 'Gharara Set', 'Readymade Gharara Set'],
+  'anarkali-suits': ['Anarkali Suit', 'Anarkali'],
+  'designer-sarees': ['Designer Saree'],
 };
 
 const escapeRegex = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

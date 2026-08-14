@@ -1,3 +1,5 @@
+import { recoveredBlogPosts } from './recoveredBlogPosts';
+
 export interface BlogSource {
   title: string;
   url: string;
@@ -50,6 +52,9 @@ export const PUBLISHED_BLOG_SLUGS = [
   'sabyasachi-mukherjee-designer-profile-handloom-revival',
   'custom-bridesmaid-wedding-guest-lehenga-online-usa',
   'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa',
+  'plus-size-indian-ethnic-wear-guide',
+  'manish-malhotra-bollywood-bridal-designer-profile',
+  'indian-wedding-terms-glossary-50-events-rituals-roles',
 ] as const;
 
 const FACT_CHECKED_AT = '2026-08-08';
@@ -878,6 +883,7 @@ export const blogPosts: BlogPost[] = [
       SOURCES.luxemiaShipping,
     ],
   },
+  ...recoveredBlogPosts,
 ];
 
 export const getPostBySlug = (slug: string): BlogPost | undefined =>

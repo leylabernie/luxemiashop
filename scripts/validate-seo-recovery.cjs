@@ -88,6 +88,10 @@ for (const routePath of REQUIRED_PATHS) {
   if (!approvedSet.has(routePath)) fail(`${routePath} is absent from the approved sitemap inventory.`);
 }
 
+if (!hook.includes('const HIDE_OLD_PRODUCTS = false;') || !prerender.includes('const HIDE_OLD_PRODUCTS = false;')) {
+  fail('Client and crawler collection visibility flags are not aligned at false.');
+}
+
 if (!sitemapGenerator.includes('const EXPECTED_SITEMAP_URL_COUNT = 767;')) {
   fail('Sitemap expected URL count is not 767.');
 }
