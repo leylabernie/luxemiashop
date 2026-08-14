@@ -92,6 +92,9 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'navratri-9-day-color-guide-2026': 'weddings-festivals',
   'custom-bridesmaid-wedding-guest-lehenga-online-usa': 'weddings-festivals',
   'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa': 'how-to-care',
+  'plus-size-indian-ethnic-wear-guide': 'how-to-care',
+  'manish-malhotra-bollywood-bridal-designer-profile': 'designer-profiles',
+  'indian-wedding-terms-glossary-50-events-rituals-roles': 'cultural-context',
 };
 
 export function getBlogCategoryGroup(slug: string): BlogCategoryGroup | undefined {

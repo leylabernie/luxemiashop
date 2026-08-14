@@ -59,6 +59,7 @@ const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
 const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
 const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
+const RecoveryCollection = lazy(() => import("./pages/RecoveryCollection"));
 const CustomizableOutfits = lazy(() => import("./pages/CustomizableOutfits"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
@@ -150,8 +151,8 @@ const App = () => (
                 <Route path="/care-guide" element={<Suspense fallback={<PageLoader />}><CareGuide /></Suspense>} />
                 <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
-                <Route path="/collections/wedding-sarees" element={<Navigate to="/sarees" replace />} />
-                <Route path="/collections/bridal-lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/wedding-sarees" element={<Suspense fallback={<PageLoader />}><RecoveryCollection handle="wedding-sarees" /></Suspense>} />
+                <Route path="/collections/bridal-lehengas" element={<Suspense fallback={<PageLoader />}><RecoveryCollection handle="bridal-lehengas" /></Suspense>} />
                 <Route path="/collections/reception-outfits" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/festive-wear" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/sarees" element={<Navigate to="/sarees" replace />} />
@@ -159,15 +160,15 @@ const App = () => (
                 <Route path="/collections/suits" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/menswear" element={<Navigate to="/menswear" replace />} />
                 <Route path="/collections/lehengas" element={<Navigate to="/lehengas" replace />} />
-                <Route path="/collections/sharara-suits" element={<Navigate to="/suits" replace />} />
-                <Route path="/collections/gharara-suits" element={<Navigate to="/suits" replace />} />
-                <Route path="/collections/anarkali-suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/sharara-suits" element={<Suspense fallback={<PageLoader />}><RecoveryCollection handle="sharara-suits" /></Suspense>} />
+                <Route path="/collections/gharara-suits" element={<Suspense fallback={<PageLoader />}><RecoveryCollection handle="gharara-suits" /></Suspense>} />
+                <Route path="/collections/anarkali-suits" element={<Suspense fallback={<PageLoader />}><RecoveryCollection handle="anarkali-suits" /></Suspense>} />
                 <Route path="/collections/pakistani-suits" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/party-wear-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/wedding-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/lehenga-choli" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/:handle" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
-                <Route path="/collections/designer-sarees" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/designer-sarees" element={<Suspense fallback={<PageLoader />}><RecoveryCollection handle="designer-sarees" /></Suspense>} />
                 <Route path="/blog/designer-wedding-dress-under-50000" element={<Navigate to="/blog/designer-wedding-dress-under-500" replace />} />
                 <Route path="/collections/indo-western" element={<Navigate to="/indowestern" replace />} />
                 <Route path="/collections/bridesmaid-dresses" element={<Navigate to="/sarees" replace />} />

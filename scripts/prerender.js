@@ -443,6 +443,12 @@ const CATEGORY_PRODUCT_TYPES = {
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Sharara Set'],
   jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
+  'wedding-sarees': ['Wedding Saree', 'Bridal Saree'],
+  'bridal-lehengas': ['Bridal Lehenga', 'Bridal Lehenga Choli', 'Bridal Lehengas', 'Bridal Lehnga', 'Bridal Lehnga Choli'],
+  'sharara-suits': ['Sharara Suit', 'Sharara', 'Sharara Set'],
+  'gharara-suits': ['Gharara Suit', 'Gharara Set', 'Readymade Gharara Set'],
+  'anarkali-suits': ['Anarkali Suit', 'Anarkali'],
+  'designer-sarees': ['Designer Saree'],
 };
 
 const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
@@ -451,7 +457,7 @@ const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
 const SAREE_TITLE_KEYWORDS = /\b(saree|sari)\b/i;
 const STANDALONE_BLOUSE_TITLE_KEYWORDS = /\b(blouse|choli)\b/i;
 const OBSOLETE_POLICY_TAG_PATTERN = /\b(canada|australia)\b|\b(worldwide|international|global)\s+(shipping|delivery)\b|\bfree\s+(worldwide\s+)?shipping\b|\bshipping\b.{0,30}(\$|usd|over|above|below|under)/i;
-const HIDE_OLD_PRODUCTS = true;
+const HIDE_OLD_PRODUCTS = false;
 const HIDE_PRODUCTS_BEFORE_DATE = new Date('2026-04-09T00:00:00Z');
 
 function isOldBatchProduct(p) {
@@ -897,8 +903,93 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
   ],
 };
 
+// Restored high-intent collection URLs lost during the July 2026 migration.
+// Each route has a distinct query intent, self-canonical HTML, relevant live
+// inventory and internal links. These are 200 destinations, never redirect aliases.
+const RECOVERY_COLLECTION_ROUTES = [
+  {
+    path: '/collections/wedding-sarees',
+    category: 'wedding-sarees',
+    title: 'Wedding Sarees Online USA — Bridal & Ceremony Sarees | LuxeMia',
+    description: 'Shop wedding sarees online for ceremonies, receptions and family celebrations. Compare exact fabric, blouse details, sizing and tracked U.S. shipping.',
+    h1: 'Wedding Sarees for Ceremonies & Receptions',
+    content: `
+      <p>Browse current wedding and bridal sarees. Use each product page to verify the exact fabric, blouse or blouse-piece details, measurements, included pieces and availability.</p>
+      <h2>Compare Wedding Sarees Before Ordering</h2>
+      <p>Construction varies by item. Confirm the selected variant, any stitching or customization, and current shipping timing before ordering for a fixed event date.</p>
+      <p><a href="/sarees">Browse all sarees</a> · <a href="/blog/wedding-saree-for-mother-of-bride">Wedding saree guide for the mother of the bride</a> · <a href="/sizing-measurements-guide">Sizing and measurements</a></p>
+    `,
+  },
+  {
+    path: '/collections/bridal-lehengas',
+    category: 'bridal-lehengas',
+    title: 'Bridal Lehengas Online USA — Wedding Lehenga Choli | LuxeMia',
+    description: 'Shop bridal lehengas and wedding lehenga choli online. Verify fabric, included pieces, measurements, availability and tracked U.S. shipping.',
+    h1: 'Bridal Lehengas for Wedding Ceremonies',
+    content: `
+      <p>Compare current bridal lehenga and lehenga-choli listings by fabric, included pieces, measurements, embellishment and availability.</p>
+      <h2>Check Every Supplied Piece</h2>
+      <p>Do not assume that every listing includes the same skirt, choli, dupatta, lining or stitching. The exact product page is the source of truth.</p>
+      <p><a href="/lehengas">Browse all lehengas</a> · <a href="/collections/customizable-indian-outfits">Customizable Indian outfits</a> · <a href="/sizing-measurements-guide">Sizing and measurements</a></p>
+    `,
+  },
+  {
+    path: '/collections/sharara-suits',
+    category: 'sharara-suits',
+    title: 'Sharara Suits Online USA — Wedding & Party Sharara Sets | LuxeMia',
+    description: 'Shop sharara suits and coordinated sharara sets online. Compare included pieces, fabric, sizing, availability and tracked U.S. shipping.',
+    h1: 'Sharara Suits & Coordinated Sets',
+    content: `
+      <p>Browse current sharara suits and sets, then verify the kurta, bottoms, dupatta, fabric, measurements and availability on each listing.</p>
+      <h2>What Is Included in the Set?</h2>
+      <p>Product construction varies. Confirm the waistband, rise, bottom length, kurta and dupatta details for the selected item.</p>
+      <p><a href="/suits">Browse all salwar kameez</a> · <a href="/collections/gharara-suits">Compare gharara suits</a> · <a href="/collections/anarkali-suits">Browse anarkali suits</a></p>
+    `,
+  },
+  {
+    path: '/collections/gharara-suits',
+    category: 'gharara-suits',
+    title: 'Gharara Suits Online USA — Readymade Gharara Sets | LuxeMia',
+    description: 'Shop gharara suits and readymade gharara sets online. Compare included pieces, fabric, sizing, availability and tracked U.S. shipping.',
+    h1: 'Gharara Suits & Readymade Gharara Sets',
+    content: `
+      <p>Shop current gharara styles while checking the exact bottom construction, included pieces, fabric, measurements and availability.</p>
+      <h2>Verify the Gharara Silhouette</h2>
+      <p>Catalog terminology can vary. Use the product photographs and description to confirm the fitted upper section, flare, waistband, kurta and dupatta supplied.</p>
+      <p><a href="/suits">Browse all salwar kameez</a> · <a href="/collections/sharara-suits">Compare sharara suits</a> · <a href="/sizing-measurements-guide">Sizing and measurements</a></p>
+    `,
+  },
+  {
+    path: '/collections/anarkali-suits',
+    category: 'anarkali-suits',
+    title: 'Anarkali Suits Online USA — Wedding & Party Anarkalis | LuxeMia',
+    description: 'Shop anarkali suits online for weddings and celebrations. Compare fabric, included pieces, measurements, availability and tracked U.S. shipping.',
+    h1: 'Anarkali Suits for Weddings & Celebrations',
+    content: `
+      <p>Browse current flared anarkali suits and verify the exact fabric, lining, included pieces, measurements and availability.</p>
+      <h2>Compare Cut, Flare and Length</h2>
+      <p>Check where the bodice ends, how the flare begins, the supplied bottoms and dupatta, and the full garment length for the selected product.</p>
+      <p><a href="/suits">Browse all salwar kameez</a> · <a href="/collections/sharara-suits">Browse sharara suits</a> · <a href="/blog/how-to-choose-salwar-kameez-body-type">Salwar kameez fit guide</a></p>
+    `,
+  },
+  {
+    path: '/collections/designer-sarees',
+    category: 'designer-sarees',
+    title: 'Designer Sarees Online USA — Wedding & Party Sarees | LuxeMia',
+    description: 'Shop designer sarees online for weddings and special occasions. Compare exact fabric, work, blouse details, availability and tracked U.S. shipping.',
+    h1: 'Designer Sarees for Weddings & Special Occasions',
+    content: `
+      <p>Browse current designer-saree listings and verify the exact fabric, surface work, blouse details, measurements and availability.</p>
+      <h2>Category Name Is Not an Affiliation Claim</h2>
+      <p>A designer-saree product type does not establish affiliation with an unrelated luxury fashion house. Use the exact listing for the stated brand or vendor and product details.</p>
+      <p><a href="/sarees">Browse all sarees</a> · <a href="/collections/wedding-sarees">Browse wedding sarees</a> · <a href="/blog/designer-profiles">Read source-based designer profiles</a></p>
+    `,
+  },
+];
+
 // Route definitions with SEO metadata
 const routes = [
+  ...RECOVERY_COLLECTION_ROUTES,
   {
     path: '/',
     title: 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
@@ -920,8 +1011,8 @@ const routes = [
       <h2>Which LuxeMia collections are best for weddings?</h2>
       <p>Wedding shoppers can browse bridal lehengas, wedding sarees, reception outfits, and festive wear for every ceremony.</p>
       <ul>
-        <li><a href="/lehengas">Bridal Lehengas</a></li>
-        <li><a href="/sarees">Wedding Sarees</a></li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a></li>
+        <li><a href="/collections/wedding-sarees">Wedding Sarees</a></li>
         <li><a href="/collections">Reception Outfits</a></li>
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
@@ -946,10 +1037,10 @@ const routes = [
       </ul>
       <h2>Shop Suits by Style</h2>
       <ul>
-        <li><a href="/anarkali-suit-for-wedding-guest">Anarkali Suits for Wedding Guests</a> — Compare current flared-kurta styles</li>
+        <li><a href="/collections/anarkali-suits">Anarkali Suits</a> — Compare current flared-kurta styles</li>
         <li><a href="/anarkali-suit-for-mother-of-bride">Anarkali Suits for the Mother of the Bride</a> — Occasion and fit considerations</li>
-        <li><a href="/sharara-for-bride-sister">Sharara Sets for the Bride's Sister</a> — Compare current wide-leg styles</li>
-        <li><strong>Gharara Suits</strong> — Review the style filters and exact listing for the supplied bottom silhouette</li>
+        <li><a href="/collections/sharara-suits">Sharara Suits</a> — Compare current wide-leg styles</li>
+        <li><a href="/collections/gharara-suits">Gharara Suits</a> — Verify the exact bottom silhouette and supplied pieces</li>
         <li><a href="/suits?sub=palazzo">Palazzo Suits</a> — Modern wide-leg pants with kurta</li>
         <li><a href="/suits?sub=pakistani">Pakistani-Style Suits</a> — Straight-cut options</li>
         <li><a href="/suits?sub=straight-cut">Straight Cut Suits</a> — Classic everyday salwar kameez</li>

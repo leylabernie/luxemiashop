@@ -992,7 +992,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Lehengas',
     href: '/lehengas',
     groups: [
-      { label: 'By Occasion', links: subcatLinks('lehengas', LEHENGAS.subcategories, 'occasion') },
+      { label: 'By Occasion', links: [{ name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' }, ...subcatLinks('lehengas', LEHENGAS.subcategories, 'occasion').filter(link => link.name !== 'Bridal')] },
     ],
   },
   {
@@ -1003,6 +1003,8 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
       {
         label: 'Wedding Traditions',
         links: [
+          { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
+          { name: 'Designer Sarees', href: '/collections/designer-sarees' },
           { name: 'Silk Sarees', href: '/collections/silk-sarees' },
           { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
         ],
@@ -1013,7 +1015,15 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Salwar Kameez',
     href: '/suits',
     groups: [
-      { label: 'By Style', links: subcatLinks('suits', SUITS.subcategories, 'style').filter(l => ['Anarkali', 'Sharara', 'Palazzo'].includes(l.name)) },
+      {
+        label: 'By Style',
+        links: [
+          { name: 'Anarkali', href: '/collections/anarkali-suits' },
+          { name: 'Sharara', href: '/collections/sharara-suits' },
+          { name: 'Gharara', href: '/collections/gharara-suits' },
+          { name: 'Palazzo', href: '/suits?sub=palazzo' },
+        ],
+      },
       { label: 'By Occasion', links: subcatLinks('suits', SUITS.subcategories, 'occasion') },
     ],
   },

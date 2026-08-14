@@ -228,8 +228,6 @@ async function routeRequest(request: Request): Promise<Response> {
   // bots need server-side 301s to properly transfer link equity and avoid
   // indexing the redirect-source URL with thin/empty SPA content.
   const COLLECTION_301_REDIRECTS: Record<string, string> = {
-    '/collections/wedding-sarees': '/sarees',
-    '/collections/bridal-lehengas': '/lehengas',
     '/collections/reception-outfits': '/collections',
     '/collections/festive-wear': '/collections',
     '/collections/sarees': '/sarees',
@@ -237,14 +235,10 @@ async function routeRequest(request: Request): Promise<Response> {
     '/collections/suits': '/suits',
     '/collections/menswear': '/menswear',
     '/collections/lehengas': '/lehengas',
-    '/collections/sharara-suits': '/suits',
-    '/collections/gharara-suits': '/suits',
-    '/collections/anarkali-suits': '/suits',
     '/collections/pakistani-suits': '/suits',
     '/collections/pakistani-wedding-dresses': '/suits',
     '/collections/party-wear-lehengas': '/lehengas',
     '/collections/wedding-lehengas': '/lehengas',
-    '/collections/designer-sarees': '/sarees',
     '/collections/indo-western': '/indowestern',
     '/collections/bridesmaid-dresses': '/sarees',
     '/collections/groomsman-outfits': '/menswear',
