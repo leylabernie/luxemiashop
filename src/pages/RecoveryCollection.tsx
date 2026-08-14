@@ -1,4 +1,4 @@
-import CategoryListing from '@/components/collections/CategoryListing';
+import { CategoryListing } from '@/components/collections/CategoryListing';
 import {
   getRecoveryCollectionConfig,
   type RecoveryCollectionHandle,
