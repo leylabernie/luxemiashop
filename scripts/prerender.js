@@ -343,7 +343,7 @@ query GetAllProducts($first: Int!, $after: String) {
             }
           }
         }
-        variants(first: 5) {
+        variants(first: 20) {
           edges {
             node {
               id
@@ -705,6 +705,11 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
 // Build the compact JSON payload that gets injected as window.__INITIAL_DATA__.
 // React's useShopifyProducts hook reads this on hydration to skip the client-side
 // Shopify fetch entirely on first paint.
+function toSafeInlineJson(value) {
+  // Prevent a product title or description from closing the inline script tag.
+  return JSON.stringify(value).replace(/</g, '\\u003c');
+}
+
 function buildInitialDataPayload(products, category) {
   // Slim each product down to the fields the hook actually consumes.
   const slim = products.map(p => ({
@@ -729,7 +734,32 @@ function buildInitialDataPayload(products, category) {
       options: p.options ?? [],
     },
   }));
-  return JSON.stringify({ category: category || 'all', products: slim });
+  return toSafeInlineJson({ category: category || 'all', products: slim });
+}
+
+// Product pages have materially higher purchase intent than category pages. Give
+// each prerendered route its own initial product record so a direct shopper
+// visit can render and add to bag before a slow Storefront API refresh finishes.
+function buildInitialProductPayload(product) {
+  const slim = {
+    id: product.id,
+    title: sanitizeProductTitle(product.title),
+    createdAt: product.createdAt,
+    description: buildVerifiedProductCopy(product),
+    handle: product.handle,
+    vendor: product.vendor,
+    productType: product.productType,
+    tags: getCrawlerSafeTags(product.tags),
+    availableForSale: product.availableForSale,
+    shipsWithinMetafield: product.shipsWithinMetafield || null,
+    seo: product.seo || { title: null, description: null },
+    priceRange: product.priceRange,
+    compareAtPriceRange: product.compareAtPriceRange,
+    images: product.images,
+    variants: product.variants,
+    options: product.options || [],
+  };
+  return toSafeInlineJson({ handle: product.handle, product: slim });
 }
 
 // Visible HTML product cards for crawlers. Removed by the existing MutationObserver
@@ -1989,6 +2019,8 @@ function generateHtml(template, route, allShopifyProducts) {
   let mainBodyContent;
   if (route.path.startsWith('/product/') && route.product) {
     const p = route.product;
+    const initialProductPayload = buildInitialProductPayload(p);
+    html = html.replace('</head>', `    <script>window.__INITIAL_PRODUCT_DATA__ = ${initialProductPayload};</script>\n</head>`);
     const isCustomizable = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle);
     const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
