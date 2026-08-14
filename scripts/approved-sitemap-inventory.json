@@ -1,7 +1,7 @@
 {
-  "source": "2026-08-12 fact-checked content and duplicate-product cleanup inventory",
-  "capturedOn": "2026-08-12",
-  "urlCount": 759,
+  "source": "2026-08-13 catalog conversion integrity inventory",
+  "capturedOn": "2026-08-13",
+  "urlCount": 758,
   "paths": [
     "/",
     "/collections",
@@ -511,7 +511,6 @@
     "/product/golden-net-embroidery-lehenga-choli-with-dupatta-397817",
     "/product/banarasi-silk-green-festival-wear-sequins-work-saree",
     "/product/yellow-mustard-banarasi-fusion-mehendi-haldi-lehenga",
-    "/product/vibrant-saffron-gadhwal-silk-bridal-lehenga-choli-for-traditional-indian-wedding-ceremony",
     "/product/sage-georgette-pearl-bead-work-wedding-lehenga-for-bridal-trousseau",
     "/product/white-soft-silk-pearl-bead-work-wedding-lehenga-for-engagement-look",
     "/product/wisteria-lilac-soft-net-pearl-bead-work-wedding-lehenga-for-sangeet",
@@ -528,7 +527,6 @@
     "/product/rust-orange-doli-baraat-handwork-designer-bridal-lehenga",
     "/product/shimmer-teal-tissue-silk-stone-work-indian-wedding-lehenga-for-bride",
     "/product/royal-rajwadi-emerald-and-ruby-kundan-choker-set",
-    "/product/royal-crimson-gadhwal-silk-bridal-lehenga-choli-with-heavy-zari-work-for-wedding",
     "/product/royal-red-dulha-dulhan-motif-embroidered-designer-bridal-lehenga",
     "/product/royal-red-heritage-panel-embroidered-designer-bridal-lehenga",
     "/product/rust-orange-raw-silk-zardosi-work-lehenga-choli-for-sangeet-reception-engagement",
@@ -541,7 +539,6 @@
     "/product/red-raw-silk-bead-work-indian-bridal-lehenga-choli-for-reception",
     "/product/red-raw-silk-thread-work-indian-wedding-lehenga-for-reception-look",
     "/product/red-raw-silk-thread-work-indian-bridal-lehenga-for-traditional-wedding",
-    "/product/radiant-rani-pink-gadhwal-silk-bridal-lehenga-choli-for-your-wedding",
     "/product/pure-white-soft-net-cutdana-bridal-lehenga-choli-for-intimate-wedding",
     "/product/pink-net-sequins-embroidery-indian-bridal-lehenga-for-heritage-wedding",
     "/product/red-raw-silk-bead-work-indian-bridal-lehenga-choli-for-engagement-wear",
@@ -586,7 +583,6 @@
     "/product/dusty-mauve-net-bridal-lehenga-with-zari-stone-and-thread-work",
     "/product/dusty-mauve-net-zari-stone-work-lehenga-choli-for-sangeet-reception-engagement",
     "/product/deep-red-raw-silk-bridal-lehenga-with-heavy-golden-zari-work",
-    "/product/elegant-ivory-gadhwal-silk-bridal-lehenga-choli-for-wedding-celebration",
     "/product/deep-maroon-3d-floral-applique-lehenga-for-luxury-wedding-reception",
     "/product/burgundy-satin-saree-paisley-border",
     "/product/blush-pink-silk-pearl-bead-work-wedding-lehenga-for-engagement-party",
@@ -761,6 +757,9 @@
     "/product/red-chinon-embroidered-palazzo-suit-wsuit-003",
     "/product/pink-chinon-embroidered-palazzo-suit-wsuit-002",
     "/product/turquoise-shimmer-silk-embroidered-palazzo-suit-wsuit-006",
-    "/product/mustard-silk-embroidered-sharara-suit-wsuit-042"
+    "/product/mustard-silk-embroidered-sharara-suit-wsuit-042",
+    "/product/bandhani-print-kutchi-patchwork-navratri-lehenga-choli",
+    "/product/ivory-rani-pink-mirror-work-gadhwal-silk-bridal-lehenga",
+    "/product/rani-pink-mirror-work-gadhwal-silk-bridal-lehenga"
   ]
 }
