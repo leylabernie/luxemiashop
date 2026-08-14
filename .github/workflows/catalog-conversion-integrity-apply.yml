@@ -1,0 +1,59 @@
+name: Apply catalog conversion integrity corrections
+
+on:
+  push:
+    branches:
+      - agent/catalog-conversion-integrity-20260813
+
+permissions:
+  contents: write
+
+concurrency:
+  group: catalog-conversion-integrity-20260813
+  cancel-in-progress: false
+
+jobs:
+  apply-and-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out approved branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/catalog-conversion-integrity-20260813
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Decode and apply deterministic corrections
+        shell: bash
+        run: |
+          base64 --decode .github/catalog-conversion-integrity.patch.gz.b64 | gzip --decompress > scripts/apply_catalog_conversion_integrity.py
+          python3 scripts/apply_catalog_conversion_integrity.py
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run source integrity gates
+        shell: bash
+        run: |
+          npm run validate:blog
+          npm run validate:policy-copy
+          npm run validate:legacy-redirects
+          npm run validate:product-schema
+          npm run validate:conversion-integrity
+
+      - name: Compile the application
+        run: npm run build:dev
+
+      - name: Commit reviewed source changes and remove temporary automation
+        shell: bash
+        run: |
+          rm -f scripts/apply_catalog_conversion_integrity.py
+          rm -f .github/catalog-conversion-integrity.patch.gz.b64
+          rm -f .github/workflows/catalog-conversion-integrity-apply.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Implement catalog conversion integrity corrections"
+          git push origin HEAD:agent/catalog-conversion-integrity-20260813
