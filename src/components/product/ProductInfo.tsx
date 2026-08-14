@@ -16,6 +16,10 @@ import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelect
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
 import { getCustomizableProduct } from '@/lib/customizableProducts';
+import {
+  isRakshaBandhanCampaignActive,
+  RAKSHA_BANDHAN_CAMPAIGN,
+} from '@/config/rakshaBandhanCampaign';
 
 // Utsav-style Stitching Type options with price modifiers
 interface StitchingTypeOption {
@@ -241,6 +245,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
+  const isLaunchOfferActive = isRakshaBandhanCampaignActive();
 
   // Honor Merchant Center variant links while preserving the first available
   // variant as the normal default when no variant query parameter is present.
@@ -929,6 +934,26 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
         <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
       </div>
+
+      {isLaunchOfferActive && (
+        <div
+          className="rounded-md border border-primary/25 bg-primary/5 px-4 py-3 text-sm"
+          role="note"
+        >
+          <div className="flex items-start gap-2">
+            <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+            <p className="leading-5">
+              <span className="font-semibold">72-hour offer:</span>{' '}
+              Use <strong>{RAKSHA_BANDHAN_CAMPAIGN.code}</strong> at checkout for{' '}
+              {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off orders of ${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ through{' '}
+              {RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.
+            </p>
+          </div>
+          <p className="mt-1 pl-6 text-[11px] leading-4 text-muted-foreground">
+            One use per customer. Cannot be combined with other discounts.
+          </p>
+        </div>
+      )}
 
       {/* Add to Cart */}
       <div className="flex gap-3 pt-2">

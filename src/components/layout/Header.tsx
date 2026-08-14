@@ -51,10 +51,11 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
   const isRakhiSaleActive = isRakshaBandhanCampaignActive();
+  // Keep the verified short-lived offer persistently visible while it is active.
+  // Shipping details remain available on the shipping page and throughout checkout.
   const announcements = isRakhiSaleActive
     ? [
         `72-Hour Offer — ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ with code ${RAKSHA_BANDHAN_CAMPAIGN.code}. Ends ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
-        ...shippingAnnouncements,
       ]
     : shippingAnnouncements;
   const displayedAnnouncement = announcements[announcementIdx % announcements.length];
