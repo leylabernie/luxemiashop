@@ -1301,6 +1301,11 @@ const routes = [
         <li><a href="/sarees">Wedding Sarees</a> — Elegant sarees for wedding celebrations</li>
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
+        <li><a href="/collections/sharara-suits">Sharara Suits</a> — Wedding and festive sharara sets</li>
+        <li><a href="/collections/gharara-suits">Gharara Suits</a> — Gharara sets for weddings and celebrations</li>
+        <li><a href="/collections/anarkali-suits">Anarkali Suits</a> — Anarkali styles for weddings and party wear</li>
+        <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Indian wedding lehenga styles</li>
+        <li><a href="/collections/party-wear-lehengas">Party-Wear Lehengas</a> — Festive lehenga choli styles</li>
       </ul>
     `,
   },
