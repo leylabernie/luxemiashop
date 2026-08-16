@@ -76,9 +76,11 @@ const PRODUCTS_PER_PAGE = 24;
 
 interface CategoryListingProps {
   config: CategoryConfig;
+  /** Keeps a dedicated SEO landing page on its intended product subset without a query-string canonical. */
+  defaultSubcategory?: string;
 }
 
-export function CategoryListing({ config }: CategoryListingProps) {
+export function CategoryListing({ config, defaultSubcategory }: CategoryListingProps) {
   // Fetch products from Shopify Storefront API (via the shared hook).
   // Note: useShopifyPaginatedProducts is currently stubbed (returns all
   // products in one fetch) — the "Load More" button below does real
@@ -96,7 +98,7 @@ export function CategoryListing({ config }: CategoryListingProps) {
     clearAll,
     activeFilterCount,
     activeSubcategory,
-  } = useListingFilters(config);
+  } = useListingFilters(config, defaultSubcategory);
 
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);

@@ -580,6 +580,12 @@ const SUITS: CategoryConfig = {
     // By Style (simplified — 5 main styles)
     styleSub('anarkali', 'Anarkali', ['style:anarkali', 'anarkali']),
     styleSub('sharara', 'Sharara', ['style:sharara', 'sharara']),
+    {
+      slug: 'gharara',
+      label: 'Gharara',
+      group: 'style',
+      matchTags: ['style:gharara', 'gharara'],
+    },
     styleSub('palazzo', 'Palazzo', ['style:palazzo', 'palazzo']),
     // By Fabric (simplified)
     styleSub('georgette-suit', 'Georgette', ['fabric:georgette', 'georgette']),

@@ -33,11 +33,18 @@ const SORT_OPTIONS = ['featured', 'newest', 'price-asc', 'price-desc'] as const;
  */
 function parseUrlState(
   searchParams: URLSearchParams,
-  config: CategoryConfig
+  config: CategoryConfig,
+  defaultSubcategory?: string
 ): ListingFilterState {
-  // Subcategory
+  // Subcategory. Dedicated commercial landing pages can provide a stable
+  // default without adding a duplicate query-string canonical.
   const sub = searchParams.get('sub');
-  const subcategory = sub && config.subcategories.some(s => s.slug === sub) ? sub : null;
+  const requestedSubcategory = sub && config.subcategories.some(s => s.slug === sub) ? sub : null;
+  const fallbackSubcategory = defaultSubcategory
+    && config.subcategories.some(s => s.slug === defaultSubcategory)
+    ? defaultSubcategory
+    : null;
+  const subcategory = requestedSubcategory || fallbackSubcategory;
 
   // Filters — each filter section has its own URL param
   const filters: Record<string, string[]> = {};
@@ -94,12 +101,12 @@ function serializeUrlState(state: ListingFilterState, config: CategoryConfig): U
   return params;
 }
 
-export function useListingFilters(config: CategoryConfig) {
+export function useListingFilters(config: CategoryConfig, defaultSubcategory?: string) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const state = useMemo(
-    () => parseUrlState(searchParams, config),
-    [searchParams, config]
+    () => parseUrlState(searchParams, config, defaultSubcategory),
+    [searchParams, config, defaultSubcategory]
   );
 
   const updateState = useCallback(
@@ -166,12 +173,12 @@ export function useListingFilters(config: CategoryConfig) {
 
   const clearAll = useCallback(() => {
     updateState(() => ({
-      subcategory: null,
+      subcategory: defaultSubcategory || null,
       filters: {},
       priceRange: [...config.priceRange] as [number, number],
       sortBy: 'featured',
     }));
-  }, [updateState, config]);
+  }, [updateState, config, defaultSubcategory]);
 
   // ─── Derived: total active filter count (for "Clear All" badge) ───────────
   const activeFilterCount = useMemo(() => {

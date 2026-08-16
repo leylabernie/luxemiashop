@@ -60,6 +60,7 @@ const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
 const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
 const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
 const CustomizableOutfits = lazy(() => import("./pages/CustomizableOutfits"));
+const CommercialCollectionLanding = lazy(() => import("./pages/CommercialCollectionLanding"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
 const PageLoader = () => (
@@ -149,7 +150,7 @@ const App = () => (
                 <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/wedding-sarees" element={<Navigate to="/sarees" replace />} />
-                <Route path="/collections/bridal-lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/bridal-lehengas" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="bridal-lehengas" /></Suspense>} />
                 <Route path="/collections/reception-outfits" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/festive-wear" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/sarees" element={<Navigate to="/sarees" replace />} />
@@ -157,11 +158,11 @@ const App = () => (
                 <Route path="/collections/suits" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/menswear" element={<Navigate to="/menswear" replace />} />
                 <Route path="/collections/lehengas" element={<Navigate to="/lehengas" replace />} />
-                <Route path="/collections/sharara-suits" element={<Navigate to="/suits" replace />} />
-                <Route path="/collections/gharara-suits" element={<Navigate to="/suits" replace />} />
-                <Route path="/collections/anarkali-suits" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/sharara-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="sharara-suits" /></Suspense>} />
+                <Route path="/collections/gharara-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="gharara-suits" /></Suspense>} />
+                <Route path="/collections/anarkali-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="anarkali-suits" /></Suspense>} />
                 <Route path="/collections/pakistani-suits" element={<Navigate to="/suits" replace />} />
-                <Route path="/collections/party-wear-lehengas" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/party-wear-lehengas" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="party-wear-lehengas" /></Suspense>} />
                 <Route path="/collections/wedding-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/lehenga-choli" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/:handle" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
