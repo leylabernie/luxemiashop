@@ -1,7 +1,7 @@
 // Short-lived campaign configuration. Public copy must match the active Shopify
 // discount exactly; disable this flag before any code is removed or expires.
 export const RAKSHA_BANDHAN_CAMPAIGN = {
-  enabled: true,
+  enabled: false,
   code: 'LUXE10',
   discountPercent: 10,
   minimumSubtotal: 150,
