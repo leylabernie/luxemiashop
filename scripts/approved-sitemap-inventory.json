@@ -1,7 +1,7 @@
 {
   "source": "2026-08-12 fact-checked content and duplicate-product cleanup inventory",
   "capturedOn": "2026-08-12",
-  "urlCount": 759,
+  "urlCount": 764,
   "paths": [
     "/",
     "/collections",
@@ -15,6 +15,11 @@
     "/collections/bridal-party-outfits",
     "/collections/bollywood-inspired-indian-outfits",
     "/collections/customizable-indian-outfits",
+    "/collections/sharara-suits",
+    "/collections/gharara-suits",
+    "/collections/anarkali-suits",
+    "/collections/bridal-lehengas",
+    "/collections/party-wear-lehengas",
     "/suits",
     "/menswear",
     "/indowestern",
