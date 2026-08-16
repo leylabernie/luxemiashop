@@ -237,9 +237,6 @@ const Collections = () => {
               )}
             </div>
           </div>
-          {/* NOTE: /collections/sharara-suits and /collections/gharara-suits
-              301-redirect to /suits in the middleware. Sharara/gharara content
-              lives in the /suits page (categoryConfig editorialContent + FAQs). */}
         </div>
       </main>
 
@@ -250,6 +247,9 @@ const Collections = () => {
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-3 text-sm leading-relaxed text-center">
             <p>
               LuxeMia is an online Indian ethnic-wear store for United States shoppers. Browse <strong>bridal and party-wear lehengas</strong>, <strong>silk and wedding sarees</strong>, <strong>Anarkali, sharara and gharara suits</strong>, sherwanis, and Indo-Western outfits.
+            </p>
+            <p>
+              Explore dedicated collections for <Link to="/collections/sharara-suits" className="underline underline-offset-2 hover:text-foreground">sharara suits</Link>, <Link to="/collections/gharara-suits" className="underline underline-offset-2 hover:text-foreground">gharara suits</Link>, <Link to="/collections/anarkali-suits" className="underline underline-offset-2 hover:text-foreground">Anarkali suits</Link>, <Link to="/collections/bridal-lehengas" className="underline underline-offset-2 hover:text-foreground">bridal lehengas</Link>, and <Link to="/collections/party-wear-lehengas" className="underline underline-offset-2 hover:text-foreground">party-wear lehengas</Link>.
             </p>
             <p>
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
