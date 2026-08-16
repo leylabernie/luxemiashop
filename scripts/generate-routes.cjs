@@ -56,6 +56,13 @@ const STATIC_ROUTES = [
   '/collections/bridal-party-outfits',
   '/collections/bollywood-inspired-indian-outfits',
   '/collections/customizable-indian-outfits',
+  // Restored commercial collection pages — keep these in the middleware manifest
+  // so the dedicated prerendered HTML is served as a direct, indexable response.
+  '/collections/sharara-suits',
+  '/collections/gharara-suits',
+  '/collections/anarkali-suits',
+  '/collections/bridal-lehengas',
+  '/collections/party-wear-lehengas',
   '/about',
   '/new-arrivals',
   '/indowestern',
