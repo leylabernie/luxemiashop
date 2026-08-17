@@ -249,14 +249,7 @@ function validateEmail(email: string): { valid: boolean; error?: string } {
   return { valid: true };
 }
 
-function generateDiscountCode(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let code = "LUXE15-";
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
-}
+const ACTIVE_WELCOME_DISCOUNT_CODE = "LUXE10";
 
 Deno.serve(async (req) => {
   // Handle CORS preflight
@@ -365,7 +358,7 @@ Deno.serve(async (req) => {
     const sanitizedEmail = email.trim().toLowerCase();
 
     if (type === "newsletter") {
-      const discountCode = generateDiscountCode();
+      const discountCode = ACTIVE_WELCOME_DISCOUNT_CODE;
       
       const { error } = await supabase.from("newsletter_subscribers").insert({
         email: sanitizedEmail,
