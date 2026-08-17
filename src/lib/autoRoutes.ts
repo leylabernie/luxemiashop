@@ -20,6 +20,8 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/collections/gharara-suits',
   '/collections/anarkali-suits',
   '/collections/bridal-lehengas',
+  '/collections/wedding-sarees',
+  '/collections/designer-sarees',
   '/collections/party-wear-lehengas',
   '/about',
   '/new-arrivals',

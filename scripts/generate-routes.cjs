@@ -63,6 +63,8 @@ const STATIC_ROUTES = [
   '/collections/gharara-suits',
   '/collections/anarkali-suits',
   '/collections/bridal-lehengas',
+  '/collections/wedding-sarees',
+  '/collections/designer-sarees',
   '/collections/party-wear-lehengas',
   '/about',
   '/new-arrivals',
