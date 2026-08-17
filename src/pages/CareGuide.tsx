@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { AlertTriangle, ArrowRight, CheckCircle2, PackageOpen, Sparkles, Tag } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 
 const faqs = [
   {
@@ -105,7 +106,7 @@ const CareGuide = () => (
               <PackageOpen className="h-9 w-9 text-primary" />
               <h2 className="mt-4 font-display text-3xl text-foreground">When your order arrives</h2>
               <p className="mt-4 text-muted-foreground">If you need to report genuine shipping damage, an incorrect item, or a missing item, record a continuous unboxing/opening video beginning with the unopened package and contact LuxeMia within 48 hours of delivery.</p>
-              <p className="mt-3 text-muted-foreground">Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+              <p className="mt-3 text-muted-foreground">{RETURN_POLICY_SUMMARY}</p>
               <Link to="/returns" className="mt-6 inline-flex items-center gap-2 font-medium text-primary hover:underline">Read returns and damage policy <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </div>

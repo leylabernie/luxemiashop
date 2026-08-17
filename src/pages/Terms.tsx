@@ -221,18 +221,19 @@ const Terms = () => {
                 </section>
 
                 <section id="returns" className="bg-card -mx-4 px-4 py-6 rounded-lg border border-border">
-                  <h2 className="text-xl font-serif text-foreground mb-4">8. No Returns Policy</h2>
+                  <h2 className="text-xl font-serif text-foreground mb-4">8. Returns and Cancellations</h2>
                   <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
                     <p className="font-semibold text-destructive">
-                      ⚠️ ALL SALES ARE FINAL, SUBJECT TO APPLICABLE LAW
+                      Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery.
                     </p>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.1 All Sales Final</h3>
+                      <h3 className="font-semibold text-foreground mb-2">8.1 Eligible U.S. Standard-Stock Returns</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>To the extent permitted by applicable law, we do not accept returns or offer refunds for change of mind, sizing, color, fit, or custom-order preferences.</strong></li>
-                        <li>Sizing, color, fit, and other selection preferences are not covered order issues.</li>
+                        <li><strong>Eligible U.S. standard-stock items may be returned when a request is made within 30 calendar days of delivery and the item is unworn, unwashed, unaltered, and returned with original tags and packaging.</strong></li>
+                        <li>Customers are responsible for tracked return shipping for buyer-remorse returns. Exchanges are not accepted.</li>
+                        <li>Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law.</li>
                         <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>
                     </div>
@@ -241,11 +242,11 @@ const Terms = () => {
                       <ul className="list-disc pl-6 space-y-2">
                         <li>For genuine shipping damage, an incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
                         <li>Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</li>
-                        <li>Keep the item and all packaging until LuxeMia reviews the claim.</li>
+                        <li>Keep the item and all packaging until LuxeMia reviews the claim. If LuxeMia confirms a covered issue and a return is required, LuxeMia provides a prepaid standard return label or another reasonable no-cost return method.</li>
                       </ul>
                     </div>
                     <p className="text-sm">
-                      For complete details, please refer to our <a href="/returns" className="text-primary hover:underline">No Returns Policy</a>.
+                      For complete details, please refer to our <a href="/returns" className="text-primary hover:underline">Returns &amp; Cancellations Policy</a>.
                     </p>
                     <p className="text-sm">Nothing in these terms limits mandatory consumer rights or remedies that cannot legally be excluded.</p>
                   </div>

@@ -16,6 +16,7 @@ import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelect
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
 import { getCustomizableProduct } from '@/lib/customizableProducts';
+import { RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 import {
   isRakshaBandhanCampaignActive,
   RAKSHA_BANDHAN_CAMPAIGN,
@@ -1089,7 +1090,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
         <div>
           <p className="text-sm font-medium">Check your measurements before ordering</p>
-          <p className="text-xs text-muted-foreground">Sales are final to the extent permitted by applicable law. Contact LuxeMia before purchase if you need sizing help.</p>
+          <p className="text-xs text-muted-foreground">{RETURN_POLICY_SUMMARY} Contact LuxeMia before purchase if you need sizing help.</p>
         </div>
       </div>
 

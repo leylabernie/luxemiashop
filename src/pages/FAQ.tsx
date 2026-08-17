@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { HelpCircle, Package, Truck, Ruler, Sparkles, CreditCard, RotateCcw, Mail, Search, Phone, MessageCircle, ChevronRight, Home } from 'lucide-react';
+import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -87,7 +88,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'To the extent permitted by applicable law, sales are final and we do not accept returns or exchanges for sizing issues. Use the measurement worksheet, compare the exact listing and contact us before ordering when sizing information is unclear.',
+          answer: 'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery if they are unworn, unwashed, unaltered, and returned with original tags and packaging. Customers pay tracked return shipping for buyer-remorse returns; custom, altered, made-to-order, and clearly identified final-sale items are not eligible. Exchanges are not accepted.',
         },
         {
           question: 'Which measurements should I compare?',
@@ -105,7 +106,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'What is your return policy?',
-          answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          answer: RETURN_POLICY_FAQ_ANSWER,
         },
         {
           question: 'Why do I need an unboxing video?',
@@ -113,15 +114,15 @@ const FAQ = () => {
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'All items are final sale. Covered claims are limited to genuine shipping damage, an incorrect item, or a missing item reported within 48 hours with the required photos and continuous video.',
+          answer: 'Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. Eligible U.S. standard-stock items must be unworn, unwashed, unaltered, and returned with original tags and packaging within 30 calendar days of delivery.',
         },
         {
           question: 'What if my order arrives damaged, incorrect, or incomplete?',
-          answer: 'Email hello@luxemia.shop within 48 hours of delivery with your order number, clear photos, and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.',
+          answer: COVERED_ORDER_ISSUE_ANSWER,
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'To the extent permitted by applicable law, sales are final and we do not accept exchanges. We recommend using our detailed Size Guide and contacting us before ordering with any questions about sizing, fit, or color.',
+          answer: 'Exchanges are not accepted. If an eligible U.S. standard-stock item is returned under the policy, customers may place a new order for a different size or color. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear.',
         },
       ],
     },

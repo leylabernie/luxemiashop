@@ -1028,7 +1028,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'What is LuxeMia’s return policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+        text: 'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. Confirmed covered issues receive no-cost return support.',
       },
     },
     {
@@ -1601,10 +1601,10 @@ const routes = [
   {
     path: '/faq',
     title: 'Frequently Asked Questions | LuxeMia',
-    description: 'Find answers to common questions about LuxeMia shipping, cancellations, final-sale policy, sizing, product details and payment.',
+    description: 'Find answers to common questions about LuxeMia shipping, eligible U.S. returns, cancellations, sizing, product details and payment.',
     h1: 'Frequently Asked Questions',
     schemas: [FAQ_PAGE_SCHEMA],
-    content: `<p>Find answers to common questions about LuxeMia orders, shipping, final-sale policy, sizing, product details and payment.</p>
+    content: `<p>Find answers to common questions about LuxeMia orders, shipping, eligible U.S. returns, sizing, product details and payment.</p>
       <h2>Where does LuxeMia ship?</h2>
       <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.</p>
       <h2>How long does LuxeMia shipping take?</h2>
@@ -1612,7 +1612,7 @@ const routes = [
       <h2>How should I choose a LuxeMia size?</h2>
       <p>Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.</p>
       <h2>What is LuxeMia’s return policy?</h2>
-      <p>Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+      <p>Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. Confirmed covered issues receive no-cost return support.</p>
       <h2>Can I cancel a LuxeMia order?</h2>
       <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
 `,
@@ -1642,9 +1642,9 @@ const routes = [
   {
     path: '/returns',
     title: 'Returns, Refunds & Cancellations | LuxeMia',
-    description: 'LuxeMia final-sale and covered-order-issue policy, subject to mandatory consumer rights under applicable law.',
+    description: 'LuxeMia’s 30-day U.S. return policy for eligible standard-stock items, buyer-remorse return shipping, covered order issues and cancellations.',
     h1: 'Returns, Refunds & Cancellations',
-    content: '<p>Sales are final to the extent permitted by applicable law. Nothing in this policy limits mandatory consumer rights or remedies that cannot legally be excluded. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>',
+    content: '<p>For eligible U.S. standard-stock items, LuxeMia accepts return requests made within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. Verified damage, incorrect-item, or missing-item issues reported within 48 hours with the required evidence receive no-cost return support where a return is required.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>',
   },
   {
     path: '/contact',
@@ -2294,7 +2294,7 @@ function generateHtml(template, route, allShopifyProducts) {
       <h3>How is this product shipped?</h3>
       <p>${deliveryAnswer}</p>
       <h3>What is the return policy?</h3>
-      <p>Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.</p>
+      <p>Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. Confirmed covered issues receive no-cost return support.</p>
       <h3>How should I care for this product?</h3>
       <p>${careAnswer}</p>`;
 

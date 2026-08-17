@@ -14,6 +14,7 @@ import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { Skeleton } from '@/components/ui/skeleton';
 import { enrichProductDescription, generateMetaDescription, sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
+import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
@@ -257,7 +258,7 @@ const ProductDetail = () => {
     }] : []),
     {
       question: `Can I return the ${product.title}?`,
-      answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.'
+      answer: RETURN_POLICY_FAQ_ANSWER
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,

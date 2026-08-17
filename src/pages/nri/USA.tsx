@@ -1,5 +1,6 @@
 import { Truck, Shield, Clock } from 'lucide-react';
 import NRILandingPage from './NRILandingPage';
+import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 
 const USA = () => (
   <NRILandingPage
@@ -29,7 +30,7 @@ const USA = () => (
         },
         {
           question: 'Can I return an item?',
-          answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          answer: RETURN_POLICY_FAQ_ANSWER,
         },
         {
           question: 'Do you offer custom sizing?',

@@ -16,6 +16,7 @@ import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
 import LazySection from '@/components/ui/LazySection';
 import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
+import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
 // HeroSection removed — was duplicating NewArrivalsBanner (two hero carousels stacked)
 // FlashSaleBanner removed — redundant "New Arrivals" bar directly below NewArrivalsBanner
@@ -27,7 +28,7 @@ const homepageFaqs = [
   },
   {
     question: "What is your return policy?",
-    answer: "Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition."
+    answer: RETURN_POLICY_FAQ_ANSWER
   },
   {
     question: "Where can I confirm a product's materials and details?",

@@ -22,6 +22,7 @@ import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
 import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
+import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 
 const indowesternFaqs = [
   {
@@ -42,7 +43,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Can I return an Indo-Western outfit?',
-    answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+    answer: RETURN_POLICY_FAQ_ANSWER,
   },
 ];
 

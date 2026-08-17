@@ -210,7 +210,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     },
     {
       question: `Can I return the ${displayTitle}?`,
-      answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+      answer: 'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. See Returns & Cancellations for complete instructions.',
     },
     {
       question: `How should I care for the ${displayTitle}?`,
@@ -359,7 +359,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         <div class="shipping-info">
           <strong>Shipping:</strong> Seven countries supported. U.S. standard shipping is free at $150 and above; international rates are shown at checkout.<br>
           <strong>Tracking:</strong> Emailed when the shipping label is created for dispatch. Contact LuxeMia before ordering when an event date is time-sensitive.<br>
-          <strong>Returns:</strong> Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.<br>
+          <strong>Returns:</strong> Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery; customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are excluded, subject to applicable law. Confirmed covered issues receive no-cost return support.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>
       </div>

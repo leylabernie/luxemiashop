@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Ruler, Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
+import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 
 interface ProductTabsProps {
   description?: string;
@@ -626,7 +627,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           {/* General tailoring note */}
           <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
             <p className="text-sm text-foreground">
-              <strong>Note:</strong> Sales are final to the extent permitted by applicable law, including stitched items. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
+              <strong>Note:</strong> Made-to-measure, altered, and custom orders are not eligible for buyer-remorse returns, subject to applicable law. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
             </p>
           </div>
         </div>
@@ -945,11 +946,9 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                     <Info className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                   </div>
                   <div>
-                    <h5 className="font-medium text-foreground mb-1">All Sales Final</h5>
+                    <h5 className="font-medium text-foreground mb-1">Eligible U.S. Standard-Stock Returns</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Sales are final to the extent permitted by applicable law.
-                      We encourage you to carefully review sizing, measurements, and product details before placing your order.
-                      Our team is always available to answer any pre-purchase questions.
+                      {RETURN_POLICY_SUMMARY} Review sizing, measurements, and product details before ordering, and see Returns &amp; Cancellations for complete return-start instructions.
                     </p>
                   </div>
                 </div>
@@ -963,7 +962,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                   <div>
                     <h5 className="font-medium text-foreground mb-1">Covered Order Issues</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      For genuine shipping damage, an incorrect item, or a missing item:
+                      {COVERED_ORDER_ISSUE_ANSWER}
                     </p>
                     <ul className="text-sm text-muted-foreground mt-2 space-y-1.5">
                       <li className="flex items-start gap-2">

@@ -1,5 +1,6 @@
 import { Truck, Shield, Clock } from 'lucide-react';
 import NRILandingPage from './NRILandingPage';
+import { COVERED_ORDER_ISSUE_ANSWER } from '@/lib/returnPolicyCopy';
 
 const NRIGeneral = () => (
   <NRILandingPage
@@ -33,7 +34,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'What if my item arrives damaged?',
-          answer: 'Sales are final to the extent permitted by applicable law. For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.',
+          answer: COVERED_ORDER_ISSUE_ANSWER,
         },
       ],
       benefits: [

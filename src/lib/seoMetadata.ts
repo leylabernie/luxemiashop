@@ -14,6 +14,7 @@ export const SITE_URL = 'https://luxemia.shop';
 export const SITE_NAME = 'LuxeMia';
 export const DEFAULT_TITLE = 'LuxeMia — Indian Ethnic Wear Online';
 export const DEFAULT_DESCRIPTION = "Shop the Indian sarees, lehengas, suits, menswear and jewelry currently listed at LuxeMia. Exact product details, prices, sizes and availability are shown online.";
+const RETURN_POLICY_SEO_DESCRIPTION = 'Read LuxeMia’s U.S. returns policy: eligible standard-stock items may be returned within 30 days; customers pay buyer-remorse return shipping, while confirmed covered issues receive no-cost return support.';
 
 export interface PageMetadata {
   title: string;
@@ -118,7 +119,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/returns': {
     title: 'Returns & Cancellations Policy | LuxeMia',
-    description: "All LuxeMia sales are final. Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with clear photos and the required continuous unboxing/opening video.",
+    description: RETURN_POLICY_SEO_DESCRIPTION,
     canonical: `${SITE_URL}/returns`,
   },
   '/privacy': {
