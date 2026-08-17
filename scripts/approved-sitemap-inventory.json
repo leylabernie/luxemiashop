@@ -1,11 +1,12 @@
 {
   "source": "2026-08-12 fact-checked content and duplicate-product cleanup inventory",
   "capturedOn": "2026-08-12",
-  "urlCount": 769,
+  "urlCount": 770,
   "paths": [
     "/",
     "/collections",
     "/about",
+    "/sitemap",
     "/lookbook",
     "/lehengas",
     "/sarees",

@@ -20,6 +20,9 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
+const APPROVED_SITEMAP_PATHS = new Set(
+  JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'scripts/approved-sitemap-inventory.json'), 'utf8')).paths
+);
 const OCCASION_SIGNALS = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/occasionSignals.json'), 'utf8')
 );
@@ -804,6 +807,46 @@ function generateCollectionProductHtml(products) {
   return `<div style="margin:24px 0">${cards}</div>`;
 }
 
+// Build-time HTML directory for every approved, live sitemap product. This is
+// intentionally simple text navigation: it creates a durable crawl path without
+// showing a 700-card merchandising grid or linking to products outside the
+// approved sitemap inventory.
+function generateApprovedProductDirectoryHtml(products) {
+  const grouped = new Map();
+  const approvedProducts = products
+    .filter((product) => APPROVED_SITEMAP_PATHS.has(`/product/${product.handle}`))
+    .sort((left, right) => sanitizeProductTitle(left.title || left.handle).localeCompare(
+      sanitizeProductTitle(right.title || right.handle),
+      'en',
+      { sensitivity: 'base' },
+    ));
+
+  for (const product of approvedProducts) {
+    const category = getDisplayCategory(product.productType || 'Designer Wear');
+    const entries = grouped.get(category) || [];
+    entries.push(product);
+    grouped.set(category, entries);
+  }
+
+  const categoryOrder = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Indo Western', 'Jewelry'];
+  const categories = [...grouped.keys()].sort((left, right) => {
+    const leftIndex = categoryOrder.indexOf(left);
+    const rightIndex = categoryOrder.indexOf(right);
+    return (leftIndex === -1 ? Number.MAX_SAFE_INTEGER : leftIndex) -
+      (rightIndex === -1 ? Number.MAX_SAFE_INTEGER : rightIndex) ||
+      left.localeCompare(right);
+  });
+
+  const sections = categories.map((category) => {
+    const links = grouped.get(category)
+      .map((product) => `<li><a href="/product/${escapeHtml(product.handle)}">${escapeHtml(sanitizeProductTitle(product.title || product.handle))}</a></li>`)
+      .join('');
+    return `<section><h2>${escapeHtml(category)}</h2><ul>${links}</ul></section>`;
+  }).join('\n');
+
+  return `<p>Browse all ${approvedProducts.length} current product listings by category. Open an individual listing for its exact fabric, included pieces, sizing, price and availability.</p>${sections}`;
+}
+
 // schema.org ItemList JSON-LD for collection pages. Each ListItem wraps a Product
 // with url/image/name/offers — what Google Merchant Center reads for rich results.
 function generateItemListJsonLd(products, category, routePath) {
@@ -954,7 +997,15 @@ const routes = [
     `,
   },
   {
-       path: '/suits',
+    path: '/sitemap',
+    htmlSitemap: true,
+    title: 'LuxeMia Product Directory | All Current Indian Ethnic Wear',
+    description: 'Browse LuxeMia’s current Indian ethnic wear product directory, including lehengas, sarees, salwar suits, menswear and jewelry.',
+    h1: 'LuxeMia Product Directory',
+    content: '<p>Use this product directory to browse all current LuxeMia listings by category.</p>',
+  },
+  {
+    path: '/suits',
     category: 'suits',
     title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
     description: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping at $150 and above.',
@@ -2161,6 +2212,14 @@ function generateHtml(template, route, allShopifyProducts) {
       <h2>Shipping &amp; Delivery</h2>
       <p>Shipping is available to seven countries. U.S. standard shipping is free at $150 and above; international rates are shown at checkout. Tracking details are emailed when the shipping label is created for dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
+  } else if (route.htmlSitemap && allShopifyProducts && allShopifyProducts.size > 0) {
+    const approvedProducts = Array.from(allShopifyProducts.values())
+      .filter((product) => APPROVED_SITEMAP_PATHS.has(`/product/${product.handle}`));
+    console.log(`[prerender] ${route.path}: linked ${approvedProducts.length} approved products in HTML directory`);
+    mainBodyContent = `
+      <h1>${escapeHtml(route.h1)}</h1>
+      ${route.content}
+      ${generateApprovedProductDirectoryHtml(approvedProducts)}`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)
     // Inject REAL Shopify products so Googlebot sees a fully populated category page on
@@ -2228,6 +2287,7 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/collections/customizable-indian-outfits">Customizable Outfits</a> |
         <a href="/blog">Blog</a> |
         <a href="/collections">Collections</a> |
+        <a href="/sitemap">Product Directory</a> |
         <a href="/contact">Contact</a>
       </nav>
       <nav aria-label="Featured shopping guides">

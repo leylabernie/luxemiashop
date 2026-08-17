@@ -319,11 +319,6 @@
       "statusCode": 301
     },
     {
-      "source": "/sitemap",
-      "destination": "/sitemap.xml",
-      "statusCode": 301
-    },
-    {
       "source": "/blog/how-to-measure-yourself-indian-ethnic-wear",
       "destination": "/blog/indian-to-us-clothing-size-conversion-guide",
       "statusCode": 301

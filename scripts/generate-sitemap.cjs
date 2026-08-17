@@ -21,7 +21,7 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const EXPECTED_SITEMAP_URL_COUNT = 769;
+const EXPECTED_SITEMAP_URL_COUNT = 770;
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
@@ -62,6 +62,7 @@ const staticPages = [
   // NOTE: '/products' removed — it 301-redirects to /collections.
   // Including redirected URLs in the sitemap is a GSC error ("Page with redirect").
   { loc: '/about', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/sitemap', changefreq: 'weekly', priority: '0.4' },
   { loc: '/lookbook', changefreq: 'monthly', priority: '0.7' },
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9' },

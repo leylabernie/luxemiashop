@@ -38,6 +38,7 @@ const footerLinks = {
   about: [
     { name: 'About LuxeMia', href: '/about' },
     { name: 'Style Quiz', href: '/style-quiz' },
+    { name: 'Product Directory', href: '/sitemap' },
     { name: 'Blog', href: '/blog' },
     { name: 'Plus-Size Indian Wear Guide', href: '/blog/plus-size-indian-ethnic-wear-guide' },
     { name: 'Manish Malhotra Profile', href: '/blog/manish-malhotra-bollywood-bridal-designer-profile' },

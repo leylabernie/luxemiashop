@@ -86,7 +86,6 @@ const Sitemap = () => {
       <SEOHead
         title="Sitemap | LuxeMia - All Pages & Products"
         description="Browse all pages and products on LuxeMia. Find designer sarees, bridal lehengas, suits, and menswear collections with easy navigation."
-        noIndex={true}
       />
       <Header />
       

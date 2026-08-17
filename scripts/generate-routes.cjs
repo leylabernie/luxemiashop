@@ -67,6 +67,7 @@ const STATIC_ROUTES = [
   '/collections/designer-sarees',
   '/collections/party-wear-lehengas',
   '/about',
+  '/sitemap',
   '/new-arrivals',
   '/indowestern',
   '/nri',
