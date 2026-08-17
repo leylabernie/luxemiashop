@@ -2221,12 +2221,19 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/">Home</a> |
         <a href="/lehengas">Lehengas</a> |
         <a href="/sarees">Sarees</a> |
+        <a href="/collections/wedding-sarees">Wedding Sarees</a> |
+        <a href="/collections/designer-sarees">Designer Sarees</a> |
         <a href="/suits">Suits</a> |
         <a href="/menswear">Menswear</a> |
         <a href="/collections/customizable-indian-outfits">Customizable Outfits</a> |
         <a href="/blog">Blog</a> |
         <a href="/collections">Collections</a> |
         <a href="/contact">Contact</a>
+      </nav>
+      <nav aria-label="Featured shopping guides">
+        <a href="/blog/plus-size-indian-ethnic-wear-guide">Plus-Size Indian Ethnic Wear Guide</a> |
+        <a href="/blog/manish-malhotra-bollywood-bridal-designer-profile">Manish Malhotra Designer Profile</a> |
+        <a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary</a>
       </nav>
     </main>
     <script>

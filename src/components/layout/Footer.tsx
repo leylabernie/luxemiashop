@@ -39,6 +39,9 @@ const footerLinks = {
     { name: 'About LuxeMia', href: '/about' },
     { name: 'Style Quiz', href: '/style-quiz' },
     { name: 'Blog', href: '/blog' },
+    { name: 'Plus-Size Indian Wear Guide', href: '/blog/plus-size-indian-ethnic-wear-guide' },
+    { name: 'Manish Malhotra Profile', href: '/blog/manish-malhotra-bollywood-bridal-designer-profile' },
+    { name: 'Indian Wedding Glossary', href: '/blog/indian-wedding-terms-glossary-50-events-rituals-roles' },
     { name: 'Press', href: '/press' },
   ],
   help: [
@@ -219,7 +222,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
 
           {/* About Links */}
           <div>
-            <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">About</h4>
+            <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">About &amp; Guides</h4>
             <ul className="space-y-2.5">
               {footerLinks.about.map((link) => (
                 <li key={link.name}>
