@@ -9,6 +9,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import { usePageTracking } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
+import NewVisitorPopup from "./components/home/NewVisitorPopup";
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
 
@@ -222,6 +223,7 @@ const App = () => (
               </Routes>
               <MobileBottomNav />
               <WhatsAppButton />
+              <NewVisitorPopup />
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>

@@ -28,6 +28,7 @@ const emailSchema = z.object({
 const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 3;
+const DISCOUNT_CODE = 'LUXE10';
 
 const checkRateLimit = (): boolean => {
   const now = Date.now();
@@ -162,16 +163,14 @@ const NewVisitorPopup = () => {
       }
 
       if (data?.duplicate) {
-        toast.info('You\'re already subscribed! Check your email for your discount code.');
+        toast.info('You\'re already subscribed. Your welcome code is still available below.');
       } else {
-        setIsSuccess(true);
         toast.success('Welcome to LuxeMia! Your discount code is ready.');
-
-        if (data?.discountCode) {
-          setDiscountCode(data.discountCode);
-          navigator.clipboard.writeText(data.discountCode).catch(() => {});
-        }
       }
+
+      setDiscountCode(DISCOUNT_CODE);
+      setIsSuccess(true);
+      navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
     } catch (error) {
       console.error('Subscription error:', error);
       toast.error('Something went wrong. Please try again.');
@@ -241,7 +240,7 @@ const NewVisitorPopup = () => {
                       transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
                       className="bg-primary text-primary-foreground rounded-full w-20 h-20 sm:w-24 sm:h-24 flex flex-col items-center justify-center shadow-lg"
                     >
-                      <span className="font-serif text-2xl sm:text-3xl font-bold leading-none">15%</span>
+                      <span className="font-serif text-2xl sm:text-3xl font-bold leading-none">10%</span>
                       <span className="text-[10px] sm:text-xs uppercase tracking-wider mt-1">OFF</span>
                     </motion.div>
                   </div>
@@ -262,14 +261,14 @@ const NewVisitorPopup = () => {
 
                       {/* Main headline — specific and benefit-driven */}
                       <h3 className="font-serif text-2xl sm:text-3xl text-center sm:text-left mb-3 leading-tight">
-                        Get <span className="text-primary font-bold">15% Off</span> Your First Indian Ethnic Wear Order
+                        Get <span className="text-primary font-bold">10% Off</span> Your First Indian Ethnic Wear Order
                       </h3>
 
                       {/* Benefit bullets — what they get, specifically */}
                       <ul className="space-y-2 mb-6 text-sm text-foreground/70">
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span><strong className="text-foreground">Instant discount code</strong> — works on lehengas, sarees, suits & menswear</span>
+                          <span><strong className="text-foreground">Instant discount code</strong> — one use per customer at checkout</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
@@ -321,7 +320,7 @@ const NewVisitorPopup = () => {
                               Unlocking...
                             </span>
                           ) : (
-                            'Claim My 15% Off Code →'
+                            'Claim My 10% Off Code →'
                           )}
                         </Button>
                       </form>
@@ -354,17 +353,17 @@ const NewVisitorPopup = () => {
                       <h3 className="font-serif text-2xl mb-2">You're In</h3>
 
                       <p className="text-sm text-foreground/60 mb-4">
-                        Your exclusive <strong className="text-foreground">15% off</strong> code is ready:
+                        Your exclusive <strong className="text-foreground">10% off</strong> code is ready:
                       </p>
 
                       <div className="bg-muted px-6 py-3 rounded-md inline-block mb-4 border-2 border-dashed border-primary/30">
                         <span className="font-mono text-lg font-semibold tracking-wider text-primary">
-                          {discountCode || 'Check your inbox'}
+                          {discountCode || DISCOUNT_CODE}
                         </span>
                       </div>
 
                       <p className="text-xs text-foreground/50 mb-6">
-                        {discountCode ? 'Code copied to clipboard! Apply at checkout.' : 'Check your inbox for your welcome code.'}
+                        Code copied to clipboard. Apply it at checkout.
                       </p>
 
                       <Button
