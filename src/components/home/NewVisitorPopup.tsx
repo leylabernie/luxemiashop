@@ -29,6 +29,8 @@ const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 3;
 const DISCOUNT_CODE = 'LUXE10';
+const NEWSLETTER_FUNCTION_URL =
+  'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email';
 
 const checkRateLimit = (): boolean => {
   const now = Date.now();
@@ -140,34 +142,30 @@ const NewVisitorPopup = () => {
     setIsSubmitting(true);
 
     try {
-      // Dynamic-import supabase — keeps ~44KB out of initial bundle.
-      // The chunk is fetched only when a visitor actually submits the form.
-      const { supabase } = await import('@/integrations/supabase/client');
-
-      const { data, error } = await supabase.functions.invoke('submit-email', {
-        body: {
+      const response = await fetch(NEWSLETTER_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           email: email.toLowerCase().trim(),
           type: 'newsletter',
           source: 'welcome_popup',
-        },
+        }),
       });
+      const data = (await response.json().catch(() => ({}))) as {
+        success?: boolean;
+        error?: string;
+        retryAfter?: number;
+      };
 
-      if (error) throw error;
-
-      if (data?.error) {
+      if (!response.ok || data.success !== true) {
         if (data.retryAfter) {
           toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
           return;
         }
-        throw new Error(data.error);
+        throw new Error(data.error || 'We could not email your code just now. Please try again.');
       }
 
-      if (data?.duplicate) {
-        toast.info('You\'re already subscribed. Your welcome code is still available below.');
-      } else {
-        toast.success('Welcome to LuxeMia! Your discount code is ready.');
-      }
-
+      toast.success('Welcome to LuxeMia! Your discount code is ready.');
       setDiscountCode(DISCOUNT_CODE);
       setIsSuccess(true);
       navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
