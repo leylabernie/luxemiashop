@@ -135,6 +135,73 @@ function isJewelryProduct(productType = '', title = '') {
   return JEWELRY_PRODUCT_PATTERN.test(`${productType} ${title}`);
 }
 
+const OCCASION_TAG_COPY = [
+  ['wedding-lehenga', 'wedding celebrations'],
+  ['bridal-lehenga', 'bridal celebrations'],
+  ['wedding-guest-outfit', 'wedding-guest occasions'],
+  ['reception-wear', 'wedding receptions'],
+  ['festival-wear', 'festival celebrations'],
+  ['festive-wear', 'festive celebrations'],
+  ['diwali-outfit', 'Diwali celebrations'],
+  ['eid-outfit', 'Eid celebrations'],
+  ['party-wear', 'party wear'],
+];
+
+function textFromListing(value) {
+  return normalizeWhitespace(
+    String(value || '')
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/&amp;/gi, '&')
+  );
+}
+
+function cleanVerifiedFact(value, maxLength = 120) {
+  const cleaned = textFromListing(value)
+    .replace(/^(?:premium|beautiful|elegant)\s+/i, '')
+    .trim();
+  if (!cleaned || /^(?:n\/?a|none|unknown|fabric|material|work)$/i.test(cleaned)) return undefined;
+  return cleaned.length > maxLength ? undefined : cleaned;
+}
+
+function getLabeledListingFact(description, labels) {
+  const source = String(description || '');
+  const labelPattern = labels
+    .map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .join('|');
+
+  // The Storefront API returns `description` as plain text and can flatten
+  // Shopify list items. Prefer exact label boundaries rather than guessing
+  // from a title or an image.
+  const htmlMatch = source.match(new RegExp(`<strong>\\s*(?:${labelPattern})\\s*:\\s*<\\/strong>\\s*([^<.]{1,160})`, 'i'));
+  const htmlFact = cleanVerifiedFact(htmlMatch?.[1]);
+  if (htmlFact) return htmlFact;
+
+  const plain = textFromListing(source);
+  const nextFieldPattern = 'Style|Fabric|Material|Work|Embroidery|Embellishment|Color|Care|Lehenga Silhouette|Blouse\\/Choli|Dupatta|Lining|Closure|Flair';
+  const plainMatch = plain.match(new RegExp(`(?:^|\\s)(?:${labelPattern})\\s*:\\s*(.{1,160}?)(?=\\s+(?:${nextFieldPattern})\\s*:|[.!?]|$)`, 'i'));
+  return cleanVerifiedFact(plainMatch?.[1]);
+}
+
+function getExplicitIncludedPieces(product) {
+  const fromTag = (product?.tags || []).find((tag) => /^(?:included|included pieces|pieces|set includes|package includes):/i.test(String(tag)));
+  if (fromTag) {
+    const parsed = String(fromTag).replace(/^[^:]+:\s*/, '');
+    return cleanVerifiedFact(parsed);
+  }
+
+  const listingText = textFromListing(product?.description);
+  if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
+  const explicit = listingText.match(/\b(?:includes|included pieces|set includes|package includes)\s*[:\-]?\s*([^.!?]{1,120})/i);
+  return cleanVerifiedFact(explicit?.[1]);
+}
+
+function getVerifiedOccasion(product) {
+  const tags = new Set((product?.tags || []).map((tag) => String(tag).trim().toLowerCase()));
+  const matched = OCCASION_TAG_COPY.find(([tag]) => tags.has(tag));
+  return matched?.[1];
+}
+
 function getListedProductAttributes(product) {
   const jewelry = isJewelryProduct(product?.productType, product?.title);
   const listingText = `${product?.title || ''} ${product?.description || ''}`.toLowerCase();
@@ -153,6 +220,8 @@ function getListedProductAttributes(product) {
   const taggedColor = prefixedTagValue('color');
   const taggedMaterial = prefixedTagValue('fabric', 'material');
   const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
+  const listedMaterial = getLabeledListingFact(product?.description, ['Fabric', 'Material']);
+  const listedWork = getLabeledListingFact(product?.description, ['Work', 'Embroidery', 'Embellishment']);
   const sizeValues = product?.options
     ?.find(option => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values
@@ -172,7 +241,7 @@ function getListedProductAttributes(product) {
     : null;
   const includedPieces = includedPiecesTag && includedPiecesPrefix
     ? String(includedPiecesTag).slice(includedPiecesPrefix.length).trim()
-    : undefined;
+    : getExplicitIncludedPieces(product);
   const rawShipsWithin = product?.shipsWithinMetafield?.value;
   const shipsWithinDays = rawShipsWithin ? Number.parseInt(String(rawShipsWithin), 10) : null;
 
@@ -181,12 +250,13 @@ function getListedProductAttributes(product) {
     color: (rawColor || taggedColor) && (!jewelry || listingText.includes((rawColor || taggedColor).toLowerCase()))
       ? (rawColor || taggedColor)
       : undefined,
-    material: (rawMaterial || taggedMaterial) && (!jewelry || listingText.includes((rawMaterial || taggedMaterial).toLowerCase()))
-      ? (rawMaterial || taggedMaterial)
+    material: (rawMaterial || taggedMaterial || listedMaterial) && (!jewelry || listingText.includes((rawMaterial || taggedMaterial || listedMaterial).toLowerCase()))
+      ? cleanVerifiedFact(rawMaterial || taggedMaterial || listedMaterial)
       : undefined,
-    work: !jewelry ? taggedWork : undefined,
+    work: !jewelry ? cleanVerifiedFact(taggedWork || listedWork) : undefined,
+    occasion: !jewelry ? getVerifiedOccasion(product) : undefined,
     sizes: jewelry ? [] : sizeValues,
-    includedPieces: includedPieces || undefined,
+    includedPieces: cleanVerifiedFact(includedPieces),
     shipsWithinDays: Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? shipsWithinDays : null,
   };
 }
@@ -207,7 +277,8 @@ function buildVerifiedProductCopy(product) {
   if (attributes.color) parts.push(`Color: ${attributes.color}.`);
   if (attributes.material) parts.push(`Material: ${attributes.material}.`);
   if (attributes.work) parts.push(`Work: ${attributes.work}.`);
-  if (attributes.includedPieces) parts.push(`Included pieces: ${attributes.includedPieces}.`);
+  if (attributes.includedPieces) parts.push(`Includes: ${attributes.includedPieces}.`);
+  if (attributes.occasion) parts.push(`Suitable for: ${attributes.occasion}.`);
   if (attributes.sizes.length > 0) {
     parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
   }
