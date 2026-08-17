@@ -60,18 +60,38 @@ export function sanitizeProductTitle(value?: string): string {
 }
 
 /**
- * Build visible product copy only from explicitly supplied attributes.
- * The raw description parameter is retained for API compatibility but is not
- * republished because historic Shopify descriptions contain obsolete policy
- * text and generated claims.
+ * Preserve useful, SKU-specific catalog information while stripping historic
+ * fulfillment copy that is now superseded by the published LuxeMia policy.
+ * Product descriptions are the only reliable source for details such as the
+ * construction, care, blouse material, or can-can status of a given listing.
+ */
+function cleanCatalogDescription(value?: string): string {
+  return cleanText(value)
+    .replace(/(?:estimated\s+)?delivery\s*:\s*[^.]+\.?/gi, '')
+    .replace(/U\.?S\.?\s+standard\s+shipping\s+is[^.]+\.?/gi, '')
+    .replace(/Shipping\s+is\s+available\s+to\s+[^.]+\.?/gi, '')
+    .replace(/Tracking\s+(?:is|details\s+are)\s+[^.]+\.?/gi, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+/**
+ * Build visible product copy from the current Shopify listing whenever it has
+ * meaningful SKU-specific information. A concise, accurate fallback is used
+ * only when the listing itself is thin.
  */
 export function enrichProductDescription(
-  _description: string,
+  description: string,
   productType: string,
   title: string,
   material?: string,
   color?: string,
 ): string {
+  const catalogDescription = cleanCatalogDescription(description);
+  if (catalogDescription.length >= 40) {
+    return `${catalogDescription} ${SHIPPING_POLICY}`;
+  }
+
   const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
   const safeType = cleanAttribute(productType);
   const safeMaterial = cleanAttribute(material);

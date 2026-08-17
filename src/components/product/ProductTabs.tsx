@@ -516,7 +516,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
             <h3 className="text-lg font-serif font-medium">Tailoring Services</h3>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            LuxeMia offers the tailoring choices shown on this page. Select the service and measurements that match this product before adding it to your bag.
+            Tailoring availability, price, and timing vary by listing. The current product options above are the source of truth; request a quote before ordering when an option is marked for confirmation.
           </p>
 
           {/* Semi Stitched */}
@@ -528,23 +528,23 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </div>
                 <h4 className="font-medium text-foreground">Semi Stitched</h4>
               </div>
-              <span className="text-sm font-medium text-green-600 dark:text-green-400">Included — No extra charge</span>
+              <span className="text-sm font-medium text-green-600 dark:text-green-400">Review the selected listing</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Pre-constructed with adjustable side seams. The main body of the outfit is assembled, leaving the side seams open for easy alteration. Select your standard size (XS–XXL) for a near-perfect fit.
+              Where this option is shown on the selected listing, the garment is supplied in its stated semi-stitched condition. Review the listing’s size choices and included-piece details before ordering.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Ready to wear with minimal adjustments</span>
+                <span>Review the selected listing’s stated construction and size choices</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Side seams can be taken in or let out by any local tailor</span>
+                <span>Use the Size Guide and ask for help before ordering if fit is unclear</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                <span>Fastest delivery — no tailoring lead time</span>
+                <span>Confirm current dispatch and delivery timing for a fixed event date</span>
               </li>
             </ul>
           </div>
@@ -561,20 +561,20 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <span className="text-sm font-medium text-foreground">Contact for quote</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Fully stitched to standard measurements matching the product image. Select your bust size (28"–52") and we'll tailor it completely — ready to wear right out of the box.
+              This option requires confirmation before purchase. LuxeMia will confirm whether it is available for the selected design, the required measurements, the charge, and the current timing.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Complete stitching to your selected measurements</span>
+                <span>Availability and fit requirements confirmed before purchase</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Choose bottom style: Churidar, Salwar, Semi Patiala, or Straight Pant / Palazzo</span>
+                <span>Only the tailoring choices confirmed for the selected design are available</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
-                <span>Confirm tailoring availability and timing before ordering</span>
+                <span>Confirm the event-date feasibility before placing a time-sensitive order</span>
               </li>
             </ul>
           </div>
@@ -591,34 +591,34 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <span className="text-sm font-medium text-foreground">Contact for quote</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Choose from the neckline, sleeve, and bottom-style options shown for this product. Submit your measurements after placing the order so the selected tailoring can be completed.
+              This service is quote-based. LuxeMia confirms the available design choices, measurements, charge, and timing for the selected listing before an order is accepted.
             </p>
             <ul className="text-sm text-muted-foreground space-y-1.5 ml-1">
               <li className="flex items-start gap-2">
                 <Palette className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span><strong className="text-foreground">Neckline:</strong> Round Neck, Deep U-Neck, Square Neck, or Sweetheart</span>
+                <span><strong className="text-foreground">Design options:</strong> only confirmed choices for the selected listing are available</span>
               </li>
               <li className="flex items-start gap-2">
                 <Palette className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span><strong className="text-foreground">Sleeve Style:</strong> Full Sleeve, 3/4 Sleeve, Half Sleeve, Sleeveless, or Cap Sleeve</span>
+                <span><strong className="text-foreground">Measurements:</strong> submit only the measurements LuxeMia requests for the confirmed service</span>
               </li>
               <li className="flex items-start gap-2">
                 <Palette className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span><strong className="text-foreground">Bottom Style:</strong> Churidar, Salwar, Semi Patiala, or Straight Pant / Palazzo</span>
+                <span><strong className="text-foreground">Quote:</strong> charges and production timing are confirmed before purchase</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span>Submit measurements after ordering via My Account → My Orders</span>
+                <span>Do not assume a customization is included until LuxeMia confirms it in writing</span>
               </li>
               <li className="flex items-start gap-2">
                 <Clock className="h-3.5 w-3.5 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                <span>Confirm tailoring availability and timing before ordering</span>
+                <span>Confirm the event-date feasibility before placing a time-sensitive order</span>
               </li>
             </ul>
             <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm mt-2">
               <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                You can submit your measurements after placing the order. Select Made to Measure, add to bag, complete your order, then go to <strong>My Account → My Orders</strong> to submit your measurements at your convenience.
+                Contact LuxeMia before checkout for a made-to-measure quote. The product listing, confirmed measurements, price, and timing must all be agreed before you place an event-date-sensitive order.
               </p>
             </div>
           </div>
