@@ -10,7 +10,6 @@ import { ProductInfo } from '@/components/product/ProductInfo';
 import { ProductTabs } from '@/components/product/ProductTabs';
 import { CompleteTheLook } from '@/components/product/CompleteTheLook';
 import { RecentlyViewed } from '@/components/product/RecentlyViewed';
-import ReviewsSection from '@/components/product/ReviewsSection';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { Skeleton } from '@/components/ui/skeleton';
 import { enrichProductDescription, generateMetaDescription, sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
@@ -400,11 +399,6 @@ const ProductDetail = () => {
                 </section>
               )}
 
-              {/* Customer Reviews */}
-              <ReviewsSection
-                productName={product.title}
-                productUrl={`https://luxemia.shop/product/${product.handle}`}
-              />
 
               {/* WhatsApp Stylist CTA */}
               <div className="mb-16 p-6 bg-secondary/30 border border-border rounded-lg text-center">
