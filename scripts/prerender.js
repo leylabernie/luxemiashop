@@ -1379,10 +1379,17 @@ const routes = [
   },
   {
     path: '/collections/wedding-sarees',
-    title: 'Wedding Saree Collection | Silk Sarees | LuxeMia',
-    description: 'Shop wedding sarees at LuxeMia. Banarasi silk, Kanjeevaram & designer wedding sarees. Traditional craftsmanship, modern elegance. Free US shipping.',
-    h1: 'Wedding Saree Collection',
-    content: '<p>Explore our curated wedding saree collection. From Banarasi silk to Kanjeevaram, each saree combines traditional craftsmanship with modern elegance for your special day.</p>',
+    title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
+    description: 'Shop wedding sarees online in the USA. Compare current bridal and wedding saree listings by stated fabric, work, blouse details, price and availability before ordering.',
+    h1: 'Wedding Sarees',
+    content: '<p>Browse current wedding sarees for ceremonies, receptions and family celebrations. Review each exact listing for stated fabric, work, blouse details, price and availability before an event-critical order.</p><p><a href="/sarees">Shop all sarees</a> | <a href="/size-guide">Size guide</a> | <a href="/shipping">Shipping information</a></p>',
+  },
+  {
+    path: '/collections/designer-sarees',
+    title: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
+    description: 'Shop designer sarees online in the USA. Compare current colors, stated fabric, embroidery or work, blouse details, price and availability before ordering.',
+    h1: 'Designer Sarees',
+    content: '<p>Browse current designer saree listings for receptions, parties and celebrations. Review each exact listing for stated fabric, work, blouse details, price and availability before ordering.</p><p><a href="/sarees">Shop all sarees</a> | <a href="/size-guide">Size guide</a> | <a href="/shipping">Shipping information</a></p>',
   },
   {
     path: '/collections/reception-outfits',

@@ -6,12 +6,15 @@ export type CommercialLandingSlug =
   | 'sharara-suits'
   | 'gharara-suits'
   | 'anarkali-suits'
+  | 'wedding-sarees'
+  | 'designer-sarees'
   | 'bridal-lehengas'
   | 'party-wear-lehengas';
 
 interface CommercialLandingDefinition {
-  categorySlug: 'suits' | 'lehengas';
+  categorySlug: 'suits' | 'lehengas' | 'sarees';
   subcategorySlug: string;
+  subcategoryLabel?: string;
   name: string;
   title: string;
   description: string;
@@ -115,6 +118,66 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
       { question: 'Do Anarkali sets include a dupatta?', answer: 'Some sets include a dupatta and some differ. The exact product description is the source of truth for included pieces.' },
     ],
   },
+  'wedding-sarees': {
+    categorySlug: 'sarees',
+    subcategorySlug: 'wedding',
+    subcategoryLabel: 'Ceremony Sarees',
+    name: 'Wedding Sarees',
+    title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
+    description: 'Shop wedding sarees online in the USA. Compare current bridal and wedding saree listings by stated fabric, work, blouse details, price and availability before ordering.',
+    editorialTitle: 'Shop Wedding Sarees Online for Indian Wedding Events',
+    editorialContent: (
+      <>
+        <p>
+          Browse current LuxeMia wedding sarees for ceremonies, receptions and family celebrations. Each listing has its own stated fabric, weave or work, blouse-piece details, dimensions and availability, so compare the individual product page before placing an event-critical order.
+        </p>
+        <h3>Compare Wedding Saree Details Before Ordering</h3>
+        <p>
+          Use the product grid to compare currently listed wedding and bridal sarees. Confirm the exact fabric wording, included blouse material or blouse details, selected option and current availability on the product page rather than assuming every saree has the same construction.
+        </p>
+        <h3>Plan Size and Delivery for a Wedding Event</h3>
+        <p>
+          Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. See <a href="/shipping">shipping information</a> for current policy details and contact LuxeMia if an event-critical question remains unanswered.
+        </p>
+        {US_SHIPPING_COPY}
+      </>
+    ),
+    faqs: [
+      { question: 'What is included with a wedding saree?', answer: 'Included blouse material, stitching status and other pieces vary by listing. Check the exact product description and images before ordering.' },
+      { question: 'How do I compare wedding sarees for an event?', answer: 'Compare the stated fabric, work, blouse details, price and current availability, then confirm the exact selected listing before placing an event-critical order.' },
+      { question: 'Do you ship wedding sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $150 and above, and tracking is provided after dispatch.' },
+    ],
+  },
+  'designer-sarees': {
+    categorySlug: 'sarees',
+    subcategorySlug: 'designer',
+    subcategoryLabel: 'Designer',
+    name: 'Designer Sarees',
+    title: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
+    description: 'Shop designer sarees online in the USA. Compare current colors, stated fabric, embroidery or work, blouse details, price and availability before ordering.',
+    editorialTitle: 'Shop Designer Sarees Online for Receptions and Celebrations',
+    editorialContent: (
+      <>
+        <p>
+          Browse current LuxeMia designer saree listings for receptions, parties and celebrations. The word “designer” describes a product category or style label; it does not by itself confirm a particular maker, fabric, handwork method or included piece. Use the exact product page as the source of truth.
+        </p>
+        <h3>Compare Designer Saree Fabric, Work and Blouse Details</h3>
+        <p>
+          Open individual listings to compare the stated fabric, embroidery or embellishment, blouse information, dimensions, color and current price. Photography can help with styling, but the supplied product details control the exact specification.
+        </p>
+        <h3>Choose a Saree for a Reception or Party</h3>
+        <p>
+          Compare the selected item’s availability and product-specific timing before ordering for a fixed event. Review the <a href="/size-guide">size guide</a> and <a href="/shipping">shipping information</a> for planning details.
+        </p>
+        {US_SHIPPING_COPY}
+      </>
+    ),
+    faqs: [
+      { question: 'What does designer saree mean on this collection page?', answer: 'It identifies the current product category or style label. Confirm the exact fabric, work, included blouse details and availability on the individual listing.' },
+      { question: 'How can I compare designer sarees online?', answer: 'Compare the stated fabric, color, work, blouse details, price and availability on each individual product page before ordering.' },
+      { question: 'Do you ship designer sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $150 and above, and tracking is provided after dispatch.' },
+    ],
+  },
   'bridal-lehengas': {
     categorySlug: 'lehengas',
     subcategorySlug: 'bridal',
@@ -186,7 +249,7 @@ function cloneConfigForLanding(
     subcategory.slug === definition.subcategorySlug
       ? {
         ...subcategory,
-        label: definition.name,
+        label: definition.subcategoryLabel ?? definition.name,
         seoTitle: definition.title,
         seoDescription: definition.description,
         seoCanonical: `https://luxemia.shop/collections/${path}`,

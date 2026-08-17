@@ -429,6 +429,20 @@ const SAREES: CategoryConfig = {
       seoDescription: 'Shop party-wear and reception sarees online. Review each listing for its exact fabric, work, blouse details, price and current availability.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=party-wear',
     }),
+    // Wedding is intentionally labelled "Ceremony Sarees" to avoid title fallback:
+    // an old catalog import added the word "wedding" to many unrelated saree titles.
+    occasionSub('wedding', 'Ceremony Sarees', ['occasion:wedding', 'occasion:bridal', 'role:bride'], {
+      matchProductType: ['Wedding Saree', 'Bridal Saree'],
+      seoTitle: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
+      seoDescription: 'Shop wedding sarees online in the USA. Compare each listing’s stated fabric, work, blouse details, price and current availability.',
+      seoCanonical: 'https://luxemia.shop/collections/wedding-sarees',
+    }),
+    occasionSub('designer', 'Designer', ['occasion:designer'], {
+      matchProductType: ['Designer Saree'],
+      seoTitle: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
+      seoDescription: 'Shop designer sarees online in the USA. Compare stated fabric, work, blouse details, price and availability on each listing.',
+      seoCanonical: 'https://luxemia.shop/collections/designer-sarees',
+    }),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'banarasi', 'kanchipuram', 'kanjeevaram']),
     styleSub('georgette', 'Georgette', ['fabric:georgette', 'georgette']),

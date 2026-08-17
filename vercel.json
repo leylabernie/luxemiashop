@@ -169,11 +169,6 @@
       "statusCode": 301
     },
     {
-      "source": "/collections/wedding-sarees",
-      "destination": "/sarees",
-      "statusCode": 301
-    },
-    {
       "source": "/collections/reception-outfits",
       "destination": "/collections",
       "statusCode": 301
@@ -221,11 +216,6 @@
     {
       "source": "/collections/lehenga-choli",
       "destination": "/lehengas",
-      "statusCode": 301
-    },
-    {
-      "source": "/collections/designer-sarees",
-      "destination": "/sarees",
       "statusCode": 301
     },
     {

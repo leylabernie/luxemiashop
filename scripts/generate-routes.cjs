@@ -27,6 +27,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
+const RECOVERED_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/recoveredBlogPosts.ts');
 
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn(
@@ -192,7 +193,7 @@ async function fetchAllProductHandles() {
  * Returns an array of slug strings.
  */
 function parseBlogSlugs() {
-  const files = [BLOG_POSTS_TS];
+  const files = [BLOG_POSTS_TS, RECOVERED_BLOG_POSTS_TS];
   const slugs = [];
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();
