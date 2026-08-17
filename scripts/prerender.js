@@ -811,6 +811,34 @@ function generateCollectionProductHtml(products) {
 // intentionally simple text navigation: it creates a durable crawl path without
 // showing a 700-card merchandising grid or linking to products outside the
 // approved sitemap inventory.
+function formatDirectoryPathLabel(routePath) {
+  const labels = {
+    '/': 'Home',
+    '/collections': 'All Collections',
+    '/about': 'About LuxeMia',
+    '/sitemap': 'Product Directory',
+    '/nri': 'Indian Ethnic Wear for U.S. Shoppers',
+    '/indian-ethnic-wear-usa': 'Indian Ethnic Wear in the USA',
+    '/pages/shipping-customs': 'Shipping and Customs',
+  };
+  if (labels[routePath]) return labels[routePath];
+  return routePath
+    .split('/')
+    .filter(Boolean)
+    .map((segment) => segment.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' '))
+    .join(' — ');
+}
+
+function generateApprovedStaticDirectoryHtml() {
+  const nonProductPaths = [...APPROVED_SITEMAP_PATHS]
+    .filter((routePath) => routePath !== '/' && routePath !== '/sitemap' && !routePath.startsWith('/product/'))
+    .sort((left, right) => formatDirectoryPathLabel(left).localeCompare(formatDirectoryPathLabel(right), 'en', { sensitivity: 'base' }));
+  const links = nonProductPaths
+    .map((routePath) => `<li><a href="${escapeHtml(routePath)}">${escapeHtml(formatDirectoryPathLabel(routePath))}</a></li>`)
+    .join('');
+  return `<section><h2>Collections, Guides and Store Information</h2><ul>${links}</ul></section>`;
+}
+
 function generateApprovedProductDirectoryHtml(products) {
   const grouped = new Map();
   const approvedProducts = products
@@ -2219,6 +2247,8 @@ function generateHtml(template, route, allShopifyProducts) {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
       ${route.content}
+      ${generateApprovedStaticDirectoryHtml()}
+      <h2>All Current Products</h2>
       ${generateApprovedProductDirectoryHtml(approvedProducts)}`;
   } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)
