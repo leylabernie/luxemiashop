@@ -19,23 +19,35 @@ const fs = require('fs');
 const path = require('path');
 
 const JSON_PATH = path.resolve(__dirname, '../dist/dead-product-handles.json');
+const LEGACY_JSON_PATH = path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json');
 const TS_PATH = path.resolve(__dirname, '../src/lib/goneRoutes.ts');
 
-function main() {
-  let handles = [];
-  if (fs.existsSync(JSON_PATH)) {
-    try {
-      const raw = JSON.parse(fs.readFileSync(JSON_PATH, 'utf8'));
-      if (Array.isArray(raw)) {
-        handles = raw.filter(h => typeof h === 'string' && h.length > 0);
-      }
-    } catch (err) {
-      console.warn(`[gone-routes] Could not parse ${JSON_PATH}: ${err.message}`);
-    }
-  } else {
-    console.log('[gone-routes] No dead-product-handles.json found — writing empty set.');
-    console.log('[gone-routes] Run `npm run build` again after the first deploy to populate it.');
+function readHandles(jsonPath, label) {
+  if (!fs.existsSync(jsonPath)) {
+    console.log(`[gone-routes] No ${label} inventory found at ${jsonPath}.`);
+    return [];
   }
+
+  try {
+    const raw = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    if (Array.isArray(raw)) {
+      return raw.filter(handle => typeof handle === 'string' && handle.length > 0);
+    }
+    console.warn(`[gone-routes] ${label} inventory is not an array: ${jsonPath}`);
+  } catch (err) {
+    console.warn(`[gone-routes] Could not parse ${label} inventory ${jsonPath}: ${err.message}`);
+  }
+  return [];
+}
+
+function main() {
+  // Automatically discovered removals are complemented by the verified GSC
+  // legacy inventory. The latter covers historic product URLs that no longer
+  // appear in the active Shopify catalog and must receive an explicit 410.
+  const handles = [
+    ...readHandles(JSON_PATH, 'automatic dead-product'),
+    ...readHandles(LEGACY_JSON_PATH, 'verified legacy-product'),
+  ];
 
   // De-duplicate + sort for stable diffs
   const unique = Array.from(new Set(handles)).sort();

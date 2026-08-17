@@ -44,6 +44,9 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
   '/product/net-turquoise-festival-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-turquoise-net-embroidery-work-festival-wear-sharara-suit',
   '/product/net-pink-festival-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-pink-net-embroidery-work-festival-wear-sharara-suit',
   '/product/chinon-silk-yellow-occasional-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-yellow-chinon-silk-embroidery-work-occasional-wear-sharara-suit',
+  // Verified same garment: legacy naming was normalized, but the current yellow
+  // Crunchy Silk Zari Anarkali listing remains the matching purchasable product.
+  '/product/zari-work-anarkali-suit-in-crunchy-silk-yellow': '/product/yellow-crunchy-silk-zari-anarkali-suit-with-dupatta',
 };
 
 // Explicit 410 Gone routes — URLs that have been permanently retired and have
@@ -293,6 +296,10 @@ async function routeRequest(request: Request): Promise<Response> {
   const LEGACY_BLOG_REDIRECTS: Record<string, string> = {
     '/blog/indian-size-to-us-clothing-size-conversion-guide': '/blog/indian-to-us-clothing-size-conversion-guide',
     '/blog/indian-size-to-us-size-conversion-chart': '/blog/indian-to-us-clothing-size-conversion-guide',
+    // The historic guides no longer have equivalent editorial pages. Send each
+    // visitor to the closest live shopping destination rather than a dead URL.
+    '/blog/banarasi-silk-saree-guide-authentic': '/collections/silk-sarees',
+    '/blog/indian-bridal-jewelry-sets-complete-guide': '/jewelry',
   };
   if (LEGACY_BLOG_REDIRECTS[pathname]) {
     return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
