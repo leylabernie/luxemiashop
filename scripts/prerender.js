@@ -120,6 +120,7 @@ function sanitizeProductTitle(value) {
     .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
     .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
     .replace(/\bhandcrafted\s+/gi, '')
+    .replace(/\s*(?:[|–—-]\s*)?luxemia\s*$/gi, '')
     .replace(/\s*[|–—-]\s*$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
@@ -2383,7 +2384,13 @@ async function main() {
       const handle = route.path.slice('/product/'.length);
       hardcodedProductHandles.add(handle);
       const live = productMap.get(handle);
-      if (live) route.product = live;
+      if (live) {
+        route.product = live;
+        // The hardcoded route inventory predates some Shopify title cleanups.
+        // Keep static H1, schema, breadcrumb, and hydrated title parity by
+        // normalizing the current live title before HTML is rendered.
+        route.h1 = sanitizeProductTitle(live.title || route.h1) || route.h1;
+      }
     }
   }
 
