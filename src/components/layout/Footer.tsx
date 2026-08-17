@@ -27,6 +27,8 @@ const footerLinks = {
   collections: [
     { name: 'Customizable Indian Outfits', href: '/collections/customizable-indian-outfits' },
     { name: 'Bridal Lehengas', href: '/lehengas?sub=bridal' },
+    { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
+    { name: 'Designer Sarees', href: '/collections/designer-sarees' },
     { name: 'Silk Sarees', href: '/collections/silk-sarees' },
     { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
     { name: 'Bridesmaid & Maid of Honor', href: '/collections/bridal-party-outfits' },
