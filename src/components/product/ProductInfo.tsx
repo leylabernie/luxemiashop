@@ -162,41 +162,44 @@ const extractProductSpecs = (tags?: string[], productType?: string, productTitle
   // Normalized catalog tags are the authoritative product specification.
   // Read their supplied value verbatim before using legacy keyword/title fallbacks;
   // this preserves precise facts such as `fabric:Viscose` and `work:Beads Work`.
-  const getExplicitTagValue = (prefixes: string[]): string | undefined => {
-    const tag = catalogTags.find((candidate) => {
-      const normalized = candidate.trim().toLowerCase();
-      return prefixes.some((prefix) => normalized.startsWith(prefix));
-    });
-    if (!tag) return undefined;
-    const delimiterIndex = tag.indexOf(':');
-    const value = delimiterIndex >= 0 ? tag.slice(delimiterIndex + 1).trim() : '';
-    return value || undefined;
+  const getExplicitTagValues = (prefixes: string[]): string[] => {
+    const values = catalogTags
+      .filter((candidate) => {
+        const normalized = candidate.trim().toLowerCase();
+        return prefixes.some((prefix) => normalized.startsWith(prefix));
+      })
+      .map((tag) => tag.slice(tag.indexOf(':') + 1).trim())
+      .filter(Boolean);
+    return [...new Set(values)];
   };
 
-  const explicitFabric = getExplicitTagValue(['fabric:', 'material:']);
+  const explicitFabrics = getExplicitTagValues(['fabric:', 'material:']);
   const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
   const titleFabric = titleFabricLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
-  if (explicitFabric) {
-    specs.fabric = explicitFabric;
+  if (explicitFabrics.length > 0) {
+    specs.fabric = explicitFabrics.join('; ');
   } else if (foundFabric || titleFabric) {
     specs.fabric = foundFabric
       ? foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
       : titleFabric!;
   }
 
-  const explicitWork = getExplicitTagValue(['work:', 'embroidery:', 'embellishment:']);
+  const explicitWorkValues = getExplicitTagValues(['work:', 'embroidery:', 'embellishment:']);
   const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
   const titleWork = titleWorkLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
-  if (explicitWork) {
-    specs.work = explicitWork;
+  if (explicitWorkValues.length > 0) {
+    specs.work = explicitWorkValues.join('; ');
   } else if (foundWork.length > 0) {
     specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
   } else if (titleWork) {
     specs.work = titleWork;
   }
 
+  const explicitColors = getExplicitTagValues(['color:']);
   const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
-  if (foundColors.length > 0) {
+  if (explicitColors.length > 0) {
+    specs.color = explicitColors.join('; ');
+  } else if (foundColors.length > 0) {
     specs.color = foundColors.slice(0, 2).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' & ');
   }
 
