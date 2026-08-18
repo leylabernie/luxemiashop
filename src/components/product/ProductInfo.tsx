@@ -284,6 +284,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [selectedBottomStyle, setSelectedBottomStyle] = useState<BottomStyleOption | null>(null);
   const [selectedSleeveStyle, setSelectedSleeveStyle] = useState<SleeveStyleOption | null>(null);
   const [customAlteration, setCustomAlteration] = useState('');
+  const [customSizeConfirmed, setCustomSizeConfirmed] = useState(false);
   const [requestedCustomColor, setRequestedCustomColor] = useState('');
   const [selectedStitchingType, setSelectedStitchingType] = useState<string | null>(
     isStitchable ? 'semi-stitched' : null
@@ -387,6 +388,17 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     return values.length > 0 ? values.join(', ') : null;
   }, [product.options]);
 
+  // A purchasable Custom size must be explicitly acknowledged before it is
+  // carried into Shopify checkout. This preserves the shopper's selected
+  // variant while making the measurement handoff visible to the customer and
+  // fulfillment team; it does not claim that arbitrary design changes apply.
+  const isCustomSizeSelected = useMemo(() =>
+    Object.entries(selectedOptions).some(([optionName, value]) =>
+      ['size', 'bust size', 'stitching size'].includes(optionName.toLowerCase())
+      && /\bcustom(?:\s*size)?\b/i.test(value.trim()),
+    ),
+  [selectedOptions]);
+
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
     // For stitchable products, check the Utsav-style selector
@@ -478,6 +490,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       setStitchingSize(null);
       setShowSizeValidation(false);
     }
+
+    if (['size', 'bust size', 'stitching size'].includes(optionName.toLowerCase())) {
+      setCustomSizeConfirmed(!/\bcustom(?:\s*size)?\b/i.test(value.trim()));
+    }
   };
 
   const handleStitchingTypeSelect = (typeId: string) => {
@@ -501,6 +517,11 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
     if (customizableProduct && !requestedCustomColor.trim()) {
       toast.error('Enter your requested custom color');
+      return;
+    }
+
+    if (isCustomSizeSelected && !customSizeConfirmed) {
+      toast.error('Confirm the custom-size measurement requirement');
       return;
     }
 
@@ -533,6 +554,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         { key: 'Requested Custom Color', value: `${requestedCustomColor.trim()} — pending LuxeMia confirmation` },
         { key: 'Measurements', value: 'Required after order' },
         { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
+      );
+    }
+    if (isCustomSizeSelected) {
+      customAttributes.push(
+        { key: 'Custom Size', value: 'Measurements must be confirmed before production' },
+        { key: 'Measurement Confirmation', value: 'Customer acknowledged before checkout' },
       );
     }
     if (isStitchable && selectedStitchingType) {
@@ -857,6 +884,40 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
         ))}
       </div>
+
+      {isCustomSizeSelected && !customizableProduct && (
+        <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Custom size selected</p>
+            <h3 id="custom-size-confirmation-heading" className="mt-1 font-serif text-xl">Measurements must be confirmed before production</h3>
+          </div>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Your selected Custom size is recorded with this order. LuxeMia will confirm measurements before tailoring begins; do not assume other design changes are included unless confirmed in writing.
+          </p>
+          <label className="flex items-start gap-3 rounded-sm border border-border bg-background p-3 text-sm text-foreground">
+            <input
+              type="checkbox"
+              checked={customSizeConfirmed}
+              onChange={(event) => setCustomSizeConfirmed(event.target.checked)}
+              className="mt-1 h-4 w-4 accent-primary"
+            />
+            <span>I understand that LuxeMia must confirm my measurements before production begins.</span>
+          </label>
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">View the sizing guide</Link>
+            <button
+              type="button"
+              onClick={() => {
+                const message = encodeURIComponent(`Hi LuxeMia, I selected Custom size for ${product.title} (${window.location.href}) and would like to confirm measurements before ordering.`);
+                window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
+              }}
+              className="font-medium text-primary underline underline-offset-4"
+            >
+              Confirm measurements by WhatsApp
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* ─── Stitching Size Selector (when product doesn't have Shopify size variants) ─── */}
       {showStitchingSizeSelector && !isMenswear && (
