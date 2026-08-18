@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,12 +10,14 @@ import { toast } from '@/hooks/use-toast';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { getDirectCardVariant } from '@/lib/purchaseOptions';
 
 type TabType = 'new' | 'ready';
 
 const ShopByCategory = () => {
   const [activeTab, setActiveTab] = useState<TabType>('new');
   const { products, isLoading } = useShopifyProducts();
+  const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addItem);
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
 
@@ -53,21 +55,23 @@ const ShopByCategory = () => {
 
   const handleQuickAdd = (product: ShopifyProduct) => {
     const node = product.node;
-    const defaultVariant = node.variants?.edges[0]?.node;
-    
+    const variant = getDirectCardVariant(node);
+
+    if (!variant) {
+      navigate(`/product/${node.handle}#product-purchase`);
+      return;
+    }
+
     addToCart({
       product,
-      variantId: defaultVariant?.id || node.id,
-      variantTitle: defaultVariant?.title || 'Standard',
-      price: {
-        amount: node.priceRange.minVariantPrice.amount,
-        currencyCode: node.priceRange.minVariantPrice.currencyCode
-      },
+      variantId: variant.id,
+      variantTitle: variant.title,
+      price: variant.price,
       quantity: 1,
-      selectedOptions: defaultVariant?.selectedOptions || [{ name: 'Size', value: 'M' }]
+      selectedOptions: variant.selectedOptions || [],
     });
     toast({
-      title: "Added to bag",
+      title: 'Added to bag',
       description: node.title,
     });
   };
@@ -133,6 +137,7 @@ const ShopByCategory = () => {
             {displayProducts.map((product, index) => {
               const node = product.node;
               const imageUrl = node.images.edges[0]?.node.url || '';
+              const directCardVariant = getDirectCardVariant(node);
               
               return (
                 <motion.div
@@ -181,7 +186,7 @@ const ShopByCategory = () => {
                         className="absolute bottom-3 left-3 right-3 py-2.5 bg-background/95 backdrop-blur-sm text-foreground text-sm font-medium rounded-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2"
                       >
                         <ShoppingBag className="w-4 h-4" />
-                        Quick Add
+                        {directCardVariant ? 'Add to Bag' : 'Choose Options'}
                       </button>
 
                       {/* Badge */}

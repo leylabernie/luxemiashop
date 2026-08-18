@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart, ShoppingBag, Trash2, ArrowRight, Share2 } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,26 +9,31 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore, type CartItem } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { toast } from 'sonner';
+import { getDirectCardVariant } from '@/lib/purchaseOptions';
 
 const Wishlist = () => {
   const { items, removeItem, clearWishlist } = useWishlistStore();
+  const navigate = useNavigate();
   const addToCart = useCartStore(state => state.addItem);
 
   const handleAddToCart = (product: typeof items[0]) => {
-    const firstVariant = product.node.variants.edges[0]?.node;
-    if (!firstVariant) return;
+    const variant = getDirectCardVariant(product.node);
+    if (!variant) {
+      navigate(`/product/${product.node.handle}#product-purchase`);
+      return;
+    }
 
     const cartItem: CartItem = {
       product,
-      variantId: firstVariant.id,
-      variantTitle: firstVariant.title,
-      price: firstVariant.price,
+      variantId: variant.id,
+      variantTitle: variant.title,
+      price: variant.price,
       quantity: 1,
-      selectedOptions: firstVariant.selectedOptions || [],
+      selectedOptions: variant.selectedOptions || [],
     };
 
     addToCart(cartItem);
-    toast.success('Added to Cart', {
+    toast.success('Added to bag', {
       description: product.node.title,
     });
   };
@@ -164,6 +169,7 @@ const Wishlist = () => {
                   {items.map((product, index) => {
                     const firstImage = product.node.images.edges[0]?.node;
                     const price = product.node.priceRange.minVariantPrice;
+                    const directCardVariant = getDirectCardVariant(product.node);
 
                     return (
                       <motion.div
@@ -219,7 +225,7 @@ const Wishlist = () => {
                             className="absolute bottom-4 left-4 right-4 bg-background/95 backdrop-blur-sm py-3 text-center text-sm tracking-editorial uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-2"
                           >
                             <ShoppingBag className="w-4 h-4" />
-                            Add to Cart
+                            {directCardVariant ? 'Add to Bag' : 'Choose Options'}
                           </motion.button>
                         </Link>
 

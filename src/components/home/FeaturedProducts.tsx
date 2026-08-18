@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
@@ -9,9 +9,11 @@ import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { getDirectCardVariant } from '@/lib/purchaseOptions';
 
 const FeaturedProducts = () => {
   const { products, isLoading } = useShopifyProducts();
+  const navigate = useNavigate();
   const addItem = useCartStore(state => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
@@ -28,12 +30,15 @@ const FeaturedProducts = () => {
     return [...mixed, ...products.filter(p => !usedIds.has(p.node.id))].slice(0, 8);
   }, [products]);
 
-  const handleAddToCart = (e: React.MouseEvent, product: ShopifyProduct) => {
+  const handleCardPurchase = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    const variant = product.node.variants.edges[0]?.node;
-    if (!variant) return;
+
+    const variant = getDirectCardVariant(product.node);
+    if (!variant) {
+      navigate(`/product/${product.node.handle}#product-purchase`);
+      return;
+    }
 
     addItem({
       product,
@@ -41,12 +46,12 @@ const FeaturedProducts = () => {
       variantTitle: variant.title,
       price: variant.price,
       quantity: 1,
-      selectedOptions: variant.selectedOptions || []
+      selectedOptions: variant.selectedOptions || [],
     });
 
-    toast.success('Added to cart', {
+    toast.success('Added to bag', {
       description: product.node.title,
-      position: 'top-center'
+      position: 'top-center',
     });
   };
 
@@ -123,6 +128,7 @@ const FeaturedProducts = () => {
             {featuredProducts.map((product, index) => {
               const image = product.node.images.edges[0]?.node;
               const price = product.node.priceRange.minVariantPrice;
+              const directCardVariant = getDirectCardVariant(product.node);
 
               return (
                 <motion.article
@@ -165,10 +171,10 @@ const FeaturedProducts = () => {
                       <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                         <button 
                           className="w-full bg-background/95 backdrop-blur-sm py-3 text-xs tracking-editorial uppercase hover:bg-background transition-colors flex items-center justify-center gap-2"
-                          onClick={(e) => handleAddToCart(e, product)}
+                          onClick={(e) => handleCardPurchase(e, product)}
                         >
                           <ShoppingBag className="w-4 h-4" />
-                          Add to Cart
+                          {directCardVariant ? 'Add to Bag' : 'Choose Options'}
                         </button>
                       </div>
                     </div>
