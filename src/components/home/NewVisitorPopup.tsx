@@ -162,7 +162,19 @@ const NewVisitorPopup = () => {
           toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
           return;
         }
-        throw new Error(data.error || 'We could not email your code just now. Please try again.');
+
+        // The isolated function saves the lead before attempting email delivery.
+        // If the provider rejects delivery, reveal the verified code directly and
+        // state the limitation instead of leaving the shopper in a dead-end state.
+        if (response.status === 503) {
+          setDiscountCode(DISCOUNT_CODE);
+          setIsSuccess(true);
+          navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
+          toast.info('Your code is ready below. Email delivery is temporarily unavailable.');
+          return;
+        }
+
+        throw new Error(data.error || 'We could not process your request just now. Please try again.');
       }
 
       toast.success('Welcome to LuxeMia! Your discount code is ready.');
