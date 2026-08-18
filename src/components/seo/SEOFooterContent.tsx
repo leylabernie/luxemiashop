@@ -23,7 +23,7 @@ const SEOFooterContent = () => {
               <div>
                 <h3 className="font-serif text-lg text-foreground mb-3">Buy Wedding Sarees Online</h3>
                 <p>
-                  Explore our curated range of <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees online</Link> including 
+                  Explore our curated range of <Link to="/collections/wedding-sarees" className="text-foreground hover:text-primary transition-colors underline">wedding sarees online</Link> including
                   <strong className="text-foreground"> Banarasi silk sarees</strong>, 
                   Kanjivaram silk, and <strong className="text-foreground">organza sarees with gota patti work</strong>. Review the exact listing for fiber, weave, work, blouse details, dimensions, and availability. Browse online from the <Link to="/indian-ethnic-wear-usa" className="text-foreground hover:text-primary transition-colors underline">United States</Link>.
                 </p>
