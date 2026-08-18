@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { X, Sparkles, Clock, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -60,6 +61,7 @@ const BACKSTOP_MS = 15000;
 const SCROLL_TRIGGER_FRACTION = 0.5; // 50% of viewport
 
 const NewVisitorPopup = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState<string | null>(null);
@@ -69,6 +71,14 @@ const NewVisitorPopup = () => {
   const triggeredRef = useRef(false);
 
   useEffect(() => {
+    // A product detail page is a purchase decision screen. Do not place a
+    // modal over its first option selection or Add to Bag interaction; the
+    // offer remains available on discovery and editorial routes instead.
+    if (location.pathname.startsWith('/product/')) {
+      setIsOpen(false);
+      return;
+    }
+
     // Respect previous dismissal
     if (localStorage.getItem('luxemia_popup_seen')) return;
 
@@ -109,7 +119,7 @@ const NewVisitorPopup = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
 
     return cleanup;
-  }, []);
+  }, [location.pathname]);
 
   const handleClose = () => {
     setIsOpen(false);
