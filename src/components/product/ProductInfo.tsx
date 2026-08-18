@@ -159,17 +159,37 @@ const extractProductSpecs = (tags?: string[], productType?: string, productTitle
   const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
   const lowerTags = catalogTags.map(t => t.toLowerCase());
 
+  // Normalized catalog tags are the authoritative product specification.
+  // Read their supplied value verbatim before using legacy keyword/title fallbacks;
+  // this preserves precise facts such as `fabric:Viscose` and `work:Beads Work`.
+  const getExplicitTagValue = (prefixes: string[]): string | undefined => {
+    const tag = catalogTags.find((candidate) => {
+      const normalized = candidate.trim().toLowerCase();
+      return prefixes.some((prefix) => normalized.startsWith(prefix));
+    });
+    if (!tag) return undefined;
+    const delimiterIndex = tag.indexOf(':');
+    const value = delimiterIndex >= 0 ? tag.slice(delimiterIndex + 1).trim() : '';
+    return value || undefined;
+  };
+
+  const explicitFabric = getExplicitTagValue(['fabric:', 'material:']);
   const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
   const titleFabric = titleFabricLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
-  if (foundFabric || titleFabric) {
+  if (explicitFabric) {
+    specs.fabric = explicitFabric;
+  } else if (foundFabric || titleFabric) {
     specs.fabric = foundFabric
       ? foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
       : titleFabric!;
   }
 
+  const explicitWork = getExplicitTagValue(['work:', 'embroidery:', 'embellishment:']);
   const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
   const titleWork = titleWorkLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
-  if (foundWork.length > 0) {
+  if (explicitWork) {
+    specs.work = explicitWork;
+  } else if (foundWork.length > 0) {
     specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
   } else if (titleWork) {
     specs.work = titleWork;
