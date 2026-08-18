@@ -307,7 +307,13 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const hasExplicitTailoringStatus = product.tags?.some((tag) =>
     /^(tailoring|stitching|availability):/i.test(tag.trim()),
   ) ?? false;
-  const isStitchable = !customizableProduct && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
+  // A catalog tag that explicitly limits the garment to a ready-made fit must
+  // not activate generic semi-stitched, made-to-measure, or alteration paths.
+  // The exact ready-made option remains visible through Shopify variants.
+  const isReadyMadeOnly = product.tags?.some((tag) =>
+    /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
+  ) ?? false;
+  const isStitchable = !customizableProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
   const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
