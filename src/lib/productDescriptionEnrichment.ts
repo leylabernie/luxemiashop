@@ -72,6 +72,18 @@ function cleanCatalogDescription(value?: string): string {
     .replace(/U\.?S\.?\s+standard\s+shipping\s+is[^.]+\.?/gi, '')
     .replace(/Shipping\s+is\s+available\s+to\s+[^.]+\.?/gi, '')
     .replace(/Tracking\s+(?:is|details\s+are)\s+[^.]+\.?/gi, '')
+    // Supplier imports sometimes claim a universal tailoring menu, unlimited
+    // sizing, or a free alteration. Those promises are not valid for every
+    // SKU. Product options and the custom-size handoff are the source of truth.
+    .replace(/Can\s+be\s+customized\s+to\s+your\s+preferred\s+[^.]+\.?/gi, '')
+    .replace(/Standard\s+customization(?:\s+at\s+no\s+extra\s+cost|\s+available)?\.?/gi, '')
+    .replace(/Custom\s+Sizing\s*:\s*Available\s+in\s+all\s+sizes(?:\s+including\s+plus\s+sizes)?\.?/gi, '')
+    .replace(/Available\s+in\s+all\s+sizes(?:\s+including\s+plus\s+sizes)?\.?/gi, '')
+    .replace(/We\s+accommodate\s+every\s+body\s+type\s+with\s+our\s+made-to-measure\s+service\.?/gi, '')
+    .replace(/Blouse\s+Customization\s*:\s*Choose\s+your\s+preferred\s+[^.]+\.?/gi, '')
+    .replace(/Custom\s+sizing\s+is\s+available\s*[—-]?\s*provide\s+your\s+measurements\s+at\s+checkout\s+for\s+a\s+tailored\s+fit\.?/gi, 'If Custom is selected, LuxeMia confirms measurements before production.')
+    .replace(/Provide\s+your\s+measurements\s+at\s+checkout\.?/gi, 'LuxeMia confirms measurements before production.')
+    .replace(/Plus-size\s+friendly\.?/gi, '')
     .replace(/\s{2,}/g, ' ')
     .trim();
 }
