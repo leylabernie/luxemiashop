@@ -67,9 +67,10 @@ interface ProductInfoProps {
 }
 
 // Helper to extract product specs from tags
-const extractProductSpecs = (tags?: string[], productType?: string) => {
+const extractProductSpecs = (tags?: string[], productType?: string, productTitle?: string) => {
   const specs: Record<string, string> = {};
   const lowerProductType = productType?.toLowerCase() || '';
+  const lowerTitle = productTitle?.toLowerCase() || '';
   const isAccessory = [
     'jewel', 'accessory', 'necklace', 'choker', 'earring', 'bangle',
     'bracelet', 'ring', 'bag', 'clutch', 'footwear', 'jutti', 'mojri',
@@ -79,10 +80,10 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
     specs.type = productType;
   }
 
-  if (!tags) return specs;
+  const catalogTags = tags ?? [];
 
   // A closure is displayed only when the catalog explicitly supplies one.
-  const closureTag = tags.find((tag) => tag.toLowerCase().startsWith('closure:'));
+  const closureTag = catalogTags.find((tag) => tag.toLowerCase().startsWith('closure:'));
   if (closureTag) {
     const closure = closureTag.slice(closureTag.indexOf(':') + 1).trim();
     if (closure) specs.closure = closure;
@@ -97,7 +98,7 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
     'set includes:',
     'package includes:',
   ];
-  const includedPiecesTag = tags.find((tag) =>
+  const includedPiecesTag = catalogTags.find((tag) =>
     includedPiecePrefixes.some((prefix) => tag.toLowerCase().startsWith(prefix)),
   );
   if (includedPiecesTag) {
@@ -110,32 +111,70 @@ const extractProductSpecs = (tags?: string[], productType?: string) => {
     if (includedPieces) specs.includedPieces = includedPieces;
   }
 
+  // A title that explicitly says “with Dupatta” is source-backed set-content
+  // information. Keep the statement no broader than the title: never infer a
+  // choli, blouse, can-can, or any other component that is not named.
+  if (!specs.includedPieces && /\bwith\s+dupatta\b/i.test(productTitle || '')) {
+    if (/\blehenga\s+choli\b/i.test(productTitle || '')) {
+      specs.includedPieces = 'Lehenga choli and dupatta';
+    } else if (/\blehenga\b/i.test(productTitle || '')) {
+      specs.includedPieces = 'Lehenga and dupatta';
+    } else if (/\bsaree\b/i.test(productTitle || '')) {
+      specs.includedPieces = 'Saree and dupatta';
+    } else if (/\bsuit\b/i.test(productTitle || '')) {
+      specs.includedPieces = 'Suit and dupatta';
+    }
+  }
+
   // Legacy accessory tags contain garment attributes on some listings. Avoid
   // surfacing those as jewelry specifications until the catalog is corrected.
   if (isAccessory) return specs;
-  
-  // Common fabric patterns
-  const fabricKeywords = ['silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
-  // Common work patterns
-  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven', 'handcrafted'];
-  // Color patterns
-  const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
 
-  const lowerTags = tags.map(t => t.toLowerCase());
-  
-  // Extract fabric
+  const titleFabricLabels: Array<[RegExp, string]> = [
+    [/\bgeorgette\s+silk\b/i, 'Georgette Silk'],
+    [/\btissue\s+silk\b/i, 'Tissue Silk'],
+    [/\bvichitra\s+silk\b/i, 'Vichitra Silk'],
+    [/\brangoli\s+silk\b/i, 'Rangoli Silk'],
+    [/\bdola\s+silk\b/i, 'Dola Silk'],
+    [/\bfendi\s+silk\b/i, 'Fendi Silk'],
+    [/\bbanarasi\b/i, 'Banarasi'],
+    [/\bgeorgette\b/i, 'Georgette'],
+    [/\bchiffon\b/i, 'Chiffon'],
+    [/\bvelvet\b/i, 'Velvet'],
+    [/\bnet\b/i, 'Net'],
+    [/\bcrepe\b/i, 'Crepe'],
+    [/\bsatin\b/i, 'Satin'],
+    [/\bviscose\b/i, 'Viscose'],
+    [/\bsilk\b/i, 'Silk'],
+    [/\bcotton\b/i, 'Cotton'],
+  ];
+  const fabricKeywords = ['georgette silk', 'tissue silk', 'vichitra silk', 'rangoli silk', 'dola silk', 'fendi silk', 'banarasi', 'silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
+  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven', 'handcrafted'];
+  const titleWorkLabels: Array<[RegExp, string]> = [
+    [/\bsequins?\b/i, 'Sequins'],
+    [/\bthread\b/i, 'Thread Work'],
+    [/\bbeads?\b/i, 'Beads'],
+    [/\bembroidery\b|\bembroidered\b/i, 'Embroidery'],
+  ];
+  const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
+  const lowerTags = catalogTags.map(t => t.toLowerCase());
+
   const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
-  if (foundFabric) {
-    specs.fabric = foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const titleFabric = titleFabricLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
+  if (foundFabric || titleFabric) {
+    specs.fabric = foundFabric
+      ? foundFabric.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+      : titleFabric!;
   }
-  
-  // Extract work type
+
   const foundWork = workKeywords.filter(w => lowerTags.some(t => t.includes(w)));
+  const titleWork = titleWorkLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
   if (foundWork.length > 0) {
     specs.work = foundWork.map(w => w.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).join(', ');
+  } else if (titleWork) {
+    specs.work = titleWork;
   }
-  
-  // Extract colors
+
   const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
   if (foundColors.length > 0) {
     specs.color = foundColors.slice(0, 2).map(c => c.charAt(0).toUpperCase() + c.slice(1)).join(' & ');
@@ -374,7 +413,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const isAvailable = purchasableVariant?.node.availableForSale ?? false;
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
-  const productSpecs = useMemo(() => extractProductSpecs(product.tags, product.productType), [product.tags, product.productType]);
+  const productSpecs = useMemo(
+    () => extractProductSpecs(product.tags, product.productType, product.title),
+    [product.tags, product.productType, product.title],
+  );
   const shipByLabel = getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
     const sizeOption = product.options.find((option) =>
