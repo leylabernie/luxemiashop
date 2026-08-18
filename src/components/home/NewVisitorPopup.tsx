@@ -167,7 +167,10 @@ const NewVisitorPopup = () => {
         retryAfter?: number;
       };
 
-      if (!response.ok || data.success !== true) {
+      // The isolated service may legitimately return an empty 2xx response after
+      // recording a lead. Treat a 2xx result with no error payload as success;
+      // only reject explicit error payloads or unsuccessful HTTP responses.
+      if (!response.ok || data.success === false || Boolean(data.error)) {
         if (data.retryAfter) {
           toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
           return;
