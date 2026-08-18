@@ -242,7 +242,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
-  const isStitchable = !customizableProduct && isStitchableProduct(product.productType, product.tags);
+  const hasExplicitTailoringStatus = product.tags?.some((tag) =>
+    /^(tailoring|stitching|availability):/i.test(tag.trim()),
+  ) ?? false;
+  const isStitchable = !customizableProduct && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
   const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
@@ -626,6 +629,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
       <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={Boolean(customizableProduct)} />
+      {shipByLabel && (
+        <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
+          <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+          <span>{shipByLabel}. This is the estimated dispatch date; carrier transit time is separate.</span>
+        </p>
+      )}
 
       <Separator />
 
