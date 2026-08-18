@@ -1,7 +1,7 @@
 {
-  "source": "2026-08-18 verified inventory refresh: 12 new active products added; 4 zero-stock products held",
+  "source": "2026-08-18 verified inventory refresh: 12 prior active products plus 5 source-verified lehenga listings added; 4 zero-stock products held",
   "capturedOn": "2026-08-18",
-  "urlCount": 778,
+  "urlCount": 783,
   "paths": [
     "/",
     "/collections",
@@ -780,6 +780,11 @@
     "/product/luxemia-shimmer-straight-collar-three-piece-set",
     "/product/luxemia-navy-blue-pre-draped-saree",
     "/product/luxemia-orange-crepe-pre-draped-saree-with-blouse",
-    "/product/luxemia-orange-mirror-work-pre-draped-saree-with-blouse"
+    "/product/luxemia-orange-mirror-work-pre-draped-saree-with-blouse",
+    "/product/fuchsia-olive-purple-black-kora-cotton-frill-navratri-lehenga-kurti-set",
+    "/product/red-ivory-faux-georgette-sequin-zari-embroidered-lehenga-choli-set",
+    "/product/multicolor-georgette-mirror-work-navratri-lehenga-choli",
+    "/product/fuchsia-black-blue-faux-georgette-embroidered-navratri-lehenga-choli",
+    "/product/olive-brown-marble-sequin-thread-work-lehenga-choli-set"
   ]
 }
