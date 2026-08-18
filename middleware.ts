@@ -47,6 +47,32 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
   // Verified same garment: legacy naming was normalized, but the current yellow
   // Crunchy Silk Zari Anarkali listing remains the matching purchasable product.
   '/product/zari-work-anarkali-suit-in-crunchy-silk-yellow': '/product/yellow-crunchy-silk-zari-anarkali-suit-with-dupatta',
+  // Verified retired-inventory replacements. Each source and destination share
+  // the named garment, color, fabric, and work; do not add a generic fallback.
+  '/product/blue-net-sequins-occasion-lehenga-choli': '/product/blue-net-sequins-lehenga-choli-with-dupatta',
+  '/product/dark-blue-pure-vichitra-embroidery-festive-lehenga-choli': '/product/dark-blue-pure-vichitra-embroidery-lehenga-choli-with-dupatta',
+  '/product/embroidery-work-lehenga-choli-in-dola-silk-beige': '/product/beige-dola-silk-embroidery-bridal-lehenga-with-dupatta',
+  '/product/embroidery-work-lehenga-choli-in-faux-georgette-red': '/product/red-faux-georgette-embroidery-lehenga-choli-with-dupatta',
+  '/product/embroidery-work-lehenga-choli-in-net-golden': '/product/golden-net-embroidery-lehenga-choli-with-dupatta-397817',
+  '/product/embroidery-work-lehenga-choli-in-net-white': '/product/white-net-embroidery-lehenga-choli-with-dupatta',
+  '/product/embroidery-work-lehenga-choli-in-pure-banarasi-green': '/product/green-pure-banarasi-embroidery-bridal-lehenga-with-dupatta',
+  '/product/fendy-silk-teal-blue-festival-wear-embroidery-work-readymade-plazzo-suit': '/product/teal-blue-fendi-silk-embroidery-palazzo-suit-with-dupatta',
+  '/product/georgette-pastle-teal-wedding-wear-zari-work-anarkali-suit': '/product/pastel-teal-georgette-zari-anarkali-suit-wsuit-018',
+  '/product/golden-net-embroidery-festive-lehenga-choli': '/product/golden-net-embroidery-lehenga-choli-with-dupatta-397817',
+  '/product/ivory-sequin-zari-bridal-lehenga-with-tissue-patchwork-stone-work': '/product/ivory-sequin-zari-bridal-lehenga-with-tissue-patchwork-and-stone-work',
+  '/product/lavender-net-thread-occasion-lehenga-choli-designer-indian-lehenga': '/product/lavender-net-thread-lehenga-choli-with-dupatta',
+  '/product/luxemia-light-pink-embroidered-shimmer-silk-palazzo-suit-for-wedding-guests': '/product/light-pink-shimmer-silk-embroidered-palazzo-suit-wsuit-008',
+  '/product/luxemia-mint-green-faux-georgette-sequins-work-party-wear-sharara-suit': '/product/faux-georgette-mint-green-party-wear-sequins-work-readymade-sharara-suit',
+  '/product/luxemia-pink-embroidered-chinon-palazzo-suit-for-wedding-guests': '/product/pink-chinon-embroidered-palazzo-suit-wsuit-002',
+  '/product/luxemia-rani-pink-embroidered-chinon-palazzo-suit-for-wedding-guests': '/product/rani-pink-chinon-embroidered-palazzo-suit-wsuit-001',
+  '/product/luxemia-sky-blue-embroidered-chinon-anarkali-suit-for-wedding-guests': '/product/sky-blue-chinon-embroidered-anarkali-suit-wsuit-005',
+  '/product/luxemia-teal-green-embroidered-shimmer-silk-palazzo-suit-for-wedding-guests': '/product/teal-green-shimmer-silk-embroidered-palazzo-suit-wsuit-007',
+  '/product/pink-net-thread-occasion-lehenga-choli': '/product/pink-net-thread-lehenga-choli-with-dupatta',
+  '/product/pure-chinon-yellow-occasional-wear-embroidery-work-readymade-sharara-suit': '/product/luxemia-yellow-chinon-silk-embroidery-work-occasional-wear-sharara-suit',
+  '/product/rani-pink-net-sequins-occasion-lehenga-choli': '/product/rani-pink-net-sequins-lehenga-choli-with-dupatta',
+  '/product/sequins-work-designer-saree-in-satin-silk-light-pink': '/product/satin-silk-pink-occasional-wear-sequins-work-saree',
+  '/product/teal-green-net-sequins-festive-lehenga-choli': '/product/teal-green-net-sequins-lehenga-choli-with-dupatta',
+  '/product/wine-silk-embroidery-festive-lehenga-choli': '/product/wine-silk-embroidery-lehenga-choli-with-dupatta',
 };
 
 // Explicit 410 Gone routes — URLs that have been permanently retired and have
