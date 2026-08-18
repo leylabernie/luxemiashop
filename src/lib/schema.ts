@@ -99,6 +99,47 @@ export function generateUsShippingServiceSchema() {
   };
 }
 
+// Product-level shipping details mirror the public U.S. shipping terms:
+// $12 below $150 and free at $150+. No delivery-time promise is emitted because
+// the storefront correctly states that timing depends on the item and options.
+export function generateUsProductShippingDetails() {
+  const shippingDestination = {
+    '@type': 'DefinedRegion',
+    addressCountry: 'US',
+  };
+
+  return [
+    {
+      '@type': 'OfferShippingDetails',
+      shippingDestination,
+      orderValue: {
+        '@type': 'MonetaryAmount',
+        maxValue: 149.99,
+        currency: 'USD',
+      },
+      shippingRate: {
+        '@type': 'MonetaryAmount',
+        value: 12,
+        currency: 'USD',
+      },
+    },
+    {
+      '@type': 'OfferShippingDetails',
+      shippingDestination,
+      orderValue: {
+        '@type': 'MonetaryAmount',
+        minValue: 150,
+        currency: 'USD',
+      },
+      shippingRate: {
+        '@type': 'MonetaryAmount',
+        value: 0,
+        currency: 'USD',
+      },
+    },
+  ];
+}
+
 // ─── Product Schema ────────────────────────────────────────────────────────
 
 export interface ProductSchemaInput {
@@ -153,6 +194,7 @@ export function generateProductSchema(input: ProductSchemaInput) {
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#org` },
       hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
+      shippingDetails: generateUsProductShippingDetails(),
     },
   };
 }

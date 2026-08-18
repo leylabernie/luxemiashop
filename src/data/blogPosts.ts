@@ -217,7 +217,7 @@ export const blogPosts: BlogPost[] = [
       </ol>
 
       <h2>What LuxeMia does and does not promise</h2>
-      <p>Available sizes, stitching status, margins and customization options vary by product. A general guide cannot guarantee fit. Review the exact listing and the <a href="/sizing-measurements-guide">LuxeMia measurement guide</a>; for a final-sale order, ask about any unclear measurement before purchasing.</p>
+      <p>Available sizes, stitching status, margins and customization options vary by product. A general guide cannot guarantee fit. Review the exact listing and the <a href="/sizing-measurements-guide">LuxeMia measurement guide</a>; for a final-sale order, ask about any unclear measurement before purchasing. If you are comparing silhouettes while checking measurements, browse <a href="/collections/gharara-suits">Gharara Suits</a>, <a href="/collections/anarkali-suits">Anarkali Suits</a>, and <a href="/collections/sharara-suits">Sharara Suits</a>.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-15',

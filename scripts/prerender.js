@@ -946,6 +946,24 @@ function generateApprovedProductDirectoryHtml(products) {
   return `<p>Browse all ${approvedProducts.length} current product listings by category. Open an individual listing for its exact fabric, included pieces, sizing, price and availability.</p>${sections}`;
 }
 
+// Product-level shipping details mirror the public U.S. standard-shipping terms:
+// $12 below $150 and free at $150+. Delivery time is intentionally omitted
+// because it depends on the item and selected options.
+const US_PRODUCT_SHIPPING_DETAILS = [
+  {
+    '@type': 'OfferShippingDetails',
+    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+    orderValue: { '@type': 'MonetaryAmount', maxValue: 149.99, currency: 'USD' },
+    shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
+  },
+  {
+    '@type': 'OfferShippingDetails',
+    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+    orderValue: { '@type': 'MonetaryAmount', minValue: 150, currency: 'USD' },
+    shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
+  },
+];
+
 // schema.org ItemList JSON-LD for collection pages. Each ListItem wraps a Product
 // with url/image/name/offers — what Google Merchant Center reads for rich results.
 function generateItemListJsonLd(products, category, routePath) {
@@ -980,6 +998,7 @@ function generateItemListJsonLd(products, category, routePath) {
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': `${SITE_URL}/#org` },
           hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
+          shippingDetails: US_PRODUCT_SHIPPING_DETAILS,
         },
       },
     };
@@ -2138,6 +2157,7 @@ function generateHtml(template, route, allShopifyProducts) {
         itemCondition: 'https://schema.org/NewCondition',
         seller: { '@id': `${SITE_URL}/#org` },
         hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
+        shippingDetails: US_PRODUCT_SHIPPING_DETAILS,
       },
     };
 
