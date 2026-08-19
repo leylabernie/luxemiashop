@@ -114,6 +114,7 @@ export const ProductGallery = ({ images, videos = [], productTitle }: ProductGal
   const currentImage = hasImages ? displayImages[selectedIndex]?.node : null;
   const productVideos = videos.filter((media) =>
     media.node.mediaContentType === 'VIDEO' &&
+    !media.node.alt?.startsWith('UNASSIGNED SOURCE COLORWAY') &&
     media.node.sources?.some((source) => source.mimeType === 'video/mp4'),
   );
   
