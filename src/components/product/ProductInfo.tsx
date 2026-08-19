@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
@@ -62,8 +62,11 @@ const openTailoringQuote = (option: StitchingTypeOption) => {
   window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
 };
 
+type ShopifyVariant = ShopifyProduct['node']['variants']['edges'][number]['node'];
+
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
+  onSelectedVariantChange?: (variant: ShopifyVariant | null) => void;
 }
 
 // Helper to extract product specs from tags
@@ -300,7 +303,7 @@ const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
   return numericValues.length >= 3;
 };
 
-export const ProductInfo = ({ product }: ProductInfoProps) => {
+export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
@@ -410,6 +413,15 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
   }, [purchasableVariant, selectedOptions, product]);
 
   // Calculate current price, including stitching option premium if applicable
+  const activeVariantForGallery = purchasableVariant?.node ?? bestMatchVariant?.node ?? null;
+
+  // Keep the product gallery synchronized with the exact Shopify variant that
+  // is active in the purchase controls. This applies to color-only variants
+  // and to products whose matching image is shared across multiple sizes.
+  useEffect(() => {
+    onSelectedVariantChange?.(activeVariantForGallery);
+  }, [activeVariantForGallery, onSelectedVariantChange]);
+
   const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
   const stitchingPremium = useMemo(() => {
     // Use the Utsav-style stitching type selector for stitchable products

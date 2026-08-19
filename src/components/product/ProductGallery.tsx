@@ -29,6 +29,7 @@ interface ProductGalleryProps {
     };
   }>;
   productTitle: string;
+  selectedImageUrl?: string | null;
 }
 
 // Hook to validate images and filter out broken ones
@@ -90,7 +91,7 @@ const useValidatedImages = (images: ProductGalleryProps['images']) => {
   return { validatedImages, isValidating };
 };
 
-export const ProductGallery = ({ images, videos = [], productTitle }: ProductGalleryProps) => {
+export const ProductGallery = ({ images, videos = [], productTitle, selectedImageUrl }: ProductGalleryProps) => {
   const { validatedImages, isValidating } = useValidatedImages(images);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -124,6 +125,23 @@ export const ProductGallery = ({ images, videos = [], productTitle }: ProductGal
       setSelectedIndex(0);
     }
   }, [displayImages.length, selectedIndex]);
+
+  // Shopify keeps a dedicated media record on each color variant. Match that
+  // record to the existing product gallery whenever the shopper changes an
+  // option, so the primary image never remains on an unrelated colorway.
+  useEffect(() => {
+    if (!selectedImageUrl || displayImages.length === 0) return;
+
+    const normalizedSelectedUrl = selectedImageUrl.split('?')[0];
+    const matchingIndex = displayImages.findIndex(
+      (image) => image.node.url.split('?')[0] === normalizedSelectedUrl,
+    );
+
+    if (matchingIndex >= 0 && matchingIndex !== selectedIndex) {
+      setSelectedIndex(matchingIndex);
+    }
+  }, [displayImages, selectedImageUrl, selectedIndex]);
+
   const highResUrl = currentImage ? getOptimizedImage(currentImage.url, 'hero') : ''; // 1920px for crisp zoom
 
   // Swipe gesture support

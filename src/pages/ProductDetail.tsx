@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
@@ -100,6 +100,7 @@ const getGoogleProductCategory = (productType?: string, title?: string): string 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const { product: shopifyProduct, isLoading: shopifyLoading, error: shopifyError } = useShopifyProduct(handle);
+  const [selectedVariantImageUrl, setSelectedVariantImageUrl] = useState<string | null>(null);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
   // CRITICAL FIX (June 2026): Removed the localProducts.ts fallback.
@@ -364,6 +365,7 @@ const ProductDetail = () => {
                   images={product.images.edges}
                   videos={product.media?.edges}
                   productTitle={sanitizeProductTitle(product.title)}
+                  selectedImageUrl={selectedVariantImageUrl}
                 />
                 
                 {/* Product Info */}
@@ -374,6 +376,7 @@ const ProductDetail = () => {
                     title: sanitizeProductTitle(product.title),
                     description: enrichedDescription || product.description,
                   }}
+                  onSelectedVariantChange={(variant) => setSelectedVariantImageUrl(variant?.image?.url ?? null)}
                 />
               </div>
 
