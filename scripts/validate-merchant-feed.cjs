@@ -34,6 +34,15 @@ const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) =
 const itemIds = [...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map((match) => match[1]);
 const groupIds = [...xml.matchAll(/<g:item_group_id>([^<]+)<\/g:item_group_id>/g)].map((match) => match[1]);
 
+function decodeXmlEntities(value) {
+  return value
+    .replace(/&gt;/g, '>')
+    .replace(/&lt;/g, '<')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&');
+}
+
 if (itemIds.length === 0) {
   throw new Error('Merchant feed contains no product IDs');
 }
@@ -53,6 +62,41 @@ if (longGroupIds.length > 0) {
 }
 if (duplicateItemIds.length > 0) {
   throw new Error(`Merchant feed contains ${new Set(duplicateItemIds).size} duplicate product IDs`);
+}
+
+const merchantTitles = itemBlocks.map((item) => decodeXmlEntities(item.match(/<g:title>([\s\S]*?)<\/g:title>/i)?.[1] || '').trim());
+const longMerchantTitles = merchantTitles.filter((title) => title.length > 150);
+if (longMerchantTitles.length > 0) {
+  throw new Error(`Merchant feed contains ${longMerchantTitles.length} title(s) longer than 150 characters`);
+}
+
+const productTypes = itemBlocks.map((item) => decodeXmlEntities(item.match(/<g:product_type>([\s\S]*?)<\/g:product_type>/i)?.[1] || '').trim());
+const invalidProductTypes = productTypes.filter((productType) => {
+  const levels = productType.split('>').map((level) => level.trim()).filter(Boolean);
+  return levels.length < 3 || levels[0] !== 'Apparel & Accessories';
+});
+if (invalidProductTypes.length > 0) {
+  throw new Error(`Merchant feed contains ${invalidProductTypes.length} product type(s) without the required Apparel & Accessories hierarchy`);
+}
+
+const navratriPriorityItems = itemBlocks.filter((item) => /<g:custom_label_1>navratri_2026_priority<\/g:custom_label_1>/i.test(item));
+const navratriPriorityHandles = new Set(navratriPriorityItems.map((item) => {
+  const link = decodeXmlEntities(item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1] || '');
+  try {
+    return new URL(link).pathname.replace(/^\/product\//, '').replace(/\/+$/, '');
+  } catch {
+    return '';
+  }
+}).filter(Boolean));
+if (navratriPriorityHandles.size !== 30) {
+  throw new Error(`Merchant feed must contain exactly 30 Navratri priority product groups; found ${navratriPriorityHandles.size}`);
+}
+const weakNavratriPriorityTitles = navratriPriorityItems.filter((item) => {
+  const title = decodeXmlEntities(item.match(/<g:title>([\s\S]*?)<\/g:title>/i)?.[1] || '');
+  return !/\bnavratri\b/i.test(title) || !/\bgarba\b/i.test(title);
+});
+if (weakNavratriPriorityTitles.length > 0) {
+  throw new Error(`Merchant feed contains ${weakNavratriPriorityTitles.length} Navratri priority title(s) missing Navratri or Garba relevance`);
 }
 
 function tagCount(item, tag) {
@@ -181,5 +225,5 @@ for (const pattern of staleClaimPatterns) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique products, ${groupIds.length} group IDs, required attributes, identifiers, product-specific HTTPS images, and current policy-safe descriptions/highlights`
+  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 Navratri priority product groups, hierarchical product types, Merchant title limits, required attributes, identifiers, product-specific HTTPS images, and current policy-safe descriptions/highlights`
 );
