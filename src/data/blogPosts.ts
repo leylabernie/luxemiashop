@@ -60,6 +60,7 @@ export const PUBLISHED_BLOG_SLUGS = [
 const FACT_CHECKED_AT = '2026-08-08';
 const POLICY_REVIEWED_AT = '2026-08-11';
 const CONTENT_REVIEWED_AT = '2026-08-12';
+const NAVRATRI_REVIEWED_AT = '2026-08-19';
 const EDITORIAL_TEAM = 'LuxeMia Editorial Team';
 
 const source = (title: string, url: string, publisher: string): BlogSource => ({
@@ -109,6 +110,11 @@ const SOURCES = {
     'https://www.drikpanchang.com/navratri/ashwin-shardiya-navratri-dates.html',
     'Drik Panchang',
   ),
+  timeAndDateNavratri2026: source(
+    'Navaratri 2026 in the United States',
+    'https://www.timeanddate.com/holidays/us/hindu-navaratri',
+    'Timeanddate.com',
+  ),
   bindi: source(
     'The Purpose of the Bindi',
     'https://www.hinduamerican.org/blog/the-purpose-of-the-bindi/',
@@ -154,6 +160,11 @@ const SOURCES = {
     'https://luxemia.shop/shipping',
     'LuxeMia',
   ),
+  luxemiaNavratriCollection: source(
+    'Navratri Outfits for Garba in the USA',
+    'https://luxemia.shop/collections/navratri-outfits',
+    'LuxeMia',
+  ),
   luxemiaCustomizableCollection: source(
     'Customizable Indian Outfits',
     'https://luxemia.shop/collections/customizable-indian-outfits',
@@ -178,6 +189,7 @@ const editorialNoteFor = (reviewDate: string) => `
 `;
 const editorialNote = editorialNoteFor('August 8, 2026');
 const policyEditorialNote = editorialNoteFor('August 11, 2026');
+const navratriEditorialNote = editorialNoteFor('August 19, 2026');
 const contentEditorialNote = editorialNoteFor('August 12, 2026');
 
 export const blogPosts: BlogPost[] = [
@@ -701,31 +713,54 @@ export const blogPosts: BlogPost[] = [
   {
     id: '63',
     slug: 'navratri-9-day-color-guide-2026',
-    title: 'Navratri 2026 Dates, Garba Clothing and the Truth About Color Lists',
-    excerpt: 'Sharad Navratri begins October 11, 2026, with Maha Navami on October 19 and Vijayadashami on October 20 in the cited New Delhi calendar. Dates and practices can vary by location and tradition.',
+    title: 'Navratri 2026 USA: Garba & Chaniya Choli Guide',
+    excerpt: 'Plan a Navratri or Garba outfit for a U.S. event with 2026 dates, fit checks, chaniya choli comparisons, and current U.S. shipping guidance.',
     content: `
-      ${policyEditorialNote}
-      <h2>Verified 2026 dates</h2>
-      <p>Incredible India explains Navratri as “nine nights” honoring forms of Goddess Durga. For New Delhi, the cited 2026 panchang places the start of Sharad Navratri on Sunday, October 11, Maha Navami on Monday, October 19, and Vijayadashami on Tuesday, October 20. Religious-calendar observances can vary by location, tithi and community, so confirm dates with your temple or event organizer.</p>
+      ${navratriEditorialNote}
+      <p><strong>Shopping for a U.S. celebration?</strong> <a href="/collections/navratri-outfits">Browse current LuxeMia Navratri and Garba outfits</a>, then use the exact product page to verify size, stitching, included pieces, price and availability.</p>
+
+      <h2>When is Navratri in 2026?</h2>
+      <p>The cited United States holiday calendar lists Navratri beginning Sunday, October 11, 2026. The cited New Delhi panchang also places the start of Sharad Navratri on October 11, followed by Maha Navami on October 19 and Vijayadashami on October 20. Religious-calendar observances can vary by location, tithi and community, so confirm the schedule with your temple or event organizer.</p>
+
+      <h2>Chaniya choli, lehenga or another Garba outfit?</h2>
+      <p>Retailers and communities may use clothing terms differently. A chaniya choli generally describes a skirt-and-blouse combination, often styled with a dupatta. A lehenga listing may describe a similar set, while an anarkali, kurta set or another festive outfit may suit an event with a different dress code. The product page—not the category name—is the source of truth for what is included.</p>
+      <table>
+        <thead><tr><th>Style to compare</th><th>Questions to check before ordering</th></tr></thead>
+        <tbody>
+          <tr><td>Chaniya choli or lehenga</td><td>Skirt length, waistband and closure, blouse or choli measurements, dupatta, lining and stitching status</td></tr>
+          <tr><td>Anarkali or salwar suit</td><td>Bust, waist, shoulder, sleeve and garment length; included bottom and dupatta; ease for movement</td></tr>
+          <tr><td>Kurta or men's Garba style</td><td>Chest, shoulder, sleeve and kurta length; included bottom or jacket; footwear and event guidance</td></tr>
+        </tbody>
+      </table>
+
+      <h2>How to choose an outfit for Garba and Dandiya</h2>
+      <ul>
+        <li><strong>Movement:</strong> Check skirt or garment length, closures, sleeve shape and whether the outfit allows the range of movement you expect.</li>
+        <li><strong>Fit:</strong> Compare your current body measurements with the exact listing. Do not rely only on a familiar letter size.</li>
+        <li><strong>Embellishment:</strong> Mirrors, sequins, tassels and jewelry can add visual detail, but also check their placement, weight and snag risk for a crowded dance floor.</li>
+        <li><strong>Venue:</strong> Confirm footwear, modesty and dress guidance with the host, temple or community organization.</li>
+        <li><strong>Included pieces:</strong> Do not assume that photographed jewelry, accessories or a second dupatta are part of the purchase unless the listing states that they are.</li>
+      </ul>
 
       <h2>Are the nine colors universal?</h2>
-      <p>No single nine-color list should be presented as a rule followed by every Navratri observer. Published color calendars can depend on the year and source, while families and organizations may use different themes or no daily color schedule.</p>
+      <p>No single nine-color list should be presented as a rule followed by every Navratri observer. Published color calendars can depend on the year and source, while families and organizations may use different themes or no daily color schedule. Follow the guidance used by your own organizer or community.</p>
 
-      <h2>What to wear for garba</h2>
-      <p>Garba clothing varies. Chaniya choli, kediyu-style garments, kurtas, lehengas and other festive outfits may be worn, but the event organizer's dress code is the authority. For dancing, check garment security, hem length, footwear, jewelry weight and whether mirrors, sequins or other work can snag nearby clothing.</p>
+      <h2>When should a U.S. shopper order?</h2>
+      <p>Start with the exact product's current availability and options. If your event date is fixed, contact LuxeMia before ordering to discuss the selected listing and timing. Preparation and carrier transit can vary, and delivery by a particular event is not guaranteed.</p>
+      <p>LuxeMia ships to United States addresses only. Standard U.S. shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use <strong>WELCOME10</strong> for 10% off their first order with no minimum purchase requirement.</p>
 
-      <h2>Ordering for an event</h2>
-      <p>LuxeMia ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Delivery by a particular Navratri event is not guaranteed, so contact support before ordering when the date is important.</p>
+      <h2>Shop current Navratri outfits</h2>
+      <p><a href="/collections/navratri-outfits"><strong>Shop current Navratri, Garba and chaniya choli listings</strong></a>, compare measurements with the <a href="/sizing-measurements-guide">LuxeMia sizing guide</a>, or <a href="/contact">contact LuxeMia</a> before ordering when a product detail or event deadline is unclear.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-15',
-    updatedAt: POLICY_REVIEWED_AT,
-    factCheckedAt: POLICY_REVIEWED_AT,
+    updatedAt: NAVRATRI_REVIEWED_AT,
+    factCheckedAt: NAVRATRI_REVIEWED_AT,
     category: 'Festival Guide',
-    tags: ['navratri 2026', 'navratri dates', 'garba outfit', 'navratri colors', 'chaniya choli'],
+    tags: ['navratri outfits usa 2026', 'navratri dates', 'garba outfit usa', 'navratri colors', 'chaniya choli usa', 'dandiya outfit'],
     image: '/images/blog/blog-006-teal-green-net.webp',
-    readTime: 4,
-    sources: [SOURCES.incredibleIndiaNavratri, SOURCES.navratri2026, SOURCES.luxemiaShipping],
+    readTime: 6,
+    sources: [SOURCES.incredibleIndiaNavratri, SOURCES.navratri2026, SOURCES.timeAndDateNavratri2026, SOURCES.luxemiaNavratriCollection, SOURCES.luxemiaShipping],
   },
   {
     id: 'fc1',
