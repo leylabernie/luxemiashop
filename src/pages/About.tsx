@@ -8,7 +8,7 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="About LuxeMia — Indian Ethnic Wear Online"
-        description="Learn about LuxeMia, an online Indian ethnic wear store with clear product details, sizing guidance, U.S.-based support, and shipping to seven countries."
+        description="Learn about LuxeMia, an online Indian ethnic wear store with clear product details, sizing guidance, U.S.-based support, and tracked United States shipping."
         canonical="https://luxemia.shop/about"
       />
       <Header />

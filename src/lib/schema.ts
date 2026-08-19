@@ -13,7 +13,7 @@
 export const SITE_URL = 'https://luxemia.shop';
 export const BRAND_NAME = 'LuxeMia';
 export const LEGAL_BUSINESS_NAME = 'Glamour Indian Wear';
-export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
+export const SHIPPING_COUNTRIES = ['US'];
 
 export function normalizeBrandName(value?: string | null): string {
   const raw = (value || '').trim();
@@ -50,23 +50,12 @@ export function generateReturnPolicySchema() {
   return {
     '@type': 'MerchantReturnPolicy',
     '@id': `${SITE_URL}/#returnPolicy`,
-    name: 'LuxeMia U.S. Return & Refund Policy',
+    name: 'LuxeMia Final-Sale & Covered Order Issue Policy',
     applicableCountry: 'US',
     returnPolicyCountry: 'US',
     merchantReturnLink: `${SITE_URL}/returns`,
-    returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-    merchantReturnDays: 30,
-    itemCondition: 'https://schema.org/NewCondition',
-    returnMethod: 'https://schema.org/ReturnByMail',
-    returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
-    returnLabelSource: 'https://schema.org/ReturnLabelCustomerResponsibility',
-    customerRemorseReturnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
-    customerRemorseReturnLabelSource: 'https://schema.org/ReturnLabelCustomerResponsibility',
-    itemDefectReturnFees: 'https://schema.org/FreeReturn',
-    itemDefectReturnLabelSource: 'https://schema.org/ReturnLabelDownloadAndPrint',
-    refundType: 'https://schema.org/FullRefund',
-    restockingFee: 0,
-    description: 'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay return shipping for buyer-remorse returns. LuxeMia provides a prepaid standard return label when a verified damaged, incorrect, or missing-item claim requires a return. Customised, altered, made-to-order, and final-sale items are excluded from buyer-remorse returns, subject to mandatory consumer rights.',
+    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+    description: 'All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours of delivery with clear photos and a continuous unboxing/opening video, subject to rights that cannot legally be excluded.',
     url: `${SITE_URL}/returns`,
   };
 }
@@ -277,7 +266,7 @@ export function generateOrganizationSchema() {
     legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.ico`,
-    description: 'LuxeMia is an online Indian ethnic wear store shipping to seven countries with product details, sizing guidance and tracking after dispatch.',
+    description: 'LuxeMia is an online Indian ethnic wear store serving United States addresses with product details, sizing guidance and tracking after dispatch.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',

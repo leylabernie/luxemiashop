@@ -255,7 +255,7 @@ const Collections = () => {
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
             </p>
             <p>
-              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to seven countries, with <strong>free U.S. standard shipping at $150 and above</strong> and international rates shown at checkout.
+              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to United States addresses only, with <strong>free U.S. standard shipping at $150 and above</strong> and a $12 rate below $150.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

@@ -105,8 +105,7 @@ const SEOHead = ({
     .replace(/\/+$/, '') || '/';
   const canonicalUrl = `${siteUrl}${canonicalPath}`;
 
-  // The current default locale remains en-US; x-default covers shoppers in
-  // the six additional English-language shipping destinations.
+  // The current default locale and shipping market remain en-US.
   const hreflangAlternates = hreflang || [
     { lang: 'en-US', href: canonicalUrl },
     { lang: 'x-default', href: canonicalUrl },
@@ -128,7 +127,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with shipping to seven countries.`,
+            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with tracked United States shipping.`,
         sku: product.sku || '',
         gtin: product.gtin,
         mpn: product.mpn,

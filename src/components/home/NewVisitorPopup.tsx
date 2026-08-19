@@ -29,7 +29,7 @@ const emailSchema = z.object({
 const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 3;
-const DISCOUNT_CODE = 'LUXE10';
+const DISCOUNT_CODE = 'WELCOME10';
 const NEWSLETTER_FUNCTION_URL =
   'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email';
 

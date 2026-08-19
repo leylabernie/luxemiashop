@@ -1,7 +1,7 @@
 {
   "name": "LuxeMia — Indian Ethnic Wear Online",
   "short_name": "LuxeMia",
-  "description": "Shop Indian ethnic wear with shipping to the United States, Canada, UK, Australia, New Zealand, South Africa, and Mauritius.",
+  "description": "Shop Indian ethnic wear online with tracked shipping to United States addresses only.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

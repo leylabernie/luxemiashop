@@ -22,7 +22,7 @@ const values = [
   {
     icon: Truck,
     title: 'Tracked Shipping',
-    description: 'Tracking is provided after dispatch for orders to seven supported countries.',
+    description: 'Tracking is provided after dispatch for orders to United States addresses.',
   },
 ];
 
@@ -45,7 +45,7 @@ const SustainabilityBanner = () => {
               Honest Service, Real Value
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              LuxeMia is an online Indian ethnic wear store shipping to seven countries. We publish the available
+              LuxeMia is an online Indian ethnic wear store shipping to United States addresses. We publish the available
               product details, shipping costs, final-sale terms, and damage-claim requirements so
               customers can review them before ordering.
             </p>

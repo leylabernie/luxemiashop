@@ -14,19 +14,19 @@ const NRIGeneral = () => (
       heroSubtitle: 'Compare Exact Product Details Before Ordering',
       shippingTime: 'tracking provided after dispatch',
       shippingCost: '$12 per order; free at $150 and above',
-      customsNote: 'Duties, taxes, or carrier processing fees may apply unless checkout explicitly states otherwise. Review current US customs guidance before ordering.',
+      customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
           question: 'Where does LuxeMia ship?',
-          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Tracking is provided after dispatch.',
+          answer: 'LuxeMia currently ships to United States addresses only. Tracking is provided after dispatch.',
         },
         {
           question: 'When does shipping become free?',
           answer: 'Orders at $150 and above qualify for free U.S. shipping. Orders below $150 cost $12 per order.',
         },
         {
-          question: 'Will I have to pay customs duties?',
-          answer: 'Possibly. Duties, taxes, and carrier processing fees depend on current rules, product classification, and shipment value. They are not included unless checkout explicitly states otherwise.',
+          question: 'Will taxes be charged?',
+          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
         },
         {
           question: 'Can I get custom sizing?',

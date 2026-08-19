@@ -46,7 +46,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.',
+          answer: 'LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
         },
         {
           question: 'How long does shipping take?',
@@ -58,7 +58,7 @@ const FAQ = () => {
         },
         {
           question: 'Do I have to pay taxes?',
-          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
+          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
         },
         {
           question: 'What if my package is delayed or lost?',
@@ -88,7 +88,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery if they are unworn, unwashed, unaltered, and returned with original tags and packaging. Customers pay tracked return shipping for buyer-remorse returns; custom, altered, made-to-order, and clearly identified final-sale items are not eligible. Exchanges are not accepted.',
+          answer: 'All sales are final and exchanges are not accepted. Review the exact product measurements and contact LuxeMia before ordering if the listing is unclear.',
         },
         {
           question: 'Which measurements should I compare?',
@@ -114,7 +114,7 @@ const FAQ = () => {
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. Eligible U.S. standard-stock items must be unworn, unwashed, unaltered, and returned with original tags and packaging within 30 calendar days of delivery.',
+          answer: 'All sales are final. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours using the covered-order-issue process.',
         },
         {
           question: 'What if my order arrives damaged, incorrect, or incomplete?',
@@ -122,7 +122,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'Exchanges are not accepted. If an eligible U.S. standard-stock item is returned under the policy, customers may place a new order for a different size or color. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear.',
+          answer: 'Exchanges are not accepted. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear.',
         },
       ],
     },
@@ -226,11 +226,11 @@ const FAQ = () => {
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
-          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
+          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
         },
         {
           question: 'Do you ship outside the United States?',
-          answer: 'Yes. LuxeMia ships to Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, in addition to the United States.',
+          answer: 'No. LuxeMia currently ships to United States addresses only.',
         },
         {
           question: 'How do Indian clothing sizes compare to US sizes?',

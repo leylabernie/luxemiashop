@@ -24,7 +24,7 @@ import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout."
+    answer: "LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above."
   },
   {
     question: "What is your return policy?",
@@ -86,7 +86,7 @@ const Index = () => {
             <aside aria-label="United States shipping summary" className="shrink-0 border-l-2 border-primary pl-4">
               <p className="font-medium">Free U.S. shipping at $150+</p>
               <p className="mt-1 text-sm text-muted-foreground">$12 flat below $150 · Tracking emailed after dispatch</p>
-              <p className="mt-1 text-sm text-muted-foreground">International shipping to six additional countries</p>
+              <p className="mt-1 text-sm text-muted-foreground">United States shipping addresses only</p>
               <Link
                 to="/shipping"
                 className="mt-2 inline-block text-sm font-medium text-primary underline underline-offset-4 hover:text-primary/80"

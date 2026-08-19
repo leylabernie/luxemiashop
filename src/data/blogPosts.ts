@@ -150,7 +150,7 @@ const SOURCES = {
     'LuxeMia',
   ),
   luxemiaShipping: source(
-    'Shipping Policy — U.S. and International Delivery',
+    'United States Shipping Policy',
     'https://luxemia.shop/shipping',
     'LuxeMia',
   ),
@@ -400,7 +400,7 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Ordering from LuxeMia</h2>
-      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Tracking does not guarantee arrival by an event date, so contact LuxeMia before ordering when timing is important.</p>
+      <p>LuxeMia ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking does not guarantee arrival by an event date, so contact LuxeMia before ordering when timing is important.</p>
 
       <h2>Optional styling suggestions</h2>
       <p>You may coordinate with a family color palette, repeat a garment color in one accessory or choose footwear for dancing. These are optional styling decisions, not festival requirements. Religious or family practices should come from the people hosting the event.</p>
@@ -715,7 +715,7 @@ export const blogPosts: BlogPost[] = [
       <p>Garba clothing varies. Chaniya choli, kediyu-style garments, kurtas, lehengas and other festive outfits may be worn, but the event organizer's dress code is the authority. For dancing, check garment security, hem length, footwear, jewelry weight and whether mirrors, sequins or other work can snag nearby clothing.</p>
 
       <h2>Ordering for an event</h2>
-      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Delivery by a particular Navratri event is not guaranteed, so contact support before ordering when the date is important.</p>
+      <p>LuxeMia ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Delivery by a particular Navratri event is not guaranteed, so contact support before ordering when the date is important.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-15',
@@ -799,7 +799,7 @@ export const blogPosts: BlogPost[] = [
       </ol>
 
       <h2>Timing and shipping</h2>
-      <p>The verified customizable collection advises allowing approximately four to five weeks for planning, but current production and carrier timing must be confirmed separately and delivery by a particular event is not guaranteed. LuxeMia currently ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.</p>
+      <p>The verified customizable collection advises allowing approximately four to five weeks for planning, but current production and carrier timing must be confirmed separately and delivery by a particular event is not guaranteed. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.</p>
 
       <h2>Does LuxeMia alter an outfit you already own?</h2>
       <p>The reviewed store pages do not establish a mail-in alteration service for customer-owned garments. Do not send an existing lehenga, saree or blouse unless LuxeMia support first confirms that service and its terms in writing. The verified offer covered here is customization on selected products sold by LuxeMia.</p>
@@ -864,7 +864,7 @@ export const blogPosts: BlogPost[] = [
       <p>Custom measurements reduce guesswork but do not guarantee fit. A low neckline also involves personal movement and coverage preferences that measurements alone may not capture. Explain how the blouse will be worn, ask how the requested depth is measured, and confirm any support or coverage requirement before the order is placed.</p>
 
       <h2>Timing and U.S. delivery</h2>
-      <p>The verified customizable collection advises allowing approximately four to five weeks for planning. Current production and carrier timing should be confirmed separately, especially for a fixed wedding date. LuxeMia ships to seven countries, including the United States; U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.</p>
+      <p>The verified customizable collection advises allowing approximately four to five weeks for planning. Current production and carrier timing should be confirmed separately, especially for a fixed wedding date. LuxeMia ships to United States addresses only; standard shipping is $12 below $150 and free at $150 and above.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: CONTENT_REVIEWED_AT,

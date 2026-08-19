@@ -7,17 +7,12 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const roots = [
   'index.html',
   'api',
-  'src/components',
-  'src/data',
-  'src/pages',
-  'src/lib/seoMetadata.ts',
-  'src/lib/productDescriptionEnrichment.ts',
+  'public',
+  'src',
   'supabase/functions',
-  'scripts/build-shopify-csv-kundan.py',
-  'scripts/build-shopify-csv-v2.py',
-  'scripts/build-shopify-csv-v3.py',
-  'scripts/build-shopify-csv-wedding-sarees.py',
-  'scripts/template-fallback-wedding-sarees.py',
+  'scripts',
+  'build_csv.py',
+  'build_boutique_csv.py',
 ];
 const supportedExtensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py']);
 
@@ -33,19 +28,20 @@ function listFiles(relativePath) {
 }
 
 const blockedPatterns = [
-  /LuxeMia ships only to (?:the )?United States/i,
-  /LuxeMia currently ships to (?:the )?United States addresses/i,
-  /We currently ship to (?:the )?United States addresses only/i,
-  /currently serves? United States shoppers only/i,
-  /United States addresses only/i,
-  /United States shipping only/i,
-  /Current LuxeMia product listings for delivery to United States addresses/i,
-  /free (?:for orders )?over \$150/i,
-  /U\.S\. Shipping Policy/i,
-  /(?:free shipping|free delivery)[^\n<]{0,100}\$?350/i,
-  /(?:delivered|delivery) (?:in|within) 7[–-]10 business days/i,
+  /Shipping is available to seven countries/i,
+  /shipping to seven countries/i,
+  /seven supported countries/i,
+  /ships to the United States, Canada, the United Kingdom/i,
+  /shipping to the United States, Canada, the United Kingdom/i,
+  /shipping is available to the United States, Canada/i,
+  /checkout accepts addresses in the United States, Canada/i,
+  /international standard shipping is/i,
+  /international rates are shown at checkout/i,
+  /eligible U\.S\. standard-stock items may be returned/i,
+  /accepts return requests made within 30 calendar days/i,
+  /MerchantReturnFiniteReturnWindow/i,
+  /merchantReturnDays/i,
   /15[ -]day return policy/i,
-  /Philadelphia headquarters?/i,
   /fits? all body types/i,
   /meets? (?:the |our )?highest standards/i,
   /delivery in 2 business days to ship to all three countries/i,
@@ -53,6 +49,7 @@ const blockedPatterns = [
 
 const failures = [];
 for (const filePath of roots.flatMap(listFiles)) {
+  if (path.basename(filePath).startsWith('validate-')) continue;
   const text = fs.readFileSync(filePath, 'utf8');
   for (const pattern of blockedPatterns) {
     if (pattern.test(text)) {

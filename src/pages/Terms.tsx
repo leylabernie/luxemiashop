@@ -121,7 +121,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">3.1 Pricing</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>All prices are listed in US Dollars (USD) unless otherwise specified.</li>
-                        <li>Prices do not include shipping, customs duties, taxes, or import fees which are the customer's responsibility.</li>
+                        <li>Applicable shipping and taxes are shown at checkout.</li>
                         <li>We reserve the right to modify prices at any time without prior notice.</li>
                         <li>Promotional discounts cannot be combined unless explicitly stated.</li>
                       </ul>
@@ -212,7 +212,7 @@ const Terms = () => {
                 <section id="shipping">
                   <h2 className="text-xl font-serif text-foreground mb-4">7. Shipping and Delivery</h2>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
+                    <li>LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
                     <li>Delivery estimates are not guaranteed and may be affected by weather or carrier delays.</li>
                     <li>LuxeMia is not responsible for delays caused by weather or carrier issues.</li>
                     <li>Risk of loss passes to you upon delivery to the carrier.</li>
@@ -224,25 +224,23 @@ const Terms = () => {
                   <h2 className="text-xl font-serif text-foreground mb-4">8. Returns and Cancellations</h2>
                   <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
                     <p className="font-semibold text-destructive">
-                      Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery.
+                      All sales are final. Exchanges are not accepted.
                     </p>
                   </div>
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.1 Eligible U.S. Standard-Stock Returns</h3>
+                      <h3 className="font-semibold text-foreground mb-2">8.1 Final-Sale Policy</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>Eligible U.S. standard-stock items may be returned when a request is made within 30 calendar days of delivery and the item is unworn, unwashed, unaltered, and returned with original tags and packaging.</strong></li>
-                        <li>Customers are responsible for tracked return shipping for buyer-remorse returns. Exchanges are not accepted.</li>
-                        <li>Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law.</li>
+                        <li><strong>LuxeMia does not accept buyer-remorse returns or exchanges for fit, color preference, event changes, or a change of mind.</strong></li>
                         <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">8.2 Covered Order Issues</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>For genuine shipping damage, an incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
+                        <li>For genuine shipping damage or defect, an incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
                         <li>Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</li>
-                        <li>Keep the item and all packaging until LuxeMia reviews the claim. If LuxeMia confirms a covered issue and a return is required, LuxeMia provides a prepaid standard return label or another reasonable no-cost return method.</li>
+                        <li>Keep the item and all packaging until LuxeMia reviews the claim. Do not send an item back unless LuxeMia authorizes it and provides instructions.</li>
                       </ul>
                     </div>
                     <p className="text-sm">

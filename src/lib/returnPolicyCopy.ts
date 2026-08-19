@@ -3,13 +3,13 @@
  * Use these constants instead of restating return terms in individual pages.
  */
 export const RETURN_POLICY_SUMMARY =
-  'For eligible U.S. standard-stock items, LuxeMia accepts return requests made within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law.';
+  'All sales are final and exchanges are not accepted. For genuine shipping damage or defect, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.';
 
 export const RETURN_POLICY_FAQ_ANSWER =
-  'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. See Returns & Cancellations for the complete policy and return-start instructions.';
+  'All sales are final and exchanges are not accepted. For genuine shipping damage or defect, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video. See Returns & Cancellations for the complete claim instructions.';
 
 export const COVERED_ORDER_ISSUE_ANSWER =
-  'If an item arrives damaged, is incorrect, or is missing, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video. If LuxeMia confirms a covered issue and a return is required, LuxeMia provides a prepaid standard return label or another reasonable no-cost return method.';
+  'If an item arrives damaged or defective, is incorrect, or is missing, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition. Keep the item and packaging until LuxeMia reviews the claim.';
 
 export const RETURN_POLICY_SEO_DESCRIPTION =
-  'Read LuxeMia’s U.S. returns policy: eligible standard-stock items may be returned within 30 days; customers pay buyer-remorse return shipping, while confirmed covered issues receive no-cost return support.';
+  'Read LuxeMia’s final-sale policy and the 48-hour process for reporting genuine shipping damage or defect, an incorrect item, or a missing item.';

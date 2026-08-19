@@ -12,7 +12,7 @@ import {
 } from '@/config/rakshaBandhanCampaign';
 
 const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'U.S. standard shipping is free at $150 and above and $12 below. International fixed rates are free at $300 and above; checkout shows available services.';
+const SHIPPING_PROMISE = 'United States shipping only. Standard shipping is free at $150 and above and $12 below; checkout shows available services.';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -249,7 +249,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     {SHIPPING_PROMISE}
                   </p>
                   <p className="text-xs text-foreground/50 text-center">
-                    Taxes and destination-specific shipping are calculated at checkout. Seven countries supported.
+                    United States shipping only. Applicable taxes are calculated at checkout.
                   </p>
                   {unavailableItems.length > 0 && (
                     <p className="text-xs text-destructive text-center" role="alert">

@@ -482,7 +482,7 @@ function buildSalwarSuitDescription(product, color, material, productType) {
   parts.push(detailsParts.join(' | '));
 
   // ── 7. Shipping ──
-  parts.push('Shipping is available to seven countries. U.S. standard shipping is free at $150 and above and $12 below; international rates are shown at checkout. Tracking is provided after dispatch.');
+  parts.push('Shipping is available to United States addresses only. U.S. standard shipping is free at $150 and above and $12 below. Tracking is provided after dispatch.');
 
   return parts.join(' ').slice(0, 5000);
 }
@@ -515,22 +515,22 @@ function sanitizeFeedTitle(text) {
 
 function sanitizeShippingAndBoilerplate(text) {
   return text
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
     .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: Tracking provided after dispatch')
     .replace(/ready to ship Indian wear USA/gi, 'Indian ethnic wear online')
-    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout.')
-    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Shipping is available to seven countries. Destination-specific rates and services are shown at checkout')
-    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: available to seven countries with destination-specific rates shown at checkout')
-    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: available to seven countries with destination-specific rates shown at checkout')
-    .replace(/Free shipping on orders over \$350/gi, 'Destination-specific shipping shown at checkout')
-    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout')
+    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout.')
+    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
+    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: available to United States addresses only, with current rates shown at checkout')
+    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: available to United States addresses only, with current rates shown at checkout')
+    .replace(/Free shipping on orders over \$350/gi, 'Current U.S. shipping shown at checkout')
+    .replace(/free shipping on orders over \$350/gi, 'current U.S. shipping shown at checkout')
     .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping at $150 and above. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
     .replace(/delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'estimated delivery is 6-17 business days with tracking after dispatch')
-    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch to supported countries')
-    .replace(/USA, Canada, and Australia/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
-    .replace(/worldwide shipping/gi, 'shipping to seven countries')
+    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch to United States addresses')
+    .replace(/USA, Canada, and Australia/gi, 'the United States')
+    .replace(/worldwide shipping/gi, 'United States shipping only')
     .replace(/perfect blend of tradition and modernit[y]/gi, 'clear balance of traditional craft and ready-to-wear ease')
     .slice(0, 5000);
 }
@@ -609,7 +609,7 @@ function sanitizeExistingFeedXml(xml) {
   sanitized = sanitized
     .replace(
       /<description>[\s\S]*?<\/description>/i,
-      '<description>Shop Indian ethnic wear online at LuxeMia with shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</description>'
+      '<description>Shop Indian ethnic wear online at LuxeMia with shipping to United States addresses only.</description>'
     )
     .replace(/<last_build_date>[\s\S]*?<\/last_build_date>/i, `<last_build_date>${new Date().toISOString()}</last_build_date>`);
 
@@ -646,13 +646,13 @@ function buildDescription(product, color, material, productType) {
     parts.push(`${detailsParts.join(' | ')}.`);
   }
   parts.push('Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering.');
-  parts.push('Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout. Tracking is provided after dispatch.');
+  parts.push('Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
   // 150 chars, append a closing line so GMC never sees a sub-150 description.
   if (out.length < 150) {
-    out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery to seven supported countries.`;
+    out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery to United States addresses only.`;
   }
   return sanitizeShippingAndBoilerplate(out);
 }
@@ -691,7 +691,7 @@ function generateProductHighlights(product, color, material, productType, title,
 
   if (productType) highlights.push(`Product type: ${productType}`);
   if (size) highlights.push(`Size option: ${size}`);
-  highlights.push('Shipping to seven countries; destination-specific rates are shown at checkout');
+  highlights.push('Shipping to United States addresses only; current rates are shown at checkout');
 
   return highlights.slice(0, 5).map((highlight) =>
     `    <g:product_highlight>${escapeXml(highlight.slice(0, 150))}</g:product_highlight>`
@@ -925,7 +925,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop Indian ethnic wear online at LuxeMia with shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</description>
+  <description>Shop Indian ethnic wear online at LuxeMia with shipping to United States addresses only.</description>
   <last_build_date>${new Date().toISOString()}</last_build_date>
 ${itemsXml}
 </channel>

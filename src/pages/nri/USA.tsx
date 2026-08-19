@@ -14,7 +14,7 @@ const USA = () => (
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
       shippingTime: 'tracking provided after dispatch',
       shippingCost: '$12 per order; free at $150 and above',
-      customsNote: 'US imports may be subject to duties, taxes, or carrier processing fees based on product classification, value, and current customs rules. These charges are not included unless checkout explicitly states otherwise.',
+      customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
           question: 'How long does shipping to the United States take?',
@@ -25,8 +25,8 @@ const USA = () => (
           answer: 'Shipping is free at $150 and above and costs $12 below that. The applicable rate is shown at checkout.',
         },
         {
-          question: 'Will I have to pay customs duties?',
-          answer: 'Possibly. Duties, taxes, and carrier processing fees depend on current rules, product classification, and shipment value. Review current US Customs and Border Protection guidance before ordering.',
+          question: 'Will taxes be charged?',
+          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
         },
         {
           question: 'Can I return an item?',

@@ -296,7 +296,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <span className="text-foreground/20">·</span>
             <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
             <span className="text-foreground/20">·</span>
-            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">Shipping & Customs</Link>
+            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">U.S. Shipping & Taxes</Link>
           </div>
 
           {/* Copyright + business info — bottom row, centered */}
