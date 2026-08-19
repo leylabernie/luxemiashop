@@ -269,6 +269,18 @@ function buildVerifiedProductCopy(product) {
     return `${getCustomProductDescription(matched.title)} Checkout accepts United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`;
   }
 
+  const isSourceVerifiedListing = (product.tags || []).some(
+    (tag) => String(tag).trim().toLowerCase() === 'facts:source-verified',
+  );
+  const sourceVerifiedDescription = isSourceVerifiedListing
+    ? textFromListing(product.description)
+    : '';
+  if (sourceVerifiedDescription.length >= 80) {
+    return normalizeWhitespace(
+      `${sourceVerifiedDescription} Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`,
+    );
+  }
+
   const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
   const attributes = getListedProductAttributes(product);
   const parts = [`${title}.`];
@@ -410,7 +422,7 @@ query GetAllProducts($first: Int!, $after: String) {
             currencyCode
           }
         }
-        images(first: 5) {
+        images(first: 10) {
           edges {
             node {
               url
