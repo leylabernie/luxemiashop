@@ -36,6 +36,7 @@ interface ShopifySelectedOption {
 interface ShopifyVariant {
   id: string;
   title: string;
+  sku: string | null;
   availableForSale: boolean;
   price: { amount: string; currencyCode: string };
   compareAtPrice: { amount: string; currencyCode: string } | null;
@@ -108,6 +109,7 @@ query FetchProducts($first: Int!, $after: String) {
             node {
               id
               title
+              sku
               availableForSale
               price { amount currencyCode }
               compareAtPrice { amount currencyCode }
@@ -253,12 +255,15 @@ function forceJpeg(url: string): string {
   if (!url) return url;
 
   if (url.includes("cdn.shopify.com") || url.includes("myshopify.com")) {
-    // Remove any existing format= and width= params, then re-add
-    let clean = url.replace(/[&?]format=\w+/g, "");
-    clean = clean.replace(/[&?]width=\d+/g, "");
-    // Clean up dangling ? or &
-    clean = clean.replace(/[?&]$/, "");
-    return clean + "?width=1200&format=jpg";
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set("width", "1200");
+      parsed.searchParams.set("format", "jpg");
+      return parsed.toString();
+    } catch {
+      const separator = url.includes("?") ? "&" : "?";
+      return `${url}${separator}width=1200&format=jpg`;
+    }
   }
 
   if (url.includes("kesimg.b-cdn.net")) {
@@ -283,12 +288,63 @@ function forceJpeg(url: string): string {
 
 function escapeXml(str: string): string {
   if (!str) return "";
-  return str
+  // XML 1.0 rejects most control characters even when the five reserved
+  // characters are escaped. Strip only characters XML cannot represent.
+  const validXmlText = Array.from(str).filter((character) => {
+    const codePoint = character.codePointAt(0) ?? 0;
+    return (
+      codePoint === 0x09 ||
+      codePoint === 0x0a ||
+      codePoint === 0x0d ||
+      (codePoint >= 0x20 && codePoint <= 0xd7ff) ||
+      (codePoint >= 0xe000 && codePoint <= 0xfffd) ||
+      (codePoint >= 0x10000 && codePoint <= 0x10ffff)
+    );
+  }).join("");
+
+  return validXmlText
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&apos;");
+}
+
+function normalizeBrand(vendor: string): string {
+  const brand = vendor.trim();
+  if (!brand) return "LuxeMia";
+  return /^luxemi(?:a|ashop)$/i.test(brand.replace(/[^a-z0-9]/gi, ""))
+    ? "LuxeMia"
+    : brand;
+}
+
+function isValidGtin(value: string): boolean {
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(value)) return false;
+
+  const body = value.slice(0, -1);
+  let sum = 0;
+  let weight = 3;
+  for (let index = body.length - 1; index >= 0; index--) {
+    sum += Number(body[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+  return (10 - (sum % 10)) % 10 === Number(value.at(-1));
+}
+
+function normalizeGtin(value: string | null): string {
+  const digits = (value || "").replace(/[\s-]/g, "");
+  return isValidGtin(digits) ? digits : "";
+}
+
+function normalizeMpn(value: string | null): string {
+  return Array.from(value || "")
+    .filter((character) => {
+      const codePoint = character.codePointAt(0) ?? 0;
+      return codePoint >= 0x20 && codePoint !== 0x7f;
+    })
+    .join("")
+    .trim()
+    .slice(0, 70);
 }
 
 // ─── Extract work type from tags ─────────────────────────────────────
@@ -482,9 +538,13 @@ function generateItem(
   const work = getWorkFromTags(product.tags);
   const availability = variant.availableForSale ? "in_stock" : "out_of_stock";
   const currencyCode = variant.price.currencyCode || "USD";
-  const barcode = variant.barcode?.trim() || "";
-  const brand = product.vendor?.trim() || "";
+  const gtin = normalizeGtin(variant.barcode);
+  const brand = normalizeBrand(product.vendor || "");
+  const mpn = brand === "LuxeMia" && !gtin ? normalizeMpn(variant.sku) : "";
   const isApparel = [1604, 5388, 8248].includes(googleCategory);
+  const productLink = `${SITE_URL}/product/${encodeURIComponent(product.handle)}${
+    product.variants.edges.length > 1 ? `?variant=${encodeURIComponent(variantId)}` : ""
+  }`;
 
   // Price handling
   const price = parseFloat(variant.price.amount);
@@ -495,6 +555,9 @@ function generateItem(
   // If compareAtPrice exists and is higher than price, then price is the sale price
   // and compareAtPrice is the original price
   const hasSale = compareAtPrice !== null && compareAtPrice > price;
+  if (!Number.isFinite(price) || price <= 0) {
+    throw new Error(`Invalid price for variant ${variant.id}`);
+  }
 
   // Image handling
   const allImages = product.images.edges.map((e) => e.node);
@@ -534,7 +597,7 @@ function generateItem(
     <g:item_group_id>${escapeXml(productId)}</g:item_group_id>
     <g:title>${escapeXml(listingTitle)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
-    <g:link>${SITE_URL}/product/${escapeXml(product.handle)}</g:link>
+    <g:link>${escapeXml(productLink)}</g:link>
     <g:image_link>${escapeXml(mainImageUrl)}</g:image_link>`;
 
   for (const imageUrl of additionalImages) {
@@ -553,6 +616,7 @@ function generateItem(
 
   xml += `
     <g:condition>new</g:condition>
+    <g:brand>${escapeXml(brand)}</g:brand>
     <g:google_product_category>${googleCategory}</g:google_product_category>`;
 
   if (product.productType) xml += `
@@ -574,11 +638,12 @@ function generateItem(
     <g:size_system>US</g:size_system>`;
   }
 
-  if (barcode) {
+  if (gtin) {
     xml += `
-    <g:gtin>${escapeXml(barcode)}</g:gtin>`;
-    if (brand) xml += `
-    <g:brand>${escapeXml(brand)}</g:brand>`;
+    <g:gtin>${gtin}</g:gtin>`;
+  } else if (mpn) {
+    xml += `
+    <g:mpn>${escapeXml(mpn)}</g:mpn>`;
   } else {
     xml += `
     <g:identifier_exists>no</g:identifier_exists>`;

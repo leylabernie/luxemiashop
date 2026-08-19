@@ -14,12 +14,9 @@ Disallow: /order-confirmation
 Disallow: /_prerender/
 # Legacy /products URLs remain crawlable so search engines can discover their
 # redirects to the current /product and /collections URLs.
-# Block URL parameter crawl traps (search, sort, filter) — saves crawl budget
-Disallow: /*?q=
-Disallow: /*?sort=
-Disallow: /*?filter=
-Disallow: /*?page=
-Disallow: /*?sub=
+# Category query URLs remain crawlable so crawlers can receive the middleware's
+# noindex directive and canonical link. Blocking them here would prevent Google
+# from seeing those consolidation signals.
 
 # ─── Googlebot ───────────────────────────────────────────────────────────────
 User-agent: Googlebot
@@ -44,11 +41,6 @@ Disallow: /checkout
 Disallow: /api/
 Disallow: /order-confirmation
 Disallow: /_prerender/
-Disallow: /*?q=
-Disallow: /*?sort=
-Disallow: /*?filter=
-Disallow: /*?page=
-Disallow: /*?sub=
 
 # ─── Googlebot-Image ─────────────────────────────────────────────────────────
 # Ensure Google can crawl all product images for Merchant Center.

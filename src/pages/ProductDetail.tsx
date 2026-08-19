@@ -22,6 +22,7 @@ import {
   applyCustomizableProductDetails,
   getCustomizableProduct,
 } from '@/lib/customizableProducts';
+import { normalizeBrandName } from '@/lib/schema';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -177,6 +178,8 @@ const ProductDetail = () => {
   const productIsAvailable = product
     ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
     : false;
+  const schemaVariant = product?.variants.edges.find((variant) => variant.node.availableForSale)?.node
+    || product?.variants.edges[0]?.node;
 
   // Enrich thin descriptions only with attributes supported by the listing.
   // Some legacy jewelry records contain garment option values (for example,
@@ -292,13 +295,14 @@ const ProductDetail = () => {
             image: product.images.edges[0]?.node.url || '',
             description: enrichedDescription || product.description || '',
             availability: productIsAvailable ? 'InStock' : 'OutOfStock',
-            sku: product.id,
+            sku: schemaVariant?.sku || '',
+            gtin: schemaVariant?.barcode || undefined,
+            mpn: normalizeBrandName(product.vendor) === 'LuxeMia' && schemaVariant?.sku && !schemaVariant?.barcode
+              ? schemaVariant.sku
+              : undefined,
             originalPrice: product.compareAtPriceRange?.maxVariantPrice?.amount,
             category: product.productType || 'Ethnic Wear',
-            brand: (() => {
-              const v = (product.vendor || '').trim();
-              return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
-            })(),
+            brand: normalizeBrandName(product.vendor),
             color: productColor,
             material: productMaterial,
             sizes: isJewelryProduct ? [] : productSizeValues,

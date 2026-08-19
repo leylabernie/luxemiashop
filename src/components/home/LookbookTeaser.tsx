@@ -4,10 +4,10 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const lookbookImages = [
-  { src: '/images/lookbook/lookbook-1.jpg', alt: 'Elegant Saree' },
-  { src: '/images/lookbook/lookbook-2.jpg', alt: 'Bridal Lehenga Collection' },
-  { src: '/images/lookbook/lookbook-3.jpg', alt: 'Wedding Collection' },
-  { src: '/images/lookbook/lookbook-4.jpg', alt: 'Festive Ensemble' },
+  { src: '/images/lookbook/lookbook-1.webp', alt: 'Elegant Saree' },
+  { src: '/images/lookbook/lookbook-2.webp', alt: 'Bridal Lehenga Collection' },
+  { src: '/images/lookbook/lookbook-3.webp', alt: 'Wedding Collection' },
+  { src: '/images/lookbook/lookbook-4.webp', alt: 'Festive Ensemble' },
 ];
 
 const LookbookTeaser = () => {

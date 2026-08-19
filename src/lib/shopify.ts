@@ -82,6 +82,7 @@ export interface ShopifyProduct {
           id: string;
           title: string;
           sku?: string;
+          barcode?: string | null;
           price: {
             amount: string;
             currencyCode: string;
@@ -165,6 +166,7 @@ const STOREFRONT_LISTING_QUERY = `
                 id
                 title
                 sku
+                barcode
                 price {
                   amount
                   currencyCode
@@ -257,6 +259,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
             id
             title
             sku
+            barcode
             price {
               amount
               currencyCode
@@ -320,6 +323,7 @@ const COLLECTION_BY_HANDLE_QUERY = `
                   id
                   title
                   sku
+                  barcode
                   price { amount currencyCode }
                   compareAtPrice { amount currencyCode }
                   availableForSale

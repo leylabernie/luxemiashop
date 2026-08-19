@@ -1127,14 +1127,26 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </Button>
         </motion.div>
 
-        <Button variant="outline" size="icon" className="h-14 w-14">
+        <Button variant="outline" size="icon" className="h-14 w-14" aria-label="Save product to wishlist">
           <Heart className="h-5 w-5" />
         </Button>
 
-        <Button variant="outline" size="icon" className="h-14 w-14">
+        <Button variant="outline" size="icon" className="h-14 w-14" aria-label="Share this product">
           <Share2 className="h-5 w-5" />
         </Button>
       </div>
+
+      <nav aria-label="Purchase help" className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
+        <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
+          Size guide
+        </Link>
+        <Link to="/shipping" className="font-medium text-primary underline underline-offset-4">
+          Shipping details
+        </Link>
+        <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
+          Returns &amp; cancellations
+        </Link>
+      </nav>
 
       <button
         type="button"
@@ -1231,7 +1243,12 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         </div>
         <div>
           <p className="text-sm font-medium">Check your measurements before ordering</p>
-          <p className="text-xs text-muted-foreground">{RETURN_POLICY_SUMMARY} Contact LuxeMia before purchase if you need sizing help.</p>
+          <p className="text-xs text-muted-foreground">
+            {RETURN_POLICY_SUMMARY} Contact LuxeMia before purchase if you need sizing help.{' '}
+            <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
+              Read the return policy
+            </Link>
+          </p>
         </div>
       </div>
 
