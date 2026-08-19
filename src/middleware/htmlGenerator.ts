@@ -6,7 +6,7 @@
  */
 
 import type { ShopifyProduct } from './shopifyProxy.js';
-import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
+import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -162,31 +162,79 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const activePrice = price;
   const schemaSalePrice = hasDiscount ? price : undefined;
 
-  // Generate schema using shared module
+  // Generate schema using the same ProductGroup model that the static build
+  // uses. Multi-variant products therefore expose every current Shopify offer
+  // rather than only the initial color in a bot-rendered response.
   const organizationSchema = generateOrganizationSchema();
-  const productSchema = generateProductSchema({
-    name: displayTitle,
-    description: description,
-    url: canonicalUrl,
-    image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))],
-    sku,
-    gtin,
-    mpn: normalizedVendor === 'LuxeMia' && sku && !gtin ? sku : undefined,
-    brand: normalizedVendor,
-    category: productAttributes.jewelry
-      ? (/necklace|choker/i.test(`${product.productType} ${displayTitle}`)
-        ? 'Apparel & Accessories > Jewelry > Necklaces'
-        : 'Apparel & Accessories > Jewelry')
-      : (product.productType || 'Clothing > Traditional & Ethnic Wear'),
-    googleProductCategory,
-    color,
-    material,
-    sizes,
-    price,
-    compareAtPrice,
-    currency,
-    availability: availability as 'InStock' | 'OutOfStock',
+  const schemaCategory = productAttributes.jewelry
+    ? (/necklace|choker/i.test(`${product.productType} ${displayTitle}`)
+      ? 'Apparel & Accessories > Jewelry > Necklaces'
+      : 'Apparel & Accessories > Jewelry')
+    : (product.productType || 'Clothing > Traditional & Ethnic Wear');
+  const schemaImages = [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))];
+  const groupId = product.handle.length <= 50
+    ? product.handle
+    : `p${product.id.split('/').pop() || product.handle}`;
+  const schemaVariants = product.variants.edges.map(({ node: variant }) => {
+    const variantId = variant.id.split('/').pop() || '';
+    const selectedOptions = variant.selectedOptions || [];
+    const colorValue = selectedOptions.find(option => ['color', 'colour'].includes(option.name.toLowerCase()))?.value || '';
+    const sizeValue = selectedOptions.find(option => ['size', 'blouse size', 'bust size', 'chest size'].includes(option.name.toLowerCase()))?.value || '';
+    const optionLabel = [...new Set(selectedOptions
+      .filter(option => option.value && option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
+      .map(option => option.value))].join(' / ');
+    const variantUrl = variantId ? `${canonicalUrl}?variant=${encodeURIComponent(variantId)}` : canonicalUrl;
+    const variantSku = variant.sku || '';
+    const variantGtin = variant.barcode || '';
+    return {
+      id: variantId,
+      name: optionLabel ? `${displayTitle} — ${optionLabel}` : displayTitle,
+      description,
+      url: variantUrl,
+      image: variant.image?.url ? [forceJpegForGmc(variant.image.url)] : schemaImages,
+      sku: variantSku,
+      gtin: variantGtin,
+      mpn: normalizedVendor === 'LuxeMia' && variantSku && !variantGtin ? variantSku : undefined,
+      color: colorValue,
+      size: sizeValue,
+      price: variant.price?.amount || price,
+      currency: variant.price?.currencyCode || currency,
+      availability: variant.availableForSale === false ? 'OutOfStock' as const : 'InStock' as const,
+    };
   });
+  const productSchema = schemaVariants.length > 1
+    ? generateProductGroupSchema({
+        name: displayTitle,
+        description,
+        url: canonicalUrl,
+        image: schemaImages,
+        brand: normalizedVendor,
+        category: schemaCategory,
+        googleProductCategory,
+        material,
+        productGroupId: groupId,
+        variesBy: ['https://schema.org/color'],
+        variants: schemaVariants,
+      })
+    : generateProductSchema({
+        name: displayTitle,
+        description,
+        url: canonicalUrl,
+        image: schemaImages,
+        sku,
+        gtin,
+        mpn: normalizedVendor === 'LuxeMia' && sku && !gtin ? sku : undefined,
+        brand: normalizedVendor,
+        category: schemaCategory,
+        googleProductCategory,
+        color,
+        material,
+        sizes,
+        price,
+        compareAtPrice,
+        currency,
+        availability: availability as 'InStock' | 'OutOfStock',
+      });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: SITE_URL },

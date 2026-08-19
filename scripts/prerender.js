@@ -446,6 +446,10 @@ query GetAllProducts($first: Int!, $after: String) {
                 currencyCode
               }
               availableForSale
+              image {
+                url
+                altText
+              }
               selectedOptions {
                 name
                 value
@@ -2165,41 +2169,100 @@ function generateHtml(template, route, allShopifyProducts) {
       ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
-    // Product schema — must include image, description, offers.price/priceCurrency
-    // for Google Merchant Listings validation.
-    const productSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      '@id': `${canonical}#product`,
-      name: route.h1,
-      image: productImages,
-      description: productDescription,
-      ...(productSku ? { sku: productSku } : {}),
-      ...(productMpn ? { mpn: productMpn } : {}),
-      ...productGtinSchema,
-      url: canonical,
-      brand: { '@type': 'Brand', name: productBrand },
-      category: productCategory.schemaCategory,
-      ...(productAttributes.color ? { color: productAttributes.color } : {}),
-      ...(productAttributes.material ? { material: productAttributes.material } : {}),
-      ...(productAttributes.sizes.length > 0 ? { size: productAttributes.sizes } : {}),
+    // Product schema must mirror Merchant Center's product grouping. Google
+    // recommends ProductGroup + hasVariant for a single page where customers
+    // switch variants with query parameters. This preserves a direct, current
+    // offer for every source-backed Shopify variant rather than exposing only
+    // the initially selected option in static HTML.
+    const schemaVariants = live?.variants?.edges?.map((edge) => edge.node).filter(Boolean) || [];
+    const productId = live?.id?.split('/').pop() || '';
+    const productGroupId = (live?.handle || '').length <= 50
+      ? (live?.handle || '')
+      : (productId ? `p${productId}` : (live?.handle || ''));
+    const offerForVariant = (variant, variantUrl) => ({
+      '@type': 'Offer',
+      '@id': `${variantUrl}#offer`,
+      url: variantUrl,
+      // Active price only; compare-at values never create unsupported sale windows.
+      price: variant?.price?.amount || productPrice,
+      priceCurrency: variant?.price?.currencyCode || productCurrency,
+      availability: `https://schema.org/${variant?.availableForSale === false ? 'OutOfStock' : 'InStock'}`,
       itemCondition: 'https://schema.org/NewCondition',
-      offers: {
-        '@type': 'Offer',
-        '@id': `${canonical}#offer`,
-        url: canonical,
-        // Product markup must expose the active price. The compare-at price is
-        // handled by the merchant feed and visible merchandising, not an
-        // invented ninety-day schema promotion window.
-        price: productPrice,
-        priceCurrency: productCurrency,
-        availability: `https://schema.org/${productAvailability}`,
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@id': `${SITE_URL}/#org` },
-        hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
-        shippingDetails: US_PRODUCT_SHIPPING_DETAILS,
-      },
+      seller: { '@id': `${SITE_URL}/#org` },
+      hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
+      shippingDetails: US_PRODUCT_SHIPPING_DETAILS,
+    });
+    const schemaVariantProduct = (variant) => {
+      const variantId = variant?.id?.split('/').pop() || '';
+      const selectedOptions = variant?.selectedOptions || [];
+      const color = selectedOptions.find((option) => ['color', 'colour'].includes((option?.name || '').toLowerCase()))?.value || '';
+      const size = selectedOptions.find((option) => ['size', 'blouse size', 'bust size', 'chest size'].includes((option?.name || '').toLowerCase()))?.value || '';
+      const visibleOptions = selectedOptions
+        .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
+        .map((option) => option.value);
+      const variantLabel = [...new Set(visibleOptions)].join(' / ');
+      const variantUrl = variantId ? `${canonical}?variant=${encodeURIComponent(variantId)}` : canonical;
+      const variantImages = variant?.image?.url ? [forceJpegForGmc(variant.image.url)] : productImages;
+      const variantSku = variant?.sku || '';
+      const variantGtin = variant?.barcode || '';
+      const variantGtinSchema = getGtinSchemaProperty(variantGtin);
+      const variantMpn = productBrand === 'LuxeMia' && variantSku && !Object.keys(variantGtinSchema).length
+        ? variantSku
+        : '';
+      return {
+        '@type': 'Product',
+        '@id': `${variantUrl}#product`,
+        isVariantOf: { '@id': `${canonical}#productgroup` },
+        name: variantLabel ? `${route.h1} — ${variantLabel}` : route.h1,
+        image: variantImages,
+        description: productDescription,
+        ...(variantSku ? { sku: variantSku } : {}),
+        ...(variantMpn ? { mpn: variantMpn } : {}),
+        ...variantGtinSchema,
+        url: variantUrl,
+        brand: { '@type': 'Brand', name: productBrand },
+        category: productCategory.schemaCategory,
+        ...(color ? { color } : {}),
+        ...(productAttributes.material ? { material: productAttributes.material } : {}),
+        ...(size ? { size } : {}),
+        offers: offerForVariant(variant, variantUrl),
+      };
     };
+    const productSchema = schemaVariants.length > 1
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'ProductGroup',
+          '@id': `${canonical}#productgroup`,
+          name: route.h1,
+          image: productImages,
+          description: productDescription,
+          url: canonical,
+          brand: { '@type': 'Brand', name: productBrand },
+          category: productCategory.schemaCategory,
+          ...(productAttributes.material ? { material: productAttributes.material } : {}),
+          ...(productGroupId ? { productGroupID: productGroupId } : {}),
+          variesBy: ['https://schema.org/color'],
+          hasVariant: schemaVariants.map(schemaVariantProduct),
+        }
+      : {
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          '@id': `${canonical}#product`,
+          name: route.h1,
+          image: productImages,
+          description: productDescription,
+          ...(productSku ? { sku: productSku } : {}),
+          ...(productMpn ? { mpn: productMpn } : {}),
+          ...productGtinSchema,
+          url: canonical,
+          brand: { '@type': 'Brand', name: productBrand },
+          category: productCategory.schemaCategory,
+          ...(productAttributes.color ? { color: productAttributes.color } : {}),
+          ...(productAttributes.material ? { material: productAttributes.material } : {}),
+          ...(productAttributes.sizes.length > 0 ? { size: productAttributes.sizes } : {}),
+          itemCondition: 'https://schema.org/NewCondition',
+          offers: offerForVariant(productVariant, canonical),
+        };
 
     // Breadcrumb schema for product pages
     const breadcrumbSchema = {

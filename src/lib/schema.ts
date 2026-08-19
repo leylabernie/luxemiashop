@@ -157,6 +157,22 @@ export interface ProductSchemaInput {
   availability: 'InStock' | 'OutOfStock';
 }
 
+export interface ProductVariantSchemaInput {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  image: string[];
+  sku?: string;
+  gtin?: string | null;
+  mpn?: string | null;
+  color?: string;
+  size?: string;
+  price: string;
+  currency: string;
+  availability: 'InStock' | 'OutOfStock';
+}
+
 function getGtinSchemaProperty(value?: string | null): Record<string, string> {
   const digits = (value || '').replace(/[\s-]/g, '');
   if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(digits)) return {};
@@ -171,6 +187,70 @@ function getGtinSchemaProperty(value?: string | null): Record<string, string> {
   if ((10 - (sum % 10)) % 10 !== Number(digits.at(-1))) return {};
 
   return { [`gtin${digits.length}`]: digits };
+}
+
+function generateOfferSchema(input: Pick<ProductVariantSchemaInput, 'url' | 'price' | 'currency' | 'availability'>) {
+  return {
+    '@type': 'Offer',
+    '@id': `${input.url}#offer`,
+    url: input.url,
+    price: input.price,
+    priceCurrency: input.currency,
+    availability: `https://schema.org/${input.availability}`,
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: { '@id': `${SITE_URL}/#org` },
+    hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
+    shippingDetails: generateUsProductShippingDetails(),
+  };
+}
+
+export function generateProductGroupSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+  image: string[];
+  brand?: string;
+  category?: string;
+  googleProductCategory?: string;
+  material?: string;
+  productGroupId: string;
+  variesBy: string[];
+  variants: ProductVariantSchemaInput[];
+}) {
+  const groupId = `${input.url}#productgroup`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProductGroup',
+    '@id': groupId,
+    name: input.name,
+    image: input.image,
+    description: input.description,
+    url: input.url,
+    brand: { '@type': 'Brand', name: normalizeBrandName(input.brand) },
+    category: input.category || 'Clothing > Traditional & Ethnic Wear',
+    ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
+    ...(input.material && { material: input.material }),
+    productGroupID: input.productGroupId,
+    variesBy: input.variesBy,
+    hasVariant: input.variants.map((variant) => ({
+      '@type': 'Product',
+      '@id': `${variant.url}#product`,
+      isVariantOf: { '@id': groupId },
+      name: variant.name,
+      image: variant.image,
+      description: variant.description,
+      ...(variant.sku && { sku: variant.sku }),
+      ...(variant.mpn && { mpn: variant.mpn }),
+      ...getGtinSchemaProperty(variant.gtin),
+      url: variant.url,
+      brand: { '@type': 'Brand', name: normalizeBrandName(input.brand) },
+      category: input.category || 'Clothing > Traditional & Ethnic Wear',
+      ...(variant.color && { color: variant.color }),
+      ...(input.material && { material: input.material }),
+      ...(variant.size && { size: variant.size }),
+      offers: generateOfferSchema(variant),
+    })),
+  };
 }
 
 export function generateProductSchema(input: ProductSchemaInput) {
@@ -197,20 +277,14 @@ export function generateProductSchema(input: ProductSchemaInput) {
     ...(input.color && { color: input.color }),
     ...(input.material && { material: input.material }),
     ...(input.sizes && input.sizes.length > 0 && { size: input.sizes.length === 1 ? input.sizes[0] : input.sizes.join('/') }),
-    offers: {
-      '@type': 'Offer',
-      '@id': `${input.url}#offer`,
+    // Always expose the current purchasable price. Do not manufacture sale
+    // windows: terms are only valid when backed by a real promotion schedule.
+    offers: generateOfferSchema({
       url: input.url,
-      // Always expose the current purchasable price. Do not manufacture sale
-      // windows: terms are only valid when backed by a real promotion schedule.
       price: schemaPrice,
-      priceCurrency: input.currency,
-      availability: `https://schema.org/${input.availability}`,
-      itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@id': `${SITE_URL}/#org` },
-      hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
-      shippingDetails: generateUsProductShippingDetails(),
-    },
+      currency: input.currency,
+      availability: input.availability,
+    }),
   };
 }
 
