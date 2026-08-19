@@ -422,7 +422,7 @@ query GetAllProducts($first: Int!, $after: String) {
             currencyCode
           }
         }
-        images(first: 10) {
+        images(first: 20) {
           edges {
             node {
               url

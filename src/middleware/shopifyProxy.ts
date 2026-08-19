@@ -32,7 +32,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
       seo { title description }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount currencyCode } }
-      images(first: 5) { edges { node { url altText } } }
+      images(first: 20) { edges { node { url altText } } }
       variants(first: 100) { edges { node { id title sku barcode price { amount currencyCode } compareAtPrice { amount currencyCode } availableForSale image { url altText } selectedOptions { name value } } } }
       options { name values }
     }
