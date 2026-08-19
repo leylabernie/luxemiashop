@@ -249,7 +249,7 @@ function validateEmail(email: string): { valid: boolean; error?: string } {
   return { valid: true };
 }
 
-const ACTIVE_WELCOME_DISCOUNT_CODE = "LUXE10";
+const ACTIVE_WELCOME_DISCOUNT_CODE = "WELCOME10";
 
 Deno.serve(async (req) => {
   // Handle CORS preflight

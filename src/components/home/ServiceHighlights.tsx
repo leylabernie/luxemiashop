@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: '7-Country Shipping',
-    description: 'U.S. and six international destinations',
+    title: 'Tracked U.S. Shipping',
+    description: 'United States addresses only',
   },
   {
     icon: ShieldCheck,

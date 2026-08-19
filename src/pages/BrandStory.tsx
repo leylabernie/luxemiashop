@@ -17,7 +17,7 @@ const organizationSchema = {
   logo: 'https://luxemia.shop/favicon.ico',
   email: 'hello@luxemia.shop',
   description:
-    'LuxeMia is an online Indian ethnic wear store shipping sarees, lehengas, salwar suits, and occasion wear to seven countries.',
+    'LuxeMia is an online Indian ethnic wear store shipping sarees, lehengas, salwar suits, and occasion wear to United States addresses.',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'US',
@@ -27,7 +27,7 @@ const organizationSchema = {
     '@type': 'ContactPoint',
     telephone: '+1-215-341-9990',
     contactType: 'customer service',
-    areaServed: ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'],
+    areaServed: ['US'],
     availableLanguage: ['English', 'Hindi'],
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',
@@ -143,9 +143,9 @@ const philosophyPoints = [
   },
   {
     icon: '⊕',
-    title: 'Seven-Country Shipping',
+    title: 'Tracked U.S. Shipping',
     description:
-      'Shipping is available to the U.S., Canada, UK, Australia, New Zealand, South Africa, and Mauritius. Destination-specific rates appear at checkout.',
+      'Shipping is available to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
   },
   {
     icon: '✦',
@@ -312,7 +312,7 @@ const BrandStory = () => {
       {/* SEO Head with enriched props */}
       <SEOHead
         title="Our Story \u2014 LuxeMia | Indian Ethnic Wear Online"
-        description="Discover LuxeMia, an online Indian ethnic wear store with clear product details, sizing guidance, U.S.-based support, and shipping to seven countries."
+        description="Discover LuxeMia, an online Indian ethnic wear store with clear product details, sizing guidance, U.S.-based support, and tracked United States shipping."
         canonical="https://luxemia.shop/brand-story"
         image="/images/heroes/hero-bridal-couture.jpg"
         breadcrumbs={[
@@ -722,7 +722,7 @@ const BrandStory = () => {
               <h3 className="font-serif text-lg mb-3">Business Model</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 LuxeMia is an online-only Indian ethnic wear store with shipping
-                to seven countries. We publish the available information about fabrics,
+                to United States addresses. We publish the available information about fabrics,
                 embellishments, stitching status, measurements, and package
                 contents. Tracking is provided after dispatch.
               </p>
@@ -732,13 +732,13 @@ const BrandStory = () => {
                 Shipping &amp; Delivery
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong>Free U.S. standard shipping:</strong> Orders at $150 and above. International rates are shown at checkout.<br />
+                <strong>Free U.S. standard shipping:</strong> Orders at $150 and above.<br />
                 <strong>Flat rate:</strong> $12 per order below $150.<br />
                 <strong>Delivery timing:</strong> Depends on the product and selected options.<br />
                 <strong>Tracking:</strong> Provided after dispatch.<br />
-                <strong>Customs:</strong> See our{' '}
-                <Link to="/pages/shipping-customs" className="text-primary underline">Shipping &amp; Customs</Link>
-                {' '}page for details on import duties and local taxes.
+                <strong>Taxes:</strong> See our{' '}
+                <Link to="/pages/shipping-customs" className="text-primary underline">U.S. Shipping &amp; Taxes</Link>
+                {' '}page for details.
               </p>
             </div>
             <div className="p-6 bg-background border border-border/50 rounded-lg">

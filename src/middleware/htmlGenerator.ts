@@ -108,7 +108,7 @@ function buildVerifiedProductDescription(product: ShopifyProduct): string {
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.'
+    'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above; tracking is provided after dispatch.'
   );
 
   return parts.join(' ').replace(/\s+/g, ' ').trim();
@@ -212,11 +212,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     }]),
     {
       question: `What is the delivery time for the ${displayTitle}?`,
-      answer: 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to seven countries; destination-specific rates are shown at checkout.',
+      answer: 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. LuxeMia currently ships to United States addresses only.',
     },
     {
       question: `Can I return the ${displayTitle}?`,
-      answer: 'Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery. Customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are not eligible for buyer-remorse returns, subject to applicable law. See Returns & Cancellations for complete instructions.',
+      answer: 'All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours of delivery with clear photos and a continuous unboxing/opening video. See Returns & Cancellations for complete instructions.',
     },
     {
       question: `How should I care for the ${displayTitle}?`,
@@ -363,9 +363,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
         </div>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Seven countries supported. U.S. standard shipping is free at $150 and above; international rates are shown at checkout.<br>
+          <strong>Shipping:</strong> United States addresses only. Standard shipping is free at $150 and above and $12 below $150.<br>
           <strong>Tracking:</strong> Emailed when the shipping label is created for dispatch. Contact LuxeMia before ordering when an event date is time-sensitive.<br>
-          <strong>Returns:</strong> Eligible U.S. standard-stock items may be returned within 30 calendar days of delivery; customers pay tracked return shipping for buyer-remorse returns. Customised, altered, made-to-order, and clearly identified final-sale items are excluded, subject to applicable law. Confirmed covered issues receive no-cost return support.<br>
+          <strong>Returns:</strong> All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours with clear photos and a continuous unboxing/opening video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>
       </div>

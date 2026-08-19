@@ -14,7 +14,7 @@ export const SITE_URL = 'https://luxemia.shop';
 export const SITE_NAME = 'LuxeMia';
 export const DEFAULT_TITLE = 'LuxeMia — Indian Ethnic Wear Online';
 export const DEFAULT_DESCRIPTION = "Shop the Indian sarees, lehengas, suits, menswear and jewelry currently listed at LuxeMia. Exact product details, prices, sizes and availability are shown online.";
-const RETURN_POLICY_SEO_DESCRIPTION = 'Read LuxeMia’s U.S. returns policy: eligible standard-stock items may be returned within 30 days; customers pay buyer-remorse return shipping, while confirmed covered issues receive no-cost return support.';
+const RETURN_POLICY_SEO_DESCRIPTION = 'Read LuxeMia’s final-sale policy and the 48-hour process for reporting genuine shipping damage or defect, an incorrect item, or a missing item.';
 
 export interface PageMetadata {
   title: string;
@@ -108,13 +108,13 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/indian-ethnic-wear-usa`,
   },
   '/shipping': {
-    title: 'Shipping Policy | U.S. & International Delivery | LuxeMia',
-    description: 'LuxeMia ships to the U.S., Canada, UK, Australia, New Zealand, South Africa and Mauritius. Review current rates, timing, tracking and customs guidance.',
+    title: 'U.S. Shipping Policy | LuxeMia',
+    description: 'LuxeMia ships to United States addresses. Standard shipping is $12 below $150 and free at $150 and above; tracking is emailed after dispatch.',
     canonical: `${SITE_URL}/shipping`,
   },
   '/pages/shipping-customs': {
-    title: 'Shipping, Customs & Taxes | LuxeMia',
-    description: "Review LuxeMia's U.S. and international shipping rates, tracking, customs and tax guidance before ordering.",
+    title: 'U.S. Shipping & Taxes | LuxeMia',
+    description: "Review LuxeMia's United States shipping rates, tracking and tax guidance before ordering.",
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {

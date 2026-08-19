@@ -627,7 +627,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
           {/* General tailoring note */}
           <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
             <p className="text-sm text-foreground">
-              <strong>Note:</strong> Made-to-measure, altered, and custom orders are not eligible for buyer-remorse returns, subject to applicable law. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
+              <strong>Note:</strong> All sales are final and exchanges are not accepted. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
             </p>
           </div>
         </div>
@@ -907,7 +907,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>International rates are shown at checkout</span>
+                  <span>United States shipping addresses only</span>
                 </li>
               </ul>
             </div>
@@ -923,7 +923,7 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Shipping to seven supported countries</span>
+                  <span>Tracking provided after dispatch</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />

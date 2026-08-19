@@ -1072,7 +1072,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
       {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
-        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Shipping to 7 countries</span>
+        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Tracked U.S. shipping</span>
         <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
         <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
       </div>
@@ -1269,7 +1269,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Tracked shipping</p>
-            <p className="text-xs text-muted-foreground">Seven supported countries</p>
+            <p className="text-xs text-muted-foreground">United States addresses only</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">

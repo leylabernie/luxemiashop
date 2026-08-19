@@ -19,7 +19,7 @@ export type ProductCategory =
   | 'indo-western';
 
 const SHIPPING_POLICY =
-  'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above; international rates are shown at checkout.';
+  'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above; tracking is provided after dispatch.';
 
 function cleanText(value?: string): string {
   return (value || '')

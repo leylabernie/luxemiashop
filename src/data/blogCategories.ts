@@ -23,7 +23,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
     longDescription: 'Use these practical outfit guides to compare silhouettes, occasion fit and styling choices. Then open the relevant LuxeMia collection and confirm the exact fabric or materials, included pieces, stitching status, size options and current availability on each product listing.',
     icon: 'Shirt',
     metaTitle: 'Indian Outfit Guides — Sarees, Lehengas, Suits & Menswear | LuxeMia',
-    metaDescription: 'Compare Indian outfit silhouettes and styling choices, then shop current LuxeMia sarees, lehengas, suits, menswear and jewelry with shipping to seven countries.',
+    metaDescription: 'Compare Indian outfit silhouettes and styling choices, then shop current LuxeMia sarees, lehengas, suits, menswear and jewelry with tracked U.S. shipping.',
   },
   {
     slug: 'motifs-embroideries',
@@ -41,7 +41,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
     longDescription: 'Plan outfits for wedding ceremonies, receptions and festivals celebrated outside India. These guides focus on useful outfit choices and link directly to relevant LuxeMia shopping categories.',
     icon: 'Heart',
     metaTitle: 'Indian Wedding Guest & Festival Outfit Guides | LuxeMia',
-    metaDescription: 'Practical Indian wedding guest and festival outfit guides with direct links to current LuxeMia collections and seven-country shipping.',
+    metaDescription: 'Practical Indian wedding guest and festival outfit guides with direct links to current LuxeMia collections and tracked U.S. shipping.',
   },
   {
     slug: 'how-to-care',

@@ -35,7 +35,7 @@ const indowesternFaqs = [
   },
   {
     question: 'Do you ship Indo-Western outfits in the United States?',
-    answer: 'Yes. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.',
+    answer: 'LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
   },
   {
     question: 'Which fabrics and embellishments are available?',
@@ -90,7 +90,7 @@ const Indowestern = () => {
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. Open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to seven countries; U.S. standard shipping is $12 below $150 and free at $150 and above, while international rates are shown at checkout.
+              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. Open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to United States addresses only; standard shipping is $12 below $150 and free at $150 and above.
             </p>
           </div>
         </div>

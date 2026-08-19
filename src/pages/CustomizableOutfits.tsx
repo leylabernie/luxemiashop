@@ -33,7 +33,7 @@ const customizableFaqs = [
   },
   {
     question: 'Where does LuxeMia currently ship these outfits?',
-    answer: 'Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout. Duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.',
+    answer: 'Checkout currently accepts United States shipping addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
   },
   {
     question: 'Can a custom order be returned?',
@@ -142,9 +142,9 @@ const CustomizableOutfits = () => {
           <div className="container mx-auto max-w-4xl px-4 lg:px-8">
             <h2 className="text-center font-serif text-2xl">Ordering, shipping, and final-sale terms</h2>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>LuxeMia checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $12 below $150 and free at $150 and above. International rates are shown at checkout.</p>
-              <p>Custom orders are final sale, subject to applicable law. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering. International duties, import taxes, brokerage, or carrier fees may apply unless checkout explicitly states otherwise.</p>
-              <p>Need help? Use <Link to="/contact" className="text-primary underline underline-offset-4">LuxeMia contact options</Link> or WhatsApp with the exact product link, requested color, measurements question, event date, and country.</p>
+              <p>LuxeMia checkout currently accepts United States shipping addresses only. Standard shipping is $12 below $150 and free at $150 and above.</p>
+              <p>All orders are final sale, subject to applicable law. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering.</p>
+              <p>Need help? Use <Link to="/contact" className="text-primary underline underline-offset-4">LuxeMia contact options</Link> or WhatsApp with the exact product link, requested color, measurements question, event date, and U.S. ZIP code.</p>
             </div>
             <nav aria-label="Related collections" className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/lehengas"><Button variant="outline" size="sm">Lehengas</Button></Link>
