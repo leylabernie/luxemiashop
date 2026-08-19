@@ -1041,6 +1041,7 @@ function generateItemListJsonLd(products, category, routePath) {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
+    '@id': `${canonical}#products`,
     name: category === 'all' ? 'LuxeMia Collection' : `LuxeMia ${category.charAt(0).toUpperCase() + category.slice(1)}`,
     url: canonical,
     numberOfItems: items.length,
@@ -1129,6 +1130,7 @@ const routes = [
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
         <ul>
+          <li><a href="/collections/navratri-outfits">Navratri &amp; Garba Outfits 2026</a> — Current chaniya choli, lehenga and festive styles for U.S. celebrations</li>
           <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
@@ -1881,19 +1883,22 @@ const routes = [
   {
     path: '/collections/navratri-outfits',
     category: 'occasion:navratri',
-    title: 'Navratri Outfits — Current Garba Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for Navratri, Garba, chaniya, or dandiya. Review exact product details and U.S. shipping terms.',
-    h1: 'Navratri Outfits',
+    title: 'Navratri Outfits USA 2026 | Garba Styles | LuxeMia',
+    description: 'Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; WELCOME10 for first orders.',
+    h1: 'Navratri Outfits for Garba in the USA',
     content: `
-      <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
-      <h2>How to Choose</h2>
-      <p>Use the organizer or community guidance for the event schedule, requested color, dress, and venue because practices vary. Open the exact listing to confirm fabric, work, included pieces, size options, price, and availability.</p>
+      <p>Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events in the United States. This collection includes available products whose catalog details explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
+      <p>United States calendars list Navratri beginning Sunday, October 11, 2026. Confirm religious dates and event schedules with your temple or organizer because practices can vary by location and community.</p>
+      <h2>Choose a Navratri Outfit</h2>
+      <p>For Garba and Dandiya, compare skirt or garment length, closures, measurements, stitching status, included pieces, and embellishment placement. Open the exact listing to confirm fabric, work, size options, price, and availability.</p>
       <ul>
-        <li><a href="/lehengas">Lehengas</a></li>
-        <li><a href="/suits">Suits</a></li>
-        <li><a href="/collections/diwali-outfits">Diwali Outfits</a></li>
+        <li><a href="/blog/navratri-9-day-color-guide-2026">Navratri Outfits USA 2026 Buying Guide</a></li>
+        <li><a href="/lehengas">Shop Lehengas and Chaniya Choli</a></li>
+        <li><a href="/suits">Shop Anarkali and Salwar Suits</a></li>
+        <li><a href="/sizing-measurements-guide">Sizing and Measurement Guide</a></li>
       </ul>
-      <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
+      <p>LuxeMia ships to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use WELCOME10 for 10% off with no minimum purchase requirement.</p>
+      <p>Contact LuxeMia before ordering when your celebration date is fixed. Delivery by a particular event is not guaranteed.</p>
     `,
   },
   {
@@ -2402,6 +2407,22 @@ function generateHtml(template, route, allShopifyProducts) {
       const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
       html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
 
+      if (route.path === '/collections/navratri-outfits') {
+        const canonical = `${SITE_URL}${route.path}`;
+        const collectionPageJsonLd = {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          '@id': canonical,
+          url: canonical,
+          name: route.h1,
+          description: route.description,
+          inLanguage: 'en-US',
+          mainEntity: { '@id': `${canonical}#products` },
+          isPartOf: { '@id': `${SITE_URL}/#website` },
+        };
+        html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(collectionPageJsonLd)}</script>\n</head>`);
+      }
+
       // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
       // and skips the client-side Shopify fetch entirely on first paint.
       const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
@@ -2452,6 +2473,8 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/contact">Contact</a>
       </nav>
       <nav aria-label="Featured shopping guides">
+        <a href="/collections/navratri-outfits">Navratri &amp; Garba Outfits 2026</a> |
+        <a href="/blog/navratri-9-day-color-guide-2026">Navratri 2026 Buying Guide</a> |
         <a href="/blog/plus-size-indian-ethnic-wear-guide">Plus-Size Indian Ethnic Wear Guide</a> |
         <a href="/blog/manish-malhotra-bollywood-bridal-designer-profile">Manish Malhotra Designer Profile</a> |
         <a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary</a>
