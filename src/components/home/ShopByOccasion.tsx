@@ -45,9 +45,9 @@ const occasions = [
     accent: 'text-amber-700 dark:text-amber-300',
   },
   {
-    label: 'Festive',
-    sublabel: 'Diwali, Eid & more',
-    href: '/sarees?sub=party-wear',
+    label: 'Navratri & Garba',
+    sublabel: 'Chaniya choli & dance-ready styles',
+    href: '/collections/navratri-outfits',
     color: 'bg-orange-50 dark:bg-orange-950/30',
     accent: 'text-orange-700 dark:text-orange-300',
   },

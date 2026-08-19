@@ -513,6 +513,104 @@ function sanitizeFeedTitle(text) {
     .trim();
 }
 
+const MERCHANT_TITLE_MAX_LENGTH = 150;
+const NAVRATRI_PRIORITY_PRODUCT_LIMIT = 30;
+
+function trimMerchantTitle(text, maxLength = MERCHANT_TITLE_MAX_LENGTH) {
+  const clean = sanitizeFeedTitle(text);
+  if (clean.length <= maxLength) return clean;
+  const shortened = clean.slice(0, maxLength + 1).replace(/\s+\S*$/, '').trim();
+  return shortened || clean.slice(0, maxLength).trim();
+}
+
+function merchantProductSearchText(product) {
+  return [
+    product.handle || '',
+    product.title || '',
+    product.productType || '',
+    ...(product.tags || []),
+  ].join(' ').toLowerCase();
+}
+
+function navratriPriorityScore(product) {
+  const text = merchantProductSearchText(product);
+  let score = 0;
+  if (/\bnavratri\b/.test(text)) score += 12;
+  if (/\bgarba\b/.test(text)) score += 8;
+  if (/\bchaniya\b/.test(text)) score += 6;
+  if (/\bdandiya\b/.test(text)) score += 4;
+  if (/\bmirror\b/.test(text)) score += 2;
+  if (/\b(?:lehenga|choli)\b/.test(text)) score += 1;
+  return score;
+}
+
+function selectNavratriPriorityHandles(products) {
+  const uniqueProducts = new Map();
+  for (const product of products) {
+    if (!product?.handle || uniqueProducts.has(product.handle)) continue;
+    const score = navratriPriorityScore(product);
+    if (score > 0) uniqueProducts.set(product.handle, { product, score });
+  }
+
+  return new Set(
+    [...uniqueProducts.values()]
+      .sort((a, b) => b.score - a.score || a.product.handle.localeCompare(b.product.handle))
+      .slice(0, NAVRATRI_PRIORITY_PRODUCT_LIMIT)
+      .map(({ product }) => product.handle)
+  );
+}
+
+function buildMerchantBaseTitle(baseTitle, handle, navratriPriorityHandles) {
+  let title = sanitizeFeedTitle(baseTitle);
+  if (!navratriPriorityHandles.has(handle)) return trimMerchantTitle(title);
+
+  const missingSeasonalTerms = [];
+  if (!/\bnavratri\b/i.test(title)) missingSeasonalTerms.push('Navratri');
+  if (!/\bgarba\b/i.test(title)) missingSeasonalTerms.push('Garba Outfit');
+  if (missingSeasonalTerms.length > 0) {
+    title = `${title} — ${missingSeasonalTerms.join(' ')}`;
+  }
+  return trimMerchantTitle(title);
+}
+
+function composeMerchantVariantTitle(baseTitle, variantLabel) {
+  const cleanBase = sanitizeFeedTitle(baseTitle);
+  const cleanVariant = sanitizeFeedTitle(variantLabel || '');
+  if (!cleanVariant) return trimMerchantTitle(cleanBase);
+
+  const separator = ' — ';
+  const maximumBaseLength = Math.max(40, MERCHANT_TITLE_MAX_LENGTH - separator.length - cleanVariant.length);
+  return `${trimMerchantTitle(cleanBase, maximumBaseLength)}${separator}${cleanVariant}`.slice(0, MERCHANT_TITLE_MAX_LENGTH).trim();
+}
+
+function getMerchantProductType(productType, title) {
+  const text = `${productType || ''} ${title || ''}`.toLowerCase();
+  const root = 'Apparel & Accessories';
+
+  if (/(?:jewelry|jewellery|necklace|choker|earring|bangle|bracelet|maang tikka|ring)/.test(text)) {
+    return `${root} > Jewelry > Indian Jewelry`;
+  }
+  if (/(?:sherwani|men(?:'s)?\s|menswear|kurta pajama|nehru jacket|jodhpuri)/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Sherwanis & Men's Kurtas`;
+  }
+  if (/\b(?:saree|sari)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Sarees`;
+  }
+  if (/\b(?:lehenga|lehnga|chaniya|choli)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Lehengas & Chaniya Choli`;
+  }
+  if (/\b(?:salwar|kameez|sharara|gharara|anarkali|palazzo|plazzo|churidar|patiala|kurti)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Salwar Kameez & Suits`;
+  }
+  if (/\bblouse\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Saree Blouses`;
+  }
+  if (/\b(?:indo.?western|fusion|co-?ord|jumpsuit|cape set)\b/.test(text)) {
+    return `${root} > Clothing > Indian Ethnic Wear > Indo-Western Clothing`;
+  }
+  return `${root} > Clothing > Indian Ethnic Wear`;
+}
+
 function sanitizeShippingAndBoilerplate(text) {
   return text
     .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
@@ -574,13 +672,39 @@ function readItemTag(itemXml, tagName) {
   return decodeXml(match?.[1] || '').trim();
 }
 
+function readProductHandleFromItem(itemXml) {
+  const link = readItemTag(itemXml, 'g:link');
+  try {
+    return new URL(link).pathname.replace(/^\/product\//, '').replace(/\/+$/, '');
+  } catch {
+    return '';
+  }
+}
+
 function sanitizeExistingFeedXml(xml) {
   let itemCount = 0;
 
+  const fallbackProducts = [...xml.matchAll(/<item>[\s\S]*?<\/item>/gi)].map(([itemXml]) => ({
+    handle: readProductHandleFromItem(itemXml),
+    title: readItemTag(itemXml, 'g:item_group_title') || readItemTag(itemXml, 'g:title'),
+    productType: readItemTag(itemXml, 'g:product_type'),
+    tags: [],
+  }));
+  const navratriPriorityHandles = selectNavratriPriorityHandles(fallbackProducts);
+
   let sanitized = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
     itemCount += 1;
-    const title = sanitizeFeedTitle(readItemTag(itemXml, 'g:title') || 'Indian ethnic wear');
-    const productType = readItemTag(itemXml, 'g:product_type') || 'Ethnic Wear';
+    const handle = readProductHandleFromItem(itemXml);
+    const rawTitle = readItemTag(itemXml, 'g:title') || 'Indian ethnic wear';
+    const rawGroupTitle = readItemTag(itemXml, 'g:item_group_title');
+    const originalBaseTitle = rawGroupTitle || rawTitle.split(/\s+[—–]\s+/)[0] || rawTitle;
+    const merchantBaseTitle = buildMerchantBaseTitle(originalBaseTitle, handle, navratriPriorityHandles);
+    const variantLabel = rawGroupTitle && rawTitle.startsWith(rawGroupTitle)
+      ? rawTitle.slice(rawGroupTitle.length).replace(/^\s*[—–-]\s*/, '')
+      : '';
+    const title = composeMerchantVariantTitle(merchantBaseTitle, variantLabel);
+    const rawProductType = readItemTag(itemXml, 'g:product_type') || 'Ethnic Wear';
+    const productType = getMerchantProductType(rawProductType, merchantBaseTitle);
     const color = readItemTag(itemXml, 'g:color');
     const material = readItemTag(itemXml, 'g:material');
     const size = readItemTag(itemXml, 'g:size');
@@ -590,9 +714,25 @@ function sanitizeExistingFeedXml(xml) {
     let item = itemXml
       .replace(/<g:title>[\s\S]*?<\/g:title>/i, `<g:title>${escapeXml(title)}</g:title>`)
       .replace(/<g:description>[\s\S]*?<\/g:description>/i, `<g:description>${escapeXml(description)}</g:description>`)
+      .replace(/<g:product_type>[\s\S]*?<\/g:product_type>/i, `<g:product_type>${escapeXml(productType)}</g:product_type>`)
       .replace(/\s*<g:product_highlight>[\s\S]*?<\/g:product_highlight>/gi, '')
+      .replace(/\s*<g:custom_label_1>[\s\S]*?<\/g:custom_label_1>/gi, '')
       .replace(/\s*<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi, '')
       .replace(/\s*<g:returns>[\s\S]*?<\/g:returns>/gi, '');
+
+    if (rawGroupTitle) {
+      item = item.replace(
+        /<g:item_group_title>[\s\S]*?<\/g:item_group_title>/i,
+        `<g:item_group_title>${escapeXml(merchantBaseTitle)}</g:item_group_title>`
+      );
+    }
+
+    if (navratriPriorityHandles.has(handle)) {
+      item = item.replace(
+        /\s*<g:custom_label_0>/i,
+        '\n    <g:custom_label_1>navratri_2026_priority</g:custom_label_1>\n    <g:custom_label_0>'
+      );
+    }
 
     if (/<g:gender>/i.test(item)) {
       item = item.replace(/\s*<g:gender>/i, `\n${highlights}\n    <g:gender>`);
@@ -605,6 +745,8 @@ function sanitizeExistingFeedXml(xml) {
   if (itemCount === 0) {
     throw new Error('Fallback merchant feed contains no products');
   }
+
+  console.log(`[merchant-feed] Prioritized ${navratriPriorityHandles.size} Navratri product groups for seasonal title relevance`);
 
   sanitized = sanitized
     .replace(
@@ -752,7 +894,7 @@ function fitMerchantId(rawId, stableFallback) {
   return `${rawId.slice(0, prefixLength)}-${hash}`.slice(0, 50);
 }
 
-function generateProductItemXml(product, variant, titleCounts) {
+function generateProductItemXml(product, variant, titleCounts, navratriPriorityHandles) {
   const handle = product.handle;
   const variantId = variant.id?.split('/').pop() || '';
   const variants = product.variants.edges.map((edge) => edge.node);
@@ -817,9 +959,10 @@ function generateProductItemXml(product, variant, titleCounts) {
   }
   const availability = variant.availableForSale === false ? 'out_of_stock' : 'in_stock';
 
-  const productType = product.productType || 'Ethnic Wear';
-  const googleProductCategory = getGoogleProductCategory(productType, product.title);
-  const gender = getGender(productType, product.title);
+  const rawProductType = product.productType || 'Ethnic Wear';
+  const productType = getMerchantProductType(rawProductType, product.title);
+  const googleProductCategory = getGoogleProductCategory(rawProductType, product.title);
+  const gender = getGender(rawProductType, product.title);
   const description = buildDescription(product, color, material, productType);
   const rawSku = variant.sku || variantId || '';
   const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
@@ -836,11 +979,12 @@ function generateProductItemXml(product, variant, titleCounts) {
   ) || '';
 
   const baseTitle = product.title || '';
-  let displayTitle = sanitizeFeedTitle(baseTitle);
+  const merchantBaseTitle = buildMerchantBaseTitle(baseTitle, handle, navratriPriorityHandles);
+  let displayTitle = merchantBaseTitle;
   if (variantLabel) {
-    displayTitle = sanitizeFeedTitle(`${baseTitle} — ${variantLabel}`);
+    displayTitle = composeMerchantVariantTitle(merchantBaseTitle, variantLabel);
   } else if (titleCounts && titleCounts.get(baseTitle) > 1) {
-    displayTitle = sanitizeFeedTitle(`${baseTitle} (${sku || handle})`);
+    displayTitle = composeMerchantVariantTitle(merchantBaseTitle, sku || handle);
   }
 
   const productId = product.id?.split('/').pop() || '';
@@ -853,7 +997,7 @@ function generateProductItemXml(product, variant, titleCounts) {
   const groupFields = isVariantGroup
     ? `
     <g:item_group_id>${escapeXml(itemGroupId)}</g:item_group_id>
-    <g:item_group_title>${escapeXml(sanitizeFeedTitle(baseTitle))}</g:item_group_title>`
+    <g:item_group_title>${escapeXml(merchantBaseTitle)}</g:item_group_title>`
     : '';
 
   return `
@@ -881,7 +1025,8 @@ function generateProductItemXml(product, variant, titleCounts) {
     ${size ? '<g:size_type>regular</g:size_type>' : ''}
     ${size ? '<g:size_system>US</g:size_system>' : ''}
     ${identifiers}
-    <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
+    <g:custom_label_0>${escapeXml(rawProductType)}</g:custom_label_0>
+    ${navratriPriorityHandles.has(handle) ? '<g:custom_label_1>navratri_2026_priority</g:custom_label_1>' : ''}
   </item>`;
 }
 
@@ -890,12 +1035,15 @@ function generateProductItemXml(product, variant, titleCounts) {
 async function main() {
   console.log('[merchant-feed] Generating static Google Merchant Center XML feed...');
 
-  let products;
-  try {
-    products = await fetchAllProducts();
-  } catch (error) {
-    console.error('[merchant-feed] Failed to fetch from Shopify API:', error);
-    products = [];
+  let products = [];
+  if (SHOPIFY_STOREFRONT_TOKEN) {
+    try {
+      products = await fetchAllProducts();
+    } catch (error) {
+      console.error('[merchant-feed] Failed to fetch from Shopify API:', error);
+    }
+  } else {
+    console.log('[merchant-feed] Storefront token is not available locally; using the checked-in feed as the catalog source.');
   }
 
   if (products.length === 0) {
@@ -912,10 +1060,13 @@ async function main() {
     titleCounts.set(t, (titleCounts.get(t) || 0) + 1);
   }
 
+  const navratriPriorityHandles = selectNavratriPriorityHandles(products);
+  console.log(`[merchant-feed] Prioritized ${navratriPriorityHandles.size} Navratri product groups for seasonal title relevance`);
+
   const itemsXml = products
     .flatMap((product) =>
       product.variants.edges.map((edge) =>
-        generateProductItemXml(product, edge.node, titleCounts)
+        generateProductItemXml(product, edge.node, titleCounts, navratriPriorityHandles)
       )
     )
     .join('\n');

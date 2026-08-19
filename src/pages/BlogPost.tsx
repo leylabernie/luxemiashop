@@ -73,6 +73,11 @@ const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
     { label: 'Sarees', href: '/sarees' },
     { label: 'Suits', href: '/suits' },
   ],
+  'Festival Guide': [
+    { label: 'Navratri Outfits', href: '/collections/navratri-outfits' },
+    { label: 'Lehengas', href: '/lehengas' },
+    { label: 'Suits', href: '/suits' },
+  ],
   'Care & Styling': [
     { label: 'Sarees', href: '/sarees' },
     { label: 'Suits', href: '/suits' },
@@ -89,6 +94,7 @@ const postShopCta: Record<string, { eyebrow: string; heading: string; href: stri
   'how-to-drape-saree-beginner-guide': { eyebrow: 'Ready to choose a saree?', heading: 'Browse current sarees and verify included pieces.', href: '/sarees', label: 'Shop Sarees' },
   'how-to-choose-salwar-kameez-body-type': { eyebrow: 'Shop with fit confidence', heading: 'Compare your measurements with current suit options.', href: '/suits', label: 'Shop Suits' },
   'sherwani-vs-jodhpuri-vs-bandhgala-groom-guide': { eyebrow: 'Shop the menswear edit', heading: 'Browse current groom and occasion styles.', href: '/menswear', label: 'Shop Menswear' },
+  'navratri-9-day-color-guide-2026': { eyebrow: 'Shop Navratri 2026', heading: 'Browse current Garba, chaniya choli and festive styles.', href: '/collections/navratri-outfits', label: 'Shop Navratri Outfits' },
   'custom-bridesmaid-wedding-guest-lehenga-online-usa': { eyebrow: 'Shop customizable occasionwear', heading: 'Browse designs with currently verified customization options.', href: '/collections/customizable-indian-outfits', label: 'Shop Customizable Outfits' },
   'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa': { eyebrow: 'Check current options', heading: 'Start with outfits whose product pages identify customization.', href: '/collections/customizable-indian-outfits', label: 'Shop Customizable Outfits' },
 };

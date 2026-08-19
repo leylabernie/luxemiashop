@@ -33,6 +33,21 @@ interface FeaturedSlide {
 const evergreenSlides: FeaturedSlide[] = [
   {
     id: 1,
+    eyebrow: 'Navratri 2026',
+    headline: 'Navratri & Garba Outfits for U.S. Celebrations',
+    subline:
+      'Shop current chaniya choli, lehenga and festive styles for Garba and Dandiya. Use WELCOME10 for 10% off your first order.',
+    cta: 'Shop Navratri Outfits',
+    link: '/collections/navratri-outfits',
+    image: '/images/hero-carousel/navratri-lehenga',
+    desktopImage: '/images/hero-carousel/navratri-lehenga-desktop',
+    alt: 'Woman wearing a bright pink lehenga suitable for a Navratri celebration',
+    width: 1672,
+    height: 941,
+    imageFit: 'cover',
+  },
+  {
+    id: 2,
     eyebrow: 'Recently Added',
     headline: 'New Co-ord Sets',
     subline:
@@ -46,7 +61,7 @@ const evergreenSlides: FeaturedSlide[] = [
     height: 936,
   },
   {
-    id: 2,
+    id: 3,
     eyebrow: 'Wedding Lehengas',
     headline: 'Bridal Lehengas for U.S. Celebrations',
     subline: 'Embroidered lehenga choli sets for weddings, receptions and milestone events.',
@@ -59,7 +74,7 @@ const evergreenSlides: FeaturedSlide[] = [
     height: 1206,
   },
   {
-    id: 3,
+    id: 4,
     eyebrow: 'Sharara & Palazzo Sets',
     headline: 'Indian Occasion Sets, Ready to Style',
     subline:
@@ -75,7 +90,7 @@ const evergreenSlides: FeaturedSlide[] = [
 ];
 
 const launchOfferSlide: FeaturedSlide = {
-  ...evergreenSlides[1],
+  ...evergreenSlides[2],
   eyebrow: '72-Hour Offer',
   headline: `${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% Off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+`,
   subline: `Use code ${RAKSHA_BANDHAN_CAMPAIGN.code} through ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Explore wedding-guest and celebration styles, then review each listing for timing and available options.`,
