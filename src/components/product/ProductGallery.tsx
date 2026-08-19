@@ -13,6 +13,21 @@ interface ProductGalleryProps {
       altText: string | null;
     };
   }>;
+  videos?: Array<{
+    node: {
+      id: string;
+      mediaContentType: string;
+      alt: string | null;
+      previewImage: {
+        url: string;
+        altText: string | null;
+      } | null;
+      sources?: Array<{
+        url: string;
+        mimeType: string;
+      }>;
+    };
+  }>;
   productTitle: string;
 }
 
@@ -75,7 +90,7 @@ const useValidatedImages = (images: ProductGalleryProps['images']) => {
   return { validatedImages, isValidating };
 };
 
-export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) => {
+export const ProductGallery = ({ images, videos = [], productTitle }: ProductGalleryProps) => {
   const { validatedImages, isValidating } = useValidatedImages(images);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -97,6 +112,10 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   const displayImages = validatedImages.length > 0 ? validatedImages : images;
   const hasImages = displayImages && displayImages.length > 0;
   const currentImage = hasImages ? displayImages[selectedIndex]?.node : null;
+  const productVideos = videos.filter((media) =>
+    media.node.mediaContentType === 'VIDEO' &&
+    media.node.sources?.some((source) => source.mimeType === 'video/mp4'),
+  );
   
   // Reset selected index if it's out of bounds after validation
   useEffect(() => {
@@ -270,7 +289,8 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
   }
 
   return (
-    <div className={`flex flex-col-reverse lg:flex-row gap-4 ${!showThumbnails ? 'lg:block' : ''}`}>
+    <>
+      <div className={`flex flex-col-reverse lg:flex-row gap-4 ${!showThumbnails ? 'lg:block' : ''}`}>
       {/* Thumbnail Strip - only show if multiple validated images */}
       {showThumbnails && (
         <div className="flex lg:flex-col gap-2 sm:gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] pb-2 lg:pb-0 lg:pr-2 scrollbar-hide">
@@ -614,5 +634,40 @@ export const ProductGallery = ({ images, productTitle }: ProductGalleryProps) =>
         </AnimatePresence>
       </div>
     </div>
+
+      {productVideos.length > 0 && (
+        <section className="mt-6 border-t border-border/60 pt-5" aria-label="Product videos">
+          <div className="mb-3">
+            <p className="font-medium text-foreground">View fabric and drape in motion</p>
+            <p className="text-sm text-muted-foreground">Watch each available colorway before adding your selection to the bag.</p>
+          </div>
+          <div className={`grid gap-4 ${productVideos.length > 1 ? 'sm:grid-cols-2 xl:grid-cols-3' : 'max-w-sm'}`}>
+            {productVideos.map((media) => {
+              const source = media.node.sources?.find((item) => item.mimeType === 'video/mp4');
+              if (!source) return null;
+
+              return (
+                <figure key={media.node.id} className="overflow-hidden rounded-sm border border-border bg-card">
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    poster={media.node.previewImage?.url}
+                    aria-label={media.node.alt || `${productTitle} product video`}
+                    className="aspect-[9/16] w-full bg-muted object-cover"
+                  >
+                    <source src={source.url} type={source.mimeType} />
+                    Your browser does not support embedded product videos.
+                  </video>
+                  <figcaption className="px-3 py-2 text-xs text-muted-foreground">
+                    {media.node.alt || `${productTitle} product video`}
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </section>
+      )}
+    </>
   );
 };

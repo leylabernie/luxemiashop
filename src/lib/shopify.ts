@@ -56,6 +56,26 @@ export interface ShopifyProduct {
         };
       }>;
     };
+    media?: {
+      edges: Array<{
+        node: {
+          id: string;
+          mediaContentType: string;
+          alt: string | null;
+          previewImage: {
+            url: string;
+            altText: string | null;
+          } | null;
+          sources?: Array<{
+            url: string;
+            mimeType: string;
+            format: string;
+            width: number;
+            height: number;
+          }>;
+        };
+      }>;
+    };
     variants: {
       edges: Array<{
         node: {
@@ -206,6 +226,28 @@ const PRODUCT_BY_HANDLE_QUERY = `
           node {
             url
             altText
+          }
+        }
+      }
+      media(first: 20) {
+        edges {
+          node {
+            id
+            mediaContentType
+            alt
+            previewImage {
+              url
+              altText
+            }
+            ... on Video {
+              sources {
+                url
+                mimeType
+                format
+                width
+                height
+              }
+            }
           }
         }
       }

@@ -357,7 +357,8 @@ const ProductDetail = () => {
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
                 {/* Gallery */}
                 <ProductGallery 
-                  images={product.images.edges} 
+                  images={product.images.edges}
+                  videos={product.media?.edges}
                   productTitle={sanitizeProductTitle(product.title)}
                 />
                 
