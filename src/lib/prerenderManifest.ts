@@ -3,6 +3,7 @@
 // Regenerated on each build. Imported by middleware.ts to avoid self-HTTP HEAD requests.
 
 export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
+  '3d-peacock-mirror-work-italian-silk-ready-made-blouse',
   'lavender-blush-pink-georgette-lucknowi-chikankari-front-cut-top-palazzo-set',
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
   'olive-brown-marble-sequin-thread-work-lehenga-choli-set',
