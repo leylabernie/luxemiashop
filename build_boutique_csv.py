@@ -1,5 +1,7 @@
 import csv
+import os
 import re
+from pathlib import Path
 
 # ============ SCRAPED DATA ============
 sarees = [
@@ -325,6 +327,25 @@ def generate_tags(name, product_type):
     
     return ', '.join(tags)
 
+def get_seo_title(name):
+    suffix = ' | LuxeMia'
+    available = 70 - len(suffix)
+    title = name if len(name) <= available else name[:available].rsplit(' ', 1)[0]
+    return f"{title}{suffix}"
+
+def get_seo_description(name):
+    description = (
+        f"Shop {name} at LuxeMia. Review product photos, listed material, "
+        "sizing, price and availability. Shipping is available to seven countries."
+    )
+    if len(description) <= 160:
+        return description
+    return description[:160].rsplit(' ', 1)[0].rstrip(' ,.;') + '.'
+
+def get_image_alt(name, product_type):
+    alt = f"{name} - {product_type} | LuxeMia"
+    return alt[:125].rsplit(' ', 1)[0] if len(alt) > 125 else alt
+
 # ============ BUILD CSV ============
 
 rows = []
@@ -335,7 +356,8 @@ fieldnames = ['Handle', 'Title', 'Body (HTML)', 'Vendor', 'Product Category', 'T
               'Variant Inventory Tracker', 'Variant Inventory Qty', 'Variant Inventory Policy',
               'Variant Fulfillment Service', 'Variant Price', 'Variant Compare At Price',
               'Variant Requires Shipping', 'Variant Taxable', 'Image Src', 'Image Position',
-              'Image Alt Text', 'Status']
+              'Image Alt Text', 'SEO Title', 'SEO Description',
+              'Google Shopping / Manufacturer part number (MPN)', 'Status']
 
 def empty_row(handle):
     return {k: '' for k in fieldnames[:-1]} | {'Handle': handle, 'Status': ''}
@@ -368,7 +390,11 @@ for i, p in enumerate(sarees):
         'Variant Price': price, 'Variant Compare At Price': '',
         'Variant Requires Shipping': 'true', 'Variant Taxable': 'true',
         'Image Src': p['img'], 'Image Position': '1',
-        'Image Alt Text': p['name'], 'Status': 'active'
+        'Image Alt Text': get_image_alt(p['name'], 'Saree'),
+        'SEO Title': get_seo_title(p['name']),
+        'SEO Description': get_seo_description(p['name']),
+        'Google Shopping / Manufacturer part number (MPN)': sku,
+        'Status': 'active'
     }
     rows.append(row)
     
@@ -378,7 +404,7 @@ for i, p in enumerate(sarees):
         r = empty_row(handle)
         r['Image Src'] = f"{base_img}({img_pos}).jpg"
         r['Image Position'] = str(img_pos + 1)
-        r['Image Alt Text'] = p['name']
+        r['Image Alt Text'] = get_image_alt(p['name'], 'Saree')
         rows.append(r)
 
 # Process suits
@@ -407,7 +433,11 @@ for i, p in enumerate(suits):
         'Variant Price': price, 'Variant Compare At Price': '',
         'Variant Requires Shipping': 'true', 'Variant Taxable': 'true',
         'Image Src': p['img'], 'Image Position': '1',
-        'Image Alt Text': p['name'], 'Status': 'active'
+        'Image Alt Text': get_image_alt(p['name'], 'Salwar Kameez'),
+        'SEO Title': get_seo_title(p['name']),
+        'SEO Description': get_seo_description(p['name']),
+        'Google Shopping / Manufacturer part number (MPN)': sku,
+        'Status': 'active'
     }
     rows.append(row)
     
@@ -416,7 +446,7 @@ for i, p in enumerate(suits):
         r = empty_row(handle)
         r['Image Src'] = f"{base_img}({img_pos}).jpg"
         r['Image Position'] = str(img_pos + 1)
-        r['Image Alt Text'] = p['name']
+        r['Image Alt Text'] = get_image_alt(p['name'], 'Salwar Kameez')
         rows.append(r)
 
 # Process sherwanis
@@ -446,7 +476,11 @@ for i, p in enumerate(sherwanis):
         'Variant Price': price, 'Variant Compare At Price': '',
         'Variant Requires Shipping': 'true', 'Variant Taxable': 'true',
         'Image Src': p['img'], 'Image Position': '1',
-        'Image Alt Text': p['name'], 'Status': 'active'
+        'Image Alt Text': get_image_alt(p['name'], "Men's Indian Wear"),
+        'SEO Title': get_seo_title(p['name']),
+        'SEO Description': get_seo_description(p['name']),
+        'Google Shopping / Manufacturer part number (MPN)': f"{sku}-38",
+        'Status': 'active'
     }
     rows.append(row)
     
@@ -456,6 +490,7 @@ for i, p in enumerate(sherwanis):
         r['Option1 Name'] = 'Size'
         r['Option1 Value'] = str(size)
         r['Variant SKU'] = f"{sku}-{size}"
+        r['Google Shopping / Manufacturer part number (MPN)'] = r['Variant SKU']
         r['Variant Grams'] = '350'
         r['Variant Inventory Tracker'] = 'shopify'
         r['Variant Inventory Qty'] = '5'
@@ -472,20 +507,20 @@ for i, p in enumerate(sherwanis):
         r = empty_row(handle)
         r['Image Src'] = f"{base_img}({img_pos}).jpg"
         r['Image Position'] = str(img_pos + 1)
-        r['Image Alt Text'] = p['name']
+        r['Image Alt Text'] = get_image_alt(p['name'], "Men's Indian Wear")
         rows.append(r)
 
 # Write CSV
-output_path = '/home/z/my-project/download/luxemia_shopify_import_with_images.csv'
+output_path = os.environ.get(
+    'LUXEMIA_BOUTIQUE_CSV_OUTPUT',
+    'artifacts/luxemia_shopify_import_with_images.csv',
+)
+Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 with open(output_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames)
     writer.writeheader()
     for row in rows:
         writer.writerow(row)
-
-# Also copy to public
-import shutil
-shutil.copy(output_path, '/home/z/my-project/public/luxemia_shopify_import.csv')
 
 print(f"CSV written to {output_path}")
 print(f"Total rows: {len(rows)}")
@@ -493,4 +528,3 @@ print(f"Unique products: 90")
 print(f"  Sarees: LXM-SAR-001 to LXM-SAR-030")
 print(f"  Suits: LXM-SUT-001 to LXM-SUT-030")
 print(f"  Sherwanis: LXM-MIW-001 to LXM-MIW-030")
-

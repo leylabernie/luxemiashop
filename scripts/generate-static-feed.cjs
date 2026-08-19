@@ -67,6 +67,7 @@ const ALL_PRODUCTS_QUERY = `
                 id
                 title
                 sku
+                barcode
                 price {
                   amount
                   currencyCode
@@ -101,7 +102,17 @@ const ALL_PRODUCTS_QUERY = `
 
 function escapeXml(str) {
   if (!str) return '';
-  return str
+  const validXmlText = Array.from(String(str)).filter((character) => {
+    const codePoint = character.codePointAt(0) || 0;
+    return codePoint === 0x09
+      || codePoint === 0x0a
+      || codePoint === 0x0d
+      || (codePoint >= 0x20 && codePoint <= 0xd7ff)
+      || (codePoint >= 0xe000 && codePoint <= 0xfffd)
+      || (codePoint >= 0x10000 && codePoint <= 0x10ffff);
+  }).join('');
+
+  return validXmlText
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -112,14 +123,25 @@ function escapeXml(str) {
 function forceJpeg(url) {
   if (!url) return url;
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
-    const clean = url.replace(/[&?]format=\w+/g, '');
-    const sep = clean.includes('?') ? '&' : '?';
-    return `${clean}${sep}format=jpg&width=1200`;
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set('format', 'jpg');
+      parsed.searchParams.set('width', '1200');
+      return parsed.toString();
+    } catch {
+      const sep = url.includes('?') ? '&' : '?';
+      return `${url}${sep}format=jpg&width=1200`;
+    }
   }
   if (url.includes('kesimg.b-cdn.net')) {
-    const clean = url.replace(/[&?]format=\w+/g, '');
-    const sep = clean.includes('?') ? '&' : '?';
-    return `${clean}${sep}format=jpg`;
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set('format', 'jpg');
+      return parsed.toString();
+    } catch {
+      const sep = url.includes('?') ? '&' : '?';
+      return `${url}${sep}format=jpg`;
+    }
   }
   if (!url.match(/\.(jpg|jpeg|png|gif)(\?|$)/i) && !url.includes('format=')) {
     const sep = url.includes('?') ? '&' : '?';
@@ -171,8 +193,37 @@ function getGender(productType, title) {
 function normalizeBrand(vendor) {
   const raw = (vendor || '').trim();
   if (!raw) return BRAND_NAME;
-  if (raw.toLowerCase() === BRAND_NAME.toLowerCase()) return BRAND_NAME;
+  if (/^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, ''))) return BRAND_NAME;
   return raw;
+}
+
+function isValidGtin(value) {
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(value)) return false;
+
+  const body = value.slice(0, -1);
+  let sum = 0;
+  let weight = 3;
+  for (let index = body.length - 1; index >= 0; index -= 1) {
+    sum += Number(body[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+  return (10 - (sum % 10)) % 10 === Number(value.at(-1));
+}
+
+function normalizeGtin(value) {
+  const digits = (value || '').replace(/[\s-]/g, '');
+  return isValidGtin(digits) ? digits : '';
+}
+
+function normalizeMpn(value) {
+  return Array.from(value || '')
+    .filter((character) => {
+      const codePoint = character.codePointAt(0) || 0;
+      return codePoint >= 0x20 && codePoint !== 0x7f;
+    })
+    .join('')
+    .trim()
+    .slice(0, 70);
 }
 
 // ─── Salwar Suit Description Enrichment ──────────────────────────────────
@@ -524,8 +575,6 @@ function readItemTag(itemXml, tagName) {
 }
 
 function sanitizeExistingFeedXml(xml) {
-  const saleStart = new Date().toISOString().split('T')[0];
-  const saleEnd = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   let itemCount = 0;
 
   let sanitized = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
@@ -542,10 +591,8 @@ function sanitizeExistingFeedXml(xml) {
       .replace(/<g:title>[\s\S]*?<\/g:title>/i, `<g:title>${escapeXml(title)}</g:title>`)
       .replace(/<g:description>[\s\S]*?<\/g:description>/i, `<g:description>${escapeXml(description)}</g:description>`)
       .replace(/\s*<g:product_highlight>[\s\S]*?<\/g:product_highlight>/gi, '')
-      .replace(
-        /<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi,
-        `<g:sale_price_effective_date>${saleStart}T00:00:00+00:00/${saleEnd}T23:59:59+00:00</g:sale_price_effective_date>`
-      );
+      .replace(/\s*<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi, '')
+      .replace(/\s*<g:returns>[\s\S]*?<\/g:returns>/gi, '');
 
     if (/<g:gender>/i.test(item)) {
       item = item.replace(/\s*<g:gender>/i, `\n${highlights}\n    <g:gender>`);
@@ -613,22 +660,6 @@ function buildDescription(product, color, material, productType) {
 // Shipping is intentionally managed at the Merchant Center account level so
 // the $150 free-shipping threshold can be represented accurately. Item-level
 // shipping entries would override that threshold and can make a $12 order look free.
-
-// Google Merchant Center's current product-feed attribute is <g:returns>,
-// not <g:returns_policy>. LuxeMia does not accept ordinary returns or
-// exchanges; shipping-damage reports are claims under the published policy,
-// not a general two-day free-return window.
-function generateReturnsXml() {
-  return `
-    <g:returns>
-      <g:country>US</g:country>
-      <g:item_condition>NEW</g:item_condition>
-      <g:window_type>NO_RETURNS</g:window_type>
-      <g:method>BY_MAIL</g:method>
-      <g:shipping_fee>0.00 USD</g:shipping_fee>
-      <g:policy_url>https://luxemia.shop/returns</g:policy_url>
-    </g:returns>`;
-}
 
 function generateProductHighlights(product, color, material, productType, title, size) {
   const highlights = [];
@@ -781,6 +812,9 @@ function generateProductItemXml(product, variant, titleCounts) {
   const currency = variantPrice.currencyCode;
   const compareAt = variant.compareAtPrice?.amount ? parseFloat(variant.compareAtPrice.amount) : 0;
   const hasDiscount = compareAt > price;
+  if (!Number.isFinite(price) || price <= 0) {
+    throw new Error(`Invalid price for variant ${variant.id}`);
+  }
   const availability = variant.availableForSale === false ? 'out_of_stock' : 'in_stock';
 
   const productType = product.productType || 'Ethnic Wear';
@@ -789,6 +823,14 @@ function generateProductItemXml(product, variant, titleCounts) {
   const description = buildDescription(product, color, material, productType);
   const rawSku = variant.sku || variantId || '';
   const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
+  const brand = normalizeBrand(product.vendor);
+  const gtin = normalizeGtin(variant.barcode);
+  const mpn = brand === BRAND_NAME && !gtin ? normalizeMpn(variant.sku) : '';
+  const identifiers = gtin
+    ? `<g:gtin>${gtin}</g:gtin>`
+    : mpn
+      ? `<g:mpn>${escapeXml(mpn)}</g:mpn>`
+      : '<g:identifier_exists>no</g:identifier_exists>';
   const patternTag = product.tags?.find((tag) =>
     /embroider|work|print|woven/i.test(tag)
   ) || '';
@@ -825,9 +867,8 @@ function generateProductItemXml(product, variant, titleCounts) {
     <g:availability>${availability}</g:availability>
     <g:price>${hasDiscount ? compareAt.toFixed(2) : price.toFixed(2)} ${currency}</g:price>
     ${hasDiscount ? `<g:sale_price>${price.toFixed(2)} ${currency}</g:sale_price>` : ''}
-    ${hasDiscount ? `<g:sale_price_effective_date>${new Date().toISOString().split('T')[0]}T00:00:00+00:00/${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}T23:59:59+00:00</g:sale_price_effective_date>` : ''}
     <g:condition>new</g:condition>
-    <g:brand>${escapeXml(normalizeBrand(product.vendor))}</g:brand>
+    <g:brand>${escapeXml(brand)}</g:brand>
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
     <g:product_type>${escapeXml(productType)}</g:product_type>
     ${generateProductHighlights(product, color, material, productType, displayTitle, size)}
@@ -839,9 +880,8 @@ function generateProductItemXml(product, variant, titleCounts) {
     ${size ? `<g:size>${escapeXml(size)}</g:size>` : ''}
     ${size ? '<g:size_type>regular</g:size_type>' : ''}
     ${size ? '<g:size_system>US</g:size_system>' : ''}
-    <g:identifier_exists>no</g:identifier_exists>
+    ${identifiers}
     <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>
-    ${generateReturnsXml()}
   </item>`;
 }
 

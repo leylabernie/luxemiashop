@@ -411,7 +411,7 @@ const BrandStory = () => {
         content="We&#39;re not claiming decades of heritage — we&#39;re a new online brand learning and improving every day. Our focus is clear product information, sizing guidance, published policies, and customer support before purchase. Delivery timing depends on the product and selected options. Tracking is provided after dispatch."
         imagePosition="left"
         bgColor="bg-background"
-        imageUrl="/images/lookbook/hero-main.jpg"
+        imageUrl="/images/lookbook/hero-main.webp"
         imageAlt="LuxeMia lookbook — Indian ethnic wear from the LuxeMia online catalog"
       />
 

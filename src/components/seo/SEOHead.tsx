@@ -42,6 +42,8 @@ interface SEOHeadProps {
     description: string;
     availability?: 'InStock' | 'OutOfStock' | 'PreOrder';
     sku?: string;
+    gtin?: string;
+    mpn?: string;
     originalPrice?: string;
     category?: string;
     brand?: string;
@@ -128,6 +130,8 @@ const SEOHead = ({
             ? product.description
             : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with shipping to seven countries.`,
         sku: product.sku || '',
+        gtin: product.gtin,
+        mpn: product.mpn,
         url: canonicalUrl,
         brand: product.brand,
         category: product.category,

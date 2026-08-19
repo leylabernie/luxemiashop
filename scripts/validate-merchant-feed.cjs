@@ -14,6 +14,22 @@ if (!feedPath) {
 }
 
 const xml = fs.readFileSync(feedPath, 'utf8');
+
+const invalidXmlCharacter = Array.from(xml).find((character) => {
+  const codePoint = character.codePointAt(0) || 0;
+  return !(
+    codePoint === 0x09
+    || codePoint === 0x0a
+    || codePoint === 0x0d
+    || (codePoint >= 0x20 && codePoint <= 0xd7ff)
+    || (codePoint >= 0xe000 && codePoint <= 0xfffd)
+    || (codePoint >= 0x10000 && codePoint <= 0x10ffff)
+  );
+});
+if (invalidXmlCharacter) {
+  throw new Error(`Merchant feed contains an invalid XML 1.0 character (U+${invalidXmlCharacter.codePointAt(0).toString(16).toUpperCase()})`);
+}
+
 const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)].map((match) => match[1]);
 const itemIds = [...xml.matchAll(/<g:id>([^<]+)<\/g:id>/g)].map((match) => match[1]);
 const groupIds = [...xml.matchAll(/<g:item_group_id>([^<]+)<\/g:item_group_id>/g)].map((match) => match[1]);
@@ -37,6 +53,56 @@ if (longGroupIds.length > 0) {
 }
 if (duplicateItemIds.length > 0) {
   throw new Error(`Merchant feed contains ${new Set(duplicateItemIds).size} duplicate product IDs`);
+}
+
+function tagCount(item, tag) {
+  return [...item.matchAll(new RegExp(`<${tag}>[\\s\\S]*?<\\/${tag}>`, 'gi'))].length;
+}
+
+function isValidGtin(value) {
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(value)) return false;
+  const body = value.slice(0, -1);
+  let sum = 0;
+  let weight = 3;
+  for (let index = body.length - 1; index >= 0; index -= 1) {
+    sum += Number(body[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+  return (10 - (sum % 10)) % 10 === Number(value.at(-1));
+}
+
+const requiredTagFailures = [];
+const identifierFailures = [];
+for (const item of itemBlocks) {
+  const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
+  for (const tag of ['g:id', 'g:title', 'g:description', 'g:link', 'g:image_link', 'g:availability', 'g:price', 'g:condition', 'g:brand']) {
+    const count = tagCount(item, tag);
+    if (count !== 1) requiredTagFailures.push(`${id}: <${tag}> appears ${count} time(s)`);
+  }
+
+  const availability = item.match(/<g:availability>([^<]+)<\/g:availability>/i)?.[1] || '';
+  if (!['in_stock', 'out_of_stock', 'preorder', 'backorder'].includes(availability)) {
+    requiredTagFailures.push(`${id}: invalid availability ${availability || '(missing)'}`);
+  }
+
+  const gtins = [...item.matchAll(/<g:gtin>([^<]+)<\/g:gtin>/gi)].map((match) => match[1].trim());
+  const mpnCount = tagCount(item, 'g:mpn');
+  const identifierExistsNo = /<g:identifier_exists>\s*no\s*<\/g:identifier_exists>/i.test(item);
+  for (const gtin of gtins) {
+    if (!isValidGtin(gtin)) identifierFailures.push(`${id}: invalid GTIN ${gtin}`);
+  }
+  if (identifierExistsNo && (gtins.length > 0 || mpnCount > 0)) {
+    identifierFailures.push(`${id}: identifier_exists=no conflicts with GTIN/MPN`);
+  }
+  if (!identifierExistsNo && gtins.length === 0 && mpnCount === 0) {
+    identifierFailures.push(`${id}: missing GTIN, MPN, or identifier_exists=no`);
+  }
+}
+if (requiredTagFailures.length > 0) {
+  throw new Error(`Merchant feed has required-attribute failures: ${requiredTagFailures.slice(0, 10).join('; ')}`);
+}
+if (identifierFailures.length > 0) {
+  throw new Error(`Merchant feed has identifier failures: ${identifierFailures.slice(0, 10).join('; ')}`);
 }
 
 // Every offer must use a real product image. Generic storefront campaign or OG
@@ -68,6 +134,12 @@ for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:ta
   if (xml.includes(`<${accountManagedTag}>`)) {
     throw new Error(`Merchant feed contains account-managed attribute <${accountManagedTag}>`);
   }
+}
+if (/<g:returns>/i.test(xml)) {
+  throw new Error('Merchant feed contains item-level returns that can conflict with the Merchant Center account policy');
+}
+if (/<g:sale_price_effective_date>/i.test(xml)) {
+  throw new Error('Merchant feed contains a sale window without a catalog-backed promotion schedule');
 }
 
 const legacyDeliveryCopy = /delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/i;
@@ -109,5 +181,5 @@ for (const pattern of staleClaimPatterns) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique products, ${groupIds.length} group IDs, product-specific HTTPS images, and current policy-safe descriptions/highlights`
+  `[merchant-feed] Validated ${itemIds.length} unique products, ${groupIds.length} group IDs, required attributes, identifiers, product-specific HTTPS images, and current policy-safe descriptions/highlights`
 );

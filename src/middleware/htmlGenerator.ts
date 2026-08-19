@@ -6,7 +6,7 @@
  */
 
 import type { ShopifyProduct } from './shopifyProxy.js';
-import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, SITE_URL } from '../lib/schema.js';
+import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -143,7 +143,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const vendor = product.vendor || 'LuxeMia';
 
   const { color, includedPieces, material, shipsWithinDays, sizes } = productAttributes;
-  const sku = product.variants.edges[0]?.node?.sku || product.id.split('/').pop() || '';
+  const schemaVariant = product.variants.edges.find((variant) => variant.node.availableForSale)?.node
+    || product.variants.edges[0]?.node;
+  const sku = schemaVariant?.sku || '';
+  const gtin = schemaVariant?.barcode || '';
+  const normalizedVendor = normalizeBrandName(vendor);
   const googleProductCategory = getGoogleProductCategory(product.productType, displayTitle);
 
   const isMenswear = (product.productType || '').toLowerCase().includes('men') || (displayTitle || '').toLowerCase().includes('sherwani') || (displayTitle || '').toLowerCase().includes('kurta pajama');
@@ -166,7 +170,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     url: canonicalUrl,
     image: [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))],
     sku,
-    brand: vendor,
+    gtin,
+    mpn: normalizedVendor === 'LuxeMia' && sku && !gtin ? sku : undefined,
+    brand: normalizedVendor,
     category: productAttributes.jewelry
       ? (/necklace|choker/i.test(`${product.productType} ${displayTitle}`)
         ? 'Apparel & Accessories > Jewelry > Necklaces'

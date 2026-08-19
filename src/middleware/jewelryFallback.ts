@@ -23,6 +23,13 @@ function toHandle(name: string): string {
 
 // Import and build handle map at module load time
 import { jewelryProducts } from '../data/jewelryProducts.js';
+import {
+  generateBreadcrumbSchema,
+  generateOrganizationSchema,
+  generateProductSchema,
+  generateWebPageSchema,
+  getGoogleProductCategory,
+} from '../lib/schema.js';
 
 const JEWELRY_MAP = new Map<string, JewelryProductMinimal>();
 for (const p of jewelryProducts) {
@@ -49,6 +56,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   const price = product.price;
   const originalPrice = product.originalPrice;
   const hasDiscount = originalPrice ? originalPrice > price : false;
+  const absoluteImage = product.image.startsWith('http') ? product.image : `${SITE_URL}${product.image}`;
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -73,43 +81,33 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
     ]
   };
 
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": product.name,
-    "description": description,
-    "url": canonicalUrl,
-    "image": product.image,
-    "brand": { "@type": "Brand", "name": "LuxeMia" },
-    "offers": {
-      "@type": "Offer",
-      "price": price,
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "seller": { "@type": "Organization", "name": "LuxeMia" }
-    }
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-      { "@type": "ListItem", "position": 2, "name": "Jewelry", "item": `${SITE_URL}/jewelry` },
-      { "@type": "ListItem", "position": 3, "name": product.name, "item": canonicalUrl }
-    ]
-  };
-
-  const webPageSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${canonicalUrl}#webpage`,
-    "url": canonicalUrl,
-    "name": title,
-    "description": description,
-    "isPartOf": { "@id": `${SITE_URL}/#website` },
-    "inLanguage": "en-US"
-  };
+  const productSchema = generateProductSchema({
+    name: product.name,
+    description,
+    url: canonicalUrl,
+    image: [absoluteImage],
+    sku: '',
+    brand: 'LuxeMia',
+    category: `Apparel & Accessories > Jewelry > ${product.category}`,
+    googleProductCategory: getGoogleProductCategory(product.category, product.name),
+    material: product.material,
+    price: String(price),
+    compareAtPrice: originalPrice ? String(originalPrice) : null,
+    currency: 'USD',
+    availability: 'InStock',
+  });
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: SITE_URL },
+    { name: 'Jewelry', url: `${SITE_URL}/jewelry` },
+    { name: product.name, url: canonicalUrl },
+  ]);
+  const webPageSchema = generateWebPageSchema({
+    url: canonicalUrl,
+    title,
+    description,
+  });
+  const organizationSchema = generateOrganizationSchema();
+  const serializeJsonLd = (schema: Record<string, unknown>) => JSON.stringify(schema).replace(/</g, '\\u003c');
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -124,7 +122,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   <meta property="og:url" content="${canonicalUrl}">
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description.replace(/"/g, '&quot;')}">
-  <meta property="og:image" content="${product.image}">
+  <meta property="og:image" content="${absoluteImage}">
   <meta property="og:site_name" content="LuxeMia">
   <meta property="product:price:amount" content="${hasDiscount ? originalPrice : price}">
   <meta property="product:price:currency" content="USD">
@@ -132,10 +130,11 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   <meta property="product:availability" content="in stock">
   <meta property="product:brand" content="LuxeMia">
   <meta property="product:condition" content="new">
-  <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+  <script type="application/ld+json">${serializeJsonLd(productSchema)}</script>
+  <script type="application/ld+json">${serializeJsonLd(breadcrumbSchema)}</script>
+  <script type="application/ld+json">${serializeJsonLd(webPageSchema)}</script>
+  <script type="application/ld+json">${serializeJsonLd(organizationSchema)}</script>
+  <script type="application/ld+json">${serializeJsonLd(faqSchema)}</script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Playfair Display', Georgia, serif; color: #1a1a1a; background: #fafaf9; line-height: 1.6; }
@@ -160,7 +159,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
   <div class="container">
     <nav><a href="${SITE_URL}">Home</a> &rsaquo; <a href="${SITE_URL}/jewelry">Jewelry</a> &rsaquo; ${product.name.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</nav>
     <div class="product-grid">
-      <div><img src="${product.image}" alt="${product.name.replace(/"/g, '&quot;')}" style="max-width:100%;height:auto;border-radius:2px;" width="800" height="1067" /></div>
+      <div><img src="${absoluteImage}" alt="${product.name.replace(/"/g, '&quot;')}" style="max-width:100%;height:auto;border-radius:2px;" width="800" height="1067" /></div>
       <div class="product-info">
         <h1>${product.name.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</h1>
         <div class="price">

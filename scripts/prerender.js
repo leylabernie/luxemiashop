@@ -424,6 +424,7 @@ query GetAllProducts($first: Int!, $after: String) {
               id
               title
               sku
+              barcode
               price {
                 amount
                 currencyCode
@@ -963,6 +964,27 @@ const US_PRODUCT_SHIPPING_DETAILS = [
     shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
   },
 ];
+
+function normalizeBrand(vendor) {
+  const raw = (vendor || '').trim();
+  if (!raw) return 'LuxeMia';
+  return /^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, '')) ? 'LuxeMia' : raw;
+}
+
+function getGtinSchemaProperty(value) {
+  const digits = (value || '').replace(/[\s-]/g, '');
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(digits)) return {};
+
+  const body = digits.slice(0, -1);
+  let sum = 0;
+  let weight = 3;
+  for (let index = body.length - 1; index >= 0; index -= 1) {
+    sum += Number(body[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+  if ((10 - (sum % 10)) % 10 !== Number(digits.at(-1))) return {};
+  return { [`gtin${digits.length}`]: digits };
+}
 
 // schema.org ItemList JSON-LD for collection pages. Each ListItem wraps a Product
 // with url/image/name/offers — what Google Merchant Center reads for rich results.
@@ -2114,14 +2136,18 @@ function generateHtml(template, route, allShopifyProducts) {
     const productDescription = (live ? buildVerifiedProductCopy(live) : route.description || '').slice(0, 5000);
     const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
-    const productSku = live?.variants?.edges?.[0]?.node?.sku || (live?.id || '').split('/').pop() || handle;
+    const productVariant = live?.variants?.edges?.find((variant) => variant.node.availableForSale)?.node
+      || live?.variants?.edges?.[0]?.node;
+    const productSku = productVariant?.sku || '';
+    const productGtin = productVariant?.barcode || '';
     const productAvailability = live?.availableForSale === true || live?.variants?.edges?.some((variant) => variant.node.availableForSale)
       ? 'InStock'
       : 'OutOfStock';
-    const productBrand = (() => {
-      const v = (live?.vendor || '').trim();
-      return !v || v.toLowerCase() === 'luxemia' ? 'LuxeMia' : v;
-    })();
+    const productBrand = normalizeBrand(live?.vendor);
+    const productGtinSchema = getGtinSchemaProperty(productGtin);
+    const productMpn = productBrand === 'LuxeMia' && productSku && !Object.keys(productGtinSchema).length
+      ? productSku
+      : '';
     const productAttributes = getListedProductAttributes(live);
     const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(handle)
       ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
@@ -2136,7 +2162,9 @@ function generateHtml(template, route, allShopifyProducts) {
       name: route.h1,
       image: productImages,
       description: productDescription,
-      ...(productSku ? { sku: productSku, mpn: productSku } : {}),
+      ...(productSku ? { sku: productSku } : {}),
+      ...(productMpn ? { mpn: productMpn } : {}),
+      ...productGtinSchema,
       url: canonical,
       brand: { '@type': 'Brand', name: productBrand },
       category: productCategory.schemaCategory,

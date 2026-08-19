@@ -19,7 +19,9 @@ Fixes applied (April 2026):
 import csv
 import json
 import math
+import os
 import re
+from pathlib import Path
 
 # ============ LOAD SCRAPED PRICES ============
 with open('product_prices.json', 'r') as f:
@@ -378,21 +380,26 @@ def generate_tags(name, product_type):
     return ', '.join(tags)
 
 def get_seo_description(name, product_type):
-    """Generate SEO description (truncated for meta tag)."""
-    color = extract_color(name)
-    fabric = extract_fabric(name)
-    occasion = extract_occasion(name)
-    work = extract_work(name)
-    desc = f"Shop the {name} at LuxeMia. "
-    if fabric:
-        desc += f"Crafted in premium {fabric}"
-    if work:
-        desc += f" with exquisite {work}"
-    desc += f" in {color}. "
-    if occasion:
-        desc += f"Perfect for {occasion.lower()}. "
-    desc += "Free shipping on orders over $150. Dry clean only."
-    return desc[:320]  # SEO description limit
+    """Generate factual, search-friendly copy without unsupported claims."""
+    desc = (
+        f"Shop {name} at LuxeMia. Review product photos, listed material, "
+        "sizing, price and availability. Shipping is available to seven countries."
+    )
+    if len(desc) <= 160:
+        return desc
+    return desc[:160].rsplit(' ', 1)[0].rstrip(' ,.;') + '.'
+
+def get_seo_title(name, product_type):
+    """Keep Shopify SEO titles concise while preserving the product name."""
+    suffix = ' | LuxeMia'
+    available = 70 - len(suffix)
+    title = name if len(name) <= available else name[:available].rsplit(' ', 1)[0]
+    return f"{title}{suffix}"
+
+def get_image_alt(name, product_type):
+    """Generate a useful fallback alt label for every catalog image."""
+    alt = f"{name} - {product_type} | LuxeMia"
+    return alt[:125].rsplit(' ', 1)[0] if len(alt) > 125 else alt
 
 # ============ BUILD PRICE LOOKUP ============
 # Create a lookup from URL suffix to scraped price data
@@ -475,7 +482,7 @@ for i, p in enumerate(SAREES):
         'Title': p['name'],
         'URL handle': handle,
         'Description': desc,
-        'Vendor': 'LuxemiaShop',
+        'Vendor': 'LuxeMia',
         'Product category': 'Apparel & Accessories > Clothing',
         'Type': 'Sarees',
         'Tags': tags,
@@ -494,14 +501,15 @@ for i, p in enumerate(SAREES):
         'Fulfillment service': 'manual',
         'Product image URL': p['img'],
         'Image position': '1',
-        'Image alt text': p['name'],
+        'Image alt text': get_image_alt(p['name'], 'Saree'),
         'Gift card': 'FALSE',
-        'SEO title': p['name'],
+        'SEO title': get_seo_title(p['name'], 'Saree'),
         'SEO description': seo_desc,
         'Color (product.metafields.shopify.color-pattern)': color.lower(),
         'Google Shopping / Google product category': 'Apparel & Accessories > Clothing',
         'Google Shopping / Gender': 'Unisex',
         'Google Shopping / Age group': 'Adult',
+        'Google Shopping / Manufacturer part number (MPN)': sku,
         'Google Shopping / Condition': 'New',
         'Google Shopping / Custom product': 'FALSE',
     })
@@ -514,7 +522,7 @@ for i, p in enumerate(SAREES):
         img_row['URL handle'] = handle
         img_row['Product image URL'] = f"{base_img}({img_pos}).jpg"
         img_row['Image position'] = str(img_pos)
-        img_row['Image alt text'] = p['name']
+        img_row['Image alt text'] = get_image_alt(p['name'], 'Saree')
         rows.append(img_row)
 
 # ---- Process Suits ----
@@ -542,7 +550,7 @@ for i, p in enumerate(SUITS):
         'Title': p['name'],
         'URL handle': handle,
         'Description': desc,
-        'Vendor': 'LuxemiaShop',
+        'Vendor': 'LuxeMia',
         'Product category': 'Apparel & Accessories > Clothing',
         'Type': 'Sarees' if 'Suit' not in p['name'] else 'Salwar Kameez',
         'Tags': tags,
@@ -561,14 +569,15 @@ for i, p in enumerate(SUITS):
         'Fulfillment service': 'manual',
         'Product image URL': p['img'],
         'Image position': '1',
-        'Image alt text': p['name'],
+        'Image alt text': get_image_alt(p['name'], 'Salwar Kameez'),
         'Gift card': 'FALSE',
-        'SEO title': p['name'],
+        'SEO title': get_seo_title(p['name'], 'Salwar Kameez'),
         'SEO description': seo_desc,
         'Color (product.metafields.shopify.color-pattern)': color.lower(),
         'Google Shopping / Google product category': 'Apparel & Accessories > Clothing',
         'Google Shopping / Gender': 'Unisex',
         'Google Shopping / Age group': 'Adult',
+        'Google Shopping / Manufacturer part number (MPN)': sku,
         'Google Shopping / Condition': 'New',
         'Google Shopping / Custom product': 'FALSE',
     })
@@ -580,7 +589,7 @@ for i, p in enumerate(SUITS):
         img_row['URL handle'] = handle
         img_row['Product image URL'] = f"{base_img}({img_pos}).jpg"
         img_row['Image position'] = str(img_pos)
-        img_row['Image alt text'] = p['name']
+        img_row['Image alt text'] = get_image_alt(p['name'], 'Salwar Kameez')
         rows.append(img_row)
 
 # ---- Process Sherwanis ----
@@ -612,7 +621,7 @@ for i, p in enumerate(SHERWANIS):
             row.update({
                 'Title': p['name'],
                 'Description': desc,
-                'Vendor': 'LuxemiaShop',
+                'Vendor': 'LuxeMia',
                 'Product category': 'Apparel & Accessories > Clothing',
                 'Type': "Men's Indian Wear",
                 'Tags': tags,
@@ -631,9 +640,9 @@ for i, p in enumerate(SHERWANIS):
                 'Fulfillment service': 'manual',
                 'Product image URL': p['img'],
                 'Image position': '1',
-                'Image alt text': p['name'],
+                'Image alt text': get_image_alt(p['name'], "Men's Indian Wear"),
                 'Gift card': 'FALSE',
-                'SEO title': p['name'],
+                'SEO title': get_seo_title(p['name'], "Men's Indian Wear"),
                 'SEO description': seo_desc,
                 'Color (product.metafields.shopify.color-pattern)': color.lower(),
                 'Google Shopping / Google product category': 'Apparel & Accessories > Clothing',
@@ -659,6 +668,7 @@ for i, p in enumerate(SHERWANIS):
             })
         row['URL handle'] = handle
         row['SKU'] = f"{base_sku}-{size}"
+        row['Google Shopping / Manufacturer part number (MPN)'] = row['SKU']
         rows.append(row)
 
     # Additional image rows for sherwanis
@@ -668,11 +678,12 @@ for i, p in enumerate(SHERWANIS):
         img_row['URL handle'] = handle
         img_row['Product image URL'] = f"{base_img}({img_pos}).jpg"
         img_row['Image position'] = str(img_pos)
-        img_row['Image alt text'] = p['name']
+        img_row['Image alt text'] = get_image_alt(p['name'], "Men's Indian Wear")
         rows.append(img_row)
 
 # ============ WRITE CSV ============
-output_path = 'public/luxemia_shopify_import.csv'
+output_path = os.environ.get('LUXEMIA_CSV_OUTPUT', 'artifacts/luxemia_shopify_import.csv')
+Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 with open(output_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
     writer.writeheader()

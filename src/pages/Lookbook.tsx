@@ -37,7 +37,13 @@ const Lookbook = () => {
       >
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-foreground/50 z-10" />
-          <LazyImage src='/images/lookbook/hero-main.jpg' alt="LuxeMia Lookbook 2026" className="w-full h-full" />
+          <LazyImage
+            src="/images/lookbook/hero-main.webp"
+            alt="LuxeMia Lookbook 2026"
+            width={1920}
+            height={1080}
+            className="w-full h-full"
+          />
         </motion.div>
 
         <motion.div

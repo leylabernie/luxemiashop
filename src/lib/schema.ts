@@ -15,6 +15,12 @@ export const BRAND_NAME = 'LuxeMia';
 export const LEGAL_BUSINESS_NAME = 'Glamour Indian Wear';
 export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 
+export function normalizeBrandName(value?: string | null): string {
+  const raw = (value || '').trim();
+  if (!raw) return BRAND_NAME;
+  return /^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, '')) ? BRAND_NAME : raw;
+}
+
 // ─── Price Handling ─────────────────────────────────────────────────────────
 
 interface PriceData {
@@ -148,6 +154,8 @@ export interface ProductSchemaInput {
   url: string;
   image: string[];
   sku: string;
+  gtin?: string | null;
+  mpn?: string | null;
   brand?: string;
   category?: string;
   googleProductCategory?: string;
@@ -158,6 +166,22 @@ export interface ProductSchemaInput {
   compareAtPrice?: string | null;
   currency: string;
   availability: 'InStock' | 'OutOfStock';
+}
+
+function getGtinSchemaProperty(value?: string | null): Record<string, string> {
+  const digits = (value || '').replace(/[\s-]/g, '');
+  if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(digits)) return {};
+
+  const body = digits.slice(0, -1);
+  let sum = 0;
+  let weight = 3;
+  for (let index = body.length - 1; index >= 0; index -= 1) {
+    sum += Number(body[index]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+  if ((10 - (sum % 10)) % 10 !== Number(digits.at(-1))) return {};
+
+  return { [`gtin${digits.length}`]: digits };
 }
 
 export function generateProductSchema(input: ProductSchemaInput) {
@@ -174,9 +198,11 @@ export function generateProductSchema(input: ProductSchemaInput) {
     name: input.name,
     image: input.image,
     description: input.description,
-    ...(input.sku && { sku: input.sku, mpn: input.sku }),
+    ...(input.sku && { sku: input.sku }),
+    ...(input.mpn && { mpn: input.mpn }),
+    ...getGtinSchemaProperty(input.gtin),
     url: input.url,
-    brand: { '@type': 'Brand', name: input.brand || BRAND_NAME },
+    brand: { '@type': 'Brand', name: normalizeBrandName(input.brand) },
     category: input.category || 'Clothing > Traditional & Ethnic Wear',
     ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
     ...(input.color && { color: input.color }),
@@ -387,13 +413,25 @@ export function getGoogleProductCategory(productType?: string, title?: string): 
 export function forceJpegForGmc(url: string): string {
   if (!url) return url;
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
-    const clean = url.replace(/[&?]format=\w+/g, '');
-    const sep = clean.includes('?') ? '&' : '?';
-    return `${clean}${sep}format=jpg&width=1200`;
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set('format', 'jpg');
+      parsed.searchParams.set('width', '1200');
+      return parsed.toString();
+    } catch {
+      const sep = url.includes('?') ? '&' : '?';
+      return `${url}${sep}format=jpg&width=1200`;
+    }
   }
   if (url.includes('kesimg.b-cdn.net')) {
-    const sep = url.includes('?') ? '&' : '?';
-    return `${url}${sep}format=jpg`;
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set('format', 'jpg');
+      return parsed.toString();
+    } catch {
+      const sep = url.includes('?') ? '&' : '?';
+      return `${url}${sep}format=jpg`;
+    }
   }
   if (!url.match(/\.(jpg|jpeg|png|gif)(\?|$)/i) && !url.includes('format=')) {
     const sep = url.includes('?') ? '&' : '?';

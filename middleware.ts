@@ -146,15 +146,20 @@ async function routeRequest(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const { pathname } = url;
 
-  // ── Canonical domain: redirect www → non-www (301 permanent) ──────────────
+  // ── Canonical origin: redirect HTTP/www → HTTPS apex (301 permanent) ──────
   // All canonical URLs in prerendered HTML and sitemap use https://luxemia.shop
   // (non-www). Consolidating ensures GSC treats them as one property and avoids
   // duplicate-content signals across the two versions. Using 301 (not 308) for
   // maximum crawler compatibility (some older crawlers and third-party SEO tools
   // handle 308 inconsistently).
-  if (url.hostname === 'www.luxemia.shop') {
+  if (
+    (url.hostname === 'www.luxemia.shop' || url.hostname === 'luxemia.shop')
+    && (url.hostname !== 'luxemia.shop' || url.protocol !== 'https:')
+  ) {
     const canonical = new URL(request.url);
     canonical.hostname = 'luxemia.shop';
+    canonical.protocol = 'https:';
+    canonical.port = '';
     return Response.redirect(canonical.toString(), 301);
   }
 
@@ -203,7 +208,7 @@ async function routeRequest(request: Request): Promise<Response> {
           ? '/_prerender/index.html'
           : `/_prerender${cleanPath}.html`;
         const resp = await fetch(new URL(prerenderPath, request.url));
-        if (resp) {
+        if (resp.ok) {
           const html = await resp.text();
           return new Response(html, {
             status: 200,
