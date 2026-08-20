@@ -3,18 +3,6 @@
 // Regenerated on each build. Imported by middleware.ts to avoid self-HTTP HEAD requests.
 
 export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
-  'mint-seafoam-saree-luxemia',
-  'pistachio-green-saree-luxemia',
-  'soft-pink-saree-luxemia',
-  'cream-gold-saree-luxemia',
-  'peach-coral-saree-luxemia',
-  'ivory-white-chaniya-luxemia',
-  'black-chaniya-luxemia',
-  'fuchsia-red-chaniya-luxemia',
-  'pistachio-green-lehenga-luxemia',
-  'peach-warm-gold-lehenga-luxemia',
-  'rayon-cotton-mirror-work-navratri-chaniya-choli',
-  'peach-pistachio-green-embellished-lehenga-set',
   '3d-peacock-mirror-work-italian-silk-ready-made-blouse',
   'lavender-blush-pink-georgette-lucknowi-chikankari-front-cut-top-palazzo-set',
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
@@ -97,7 +85,6 @@ export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
   'kora-cotton-navratri-lehenga-kurti-set',
   'yellow-vichitra-silk-navratri-lehenga-choli-shrug',
   'italian-silk-mirror-work-navratri-blouse',
-  'butterfly-net-sequin-embroidered-lehenga-choli-set',
   'grey-cotton-jacquard-festive-kurta-set-men',
   'navy-blue-cotton-jacquard-wedding-kurta-set-men',
   'peach-pink-cotton-jacquard-kurta-pajama-men',

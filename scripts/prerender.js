@@ -32,6 +32,9 @@ const CUSTOMIZABLE_PRODUCTS = JSON.parse(
 const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
   CUSTOMIZABLE_PRODUCTS.map((product) => [product.handle, product])
 );
+const RETIRED_PRODUCT_HANDLES = new Set(
+  JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/legacyGoneProductHandles.json'), 'utf8'))
+);
 const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
 
 function getCustomProductDescription(title) {
@@ -2751,6 +2754,25 @@ async function main() {
     console.error('[prerender] Blog output may be incomplete; coverage verification will fail if a registered route is missing.');
   }
 
+  // A product marked as permanently retired must never retain bot-facing
+  // prerendered HTML or a manifest entry. Remove stale fixed-route entries
+  // before loading current catalog data; the same handle is also excluded from
+  // Shopify's broad catalog response below.
+  const retiredFixedRouteCount = routes.length;
+  for (let index = routes.length - 1; index >= 0; index--) {
+    const routePath = routes[index].path;
+    if (
+      routePath.startsWith('/product/') &&
+      RETIRED_PRODUCT_HANDLES.has(routePath.slice('/product/'.length))
+    ) {
+      routes.splice(index, 1);
+    }
+  }
+  const retiredFixedRoutesRemoved = retiredFixedRouteCount - routes.length;
+  if (retiredFixedRoutesRemoved > 0) {
+    console.log(`[prerender] Removed ${retiredFixedRoutesRemoved} explicit 410 product route(s) from the fixed prerender inventory.`);
+  }
+
   // Pre-fetch live Shopify product data so /product/* prerendered HTML
   // emits valid Product JSON-LD with image, description, and offers.price.
   const productMap = await fetchAllShopifyProducts();
@@ -2776,7 +2798,7 @@ async function main() {
   // only ~73 of 360 products — the rest fell through to the empty SPA shell
   // with no Product schema, breaking GMC validation).
   for (const [handle, p] of productMap.entries()) {
-    if (hardcodedProductHandles.has(handle)) continue;
+    if (RETIRED_PRODUCT_HANDLES.has(handle) || hardcodedProductHandles.has(handle)) continue;
     // Prefer Shopify admin "Search engine listing" (SEO) fields when set.
     // Falls back to plain product title + " | LuxeMia" suffix.
     // IMPORTANT: when seoTitle is set, use it VERBATIM. Shopify's SEO title
