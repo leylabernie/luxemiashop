@@ -1129,7 +1129,7 @@ const routes = [
   {
     path: '/',
     title: 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
-    description: 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
+    description: 'Shop Indian outfits for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping.',
     h1: 'Premium Indian Ethnic Wear with Tracked U.S. Shipping',
     content: `
       <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to United States addresses only. Browse Indian wedding guest outfits with U.S.-based support.</p>

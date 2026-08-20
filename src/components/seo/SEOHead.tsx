@@ -74,7 +74,7 @@ interface SEOHeadProps {
 
 const SEOHead = ({
   title = 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
-  description = 'Shop premium Indian ethnic wear online in the USA: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping.',
+  description = 'Shop Indian outfits for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping.',
   canonical,
   image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   type = 'website',
