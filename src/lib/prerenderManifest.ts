@@ -3,6 +3,16 @@
 // Regenerated on each build. Imported by middleware.ts to avoid self-HTTP HEAD requests.
 
 export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
+  'mint-seafoam-saree-luxemia',
+  'pistachio-green-saree-luxemia',
+  'soft-pink-saree-luxemia',
+  'cream-gold-saree-luxemia',
+  'peach-coral-saree-luxemia',
+  'ivory-white-chaniya-luxemia',
+  'black-chaniya-luxemia',
+  'fuchsia-red-chaniya-luxemia',
+  'pistachio-green-lehenga-luxemia',
+  'peach-warm-gold-lehenga-luxemia',
   'rayon-cotton-mirror-work-navratri-chaniya-choli',
   'peach-pistachio-green-embellished-lehenga-set',
   '3d-peacock-mirror-work-italian-silk-ready-made-blouse',

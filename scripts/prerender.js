@@ -1554,51 +1554,86 @@ const routes = [
   {
     path: '/collections/bridal-lehengas',
     title: 'Bridal Lehengas Online USA | Indian Wedding Lehengas | LuxeMia',
-    description: 'Shop bridal lehengas online in the USA. Compare current colors, stated fabric, embroidery, included choli and dupatta pieces, sizing and availability.',
+    description: 'Shop bridal lehengas online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Bridal Lehengas',
-    content: '<p>Browse bridal lehengas for Indian wedding celebrations. Compare the exact product listing for fabric, work, included pieces, size and availability before ordering.</p><p><a href="/size-guide">Size guide</a> | <a href="/shipping">U.S. shipping information</a></p>',
+    content: `<p>Browse current bridal lehengas for Indian wedding celebrations. Each listed design can differ in color, fabric, embroidery, included choli or dupatta pieces, size options and availability.</p>
+      <h2>Compare Bridal Lehenga Details Before Ordering</h2>
+      <p>Use the product grid to compare current styles, then open the exact listing to confirm the supplied fabric, work, included pieces, measurements and selected option. A category label does not confirm the construction or contents of every design.</p>
+      <h3>Plan for a Wedding Date</h3>
+      <p>For an event with a fixed date, review the selected product details and current policy information before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and <a href="/shipping">U.S. shipping information</a> for planning details.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/sharara-suits',
     title: 'Sharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
-    description: 'Shop sharara suits online in the USA. Compare current colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.',
+    description: 'Shop sharara suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Sharara Suits',
-    content: '<p>Browse current sharara suits for wedding events and celebrations. Review the exact listing for fabric, embroidery, included pieces, size and availability before ordering.</p><p><a href="/suits">Shop all suits</a> | <a href="/size-guide">Size guide</a></p>',
+    content: `<p>Browse current sharara suits for wedding events, festive celebrations and party wear. A sharara set can combine a kurti, flared bottoms and a dupatta, but the exact silhouette and included pieces vary by listing.</p>
+      <h2>Compare Sharara Suit Fabric, Work and Included Pieces</h2>
+      <p>Use the current product grid to compare color, stated fabric, embroidery or work, price and available options. Open the exact listing to confirm the supplied kurti, bottoms, dupatta, lining, size and current availability rather than assuming every set includes the same pieces.</p>
+      <h3>Size and Event Planning</h3>
+      <p>For a time-sensitive celebration, compare your measurements with the selected listing before ordering. See the <a href="/size-guide">size guide</a>, <a href="/shipping">U.S. shipping information</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/gharara-suits',
     title: 'Gharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
-    description: 'Shop gharara suits online in the USA. Compare current colors, stated fabric, embroidery, included pieces, sizes and product availability for weddings and celebrations.',
+    description: 'Shop gharara suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Gharara Suits',
-    content: '<p>Browse current gharara suit listings for wedding celebrations and festive occasions. Check the exact product details for construction, included pieces, size and availability.</p><p><a href="/suits">Shop all suits</a> | <a href="/shipping">U.S. shipping information</a></p>',
+    content: `<p>Browse current gharara suit listings for wedding celebrations and festive occasions. Gharara styling can vary by design, so use the product photography and supplied description to compare the exact kurti, flared bottoms, dupatta and embellishment details.</p>
+      <h2>Choose a Gharara Set by Color, Work and Included Pieces</h2>
+      <p>Compare currently listed colors, fabrics, work and price, then confirm the supplied included pieces, size options and availability on the individual product page. Product details—not a style name alone—are the reliable specification for every outfit.</p>
+      <h3>Size and Delivery Planning</h3>
+      <p>For a fixed event date, compare your measurements with the selected listing before ordering. Review the <a href="/size-guide">size guide</a>, <a href="/shipping">U.S. shipping information</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/anarkali-suits',
     title: 'Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia',
-    description: 'Shop Anarkali suits online in the USA. Compare current colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.',
+    description: 'Shop Anarkali suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Anarkali Suits',
-    content: '<p>Browse Anarkali suits for wedding events, festive gatherings and party wear. Review each product listing for the exact fabric, work, included pieces, size and availability.</p><p><a href="/suits">Shop all suits</a> | <a href="/size-guide">Size guide</a></p>',
+    content: `<p>Browse current Anarkali suits for wedding events, festive gatherings and party wear. The available sets can differ in fabric, embroidery, length and included pieces, so use the exact product page to compare the supplied specifications before ordering.</p>
+      <h2>Compare Anarkali Suit Fabric, Work and Fit</h2>
+      <p>Compare current colors, stated fabric, embroidery or work, price and available options in the product grid. Confirm whether the selected set includes a dupatta, bottoms or lining, plus the listed size and current availability.</p>
+      <h3>Plan for a Wedding or Celebration</h3>
+      <p>For an event with a fixed date, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and browse <a href="/suits">all current suits</a> for additional styles.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/party-wear-lehengas',
     title: 'Party-Wear Lehengas Online USA | Festive Lehenga Choli | LuxeMia',
-    description: 'Shop party-wear lehengas online in the USA. Compare current colors, stated fabric, embroidery, included pieces, sizing and availability for festive events.',
+    description: 'Shop party-wear lehengas online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Party-Wear Lehengas',
-    content: '<p>Browse party-wear lehengas for receptions, festive events and celebrations. Review each exact listing for fabric, work, included pieces, size and current availability.</p><p><a href="/lehengas">Shop all lehengas</a> | <a href="/shipping">U.S. shipping information</a></p>',
+    content: `<p>Browse current party-wear lehengas for receptions, festive events and celebrations. Available designs can differ in silhouette, color, fabric, work, included choli or dupatta pieces, size options and availability.</p>
+      <h2>Compare Party-Wear Lehenga Details Before Ordering</h2>
+      <p>Use the product grid to compare currently listed styles, then open the selected product page to confirm its supplied fabric, embroidery or work, included pieces, measurements and available option. Do not assume construction or package contents from the category alone.</p>
+      <h3>Plan for a Reception or Festive Event</h3>
+      <p>For a time-sensitive event, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/lehengas">all current lehengas</a> to compare styles.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/wedding-sarees',
     title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
-    description: 'Shop wedding sarees online in the USA. Compare current bridal and wedding saree listings by stated fabric, work, blouse details, price and availability before ordering.',
+    description: 'Shop wedding sarees online in the USA. Compare current fabric, work, blouse details, price and availability before ordering.',
     h1: 'Wedding Sarees',
-    content: '<p>Browse current wedding sarees for ceremonies, receptions and family celebrations. Review each exact listing for stated fabric, work, blouse details, price and availability before an event-critical order.</p><p><a href="/sarees">Shop all sarees</a> | <a href="/size-guide">Size guide</a> | <a href="/shipping">Shipping information</a></p>',
+    content: `<p>Browse current wedding sarees for ceremonies, receptions and family celebrations. Each listing has its own supplied fabric, weave or work, blouse details, dimensions, price and availability, so compare the exact product page before placing an event-critical order.</p>
+      <h2>Compare Wedding Saree Details Before Ordering</h2>
+      <p>Use the current product grid to compare wedding and bridal sarees, then verify the selected listing’s fabric wording, blouse material or blouse details, available option and current availability. A category label does not confirm that every saree has the same construction or included pieces.</p>
+      <h3>Plan Size and Delivery for a Wedding Event</h3>
+      <p>Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. Review <a href="/shipping">U.S. shipping information</a> and browse <a href="/sarees">all current sarees</a> for additional comparison.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/designer-sarees',
     title: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
-    description: 'Shop designer sarees online in the USA. Compare current colors, stated fabric, embroidery or work, blouse details, price and availability before ordering.',
+    description: 'Shop designer sarees online in the USA. Compare current colors, fabric, work, blouse details, price and availability.',
     h1: 'Designer Sarees',
-    content: '<p>Browse current designer saree listings for receptions, parties and celebrations. Review each exact listing for stated fabric, work, blouse details, price and availability before ordering.</p><p><a href="/sarees">Shop all sarees</a> | <a href="/size-guide">Size guide</a> | <a href="/shipping">Shipping information</a></p>',
+    content: `<p>Browse current designer saree listings for receptions, parties and celebrations. The word “designer” describes a category or style label; it does not by itself confirm a particular maker, fabric, handwork method or included piece. Use the exact product page as the source of truth.</p>
+      <h2>Compare Designer Saree Fabric, Work and Blouse Details</h2>
+      <p>Use the product grid to compare currently listed colors, stated fabric, embroidery or work, price and available options. Open the selected listing to verify its blouse details, dimensions, included pieces and current availability before ordering.</p>
+      <h3>Plan for a Reception or Celebration</h3>
+      <p>For a fixed event date, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/sarees">all current sarees</a> to compare styles.</p>
+      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
   },
   {
     path: '/collections/reception-outfits',
@@ -2140,6 +2175,26 @@ function generateHtml(template, route, allShopifyProducts) {
       .map((schema) => `<script type="application/ld+json" data-prerender-schema>${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>`)
       .join('\n    ');
     html = html.replace('</head>', `    ${routeSchemas}\n</head>`);
+  }
+
+  // Every static collection route needs a BreadcrumbList in the initial HTML.
+  // Commercial landings use their own route records and may not enter the
+  // category-product branch below, so this must be applied before that split.
+  if (!route.noIndex && route.path.startsWith('/collections/')) {
+    const collectionCanonical = `${SITE_URL}${route.path}`;
+    const collectionBreadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: 'Collections', item: `${SITE_URL}/collections` },
+        { '@type': 'ListItem', position: 3, name: route.h1, item: collectionCanonical },
+      ],
+    };
+    html = html.replace(
+      '</head>',
+      `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(collectionBreadcrumbSchema)}</script>\n</head>`
+    );
   }
 
   // Inject structured data (JSON-LD) for product pages
