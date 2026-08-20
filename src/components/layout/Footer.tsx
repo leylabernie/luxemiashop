@@ -61,6 +61,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [newsletterDiscountCode, setNewsletterDiscountCode] = useState<string | null>(null);
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,9 +73,13 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
         body: { email: newsletterEmail, type: 'newsletter', source: 'footer' },
       });
       if (error) throw error;
+      // Verified against the active Shopify welcome discount on August 20, 2026.
+      // Do not rely on a stale backend response for a checkout-facing promotion.
+      const discountCode = 'LUXE10';
+      setNewsletterDiscountCode(discountCode);
       setNewsletterSubmitted(true);
-      toast.success('You\'re on the list!', {
-        description: 'We\'ll send you new arrivals and exclusive offers.',
+      toast.success(`Welcome — use ${discountCode}`, {
+        description: 'Use your 10% first-order code at checkout. We\'ll also send new arrivals and offers.',
       });
     } catch {
       toast.error('Something went wrong', {
@@ -120,7 +125,11 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             {newsletterSubmitted ? (
               <div className="flex items-center justify-center gap-2 py-3 text-sm text-green-700 dark:text-green-400">
                 <Check className="h-4 w-4" />
-                <span>Thank you! You\'re on the list.</span>
+                <span>
+                  {newsletterDiscountCode
+                    ? <>Thank you! Use <strong>{newsletterDiscountCode}</strong> for 10% off your first order.</>
+                    : 'Thank you! You\'re on the list.'}
+                </span>
               </div>
             ) : (
               <form className="flex flex-col sm:flex-row gap-3" onSubmit={handleNewsletterSubmit}>
