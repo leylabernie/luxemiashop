@@ -39,7 +39,7 @@ requireText(collectionHtml, '"@type":"CollectionPage"', 'CollectionPage schema')
 requireText(collectionHtml, '"@type":"ItemList"', 'ItemList schema');
 requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#products', 'linked collection product schema');
 requireText(collectionHtml, '/blog/navratri-9-day-color-guide-2026', 'collection-to-guide internal link');
-requireText(collectionHtml, 'WELCOME10', 'collection first-order offer');
+requireText(collectionHtml, 'LUXE10', 'collection first-order offer');
 
 const collectionProductLinks = new Set(
   [...collectionHtml.matchAll(/href="\/product\/([^"?]+)"/g)].map((match) => match[1])
@@ -53,7 +53,7 @@ requireText(articleHtml, '<link rel="canonical" href="https://luxemia.shop/blog/
 requireText(articleHtml, 'dateModified":"2026-08-19"', 'article review date');
 requireText(articleHtml, 'https://www.timeanddate.com/holidays/us/hindu-navaratri', 'United States date source');
 requireText(articleHtml, 'href="/collections/navratri-outfits"', 'guide-to-collection internal link');
-requireText(articleHtml, 'WELCOME10', 'article first-order offer');
+requireText(articleHtml, 'LUXE10', 'article first-order offer');
 
 requireText(homepageHtml, 'href="/collections/navratri-outfits"', 'homepage Navratri collection link');
 requireText(homepageHtml, 'href="/blog/navratri-9-day-color-guide-2026"', 'homepage Navratri guide link');

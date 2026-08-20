@@ -36,7 +36,7 @@ const evergreenSlides: FeaturedSlide[] = [
     eyebrow: 'Navratri 2026',
     headline: 'Navratri & Garba Outfits for U.S. Celebrations',
     subline:
-      'Shop current chaniya choli, lehenga and festive styles for Garba and Dandiya. Use WELCOME10 for 10% off your first order.',
+      'Shop current chaniya choli, lehenga and festive styles for Garba and Dandiya. Use LUXE10 for 10% off your first order.',
     cta: 'Shop Navratri Outfits',
     link: '/collections/navratri-outfits',
     image: '/images/hero-carousel/navratri-lehenga',

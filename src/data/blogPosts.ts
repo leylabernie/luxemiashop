@@ -747,7 +747,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>When should a U.S. shopper order?</h2>
       <p>Start with the exact product's current availability and options. If your event date is fixed, contact LuxeMia before ordering to discuss the selected listing and timing. Preparation and carrier transit can vary, and delivery by a particular event is not guaranteed.</p>
-      <p>LuxeMia ships to United States addresses only. Standard U.S. shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use <strong>WELCOME10</strong> for 10% off their first order with no minimum purchase requirement.</p>
+      <p>LuxeMia ships to United States addresses only. Standard U.S. shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use <strong>LUXE10</strong> for 10% off their first order with no minimum purchase requirement.</p>
 
       <h2>Shop current Navratri outfits</h2>
       <p><a href="/collections/navratri-outfits"><strong>Shop current Navratri, Garba and chaniya choli listings</strong></a>, compare measurements with the <a href="/sizing-measurements-guide">LuxeMia sizing guide</a>, or <a href="/contact">contact LuxeMia</a> before ordering when a product detail or event deadline is unclear.</p>

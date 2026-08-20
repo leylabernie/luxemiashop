@@ -47,7 +47,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Is there a first-order discount?',
-    answer: 'First-time shoppers can use code WELCOME10 for 10% off their first LuxeMia order. The code has no minimum purchase requirement.',
+    answer: 'First-time shoppers can use code LUXE10 for 10% off their first LuxeMia order. The code has no minimum purchase requirement.',
   },
   {
     question: 'Can I return a Navratri outfit?',
@@ -65,7 +65,7 @@ const NavratriOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Navratri Outfits USA 2026 | Garba Styles | LuxeMia"
-        description="Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; WELCOME10 for first orders."
+        description="Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 for first orders."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         image="/images/hero-carousel/navratri-lehenga-desktop.jpg"
         type="collection"
@@ -116,7 +116,7 @@ const NavratriOutfits = () => {
             <div className="grid gap-3 text-sm sm:grid-cols-3">
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><CheckCircle2 className="h-4 w-4 text-primary" /> Current catalog listings</p>
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><Truck className="h-4 w-4 text-primary" /> $12 below $150 · Free at $150+</p>
-              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use WELCOME10 on your first order</p>
+              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use LUXE10 on your first order</p>
             </div>
           </div>
         </div>
