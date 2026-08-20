@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
+    "build": "npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -13,7 +13,8 @@
     "validate:navratri-traffic": "node scripts/validate-navratri-traffic.cjs",
     "validate:blog": "node scripts/validate-blog-content.cjs",
     "validate:policy-copy": "node scripts/validate-current-policy-copy.cjs",
-    "validate:legacy-redirects": "node scripts/validate-legacy-redirects.cjs"
+    "validate:legacy-redirects": "node scripts/validate-legacy-redirects.cjs",
+    "validate:product-retirement-lifecycle": "node scripts/validate-product-retirement-lifecycle.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
