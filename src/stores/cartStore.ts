@@ -5,7 +5,9 @@ import {
   AnalyticsItem,
   trackAddToCart,
   trackBeginCheckout,
+  trackCheckoutHandoffSuccess,
   trackRemoveFromCart,
+  trackViewCart,
 } from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
 import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
@@ -47,6 +49,7 @@ interface CartStore {
   setLoading: (loading: boolean) => void;
   openCart: () => void;
   closeCart: () => void;
+  trackCartView: () => void;
   createCheckout: () => Promise<string | null>;
 }
 
@@ -180,6 +183,14 @@ export const useCartStore = create<CartStore>()(
       setLoading: (isLoading) => set({ isLoading }),
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
+      trackCartView: () => {
+        const { items } = get();
+        if (items.length === 0) return;
+        trackViewCart(
+          items.map((item) => toAnalyticsItem(item)),
+          items[0]?.price.currencyCode,
+        );
+      },
 
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();
@@ -207,6 +218,11 @@ export const useCartStore = create<CartStore>()(
           );
 
           if (checkoutUrl) {
+            trackCheckoutHandoffSuccess(
+              items.map((item) => toAnalyticsItem(item)),
+              totalValue,
+              items[0]?.price.currencyCode,
+            );
             setCheckoutUrl(checkoutUrl);
             return checkoutUrl;
           }

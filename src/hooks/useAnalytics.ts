@@ -147,6 +147,23 @@ export const trackBeginCheckout = (items: AnalyticsItem[], totalValue?: number, 
   sendEcommerceEvent('begin_checkout', items, totalValue ?? cartValue(items), currency);
 };
 
+// `begin_checkout` captures shopper intent. This companion event confirms that
+// Shopify returned a usable checkout URL, separating checkout-interest from a
+// failed or interrupted hosted-checkout handoff without sending customer data.
+export const trackCheckoutHandoffSuccess = (
+  items: AnalyticsItem[],
+  totalValue?: number,
+  currency?: string,
+) => {
+  sendEcommerceEvent(
+    'checkout_handoff_success',
+    items,
+    totalValue ?? cartValue(items),
+    currency,
+    { checkout_flow: 'direct_cart' },
+  );
+};
+
 export const trackAddShippingInfo = (
   items: AnalyticsItem[],
   value: number,

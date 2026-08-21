@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
@@ -19,7 +20,20 @@ interface CartDrawerProps {
 }
 
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
-  const { items, isLoading, updateQuantity, removeItem, createCheckout } = useCartStore();
+  const {
+    items,
+    isLoading,
+    updateQuantity,
+    removeItem,
+    createCheckout,
+    trackCartView,
+  } = useCartStore();
+
+  useEffect(() => {
+    if (isOpen) {
+      trackCartView();
+    }
+  }, [isOpen, trackCartView]);
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
