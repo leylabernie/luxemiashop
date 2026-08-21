@@ -4,8 +4,7 @@ export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-
 
 export type ServiceAddOnCode =
   | 'blouse-stitching'
-  | 'saree-pico'
-  | 'saree-fall'
+  | 'pico-fall'
   | 'matching-petticoat'
   | 'garment-alteration';
 
@@ -25,19 +24,12 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
     price: 10,
     description: 'Available only where this listing includes blouse fabric or states an unstitched blouse piece.',
   },
-  'saree-pico': {
-    code: 'saree-pico',
-    label: 'Saree Pico',
-    checkoutOptionValue: 'Saree Pico (+$8)',
+  'pico-fall': {
+    code: 'pico-fall',
+    label: 'Pico & Fall',
+    checkoutOptionValue: 'Pico & Fall (+$8)',
     price: 8,
-    description: 'A finishing option for eligible standard sarees.',
-  },
-  'saree-fall': {
-    code: 'saree-fall',
-    label: 'Saree Fall',
-    checkoutOptionValue: 'Saree Fall (+$8)',
-    price: 8,
-    description: 'A finishing option for eligible standard sarees.',
+    description: 'Combined pico and fall finishing for eligible standard sarees.',
   },
   'matching-petticoat': {
     code: 'matching-petticoat',
@@ -91,7 +83,7 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
 
   if (isSaree) {
     if (isReady) return [];
-    const services: ServiceAddOnCode[] = ['saree-pico', 'saree-fall', 'matching-petticoat'];
+    const services: ServiceAddOnCode[] = ['pico-fall', 'matching-petticoat'];
     if (BLOUSE_PATTERN.test(evidence) && !hasListingStitchingOption) {
       services.unshift('blouse-stitching');
     }
