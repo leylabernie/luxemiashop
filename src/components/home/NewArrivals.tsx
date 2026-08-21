@@ -86,7 +86,7 @@ export const NewArrivals = () => {
   // ── Loading skeleton ──
   if (isLoading) {
     return (
-      <section className="py-16 lg:py-24 bg-background">
+      <section className="bg-[#fffaf6] py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 mb-4">
@@ -121,7 +121,7 @@ export const NewArrivals = () => {
   if (totalNew === 0) return null;
 
   return (
-    <section className="py-16 lg:py-24 bg-background">
+    <section className="bg-[#fffaf6] py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -133,15 +133,15 @@ export const NewArrivals = () => {
         >
           <div className="inline-flex items-center gap-2 mb-4">
             <Sparkles className="h-4 w-4 text-primary" />
-            <p className="text-sm tracking-luxury uppercase text-muted-foreground">
+            <p className="text-sm uppercase tracking-luxury text-[#a96f72]">
               Just Dropped
             </p>
             <Sparkles className="h-4 w-4 text-primary" />
           </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-3">
+          <h2 className="mb-3 font-serif text-3xl text-[#3b292c] md:text-4xl lg:text-5xl">
             New Arrivals
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-[#7f706d]">
             {totalNew} recently added {totalNew === 1 ? 'style' : 'styles'} across {Object.keys(recentByCategory).length} {Object.keys(recentByCategory).length === 1 ? 'category' : 'categories'}. Review each listing for exact product details and availability.
           </p>
         </motion.div>
@@ -168,8 +168,8 @@ export const NewArrivals = () => {
                 className={`
                   inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium uppercase tracking-wider transition-all duration-200
                   ${isActive
-                    ? 'bg-foreground text-background shadow-sm'
-                    : 'bg-secondary/60 text-muted-foreground hover:bg-secondary hover:text-foreground'
+                    ? 'bg-[#3b292c] text-[#fff9f4] shadow-sm'
+                    : 'bg-[#f2e3de] text-[#765f5b] hover:bg-[#ead1cb] hover:text-[#3b292c]'
                   }
                 `}
               >
@@ -216,7 +216,7 @@ export const NewArrivals = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <Button asChild variant="outline" size="lg" className="group">
+          <Button asChild variant="outline" size="lg" className="group border-[#d6b7b0] bg-[#fffaf6] text-[#493235] hover:bg-[#f2e3de]">
             <Link to="/new-arrivals">
               View All New Arrivals
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

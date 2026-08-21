@@ -36,7 +36,7 @@ const services = [
 
 const ServiceHighlights = () => {
   return (
-    <section className="bg-secondary/50 border-y border-border/30">
+    <section className="border-y border-[#e3cfca] bg-[#f4e8e3]">
       <div className="container mx-auto px-4">
         {/* Scrolling banner on mobile, grid on desktop */}
         <div className="hidden lg:block py-5">
@@ -48,16 +48,16 @@ const ServiceHighlights = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-3 group cursor-default"
+                className="group flex cursor-default items-center gap-3"
               >
-                <div className="flex-shrink-0 p-2 rounded-full bg-background/80 group-hover:bg-background transition-colors">
-                  <service.icon className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+                <div className="flex-shrink-0 rounded-full bg-[#fffaf6] p-2 text-[#a96f72] transition-colors group-hover:bg-[#f9dcd6]">
+                  <service.icon className="h-4 w-4 text-[#a96f72]" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-foreground leading-tight">
+                  <h3 className="text-sm font-medium leading-tight text-[#493235]">
                     {service.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground font-light">
+                  <p className="text-xs font-light text-[#806d69]">
                     {service.description}
                   </p>
                 </div>
@@ -68,20 +68,20 @@ const ServiceHighlights = () => {
 
         {/* Mobile: Horizontal scroll */}
         <div className="lg:hidden py-4 -mx-4 px-4 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-6 min-w-max">
+          <div className="flex min-w-max gap-6">
             {services.slice(0, 4).map((service) => (
               <div
                 key={service.title}
-                className="flex items-center gap-2.5"
+                className="flex items-center gap-2.5 text-[#493235]"
               >
-                <div className="flex-shrink-0 p-2 rounded-full bg-background/80">
-                  <service.icon className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+                <div className="flex-shrink-0 rounded-full bg-[#fffaf6] p-2">
+                  <service.icon className="h-4 w-4 text-[#a96f72]" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium text-foreground whitespace-nowrap">
+                  <h3 className="whitespace-nowrap text-sm font-medium text-[#493235]">
                     {service.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground font-light whitespace-nowrap">
+                  <p className="whitespace-nowrap text-xs font-light text-[#806d69]">
                     {service.description}
                   </p>
                 </div>

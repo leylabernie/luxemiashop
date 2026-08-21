@@ -62,7 +62,7 @@ const categories = [
 
 const CategoryShowcase = () => {
   return (
-    <section className="py-16 lg:py-24 bg-background">
+    <section className="bg-[radial-gradient(circle_at_90%_8%,rgba(232,195,182,0.32),transparent_24%),#f8f0e8] py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -72,11 +72,11 @@ const CategoryShowcase = () => {
           transition={{ duration: 0.7 }}
           className="text-center mb-12 lg:mb-16"
         >
-          <p className="text-xs tracking-luxury uppercase text-muted-foreground mb-3">
+          <p className="mb-3 text-xs uppercase tracking-luxury text-[#a96f72]">
             Featured Collections
           </p>
-          <h2 className="font-serif text-3xl lg:text-5xl mb-4">Shop by Category</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
+          <h2 className="mb-4 font-serif text-3xl text-[#3b292c] lg:text-5xl">Shop by Category</h2>
+          <p className="mx-auto max-w-xl text-[#7f706d]">
             Explore Indian ethnic wear for weddings, festivals, and special occasions
           </p>
         </motion.div>
@@ -94,7 +94,7 @@ const CategoryShowcase = () => {
             >
               <Link
                 to={category.href}
-                className="block relative aspect-[3/4] overflow-hidden rounded-sm"
+                className="group/card relative block aspect-[3/4] overflow-hidden rounded-[2px] shadow-[0_12px_28px_rgba(78,49,50,0.1)]"
                 aria-label={`Shop ${category.name} - ${category.subtitle}`}
               >
                 {/* Category Image */}
@@ -110,17 +110,17 @@ const CategoryShowcase = () => {
                       width={300} height={400}
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out group-hover:scale-110"
+                      className="absolute inset-0 h-full w-full object-cover object-top transition-all duration-700 ease-out group-hover/card:scale-110"
                     />
                   </picture>
                 </div>
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2f2023]/82 via-[#4a3136]/18 to-transparent opacity-90 transition-opacity duration-500 group-hover/card:opacity-100" />
 
                 {/* Content Overlay */}
                 <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6">
-                  <div className="transform transition-all duration-500 ease-out group-hover:-translate-y-2">
+                  <div className="transform transition-all duration-500 ease-out group-hover/card:-translate-y-2">
                     <p className="text-xs tracking-[0.15em] uppercase text-white/70 mb-1.5">
                       {category.subtitle}
                     </p>
@@ -128,14 +128,14 @@ const CategoryShowcase = () => {
                       <h3 className="font-serif text-2xl lg:text-3xl text-white">
                         {category.name}
                       </h3>
-                      <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300">
-                        <ArrowRight className="w-4 h-4 text-white" />
+                      <div className="flex h-8 w-8 scale-90 items-center justify-center rounded-full bg-[#f2bbb4]/90 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover/card:scale-100 group-hover/card:opacity-100">
+                        <ArrowRight className="h-4 w-4 text-[#3b292c]" />
                       </div>
                     </div>
                     <p className="text-xs sm:text-sm text-white/70 font-light max-w-xs leading-relaxed">
                       {category.description}
                     </p>
-                    <div className="mt-3 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                    <div className="mt-3 translate-y-3 opacity-0 transition-all delay-100 duration-500 group-hover/card:translate-y-0 group-hover/card:opacity-100">
                       <span className="inline-flex items-center gap-1.5 text-xs text-white font-medium border-b border-white/50 pb-0.5 hover:border-white transition-colors">
                         Explore Collection
                         <ArrowRight className="w-3 h-3" />
