@@ -67,20 +67,28 @@ const appliesToProductTitle = (item: CartItem) => item.customAttributes
 
 const isServiceLine = (item: CartItem) => isHiddenBillingProductHandle(item.product.node.handle);
 
-const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => ({
-  // A Shopify variant is the purchasable inventory unit. Use it as the GA4 item
-  // key, with the product ID retained for parent-product rollups.
-  id: item.variantId || item.product.node.id,
-  name: item.product.node.title,
-  price: Number(item.price.amount),
-  quantity,
-  currency: item.price.currencyCode,
-  category: item.product.node.productType,
-  variant: item.variantTitle !== 'Default Title' ? item.variantTitle : undefined,
-  productGroupId: item.product.node.id,
-  tailoringOption: getTailoringOption(item),
-  occasion: item.product.node.metadata?.occasion || undefined,
-});
+const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => {
+  const serviceLine = isServiceLine(item);
+  const serviceVariant = item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
+
+  return {
+    // A Shopify variant is the purchasable inventory unit. Use it as the GA4 item
+    // key, with the product ID retained for parent-product rollups. Service names
+    // stay customer-facing even when an older local cart retains a legacy product title.
+    id: item.variantId || item.product.node.id,
+    name: serviceLine ? 'LuxeMia Saree Services' : item.product.node.title,
+    price: Number(item.price.amount),
+    quantity,
+    currency: item.price.currencyCode,
+    category: item.product.node.productType,
+    variant: serviceLine
+      ? serviceVariant
+      : (item.variantTitle !== 'Default Title' ? item.variantTitle : undefined),
+    productGroupId: item.product.node.id,
+    tailoringOption: getTailoringOption(item),
+    occasion: item.product.node.metadata?.occasion || undefined,
+  };
+};
 
 export const useCartStore = create<CartStore>()(
   persist(
