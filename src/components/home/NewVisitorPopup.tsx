@@ -71,10 +71,13 @@ const NewVisitorPopup = () => {
   const triggeredRef = useRef(false);
 
   useEffect(() => {
-    // A product detail page is a purchase decision screen. Do not place a
-    // modal over its first option selection or Add to Bag interaction; the
-    // offer remains available on discovery and editorial routes instead.
-    if (location.pathname.startsWith('/product/')) {
+    // Product pages and the Custom Options inquiry journey are decision
+    // screens. Do not place a welcome-offer modal over their selections,
+    // add-to-bag controls, or made-to-measure form.
+    if (
+      location.pathname.startsWith('/product/') ||
+      location.pathname === '/collections/customizable-indian-outfits'
+    ) {
       setIsOpen(false);
       return;
     }
