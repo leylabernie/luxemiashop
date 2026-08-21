@@ -15,7 +15,6 @@ import { NewArrivals } from '@/components/home/NewArrivals';
 import ShopByOccasion from '@/components/home/ShopByOccasion';
 import CustomerStories from '@/components/home/CustomerStories';
 import LazySection from '@/components/ui/LazySection';
-import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
@@ -179,10 +178,10 @@ const Index = () => {
                 Our story
               </p>
               <h2 id="our-story-home-heading" className="max-w-2xl font-serif text-4xl leading-[0.96] tracking-[-0.025em] sm:text-5xl lg:text-6xl">
-                The beauty is in the <em className="font-normal text-[#f1bbb5]">details.</em>
+                Every celebration begins with a <em className="font-normal text-[#f1bbb5]">feeling.</em>
               </h2>
               <p className="mt-7 max-w-xl text-base leading-8 text-[#fff9f4]/78 sm:text-lg">
-                LuxeMia brings Indian occasionwear closer to home for celebrations in the United States. We believe choosing a look should feel considered, personal, and clear from the first browse to the final detail.
+                A familiar song, a room filled with family, a photograph you will keep returning to. LuxeMia is for the feeling of arriving in those moments with colour, confidence, and a little more of home.
               </p>
               <Link
                 to="/brand-story"
@@ -195,18 +194,18 @@ const Index = () => {
             <div className="grid gap-px overflow-hidden rounded-[2px] border border-white/15 bg-white/15 sm:grid-cols-3">
               <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
                 <p className="font-serif text-3xl text-[#f1bbb5]">01</p>
-                <h3 className="mt-7 font-serif text-xl">Details to decide from</h3>
-                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Review fabric, included pieces, available sizes, and stated stitching information within each listing.</p>
+                <h3 className="mt-7 font-serif text-xl">A touch of home</h3>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Pieces chosen for the colours, textures, and rituals that make a celebration feel deeply familiar.</p>
               </div>
               <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
                 <p className="font-serif text-3xl text-[#f1bbb5]">02</p>
-                <h3 className="mt-7 font-serif text-xl">A helping hand, when needed</h3>
-                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Ask about product, sizing, shipping, and policy questions before you place an order.</p>
+                <h3 className="mt-7 font-serif text-xl">Guidance with care</h3>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">A more personal way to choose when you would like a little reassurance around fit, detail, or occasion.</p>
               </div>
               <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
                 <p className="font-serif text-3xl text-[#f1bbb5]">03</p>
-                <h3 className="mt-7 font-serif text-xl">Made for meaningful moments</h3>
-                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Explore sarees, lehengas, suits, menswear, and jewelry for weddings, festivals, and every occasion in between.</p>
+                <h3 className="mt-7 font-serif text-xl">Made for memory</h3>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">For weddings, festivals, and the in-between moments that become part of a family&rsquo;s story.</p>
               </div>
             </div>
           </div>
@@ -294,7 +293,6 @@ const Index = () => {
           </div>
         </section>
 
-        <CeremonyVerseLinkBlock />
         <SEOFooterContent />
       </main>
 

@@ -59,7 +59,6 @@ import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import { useListingFilters } from '@/hooks/useListingFilters';
 import { filterSortAndSubcategorize } from '@/lib/productFilters';
 import ProductCard from '@/components/ui/ProductCard';
-import CeremonyVerseLinkBlock from '@/components/CeremonyVerseLinkBlock';
 import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
 import { FilterSidebar, ActiveFilterTags } from './FilterSidebar';
 import type { CategoryConfig } from '@/config/categoryConfig';
@@ -438,7 +437,6 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
         </section>
       )}
 
-      <CeremonyVerseLinkBlock />
       </main>
       <Footer />
     </div>

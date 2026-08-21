@@ -580,7 +580,7 @@ const SUITS: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.suits.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.suits.alt,
   heroTitle: 'Salwar Kameez & Suits',
-  heroSubtitle: "Anarkalis, shararas and palazzo sets, available online. If you need a specific colour or a set for a group, that's our sister site CeremonyVerse.",
+  heroSubtitle: 'Anarkalis, shararas and palazzo sets for celebrations. For selected custom colour or made-to-measure possibilities, explore LuxeMia custom options.',
   seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
   seoDescription: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping at $150 and above.',
   canonical: 'https://luxemia.shop/suits',

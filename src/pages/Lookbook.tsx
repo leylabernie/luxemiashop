@@ -7,6 +7,7 @@ import SEOHead from '@/components/seo/SEOHead';
 import LookbookSection from '@/components/lookbook/LookbookSection';
 import LazyImage from '@/components/ui/LazyImage';
 import { useLookbookProducts, LOOKBOOK_COLLECTIONS } from '@/hooks/useLookbookProducts';
+import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 
 const Lookbook = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -38,8 +39,8 @@ const Lookbook = () => {
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/40 via-foreground/30 to-foreground/50 z-10" />
           <LazyImage
-            src="/images/lookbook/hero-main.webp"
-            alt="LuxeMia Lookbook 2026"
+            src={FEATURED_CATEGORY_PRODUCTS.lehengas.image}
+            alt={FEATURED_CATEGORY_PRODUCTS.lehengas.alt}
             width={1920}
             height={1080}
             className="w-full h-full"
@@ -56,7 +57,7 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xs tracking-luxury uppercase mb-6 text-background/80"
           >
-            Spring / Summer 2026
+            The LuxeMia edit
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -64,8 +65,8 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="font-serif text-6xl lg:text-9xl mb-8 leading-tight"
           >
-            The <span className="italic font-light">Art</span> of <br />
-            <span className="tracking-widest uppercase text-3xl lg:text-5xl font-light">Ethereal Grace</span>
+            Celebrations in <br />
+            <span className="font-light italic">full colour</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -73,7 +74,7 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-sm lg:text-base font-light max-w-md mx-auto text-background/90"
           >
-            Styled looks featuring our latest ethnic wear — shop directly from the lookbook
+            Real LuxeMia pieces, chosen for weddings, festivals, and the moments you want to remember.
           </motion.p>
         </motion.div>
 

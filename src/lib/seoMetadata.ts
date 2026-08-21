@@ -78,8 +78,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     type: 'article',
   },
   '/about': {
-    title: 'About LuxeMia — Indian Ethnic Wear Online',
-    description: "Learn about LuxeMia, the online Indian clothing and jewelry catalog operated by CeremonyVerse, and how to contact our U.S.-based support team.",
+    title: 'Our Story — LuxeMia',
+    description: 'Discover LuxeMia: Indian occasionwear chosen for weddings, festivals, and meaningful celebrations in the United States.',
     canonical: `${SITE_URL}/about`,
   },
   '/new-arrivals': {
