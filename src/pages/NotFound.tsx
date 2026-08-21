@@ -122,7 +122,7 @@ const NotFound = () => {
             <a href="tel:+1-215-341-9990" className="underline hover:text-foreground">
               +1-215-341-9990
             </a>{" "}
-            · WhatsApp anytime
+            · WhatsApp during business hours
           </p>
         </div>
       </div>

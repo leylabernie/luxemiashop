@@ -182,7 +182,7 @@ const FAQ = () => {
         },
         {
           question: 'How can I contact customer service?',
-          answer: 'Email us at hello@luxemia.shop, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. Contact details and current support hours are listed below.',
+          answer: 'Email us at hello@luxemia.shop, call +1-215-341-9990 (Mon-Sat 10AM-7PM ET, Sun 11AM-5PM ET), or use the contact form on our Contact page. Contact details and current support hours are listed below.',
         },
       ],
     },
@@ -546,7 +546,7 @@ const FAQ = () => {
                     <p className="font-semibold text-sm">Phone</p>
                     <p className="text-xs text-muted-foreground">+1-215-341-9990</p>
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">Mon-Sat 10AM-7PM EST</p>
+                  <p className="text-xs text-muted-foreground text-center">Mon-Sat 10AM-7PM ET</p>
                 </a>
               </div>
 
