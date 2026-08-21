@@ -120,14 +120,14 @@ const BrandStory = () => {
             <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">For your next celebration</p>
             <h2 className="mt-5 font-serif text-4xl leading-[0.98] tracking-[-0.025em] text-[#352629] sm:text-5xl">Find the piece that feels like it was waiting for you.</h2>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#6f5d59] sm:text-lg">
-              Explore our sarees, lehengas, suits, menswear, and jewelry for the celebrations on your calendar. For selected made-to-measure pieces and custom colour possibilities, begin with our custom options.
+              Begin with a fresh edit of sarees, lehengas, suits, menswear, and jewelry for the celebrations on your calendar. For selected made-to-measure pieces and custom colour possibilities, begin with our custom options.
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-4">
               <Link to="/collections/customizable-indian-outfits" className="group inline-flex items-center gap-3 rounded-full bg-[#3b2a2d] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#fffaf6] shadow-[0_12px_25px_rgba(59,42,45,0.18)] transition-colors hover:bg-[#a96f72]">
                 Discover custom options <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link to="/collections" className="inline-flex items-center rounded-full border border-[#c99a94] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#493235] transition-colors hover:bg-[#f3dcd6]">
-                Explore the collection
+              <Link to="/new-arrivals" className="inline-flex items-center rounded-full border border-[#c99a94] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#493235] transition-colors hover:bg-[#f3dcd6]">
+                Explore new arrivals
               </Link>
             </div>
           </div>
