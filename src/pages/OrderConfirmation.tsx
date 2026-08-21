@@ -29,7 +29,7 @@ interface PersistedCartItem {
       handle?: string;
       title?: string;
       productType?: string;
-      metadata?: { occasion?: string | null };
+      metadata?: { occasion?: string[] | null };
     };
   };
 }
@@ -159,7 +159,7 @@ const OrderConfirmation = () => {
         tailoringOption: item.customAttributes
           ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key || ''))
           ?.value,
-        occasion: item.product?.node?.metadata?.occasion || undefined,
+        occasion: item.product?.node?.metadata?.occasion?.join(', ') || undefined,
       }));
     } catch {
       // Purchase tracking should never block the confirmation page.

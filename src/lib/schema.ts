@@ -151,6 +151,7 @@ export interface ProductSchemaInput {
   color?: string;
   material?: string;
   sizes?: string[];
+  additionalProperties?: Array<{ name: string; value: string }>;
   price: string;
   compareAtPrice?: string | null;
   currency: string;
@@ -168,6 +169,7 @@ export interface ProductVariantSchemaInput {
   mpn?: string | null;
   color?: string;
   size?: string;
+  additionalProperties?: Array<{ name: string; value: string }>;
   price: string;
   currency: string;
   availability: 'InStock' | 'OutOfStock';
@@ -213,6 +215,7 @@ export function generateProductGroupSchema(input: {
   category?: string;
   googleProductCategory?: string;
   material?: string;
+  additionalProperties?: Array<{ name: string; value: string }>;
   productGroupId: string;
   variesBy: string[];
   variants: ProductVariantSchemaInput[];
@@ -230,6 +233,13 @@ export function generateProductGroupSchema(input: {
     category: input.category || 'Clothing > Traditional & Ethnic Wear',
     ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
     ...(input.material && { material: input.material }),
+    ...(input.additionalProperties && input.additionalProperties.length > 0 && {
+      additionalProperty: input.additionalProperties.map(({ name, value }) => ({
+        '@type': 'PropertyValue',
+        name,
+        value,
+      })),
+    }),
     productGroupID: input.productGroupId,
     variesBy: input.variesBy,
     hasVariant: input.variants.map((variant) => ({
@@ -247,6 +257,13 @@ export function generateProductGroupSchema(input: {
       category: input.category || 'Clothing > Traditional & Ethnic Wear',
       ...(variant.color && { color: variant.color }),
       ...(input.material && { material: input.material }),
+      ...(input.additionalProperties && input.additionalProperties.length > 0 && {
+        additionalProperty: input.additionalProperties.map(({ name, value }) => ({
+          '@type': 'PropertyValue',
+          name,
+          value,
+        })),
+      }),
       ...(variant.size && { size: variant.size }),
       offers: generateOfferSchema(variant),
     })),
@@ -276,6 +293,13 @@ export function generateProductSchema(input: ProductSchemaInput) {
     ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
     ...(input.color && { color: input.color }),
     ...(input.material && { material: input.material }),
+    ...(input.additionalProperties && input.additionalProperties.length > 0 && {
+      additionalProperty: input.additionalProperties.map(({ name, value }) => ({
+        '@type': 'PropertyValue',
+        name,
+        value,
+      })),
+    }),
     ...(input.sizes && input.sizes.length > 0 && { size: input.sizes.length === 1 ? input.sizes[0] : input.sizes.join('/') }),
     // Always expose the current purchasable price. Do not manufacture sale
     // windows: terms are only valid when backed by a real promotion schedule.
@@ -462,7 +486,9 @@ export function getGoogleProductCategory(productType?: string, title?: string): 
     return '2104';
   }
   if (pt.includes('lehenga')) return '2271';
-  if (pt.includes('saree')) return '5424';
+  // Google Merchant category 8248 is the current Saris & Lehengas taxonomy
+  // node. It is more specific and consistent with the store merchant feed.
+  if (pt.includes('saree') || pt.includes('sari') || t.includes('saree') || t.includes('sari')) return '8248';
   if (pt.includes('necklace')) return '193';
   if (pt.includes('earring')) return '194';
   if (pt.includes('bangle') || pt.includes('bracelet')) return '200';

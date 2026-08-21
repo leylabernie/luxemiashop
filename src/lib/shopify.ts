@@ -8,9 +8,19 @@ const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN |
 
 // Product metadata for filtering
 export interface ProductMetadata {
-  occasion?: string | null;
+  occasion?: string[] | null;
   fabric?: string | null;
+  material?: string | null;
+  blouseFabric?: string | null;
   color?: string | null;
+  includedComponents?: string[] | null;
+  careInstructions?: string | null;
+  productStyle?: string | null;
+  shopifyCategory?: string | null;
+  googleProductCategory?: string | null;
+  gender?: string | null;
+  condition?: string | null;
+  searchKeywords?: string[] | null;
   work?: string | null;
   tags?: string[] | null;
   priceInr?: number | null;
@@ -30,6 +40,19 @@ export interface ShopifyProduct {
     availableForSale?: boolean;
     shipsWithin?: number | null;
     shipsWithinMetafield?: { value: string | null } | null;
+    fabricMetafield?: { value: string | null } | null;
+    materialMetafield?: { value: string | null } | null;
+    blouseFabricMetafield?: { value: string | null } | null;
+    colorMetafield?: { value: string | null } | null;
+    occasionMetafield?: { value: string | null } | null;
+    includedComponentsMetafield?: { value: string | null } | null;
+    careInstructionsMetafield?: { value: string | null } | null;
+    productStyleMetafield?: { value: string | null } | null;
+    shopifyCategoryMetafield?: { value: string | null } | null;
+    googleProductCategoryMetafield?: { value: string | null } | null;
+    genderMetafield?: { value: string | null } | null;
+    conditionMetafield?: { value: string | null } | null;
+    searchKeywordsMetafield?: { value: string | null } | null;
     seo?: { title: string | null; description: string | null };
     metadata?: ProductMetadata;
     priceRange: {
@@ -140,6 +163,19 @@ const STOREFRONT_LISTING_QUERY = `
           tags
           availableForSale
           shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+          fabricMetafield: metafield(namespace: "custom", key: "fabric") { value }
+          materialMetafield: metafield(namespace: "custom", key: "material") { value }
+          blouseFabricMetafield: metafield(namespace: "custom", key: "blouse_fabric") { value }
+          colorMetafield: metafield(namespace: "custom", key: "color") { value }
+          occasionMetafield: metafield(namespace: "custom", key: "occasion") { value }
+          includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
+          careInstructionsMetafield: metafield(namespace: "custom", key: "care_instructions") { value }
+          productStyleMetafield: metafield(namespace: "custom", key: "product_style") { value }
+          shopifyCategoryMetafield: metafield(namespace: "custom", key: "shopify_category") { value }
+          googleProductCategoryMetafield: metafield(namespace: "custom", key: "google_product_category") { value }
+          genderMetafield: metafield(namespace: "custom", key: "gender") { value }
+          conditionMetafield: metafield(namespace: "custom", key: "condition") { value }
+          searchKeywordsMetafield: metafield(namespace: "custom", key: "search_keywords") { value }
           priceRange {
             minVariantPrice {
               amount
@@ -363,9 +399,37 @@ function sanitizeShopifyProductCopy(value: string): string {
     .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
+function parseMetafieldList(value?: string | null): string[] | null {
+  if (!value) return null;
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0) : null;
+  } catch {
+    return null;
+  }
+}
+
 function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
+  const metadata: ProductMetadata = {
+    ...node.metadata,
+    fabric: node.fabricMetafield?.value || node.metadata?.fabric || null,
+    material: node.materialMetafield?.value || node.metadata?.material || null,
+    blouseFabric: node.blouseFabricMetafield?.value || node.metadata?.blouseFabric || null,
+    color: node.colorMetafield?.value || node.metadata?.color || null,
+    occasion: parseMetafieldList(node.occasionMetafield?.value) || node.metadata?.occasion || null,
+    includedComponents: parseMetafieldList(node.includedComponentsMetafield?.value) || node.metadata?.includedComponents || null,
+    careInstructions: node.careInstructionsMetafield?.value || node.metadata?.careInstructions || null,
+    productStyle: node.productStyleMetafield?.value || node.metadata?.productStyle || null,
+    shopifyCategory: node.shopifyCategoryMetafield?.value || node.metadata?.shopifyCategory || null,
+    googleProductCategory: node.googleProductCategoryMetafield?.value || node.metadata?.googleProductCategory || null,
+    gender: node.genderMetafield?.value || node.metadata?.gender || null,
+    condition: node.conditionMetafield?.value || node.metadata?.condition || null,
+    searchKeywords: parseMetafieldList(node.searchKeywordsMetafield?.value) || node.metadata?.searchKeywords || null,
+  };
+
   return {
     ...node,
+    metadata,
     description: sanitizeShopifyProductCopy(node.description || ''),
     descriptionHtml: node.descriptionHtml ? sanitizeShopifyProductCopy(node.descriptionHtml) : node.descriptionHtml,
     title: node.title.replace(/\s*\|\s*Ready to Ship/gi, ''),

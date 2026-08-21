@@ -22,7 +22,7 @@ import {
   applyCustomizableProductDetails,
   getCustomizableProduct,
 } from '@/lib/customizableProducts';
-import { generateProductGroupSchema, normalizeBrandName } from '@/lib/schema';
+import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -52,50 +52,6 @@ const sanitizeSeoTitle = (value?: string | null): string => (value || '')
   .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
   .replace(/\s+/g, ' ')
   .trim();
-
-/**
- * Get Google Product Category using NUMERIC TAXONOMY IDs.
- * GMC accepts both numeric IDs and text paths, but numeric IDs are
- * unambiguous and avoid "Invalid product category" errors from
- * apostrophe mismatches or path typos.
- * See: https://support.google.com/merchants/answer/6324436
- *
- * Google Product Taxonomy IDs:
- *   1604 = Apparel & Accessories > Clothing
- *   2271 = Apparel & Accessories > Clothing > Dresses
- *   5424 = Apparel & Accessories > Clothing > Sarees & Blouses
- *   2104 = Apparel & Accessories > Clothing > Men's Clothing
- *   2195 = Apparel & Accessories > Clothing > Men's Clothing > Men's Suits
- *   2197 = Apparel & Accessories > Clothing > Men's Clothing > Men's Shirts & Tops
- *   188  = Apparel & Accessories > Jewelry
- *   193  = Apparel & Accessories > Jewelry > Necklaces
- *   194  = Apparel & Accessories > Jewelry > Earrings
- *   200  = Apparel & Accessories > Jewelry > Bracelets
- */
-const getGoogleProductCategory = (productType?: string, title?: string): string => {
-  const t = (title || '').toLowerCase();
-  const pt = (productType || '').toLowerCase();
-
-  // Men's categories
-  if (pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear')) {
-    if (t.includes('sherwani')) return '2195'; // Men's Suits
-    if (t.includes('kurta')) return '2197'; // Men's Shirts & Tops
-    return '2104'; // Men's Clothing
-  }
-  // Lehengas and Dresses
-  if (pt.includes('lehenga') || pt.includes('dress')) return '2271';
-  // Sarees
-  if (pt.includes('saree')) return '5424';
-  // Jewelry subcategories
-  if (pt.includes('necklace')) return '193';
-  if (pt.includes('earring')) return '194';
-  if (pt.includes('bangle') || pt.includes('bracelet')) return '200';
-  if (pt.includes('jewel')) return '188';
-  // Suits, Anarkalis, Sharara, Palazzo, Salwar
-  if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar')) return '2271';
-  // Default: Clothing
-  return '1604';
-};
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -158,7 +114,7 @@ const ProductDetail = () => {
         category: product.productType,
         variant: defaultVariant?.node.title !== 'Default Title' ? defaultVariant?.node.title : undefined,
         productGroupId: product.id,
-        occasion: product.metadata?.occasion || undefined,
+        occasion: product.metadata?.occasion?.join(', ') || undefined,
       });
     }
   }, [product, addToRecentlyViewed]);
@@ -197,12 +153,36 @@ const ProductDetail = () => {
   const rawProductMaterial = product?.options?.find((option) =>
     ['fabric', 'material'].includes(option.name.toLowerCase()),
   )?.values?.[0];
-  const productColor = rawProductColor && (!isJewelryProduct || productText.includes(rawProductColor.toLowerCase()))
+  const productMetadata = product?.metadata;
+  const productColor = productMetadata?.color || (rawProductColor && (!isJewelryProduct || productText.includes(rawProductColor.toLowerCase()))
     ? rawProductColor
-    : undefined;
-  const productMaterial = rawProductMaterial && (!isJewelryProduct || productText.includes(rawProductMaterial.toLowerCase()))
+    : undefined);
+  const productMaterial = productMetadata?.material || productMetadata?.fabric || (rawProductMaterial && (!isJewelryProduct || productText.includes(rawProductMaterial.toLowerCase()))
     ? rawProductMaterial
-    : undefined;
+    : undefined);
+  const productOccasions = productMetadata?.occasion || [];
+  const productBlouseFabric = productMetadata?.blouseFabric || undefined;
+  const productComponents = productMetadata?.includedComponents || [];
+  const productCare = productMetadata?.careInstructions || undefined;
+  const productShopifyCategory = productMetadata?.shopifyCategory || undefined;
+  const productGoogleCategory = productMetadata?.googleProductCategory || getGoogleProductCategory(product?.productType, product?.title);
+  const productSchemaCategory = productShopifyCategory === 'Saris'
+    ? 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing > Saris & Lehengas > Saris'
+    : product?.productType || 'Ethnic Wear';
+  const productAdditionalProperties = [
+    ['Fabric', productMaterial],
+    ['Blouse Fabric', productBlouseFabric],
+    ['Color', productColor],
+    ['Occasion', productOccasions.join(', ') || undefined],
+    ['Included Components', productComponents.join(', ') || undefined],
+    ['Care Instructions', productCare],
+    ['Product Style', productMetadata?.productStyle || undefined],
+    ['Shopify Category', productShopifyCategory],
+    ['Google Product Category', productGoogleCategory],
+    ['Gender', productMetadata?.gender || (isJewelryProduct ? undefined : 'Female')],
+    ['Condition', productMetadata?.condition || 'New'],
+    ['Market', 'United States'],
+  ].filter((entry): entry is [string, string] => Boolean(entry[1]));
 
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
   // Falls back to the existing title template + generated meta description.
@@ -254,6 +234,18 @@ const ProductDetail = () => {
       question: `What sizes are available for the ${product.title}?`,
       answer: sizeAnswer
     }]),
+    ...(productComponents.length > 0 ? [{
+      question: `What is included with the ${product.title}?`,
+      answer: `This listing includes ${productComponents.join(', ')}. Review the images and Product Details before ordering.`,
+    }] : []),
+    ...(productOccasions.length > 0 ? [{
+      question: `When can I wear the ${product.title}?`,
+      answer: `This saree is listed for ${productOccasions.join(' and ')}.`,
+    }] : []),
+    {
+      question: `Does LuxeMia ship the ${product.title} within the United States?`,
+      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.',
+    },
     {
       question: `What is the delivery time for the ${product.title}?`,
       answer: customizableProduct
@@ -272,7 +264,7 @@ const ProductDetail = () => {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
       answer: isJewelryProduct
         ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe it gently after wear and store pieces separately in a soft pouch.'
-        : 'Follow any product-specific care instructions in Product Details. Dry cleaning is recommended for embroidered or embellished ethnic wear; avoid ironing directly over decoration.'
+        : productCare || 'Follow any product-specific care instructions in Product Details. Dry cleaning is recommended for embroidered or embellished ethnic wear; avoid ironing directly over decoration.'
     }
   ] : [];
 
@@ -324,9 +316,10 @@ const ProductDetail = () => {
       url: canonicalUrl,
       image: schemaImages,
       brand: normalizeBrandName(product.vendor),
-      category: product.productType || 'Clothing > Traditional & Ethnic Wear',
-      googleProductCategory: getGoogleProductCategory(product.productType, product.title),
+      category: productSchemaCategory,
+      googleProductCategory: productGoogleCategory,
       material,
+      additionalProperties: productAdditionalProperties,
       productGroupId: groupId,
       variesBy: [
         ...(variants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
@@ -367,12 +360,13 @@ const ProductDetail = () => {
               ? schemaVariant.sku
               : undefined,
             originalPrice: product.compareAtPriceRange?.maxVariantPrice?.amount,
-            category: product.productType || 'Ethnic Wear',
+            category: productSchemaCategory,
             brand: normalizeBrandName(product.vendor),
             color: productColor,
             material: productMaterial,
             sizes: isJewelryProduct ? [] : productSizeValues,
-            googleProductCategory: getGoogleProductCategory(product.productType, product.title),
+            additionalProperties: productAdditionalProperties,
+            googleProductCategory: productGoogleCategory,
           }}
           structuredProduct={productGroupSchema}
           breadcrumbs={[

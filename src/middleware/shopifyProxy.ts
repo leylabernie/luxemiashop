@@ -14,6 +14,18 @@ export interface ShopifyProduct {
   vendor?: string; productType?: string; tags?: string[];
   availableForSale?: boolean;
   shipsWithinMetafield?: { value: string | null } | null;
+  fabricMetafield?: { value: string | null } | null;
+  materialMetafield?: { value: string | null } | null;
+  blouseFabricMetafield?: { value: string | null } | null;
+  colorMetafield?: { value: string | null } | null;
+  occasionMetafield?: { value: string | null } | null;
+  includedComponentsMetafield?: { value: string | null } | null;
+  careInstructionsMetafield?: { value: string | null } | null;
+  productStyleMetafield?: { value: string | null } | null;
+  shopifyCategoryMetafield?: { value: string | null } | null;
+  googleProductCategoryMetafield?: { value: string | null } | null;
+  genderMetafield?: { value: string | null } | null;
+  conditionMetafield?: { value: string | null } | null;
   seo?: { title?: string | null; description?: string | null };
   priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
   compareAtPriceRange: { minVariantPrice: { amount: string; currencyCode: string } };
@@ -29,6 +41,18 @@ const PRODUCT_BY_HANDLE_QUERY = `
     product(handle: $handle) {
       id title description handle vendor productType tags availableForSale
       shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+      fabricMetafield: metafield(namespace: "custom", key: "fabric") { value }
+      materialMetafield: metafield(namespace: "custom", key: "material") { value }
+      blouseFabricMetafield: metafield(namespace: "custom", key: "blouse_fabric") { value }
+      colorMetafield: metafield(namespace: "custom", key: "color") { value }
+      occasionMetafield: metafield(namespace: "custom", key: "occasion") { value }
+      includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
+      careInstructionsMetafield: metafield(namespace: "custom", key: "care_instructions") { value }
+      productStyleMetafield: metafield(namespace: "custom", key: "product_style") { value }
+      shopifyCategoryMetafield: metafield(namespace: "custom", key: "shopify_category") { value }
+      googleProductCategoryMetafield: metafield(namespace: "custom", key: "google_product_category") { value }
+      genderMetafield: metafield(namespace: "custom", key: "gender") { value }
+      conditionMetafield: metafield(namespace: "custom", key: "condition") { value }
       seo { title description }
       priceRange { minVariantPrice { amount currencyCode } }
       compareAtPriceRange { minVariantPrice { amount currencyCode } }

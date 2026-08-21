@@ -37,6 +37,16 @@ export function escapeHtml(str: string): string {
 
 const JEWELRY_PRODUCT_PATTERN = /\b(jewel|jewell|necklace|choker|earring|bangle|bracelet|ring|maang\s*tikka|anklet|kundan|polki)\b/i;
 
+function parseMetafieldList(value?: string | null): string[] {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string' && item.trim().length > 0) : [];
+  } catch {
+    return [];
+  }
+}
+
 function isJewelryProduct(productType?: string, title?: string): boolean {
   return JEWELRY_PRODUCT_PATTERN.test(`${productType || ''} ${title || ''}`);
 }
@@ -76,9 +86,14 @@ function getListedProductAttributes(product: ShopifyProduct) {
   const optionValue = (...names: string[]) => product.options
     ?.find((option: { name?: string }) => names.includes((option.name || '').toLowerCase()))
     ?.values?.[0];
-  const rawColor = optionValue('color');
-  const rawMaterial = optionValue('fabric', 'material')
+  const rawColor = product.colorMetafield?.value || optionValue('color', 'colour');
+  const rawMaterial = product.materialMetafield?.value
+    || product.fabricMetafield?.value
+    || optionValue('fabric', 'material')
     || getLabeledDescriptionValue(product.description, ['fabric', 'material', 'top fabric', 'bottom fabric']);
+  const blouseFabric = product.blouseFabricMetafield?.value || undefined;
+  const occasions = parseMetafieldList(product.occasionMetafield?.value);
+  const components = parseMetafieldList(product.includedComponentsMetafield?.value);
   const sizeValues = product.options
     ?.find((option: { name?: string }) => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
@@ -95,7 +110,9 @@ function getListedProductAttributes(product: ShopifyProduct) {
   const includedPiecesPrefix = includedPiecesTag
     ? includedPiecePrefixes.find((prefix) => includedPiecesTag.toLowerCase().startsWith(prefix))
     : null;
-  const includedPieces = includedPiecesTag && includedPiecesPrefix
+  const includedPieces = components.length > 0
+    ? components.join(', ')
+    : includedPiecesTag && includedPiecesPrefix
     ? includedPiecesTag.slice(includedPiecesPrefix.length).trim()
     : getLabeledDescriptionValue(product.description, ['set includes', 'included pieces', 'included', 'pieces', 'package includes']);
   const rawShipsWithin = product.shipsWithinMetafield?.value;
@@ -107,6 +124,14 @@ function getListedProductAttributes(product: ShopifyProduct) {
     material: rawMaterial && (!jewelry || listingText.includes(rawMaterial.toLowerCase())) ? rawMaterial : undefined,
     sizes: jewelry ? [] : sizeValues,
     includedPieces: includedPieces || undefined,
+    blouseFabric,
+    occasions,
+    careInstructions: product.careInstructionsMetafield?.value || undefined,
+    productStyle: product.productStyleMetafield?.value || undefined,
+    shopifyCategory: product.shopifyCategoryMetafield?.value || undefined,
+    googleProductCategory: product.googleProductCategoryMetafield?.value || undefined,
+    gender: product.genderMetafield?.value || undefined,
+    condition: product.conditionMetafield?.value || undefined,
     shipsWithinDays: Number.isFinite(shipsWithinDays) && Number(shipsWithinDays) > 0
       ? Number(shipsWithinDays)
       : null,
@@ -121,6 +146,10 @@ function buildVerifiedProductDescription(product: ShopifyProduct): string {
   if (product.productType) parts.push(`Category: ${product.productType}.`);
   if (attributes.color) parts.push(`Color: ${attributes.color}.`);
   if (attributes.material) parts.push(`Material: ${attributes.material}.`);
+  if (attributes.blouseFabric) parts.push(`Blouse fabric: ${attributes.blouseFabric}.`);
+  if (attributes.includedPieces) parts.push(`Included: ${attributes.includedPieces}.`);
+  if (attributes.occasions.length > 0) parts.push(`Suitable for: ${attributes.occasions.join(', ')}.`);
+  if (attributes.careInstructions) parts.push(`Care: ${attributes.careInstructions}.`);
   if (attributes.sizes.length > 0) {
     parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
   }
@@ -161,16 +190,52 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     : 'OutOfStock';
   const vendor = product.vendor || 'LuxeMia';
 
-  const { color, includedPieces, material, shipsWithinDays, sizes } = productAttributes;
+  const {
+    blouseFabric,
+    careInstructions,
+    color,
+    condition,
+    gender: metafieldGender,
+    googleProductCategory: metafieldGoogleProductCategory,
+    includedPieces,
+    material,
+    occasions,
+    productStyle,
+    shopifyCategory,
+    shipsWithinDays,
+    sizes,
+  } = productAttributes;
   const schemaVariant = product.variants.edges.find((variant) => variant.node.availableForSale)?.node
     || product.variants.edges[0]?.node;
   const sku = schemaVariant?.sku || '';
   const gtin = schemaVariant?.barcode || '';
   const normalizedVendor = normalizeBrandName(vendor);
-  const googleProductCategory = getGoogleProductCategory(product.productType, displayTitle);
+  const googleProductCategory = metafieldGoogleProductCategory || getGoogleProductCategory(product.productType, displayTitle);
 
   const isMenswear = (product.productType || '').toLowerCase().includes('men') || (displayTitle || '').toLowerCase().includes('sherwani') || (displayTitle || '').toLowerCase().includes('kurta pajama');
-  const gender = isMenswear ? 'male' : 'female';
+  const gender = (metafieldGender || (isMenswear ? 'Male' : 'Female')).toLowerCase();
+  const conditionLabel = condition || 'New';
+  const schemaCategory = shopifyCategory === 'Saris'
+    ? 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing > Saris & Lehengas > Saris'
+    : productAttributes.jewelry
+      ? (/necklace|choker/i.test(`${product.productType} ${displayTitle}`)
+        ? 'Apparel & Accessories > Jewelry > Necklaces'
+        : 'Apparel & Accessories > Jewelry')
+      : (product.productType || 'Clothing > Traditional & Ethnic Wear');
+  const additionalProperties = [
+    ['Fabric', material],
+    ['Blouse Fabric', blouseFabric],
+    ['Color', color],
+    ['Occasion', occasions.join(', ') || undefined],
+    ['Included Components', includedPieces],
+    ['Care Instructions', careInstructions],
+    ['Product Style', productStyle],
+    ['Shopify Category', shopifyCategory],
+    ['Google Product Category', googleProductCategory],
+    ['Gender', gender === 'male' ? 'Male' : 'Female'],
+    ['Condition', conditionLabel],
+    ['Market', 'United States'],
+  ].filter((entry): entry is [string, string] => Boolean(entry[1]));
 
   const priceNum = parseFloat(price);
   const compareNum = compareAtPrice ? parseFloat(compareAtPrice) : 0;
@@ -185,11 +250,6 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   // uses. Multi-variant products therefore expose every current Shopify offer
   // rather than only the initial color in a bot-rendered response.
   const organizationSchema = generateOrganizationSchema();
-  const schemaCategory = productAttributes.jewelry
-    ? (/necklace|choker/i.test(`${product.productType} ${displayTitle}`)
-      ? 'Apparel & Accessories > Jewelry > Necklaces'
-      : 'Apparel & Accessories > Jewelry')
-    : (product.productType || 'Clothing > Traditional & Ethnic Wear');
   const schemaImages = [gmcSafeImage, ...product.images.edges.slice(1, 5).map(e => forceJpegForGmc(e.node.url))];
   const groupId = product.handle.length <= 50
     ? product.handle
@@ -231,6 +291,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         category: schemaCategory,
         googleProductCategory,
         material,
+        additionalProperties,
         productGroupId: groupId,
         variesBy: [
           'https://schema.org/color',
@@ -252,6 +313,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         color,
         material,
         sizes,
+        additionalProperties,
         price,
         compareAtPrice,
         currency,
@@ -280,9 +342,17 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       question: `What sizes are available for the ${displayTitle}?`,
       answer: sizeAnswer,
     }]),
+    ...(includedPieces ? [{
+      question: `What is included with the ${displayTitle}?`,
+      answer: `This listing includes ${includedPieces}. Review the images and Product Details before ordering.`,
+    }] : []),
+    ...(occasions.length > 0 ? [{
+      question: `When can I wear the ${displayTitle}?`,
+      answer: `This saree is listed for ${occasions.join(' and ')}.`,
+    }] : []),
     {
-      question: `What is the delivery time for the ${displayTitle}?`,
-      answer: 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. LuxeMia currently ships to United States addresses only.',
+      question: `Does LuxeMia ship the ${displayTitle} within the United States?`,
+      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.',
     },
     {
       question: `Can I return the ${displayTitle}?`,
@@ -290,7 +360,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     },
     {
       question: `How should I care for the ${displayTitle}?`,
-      answer: 'Follow any care instructions stated in Product Details. Contact LuxeMia before ordering if care information is not listed.',
+      answer: careInstructions || 'Follow any care instructions stated in Product Details. Contact LuxeMia before ordering if care information is not listed.',
     },
   ];
 
@@ -344,7 +414,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta property="product:original_price:currency" content="${escapeHtml(currency)}">
   <meta property="product:availability" content="${availability === 'InStock' ? 'in stock' : 'out of stock'}">
   <meta property="product:brand" content="${escapeHtml(vendor)}">
-  <meta property="product:condition" content="new">
+  <meta property="product:category" content="${escapeHtml(schemaCategory)}">
+  ${color ? `<meta property="product:color" content="${escapeHtml(color)}">` : ''}
+  ${material ? `<meta property="product:material" content="${escapeHtml(material)}">` : ''}
+  <meta property="product:condition" content="${escapeHtml(conditionLabel.toLowerCase())}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="${escapeHtml(canonicalUrl)}">
   <meta name="twitter:title" content="${escapeHtml(title)}">
@@ -418,13 +491,17 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         <h2 style="font-size:22px;margin:24px 0 12px;">Product Specifications</h2>
         <dl class="details">
           <div><dt>Fabric Details</dt><dd>${escapeHtml(material || 'Review the product description for the fabric or material supplied with this listing.')}</dd></div>
+          ${blouseFabric ? `<div><dt>Blouse Fabric</dt><dd>${escapeHtml(blouseFabric)}</dd></div>` : ''}
+          ${occasions.length > 0 ? `<div><dt>Occasion</dt><dd>${escapeHtml(occasions.join(', '))}</dd></div>` : ''}
           <div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.')}</dd></div>
+          ${careInstructions ? `<div><dt>Care</dt><dd>${escapeHtml(careInstructions)}</dd></div>` : ''}
+          ${shopifyCategory ? `<div><dt>Product Category</dt><dd>${escapeHtml(shopifyCategory)}</dd></div>` : ''}
           <div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizes.length > 0 ? `Listed options: ${sizes.join(', ')}. Review the Size Guide before ordering.` : 'Available sizing varies by product. Review the listed options and Size Guide before ordering.')}</dd></div>
           <div><dt>Shipping Estimate</dt><dd>${escapeHtml(shipsWithinDays ? `Ships within ${shipsWithinDays} business day${shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.` : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.')}</dd></div>
           ${vendor ? `<div><dt>Brand</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
           ${color ? `<div><dt>Color</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
           <div><dt>Gender</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>
-          <div><dt>Condition</dt><dd>New</dd></div>
+          <div><dt>Condition</dt><dd>${escapeHtml(conditionLabel)}</dd></div>
           <div><dt>Availability</dt><dd>${availability === 'InStock' ? 'In Stock' : 'Out of Stock'}</dd></div>
         </dl>
         <div class="trust-badges">

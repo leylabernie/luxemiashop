@@ -50,6 +50,7 @@ interface SEOHeadProps {
     color?: string;
     material?: string;
     sizes?: string[];
+    additionalProperties?: Array<{ name: string; value: string }>;
     googleProductCategory?: string;
   };
   /** A ProductGroup schema for multi-variant listings, replacing the single Product schema. */
@@ -141,6 +142,7 @@ const SEOHead = ({
         color: product.color,
         material: product.material,
         sizes: product.sizes,
+        additionalProperties: product.additionalProperties,
         price: product.price,
         compareAtPrice: product.originalPrice || null,
         currency: product.currency || 'USD',
