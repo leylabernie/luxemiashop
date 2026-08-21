@@ -1,5 +1,7 @@
 import { toast } from 'sonner';
 
+import { isHiddenBillingProductHandle } from './serviceAddOns';
+
 // Shopify API Configuration
 const SHOPIFY_API_VERSION = '2025-10';
 const SHOPIFY_STORE_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
@@ -532,7 +534,9 @@ export async function fetchProducts(first: number = 12, query?: string): Promise
   try {
     const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query });
     if (!data) return [];
-    return (data.data.products.edges || []).map(sanitizeProductEdge);
+    return (data.data.products.edges || [])
+      .map(sanitizeProductEdge)
+      .filter((product) => !isHiddenBillingProductHandle(product.node.handle));
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];
@@ -563,17 +567,25 @@ export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]
     console.error('Error fetching all products:', error);
   }
 
-  return allProducts;
+  return allProducts.filter((product) => !isHiddenBillingProductHandle(product.node.handle));
 }
 
-export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct['node'] | null> {
+export async function fetchProductByHandle(
+  handle: string,
+  options: { allowHiddenBillingProduct?: boolean } = {},
+): Promise<ShopifyProduct['node'] | null> {
+  if (isHiddenBillingProductHandle(handle) && !options.allowHiddenBillingProduct) return null;
+
   try {
     const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
     if (!data) return null;
     // The query now uses `product(handle:)` (replacing the deprecated
     // `productByHandle`) so the response shape is `data.product`, not
     // `data.productByHandle`.
-    return data.data.product ? sanitizeProductNode(data.data.product) : null;
+    const product = data.data.product ? sanitizeProductNode(data.data.product) : null;
+    return product && (!isHiddenBillingProductHandle(product.handle) || options.allowHiddenBillingProduct)
+      ? product
+      : null;
   } catch (error) {
     console.error('Error fetching product:', error);
     return null;
@@ -600,7 +612,9 @@ export async function fetchCollectionByHandle(
       description: collection.description || '',
       descriptionHtml: collection.descriptionHtml || '',
       image: collection.image || null,
-      products: (collection.products?.edges || []).map(sanitizeProductEdge),
+      products: (collection.products?.edges || [])
+        .map(sanitizeProductEdge)
+        .filter((product) => !isHiddenBillingProductHandle(product.node.handle)),
     };
   } catch (error) {
     if ((error as Error).name !== 'AbortError') {

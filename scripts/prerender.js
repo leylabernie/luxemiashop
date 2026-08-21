@@ -35,6 +35,9 @@ const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
 const RETIRED_PRODUCT_HANDLES = new Set(
   JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/legacyGoneProductHandles.json'), 'utf8'))
 );
+const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
+  'luxemia-tailoring-saree-finishing-add-ons',
+]);
 const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
 
 function getCustomProductDescription(title) {
@@ -514,7 +517,9 @@ async function fetchAllShopifyProducts() {
       if (!data) break;
       for (const edge of data.edges || []) {
         const p = edge.node;
-        if (p?.handle) map.set(p.handle, applyCustomizableProductDetails(p));
+        if (p?.handle && !HIDDEN_BILLING_PRODUCT_HANDLES.has(p.handle)) {
+          map.set(p.handle, applyCustomizableProductDetails(p));
+        }
       }
       if (!data.pageInfo?.hasNextPage) break;
       cursor = data.pageInfo.endCursor;
@@ -2763,7 +2768,10 @@ async function main() {
     const routePath = routes[index].path;
     if (
       routePath.startsWith('/product/') &&
-      RETIRED_PRODUCT_HANDLES.has(routePath.slice('/product/'.length))
+      (
+        RETIRED_PRODUCT_HANDLES.has(routePath.slice('/product/'.length)) ||
+        HIDDEN_BILLING_PRODUCT_HANDLES.has(routePath.slice('/product/'.length))
+      )
     ) {
       routes.splice(index, 1);
     }
@@ -2798,7 +2806,7 @@ async function main() {
   // only ~73 of 360 products — the rest fell through to the empty SPA shell
   // with no Product schema, breaking GMC validation).
   for (const [handle, p] of productMap.entries()) {
-    if (RETIRED_PRODUCT_HANDLES.has(handle) || hardcodedProductHandles.has(handle)) continue;
+    if (RETIRED_PRODUCT_HANDLES.has(handle) || HIDDEN_BILLING_PRODUCT_HANDLES.has(handle) || hardcodedProductHandles.has(handle)) continue;
     // Prefer Shopify admin "Search engine listing" (SEO) fields when set.
     // Falls back to plain product title + " | LuxeMia" suffix.
     // IMPORTANT: when seoTitle is set, use it VERBATIM. Shopify's SEO title

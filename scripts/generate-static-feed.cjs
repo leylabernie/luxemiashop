@@ -23,6 +23,9 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 // (e.g. "Luxemia" vs "LuxeMia") which trips Google Merchant Center
 // brand-consistency checks. Always emit this exact string.
 const BRAND_NAME = 'LuxeMia';
+const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
+  'luxemia-tailoring-saree-finishing-add-ons',
+]);
 
 const ALL_PRODUCTS_QUERY = `
   query GetAllProducts($first: Int!, $after: String) {
@@ -877,7 +880,10 @@ async function fetchAllProducts() {
   }
 
   console.log(`[merchant-feed] Fetched ${allProducts.length} total products from Shopify`);
-  return allProducts.filter(p => p.availableForSale !== false);
+  return allProducts.filter((product) =>
+    product.availableForSale !== false &&
+    !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle),
+  );
 }
 
 // ─── XML Item Generation ────────────────────────────────────────────────────

@@ -2,6 +2,14 @@ import type { ShopifyProduct } from '@/lib/shopify';
 
 export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
 
+/**
+ * This record exists only to supply billable checkout lines selected on an
+ * eligible garment page. It must never be treated as customer-facing catalog
+ * merchandise, a search result, or a direct product page.
+ */
+export const isHiddenBillingProductHandle = (handle?: string | null): boolean =>
+  handle === SERVICE_ADD_ON_PRODUCT_HANDLE;
+
 export type ServiceAddOnCode =
   | 'blouse-stitching'
   | 'pico-fall'
@@ -29,14 +37,14 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
     label: 'Pico & Fall',
     checkoutOptionValue: 'Pico & Fall (+$8)',
     price: 8,
-    description: 'Combined pico and fall finishing for eligible standard sarees.',
+    description: 'Combined pico and fall finishing for this saree listing.',
   },
   'matching-petticoat': {
     code: 'matching-petticoat',
     label: 'Matching Petticoat',
     checkoutOptionValue: 'Matching Petticoat (+$8)',
     price: 8,
-    description: 'An optional matching petticoat for eligible standard sarees.',
+    description: 'An optional matching petticoat for this saree listing.',
   },
   'garment-alteration': {
     code: 'garment-alteration',
@@ -69,9 +77,10 @@ const productEvidence = (product: ServiceEligibleProduct) => [
 ].filter(Boolean).join(' ');
 
 /**
- * Returns only services supported by a listing’s facts. It deliberately excludes
- * ready-to-wear, pre-stitched, and pre-draped garments from generic finishing
- * or alteration offers rather than making an unsupported tailoring promise.
+ * Returns direct purchase options for sarees and only evidence-supported
+ * alteration options for other garments. Every saree receives the combined
+ * Pico & Fall and matching petticoat selections; blouse stitching remains
+ * conditional on stated blouse-fabric or blouse-piece evidence.
  */
 export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): ServiceAddOnCode[] => {
   const evidence = productEvidence(product);
@@ -82,7 +91,6 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
   );
 
   if (isSaree) {
-    if (isReady) return [];
     const services: ServiceAddOnCode[] = ['pico-fall', 'matching-petticoat'];
     if (BLOUSE_PATTERN.test(evidence) && !hasListingStitchingOption) {
       services.unshift('blouse-stitching');

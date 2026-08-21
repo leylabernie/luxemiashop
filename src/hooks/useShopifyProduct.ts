@@ -29,7 +29,10 @@ function getInitialProduct(handle: string | undefined): ShopifyProduct['node'] |
  * it retains the normal live-fetch behavior. This avoids a shopper-facing
  * skeleton while a slow Storefront API request is in flight.
  */
-export const useShopifyProduct = (handle: string | undefined) => {
+export const useShopifyProduct = (
+  handle: string | undefined,
+  options: { allowHiddenBillingProduct?: boolean } = {},
+) => {
   const preloadedProduct = getInitialProduct(handle);
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(preloadedProduct);
   const [isLoading, setIsLoading] = useState(!preloadedProduct);
@@ -66,7 +69,7 @@ export const useShopifyProduct = (handle: string | undefined) => {
       }
 
       try {
-        const data = await fetchProductByHandle(handle);
+        const data = await fetchProductByHandle(handle, options);
         if (cancelled) return;
 
         if (data) {
@@ -105,7 +108,7 @@ export const useShopifyProduct = (handle: string | undefined) => {
     return () => {
       cancelled = true;
     };
-  }, [handle]);
+  }, [handle, options.allowHiddenBillingProduct]);
 
   return { product, isLoading, error };
 };

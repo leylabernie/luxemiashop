@@ -311,7 +311,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
-  const { product: serviceAddOnProduct } = useShopifyProduct(SERVICE_ADD_ON_PRODUCT_HANDLE);
+  const { product: serviceAddOnProduct } = useShopifyProduct(
+    SERVICE_ADD_ON_PRODUCT_HANDLE,
+    { allowHiddenBillingProduct: true },
+  );
   const hasExplicitTailoringStatus = product.tags?.some((tag) =>
     /^(tailoring|stitching|availability):/i.test(tag.trim()),
   ) ?? false;

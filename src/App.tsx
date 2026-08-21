@@ -116,6 +116,8 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 {/* Verified retired product URL: preserve the shopper journey to the live menswear edit. */}
                 <Route path="/product/ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809" element={<Navigate to="/menswear" replace />} />
+                {/* Internal billing support: never expose a standalone customer product page. */}
+                <Route path="/product/luxemia-tailoring-saree-finishing-add-ons" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 <Route path="/product/:handle" element={<Suspense fallback={<PageLoader />}><ProductDetail /></Suspense>} />
                 <Route path="/collections" element={<Suspense fallback={<PageLoader />}><Collections /></Suspense>} />
                 <Route path="/lehengas" element={<Suspense fallback={<PageLoader />}><Lehengas /></Suspense>} />

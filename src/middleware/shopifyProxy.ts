@@ -5,6 +5,8 @@
  * Includes in-memory caching for edge runtime performance.
  */
 
+import { isHiddenBillingProductHandle } from '../lib/serviceAddOns';
+
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 
@@ -71,6 +73,8 @@ const productCache = new Map<string, { data: ShopifyProduct | null; timestamp: n
 const CACHE_TTL = 2 * 60 * 1000; // 2 minutes (was 10 — too stale after CSV imports)
 
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
+  if (isHiddenBillingProductHandle(handle)) return null;
+
   const cached = productCache.get(handle);
   if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
     return cached.data;
