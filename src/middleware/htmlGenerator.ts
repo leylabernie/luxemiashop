@@ -52,6 +52,24 @@ function getCategoryUrl(productType?: string, title?: string): string {
   return '/collections';
 }
 
+function getLabeledDescriptionValue(description: string | undefined, labels: string[]): string | undefined {
+  const source = (description || '').replace(/\s+/g, ' ').trim();
+  if (!source) return undefined;
+
+  const escapedLabels = labels.map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const followingLabels = [
+    'fabric', 'material', 'top fabric', 'bottom fabric', 'set includes', 'included',
+    'included pieces', 'pieces', 'style', 'colour options', 'color options',
+    'available sizes', 'sizes', 'fit guidance', 'care', 'shipping',
+  ].map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const expression = new RegExp(
+    `(?:^|\\s)(?:${escapedLabels})\\s*:\\s*(.+?)(?=\\s+(?:${followingLabels})\\s*:|$)`,
+    'i',
+  );
+  const match = source.match(expression);
+  return match?.[1]?.replace(/[.;,\s]+$/, '').trim() || undefined;
+}
+
 function getListedProductAttributes(product: ShopifyProduct) {
   const jewelry = isJewelryProduct(product.productType, product.title);
   const listingText = `${product.title || ''} ${product.description || ''}`.toLowerCase();
@@ -59,7 +77,8 @@ function getListedProductAttributes(product: ShopifyProduct) {
     ?.find((option: { name?: string }) => names.includes((option.name || '').toLowerCase()))
     ?.values?.[0];
   const rawColor = optionValue('color');
-  const rawMaterial = optionValue('fabric', 'material');
+  const rawMaterial = optionValue('fabric', 'material')
+    || getLabeledDescriptionValue(product.description, ['fabric', 'material', 'top fabric', 'bottom fabric']);
   const sizeValues = product.options
     ?.find((option: { name?: string }) => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
@@ -78,7 +97,7 @@ function getListedProductAttributes(product: ShopifyProduct) {
     : null;
   const includedPieces = includedPiecesTag && includedPiecesPrefix
     ? includedPiecesTag.slice(includedPiecesPrefix.length).trim()
-    : undefined;
+    : getLabeledDescriptionValue(product.description, ['set includes', 'included pieces', 'included', 'pieces', 'package includes']);
   const rawShipsWithin = product.shipsWithinMetafield?.value;
   const shipsWithinDays = rawShipsWithin ? Number.parseInt(rawShipsWithin, 10) : null;
 
@@ -213,7 +232,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         googleProductCategory,
         material,
         productGroupId: groupId,
-        variesBy: ['https://schema.org/color'],
+        variesBy: [
+          'https://schema.org/color',
+          ...(schemaVariants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
+        ],
         variants: schemaVariants,
       })
     : generateProductSchema({
