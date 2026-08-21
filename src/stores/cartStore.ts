@@ -8,6 +8,7 @@ import {
   trackRemoveFromCart,
 } from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
+import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
 
 export interface CartAttribute {
   key: string;
@@ -56,6 +57,12 @@ const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[]) => (
 const getTailoringOption = (item: CartItem) => item.customAttributes
   ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key))
   ?.value;
+
+const appliesToProductTitle = (item: CartItem) => item.customAttributes
+  ?.find((attribute) => attribute.key === 'Applies To')
+  ?.value;
+
+const isServiceLine = (item: CartItem) => isHiddenBillingProductHandle(item.product.node.handle);
 
 const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => ({
   // A Shopify variant is the purchasable inventory unit. Use it as the GA4 item
@@ -125,12 +132,19 @@ export const useCartStore = create<CartStore>()(
           trackRemoveFromCart(toAnalyticsItem(current, Math.abs(quantityDelta)));
         }
 
+        const appliesToTitle = current.product.node.title;
+        const shouldSyncServiceQuantities = !isServiceLine(current);
+
         set({
-          items: get().items.map((item) => (
-            item.variantId === variantId && sameAttributes(item.customAttributes, customAttributes)
-              ? { ...item, quantity }
-              : item
-          )),
+          items: get().items.map((item) => {
+            const isCurrentLine = item.variantId === variantId
+              && sameAttributes(item.customAttributes, customAttributes);
+            const isDependentService = shouldSyncServiceQuantities
+              && isServiceLine(item)
+              && appliesToProductTitle(item) === appliesToTitle;
+
+            return isCurrentLine || isDependentService ? { ...item, quantity } : item;
+          }),
         });
       },
 
@@ -139,13 +153,21 @@ export const useCartStore = create<CartStore>()(
           item.variantId === variantId
           && sameAttributes(item.customAttributes, customAttributes)
         ));
-        if (itemToRemove) trackRemoveFromCart(toAnalyticsItem(itemToRemove));
+        if (!itemToRemove) return;
 
+        const removeDependentServices = !isServiceLine(itemToRemove);
+        const linesToRemove = get().items.filter((item) => {
+          const isCurrentLine = item.variantId === variantId
+            && sameAttributes(item.customAttributes, customAttributes);
+          const isDependentService = removeDependentServices
+            && isServiceLine(item)
+            && appliesToProductTitle(item) === itemToRemove.product.node.title;
+          return isCurrentLine || isDependentService;
+        });
+
+        linesToRemove.forEach((item) => trackRemoveFromCart(toAnalyticsItem(item)));
         set({
-          items: get().items.filter((item) => !(
-            item.variantId === variantId
-            && sameAttributes(item.customAttributes, customAttributes)
-          )),
+          items: get().items.filter((item) => !linesToRemove.includes(item)),
         });
       },
 
@@ -216,7 +238,21 @@ export const useCartStore = create<CartStore>()(
             state.items = [];
             state.cartId = null;
             state.checkoutUrl = null;
+            return;
           }
+
+          // Remove legacy implementation details from carts created before the
+          // customer-facing service experience was refined. Shopify displays
+          // cart attributes in checkout, so only shopper-friendly context may
+          // be persisted on service lines.
+          state.items = state.items.map((item) => ({
+            ...item,
+            customAttributes: item.customAttributes?.filter((attribute) => {
+              if (attribute.key === 'Related Product Handle') return false;
+              if (!isServiceLine(item) && attribute.key === 'Selected Paid Services') return false;
+              return true;
+            }),
+          }));
         }
       },
     },

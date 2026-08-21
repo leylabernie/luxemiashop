@@ -688,12 +688,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         customAttributes.push({ key: 'Tailoring Confirmation', value: 'Listing-specific availability, measurements, timing, and charge require LuxeMia confirmation' });
       }
     }
-    if (selectedAvailableServiceAddOnCodes.length > 0) {
-      customAttributes.push({
-        key: 'Selected Paid Services',
-        value: selectedAvailableServiceAddOnCodes.map((code) => SERVICE_ADD_ONS[code].label).join(', '),
-      });
-    }
     if (needsStitchingSize && stitchingSize) {
       customAttributes.push({ key: 'Stitching Size', value: stitchingSize });
     }
@@ -733,7 +727,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           selectedOptions: serviceVariant.selectedOptions,
           customAttributes: [
             { key: 'Applies To', value: product.title },
-            { key: 'Related Product Handle', value: product.handle },
           ],
         });
       }
