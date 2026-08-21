@@ -169,6 +169,49 @@ const Index = () => {
           </div>
         </section>
 
+        <section aria-labelledby="our-story-home-heading" className="relative overflow-hidden bg-[#352629] py-16 text-[#fff9f4] sm:py-20 lg:py-24">
+          <div className="pointer-events-none absolute -left-24 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-[#bd7f7c]/20 blur-3xl" aria-hidden="true" />
+          <div className="pointer-events-none absolute -right-20 top-0 h-64 w-64 rounded-full bg-[#e4c38b]/10 blur-3xl" aria-hidden="true" />
+          <div className="container relative mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
+            <div>
+              <p className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f1bbb5]">
+                <span className="h-px w-9 bg-[#f1bbb5]" />
+                Our story
+              </p>
+              <h2 id="our-story-home-heading" className="max-w-2xl font-serif text-4xl leading-[0.96] tracking-[-0.025em] sm:text-5xl lg:text-6xl">
+                The beauty is in the <em className="font-normal text-[#f1bbb5]">details.</em>
+              </h2>
+              <p className="mt-7 max-w-xl text-base leading-8 text-[#fff9f4]/78 sm:text-lg">
+                LuxeMia brings Indian occasionwear closer to home for celebrations in the United States. We believe choosing a look should feel considered, personal, and clear from the first browse to the final detail.
+              </p>
+              <Link
+                to="/brand-story"
+                className="group mt-8 inline-flex items-center gap-3 rounded-full border border-[#f1bbb5] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#fff9f4] transition-colors duration-300 hover:bg-[#f1bbb5] hover:text-[#352629]"
+              >
+                Discover our story <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
+
+            <div className="grid gap-px overflow-hidden rounded-[2px] border border-white/15 bg-white/15 sm:grid-cols-3">
+              <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
+                <p className="font-serif text-3xl text-[#f1bbb5]">01</p>
+                <h3 className="mt-7 font-serif text-xl">Details to decide from</h3>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Review fabric, included pieces, available sizes, and stated stitching information within each listing.</p>
+              </div>
+              <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
+                <p className="font-serif text-3xl text-[#f1bbb5]">02</p>
+                <h3 className="mt-7 font-serif text-xl">A helping hand, when needed</h3>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Ask about product, sizing, shipping, and policy questions before you place an order.</p>
+              </div>
+              <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
+                <p className="font-serif text-3xl text-[#f1bbb5]">03</p>
+                <h3 className="mt-7 font-serif text-xl">Made for meaningful moments</h3>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Explore sarees, lehengas, suits, menswear, and jewelry for weddings, festivals, and every occasion in between.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* PSI 2026-07-22: Sections wrapped in LazySection (IntersectionObserver)
             to defer JS execution for below-fold content. These components import
             framer-motion + lucide-react. Deferring removes their animation setup
