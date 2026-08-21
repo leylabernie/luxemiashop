@@ -213,15 +213,21 @@ const NewVisitorPopup = () => {
             className="fixed inset-0 bg-foreground/60 backdrop-blur-sm z-50"
             onClick={handleClose}
           />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            // Mobile: bottom-aligned so keyboard doesn't cover the email input
-            // Desktop: centered, two-column layout (image + content)
-            className="fixed left-1/2 -translate-x-1/2 bottom-[env(safe-area-inset-bottom,0.5rem)] sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 w-[94vw] max-w-2xl max-h-[92dvh] overflow-y-auto bg-background z-50 shadow-2xl rounded-lg"
+          {/* The wrapper owns centering. Framer Motion owns only entrance transforms,
+              preventing animation styles from overriding CSS translate centering. */}
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="welcome-offer-heading"
           >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 16 }}
+              transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
+              className="w-full max-w-3xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto overscroll-contain rounded-lg bg-background shadow-2xl sm:max-h-[calc(100dvh-3rem)]"
+            >
             <div className="relative">
               {/* Close button — 44x44px touch target for mobile */}
               <button
@@ -236,7 +242,7 @@ const NewVisitorPopup = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2">
 
                 {/* ─── Image Panel ─────────────────────────────────────── */}
-                <div className="relative order-1 sm:order-1 aspect-square sm:aspect-auto sm:min-h-[420px] bg-gradient-to-br from-primary/10 via-primary/5 to-transparent overflow-hidden">
+                <div className="relative order-1 h-52 overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent sm:h-auto sm:min-h-[420px]">
                   <img
                     src="/images/popup-image.webp"
                     alt="LuxeMia Indian ethnic wear — bridal lehenga collection"
@@ -283,7 +289,7 @@ const NewVisitorPopup = () => {
                       </div>
 
                       {/* Main headline — specific and benefit-driven */}
-                      <h3 className="font-serif text-2xl sm:text-3xl text-center sm:text-left mb-3 leading-tight">
+                      <h3 id="welcome-offer-heading" className="font-serif text-2xl sm:text-3xl text-center sm:text-left mb-3 leading-tight">
                         Get <span className="text-primary font-bold">10% Off</span> Your First Indian Ethnic Wear Order
                       </h3>
 
@@ -401,7 +407,8 @@ const NewVisitorPopup = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
