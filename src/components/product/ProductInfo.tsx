@@ -328,6 +328,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNumericSizes = hasNumericSizeVariants(product);
+  const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
   const isLaunchOfferActive = isRakshaBandhanCampaignActive();
 
   // Honor Merchant Center variant links while preserving the first available
@@ -1024,10 +1025,16 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       {availableServiceAddOnCodes.length > 0 && (
         <section className="space-y-3 rounded-sm border border-primary/25 bg-primary/5 p-4" aria-labelledby="listing-service-add-ons-heading">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Listing-appropriate services</p>
-            <h3 id="listing-service-add-ons-heading" className="mt-1 font-serif text-xl">Optional finishing &amp; tailoring</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+              {isSareeListing ? 'Saree options' : 'Listing-appropriate services'}
+            </p>
+            <h3 id="listing-service-add-ons-heading" className="mt-1 font-serif text-xl">
+              {isSareeListing ? 'Finish your saree' : 'Optional finishing & tailoring'}
+            </h3>
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              Only services supported by this product’s stated construction are shown. Each selection is added as a separate, taxable checkout line linked to this garment.
+              {isSareeListing
+                ? 'Choose finishing, petticoat, and blouse-stitching options for this saree before adding it to bag. Selected options are included with this saree order.'
+                : 'Only services supported by this product’s stated construction are shown and included with this garment order.'}
             </p>
           </div>
           <div className="space-y-2">
