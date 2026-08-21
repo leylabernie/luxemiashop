@@ -22,7 +22,7 @@ import {
   applyCustomizableProductDetails,
   getCustomizableProduct,
 } from '@/lib/customizableProducts';
-import { normalizeBrandName } from '@/lib/schema';
+import { generateProductGroupSchema, normalizeBrandName } from '@/lib/schema';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -276,6 +276,66 @@ const ProductDetail = () => {
     }
   ] : [];
 
+  const productGroupSchema = useMemo(() => {
+    if (!product || product.variants.edges.length < 2) return undefined;
+
+    const canonicalUrl = `https://luxemia.shop/product/${product.handle}`;
+    const schemaImages = product.images.edges
+      .map((edge) => edge.node.url)
+      .filter(Boolean);
+    const material = productMaterial
+      || (/\breal\s+chinon\b/i.test(`${product.title} ${product.description}`) ? 'Real Chinon' : undefined);
+    const groupId = product.handle.length <= 50
+      ? product.handle
+      : `p${product.id.split('/').pop() || product.handle}`;
+    const description = enrichedDescription || product.description || product.title;
+    const variants = product.variants.edges.map(({ node: variant }) => {
+      const color = variant.selectedOptions.find((option) => ['color', 'colour'].includes(option.name.toLowerCase()))?.value;
+      const size = variant.selectedOptions.find((option) => ['size', 'blouse size', 'bust size', 'chest size'].includes(option.name.toLowerCase()))?.value;
+      const variantId = variant.id.split('/').pop() || '';
+      const optionLabel = variant.selectedOptions
+        .filter((option) => option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
+        .map((option) => option.value)
+        .join(' / ');
+      const variantUrl = variantId ? `${canonicalUrl}?variant=${encodeURIComponent(variantId)}` : canonicalUrl;
+
+      return {
+        id: variantId,
+        name: optionLabel ? `${product.title} — ${optionLabel}` : product.title,
+        description,
+        url: variantUrl,
+        image: variant.image?.url ? [variant.image.url] : schemaImages,
+        sku: variant.sku,
+        gtin: variant.barcode,
+        mpn: normalizeBrandName(product.vendor) === 'LuxeMia' && variant.sku && !variant.barcode
+          ? variant.sku
+          : undefined,
+        color,
+        size,
+        price: variant.price.amount,
+        currency: variant.price.currencyCode,
+        availability: variant.availableForSale ? 'InStock' as const : 'OutOfStock' as const,
+      };
+    });
+
+    return generateProductGroupSchema({
+      name: product.title,
+      description,
+      url: canonicalUrl,
+      image: schemaImages,
+      brand: normalizeBrandName(product.vendor),
+      category: product.productType || 'Clothing > Traditional & Ethnic Wear',
+      googleProductCategory: getGoogleProductCategory(product.productType, product.title),
+      material,
+      productGroupId: groupId,
+      variesBy: [
+        ...(variants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
+        ...(variants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
+      ],
+      variants,
+    });
+  }, [enrichedDescription, product, productMaterial]);
+
   return (
     <div className="min-h-screen bg-background">
       {product ? (
@@ -314,6 +374,7 @@ const ProductDetail = () => {
             sizes: isJewelryProduct ? [] : productSizeValues,
             googleProductCategory: getGoogleProductCategory(product.productType, product.title),
           }}
+          structuredProduct={productGroupSchema}
           breadcrumbs={[
             { name: 'Home', url: '/' },
             { name: categoryName, url: categoryUrl },

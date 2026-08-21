@@ -350,11 +350,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <meta name="twitter:image" content="${escapeHtml(gmcSafeImage)}">
-  <script type="application/ld+json">${JSON.stringify(organizationSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>
-  <script type="application/ld+json">${JSON.stringify(webPageSchema)}</script>
-  ${faqSchema ? `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>` : ''}
+  <script type="application/ld+json" data-prerender-schema>${JSON.stringify(organizationSchema)}</script>
+  <script type="application/ld+json" data-prerender-schema>${JSON.stringify(productSchema)}</script>
+  <script type="application/ld+json" data-prerender-schema>${JSON.stringify(breadcrumbSchema)}</script>
+  <script type="application/ld+json" data-prerender-schema>${JSON.stringify(webPageSchema)}</script>
+  ${faqSchema ? `<script type="application/ld+json" data-prerender-schema>${JSON.stringify(faqSchema)}</script>` : ''}
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

@@ -52,6 +52,8 @@ interface SEOHeadProps {
     sizes?: string[];
     googleProductCategory?: string;
   };
+  /** A ProductGroup schema for multi-variant listings, replacing the single Product schema. */
+  structuredProduct?: Record<string, unknown>;
   collection?: {
     name: string;
     description: string;
@@ -79,6 +81,7 @@ const SEOHead = ({
   image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   type = 'website',
   product,
+  structuredProduct,
   // `collection` prop is intentionally not destructured here. It remains in the
   // SEOHeadProps interface for backwards compatibility (callers still pass it),
   // but the ItemList schema is now generated server-side by scripts/prerender.js
@@ -120,7 +123,7 @@ const SEOHead = ({
   // Product Schema — uses shared generateProductSchema from schema.ts
   // Fallbacks ensure required Merchant Listings fields (image, description,
   // offers.price) are always present even when Shopify data is incomplete.
-  const productSchema = product
+  const productSchema = structuredProduct || (product
     ? generateProductSchema({
         name: product.name,
         image: [forceJpegForGmc(product.image || absoluteImage)],
@@ -143,7 +146,7 @@ const SEOHead = ({
         currency: product.currency || 'USD',
         availability: product.availability === 'InStock' ? 'InStock' : 'OutOfStock',
       })
-    : null;
+    : null);
 
   // Breadcrumb Schema — uses shared generateBreadcrumbSchema from schema.ts
   const breadcrumbSchema = breadcrumbs
