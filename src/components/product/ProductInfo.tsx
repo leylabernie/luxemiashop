@@ -17,6 +17,14 @@ import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
 import { getCustomizableProduct } from '@/lib/customizableProducts';
 import { RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
+import { useShopifyProduct } from '@/hooks/useShopifyProduct';
+import {
+  getEligibleServiceAddOns,
+  SERVICE_ADD_ON_PRODUCT_HANDLE,
+  SERVICE_ADD_ONS,
+  serviceAddOnTotal,
+  type ServiceAddOnCode,
+} from '@/lib/serviceAddOns';
 import {
   isRakshaBandhanCampaignActive,
   RAKSHA_BANDHAN_CAMPAIGN,
@@ -29,6 +37,7 @@ interface StitchingTypeOption {
   description: string;
   priceModifier: number;
   requiresMeasurement: boolean;
+  requiresQuote?: boolean;
 }
 
 const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
@@ -42,25 +51,20 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
   {
     id: 'ready-to-wear',
     label: 'Ready to Wear',
-    description: 'Fully stitched to standard measurements matching the product image. Select your bust size.',
-    priceModifier: 15,
+    description: 'A listing-specific ready-to-wear request. Select the stated size and confirm availability before ordering when the product requires it.',
+    priceModifier: 0,
     requiresMeasurement: true,
+    requiresQuote: true,
   },
   {
     id: 'made-to-measure',
     label: 'Made to Measure (UDesign)',
-    description: 'Made-to-measure tailoring with the neckline, sleeve, and bottom-style choices shown on this page. Submit measurements after ordering.',
-    priceModifier: 25,
+    description: 'Made-to-measure tailoring is available only when LuxeMia confirms the listing-specific design choices, measurements, timing, and charge.',
+    priceModifier: 0,
     requiresMeasurement: true,
+    requiresQuote: true,
   },
 ];
-
-const openTailoringQuote = (option: StitchingTypeOption) => {
-  const message = encodeURIComponent(
-    `Hi LuxeMia, I would like a tailoring quote for ${option.label}.`
-  );
-  window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
-};
 
 type ShopifyVariant = ShopifyProduct['node']['variants']['edges'][number]['node'];
 
@@ -307,6 +311,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
+  const { product: serviceAddOnProduct } = useShopifyProduct(SERVICE_ADD_ON_PRODUCT_HANDLE);
   const hasExplicitTailoringStatus = product.tags?.some((tag) =>
     /^(tailoring|stitching|availability):/i.test(tag.trim()),
   ) ?? false;
@@ -361,8 +366,31 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     isStitchable ? 'semi-stitched' : null
   );
   const [showStitchingInfo, setShowStitchingInfo] = useState<string | null>(null);
+  const [selectedServiceAddOnCodes, setSelectedServiceAddOnCodes] = useState<ServiceAddOnCode[]>([]);
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
+
+  const eligibleServiceAddOnCodes = useMemo(
+    () => getEligibleServiceAddOns(product),
+    [product],
+  );
+  const serviceVariants = useMemo(() => {
+    const variants = new Map<ServiceAddOnCode, ShopifyVariant>();
+    if (!serviceAddOnProduct) return variants;
+
+    for (const code of eligibleServiceAddOnCodes) {
+      const definition = SERVICE_ADD_ONS[code];
+      const variant = serviceAddOnProduct.variants.edges.find(({ node }) =>
+        node.availableForSale && node.selectedOptions.some((option) =>
+          option.name === 'Service' && option.value === definition.checkoutOptionValue,
+        ),
+      )?.node;
+      if (variant) variants.set(code, variant);
+    }
+    return variants;
+  }, [eligibleServiceAddOnCodes, serviceAddOnProduct]);
+  const availableServiceAddOnCodes = eligibleServiceAddOnCodes.filter((code) => serviceVariants.has(code));
+  const selectedAvailableServiceAddOnCodes = selectedServiceAddOnCodes.filter((code) => serviceVariants.has(code));
 
   // Find the matching variant based on selected options
   const selectedVariant = product.variants.edges.find((variant) => {
@@ -441,13 +469,17 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return 0;
   }, [selectedOptions, selectedStitchingType, isStitchable]);
 
+  const selectedServiceAddOnCharge = useMemo(
+    () => serviceAddOnTotal(selectedAvailableServiceAddOnCodes),
+    [selectedAvailableServiceAddOnCodes],
+  );
   const currentPrice = useMemo(() => {
     const baseAmount = parseFloat(basePrice.amount);
     return {
-      amount: (baseAmount + stitchingPremium).toString(),
+      amount: (baseAmount + stitchingPremium + selectedServiceAddOnCharge).toString(),
       currencyCode: basePrice.currencyCode,
     };
-  }, [basePrice, stitchingPremium]);
+  }, [basePrice, selectedServiceAddOnCharge, stitchingPremium]);
   const hasAvailableVariant = product.variants.edges.some(
     (edge) => edge.node.availableForSale !== false
   );
@@ -648,9 +680,15 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     if (isStitchable && selectedStitchingType) {
       const stitchingOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
       customAttributes.push({ key: 'Stitching Type', value: stitchingOption?.label || selectedStitchingType });
-      if (stitchingOption?.priceModifier && stitchingOption.priceModifier > 0) {
-        customAttributes.push({ key: 'Stitching Charge', value: `+$${stitchingOption.priceModifier}.00` });
+      if (stitchingOption?.requiresQuote) {
+        customAttributes.push({ key: 'Tailoring Confirmation', value: 'Listing-specific availability, measurements, timing, and charge require LuxeMia confirmation' });
       }
+    }
+    if (selectedAvailableServiceAddOnCodes.length > 0) {
+      customAttributes.push({
+        key: 'Selected Paid Services',
+        value: selectedAvailableServiceAddOnCodes.map((code) => SERVICE_ADD_ONS[code].label).join(', '),
+      });
     }
     if (needsStitchingSize && stitchingSize) {
       customAttributes.push({ key: 'Stitching Size', value: stitchingSize });
@@ -677,6 +715,25 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       selectedOptions: purchasableVariant.node.selectedOptions,
       customAttributes: customAttributes.length > 0 ? customAttributes : undefined,
     });
+
+    if (serviceAddOnProduct) {
+      for (const code of selectedAvailableServiceAddOnCodes) {
+        const serviceVariant = serviceVariants.get(code);
+        if (!serviceVariant) continue;
+        addItem({
+          product: { node: serviceAddOnProduct },
+          variantId: serviceVariant.id,
+          variantTitle: serviceVariant.title,
+          price: serviceVariant.price,
+          quantity,
+          selectedOptions: serviceVariant.selectedOptions,
+          customAttributes: [
+            { key: 'Applies To', value: product.title },
+            { key: 'Related Product Handle', value: product.handle },
+          ],
+        });
+      }
+    }
 
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsAdding(false);
@@ -851,13 +908,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
               <button
                 key={option.id}
                 onClick={() => {
-                  // Paid tailoring cannot be represented as a Shopify line-item
-                  // price yet. Request a confirmed quote instead of displaying
-                  // a surcharge that checkout would silently omit.
-                  if (option.priceModifier > 0) {
-                    openTailoringQuote(option);
-                    return;
-                  }
                   handleStitchingTypeSelect(option.id);
                 }}
                 className={`w-full text-left p-4 border rounded-sm transition-all duration-300 ${
@@ -885,7 +935,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                       ? 'text-green-600 dark:text-green-400'
                       : 'text-foreground'
                   }`}>
-                    {option.priceModifier === 0 ? 'Included' : 'Contact for quote'}
+                    {option.requiresQuote ? 'Confirmation required' : 'Included'}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
@@ -967,6 +1017,57 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           </div>
         ))}
       </div>
+
+      {availableServiceAddOnCodes.length > 0 && (
+        <section className="space-y-3 rounded-sm border border-primary/25 bg-primary/5 p-4" aria-labelledby="listing-service-add-ons-heading">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Listing-appropriate services</p>
+            <h3 id="listing-service-add-ons-heading" className="mt-1 font-serif text-xl">Optional finishing &amp; tailoring</h3>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              Only services supported by this product’s stated construction are shown. Each selection is added as a separate, taxable checkout line linked to this garment.
+            </p>
+          </div>
+          <div className="space-y-2">
+            {availableServiceAddOnCodes.map((code) => {
+              const service = SERVICE_ADD_ONS[code];
+              const selected = selectedAvailableServiceAddOnCodes.includes(code);
+              return (
+                <button
+                  key={code}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() => setSelectedServiceAddOnCodes((current) =>
+                    current.includes(code)
+                      ? current.filter((currentCode) => currentCode !== code)
+                      : [...current, code],
+                  )}
+                  className={`flex w-full items-start justify-between gap-4 rounded-sm border p-3 text-left transition-colors ${
+                    selected ? 'border-primary bg-background ring-1 ring-primary' : 'border-border bg-background hover:border-primary/60'
+                  }`}
+                >
+                  <span className="flex items-start gap-3">
+                    <span className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border ${
+                      selected ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/50'
+                    }`}>
+                      {selected && <Check className="h-3 w-3" aria-hidden="true" />}
+                    </span>
+                    <span>
+                      <span className="block text-sm font-medium text-foreground">{service.label}</span>
+                      <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{service.description}</span>
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-sm font-semibold text-foreground">+${service.price.toFixed(2)}</span>
+                </button>
+              );
+            })}
+          </div>
+          {selectedAvailableServiceAddOnCodes.length > 0 && (
+            <p className="text-sm font-medium text-foreground">
+              Selected services: +{formatPrice(selectedServiceAddOnCharge.toFixed(2), basePrice.currencyCode)}
+            </p>
+          )}
+        </section>
+      )}
 
       {isCustomSizeSelected && !customizableProduct && (
         <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
