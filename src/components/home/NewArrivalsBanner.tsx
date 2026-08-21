@@ -44,7 +44,10 @@ const evergreenSlides: FeaturedSlide[] = [
     alt: 'Woman in a blush pink embroidered Indian occasionwear set in a garden setting',
     width: 1600,
     height: 900,
-    imageFit: 'cover',
+    // Preserve the complete 16:9 campaign image. The component supplies a
+    // softly blurred full-bleed backdrop, so desktop still feels immersive
+    // without cutting off the model at the top or bottom.
+    imageFit: 'contain',
   },
   {
     id: 2,
