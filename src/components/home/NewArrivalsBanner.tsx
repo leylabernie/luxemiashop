@@ -33,6 +33,21 @@ interface FeaturedSlide {
 const evergreenSlides: FeaturedSlide[] = [
   {
     id: 1,
+    eyebrow: 'The LuxeMia Boutique Edit',
+    headline: 'Graceful moments, beautifully dressed.',
+    subline:
+      'Discover lovingly curated Indian occasionwear for the celebrations, traditions, and entrances that become part of your story.',
+    cta: 'Explore New Arrivals',
+    link: '/new-arrivals',
+    image: '/images/campaigns/new-indian-ethnic-wear-2026-mobile',
+    desktopImage: '/images/campaigns/new-indian-ethnic-wear-2026-desktop',
+    alt: 'Woman in a blush pink embroidered Indian occasionwear set in a garden setting',
+    width: 1600,
+    height: 900,
+    imageFit: 'cover',
+  },
+  {
+    id: 2,
     eyebrow: 'Navratri 2026',
     headline: 'Navratri & Garba Outfits for U.S. Celebrations',
     subline:
@@ -45,20 +60,6 @@ const evergreenSlides: FeaturedSlide[] = [
     width: 1672,
     height: 941,
     imageFit: 'cover',
-  },
-  {
-    id: 2,
-    eyebrow: 'Recently Added',
-    headline: 'New Co-ord Sets',
-    subline:
-      'Browse current co-ord and occasion sets, then review each listing for exact fabric, work, sizes, included pieces, price, and availability.',
-    cta: 'Shop New Arrivals',
-    link: '/new-arrivals',
-    image: '/images/campaigns/new-indian-ethnic-wear-2026-mobile',
-    desktopImage: '/images/campaigns/new-indian-ethnic-wear-2026-desktop',
-    alt: 'Woman wearing a blush pink embroidered co-ord set with matching dupatta',
-    width: 624,
-    height: 936,
   },
   {
     id: 3,

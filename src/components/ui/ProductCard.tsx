@@ -281,12 +281,12 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: animationDelay }}
-      className={`group ${className}`}
+      className={`group rounded-[2px] ${className}`}
     >
       <Link to={`/product/${product.node.handle}`}>
         <div 
           ref={imageContainerRef}
-          className="relative aspect-[3/4] mb-4 overflow-hidden rounded-sm bg-card touch-none"
+          className="relative mb-3 aspect-[3/4] overflow-hidden rounded-[2px] bg-[#efe5df] shadow-[0_8px_20px_rgba(78,49,50,0.06)] touch-none sm:mb-4"
           onTouchStart={(e) => {
             handleDoubleTap(e);
             handleTouchStart(e);
@@ -339,7 +339,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           {/* Mobile Wishlist Button - Always visible on mobile */}
           <button
             onClick={handleWishlistToggle}
-            className="absolute top-2 right-2 p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center bg-background/90 backdrop-blur-sm rounded-full transition-all z-10 lg:opacity-0 lg:group-hover:opacity-100"
+            className="absolute right-2 top-2 z-10 flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full bg-[#fffaf6]/92 p-2.5 text-[#493235] shadow-sm backdrop-blur-sm transition-all lg:opacity-0 lg:group-hover:opacity-100"
             aria-label={isInWishlist(product.node.id) ? 'Remove from wishlist' : 'Add to wishlist'}
           >
             <Heart
@@ -362,7 +362,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 <button
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsQuickViewOpen(true); }}
                   data-testid={`quick-view-${product.node.handle}`}
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 bg-background/95 hover:bg-background text-foreground backdrop-blur-sm text-xs font-medium rounded-sm transition-colors border border-border/20"
+                  className="flex items-center justify-center gap-1.5 rounded-[2px] border border-[#dfc8c2] bg-[#fffaf6]/95 px-3 py-2 text-xs font-medium text-[#3b292c] backdrop-blur-sm transition-colors hover:bg-[#f4e3df]"
                   aria-label="Quick view"
                 >
                   <Eye className="h-3.5 w-3.5" />
@@ -373,7 +373,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 <Button
                   onClick={handleQuickAdd}
                   size="sm"
-                  className="flex-1 py-2 bg-foreground hover:bg-foreground/90 text-background text-xs font-medium"
+                  className="flex-1 rounded-[2px] bg-[#3b292c] py-2 text-xs font-medium text-[#fff9f4] hover:bg-[#a96f72]"
                 >
                   {requiresOptionSelection ? <Eye className="h-3.5 w-3.5 mr-1" /> : <Plus className="h-3.5 w-3.5 mr-1" />}
                   {requiresOptionSelection ? 'Choose Options' : 'Add to Bag'}
@@ -385,12 +385,12 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
             {isNew && isAvailable && (
-              <span className="px-2 py-0.5 text-[10px] uppercase tracking-widest bg-foreground text-background rounded-sm font-medium">
+              <span className="rounded-[2px] bg-[#3b292c] px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-[#fff9f4]">
                 New
               </span>
             )}
             {isVerifiedCustom && isAvailable && (
-              <span className="px-2 py-0.5 text-[10px] uppercase tracking-widest bg-primary text-primary-foreground rounded-sm font-medium">
+              <span className="rounded-[2px] bg-[#a96f72] px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-[#fff9f4]">
                 Custom color
               </span>
             )}
@@ -403,16 +403,16 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           )}
         </div>
 
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">
+        <div className="space-y-1.5 px-0.5">
+          <p className="text-[10px] font-medium uppercase tracking-[0.13em] text-[#9a807b]">
             {product.node.productType || 'Collection'}
           </p>
-          <h3 className="font-medium text-sm line-clamp-2 min-h-[2.5rem] group-hover:text-primary transition-colors">
+          <h3 className="min-h-[2.5rem] font-serif text-[15px] leading-[1.25] text-[#3b292c] line-clamp-2 transition-colors group-hover:text-[#a96f72]">
             {product.node.title}
           </h3>
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <p className="text-sm text-foreground font-medium">
+              <p className="text-sm font-semibold text-[#493235]">
                 {formatPrice(
                   product.node.priceRange.minVariantPrice.amount,
                   product.node.priceRange.minVariantPrice.currencyCode
@@ -439,7 +439,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
             parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) >
             parseFloat(product.node.priceRange.minVariantPrice.amount) && (
-            <p className="text-xs text-primary font-medium">
+            <p className="text-xs font-medium text-[#a96f72]">
               {Math.round((1 - parseFloat(product.node.priceRange.minVariantPrice.amount) /
                 parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
             </p>

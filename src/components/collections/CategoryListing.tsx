@@ -153,7 +153,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
   }));
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#fcf8f4]">
       <SEOHead
         title={activeSubcategory?.seoTitle || config.seoTitle}
         description={activeSubcategory?.seoDescription || config.seoDescription}
@@ -170,7 +170,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
       />
       <Header />
 
-      <main id="main-content" className="pt-[90px] lg:pt-[132px] pb-16">
+      <main id="main-content" className="bg-[#fcf8f4] pb-16 pt-[90px] lg:pt-[132px]">
         {/* Hero Banner — hidden when a subcategory is active (no occasion-specific banners) */}
         {!activeSubcategory && (
           <ImageCategoryHero
@@ -184,15 +184,15 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
         )}
 
         {/* Breadcrumbs */}
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl py-6">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="container mx-auto max-w-7xl px-5 py-7 lg:px-8">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-[#7f706d]">
             {config.breadcrumbs.map((crumb, i) => (
               <span key={crumb.url} className="flex items-center gap-2">
                 {i > 0 && <span>/</span>}
                 {i === config.breadcrumbs.length - 1 ? (
-                  <span className="text-foreground">{crumb.name}</span>
+                  <span className="text-[#3b292c]">{crumb.name}</span>
                 ) : (
-                  <Link to={crumb.url} className="hover:text-foreground transition-colors">
+                  <Link to={crumb.url} className="transition-colors hover:text-[#a96f72]">
                     {crumb.name}
                   </Link>
                 )}
@@ -224,7 +224,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
 
         {/* Main Content: Sidebar + Grid */}
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-          <div className="flex gap-8">
+          <div className="flex gap-6 lg:gap-8">
             {/* Desktop Sidebar */}
             <div className="hidden lg:block">
               <FilterSidebar
@@ -242,10 +242,10 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
             {/* Products Area */}
             <div className="flex-1">
               {/* Toolbar */}
-              <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
-                <p className="text-sm text-muted-foreground">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#e3cfca] pb-5">
+                <p className="text-sm leading-5 text-[#7f706d]">
                   Showing{' '}
-                  <span className="text-foreground font-medium">
+                  <span className="font-medium text-[#3b292c]">
                     {visibleProducts.length}
                   </span>
                   {filteredProducts.length !== visibleProducts.length && (
@@ -257,11 +257,11 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                   )}
                 </p>
 
-                <div className="flex items-center gap-3">
+                <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                   {/* Mobile Filter Button */}
                   <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
                     <SheetTrigger asChild>
-                      <Button variant="outline" size="sm" className="lg:hidden">
+                      <Button variant="outline" size="sm" className="border-[#d6b7b0] bg-[#fffaf6] text-[#493235] hover:bg-[#f4e3df] lg:hidden">
                         <SlidersHorizontal className="h-4 w-4 mr-2" />
                         Filters
                         {activeFilterCount > 0 && (
@@ -293,7 +293,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                   {/* Sort Dropdown */}
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="outline" size="sm" className="border-[#d6b7b0] bg-[#fffaf6] text-[#493235] hover:bg-[#f4e3df]">
                         Sort by: {SORT_OPTIONS.find(o => o.value === state.sortBy)?.label}
                         <ChevronDown className="h-4 w-4 ml-2" />
                       </Button>
@@ -347,7 +347,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                 </div>
               ) : visibleProducts.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4 lg:gap-6">
                     {visibleProducts.map((product, index) => (
                       <ProductCard
                         key={product.node.id}
@@ -392,7 +392,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
           for keyword-rich content that helps search engines understand the
           category. Added per SEO audit Item #14. */}
       {config.editorialContent && (
-        <section className="border-t border-border bg-background py-14">
+        <section className="border-t border-[#e3cfca] bg-[radial-gradient(circle_at_92%_12%,rgba(233,198,185,0.32),transparent_24%),#f8f0e8] py-14">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             {config.editorialTitle && (
               <h2 className="font-serif text-2xl lg:text-3xl mb-6 text-center">
@@ -413,7 +413,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
 
       {/* FAQ Section */}
       {config.faqs && config.faqs.length > 0 && (
-        <section className="border-t border-border bg-card/30 py-14">
+        <section className="border-t border-[#e3cfca] bg-[#f3e5e0] py-14">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
             <h2 className="font-serif text-2xl mb-8 text-center">
               Frequently Asked Questions — {config.name}
@@ -423,7 +423,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
-                  className="bg-background border border-border rounded-lg px-5"
+                  className="rounded-[2px] border border-[#dfc8c2] bg-[#fffaf6] px-5"
                 >
                   <AccordionTrigger className="text-sm font-medium text-left hover:no-underline py-4">
                     {faq.question}
