@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
 import EmailCaptureModal from './EmailCaptureModal';
 import {
   isRakshaBandhanCampaignActive,
@@ -111,7 +112,12 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 </div>
               ) : (
                 items.map((item, index) => {
-                  const image = item.product.node.images?.edges?.[0]?.node;
+                  const isSareeService = isHiddenBillingProductHandle(item.product.node.handle);
+                  const image = isSareeService ? undefined : item.product.node.images?.edges?.[0]?.node;
+                  const serviceLabel = item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
+                  const visibleAttributes = isSareeService
+                    ? item.customAttributes?.filter((attribute) => attribute.key !== 'Related Product Handle')
+                    : item.customAttributes;
                   
                   return (
                     <motion.div
@@ -131,17 +137,27 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                             className="w-full h-full object-cover object-top"
                           />
                         ) : (
-                          <ProductPlaceholder className="w-full h-full" />
+                          isSareeService ? (
+                            <div className="flex h-full w-full items-center justify-center bg-primary/5 px-2 text-center text-[10px] font-medium leading-tight text-primary">
+                              Saree service
+                            </div>
+                          ) : (
+                            <ProductPlaceholder className="w-full h-full" />
+                          )
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-serif text-sm mb-1 truncate">{item.product.node.title}</h3>
+                        <h3 className="font-serif text-sm mb-1 truncate">
+                          {isSareeService ? serviceLabel : item.product.node.title}
+                        </h3>
                         <p className="text-xs text-foreground/60 mb-1">
-                          {item.selectedOptions.map(o => o.value).join(' / ') || item.variantTitle}
+                          {isSareeService
+                            ? 'Optional service for your selected saree'
+                            : (item.selectedOptions.map(o => o.value).join(' / ') || item.variantTitle)}
                         </p>
-                        {item.customAttributes && item.customAttributes.length > 0 && (
+                        {visibleAttributes && visibleAttributes.length > 0 && (
                           <div className="mb-2 space-y-0.5">
-                            {item.customAttributes.map((attr, i) => (
+                            {visibleAttributes.map((attr, i) => (
                               <p key={i} className="text-[10px] text-primary/80 italic leading-tight">
                                 <span className="font-medium">{attr.key}:</span> {attr.value}
                               </p>
