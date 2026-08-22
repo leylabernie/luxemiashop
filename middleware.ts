@@ -86,6 +86,11 @@ const GONE_ROUTES: Set<string> = new Set<string>([
   // at pos 6.38 as of 2026-07-11). 410 tells Google to drop it from the index
   // immediately, vs. 404 which Google retries for weeks.
   '/product/art-silk-pista-green-groom-wear-thread-work-readymade-sherwani',
+  // Search Console redirect examples checked on 22 Aug 2026. Shopify searches
+  // found no exact active replacement, so these retired product URLs must not
+  // redirect shoppers or crawlers to unrelated catalog items.
+  '/product/luxemia-off-white-sequin-work-net-lehenga-choli-for-sangeet-and-wedding-guests',
+  '/product/black-cotton-embroidered-men-s-kurta-pajama-set',
 ]);
 
 // Combine manual GONE_ROUTES with auto-discovered dead product handles from build.
