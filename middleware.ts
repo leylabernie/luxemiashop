@@ -116,6 +116,15 @@ const GONE_ROUTES: Set<string> = new Set<string>([
   '/product/shimmer-silk-sky-blue-occasional-wear-mirror-work-readymade-plazzo-suit',
   '/product/silk-green-occasional-wear-mirror-work-readymade-patiyala-suit',
   '/product/wine-net-embroidery-festive-lehenga-choli',
+  // Google-selected-canonical examples checked on 22 Aug 2026. All seven
+  // handles are absent from Shopify and have no source-verified replacement.
+  '/product/art-silk-cream-groom-wear-thread-work-readymade-sherwani',
+  '/product/chinon-navy-blue-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  '/product/georgette-purple-wedding-wear-embroidery-work-readywar-plazzo-suit',
+  '/product/luxemia-multicolor-mirror-work-cotton-lehenga-choli-for-sangeet-and-wedding-guests',
+  '/product/luxemia-navy-blue-hand-worked-imported-lachka-indo-western-for-south-asian-weddings',
+  '/product/teal-blue-art-silk-patterned-sherwani-style-kurta-pajama-set',
+  '/product/wine-art-banarasi-silk-patterned-men-s-kurta-pajama-with-jacket',
 ]);
 
 // Combine manual GONE_ROUTES with auto-discovered dead product handles from build.
