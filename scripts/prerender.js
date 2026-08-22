@@ -2581,8 +2581,35 @@ function generateHtml(template, route, allShopifyProducts) {
       ${route.content}`;
   }
 
+  // The Product Directory is the permanent HTML link hub for the approved catalog.
+  // It must remain in the rendered DOM after hydration so that both users and
+  // JavaScript-capable crawlers can traverse the same complete product graph.
+  // Other route-specific prerender blocks are replaced after React mounts to
+  // avoid duplicating the application UI.
+  const hydrationCleanupScript = route.htmlSitemap ? '' : `
+    <script>
+      (function(){
+        var root = document.getElementById('root');
+        var seo = document.getElementById('seo-prerender');
+        if (!root || !seo) return;
+        // Remove once React has populated #root (MutationObserver fires on first child added)
+        var obs = new MutationObserver(function() {
+          obs.disconnect();
+          var p = document.getElementById('seo-prerender');
+          if (p) p.remove();
+        });
+        obs.observe(root, { childList: true });
+        // Safety fallback in case observer misses the mutation
+        setTimeout(function() {
+          obs.disconnect();
+          var p = document.getElementById('seo-prerender');
+          if (p) p.remove();
+        }, 5000);
+      })();
+    </script>`;
+
   const seoContent = `
-    <main id="seo-prerender">
+    <main id="seo-prerender"${route.htmlSitemap ? ' aria-label="Complete product directory"' : ''}>
       ${mainBodyContent}
       <nav aria-label="Site navigation">
         <a href="/">Home</a> |
@@ -2605,27 +2632,7 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/blog/manish-malhotra-bollywood-bridal-designer-profile">Manish Malhotra Designer Profile</a> |
         <a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary</a>
       </nav>
-    </main>
-    <script>
-      (function(){
-        var root = document.getElementById('root');
-        var seo = document.getElementById('seo-prerender');
-        if (!root || !seo) return;
-        // Remove once React has populated #root (MutationObserver fires on first child added)
-        var obs = new MutationObserver(function() {
-          obs.disconnect();
-          var p = document.getElementById('seo-prerender');
-          if (p) p.remove();
-        });
-        obs.observe(root, { childList: true });
-        // Safety fallback in case observer misses the mutation
-        setTimeout(function() {
-          obs.disconnect();
-          var p = document.getElementById('seo-prerender');
-          if (p) p.remove();
-        }, 5000);
-      })();
-    </script>`;
+    </main>${hydrationCleanupScript}`;
 
   html = html.replace(
     '<div id="root"></div>',
