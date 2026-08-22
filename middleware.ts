@@ -252,10 +252,11 @@ async function routeRequest(request: Request): Promise<Response> {
   if (pathname === '/products') {
     return Response.redirect(new URL('/collections', request.url).toString(), 301);
   }
-  // /virtual-try-on feature has been retired — 301 redirect to homepage so any
-  // old bookmarks or indexed URLs pass link equity to the homepage instead of 404.
+  // The virtual try-on feature has been retired with no semantically equivalent
+  // destination. A 410 accurately retires the old URL and avoids an irrelevant
+  // homepage redirect that Google can classify as a soft 404.
   if (pathname === '/virtual-try-on') {
-    return Response.redirect(new URL('/', request.url).toString(), 301);
+    return return410();
   }
   // 301 Permanent Redirect for /collections/* → canonical category pages.
   // These routes exist as client-side React Router <Navigate> redirects, but
