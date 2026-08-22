@@ -91,6 +91,31 @@ const GONE_ROUTES: Set<string> = new Set<string>([
   // redirect shoppers or crawlers to unrelated catalog items.
   '/product/luxemia-off-white-sequin-work-net-lehenga-choli-for-sangeet-and-wedding-guests',
   '/product/black-cotton-embroidered-men-s-kurta-pajama-set',
+  // Current 404s from the 22 Aug 2026 Search Console crawled-not-indexed
+  // examples. The three blog slugs have no published source route; the product
+  // handles are absent from Shopify, except one explicitly archived product.
+  // No exact live replacement was source-verified for any of them.
+  '/blog/designer-wedding-dress-under-50000',
+  '/blog/red-bridal-lehenga-trends-2026',
+  '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
+  '/product/chinon-lime-yellow-wedding-wear-embroidery-work-readymade-sharara-suit',
+  '/product/chinon-silk-orange-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  '/product/classic-bridal-red-silk-lehenga',
+  '/product/faux-georgette-wine-occasional-wear-sequins-work-readymade-sharara-suit',
+  '/product/georgette-green-occasional-wear-embroidery-work-readymade-plazzo-suit',
+  '/product/georgette-rani-pink-festival-wear-embroidery-work-readymade-sharara-suit',
+  '/product/lilac-linen-cotton-embroidered-men-s-kurta-pajama-set',
+  '/product/luxemia-black-chinon-silk-embroidery-work-occasional-wear-sharara-suit',
+  '/product/luxemia-brown-embroidered-art-silk-indo-western-for-south-asian-weddings',
+  '/product/luxemia-front-cut-western-top-set',
+  '/product/luxemia-olive-green-embroidered-satin-lehenga-choli-for-sangeet-and-wedding-guests',
+  '/product/luxemia-tissue-brocade-pre-draped-saree',
+  '/product/net-black-eid-wear-sequins-work-sharara-suit',
+  '/product/pure-gmy-silk-red-eid-wear-embroidery-work-readymade-pakistani-suit',
+  '/product/royal-rani-pink-silk-bridal-lehenga',
+  '/product/shimmer-silk-sky-blue-occasional-wear-mirror-work-readymade-plazzo-suit',
+  '/product/silk-green-occasional-wear-mirror-work-readymade-patiyala-suit',
+  '/product/wine-net-embroidery-festive-lehenga-choli',
 ]);
 
 // Combine manual GONE_ROUTES with auto-discovered dead product handles from build.
