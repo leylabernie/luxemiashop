@@ -1,25 +1,28 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { ArrowRight, ChevronDown, Heart, Sparkles, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import CategoryShowcase from '@/components/home/CategoryShowcase';
-import ShopByCategory from '@/components/home/ShopByCategory';
-import LookbookTeaser from '@/components/home/LookbookTeaser';
 import SEOHead from '@/components/seo/SEOHead';
-import ServiceHighlights from '@/components/home/ServiceHighlights';
-import SustainabilityBanner from '@/components/home/SustainabilityBanner';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
 import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
-import { NewArrivals } from '@/components/home/NewArrivals';
-import ShopByOccasion from '@/components/home/ShopByOccasion';
-import CustomerStories from '@/components/home/CustomerStories';
 import LazySection from '@/components/ui/LazySection';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
 // HeroSection removed — was duplicating NewArrivalsBanner (two hero carousels stacked)
 // FlashSaleBanner removed — redundant "New Arrivals" bar directly below NewArrivalsBanner
+
+// These components are visually below the fold. Lazy importing them prevents their
+// product hooks and animation code from increasing the homepage’s critical bundle.
+const NewArrivals = lazy(() => import('@/components/home/NewArrivals').then(({ NewArrivals }) => ({ default: NewArrivals })));
+const ServiceHighlights = lazy(() => import('@/components/home/ServiceHighlights'));
+const CategoryShowcase = lazy(() => import('@/components/home/CategoryShowcase'));
+const ShopByOccasion = lazy(() => import('@/components/home/ShopByOccasion'));
+const ShopByCategory = lazy(() => import('@/components/home/ShopByCategory'));
+const CustomerStories = lazy(() => import('@/components/home/CustomerStories'));
+const SustainabilityBanner = lazy(() => import('@/components/home/SustainabilityBanner'));
+const LookbookTeaser = lazy(() => import('@/components/home/LookbookTeaser'));
 
 const homepageFaqs = [
   {
@@ -216,13 +219,13 @@ const Index = () => {
             framer-motion + lucide-react. Deferring removes their animation setup
             from the critical render path. */}
         <LazySection rootMargin="200px" placeholderHeight={500}>
-          <NewArrivals />
+          <Suspense fallback={null}><NewArrivals /></Suspense>
         </LazySection>
         <LazySection rootMargin="200px" placeholderHeight={300}>
-          <ServiceHighlights />
+          <Suspense fallback={null}><ServiceHighlights /></Suspense>
         </LazySection>
         <LazySection rootMargin="200px" placeholderHeight={500}>
-          <CategoryShowcase />
+          <Suspense fallback={null}><CategoryShowcase /></Suspense>
         </LazySection>
 
         {/* PSI 2026-07-22: Below-fold sections wrapped in LazySection (IntersectionObserver).
@@ -230,7 +233,7 @@ const Index = () => {
             Deferring them until they enter the viewport removes this JS from the
             initial render path, improving bootup-time by ~1s and unused-javascript. */}
         <LazySection rootMargin="300px" placeholderHeight={400}>
-          <ShopByOccasion />
+          <Suspense fallback={null}><ShopByOccasion /></Suspense>
         </LazySection>
 
         {/* Style Quiz CTA */}
@@ -257,16 +260,16 @@ const Index = () => {
         </section>
 
         <LazySection rootMargin="300px" placeholderHeight={600}>
-          <ShopByCategory />
+          <Suspense fallback={null}><ShopByCategory /></Suspense>
         </LazySection>
         <LazySection rootMargin="300px" placeholderHeight={350}>
-          <CustomerStories />
+          <Suspense fallback={null}><CustomerStories /></Suspense>
         </LazySection>
         <LazySection rootMargin="300px" placeholderHeight={400}>
-          <SustainabilityBanner />
+          <Suspense fallback={null}><SustainabilityBanner /></Suspense>
         </LazySection>
         <LazySection rootMargin="300px" placeholderHeight={400}>
-          <LookbookTeaser />
+          <Suspense fallback={null}><LookbookTeaser /></Suspense>
         </LazySection>
         {/* FAQ Section */}
         <section className="py-16 lg:py-20 bg-secondary/30">

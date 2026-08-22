@@ -38,11 +38,11 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  // Fetch all products from Shopify Storefront API (live data — never stale)
-  // Previously this used hardcoded data from src/data/localProducts.ts which
-  // contained titles scraped from wholesalesalwar.com months ago, causing
-  // stale search results after Shopify CSV imports.
+  // Build the live search index only after a shopper opens search. This keeps
+  // the full-catalog Storefront API request out of the initial page load.
   useEffect(() => {
+    if (!isOpen || allProducts.length > 0) return;
+
     let cancelled = false;
     (async () => {
       try {
@@ -81,7 +81,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
       }
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [allProducts.length, isOpen]);
 
   // Filter products based on query and filters
   useEffect(() => {

@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
-import ProductSearch from '../search/ProductSearch';
+const ProductSearch = lazy(() => import('../search/ProductSearch'));
 import { MegaMenuNavItem } from './MegaMenuNavItem';
 import { MEGA_MENUS } from '@/config/categoryConfig';
 import { useWishlistStore } from '@/stores/wishlistStore';
@@ -253,8 +253,12 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Search Modal */}
-      <ProductSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      {/* Search loads only after a customer opens it, keeping Shopify catalog work off the initial route. */}
+      {isSearchOpen && (
+        <Suspense fallback={null}>
+          <ProductSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+        </Suspense>
+      )}
 
       {/* Mobile Menu — CSS-only slide (PSI 2026-07-22: removed framer-motion) */}
       {isMenuOpen && (

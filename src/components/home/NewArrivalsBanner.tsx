@@ -193,6 +193,11 @@ const NewArrivalsBanner = () => {
           const isActive = slideIndex === index;
           const preservesFullImage = Boolean(slide.desktopImage && slide.imageFit !== 'cover');
 
+          // Hidden slides previously remained in the DOM, so the browser fetched
+          // and decoded every campaign image on first paint. Keep only the visible
+          // slide mounted; the next image is fetched only when the shopper selects it.
+          if (!isActive) return null;
+
           return (
             <div
               key={slide.id}
