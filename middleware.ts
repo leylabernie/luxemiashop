@@ -165,10 +165,91 @@ function withResponseHeader(response: Response, key: string, value: string): Res
   });
 }
 
+// Query parameters that create filter, sort, grid, or internal-search URL noise.
+// These URLs remain usable for shoppers, but should not become separate organic
+// landing pages. Product ?variant= is intentionally excluded: it may be a valid
+// product-variant or Merchant landing URL and receives canonical-only handling.
+const INDEXATION_NOISE_PARAMS = new Set<string>([
+  'sort_by',
+  'filter',
+  'grid',
+  'q',
+  'sub',
+  'color',
+  'fabric',
+  'size',
+  'price_min',
+  'price_max',
+  'section_id',
+]);
+
+function isIndexationNoiseParam(name: string): boolean {
+  const normalized = name.toLowerCase();
+  return (
+    INDEXATION_NOISE_PARAMS.has(normalized)
+    || normalized.startsWith('filter.')
+    || normalized.startsWith('filter[')
+    || normalized.startsWith('options[')
+  );
+}
+
+function hasIndexationNoiseParams(searchParams: URLSearchParams): boolean {
+  for (const name of searchParams.keys()) {
+    if (isIndexationNoiseParam(name)) return true;
+  }
+  return false;
+}
+
+function isPublicHtmlPath(pathname: string): boolean {
+  if (pathname.includes('.')) return false;
+
+  const nonPublicPrefixes = [
+    '/_prerender',
+    '/assets',
+    '/api',
+    '/catalogs',
+    '/admin',
+    '/account',
+    '/auth',
+    '/wishlist',
+    '/cart',
+    '/checkout',
+    '/order-confirmation',
+  ];
+
+  return !nonPublicPrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
+function withCanonicalQuerySignals(request: Request, response: Response): Response {
+  const url = new URL(request.url);
+  if (!url.search || response.status !== 200 || !isPublicHtmlPath(url.pathname)) {
+    return response;
+  }
+
+  const existingRobots = response.headers.get('X-Robots-Tag')?.toLowerCase() || '';
+  if (existingRobots.includes('nofollow')) return response;
+
+  const headers = new Headers(response.headers);
+  headers.set('Link', `<https://luxemia.shop${url.pathname}>; rel="canonical"`);
+
+  if (hasIndexationNoiseParams(url.searchParams)) {
+    headers.set('X-Robots-Tag', 'noindex, follow');
+  }
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 // ─── Main Middleware ─────────────────────────────────────────────────────────
 
 export default async function middleware(request: Request) {
-  const response = await routeRequest(request);
+  let response = await routeRequest(request);
+  response = withCanonicalQuerySignals(request, response);
   const hostname = new URL(request.url).hostname.toLowerCase();
 
   // Vercel/Lovable preview URLs remain usable for QA, but can never compete
