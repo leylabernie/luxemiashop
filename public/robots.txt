@@ -14,9 +14,11 @@ Disallow: /order-confirmation
 Disallow: /_prerender/
 # Legacy /products URLs remain crawlable so search engines can discover their
 # redirects to the current /product and /collections URLs.
-# Category query URLs remain crawlable so crawlers can receive the middleware's
-# noindex directive and canonical link. Blocking them here would prevent Google
-# from seeing those consolidation signals.
+# Public query URLs remain crawlable so middleware can return the clean canonical
+# and, for filter/search noise, an HTTP noindex directive. Blocking them here
+# would prevent crawlers from seeing those consolidation signals. Product
+# ?variant= URLs specifically remain crawlable and canonical-only because they
+# can be legitimate product-variant and Merchant landing URLs.
 
 # ─── Googlebot ───────────────────────────────────────────────────────────────
 User-agent: Googlebot
