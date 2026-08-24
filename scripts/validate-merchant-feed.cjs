@@ -79,6 +79,141 @@ if (invalidProductTypes.length > 0) {
   throw new Error(`Merchant feed contains ${invalidProductTypes.length} product type(s) without the required Apparel & Accessories hierarchy`);
 }
 
+const GOOGLE_PRODUCT_CATEGORY = Object.freeze({
+  CLOTHING: '1604',
+  SHIRTS_AND_TOPS: '212',
+  SKIRTS: '1581',
+  PANTS: '204',
+  DRESSES: '2271',
+  JUMPSUITS_AND_ROMPERS: '5250',
+  OUTFIT_SETS: '7313',
+  TRADITIONAL_AND_CEREMONIAL_CLOTHING: '5388',
+  SARIS_AND_LEHENGAS: '8248',
+  JEWELRY: '188',
+  BRACELETS: '191',
+  EARRINGS: '194',
+  NECKLACES: '196',
+  RINGS: '200',
+  JEWELRY_SETS: '6463',
+});
+
+function expectedGoogleProductCategory(productType, title) {
+  const typeText = (productType || '').toLowerCase();
+  const titleText = (title || '').toLowerCase();
+  const text = `${typeText} ${titleText}`;
+
+  if (/\b(?:jewelry|jewellery|necklaces?|chokers?|earrings?|bangles?|bracelets?|maang tikka|rings?)\b/.test(text)) {
+    if (/\b(?:sets?|combos?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.JEWELRY_SETS;
+    if (/\b(?:necklaces?|chokers?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.NECKLACES;
+    if (/\bearrings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.EARRINGS;
+    if (/\b(?:bangles?|bracelets?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.BRACELETS;
+    if (/\brings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.RINGS;
+    return GOOGLE_PRODUCT_CATEGORY.JEWELRY;
+  }
+  if (/\bblouses?\b/.test(typeText)) return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
+  if (/\b(?:sarees?|saris?|lehengas?|lehngas?|chaniyas?|cholis?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS;
+  if (/\b(?:jumpsuits?|rompers?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.JUMPSUITS_AND_ROMPERS;
+  if (/\b(?:sets?|suits?)\b/.test(typeText)
+    || /\b(?:salwars?|kameez|shararas?|ghararas?|gararas?|palazzos?|plazzos?|churidars?|patialas?|co-?ords?|outfit sets?)\b/.test(text)
+    || /\b(?:anarkalis?|capes?|kurtas?)\b[^.]{0,30}\b(?:sets?|suits?|with dupatta)\b/.test(text)
+    || /\b(?:sets?|suits?)\b[^.]{0,30}\b(?:anarkalis?|capes?|kurtas?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS;
+  }
+  if (/\b(?:sherwanis?|nehru jackets?|jodhpuris?|groom wear|traditional|ceremonial|indo.?western|fusion|kurtas?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING;
+  }
+  if (/\b(?:anarkalis?|gowns?|dresses?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.DRESSES;
+  if (/\b(?:kurtis?|blouses?|tops?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
+  if (/\bskirts?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SKIRTS;
+  if (/\b(?:pants|trousers)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.PANTS;
+  return GOOGLE_PRODUCT_CATEGORY.CLOTHING;
+}
+
+const taxonomyFixtures = [
+  ['Designer Saree', 'Ready to Wear – Blouse Stitched', GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS],
+  ['Saree Blouse', 'Peacock Mirror Work Blouse', GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS],
+  ['Bridal Lehengas', 'Express Tailoring Available', GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS],
+  ['Skirt Set', 'Embroidered Skirt Set', GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS],
+  ['Three-Piece Set', 'Three-Piece Festive Set', GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS],
+  ['Wedding Suit', 'Wedding Suit with Dupatta', GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS],
+  ["Men's Kurta", 'Embroidered Festive Kurta', GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING],
+  ['Jewelry Sets', 'Necklace and Earring Combos', GOOGLE_PRODUCT_CATEGORY.JEWELRY_SETS],
+];
+const taxonomyFixtureFailures = taxonomyFixtures.filter(([productType, title, expected]) => (
+  expectedGoogleProductCategory(productType, title) !== expected
+));
+if (taxonomyFixtureFailures.length > 0) {
+  throw new Error(`Merchant taxonomy classifier failed ${taxonomyFixtureFailures.length} fixed precedence fixture(s)`);
+}
+
+function expectedGender(productType, title) {
+  const text = `${productType || ''} ${title || ''}`.toLowerCase();
+  if (/\b(?:women|womens|women's|female)\b/.test(text)) return 'female';
+  if (/\b(?:men|mens|men's|male|groom|sherwanis?|kurta pajama|nehru jackets?|jodhpuris?)\b/.test(text)) return 'male';
+  return 'female';
+}
+
+const categoryFailures = [];
+const productTypeCategoryFailures = [];
+const genderFailures = [];
+const legacyCategoryIds = new Set(['193', '2104', '2195', '2197', '5424']);
+const jewelryCategoryIds = new Set([
+  GOOGLE_PRODUCT_CATEGORY.JEWELRY,
+  GOOGLE_PRODUCT_CATEGORY.BRACELETS,
+  GOOGLE_PRODUCT_CATEGORY.EARRINGS,
+  GOOGLE_PRODUCT_CATEGORY.NECKLACES,
+  GOOGLE_PRODUCT_CATEGORY.RINGS,
+  GOOGLE_PRODUCT_CATEGORY.JEWELRY_SETS,
+]);
+for (const item of itemBlocks) {
+  const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
+  const title = decodeXmlEntities(
+    item.match(/<g:item_group_title>([\s\S]*?)<\/g:item_group_title>/i)?.[1]
+      || item.match(/<g:title>([\s\S]*?)<\/g:title>/i)?.[1]
+      || ''
+  ).trim();
+  const productType = decodeXmlEntities(
+    item.match(/<g:custom_label_0>([\s\S]*?)<\/g:custom_label_0>/i)?.[1]
+      || item.match(/<g:product_type>([\s\S]*?)<\/g:product_type>/i)?.[1]
+      || ''
+  ).trim();
+  const actual = item.match(/<g:google_product_category>([^<]+)<\/g:google_product_category>/i)?.[1]?.trim() || '';
+  const expected = expectedGoogleProductCategory(productType, title);
+  if (actual !== expected) categoryFailures.push(`${id}: expected ${expected}, found ${actual || '(missing)'}`);
+  if (legacyCategoryIds.has(actual)) categoryFailures.push(`${id}: forbidden legacy category ${actual}`);
+
+  const merchantProductType = decodeXmlEntities(item.match(/<g:product_type>([\s\S]*?)<\/g:product_type>/i)?.[1] || '').trim();
+  const hasJewelryHierarchy = />\s*Jewelry\s*>/i.test(merchantProductType);
+  if (jewelryCategoryIds.has(actual) !== hasJewelryHierarchy) {
+    productTypeCategoryFailures.push(`${id}: category ${actual || '(missing)'} conflicts with ${merchantProductType || '(missing product type)'}`);
+  }
+
+  const expectedHierarchyLeaf = {
+    [GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS]: /Saree Blouses$/i,
+    [GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS]: /(?:Sarees|Lehengas & Chaniya Choli)$/i,
+    [GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS]: /Outfit Sets$/i,
+    [GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING]: /(?:Sherwanis & Men's Kurtas|Indo-Western Clothing)$/i,
+  }[actual];
+  if (expectedHierarchyLeaf && !expectedHierarchyLeaf.test(merchantProductType)) {
+    productTypeCategoryFailures.push(`${id}: category ${actual} has misaligned hierarchy ${merchantProductType || '(missing product type)'}`);
+  }
+
+  const actualGender = item.match(/<g:gender>([^<]+)<\/g:gender>/i)?.[1]?.trim() || '';
+  const expectedItemGender = expectedGender(productType, title);
+  if (actualGender !== expectedItemGender) {
+    genderFailures.push(`${id}: expected ${expectedItemGender}, found ${actualGender || '(missing)'}`);
+  }
+}
+if (categoryFailures.length > 0) {
+  throw new Error(`Merchant feed has Google taxonomy failures: ${categoryFailures.slice(0, 10).join('; ')}`);
+}
+if (productTypeCategoryFailures.length > 0) {
+  throw new Error(`Merchant feed has product-type/category alignment failures: ${productTypeCategoryFailures.slice(0, 10).join('; ')}`);
+}
+if (genderFailures.length > 0) {
+  throw new Error(`Merchant feed has gender-classification failures: ${genderFailures.slice(0, 10).join('; ')}`);
+}
+
 const navratriPriorityItems = itemBlocks.filter((item) => /<g:custom_label_1>navratri_2026_priority<\/g:custom_label_1>/i.test(item));
 const navratriPriorityHandles = new Set(navratriPriorityItems.map((item) => {
   const link = decodeXmlEntities(item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1] || '');
@@ -119,7 +254,7 @@ const requiredTagFailures = [];
 const identifierFailures = [];
 for (const item of itemBlocks) {
   const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
-  for (const tag of ['g:id', 'g:title', 'g:description', 'g:link', 'g:image_link', 'g:availability', 'g:price', 'g:condition', 'g:brand']) {
+  for (const tag of ['g:id', 'g:title', 'g:description', 'g:link', 'g:image_link', 'g:availability', 'g:price', 'g:condition', 'g:brand', 'g:google_product_category']) {
     const count = tagCount(item, tag);
     if (count !== 1) requiredTagFailures.push(`${id}: <${tag}> appears ${count} time(s)`);
   }
@@ -202,6 +337,15 @@ if (shortDescriptions.length > 0) {
   throw new Error(`Merchant feed contains ${shortDescriptions.length} descriptions shorter than 150 characters`);
 }
 
+const descriptionAlignmentFailures = itemBlocks.filter((item) => {
+  const title = decodeXmlEntities(item.match(/<g:title>([\s\S]*?)<\/g:title>/i)?.[1] || '').trim();
+  const description = decodeXmlEntities(item.match(/<g:description>([\s\S]*?)<\/g:description>/i)?.[1] || '').trim();
+  return !description.startsWith(`${title} from LuxeMia.`) || !description.includes('Style:');
+});
+if (descriptionAlignmentFailures.length > 0) {
+  throw new Error(`Merchant feed contains ${descriptionAlignmentFailures.length} offer description(s) without matching variant title and structured style details`);
+}
+
 const staleClaimPatterns = [
   /(?:free shipping|free delivery)[^<]{0,80}\$350/i,
   /7[–-]10 business days/i,
@@ -225,5 +369,5 @@ for (const pattern of staleClaimPatterns) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 Navratri priority product groups, hierarchical product types, Merchant title limits, required attributes, identifiers, product-specific HTTPS images, and current policy-safe descriptions/highlights`
+  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 Navratri priority product groups, current Google taxonomy mappings, hierarchical product types, Merchant title limits, required attributes, identifiers, product-specific HTTPS images, and variant-aligned policy-safe descriptions/highlights`
 );
