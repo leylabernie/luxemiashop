@@ -1,0 +1,24 @@
+name: Royal Export Product Image Map
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/print-royal-export-image-map.cjs
+      - .github/workflows/royal-export-map-pr.yml
+
+permissions:
+  contents: read
+
+jobs:
+  extract-image-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Extract approved source product image map
+        run: node scripts/print-royal-export-image-map.cjs
