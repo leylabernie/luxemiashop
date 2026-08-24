@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:indexation-recovery && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
+    "build": "npm run validate:indexation-recovery && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/audit-gsc-gmc-build.cjs && node scripts/validate-navratri-traffic.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -57,7 +57,7 @@
     "recharts": "^2.15.4",
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss-animate": "^1.0.0",
     "vaul": "^0.9.9",
     "zod": "^3.25.76",
     "zustand": "^5.0.9"
