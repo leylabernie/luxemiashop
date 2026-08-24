@@ -1,0 +1,46 @@
+name: Royal Export Browser Image Staging
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/download_royal_export_images_playwright.mjs
+      - .github/workflows/royal-export-browser-staging.yml
+
+permissions:
+  contents: write
+
+jobs:
+  browser-stage-images:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Capture and validate approved supplier gallery images
+        run: node scripts/download_royal_export_images_playwright.mjs
+
+      - name: Commit temporary browser-staged images to isolated branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f royal-export-artifact
+          if git diff --cached --quiet; then
+            echo "No browser-staged image changes to commit."
+          else
+            git commit -m "Stage Royal Export gallery images through browser context"
+            git push origin HEAD:${{ github.head_ref }}
+          fi
