@@ -153,24 +153,68 @@ function forceJpeg(url) {
   return url;
 }
 
-function getGoogleProductCategory(productType, title) {
-  const t = (title || '').toLowerCase();
-  const pt = (productType || '').toLowerCase();
+// Current Google Product Taxonomy IDs (en-US). Keep these explicit: several
+// older IDs previously used here pointed to unrelated categories such as baby
+// dresses, hardware washers, and place cards. Google can approve an offer with
+// a bad category while still matching it to the wrong shopping intent.
+const GOOGLE_PRODUCT_CATEGORY = Object.freeze({
+  CLOTHING: '1604',
+  SHIRTS_AND_TOPS: '212',
+  SKIRTS: '1581',
+  PANTS: '204',
+  DRESSES: '2271',
+  JUMPSUITS_AND_ROMPERS: '5250',
+  OUTFIT_SETS: '7313',
+  TRADITIONAL_AND_CEREMONIAL_CLOTHING: '5388',
+  SARIS_AND_LEHENGAS: '8248',
+  JEWELRY: '188',
+  BRACELETS: '191',
+  EARRINGS: '194',
+  NECKLACES: '196',
+  RINGS: '200',
+  JEWELRY_SETS: '6463',
+});
 
-  if (pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear')) {
-    if (t.includes('sherwani')) return '2195';
-    if (t.includes('kurta')) return '2197';
-    return '2104';
+function getGoogleProductCategory(productType, title) {
+  const typeText = (productType || '').toLowerCase();
+  const titleText = (title || '').toLowerCase();
+  const text = `${typeText} ${titleText}`;
+
+  if (/\b(?:jewelry|jewellery|necklaces?|chokers?|earrings?|bangles?|bracelets?|maang tikka|rings?)\b/.test(text)) {
+    if (/\b(?:sets?|combos?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.JEWELRY_SETS;
+    if (/\b(?:necklaces?|chokers?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.NECKLACES;
+    if (/\bearrings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.EARRINGS;
+    if (/\b(?:bangles?|bracelets?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.BRACELETS;
+    if (/\brings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.RINGS;
+    return GOOGLE_PRODUCT_CATEGORY.JEWELRY;
   }
-  if (pt.includes('lehenga') || t.includes('lehenga')) return '2271';
-  if (pt.includes('saree') || t.includes('saree')) return '5424';
-  if (pt.includes('necklace') || t.includes('necklace')) return '193';
-  if (pt.includes('earring') || t.includes('earring')) return '194';
-  if (pt.includes('bangle') || pt.includes('bracelet') || t.includes('bangle')) return '200';
-  if (pt.includes('jewel') || t.includes('jewel')) return '188';
-  if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar') || t.includes('anarkali') || t.includes('sharara') || t.includes('salwar')) return '2271';
-  if (pt.includes('indo western') || pt.includes('indo-western')) return '2271';
-  return '1604';
+
+  if (/\bblouses?\b/.test(typeText)) {
+    return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
+  }
+  if (/\b(?:sarees?|saris?|lehengas?|lehngas?|chaniyas?|cholis?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS;
+  }
+  if (/\b(?:jumpsuits?|rompers?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.JUMPSUITS_AND_ROMPERS;
+  }
+  if (/\b(?:sets?|suits?)\b/.test(typeText)
+    || /\b(?:salwars?|kameez|shararas?|ghararas?|gararas?|palazzos?|plazzos?|churidars?|patialas?|co-?ords?|outfit sets?)\b/.test(text)
+    || /\b(?:anarkalis?|capes?|kurtas?)\b[^.]{0,30}\b(?:sets?|suits?|with dupatta)\b/.test(text)
+    || /\b(?:sets?|suits?)\b[^.]{0,30}\b(?:anarkalis?|capes?|kurtas?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS;
+  }
+  if (/\b(?:sherwanis?|nehru jackets?|jodhpuris?|groom wear|traditional|ceremonial|indo.?western|fusion|kurtas?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING;
+  }
+  if (/\b(?:anarkalis?|gowns?|dresses?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.DRESSES;
+  }
+  if (/\b(?:kurtis?|blouses?|tops?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
+  if (/\bskirts?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SKIRTS;
+  if (/\b(?:pants|trousers)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.PANTS;
+
+  return GOOGLE_PRODUCT_CATEGORY.CLOTHING;
 }
 
 function getSizes(product) {
@@ -184,9 +228,9 @@ function getSizes(product) {
 }
 
 function getGender(productType, title) {
-  const pt = (productType || '').toLowerCase();
-  const t = (title || '').toLowerCase();
-  if (pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom')) return 'male';
+  const text = `${productType || ''} ${title || ''}`.toLowerCase();
+  if (/\b(?:women|womens|women's|female)\b/.test(text)) return 'female';
+  if (/\b(?:men|mens|men's|male|groom|sherwanis?|kurta pajama|nehru jackets?|jodhpuris?)\b/.test(text)) return 'male';
   return 'female';
 }
 
@@ -229,267 +273,6 @@ function normalizeMpn(value) {
     .slice(0, 70);
 }
 
-// ─── Salwar Suit Description Enrichment ──────────────────────────────────
-//
-// GMC RECOMMENDATION FIX: "Update descriptions for Salwar Suits — Add missing
-// details to 194 products to help customers find exactly what they need."
-//
-// GMC flagged 194 salwar suit products as having thin descriptions missing
-// key details that shoppers search for: outfit components (kameez + bottom +
-// dupatta), bottom style, dupatta details, work/embellishment specifics,
-// silhouette/fit, and care instructions.
-//
-// This module extracts attributes from product titles and Shopify data, then
-// generates rich multi-paragraph descriptions that include every detail GMC
-// and shoppers expect.
-
-/** Check if a product type is a salwar/suit variant that needs enrichment. */
-function isSalwarSuitType(productType) {
-  const pt = (productType || '').toLowerCase();
-  return pt.includes('salwar') || pt.includes('suit') || pt.includes('kameez')
-    || pt.includes('palazzo') || pt.includes('anarkali') || pt.includes('sharara')
-    || pt.includes('readymade suit') || pt.includes('pakistani');
-}
-
-/**
- * Extract salwar-suit-specific attributes from title, description, and options.
- * Returns a structured object with all details needed for a rich description.
- */
-function extractSalwarAttributes(product, color, material, productType) {
-  const title = (product.title || '').toLowerCase();
-  const desc = (product.description || '').toLowerCase();
-  const searchable = `${title} ${desc}`;
-  const rawTitle = product.title || '';
-
-  // ── Bottom style ──
-  let bottomStyle = '';
-  if (searchable.includes('palazzo')) bottomStyle = 'palazzo';
-  else if (searchable.includes('churidar')) bottomStyle = 'churidar';
-  else if (searchable.includes('patiyala') || searchable.includes('patiala')) bottomStyle = 'patiala';
-  else if (searchable.includes('sharara') || searchable.includes('garara')) bottomStyle = 'sharara';
-  else if (searchable.includes('straight')) bottomStyle = 'straight-cut';
-  else if (productType.toLowerCase().includes('salwar')) bottomStyle = 'salwar';
-  else if (searchable.includes('salwar')) bottomStyle = 'salwar';
-
-  // ── Work/embellishment type ──
-  let workType = '';
-  const workPatterns = [
-    { keywords: ['mirror work', 'mirror-work', 'mirrorwork'], label: 'mirror work' },
-    { keywords: ['sequins embroidery', 'sequin embroidery', 'sequins work'], label: 'sequins embroidery' },
-    { keywords: ['sequin', 'sequins'], label: 'sequin work' },
-    { keywords: ['zardozi', 'zardosi'], label: 'zardozi embroidery' },
-    { keywords: ['zari'], label: 'zari threadwork' },
-    { keywords: ['gota patti', 'gota-patti', 'gotapatti'], label: 'gota patti work' },
-    { keywords: ['chikankari'], label: 'chikankari embroidery' },
-    { keywords: ['kundan'], label: 'kundan stone work' },
-    { keywords: ['thread work', 'threadwork'], label: 'thread work' },
-    { keywords: ['resham'], label: 'resham embroidery' },
-    { keywords: ['stone work', 'stonework'], label: 'stone work' },
-    { keywords: ['beads work', 'bead work', 'beadwork'], label: 'bead work' },
-    { keywords: ['embroidered', 'embroidery'], label: 'embroidery' },
-    { keywords: ['printed', 'print'], label: 'print' },
-  ];
-  for (const wp of workPatterns) {
-    if (wp.keywords.some(k => searchable.includes(k))) {
-      workType = wp.label;
-      break;
-    }
-  }
-
-  // ── Occasion ──
-  let occasion = '';
-  const occasionPatterns = [
-    { keywords: ['bridal'], label: 'bridal celebrations' },
-    { keywords: ['wedding wear', 'wedding suit'], label: 'weddings and receptions' },
-    { keywords: ['eid wear'], label: 'Eid and festive celebrations' },
-    { keywords: ['festive', 'festival'], label: 'festive celebrations' },
-    { keywords: ['party wear', 'party suit'], label: 'parties and celebrations' },
-    { keywords: ['casual'], label: 'casual and everyday occasions' },
-    { keywords: ['occasion', 'occasional'], label: 'special occasions' },
-  ];
-  for (const op of occasionPatterns) {
-    if (op.keywords.some(k => searchable.includes(k))) {
-      occasion = op.label;
-      break;
-    }
-  }
-  if (!occasion) occasion = 'festive celebrations and special occasions';
-
-  // ── Stitching type ──
-  let stitchType = '';
-  if (searchable.includes('readymade') || searchable.includes('ready-made') || searchable.includes('ready to wear')) {
-    stitchType = 'readymade';
-  } else if (searchable.includes('semi-stitched') || searchable.includes('semi stitched')) {
-    stitchType = 'semi-stitched';
-  } else if (searchable.includes('unstitched') || searchable.includes('un-stitched')) {
-    stitchType = 'unstitched';
-  }
-  // If title contains "Readymade" specifically
-  if (!stitchType && rawTitle.includes('Readymade')) stitchType = 'readymade';
-  if (!stitchType && rawTitle.includes('Unstitched')) stitchType = 'unstitched';
-
-  // ── Silhouette ──
-  let silhouette = '';
-  if (searchable.includes('a-line') || searchable.includes('aline')) silhouette = 'A-line';
-  else if (searchable.includes('straight cut') || searchable.includes('straight-cut') || searchable.includes('straight kameez')) silhouette = 'straight-cut';
-  else if (bottomStyle === 'palazzo') silhouette = 'relaxed palazzo';
-  else if (bottomStyle === 'sharara') silhouette = 'flared sharara';
-  else if (bottomStyle === 'churidar') silhouette = 'classic churidar';
-  else if (searchable.includes('anarkali')) silhouette = 'flared anarkali';
-  else if (bottomStyle === 'patiala') silhouette = 'traditional patiala';
-
-  // ── Fabric (refined from title context) ──
-  let fabric = material || '';
-  if (!fabric) {
-    const fabricPatterns = [
-      { keywords: ['faux georgette'], label: 'Faux Georgette' },
-      { keywords: ['shimmer silk'], label: 'Shimmer Silk' },
-      { keywords: ['raw silk'], label: 'Raw Silk' },
-      { keywords: ['banarasi silk'], label: 'Banarasi Silk' },
-      { keywords: ['silk'], label: 'Silk' },
-      { keywords: ['georgette'], label: 'Georgette' },
-      { keywords: ['chinon', 'chinnon'], label: 'Chinon' },
-      { keywords: ['chiffon'], label: 'Chiffon' },
-      { keywords: ['velvet'], label: 'Velvet' },
-      { keywords: ['cotton'], label: 'Cotton' },
-      { keywords: ['crepe'], label: 'Crepe' },
-      { keywords: ['net'], label: 'Net' },
-      { keywords: ['satin'], label: 'Satin' },
-      { keywords: ['organza'], label: 'Organza' },
-      { keywords: ['linen'], label: 'Linen' },
-      { keywords: ['jacquard'], label: 'Jacquard' },
-      { keywords: ['brocade'], label: 'Brocade' },
-      { keywords: ['shimmer'], label: 'Shimmer' },
-    ];
-    for (const fp of fabricPatterns) {
-      if (fp.keywords.some(k => title.includes(k))) {
-        fabric = fp.label;
-        break;
-      }
-    }
-  }
-
-  // ── Suit sub-type label ──
-  let suitLabel = 'salwar suit';
-  const pt = productType.toLowerCase();
-  if (pt.includes('pakistani') || title.includes('pakistani')) suitLabel = 'Pakistani suit';
-  else if (pt.includes('wedding') || title.includes('wedding')) suitLabel = 'wedding suit';
-  else if (title.includes('anarkali')) suitLabel = 'anarkali suit';
-  else if (title.includes('palazzo')) suitLabel = 'palazzo suit';
-  else if (title.includes('sharara')) suitLabel = 'sharara set';
-  else if (pt.includes('salwar kameez')) suitLabel = 'salwar kameez';
-
-  return { bottomStyle, workType, occasion, stitchType, silhouette, fabric, suitLabel };
-}
-
-/**
- * Build a rich, multi-paragraph description specifically for salwar suit products.
- * Addresses GMC recommendation: "Add missing details to 194 products."
- *
- * Structure:
- * 1. Opening — product name, fabric, work type, design highlights
- * 2. Components — kameez, bottom style, dupatta details
- * 3. Occasion & styling — when to wear, how to accessorize
- * 4. Stitching & sizing — readymade/unstitched options, sizes
- * 5. Care — dry cleaning instructions
- * 6. Details line — Color | Fabric | Work | Occasion
- * 7. Shipping — U.S. rate plus current seven-country availability
- */
-function buildSalwarSuitDescription(product, color, material, productType) {
-  const attrs = extractSalwarAttributes(product, color, material, productType);
-  const rawTitle = product.title || 'Indian Ethnic Suit';
-  const original = (product.description || '').trim();
-
-  const parts = [];
-
-  // ── 1. Opening paragraph ──
-  const colorPhrase = color ? `${color} ` : '';
-  const fabricPhrase = attrs.fabric ? ` in ${attrs.fabric}` : '';
-  const workPhrase = attrs.workType ? ` with ${attrs.workType}` : '';
-  parts.push(
-    `Shop the ${rawTitle} at LuxeMia — a ${colorPhrase}${attrs.suitLabel}${fabricPhrase}${workPhrase}. ` +
-    `Every detail reflects the skill of Indian artisans, blending traditional craftsmanship with contemporary design ` +
-    `for a garment that stands out at any occasion.`
-  );
-
-  // ── 2. Components paragraph (THE KEY MISSING DETAIL) ──
-  const bottomPhrase = attrs.bottomStyle
-    ? `The set includes a beautifully crafted kameez paired with ${attrs.bottomStyle} bottoms`
-    : `The set includes a beautifully crafted kameez with coordinated bottoms`;
-  const dupattaWork = attrs.workType
-    ? ` embellished with ${attrs.workType}`
-    : '';
-  parts.push(
-    `${bottomPhrase}, and a matching dupatta${dupattaWork} to complete the ensemble. ` +
-    `The kameez features ${attrs.workType || 'fine detailing'} on the neckline, sleeves, and yoke, ` +
-    `while the ${attrs.bottomStyle || 'coordinated bottom'} provides a comfortable and flattering fit. ` +
-    `The dupatta adds the finishing touch — drape it over one shoulder for classic elegance, ` +
-    `or style it across both arms for a more structured look.`
-  );
-
-  // ── 3. Occasion & styling ──
-  const stylingAccessories = [
-    'jhumka earrings and a stack of bangles',
-    'a statement necklace and kolhapuri sandals',
-    'a maang tikka and embroidered juttis',
-  ];
-  const accessoryPick = stylingAccessories[
-    Math.abs(hashCode(rawTitle + '-acc')) % stylingAccessories.length
-  ];
-  parts.push(
-    `Perfect for ${attrs.occasion}, this ${attrs.suitLabel} ensures you make a memorable impression wherever you go. ` +
-    `Pair with ${accessoryPick} for a head-to-toe curated look ` +
-    `that transitions effortlessly from intimate family gatherings to grand celebrations.`
-  );
-
-  // ── 4. Stitching & sizing ──
-  let stitchPara = '';
-  if (attrs.stitchType === 'readymade') {
-    stitchPara = `This is a readymade suit — pre-stitched and ready to wear straight out of the box. ` +
-      `Available in sizes S to XXL (bust 32-48), simply pick your size and go.`;
-  } else if (attrs.stitchType === 'unstitched') {
-    stitchPara = `This is an unstitched suit set — you receive the fabric and trims to have it tailored to your exact measurements. ` +
-      `We also offer Made to Measure stitching: we will email you a measurement form after checkout ` +
-      `and stitch the suit to your body. Alternatively, choose Ready to Wear for standard sizes S-XXL (bust 32-48).`;
-  } else if (attrs.stitchType === 'semi-stitched') {
-    stitchPara = `This is a semi-stitched suit — partially tailored with adjustable seams for a customized fit. ` +
-      `Minor alterations can be made by your local tailor for the perfect silhouette. ` +
-      `Available in sizes S to XXL (bust 32-48).`;
-  } else {
-    stitchPara = `Available in sizes S to XXL (bust 32-48) with custom tailoring options. ` +
-      `Choose Unstitched (fabric and trims for your own tailor), Ready to Wear (pre-stitched to standard sizes), ` +
-      `or Made to Measure (stitched to your exact body measurements — we will email a measurement form after checkout).`;
-  }
-  parts.push(stitchPara);
-
-  // ── 5. Care instructions ──
-  const fabricLower = (attrs.fabric || '').toLowerCase();
-  let carePara;
-  if (fabricLower.includes('cotton') && !fabricLower.includes('silk')) {
-    carePara = `Care: Gentle machine wash in cold water on a delicate cycle for cotton suits. ` +
-      `Iron on medium heat with steam. For embellished areas, use a pressing cloth.`;
-  } else {
-    carePara = `Care: Professional dry cleaning is recommended to preserve the embroidery and fabric integrity. ` +
-      `Avoid wringing or machine washing. Iron on low heat with a pressing cloth over embellished areas. ` +
-      `Store in a muslin garment bag — avoid plastic covers which can trap moisture and damage embroidery.`;
-  }
-  parts.push(carePara);
-
-  // ── 6. Structured details line ──
-  const detailsParts = [];
-  if (color) detailsParts.push(`Color: ${color}`);
-  if (attrs.fabric) detailsParts.push(`Fabric: ${attrs.fabric}`);
-  if (attrs.workType) detailsParts.push(`Work: ${capitalize(attrs.workType)}`);
-  if (attrs.bottomStyle) detailsParts.push(`Bottom: ${capitalize(attrs.bottomStyle)}`);
-  detailsParts.push(`Occasion: ${capitalize(attrs.occasion)}`);
-  parts.push(detailsParts.join(' | '));
-
-  // ── 7. Shipping ──
-  parts.push('Shipping is available to United States addresses only. U.S. standard shipping is free at $150 and above and $12 below. Tracking is provided after dispatch.');
-
-  return parts.join(' ').slice(0, 5000);
-}
-
 /** Simple string hash for deterministic picking. */
 function hashCode(str) {
   let hash = 0;
@@ -497,12 +280,6 @@ function hashCode(str) {
     hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
   }
   return hash;
-}
-
-/** Capitalize the first letter of a string. */
-function capitalize(str) {
-  if (!str) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 function sanitizeFeedTitle(text) {
@@ -587,28 +364,39 @@ function composeMerchantVariantTitle(baseTitle, variantLabel) {
 }
 
 function getMerchantProductType(productType, title) {
-  const text = `${productType || ''} ${title || ''}`.toLowerCase();
+  const typeText = (productType || '').toLowerCase();
+  const titleText = (title || '').toLowerCase();
+  const text = `${typeText} ${titleText}`;
   const root = 'Apparel & Accessories';
 
-  if (/(?:jewelry|jewellery|necklace|choker|earring|bangle|bracelet|maang tikka|ring)/.test(text)) {
+  if (/\b(?:jewelry|jewellery|necklaces?|chokers?|earrings?|bangles?|bracelets?|maang tikka|rings?)\b/.test(text)) {
     return `${root} > Jewelry > Indian Jewelry`;
   }
-  if (/(?:sherwani|men(?:'s)?\s|menswear|kurta pajama|nehru jacket|jodhpuri)/.test(text)) {
-    return `${root} > Clothing > Traditional & Ceremonial Clothing > Sherwanis & Men's Kurtas`;
-  }
-  if (/\b(?:saree|sari)\b/.test(text)) {
-    return `${root} > Clothing > Traditional & Ceremonial Clothing > Sarees`;
-  }
-  if (/\b(?:lehenga|lehnga|chaniya|choli)\b/.test(text)) {
-    return `${root} > Clothing > Traditional & Ceremonial Clothing > Lehengas & Chaniya Choli`;
-  }
-  if (/\b(?:salwar|kameez|sharara|gharara|anarkali|palazzo|plazzo|churidar|patiala|kurti)\b/.test(text)) {
-    return `${root} > Clothing > Traditional & Ceremonial Clothing > Salwar Kameez & Suits`;
-  }
-  if (/\bblouse\b/.test(text)) {
+  if (/\bblouses?\b/.test(typeText)) {
     return `${root} > Clothing > Traditional & Ceremonial Clothing > Saree Blouses`;
   }
-  if (/\b(?:indo.?western|fusion|co-?ord|jumpsuit|cape set)\b/.test(text)) {
+  if (/\b(?:sarees?|saris?)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Sarees`;
+  }
+  if (/\b(?:lehengas?|lehngas?|chaniyas?|cholis?)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Lehengas & Chaniya Choli`;
+  }
+  if (/\b(?:sets?|suits?)\b/.test(typeText)
+    || /\b(?:salwars?|kameez|shararas?|ghararas?|gararas?|palazzos?|plazzos?|churidars?|patialas?|co-?ords?|outfit sets?)\b/.test(text)
+    || /\b(?:anarkalis?|capes?|kurtas?)\b[^.]{0,30}\b(?:sets?|suits?|with dupatta)\b/.test(text)
+    || /\b(?:sets?|suits?)\b[^.]{0,30}\b(?:anarkalis?|capes?|kurtas?)\b/.test(text)) {
+    return `${root} > Clothing > Outfit Sets`;
+  }
+  if (/\b(?:sherwanis?|men|mens|men's|menswear|kurta pajama|nehru jackets?|jodhpuris?)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Sherwanis & Men's Kurtas`;
+  }
+  if (/\b(?:salwars?|kameez|shararas?|ghararas?|anarkalis?|palazzos?|plazzos?|churidars?|patialas?|kurtis?)\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Salwar Kameez & Suits`;
+  }
+  if (/\bblouses?\b/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing > Saree Blouses`;
+  }
+  if (/\b(?:indo.?western|fusion|co-?ords?|jumpsuits?|cape sets?)\b/.test(text)) {
     return `${root} > Clothing > Indian Ethnic Wear > Indo-Western Clothing`;
   }
   return `${root} > Clothing > Indian Ethnic Wear`;
@@ -690,7 +478,7 @@ function sanitizeExistingFeedXml(xml) {
   const fallbackProducts = [...xml.matchAll(/<item>[\s\S]*?<\/item>/gi)].map(([itemXml]) => ({
     handle: readProductHandleFromItem(itemXml),
     title: readItemTag(itemXml, 'g:item_group_title') || readItemTag(itemXml, 'g:title'),
-    productType: readItemTag(itemXml, 'g:product_type'),
+    productType: readItemTag(itemXml, 'g:custom_label_0') || readItemTag(itemXml, 'g:product_type'),
     tags: [],
   }));
   const navratriPriorityHandles = selectNavratriPriorityHandles(fallbackProducts);
@@ -706,18 +494,37 @@ function sanitizeExistingFeedXml(xml) {
       ? rawTitle.slice(rawGroupTitle.length).replace(/^\s*[—–-]\s*/, '')
       : '';
     const title = composeMerchantVariantTitle(merchantBaseTitle, variantLabel);
-    const rawProductType = readItemTag(itemXml, 'g:product_type') || 'Ethnic Wear';
+    const rawProductType = readItemTag(itemXml, 'g:custom_label_0')
+      || readItemTag(itemXml, 'g:product_type')
+      || 'Ethnic Wear';
     const productType = getMerchantProductType(rawProductType, merchantBaseTitle);
     const color = readItemTag(itemXml, 'g:color');
     const material = readItemTag(itemXml, 'g:material');
     const size = readItemTag(itemXml, 'g:size');
-    const description = buildDescription({ title, tags: [] }, color, material, productType);
-    const highlights = generateProductHighlights({ tags: [] }, color, material, productType, title, size);
+    const pattern = readItemTag(itemXml, 'g:pattern');
+    const fallbackProduct = {
+      title,
+      productType: rawProductType,
+      tags: pattern ? [`work:${pattern}`] : [],
+    };
+    const description = buildDescription(
+      fallbackProduct,
+      color,
+      material,
+      productType,
+      title,
+      size ? [{ name: 'Size', value: size }] : [],
+    );
+    const googleProductCategory = getGoogleProductCategory(rawProductType, merchantBaseTitle);
+    const gender = getGender(rawProductType, merchantBaseTitle);
+    const highlights = generateProductHighlights(fallbackProduct, color, material, productType, title, size);
 
     let item = itemXml
       .replace(/<g:title>[\s\S]*?<\/g:title>/i, `<g:title>${escapeXml(title)}</g:title>`)
       .replace(/<g:description>[\s\S]*?<\/g:description>/i, `<g:description>${escapeXml(description)}</g:description>`)
+      .replace(/<g:google_product_category>[\s\S]*?<\/g:google_product_category>/i, `<g:google_product_category>${googleProductCategory}</g:google_product_category>`)
       .replace(/<g:product_type>[\s\S]*?<\/g:product_type>/i, `<g:product_type>${escapeXml(productType)}</g:product_type>`)
+      .replace(/<g:gender>[\s\S]*?<\/g:gender>/i, `<g:gender>${gender}</g:gender>`)
       .replace(/\s*<g:product_highlight>[\s\S]*?<\/g:product_highlight>/gi, '')
       .replace(/\s*<g:custom_label_1>[\s\S]*?<\/g:custom_label_1>/gi, '')
       .replace(/\s*<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi, '')
@@ -775,20 +582,43 @@ function writeFallbackFeed() {
   return true;
 }
 
-function buildDescription(product, color, material, productType) {
+function getStructuredTagValues(product, prefix) {
+  const matcher = new RegExp(`^${prefix}\\s*:\\s*(.+)$`, 'i');
+  return [...new Set((product.tags || [])
+    .map((tag) => tag.match(matcher)?.[1]?.trim() || '')
+    .filter(Boolean))];
+}
+
+function buildDescription(product, color, material, productType, displayTitle = '', selectedOptions = []) {
   // Merchant descriptions are rebuilt from structured catalog fields. Shopify
   // prose is intentionally excluded because old marketing and policy claims can
   // otherwise re-enter the feed long after the storefront copy is corrected.
-  const title = sanitizeFeedTitle(product.title || 'Indian ethnic wear');
+  const title = sanitizeFeedTitle(displayTitle || product.title || 'Indian ethnic wear');
+  const rawProductType = (product.productType || productType.split('>').at(-1) || 'Indian ethnic wear').trim();
+  const structuredMaterial = material || getStructuredTagValues(product, 'fabric')[0] || '';
+  const work = getStructuredTagValues(product, 'work')[0] || '';
+  const includedPieces = getStructuredTagValues(product, 'included');
+  const optionDetails = [...new Map((selectedOptions || [])
+    .filter((option) => option?.name && option?.value)
+    .filter((option) => option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
+    .map((option) => [option.name.toLowerCase(), `${option.name}: ${option.value}`]))
+    .values()];
   const parts = [];
   parts.push(`${title} from LuxeMia.`);
 
   const detailsParts = [];
+  if (rawProductType) detailsParts.push(`Style: ${rawProductType}`);
   if (color) detailsParts.push(`Color: ${color}`);
-  if (material) detailsParts.push(`Material: ${material}`);
-  if (productType) detailsParts.push(`Category: ${productType}`);
+  if (structuredMaterial) detailsParts.push(`Material: ${structuredMaterial}`);
+  if (work) detailsParts.push(`Design detail: ${work}`);
   if (detailsParts.length > 0) {
     parts.push(`${detailsParts.join(' | ')}.`);
+  }
+  if (includedPieces.length > 0) {
+    parts.push(`Included pieces: ${includedPieces.join('; ')}.`);
+  }
+  if (optionDetails.length > 0) {
+    parts.push(`Selected options: ${optionDetails.join('; ')}.`);
   }
   parts.push('Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering.');
   parts.push('Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch.');
@@ -969,7 +799,6 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   const productType = getMerchantProductType(rawProductType, product.title);
   const googleProductCategory = getGoogleProductCategory(rawProductType, product.title);
   const gender = getGender(rawProductType, product.title);
-  const description = buildDescription(product, color, material, productType);
   const rawSku = variant.sku || variantId || '';
   const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
   const brand = normalizeBrand(product.vendor);
@@ -992,6 +821,14 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   } else if (titleCounts && titleCounts.get(baseTitle) > 1) {
     displayTitle = composeMerchantVariantTitle(merchantBaseTitle, sku || handle);
   }
+  const description = buildDescription(
+    product,
+    color,
+    material,
+    productType,
+    displayTitle,
+    meaningfulOptions,
+  );
 
   const productId = product.id?.split('/').pop() || '';
   const rawItemId = isVariantGroup ? `${handle}-${variantId}` : handle;

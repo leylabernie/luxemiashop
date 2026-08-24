@@ -199,24 +199,64 @@ async function fetchAllProducts(): Promise<ShopifyProduct[]> {
 
 // ─── Google Product Category (NUMERIC IDs) ──────────────────────────
 
+const GOOGLE_PRODUCT_CATEGORY = {
+  CLOTHING: 1604,
+  SHIRTS_AND_TOPS: 212,
+  SKIRTS: 1581,
+  PANTS: 204,
+  DRESSES: 2271,
+  JUMPSUITS_AND_ROMPERS: 5250,
+  OUTFIT_SETS: 7313,
+  TRADITIONAL_AND_CEREMONIAL_CLOTHING: 5388,
+  SARIS_AND_LEHENGAS: 8248,
+  JEWELRY: 188,
+  BRACELETS: 191,
+  EARRINGS: 194,
+  NECKLACES: 196,
+  RINGS: 200,
+  JEWELRY_SETS: 6463,
+} as const;
+
 function getGoogleCategory(productType: string, title: string): number {
-  const text = `${productType} ${title}`.toLowerCase();
+  const typeText = (productType || "").toLowerCase();
+  const titleText = (title || "").toLowerCase();
+  const text = `${typeText} ${titleText}`;
 
-  if (/(jewelry|jewellery|necklace|choker|earring|bangle|bracelet|ring)/.test(text)) {
-    if (/(set|combo)/.test(text)) return 6463; // Jewelry Sets
-    if (/(necklace|choker)/.test(text)) return 196; // Necklaces
-    if (/earring/.test(text)) return 194; // Earrings
-    if (/(bangle|bracelet)/.test(text)) return 191; // Bracelets
-    if (/ring/.test(text)) return 200; // Rings
-    return 188; // Jewelry
+  if (/\b(?:jewelry|jewellery|necklaces?|chokers?|earrings?|bangles?|bracelets?|maang tikka|rings?)\b/.test(text)) {
+    if (/\b(?:sets?|combos?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.JEWELRY_SETS;
+    if (/\b(?:necklaces?|chokers?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.NECKLACES;
+    if (/\bearrings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.EARRINGS;
+    if (/\b(?:bangles?|bracelets?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.BRACELETS;
+    if (/\brings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.RINGS;
+    return GOOGLE_PRODUCT_CATEGORY.JEWELRY;
   }
 
-  if (/(saree|sari|lehenga)/.test(text)) return 8248; // Saris & Lehengas
-  if (/(sherwani|kurta|salwar|anarkali|sharara|gharara|palazzo|traditional)/.test(text)) {
-    return 5388; // Traditional & Ceremonial Clothing
+  if (/\bblouses?\b/.test(typeText)) {
+    return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
   }
+  if (/\b(?:sarees?|saris?|lehengas?|lehngas?|chaniyas?|cholis?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS;
+  }
+  if (/\b(?:jumpsuits?|rompers?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.JUMPSUITS_AND_ROMPERS;
+  }
+  if (/\b(?:sets?|suits?)\b/.test(typeText)
+    || /\b(?:salwars?|kameez|shararas?|ghararas?|gararas?|palazzos?|plazzos?|churidars?|patialas?|co-?ords?|outfit sets?)\b/.test(text)
+    || /\b(?:anarkalis?|capes?|kurtas?)\b[^.]{0,30}\b(?:sets?|suits?|with dupatta)\b/.test(text)
+    || /\b(?:sets?|suits?)\b[^.]{0,30}\b(?:anarkalis?|capes?|kurtas?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS;
+  }
+  if (/\b(?:sherwanis?|nehru jackets?|jodhpuris?|groom wear|traditional|ceremonial|indo.?western|fusion|kurtas?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING;
+  }
+  if (/\b(?:anarkalis?|gowns?|dresses?)\b/.test(text)) {
+    return GOOGLE_PRODUCT_CATEGORY.DRESSES;
+  }
+  if (/\b(?:kurtis?|blouses?|tops?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
+  if (/\bskirts?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SKIRTS;
+  if (/\b(?:pants|trousers)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.PANTS;
 
-  return 1604; // Clothing
+  return GOOGLE_PRODUCT_CATEGORY.CLOTHING;
 }
 
 // ─── Gender Mapping ──────────────────────────────────────────────────
@@ -224,13 +264,13 @@ function getGoogleCategory(productType: string, title: string): number {
 function getGender(productType: string, title: string): string {
   const text = `${productType} ${title}`.toLowerCase();
 
-  if (/(^|\b)(men|mens|men's|male|groom|sherwani|kurta pajama|nehru)(\b|$)/.test(text)) {
-    return "male";
-  }
-  if (/(^|\b)(women|womens|women's|female|saree|sari|lehenga|choli|blouse|anarkali|salwar|sharara|gharara|palazzo)(\b|$)/.test(text)) {
+  if (/\b(?:women|womens|women's|female)\b/.test(text)) {
     return "female";
   }
-  return "";
+  if (/\b(?:men|mens|men's|male|groom|sherwanis?|kurta pajama|nehru jackets?|jodhpuris?)\b/.test(text)) {
+    return "male";
+  }
+  return "female";
 }
 
 // ─── Size Extraction ─────────────────────────────────────────────────
@@ -485,27 +525,55 @@ function sanitizeProductTitle(value: string): string {
     .trim();
 }
 
+function composeMerchantVariantTitle(baseTitle: string, selectedOptions: ShopifySelectedOption[]): string {
+  const optionValues = selectedOptions
+    .filter((option) => option.name && option.value)
+    .filter((option) => option.name.toLowerCase() !== "title" && option.value.toLowerCase() !== "default title")
+    .map((option) => option.value.trim())
+    .filter(Boolean);
+  if (optionValues.length === 0) return baseTitle.slice(0, 150).trim();
+
+  const suffix = ` — ${optionValues.join(" / ")}`;
+  const baseLimit = Math.max(1, 150 - suffix.length);
+  return `${baseTitle.slice(0, baseLimit).trim()}${suffix}`.slice(0, 150).trim();
+}
+
+function getStructuredTagValues(tags: string[], prefix: string): string[] {
+  const matcher = new RegExp(`^${prefix}\\s*:\\s*(.+)$`, "i");
+  return [...new Set(tags
+    .map((tag) => tag.match(matcher)?.[1]?.trim() || "")
+    .filter(Boolean))];
+}
+
 // ─── Enriched Description ────────────────────────────────────────────
 
 // Raw Shopify descriptions are intentionally excluded because legacy policy text can conflict with the live store policy.
 
 function enrichDescription(
-  _desc: string,
-  productType: string,
+  product: ShopifyProduct,
   title: string,
-  tags: string[],
-  size: string
+  selectedOptions: ShopifySelectedOption[]
 ): string {
-  const fabric = getMaterialFromProduct({ productType, title, tags, options: [] } as unknown as ShopifyProduct);
-  const work = getWorkFromTags(tags);
+  const fabric = getStructuredTagValues(product.tags, "fabric")[0] || getMaterialFromProduct(product);
+  const work = getStructuredTagValues(product.tags, "work")[0] || getWorkFromTags(product.tags);
+  const includedPieces = getStructuredTagValues(product.tags, "included");
+  const optionDetails = [...new Map(selectedOptions
+    .filter((option) => option.name && option.value)
+    .filter((option) => option.name.toLowerCase() !== "title" && option.value.toLowerCase() !== "default title")
+    .map((option) => [option.name.toLowerCase(), `${option.name}: ${option.value}`]))
+    .values()];
 
-  const details = [`${title}.`];
-  if (productType) details.push(`Category: ${productType}.`);
+  const details = [`${title} from LuxeMia.`];
+  if (product.productType) details.push(`Style: ${product.productType}.`);
   if (fabric) details.push(`Material: ${fabric}.`);
-  if (work) details.push(`Detail: ${work}.`);
-  if (size) details.push(`Selected size: ${size}.`);
+  if (work) details.push(`Design detail: ${work}.`);
+  if (includedPieces.length > 0) details.push(`Included pieces: ${includedPieces.join("; ")}.`);
+  if (optionDetails.length > 0) details.push(`Selected options: ${optionDetails.join("; ")}.`);
   details.push(
-    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. Review the product page for current availability and exact details."
+    "Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering."
+  );
+  details.push(
+    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch."
   );
 
   return details.join(" ").slice(0, 5000);
@@ -527,7 +595,11 @@ function generateItem(
   product: ShopifyProduct,
   variant: ShopifyVariant
 ): string {
-  const listingTitle = sanitizeProductTitle(product.title);
+  const baseTitle = sanitizeProductTitle(product.title);
+  const meaningfulOptions = variant.selectedOptions
+    .filter((option) => option.name && option.value)
+    .filter((option) => option.name.toLowerCase() !== "title" && option.value.toLowerCase() !== "default title");
+  const listingTitle = composeMerchantVariantTitle(baseTitle, meaningfulOptions);
   const variantId = shortenId(variant.id);
   const productId = shortenId(product.id);
   const googleCategory = getGoogleCategory(product.productType, product.title);
@@ -541,7 +613,7 @@ function generateItem(
   const gtin = normalizeGtin(variant.barcode);
   const brand = normalizeBrand(product.vendor || "");
   const mpn = brand === "LuxeMia" && !gtin ? normalizeMpn(variant.sku) : "";
-  const isApparel = [1604, 5388, 8248].includes(googleCategory);
+  const isApparel = [1604, 212, 1581, 204, 2271, 5250, 7313, 5388, 8248].includes(googleCategory);
   const productLink = `${SITE_URL}/product/${encodeURIComponent(product.handle)}${
     product.variants.edges.length > 1 ? `?variant=${encodeURIComponent(variantId)}` : ""
   }`;
@@ -584,11 +656,9 @@ function generateItem(
 
   // Enriched description
   const description = enrichDescription(
-    product.description,
-    product.productType,
+    product,
     listingTitle,
-    product.tags,
-    size
+    meaningfulOptions
   );
 
   let xml = `
