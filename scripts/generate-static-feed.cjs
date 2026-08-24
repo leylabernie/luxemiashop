@@ -14,6 +14,10 @@
 
 const fs = require('fs');
 const path = require('path');
+const {
+  containsExactPhrase,
+  inferColorFromText,
+} = require('../merchant-feed-color.cjs');
 
 const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
@@ -472,6 +476,33 @@ function readProductHandleFromItem(itemXml) {
   }
 }
 
+function getStructuredColorFromTags(tags) {
+  for (const tag of tags || []) {
+    const match = String(tag).match(/^colou?r\s*:\s*(.+)$/i);
+    if (match?.[1]) return match[1].trim();
+  }
+  return '';
+}
+
+function resolveProductColor(product, selectedOptions, variantLabel = '') {
+  const colorSelection = (selectedOptions || []).find((option) =>
+    ['color', 'colour'].includes(option.name?.toLowerCase())
+  );
+  if (colorSelection?.value) return colorSelection.value.trim();
+
+  const colorOption = product.options?.find((option) =>
+    ['color', 'colour'].includes(option.name?.toLowerCase())
+  );
+  if (colorOption?.values?.length === 1 && colorOption.values[0]) {
+    return colorOption.values[0].trim();
+  }
+
+  const taggedColor = getStructuredColorFromTags(product.tags);
+  if (taggedColor) return taggedColor;
+
+  return inferColorFromText(`${product.title || ''} ${variantLabel}`);
+}
+
 function sanitizeExistingFeedXml(xml) {
   let itemCount = 0;
 
@@ -498,7 +529,11 @@ function sanitizeExistingFeedXml(xml) {
       || readItemTag(itemXml, 'g:product_type')
       || 'Ethnic Wear';
     const productType = getMerchantProductType(rawProductType, merchantBaseTitle);
-    const color = readItemTag(itemXml, 'g:color');
+    const existingColor = readItemTag(itemXml, 'g:color');
+    const inferredColor = inferColorFromText(originalBaseTitle);
+    const color = containsExactPhrase(rawTitle, existingColor)
+      ? existingColor
+      : inferredColor || 'Multi-Color';
     const material = readItemTag(itemXml, 'g:material');
     const size = readItemTag(itemXml, 'g:size');
     const pattern = readItemTag(itemXml, 'g:pattern');
@@ -525,6 +560,7 @@ function sanitizeExistingFeedXml(xml) {
       .replace(/<g:google_product_category>[\s\S]*?<\/g:google_product_category>/i, `<g:google_product_category>${googleProductCategory}</g:google_product_category>`)
       .replace(/<g:product_type>[\s\S]*?<\/g:product_type>/i, `<g:product_type>${escapeXml(productType)}</g:product_type>`)
       .replace(/<g:gender>[\s\S]*?<\/g:gender>/i, `<g:gender>${gender}</g:gender>`)
+      .replace(/<g:color>[\s\S]*?<\/g:color>/i, `<g:color>${escapeXml(color)}</g:color>`)
       .replace(/\s*<g:product_highlight>[\s\S]*?<\/g:product_highlight>/gi, '')
       .replace(/\s*<g:custom_label_1>[\s\S]*?<\/g:custom_label_1>/gi, '')
       .replace(/\s*<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi, '')
@@ -598,9 +634,13 @@ function buildDescription(product, color, material, productType, displayTitle = 
   const structuredMaterial = material || getStructuredTagValues(product, 'fabric')[0] || '';
   const work = getStructuredTagValues(product, 'work')[0] || '';
   const includedPieces = getStructuredTagValues(product, 'included');
+  const sizeSelection = (selectedOptions || []).find((option) =>
+    ['size', 'bust size', 'chest size'].includes(option?.name?.toLowerCase())
+  );
   const optionDetails = [...new Map((selectedOptions || [])
     .filter((option) => option?.name && option?.value)
     .filter((option) => option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
+    .filter((option) => !['color', 'colour', 'size', 'bust size', 'chest size'].includes(option.name.toLowerCase()))
     .map((option) => [option.name.toLowerCase(), `${option.name}: ${option.value}`]))
     .values()];
   const parts = [];
@@ -610,6 +650,7 @@ function buildDescription(product, color, material, productType, displayTitle = 
   if (rawProductType) detailsParts.push(`Style: ${rawProductType}`);
   if (color) detailsParts.push(`Color: ${color}`);
   if (structuredMaterial) detailsParts.push(`Material: ${structuredMaterial}`);
+  if (sizeSelection?.value) detailsParts.push(`Size: ${sizeSelection.value}`);
   if (work) detailsParts.push(`Design detail: ${work}`);
   if (detailsParts.length > 0) {
     parts.push(`${detailsParts.join(' | ')}.`);
@@ -745,34 +786,14 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   const sizeSelection = selectedOptions.find((option) =>
     ['size', 'bust size', 'chest size'].includes(option.name?.toLowerCase())
   );
-  const colorSelection = selectedOptions.find((option) =>
-    ['color', 'colour'].includes(option.name?.toLowerCase())
-  );
   const materialSelection = selectedOptions.find((option) =>
     ['fabric', 'material'].includes(option.name?.toLowerCase())
-  );
-  const colorOption = product.options?.find((option) =>
-    ['color', 'colour'].includes(option.name?.toLowerCase())
   );
   const materialOption = product.options?.find((option) =>
     ['fabric', 'material'].includes(option.name?.toLowerCase())
   );
 
-  let color = colorSelection?.value || colorOption?.values?.[0] || '';
-  if (!color) {
-    const colorKeywords = [
-      'Rani Pink', 'Sky Blue', 'Baby Pink', 'Dusty Pink', 'Dusty Rose', 'Royal Blue',
-      'Off White', 'Multi Color', 'Pista Green', 'Sea Green', 'Emerald Green',
-      'Red', 'Maroon', 'Burgundy', 'Wine', 'Pink', 'Rose', 'Fuchsia', 'Magenta',
-      'Blue', 'Navy', 'Teal', 'Peacock', 'Purple', 'Lavender', 'Green', 'Emerald',
-      'Olive', 'Mint', 'Sage', 'Yellow', 'Gold', 'Mustard', 'Amber', 'Saffron',
-      'Marigold', 'Orange', 'Peach', 'Coral', 'Rust', 'Ruby', 'Black', 'White',
-      'Ivory', 'Beige', 'Cream', 'Champagne', 'Grey', 'Charcoal', 'Silver',
-      'Mauve', 'Lilac', 'Plum', 'Copper', 'Bronze', 'Tan', 'Camel', 'Onion',
-    ];
-    const searchable = `${product.title} ${variantLabel}`.toLowerCase();
-    color = colorKeywords.find((candidate) => searchable.includes(candidate.toLowerCase())) || '';
-  }
+  const color = resolveProductColor(product, selectedOptions, variantLabel);
 
   const material = materialSelection?.value || materialOption?.values?.[0] || '';
   const size = sizeSelection?.value || '';
