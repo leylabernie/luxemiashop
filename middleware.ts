@@ -73,6 +73,12 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
   '/product/sequins-work-designer-saree-in-satin-silk-light-pink': '/product/satin-silk-pink-occasional-wear-sequins-work-saree',
   '/product/teal-green-net-sequins-festive-lehenga-choli': '/product/teal-green-net-sequins-lehenga-choli-with-dupatta',
   '/product/wine-silk-embroidery-festive-lehenga-choli': '/product/wine-silk-embroidery-lehenga-choli-with-dupatta',
+  // Live 4xx recovery verified against the current Shopify catalog on 24 Aug 2026.
+  '/product/mustard-georgette-embroidered-anarkali-suit-with-dupatta': '/product/mustard-georgette-embroidered-anarkali-suit-with-dupatta-396043',
+  // Same RANGHAT-1071 blue-net garment: archived legacy handles now resolve
+  // to the current purchasable partywear listing instead of returning 404.
+  '/product/blue-net-embroidery-lehenga-choli-with-dupatta': '/product/blue-net-embroidery-partywear-lehenga-with-dupatta',
+  '/product/blue-net-embroidery-festive-lehenga-choli': '/product/blue-net-embroidery-partywear-lehenga-with-dupatta',
 };
 
 // Explicit 410 Gone routes — URLs that have been permanently retired and have
@@ -368,6 +374,11 @@ async function routeRequest(request: Request): Promise<Response> {
   if (pathname === '/terms-of-service') {
     return Response.redirect(new URL('/terms', request.url).toString(), 301);
   }
+  // Shopify-style page alias still appears in crawl logs; preserve the
+  // established contact destination with a single permanent hop.
+  if (pathname === '/pages/contact') {
+    return Response.redirect(new URL('/contact', request.url).toString(), 301);
+  }
   // /products has no React route — redirect to /collections to prevent soft 404
   if (pathname === '/products') {
     return Response.redirect(new URL('/collections', request.url).toString(), 301);
@@ -397,6 +408,12 @@ async function routeRequest(request: Request): Promise<Response> {
     '/collections/bridesmaid-dresses': '/sarees',
     '/collections/groomsman-outfits': '/menswear',
     '/collections/lehenga-choli': '/lehengas',
+    // Canonical category aliases observed in production 4xx logs. Each
+    // destination is the existing final 200, self-canonical route.
+    '/collections/jewelry': '/jewelry',
+    '/collections/new-arrivals': '/new-arrivals',
+    '/collections/indowestern': '/indowestern',
+    '/collections/nri': '/nri',
   };
   if (COLLECTION_301_REDIRECTS[pathname]) {
     return Response.redirect(new URL(COLLECTION_301_REDIRECTS[pathname], request.url).toString(), 301);
@@ -452,6 +469,12 @@ async function routeRequest(request: Request): Promise<Response> {
     // visitor to the closest live shopping destination rather than a dead URL.
     '/blog/banarasi-silk-saree-guide-authentic': '/collections/silk-sarees',
     '/blog/indian-bridal-jewelry-sets-complete-guide': '/jewelry',
+    // Retired guides observed in live 4xx logs. These destinations preserve
+    // the same sizing, wedding-guest, menswear, or Mehendi intent.
+    '/blog/how-to-measure-yourself-for-a-saree-or-lehenga': '/sizing-measurements-guide',
+    '/blog/saree-vs-lehenga-wedding-guest-guide-2026': '/blog/wedding-guest-outfit-ideas',
+    '/blog/indian-wedding-guest-outfits-men-usa-guide': '/menswear',
+    '/blog/mehendi-outfit-by-role': '/collections/mehendi-outfits',
   };
   if (LEGACY_BLOG_REDIRECTS[pathname]) {
     return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);

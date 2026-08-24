@@ -105,8 +105,9 @@ let cachePromise: Promise<ShopifyProduct[]> | null = null;
 // Build-time prerender (scripts/prerender.js) injects a JSON payload as
 // window.__INITIAL_DATA__ on collection routes (/sarees, /lehengas, /suits,
 // /menswear, /indowestern, /collections, /new-arrivals).
-// Reading it on hydration lets React paint product cards instantly with zero
-// client-side Shopify fetch — the SEO fix for the 100 → 7 impression drop.
+// Reading it on hydration lets React paint product cards without waiting for a
+// client-side Shopify fetch. The full catalog then refreshes in the background
+// so the build-time first page never becomes a permanent 50-product ceiling.
 // On routes without prerendered data (e.g. client-side navigations) this returns
 // null and the hook falls back to the existing cache + Shopify API path.
 declare global {
@@ -398,6 +399,18 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
   const [hasMore] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+
+    const applyProducts = (sourceProducts: ShopifyProduct[]) => {
+      const globallyFiltered = sourceProducts.filter(p => {
+        if (isOldBatchProduct(p)) return false;
+        if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
+        return true;
+      });
+      const filtered = category ? filterByCategory(sourceProducts, category) : globallyFiltered;
+      if (!cancelled) setProducts(enrichProducts(filtered));
+    };
+
     const load = async () => {
       setIsLoading(true);
       setError(null);
@@ -408,16 +421,6 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
         //    previous category's products and can render zero or mixed products.
         const initial = getInitialData(category);
         if (initial) {
-          const applyProducts = (sourceProducts: ShopifyProduct[]) => {
-            const globallyFiltered = sourceProducts.filter(p => {
-              if (isOldBatchProduct(p)) return false;
-              if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
-              return true;
-            });
-            const filtered = category ? filterByCategory(sourceProducts, category) : globallyFiltered;
-            setProducts(enrichProducts(filtered));
-          };
-
           applyProducts(initial);
 
           // Clear the payload so a stale one can't leak into a later category navigation.
@@ -425,21 +428,26 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
             window.__INITIAL_DATA__ = undefined;
           }
 
-          // New Arrivals must not remain frozen at the Vercel build-time snapshot.
-          // Paint the prerendered products immediately, then revalidate from Shopify
-          // so newly published products appear without requiring another deployment.
-          setIsLoading(false);
-          if (revalidate) {
-            try {
-              const freshProducts = await fetchAllProducts();
-              if (freshProducts.length > 0) {
-                cachedProducts = freshProducts;
-                storeProducts(freshProducts);
-                applyProducts(freshProducts);
+          // The prerender payload is deliberately capped for a fast first paint. It
+          // is not the complete catalog, so every category must refresh from the
+          // shared full-catalog cache after hydration. Without this refresh the UI
+          // remains permanently frozen at the first 50 prerendered products.
+          if (!cancelled) setIsLoading(false);
+          try {
+            let fullCatalog = revalidate ? await fetchAllProducts() : await getAllProducts();
+            if (revalidate) {
+              if (fullCatalog.length > 0) {
+                cachedProducts = fullCatalog;
+                storeProducts(fullCatalog);
+              } else {
+                fullCatalog = await getAllProducts();
               }
-            } catch (refreshError) {
-              console.warn('Unable to refresh New Arrivals from Shopify:', refreshError);
             }
+            if (fullCatalog.length > 0) applyProducts(fullCatalog);
+          } catch (refreshError) {
+            // Retain the usable prerendered first page when a background refresh
+            // fails. A later navigation or cache expiry will retry automatically.
+            console.warn('Unable to refresh the complete Shopify catalog:', refreshError);
           }
           return;
         }
@@ -453,22 +461,18 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
             allProducts = await getAllProducts();
           }
         }
-        // Apply global filters (old batch exclusion + excluded titles) even when no category
-        const globallyFiltered = allProducts.filter(p => {
-          if (isOldBatchProduct(p)) return false;
-          if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
-          return true;
-        });
-        const filtered = category ? filterByCategory(allProducts, category) : globallyFiltered;
-        setProducts(enrichProducts(filtered));
+        applyProducts(allProducts);
       } catch (err) {
         console.error('Error fetching Shopify products:', err);
-        setError('Failed to load products');
+        if (!cancelled) setError('Failed to load products');
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
     load();
+    return () => {
+      cancelled = true;
+    };
   }, [category, revalidate]);
 
   // no-op loadMore since we fetch all at once

@@ -38,7 +38,23 @@ const RETIRED_PRODUCT_HANDLES = new Set(
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
 ]);
+const SIZE_OPTION_NAMES = new Set([
+  'size',
+  'standard size',
+  'blouse size',
+  'bust size',
+  'chest size',
+  'stitching size',
+]);
 const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
+
+function normalizeOptionName(value) {
+  return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+function isSizeOptionName(value) {
+  return SIZE_OPTION_NAMES.has(normalizeOptionName(value));
+}
 
 function getCustomProductDescription(title) {
   return `${title}. Made to order from measurements confirmed with LuxeMia, with a custom color available for this design. ${CUSTOM_PRODUCT_TIMING} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
@@ -85,6 +101,7 @@ async function loadTsModule(relativeSrcPath) {
     bundle: true,
     format: 'esm',
     platform: 'node',
+    jsx: 'automatic',
     write: false,
     logLevel: 'silent',
     // Type-only imports are erased by esbuild's TS transform.
@@ -229,7 +246,7 @@ function getListedProductAttributes(product) {
   const listedMaterial = getLabeledListingFact(product?.description, ['Fabric', 'Material']);
   const listedWork = getLabeledListingFact(product?.description, ['Work', 'Embroidery', 'Embellishment']);
   const sizeValues = product?.options
-    ?.find(option => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
+    ?.find(option => isSizeOptionName(option?.name))
     ?.values
     ?.filter(value => value && value.toLowerCase() !== 'default title') || [];
   const includedPiecePrefixes = [
@@ -436,7 +453,7 @@ query GetAllProducts($first: Int!, $after: String) {
             }
           }
         }
-        variants(first: 20) {
+        variants(first: 100) {
           edges {
             node {
               id
@@ -478,7 +495,7 @@ function forceJpegForGmc(url) {
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
     const clean = url.replace(/[&?]format=\w+/g, '');
     const sep = clean.includes('?') ? '&' : '?';
-    return `${clean}${sep}format=jpg&width=1200`;
+    return `${clean}${sep}format=jpg&width=1500`;
   }
   if (url.includes('kesimg.b-cdn.net')) {
     const clean = url.replace(/[&?]format=\w+/g, '');
@@ -551,7 +568,10 @@ const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
 const SAREE_TITLE_KEYWORDS = /\b(saree|sari)\b/i;
 const STANDALONE_BLOUSE_TITLE_KEYWORDS = /\b(blouse|choli)\b/i;
 const OBSOLETE_POLICY_TAG_PATTERN = /\b(canada|australia)\b|\b(worldwide|international|global)\s+(shipping|delivery)\b|\bfree\s+(worldwide\s+)?shipping\b|\bshipping\b.{0,30}(\$|usd|over|above|below|under)/i;
-const HIDE_OLD_PRODUCTS = true;
+// Keep crawler and shopper collection inventories aligned. The storefront
+// disabled the April-batch cutoff on 2026-07-10, so the prerender must not
+// silently discard products that the hydrated commercial landing displays.
+const HIDE_OLD_PRODUCTS = false;
 const HIDE_PRODUCTS_BEFORE_DATE = new Date('2026-04-09T00:00:00Z');
 
 function isOldBatchProduct(p) {
@@ -600,6 +620,7 @@ function getDisplayCategory(productType) {
 // Server-side mirror of filterByCategory() from useShopifyProducts.ts.
 // Returns up to MAX_COLLECTION_PRODUCTS for the prerendered HTML payload.
 const MAX_COLLECTION_PRODUCTS = 50;
+let applyCommercialLandingSubcategory = null;
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -800,6 +821,22 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
     }
     return false;
   }).slice(0, MAX_COLLECTION_PRODUCTS);
+}
+
+function filterProductsForCollectionRoute(allProducts, route) {
+  let candidates = allProducts;
+
+  if (route.prerenderSubcategory) {
+    if (typeof applyCommercialLandingSubcategory !== 'function') {
+      throw new Error(`Commercial landing matcher was not initialized for ${route.path}`);
+    }
+    candidates = applyCommercialLandingSubcategory(
+      allProducts.map((node) => ({ node })),
+      route.prerenderSubcategory,
+    ).map((product) => product.node);
+  }
+
+  return filterProductsForCategory(candidates, route.category, route.path === '/new-arrivals');
 }
 
 // Build the compact JSON payload that gets injected as window.__INITIAL_DATA__.
@@ -1561,6 +1598,7 @@ const routes = [
   },
   {
     path: '/collections/bridal-lehengas',
+    commercialLanding: 'bridal-lehengas',
     title: 'Bridal Lehengas Online USA | Indian Wedding Lehengas | LuxeMia',
     description: 'Shop bridal lehengas online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Bridal Lehengas',
@@ -1573,6 +1611,7 @@ const routes = [
   },
   {
     path: '/collections/sharara-suits',
+    commercialLanding: 'sharara-suits',
     title: 'Sharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
     description: 'Shop sharara suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Sharara Suits',
@@ -1585,6 +1624,7 @@ const routes = [
   },
   {
     path: '/collections/gharara-suits',
+    commercialLanding: 'gharara-suits',
     title: 'Gharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
     description: 'Shop gharara suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Gharara Suits',
@@ -1597,6 +1637,7 @@ const routes = [
   },
   {
     path: '/collections/anarkali-suits',
+    commercialLanding: 'anarkali-suits',
     title: 'Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia',
     description: 'Shop Anarkali suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Anarkali Suits',
@@ -1609,6 +1650,7 @@ const routes = [
   },
   {
     path: '/collections/party-wear-lehengas',
+    commercialLanding: 'party-wear-lehengas',
     title: 'Party-Wear Lehengas Online USA | Festive Lehenga Choli | LuxeMia',
     description: 'Shop party-wear lehengas online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
     h1: 'Party-Wear Lehengas',
@@ -1621,6 +1663,7 @@ const routes = [
   },
   {
     path: '/collections/wedding-sarees',
+    commercialLanding: 'wedding-sarees',
     title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
     description: 'Shop wedding sarees online in the USA. Compare current fabric, work, blouse details, price and availability before ordering.',
     h1: 'Wedding Sarees',
@@ -1633,6 +1676,7 @@ const routes = [
   },
   {
     path: '/collections/designer-sarees',
+    commercialLanding: 'designer-sarees',
     title: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
     description: 'Shop designer sarees online in the USA. Compare current colors, fabric, work, blouse details, price and availability.',
     h1: 'Designer Sarees',
@@ -2264,7 +2308,7 @@ function generateHtml(template, route, allShopifyProducts) {
       const variantId = variant?.id?.split('/').pop() || '';
       const selectedOptions = variant?.selectedOptions || [];
       const color = selectedOptions.find((option) => ['color', 'colour'].includes((option?.name || '').toLowerCase()))?.value || '';
-      const size = selectedOptions.find((option) => ['size', 'blouse size', 'bust size', 'chest size'].includes((option?.name || '').toLowerCase()))?.value || '';
+      const size = selectedOptions.find((option) => isSizeOptionName(option?.name))?.value || '';
       const visibleOptions = selectedOptions
         .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
         .map((option) => option.value);
@@ -2296,6 +2340,11 @@ function generateHtml(template, route, allShopifyProducts) {
         offers: offerForVariant(variant, variantUrl),
       };
     };
+    const emittedSchemaVariants = schemaVariants.map(schemaVariantProduct);
+    const schemaVariesBy = [
+      ...(emittedSchemaVariants.some((variant) => Boolean(variant.color)) ? ['https://schema.org/color'] : []),
+      ...(emittedSchemaVariants.some((variant) => Boolean(variant.size)) ? ['https://schema.org/size'] : []),
+    ];
     const productSchema = schemaVariants.length > 1
       ? {
           '@context': 'https://schema.org',
@@ -2309,8 +2358,8 @@ function generateHtml(template, route, allShopifyProducts) {
           category: productCategory.schemaCategory,
           ...(productAttributes.material ? { material: productAttributes.material } : {}),
           ...(productGroupId ? { productGroupID: productGroupId } : {}),
-          variesBy: ['https://schema.org/color'],
-          hasVariant: schemaVariants.map(schemaVariantProduct),
+          ...(schemaVariesBy.length > 0 ? { variesBy: schemaVariesBy } : {}),
+          hasVariant: emittedSchemaVariants,
         }
       : {
           '@context': 'https://schema.org',
@@ -2518,8 +2567,11 @@ function generateHtml(template, route, allShopifyProducts) {
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.
     const allProducts = Array.from(allShopifyProducts.values());
-    const collectionProducts = filterProductsForCategory(allProducts, route.category, route.path === '/new-arrivals');
-    console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for category '${route.category}'`);
+    const collectionProducts = filterProductsForCollectionRoute(allProducts, route);
+    const matchLabel = route.prerenderSubcategory
+      ? `${route.category}:${route.prerenderSubcategory.slug}`
+      : route.category;
+    console.log(`[prerender] ${route.path}: matched ${collectionProducts.length} products for '${matchLabel}'`);
 
     if (collectionProducts.length === 0) {
       html = html.replace(
@@ -2764,6 +2816,28 @@ async function main() {
   } catch (err) {
     console.error(`[prerender] WARNING: Failed to load published blog data: ${err.message}`);
     console.error('[prerender] Blog output may be incomplete; coverage verification will fail if a registered route is missing.');
+  }
+
+  // Resolve dedicated commercial collection routes from the same category
+  // configuration and subcategory matcher used by the hydrated storefront.
+  // Filtering the complete catalog by subcategory before the 50-product
+  // prerender cap keeps these high-intent pages from inheriting an unrelated
+  // first page of their broader category.
+  const [commercialLandingModule, productFiltersModule] = await Promise.all([
+    loadTsModule('src/config/commercialLandingPages.tsx'),
+    loadTsModule('src/lib/productFilters.ts'),
+  ]);
+  applyCommercialLandingSubcategory = productFiltersModule.applySubcategory;
+
+  for (const route of routes.filter((candidate) => candidate.commercialLanding)) {
+    const config = commercialLandingModule.getCommercialLandingConfig(route.commercialLanding);
+    const subcategorySlug = commercialLandingModule.getCommercialLandingSubcategory(route.commercialLanding);
+    const subcategory = config.subcategories.find((candidate) => candidate.slug === subcategorySlug);
+    if (!subcategory) {
+      throw new Error(`Missing subcategory '${subcategorySlug}' for ${route.path}`);
+    }
+    route.category = config.slug;
+    route.prerenderSubcategory = subcategory;
   }
 
   // A product marked as permanently retired must never retain bot-facing

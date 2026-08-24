@@ -89,8 +89,11 @@ export const usePageTracking = () => {
 
   useEffect(() => {
     if (typeof window.gtag === 'function') {
-      window.gtag('config', GA_MEASUREMENT_ID, {
+      window.gtag('event', 'page_view', {
+        send_to: GA_MEASUREMENT_ID,
         page_path: location.pathname + location.search,
+        page_location: window.location.href,
+        page_title: document.title,
       });
     }
   }, [location]);

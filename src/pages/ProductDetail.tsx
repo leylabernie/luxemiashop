@@ -23,6 +23,7 @@ import {
   getCustomizableProduct,
 } from '@/lib/customizableProducts';
 import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
+import { isProductSizeOptionName } from '@/lib/productOptionNames';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -218,7 +219,7 @@ const ProductDetail = () => {
   // Product-specific FAQs are also rendered visibly below, so the structured
   // data and on-page content remain consistent.
   const productSizeValues = product?.options
-    ?.find((option) => ['size', 'bust size'].includes(option.name.toLowerCase()))
+    ?.find((option) => isProductSizeOptionName(option.name))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
   const sizeAnswer = customizableProduct
     ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
@@ -283,7 +284,7 @@ const ProductDetail = () => {
     const description = enrichedDescription || product.description || product.title;
     const variants = product.variants.edges.map(({ node: variant }) => {
       const color = variant.selectedOptions.find((option) => ['color', 'colour'].includes(option.name.toLowerCase()))?.value;
-      const size = variant.selectedOptions.find((option) => ['size', 'blouse size', 'bust size', 'chest size'].includes(option.name.toLowerCase()))?.value;
+      const size = variant.selectedOptions.find((option) => isProductSizeOptionName(option.name))?.value;
       const variantId = variant.id.split('/').pop() || '';
       const optionLabel = variant.selectedOptions
         .filter((option) => option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')

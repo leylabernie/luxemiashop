@@ -1,3 +1,8 @@
+import {
+  getMerchantGoogleProductCategory,
+  isMerchantApparelCategory,
+} from '../../../src/lib/merchantTaxonomy.ts';
+
 // Supabase Edge Function: Google Merchant Center XML Product Feed
 // Fetches ALL products from Shopify Storefront API with pagination
 // and generates a compliant GMC XML feed with numeric taxonomy IDs
@@ -92,7 +97,7 @@ query FetchProducts($first: Int!, $after: String) {
           name
           values
         }
-        images(first: 3) {
+        images(first: 11) {
           edges {
             node {
               url
@@ -192,28 +197,6 @@ async function fetchAllProducts(): Promise<ShopifyProduct[]> {
   return allProducts;
 }
 
-// ─── Google Product Category (NUMERIC IDs) ──────────────────────────
-
-function getGoogleCategory(productType: string, title: string): number {
-  const text = `${productType} ${title}`.toLowerCase();
-
-  if (/(jewelry|jewellery|necklace|choker|earring|bangle|bracelet|ring)/.test(text)) {
-    if (/(set|combo)/.test(text)) return 6463; // Jewelry Sets
-    if (/(necklace|choker)/.test(text)) return 196; // Necklaces
-    if (/earring/.test(text)) return 194; // Earrings
-    if (/(bangle|bracelet)/.test(text)) return 191; // Bracelets
-    if (/ring/.test(text)) return 200; // Rings
-    return 188; // Jewelry
-  }
-
-  if (/(saree|sari|lehenga)/.test(text)) return 8248; // Saris & Lehengas
-  if (/(sherwani|kurta|salwar|anarkali|sharara|gharara|palazzo|traditional)/.test(text)) {
-    return 5388; // Traditional & Ceremonial Clothing
-  }
-
-  return 1604; // Clothing
-}
-
 // ─── Gender Mapping ──────────────────────────────────────────────────
 
 function getGender(productType: string, title: string): string {
@@ -230,16 +213,31 @@ function getGender(productType: string, title: string): string {
 
 // ─── Size Extraction ─────────────────────────────────────────────────
 
+const SIZE_OPTION_NAMES = new Set([
+  "size",
+  "standard size",
+  "blouse size",
+  "bust size",
+  "chest size",
+  "stitching size",
+]);
+
+function normalizeOptionName(value: string): string {
+  return (value || "").trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function isSizeOptionName(value: string): boolean {
+  return SIZE_OPTION_NAMES.has(normalizeOptionName(value));
+}
+
 function getSizeFromVariant(
   selectedOptions: ShopifySelectedOption[],
   productType: string,
   title: string
 ): string {
-  const sizeOptionNames = ["Size", "Bust Size", "Chest Size"];
-
   for (const option of selectedOptions) {
-    if (sizeOptionNames.includes(option.name)) {
-      return option.value;
+    if (isSizeOptionName(option.name) && option.value.trim()) {
+      return option.value.trim();
     }
   }
 
@@ -252,12 +250,15 @@ function forceJpeg(url: string): string {
   if (!url) return url;
 
   if (url.includes("cdn.shopify.com") || url.includes("myshopify.com")) {
-    // Remove any existing format= and width= params, then re-add
-    let clean = url.replace(/[&?]format=\w+/g, "");
-    clean = clean.replace(/[&?]width=\d+/g, "");
-    // Clean up dangling ? or &
-    clean = clean.replace(/[?&]$/, "");
-    return clean + "?width=1200&format=jpg";
+    try {
+      const parsed = new URL(url);
+      parsed.searchParams.set("width", "1500");
+      parsed.searchParams.set("format", "jpg");
+      return parsed.toString();
+    } catch {
+      const separator = url.includes("?") ? "&" : "?";
+      return `${url}${separator}width=1500&format=jpg`;
+    }
   }
 
   if (url.includes("kesimg.b-cdn.net")) {
@@ -334,44 +335,34 @@ function getWorkFromTags(tags: string[]): string {
   return "";
 }
 
-// ─── Extract material/fabric from product options or title ───────────
+// ─── Extract verified material/fabric from structured catalog data ───
+
+function getStructuredTagValues(tags: string[], prefix: string): string[] {
+  const matcher = new RegExp(`^${prefix}\\s*:\\s*(.+)$`, "i");
+  return [...new Set(tags
+    .map((tag) => tag.match(matcher)?.[1]?.trim() || "")
+    .filter(Boolean))];
+}
 
 function getMaterialFromProduct(
-  product: ShopifyProduct
+  product: ShopifyProduct,
+  selectedOptions: ShopifySelectedOption[] = []
 ): string {
-  const fabricKeywords = [
-    "Silk",
-    "Net",
-    "Georgette",
-    "Chiffon",
-    "Cotton",
-    "Velvet",
-    "Satin",
-    "Organza",
-    "Crepe",
-    "Jacquard",
-    "Chinnon",
-    "Chinon",
-    "Viscose",
-    "Vichitra",
-    "Khadi",
-    "Tissue",
-    "Banarasi",
-    "Kanjivaram",
-    "Roman Silk",
-    "Art Silk",
-    "Heavy Silk",
-    "Pure Silk",
-  ];
+  const selectedMaterial = selectedOptions.find((option) =>
+    ["fabric", "material"].includes(normalizeOptionName(option.name))
+  )?.value?.trim();
+  if (selectedMaterial) return selectedMaterial;
 
-  const searchText = `${product.title} ${product.productType} ${product.tags.join(" ")}`;
-
-  for (const fabric of fabricKeywords) {
-    if (searchText.toLowerCase().includes(fabric.toLowerCase())) {
-      return fabric;
-    }
+  const materialOption = product.options.find((option) =>
+    ["fabric", "material"].includes(normalizeOptionName(option.name))
+  );
+  if (materialOption?.values.length === 1 && materialOption.values[0]?.trim()) {
+    return materialOption.values[0].trim();
   }
-  return "";
+
+  return getStructuredTagValues(product.tags, "material")[0]
+    || getStructuredTagValues(product.tags, "fabric")[0]
+    || "";
 }
 
 // ─── Extract color from product options ──────────────────────────────
@@ -435,16 +426,16 @@ function enrichDescription(
   productType: string,
   title: string,
   tags: string[],
-  size: string
+  size: string,
+  material: string
 ): string {
-  const fabric = getMaterialFromProduct({ productType, title, tags, options: [] } as unknown as ShopifyProduct);
   const work = getWorkFromTags(tags);
 
   const details = [`${title}.`];
   if (productType) details.push(`Category: ${productType}.`);
-  if (fabric) details.push(`Material: ${fabric}.`);
+  if (material) details.push(`Material: ${material}.`);
   if (work) details.push(`Detail: ${work}.`);
-  if (size) details.push(`Selected size: ${size}.`);
+  if (size) details.push(`Size: ${size}.`);
   details.push(
     "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. Review the product page for current availability and exact details."
   );
@@ -471,7 +462,7 @@ function generateItem(
   const listingTitle = sanitizeProductTitle(product.title);
   const variantId = shortenId(variant.id);
   const productId = shortenId(product.id);
-  const googleCategory = getGoogleCategory(product.productType, product.title);
+  const googleCategory = getMerchantGoogleProductCategory(product.productType, product.title);
   const gender = getGender(product.productType, product.title);
   const size = getSizeFromVariant(
     variant.selectedOptions,
@@ -479,13 +470,13 @@ function generateItem(
     product.title
   );
   const color = getColorFromProduct(product, variant.selectedOptions);
-  const material = getMaterialFromProduct(product);
+  const material = getMaterialFromProduct(product, variant.selectedOptions);
   const work = getWorkFromTags(product.tags);
   const availability = variant.availableForSale ? "in_stock" : "out_of_stock";
   const currencyCode = variant.price.currencyCode || "USD";
   const barcode = variant.barcode?.trim() || "";
   const brand = product.vendor?.trim() || "";
-  const isApparel = [1604, 5388, 8248].includes(googleCategory);
+  const isApparel = isMerchantApparelCategory(googleCategory);
 
   // Price handling
   const price = parseFloat(variant.price.amount);
@@ -518,6 +509,7 @@ function generateItem(
       }
       return img !== allImages[0];
     })
+    .slice(0, 10)
     .map((img) => forceJpeg(img.url));
 
   // Enriched description
@@ -526,7 +518,8 @@ function generateItem(
     product.productType,
     listingTitle,
     product.tags,
-    size
+    size,
+    material
   );
 
   let xml = `

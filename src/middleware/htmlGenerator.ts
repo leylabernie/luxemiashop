@@ -7,6 +7,7 @@
 
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
+import { isProductSizeOptionName } from '../lib/productOptionNames.js';
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -95,7 +96,7 @@ function getListedProductAttributes(product: ShopifyProduct) {
   const occasions = parseMetafieldList(product.occasionMetafield?.value);
   const components = parseMetafieldList(product.includedComponentsMetafield?.value);
   const sizeValues = product.options
-    ?.find((option: { name?: string }) => ['size', 'bust size', 'chest size'].includes((option.name || '').toLowerCase()))
+    ?.find((option: { name?: string }) => isProductSizeOptionName(option.name))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
   const includedPiecePrefixes = [
     'included:',
@@ -258,7 +259,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     const variantId = variant.id.split('/').pop() || '';
     const selectedOptions = variant.selectedOptions || [];
     const colorValue = selectedOptions.find(option => ['color', 'colour'].includes(option.name.toLowerCase()))?.value || '';
-    const sizeValue = selectedOptions.find(option => ['size', 'blouse size', 'bust size', 'chest size'].includes(option.name.toLowerCase()))?.value || '';
+    const sizeValue = selectedOptions.find(option => isProductSizeOptionName(option.name))?.value || '';
     const optionLabel = [...new Set(selectedOptions
       .filter(option => option.value && option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
       .map(option => option.value))].join(' / ');
@@ -294,7 +295,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         additionalProperties,
         productGroupId: groupId,
         variesBy: [
-          'https://schema.org/color',
+          ...(schemaVariants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
           ...(schemaVariants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
         ],
         variants: schemaVariants,

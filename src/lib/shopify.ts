@@ -295,7 +295,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
           }
         }
       }
-      variants(first: 20) {
+      variants(first: 100) {
         edges {
           node {
             id
@@ -363,7 +363,7 @@ const COLLECTION_BY_HANDLE_QUERY = `
             images(first: 1) {
               edges { node { url altText } }
             }
-            variants(first: 20) {
+            variants(first: 100) {
               edges {
                 node {
                   id
