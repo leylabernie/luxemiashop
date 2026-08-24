@@ -360,7 +360,7 @@ const LEHENGAS: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $135 and above and shipping is $12 below that. Tracking is provided after dispatch.
         See the <a href="/shipping">shipping policy</a> for current details.
       </p>
     </>
@@ -408,7 +408,7 @@ const SAREES: CategoryConfig = {
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       matchProductType: ['Bridal Saree'],
       seoTitle: 'Bridal Sarees for Indian Brides in USA | Silk & Kanjeevaram - LuxeMia',
-      seoDescription: 'Shop bridal sarees online. Compare each listing\'s stated fabric, weave or work, blouse details, current price and availability. Free U.S. shipping at $150 and above.',
+      seoDescription: 'Shop bridal sarees online. Compare each listing\'s stated fabric, weave or work, blouse details, current price and availability. Free U.S. shipping at $135 and above.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid'], {
@@ -528,7 +528,7 @@ const SAREES: CategoryConfig = {
     },
     {
       question: "Do you ship sarees to the United States?",
-      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch."
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $135 and above and costs $12 below that. Tracking is provided after dispatch."
     }
   ],
   // SEO editorial content (Item #14)
@@ -564,7 +564,7 @@ const SAREES: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $135 and above and shipping is $12 below that. Tracking is provided after dispatch.
         See the <a href="/shipping">shipping policy</a> for current details.
       </p>
     </>
@@ -582,7 +582,7 @@ const SUITS: CategoryConfig = {
   heroTitle: 'Salwar Kameez & Suits',
   heroSubtitle: 'Anarkalis, shararas and palazzo sets for celebrations. For selected custom colour or made-to-measure possibilities, explore LuxeMia custom options.',
   seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
-  seoDescription: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping at $150 and above.',
+  seoDescription: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping at $135 and above.',
   canonical: 'https://luxemia.shop/suits',
   ogImage: '/og/og-suits.jpg',
   breadcrumbs: [
@@ -732,7 +732,7 @@ const SUITS: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $135 and above and shipping is $12 below that. Tracking is provided after dispatch.
       </p>
     </>
   ),
@@ -749,7 +749,7 @@ const MENSWEAR: CategoryConfig = {
   heroTitle: 'Menswear',
   heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
   seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
-  seoDescription: 'Shop sherwanis, kurta pajama sets and Indo-Western menswear online. Compare exact fabric, included pieces, sizes and availability. Free U.S. shipping at $150 and above.',
+  seoDescription: 'Shop sherwanis, kurta pajama sets and Indo-Western menswear online. Compare exact fabric, included pieces, sizes and availability. Free U.S. shipping at $135 and above.',
   canonical: 'https://luxemia.shop/menswear',
   ogImage: '/og/og-menswear.jpg',
   breadcrumbs: [
@@ -892,7 +892,7 @@ const MENSWEAR: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $135 and above and shipping is $12 below that. Tracking is provided after dispatch.
       </p>
     </>
   ),
@@ -909,7 +909,7 @@ const JEWELRY: CategoryConfig = {
   heroTitle: 'Bridal Jewelry',
   heroSubtitle: 'Kundan-style, polki-style and bridal necklace sets. Review each listing for exact materials, finish, included pieces and measurements.',
   seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-  seoDescription: 'Shop Kundan-style, polki-style and bridal necklace sets online. Compare exact materials, finish, included pieces and measurements. Free U.S. shipping at $150 and above.',
+  seoDescription: 'Shop Kundan-style, polki-style and bridal necklace sets online. Compare exact materials, finish, included pieces and measurements. Free U.S. shipping at $135 and above.',
   canonical: 'https://luxemia.shop/jewelry',
   ogImage: '/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   breadcrumbs: [
@@ -966,7 +966,7 @@ const JEWELRY: CategoryConfig = {
     },
     {
       question: "Do you ship bridal jewelry to the United States?",
-      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch."
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $135 and above and costs $12 below that. Tracking is provided after dispatch."
     }
   ],
 };

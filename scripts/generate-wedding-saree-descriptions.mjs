@@ -107,7 +107,7 @@ function generateSeoDescription(p) {
   const usdPrice = Math.round((p.price_inr * 2) / 90);
   const candidates = [
     `Shop this ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} for brides. Handcrafted. Free shipping United States.`,
-    `${p.color} ${p.fabric} saree with ${p.work.toLowerCase()} for weddings — handcrafted for the modern bride. Free U.S. shipping over $150 to the United States.`,
+    `${p.color} ${p.fabric} saree with ${p.work.toLowerCase()} for weddings — handcrafted for the modern bride. Free U.S. shipping at $135 and above to the United States.`,
     `Buy ${p.color.toLowerCase()} ${p.fabric.toLowerCase()} wedding saree with ${p.work.toLowerCase()} online. Premium ethnic wear for brides. Free shipping to United States.`,
   ];
   for (const c of candidates) {

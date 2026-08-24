@@ -11,8 +11,8 @@ import {
   RAKSHA_BANDHAN_CAMPAIGN,
 } from '@/config/rakshaBandhanCampaign';
 
-const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'Complimentary U.S. shipping is available at $150 and above; standard shipping is $12 below that.';
+const FREE_SHIPPING_THRESHOLD = 135;
+const SHIPPING_PROMISE = 'Complimentary U.S. shipping is available when the checkout subtotal after discounts is $135 or more; standard shipping is $12 below that.';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -220,7 +220,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   {subtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
-                      You've unlocked free US shipping!
+                      Your current subtotal qualifies for free U.S. shipping
                     </div>
                   ) : (
                     <div className="mb-2">
@@ -274,7 +274,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   </div>
                   <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
                     <p>{SHIPPING_PROMISE}</p>
-                    <p className="mt-1">U.S. delivery only. Taxes and final delivery options are calculated at checkout.</p>
+                    <p className="mt-1">Discounts are applied before shipping eligibility. U.S. delivery only; taxes and final delivery options are calculated at checkout.</p>
                   </div>
                   {unavailableItems.length > 0 && (
                     <p className="text-xs text-destructive text-center" role="alert">

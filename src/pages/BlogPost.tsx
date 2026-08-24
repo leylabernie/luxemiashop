@@ -518,7 +518,7 @@ const BlogPost = () => {
                   {shopCta.heading}
                 </h2>
                 <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. U.S. shipping is $12 below $150 and free at $150 and above.
+                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. U.S. shipping is $12 below $135 and free at $135 and above.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button asChild>

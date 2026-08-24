@@ -9,11 +9,11 @@ const NRIGeneral = () => (
       countryCode: 'US',
       slug: 'nri',
       seoTitle: 'Indian Ethnic Wear Online for U.S. Shoppers | LuxeMia',
-      seoDescription: 'Shop Indian ethnic wear online for U.S. delivery. Compare exact product details, sizing and availability. Free shipping at $150 and above; tracking after dispatch.',
+      seoDescription: 'Shop Indian ethnic wear online for U.S. delivery. Compare exact product details, sizing and availability. Free shipping at $135 and above; tracking after dispatch.',
       heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
       heroSubtitle: 'Compare Exact Product Details Before Ordering',
       shippingTime: 'tracking provided after dispatch',
-      shippingCost: '$12 per order; free at $150 and above',
+      shippingCost: '$12 per order; free at $135 and above',
       customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
@@ -22,7 +22,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'When does shipping become free?',
-          answer: 'Orders at $150 and above qualify for free U.S. shipping. Orders below $150 cost $12 per order.',
+          answer: 'Orders at $135 and above qualify for free U.S. shipping. Orders below $135 cost $12 per order.',
         },
         {
           question: 'Will taxes be charged?',
@@ -38,7 +38,7 @@ const NRIGeneral = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free at $150 and above' },
+        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free at $135 and above' },
         { icon: Shield, title: 'Clear Product Details', description: 'Review materials, sizing and included pieces' },
         { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
       ],

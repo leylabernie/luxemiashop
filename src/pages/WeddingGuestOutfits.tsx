@@ -35,7 +35,7 @@ const weddingGuestFaqs = [
   },
   {
     question: 'Do you ship Indian wedding guest outfits to the United States?',
-    answer: 'LuxeMia ships Indian wedding guest outfits to United States addresses only. Standard shipping is free at $150 and above and $12 below $150. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships Indian wedding guest outfits to United States addresses only. Standard shipping is free at $135 and above and $12 below $135. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'Can I repeat an outfit at multiple wedding events?',
@@ -166,7 +166,7 @@ const WeddingGuestOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">How Much Should You Spend on an Indian Wedding Guest Outfit?</h3>
-                <p>Set your budget before browsing and compare the current prices, product details, included pieces, and available sizes shown on each listing. U.S. shipping is free at $150 and above and costs a flat $12 below that.</p>
+                <p>Set your budget before browsing and compare the current prices, product details, included pieces, and available sizes shown on each listing. U.S. shipping is free at $135 and above and costs a flat $12 below that.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

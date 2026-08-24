@@ -46,7 +46,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
+          answer: 'LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $135 and free at $135 and above.',
         },
         {
           question: 'How long does shipping take?',
@@ -66,7 +66,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you offer free US shipping?',
-          answer: 'Yes. We offer free US shipping at $150 and above. A flat $12 shipping rate applies below $150.',
+          answer: 'Yes. We offer free US shipping at $135 and above. A flat $12 shipping rate applies below $135.',
         },
       ],
     },
@@ -222,7 +222,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free US shipping applies at $150 and above, a flat $12 rate applies below $150, and online orders ship with tracking after dispatch.',
+          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free US shipping applies at $135 and above, a flat $12 rate applies below $135, and online orders ship with tracking after dispatch.',
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
