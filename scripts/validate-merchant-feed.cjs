@@ -2,6 +2,10 @@
 
 const fs = require('fs');
 const path = require('path');
+const {
+  containsExactPhrase,
+  inferColorFromText,
+} = require('../merchant-feed-color.cjs');
 
 const candidates = [
   path.resolve(__dirname, '../dist/merchant-feed.xml'),
@@ -41,6 +45,20 @@ function decodeXmlEntities(value) {
     .replace(/&quot;/g, '"')
     .replace(/&apos;/g, "'")
     .replace(/&amp;/g, '&');
+}
+
+const colorInferenceFixtures = [
+  ['Powder Blue Chinon Silk Embroidered Palazzo Suit', 'Powder Blue'],
+  ['Black Chinon Silk Embroidered Palazzo Suit', 'Black'],
+  ['Teal Green Chinon Embroidered Palazzo Suit', 'Teal Green'],
+  ['Red Embroidered Anarkali Suit', 'Red'],
+  ['Madhuri Dixit-Inspired Rangoli Silk Sequin Saree', ''],
+];
+const colorInferenceFailures = colorInferenceFixtures.filter(([title, expected]) => (
+  inferColorFromText(title) !== expected
+));
+if (colorInferenceFailures.length > 0) {
+  throw new Error(`Merchant color inference failed ${colorInferenceFailures.length} boundary fixture(s)`);
 }
 
 if (itemIds.length === 0) {
@@ -344,6 +362,38 @@ const descriptionAlignmentFailures = itemBlocks.filter((item) => {
 });
 if (descriptionAlignmentFailures.length > 0) {
   throw new Error(`Merchant feed contains ${descriptionAlignmentFailures.length} offer description(s) without matching variant title and structured style details`);
+}
+
+const colorAlignmentFailures = [];
+const sizeAlignmentFailures = [];
+for (const item of itemBlocks) {
+  const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
+  const title = decodeXmlEntities(item.match(/<g:title>([\s\S]*?)<\/g:title>/i)?.[1] || '').trim();
+  const description = decodeXmlEntities(item.match(/<g:description>([\s\S]*?)<\/g:description>/i)?.[1] || '').trim();
+  const color = decodeXmlEntities(item.match(/<g:color>([\s\S]*?)<\/g:color>/i)?.[1] || '').trim();
+  const size = decodeXmlEntities(item.match(/<g:size>([\s\S]*?)<\/g:size>/i)?.[1] || '').trim();
+
+  if (color && color !== 'Multi-Color') {
+    const exactTitleColor = containsExactPhrase(title, color);
+    const inferredTitleColor = inferColorFromText(title);
+    const embeddedSubstringOnly = title.toLowerCase().includes(color.toLowerCase()) && !exactTitleColor;
+    if (
+      !description.includes(`Color: ${color}`)
+      || embeddedSubstringOnly
+      || (inferredTitleColor && !exactTitleColor)
+    ) {
+      colorAlignmentFailures.push(`${id}: ${color} is not aligned with title/description`);
+    }
+  }
+  if (size && !description.includes(`Size: ${size}`)) {
+    sizeAlignmentFailures.push(`${id}: ${size} is not aligned with the description`);
+  }
+}
+if (colorAlignmentFailures.length > 0) {
+  throw new Error(`Merchant feed has color-alignment failures: ${colorAlignmentFailures.slice(0, 10).join('; ')}`);
+}
+if (sizeAlignmentFailures.length > 0) {
+  throw new Error(`Merchant feed has size-alignment failures: ${sizeAlignmentFailures.slice(0, 10).join('; ')}`);
 }
 
 const staleClaimPatterns = [
