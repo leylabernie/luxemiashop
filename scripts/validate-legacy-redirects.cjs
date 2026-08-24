@@ -39,6 +39,27 @@ const activeHubPaths = new Set(BLOG_CATEGORY_GROUPS.map(group => `/blog/${group.
 const exactRedirects = redirects.filter(redirect => !isParameterized(redirect.source));
 const exactSources = new Set(exactRedirects.map(redirect => redirect.source));
 
+const requiredCollectionAliases = new Map([
+  ['/collections/jewelry', '/jewelry'],
+  ['/collections/new-arrivals', '/new-arrivals'],
+  ['/collections/indowestern', '/indowestern'],
+  ['/collections/nri', '/nri'],
+]);
+
+for (const [source, destination] of requiredCollectionAliases) {
+  const redirect = exactRedirects.find(candidate => candidate.source === source);
+  if (!redirect) {
+    fail(`${source} is missing from vercel.json redirects.`);
+    continue;
+  }
+  if (redirect.destination !== destination) {
+    fail(`${source} must redirect to ${destination}, not ${redirect.destination}.`);
+  }
+  if (redirect.statusCode !== 301 && redirect.statusCode !== 308 && redirect.permanent !== true) {
+    fail(`${source} is not explicitly permanent.`);
+  }
+}
+
 const duplicates = redirects
   .map(redirect => redirect.source)
   .filter((source, index, sources) => sources.indexOf(source) !== index);
