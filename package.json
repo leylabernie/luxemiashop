@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:indexation-recovery && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
+    "build": "node scripts/apply-gsc-runtime-remediation.cjs && npm run validate:indexation-recovery && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
