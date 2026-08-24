@@ -234,6 +234,26 @@
       "statusCode": 301
     },
     {
+      "source": "/collections/jewelry",
+      "destination": "/jewelry",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/new-arrivals",
+      "destination": "/new-arrivals",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/indowestern",
+      "destination": "/indowestern",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/nri",
+      "destination": "/nri",
+      "statusCode": 301
+    },
+    {
       "source": "/our-story",
       "destination": "/about",
       "statusCode": 301
