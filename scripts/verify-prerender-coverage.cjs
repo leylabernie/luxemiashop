@@ -37,6 +37,15 @@ require('./postprocess-error-pages.cjs');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const PRERENDER_DIR = path.join(PROJECT_ROOT, 'dist/_prerender');
+const COMMERCIAL_COLLECTIONS = [
+  { route: '/collections/bridal-lehengas', category: 'lehengas' },
+  { route: '/collections/party-wear-lehengas', category: 'lehengas' },
+  { route: '/collections/wedding-sarees', category: 'sarees' },
+  { route: '/collections/designer-sarees', category: 'sarees' },
+  { route: '/collections/sharara-suits', category: 'suits' },
+  { route: '/collections/gharara-suits', category: 'suits' },
+  { route: '/collections/anarkali-suits', category: 'suits' },
+];
 
 function routeToFilePath(routePath) {
   if (routePath === '/') {
@@ -44,6 +53,56 @@ function routeToFilePath(routePath) {
   }
   const parts = routePath.slice(1); // remove leading /
   return path.join(PRERENDER_DIR, `${parts}.html`);
+}
+
+function parseCommercialCollectionHtml(route, category) {
+  const filePath = routeToFilePath(route);
+  const html = fs.readFileSync(filePath, 'utf8');
+  const payloadMatch = html.match(/window\.__INITIAL_DATA__\s*=\s*([\s\S]*?);<\/script>/);
+  if (!payloadMatch) return `${route}: missing window.__INITIAL_DATA__ payload`;
+
+  let payload;
+  try {
+    payload = JSON.parse(payloadMatch[1]);
+  } catch (error) {
+    return `${route}: invalid window.__INITIAL_DATA__ JSON (${error.message})`;
+  }
+
+  const payloadHandles = (payload.products || [])
+    .map((product) => product?.node?.handle)
+    .filter(Boolean);
+  if (payload.category !== category) {
+    return `${route}: hydration category is '${payload.category || '(missing)'}', expected '${category}'`;
+  }
+  if (payloadHandles.length === 0) return `${route}: hydration payload has no products`;
+
+  const linkedHandles = [...html.matchAll(/href="\/product\/([^"?#]+)"/g)].map((match) => match[1]);
+  if (linkedHandles.length === 0) return `${route}: prerendered HTML has no product links`;
+
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .map((match) => {
+      try {
+        return JSON.parse(match[1]);
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+  const itemList = schemas.find((schema) => schema['@type'] === 'ItemList');
+  if (!itemList) return `${route}: missing valid ItemList JSON-LD`;
+
+  const itemListHandles = (itemList.itemListElement || [])
+    .map((entry) => entry?.item?.url?.match(/\/product\/([^/?#]+)$/)?.[1])
+    .filter(Boolean);
+  const expected = JSON.stringify(payloadHandles);
+  if (JSON.stringify(linkedHandles) !== expected) {
+    return `${route}: product links do not match the hydration payload`;
+  }
+  if (JSON.stringify(itemListHandles) !== expected || itemList.numberOfItems !== payloadHandles.length) {
+    return `${route}: ItemList products do not match the hydration payload`;
+  }
+
+  return null;
 }
 
 function main() {
@@ -77,7 +136,16 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes in PRERENDERED_ROUTES have a matching prerendered HTML file.`);
+  const invalidCommercialCollections = COMMERCIAL_COLLECTIONS
+    .map(({ route, category }) => parseCommercialCollectionHtml(route, category))
+    .filter(Boolean);
+  if (invalidCommercialCollections.length > 0) {
+    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${invalidCommercialCollections.length} commercial collection prerender(s) are incomplete.`);
+    for (const failure of invalidCommercialCollections) console.error(`  ${failure}`);
+    process.exit(1);
+  }
+
+  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have HTML and all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema.`);
 }
 
 main();

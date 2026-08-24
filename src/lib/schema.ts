@@ -1,3 +1,5 @@
+import { getMerchantGoogleProductCategory } from './merchantTaxonomy.js';
+
 /**
  * Shared Schema.org Module — Single source of truth for structured data generation.
  *
@@ -477,24 +479,7 @@ export function generateSiteNavigationSchema() {
 // ─── Google Product Category Helper ────────────────────────────────────────
 
 export function getGoogleProductCategory(productType?: string, title?: string): string {
-  const t = (title || '').toLowerCase();
-  const pt = (productType || '').toLowerCase();
-
-  if (pt.includes('men') || t.includes('sherwani') || t.includes('kurta pajama') || t.includes('groom wear')) {
-    if (t.includes('sherwani')) return '2195';
-    if (t.includes('kurta')) return '2197';
-    return '2104';
-  }
-  if (pt.includes('lehenga')) return '2271';
-  // Google Merchant category 8248 is the current Saris & Lehengas taxonomy
-  // node. It is more specific and consistent with the store merchant feed.
-  if (pt.includes('saree') || pt.includes('sari') || t.includes('saree') || t.includes('sari')) return '8248';
-  if (pt.includes('necklace')) return '193';
-  if (pt.includes('earring')) return '194';
-  if (pt.includes('bangle') || pt.includes('bracelet')) return '200';
-  if (pt.includes('jewel')) return '188';
-  if (pt.includes('suit') || pt.includes('anarkali') || pt.includes('sharara') || pt.includes('palazzo') || pt.includes('salwar')) return '2271';
-  return '1604';
+  return getMerchantGoogleProductCategory(productType, title);
 }
 
 // ─── Image URL Helper ──────────────────────────────────────────────────────
@@ -505,11 +490,11 @@ export function forceJpegForGmc(url: string): string {
     try {
       const parsed = new URL(url);
       parsed.searchParams.set('format', 'jpg');
-      parsed.searchParams.set('width', '1200');
+      parsed.searchParams.set('width', '1500');
       return parsed.toString();
     } catch {
       const sep = url.includes('?') ? '&' : '?';
-      return `${url}${sep}format=jpg&width=1200`;
+      return `${url}${sep}format=jpg&width=1500`;
     }
   }
   if (url.includes('kesimg.b-cdn.net')) {

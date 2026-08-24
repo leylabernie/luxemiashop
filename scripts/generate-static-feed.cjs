@@ -14,14 +14,51 @@
 
 const fs = require('fs');
 const path = require('path');
+const esbuild = require('esbuild');
 const {
   containsExactPhrase,
   inferColorFromText,
 } = require('../merchant-feed-color.cjs');
+const {
+  getSizeOption,
+  isSizeOptionName,
+  normalizeOptionName,
+} = require('../merchant-feed-size.cjs');
+
+function loadTsModule(relativePath) {
+  const result = esbuild.buildSync({
+    entryPoints: [path.resolve(__dirname, '..', relativePath)],
+    bundle: true,
+    format: 'cjs',
+    platform: 'node',
+    write: false,
+    logLevel: 'silent',
+  });
+  const module = { exports: {} };
+  const execute = new Function('module', 'exports', 'require', result.outputFiles[0].text);
+  execute(module, module.exports, require);
+  return module.exports;
+}
+
+const {
+  getMerchantGoogleProductCategory,
+  isExplicitStandaloneOutfitSetTitle,
+} = loadTsModule('src/lib/merchantTaxonomy.ts');
 
 const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
+const MERCHANT_FEED_REFRESH_SOURCE = process.env.MERCHANT_FEED_REFRESH_SOURCE || '';
+const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCase())
+  || process.env.VERCEL === '1'
+  || Boolean(process.env.VERCEL_ENV)
+  || process.env.GITHUB_ACTIONS === 'true'
+  || process.env.NETLIFY === 'true'
+  || process.env.CF_PAGES === '1';
+const MIN_EXPECTED_OFFER_COUNT = 4210;
+const MIN_SIZE_COVERAGE_RATIO = 0.92;
+const MIN_MATERIAL_COVERAGE_RATIO = 0.84;
+const MAX_LOCAL_SNAPSHOT_AGE_DAYS = 7;
 
 // Canonical brand name. Shopify vendor field can drift in casing
 // (e.g. "Luxemia" vs "LuxeMia") which trips Google Merchant Center
@@ -60,7 +97,7 @@ const ALL_PRODUCTS_QUERY = `
               currencyCode
             }
           }
-          images(first: 5) {
+          images(first: 11) {
             edges {
               node {
                 url
@@ -133,11 +170,11 @@ function forceJpeg(url) {
     try {
       const parsed = new URL(url);
       parsed.searchParams.set('format', 'jpg');
-      parsed.searchParams.set('width', '1200');
+      parsed.searchParams.set('width', '1500');
       return parsed.toString();
     } catch {
       const sep = url.includes('?') ? '&' : '?';
-      return `${url}${sep}format=jpg&width=1200`;
+      return `${url}${sep}format=jpg&width=1500`;
     }
   }
   if (url.includes('kesimg.b-cdn.net')) {
@@ -157,73 +194,9 @@ function forceJpeg(url) {
   return url;
 }
 
-// Current Google Product Taxonomy IDs (en-US). Keep these explicit: several
-// older IDs previously used here pointed to unrelated categories such as baby
-// dresses, hardware washers, and place cards. Google can approve an offer with
-// a bad category while still matching it to the wrong shopping intent.
-const GOOGLE_PRODUCT_CATEGORY = Object.freeze({
-  CLOTHING: '1604',
-  SHIRTS_AND_TOPS: '212',
-  SKIRTS: '1581',
-  PANTS: '204',
-  DRESSES: '2271',
-  JUMPSUITS_AND_ROMPERS: '5250',
-  OUTFIT_SETS: '7313',
-  TRADITIONAL_AND_CEREMONIAL_CLOTHING: '5388',
-  SARIS_AND_LEHENGAS: '8248',
-  JEWELRY: '188',
-  BRACELETS: '191',
-  EARRINGS: '194',
-  NECKLACES: '196',
-  RINGS: '200',
-  JEWELRY_SETS: '6463',
-});
-
-function getGoogleProductCategory(productType, title) {
-  const typeText = (productType || '').toLowerCase();
-  const titleText = (title || '').toLowerCase();
-  const text = `${typeText} ${titleText}`;
-
-  if (/\b(?:jewelry|jewellery|necklaces?|chokers?|earrings?|bangles?|bracelets?|maang tikka|rings?)\b/.test(text)) {
-    if (/\b(?:sets?|combos?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.JEWELRY_SETS;
-    if (/\b(?:necklaces?|chokers?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.NECKLACES;
-    if (/\bearrings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.EARRINGS;
-    if (/\b(?:bangles?|bracelets?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.BRACELETS;
-    if (/\brings?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.RINGS;
-    return GOOGLE_PRODUCT_CATEGORY.JEWELRY;
-  }
-
-  if (/\bblouses?\b/.test(typeText)) {
-    return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
-  }
-  if (/\b(?:sarees?|saris?|lehengas?|lehngas?|chaniyas?|cholis?)\b/.test(text)) {
-    return GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS;
-  }
-  if (/\b(?:jumpsuits?|rompers?)\b/.test(text)) {
-    return GOOGLE_PRODUCT_CATEGORY.JUMPSUITS_AND_ROMPERS;
-  }
-  if (/\b(?:sets?|suits?)\b/.test(typeText)
-    || /\b(?:salwars?|kameez|shararas?|ghararas?|gararas?|palazzos?|plazzos?|churidars?|patialas?|co-?ords?|outfit sets?)\b/.test(text)
-    || /\b(?:anarkalis?|capes?|kurtas?)\b[^.]{0,30}\b(?:sets?|suits?|with dupatta)\b/.test(text)
-    || /\b(?:sets?|suits?)\b[^.]{0,30}\b(?:anarkalis?|capes?|kurtas?)\b/.test(text)) {
-    return GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS;
-  }
-  if (/\b(?:sherwanis?|nehru jackets?|jodhpuris?|groom wear|traditional|ceremonial|indo.?western|fusion|kurtas?)\b/.test(text)) {
-    return GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING;
-  }
-  if (/\b(?:anarkalis?|gowns?|dresses?)\b/.test(text)) {
-    return GOOGLE_PRODUCT_CATEGORY.DRESSES;
-  }
-  if (/\b(?:kurtis?|blouses?|tops?)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS;
-  if (/\bskirts?\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.SKIRTS;
-  if (/\b(?:pants|trousers)\b/.test(text)) return GOOGLE_PRODUCT_CATEGORY.PANTS;
-
-  return GOOGLE_PRODUCT_CATEGORY.CLOTHING;
-}
-
 function getSizes(product) {
   const sizeOption = product.options?.find((option) =>
-    ['size', 'bust size', 'chest size'].includes(option.name?.toLowerCase())
+    isSizeOptionName(option?.name)
   );
   if (!sizeOption) return [];
   return sizeOption.values
@@ -379,6 +352,9 @@ function getMerchantProductType(productType, title) {
   if (/\bblouses?\b/.test(typeText)) {
     return `${root} > Clothing > Traditional & Ceremonial Clothing > Saree Blouses`;
   }
+  if (isExplicitStandaloneOutfitSetTitle(title)) {
+    return `${root} > Clothing > Outfit Sets`;
+  }
   if (/\b(?:sarees?|saris?)\b/.test(text)) {
     return `${root} > Clothing > Traditional & Ceremonial Clothing > Sarees`;
   }
@@ -467,6 +443,29 @@ function readItemTag(itemXml, tagName) {
   return decodeXml(match?.[1] || '').trim();
 }
 
+function readSizeOptionFromDescription(description) {
+  const optionText = String(description || '').match(
+    /\bSelected options:\s*(.+?)(?:\.\s+Review the product images\b|$)/i
+  )?.[1];
+  if (!optionText) return '';
+
+  for (const detail of optionText.split(/\s*;\s*/)) {
+    const separatorIndex = detail.indexOf(':');
+    if (separatorIndex < 1) continue;
+    const optionName = detail.slice(0, separatorIndex);
+    const optionValue = detail.slice(separatorIndex + 1).trim();
+    if (isSizeOptionName(optionName) && optionValue) return optionValue;
+  }
+
+  return '';
+}
+
+function readMaterialFromDescription(description) {
+  return String(description || '').match(
+    /(?:^|[.|])\s*Material:\s*(.+?)(?=\s*\||\.\s+|$)/i
+  )?.[1]?.trim() || '';
+}
+
 function readProductHandleFromItem(itemXml) {
   const link = readItemTag(itemXml, 'g:link');
   try {
@@ -523,19 +522,23 @@ function sanitizeExistingFeedXml(xml) {
     const merchantBaseTitle = buildMerchantBaseTitle(originalBaseTitle, handle, navratriPriorityHandles);
     const variantLabel = rawGroupTitle && rawTitle.startsWith(rawGroupTitle)
       ? rawTitle.slice(rawGroupTitle.length).replace(/^\s*[—–-]\s*/, '')
-      : '';
+      : rawTitle.match(/\s+[—–]\s+(.+)$/)?.[1]?.trim() || '';
     const title = composeMerchantVariantTitle(merchantBaseTitle, variantLabel);
     const rawProductType = readItemTag(itemXml, 'g:custom_label_0')
       || readItemTag(itemXml, 'g:product_type')
       || 'Ethnic Wear';
     const productType = getMerchantProductType(rawProductType, merchantBaseTitle);
     const existingColor = readItemTag(itemXml, 'g:color');
+    const existingDescription = readItemTag(itemXml, 'g:description');
     const inferredColor = inferColorFromText(originalBaseTitle);
     const color = containsExactPhrase(rawTitle, existingColor)
+      || containsExactPhrase(existingDescription, existingColor)
       ? existingColor
       : inferredColor || 'Multi-Color';
-    const material = readItemTag(itemXml, 'g:material');
-    const size = readItemTag(itemXml, 'g:size');
+    const material = readItemTag(itemXml, 'g:material')
+      || readMaterialFromDescription(existingDescription);
+    const size = readItemTag(itemXml, 'g:size')
+      || readSizeOptionFromDescription(existingDescription);
     const pattern = readItemTag(itemXml, 'g:pattern');
     const fallbackProduct = {
       title,
@@ -550,7 +553,7 @@ function sanitizeExistingFeedXml(xml) {
       title,
       size ? [{ name: 'Size', value: size }] : [],
     );
-    const googleProductCategory = getGoogleProductCategory(rawProductType, merchantBaseTitle);
+    const googleProductCategory = getMerchantGoogleProductCategory(rawProductType, merchantBaseTitle);
     const gender = getGender(rawProductType, merchantBaseTitle);
     const highlights = generateProductHighlights(fallbackProduct, color, material, productType, title, size);
 
@@ -566,6 +569,11 @@ function sanitizeExistingFeedXml(xml) {
       .replace(/\s*<g:sale_price_effective_date>[\s\S]*?<\/g:sale_price_effective_date>/gi, '')
       .replace(/\s*<g:returns>[\s\S]*?<\/g:returns>/gi, '');
 
+    item = item.replace(
+      /<g:(image_link|additional_image_link)>([\s\S]*?)<\/g:\1>/gi,
+      (_match, tagName, imageUrl) => `<g:${tagName}>${escapeXml(forceJpeg(decodeXml(imageUrl).trim()))}</g:${tagName}>`
+    );
+
     if (rawGroupTitle) {
       item = item.replace(
         /<g:item_group_title>[\s\S]*?<\/g:item_group_title>/i,
@@ -577,6 +585,20 @@ function sanitizeExistingFeedXml(xml) {
       item = item.replace(
         /\s*<g:custom_label_0>/i,
         '\n    <g:custom_label_1>navratri_2026_priority</g:custom_label_1>\n    <g:custom_label_0>'
+      );
+    }
+
+    if (size && !/<g:size>/i.test(item)) {
+      item = item.replace(
+        /\s*<\/item>/i,
+        `\n    <g:size>${escapeXml(size)}</g:size>\n    <g:size_type>regular</g:size_type>\n    <g:size_system>US</g:size_system>\n  </item>`
+      );
+    }
+
+    if (material && !/<g:material>/i.test(item)) {
+      item = item.replace(
+        /\s*<\/item>/i,
+        `\n    <g:material>${escapeXml(material)}</g:material>\n  </item>`
       );
     }
 
@@ -604,18 +626,68 @@ function sanitizeExistingFeedXml(xml) {
   return normalizeFeedWhitespace(normalizeFeedDeliveryCopy(sanitized));
 }
 
-function writeFallbackFeed() {
+function getFeedSnapshotStats(xml) {
+  const buildDateValue = xml.match(/<last_build_date>([^<]+)<\/last_build_date>/i)?.[1]?.trim() || '';
+  return {
+    offers: (xml.match(/<item>/gi) || []).length,
+    sizes: (xml.match(/<g:size>/gi) || []).length,
+    materials: (xml.match(/<g:material>/gi) || []).length,
+    buildDateValue,
+    buildDateMs: Date.parse(buildDateValue),
+  };
+}
+
+function assertFeedSnapshotCoverage(xml, sourceLabel) {
+  const stats = getFeedSnapshotStats(xml);
+  const ageMs = Date.now() - stats.buildDateMs;
+  const maxAgeMs = MAX_LOCAL_SNAPSHOT_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const failures = [];
+  if (stats.offers < MIN_EXPECTED_OFFER_COUNT) failures.push(`${stats.offers} offers (minimum ${MIN_EXPECTED_OFFER_COUNT})`);
+  if (stats.offers > 0 && stats.sizes / stats.offers < MIN_SIZE_COVERAGE_RATIO) {
+    failures.push(`${stats.sizes}/${stats.offers} sized offers (minimum ${(MIN_SIZE_COVERAGE_RATIO * 100).toFixed(0)}%)`);
+  }
+  if (stats.offers > 0 && stats.materials / stats.offers < MIN_MATERIAL_COVERAGE_RATIO) {
+    failures.push(`${stats.materials}/${stats.offers} material offers (minimum ${(MIN_MATERIAL_COVERAGE_RATIO * 100).toFixed(0)}%)`);
+  }
+  if (!Number.isFinite(stats.buildDateMs)) failures.push('missing or invalid last_build_date');
+  if (Number.isFinite(stats.buildDateMs) && (ageMs < 0 || ageMs > maxAgeMs)) {
+    failures.push(`last_build_date ${stats.buildDateValue} is outside the ${MAX_LOCAL_SNAPSHOT_AGE_DAYS}-day local fallback window`);
+  }
+  if (failures.length > 0) {
+    throw new Error(`${sourceLabel} is not a release-safe merchant snapshot: ${failures.join('; ')}`);
+  }
+  return stats;
+}
+
+function copyValidatedFallbackFeed() {
   const existingFeed = path.resolve(__dirname, '../public/merchant-feed.xml');
   if (!fs.existsSync(existingFeed)) return false;
 
-  console.log('[merchant-feed] Rebuilding safe descriptions from existing public/merchant-feed.xml');
-  const safeXml = sanitizeExistingFeedXml(fs.readFileSync(existingFeed, 'utf8'));
+  const existingXml = fs.readFileSync(existingFeed, 'utf8');
+  const stats = assertFeedSnapshotCoverage(existingXml, 'Checked-in public/merchant-feed.xml');
+  const distDir = path.resolve(__dirname, '../dist');
+  if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
+  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), existingXml, 'utf8');
+  console.log(`[merchant-feed] Preserved validated local snapshot (${stats.offers} offers, ${stats.sizes} sizes, ${stats.materials} materials); public/ was not rewritten`);
+  return true;
+}
+
+function refreshFeedFromExplicitSnapshot(sourcePath) {
+  if (IS_RELEASE_BUILD) {
+    throw new Error('MERCHANT_FEED_REFRESH_SOURCE is a local recovery workflow; release/CI builds require fresh Shopify API data');
+  }
+  const resolvedSource = path.resolve(sourcePath);
+  if (!fs.existsSync(resolvedSource)) {
+    throw new Error(`Merchant feed refresh source does not exist: ${resolvedSource}`);
+  }
+  console.log(`[merchant-feed] Rebuilding the checked-in feed from explicit source ${resolvedSource}`);
+  const safeXml = sanitizeExistingFeedXml(fs.readFileSync(resolvedSource, 'utf8'));
+  const stats = assertFeedSnapshotCoverage(safeXml, `Refreshed snapshot from ${resolvedSource}`);
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
   fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), safeXml, 'utf8');
-  fs.writeFileSync(existingFeed, safeXml, 'utf8');
-  console.log('[merchant-feed] Wrote sanitized fallback feed to dist/ and public/');
-  return true;
+  fs.writeFileSync(path.resolve(__dirname, '../public/merchant-feed.xml'), safeXml, 'utf8');
+  console.log(`[merchant-feed] Refreshed public/ and dist/ with ${stats.offers} offers, ${stats.sizes} sizes, and ${stats.materials} materials`);
 }
 
 function getStructuredTagValues(product, prefix) {
@@ -631,17 +703,18 @@ function buildDescription(product, color, material, productType, displayTitle = 
   // otherwise re-enter the feed long after the storefront copy is corrected.
   const title = sanitizeFeedTitle(displayTitle || product.title || 'Indian ethnic wear');
   const rawProductType = (product.productType || productType.split('>').at(-1) || 'Indian ethnic wear').trim();
-  const structuredMaterial = material || getStructuredTagValues(product, 'fabric')[0] || '';
+  const structuredMaterial = material
+    || getStructuredTagValues(product, 'material')[0]
+    || getStructuredTagValues(product, 'fabric')[0]
+    || '';
   const work = getStructuredTagValues(product, 'work')[0] || '';
   const includedPieces = getStructuredTagValues(product, 'included');
-  const sizeSelection = (selectedOptions || []).find((option) =>
-    ['size', 'bust size', 'chest size'].includes(option?.name?.toLowerCase())
-  );
+  const sizeSelection = getSizeOption(selectedOptions);
   const optionDetails = [...new Map((selectedOptions || [])
     .filter((option) => option?.name && option?.value)
-    .filter((option) => option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
-    .filter((option) => !['color', 'colour', 'size', 'bust size', 'chest size'].includes(option.name.toLowerCase()))
-    .map((option) => [option.name.toLowerCase(), `${option.name}: ${option.value}`]))
+    .filter((option) => normalizeOptionName(option.name) !== 'title' && normalizeOptionName(option.value) !== 'default title')
+    .filter((option) => !['color', 'colour'].includes(normalizeOptionName(option.name)) && !isSizeOptionName(option.name))
+    .map((option) => [normalizeOptionName(option.name), `${option.name}: ${option.value}`]))
     .values()];
   const parts = [];
   parts.push(`${title} from LuxeMia.`);
@@ -783,9 +856,7 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   );
   const variantLabel = [...new Set(meaningfulOptions.map((option) => option.value).filter(Boolean))].join(' / ');
 
-  const sizeSelection = selectedOptions.find((option) =>
-    ['size', 'bust size', 'chest size'].includes(option.name?.toLowerCase())
-  );
+  const sizeSelection = getSizeOption(selectedOptions);
   const materialSelection = selectedOptions.find((option) =>
     ['fabric', 'material'].includes(option.name?.toLowerCase())
   );
@@ -795,7 +866,12 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
 
   const color = resolveProductColor(product, selectedOptions, variantLabel);
 
-  const material = materialSelection?.value || materialOption?.values?.[0] || '';
+  const structuredMaterial = getStructuredTagValues(product, 'material')[0]
+    || getStructuredTagValues(product, 'fabric')[0]
+    || '';
+  const material = materialSelection?.value
+    || (materialOption?.values?.length === 1 ? materialOption.values[0] : '')
+    || structuredMaterial;
   const size = sizeSelection?.value || '';
   const link = `${SITE_URL}/product/${handle}${isVariantGroup && variantId ? `?variant=${encodeURIComponent(variantId)}` : ''}`;
   const primaryImage = variant.image?.url || product.images.edges[0]?.node.url;
@@ -803,7 +879,7 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   const additionalImages = product.images.edges
     .map((edge) => edge.node.url)
     .filter((url) => url && url !== primaryImage)
-    .slice(0, 4)
+    .slice(0, 10)
     .map(forceJpeg);
 
   const variantPrice = variant.price || product.priceRange.minVariantPrice;
@@ -818,7 +894,7 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
 
   const rawProductType = product.productType || 'Ethnic Wear';
   const productType = getMerchantProductType(rawProductType, product.title);
-  const googleProductCategory = getGoogleProductCategory(rawProductType, product.title);
+  const googleProductCategory = getMerchantGoogleProductCategory(rawProductType, product.title);
   const gender = getGender(rawProductType, product.title);
   const rawSku = variant.sku || variantId || '';
   const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');
@@ -899,6 +975,15 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
 async function main() {
   console.log('[merchant-feed] Generating static Google Merchant Center XML feed...');
 
+  if (MERCHANT_FEED_REFRESH_SOURCE) {
+    refreshFeedFromExplicitSnapshot(MERCHANT_FEED_REFRESH_SOURCE);
+    return;
+  }
+
+  if (IS_RELEASE_BUILD && !SHOPIFY_STOREFRONT_TOKEN) {
+    throw new Error('Release/CI merchant feed generation requires SHOPIFY_STOREFRONT_TOKEN; refusing to publish a fallback snapshot');
+  }
+
   let products = [];
   if (SHOPIFY_STOREFRONT_TOKEN) {
     try {
@@ -907,13 +992,16 @@ async function main() {
       console.error('[merchant-feed] Failed to fetch from Shopify API:', error);
     }
   } else {
-    console.log('[merchant-feed] Storefront token is not available locally; using the checked-in feed as the catalog source.');
+    console.log('[merchant-feed] Storefront token is not available locally; validating and preserving the checked-in snapshot.');
   }
 
   if (products.length === 0) {
-    console.log('[merchant-feed] Shopify returned no usable products; attempting the checked-in fallback feed.');
-    if (writeFallbackFeed()) return;
-    throw new Error('Shopify returned no products and no fallback feed is available');
+    if (IS_RELEASE_BUILD) {
+      throw new Error('Shopify returned no usable products during a release/CI build; refusing to publish a fallback snapshot');
+    }
+    console.log('[merchant-feed] Shopify returned no usable products; validating the checked-in local snapshot without rewriting it.');
+    if (copyValidatedFallbackFeed()) return;
+    throw new Error('Shopify returned no products and no validated local snapshot is available');
   }
 
   // Pre-compute title occurrence counts so duplicates can be disambiguated
@@ -955,13 +1043,7 @@ ${itemsXml}
   fs.writeFileSync(distPath, feed, 'utf8');
   console.log(`[merchant-feed] Written feed to ${distPath} (${(feed.length / 1024).toFixed(1)} KB, ${products.length} products)`);
 
-  // Also write to public/ directory so it's available during dev and as a fallback
-  const publicDir = path.resolve(__dirname, '../public');
-  if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
-
-  const publicPath = path.join(publicDir, 'merchant-feed.xml');
-  fs.writeFileSync(publicPath, feed, 'utf8');
-  console.log(`[merchant-feed] Also written to ${publicPath}`);
+  console.log('[merchant-feed] Checked-in public/merchant-feed.xml was not changed; refresh it only with MERCHANT_FEED_REFRESH_SOURCE');
 }
 
 main().catch(err => {

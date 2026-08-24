@@ -17,6 +17,11 @@ import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
 import { getCustomizableProduct } from '@/lib/customizableProducts';
 import { RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
+import {
+  isProductSizeOptionName,
+  shouldRenderShopifyProductOption,
+} from '@/lib/productOptionNames';
+import { inferProductSpecColors } from '@/lib/productSpecColor';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
   getEligibleServiceAddOns,
@@ -163,7 +168,6 @@ const extractProductSpecs = (tags?: string[], productType?: string, productTitle
     [/\bbeads?\b/i, 'Beads'],
     [/\bembroidery\b|\bembroidered\b/i, 'Embroidery'],
   ];
-  const colorKeywords = ['pink', 'red', 'blue', 'green', 'yellow', 'purple', 'violet', 'cream', 'white', 'black', 'gold', 'silver', 'orange', 'maroon', 'teal', 'wine', 'ivory', 'emerald', 'mustard', 'rust', 'peach', 'coral', 'sea green', 'hot pink', 'royal'];
   const lowerTags = catalogTags.map(t => t.toLowerCase());
 
   // Normalized catalog tags are the authoritative product specification.
@@ -203,7 +207,7 @@ const extractProductSpecs = (tags?: string[], productType?: string, productTitle
   }
 
   const explicitColors = getExplicitTagValues(['color:']);
-  const foundColors = colorKeywords.filter(c => lowerTags.some(t => t.includes(c)));
+  const foundColors = inferProductSpecColors(catalogTags);
   if (explicitColors.length > 0) {
     specs.color = explicitColors.join('; ');
   } else if (foundColors.length > 0) {
@@ -299,7 +303,7 @@ const isMenswearProduct = (productType?: string, tags?: string[]): boolean => {
 // Check if a product already has numeric size variants from Shopify (28-62)
 const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
   const sizeOption = product.options.find(
-    (opt) => opt.name.toLowerCase() === 'size'
+    (option) => isProductSizeOptionName(option.name)
   );
   if (!sizeOption) return false;
   // Check if any size values look like numeric bust sizes (e.g. "28", "30", "32")
@@ -496,9 +500,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   );
   const shipByLabel = getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
-    const sizeOption = product.options.find((option) =>
-      ['size', 'bust size', 'stitching size'].includes(option.name.toLowerCase()),
-    );
+    const sizeOption = product.options.find((option) => isProductSizeOptionName(option.name));
     if (!sizeOption) return null;
 
     const values = sizeOption.values.filter((value) =>
@@ -513,7 +515,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   // fulfillment team; it does not claim that arbitrary design changes apply.
   const isCustomSizeSelected = useMemo(() =>
     Object.entries(selectedOptions).some(([optionName, value]) =>
-      ['size', 'bust size', 'stitching size'].includes(optionName.toLowerCase())
+      isProductSizeOptionName(optionName)
       && /\bcustom(?:\s*size)?\b/i.test(value.trim()),
     ),
   [selectedOptions]);
@@ -610,7 +612,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       setShowSizeValidation(false);
     }
 
-    if (['size', 'bust size', 'stitching size'].includes(optionName.toLowerCase())) {
+    if (isProductSizeOptionName(optionName)) {
       setCustomSizeConfirmed(!/\bcustom(?:\s*size)?\b/i.test(value.trim()));
     }
   };
@@ -969,18 +971,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       {/* ─── Product Options (Color, Size from Shopify) ─── */}
       <div className="space-y-5">
         {product.options
-          .filter((option) => {
-            // Hide "Default Title" single-value options
-            if (option.values.length === 1 && option.values[0] === 'Default Title') return false;
-            if (customizableProduct && option.name.toLowerCase() === 'size' && option.values.length === 1 && option.values[0].toLowerCase() === 'custom') return false;
-            // For stitchable products, hide the "Stitching" option from Shopify variants
-            // since we use our custom Utsav-style selector above instead
-            if (isStitchable && option.name.toLowerCase().includes('stitch')) return false;
-            // If product already has numeric sizes and we're showing stitching, 
-            // don't duplicate the size selector — the StitchingSizeSelector handles it
-            if (productHasNumericSizes && option.name.toLowerCase() === 'size') return false;
-            return true;
-          })
+          .filter((option) => shouldRenderShopifyProductOption(option, {
+            isCustomizable: Boolean(customizableProduct),
+            isStitchable,
+          }))
           .map((option) => (
           <div key={option.name} className="space-y-3">
             <div className="flex items-center justify-between">
@@ -992,7 +986,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                   </span>
                 )}
               </label>
-              {option.name.toLowerCase() === 'size' && (
+              {isProductSizeOptionName(option.name) && (
                 <SizeGuideModal category={product.productType} />
               )}
             </div>

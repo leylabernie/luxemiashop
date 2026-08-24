@@ -1,5 +1,6 @@
 import type { ShopifyProduct } from '@/lib/shopify';
 import type { Subcategory, FilterSection } from '@/config/categoryConfig';
+import { isProductSizeOptionName } from '@/lib/productOptionNames';
 
 /**
  * Product filter + sort + subcategory matching utilities.
@@ -230,14 +231,14 @@ export function applyProductFiltersV2(
           const variants = p.node.variants?.edges || [];
           const hasVariantSize = variants.some(v =>
             v.node.selectedOptions?.some(opt =>
-              opt.name.toLowerCase() === 'size' &&
+              isProductSizeOptionName(opt.name) &&
               opt.value.toLowerCase().includes(valueLower)
             )
           );
           if (hasVariantSize) return true;
           // Check product options
           const hasOptionSize = p.node.options?.some(opt =>
-            opt.name.toLowerCase() === 'size' &&
+            isProductSizeOptionName(opt.name) &&
             opt.values.some(val => val.toLowerCase().includes(valueLower))
           );
           return !!hasOptionSize;
@@ -371,10 +372,16 @@ export function applySubcategory(
     // ─── Bridal-priority exclusion ────────────────────────────────────────
     // If a product is bridal and the active sub is a non-bridal occasion,
     // exclude it. The bridal subcategory 'owns' bridal products.
-    // EXCEPTION: Reception (for Lehengas) has its own color-based exclusion
-    // and explicitly allows 'bridal' in description (reception lehengas are
-    // for brides — just for the reception event, not the wedding ceremony).
-    if (sub.group === 'occasion' && sub.slug !== 'bridal' && sub.slug !== 'reception') {
+    // EXCEPTIONS: Reception (for Lehengas) has its own color-based exclusion.
+    // Wedding (Ceremony Sarees) deliberately includes occasion:bridal and
+    // role:bride signals, so excluding bridal products there would empty the
+    // collection after matchSubcategory had correctly selected them.
+    if (
+      sub.group === 'occasion'
+      && sub.slug !== 'bridal'
+      && sub.slug !== 'reception'
+      && sub.slug !== 'wedding'
+    ) {
       if (isBridalProduct(p.node)) return false;
     }
 
