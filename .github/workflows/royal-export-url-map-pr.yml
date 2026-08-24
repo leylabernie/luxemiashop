@@ -1,0 +1,40 @@
+name: Royal Export Image URL Map
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/extract_royal_export_image_urls.py
+      - .github/workflows/royal-export-url-map-pr.yml
+
+permissions:
+  contents: write
+
+jobs:
+  extract-url-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install parser dependencies
+        run: python -m pip install --upgrade requests beautifulsoup4 lxml
+      - name: Extract exact source image URLs
+        run: python scripts/extract_royal_export_image_urls.py
+      - name: Commit URL map to isolated branch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f royal-export-image-url-map.json
+          if git diff --cached --quiet; then
+            echo "No URL map changes to commit."
+          else
+            git commit -m "Record exact Royal Export product image URL map"
+            git push origin HEAD:${{ github.head_ref }}
+          fi
