@@ -37,7 +37,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/sarees': {
     title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: "Browse currently listed sarees at LuxeMia. Open each product for its exact fabric, color, included pieces, price and availability. U.S. shipping is free at $150 and above; $12 below.",
+    description: "Browse currently listed sarees at LuxeMia. Open each product for its exact fabric, color, included pieces, price and availability. U.S. shipping is free at $135 and above; $12 below.",
     canonical: `${SITE_URL}/sarees`,
     image: `${SITE_URL}/og/og-sarees.jpg`,
   },
@@ -89,12 +89,12 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/indowestern': {
     title: 'Indo-Western Collection | Fusion Wear Online | LuxeMia',
-    description: "Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping at $150 and above; $12 below.",
+    description: "Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping at $135 and above; $12 below.",
     canonical: `${SITE_URL}/indowestern`,
   },
   '/nri': {
     title: "Indian Ethnic Wear Online | U.S. Shipping | LuxeMia",
-    description: "Browse LuxeMia's online catalog for delivery to United States addresses. Shipping is $12 below $150 and free at $150 and above; tracking is emailed after dispatch.",
+    description: "Browse LuxeMia's online catalog for delivery to United States addresses. Shipping is $12 below $135 and free at $135 and above; tracking is emailed after dispatch.",
     canonical: `${SITE_URL}/nri`,
   },
   '/nri/usa': {
@@ -104,12 +104,12 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/indian-ethnic-wear-usa': {
     title: "Indian Ethnic Wear Online in the USA | LuxeMia",
-    description: "Browse Indian sarees, lehengas, suits, menswear and jewelry online for delivery to U.S. addresses. Shipping is free at $150 and above and $12 below.",
+    description: "Browse Indian sarees, lehengas, suits, menswear and jewelry online for delivery to U.S. addresses. Shipping is free at $135 and above and $12 below.",
     canonical: `${SITE_URL}/indian-ethnic-wear-usa`,
   },
   '/shipping': {
     title: 'U.S. Shipping Policy | LuxeMia',
-    description: 'LuxeMia ships to United States addresses. Standard shipping is $12 below $150 and free at $150 and above; tracking is emailed after dispatch.',
+    description: 'LuxeMia ships to United States addresses. Standard shipping is $12 below $135 and free at $135 and above; tracking is emailed after dispatch.',
     canonical: `${SITE_URL}/shipping`,
   },
   '/pages/shipping-customs': {

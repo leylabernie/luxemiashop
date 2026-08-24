@@ -75,7 +75,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
         "name": `Where does LuxeMia ship ${product.category.toLowerCase()}?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `LuxeMia ships ${product.category.toLowerCase()} to United States addresses only. Standard shipping is free at $150 and above and $12 below $150.`
+          "text": `LuxeMia ships ${product.category.toLowerCase()} to United States addresses only. Standard shipping is free at $135 and above and $12 below $135.`
         }
       }
     ]
@@ -176,7 +176,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
           <div><dt>Availability:</dt><dd>In Stock</dd></div>
         </dl>
         <div class="shipping-info">
-          <strong>Shipping:</strong> Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.<br>
+          <strong>Shipping:</strong> Free U.S. shipping at $135 and above. $12 flat below that. Tracking provided after dispatch.<br>
           <strong>Returns:</strong> All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours with clear photos and a continuous unboxing/opening video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>

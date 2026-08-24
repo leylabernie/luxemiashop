@@ -11,10 +11,11 @@ const roots = [
   'src',
   'supabase/functions',
   'scripts',
+  'CREAO_AI_PROMPT.md',
   'build_csv.py',
   'build_boutique_csv.py',
 ];
-const supportedExtensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py']);
+const supportedExtensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py', '.txt', '.md']);
 
 function listFiles(relativePath) {
   const absolutePath = path.join(PROJECT_ROOT, relativePath);
@@ -45,7 +46,31 @@ const blockedPatterns = [
   /fits? all body types/i,
   /meets? (?:the |our )?highest standards/i,
   /delivery in 2 business days to ship to all three countries/i,
+  /\$12(?: flat)? (?:for orders )?below \$150/i,
+  /free (?:U\.S\. )?shipping (?:at|on orders over) \$150/i,
+  /free at \$150(?: and above|\+)/i,
+  /(?:shipping|delivery)[^\n]{0,120}(?<!\\)\$150/i,
+  /(?<!\\)\$150[^\n]{0,120}(?:shipping|delivery)/i,
 ];
+
+const requiredSnippets = {
+  'src/components/cart/CartDrawer.tsx': [
+    'const FREE_SHIPPING_THRESHOLD = 135;',
+    'Discounts are applied before shipping eligibility.',
+  ],
+  'src/lib/schema.ts': [
+    'maxValue: 134.99',
+    'minValue: 135',
+  ],
+  'scripts/prerender.js': [
+    "maxValue: 134.99, currency: 'USD'",
+    "minValue: 135, currency: 'USD'",
+  ],
+  'index.html': [
+    '"maxValue": 134.99',
+    '"minValue": 135',
+  ],
+};
 
 const failures = [];
 for (const filePath of roots.flatMap(listFiles)) {
@@ -54,6 +79,15 @@ for (const filePath of roots.flatMap(listFiles)) {
   for (const pattern of blockedPatterns) {
     if (pattern.test(text)) {
       failures.push(`${path.relative(PROJECT_ROOT, filePath)} matches ${pattern}`);
+    }
+  }
+}
+
+for (const [relativePath, snippets] of Object.entries(requiredSnippets)) {
+  const text = fs.readFileSync(path.join(PROJECT_ROOT, relativePath), 'utf8');
+  for (const snippet of snippets) {
+    if (!text.includes(snippet)) {
+      failures.push(`${relativePath} is missing required current-policy snippet: ${snippet}`);
     }
   }
 }

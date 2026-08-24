@@ -517,7 +517,7 @@ function enrichDescription(
     "Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering."
   );
   details.push(
-    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch."
+    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $135 and free at $135 and above. Tracking is provided after dispatch."
   );
 
   return details.join(" ").slice(0, 5000);

@@ -77,7 +77,7 @@ export function generateUsShippingServiceSchema() {
         orderValue: {
           '@type': 'MonetaryAmount',
           minValue: 0,
-          maxValue: 149.99,
+          maxValue: 134.99,
           currency: 'USD',
         },
         shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
@@ -87,7 +87,7 @@ export function generateUsShippingServiceSchema() {
         shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
         orderValue: {
           '@type': 'MonetaryAmount',
-          minValue: 150,
+          minValue: 135,
           currency: 'USD',
         },
         shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
@@ -97,7 +97,7 @@ export function generateUsShippingServiceSchema() {
 }
 
 // Product-level shipping details mirror the public U.S. shipping terms:
-// $12 below $150 and free at $150+. No delivery-time promise is emitted because
+// $12 below $135 and free at $135+. No delivery-time promise is emitted because
 // the storefront correctly states that timing depends on the item and options.
 export function generateUsProductShippingDetails() {
   const shippingDestination = {
@@ -111,7 +111,7 @@ export function generateUsProductShippingDetails() {
       shippingDestination,
       orderValue: {
         '@type': 'MonetaryAmount',
-        maxValue: 149.99,
+        maxValue: 134.99,
         currency: 'USD',
       },
       shippingRate: {
@@ -125,7 +125,7 @@ export function generateUsProductShippingDetails() {
       shippingDestination,
       orderValue: {
         '@type': 'MonetaryAmount',
-        minValue: 150,
+        minValue: 135,
         currency: 'USD',
       },
       shippingRate: {

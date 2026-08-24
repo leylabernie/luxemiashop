@@ -9,11 +9,11 @@ const USA = () => (
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
       seoTitle: 'Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping at $150 and above; $12 below. Tracking after dispatch.',
+      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping at $135 and above; $12 below. Tracking after dispatch.',
       heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
       shippingTime: 'tracking provided after dispatch',
-      shippingCost: '$12 per order; free at $150 and above',
+      shippingCost: '$12 per order; free at $135 and above',
       customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
@@ -22,7 +22,7 @@ const USA = () => (
         },
         {
           question: 'Is shipping free to the United States?',
-          answer: 'Shipping is free at $150 and above and costs $12 below that. The applicable rate is shown at checkout.',
+          answer: 'Shipping is free at $135 and above and costs $12 below that. The applicable rate is shown at checkout.',
         },
         {
           question: 'Will taxes be charged?',
@@ -38,7 +38,7 @@ const USA = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free at $150 and above' },
+        { icon: Truck, title: 'U.S. Delivery', description: '$12 per order; free at $135 and above' },
         { icon: Shield, title: 'Clear Policies', description: 'Shipping and damage-claim terms online' },
         { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
       ],

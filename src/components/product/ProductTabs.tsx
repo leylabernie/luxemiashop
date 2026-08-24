@@ -895,11 +895,11 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Free U.S. shipping at $150 and above</span>
+                  <span>Free U.S. shipping at $135 and above</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>$12 flat below $150</span>
+                  <span>$12 flat below $135</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />

@@ -92,7 +92,7 @@ def generate_body_html(p):
 <p>Use the final product page as the source for composition, package contents, measurements, care instructions, and any other item-specific detail. Contact LuxeMia before ordering if an important detail is not listed.</p>
 
 <h3>Shipping</h3>
-<p>Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch.</p>"""
+<p>Shipping is available to United States addresses only. U.S. standard shipping is $12 below $135 and free at $135 and above. Tracking is provided after dispatch.</p>"""
     
     return body
 
@@ -128,7 +128,7 @@ def generate_seo_description(p):
     
     candidates = [
         f"Shop this {color} {stone} {jtype} for weddings. Handcrafted for brides. Free shipping United States.",
-        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free U.S. shipping over $150 to the United States.",
+        f"{a['color_primary']} {stone} {jtype} for brides — handcrafted Indian bridal jewelry. Free U.S. shipping at $135 and above to the United States.",
         f"Buy {color} {stone} {jtype} online. Premium bridal jewelry. Free shipping to United States.",
     ]
     for c in candidates:

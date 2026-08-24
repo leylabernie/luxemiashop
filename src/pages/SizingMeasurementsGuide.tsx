@@ -261,7 +261,7 @@ const SizingMeasurementsGuide = () => {
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-3xl md:text-4xl">Shop with your measurements ready</h2>
             <p className="mx-auto mt-4 max-w-2xl text-primary-foreground/90">
-              Compare your worksheet with the size and construction details on each listing. U.S. shipping is free at $150 and above and $12 below that.
+              Compare your worksheet with the size and construction details on each listing. U.S. shipping is free at $135 and above and $12 below that.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link to="/lehengas" className="inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 font-medium text-foreground">Shop lehengas <ArrowRight className="h-4 w-4" /></Link>

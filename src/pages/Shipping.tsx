@@ -6,15 +6,15 @@ import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const FLAT_SHIPPING_RATE = 12;
-const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'LuxeMia currently ships to United States addresses only. Standard shipping is free at $150 and above and $12 below $150.';
+const FREE_SHIPPING_THRESHOLD = 135;
+const SHIPPING_PROMISE = 'LuxeMia currently ships to United States addresses only. Standard shipping is free when the checkout subtotal after discounts is $135 or more and costs $12 below $135.';
 
 const Shipping = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="U.S. Shipping Policy | LuxeMia"
-        description="LuxeMia ships to United States addresses. Standard shipping is $12 below $150 and free at $150 and above; tracking is emailed after dispatch."
+        description="LuxeMia ships to United States addresses. Standard shipping is $12 below $135 and free at $135 and above; tracking is emailed after dispatch."
         canonical="https://luxemia.shop/shipping"
       />
       <Header />
@@ -44,11 +44,11 @@ const Shipping = () => {
             <h2 id="shipping-at-a-glance" className="sr-only">Shipping at a glance</h2>
             <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center max-w-4xl mx-auto">
               <div>
-                <dt className="text-sm text-muted-foreground">U.S. standard below ${FREE_SHIPPING_THRESHOLD}</dt>
+                <dt className="text-sm text-muted-foreground">Checkout subtotal below ${FREE_SHIPPING_THRESHOLD}</dt>
                 <dd className="mt-1 text-3xl font-serif font-semibold text-primary">${FLAT_SHIPPING_RATE}</dd>
               </div>
               <div>
-                <dt className="text-sm text-muted-foreground">U.S. standard at ${FREE_SHIPPING_THRESHOLD}+</dt>
+                <dt className="text-sm text-muted-foreground">Checkout subtotal at ${FREE_SHIPPING_THRESHOLD}+</dt>
                 <dd className="mt-1 text-3xl font-serif font-semibold text-green-600 dark:text-green-400">Free</dd>
               </div>
               <div>
@@ -99,7 +99,7 @@ const Shipping = () => {
                 <div className="bg-card border border-border rounded-lg p-6">
                   <h3 className="font-semibold mb-3">United States</h3>
                   <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
-                    <li>Free standard shipping at ${FREE_SHIPPING_THRESHOLD} and above</li>
+                    <li>Free standard shipping at ${FREE_SHIPPING_THRESHOLD} and above after discounts</li>
                     <li>${FLAT_SHIPPING_RATE} standard shipping below ${FREE_SHIPPING_THRESHOLD}</li>
                     <li>Taxes, if applicable, are calculated at checkout</li>
                     <li>Tracking is emailed when the shipping label is created for dispatch</li>
@@ -169,8 +169,8 @@ const Shipping = () => {
                 <AccordionItem value="item-2">
                   <AccordionTrigger>How much is shipping?</AccordionTrigger>
                   <AccordionContent>
-                    U.S. standard shipping is free at ${FREE_SHIPPING_THRESHOLD} and above and costs ${FLAT_SHIPPING_RATE} below it.
-                    Checkout shows the final available service.
+                    U.S. standard shipping is free when the checkout subtotal after discounts is ${FREE_SHIPPING_THRESHOLD} or more
+                    and costs ${FLAT_SHIPPING_RATE} below it. Checkout shows the final available service.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">

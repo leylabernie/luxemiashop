@@ -245,7 +245,7 @@ const ProductDetail = () => {
     }] : []),
     {
       question: `Does LuxeMia ship the ${product.title} within the United States?`,
-      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.',
+      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $135 and free at $135 and above. Tracking details are emailed when the shipping label is created for dispatch.',
     },
     {
       question: `What is the delivery time for the ${product.title}?`,

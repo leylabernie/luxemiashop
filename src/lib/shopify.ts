@@ -387,10 +387,14 @@ const COLLECTION_BY_HANDLE_QUERY = `
 
 function sanitizeShopifyProductCopy(value: string): string {
   return (value || '')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
+    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $12 below $135 and free at $135 and above')
+    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard shipping is free at $135 and above and $12 below $135')
+    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. shipping at $135 and above')
+    .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $135 and above')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $135 and above. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'United States shipping only. Standard shipping is $12 below $135 and free at $135 and above')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'United States shipping only. Standard shipping is $12 below $135 and free at $135 and above')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'United States shipping only. Standard shipping is $12 below $135 and free at $135 and above')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')

@@ -35,7 +35,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Do you ship Eid outfits to the United States?',
-    answer: 'LuxeMia ships Eid outfits to United States addresses only. Standard shipping is free at $150 and above and $12 below $150. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Eid outfits to United States addresses only. Standard shipping is free at $135 and above and $12 below $135. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'How do I confirm what comes with an outfit?',
@@ -153,7 +153,7 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Compare Current Prices</h3>
-                <p>Use the live price on each product page. U.S. standard shipping is $12 below $150 and free at $150 and above.</p>
+                <p>Use the live price on each product page. U.S. standard shipping is $12 below $135 and free at $135 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
