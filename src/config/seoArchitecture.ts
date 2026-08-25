@@ -21,17 +21,17 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/suits": {
       "title": "Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia",
-      "description": "Shop salwar kameez, Anarkali, sharara and palazzo suits online. Compare fabric, included pieces, sizing and availability. Free U.S. shipping at $135+.",
+      "description": "Shop salwar kameez, Anarkali, sharara and palazzo suits online. Compare fabric, included pieces, sizing and availability. Free U.S. shipping at $150+.",
       "h1": "Salwar Kameez & Indian Suits Online in the USA"
     },
     "/menswear": {
       "title": "Buy Sherwanis Online USA | Groom & Wedding | LuxeMia",
-      "description": "Shop sherwanis, kurta pajama and Indo-Western menswear online. Compare stated fabric, included pieces, sizes and availability. Free U.S. shipping at $135+.",
+      "description": "Shop sherwanis, kurta pajama and Indo-Western menswear online. Compare stated fabric, included pieces, sizes and availability. Free U.S. shipping at $150+.",
       "h1": "Indian Wedding Menswear & Sherwanis Online in the USA"
     },
     "/jewelry": {
       "title": "Kundan Bridal Jewelry & Wedding Sets | LuxeMia",
-      "description": "Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, pieces and measurements. Free U.S. shipping at $135+.",
+      "description": "Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, pieces and measurements. Free U.S. shipping at $150+.",
       "h1": "Indian Bridal Jewelry Sets & Wedding Necklaces"
     },
     "/collections/bridal-lehengas": {
