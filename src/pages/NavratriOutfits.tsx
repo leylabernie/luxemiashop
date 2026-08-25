@@ -43,7 +43,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'How much is U.S. shipping for Navratri outfits?',
-    answer: 'LuxeMia ships to United States addresses only. Standard shipping is $12 below $135 and free at $135 and above. Tracking is provided after dispatch.',
+    answer: 'LuxeMia ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch.',
   },
   {
     question: 'Is there a first-order discount?',
@@ -115,7 +115,7 @@ const NavratriOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <div className="grid gap-3 text-sm sm:grid-cols-3">
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><CheckCircle2 className="h-4 w-4 text-primary" /> Current catalog listings</p>
-              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Truck className="h-4 w-4 text-primary" /> $12 below $135 · Free at $135+</p>
+              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Truck className="h-4 w-4 text-primary" /> $12 below $150 · Free at $150+</p>
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use LUXE10 on your first order</p>
             </div>
           </div>
