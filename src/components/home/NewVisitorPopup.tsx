@@ -308,7 +308,7 @@ const NewVisitorPopup = () => {
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span><strong className="text-foreground">Free US shipping</strong> at $135 and above. $12 flat below that.</span>
+                          <span><strong className="text-foreground">Free US shipping</strong> at $150 and above. $12 flat below that.</span>
                         </li>
                       </ul>
 
