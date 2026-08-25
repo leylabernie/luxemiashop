@@ -26,7 +26,7 @@ interface CommercialLandingDefinition {
 
 const US_SHIPPING_COPY = (
   <p>
-    Free U.S. standard shipping applies at $135 and above; shipping is $12 below that threshold.
+    Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.
     Review the exact listing for size, included pieces, current availability and any product-specific timing before ordering.
   </p>
 );
@@ -58,7 +58,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     faqs: [
       { question: 'What is included in a sharara suit set?', answer: 'Included pieces vary by design. Check the exact listing to confirm the kurti, sharara bottoms, dupatta, lining and any other components.' },
       { question: 'Can I use the Sharara Suits page to compare wedding outfits?', answer: 'Yes. Use the filters to compare currently available styles, then verify fabric, work, size and timing on the specific product page before ordering.' },
-      { question: 'Do you ship sharara suits in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $135 and above, and tracking is provided after dispatch.' },
+      { question: 'Do you ship sharara suits in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $150 and above, and tracking is provided after dispatch.' },
     ],
   },
   'gharara-suits': {
@@ -87,7 +87,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     faqs: [
       { question: 'What is the difference between gharara and sharara suits?', answer: 'Both styles use flared bottoms, but the exact cut, fit and construction vary by design. Check the product images and description for the specific LuxeMia set.' },
       { question: 'How many gharara suits are currently available?', answer: 'Availability changes. The product grid on this page reflects the current LuxeMia listings; open a listing to confirm the selected size and variant.' },
-      { question: 'Do you ship gharara suits in the United States?', answer: 'Yes. LuxeMia ships to U.S. addresses, with free standard shipping at $135 and above.' },
+      { question: 'Do you ship gharara suits in the United States?', answer: 'Yes. LuxeMia ships to U.S. addresses, with free standard shipping at $150 and above.' },
     ],
   },
   'anarkali-suits': {
@@ -146,7 +146,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     faqs: [
       { question: 'What is included with a wedding saree?', answer: 'Included blouse material, stitching status and other pieces vary by listing. Check the exact product description and images before ordering.' },
       { question: 'How do I compare wedding sarees for an event?', answer: 'Compare the stated fabric, work, blouse details, price and current availability, then confirm the exact selected listing before placing an event-critical order.' },
-      { question: 'Do you ship wedding sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $135 and above, and tracking is provided after dispatch.' },
+      { question: 'Do you ship wedding sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $150 and above, and tracking is provided after dispatch.' },
     ],
   },
   'designer-sarees': {
@@ -176,7 +176,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     faqs: [
       { question: 'What does designer saree mean on this collection page?', answer: 'It identifies the current product category or style label. Confirm the exact fabric, work, included blouse details and availability on the individual listing.' },
       { question: 'How can I compare designer sarees online?', answer: 'Compare the stated fabric, color, work, blouse details, price and availability on each individual product page before ordering.' },
-      { question: 'Do you ship designer sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $135 and above, and tracking is provided after dispatch.' },
+      { question: 'Do you ship designer sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $150 and above, and tracking is provided after dispatch.' },
     ],
   },
   'bridal-lehengas': {
@@ -205,7 +205,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     faqs: [
       { question: 'What is included with a bridal lehenga?', answer: 'Included pieces vary by design. Confirm the exact skirt, blouse or choli, dupatta, lining and accessory details on the individual product page.' },
       { question: 'How do I choose a bridal lehenga size?', answer: 'Compare your measurements with the selected listing and LuxeMia size guide. Size availability and tailoring options vary by product.' },
-      { question: 'Do you offer U.S. shipping for bridal lehengas?', answer: 'Yes. LuxeMia ships to U.S. addresses, and free standard shipping applies at $135 and above.' },
+      { question: 'Do you offer U.S. shipping for bridal lehengas?', answer: 'Yes. LuxeMia ships to U.S. addresses, and free standard shipping applies at $150 and above.' },
     ],
   },
   'party-wear-lehengas': {
@@ -234,7 +234,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     faqs: [
       { question: 'What makes a lehenga suitable for party wear?', answer: 'Occasion, color, work and styling vary by design. Use the product images and supplied listing details to choose a style for your event.' },
       { question: 'What is included in a party-wear lehenga set?', answer: 'Included pieces vary. Confirm the exact skirt, choli or blouse, dupatta, lining and any accessories on the selected product page.' },
-      { question: 'Can I order party-wear lehengas for U.S. delivery?', answer: 'Yes. LuxeMia ships to U.S. addresses, with free standard shipping at $135 and above.' },
+      { question: 'Can I order party-wear lehengas for U.S. delivery?', answer: 'Yes. LuxeMia ships to U.S. addresses, with free standard shipping at $150 and above.' },
     ],
   },
 };

@@ -5,7 +5,7 @@
 # pages are intentionally excluded.
 #
 # Shipping destination: United States addresses only. Standard shipping is $12
-# below $135 and free at $135 and above. International shipping is not currently
+# below $150 and free at $150 and above. International shipping is not currently
 # available. All sales are final and exchanges are not accepted, subject to
 # applicable law. For genuine shipping damage, a defective or incorrect item,
 # or a missing item, contact LuxeMia within

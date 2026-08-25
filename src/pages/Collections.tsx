@@ -102,7 +102,7 @@ const Collections = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
-              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. shipping at $135 and above.
+              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. shipping at $150 and above.
             </p>
           </motion.div>
         </section>
@@ -255,7 +255,7 @@ const Collections = () => {
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
             </p>
             <p>
-              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to United States addresses only, with <strong>free U.S. standard shipping at $135 and above</strong> and a $12 rate below $135.
+              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to United States addresses only, with <strong>free U.S. standard shipping at $150 and above</strong> and a $12 rate below $150.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

@@ -28,6 +28,7 @@ function listFiles(relativePath) {
   });
 }
 
+// Current approved U.S. policy: $12 below $150; free at $150 and above.
 const blockedPatterns = [
   /Shipping is available to seven countries/i,
   /shipping to seven countries/i,
@@ -46,29 +47,29 @@ const blockedPatterns = [
   /fits? all body types/i,
   /meets? (?:the |our )?highest standards/i,
   /delivery in 2 business days to ship to all three countries/i,
-  /\$12(?: flat)? (?:for orders )?below \$150/i,
-  /free (?:U\.S\. )?shipping (?:at|on orders over) \$150/i,
-  /free at \$150(?: and above|\+)/i,
-  /(?:shipping|delivery)[^\n]{0,120}(?<!\\)\$150/i,
-  /(?<!\\)\$150[^\n]{0,120}(?:shipping|delivery)/i,
+  /\$12(?: flat)? (?:for orders )?below \$135/i,
+  /free (?:U\.S\. )?shipping (?:at|on orders over) \$135/i,
+  /free at \$135(?: and above|\+)/i,
+  /(?:shipping|delivery)[^\n]{0,120}(?<!\\)\$135/i,
+  /(?<!\\)\$135[^\n]{0,120}(?:shipping|delivery)/i,
 ];
 
 const requiredSnippets = {
   'src/components/cart/CartDrawer.tsx': [
-    'const FREE_SHIPPING_THRESHOLD = 135;',
+    'const FREE_SHIPPING_THRESHOLD = 150;',
     'Discounts are applied before shipping eligibility.',
   ],
   'src/lib/schema.ts': [
-    'maxValue: 134.99',
-    'minValue: 135',
+    'maxValue: 149.99',
+    'minValue: 150',
   ],
   'scripts/prerender.js': [
-    "maxValue: 134.99, currency: 'USD'",
-    "minValue: 135, currency: 'USD'",
+    "maxValue: 149.99, currency: 'USD'",
+    "minValue: 150, currency: 'USD'",
   ],
   'index.html': [
-    '"maxValue": 134.99',
-    '"minValue": 135',
+    '"maxValue": 149.99',
+    '"minValue": 150',
   ],
 };
 

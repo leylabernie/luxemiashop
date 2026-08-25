@@ -550,7 +550,7 @@ if (imageAttributeFailures.length > 0) {
 
 // Country, language, tax, and threshold-based shipping are configured at
 // Merchant Center's data-source/account level. Item shipping would override
-// the accurate "$12 below $135, free at $135+" account rule.
+// the accurate "$12 below $150, free at $150+" account rule.
 for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:tax', 'g:shipping']) {
   if (xml.includes(`<${accountManagedTag}>`)) {
     throw new Error(`Merchant feed contains account-managed attribute <${accountManagedTag}>`);
@@ -640,7 +640,7 @@ if (materialAlignmentFailures.length > 0) {
 }
 
 const staleClaimPatterns = [
-  /(?:shipping|delivery)[^<\n]{0,120}\$150|\$150[^<\n]{0,120}(?:shipping|delivery)/i,
+  /(?:shipping|delivery)[^<\n]{0,120}\$135|\$135[^<\n]{0,120}(?:shipping|delivery)/i,
   /(?:free shipping|free delivery)[^<]{0,80}\$350/i,
   /7[–-]10 business days/i,
   /15[ -]day return/i,

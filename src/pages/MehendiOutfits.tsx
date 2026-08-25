@@ -35,7 +35,7 @@ const mehendiOutfitFaqs = [
   },
   {
     question: 'Do you ship mehendi outfits to the United States?',
-    answer: 'LuxeMia ships mehendi outfits to United States addresses only. Standard shipping is free at $135 and above and $12 below $135. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships mehendi outfits to United States addresses only. Standard shipping is free at $150 and above and $12 below $150. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'How do I confirm what comes with an outfit?',

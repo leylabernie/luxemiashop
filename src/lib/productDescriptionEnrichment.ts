@@ -19,7 +19,7 @@ export type ProductCategory =
   | 'indo-western';
 
 const SHIPPING_POLICY =
-  'United States shipping only. Standard shipping is $12 below $135 and free at $135 and above; tracking is provided after dispatch.';
+  'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above; tracking is provided after dispatch.';
 
 function cleanText(value?: string): string {
   return (value || '')
@@ -138,7 +138,7 @@ export function generateMetaDescription(
   const attributes = [safeColor, safeMaterial, safeType].filter(Boolean).join(' ');
   const core = attributes ? `${safeTitle} — ${attributes}.` : `${safeTitle}.`;
   return truncateAtWord(
-    `${core} Review exact options at LuxeMia. U.S. shipping is $12 below $135 and free at $135 and above.`,
+    `${core} Review exact options at LuxeMia. U.S. shipping is $12 below $150 and free at $150 and above.`,
     160,
   );
 }

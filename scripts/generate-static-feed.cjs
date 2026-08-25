@@ -386,7 +386,7 @@ function sanitizeShippingAndBoilerplate(text) {
   return text
     .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
     .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $135 and above. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: Tracking provided after dispatch')
     .replace(/ready to ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout.')
@@ -395,7 +395,7 @@ function sanitizeShippingAndBoilerplate(text) {
     .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: available to United States addresses only, with current rates shown at checkout')
     .replace(/Free shipping on orders over \$350/gi, 'Current U.S. shipping shown at checkout')
     .replace(/free shipping on orders over \$350/gi, 'current U.S. shipping shown at checkout')
-    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping at $135 and above. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
+    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping at $150 and above. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
     .replace(/delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'estimated delivery is 6-17 business days with tracking after dispatch')
     .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch to United States addresses')
     .replace(/USA, Canada, and Australia/gi, 'the United States')
@@ -735,7 +735,7 @@ function buildDescription(product, color, material, productType, displayTitle = 
     parts.push(`Selected options: ${optionDetails.join('; ')}.`);
   }
   parts.push('Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering.');
-  parts.push('Shipping is available to United States addresses only. U.S. standard shipping is $12 below $135 and free at $135 and above. Tracking is provided after dispatch.');
+  parts.push('Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch.');
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
@@ -747,7 +747,7 @@ function buildDescription(product, color, material, productType, displayTitle = 
 }
 
 // Shipping is intentionally managed at the Merchant Center account level so
-// the $135 free-shipping threshold can be represented accurately. Item-level
+// the $150 free-shipping threshold can be represented accurately. Item-level
 // shipping entries would override that threshold and can make a $12 order look free.
 
 function generateProductHighlights(product, color, material, productType, title, size) {

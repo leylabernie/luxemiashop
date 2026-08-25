@@ -83,7 +83,7 @@ export function generateUsShippingServiceSchema() {
         orderValue: {
           '@type': 'MonetaryAmount',
           minValue: 0,
-          maxValue: 134.99,
+          maxValue: 149.99,
           currency: 'USD',
         },
         shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
@@ -93,7 +93,7 @@ export function generateUsShippingServiceSchema() {
         shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
         orderValue: {
           '@type': 'MonetaryAmount',
-          minValue: 135,
+          minValue: 150,
           currency: 'USD',
         },
         shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
@@ -103,7 +103,7 @@ export function generateUsShippingServiceSchema() {
 }
 
 // Product-level shipping details mirror the public U.S. shipping terms:
-// $12 below $135 and free at $135+. A handling-time window is emitted only
+// $12 below $150 and free at $150+. A handling-time window is emitted only
 // when the product carries a valid custom.ships_within value. Carrier transit
 // remains omitted because it depends on the destination and selected service.
 export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
@@ -130,7 +130,7 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
       shippingDestination,
       orderValue: {
         '@type': 'MonetaryAmount',
-        maxValue: 134.99,
+        maxValue: 149.99,
         currency: 'USD',
       },
       shippingRate: {
@@ -145,7 +145,7 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
       shippingDestination,
       orderValue: {
         '@type': 'MonetaryAmount',
-        minValue: 135,
+        minValue: 150,
         currency: 'USD',
       },
       shippingRate: {
