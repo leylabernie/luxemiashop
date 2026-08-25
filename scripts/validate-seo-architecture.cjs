@@ -9,6 +9,23 @@ const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'u
 const architecture = JSON.parse(read('src/config/seoArchitecture.json'));
 const failures = [];
 
+const runtimeArchitectureSource = read('src/config/seoArchitecture.ts');
+const runtimeArchitectureMatch = runtimeArchitectureSource.match(
+  /\/\* seo-architecture-json:start \*\/\s*([\s\S]*?)\s*\/\* seo-architecture-json:end \*\//,
+);
+if (!runtimeArchitectureMatch) {
+  failures.push('Runtime SEO architecture JSON block was not found.');
+} else {
+  try {
+    const runtimeArchitecture = JSON.parse(runtimeArchitectureMatch[1]);
+    if (JSON.stringify(runtimeArchitecture) !== JSON.stringify(architecture)) {
+      failures.push('Runtime and prerender SEO architecture maps have drifted.');
+    }
+  } catch (error) {
+    failures.push(`Runtime SEO architecture block is not strict JSON: ${error.message}`);
+  }
+}
+
 const requireText = (source, needle, label) => {
   if (!source.includes(needle)) failures.push(`Missing ${label}: ${needle}`);
 };
