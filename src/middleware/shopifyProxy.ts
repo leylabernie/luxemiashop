@@ -5,7 +5,7 @@
  * Includes in-memory caching for edge runtime performance.
  */
 
-import { isHiddenBillingProductHandle } from '../lib/serviceAddOns';
+import { isHiddenBillingProductHandle } from '../lib/serviceAddOns.js';
 
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';

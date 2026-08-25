@@ -224,19 +224,19 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         : 'Apparel & Accessories > Jewelry')
       : (product.productType || 'Clothing > Traditional & Ethnic Wear');
   const additionalProperties = [
-    ['Fabric', material],
-    ['Blouse Fabric', blouseFabric],
-    ['Color', color],
-    ['Occasion', occasions.join(', ') || undefined],
-    ['Included Components', includedPieces],
-    ['Care Instructions', careInstructions],
-    ['Product Style', productStyle],
-    ['Shopify Category', shopifyCategory],
-    ['Google Product Category', googleProductCategory],
-    ['Gender', gender === 'male' ? 'Male' : 'Female'],
-    ['Condition', conditionLabel],
-    ['Market', 'United States'],
-  ].filter((entry): entry is [string, string] => Boolean(entry[1]));
+    { name: 'Fabric', value: material },
+    { name: 'Blouse Fabric', value: blouseFabric },
+    { name: 'Color', value: color },
+    { name: 'Occasion', value: occasions.join(', ') || undefined },
+    { name: 'Included Components', value: includedPieces },
+    { name: 'Care Instructions', value: careInstructions },
+    { name: 'Product Style', value: productStyle },
+    { name: 'Shopify Category', value: shopifyCategory },
+    { name: 'Google Product Category', value: googleProductCategory },
+    { name: 'Gender', value: gender === 'male' ? 'Male' : 'Female' },
+    { name: 'Condition', value: conditionLabel },
+    { name: 'Market', value: 'United States' },
+  ].filter((entry): entry is { name: string; value: string } => Boolean(entry.value));
 
   const priceNum = parseFloat(price);
   const compareNum = compareAtPrice ? parseFloat(compareAtPrice) : 0;
