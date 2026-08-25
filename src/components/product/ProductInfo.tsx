@@ -527,6 +527,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       const selectedOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
       return selectedOption?.requiresMeasurement || false;
     }
+    // A single fixed Shopify variant can describe its supplied construction
+    // with values such as "Stitched" or "Fully Stitched". That wording is not
+    // an offer of separate tailoring, size, or neckline choices. Explicit
+    // tailoring tags are handled by the branch above; the fallback below is
+    // only for catalogs that expose multiple selectable stitching variants.
+    if (product.variants.edges.length <= 1) return false;
     // Fallback for products with stitching in variant names
     return Object.entries(selectedOptions).some(([key, val]) => {
       const lowerKey = key.toLowerCase();
@@ -535,7 +541,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       const isUnstitched = lowerVal.startsWith('unstitched') || lowerVal === 'unstitched';
       return isStitchingOption && !isUnstitched;
     });
-  }, [selectedOptions, selectedStitchingType, isStitchable]);
+  }, [selectedOptions, selectedStitchingType, isStitchable, product.variants.edges.length]);
 
   // Determine the size mode based on stitching type
   const sizeMode: SizeMode = useMemo(() => {
