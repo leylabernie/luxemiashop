@@ -28,7 +28,7 @@ const LookbookTeaser = lazy(() => import('@/components/home/LookbookTeaser'));
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $135 and free at $135 and above."
+    answer: "LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above."
   },
   {
     question: "What is your return policy?",
@@ -48,7 +48,7 @@ const homepageFaqs = [
   },
   {
     question: "How much is US shipping?",
-    answer: "US shipping is free at $135 and above. Orders below $135 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
+    answer: "US shipping is free at $150 and above. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
