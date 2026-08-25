@@ -223,8 +223,21 @@ function getExplicitIncludedPieces(product) {
 
   const listingText = textFromListing(product?.description);
   if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
-  const explicit = listingText.match(/\b(?:includes|included pieces|set includes|package includes)\s*[:\-]?\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
-  return cleanVerifiedFact(explicit?.[1]);
+  const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
+  const parsed = cleanVerifiedFact(explicit?.[1]);
+  if (!parsed) return undefined;
+
+  // "Includes" also appears in tailoring/pricing prose (for example,
+  // "includes the approved $10 stitching tier"). Only expose the value as a
+  // product component when it names an actual garment/accessory and contains
+  // no commercial-service language.
+  if (/\$|\b(?:approved|price|pricing|fee|charge|service|shipping|delivery|return|refund|tier)\b/i.test(parsed)) {
+    return undefined;
+  }
+  if (!/\b(?:blouse|choli|lehenga|skirt|dupatta|saree|fabric|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?|bracelet|ring|tikka|purse|potli)\b/i.test(parsed)) {
+    return undefined;
+  }
+  return parsed;
 }
 
 function getVerifiedOccasion(product) {
