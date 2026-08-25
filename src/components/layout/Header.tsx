@@ -21,8 +21,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const shippingAnnouncements = [
-  'Free U.S. shipping at $135 and above. $12 flat below that. Tracking provided after dispatch.',
-  'Tracked U.S. shipping — $12 below $135 and free at $135+.',
+  'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.',
+  'Tracked U.S. shipping — $12 below $150 and free at $150+.',
 ];
 
 // Categories without a mega-menu use plain links.
