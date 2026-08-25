@@ -103,7 +103,7 @@ export function generateUsShippingServiceSchema() {
 }
 
 // Product-level shipping details mirror the public U.S. shipping terms:
-// $12 below $135 and free at $135+. A handling-time window is emitted only
+// $12 below $150 and free at $150+. A handling-time window is emitted only
 // when the product carries a valid custom.ships_within value. Carrier transit
 // remains omitted because it depends on the destination and selected service.
 export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
