@@ -83,7 +83,7 @@ export function generateUsShippingServiceSchema() {
         orderValue: {
           '@type': 'MonetaryAmount',
           minValue: 0,
-          maxValue: 134.99,
+          maxValue: 149.99,
           currency: 'USD',
         },
         shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
@@ -93,7 +93,7 @@ export function generateUsShippingServiceSchema() {
         shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
         orderValue: {
           '@type': 'MonetaryAmount',
-          minValue: 135,
+          minValue: 150,
           currency: 'USD',
         },
         shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
@@ -130,7 +130,7 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
       shippingDestination,
       orderValue: {
         '@type': 'MonetaryAmount',
-        maxValue: 134.99,
+        maxValue: 149.99,
         currency: 'USD',
       },
       shippingRate: {
@@ -145,7 +145,7 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
       shippingDestination,
       orderValue: {
         '@type': 'MonetaryAmount',
-        minValue: 135,
+        minValue: 150,
         currency: 'USD',
       },
       shippingRate: {
