@@ -37,7 +37,7 @@ const customizableFaqs = [
   },
   {
     question: 'Where does LuxeMia currently ship these outfits?',
-    answer: 'Checkout currently accepts United States shipping addresses only. Standard shipping is $12 below $135 and free at $135 and above.',
+    answer: 'Checkout currently accepts United States shipping addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
   },
   {
     question: 'Can a custom order be returned?',
@@ -265,7 +265,7 @@ const CustomizableOutfits = () => {
           <div className="container mx-auto max-w-4xl px-4 lg:px-8">
             <h2 className="text-center font-serif text-2xl">Ordering, shipping, and final-sale terms</h2>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>LuxeMia checkout currently accepts United States shipping addresses only. Standard shipping is $12 below $135 and free at $135 and above.</p>
+              <p>LuxeMia checkout currently accepts United States shipping addresses only. Standard shipping is $12 below $150 and free at $150 and above.</p>
               <p>All orders are final sale, subject to applicable law. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering.</p>
               <p>Need help before completing the form? Use <Link to="/contact" className="text-primary underline underline-offset-4">LuxeMia contact options</Link> with the exact product link, requested colour, measurements question, event date, and U.S. ZIP code.</p>
             </div>
