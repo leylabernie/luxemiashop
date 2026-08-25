@@ -28,6 +28,7 @@ interface FilterSidebarProps {
   onToggleFilter: (section: string, value: string) => void;
   onPriceChange: (range: [number, number]) => void;
   onClearAll: () => void;
+  onSelectSubcategory: (subcategory: string | null) => void;
   activeFilterCount: number;
   activeSubSlug?: string;
 }
@@ -39,6 +40,7 @@ export function FilterSidebar({
   onToggleFilter,
   onPriceChange,
   onClearAll,
+  onSelectSubcategory,
   activeFilterCount,
   activeSubSlug,
 }: FilterSidebarProps) {
@@ -107,20 +109,29 @@ export function FilterSidebar({
               </Link>
               {config.subcategories
                 .filter(s => s.group === 'occasion')
-                .map(sub => (
-                  <Link
-                    key={sub.slug}
-                    to={`/${config.slug}?sub=${sub.slug}`}
-                    className={cn(
-                      'text-sm py-1.5 px-2 rounded transition-colors',
-                      activeSubSlug === sub.slug
-                        ? 'bg-secondary text-foreground font-medium'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
-                    )}
-                  >
-                    {sub.label}
-                  </Link>
-                ))}
+                .map(sub => {
+                  const className = cn(
+                    'text-left text-sm py-1.5 px-2 rounded transition-colors',
+                    activeSubSlug === sub.slug
+                      ? 'bg-secondary text-foreground font-medium'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
+                  );
+
+                  return sub.landingPath ? (
+                    <Link key={sub.slug} to={sub.landingPath} className={className}>
+                      {sub.label}
+                    </Link>
+                  ) : (
+                    <button
+                      key={sub.slug}
+                      type="button"
+                      className={className}
+                      onClick={() => onSelectSubcategory(sub.slug)}
+                    >
+                      {sub.label}
+                    </button>
+                  );
+                })}
             </div>
           </FilterSectionBlock>
         )}

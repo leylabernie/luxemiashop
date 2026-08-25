@@ -52,6 +52,7 @@ interface SEOHeadProps {
     sizes?: string[];
     additionalProperties?: Array<{ name: string; value: string }>;
     googleProductCategory?: string;
+    shipsWithinDays?: number | null;
   };
   /** A ProductGroup schema for multi-variant listings, replacing the single Product schema. */
   structuredProduct?: Record<string, unknown>;
@@ -147,6 +148,7 @@ const SEOHead = ({
         compareAtPrice: product.originalPrice || null,
         currency: product.currency || 'USD',
         availability: product.availability === 'InStock' ? 'InStock' : 'OutOfStock',
+        shipsWithinDays: product.shipsWithinDays,
       })
     : null);
 

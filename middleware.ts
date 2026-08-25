@@ -5,6 +5,7 @@ import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
 import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
+import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -193,6 +194,7 @@ function withResponseHeader(response: Response, key: string, value: string): Res
 // product-variant or Merchant landing URL and receives canonical-only handling.
 const INDEXATION_NOISE_PARAMS = new Set<string>([
   'sort_by',
+  'sort',
   'filter',
   'grid',
   'q',
@@ -202,6 +204,12 @@ const INDEXATION_NOISE_PARAMS = new Set<string>([
   'size',
   'price_min',
   'price_max',
+  'price',
+  'work',
+  'style',
+  'occasion',
+  'availability',
+  'gender',
   'section_id',
 ]);
 
@@ -220,6 +228,22 @@ function hasIndexationNoiseParams(searchParams: URLSearchParams): boolean {
     if (isIndexationNoiseParam(name)) return true;
   }
   return false;
+}
+
+function getCleanFacetCanonicalPath(url: URL): string {
+  const subcategory = url.searchParams.get('sub');
+  const category = url.pathname.match(/^\/(lehengas|sarees|suits|menswear|jewelry)$/)?.[1];
+  return category && subcategory
+    ? getDedicatedSubcategoryPath(category, subcategory) || url.pathname
+    : url.pathname;
+}
+
+function getLegacyFacetRedirectPath(url: URL): string | null {
+  const parameterNames = [...url.searchParams.keys()];
+  if (parameterNames.length !== 1 || parameterNames[0].toLowerCase() !== 'sub') return null;
+
+  const canonicalPath = getCleanFacetCanonicalPath(url);
+  return canonicalPath !== url.pathname ? canonicalPath : null;
 }
 
 function isPublicHtmlPath(pathname: string): boolean {
@@ -254,7 +278,7 @@ function withCanonicalQuerySignals(request: Request, response: Response): Respon
   if (existingRobots.includes('nofollow')) return response;
 
   const headers = new Headers(response.headers);
-  headers.set('Link', `<https://luxemia.shop${url.pathname}>; rel="canonical"`);
+  headers.set('Link', `<https://luxemia.shop${getCleanFacetCanonicalPath(url)}>; rel="canonical"`);
 
   if (hasIndexationNoiseParams(url.searchParams)) {
     headers.set('X-Robots-Tag', 'noindex, follow');
@@ -344,6 +368,11 @@ async function routeRequest(request: Request): Promise<Response> {
       '/indowestern', '/new-arrivals', '/collections',
     ]);
     if (CATEGORY_ROUTES.has(cleanPath) || cleanPath.startsWith('/collections/')) {
+      const facetRedirectPath = getLegacyFacetRedirectPath(url);
+      if (facetRedirectPath) {
+        return Response.redirect(new URL(facetRedirectPath, request.url).toString(), 301);
+      }
+
       // Return the clean URL's content but with noindex to drop the param URL
       if (PRERENDERED_ROUTES.has(cleanPath)) {
         const prerenderPath = cleanPath === '/'

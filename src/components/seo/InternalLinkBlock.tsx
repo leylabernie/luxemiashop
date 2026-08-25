@@ -47,12 +47,12 @@ const OCCASION_LINKS: LinkItem[] = [
   { to: "/collections/navratri-outfits", label: "Navratri & Garba Outfits" },
   { to: "/collections/haldi-outfits", label: "Haldi Ceremony Outfits" },
   { to: "/nri", label: "NRI Shopping Hub" },
-  { to: "/nri/usa", label: "Indian Ethnic Wear — USA" },
+  { to: "/indian-ethnic-wear-usa", label: "Indian Ethnic Wear — USA" },
 ];
 
 const INFO_LINKS: LinkItem[] = [
   { to: "/blog", label: "Indian Fashion Blog" },
-  { to: "/brand-story", label: "Our Story" },
+  { to: "/about", label: "Our Story" },
   { to: "/size-guide", label: "Size Guide" },
   { to: "/care-guide", label: "Garment Care Guide" },
   { to: "/shipping", label: "Shipping Policy" },

@@ -9,6 +9,7 @@ import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
 import LazySection from '@/components/ui/LazySection';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
+import { getIndexableRouteSeo } from '@/config/seoArchitecture';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
 // HeroSection removed — was duplicating NewArrivalsBanner (two hero carousels stacked)
 // FlashSaleBanner removed — redundant "New Arrivals" bar directly below NewArrivalsBanner
@@ -57,12 +58,14 @@ const homepageFaqs = [
 
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const homepageSeo = getIndexableRouteSeo('/');
+  const [homepageHeadingLead, homepageHeadingAccent] = homepageSeo.h1.split(' for ');
 
   return (
     <div className="min-h-screen bg-[#fcf8f4]">
       <SEOHead
-        title="Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia"
-        description="Shop Indian outfits for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping."
+        title={homepageSeo.title}
+        description={homepageSeo.description}
         canonical="https://luxemia.shop/"
         faqs={homepageFaqs}
       />
@@ -96,7 +99,8 @@ const Index = () => {
                 A boutique collection, chosen with care
               </p>
               <h1 id="homepage-heading" className="font-serif text-[clamp(2.8rem,6vw,5.7rem)] leading-[0.9] tracking-[-0.035em] text-[#291f20]">
-                Indian occasionwear, <em className="font-normal text-[#a96f72]">chosen for your story.</em>
+                {homepageHeadingLead} for{' '}
+                <em className="font-normal text-[#a96f72]">{homepageHeadingAccent}</em>
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-[#665a59] sm:text-lg">
                 Discover expressive silhouettes, handpicked for weddings, festivals, evening celebrations and every entrance worth remembering.
@@ -187,7 +191,7 @@ const Index = () => {
                 A familiar song, a room filled with family, a photograph you will keep returning to. LuxeMia is for the feeling of arriving in those moments with colour, confidence, and a little more of home.
               </p>
               <Link
-                to="/brand-story"
+                to="/about"
                 className="group mt-8 inline-flex items-center gap-3 rounded-full border border-[#f1bbb5] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#fff9f4] transition-colors duration-300 hover:bg-[#f1bbb5] hover:text-[#352629]"
               >
                 Discover our story <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

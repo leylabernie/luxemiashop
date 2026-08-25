@@ -29,13 +29,6 @@ const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
 const RECOVERED_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/recoveredBlogPosts.ts');
 
-if (!SHOPIFY_STOREFRONT_TOKEN) {
-  console.warn(
-    '[generate-routes] WARNING: SHOPIFY_STOREFRONT_TOKEN env var is not set. ' +
-      'Product handles will not be fetched from Shopify. Only static + blog routes will be included.'
-  );
-}
-
 // ─── Static Routes ──────────────────────────────────────────────────────────
 // These are the non-dynamic, non-blog page routes currently in middleware.ts's
 // PRERENDERED_ROUTES Set. Product routes (/product/*) are deliberately excluded
@@ -120,7 +113,7 @@ const GET_ALL_PRODUCT_HANDLES_QUERY = `
 /**
  * Fetch all product handles from Shopify Storefront API with pagination.
  * Returns an array of handle strings (e.g. ["velvet-bridal-lehenga", "silk-saree-1"]).
- * On failure, returns an empty array.
+ * Throws on any incomplete response so a partial source cannot be published.
  */
 async function fetchAllProductHandles() {
   const handles = [];
@@ -128,8 +121,8 @@ async function fetchAllProductHandles() {
   let hasNextPage = true;
   const MAX_PAGES = 50; // safety limit — 250 * 50 = 12,500 products
 
+  let page = 0;
   try {
-    let page = 0;
     while (hasNextPage && page < MAX_PAGES) {
       page++;
       console.log(
@@ -149,38 +142,44 @@ async function fetchAllProductHandles() {
       });
 
       if (!resp.ok) {
-        console.warn(
-          `[generate-routes] Shopify API returned ${resp.status} ${resp.statusText} — stopping pagination`
-        );
-        break;
+        throw new Error(`Shopify API returned ${resp.status} ${resp.statusText}`);
       }
 
       const json = await resp.json();
 
-      if (json.errors) {
-        console.warn(
-          `[generate-routes] Shopify GraphQL errors: ${JSON.stringify(json.errors)} — stopping pagination`
-        );
-        break;
+      if (Array.isArray(json.errors) && json.errors.length > 0) {
+        throw new Error(`Shopify GraphQL errors: ${JSON.stringify(json.errors)}`);
       }
 
       const data = json?.data?.products;
-      if (!data) {
-        console.warn('[generate-routes] Unexpected response shape — stopping pagination');
-        break;
+      if (!data || !Array.isArray(data.edges) || typeof data.pageInfo?.hasNextPage !== 'boolean') {
+        throw new Error('Shopify returned an unexpected products response shape');
       }
 
-      for (const edge of data.edges || []) {
+      for (const edge of data.edges) {
         if (edge.node?.handle) {
           handles.push(edge.node.handle);
         }
       }
 
-      hasNextPage = data.pageInfo?.hasNextPage ?? false;
-      cursor = data.pageInfo?.endCursor ?? null;
+      hasNextPage = data.pageInfo.hasNextPage;
+      const nextCursor = data.pageInfo.endCursor ?? null;
+      if (hasNextPage && (!nextCursor || nextCursor === cursor)) {
+        throw new Error('Shopify pagination did not provide a new end cursor');
+      }
+      cursor = nextCursor;
     }
   } catch (err) {
-    console.warn(`[generate-routes] Shopify fetch failed: ${err.message}`);
+    throw new Error(`Shopify product source failed on page ${page}: ${err.message}`);
+  }
+
+  if (hasNextPage) {
+    throw new Error(
+      `Shopify product source exceeded the ${MAX_PAGES}-page safety limit; refusing partial output`
+    );
+  }
+  if (handles.length === 0) {
+    throw new Error('Shopify product source returned zero handles; refusing partial output');
   }
 
   console.log(`[generate-routes] Fetched ${handles.length} product handles from Shopify`);
@@ -197,38 +196,49 @@ async function fetchAllProductHandles() {
  */
 function parseBlogSlugs() {
   const files = [BLOG_POSTS_TS, RECOVERED_BLOG_POSTS_TS];
-  const slugs = [];
+  const slugs = new Set();
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();
 
-  if (fs.existsSync(BLOG_POSTS_TS)) {
-    const blogSource = fs.readFileSync(BLOG_POSTS_TS, 'utf8');
-    const excludedBlock = blogSource.match(/UNPUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
-    if (excludedBlock) {
-      const valueRegex = /['"]([^'"]+)['"]/g;
-      let excludedMatch;
-      while ((excludedMatch = valueRegex.exec(excludedBlock[1])) !== null) {
-        excludedSlugs.add(excludedMatch[1]);
-      }
+  for (const filePath of files) {
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Required blog source file not found: ${filePath}`);
     }
-    const publishedBlock = blogSource.match(/PUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
-    if (publishedBlock) {
-      const valueRegex = /['"]([^'"]+)['"]/g;
-      let publishedMatch;
-      while ((publishedMatch = valueRegex.exec(publishedBlock[1])) !== null) {
-        publishedSlugs.add(publishedMatch[1]);
-      }
+  }
+
+  const blogSource = fs.readFileSync(BLOG_POSTS_TS, 'utf8');
+  const excludedBlock = blogSource.match(/UNPUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+  if (excludedBlock) {
+    const valueRegex = /['"]([^'"]+)['"]/g;
+    let excludedMatch;
+    while ((excludedMatch = valueRegex.exec(excludedBlock[1])) !== null) {
+      excludedSlugs.add(excludedMatch[1]);
+    }
+  }
+
+  const publishedBlock = blogSource.match(/PUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+  if (!publishedBlock) {
+    throw new Error(`PUBLISHED_BLOG_SLUGS was not found in ${BLOG_POSTS_TS}`);
+  }
+  const valueRegex = /['"]([^'"]+)['"]/g;
+  let publishedMatch;
+  while ((publishedMatch = valueRegex.exec(publishedBlock[1])) !== null) {
+    if (publishedSlugs.has(publishedMatch[1])) {
+      throw new Error(`PUBLISHED_BLOG_SLUGS contains duplicate slug: ${publishedMatch[1]}`);
+    }
+    publishedSlugs.add(publishedMatch[1]);
+  }
+  if (publishedSlugs.size === 0) {
+    throw new Error(`PUBLISHED_BLOG_SLUGS is empty in ${BLOG_POSTS_TS}`);
+  }
+
+  for (const slug of excludedSlugs) {
+    if (publishedSlugs.has(slug)) {
+      throw new Error(`Blog slug is both published and unpublished: ${slug}`);
     }
   }
 
   for (const filePath of files) {
-    if (!fs.existsSync(filePath)) {
-      console.warn(
-        `[generate-routes] Blog file not found at ${filePath} — skipping`
-      );
-      continue;
-    }
-
     const fileContent = fs.readFileSync(filePath, 'utf8');
 
     // Match: slug: 'some-slug' or slug: "some-slug"
@@ -237,13 +247,23 @@ function parseBlogSlugs() {
 
     while ((match = slugRegex.exec(fileContent)) !== null) {
       if (publishedSlugs.has(match[1]) && !excludedSlugs.has(match[1])) {
-        slugs.push(match[1]);
+        if (slugs.has(match[1])) {
+          throw new Error(`Published blog slug is defined more than once: ${match[1]}`);
+        }
+        slugs.add(match[1]);
       }
     }
   }
 
-  console.log(`[generate-routes] Parsed ${slugs.length} allowlisted blog slugs`);
-  return slugs;
+  const missingPublishedSlugs = [...publishedSlugs].filter((slug) => !slugs.has(slug));
+  if (missingPublishedSlugs.length > 0) {
+    throw new Error(
+      `Published blog slug(s) missing from source records: ${missingPublishedSlugs.join(', ')}`
+    );
+  }
+
+  console.log(`[generate-routes] Parsed ${slugs.size} allowlisted blog slugs`);
+  return [...slugs];
 }
 
 // ─── Output Generation ──────────────────────────────────────────────────────
@@ -299,14 +319,12 @@ async function main() {
   console.log('[generate-routes] Generating prerendered routes list...');
 
   // 1. Fetch product handles from Shopify
-  let productHandles = [];
-  if (SHOPIFY_STOREFRONT_TOKEN) {
-    productHandles = await fetchAllProductHandles();
-  } else {
-    console.warn(
-      '[generate-routes] No Shopify token — skipping product handle fetch'
+  if (!SHOPIFY_STOREFRONT_TOKEN) {
+    throw new Error(
+      'SHOPIFY_STOREFRONT_TOKEN is not set; refusing to generate a potentially incomplete route manifest'
     );
   }
+  const productHandles = await fetchAllProductHandles();
 
   // 2. Parse blog slugs from the published blogPosts.ts source
   const blogSlugs = parseBlogSlugs();
@@ -344,7 +362,7 @@ async function main() {
     }
   }
 
-  // 4. Write output files (even if Shopify fetch failed, we write with what we have)
+  // 4. Write output files only after every required source completed successfully.
   writeOutputFiles(finalRoutes);
 
   const blogCount = finalRoutes.filter((r) => r.startsWith('/blog/')).length;
@@ -358,15 +376,5 @@ async function main() {
 
 main().catch((err) => {
   console.error('[generate-routes] Fatal error:', err);
-  // Still attempt to write files with just static routes as ultimate fallback
-  try {
-    console.warn(
-      '[generate-routes] Attempting fallback write with static routes only...'
-    );
-    writeOutputFiles(STATIC_ROUTES);
-  } catch (writeErr) {
-    console.error('[generate-routes] Fallback write also failed:', writeErr);
-  }
-  // Don't fail the build — prerender.js will fail loudly if products are missing
-  process.exit(0);
+  process.exitCode = 1;
 });

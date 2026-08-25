@@ -23,6 +23,37 @@ interface ShopifyProductOptionLike {
   values: string[];
 }
 
+export function isConventionalProductSizeValue(value?: string | null): boolean {
+  return /^(?:xxs|xs|s|m|l|xl|xxl|xxxl|[2-6]xl|\d{2,3}|one[-\s]?size|free[-\s]?size)$/i.test(
+    (value || '').trim(),
+  );
+}
+
+export function hasNativeProductSizeOption(
+  options: ShopifyProductOptionLike[],
+): boolean {
+  return options.some((option) => {
+    const values = option.values
+      .map((value) => value.trim())
+      .filter((value) => value && value.toLowerCase() !== 'default title');
+    if (values.length === 0) return false;
+    if (isProductSizeOptionName(option.name)) return true;
+
+    // Do not reinterpret an explicitly named merchandising attribute as a
+    // size control even if its values happen to be short abbreviations.
+    if (/^(?:colou?r|fabric|material|style|design|pattern)$/.test(normalizeProductOptionName(option.name))) {
+      return false;
+    }
+
+    // Some imported Shopify products mislabeled their native S–XXL or
+    // numeric-size option as "Stitching". Recognize the values themselves so
+    // shoppers do not receive a second, contradictory size selector. Require
+    // multiple values to avoid treating an incidental one-letter option as a
+    // size control.
+    return values.length >= 2 && values.every(isConventionalProductSizeValue);
+  });
+}
+
 interface ProductOptionDisplayContext {
   isCustomizable?: boolean;
   isStitchable?: boolean;

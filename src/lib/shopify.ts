@@ -5,8 +5,104 @@ import { isHiddenBillingProductHandle } from './serviceAddOns';
 // Shopify API Configuration
 const SHOPIFY_API_VERSION = '2025-10';
 const SHOPIFY_STORE_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
+const SHOPIFY_LEGACY_MYSHOPIFY_DOMAIN = 'luxemiashop.myshopify.com';
+const SHOPIFY_BRANDED_CHECKOUT_DOMAIN = 'checkout.luxemia.shop';
+const SHOPIFY_CHECKOUT_RETURN_URL = 'https://luxemia.shop/order-confirmation';
+const SHOPIFY_CHECKOUT_CHANNEL = 'online_store';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
+
+/**
+ * Keep hosted checkout on Shopify's permanent domain until the branded
+ * checkout hostname has been configured and its DNS has been verified.
+ * Deliberately accept hostnames, not URLs or hostname suffixes.
+ */
+export function resolveShopifyCheckoutHost(configuredHost?: string | null): string {
+  const normalizedHost = configuredHost?.trim().toLowerCase();
+
+  return normalizedHost === SHOPIFY_BRANDED_CHECKOUT_DOMAIN
+    ? SHOPIFY_BRANDED_CHECKOUT_DOMAIN
+    : SHOPIFY_STORE_PERMANENT_DOMAIN;
+}
+
+function isAllowedCheckoutSourceHost(hostname: string, checkoutHost: string): boolean {
+  const allowedHosts = new Set([
+    SHOPIFY_STORE_PERMANENT_DOMAIN,
+    SHOPIFY_LEGACY_MYSHOPIFY_DOMAIN,
+    'luxemia.shop',
+    'www.luxemia.shop',
+    'luxemiashop.lovable.app',
+    checkoutHost,
+  ]);
+
+  return allowedHosts.has(hostname.toLowerCase());
+}
+
+function setRequiredCheckoutParams(url: URL): void {
+  url.searchParams.set('channel', SHOPIFY_CHECKOUT_CHANNEL);
+  url.searchParams.set('return_url', SHOPIFY_CHECKOUT_RETURN_URL);
+}
+
+function isCartCheckoutPath(pathname: string): boolean {
+  return /^\/cart\/c\/[^/?#]+\/?$/.test(pathname);
+}
+
+/**
+ * Normalizes a Shopify-hosted cart URL without ever trusting a partial
+ * hostname match. Relative cart URLs are supported as a defensive fallback;
+ * their query string is retained before the required channel and return URL
+ * are applied.
+ */
+export function normalizeShopifyCheckoutUrl(
+  rawCheckoutUrl: string,
+  configuredHost?: string | null,
+): string | null {
+  const checkoutHost = resolveShopifyCheckoutHost(configuredHost);
+  let parsedUrl: URL;
+
+  try {
+    parsedUrl = new URL(rawCheckoutUrl);
+
+    if (
+      parsedUrl.protocol !== 'https:'
+      || !isAllowedCheckoutSourceHost(parsedUrl.hostname, checkoutHost)
+    ) {
+      return null;
+    }
+  } catch {
+    // Accept only a same-origin relative path. Protocol-relative and
+    // backslash-prefixed inputs can otherwise be interpreted as another host.
+    if (!/^\/(?![\\/])/.test(rawCheckoutUrl)) {
+      return null;
+    }
+
+    try {
+      parsedUrl = new URL(rawCheckoutUrl, `https://${checkoutHost}`);
+    } catch {
+      return null;
+    }
+  }
+
+  if (!isCartCheckoutPath(parsedUrl.pathname)) {
+    return null;
+  }
+
+  parsedUrl.protocol = 'https:';
+  parsedUrl.hostname = checkoutHost;
+  parsedUrl.port = '';
+  parsedUrl.username = '';
+  parsedUrl.password = '';
+  parsedUrl.hash = '';
+  setRequiredCheckoutParams(parsedUrl);
+
+  // This exact comparison is the final redirect boundary. In particular,
+  // `*.myshopify.com.evil.example` must never be treated as a Shopify host.
+  if (parsedUrl.hostname !== checkoutHost) {
+    return null;
+  }
+
+  return parsedUrl.toString();
+}
 
 // Product metadata for filtering
 export interface ProductMetadata {
@@ -249,6 +345,19 @@ const PRODUCT_BY_HANDLE_QUERY = `
       tags
       availableForSale
       shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+      fabricMetafield: metafield(namespace: "custom", key: "fabric") { value }
+      materialMetafield: metafield(namespace: "custom", key: "material") { value }
+      blouseFabricMetafield: metafield(namespace: "custom", key: "blouse_fabric") { value }
+      colorMetafield: metafield(namespace: "custom", key: "color") { value }
+      occasionMetafield: metafield(namespace: "custom", key: "occasion") { value }
+      includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
+      careInstructionsMetafield: metafield(namespace: "custom", key: "care_instructions") { value }
+      productStyleMetafield: metafield(namespace: "custom", key: "product_style") { value }
+      shopifyCategoryMetafield: metafield(namespace: "custom", key: "shopify_category") { value }
+      googleProductCategoryMetafield: metafield(namespace: "custom", key: "google_product_category") { value }
+      genderMetafield: metafield(namespace: "custom", key: "gender") { value }
+      conditionMetafield: metafield(namespace: "custom", key: "condition") { value }
+      searchKeywordsMetafield: metafield(namespace: "custom", key: "search_keywords") { value }
       priceRange {
         minVariantPrice {
           amount
@@ -542,7 +651,7 @@ export async function fetchProducts(first: number = 12, query?: string): Promise
     if (!data) return [];
     return (data.data.products.edges || [])
       .map(sanitizeProductEdge)
-      .filter((product) => !isHiddenBillingProductHandle(product.node.handle));
+      .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle));
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];
@@ -620,7 +729,7 @@ export async function fetchCollectionByHandle(
       image: collection.image || null,
       products: (collection.products?.edges || [])
         .map(sanitizeProductEdge)
-        .filter((product) => !isHiddenBillingProductHandle(product.node.handle)),
+        .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle)),
     };
   } catch (error) {
     if ((error as Error).name !== 'AbortError') {
@@ -670,50 +779,21 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     throw new Error('No checkout URL returned from Shopify');
   }
 
-  // Ensure the checkout URL always points to the myshopify.com domain.
-  // Shopify may return URLs using a custom domain (luxemia.shop) or browsers
-  // may have cached the old Lovable domain — both will 404 since the site
-  // now runs on Vercel. Do a robust string replacement for any non-myshopify domain.
-  let checkoutUrl = cart.checkoutUrl as string;
-  try {
-    const url = new URL(checkoutUrl);
-    // Replace any hostname that isn't the myshopify domain
-    if (url.hostname !== SHOPIFY_STORE_PERMANENT_DOMAIN) {
-      url.hostname = SHOPIFY_STORE_PERMANENT_DOMAIN;
-    }
-    url.searchParams.set('channel', 'online_store');
-    // Add return_url so Shopify redirects back to luxemia.shop/order-confirmation
-    // after checkout completes. This is REQUIRED for Google Customer Reviews
-    // opt-in integration (the opt-in snippet must fire on a page hosted on
-    // our own domain, not Shopify's thank-you page).
-    url.searchParams.set('return_url', 'https://luxemia.shop/order-confirmation');
-    checkoutUrl = url.toString();
-  } catch {
-    // URL parsing failed — do plain string replacements as fallback
-    checkoutUrl = checkoutUrl
-      .replace(/luxemia\.shop/g, SHOPIFY_STORE_PERMANENT_DOMAIN)
-      .replace(/luxemiashop\.lovable\.app/g, SHOPIFY_STORE_PERMANENT_DOMAIN);
-  }
+  // Shopify can return the Vercel storefront hostname even though hosted
+  // checkout must remain on Shopify. The permanent myshopify.com host is the
+  // default; checkout.luxemia.shop is used only when explicitly configured
+  // after DNS verification.
+  const checkoutUrl = normalizeShopifyCheckoutUrl(
+    cart.checkoutUrl as string,
+    import.meta.env.VITE_SHOPIFY_CHECKOUT_HOST,
+  );
 
-  // Final safety check: if the URL still doesn't point to myshopify.com,
-  // try to extract the cart token and construct the URL manually
-  if (!checkoutUrl.includes('myshopify.com')) {
-    const tokenMatch = checkoutUrl.match(/\/cart\/c\/([^?]+)/);
-    const keyMatch = checkoutUrl.match(/[?&]key=([^&]+)/);
-    if (tokenMatch) {
-      checkoutUrl = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/cart/c/${tokenMatch[1]}`;
-      if (keyMatch) {
-        checkoutUrl += `?key=${keyMatch[1]}&channel=online_store`;
-      } else {
-        checkoutUrl += '?channel=online_store';
-      }
-    } else {
-      // Do not send customers to the store homepage: that discards their cart
-      // and creates a silent conversion failure. Let the cart UI preserve the
-      // bag and show a retryable checkout error instead.
-      console.error('Unable to normalize Shopify checkout URL');
-      return null;
-    }
+  if (!checkoutUrl) {
+    // Do not send customers to the store homepage: that discards their cart
+    // and creates a silent conversion failure. Let the cart UI preserve the
+    // bag and show a retryable checkout error instead.
+    console.error('Unable to normalize Shopify checkout URL');
+    return null;
   }
 
   // Checkout URL created successfully

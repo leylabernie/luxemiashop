@@ -109,7 +109,7 @@ const SEOFooterContent = () => {
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
                 LuxeMia offers Indian ethnic clothing online for United States shoppers. Review each listing for its stated fabric or materials, included pieces, available sizes, stitching options, price, and current availability. We offer <strong className="text-foreground">free U.S. shipping at $135 and above and $12 flat below that</strong>, with support by WhatsApp, phone, and email for questions before ordering.
-                <Link to="/brand-story" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover 
+                <Link to="/about" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover
                 how LuxeMia presents Indian ethnic wear for weddings and celebrations.
               </p>
             </div>
