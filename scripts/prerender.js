@@ -1104,14 +1104,14 @@ function generateUsProductShippingDetails(shipsWithinDays) {
     {
       '@type': 'OfferShippingDetails',
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-      orderValue: { '@type': 'MonetaryAmount', maxValue: 134.99, currency: 'USD' },
+      orderValue: { '@type': 'MonetaryAmount', maxValue: 149.99, currency: 'USD' },
       shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
       ...(deliveryTime ? { deliveryTime } : {}),
     },
     {
       '@type': 'OfferShippingDetails',
       shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-      orderValue: { '@type': 'MonetaryAmount', minValue: 135, currency: 'USD' },
+      orderValue: { '@type': 'MonetaryAmount', minValue: 150, currency: 'USD' },
       shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
       ...(deliveryTime ? { deliveryTime } : {}),
     },
