@@ -152,11 +152,12 @@ function main() {
       .filter((name) => {
         const html = fs.readFileSync(path.join(productDir, name), 'utf8');
         return /5-day express delivery to USA and Canada|FAQQ\s*:/i.test(html)
-          || /<h1[^>]*>[^<]*\|\s*luxemia\.shop\s*<\/h1>/i.test(html);
+          || /<h1[^>]*>[^<]*\|\s*luxemia\.shop\s*<\/h1>/i.test(html)
+          || /\bIncludes:\s*[^.<]{0,120}(?:\$|\bapproved\b|\bpricing\b|\bfee\b|\bcharge\b|\bservice\b|\btier\b)/i.test(html);
       })
     : [];
   if (legacyCopyFailures.length > 0) {
-    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${legacyCopyFailures.length} product prerender(s) contain obsolete supplier shipping/FAQ copy or a branded-domain H1.`);
+    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${legacyCopyFailures.length} product prerender(s) contain obsolete supplier copy, a branded-domain H1, or pricing/service text mislabeled as included pieces.`);
     for (const name of legacyCopyFailures.slice(0, 30)) console.error(`  /product/${name.replace(/\.html$/, '')}`);
     process.exit(1);
   }
