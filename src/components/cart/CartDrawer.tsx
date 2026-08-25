@@ -11,7 +11,7 @@ import {
   RAKSHA_BANDHAN_CAMPAIGN,
 } from '@/config/rakshaBandhanCampaign';
 
-const FREE_SHIPPING_THRESHOLD = 135;
+const FREE_SHIPPING_THRESHOLD = 150;
 const SHIPPING_PROMISE = 'Complimentary U.S. shipping is available when the checkout subtotal after discounts is $135 or more; standard shipping is $12 below that.';
 
 interface CartDrawerProps {
