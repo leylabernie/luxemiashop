@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     question: 'How much is US shipping?',
-    answer: 'Free US shipping applies at $135 and above. Orders below $135 ship for a flat $12 rate.',
+    answer: 'Free US shipping applies at $150 and above. Orders below $150 ship for a flat $12 rate.',
   },
   {
     question: 'Will tracking be provided?',
@@ -65,7 +65,7 @@ const ShippingCustoms = () => {
             <div>
               <h2 className="font-serif text-2xl mb-4">Shipping promise</h2>
               <p className="text-base text-foreground/90 leading-relaxed">
-                U.S. standard shipping is $12 below $135 and free at $135 and above. Tracking is emailed when the shipping label
+                U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is emailed when the shipping label
                 is created for dispatch. Checkout controls the final available service and charge.
               </p>
             </div>
