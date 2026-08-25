@@ -437,7 +437,7 @@ function enrichDescription(
   if (work) details.push(`Detail: ${work}.`);
   if (size) details.push(`Size: ${size}.`);
   details.push(
-    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $135 and free at $135 and above. Tracking is provided after dispatch. Review the product page for current availability and exact details."
+    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. Review the product page for current availability and exact details."
   );
 
   return details.join(" ").slice(0, 5000);
