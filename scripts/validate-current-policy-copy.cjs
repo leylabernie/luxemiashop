@@ -28,6 +28,7 @@ function listFiles(relativePath) {
   });
 }
 
+// Current approved U.S. policy: $12 below $150; free at $150 and above.
 const blockedPatterns = [
   /Shipping is available to seven countries/i,
   /shipping to seven countries/i,
