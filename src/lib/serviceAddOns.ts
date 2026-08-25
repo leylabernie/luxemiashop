@@ -1,5 +1,3 @@
-import type { ShopifyProduct } from '@/lib/shopify';
-
 export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
 
 /**
@@ -61,10 +59,17 @@ const UNSTITCHED_PATTERN = /\b(?:unstitched|semi[-\s]?stitched)\b/i;
 const BLOUSE_PATTERN = /\b(?:blouse\s+fabric|unstitched\s+blouse|blouse\s+piece|blouse)\b/i;
 const APPAREL_PATTERN = /\b(?:lehenga|choli|suit|kurta|salwar|sharara|palazzo|anarkali|gown|sherwani|jacket|co-?ord|blouse|dress|kaftan|skirt|dhoti|pant|tunic)\b/i;
 
-export type ServiceEligibleProduct = Pick<
-  ShopifyProduct['node'],
-  'title' | 'productType' | 'description' | 'tags' | 'options' | 'metadata'
->;
+export interface ServiceEligibleProduct {
+  title: string;
+  productType?: string;
+  description: string;
+  tags?: string[];
+  options?: Array<{ name: string; values: string[] }>;
+  metadata?: {
+    blouseFabric?: string | null;
+    includedComponents?: string[] | null;
+  };
+}
 
 const productEvidence = (product: ServiceEligibleProduct) => [
   product.title,
