@@ -1,4 +1,4 @@
-import architecture from './seoArchitecture.json';
+import architecture from './seoArchitecture.json' with { type: 'json' };
 
 export interface IndexableRouteSeo {
   title: string;
