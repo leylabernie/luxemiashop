@@ -1,7 +1,7 @@
 {
-  "source": "2026-08-25 live catalog recovery: added 16 published Navratri products, restored 10 stocked public products that had been incorrectly classified as retired, and added 21 active stocked products after restoring their Headless publication; hidden billing and zero-inventory pricing-review products remain excluded",
+  "source": "2026-08-25 live catalog recovery: retained the verified recovery inventory and added the 16 newly published Royal Export/sharara listings after product, publication, material, pricing, image, and storefront checks; hidden billing and unreviewed candidates remain excluded",
   "capturedOn": "2026-08-25",
-  "urlCount": 833,
+  "urlCount": 849,
   "paths": [
     "/",
     "/collections",
@@ -835,6 +835,22 @@
     "/product/shimmer-pink-chiffon-saree-with-embroidered-blouse-luxemia",
     "/product/antique-gold-georgette-saree-with-embroidered-blouse-luxemia",
     "/product/electric-blue-satin-silk-saree-with-embroidered-blouse-luxemia",
-    "/product/fuchsia-pink-georgette-saree-with-embroidered-blouse-luxemia"
+    "/product/fuchsia-pink-georgette-saree-with-embroidered-blouse-luxemia",
+    "/product/red-printed-lawn-three-piece-suit-with-cotton-dupatta",
+    "/product/yellow-crush-satin-embroidered-palazzo-suit",
+    "/product/peach-crush-satin-embroidered-palazzo-suit",
+    "/product/white-crush-satin-embroidered-palazzo-suit",
+    "/product/blue-printed-lawn-three-piece-suit-with-cotton-dupatta",
+    "/product/mauve-moch-beaded-palazzo-suit-with-dupatta",
+    "/product/teal-moch-beaded-palazzo-suit-with-dupatta",
+    "/product/teal-blue-heavy-chinnon-embroidered-palazzo-suit",
+    "/product/orange-heavy-chinnon-embroidered-palazzo-suit",
+    "/product/purple-moch-beaded-palazzo-suit-with-dupatta",
+    "/product/purple-simar-silk-mirror-work-palazzo-suit",
+    "/product/cream-simar-silk-mirror-work-palazzo-suit",
+    "/product/sky-blue-simar-silk-mirror-work-palazzo-suit",
+    "/product/olive-green-heavy-chinnon-embroidered-palazzo-suit",
+    "/product/purple-heavy-chinnon-embroidered-palazzo-suit",
+    "/product/womens-embroidered-chinnon-sharara-set-with-dupatta"
   ]
 }
