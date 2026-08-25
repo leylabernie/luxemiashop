@@ -23,6 +23,25 @@ function count(haystack, pattern) {
   return [...haystack.matchAll(pattern)].length;
 }
 
+const REQUIRED_NAVRATRI_PRODUCT_HANDLES = [
+  'pure-cotton-gamthi-work-navratri-lehenga-choli-set',
+  'pink-pure-rayon-gamthi-gota-patti-navratri-lehenga-choli-set',
+  'red-pure-cotton-gamthi-mirror-work-navratri-lehenga-choli-set',
+  'blue-white-muslin-kutchi-mirror-digital-print-lehenga-choli-set',
+  'maroon-pure-cotton-gamthi-mirror-navratri-lehenga-choli-set',
+  'blue-cora-cotton-bandhej-gamthi-navratri-lehenga-top-set',
+  'lime-white-pure-cotton-mirror-gota-patti-lehenga-choli-set',
+  'red-pure-cotton-mirror-work-navratri-lehenga-set-with-purse',
+  'muslin-cotton-real-mirror-work-navratri-lehenga-choli-set',
+  'butter-silk-digital-print-mirror-work-navratri-lehenga-choli-set',
+  'butter-silk-real-mirror-work-navratri-lehenga-choli-set',
+  'black-butter-silk-real-mirror-gota-patti-navratri-lehenga-choli',
+  'dola-silk-bandhani-ajrakh-navratri-chaniya-choli-set',
+  'soft-gaji-silk-zari-border-navratri-lehenga-choli-set',
+  'black-jam-cotton-8-meter-flare-navratri-lehenga-set',
+  'black-maroon-rayon-kodi-lace-navratri-lehenga-choli-set',
+];
+
 const collectionPath = 'dist/_prerender/collections/navratri-outfits.html';
 const articlePath = 'dist/_prerender/blog/navratri-9-day-color-guide-2026.html';
 const homepagePath = 'dist/_prerender/index.html';
@@ -46,6 +65,15 @@ const collectionProductLinks = new Set(
 );
 if (collectionProductLinks.size < 12) {
   throw new Error(`[navratri-traffic] Collection prerender contains only ${collectionProductLinks.size} unique product links`);
+}
+for (const handle of REQUIRED_NAVRATRI_PRODUCT_HANDLES) {
+  if (!collectionProductLinks.has(handle)) {
+    throw new Error(`[navratri-traffic] Collection prerender is missing published Navratri product ${handle}`);
+  }
+  const productPrerenderPath = path.join(PROJECT_ROOT, 'dist', '_prerender', 'product', `${handle}.html`);
+  if (!fs.existsSync(productPrerenderPath)) {
+    throw new Error(`[navratri-traffic] Published Navratri product is not prerendered: ${handle}`);
+  }
 }
 
 requireText(articleHtml, '<title>Navratri 2026 USA: Garba &amp; Chaniya Choli Guide | LuxeMia</title>', 'article search title');
@@ -82,6 +110,7 @@ if (hierarchicalTypes !== feedItems) {
 for (const url of [
   'https://luxemia.shop/collections/navratri-outfits',
   'https://luxemia.shop/blog/navratri-9-day-color-guide-2026',
+  ...REQUIRED_NAVRATRI_PRODUCT_HANDLES.map((handle) => `https://luxemia.shop/product/${handle}`),
 ]) {
   const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const occurrences = count(sitemapXml, new RegExp(`<loc>${escaped}<\\/loc>`, 'g'));
@@ -90,4 +119,4 @@ for (const url of [
   }
 }
 
-console.log(`[navratri-traffic] OK — ${collectionProductLinks.size} collection products, bidirectional guide links, CollectionPage/ItemList schema, 30 Merchant priority groups, full product-type hierarchy, and sitemap coverage verified.`);
+console.log(`[navratri-traffic] OK — ${collectionProductLinks.size} collection products including all ${REQUIRED_NAVRATRI_PRODUCT_HANDLES.length} published seasonal listings, bidirectional guide links, CollectionPage/ItemList schema, 30 Merchant priority groups, full product-type hierarchy, prerender coverage, and sitemap coverage verified.`);

@@ -36,6 +36,31 @@ export interface ShopifyProduct {
   options: Array<{ name: string; values: string[] }>;
 }
 
+export type ShopifyProductLookupResult =
+  | { status: 'found'; product: ShopifyProduct }
+  | { status: 'not_found' }
+  | { status: 'unavailable' };
+
+type CacheableShopifyProductLookupResult = Exclude<
+  ShopifyProductLookupResult,
+  { status: 'unavailable' }
+>;
+
+function isShopifyProduct(value: unknown): value is ShopifyProduct {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
+
+  const product = value as Partial<ShopifyProduct>;
+  return (
+    typeof product.handle === 'string'
+    && typeof product.title === 'string'
+    && typeof product.priceRange?.minVariantPrice?.amount === 'string'
+    && typeof product.priceRange?.minVariantPrice?.currencyCode === 'string'
+    && Array.isArray(product.images?.edges)
+    && Array.isArray(product.variants?.edges)
+    && Array.isArray(product.options)
+  );
+}
+
 // productByHandle was deprecated in Shopify Storefront API 2022-04 and removed in 2024+.
 // Use product(handle:) instead.
 const PRODUCT_BY_HANDLE_QUERY = `
@@ -69,15 +94,18 @@ const PRODUCT_BY_HANDLE_QUERY = `
 // TTL of 2 minutes balances freshness against Shopify API call volume.
 // When products are updated via Shopify CSV import, bot SSR HTML picks up
 // the new title within at most 2 minutes of the next bot request.
-const productCache = new Map<string, { data: ShopifyProduct | null; timestamp: number }>();
+const productCache = new Map<string, {
+  result: CacheableShopifyProductLookupResult;
+  timestamp: number;
+}>();
 const CACHE_TTL = 2 * 60 * 1000; // 2 minutes (was 10 — too stale after CSV imports)
 
-export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct | null> {
-  if (isHiddenBillingProductHandle(handle)) return null;
+export async function fetchProductByHandle(handle: string): Promise<ShopifyProductLookupResult> {
+  if (isHiddenBillingProductHandle(handle)) return { status: 'not_found' };
 
   const cached = productCache.get(handle);
   if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
-    return cached.data;
+    return cached.result;
   }
 
   try {
@@ -93,15 +121,37 @@ export async function fetchProductByHandle(handle: string): Promise<ShopifyProdu
       }),
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      console.error('Middleware: Shopify returned an error for handle:', handle, response.status);
+      return { status: 'unavailable' };
+    }
 
-    const data = await response.json();
-    const product = data?.data?.product || null;
+    const payload = await response.json() as {
+      data?: { product?: ShopifyProduct | null } | null;
+      errors?: unknown;
+    };
 
-    productCache.set(handle, { data: product, timestamp: Date.now() });
-    return product;
+    if (
+      payload?.errors !== undefined
+      && (!Array.isArray(payload.errors) || payload.errors.length > 0)
+    ) {
+      console.error('Middleware: Shopify returned GraphQL errors for handle:', handle);
+      return { status: 'unavailable' };
+    }
+
+    const product = payload?.data?.product;
+    if (product === undefined || (product !== null && !isShopifyProduct(product))) {
+      console.error('Middleware: Shopify returned a malformed product response for handle:', handle);
+      return { status: 'unavailable' };
+    }
+
+    const result: CacheableShopifyProductLookupResult = product === null
+      ? { status: 'not_found' }
+      : { status: 'found', product };
+    productCache.set(handle, { result, timestamp: Date.now() });
+    return result;
   } catch (error) {
     console.error('Middleware: Shopify fetch failed for handle:', handle, error);
-    return null;
+    return { status: 'unavailable' };
   }
 }

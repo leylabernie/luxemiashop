@@ -145,7 +145,23 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have HTML and all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema.`);
+  const productDir = path.join(PRERENDER_DIR, 'product');
+  const legacyCopyFailures = fs.existsSync(productDir)
+    ? fs.readdirSync(productDir)
+      .filter((name) => name.endsWith('.html'))
+      .filter((name) => {
+        const html = fs.readFileSync(path.join(productDir, name), 'utf8');
+        return /5-day express delivery to USA and Canada|FAQQ\s*:/i.test(html)
+          || /<h1[^>]*>[^<]*\|\s*luxemia\.shop\s*<\/h1>/i.test(html);
+      })
+    : [];
+  if (legacyCopyFailures.length > 0) {
+    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${legacyCopyFailures.length} product prerender(s) contain obsolete supplier shipping/FAQ copy or a branded-domain H1.`);
+    for (const name of legacyCopyFailures.slice(0, 30)) console.error(`  /product/${name.replace(/\.html$/, '')}`);
+    process.exit(1);
+  }
+
+  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML and all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema.`);
 }
 
 main();
