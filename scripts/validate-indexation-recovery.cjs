@@ -8,11 +8,13 @@ const middlewarePath = path.join(root, 'middleware.ts');
 const robotsPath = path.join(root, 'public', 'robots.txt');
 const productHookPath = path.join(root, 'src', 'hooks', 'useShopifyProducts.ts');
 const prerenderPath = path.join(root, 'scripts', 'prerender.js');
+const shopifyProxyPath = path.join(root, 'src', 'middleware', 'shopifyProxy.ts');
 
 const middleware = fs.readFileSync(middlewarePath, 'utf8');
 const robots = fs.readFileSync(robotsPath, 'utf8');
 const productHook = fs.readFileSync(productHookPath, 'utf8');
 const prerender = fs.readFileSync(prerenderPath, 'utf8');
+const shopifyProxy = fs.readFileSync(shopifyProxyPath, 'utf8');
 
 const failures = [];
 const requireText = (source, needle, label) => {
@@ -24,6 +26,64 @@ requireText(middleware, 'withCanonicalQuerySignals', 'HTTP query canonicalizatio
 requireText(middleware, "headers.set('Link'", 'HTTP Link canonical header');
 requireText(middleware, "headers.set('X-Robots-Tag', 'noindex, follow')", 'facet noindex directive');
 requireText(middleware, "rel=\"canonical\"", 'clean canonical relation');
+
+requireText(shopifyProxy, "{ status: 'found'; product: ShopifyProduct }", 'found Shopify lookup result');
+requireText(shopifyProxy, "{ status: 'not_found' }", 'definitive Shopify not-found result');
+requireText(shopifyProxy, "{ status: 'unavailable' }", 'transient Shopify unavailable result');
+requireText(shopifyProxy, "{ status: 'unavailable' }\n>", 'unavailable cache exclusion');
+requireText(shopifyProxy, 'function isShopifyProduct(value: unknown): value is ShopifyProduct', 'Shopify product shape guard');
+requireText(shopifyProxy, 'Array.isArray(value)', 'Shopify product array rejection');
+requireText(shopifyProxy, 'Array.isArray(product.images?.edges)', 'Shopify image-edge validation');
+requireText(shopifyProxy, 'Array.isArray(product.variants?.edges)', 'Shopify variant-edge validation');
+requireText(shopifyProxy, 'Array.isArray(product.options)', 'Shopify options validation');
+requireText(shopifyProxy, 'if (!response.ok)', 'Shopify HTTP error handling');
+requireText(shopifyProxy, 'payload?.errors !== undefined', 'Shopify GraphQL error handling');
+requireText(shopifyProxy, "product === null\n      ? { status: 'not_found' }\n      : { status: 'found', product }", 'definitive Shopify lookup classification');
+requireText(middleware, "productLookup.status === 'found'", 'found-product middleware branch');
+requireText(middleware, "productLookup.status === 'unavailable'", 'unavailable-product middleware branch');
+
+if (shopifyProxy.includes('Promise<ShopifyProduct | null>')) {
+  failures.push('The Shopify proxy still exposes null as an ambiguous lookup result.');
+}
+
+const cacheWrites = shopifyProxy.match(/productCache\.set\(/g)?.length || 0;
+if (cacheWrites !== 1) {
+  failures.push(`Expected one guarded Shopify product-cache write, found ${cacheWrites}.`);
+}
+
+const unavailableReturns = shopifyProxy.match(/return \{ status: 'unavailable' \};/g)?.length || 0;
+if (unavailableReturns < 4) {
+  failures.push('HTTP, GraphQL, malformed-payload, and thrown Shopify failures must all return unavailable.');
+}
+
+const unavailableHelper = middleware.match(
+  /function returnShopifyUnavailable\(\): Response \{([\s\S]*?)\n\}/,
+)?.[1] || '';
+requireText(unavailableHelper, 'status: 503', 'Shopify unavailable 503 status');
+requireText(unavailableHelper, "'Cache-Control': 'no-store'", 'Shopify unavailable no-store directive');
+requireText(unavailableHelper, "'Retry-After': '60'", 'Shopify unavailable retry guidance');
+
+const productRouteStart = middleware.indexOf("if (pathname.startsWith('/product/'))");
+const productRouteEnd = middleware.indexOf('// Preserve SEO equity for legacy size-guide URLs', productRouteStart);
+const productRoute = productRouteStart >= 0 && productRouteEnd > productRouteStart
+  ? middleware.slice(productRouteStart, productRouteEnd)
+  : '';
+const lookupIndex = productRoute.indexOf('const productLookup = await fetchProductByHandle(handle);');
+const foundIndex = productRoute.indexOf("productLookup.status === 'found'", lookupIndex);
+const jewelryIndex = productRoute.indexOf('getJewelryProductByHandle(handle)', foundIndex);
+const unavailableIndex = productRoute.indexOf("productLookup.status === 'unavailable'", jewelryIndex);
+const unavailableResponseIndex = productRoute.indexOf('return returnShopifyUnavailable();', unavailableIndex);
+const final404Index = productRoute.indexOf('return return404(request);', unavailableResponseIndex);
+if (!(
+  lookupIndex >= 0
+  && lookupIndex < foundIndex
+  && foundIndex < jewelryIndex
+  && jewelryIndex < unavailableIndex
+  && unavailableIndex < unavailableResponseIndex
+  && unavailableResponseIndex < final404Index
+)) {
+  failures.push('Product routing must serve found/local products, return 503 for upstream failure, and reserve 404 for definitive misses.');
+}
 
 const requiredNoiseParameters = [
   'sort_by',
@@ -106,5 +166,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  'Indexation recovery validation passed: public query duplicates expose clean canonicals, variant URLs stay crawlable, the first 50 collection products paint immediately, the full catalog refreshes after hydration, and the complete crawlable product directory remains available.',
+  'Indexation recovery validation passed: public query duplicates expose clean canonicals, transient Shopify failures stay out of the 404/cache path, variant URLs stay crawlable, the first 50 collection products paint immediately, the full catalog refreshes after hydration, and the complete crawlable product directory remains available.',
 );

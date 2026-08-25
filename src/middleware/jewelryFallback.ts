@@ -2,8 +2,8 @@
  * Jewelry Product Fallback for Bot SSR
  *
  * Jewelry products are hardcoded in src/data/jewelryProducts.ts and NOT synced
- * to Shopify. When the middleware's Shopify API call returns null for a
- * /product/{handle} URL, this module provides a fallback lookup to generate
+ * to Shopify. When the middleware's Shopify lookup does not produce a product
+ * for a /product/{handle} URL, this module provides a fallback lookup to generate
  * proper SSR HTML instead of returning a soft-404.
  */
 

@@ -21,7 +21,7 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const EXPECTED_SITEMAP_URL_COUNT = 786;
+const MIN_APPROVED_SITEMAP_URL_COUNT = 786;
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
 ]);
@@ -353,13 +353,15 @@ async function main() {
   const approvedInventory = JSON.parse(fs.readFileSync(APPROVED_INVENTORY_PATH, 'utf8'));
   const approvedPaths = Array.isArray(approvedInventory.paths) ? approvedInventory.paths : [];
   const approvedPathSet = new Set(approvedPaths);
+  const expectedSitemapUrlCount = approvedInventory.urlCount;
   if (
-    approvedInventory.urlCount !== EXPECTED_SITEMAP_URL_COUNT ||
-    approvedPaths.length !== EXPECTED_SITEMAP_URL_COUNT ||
-    approvedPathSet.size !== EXPECTED_SITEMAP_URL_COUNT
+    !Number.isInteger(expectedSitemapUrlCount) ||
+    expectedSitemapUrlCount < MIN_APPROVED_SITEMAP_URL_COUNT ||
+    approvedPaths.length !== expectedSitemapUrlCount ||
+    approvedPathSet.size !== expectedSitemapUrlCount
   ) {
     throw new Error(
-      `Approved sitemap inventory must contain exactly ${EXPECTED_SITEMAP_URL_COUNT} unique paths ` +
+      `Approved sitemap inventory must declare at least ${MIN_APPROVED_SITEMAP_URL_COUNT} URLs and contain exactly that many unique paths ` +
       `(found declared=${approvedInventory.urlCount}, paths=${approvedPaths.length}, unique=${approvedPathSet.size}).`
     );
   }
@@ -431,13 +433,13 @@ async function main() {
   const missingApprovedPaths = approvedPaths.filter((routePath) => !sitemapPathSet.has(routePath));
   const unexpectedPaths = sitemapPaths.filter((routePath) => !approvedPathSet.has(routePath));
   if (
-    sitemapPaths.length !== EXPECTED_SITEMAP_URL_COUNT ||
-    sitemapPathSet.size !== EXPECTED_SITEMAP_URL_COUNT ||
+    sitemapPaths.length !== expectedSitemapUrlCount ||
+    sitemapPathSet.size !== expectedSitemapUrlCount ||
     missingApprovedPaths.length > 0 ||
     unexpectedPaths.length > 0
   ) {
     throw new Error(
-      `Generated sitemap scope must exactly match the ${EXPECTED_SITEMAP_URL_COUNT}-URL approved/live inventory. ` +
+      `Generated sitemap scope must exactly match the ${expectedSitemapUrlCount}-URL approved/live inventory. ` +
       `Generated=${sitemapPaths.length}, unique=${sitemapPathSet.size}, ` +
       `missing=${missingApprovedPaths.join(', ') || 'none'}, ` +
       `unexpected=${unexpectedPaths.join(', ') || 'none'}.`

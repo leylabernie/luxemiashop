@@ -387,6 +387,8 @@ const COLLECTION_BY_HANDLE_QUERY = `
 
 function sanitizeShopifyProductCopy(value: string): string {
   return (value || '')
+    .replace(/\s*Shipping:\s*5-day express delivery to USA and Canada[\s\S]*$/gi, '')
+    .replace(/\s*FAQQ\s*:[\s\S]*$/gi, '')
     .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $12 below $135 and free at $135 and above')
     .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard shipping is free at $135 and above and $12 below $135')
     .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. shipping at $135 and above')

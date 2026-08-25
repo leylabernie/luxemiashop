@@ -161,6 +161,22 @@ function return410(): Response {
   });
 }
 
+function returnShopifyUnavailable(): Response {
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
+    `<meta name="viewport" content="width=device-width,initial-scale=1">` +
+    `<title>Temporarily unavailable — LuxeMia</title></head><body>` +
+    `<h1>This product is temporarily unavailable.</h1>` +
+    `<p>Please try again shortly.</p></body></html>`;
+  return new Response(html, {
+    status: 503,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Retry-After': '60',
+    },
+  });
+}
+
 function withResponseHeader(response: Response, key: string, value: string): Response {
   const headers = new Headers(response.headers);
   headers.set(key, value);
@@ -431,10 +447,10 @@ async function routeRequest(request: Request): Promise<Response> {
       return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
     }
 
-    const product = await fetchProductByHandle(handle);
-    if (product) {
+    const productLookup = await fetchProductByHandle(handle);
+    if (productLookup.status === 'found') {
       const canonicalUrl = `https://luxemia.shop/product/${handle}`;
-      return new Response(generateProductHtml(product, canonicalUrl), {
+      return new Response(generateProductHtml(productLookup.product, canonicalUrl), {
         status: 200,
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
@@ -444,6 +460,8 @@ async function routeRequest(request: Request): Promise<Response> {
       });
     }
 
+    // Locally catalogued jewelry remains serviceable without Shopify. Every
+    // other upstream failure must stay transient instead of becoming a 404.
     const jewelryProduct = getJewelryProductByHandle(handle);
     if (jewelryProduct) {
       const canonicalUrl = `https://luxemia.shop/product/${handle}`;
@@ -455,6 +473,10 @@ async function routeRequest(request: Request): Promise<Response> {
           'X-Robots-Tag': 'index, follow',
         },
       });
+    }
+
+    if (productLookup.status === 'unavailable') {
+      return returnShopifyUnavailable();
     }
 
     return return404(request);

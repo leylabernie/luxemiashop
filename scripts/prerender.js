@@ -126,6 +126,10 @@ function normalizeWhitespace(value) {
 
 function sanitizeProductCopy(value) {
   return (value || '')
+    // Remove obsolete supplier boilerplate before it can leak into product
+    // facts, structured data, or customer-facing copy.
+    .replace(/\s*Shipping:\s*5-day express delivery to USA and Canada[\s\S]*$/gi, '')
+    .replace(/\s*FAQQ\s*:[\s\S]*$/gi, '')
     .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $12 below $135 and free at $135 and above')
     .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard shipping is free at $135 and above and $12 below $135')
     .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. shipping at $135 and above')
@@ -150,7 +154,7 @@ function sanitizeProductTitle(value) {
     .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
     .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
     .replace(/\bhandcrafted\s+/gi, '')
-    .replace(/\s*(?:[|–—-]\s*)?luxemia\s*$/gi, '')
+    .replace(/\s*(?:[|–—-]\s*)?luxemia(?:\.shop)?\s*$/gi, '')
     .replace(/\s*[|–—-]\s*$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
@@ -176,7 +180,7 @@ const OCCASION_TAG_COPY = [
 
 function textFromListing(value) {
   return normalizeWhitespace(
-    String(value || '')
+    sanitizeProductCopy(String(value || ''))
       .replace(/<[^>]*>/g, ' ')
       .replace(/&nbsp;/gi, ' ')
       .replace(/&amp;/gi, '&')
@@ -205,7 +209,7 @@ function getLabeledListingFact(description, labels) {
   if (htmlFact) return htmlFact;
 
   const plain = textFromListing(source);
-  const nextFieldPattern = 'Style|Fabric|Material|Work|Embroidery|Embellishment|Color|Care|Lehenga Silhouette|Blouse\\/Choli|Dupatta|Lining|Closure|Flair';
+  const nextFieldPattern = 'Style|Fabric|Material|Work|Embroidery|Embellishment|Color|Care|Lehenga Silhouette|Blouse\\/Choli|Dupatta|Lining|Closure|Flair|Shipping|Returns?|FAQQ?';
   const plainMatch = plain.match(new RegExp(`(?:^|\\s)(?:${labelPattern})\\s*:\\s*(.{1,160}?)(?=\\s+(?:${nextFieldPattern})\\s*:|[.!?]|$)`, 'i'));
   return cleanVerifiedFact(plainMatch?.[1]);
 }
@@ -219,7 +223,7 @@ function getExplicitIncludedPieces(product) {
 
   const listingText = textFromListing(product?.description);
   if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
-  const explicit = listingText.match(/\b(?:includes|included pieces|set includes|package includes)\s*[:\-]?\s*([^.!?]{1,120})/i);
+  const explicit = listingText.match(/\b(?:includes|included pieces|set includes|package includes)\s*[:\-]?\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
   return cleanVerifiedFact(explicit?.[1]);
 }
 
@@ -236,7 +240,9 @@ function getListedProductAttributes(product) {
     ?.find(option => names.includes((option.name || '').toLowerCase()))
     ?.values?.[0];
   const rawColor = optionValue('color');
-  const rawMaterial = optionValue('fabric', 'material');
+  const rawMaterial = product?.fabricMetafield?.value
+    || product?.materialMetafield?.value
+    || optionValue('fabric', 'material');
   const prefixedTagValue = (...prefixes) => {
     const matchedTag = (product?.tags || []).find((tag) => {
       const normalizedTag = String(tag).toLowerCase();
@@ -431,6 +437,12 @@ query GetAllProducts($first: Int!, $after: String) {
           namespace: "custom"
           key: "ships_within"
         ) {
+          value
+        }
+        fabricMetafield: metafield(namespace: "custom", key: "fabric") {
+          value
+        }
+        materialMetafield: metafield(namespace: "custom", key: "material") {
           value
         }
         seo {

@@ -26,7 +26,7 @@ const PRODUCT_HANDLES_QUERY = `
   query ProductHandles($first: Int!, $after: String) {
     products(first: $first, after: $after, sortKey: UPDATED_AT, reverse: true) {
       pageInfo { hasNextPage endCursor }
-      edges { node { handle } }
+      edges { node { handle availableForSale } }
     }
   }
 `;
@@ -49,6 +49,7 @@ function parsePriorPrerenderProductPaths(source) {
 
 async function fetchCurrentProductPaths() {
   const paths = new Set();
+  const sellablePaths = new Set();
   let cursor = null;
   let hasNextPage = true;
   while (hasNextPage) {
@@ -67,14 +68,17 @@ async function fetchCurrentProductPaths() {
     if (data?.errors?.length) throw new Error(`Shopify product lifecycle query returned errors: ${JSON.stringify(data.errors)}`);
     const edges = data?.data?.products?.edges || [];
     for (const edge of edges) {
-      if (edge?.node?.handle) paths.add(`/product/${edge.node.handle}`);
+      if (!edge?.node?.handle) continue;
+      const productPath = `/product/${edge.node.handle}`;
+      paths.add(productPath);
+      if (edge.node.availableForSale) sellablePaths.add(productPath);
     }
     const pageInfo = data?.data?.products?.pageInfo;
     hasNextPage = pageInfo?.hasNextPage ?? false;
     cursor = pageInfo?.endCursor ?? null;
   }
   if (paths.size === 0) throw new Error('Shopify product lifecycle query returned no product handles.');
-  return paths;
+  return { paths, sellablePaths };
 }
 
 async function main() {
@@ -87,7 +91,10 @@ async function main() {
   const redirectSources = Object.keys(redirects);
   const redirectTargets = Object.values(redirects);
   const priorPrerenderProductPaths = parsePriorPrerenderProductPaths(read('src/lib/prerenderManifest.ts'));
-  const currentShopifyProductPaths = await fetchCurrentProductPaths();
+  const {
+    paths: currentShopifyProductPaths,
+    sellablePaths: currentSellableShopifyProductPaths,
+  } = await fetchCurrentProductPaths();
 
   fail('Active sitemap product URL is also marked retired', [...activeProductPaths].filter((value) => retiredProductPaths.has(value)));
   fail('Retired product URL still appears in the approved sitemap inventory', [...retiredProductPaths].filter((value) => activeProductPaths.has(value)));
@@ -96,6 +103,10 @@ async function main() {
   fail('Product 301 destination is also marked retired', redirectTargets.filter((value) => retiredProductPaths.has(value)));
   fail('Product 301 contains a non-product source', redirectSources.filter((value) => !value.startsWith('/product/')));
   fail('Product 301 contains a non-product destination', redirectTargets.filter((value) => !value.startsWith('/product/')));
+  fail(
+    'Sellable Storefront product is incorrectly marked retired',
+    [...currentSellableShopifyProductPaths].filter((value) => retiredProductPaths.has(value))
+  );
 
   const missingPriorProducts = [...priorPrerenderProductPaths].filter((pathname) =>
     !currentShopifyProductPaths.has(pathname) &&
@@ -107,7 +118,8 @@ async function main() {
   console.log(
     `[retirement-lifecycle] OK — ${retiredProductPaths.size} retired routes, ` +
     `${redirectSources.length} verified one-to-one redirects, ${activeProductPaths.size} active sitemap products, ` +
-    `and ${priorPrerenderProductPaths.size} previously deployed product routes reconciled with ${currentShopifyProductPaths.size} current Shopify products.`
+    `and ${priorPrerenderProductPaths.size} previously deployed product routes reconciled with ` +
+    `${currentShopifyProductPaths.size} current Shopify products (${currentSellableShopifyProductPaths.size} sellable).`
   );
 }
 
