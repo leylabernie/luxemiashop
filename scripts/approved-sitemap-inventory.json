@@ -1,7 +1,7 @@
 {
-  "source": "2026-08-25 live catalog recovery: retained the verified recovery inventory and added the 16 newly published Royal Export/sharara listings after product, publication, material, pricing, image, and storefront checks; hidden billing and unreviewed candidates remain excluded",
-  "capturedOn": "2026-08-25",
-  "urlCount": 849,
+  "source": "2026-08-26 live catalog recovery: retained the verified recovery inventory and added the 25 published Royal Export/sharara listings after product, publication, material, pricing, image, and storefront checks; hidden billing and unreviewed candidates remain excluded",
+  "capturedOn": "2026-08-26",
+  "urlCount": 858,
   "paths": [
     "/",
     "/collections",
@@ -851,6 +851,15 @@
     "/product/sky-blue-simar-silk-mirror-work-palazzo-suit",
     "/product/olive-green-heavy-chinnon-embroidered-palazzo-suit",
     "/product/purple-heavy-chinnon-embroidered-palazzo-suit",
-    "/product/womens-embroidered-chinnon-sharara-set-with-dupatta"
+    "/product/womens-embroidered-chinnon-sharara-set-with-dupatta",
+    "/product/green-crush-satin-beaded-palazzo-suit-with-dupatta",
+    "/product/white-premium-silk-embroidered-palazzo-suit-with-dupatta",
+    "/product/orange-premium-silk-embroidered-palazzo-suit-with-dupatta",
+    "/product/teal-premium-silk-embroidered-anarkali-palazzo-suit",
+    "/product/hot-pink-premium-silk-embroidered-palazzo-suit-set",
+    "/product/lemon-yellow-chinnon-beaded-palazzo-suit-with-dupatta",
+    "/product/pink-chinnon-beaded-palazzo-suit-with-butti-dupatta",
+    "/product/cream-chinnon-beaded-palazzo-suit-with-butti-dupatta",
+    "/product/white-crush-satin-mirror-work-palazzo-suit-with-dupatta"
   ]
 }
