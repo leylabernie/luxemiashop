@@ -1,7 +1,7 @@
 {
-  "source": "2026-08-25 live catalog recovery: added 16 published Navratri products and restored 10 stocked public products that had been incorrectly classified as retired; hidden billing and zero-inventory pricing-review products remain excluded",
+  "source": "2026-08-25 live catalog recovery: added 16 published Navratri products, restored 10 stocked public products that had been incorrectly classified as retired, and added 21 active stocked products after restoring their Headless publication; hidden billing and zero-inventory pricing-review products remain excluded",
   "capturedOn": "2026-08-25",
-  "urlCount": 812,
+  "urlCount": 833,
   "paths": [
     "/",
     "/collections",
@@ -814,6 +814,27 @@
     "/product/cream-gold-saree-luxemia",
     "/product/soft-pink-saree-luxemia",
     "/product/pistachio-green-saree-luxemia",
-    "/product/mint-seafoam-saree-luxemia"
+    "/product/mint-seafoam-saree-luxemia",
+    "/product/butterfly-net-sequin-embroidered-lehenga-choli-set",
+    "/product/dusty-lavender-co-ord-silk-embroidered-farshi-salwar-suit-set-luxemia",
+    "/product/ready-to-wear-imported-lycra-saree-with-beadwork-blouse-luxemia",
+    "/product/parrot-green-satin-saree-with-embroidered-blouse-luxemia",
+    "/product/shimmer-gold-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/jet-black-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/dusty-rose-georgette-tissue-saree-with-embroidered-blouse-luxemia",
+    "/product/mulberry-georgette-silk-saree-with-embroidered-blouse-luxemia",
+    "/product/blood-red-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/peach-pink-crushed-tissue-saree-with-embroidered-blouse-luxemia",
+    "/product/olive-yellow-georgette-saree-with-embroidered-blouse-luxemia",
+    "/product/teal-blue-satin-georgette-saree-with-embroidered-blouse-luxemia",
+    "/product/silver-white-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/pista-green-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/rich-yellow-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/rose-gold-georgette-saree-with-embroidered-blouse-luxemia",
+    "/product/electric-wine-satin-silk-saree-with-embroidered-blouse-luxemia",
+    "/product/shimmer-pink-chiffon-saree-with-embroidered-blouse-luxemia",
+    "/product/antique-gold-georgette-saree-with-embroidered-blouse-luxemia",
+    "/product/electric-blue-satin-silk-saree-with-embroidered-blouse-luxemia",
+    "/product/fuchsia-pink-georgette-saree-with-embroidered-blouse-luxemia"
   ]
 }
