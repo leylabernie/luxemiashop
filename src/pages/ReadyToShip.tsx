@@ -44,7 +44,7 @@ const OnlineCollection = () => {
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Ethnic Wear Online</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
               Browse LuxeMia&apos;s online edit of lehengas, sarees, salwar kameez, menswear and jewelry for weddings,
-              festivals and family celebrations. Free U.S. shipping at $135 and above; $12 flat below that. Tracking is provided after dispatch.
+              festivals and family celebrations. Free U.S. shipping at $150 and above; $12 flat below that. Tracking is provided after dispatch.
             </p>
           </div>
         </section>
