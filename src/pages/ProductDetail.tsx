@@ -38,6 +38,18 @@ const isStitchableProductType = (productType?: string): boolean => {
   return STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t));
 };
 
+const hasExplicitTailoringOffer = (productType?: string, tags?: string[]): boolean => {
+  if (!isStitchableProductType(productType)) return false;
+  const normalizedTags = tags ?? [];
+  const hasTailoringStatus = normalizedTags.some((tag) =>
+    /^(tailoring|stitching|availability):/i.test(tag.trim()),
+  );
+  const isReadyMadeOnly = normalizedTags.some((tag) =>
+    /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
+  );
+  return hasTailoringStatus && !isReadyMadeOnly;
+};
+
 const JEWELRY_PRODUCT_TYPES = [
   'jewel', 'necklace', 'choker', 'earring', 'bangle', 'bracelet',
   'ring', 'maang tikka', 'anklet',
@@ -446,7 +458,7 @@ const ProductDetail = () => {
                 <ProductTabs 
                   description={enrichedDescription || product.description}
                   productType={product.productType}
-                  isStitchable={isStitchableProductType(product.productType)}
+                  isStitchable={!customizableProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
                 />
               </div>
