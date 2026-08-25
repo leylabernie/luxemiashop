@@ -13,6 +13,10 @@
 
 import type { ReactNode } from 'react';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
+import {
+  getDedicatedSubcategoryPath,
+  getIndexableRouteSeo,
+} from '@/config/seoArchitecture';
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 
@@ -59,6 +63,8 @@ export interface Subcategory {
   seoDescription?: string;
   /** Optional canonical URL override (defaults to <config.canonical>?sub=<slug>) */
   seoCanonical?: string;
+  /** Dedicated, indexable collection URL when this filter has a stocked landing page. */
+  landingPath?: string;
 }
 
 export interface FilterOption {
@@ -190,10 +196,10 @@ const LEHENGAS: CategoryConfig = {
   heroImage: FEATURED_CATEGORY_PRODUCTS.lehengas.image,
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.lehengas.alt,
-  heroTitle: 'Lehengas',
+  heroTitle: getIndexableRouteSeo('/lehengas').h1,
   heroSubtitle: 'Bridal, wedding guest and festive lehengas for U.S. delivery. Use the Ready to Ship filter for listings explicitly tagged that way, then confirm fabric, included pieces, sizing and shipping timing on the product page.',
-  seoTitle: 'Bridal & Ready-to-Ship Lehengas USA | LuxeMia',
-  seoDescription: 'Shop bridal and wedding guest lehengas online in the USA. Use the Ready to Ship filter for eligible listings; compare fabric, included pieces, sizing and tracked U.S. shipping.',
+  seoTitle: getIndexableRouteSeo('/lehengas').title,
+  seoDescription: getIndexableRouteSeo('/lehengas').description,
   canonical: 'https://luxemia.shop/lehengas',
   ogImage: '/og/og-lehengas.jpg',
   breadcrumbs: [
@@ -375,10 +381,10 @@ const SAREES: CategoryConfig = {
   heroImage: FEATURED_CATEGORY_PRODUCTS.sarees.image,
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.sarees.alt,
-  heroTitle: 'Sarees',
+  heroTitle: getIndexableRouteSeo('/sarees').h1,
   heroSubtitle: 'Shop Banarasi-style, silk, georgette, wedding and festive sarees online in the U.S. Review each listing for its exact fabric, blouse information, dimensions and stitching status.',
-  seoTitle: 'Buy Indian Wedding Sarees Online in the U.S. | LuxeMia',
-  seoDescription: 'Buy Indian wedding, silk and festive sarees online in the U.S. Compare each listing’s exact fabric, weave or work, blouse details, availability and tracked shipping.',
+  seoTitle: getIndexableRouteSeo('/sarees').title,
+  seoDescription: getIndexableRouteSeo('/sarees').description,
   canonical: 'https://luxemia.shop/sarees',
   ogImage: '/og/og-sarees.jpg',
   breadcrumbs: [
@@ -579,10 +585,10 @@ const SUITS: CategoryConfig = {
   heroImage: FEATURED_CATEGORY_PRODUCTS.suits.image,
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.suits.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.suits.alt,
-  heroTitle: 'Salwar Kameez & Suits',
+  heroTitle: getIndexableRouteSeo('/suits').h1,
   heroSubtitle: 'Anarkalis, shararas and palazzo sets for celebrations. For selected custom colour or made-to-measure possibilities, explore LuxeMia custom options.',
-  seoTitle: 'Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia',
-  seoDescription: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping at $135 and above.',
+  seoTitle: getIndexableRouteSeo('/suits').title,
+  seoDescription: getIndexableRouteSeo('/suits').description,
   canonical: 'https://luxemia.shop/suits',
   ogImage: '/og/og-suits.jpg',
   breadcrumbs: [
@@ -746,10 +752,10 @@ const MENSWEAR: CategoryConfig = {
   heroImage: FEATURED_CATEGORY_PRODUCTS.menswear.image,
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.menswear.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.menswear.alt,
-  heroTitle: 'Menswear',
+  heroTitle: getIndexableRouteSeo('/menswear').h1,
   heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
-  seoTitle: 'Buy Sherwanis Online USA | Groom & Wedding | LuxeMia',
-  seoDescription: 'Shop sherwanis, kurta pajama sets and Indo-Western menswear online. Compare exact fabric, included pieces, sizes and availability. Free U.S. shipping at $135 and above.',
+  seoTitle: getIndexableRouteSeo('/menswear').title,
+  seoDescription: getIndexableRouteSeo('/menswear').description,
   canonical: 'https://luxemia.shop/menswear',
   ogImage: '/og/og-menswear.jpg',
   breadcrumbs: [
@@ -906,10 +912,10 @@ const JEWELRY: CategoryConfig = {
   heroImage: FEATURED_CATEGORY_PRODUCTS.jewelry.image,
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.jewelry.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.jewelry.alt,
-  heroTitle: 'Bridal Jewelry',
+  heroTitle: getIndexableRouteSeo('/jewelry').h1,
   heroSubtitle: 'Kundan-style, polki-style and bridal necklace sets. Review each listing for exact materials, finish, included pieces and measurements.',
-  seoTitle: 'Kundan Bridal Jewelry | Necklace Sets for Wedding | LuxeMia',
-  seoDescription: 'Shop Kundan-style, polki-style and bridal necklace sets online. Compare exact materials, finish, included pieces and measurements. Free U.S. shipping at $135 and above.',
+  seoTitle: getIndexableRouteSeo('/jewelry').title,
+  seoDescription: getIndexableRouteSeo('/jewelry').description,
   canonical: 'https://luxemia.shop/jewelry',
   ogImage: '/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   breadcrumbs: [
@@ -982,7 +988,16 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {
-  return CATEGORY_CONFIGS[slug];
+  const config = CATEGORY_CONFIGS[slug];
+  if (!config) return undefined;
+
+  return {
+    ...config,
+    subcategories: config.subcategories.map((subcategory) => ({
+      ...subcategory,
+      landingPath: getDedicatedSubcategoryPath(config.slug, subcategory.slug),
+    })),
+  };
 }
 
 // ─── Mega-menu structure for Header ────────────────────────────────────────
@@ -1000,11 +1015,11 @@ export interface MegaMenuConfig {
 
 function subcatLinks(catSlug: string, subcats: Subcategory[], group: SubcategoryGroup, limit?: number): Array<{ name: string; href: string }> {
   const filtered = subcats.filter(s => s.group === group);
-  const sliced = limit ? filtered.slice(0, limit) : filtered;
-  return sliced.map(s => ({
-    name: s.label,
-    href: `/${catSlug}?sub=${s.slug}`,
-  }));
+  const indexableLinks = filtered.flatMap((subcategory) => {
+    const href = getDedicatedSubcategoryPath(catSlug, subcategory.slug);
+    return href ? [{ name: subcategory.label, href }] : [];
+  });
+  return limit ? indexableLinks.slice(0, limit) : indexableLinks;
 }
 
 export const MEGA_MENUS: MegaMenuConfig[] = [

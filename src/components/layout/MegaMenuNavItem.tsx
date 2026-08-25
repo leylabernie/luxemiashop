@@ -5,8 +5,8 @@
  * Pattern borrowed from kalkifashion.com: hover any top-level category
  * in the header to see a 4-column dropdown of subcategory links.
  *
- * Each link goes to `/<category>?sub=<slug>` — the listing page picks up
- * the sub from the URL and filters accordingly.
+ * Each link goes to a clean, indexable collection route. Facet-only choices
+ * remain interactive filters on the listing page instead of crawlable URLs.
  *
  * Mobile: not used. Mobile uses the existing hamburger drawer in Header.tsx.
  */

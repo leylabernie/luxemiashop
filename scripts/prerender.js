@@ -20,6 +20,29 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 const FALLBACK_PRICE = '299.00';
+const SEO_ARCHITECTURE = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8')
+);
+const INDEXABLE_ROUTE_SEO = SEO_ARCHITECTURE.routes;
+const SUBCATEGORY_LANDING_PATHS = SEO_ARCHITECTURE.subcategoryLandingPaths;
+
+function getIndexableRouteSeo(routePath) {
+  const route = INDEXABLE_ROUTE_SEO[routePath];
+  if (!route) throw new Error(`Missing shared SEO architecture for ${routePath}`);
+  return route;
+}
+
+function normalizeInternalNavigationHtml(content) {
+  return String(content || '').replace(
+    /<a(\s+[^>]*?)href=(['"])(\/(lehengas|sarees|suits|menswear|jewelry)\?sub=([^'"&]+))\2([^>]*)>([\s\S]*?)<\/a>/g,
+    (_match, beforeHref, quote, _href, category, subcategory, afterHref, label) => {
+      const cleanPath = SUBCATEGORY_LANDING_PATHS[category]?.[subcategory];
+      return cleanPath
+        ? `<a${beforeHref}href=${quote}${cleanPath}${quote}${afterHref}>${label}</a>`
+        : `<span>${label}</span>`;
+    },
+  );
+}
 const APPROVED_SITEMAP_PATHS = new Set(
   JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'scripts/approved-sitemap-inventory.json'), 'utf8')).paths
 );
@@ -859,13 +882,44 @@ function filterProductsForCollectionRoute(allProducts, route) {
     if (typeof applyCommercialLandingSubcategory !== 'function') {
       throw new Error(`Commercial landing matcher was not initialized for ${route.path}`);
     }
-    candidates = applyCommercialLandingSubcategory(
-      allProducts.map((node) => ({ node })),
-      route.prerenderSubcategory,
-    ).map((product) => product.node);
+    // Match the exact normalized product representation that React receives
+    // from window.__INITIAL_DATA__. Matching raw supplier copy here can admit
+    // cards that disappear immediately after hydration when verified copy or
+    // crawler-safe tags differ. Keep the original records for HTML/schema once
+    // the stable set of matching handles has been resolved.
+    const matchingHandles = new Set(
+      applyCommercialLandingSubcategory(
+        allProducts.map((node) => ({ node: buildHydrationProductNode(node) })),
+        route.prerenderSubcategory,
+      ).map((product) => product.node.handle),
+    );
+    candidates = allProducts.filter((product) => matchingHandles.has(product.handle));
   }
 
-  return filterProductsForCategory(candidates, route.category, route.path === '/new-arrivals');
+  const selectedProducts = filterProductsForCategory(
+    candidates,
+    route.category,
+    route.path === '/new-arrivals',
+  );
+
+  if (route.prerenderSubcategory) {
+    const hydrationMatchedHandles = new Set(
+      applyCommercialLandingSubcategory(
+        selectedProducts.map((node) => ({ node: buildHydrationProductNode(node) })),
+        route.prerenderSubcategory,
+      ).map((product) => product.node.handle),
+    );
+    const unstableHandles = selectedProducts
+      .map((product) => product.handle)
+      .filter((handle) => !hydrationMatchedHandles.has(handle));
+    if (unstableHandles.length > 0) {
+      throw new Error(
+        `${route.path} contains ${unstableHandles.length} product(s) that would disappear after hydration: ${unstableHandles.join(', ')}`,
+      );
+    }
+  }
+
+  return selectedProducts;
 }
 
 // Build the compact JSON payload that gets injected as window.__INITIAL_DATA__.
@@ -876,29 +930,33 @@ function toSafeInlineJson(value) {
   return JSON.stringify(value).replace(/</g, '\\u003c');
 }
 
+function buildHydrationProductNode(product) {
+  return {
+    id: product.id,
+    title: sanitizeProductTitle(product.title),
+    createdAt: product.createdAt,
+    description: buildVerifiedProductCopy(product),
+    handle: product.handle,
+    vendor: product.vendor,
+    productType: product.productType,
+    // Keep merchandising attributes needed by client-side filters, while
+    // preventing obsolete shipping regions and thresholds from being
+    // republished inside the crawlable hydration payload.
+    tags: getCrawlerSafeTags(product.tags),
+    availableForSale: product.availableForSale,
+    shipsWithinMetafield: product.shipsWithinMetafield || null,
+    priceRange: product.priceRange,
+    compareAtPriceRange: product.compareAtPriceRange,
+    images: product.images,
+    variants: product.variants,
+    options: product.options ?? [],
+  };
+}
+
 function buildInitialDataPayload(products, category) {
   // Slim each product down to the fields the hook actually consumes.
-  const slim = products.map(p => ({
-    node: {
-      id: p.id,
-      title: sanitizeProductTitle(p.title),
-      createdAt: p.createdAt,
-      description: buildVerifiedProductCopy(p),
-      handle: p.handle,
-      vendor: p.vendor,
-      productType: p.productType,
-      // Keep merchandising attributes needed by client-side filters, while
-      // preventing obsolete shipping regions and thresholds from being
-      // republished inside the crawlable hydration payload.
-      tags: getCrawlerSafeTags(p.tags),
-      availableForSale: p.availableForSale,
-      shipsWithinMetafield: p.shipsWithinMetafield || null,
-      priceRange: p.priceRange,
-      compareAtPriceRange: p.compareAtPriceRange,
-      images: p.images,
-      variants: p.variants,
-      options: p.options ?? [],
-    },
+  const slim = products.map((product) => ({
+    node: buildHydrationProductNode(product),
   }));
   return toSafeInlineJson({ category: category || 'all', products: slim });
 }
@@ -908,22 +966,8 @@ function buildInitialDataPayload(products, category) {
 // visit can render and add to bag before a slow Storefront API refresh finishes.
 function buildInitialProductPayload(product) {
   const slim = {
-    id: product.id,
-    title: sanitizeProductTitle(product.title),
-    createdAt: product.createdAt,
-    description: buildVerifiedProductCopy(product),
-    handle: product.handle,
-    vendor: product.vendor,
-    productType: product.productType,
-    tags: getCrawlerSafeTags(product.tags),
-    availableForSale: product.availableForSale,
-    shipsWithinMetafield: product.shipsWithinMetafield || null,
+    ...buildHydrationProductNode(product),
     seo: product.seo || { title: null, description: null },
-    priceRange: product.priceRange,
-    compareAtPriceRange: product.compareAtPriceRange,
-    images: product.images,
-    variants: product.variants,
-    options: product.options || [],
   };
   return toSafeInlineJson({ handle: product.handle, product: slim });
 }
@@ -1037,23 +1081,42 @@ function generateApprovedProductDirectoryHtml(products) {
   return `<p>Browse all ${approvedProducts.length} current product listings by category. Open an individual listing for its exact fabric, included pieces, sizing, price and availability.</p>${sections}`;
 }
 
-// Product-level shipping details mirror the public U.S. standard-shipping terms:
-// $12 below $135 and free at $135+. Delivery time is intentionally omitted
-// because it depends on the item and selected options.
-const US_PRODUCT_SHIPPING_DETAILS = [
-  {
-    '@type': 'OfferShippingDetails',
-    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-    orderValue: { '@type': 'MonetaryAmount', maxValue: 134.99, currency: 'USD' },
-    shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
-  },
-  {
-    '@type': 'OfferShippingDetails',
-    shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-    orderValue: { '@type': 'MonetaryAmount', minValue: 135, currency: 'USD' },
-    shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-  },
-];
+// Product-level shipping details mirror the public U.S. standard-shipping terms.
+// Add a handling window only when custom.ships_within supplies a positive day
+// count. Carrier transit remains omitted because it varies by destination.
+function generateUsProductShippingDetails(shipsWithinDays) {
+  const handlingDays = Number.isFinite(shipsWithinDays) && shipsWithinDays > 0
+    ? Math.trunc(shipsWithinDays)
+    : null;
+  const deliveryTime = handlingDays
+    ? {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: {
+          '@type': 'QuantitativeValue',
+          minValue: 0,
+          maxValue: handlingDays,
+          unitCode: 'DAY',
+        },
+      }
+    : null;
+
+  return [
+    {
+      '@type': 'OfferShippingDetails',
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+      orderValue: { '@type': 'MonetaryAmount', maxValue: 134.99, currency: 'USD' },
+      shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
+      ...(deliveryTime ? { deliveryTime } : {}),
+    },
+    {
+      '@type': 'OfferShippingDetails',
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+      orderValue: { '@type': 'MonetaryAmount', minValue: 135, currency: 'USD' },
+      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
+      ...(deliveryTime ? { deliveryTime } : {}),
+    },
+  ];
+}
 
 function normalizeBrand(vendor) {
   const raw = (vendor || '').trim();
@@ -1090,6 +1153,7 @@ function generateItemListJsonLd(products, category, routePath) {
       ? 'https://schema.org/InStock'
       : 'https://schema.org/OutOfStock';
     const productUrl = `${SITE_URL}/product/${p.handle}`;
+    const shipsWithinDays = getListedProductAttributes(p).shipsWithinDays;
     return {
       '@type': 'ListItem',
       position: i + 1,
@@ -1110,7 +1174,7 @@ function generateItemListJsonLd(products, category, routePath) {
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': `${SITE_URL}/#org` },
           hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
-          shippingDetails: US_PRODUCT_SHIPPING_DETAILS,
+          shippingDetails: generateUsProductShippingDetails(shipsWithinDays),
         },
       },
     };
@@ -1199,9 +1263,9 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
 const routes = [
   {
     path: '/',
-    title: 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
-    description: 'Shop Indian outfits for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping.',
-    h1: 'Premium Indian Ethnic Wear with Tracked U.S. Shipping',
+    title: getIndexableRouteSeo('/').title,
+    description: getIndexableRouteSeo('/').description,
+    h1: getIndexableRouteSeo('/').h1,
     content: `
       <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to United States addresses only. Browse Indian wedding guest outfits with U.S.-based support.</p>
       <h2>What can I shop at LuxeMia?</h2>
@@ -1239,9 +1303,9 @@ const routes = [
   {
     path: '/suits',
     category: 'suits',
-    title: 'Buy Salwar Suits Online — Anarkali, Palazzo & Sharara | LuxeMia',
-    description: 'Shop salwar kameez, anarkali, sharara and palazzo suits online. Compare exact fabric, included pieces, sizing and availability. Free U.S. shipping at $135 and above.',
-    h1: 'Salwar Kameez & Suits Collection',
+    title: getIndexableRouteSeo('/suits').title,
+    description: getIndexableRouteSeo('/suits').description,
+    h1: getIndexableRouteSeo('/suits').h1,
     content: `
       <p>Explore salwar kameez, anarkali, sharara and palazzo sets. Review each product page for the exact fabric, work, included pieces, stitching status, sizing and current availability.</p>
       <h2>Shop Suits by Occasion</h2>
@@ -1294,9 +1358,9 @@ const routes = [
   {
     path: '/lehengas',
     category: 'lehengas',
-    title: 'Bridal & Ready-to-Ship Lehengas USA | LuxeMia',
-    description: 'Shop bridal and wedding guest lehengas online in the USA. Use the Ready to Ship filter for eligible listings; compare fabric, included pieces, sizing and tracked U.S. shipping.',
-    h1: 'Bridal, Wedding Guest & Ready-to-Ship Lehengas in the USA',
+    title: getIndexableRouteSeo('/lehengas').title,
+    description: getIndexableRouteSeo('/lehengas').description,
+    h1: getIndexableRouteSeo('/lehengas').h1,
     content: `
       <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter only for listings explicitly tagged that way, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
       <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
@@ -1354,9 +1418,9 @@ const routes = [
   {
     path: '/sarees',
     category: 'sarees',
-    title: 'Buy Indian Wedding Sarees Online in the U.S. | LuxeMia',
-    description: 'Buy Indian wedding, silk and festive sarees online in the U.S. Compare each listing’s exact fabric, weave or work, blouse details, availability and tracked shipping.',
-    h1: 'Buy Indian Wedding Sarees Online in the U.S.',
+    title: getIndexableRouteSeo('/sarees').title,
+    description: getIndexableRouteSeo('/sarees').description,
+    h1: getIndexableRouteSeo('/sarees').h1,
     content: `
       <p>Explore wedding, silk and festive sarees for U.S. delivery. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
       <h2>Shop Sarees by Occasion</h2>
@@ -1474,9 +1538,9 @@ const routes = [
   {
     path: '/menswear',
     category: 'menswear',
-    title: 'Buy Sherwanis Online — Wedding & Groom Sherwani for Men | LuxeMia',
-    description: 'Shop sherwanis, kurta pajama sets and Indo-Western menswear online. Compare exact fabric, included pieces, sizes and availability. Free U.S. shipping at $135 and above.',
-    h1: 'Indian Menswear — Sherwanis & Kurta Collection',
+    title: getIndexableRouteSeo('/menswear').title,
+    description: getIndexableRouteSeo('/menswear').description,
+    h1: getIndexableRouteSeo('/menswear').h1,
     content: `
       <p>Discover sherwanis, kurta sets and Indo-Western menswear. Review each product page for the exact fabric, work, included pieces, sizes, tailoring options and current availability.</p>
       <h2>Custom Plus-Size Kurta Pajama and Nehru-Jacket Sets</h2>
@@ -1535,9 +1599,9 @@ const routes = [
   {
     path: '/jewelry',
     category: 'jewelry',
-    title: 'Indian Bridal Jewelry Sets | Traditional Wedding Necklaces | LuxeMia',
-    description: 'Shop Kundan-style, polki-style and bridal necklace sets online. Compare exact materials, finish, included pieces and measurements. Free U.S. shipping at $135 and above.',
-    h1: 'Indian Bridal Jewelry & Necklace Sets',
+    title: getIndexableRouteSeo('/jewelry').title,
+    description: getIndexableRouteSeo('/jewelry').description,
+    h1: getIndexableRouteSeo('/jewelry').h1,
     content: `
       <p>Discover Kundan-style, polki-style and bridal necklace sets. Review each product page for the exact materials, finish, stones or accents, included pieces, closure and measurements.</p>
       <h2>Shop Jewelry by Type</h2>
@@ -1628,9 +1692,9 @@ const routes = [
   {
     path: '/collections/bridal-lehengas',
     commercialLanding: 'bridal-lehengas',
-    title: 'Bridal Lehengas Online USA | Indian Wedding Lehengas | LuxeMia',
-    description: 'Shop bridal lehengas online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
-    h1: 'Bridal Lehengas',
+    title: getIndexableRouteSeo('/collections/bridal-lehengas').title,
+    description: getIndexableRouteSeo('/collections/bridal-lehengas').description,
+    h1: getIndexableRouteSeo('/collections/bridal-lehengas').h1,
     content: `<p>Browse current bridal lehengas for Indian wedding celebrations. Each listed design can differ in color, fabric, embroidery, included choli or dupatta pieces, size options and availability.</p>
       <h2>Compare Bridal Lehenga Details Before Ordering</h2>
       <p>Use the product grid to compare current styles, then open the exact listing to confirm the supplied fabric, work, included pieces, measurements and selected option. A category label does not confirm the construction or contents of every design.</p>
@@ -1641,9 +1705,9 @@ const routes = [
   {
     path: '/collections/sharara-suits',
     commercialLanding: 'sharara-suits',
-    title: 'Sharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
-    description: 'Shop sharara suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
-    h1: 'Sharara Suits',
+    title: getIndexableRouteSeo('/collections/sharara-suits').title,
+    description: getIndexableRouteSeo('/collections/sharara-suits').description,
+    h1: getIndexableRouteSeo('/collections/sharara-suits').h1,
     content: `<p>Browse current sharara suits for wedding events, festive celebrations and party wear. A sharara set can combine a kurti, flared bottoms and a dupatta, but the exact silhouette and included pieces vary by listing.</p>
       <h2>Compare Sharara Suit Fabric, Work and Included Pieces</h2>
       <p>Use the current product grid to compare color, stated fabric, embroidery or work, price and available options. Open the exact listing to confirm the supplied kurti, bottoms, dupatta, lining, size and current availability rather than assuming every set includes the same pieces.</p>
@@ -1654,9 +1718,9 @@ const routes = [
   {
     path: '/collections/gharara-suits',
     commercialLanding: 'gharara-suits',
-    title: 'Gharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
-    description: 'Shop gharara suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
-    h1: 'Gharara Suits',
+    title: getIndexableRouteSeo('/collections/gharara-suits').title,
+    description: getIndexableRouteSeo('/collections/gharara-suits').description,
+    h1: getIndexableRouteSeo('/collections/gharara-suits').h1,
     content: `<p>Browse current gharara suit listings for wedding celebrations and festive occasions. Gharara styling can vary by design, so use the product photography and supplied description to compare the exact kurti, flared bottoms, dupatta and embellishment details.</p>
       <h2>Choose a Gharara Set by Color, Work and Included Pieces</h2>
       <p>Compare currently listed colors, fabrics, work and price, then confirm the supplied included pieces, size options and availability on the individual product page. Product details—not a style name alone—are the reliable specification for every outfit.</p>
@@ -1667,9 +1731,9 @@ const routes = [
   {
     path: '/collections/anarkali-suits',
     commercialLanding: 'anarkali-suits',
-    title: 'Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia',
-    description: 'Shop Anarkali suits online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
-    h1: 'Anarkali Suits',
+    title: getIndexableRouteSeo('/collections/anarkali-suits').title,
+    description: getIndexableRouteSeo('/collections/anarkali-suits').description,
+    h1: getIndexableRouteSeo('/collections/anarkali-suits').h1,
     content: `<p>Browse current Anarkali suits for wedding events, festive gatherings and party wear. The available sets can differ in fabric, embroidery, length and included pieces, so use the exact product page to compare the supplied specifications before ordering.</p>
       <h2>Compare Anarkali Suit Fabric, Work and Fit</h2>
       <p>Compare current colors, stated fabric, embroidery or work, price and available options in the product grid. Confirm whether the selected set includes a dupatta, bottoms or lining, plus the listed size and current availability.</p>
@@ -1680,9 +1744,9 @@ const routes = [
   {
     path: '/collections/party-wear-lehengas',
     commercialLanding: 'party-wear-lehengas',
-    title: 'Party-Wear Lehengas Online USA | Festive Lehenga Choli | LuxeMia',
-    description: 'Shop party-wear lehengas online in the USA. Compare current colors, fabric, work, included pieces, sizes and availability.',
-    h1: 'Party-Wear Lehengas',
+    title: getIndexableRouteSeo('/collections/party-wear-lehengas').title,
+    description: getIndexableRouteSeo('/collections/party-wear-lehengas').description,
+    h1: getIndexableRouteSeo('/collections/party-wear-lehengas').h1,
     content: `<p>Browse current party-wear lehengas for receptions, festive events and celebrations. Available designs can differ in silhouette, color, fabric, work, included choli or dupatta pieces, size options and availability.</p>
       <h2>Compare Party-Wear Lehenga Details Before Ordering</h2>
       <p>Use the product grid to compare currently listed styles, then open the selected product page to confirm its supplied fabric, embroidery or work, included pieces, measurements and available option. Do not assume construction or package contents from the category alone.</p>
@@ -1693,9 +1757,9 @@ const routes = [
   {
     path: '/collections/wedding-sarees',
     commercialLanding: 'wedding-sarees',
-    title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
-    description: 'Shop wedding sarees online in the USA. Compare current fabric, work, blouse details, price and availability before ordering.',
-    h1: 'Wedding Sarees',
+    title: getIndexableRouteSeo('/collections/wedding-sarees').title,
+    description: getIndexableRouteSeo('/collections/wedding-sarees').description,
+    h1: getIndexableRouteSeo('/collections/wedding-sarees').h1,
     content: `<p>Browse current wedding sarees for ceremonies, receptions and family celebrations. Each listing has its own supplied fabric, weave or work, blouse details, dimensions, price and availability, so compare the exact product page before placing an event-critical order.</p>
       <h2>Compare Wedding Saree Details Before Ordering</h2>
       <p>Use the current product grid to compare wedding and bridal sarees, then verify the selected listing’s fabric wording, blouse material or blouse details, available option and current availability. A category label does not confirm that every saree has the same construction or included pieces.</p>
@@ -1706,9 +1770,9 @@ const routes = [
   {
     path: '/collections/designer-sarees',
     commercialLanding: 'designer-sarees',
-    title: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
-    description: 'Shop designer sarees online in the USA. Compare current colors, fabric, work, blouse details, price and availability.',
-    h1: 'Designer Sarees',
+    title: getIndexableRouteSeo('/collections/designer-sarees').title,
+    description: getIndexableRouteSeo('/collections/designer-sarees').description,
+    h1: getIndexableRouteSeo('/collections/designer-sarees').h1,
     content: `<p>Browse current designer saree listings for receptions, parties and celebrations. The word “designer” describes a category or style label; it does not by itself confirm a particular maker, fabric, handwork method or included piece. Use the exact product page as the source of truth.</p>
       <h2>Compare Designer Saree Fabric, Work and Blouse Details</h2>
       <p>Use the product grid to compare currently listed colors, stated fabric, embroidery or work, price and available options. Open the selected listing to verify its blouse details, dimensions, included pieces and current availability before ordering.</p>
@@ -2152,6 +2216,7 @@ function generateHtml(template, route, allShopifyProducts) {
   let html = template;
   const seoTitle = clampTitle(route.title);
   const seoDescription = clampDescription(route.description);
+  const routeContent = normalizeInternalNavigationHtml(route.content);
 
   // Replace title
   html = html.replace(
@@ -2331,7 +2396,7 @@ function generateHtml(template, route, allShopifyProducts) {
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#org` },
       hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
-      shippingDetails: US_PRODUCT_SHIPPING_DETAILS,
+      shippingDetails: generateUsProductShippingDetails(productAttributes.shipsWithinDays),
     });
     const schemaVariantProduct = (variant) => {
       const variantId = variant?.id?.split('/').pop() || '';
@@ -2586,7 +2651,7 @@ function generateHtml(template, route, allShopifyProducts) {
     console.log(`[prerender] ${route.path}: linked ${approvedProducts.length} approved products in HTML directory`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}
+      ${routeContent}
       ${generateApprovedStaticDirectoryHtml()}
       <h2>All Current Products</h2>
       ${generateApprovedProductDirectoryHtml(approvedProducts)}`;
@@ -2640,7 +2705,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const productCardsHtml = generateCollectionProductHtml(collectionProducts);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}
+      ${routeContent}
       <h2>Products in this Collection</h2>
       ${productCardsHtml}`;
   } else if (route.path === '/' && allShopifyProducts && allShopifyProducts.size > 0) {
@@ -2653,13 +2718,13 @@ function generateHtml(template, route, allShopifyProducts) {
     html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}
+      ${routeContent}
       <h2>Recently Added Indian Ethnic Wear</h2>
       ${generateCollectionProductHtml(homepageProducts)}`;
   } else {
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      ${route.content}`;
+      ${routeContent}`;
   }
 
   // The Product Directory is the permanent HTML link hub for the approved catalog.

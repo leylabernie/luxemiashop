@@ -31,7 +31,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { SlidersHorizontal, ChevronDown, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -80,6 +80,7 @@ interface CategoryListingProps {
 }
 
 export function CategoryListing({ config, defaultSubcategory }: CategoryListingProps) {
+  const location = useLocation();
   // Fetch products from Shopify Storefront API (via the shared hook).
   // Note: useShopifyPaginatedProducts is currently stubbed (returns all
   // products in one fetch) — the "Load More" button below does real
@@ -150,13 +151,31 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
     price: p.node.priceRange.minVariantPrice.amount,
     currency: p.node.priceRange.minVariantPrice.currencyCode,
   }));
+  const hasListingQueryState = useMemo(() => {
+    const listingParams = new Set([
+      'sub',
+      'price',
+      'sort',
+      ...config.filters.map((section) => section.name.toLowerCase()),
+    ]);
+    return [...new URLSearchParams(location.search).keys()].some((name) =>
+      listingParams.has(name.toLowerCase()),
+    );
+  }, [config.filters, location.search]);
+  const cleanFacetCanonical = !defaultSubcategory && activeSubcategory?.landingPath
+    ? `https://luxemia.shop${activeSubcategory.landingPath}`
+    : config.canonical;
+  const canonical = hasListingQueryState
+    ? cleanFacetCanonical
+    : activeSubcategory?.seoCanonical || config.canonical;
 
   return (
     <div className="min-h-screen bg-[#fcf8f4]">
       <SEOHead
         title={activeSubcategory?.seoTitle || config.seoTitle}
         description={activeSubcategory?.seoDescription || config.seoDescription}
-        canonical={activeSubcategory?.seoCanonical || config.canonical}
+        canonical={canonical}
+        noIndexFollow={hasListingQueryState}
         type="collection"
         image={config.ogImage}
         breadcrumbs={config.breadcrumbs}
@@ -209,7 +228,9 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
               already has the H1 when no sub is active. */}
           {activeSubcategory && (
             <h1 className="text-3xl md:text-4xl font-serif mt-4 mb-2">
-              {activeSubcategory.label} {config.name}
+              {defaultSubcategory
+                ? config.heroTitle
+                : `${activeSubcategory.label} ${config.name}`}
             </h1>
           )}
           {activeSubcategory?.seoDescription && (
@@ -233,6 +254,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                 onToggleFilter={toggleFilter}
                 onPriceChange={setPriceRange}
                 onClearAll={clearAll}
+                onSelectSubcategory={setSubcategory}
                 activeFilterCount={activeFilterCount}
                 activeSubSlug={state.subcategory ?? undefined}
               />
@@ -282,6 +304,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                           onToggleFilter={toggleFilter}
                           onPriceChange={setPriceRange}
                           onClearAll={clearAll}
+                          onSelectSubcategory={setSubcategory}
                           activeFilterCount={activeFilterCount}
                           activeSubSlug={state.subcategory ?? undefined}
                         />

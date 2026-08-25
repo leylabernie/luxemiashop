@@ -16,6 +16,7 @@ export const SITE_URL = 'https://luxemia.shop';
 export const BRAND_NAME = 'LuxeMia';
 export const LEGAL_BUSINESS_NAME = 'Glamour Indian Wear';
 export const SHIPPING_COUNTRIES = ['US'];
+export const BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`;
 
 export function normalizeBrandName(value?: string | null): string {
   const raw = (value || '').trim();
@@ -29,6 +30,11 @@ interface PriceData {
   price: string;
   compareAtPrice?: string | null;
   currency: string;
+}
+
+function normalizeShipsWithinDays(value?: number | null): number | null {
+  if (!Number.isFinite(value) || !value || value < 1) return null;
+  return Math.trunc(value);
 }
 
 export function getSchemaPrices(priceData: PriceData) {
@@ -97,13 +103,26 @@ export function generateUsShippingServiceSchema() {
 }
 
 // Product-level shipping details mirror the public U.S. shipping terms:
-// $12 below $135 and free at $135+. No delivery-time promise is emitted because
-// the storefront correctly states that timing depends on the item and options.
-export function generateUsProductShippingDetails() {
+// $12 below $135 and free at $135+. A handling-time window is emitted only
+// when the product carries a valid custom.ships_within value. Carrier transit
+// remains omitted because it depends on the destination and selected service.
+export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
+  const handlingDays = normalizeShipsWithinDays(shipsWithinDays);
   const shippingDestination = {
     '@type': 'DefinedRegion',
     addressCountry: 'US',
   };
+  const deliveryTime = handlingDays
+    ? {
+        '@type': 'ShippingDeliveryTime',
+        handlingTime: {
+          '@type': 'QuantitativeValue',
+          minValue: 0,
+          maxValue: handlingDays,
+          unitCode: 'DAY',
+        },
+      }
+    : null;
 
   return [
     {
@@ -119,6 +138,7 @@ export function generateUsProductShippingDetails() {
         value: 12,
         currency: 'USD',
       },
+      ...(deliveryTime && { deliveryTime }),
     },
     {
       '@type': 'OfferShippingDetails',
@@ -133,6 +153,7 @@ export function generateUsProductShippingDetails() {
         value: 0,
         currency: 'USD',
       },
+      ...(deliveryTime && { deliveryTime }),
     },
   ];
 }
@@ -158,6 +179,8 @@ export interface ProductSchemaInput {
   compareAtPrice?: string | null;
   currency: string;
   availability: 'InStock' | 'OutOfStock';
+  /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
+  shipsWithinDays?: number | null;
 }
 
 export interface ProductVariantSchemaInput {
@@ -193,7 +216,11 @@ function getGtinSchemaProperty(value?: string | null): Record<string, string> {
   return { [`gtin${digits.length}`]: digits };
 }
 
-function generateOfferSchema(input: Pick<ProductVariantSchemaInput, 'url' | 'price' | 'currency' | 'availability'>) {
+function generateOfferSchema(
+  input: Pick<ProductVariantSchemaInput, 'url' | 'price' | 'currency' | 'availability'> & {
+    shipsWithinDays?: number | null;
+  },
+) {
   return {
     '@type': 'Offer',
     '@id': `${input.url}#offer`,
@@ -204,7 +231,7 @@ function generateOfferSchema(input: Pick<ProductVariantSchemaInput, 'url' | 'pri
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@id': `${SITE_URL}/#org` },
     hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
-    shippingDetails: generateUsProductShippingDetails(),
+    shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays),
   };
 }
 
@@ -221,6 +248,8 @@ export function generateProductGroupSchema(input: {
   productGroupId: string;
   variesBy: string[];
   variants: ProductVariantSchemaInput[];
+  /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
+  shipsWithinDays?: number | null;
 }) {
   const groupId = `${input.url}#productgroup`;
   return {
@@ -267,7 +296,7 @@ export function generateProductGroupSchema(input: {
         })),
       }),
       ...(variant.size && { size: variant.size }),
-      offers: generateOfferSchema(variant),
+      offers: generateOfferSchema({ ...variant, shipsWithinDays: input.shipsWithinDays }),
     })),
   };
 }
@@ -310,6 +339,7 @@ export function generateProductSchema(input: ProductSchemaInput) {
       price: schemaPrice,
       currency: input.currency,
       availability: input.availability,
+      shipsWithinDays: input.shipsWithinDays,
     }),
   };
 }
@@ -365,7 +395,7 @@ export function generateOrganizationSchema() {
     name: BRAND_NAME,
     legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/favicon.ico`,
+    logo: BRAND_LOGO_URL,
     description: 'LuxeMia is an online Indian ethnic wear store serving United States addresses with product details, sizing guidance and tracking after dispatch.',
     address: {
       '@type': 'PostalAddress',
@@ -460,7 +490,7 @@ export function generateSiteNavigationSchema() {
     { name: 'New Arrivals', url: '/new-arrivals' },
     { name: 'Collections', url: '/collections' },
     { name: 'Blog', url: '/blog' },
-    { name: 'Brand Story', url: '/brand-story' },
+    { name: 'Our Story', url: '/about' },
   ];
 
   return {

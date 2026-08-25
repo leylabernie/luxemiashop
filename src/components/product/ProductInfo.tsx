@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, RefreshCcw, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCartStore } from '@/stores/cartStore';
+import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
@@ -16,11 +17,19 @@ import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelect
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
 import { getCustomizableProduct } from '@/lib/customizableProducts';
-import { RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 import {
+  getCustomerFacingProductOptionName,
+  hasNativeProductSizeOption,
   isProductSizeOptionName,
   shouldRenderShopifyProductOption,
 } from '@/lib/productOptionNames';
+import {
+  isVariantOptionValueAvailable,
+  resolveAvailableVariantForOption,
+  resolveIncludedPieces,
+  selectedOptionsFromVariant,
+  selectionRequiresSeparateMeasurements,
+} from '@/lib/productPurchaseFlow';
 import { inferProductSpecColors } from '@/lib/productSpecColor';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
@@ -35,12 +44,12 @@ import {
   RAKSHA_BANDHAN_CAMPAIGN,
 } from '@/config/rakshaBandhanCampaign';
 
-// Utsav-style Stitching Type options with price modifiers
+// Listing-specific stitching choices. Any billable amount must come from an
+// actual Shopify variant or service add-on, never from this display config.
 interface StitchingTypeOption {
   id: string;
   label: string;
   description: string;
-  priceModifier: number;
   requiresMeasurement: boolean;
   requiresQuote?: boolean;
 }
@@ -49,15 +58,13 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
   {
     id: 'semi-stitched',
     label: 'Semi Stitched',
-    description: 'Pre-constructed with adjustable side seams. Select your standard size for a near-perfect fit.',
-    priceModifier: 0,
+    description: 'Pre-constructed with adjustable side seams. Select only a size offered on this listing and plan local alterations if needed.',
     requiresMeasurement: false,
   },
   {
     id: 'ready-to-wear',
     label: 'Ready to Wear',
     description: 'A listing-specific ready-to-wear request. Select the stated size and confirm availability before ordering when the product requires it.',
-    priceModifier: 0,
     requiresMeasurement: true,
     requiresQuote: true,
   },
@@ -65,7 +72,6 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
     id: 'made-to-measure',
     label: 'Made to Measure (UDesign)',
     description: 'Made-to-measure tailoring is available only when LuxeMia confirms the listing-specific design choices, measurements, timing, and charge.',
-    priceModifier: 0,
     requiresMeasurement: true,
     requiresQuote: true,
   },
@@ -79,7 +85,12 @@ interface ProductInfoProps {
 }
 
 // Helper to extract product specs from tags
-const extractProductSpecs = (tags?: string[], productType?: string, productTitle?: string) => {
+const extractProductSpecs = (
+  tags?: string[],
+  productType?: string,
+  productTitle?: string,
+  metadataIncludedComponents?: string[] | null,
+) => {
   const specs: Record<string, string> = {};
   const lowerProductType = productType?.toLowerCase() || '';
   const lowerTitle = productTitle?.toLowerCase() || '';
@@ -101,42 +112,12 @@ const extractProductSpecs = (tags?: string[], productType?: string, productTitle
     if (closure) specs.closure = closure;
   }
 
-  // Included pieces must come from an explicit catalog tag. Do not infer a
-  // dupatta, blouse, bottom, jewelry piece, or accessory from the product type.
-  const includedPiecePrefixes = [
-    'included:',
-    'included pieces:',
-    'pieces:',
-    'set includes:',
-    'package includes:',
-  ];
-  const includedPiecesTag = catalogTags.find((tag) =>
-    includedPiecePrefixes.some((prefix) => tag.toLowerCase().startsWith(prefix)),
+  const includedPieces = resolveIncludedPieces(
+    metadataIncludedComponents,
+    catalogTags,
+    productTitle,
   );
-  if (includedPiecesTag) {
-    const matchedPrefix = includedPiecePrefixes.find((prefix) =>
-      includedPiecesTag.toLowerCase().startsWith(prefix),
-    );
-    const includedPieces = matchedPrefix
-      ? includedPiecesTag.slice(matchedPrefix.length).trim()
-      : '';
-    if (includedPieces) specs.includedPieces = includedPieces;
-  }
-
-  // A title that explicitly says “with Dupatta” is source-backed set-content
-  // information. Keep the statement no broader than the title: never infer a
-  // choli, blouse, can-can, or any other component that is not named.
-  if (!specs.includedPieces && /\bwith\s+dupatta\b/i.test(productTitle || '')) {
-    if (/\blehenga\s+choli\b/i.test(productTitle || '')) {
-      specs.includedPieces = 'Lehenga choli and dupatta';
-    } else if (/\blehenga\b/i.test(productTitle || '')) {
-      specs.includedPieces = 'Lehenga and dupatta';
-    } else if (/\bsaree\b/i.test(productTitle || '')) {
-      specs.includedPieces = 'Saree and dupatta';
-    } else if (/\bsuit\b/i.test(productTitle || '')) {
-      specs.includedPieces = 'Suit and dupatta';
-    }
-  }
+  if (includedPieces) specs.includedPieces = includedPieces;
 
   // Legacy accessory tags contain garment attributes on some listings. Avoid
   // surfacing those as jewelry specifications until the catalog is corrected.
@@ -300,17 +281,6 @@ const isMenswearProduct = (productType?: string, tags?: string[]): boolean => {
   return false;
 };
 
-// Check if a product already has numeric size variants from Shopify (28-62)
-const hasNumericSizeVariants = (product: ShopifyProduct['node']): boolean => {
-  const sizeOption = product.options.find(
-    (option) => isProductSizeOptionName(option.name)
-  );
-  if (!sizeOption) return false;
-  // Check if any size values look like numeric bust sizes (e.g. "28", "30", "32")
-  const numericValues = sizeOption.values.filter(v => /^\d{2}$/.test(v.trim()));
-  return numericValues.length >= 3;
-};
-
 export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
@@ -331,7 +301,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const isStitchable = !customizableProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
   const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
-  const productHasNumericSizes = hasNumericSizeVariants(product);
+  const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
   const isLaunchOfferActive = isRakshaBandhanCampaignActive();
 
@@ -377,6 +347,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const [selectedServiceAddOnCodes, setSelectedServiceAddOnCodes] = useState<ServiceAddOnCode[]>([]);
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
+  const toggleWishlistItem = useWishlistStore((state) => state.toggleItem);
+  const isWishlisted = useWishlistStore((state) => state.isInWishlist(product.id));
+  const variantNodes = useMemo(
+    () => product.variants.edges.map((edge) => edge.node),
+    [product.variants.edges],
+  );
 
   const eligibleServiceAddOnCodes = useMemo(
     () => getEligibleServiceAddOns(product),
@@ -448,7 +424,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return bestVar;
   }, [purchasableVariant, selectedOptions, product]);
 
-  // Calculate current price, including stitching option premium if applicable
+  // Shopify's selected variant is the only source of truth for the garment
+  // price. Never infer a surcharge from option labels: that would make the
+  // product page disagree with the amount Shopify actually charges.
   const activeVariantForGallery = purchasableVariant?.node ?? bestMatchVariant?.node ?? null;
 
   // Keep the product gallery synchronized with the exact Shopify variant that
@@ -459,24 +437,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   }, [activeVariantForGallery, onSelectedVariantChange]);
 
   const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
-  const stitchingPremium = useMemo(() => {
-    // Use the Utsav-style stitching type selector for stitchable products
-    if (isStitchable && selectedStitchingType) {
-      const option = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
-      return option?.priceModifier || 0;
-    }
-    // Fallback for non-stitchable products that still have stitching in variant names
-    for (const [key, value] of Object.entries(selectedOptions)) {
-      if (key.toLowerCase().includes('stitch') && value) {
-        const lowerValue = value.toLowerCase();
-        if (lowerValue.includes('blouse')) return 15;
-        if (lowerValue.includes('full')) return 25;
-        if (lowerValue.includes('semi')) return 0;
-      }
-    }
-    return 0;
-  }, [selectedOptions, selectedStitchingType, isStitchable]);
-
   const selectedServiceAddOnCharge = useMemo(
     () => serviceAddOnTotal(selectedAvailableServiceAddOnCodes),
     [selectedAvailableServiceAddOnCodes],
@@ -484,10 +444,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const currentPrice = useMemo(() => {
     const baseAmount = parseFloat(basePrice.amount);
     return {
-      amount: (baseAmount + stitchingPremium + selectedServiceAddOnCharge).toString(),
+      amount: (baseAmount + selectedServiceAddOnCharge).toString(),
       currencyCode: basePrice.currencyCode,
     };
-  }, [basePrice, selectedServiceAddOnCharge, stitchingPremium]);
+  }, [basePrice, selectedServiceAddOnCharge]);
   const hasAvailableVariant = product.variants.edges.some(
     (edge) => edge.node.availableForSale !== false
   );
@@ -495,8 +455,13 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
   const productSpecs = useMemo(
-    () => extractProductSpecs(product.tags, product.productType, product.title),
-    [product.tags, product.productType, product.title],
+    () => extractProductSpecs(
+      product.tags,
+      product.productType,
+      product.title,
+      product.metadata?.includedComponents,
+    ),
+    [product.tags, product.productType, product.title, product.metadata?.includedComponents],
   );
   const shipByLabel = getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
@@ -533,14 +498,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     // tailoring tags are handled by the branch above; the fallback below is
     // only for catalogs that expose multiple selectable stitching variants.
     if (product.variants.edges.length <= 1) return false;
-    // Fallback for products with stitching in variant names
-    return Object.entries(selectedOptions).some(([key, val]) => {
-      const lowerKey = key.toLowerCase();
-      const lowerVal = val.toLowerCase();
-      const isStitchingOption = lowerKey.includes('stitch') || lowerVal.includes('stitch');
-      const isUnstitched = lowerVal.startsWith('unstitched') || lowerVal === 'unstitched';
-      return isStitchingOption && !isUnstitched;
-    });
+    // Standard and semi-stitched variant labels are complete catalog choices;
+    // they must not trigger a second measurement selector. Only an explicit
+    // tailoring choice (for example Custom Stitching) reaches this fallback.
+    return Object.entries(selectedOptions).some(([key, val]) =>
+      selectionRequiresSeparateMeasurements(key, val),
+    );
   }, [selectedOptions, selectedStitchingType, isStitchable, product.variants.edges.length]);
 
   // Determine the size mode based on stitching type
@@ -588,38 +551,56 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return isStitchable && selectedStitchingType === 'made-to-measure';
   }, [isStitchable, selectedStitchingType]);
 
-  // Whether to show the StitchingSizeSelector (only when the product doesn't have numeric sizes from Shopify)
+  // Shopify's native letter and numeric size variants are the purchase source
+  // of truth. Never ask for a second "Stitching Size" when either is present.
   const showStitchingSizeSelector = useMemo(() => {
-    if (isMenswear) return true; // Menswear always needs a size selector
-    if (productHasNumericSizes) return false; // Product already has size variants in Shopify
+    if (productHasNativeSizes) return false;
+    if (isMenswear) return true;
     return needsStitchingSize;
-  }, [needsStitchingSize, productHasNumericSizes, isMenswear]);
+  }, [needsStitchingSize, productHasNativeSizes, isMenswear]);
 
   // Whether to show the Customize header (all stitchable products + menswear)
   const showCustomizeHeader = isStitchable || isMenswear;
 
   const handleOptionSelect = (optionName: string, value: string) => {
-    setSelectedOptions((prev) => ({
-      ...prev,
-      [optionName]: value,
-    }));
-    
-    // If this is a stitching option, show the size selector and trigger validation
-    if (optionName.toLowerCase().includes('stitch') && value.toLowerCase().includes('stitch')) {
-      setShowSizeValidation(true);
-    }
-    
-    // Reset stitching size when switching to Unstitched or a non-stitch option
-    if (
-      value.toLowerCase().startsWith('unstitched') ||
-      (!value.toLowerCase().includes('stitch'))
-    ) {
-      setStitchingSize(null);
-      setShowSizeValidation(false);
+    const resolvedVariant = resolveAvailableVariantForOption(
+      variantNodes,
+      selectedOptions,
+      optionName,
+      value,
+    );
+    if (!resolvedVariant) {
+      toast.error(`${value} is currently unavailable`);
+      return;
     }
 
-    if (isProductSizeOptionName(optionName)) {
-      setCustomSizeConfirmed(!/\bcustom(?:\s*size)?\b/i.test(value.trim()));
+    const nextSelectedOptions = {
+      ...selectedOptions,
+      ...selectedOptionsFromVariant(resolvedVariant),
+    };
+    setSelectedOptions(nextSelectedOptions);
+
+    const currentCustomSize = Object.entries(selectedOptions).some(([name, selectedValue]) =>
+      isProductSizeOptionName(name)
+      && /\bcustom(?:\s*size)?\b/i.test(selectedValue.trim()),
+    );
+    const nextCustomSize = Object.entries(nextSelectedOptions).some(([name, selectedValue]) =>
+      isProductSizeOptionName(name)
+      && /\bcustom(?:\s*size)?\b/i.test(selectedValue.trim()),
+    );
+    if (!nextCustomSize) {
+      setCustomSizeConfirmed(true);
+    } else if (!currentCustomSize) {
+      setCustomSizeConfirmed(false);
+    }
+
+    const isTailoringOption = !isProductSizeOptionName(optionName)
+      && (optionName.toLowerCase().includes('stitch') || optionName.toLowerCase().includes('tailor'));
+    if (isTailoringOption) {
+      const requiresSeparateMeasurements = selectionRequiresSeparateMeasurements(optionName, value)
+        && !productHasNativeSizes;
+      setShowSizeValidation(requiresSeparateMeasurements);
+      if (!requiresSeparateMeasurements) setStitchingSize(null);
     }
   };
 
@@ -659,14 +640,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     }
 
     // Require stitching size when needed and not already provided by Shopify variants
-    if (needsStitchingSize && !productHasNumericSizes && !stitchingSize) {
+    if (needsStitchingSize && !productHasNativeSizes && !stitchingSize) {
       setShowSizeValidation(true);
       toast.error('Please select a size for stitching');
       return;
     }
 
     // For menswear, require size
-    if (isMenswear && !stitchingSize && !productHasNumericSizes) {
+    if (isMenswear && !stitchingSize && !productHasNativeSizes) {
       setShowSizeValidation(true);
       toast.error('Please select a size');
       return;
@@ -696,7 +677,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         customAttributes.push({ key: 'Tailoring Confirmation', value: 'Listing-specific availability, measurements, timing, and charge require LuxeMia confirmation' });
       }
     }
-    if (needsStitchingSize && stitchingSize) {
+    if (needsStitchingSize && !productHasNativeSizes && stitchingSize) {
       customAttributes.push({ key: 'Stitching Size', value: stitchingSize });
     }
     if (showNeckline) {
@@ -750,6 +731,36 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       style: 'currency',
       currency,
     }).format(parseFloat(amount));
+  };
+
+  const handleWishlistToggle = () => {
+    toggleWishlistItem({ node: product });
+    toast.success(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist', {
+      description: product.title,
+    });
+  };
+
+  const handleShare = async () => {
+    const productUrl = `https://luxemia.shop/product/${product.handle}`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: product.title,
+          text: `View ${product.title} at LuxeMia`,
+          url: productUrl,
+        });
+        return;
+      }
+
+      await navigator.clipboard.writeText(productUrl);
+      toast.success('Product link copied');
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      toast.error('Unable to share this product', {
+        description: productUrl,
+      });
+    }
   };
 
   return (
@@ -902,9 +913,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           {/* Stitching Info Popover */}
           {showStitchingInfo && (
             <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
-              <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed outfit with adjustable side seams. Select your standard size for a near-perfect fit. Alterations can be done locally if needed.</p>
-              <p><strong className="text-foreground">Ready to Wear:</strong> Fully stitched to your selected size. Choose your bust size and we'll tailor it completely — ready to wear right out of the box.</p>
-              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> Choose from the neckline, sleeve, and bottom-style options shown on this page. Submit measurements after placing the order.</p>
+              <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed with adjustable side seams. Select only a size offered on this listing and plan local alterations if needed.</p>
+              <p><strong className="text-foreground">Ready to Wear:</strong> A listing-specific request that requires LuxeMia to confirm the stated size, availability, timing, and any charge.</p>
+              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> The design choices, measurements, timing, and charge require LuxeMia confirmation before production.</p>
             </div>
           )}
 
@@ -912,6 +923,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             {STITCHING_TYPE_OPTIONS.map((option) => (
               <button
                 key={option.id}
+                type="button"
                 onClick={() => {
                   handleStitchingTypeSelect(option.id);
                 }}
@@ -936,9 +948,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                     )}
                   </div>
                   <span className={`text-sm font-medium ${
-                    option.priceModifier === 0
-                      ? 'text-green-600 dark:text-green-400'
-                      : 'text-foreground'
+                    option.requiresQuote
+                      ? 'text-foreground'
+                      : 'text-green-600 dark:text-green-400'
                   }`}>
                     {option.requiresQuote ? 'Confirmation required' : 'Included'}
                   </span>
@@ -951,12 +963,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             ))}
           </div>
 
-          {/* Made to Measure — post-order measurement info box */}
+          {/* Made to Measure — source-backed confirmation process */}
           {selectedStitchingType === 'made-to-measure' && (
             <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm">
               <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                You can submit your measurements after placing the order. Select Made to Measure, add to bag, complete your order, then go to <strong>My Account → My Orders</strong> to submit your measurements at your convenience.
+                After checkout, LuxeMia will use the order contact details to confirm whether tailoring is available, the exact measurements, timing, and any charge before production. Contact LuxeMia before ordering for a fixed event date.
               </p>
             </div>
           )}
@@ -964,7 +976,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       )}
 
       {/* ─── Menswear Size Selector ─── */}
-      {isMenswear && !productHasNumericSizes && (
+      {isMenswear && !productHasNativeSizes && (
         <StitchingSizeSelector
           selectedSize={stitchingSize}
           onSizeChange={setStitchingSize}
@@ -985,31 +997,43 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           <div key={option.name} className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium uppercase tracking-wide">
-                {option.name}
+                {getCustomerFacingProductOptionName(option)}
                 {selectedOptions[option.name] && (
                   <span className="font-normal text-muted-foreground ml-2">
                     — {selectedOptions[option.name]}
                   </span>
                 )}
               </label>
-              {isProductSizeOptionName(option.name) && (
+              {getCustomerFacingProductOptionName(option) === 'Size' && (
                 <SizeGuideModal category={product.productType} />
               )}
             </div>
             <div className="flex flex-wrap gap-2">
-              {option.values.map((value) => (
-                <button
-                  key={value}
-                  onClick={() => handleOptionSelect(option.name, value)}
-                  className={`px-4 py-2.5 text-sm border rounded-sm transition-all duration-300 ${
-                    selectedOptions[option.name] === value
-                      ? 'border-foreground bg-foreground text-background'
-                      : 'border-border hover:border-foreground/50'
-                  }`}
-                >
-                  {value}
-                </button>
-              ))}
+              {option.values.map((value) => {
+                const optionValueAvailable = isVariantOptionValueAvailable(
+                  variantNodes,
+                  option.name,
+                  value,
+                );
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => handleOptionSelect(option.name, value)}
+                    disabled={!optionValueAvailable}
+                    aria-label={`${value}${optionValueAvailable ? '' : ' — unavailable'}`}
+                    className={`px-4 py-2.5 text-sm border rounded-sm transition-all duration-300 ${
+                      selectedOptions[option.name] === value
+                        ? 'border-foreground bg-foreground text-background'
+                        : optionValueAvailable
+                        ? 'border-border hover:border-foreground/50'
+                        : 'cursor-not-allowed border-border text-muted-foreground opacity-45'
+                    }`}
+                  >
+                    {value}
+                  </button>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -1243,11 +1267,26 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           </Button>
         </motion.div>
 
-        <Button variant="outline" size="icon" className="h-14 w-14" aria-label="Save product to wishlist">
-          <Heart className="h-5 w-5" />
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          className="h-14 w-14"
+          aria-label={isWishlisted ? 'Remove product from wishlist' : 'Save product to wishlist'}
+          aria-pressed={isWishlisted}
+          onClick={handleWishlistToggle}
+        >
+          <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-primary text-primary' : ''}`} />
         </Button>
 
-        <Button variant="outline" size="icon" className="h-14 w-14" aria-label="Share this product">
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          className="h-14 w-14"
+          aria-label="Share this product"
+          onClick={handleShare}
+        >
           <Share2 className="h-5 w-5" />
         </Button>
       </div>
@@ -1360,9 +1399,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         <div>
           <p className="text-sm font-medium">Check your measurements before ordering</p>
           <p className="text-xs text-muted-foreground">
-            {RETURN_POLICY_SUMMARY} Contact LuxeMia before purchase if you need sizing help.{' '}
+            All sales are final. Damaged, incorrect, or missing-item reports follow the covered-order-issue process. Contact LuxeMia before purchase if you need sizing help.{' '}
             <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
-              Read the return policy
+              Review the return policy and reporting steps
             </Link>
           </p>
         </div>
@@ -1394,16 +1433,16 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           </div>
           <div>
             <p className="text-sm font-medium">Secure Checkout</p>
-            <p className="text-xs text-muted-foreground">Shopify PCI-DSS encrypted</p>
+            <p className="text-xs text-muted-foreground">Secure Shopify checkout</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-            <RefreshCcw className="h-5 w-5 text-primary" />
+            <Info className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <p className="text-sm font-medium">Damage Protection</p>
-            <p className="text-xs text-muted-foreground">Report genuine shipping damage, an incorrect item, or a missing item within 48 hours with clear photos and the required continuous unboxing/opening video.</p>
+            <p className="text-sm font-medium">Order Issue Support</p>
+            <p className="text-xs text-muted-foreground">Guidance for reporting a damaged, incorrect, or missing item</p>
           </div>
         </div>
       </div>
@@ -1421,16 +1460,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         </div>
       </div>
 
-      {/* Payment Methods */}
+      {/* Payment methods vary by order, device, and Shopify eligibility. */}
       <div className="pt-4 border-t border-border/30 mt-4">
-        <p className="text-xs text-muted-foreground mb-2">We Accept</p>
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Visa</div>
-          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Mastercard</div>
-          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Amex</div>
-          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">PayPal</div>
-          <div className="px-2 py-1 bg-muted rounded text-xs font-medium">Apple Pay</div>
-        </div>
+        <p className="text-xs text-muted-foreground">
+          Payment methods available for this order are shown at secure Shopify checkout.
+        </p>
       </div>
     </div>
   );

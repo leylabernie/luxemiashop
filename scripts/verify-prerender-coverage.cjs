@@ -37,6 +37,31 @@ require('./postprocess-error-pages.cjs');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const PRERENDER_DIR = path.join(PROJECT_ROOT, 'dist/_prerender');
+const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
+const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
+const MAIN_TSX = path.join(PROJECT_ROOT, 'src/main.tsx');
+const BLOG_POST_PAGE_TSX = path.join(PROJECT_ROOT, 'src/pages/BlogPost.tsx');
+const VERCEL_JSON = path.join(PROJECT_ROOT, 'vercel.json');
+const SITE_URL = 'https://luxemia.shop';
+const AUTHOR_ROUTE = '/authors/luxemia-editorial-team';
+const BLOG_TOPIC_HUBS = [
+  '/blog/attires',
+  '/blog/motifs-embroideries',
+  '/blog/weddings-festivals',
+  '/blog/how-to-care',
+  '/blog/designer-profiles',
+  '/blog/cultural-context',
+];
+const LEGACY_AUTHOR_ROUTES = [
+  '/authors/ananya-iyer',
+  '/authors/meera-kapoor',
+  '/authors/rajesh-sharma',
+  '/authors/priya-nair',
+];
+const LEGACY_AUTHOR_NAMES = ['Ananya Iyer', 'Meera Kapoor', 'Rajesh Sharma', 'Priya Nair'];
+const SEO_ARCHITECTURE = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8'),
+);
 const COMMERCIAL_COLLECTIONS = [
   { route: '/collections/bridal-lehengas', category: 'lehengas' },
   { route: '/collections/party-wear-lehengas', category: 'lehengas' },
@@ -53,6 +78,242 @@ function routeToFilePath(routePath) {
   }
   const parts = routePath.slice(1); // remove leading /
   return path.join(PRERENDER_DIR, `${parts}.html`);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function extractQuotedValues(source) {
+  return [...source.matchAll(/['"]([^'"]+)['"]/g)].map((match) => match[1]);
+}
+
+function parsePublishedBlogSlugs() {
+  if (!fs.existsSync(BLOG_POSTS_TS)) {
+    throw new Error(`${BLOG_POSTS_TS} not found`);
+  }
+  const source = fs.readFileSync(BLOG_POSTS_TS, 'utf8');
+  const block = source.match(/PUBLISHED_BLOG_SLUGS\s*=\s*\[([\s\S]*?)\]\s*as const/);
+  if (!block) {
+    throw new Error(`PUBLISHED_BLOG_SLUGS was not found in ${BLOG_POSTS_TS}`);
+  }
+  const slugs = extractQuotedValues(block[1]);
+  if (slugs.length === 0) {
+    throw new Error(`PUBLISHED_BLOG_SLUGS is empty in ${BLOG_POSTS_TS}`);
+  }
+  const duplicates = slugs.filter((slug, index) => slugs.indexOf(slug) !== index);
+  if (duplicates.length > 0) {
+    throw new Error(`PUBLISHED_BLOG_SLUGS contains duplicate(s): ${[...new Set(duplicates)].join(', ')}`);
+  }
+  return slugs;
+}
+
+function parseAutoRoutes() {
+  if (!fs.existsSync(AUTO_ROUTES_TS)) {
+    throw new Error(`${AUTO_ROUTES_TS} not found`);
+  }
+  const source = fs.readFileSync(AUTO_ROUTES_TS, 'utf8');
+  const block = source.match(/PRERENDERED_ROUTES[\s\S]*?new Set\(\s*\[([\s\S]*?)\]\s*\)/);
+  if (!block) {
+    throw new Error(`PRERENDERED_ROUTES could not be parsed from ${AUTO_ROUTES_TS}`);
+  }
+  return extractQuotedValues(block[1]);
+}
+
+function getHtmlAttribute(tag, attribute) {
+  const escapedAttribute = attribute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = tag.match(new RegExp(`\\b${escapedAttribute}\\s*=\\s*(["'])(.*?)\\1`, 'i'));
+  return match?.[2] ?? null;
+}
+
+function collectSchemaNodesByType(value, schemaType, nodes = []) {
+  if (Array.isArray(value)) {
+    for (const entry of value) collectSchemaNodesByType(entry, schemaType, nodes);
+    return nodes;
+  }
+  if (!value || typeof value !== 'object') return nodes;
+
+  const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+  if (types.includes(schemaType)) nodes.push(value);
+  for (const nestedValue of Object.values(value)) {
+    collectSchemaNodesByType(nestedValue, schemaType, nodes);
+  }
+  return nodes;
+}
+
+function parseJsonLdScripts(html, route, failures) {
+  const parsed = [];
+  for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    const attributes = match[1];
+    if (getHtmlAttribute(attributes, 'type')?.toLowerCase() !== 'application/ld+json') continue;
+    try {
+      parsed.push({ attributes, schema: JSON.parse(match[2]) });
+    } catch (error) {
+      failures.push(`${route}: invalid JSON-LD (${error.message})`);
+    }
+  }
+  return parsed;
+}
+
+function verifyJulyRegressionGuards(routes) {
+  const failures = [];
+  const routeSet = new Set(routes);
+  const duplicateRoutes = routes.filter((route, index) => routes.indexOf(route) !== index);
+  if (duplicateRoutes.length > 0) {
+    failures.push(`scripts/routes.json contains duplicate(s): ${[...new Set(duplicateRoutes)].join(', ')}`);
+  }
+
+  let autoRoutes = [];
+  try {
+    autoRoutes = parseAutoRoutes();
+  } catch (error) {
+    failures.push(error.message);
+  }
+  if (autoRoutes.length > 0) {
+    const autoRouteSet = new Set(autoRoutes);
+    const missingFromAutoRoutes = routes.filter((route) => !autoRouteSet.has(route));
+    const missingFromRoutesJson = autoRoutes.filter((route) => !routeSet.has(route));
+    if (missingFromAutoRoutes.length > 0) {
+      failures.push(`src/lib/autoRoutes.ts is missing manifest route(s): ${missingFromAutoRoutes.join(', ')}`);
+    }
+    if (missingFromRoutesJson.length > 0) {
+      failures.push(`scripts/routes.json is missing auto route(s): ${missingFromRoutesJson.join(', ')}`);
+    }
+    if (autoRoutes.length !== autoRouteSet.size) {
+      failures.push('src/lib/autoRoutes.ts contains duplicate routes');
+    }
+  }
+
+  let publishedSlugs = [];
+  try {
+    publishedSlugs = parsePublishedBlogSlugs();
+  } catch (error) {
+    failures.push(error.message);
+  }
+  const publishedRoutes = publishedSlugs.map((slug) => `/blog/${slug}`);
+  const publishedRouteSet = new Set(publishedRoutes);
+  for (const route of publishedRoutes) {
+    if (!routeSet.has(route)) failures.push(`${route}: published source article is absent from routes.json`);
+  }
+  for (const route of BLOG_TOPIC_HUBS) {
+    if (!routeSet.has(route)) failures.push(`${route}: required blog topic hub is absent from routes.json`);
+  }
+  const unknownBlogRoutes = routes.filter(
+    (route) => route.startsWith('/blog/')
+      && !publishedRouteSet.has(route)
+      && !BLOG_TOPIC_HUBS.includes(route),
+  );
+  if (unknownBlogRoutes.length > 0) {
+    failures.push(`routes.json contains blog article route(s) outside PUBLISHED_BLOG_SLUGS: ${unknownBlogRoutes.join(', ')}`);
+  }
+
+  if (!routeSet.has(AUTHOR_ROUTE)) {
+    failures.push(`${AUTHOR_ROUTE}: factual author route is absent from routes.json`);
+  } else {
+    const authorHtml = fs.readFileSync(routeToFilePath(AUTHOR_ROUTE), 'utf8');
+    const metaTags = [...authorHtml.matchAll(/<meta\b[^>]*>/gi)].map((match) => match[0]);
+    const robotsTags = metaTags.filter(
+      (tag) => getHtmlAttribute(tag, 'name')?.toLowerCase() === 'robots',
+    );
+    const robotsContent = robotsTags.length === 1 ? getHtmlAttribute(robotsTags[0], 'content') : null;
+    if (robotsTags.length !== 1 || !robotsContent || !/\bindex\b/i.test(robotsContent) || /\bnoindex\b/i.test(robotsContent)) {
+      failures.push(`${AUTHOR_ROUTE}: expected one indexable robots directive`);
+    }
+
+    const canonicalTags = [...authorHtml.matchAll(/<link\b[^>]*>/gi)]
+      .map((match) => match[0])
+      .filter((tag) => getHtmlAttribute(tag, 'rel')?.toLowerCase() === 'canonical');
+    const canonical = canonicalTags.length === 1 ? getHtmlAttribute(canonicalTags[0], 'href') : null;
+    if (canonical !== `${SITE_URL}${AUTHOR_ROUTE}`) {
+      failures.push(`${AUTHOR_ROUTE}: expected one self-referencing canonical`);
+    }
+    if (!authorHtml.includes('<h1>LuxeMia Editorial Team</h1>')) {
+      failures.push(`${AUTHOR_ROUTE}: factual author prerender is missing its H1`);
+    }
+  }
+
+  for (const route of publishedRoutes) {
+    if (!routeSet.has(route)) continue;
+    const html = fs.readFileSync(routeToFilePath(route), 'utf8');
+    const jsonLdScripts = parseJsonLdScripts(html, route, failures);
+    const blogPostings = jsonLdScripts.flatMap(({ attributes, schema }) =>
+      collectSchemaNodesByType(schema, 'BlogPosting').map((node) => ({ attributes, node })),
+    );
+    if (blogPostings.length !== 1) {
+      failures.push(`${route}: expected exactly one prerendered BlogPosting schema, found ${blogPostings.length}`);
+    } else {
+      const [{ attributes, node }] = blogPostings;
+      if (!/\bdata-prerender-schema(?:\s|=|$)/i.test(attributes)) {
+        failures.push(`${route}: BlogPosting schema is not marked data-prerender-schema for hydration cleanup`);
+      }
+      const authors = Array.isArray(node.author) ? node.author : [node.author];
+      const hasFactualAuthor = authors.some(
+        (author) => author?.name === 'LuxeMia Editorial Team'
+          && author?.url === `${SITE_URL}${AUTHOR_ROUTE}`,
+      );
+      if (!hasFactualAuthor) {
+        failures.push(`${route}: BlogPosting does not reference the factual editorial-team author`);
+      }
+    }
+    for (const legacyRoute of LEGACY_AUTHOR_ROUTES) {
+      if (html.includes(legacyRoute)) failures.push(`${route}: prerender still links to ${legacyRoute}`);
+    }
+    for (const legacyName of LEGACY_AUTHOR_NAMES) {
+      if (html.includes(legacyName)) failures.push(`${route}: prerender still names fabricated author ${legacyName}`);
+    }
+  }
+
+  const mainSource = fs.readFileSync(MAIN_TSX, 'utf8');
+  const cleanupIndex = mainSource.indexOf('script[data-prerender-schema]');
+  const createRootIndex = mainSource.indexOf('createRoot(');
+  const cleanupSection = cleanupIndex >= 0 && createRootIndex > cleanupIndex
+    ? mainSource.slice(cleanupIndex, createRootIndex)
+    : '';
+  if (!cleanupSection.includes('.remove()')) {
+    failures.push('src/main.tsx must remove data-prerender-schema scripts before createRoot()');
+  }
+
+  const blogPostPageSource = fs.readFileSync(BLOG_POST_PAGE_TSX, 'utf8');
+  const hydratedBlogPostingCount = (
+    blogPostPageSource.match(/["']@type["']\s*:\s*["']BlogPosting["']/g) || []
+  ).length;
+  if (hydratedBlogPostingCount !== 1) {
+    failures.push(`src/pages/BlogPost.tsx must define exactly one hydrated BlogPosting schema, found ${hydratedBlogPostingCount}`);
+  }
+  if (!blogPostPageSource.includes(`${SITE_URL}${AUTHOR_ROUTE}`)) {
+    failures.push('src/pages/BlogPost.tsx does not reference the factual editorial-team author URL');
+  }
+
+  let vercelConfig;
+  try {
+    vercelConfig = JSON.parse(fs.readFileSync(VERCEL_JSON, 'utf8'));
+  } catch (error) {
+    failures.push(`vercel.json could not be parsed (${error.message})`);
+  }
+  const redirects = Array.isArray(vercelConfig?.redirects) ? vercelConfig.redirects : [];
+  for (const legacyRoute of LEGACY_AUTHOR_ROUTES) {
+    const matchingRedirects = redirects.filter((redirect) => redirect.source === legacyRoute);
+    if (
+      matchingRedirects.length !== 1
+      || matchingRedirects[0].destination !== AUTHOR_ROUTE
+      || matchingRedirects[0].statusCode !== 301
+    ) {
+      failures.push(`${legacyRoute}: expected one 301 redirect to ${AUTHOR_ROUTE}`);
+    }
+    if (routeSet.has(legacyRoute)) {
+      failures.push(`${legacyRoute}: legacy fabricated author remains in routes.json`);
+    }
+    if (fs.existsSync(routeToFilePath(legacyRoute))) {
+      failures.push(`${legacyRoute}: legacy fabricated author still has prerendered HTML`);
+    }
+  }
+
+  return { failures, publishedCount: publishedRoutes.length };
 }
 
 function parseCommercialCollectionHtml(route, category) {
@@ -136,6 +397,51 @@ function main() {
     process.exit(1);
   }
 
+  const julyRegressionGuards = verifyJulyRegressionGuards(routes);
+  if (julyRegressionGuards.failures.length > 0) {
+    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${julyRegressionGuards.failures.length} source/manifest/blog-author regression guard(s) failed.`);
+    for (const failure of julyRegressionGuards.failures) console.error(`  ${failure}`);
+    process.exit(1);
+  }
+
+  const seoArchitectureFailures = [];
+  for (const [route, seo] of Object.entries(SEO_ARCHITECTURE.routes)) {
+    const filePath = routeToFilePath(route);
+    if (!fs.existsSync(filePath)) {
+      seoArchitectureFailures.push(`${route}: shared SEO route has no prerendered HTML`);
+      continue;
+    }
+    const html = fs.readFileSync(filePath, 'utf8');
+    if (!html.includes(`<h1>${escapeHtml(seo.h1)}</h1>`)) {
+      seoArchitectureFailures.push(`${route}: prerendered H1 does not match shared SEO architecture`);
+    }
+  }
+
+  for (const route of routes) {
+    const html = fs.readFileSync(routeToFilePath(route), 'utf8');
+    if (/href=["']\/(?:lehengas|sarees|suits|menswear|jewelry)\?sub=/i.test(html)) {
+      seoArchitectureFailures.push(`${route}: prerendered HTML links to a noindex facet URL`);
+    }
+  }
+
+  const homepageHtml = fs.readFileSync(routeToFilePath('/'), 'utf8');
+  if (!homepageHtml.includes(`<title>${escapeHtml(SEO_ARCHITECTURE.routes['/'].title)}</title>`)) {
+    seoArchitectureFailures.push('/: prerendered title does not match the shared branded homepage title');
+  }
+  if (/SearchAction|urlTemplate/.test(homepageHtml)) {
+    seoArchitectureFailures.push('/: homepage still advertises a search action without an indexable search route');
+  }
+  const homepageLogoCount = (homepageHtml.match(/"logo"\s*:\s*"https:\/\/luxemia\.shop\/og-image\.jpg"/g) || []).length;
+  if (homepageLogoCount !== 2) {
+    seoArchitectureFailures.push(`/: expected two branded Organization/OnlineStore logo references, found ${homepageLogoCount}`);
+  }
+
+  if (seoArchitectureFailures.length > 0) {
+    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${seoArchitectureFailures.length} SEO architecture check(s) failed.`);
+    for (const failure of seoArchitectureFailures) console.error(`  ${failure}`);
+    process.exit(1);
+  }
+
   const invalidCommercialCollections = COMMERCIAL_COLLECTIONS
     .map(({ route, category }) => parseCommercialCollectionHtml(route, category))
     .filter(Boolean);
@@ -162,7 +468,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML and all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema.`);
+  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML; ${julyRegressionGuards.publishedCount} published articles, ${BLOG_TOPIC_HUBS.length} blog hubs, the factual author route, hydration-safe BlogPosting schema, and legacy-author redirects are aligned; all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema.`);
 }
 
 main();

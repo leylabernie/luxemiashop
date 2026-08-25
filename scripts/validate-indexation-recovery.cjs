@@ -87,6 +87,7 @@ if (!(
 
 const requiredNoiseParameters = [
   'sort_by',
+  'sort',
   'filter',
   'grid',
   'q',
@@ -96,6 +97,12 @@ const requiredNoiseParameters = [
   'size',
   'price_min',
   'price_max',
+  'price',
+  'work',
+  'style',
+  'occasion',
+  'availability',
+  'gender',
 ];
 
 for (const parameter of requiredNoiseParameters) {

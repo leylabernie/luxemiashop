@@ -24,6 +24,7 @@ import {
 } from '@/lib/customizableProducts';
 import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
 import { isProductSizeOptionName } from '@/lib/productOptionNames';
+import { getProductShipsWithin } from '@/lib/shipBy';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -95,6 +96,7 @@ const ProductDetail = () => {
     [shopifyProduct],
   );
   const customizableProduct = getCustomizableProduct(product?.handle);
+  const productShipsWithinDays = getProductShipsWithin(product);
   const stylistConversationHref = product
     ? `https://wa.me/12153419990?text=${encodeURIComponent(
         `Hi LuxeMia, I would like help before ordering this product: ${product.title}\n${`https://luxemia.shop/product/${product.handle}`}\n\nMy preferred color: __\nMy ready-made size: __\nMy event date: __\n\nPlease help me confirm the listed options and delivery suitability.`,
@@ -183,19 +185,19 @@ const ProductDetail = () => {
     ? 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing > Saris & Lehengas > Saris'
     : product?.productType || 'Ethnic Wear';
   const productAdditionalProperties = [
-    ['Fabric', productMaterial],
-    ['Blouse Fabric', productBlouseFabric],
-    ['Color', productColor],
-    ['Occasion', productOccasions.join(', ') || undefined],
-    ['Included Components', productComponents.join(', ') || undefined],
-    ['Care Instructions', productCare],
-    ['Product Style', productMetadata?.productStyle || undefined],
-    ['Shopify Category', productShopifyCategory],
-    ['Google Product Category', productGoogleCategory],
-    ['Gender', productMetadata?.gender || (isJewelryProduct ? undefined : 'Female')],
-    ['Condition', productMetadata?.condition || 'New'],
-    ['Market', 'United States'],
-  ].filter((entry): entry is [string, string] => Boolean(entry[1]));
+    { name: 'Fabric', value: productMaterial },
+    { name: 'Blouse Fabric', value: productBlouseFabric },
+    { name: 'Color', value: productColor },
+    { name: 'Occasion', value: productOccasions.join(', ') || undefined },
+    { name: 'Included Components', value: productComponents.join(', ') || undefined },
+    { name: 'Care Instructions', value: productCare },
+    { name: 'Product Style', value: productMetadata?.productStyle || undefined },
+    { name: 'Shopify Category', value: productShopifyCategory },
+    { name: 'Google Product Category', value: productGoogleCategory },
+    { name: 'Gender', value: productMetadata?.gender || (isJewelryProduct ? undefined : 'Female') },
+    { name: 'Condition', value: productMetadata?.condition || 'New' },
+    { name: 'Market', value: 'United States' },
+  ].filter((entry): entry is { name: string; value: string } => Boolean(entry.value));
 
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
   // Falls back to the existing title template + generated meta description.
@@ -334,13 +336,22 @@ const ProductDetail = () => {
       material,
       additionalProperties: productAdditionalProperties,
       productGroupId: groupId,
+      shipsWithinDays: productShipsWithinDays,
       variesBy: [
         ...(variants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
         ...(variants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
       ],
       variants,
     });
-  }, [enrichedDescription, product, productMaterial]);
+  }, [
+    enrichedDescription,
+    product,
+    productAdditionalProperties,
+    productGoogleCategory,
+    productMaterial,
+    productSchemaCategory,
+    productShipsWithinDays,
+  ]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -380,6 +391,7 @@ const ProductDetail = () => {
             sizes: isJewelryProduct ? [] : productSizeValues,
             additionalProperties: productAdditionalProperties,
             googleProductCategory: productGoogleCategory,
+            shipsWithinDays: productShipsWithinDays,
           }}
           structuredProduct={productGroupSchema}
           breadcrumbs={[

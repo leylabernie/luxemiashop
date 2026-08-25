@@ -48,7 +48,7 @@ const Privacy = () => {
                   <ul className="list-disc pl-6 space-y-2 mt-2">
                     <li><strong>Identity Data:</strong> First name, last name, username, and date of birth (where applicable for age verification).</li>
                     <li><strong>Contact Data:</strong> Email address, billing address, shipping address, and telephone number.</li>
-                    <li><strong>Financial Data:</strong> Payment card details. Please note that we do not store your full credit card number on our servers. All payment information is processed securely through Shopify Payments, Stripe, or other PCI-compliant payment processors. We only retain a tokenized reference and the last four digits of your card for receipt purposes.</li>
+                    <li><strong>Financial Data:</strong> Payment information entered at Shopify-hosted checkout. LuxeMia does not receive or store your full payment-card number; the checkout provider returns only the transaction and payment-status information needed to process the order.</li>
                     <li><strong>Transaction Data:</strong> Details of products you have purchased, order history, order value, payment method, and delivery information.</li>
                     <li><strong>Profile Data:</strong> Your preferences, wishlists, product reviews, feedback, survey responses, and any personal data you choose to provide through style consultations or size guides.</li>
                     <li><strong>Communications Data:</strong> Records of correspondence between you and LuxeMia, including emails, WhatsApp messages, and customer support interactions.</li>
@@ -65,7 +65,7 @@ const Privacy = () => {
                   <ul className="list-disc pl-6 space-y-2 mt-2">
                     <li><strong>Social Media:</strong> If you log in or interact with our Site through social media integrations (Instagram, Facebook, Pinterest), we may receive your public profile information, friend lists, and email address as permitted by the social media platform and your privacy settings.</li>
                     <li><strong>Analytics Partners:</strong> Aggregated and anonymized data from Google Analytics and similar tools.</li>
-                    <li><strong>Payment Processors:</strong> Confirmation of payment status and fraud screening results from Shopify Payments and other processors.</li>
+                    <li><strong>Payment Processors:</strong> Confirmation of payment status and fraud-screening results from Shopify and the payment provider available for your order.</li>
                   </ul>
                 </section>
 
@@ -100,7 +100,7 @@ const Privacy = () => {
                   <p>We do not sell, rent, or trade your personal information to third parties for their marketing purposes. We may share your information in the following circumstances:</p>
                   <ul className="list-disc pl-6 space-y-2 mt-4">
                     <li><strong>Shipping & Logistics Partners:</strong> DHL Express, USPS, UPS, FedEx, and Aramex receive your name, shipping address, and phone number for delivery purposes only.</li>
-                    <li><strong>Payment Processors:</strong> Shopify Payments, Stripe, PayPal, and Google Pay process your payment transactions securely in compliance with PCI-DSS standards.</li>
+                    <li><strong>Payment Processors:</strong> Shopify and the payment provider shown at checkout process the payment information required for your transaction.</li>
                     <li><strong>Platform Provider:</strong> Shopify Inc. hosts our online store and processes transactions on our behalf. Shopify's data practices are governed by their own Privacy Policy at shopify.com/legal/privacy.</li>
                     <li><strong>Analytics Providers:</strong> Google Analytics (GA4) helps us understand how visitors interact with our Site. Data is collected pseudonymously and aggregated.</li>
                     <li><strong>Marketing Tools:</strong> Email service providers and social media advertising platforms (Meta Custom Audiences, Google Ads) receive hashed email addresses or cookie-based identifiers for ad targeting — only when you have consented to marketing.</li>
@@ -196,7 +196,7 @@ const Privacy = () => {
                   </p>
                   <ul className="list-disc pl-6 space-y-2 mt-4">
                     <li>SSL/TLS encryption for all data transmitted between your browser and our servers</li>
-                    <li>PCI-DSS compliant payment processing through Shopify Payments and authorized payment processors</li>
+                    <li>Payment information handled through Shopify-hosted checkout and the payment provider shown for the order</li>
                     <li>Regular security audits and vulnerability assessments</li>
                     <li>Access controls limiting employee access to personal data on a need-to-know basis</li>
                     <li>Secure data storage with encryption at rest for sensitive information</li>

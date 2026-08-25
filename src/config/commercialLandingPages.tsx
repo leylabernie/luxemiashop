@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import type { CategoryConfig, Subcategory } from '@/config/categoryConfig';
 import { getCategoryConfig } from '@/config/categoryConfig';
+import { getIndexableRouteSeo } from '@/config/seoArchitecture';
 
 export type CommercialLandingSlug =
   | 'sharara-suits'
@@ -244,15 +245,17 @@ function cloneConfigForLanding(
 ): CategoryConfig {
   const base = getCategoryConfig(definition.categorySlug);
   if (!base) throw new Error(`Missing category configuration for ${definition.categorySlug}`);
+  const routePath = `/collections/${path}`;
+  const routeSeo = getIndexableRouteSeo(routePath);
 
   const subcategories: Subcategory[] = base.subcategories.map((subcategory) => (
     subcategory.slug === definition.subcategorySlug
       ? {
         ...subcategory,
         label: definition.subcategoryLabel ?? definition.name,
-        seoTitle: definition.title,
-        seoDescription: definition.description,
-        seoCanonical: `https://luxemia.shop/collections/${path}`,
+        seoTitle: routeSeo.title,
+        seoDescription: routeSeo.description,
+        seoCanonical: `https://luxemia.shop${routePath}`,
       }
       : subcategory
   ));
@@ -260,11 +263,11 @@ function cloneConfigForLanding(
   return {
     ...base,
     name: definition.name,
-    heroTitle: definition.name,
-    heroSubtitle: definition.description,
-    seoTitle: definition.title,
-    seoDescription: definition.description,
-    canonical: `https://luxemia.shop/collections/${path}`,
+    heroTitle: routeSeo.h1,
+    heroSubtitle: routeSeo.description,
+    seoTitle: routeSeo.title,
+    seoDescription: routeSeo.description,
+    canonical: `https://luxemia.shop${routePath}`,
     breadcrumbs: [
       { name: 'Home', url: '/' },
       { name: 'Collections', url: '/collections' },

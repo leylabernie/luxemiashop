@@ -12,8 +12,11 @@
 
 export const SITE_URL = 'https://luxemia.shop';
 export const SITE_NAME = 'LuxeMia';
-export const DEFAULT_TITLE = 'LuxeMia — Indian Ethnic Wear Online';
-export const DEFAULT_DESCRIPTION = "Shop the Indian sarees, lehengas, suits, menswear and jewelry currently listed at LuxeMia. Exact product details, prices, sizes and availability are shown online.";
+import { getIndexableRouteSeo } from '@/config/seoArchitecture';
+
+const homepageSeo = getIndexableRouteSeo('/');
+export const DEFAULT_TITLE = homepageSeo.title;
+export const DEFAULT_DESCRIPTION = homepageSeo.description;
 const RETURN_POLICY_SEO_DESCRIPTION = 'Read LuxeMia’s final-sale policy and the 48-hour process for reporting genuine shipping damage or defect, an incorrect item, or a missing item.';
 
 export interface PageMetadata {
@@ -30,8 +33,8 @@ export interface PageMetadata {
  */
 export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   '/': {
-    title: 'LuxeMia — Indian Ethnic Wear Online',
-    description: "Shop the Indian sarees, lehengas, suits, menswear and jewelry currently listed at LuxeMia. Exact details, prices, sizes and availability are shown online.",
+    title: homepageSeo.title,
+    description: homepageSeo.description,
     canonical: SITE_URL,
     image: `${SITE_URL}/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg`,
   },

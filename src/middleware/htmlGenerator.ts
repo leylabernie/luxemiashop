@@ -294,6 +294,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         material,
         additionalProperties,
         productGroupId: groupId,
+        shipsWithinDays,
         variesBy: [
           ...(schemaVariants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
           ...(schemaVariants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
@@ -319,6 +320,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         compareAtPrice,
         currency,
         availability: availability as 'InStock' | 'OutOfStock',
+        shipsWithinDays,
       });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
