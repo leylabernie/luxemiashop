@@ -8,7 +8,10 @@ import {
   selectedOptionsFromVariant,
   selectionRequiresSeparateMeasurements,
 } from '../src/lib/productPurchaseFlow.ts';
-import { hasNativeProductSizeOption } from '../src/lib/productOptionNames.ts';
+import {
+  getCustomerFacingProductOptionName,
+  hasNativeProductSizeOption,
+} from '../src/lib/productOptionNames.ts';
 
 const variants = [
   {
@@ -117,6 +120,21 @@ test('named and value-inferred Shopify sizes count as native size controls', () 
   assert.equal(hasNativeProductSizeOption([{ name: 'Color', values: ['Pink'] }]), false);
   assert.equal(hasNativeProductSizeOption([{ name: 'Color', values: ['Sage', 'Maroon'] }]), false);
   assert.equal(hasNativeProductSizeOption([{ name: 'Color', values: ['S', 'M'] }]), false);
+});
+
+test('misnamed imported size and color options receive truthful customer labels', () => {
+  assert.equal(getCustomerFacingProductOptionName({
+    name: 'Stitching',
+    values: ['S', 'M', 'L', 'XL', 'XXL'],
+  }), 'Size');
+  assert.equal(getCustomerFacingProductOptionName({
+    name: 'Size',
+    values: ['Navy Blue'],
+  }), 'Color');
+  assert.equal(getCustomerFacingProductOptionName({
+    name: 'Fabric',
+    values: ['Silk'],
+  }), 'Fabric');
 });
 
 test('included pieces prefer normalized metadata and retain exact included tags', () => {

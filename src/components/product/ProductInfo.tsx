@@ -18,6 +18,7 @@ import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
 import { getCustomizableProduct } from '@/lib/customizableProducts';
 import {
+  getCustomerFacingProductOptionName,
   hasNativeProductSizeOption,
   isProductSizeOptionName,
   shouldRenderShopifyProductOption,
@@ -996,14 +997,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           <div key={option.name} className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium uppercase tracking-wide">
-                {option.name}
+                {getCustomerFacingProductOptionName(option)}
                 {selectedOptions[option.name] && (
                   <span className="font-normal text-muted-foreground ml-2">
                     — {selectedOptions[option.name]}
                   </span>
                 )}
               </label>
-              {isProductSizeOptionName(option.name) && (
+              {getCustomerFacingProductOptionName(option) === 'Size' && (
                 <SizeGuideModal category={product.productType} />
               )}
             </div>

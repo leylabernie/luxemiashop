@@ -29,6 +29,37 @@ export function isConventionalProductSizeValue(value?: string | null): boolean {
   );
 }
 
+const COLOR_VALUE_PATTERN = /\b(?:beige|black|blue|brown|coral|cream|fuchsia|gold|gray|green|grey|ivory|lavender|magenta|maroon|mint|multicolou?r|mustard|navy|olive|orange|peach|pink|purple|red|silver|teal|turquoise|white|wine|yellow)\b/i;
+
+function hasOnlyColorValues(values: string[]): boolean {
+  const normalizedValues = values
+    .map((value) => value.trim())
+    .filter((value) => value && value.toLowerCase() !== 'default title');
+  return normalizedValues.length > 0 && normalizedValues.every((value) => COLOR_VALUE_PATTERN.test(value));
+}
+
+/**
+ * Corrects customer-facing labels for imported options without changing the
+ * Shopify option names used to resolve variants and create cart lines.
+ */
+export function getCustomerFacingProductOptionName(option: ShopifyProductOptionLike): string {
+  const normalizedName = normalizeProductOptionName(option.name);
+  const values = option.values
+    .map((value) => value.trim())
+    .filter((value) => value && value.toLowerCase() !== 'default title');
+
+  if (
+    !isProductSizeOptionName(option.name)
+    && values.length >= 2
+    && values.every(isConventionalProductSizeValue)
+  ) {
+    return 'Size';
+  }
+
+  if (normalizedName === 'size' && hasOnlyColorValues(values)) return 'Color';
+  return option.name;
+}
+
 export function hasNativeProductSizeOption(
   options: ShopifyProductOptionLike[],
 ): boolean {
