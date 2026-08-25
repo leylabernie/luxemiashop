@@ -6,7 +6,7 @@ import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const FLAT_SHIPPING_RATE = 12;
-const FREE_SHIPPING_THRESHOLD = 135;
+const FREE_SHIPPING_THRESHOLD = 150;
 const SHIPPING_PROMISE = 'LuxeMia currently ships to United States addresses only. Standard shipping is free when the checkout subtotal after discounts is $150 or more and costs $12 below $150.';
 
 const Shipping = () => {
