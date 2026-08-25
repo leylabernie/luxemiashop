@@ -157,7 +157,7 @@ function buildVerifiedProductDescription(product: ShopifyProduct): string {
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'United States shipping only. Standard shipping is $12 below $135 and free at $135 and above; tracking is provided after dispatch.'
+    'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above; tracking is provided after dispatch.'
   );
 
   return parts.join(' ').replace(/\s+/g, ' ').trim();
@@ -355,7 +355,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     }] : []),
     {
       question: `Does LuxeMia ship the ${displayTitle} within the United States?`,
-      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $135 and free at $135 and above. Tracking details are emailed when the shipping label is created for dispatch.',
+      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.',
     },
     {
       question: `Can I return the ${displayTitle}?`,
@@ -509,11 +509,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         </dl>
         <div class="trust-badges">
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>SSL Secure</div>
-          <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 18.5a1.5 1.5 0 0 1-1.5-1.5 1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5M19.5 9.5L21 12h-3l1.5-2.5M6 18.5A1.5 1.5 0 0 1 4.5 17 1.5 1.5 0 0 1 6 15.5 1.5 1.5 0 0 1 7.5 17 1.5 1.5 0 0 1 6 18.5M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>Free U.S. shipping at $135 and above</div>
+          <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 18.5a1.5 1.5 0 0 1-1.5-1.5 1.5 1.5 0 0 1 1.5-1.5 1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1-1.5 1.5M19.5 9.5L21 12h-3l1.5-2.5M6 18.5A1.5 1.5 0 0 1 4.5 17 1.5 1.5 0 0 1 6 15.5 1.5 1.5 0 0 1 7.5 17 1.5 1.5 0 0 1 6 18.5M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4z"/></svg>Free U.S. shipping at $150 and above</div>
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
         </div>
         <div class="shipping-info">
-          <strong>Shipping:</strong> United States addresses only. Standard shipping is free at $135 and above and $12 below $135.<br>
+          <strong>Shipping:</strong> United States addresses only. Standard shipping is free at $150 and above and $12 below $150.<br>
           <strong>Tracking:</strong> Emailed when the shipping label is created for dispatch. Contact LuxeMia before ordering when an event date is time-sensitive.<br>
           <strong>Returns:</strong> All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours with clear photos and a continuous unboxing/opening video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
