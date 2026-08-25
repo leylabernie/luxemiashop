@@ -35,7 +35,7 @@ const diwaliOutfitFaqs = [
   },
   {
     question: 'Do you ship Diwali outfits to the United States?',
-    answer: 'LuxeMia ships Diwali outfits to United States addresses only. Standard shipping is free at $135 and above and $12 below $135. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Diwali outfits to United States addresses only. Standard shipping is free at $150 and above and $12 below $150. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'How do I check what is included?',
