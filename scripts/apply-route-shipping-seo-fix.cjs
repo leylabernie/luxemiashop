@@ -11,6 +11,9 @@ const HOME_TITLE = 'Indian Wedding Sarees & Bridal Lehengas | LuxeMia';
 const HOME_DESCRIPTION = 'Shop South Asian bridal wear, wedding sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and other supported markets.';
 const HOME_H1 = 'LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
 const MENSWEAR_DESCRIPTION = 'Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and U.S. shipping.';
+const DESTINATION_LIST = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
+const US_RATE_SUMMARY = 'U.S. standard shipping is $14.99 below $199 and free at $199 and above.';
+const ROUTE_RATE_SUMMARY = `${US_RATE_SUMMARY} Canada and the UK are $24.99 below $299 and free at $299 and above. Australia and New Zealand are $29.99 below $349 and free at $349 and above. South Africa is $49.99 and Mauritius is $59.99 per order.`;
 
 const architecturePath = 'src/config/seoArchitecture.json';
 const architecture = JSON.parse(read(architecturePath));
@@ -66,6 +69,92 @@ indexSource = indexSource.replace(
 );
 write('index.html', indexSource);
 
+function patchLegacyShippingSurface(relativePath) {
+  let source = read(relativePath);
+
+  const exactReplacements = [
+    [
+      'We currently ship to United States addresses only. Standard shipping is $12 for orders below $150 and free at $150 and above. Tracking is emailed after dispatch.',
+      `LuxeMia ships to ${DESTINATION_LIST}. ${ROUTE_RATE_SUMMARY} Tracking is emailed after dispatch.`,
+    ],
+    [
+      'U.S. standard shipping is $12 below $150 and free at $150 and above.',
+      US_RATE_SUMMARY,
+    ],
+    [
+      'U.S. standard shipping is $12 below $150 and free at $150 and above',
+      'U.S. standard shipping is $14.99 below $199 and free at $199 and above',
+    ],
+    [
+      'Standard shipping is free at $150 and above and $12 below $150',
+      'U.S. standard shipping is free at $199 and above and $14.99 below $199',
+    ],
+    [
+      'U.S. standard shipping is free at $150 and above and $12 below $150',
+      'U.S. standard shipping is free at $199 and above and $14.99 below $199',
+    ],
+    [
+      '$12 USD below $150 USD; free at $150 USD and above',
+      '$14.99 USD below $199 USD; free at $199 USD and above',
+    ],
+    [
+      'Free U.S. shipping at $150 and above',
+      'Free U.S. standard shipping at $199 and above',
+    ],
+    [
+      'free US shipping at $150 and above',
+      'free U.S. standard shipping at $199 and above',
+    ],
+    [
+      '$12 flat below that',
+      '$14.99 below $199',
+    ],
+  ];
+
+  for (const [from, to] of exactReplacements) source = source.split(from).join(to);
+
+  source = source
+    .replace(/LuxeMia currently ships to United States addresses only\./g, `LuxeMia ships to ${DESTINATION_LIST}.`)
+    .replace(/LuxeMia ships to United States addresses only\./g, `LuxeMia ships to ${DESTINATION_LIST}.`)
+    .replace(/Shipping is available to United States addresses only\./g, `Shipping is available to ${DESTINATION_LIST}.`)
+    .replace(/Checkout accepts United States addresses only\./g, `Checkout accepts addresses in ${DESTINATION_LIST}.`)
+    .replace(/tracked shipping to United States addresses only/g, `tracked shipping to ${DESTINATION_LIST}`)
+    .replace(/to United States addresses only/g, `to addresses in ${DESTINATION_LIST}`)
+    .replace(/costs \$12 below \$150/g, 'costs $14.99 below $199')
+    .replace(/costs \$12 below that/g, 'costs $14.99 below $199')
+    .replace(/free at \$150 and above/g, 'free at $199 and above')
+    .replace(/free at \$150\+/g, 'free at $199+')
+    .replace(/Free U\.S\. shipping at \$150\+/g, 'Free U.S. standard shipping at $199+')
+    .replace(/free U\.S\. shipping at \$150\+/g, 'free U.S. standard shipping at $199+');
+
+  if (relativePath === 'public/llms.txt') {
+    source = source
+      .replace(
+        '> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry for delivery to United States addresses.',
+        `> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry for tracked delivery to ${DESTINATION_LIST}.`,
+      )
+      .replace(
+        '- Shipping destination: United States only',
+        '- Shipping destinations: United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius',
+      )
+      .replace(
+        '- International shipping: not currently available',
+        '- International standard shipping: Canada/UK $24.99 below $299 and free at $299+; Australia/New Zealand $29.99 below $349 and free at $349+; South Africa $49.99; Mauritius $59.99',
+      );
+  }
+
+  write(relativePath, source);
+}
+
+for (const relativePath of [
+  'index.html',
+  'src/lib/schema.ts',
+  'scripts/prerender.js',
+  'public/llms.txt',
+]) {
+  patchLegacyShippingSurface(relativePath);
+}
+
 if (HOME_TITLE.length > 58 || HOME_DESCRIPTION.length > 155 || MENSWEAR_DESCRIPTION.length > 155) {
   throw new Error('[route-shipping-seo] Emitted metadata exceeds release limits.');
 }
@@ -73,4 +162,4 @@ if (!HOME_TITLE.endsWith('| LuxeMia') || !HOME_H1.startsWith('LuxeMia')) {
   throw new Error('[route-shipping-seo] LuxeMia brand placement is invalid.');
 }
 
-console.log('[route-shipping-seo] Restored concise branded metadata after route-based shipping remediation.');
+console.log('[route-shipping-seo] Restored concise branded metadata and removed legacy route copy after shipping remediation.');
