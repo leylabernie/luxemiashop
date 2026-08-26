@@ -17,22 +17,29 @@ const sortOptions = [
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
-const OnlineCollection = () => {
+const ReadyToShip = () => {
   const { products, isLoading } = useShopifyProducts();
   const [sortBy, setSortBy] = useState('featured');
 
-  const sortedProducts = useMemo(() => sortProducts(products, sortBy).slice(0, 48), [products, sortBy]);
-  const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const readyProducts = useMemo(
+    () => products.filter((product) => {
+      const processingDays = Number(product.node.shipsWithinDays);
+      return Number.isFinite(processingDays) && processingDays > 0 && processingDays <= 3;
+    }),
+    [products],
+  );
+  const sortedProducts = useMemo(() => sortProducts(readyProducts, sortBy).slice(0, 48), [readyProducts, sortBy]);
+  const currentSort = sortOptions.find((option) => option.value === sortBy)?.label || 'Featured';
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Ethnic Wear Online | LuxeMia"
-        description="Shop Indian ethnic wear online at LuxeMia: lehengas, sarees, salwar kameez, menswear and jewelry with tracked U.S. shipping."
+        title="Ready-to-Ship Indian Ethnic Wear | LuxeMia"
+        description="Shop LuxeMia Indian ethnic wear with published 1–3 business-day processing windows. Review each product's ship-by estimate before ordering for an event."
         canonical="https://luxemia.shop/ready-to-ship"
         breadcrumbs={[
           { name: 'Home', url: '/' },
-          { name: 'Indian Ethnic Wear Online', url: '/ready-to-ship' },
+          { name: 'Ready to Ship', url: '/ready-to-ship' },
         ]}
       />
       <Header />
@@ -40,20 +47,20 @@ const OnlineCollection = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <section className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
-            <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Online Collection</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Ethnic Wear Online</h1>
-            <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Browse LuxeMia&apos;s online edit of lehengas, sarees, salwar kameez, menswear and jewelry for weddings,
-              festivals and family celebrations. Free U.S. shipping at $150 and above; $12 flat below that. Tracking is provided after dispatch.
+            <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Short processing windows</span>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Ready-to-Ship Indian Ethnic Wear</h1>
+            <p className="text-muted-foreground font-light max-w-3xl mx-auto text-sm lg:text-base leading-relaxed">
+              This edit contains products with a published processing window of three business days or less. Processing is the time before dispatch; carrier transit begins afterward. Review the exact product page and contact LuxeMia before ordering for a fixed event date.
+            </p>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Tracked delivery is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. <Link className="text-primary underline" to="/shipping">View route-based rates.</Link>
             </p>
           </div>
         </section>
 
         <div className="border-b border-border/30 bg-background sticky top-[90px] lg:top-[132px] z-30">
           <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
-              {isLoading ? 'Loading…' : `${sortedProducts.length} styles`}
-            </p>
+            <p className="text-sm text-muted-foreground">{isLoading ? 'Loading…' : `${sortedProducts.length} ready-to-ship styles`}</p>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-2 text-sm font-light">
@@ -61,9 +68,9 @@ const OnlineCollection = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {sortOptions.map(opt => (
-                  <DropdownMenuItem key={opt.value} onClick={() => setSortBy(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
-                    {opt.label}
+                {sortOptions.map((option) => (
+                  <DropdownMenuItem key={option.value} onClick={() => setSortBy(option.value)} className={sortBy === option.value ? 'font-medium' : ''}>
+                    {option.label}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -74,8 +81,8 @@ const OnlineCollection = () => {
         <section className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="animate-pulse">
+              {Array.from({ length: 12 }).map((_, index) => (
+                <div key={index} className="animate-pulse">
                   <div className="aspect-[3/4] bg-muted rounded-sm mb-4" />
                   <div className="h-3 bg-muted rounded w-1/3 mb-2" />
                   <div className="h-4 bg-muted rounded w-3/4 mb-2" />
@@ -85,13 +92,11 @@ const OnlineCollection = () => {
             </div>
           ) : sortedProducts.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-              {sortedProducts.map((product, index) => (
-                <ProductCard key={product.node.id} product={product} index={index} />
-              ))}
+              {sortedProducts.map((product, index) => <ProductCard key={product.node.id} product={product} index={index} />)}
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-muted-foreground text-sm mb-4">No products are available right now. Please browse our full collection.</p>
+              <p className="text-muted-foreground text-sm mb-4">No products currently have a published processing window of three business days or less.</p>
               <Link to="/collections"><Button variant="outline" size="sm">View All Collections</Button></Link>
             </div>
           )}
@@ -103,4 +108,4 @@ const OnlineCollection = () => {
   );
 };
 
-export default OnlineCollection;
+export default ReadyToShip;
