@@ -15,12 +15,17 @@ const roots = [
   'build_csv.py',
   'build_boutique_csv.py',
 ];
-const supportedExtensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py', '.txt', '.md']);
+const supportedExtensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py', '.txt', '.md', '.json']);
+const skippedBasenames = new Set([
+  'apply-international-shipping-remediation.cjs',
+  'validate-current-policy-copy.cjs',
+]);
 
 function listFiles(relativePath) {
   const absolutePath = path.join(PROJECT_ROOT, relativePath);
+  if (!fs.existsSync(absolutePath)) return [];
   const stat = fs.statSync(absolutePath);
-  if (stat.isFile()) return [absolutePath];
+  if (stat.isFile()) return supportedExtensions.has(path.extname(absolutePath)) ? [absolutePath] : [];
   return fs.readdirSync(absolutePath, { withFileTypes: true }).flatMap((entry) => {
     const child = path.join(absolutePath, entry.name);
     if (entry.isDirectory()) return listFiles(path.relative(PROJECT_ROOT, child));
@@ -28,17 +33,20 @@ function listFiles(relativePath) {
   });
 }
 
-// Current approved U.S. policy: $12 below $150; free at $150 and above.
+// Current verified policy:
+// - U.S.: $12 below $150; free at $150+
+// - CA, GB, AU, NZ, ZA, MU: $14.99 below $300; free at $300+
+// - All sales final; covered damage/incorrect/missing-item reports within 48 hours.
 const blockedPatterns = [
-  /Shipping is available to seven countries/i,
-  /shipping to seven countries/i,
-  /seven supported countries/i,
-  /ships to the United States, Canada, the United Kingdom/i,
-  /shipping to the United States, Canada, the United Kingdom/i,
-  /shipping is available to the United States, Canada/i,
-  /checkout accepts addresses in the United States, Canada/i,
-  /international standard shipping is/i,
-  /international rates are shown at checkout/i,
+  /LuxeMia currently ships to United States addresses only/i,
+  /Shipping is available to United States addresses only/i,
+  /We currently ship to United States addresses only/i,
+  /United States shipping only/i,
+  /Shipping destination: United States only/i,
+  /Shipping destination: United States addresses only/i,
+  /International shipping: not currently available/i,
+  /international shipping is not currently available/i,
+  /Current LuxeMia product listings (?:with|for) delivery to United States addresses/i,
   /eligible U\.S\. standard-stock items may be returned/i,
   /accepts return requests made within 30 calendar days/i,
   /MerchantReturnFiniteReturnWindow/i,
@@ -55,48 +63,78 @@ const blockedPatterns = [
 ];
 
 const requiredSnippets = {
+  'package.json': [
+    'node scripts/apply-international-shipping-remediation.cjs',
+    '"validate:policy-copy": "node scripts/apply-international-shipping-remediation.cjs && node scripts/validate-current-policy-copy.cjs"',
+  ],
   'src/components/cart/CartDrawer.tsx': [
     'const FREE_SHIPPING_THRESHOLD = 150;',
     'Discounts are applied before shipping eligibility.',
   ],
   'src/lib/schema.ts': [
-    'maxValue: 149.99',
-    'minValue: 150',
+    "export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];",
+    "export const INTERNATIONAL_SHIPPING_COUNTRIES = ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];",
+    '#international-standard-shipping',
+    'value: 14.99',
+    'maxValue: 299.99',
+    'minValue: 300',
+    'returnPolicyCategory: \'https://schema.org/MerchantReturnNotPermitted\'',
+    'returnPolicyCountry: SHIPPING_COUNTRIES',
   ],
   'scripts/prerender.js': [
-    "maxValue: 149.99, currency: 'USD'",
-    "minValue: 150, currency: 'USD'",
+    "addressCountry: ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU']",
+    'value: 14.99',
+    'maxValue: 299.99',
+    'minValue: 300',
   ],
   'index.html': [
-    '"maxValue": 149.99',
-    '"minValue": 150',
+    'https://luxemia.shop/#international-standard-shipping',
+    '"value": 14.99',
+    '"maxValue": 299.99',
+    '"minValue": 300',
+    '"MU"',
+    '"returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"',
+  ],
+  'src/pages/Shipping.tsx': [
+    'International standard shipping is $14.99 below $300 and free at $300 and above',
+    'All sales are final',
+  ],
+  'src/pages/ShippingCustoms.tsx': [
+    'International Shipping, Duties & Taxes',
+  ],
+  'public/llms.txt': [
+    'International standard shipping: $14.99 USD below $300 USD; free at $300 USD and above',
+  ],
+  'api/merchant-feed.ts': [
+    'Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius',
   ],
 };
 
 const failures = [];
 for (const filePath of roots.flatMap(listFiles)) {
-  if (path.basename(filePath).startsWith('validate-')) continue;
+  if (skippedBasenames.has(path.basename(filePath))) continue;
   const text = fs.readFileSync(filePath, 'utf8');
   for (const pattern of blockedPatterns) {
-    if (pattern.test(text)) {
-      failures.push(`${path.relative(PROJECT_ROOT, filePath)} matches ${pattern}`);
-    }
+    if (pattern.test(text)) failures.push(`${path.relative(PROJECT_ROOT, filePath)} matches ${pattern}`);
   }
 }
 
 for (const [relativePath, snippets] of Object.entries(requiredSnippets)) {
-  const text = fs.readFileSync(path.join(PROJECT_ROOT, relativePath), 'utf8');
+  const absolutePath = path.join(PROJECT_ROOT, relativePath);
+  if (!fs.existsSync(absolutePath)) {
+    failures.push(`${relativePath} does not exist`);
+    continue;
+  }
+  const text = fs.readFileSync(absolutePath, 'utf8');
   for (const snippet of snippets) {
-    if (!text.includes(snippet)) {
-      failures.push(`${relativePath} is missing required current-policy snippet: ${snippet}`);
-    }
+    if (!text.includes(snippet)) failures.push(`${relativePath} is missing required policy fragment: ${snippet}`);
   }
 }
 
 if (failures.length > 0) {
-  console.error('[policy-copy] Stale or unsupported copy found:');
+  console.error('[policy-copy] Stale, contradictory, or unsupported policy copy found:');
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log('[policy-copy] OK — user-facing source and catalog templates contain no blocked legacy policy copy.');
+console.log('[policy-copy] OK — seven-country shipping, exact thresholds, and final-sale terms are aligned across storefront, schema, feeds, and generated copy.');
