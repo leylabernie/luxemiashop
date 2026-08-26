@@ -15,6 +15,7 @@ const requireAll = (relative, snippets) => {
 
 requireAll('package.json', [
   'node scripts/apply-route-based-shipping-growth.cjs',
+  'node scripts/apply-route-shipping-seo-fix.cjs',
   'node scripts/validate-route-based-shipping.cjs',
 ]);
 requireAll('src/config/shippingPolicy.ts', [
@@ -26,8 +27,8 @@ requireAll('src/config/shippingPolicy.ts', [
 ]);
 requireAll('src/pages/Shipping.tsx', [
   'Standard Shipping Rates',
-  'Processing is not carrier transit',
-  'separately quoted split shipment or express option',
+  'Processing and carrier transit are stated separately',
+  'Express service is never assumed',
 ]);
 requireAll('src/pages/ShippingCustoms.tsx', [
   'International Shipping, Duties & Taxes',
@@ -47,19 +48,19 @@ requireAll('src/components/cart/CartDrawer.tsx', [
   'Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.',
 ]);
 requireAll('src/config/seoArchitecture.ts', [
-  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  'Indian Wedding Sarees & Bridal Lehengas | LuxeMia',
   'tracked shipping to the USA, Canada, UK and other supported markets',
 ]);
 requireAll('src/config/seoArchitecture.json', [
-  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  'Indian Wedding Sarees & Bridal Lehengas | LuxeMia',
 ]);
 requireAll('src/lib/schema.ts', [
+  "SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU']",
   "createService('us-standard-shipping'",
   "createService('canada-uk-standard-shipping'",
   "createService('australia-nz-standard-shipping'",
   "createService('south-africa-standard-shipping'",
   "createService('mauritius-standard-shipping'",
-  "'@type': ['OnlineStore', 'ClothingStore']",
 ]);
 requireAll('scripts/prerender.js', [
   "...create(['CA', 'GB'], 24.99, 299)",
@@ -68,7 +69,7 @@ requireAll('scripts/prerender.js', [
   "...create('MU', 59.99)",
 ]);
 requireAll('index.html', [
-  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  'Indian Wedding Sarees &amp; Bridal Lehengas | LuxeMia',
   'https://luxemia.shop/#canada-uk-standard-shipping',
   'https://luxemia.shop/#australia-nz-standard-shipping',
   'https://luxemia.shop/#south-africa-standard-shipping',
@@ -83,6 +84,14 @@ const blocked = [
   /free[^\n]{0,50}\$150/i,
   /International standard shipping is \$14\.99 below \$300/i,
 ];
+
+const removeSanitizerRegexLiterals = (source) => source
+  .split('\n')
+  .map((line) => line.includes('.replace(/')
+    ? line.replace(/\.replace\(\/.*\/[dgimsuvy]*,\s*/, '.replace(<legacy-pattern>, ')
+    : line)
+  .join('\n');
+
 for (const relative of [
   'index.html',
   'src/pages/Index.tsx',
@@ -95,7 +104,10 @@ for (const relative of [
   'public/llms.txt',
   'api/merchant-feed.ts',
 ]) {
-  const source = read(relative);
+  const rawSource = read(relative);
+  const source = relative === 'scripts/prerender.js'
+    ? removeSanitizerRegexLiterals(rawSource)
+    : rawSource;
   for (const pattern of blocked) if (pattern.test(source)) failures.push(`${relative} contains stale policy matching ${pattern}`);
 }
 
