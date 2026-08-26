@@ -18,6 +18,7 @@ const roots = [
 const supportedExtensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py', '.txt', '.md', '.json']);
 const skippedBasenames = new Set([
   'apply-international-shipping-remediation.cjs',
+  'apply-shipping-page-remediation.cjs',
   'validate-current-policy-copy.cjs',
 ]);
 
@@ -64,8 +65,9 @@ const blockedPatterns = [
 
 const requiredSnippets = {
   'package.json': [
+    'node scripts/apply-shipping-page-remediation.cjs',
     'node scripts/apply-international-shipping-remediation.cjs',
-    '"validate:policy-copy": "node scripts/apply-international-shipping-remediation.cjs && node scripts/validate-current-policy-copy.cjs"',
+    'node scripts/validate-current-policy-copy.cjs',
   ],
   'src/components/cart/CartDrawer.tsx': [
     'const FREE_SHIPPING_THRESHOLD = 150;',
