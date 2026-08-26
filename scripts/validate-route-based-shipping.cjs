@@ -108,7 +108,16 @@ for (const relative of [
   const source = relative === 'scripts/prerender.js'
     ? removeSanitizerRegexLiterals(rawSource)
     : rawSource;
-  for (const pattern of blocked) if (pattern.test(source)) failures.push(`${relative} contains stale policy matching ${pattern}`);
+  for (const pattern of blocked) {
+    const match = source.match(pattern);
+    if (!match || match.index === undefined) continue;
+    const line = source.slice(0, match.index).split('\n').length;
+    const context = source
+      .slice(Math.max(0, match.index - 80), Math.min(source.length, match.index + match[0].length + 80))
+      .replace(/\s+/g, ' ')
+      .trim();
+    failures.push(`${relative}:${line} contains stale policy matching ${pattern}; context: ${context}`);
+  }
 }
 
 if (failures.length) {
