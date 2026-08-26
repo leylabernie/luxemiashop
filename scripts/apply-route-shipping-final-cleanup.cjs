@@ -10,6 +10,10 @@ const replacements = [
     'U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
   ],
   [
+    'U.S. shipping is $12 below $150 and free at $199 and above.',
+    'U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
+  ],
+  [
     '$12 below $150 and free at $199+',
     '$14.99 below $199 and free at $199+',
   ],
@@ -20,6 +24,10 @@ const replacements = [
   [
     'Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.',
     'Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.',
+  ],
+  [
+    'U.S. standard shipping is free when the checkout subtotal after discounts is $150 or more and costs $14.99 below $199.',
+    'U.S. standard shipping is free when the checkout subtotal after discounts is $199 or more and costs $14.99 below $199.',
   ],
 ];
 
