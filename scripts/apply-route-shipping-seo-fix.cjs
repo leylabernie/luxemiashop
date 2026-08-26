@@ -34,7 +34,10 @@ const runtimePattern = /(\/\* seo-architecture-json:start \*\/)\s*[\s\S]*?\s*(\/
 if (!runtimePattern.test(runtimeSource)) {
   throw new Error('[route-shipping-seo] Runtime SEO architecture block was not found.');
 }
-runtimeSource = runtimeSource.replace(runtimePattern, `$1 ${architectureJson} $2`);
+runtimeSource = runtimeSource.replace(
+  runtimePattern,
+  (_match, startMarker, endMarker) => `${startMarker} ${architectureJson} ${endMarker}`,
+);
 write(runtimePath, runtimeSource);
 
 const escapeHtml = (value) => value
