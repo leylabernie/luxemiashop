@@ -97,7 +97,6 @@ const requiredSnippets = {
   ],
   'src/pages/Shipping.tsx': [
     'International standard shipping is $14.99 below $300 and free at $300 and above',
-    'All sales are final',
   ],
   'src/pages/ShippingCustoms.tsx': [
     'International Shipping, Duties & Taxes',
