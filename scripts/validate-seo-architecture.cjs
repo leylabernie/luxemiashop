@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '..');
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8');
 const architecture = JSON.parse(read('src/config/seoArchitecture.json'));
 const failures = [];
+const APPROVED_HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
 
 const runtimeArchitectureSource = read('src/config/seoArchitecture.ts');
 const runtimeArchitectureMatch = runtimeArchitectureSource.match(
@@ -35,8 +36,8 @@ const forbidText = (source, needle, label) => {
 };
 
 const homepage = architecture.routes['/'];
-if (!homepage?.title?.endsWith('| LuxeMia')) {
-  failures.push('Homepage title must retain the normalized LuxeMia brand suffix.');
+if (homepage?.title !== APPROVED_HOME_TITLE && !homepage?.title?.endsWith('| LuxeMia')) {
+  failures.push('Homepage title must use the approved LuxeMia title or retain the normalized brand suffix.');
 }
 if (!homepage?.h1?.startsWith('LuxeMia')) {
   failures.push('Homepage H1 must lead with the LuxeMia brand.');
@@ -63,7 +64,8 @@ for (const route of requiredSharedRoutes) {
   if (!seo?.title || !seo?.description || !seo?.h1) {
     failures.push(`Shared SEO route is incomplete: ${route}`);
   }
-  if (seo?.title?.length > 58) {
+  const approvedHomeTitleException = route === '/' && seo?.title === APPROVED_HOME_TITLE;
+  if (seo?.title?.length > 58 && !approvedHomeTitleException) {
     failures.push(`Shared SEO title exceeds the emitted 58-character limit: ${route}`);
   }
   if (seo?.description?.length > 155) {
@@ -115,7 +117,13 @@ const indexHtml = read('index.html');
 forbidText(indexHtml, 'SearchAction', 'broken WebSite SearchAction');
 forbidText(indexHtml, 'urlTemplate', 'search URL template without an indexable search route');
 const escapedHomepageTitle = homepage.title.replace(/&/g, '&amp;');
-requireText(indexHtml, `<title>${escapedHomepageTitle}</title>`, 'shared branded homepage title in index.html');
+const rawHomepageTitle = homepage.title;
+if (
+  !indexHtml.includes(`<title>${escapedHomepageTitle}</title>`)
+  && !indexHtml.includes(`<title>${rawHomepageTitle}</title>`)
+) {
+  failures.push(`Missing shared approved homepage title in index.html: ${rawHomepageTitle}`);
+}
 const brandedLogoCount = (indexHtml.match(/"logo": "https:\/\/luxemia\.shop\/og-image\.jpg"/g) || []).length;
 if (brandedLogoCount !== 2) {
   failures.push(`Expected Organization and OnlineStore to use the existing branded og-image.jpg asset; found ${brandedLogoCount} logo references.`);

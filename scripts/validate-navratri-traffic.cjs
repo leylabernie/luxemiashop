@@ -19,6 +19,12 @@ function requireText(haystack, needle, label) {
   }
 }
 
+function requirePattern(haystack, pattern, label) {
+  if (!pattern.test(haystack)) {
+    throw new Error(`[navratri-traffic] ${label} is missing: ${pattern}`);
+  }
+}
+
 function count(haystack, pattern) {
   return [...haystack.matchAll(pattern)].length;
 }
@@ -54,8 +60,8 @@ const sitemapXml = read('dist/sitemap.xml');
 requireText(collectionHtml, '<title>Navratri Outfits USA 2026 | Garba Styles | LuxeMia</title>', 'collection search title');
 requireText(collectionHtml, '<link rel="canonical" href="https://luxemia.shop/collections/navratri-outfits"', 'collection canonical');
 requireText(collectionHtml, '<h1>Navratri Outfits for Garba in the USA</h1>', 'collection H1');
-requireText(collectionHtml, '"@type":"CollectionPage"', 'CollectionPage schema');
-requireText(collectionHtml, '"@type":"ItemList"', 'ItemList schema');
+requirePattern(collectionHtml, /"@type"\s*:\s*"CollectionPage"/, 'CollectionPage schema');
+requirePattern(collectionHtml, /"@type"\s*:\s*"ItemList"/, 'ItemList schema');
 requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#products', 'linked collection product schema');
 requireText(collectionHtml, '/blog/navratri-9-day-color-guide-2026', 'collection-to-guide internal link');
 requireText(collectionHtml, 'LUXE10', 'collection first-order offer');
@@ -78,7 +84,7 @@ for (const handle of REQUIRED_NAVRATRI_PRODUCT_HANDLES) {
 
 requireText(articleHtml, '<title>Navratri 2026 USA: Garba &amp; Chaniya Choli Guide | LuxeMia</title>', 'article search title');
 requireText(articleHtml, '<link rel="canonical" href="https://luxemia.shop/blog/navratri-9-day-color-guide-2026"', 'article canonical');
-requireText(articleHtml, 'dateModified":"2026-08-19"', 'article review date');
+requirePattern(articleHtml, /"dateModified"\s*:\s*"2026-08-19"/, 'article review date');
 requireText(articleHtml, 'https://www.timeanddate.com/holidays/us/hindu-navaratri', 'United States date source');
 requireText(articleHtml, 'href="/collections/navratri-outfits"', 'guide-to-collection internal link');
 requireText(articleHtml, 'LUXE10', 'article first-order offer');
