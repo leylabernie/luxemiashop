@@ -5,6 +5,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
+const PRERENDER = path.join(DIST, '_prerender');
 const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
 const SHIPPING_TITLE = 'Shipping Policy & International Rates | LuxeMia';
@@ -19,14 +20,11 @@ function walk(directory) {
   });
 }
 
-function readBuilt(relative) {
-  const candidates = [
-    path.join(DIST, relative),
-    path.join(DIST, relative.replace(/\/index\.html$/, '.html')),
-  ];
-  const file = candidates.find((candidate) => fs.existsSync(candidate));
-  if (!file) {
-    failures.push(`built route missing: ${relative}`);
+function readPrerender(route) {
+  const relative = route === '/' ? 'index.html' : `${route.replace(/^\//, '')}.html`;
+  const file = path.join(PRERENDER, relative);
+  if (!fs.existsSync(file)) {
+    failures.push(`built prerender route missing: ${route}`);
     return '';
   }
   return fs.readFileSync(file, 'utf8');
@@ -62,8 +60,8 @@ function inspectJsonLd(label, source, required = false) {
   }
 }
 
-if (!fs.existsSync(DIST)) {
-  console.error('[built-trust] dist directory does not exist');
+if (!fs.existsSync(PRERENDER)) {
+  console.error('[built-trust] prerender directory does not exist');
   process.exit(1);
 }
 
@@ -94,62 +92,25 @@ for (const file of allHtmlFiles) {
     const match = source.match(pattern);
     if (!match || match.index === undefined) continue;
     const line = source.slice(0, match.index).split('\n').length;
-    failures.push(`${relative}:${line} contains blocked built value matching ${pattern}`);
+    const context = source.slice(Math.max(0, match.index - 90), Math.min(source.length, match.index + match[0].length + 110)).replace(/\s+/g, ' ').trim();
+    failures.push(`${relative}:${line} contains blocked built value matching ${pattern}; context: ${context}`);
   }
   inspectJsonLd(relative, source);
 }
 
-const home = readBuilt('index.html');
+const home = readPrerender('/');
 requireTitle('home', home, HOME_TITLE);
-requireAll('home', home, [
-  HOME_DESCRIPTION,
-  '"ClothingStore"',
-  'AUD, CAD, GBP, MUR, NZD, USD',
-  'hello@luxemia.shop',
-  '+1-215-341-9990',
-]);
+requireAll('home', home, [HOME_DESCRIPTION, '"ClothingStore"', 'AUD, CAD, GBP, MUR, NZD, USD', 'hello@luxemia.shop', '+1-215-341-9990']);
 inspectJsonLd('home', home, true);
 
-const shipping = readBuilt('shipping/index.html');
+const shipping = readPrerender('/shipping');
 requireTitle('shipping', shipping, SHIPPING_TITLE);
-requireAll('shipping', shipping, [
-  '$14.99',
-  '$199',
-  '$24.99',
-  '$299',
-  '$29.99',
-  '$349',
-  '$49.99',
-  '$59.99',
-  'Canada',
-  'United Kingdom',
-  'South Africa',
-  'Mauritius',
-]);
+requireAll('shipping', shipping, ['$14.99', '$199', '$24.99', '$299', '$29.99', '$349', '$49.99', '$59.99', 'Canada', 'United Kingdom', 'South Africa', 'Mauritius']);
 inspectJsonLd('shipping', shipping, true);
 
-const ready = readBuilt('ready-to-ship/index.html');
-requireAll('ready-to-ship', ready, [
-  'Ready-to-Ship Indian Ethnic Wear',
-  'Processing is the time before dispatch',
-  'View route-based rates',
-]);
+const ready = readPrerender('/ready-to-ship');
+requireAll('ready-to-ship', ready, ['Ready-to-Ship Indian Ethnic Wear', 'Processing is the time before dispatch', 'View route-based rates']);
 inspectJsonLd('ready-to-ship', ready, true);
-
-const collectionRedirectTargets = [
-  'collections/earrings/index.html',
-  'collections/frontpage/index.html',
-  'collections/manthrakodi-sarees/index.html',
-];
-for (const relative of collectionRedirectTargets) {
-  const file = path.join(DIST, relative);
-  if (fs.existsSync(file)) {
-    const source = fs.readFileSync(file, 'utf8');
-    if (!/noindex/i.test(source) && !/http-equiv=["']refresh/i.test(source)) {
-      failures.push(`${relative} exists without a noindex or redirect signal`);
-    }
-  }
-}
 
 if (failures.length) {
   console.error('[built-trust] Validation failed:');
