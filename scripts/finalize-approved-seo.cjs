@@ -72,6 +72,10 @@ function normalizeCustomerShippingCopy(relative) {
     .split('LuxeMia currently ships to United States addresses only').join(`LuxeMia ships to ${DESTINATIONS}`)
     .split('LuxeMia ships to United States addresses only').join(`LuxeMia ships to ${DESTINATIONS}`)
     .split('United States addresses only').join(DESTINATIONS)
+    .split('Only products with a published 1–3 business-day processing window.')
+      .join('Products whose semi-stitched option has a verified 3–5 business-day processing window; stitched and made-to-measure options take longer.')
+    .split('Only products with a published 1-3 business-day processing window.')
+      .join('Products whose semi-stitched option has a verified 3–5 business-day processing window; stitched and made-to-measure options take longer.')
     .replace(
       /answer: 'No\. LuxeMia (?:currently )?ships to [^']*'/g,
       `answer: 'Yes. LuxeMia ships to ${DESTINATIONS}. Review the Shipping page for destination-based rates, duties and processing guidance.'`,
@@ -91,7 +95,7 @@ function normalizeCustomerShippingCopy(relative) {
   write(relative, source);
 }
 
-for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx']) {
+for (const relative of ['src/pages/Index.tsx', 'src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx']) {
   normalizeCustomerShippingCopy(relative);
 }
 
@@ -135,12 +139,15 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
 }
 if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
 if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
-for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts']) {
+for (const relative of ['src/pages/Index.tsx', 'src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts']) {
   if (!exists(relative)) continue;
   const source = read(relative);
   if (/\$12[^\n]{0,160}(?:shipping|delivery|below \$150)/i.test(source) || /(?:shipping|delivery|free)[^\n]{0,160}\$150/i.test(source)) {
     throw new Error(`[approved-seo] Stale shipping copy remains in ${relative}`);
   }
+  if (/published 1[–-]3 business-day processing/i.test(source) || /processing window of three business days or less/i.test(source)) {
+    throw new Error(`[approved-seo] Stale Ready-to-Ship processing copy remains in ${relative}`);
+  }
 }
 
-console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions, statutory-right wording and customer-facing/editorial shipping copy meet release rules.');
+console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions, statutory-right wording, Ready-to-Ship promise and customer-facing/editorial shipping copy meet release rules.');
