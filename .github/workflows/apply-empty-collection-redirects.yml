@@ -1,0 +1,114 @@
+name: Apply verified empty collection redirects
+
+on:
+  push:
+    branches:
+      - agent/fix-live-empty-collection-redirects-20260827
+    paths:
+      - .github/workflows/apply-empty-collection-redirects.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the controlled branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/fix-live-empty-collection-redirects-20260827
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Commit redirects in deployable middleware source
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          redirects = {
+              '/collections/earrings': '/jewelry',
+              '/collections/evening-gowns': '/collections',
+              '/collections/frontpage': '/',
+              '/collections/indo-western': '/indowestern',
+              '/collections/jacket-sets': '/suits',
+              '/collections/kurta-pajama-vest': '/menswear',
+              '/collections/manthrakodi-sarees': '/sarees',
+              '/collections/saree-gowns': '/sarees',
+          }
+
+          middleware_path = Path('middleware.ts')
+          source = middleware_path.read_text(encoding='utf-8')
+          marker = "  const COLLECTION_301_REDIRECTS: Record<string, string> = {\n"
+          if marker not in source:
+              raise SystemExit('[empty-collection-redirects] Collection redirect map not found')
+
+          missing = [
+              (source_path, destination)
+              for source_path, destination in redirects.items()
+              if f"    '{source_path}': '{destination}'," not in source
+          ]
+          if missing:
+              committed_entries = ''.join(
+                  f"    '{source_path}': '{destination}',\n"
+                  for source_path, destination in missing
+              )
+              source = source.replace(marker, marker + committed_entries, 1)
+              middleware_path.write_text(source, encoding='utf-8')
+
+          helper = """#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = path.resolve(__dirname, '..');
+const file = path.join(ROOT, 'middleware.ts');
+const source = fs.readFileSync(file, 'utf8');
+
+const redirects = {
+  '/collections/earrings': '/jewelry',
+  '/collections/evening-gowns': '/collections',
+  '/collections/frontpage': '/',
+  '/collections/indo-western': '/indowestern',
+  '/collections/jacket-sets': '/suits',
+  '/collections/kurta-pajama-vest': '/menswear',
+  '/collections/manthrakodi-sarees': '/sarees',
+  '/collections/saree-gowns': '/sarees',
+};
+
+for (const [from, to] of Object.entries(redirects)) {
+  const committedEntry = `    '${from}': '${to}',`;
+  if (!source.includes(committedEntry)) {
+    throw new Error(`[empty-collection-redirects] Missing committed redirect ${from} -> ${to}`);
+  }
+}
+
+console.log(`[empty-collection-redirects] ${Object.keys(redirects).length} committed middleware redirects verified.`);
+"""
+          Path('scripts/finalize-empty-collection-redirects.cjs').write_text(helper, encoding='utf-8')
+
+          workflow_path = Path('.github/workflows/apply-empty-collection-redirects.yml')
+          if workflow_path.exists():
+              workflow_path.unlink()
+          PY
+
+      - name: Validate committed redirect source
+        shell: bash
+        run: |
+          node scripts/finalize-empty-collection-redirects.cjs
+          git diff --check
+
+      - name: Commit the controlled source correction
+        shell: bash
+        run: |
+          git config user.name "LuxeMia Recovery Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No source correction was produced."
+            exit 1
+          fi
+          git commit -m "fix: commit live empty collection redirects"
+          git push origin HEAD:agent/fix-live-empty-collection-redirects-20260827
