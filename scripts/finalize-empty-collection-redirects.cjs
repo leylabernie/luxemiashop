@@ -4,10 +4,10 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const file = path.join(ROOT, 'middleware.ts');
-const source = fs.readFileSync(file, 'utf8');
+const file = path.join(ROOT, 'vercel.json');
+const config = JSON.parse(fs.readFileSync(file, 'utf8'));
 
-const redirects = {
+const expected = {
   '/collections/earrings': '/jewelry',
   '/collections/evening-gowns': '/collections',
   '/collections/frontpage': '/',
@@ -18,11 +18,24 @@ const redirects = {
   '/collections/saree-gowns': '/sarees',
 };
 
-for (const [from, to] of Object.entries(redirects)) {
-  const committedEntry = `    '${from}': '${to}',`;
-  if (!source.includes(committedEntry)) {
-    throw new Error(`[empty-collection-redirects] Missing committed redirect ${from} -> ${to}`);
+if (!Array.isArray(config.redirects)) {
+  throw new Error('[empty-collection-redirects] vercel.json redirects array not found');
+}
+
+for (const [source, destination] of Object.entries(expected)) {
+  const matches = config.redirects.filter((entry) => entry.source === source);
+  if (matches.length !== 1) {
+    throw new Error(`[empty-collection-redirects] Expected one ${source} redirect; found ${matches.length}`);
+  }
+
+  const redirect = matches[0];
+  if (redirect.destination !== destination || redirect.statusCode !== 301) {
+    throw new Error(
+      `[empty-collection-redirects] Invalid ${source} redirect: ${JSON.stringify(redirect)}`,
+    );
   }
 }
 
-console.log(`[empty-collection-redirects] ${Object.keys(redirects).length} committed middleware redirects verified.`);
+console.log(
+  `[empty-collection-redirects] ${Object.keys(expected).length} committed Vercel 301 redirects verified.`,
+);
