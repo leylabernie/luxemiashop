@@ -83,6 +83,8 @@ const blocked = [
   /Custom sizing:\s*Available on request/i,
   /LuxeMia — Indian Ethnic Wear Online for (?:US|U\.S\.) Delivery/i,
   /priceValidUntil/i,
+  /published 1[–-]3 business-day processing/i,
+  /processing window of three business days or less/i,
 ];
 
 for (const file of allHtmlFiles) {
@@ -109,8 +111,21 @@ requireAll('shipping', shipping, ['$14.99', '$199', '$24.99', '$299', '$29.99', 
 inspectJsonLd('shipping', shipping, true);
 
 const ready = readPrerender('/ready-to-ship');
-requireAll('ready-to-ship', ready, ['Ready-to-Ship Indian Ethnic Wear', 'Processing is the time before dispatch', 'View route-based rates']);
+requireAll('ready-to-ship', ready, [
+  'Ready-to-Ship Indian Ethnic Wear',
+  'semi-stitched option has a verified processing window of 3–5 business days',
+  'Ready-to-wear and made-to-measure selections take longer',
+  'Processing is the time before dispatch',
+  'View route-based rates',
+]);
 inspectJsonLd('ready-to-ship', ready, true);
+
+const readyProductLinks = new Set(
+  [...ready.matchAll(/href="\/product\/([^"?]+)"/g)].map((match) => match[1]),
+);
+if (readyProductLinks.size !== 10) {
+  failures.push(`ready-to-ship must contain exactly 10 verified product links; found ${readyProductLinks.size}`);
+}
 
 if (failures.length) {
   console.error('[built-trust] Validation failed:');
@@ -118,4 +133,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`[built-trust] OK — ${allHtmlFiles.length} built HTML pages have aligned metadata, route-based shipping, Ready-to-Ship output and no false global return schema.`);
+console.log(`[built-trust] OK — ${allHtmlFiles.length} built HTML pages have aligned metadata, route-based shipping, 10 verified five-day Ready-to-Ship products and no false global return schema.`);
