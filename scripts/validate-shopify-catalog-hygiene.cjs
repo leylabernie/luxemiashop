@@ -88,12 +88,12 @@ const ALL_PRODUCTS_QUERY = `
 
 const STALE_COPY_PATTERNS = [
   {
-    label: 'legacy $12/$150 U.S. shipping threshold',
-    pattern: /(?:standard\s+)?shipping[^.!?\n]{0,100}\$12[^.!?\n]{0,100}\$150/i,
+    label: 'legacy $12 U.S. shipping threshold',
+    pattern: /(?:standard\s+)?shipping[^.!?\n]{0,100}\$12(?:\.00)?[^.!?\n]{0,100}\$(?:135|150)(?:\.00)?/i,
   },
   {
-    label: 'legacy free shipping at $150',
-    pattern: /(?:free\s+(?:u\.s\.\s+)?(?:standard\s+)?shipping|shipping\s+is\s+free)[^.!?\n]{0,80}(?:at|over|above|orders?\s+(?:over|above|of))\s*\$150/i,
+    label: 'legacy free-shipping threshold',
+    pattern: /(?:free\s+(?:u\.s\.\s+)?(?:standard\s+)?shipping|shipping\s+is\s+free)[^.!?\n]{0,80}(?:at|over|above|orders?\s+(?:over|above|of))\s*\$(?:135|150)(?:\.00)?/i,
   },
   {
     label: 'free shipping to USA and Canada',
@@ -108,8 +108,8 @@ const STALE_COPY_PATTERNS = [
     pattern: /(?:we|luxe\s?mia)\s+(?:currently\s+)?(?:only\s+ship|ship\s+only)\s+to\s+(?:the\s+)?(?:u\.s\.|usa|united states)/i,
   },
   {
-    label: 'United States addresses only',
-    pattern: /united\s+states\s+addresses\s+only/i,
+    label: 'U.S. addresses only',
+    pattern: /(?:ships?\s+to\s+)?(?:u\.s\.|usa|united states)\s+addresses?\s+only/i,
   },
   {
     label: 'U.S. delivery only',
