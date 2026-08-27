@@ -14,7 +14,7 @@ import {
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
-import { isCustomizableProduct } from '@/lib/customizableProducts';
+import { isMadeToOrderProduct } from '@/lib/customizableProducts';
 
 const PRODUCTS_PER_PAGE = 48;
 
@@ -32,7 +32,7 @@ const ReadyToShip = () => {
 
   const readyProducts = useMemo(
     () => products.filter((product) => {
-      if (isCustomizableProduct(product.node.handle)) return false;
+      if (isMadeToOrderProduct(product.node.handle, product.node.tags)) return false;
       if (product.node.availableForSale === false) return false;
 
       const variants = product.node.variants?.edges || [];
@@ -57,7 +57,7 @@ const ReadyToShip = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Ready-to-Ship Indian Ethnic Wear | LuxeMia"
-        description="Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Every available catalog item is ready to ship unless it is explicitly marked Made to Order."
+        description="Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order."
         canonical="https://luxemia.shop/ready-to-ship"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -74,13 +74,14 @@ const ReadyToShip = () => {
             </span>
             <h1 className="mb-4 font-serif text-3xl lg:text-5xl">Ready-to-Ship Indian Ethnic Wear</h1>
             <p className="mx-auto max-w-3xl text-sm font-light leading-relaxed text-muted-foreground lg:text-base">
-              Every available LuxeMia catalog item is ready to ship unless the product is explicitly marked
-              <strong className="font-medium text-foreground"> Made to Order</strong>. Ready to Ship means the base item is stocked for order handling and dispatch. Optional stitching, finishing or alterations add processing time, and carrier transit begins after dispatch.
+              Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked
+              <strong className="font-medium text-foreground"> Made to Order</strong> or
+              <strong className="font-medium text-foreground"> Made to Measure</strong>. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch. Order processing and carrier transit are separate.
             </p>
             <p className="mt-4 text-xs text-muted-foreground">
-              Custom-made designs remain separate and use an approximately 4–5 week planning window.{' '}
+              Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Those custom selections require additional processing and use the timing stated on the product page.{' '}
               <Link className="text-primary underline" to="/collections/customizable-indian-outfits">
-                View custom-made outfits.
+                View made-to-order outfits.
               </Link>
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
