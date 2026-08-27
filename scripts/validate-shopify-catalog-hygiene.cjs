@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 /**
- * Release gate for the live Shopify catalog.
+ * Release gate for the complete live Shopify catalog.
  *
- * This validator reads every product exposed by the Storefront API during each
- * release build. It fails the build when customer-facing product copy contains
- * obsolete shipping/return claims or when a controlled deletion reappears.
- * Attribute-completeness gaps are reported as warnings so missing supplier facts
- * are never invented merely to satisfy a build.
+ * Owner-approved fulfillment rule:
+ * - every purchasable product is Ready to Ship unless Shopify identifies it as
+ *   Made to Order / Made to Measure;
+ * - a stocked product may also offer an optional custom-size or custom-stitching
+ *   variant, but the custom selection must be described separately;
+ * - processing and carrier transit must never be presented as the same promise.
  */
 
 const fs = require('fs');
@@ -22,6 +23,8 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
 const MIN_EXPECTED_ACTIVE_PRODUCTS = 800;
+const MIN_EXPECTED_READY_PRODUCTS = 750;
+const MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS = 40;
 
 const REMOVED_HANDLES = new Set([
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
@@ -31,10 +34,7 @@ const REMOVED_HANDLES = new Set([
 const ALL_PRODUCTS_QUERY = `
   query CatalogHygieneProducts($first: Int!, $after: String) {
     products(first: $first, after: $after, sortKey: CREATED_AT, reverse: true) {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
+      pageInfo { hasNextPage endCursor }
       edges {
         node {
           id
@@ -45,23 +45,13 @@ const ALL_PRODUCTS_QUERY = `
           productType
           tags
           availableForSale
-          seo {
-            title
-            description
-          }
+          seo { title description }
           shipsWithin: metafield(namespace: "custom", key: "ships_within") { value }
           fabric: metafield(namespace: "custom", key: "fabric") { value }
           material: metafield(namespace: "custom", key: "material") { value }
           occasion: metafield(namespace: "custom", key: "occasion") { value }
           includedComponents: metafield(namespace: "custom", key: "included_components") { value }
-          images(first: 20) {
-            edges {
-              node {
-                url
-                altText
-              }
-            }
-          }
+          images(first: 20) { edges { node { url altText } } }
           variants(first: 100) {
             edges {
               node {
@@ -69,17 +59,11 @@ const ALL_PRODUCTS_QUERY = `
                 title
                 sku
                 availableForSale
-                selectedOptions {
-                  name
-                  value
-                }
+                selectedOptions { name value }
               }
             }
           }
-          options {
-            name
-            values
-          }
+          options { name values }
         }
       }
     }
@@ -93,11 +77,19 @@ const STALE_COPY_PATTERNS = [
   },
   {
     label: 'legacy free-shipping threshold',
-    pattern: /(?:free\s+(?:u\.s\.\s+)?(?:standard\s+)?shipping|shipping\s+is\s+free)[^.!?\n]{0,80}(?:at|over|above|orders?\s+(?:over|above|of))\s*\$(?:135|150)(?:\.00)?/i,
+    pattern: /(?:free\s+(?:u\.s\.\s+)?(?:standard\s+)?shipping|shipping\s+is\s+free)[^.!?\n]{0,80}(?:at|over|above|orders?\s+(?:over|above|of))\s*\$(?:135|150|350)(?:\.00)?/i,
   },
   {
     label: 'free shipping to USA and Canada',
-    pattern: /(?:ships?\s+free|free\s+shipping)[^.!?\n]{0,80}(?:usa|u\.s\.|united states)[^.!?\n]{0,60}canada/i,
+    pattern: /(?:ships?\s+free|free\s+shipping)[^.!?\n]{0,100}(?:usa|u\.s\.|united states)[^.!?\n]{0,80}canada/i,
+  },
+  {
+    label: 'free worldwide shipping',
+    pattern: /free\s+worldwide\s+shipping/i,
+  },
+  {
+    label: 'worldwide-shipping claim',
+    pattern: /(?:ships?|shipping)\s+worldwide/i,
   },
   {
     label: 'USA-only product-positioning phrase',
@@ -116,45 +108,81 @@ const STALE_COPY_PATTERNS = [
     pattern: /u\.s\.\s+delivery\s+only/i,
   },
   {
-    label: 'free worldwide shipping',
-    pattern: /free\s+worldwide\s+shipping/i,
-  },
-  {
     label: 'unverified five-day USA/Canada express claim',
     pattern: /5[- ]day\s+express\s+delivery\s+to\s+usa\s+and\s+canada/i,
+  },
+  {
+    label: 'unverified fixed delivery-window claim',
+    pattern: /(?:standard\s+delivery|express\s+shipping|delivery\s+(?:takes|within|in))[^.!?\n]{0,80}(?:5[–-]7|7[–-]10|10[–-]15)\s+business\s+days/i,
+  },
+  {
+    label: 'unverified one-to-two-day USA processing claim',
+    pattern: /ships?\s+within\s+1[–-]2\s+business\s+days\s+from\s+the\s+usa/i,
   },
   {
     label: 'blanket all-sales-final product claim',
     pattern: /all\s+sales\s+are\s+final/i,
   },
   {
-    label: 'legacy 30-day return promise',
-    pattern: /(?:30[- ]day\s+(?:return|returns|refund)|returns?\s+(?:are\s+)?accepted\s+within\s+30\s+days)/i,
+    label: 'legacy 14/15/30-day return promise',
+    pattern: /(?:(?:14|15|30)[- ]day\s+(?:return|returns|refund)|returns?\s+(?:are\s+)?accepted\s+within\s+(?:14|15|30)\s+days)/i,
   },
   {
     label: 'blanket no-returns-or-exchanges product claim',
     pattern: /no\s+returns?\s+or\s+exchanges?/i,
   },
-  {
-    label: 'unverified one-to-two-day USA processing claim',
-    pattern: /ships?\s+within\s+1[–-]2\s+business\s+days\s+from\s+the\s+usa/i,
-  },
 ];
+
+const MADE_TO_ORDER_TAGS = new Set([
+  'made to order',
+  'availability:made to order',
+  'custom-made',
+]);
+const READY_TO_SHIP_TAGS = new Set([
+  'ready to ship',
+  'ready-to-ship',
+  'availability:ready to ship',
+]);
 
 function normalize(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
+function lowerTags(product) {
+  return (product.tags || []).map((tag) => String(tag).trim().toLowerCase());
+}
+
 function sourceText(product) {
   return normalize([
+    product.title,
     product.description,
     product.seo?.title,
     product.seo?.description,
+    ...(product.tags || []),
   ].filter(Boolean).join(' '));
 }
 
-function lowerTags(product) {
-  return (product.tags || []).map((tag) => String(tag).trim().toLowerCase());
+function isMadeToOrder(product) {
+  return lowerTags(product).some((tag) => MADE_TO_ORDER_TAGS.has(tag));
+}
+
+function hasReadyToShipTag(product) {
+  return lowerTags(product).some((tag) => READY_TO_SHIP_TAGS.has(tag));
+}
+
+function isPurchasable(product) {
+  if (product.availableForSale === true) return true;
+  return (product.variants?.edges || []).some((edge) => edge.node.availableForSale !== false);
+}
+
+function hasOnlyCustomSizeChoices(product) {
+  const sizeOption = (product.options || []).find((option) =>
+    /^(?:size|sizes|apparel size|garment size|blouse size|waist size|chest size|stitching size)$/i.test(option.name || ''),
+  );
+  if (!sizeOption || !Array.isArray(sizeOption.values) || sizeOption.values.length === 0) return false;
+  return sizeOption.values.every((value) =>
+    /^(?:custom|custom size|custom stitching|made to measure|made-to-measure)$/i.test(normalize(value)),
+  );
 }
 
 function hasTagPrefix(product, prefixes) {
@@ -163,7 +191,7 @@ function hasTagPrefix(product, prefixes) {
 }
 
 function hasSizeChoice(product) {
-  const sizeNames = /^(?:size|sizes|apparel size|garment size|blouse size|waist size|chest size)$/i;
+  const sizeNames = /^(?:size|sizes|apparel size|garment size|blouse size|waist size|chest size|stitching size)$/i;
   if ((product.options || []).some((option) => sizeNames.test(option.name || '') && (option.values || []).length > 0)) {
     return true;
   }
@@ -211,10 +239,7 @@ async function shopifyRequest(variables, attempt = 1) {
       cache: 'no-store',
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status} ${response.statusText}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
     const payload = await response.json();
     if (payload.errors?.length) {
       throw new Error(payload.errors.map((error) => error.message).join('; '));
@@ -312,6 +337,11 @@ async function main() {
   const handleCounts = new Map();
   const staleProducts = [];
   const removedProducts = [];
+  const classificationErrors = [];
+  let purchasableProducts = 0;
+  let readyToShipProducts = 0;
+  let madeToOrderProducts = 0;
+  let mixedCustomOptionProducts = 0;
 
   for (const product of products) {
     handleCounts.set(product.handle, (handleCounts.get(product.handle) || 0) + 1);
@@ -321,14 +351,30 @@ async function main() {
     const matches = STALE_COPY_PATTERNS
       .filter(({ pattern }) => pattern.test(text))
       .map(({ label }) => label);
-
     if (matches.length > 0) {
-      staleProducts.push({
-        id: product.id,
-        title: product.title,
-        handle: product.handle,
-        matches,
-      });
+      staleProducts.push({ id: product.id, title: product.title, handle: product.handle, matches });
+    }
+
+    const purchasable = isPurchasable(product);
+    const madeToOrder = isMadeToOrder(product);
+    const onlyCustomSize = hasOnlyCustomSizeChoices(product);
+    const hasCustomOption = (product.options || []).some((option) =>
+      (option.values || []).some((value) => /custom|made[- ]to[- ]measure/i.test(String(value))),
+    );
+
+    if (purchasable) purchasableProducts += 1;
+    if (madeToOrder) madeToOrderProducts += 1;
+    else if (purchasable) readyToShipProducts += 1;
+    if (!madeToOrder && hasCustomOption) mixedCustomOptionProducts += 1;
+
+    if (onlyCustomSize && !madeToOrder) {
+      classificationErrors.push(`${product.handle}: only custom-size choices are offered but the product is not tagged Made to Order`);
+    }
+    if (madeToOrder && hasReadyToShipTag(product)) {
+      classificationErrors.push(`${product.handle}: Made-to-Order product still carries a Ready-to-Ship tag`);
+    }
+    if (madeToOrder && /\bready[- ]to[- ]ship\b/i.test(`${product.title} ${product.description}`)) {
+      classificationErrors.push(`${product.handle}: Made-to-Order product still makes a Ready-to-Ship customer claim`);
     }
   }
 
@@ -336,7 +382,22 @@ async function main() {
     .filter(([, count]) => count > 1)
     .map(([handle, count]) => ({ handle, count }));
 
-  if (removedProducts.length > 0 || duplicateHandles.length > 0 || staleProducts.length > 0) {
+  if (readyToShipProducts < MIN_EXPECTED_READY_PRODUCTS) {
+    classificationErrors.push(`only ${readyToShipProducts} purchasable non-custom products resolved as Ready to Ship; expected at least ${MIN_EXPECTED_READY_PRODUCTS}`);
+  }
+  if (madeToOrderProducts < MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS) {
+    classificationErrors.push(`only ${madeToOrderProducts} products resolved as Made to Order; expected at least ${MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS}`);
+  }
+  if (readyToShipProducts + madeToOrderProducts !== purchasableProducts) {
+    classificationErrors.push('Ready-to-Ship plus Made-to-Order counts do not equal the purchasable catalog count');
+  }
+
+  if (
+    removedProducts.length > 0
+    || duplicateHandles.length > 0
+    || staleProducts.length > 0
+    || classificationErrors.length > 0
+  ) {
     console.error('[shopify-catalog] Validation failed:');
     for (const product of removedProducts) {
       console.error(`- Removed product reappeared: ${product.handle} (${product.id})`);
@@ -347,6 +408,7 @@ async function main() {
     for (const product of staleProducts) {
       console.error(`- ${product.handle} — ${product.title}: ${product.matches.join('; ')}`);
     }
+    for (const error of classificationErrors) console.error(`- ${error}`);
     process.exit(1);
   }
 
@@ -354,9 +416,14 @@ async function main() {
   const report = {
     generatedAt: new Date().toISOString(),
     activeProductsChecked: products.length,
+    purchasableProducts,
+    readyToShipProducts,
+    madeToOrderProducts,
+    mixedCustomOptionProducts,
     staleCopyProducts: staleProducts.length,
     removedProductsPresent: removedProducts.length,
     duplicateHandles: duplicateHandles.length,
+    classificationErrors: classificationErrors.length,
     completeness,
   };
 
@@ -367,7 +434,7 @@ async function main() {
   );
 
   console.log(
-    `[shopify-catalog] OK — checked ${products.length} active products; 0 stale-copy products, 0 removed-product regressions, and 0 duplicate handles.`,
+    `[shopify-catalog] OK — checked ${products.length} active products; ${readyToShipProducts} Ready to Ship, ${madeToOrderProducts} Made to Order, ${mixedCustomOptionProducts} stocked products with an optional custom selection, 0 stale-copy products, 0 removed-product regressions, and 0 duplicate handles.`,
   );
   console.log(
     `[shopify-catalog] Completeness warnings — missing description ${completeness.missingDescription}; thin description ${completeness.thinDescription}; missing product type ${completeness.missingProductType}; missing image ${completeness.missingImage}; image-alt gaps ${completeness.missingImageAltText}; missing variant ${completeness.missingVariant}; SKU gaps ${completeness.missingSku}; SEO-title gaps ${completeness.missingSeoTitle}; SEO-description gaps ${completeness.missingSeoDescription}.`,
