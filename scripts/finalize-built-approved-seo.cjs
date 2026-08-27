@@ -5,6 +5,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
+const HOME_TITLE_HTML = HOME_TITLE.replace(/&/g, '&amp;');
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
 const files = [
   path.join(ROOT, 'dist', 'index.html'),
@@ -33,8 +34,8 @@ for (const file of files) {
   let html = fs.readFileSync(file, 'utf8');
 
   html = /<title>[\s\S]*?<\/title>/i.test(html)
-    ? html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE}</title>`)
-    : html.replace('</head>', `  <title>${HOME_TITLE}</title>\n</head>`);
+    ? html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE_HTML}</title>`)
+    : html.replace('</head>', `  <title>${HOME_TITLE_HTML}</title>\n</head>`);
   html = setMeta(html, 'name', 'title', HOME_TITLE);
   html = setMeta(html, 'name', 'description', HOME_DESCRIPTION);
   html = setMeta(html, 'property', 'og:title', HOME_TITLE);
@@ -45,7 +46,7 @@ for (const file of files) {
   fs.writeFileSync(file, html, 'utf8');
   updatedCount += 1;
 
-  for (const required of [`<title>${HOME_TITLE}</title>`, HOME_DESCRIPTION]) {
+  for (const required of [`<title>${HOME_TITLE_HTML}</title>`, HOME_DESCRIPTION]) {
     if (!html.includes(required)) throw new Error(`[built-approved-seo] ${file} missing built value: ${required}`);
   }
 }
