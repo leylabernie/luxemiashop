@@ -48,6 +48,13 @@ if (!pattern.test(tsSource)) throw new Error('[approved-seo] Runtime SEO archite
 tsSource = tsSource.replace(pattern, (_match, start, end) => `${start} ${rendered} ${end}`);
 write(tsPath, tsSource);
 
+const seoHeadPath = 'src/components/seo/SEOHead.tsx';
+let seoHead = read(seoHeadPath);
+seoHead = seoHead
+  .replace(/title = '[^']*'/, `title = '${HOME_TITLE}'`)
+  .replace(/description = '[^']*'/, `description = '${HOME_DESCRIPTION}'`);
+write(seoHeadPath, seoHead);
+
 let index = read('index.html');
 index = index.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE}</title>`);
 const replacements = [
@@ -68,5 +75,6 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
   }
 }
 if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
+if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
 
 console.log('[approved-seo] Exact approved homepage title retained; H1 and shared descriptions meet release limits.');
