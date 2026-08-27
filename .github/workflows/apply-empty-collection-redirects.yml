@@ -51,50 +51,19 @@ jobs:
               if f"    '{source_path}': '{destination}'," not in source
           ]
           if missing:
-              committed_entries = ''.join(
+              entries = ''.join(
                   f"    '{source_path}': '{destination}',\n"
                   for source_path, destination in missing
               )
-              source = source.replace(marker, marker + committed_entries, 1)
+              source = source.replace(marker, marker + entries, 1)
               middleware_path.write_text(source, encoding='utf-8')
-
-          helper = """#!/usr/bin/env node
-
-const fs = require('fs');
-const path = require('path');
-
-const ROOT = path.resolve(__dirname, '..');
-const file = path.join(ROOT, 'middleware.ts');
-const source = fs.readFileSync(file, 'utf8');
-
-const redirects = {
-  '/collections/earrings': '/jewelry',
-  '/collections/evening-gowns': '/collections',
-  '/collections/frontpage': '/',
-  '/collections/indo-western': '/indowestern',
-  '/collections/jacket-sets': '/suits',
-  '/collections/kurta-pajama-vest': '/menswear',
-  '/collections/manthrakodi-sarees': '/sarees',
-  '/collections/saree-gowns': '/sarees',
-};
-
-for (const [from, to] of Object.entries(redirects)) {
-  const committedEntry = `    '${from}': '${to}',`;
-  if (!source.includes(committedEntry)) {
-    throw new Error(`[empty-collection-redirects] Missing committed redirect ${from} -> ${to}`);
-  }
-}
-
-console.log(`[empty-collection-redirects] ${Object.keys(redirects).length} committed middleware redirects verified.`);
-"""
-          Path('scripts/finalize-empty-collection-redirects.cjs').write_text(helper, encoding='utf-8')
 
           workflow_path = Path('.github/workflows/apply-empty-collection-redirects.yml')
           if workflow_path.exists():
               workflow_path.unlink()
           PY
 
-      - name: Validate committed redirect source
+      - name: Validate exact redirect entries
         shell: bash
         run: |
           node scripts/finalize-empty-collection-redirects.cjs
