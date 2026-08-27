@@ -90,7 +90,9 @@ requireAll('src/App.tsx', [
   'path="/collections/manthrakodi-sarees" element={<Navigate to="/sarees" replace />}',
 ]);
 requireAll('src/pages/ReadyToShip.tsx', [
-  'processingDays <= 3',
+  'processingDays <= 5',
+  'verified semi-stitched processing window of up to five business days',
+  'Ready-to-wear and made-to-measure selections require additional processing',
   'Processing is the time before dispatch',
   'View route-based rates',
 ]);
@@ -137,6 +139,8 @@ const blockedRuntimePatterns = [
   /Free worldwide shipping/i,
   /All orders ship with full DHL Express tracking/i,
   /Custom sizing:\s*Available on request/i,
+  /published 1[–-]3 business-day processing/i,
+  /processing window of three business days or less/i,
 ];
 
 for (const relative of [
@@ -210,4 +214,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[trust-source] OK — metadata, route shipping, Ready-to-Ship data, redirects and structured data use the final verified source of truth.');
+console.log('[trust-source] OK — metadata, route shipping, verified five-day Ready-to-Ship data, redirects and structured data use the final source of truth.');
