@@ -38,6 +38,13 @@ function requireAll(label, source, snippets) {
   }
 }
 
+function requireTitle(label, source, title) {
+  const escaped = title.replace(/&/g, '&amp;');
+  if (!source.includes(`<title>${title}</title>`) && !source.includes(`<title>${escaped}</title>`)) {
+    failures.push(`${label} missing required built title: ${title}`);
+  }
+}
+
 function inspectJsonLd(label, source, required = false) {
   const scripts = [...source.matchAll(/<script\s+type=["']application\/ld\+json["']>([\s\S]*?)<\/script>/gi)];
   if (required && scripts.length === 0) failures.push(`${label} has no JSON-LD blocks`);
@@ -93,8 +100,8 @@ for (const file of allHtmlFiles) {
 }
 
 const home = readBuilt('index.html');
+requireTitle('home', home, HOME_TITLE);
 requireAll('home', home, [
-  `<title>${HOME_TITLE}</title>`,
   HOME_DESCRIPTION,
   '"ClothingStore"',
   'AUD, CAD, GBP, MUR, NZD, USD',
@@ -104,8 +111,8 @@ requireAll('home', home, [
 inspectJsonLd('home', home, true);
 
 const shipping = readBuilt('shipping/index.html');
+requireTitle('shipping', shipping, SHIPPING_TITLE);
 requireAll('shipping', shipping, [
-  `<title>${SHIPPING_TITLE}</title>`,
   '$14.99',
   '$199',
   '$24.99',
