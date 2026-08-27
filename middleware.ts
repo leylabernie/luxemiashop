@@ -439,6 +439,13 @@ async function routeRequest(request: Request): Promise<Response> {
   // bots need server-side 301s to properly transfer link equity and avoid
   // indexing the redirect-source URL with thin/empty SPA content.
   const COLLECTION_301_REDIRECTS: Record<string, string> = {
+    '/collections/earrings': '/jewelry',
+    '/collections/evening-gowns': '/collections',
+    '/collections/frontpage': '/',
+    '/collections/jacket-sets': '/suits',
+    '/collections/kurta-pajama-vest': '/menswear',
+    '/collections/manthrakodi-sarees': '/sarees',
+    '/collections/saree-gowns': '/sarees',
     '/collections/reception-outfits': '/collections',
     '/collections/festive-wear': '/collections',
     '/collections/sarees': '/sarees',
