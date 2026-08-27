@@ -219,8 +219,43 @@
       "statusCode": 301
     },
     {
+      "source": "/collections/earrings",
+      "destination": "/jewelry",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/evening-gowns",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/frontpage",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
       "source": "/collections/indo-western",
       "destination": "/indowestern",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/jacket-sets",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/kurta-pajama-vest",
+      "destination": "/menswear",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/manthrakodi-sarees",
+      "destination": "/sarees",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/saree-gowns",
+      "destination": "/sarees",
       "statusCode": 301
     },
     {
