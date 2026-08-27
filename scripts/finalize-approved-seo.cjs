@@ -55,6 +55,28 @@ seoHead = seoHead
   .replace(/description = '[^']*'/, `description = '${HOME_DESCRIPTION}'`);
 write(seoHeadPath, seoHead);
 
+const pageReplacements = new Map([
+  ['src/pages/FAQ.tsx', [
+    [
+      "answer: 'Yes. We offer free US shipping at $150 and above. A flat $12 shipping rate applies below $150.'",
+      "answer: 'U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other countries use route-based rates shown on the Shipping page.'",
+    ],
+  ]],
+  ['src/pages/Collections.tsx', [
+    ['free U.S. standard shipping at $150 and above', 'free U.S. standard shipping at $199 and above'],
+    ['a $12 rate below $150', 'a $14.99 rate below $199'],
+  ]],
+  ['src/pages/NewArrivals.tsx', [
+    ['Free U.S. shipping applies at $150 and above', 'Free U.S. standard shipping applies at $199 and above'],
+    ['shipping is $12 below that', 'U.S. shipping is $14.99 below $199'],
+  ]],
+]);
+for (const [relative, replacements] of pageReplacements) {
+  let source = read(relative);
+  for (const [from, to] of replacements) source = source.split(from).join(to);
+  write(relative, source);
+}
+
 let index = read('index.html');
 index = index.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE}</title>`);
 const replacements = [
@@ -76,5 +98,11 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
 }
 if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
 if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
+for (const relative of pageReplacements.keys()) {
+  const source = read(relative);
+  if (/\$12[^\n]{0,100}(?:shipping|below \$150)/i.test(source) || /free[^\n]{0,60}\$150/i.test(source)) {
+    throw new Error(`[approved-seo] Stale shipping copy remains in ${relative}`);
+  }
+}
 
-console.log('[approved-seo] Exact approved homepage title retained; H1 and shared descriptions meet release limits.');
+console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions and customer-facing shipping copy meet release rules.');
