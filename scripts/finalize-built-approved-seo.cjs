@@ -4,12 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const file = path.join(ROOT, 'dist', 'index.html');
 const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
-
-if (!fs.existsSync(file)) throw new Error('[built-approved-seo] dist/index.html is missing');
-let html = fs.readFileSync(file, 'utf8');
+const files = [
+  path.join(ROOT, 'dist', 'index.html'),
+  path.join(ROOT, 'dist', '_prerender', 'index.html'),
+];
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -27,20 +27,27 @@ function setMeta(source, attribute, name, content) {
   return source.replace(current, updated);
 }
 
-html = /<title>[\s\S]*?<\/title>/i.test(html)
-  ? html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE}</title>`)
-  : html.replace('</head>', `  <title>${HOME_TITLE}</title>\n</head>`);
-html = setMeta(html, 'name', 'title', HOME_TITLE);
-html = setMeta(html, 'name', 'description', HOME_DESCRIPTION);
-html = setMeta(html, 'property', 'og:title', HOME_TITLE);
-html = setMeta(html, 'property', 'og:description', HOME_DESCRIPTION);
-html = setMeta(html, 'name', 'twitter:title', HOME_TITLE);
-html = setMeta(html, 'name', 'twitter:description', HOME_DESCRIPTION);
+let updatedCount = 0;
+for (const file of files) {
+  if (!fs.existsSync(file)) throw new Error(`[built-approved-seo] Missing homepage output: ${file}`);
+  let html = fs.readFileSync(file, 'utf8');
 
-fs.writeFileSync(file, html, 'utf8');
+  html = /<title>[\s\S]*?<\/title>/i.test(html)
+    ? html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE}</title>`)
+    : html.replace('</head>', `  <title>${HOME_TITLE}</title>\n</head>`);
+  html = setMeta(html, 'name', 'title', HOME_TITLE);
+  html = setMeta(html, 'name', 'description', HOME_DESCRIPTION);
+  html = setMeta(html, 'property', 'og:title', HOME_TITLE);
+  html = setMeta(html, 'property', 'og:description', HOME_DESCRIPTION);
+  html = setMeta(html, 'name', 'twitter:title', HOME_TITLE);
+  html = setMeta(html, 'name', 'twitter:description', HOME_DESCRIPTION);
 
-for (const required of [`<title>${HOME_TITLE}</title>`, HOME_DESCRIPTION]) {
-  if (!html.includes(required)) throw new Error(`[built-approved-seo] Missing built value: ${required}`);
+  fs.writeFileSync(file, html, 'utf8');
+  updatedCount += 1;
+
+  for (const required of [`<title>${HOME_TITLE}</title>`, HOME_DESCRIPTION]) {
+    if (!html.includes(required)) throw new Error(`[built-approved-seo] ${file} missing built value: ${required}`);
+  }
 }
 
-console.log('[built-approved-seo] Final built homepage metadata matches the approved concise source.');
+console.log(`[built-approved-seo] Final homepage metadata matches the approved source in ${updatedCount} HTML outputs.`);
