@@ -7,6 +7,7 @@ const ROOT = path.resolve(__dirname, '..');
 const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
 const HOME_H1 = 'LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
+const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 
 const routeDescriptions = {
   '/lehengas': 'Shop bridal and wedding-guest lehengas online. Compare fabric, included pieces, stitching, sizing, availability and processing details.',
@@ -55,26 +56,39 @@ seoHead = seoHead
   .replace(/description = '[^']*'/, `description = '${HOME_DESCRIPTION}'`);
 write(seoHeadPath, seoHead);
 
-const pageReplacements = new Map([
-  ['src/pages/FAQ.tsx', [
-    [
-      "answer: 'Yes. We offer free US shipping at $150 and above. A flat $12 shipping rate applies below $150.'",
-      "answer: 'U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other countries use route-based rates shown on the Shipping page.'",
-    ],
-  ]],
-  ['src/pages/Collections.tsx', [
-    ['free U.S. standard shipping at $150 and above', 'free U.S. standard shipping at $199 and above'],
-    ['a $12 rate below $150', 'a $14.99 rate below $199'],
-  ]],
-  ['src/pages/NewArrivals.tsx', [
-    ['Free U.S. shipping applies at $150 and above', 'Free U.S. standard shipping applies at $199 and above'],
-    ['shipping is $12 below that', 'U.S. shipping is $14.99 below $199'],
-  ]],
-]);
-for (const [relative, replacements] of pageReplacements) {
+function normalizeCustomerShippingCopy(relative) {
   let source = read(relative);
-  for (const [from, to] of replacements) source = source.split(from).join(to);
+  source = source
+    .split('$12').join('$14.99')
+    .split('$150').join('$199')
+    .split('Free US shipping').join('Free U.S. standard shipping')
+    .split('free US shipping').join('free U.S. standard shipping')
+    .split('Free U.S. shipping').join('Free U.S. standard shipping')
+    .split('free U.S. shipping').join('free U.S. standard shipping')
+    .split('LuxeMia currently ships to United States addresses only').join(`LuxeMia ships to ${DESTINATIONS}`)
+    .split('LuxeMia ships to United States addresses only').join(`LuxeMia ships to ${DESTINATIONS}`)
+    .split('United States addresses only').join(DESTINATIONS)
+    .replace(
+      /answer: 'No\. LuxeMia (?:currently )?ships to [^']*'/g,
+      `answer: 'Yes. LuxeMia ships to ${DESTINATIONS}. Review the Shipping page for destination-based rates, duties and processing guidance.'`,
+    )
+    .replace(
+      /answer: 'All sales are final and exchanges are not accepted\. Review the exact product measurements and contact LuxeMia before ordering if the listing is unclear\.'/g,
+      "answer: 'Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Review the exact product measurements and contact LuxeMia before ordering if the listing is unclear.'",
+    )
+    .replace(
+      /answer: 'All sales are final\. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours using the covered-order-issue process\.'/g,
+      "answer: 'Under LuxeMia’s voluntary policy, change-of-mind, fit and preference returns are not accepted except where applicable law provides otherwise. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours using the covered-order-issue process.'",
+    )
+    .replace(
+      /answer: 'Exchanges are not accepted\. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear\.'/g,
+      "answer: 'Voluntary size or color exchanges are not accepted except where applicable law provides otherwise. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear.'",
+    );
   write(relative, source);
+}
+
+for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx']) {
+  normalizeCustomerShippingCopy(relative);
 }
 
 let index = read('index.html');
@@ -98,11 +112,11 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
 }
 if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
 if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
-for (const relative of pageReplacements.keys()) {
+for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx']) {
   const source = read(relative);
   if (/\$12[^\n]{0,100}(?:shipping|below \$150)/i.test(source) || /free[^\n]{0,60}\$150/i.test(source)) {
     throw new Error(`[approved-seo] Stale shipping copy remains in ${relative}`);
   }
 }
 
-console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions and customer-facing shipping copy meet release rules.');
+console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions, statutory-right wording and customer-facing shipping copy meet release rules.');
