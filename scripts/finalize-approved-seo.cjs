@@ -24,6 +24,10 @@ function write(relative, content) {
   fs.writeFileSync(path.join(ROOT, relative), content, 'utf8');
 }
 
+function exists(relative) {
+  return fs.existsSync(path.join(ROOT, relative));
+}
+
 function applyArchitecture(architecture) {
   architecture.routes['/'] = {
     ...architecture.routes['/'],
@@ -91,6 +95,25 @@ for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/p
   normalizeCustomerShippingCopy(relative);
 }
 
+function normalizeEditorialShippingCopy(relative) {
+  if (!exists(relative)) return;
+  const source = read(relative)
+    .split('\n')
+    .map((line) => {
+      const hasRetiredAmounts = line.includes('$12') && line.includes('$150');
+      const isShippingContext = /shipping|delivery|free|orders?\s+(?:below|over|at)/i.test(line);
+      if (!hasRetiredAmounts || !isShippingContext) return line;
+      return line.replace(/\$12/g, '$14.99').replace(/\$150/g, '$199');
+    })
+    .join('\n')
+    .replace("title: 'United States Shipping Policy'", "title: 'Shipping Policy & International Rates'");
+  write(relative, source);
+}
+
+for (const relative of ['src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts']) {
+  normalizeEditorialShippingCopy(relative);
+}
+
 let index = read('index.html');
 index = index.replace(/<title>[\s\S]*?<\/title>/i, `<title>${HOME_TITLE}</title>`);
 const replacements = [
@@ -112,11 +135,12 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
 }
 if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
 if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
-for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx']) {
+for (const relative of ['src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts']) {
+  if (!exists(relative)) continue;
   const source = read(relative);
-  if (/\$12[^\n]{0,100}(?:shipping|below \$150)/i.test(source) || /free[^\n]{0,60}\$150/i.test(source)) {
+  if (/\$12[^\n]{0,160}(?:shipping|delivery|below \$150)/i.test(source) || /(?:shipping|delivery|free)[^\n]{0,160}\$150/i.test(source)) {
     throw new Error(`[approved-seo] Stale shipping copy remains in ${relative}`);
   }
 }
 
-console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions, statutory-right wording and customer-facing shipping copy meet release rules.');
+console.log('[approved-seo] Exact approved homepage title retained; H1, shared descriptions, statutory-right wording and customer-facing/editorial shipping copy meet release rules.');
