@@ -5,7 +5,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const file = path.join(ROOT, 'middleware.ts');
-let source = fs.readFileSync(file, 'utf8');
+const source = fs.readFileSync(file, 'utf8');
 
 const redirects = {
   '/collections/earrings': '/jewelry',
@@ -18,24 +18,11 @@ const redirects = {
   '/collections/saree-gowns': '/sarees',
 };
 
-const marker = "  const COLLECTION_301_REDIRECTS: Record<string, string> = {\n";
-if (!source.includes(marker)) {
-  throw new Error('[empty-collection-redirects] Collection redirect map not found');
-}
-
-const entries = Object.entries(redirects)
-  .filter(([from]) => !source.includes(`    '${from}':`))
-  .map(([from, to]) => `    '${from}': '${to}',`);
-
-if (entries.length > 0) {
-  source = source.replace(marker, `${marker}${entries.join('\n')}\n`);
-  fs.writeFileSync(file, source, 'utf8');
-}
-
 for (const [from, to] of Object.entries(redirects)) {
-  if (!source.includes(`'${from}': '${to}'`)) {
-    throw new Error(`[empty-collection-redirects] Missing redirect ${from} -> ${to}`);
+  const committedEntry = `    '${from}': '${to}',`;
+  if (!source.includes(committedEntry)) {
+    throw new Error(`[empty-collection-redirects] Missing committed redirect ${from} -> ${to}`);
   }
 }
 
-console.log(`[empty-collection-redirects] ${Object.keys(redirects).length} empty collection routes permanently redirect to useful live destinations.`);
+console.log(`[empty-collection-redirects] ${Object.keys(redirects).length} committed middleware redirects verified.`);
