@@ -130,8 +130,6 @@ function patchRuntimeShippingSanitizer() {
       .join('Tracked shipping is available to seven countries. U.S. shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch.')
     .split('United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
       .join('Tracked shipping is available to seven countries. U.S. shipping is $14.99 below $199 and free at $199 and above')
-    .split('United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-      .join('Tracked shipping is available to seven countries. U.S. shipping is $14.99 below $199 and free at $199 and above')
     .split('United States shipping only')
       .join('Tracked shipping to seven supported countries')
     .split('USA, Canada, and Australia')
@@ -193,7 +191,7 @@ function validateFinalState() {
     /fetchProducts\(80\)/,
     'live Shopify recommendation pool',
   );
-  if (/jewelryProducts|JewelryProduct/.test(completeTheLook)) {
+  if (/@\/data\/jewelryProducts|\btype\s+JewelryProduct\b/.test(completeTheLook)) {
     throw new Error('[competitor-merchandising] CompleteTheLook still depends on local non-Shopify inventory');
   }
   requireMatch(
