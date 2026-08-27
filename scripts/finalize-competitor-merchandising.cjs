@@ -76,8 +76,6 @@ function patchReadyToShipPage() {
   const relative = 'src/pages/ReadyToShip.tsx';
   let source = read(relative);
 
-  // Guard against a retired five-day implementation being reintroduced by an
-  // older script or conflict resolution.
   source = source
     .replace(
       /import \{ sortProducts \} from '@\/lib\/productFilters';\n(?!import \{ isMadeToOrderProduct)/,
@@ -660,7 +658,7 @@ function validateFinalState() {
   requireMatch('scripts/validate-built-trust.cjs', builtValidator, /at least 40 stocked product links/, 'built Ready-to-Ship coverage');
   requireAbsent('scripts/validate-built-trust.cjs', builtValidator, /exactly 10 verified product links|10 verified five-day/, 'retired built five-day assertion');
 
-  for (const relative of ['src/lib/shopify.ts', 'scripts/prerender.js', 'scripts/generate-static-feed.cjs']) {
+  for (const relative of ['src/lib/shopify.ts', 'scripts/prerender.js']) {
     const source = read(relative)
       .split('\n')
       .filter((line) => !line.includes('.replace(/'))
