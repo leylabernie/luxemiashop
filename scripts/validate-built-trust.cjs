@@ -38,9 +38,9 @@ function requireAll(label, source, snippets) {
   }
 }
 
-function inspectJsonLd(label, source) {
+function inspectJsonLd(label, source, required = false) {
   const scripts = [...source.matchAll(/<script\s+type=["']application\/ld\+json["']>([\s\S]*?)<\/script>/gi)];
-  if (scripts.length === 0) failures.push(`${label} has no JSON-LD blocks`);
+  if (required && scripts.length === 0) failures.push(`${label} has no JSON-LD blocks`);
   for (const [index, match] of scripts.entries()) {
     try {
       const parsed = JSON.parse(match[1].trim());
@@ -101,6 +101,7 @@ requireAll('home', home, [
   'hello@luxemia.shop',
   '+1-215-341-9990',
 ]);
+inspectJsonLd('home', home, true);
 
 const shipping = readBuilt('shipping/index.html');
 requireAll('shipping', shipping, [
@@ -118,6 +119,7 @@ requireAll('shipping', shipping, [
   'South Africa',
   'Mauritius',
 ]);
+inspectJsonLd('shipping', shipping, true);
 
 const ready = readBuilt('ready-to-ship/index.html');
 requireAll('ready-to-ship', ready, [
@@ -125,6 +127,7 @@ requireAll('ready-to-ship', ready, [
   'Processing is the time before dispatch',
   'View route-based rates',
 ]);
+inspectJsonLd('ready-to-ship', ready, true);
 
 const collectionRedirectTargets = [
   'collections/earrings/index.html',
