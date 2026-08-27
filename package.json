@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/apply-gsc-runtime-remediation.cjs && node scripts/apply-legacy-shipping-copy-cleanup.cjs && node scripts/apply-route-based-shipping-growth.cjs && node scripts/apply-route-shipping-seo-fix.cjs && node scripts/apply-route-shipping-final-cleanup.cjs && npm run validate:indexation-recovery && npm run validate:seo-architecture && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/verify-prerender-coverage.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
+    "build": "node scripts/apply-gsc-runtime-remediation.cjs && node scripts/apply-legacy-shipping-copy-cleanup.cjs && node scripts/apply-route-based-shipping-growth.cjs && node scripts/apply-route-shipping-seo-fix.cjs && node scripts/apply-route-shipping-final-cleanup.cjs && node scripts/apply-trust-source-of-truth.cjs && npm run validate:indexation-recovery && npm run validate:seo-architecture && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/postprocess-built-trust.cjs && node scripts/verify-prerender-coverage.cjs && node scripts/validate-built-trust.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -17,7 +17,9 @@
     "test:checkout-url": "node --test tests/checkout-url.test.cjs",
     "validate:navratri-traffic": "node scripts/validate-navratri-traffic.cjs",
     "validate:blog": "node scripts/validate-blog-content.cjs",
-    "validate:policy-copy": "node scripts/apply-legacy-shipping-copy-cleanup.cjs && node scripts/apply-route-based-shipping-growth.cjs && node scripts/apply-route-shipping-seo-fix.cjs && node scripts/apply-route-shipping-final-cleanup.cjs && node scripts/validate-route-based-shipping.cjs",
+    "validate:policy-copy": "node scripts/apply-legacy-shipping-copy-cleanup.cjs && node scripts/apply-route-based-shipping-growth.cjs && node scripts/apply-route-shipping-seo-fix.cjs && node scripts/apply-route-shipping-final-cleanup.cjs && node scripts/apply-trust-source-of-truth.cjs && node scripts/validate-trust-source-of-truth.cjs",
+    "validate:trust": "node scripts/apply-trust-source-of-truth.cjs && node scripts/validate-trust-source-of-truth.cjs",
+    "validate:built-trust": "node scripts/validate-built-trust.cjs",
     "validate:legacy-redirects": "node scripts/validate-legacy-redirects.cjs",
     "validate:product-retirement-lifecycle": "node scripts/validate-product-retirement-lifecycle.cjs"
   },
