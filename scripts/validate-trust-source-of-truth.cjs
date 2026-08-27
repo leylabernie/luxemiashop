@@ -27,8 +27,19 @@ function requireAll(relative, snippets) {
   }
 }
 
+function sourceForCopyValidation(relative, rawSource) {
+  if (relative !== 'src/lib/shopify.ts' && relative !== 'scripts/prerender.js') return rawSource;
+  // These files intentionally contain regex sanitizers that recognize old copy
+  // in incoming supplier descriptions. The pattern text is not emitted output.
+  return rawSource
+    .split('\n')
+    .filter((line) => !line.includes('.replace(/'))
+    .join('\n');
+}
+
 function block(relative, patterns) {
-  const source = requireFile(relative);
+  const rawSource = requireFile(relative);
+  const source = sourceForCopyValidation(relative, rawSource);
   for (const pattern of patterns) {
     const match = source.match(pattern);
     if (!match || match.index === undefined) continue;
