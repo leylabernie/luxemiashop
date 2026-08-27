@@ -20,8 +20,28 @@ export const CUSTOMIZABLE_PRODUCT_HANDLES = new Set(customizableProductsByHandle
 export const getCustomizableProduct = (handle?: string | null): CustomizableProductRecord | undefined =>
   handle ? customizableProductsByHandle.get(handle) : undefined;
 
+/**
+ * The original customizable-product mapping identifies the verified designs
+ * that also offer a confirmed custom color. Shopify now carries additional
+ * made-to-order products whose catalog tags truthfully identify their status
+ * but which do not offer the same custom-color promise.
+ */
 export const isCustomizableProduct = (handle?: string | null): boolean =>
   Boolean(handle && customizableProductsByHandle.has(handle));
+
+const MADE_TO_ORDER_TAGS = new Set([
+  'made to order',
+  'availability:made to order',
+  'custom-made',
+]);
+
+export const isMadeToOrderProduct = (
+  handle?: string | null,
+  tags?: string[] | null,
+): boolean => {
+  if (isCustomizableProduct(handle)) return true;
+  return (tags || []).some((tag) => MADE_TO_ORDER_TAGS.has(tag.trim().toLowerCase()));
+};
 
 export const CUSTOM_PRODUCT_TIMING =
   'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
