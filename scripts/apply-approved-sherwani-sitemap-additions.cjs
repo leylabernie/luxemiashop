@@ -14,6 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
+const GONE_HANDLES_FILE = path.join(ROOT, 'src/data/legacyGoneProductHandles.json');
 const APPROVED_SITEMAP_FILE = path.join(ROOT, 'scripts/approved-sitemap-inventory.json');
 const CAPTURED_ON = '2026-08-28';
 const APPROVED_SHERWANI_PATHS = [
@@ -55,6 +56,31 @@ for (const pathname of APPROVED_SHERWANI_PATHS) {
   }
 }
 
+const approvedSherwaniHandles = new Set(
+  APPROVED_SHERWANI_PATHS.map((pathname) => pathname.replace('/product/', '')),
+);
+const parsedGoneHandles = JSON.parse(fs.readFileSync(GONE_HANDLES_FILE, 'utf8'));
+if (!Array.isArray(parsedGoneHandles)) {
+  throw new Error('[approved-sherwani-sitemap] legacyGoneProductHandles.json must contain an array.');
+}
+
+const remainingGoneHandles = parsedGoneHandles
+  .map((value) => String(value).trim())
+  .filter(Boolean)
+  .filter((handle) => !approvedSherwaniHandles.has(handle))
+  .sort((a, b) => a.localeCompare(b));
+fs.writeFileSync(
+  GONE_HANDLES_FILE,
+  `${JSON.stringify(remainingGoneHandles, null, 2)}\n`,
+  'utf8',
+);
+
+for (const handle of approvedSherwaniHandles) {
+  if (remainingGoneHandles.includes(handle)) {
+    throw new Error(`[approved-sherwani-sitemap] Approved handle remains retired: ${handle}.`);
+  }
+}
+
 inventory.source =
   '2026-08-28 catalog release: retained the verified recovery inventory and added nine published Surat Wholesale Shop catalog 35757 art-silk sherwanis after product, publication, pricing, image, SEO, storefront, and Merchant-feed checks; hidden billing and unreviewed candidates remain excluded';
 inventory.capturedOn = CAPTURED_ON;
@@ -64,5 +90,5 @@ inventory.urlCount = originalPaths.length;
 fs.writeFileSync(APPROVED_SITEMAP_FILE, `${JSON.stringify(inventory, null, 2)}\n`, 'utf8');
 
 console.log(
-  `[approved-sherwani-sitemap] OK — ${APPROVED_SHERWANI_PATHS.length} reviewed catalog 35757 sherwani URLs are present in the ${inventory.urlCount}-URL approved inventory before retirement finalization.`,
+  `[approved-sherwani-sitemap] OK — ${APPROVED_SHERWANI_PATHS.length} reviewed catalog 35757 sherwani URLs are restored from 410 retirement and present in the ${inventory.urlCount}-URL approved inventory before retirement finalization.`,
 );
