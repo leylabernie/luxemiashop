@@ -23,7 +23,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
     longDescription: 'Use these practical outfit guides to compare silhouettes, occasion fit and styling choices. Then open the relevant LuxeMia collection and confirm the exact fabric or materials, included pieces, stitching status, size options and current availability on each product listing.',
     icon: 'Shirt',
     metaTitle: 'Indian Outfit Guides — Sarees, Lehengas, Suits & Menswear | LuxeMia',
-    metaDescription: 'Compare Indian outfit silhouettes and styling choices, then shop current LuxeMia sarees, lehengas, suits, menswear and jewelry with tracked U.S. shipping.',
+    metaDescription: 'Compare Indian outfit silhouettes and styling choices, then shop current LuxeMia sarees, lehengas, suits, menswear and jewelry with tracked shipping to seven countries.',
   },
   {
     slug: 'motifs-embroideries',
@@ -41,7 +41,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
     longDescription: 'Plan outfits for wedding ceremonies, receptions and festivals celebrated outside India. These guides focus on useful outfit choices and link directly to relevant LuxeMia shopping categories.',
     icon: 'Heart',
     metaTitle: 'Indian Wedding Guest & Festival Outfit Guides | LuxeMia',
-    metaDescription: 'Practical Indian wedding guest and festival outfit guides with direct links to current LuxeMia collections and tracked U.S. shipping.',
+    metaDescription: 'Practical Indian wedding guest and festival outfit guides with direct links to current LuxeMia collections and tracked shipping to seven countries.',
   },
   {
     slug: 'how-to-care',
@@ -95,6 +95,11 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'plus-size-indian-ethnic-wear-guide': 'how-to-care',
   'manish-malhotra-bollywood-bridal-designer-profile': 'designer-profiles',
   'indian-wedding-terms-glossary-50-events-rituals-roles': 'cultural-context',
+  'sharara-vs-gharara-difference': 'attires',
+  'ready-to-ship-vs-made-to-order-indian-outfits': 'how-to-care',
+  'does-a-saree-come-with-a-blouse': 'how-to-care',
+  'how-should-a-sherwani-fit-measurement-checklist': 'how-to-care',
+  'how-to-buy-a-bridal-lehenga-online-checklist': 'weddings-festivals',
 };
 
 export function getBlogCategoryGroup(slug: string): BlogCategoryGroup | undefined {

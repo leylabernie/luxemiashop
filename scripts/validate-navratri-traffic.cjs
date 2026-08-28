@@ -56,6 +56,11 @@ const articleHtml = read(articlePath);
 const homepageHtml = read(homepagePath);
 const feedXml = read('dist/merchant-feed.xml');
 const sitemapXml = read('dist/sitemap.xml');
+const blogSource = read('src/data/blogPosts.ts');
+const reviewedAt = blogSource.match(/const GROWTH_CONTENT_REVIEWED_AT = '(\d{4}-\d{2}-\d{2})';/)?.[1];
+if (!reviewedAt) {
+  throw new Error('[navratri-traffic] GROWTH_CONTENT_REVIEWED_AT is missing from src/data/blogPosts.ts');
+}
 
 requireText(collectionHtml, '<title>Navratri Outfits USA 2026 | Garba Styles | LuxeMia</title>', 'collection search title');
 requireText(collectionHtml, '<link rel="canonical" href="https://luxemia.shop/collections/navratri-outfits"', 'collection canonical');
@@ -84,7 +89,11 @@ for (const handle of REQUIRED_NAVRATRI_PRODUCT_HANDLES) {
 
 requireText(articleHtml, '<title>Navratri 2026 USA: Garba &amp; Chaniya Choli Guide | LuxeMia</title>', 'article search title');
 requireText(articleHtml, '<link rel="canonical" href="https://luxemia.shop/blog/navratri-9-day-color-guide-2026"', 'article canonical');
-requirePattern(articleHtml, /"dateModified"\s*:\s*"2026-08-19"/, 'article review date');
+requirePattern(
+  articleHtml,
+  new RegExp(`"dateModified"\\s*:\\s*"${reviewedAt}"`),
+  `article review date ${reviewedAt}`,
+);
 requireText(articleHtml, 'https://www.timeanddate.com/holidays/us/hindu-navaratri', 'United States date source');
 requireText(articleHtml, 'href="/collections/navratri-outfits"', 'guide-to-collection internal link');
 requireText(articleHtml, 'LUXE10', 'article first-order offer');

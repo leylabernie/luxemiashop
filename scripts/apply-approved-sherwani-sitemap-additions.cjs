@@ -82,7 +82,7 @@ for (const handle of approvedSherwaniHandles) {
 }
 
 inventory.source =
-  '2026-08-28 catalog release: retained the verified recovery inventory and added nine published Surat Wholesale Shop catalog 35757 art-silk sherwanis after product, publication, pricing, image, SEO, storefront, and Merchant-feed checks; hidden billing and unreviewed candidates remain excluded';
+  '2026-08-28 organic search and catalog release: retained the verified recovery inventory, added five source-reviewed buyer guides, and added nine published Surat Wholesale Shop catalog 35757 art-silk sherwanis after product, publication, pricing, image, SEO, storefront, and Merchant-feed checks; hidden billing and unreviewed candidates remain excluded';
 inventory.capturedOn = CAPTURED_ON;
 inventory.paths = originalPaths;
 inventory.urlCount = originalPaths.length;

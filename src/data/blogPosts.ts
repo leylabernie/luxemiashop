@@ -1,4 +1,5 @@
 import { recoveredBlogPosts } from './recoveredBlogPosts';
+import { seoGrowthBlogPosts } from './seoGrowthBlogPosts';
 
 export interface BlogSource {
   title: string;
@@ -55,12 +56,16 @@ export const PUBLISHED_BLOG_SLUGS = [
   'plus-size-indian-ethnic-wear-guide',
   'manish-malhotra-bollywood-bridal-designer-profile',
   'indian-wedding-terms-glossary-50-events-rituals-roles',
+  'sharara-vs-gharara-difference',
+  'ready-to-ship-vs-made-to-order-indian-outfits',
+  'does-a-saree-come-with-a-blouse',
+  'how-should-a-sherwani-fit-measurement-checklist',
+  'how-to-buy-a-bridal-lehenga-online-checklist',
 ] as const;
 
 const FACT_CHECKED_AT = '2026-08-08';
-const POLICY_REVIEWED_AT = '2026-08-11';
 const CONTENT_REVIEWED_AT = '2026-08-12';
-const NAVRATRI_REVIEWED_AT = '2026-08-19';
+const GROWTH_CONTENT_REVIEWED_AT = '2026-08-28';
 const EDITORIAL_TEAM = 'LuxeMia Editorial Team';
 
 const source = (title: string, url: string, publisher: string): BlogSource => ({
@@ -156,7 +161,7 @@ const SOURCES = {
     'LuxeMia',
   ),
   luxemiaShipping: source(
-    'United States Shipping Policy',
+    'Shipping and Delivery',
     'https://luxemia.shop/shipping',
     'LuxeMia',
   ),
@@ -188,9 +193,7 @@ const editorialNoteFor = (reviewDate: string) => `
   </aside>
 `;
 const editorialNote = editorialNoteFor('August 8, 2026');
-const policyEditorialNote = editorialNoteFor('August 11, 2026');
-const navratriEditorialNote = editorialNoteFor('August 19, 2026');
-const contentEditorialNote = editorialNoteFor('August 12, 2026');
+const growthEditorialNote = editorialNoteFor('August 28, 2026');
 
 export const blogPosts: BlogPost[] = [
   {
@@ -399,7 +402,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Styling Indian Ethnic Wear for U.S. Festivals: A Practical, Respectful Guide',
     excerpt: 'Festival practices and dress vary by family, region, faith and event. Confirm the organizer’s expectations, then choose the garment for venue, weather, movement and the exact listing details.',
     content: `
-      ${policyEditorialNote}
+      ${growthEditorialNote}
       <h2>Festival names do not create one dress code</h2>
       <p>Diwali, Eid, Navratri and other celebrations are observed by diverse communities. A temple program, family dinner, community garba and formal fundraiser can require different clothing even when held for the same festival. Use the invitation or organizer's instructions as the authority.</p>
 
@@ -412,15 +415,15 @@ export const blogPosts: BlogPost[] = [
       </ul>
 
       <h2>Ordering from LuxeMia</h2>
-      <p>LuxeMia ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking does not guarantee arrival by an event date, so contact LuxeMia before ordering when timing is important.</p>
+      <p>LuxeMia offers tracked shipping to seven countries. Review the current destinations, rates and thresholds on the <a href="/shipping">shipping page</a>. Tracking does not guarantee arrival by an event date, so contact LuxeMia before ordering when timing is important.</p>
 
       <h2>Optional styling suggestions</h2>
       <p>You may coordinate with a family color palette, repeat a garment color in one accessory or choose footwear for dancing. These are optional styling decisions, not festival requirements. Religious or family practices should come from the people hosting the event.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-12',
-    updatedAt: POLICY_REVIEWED_AT,
-    factCheckedAt: POLICY_REVIEWED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'Festival Guide',
     tags: ['festival outfits usa', 'indian ethnic wear usa', 'diwali outfit', 'navratri outfit', 'event planning'],
     image: '/images/blog/gdrive/bride-blue-lehenga-festive.webp',
@@ -433,7 +436,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Lehenga, Sharara and Anarkali: What the Garment Terms Mean',
     excerpt: 'A lehenga is built around a separate skirt, a sharara around flared divided bottoms, and an anarkali around a long flared top. Retail use varies, so the included pieces and measurements on the listing are decisive.',
     content: `
-      ${editorialNote}
+      ${growthEditorialNote}
       <h2>Basic silhouette differences</h2>
       <table>
         <thead><tr><th>Term</th><th>Typical structure</th><th>Listing details to verify</th></tr></thead>
@@ -455,11 +458,12 @@ export const blogPosts: BlogPost[] = [
         <li>Consider sitting, walking and dancing in the actual venue.</li>
         <li>Do not choose by a claimed “best body type”; fit depends on the garment measurements and wearer's preference.</li>
       </ul>
+      <p>For the defining knee construction that separates the two divided-bottom styles, read <a href="/blog/sharara-vs-gharara-difference">Sharara vs Gharara: The Exact Construction and Shopping Difference</a>.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-12',
-    updatedAt: FACT_CHECKED_AT,
-    factCheckedAt: FACT_CHECKED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'Outfit Guide',
     tags: ['lehenga vs sharara', 'anarkali guide', 'indian outfit terms', 'sharara suit', 'lehenga choli'],
     image: '/images/blog/gdrive/anarkali-gold-mint.webp',
@@ -472,7 +476,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Drape a Saree: One Beginner Method, Not a Universal Rule',
     excerpt: 'Sarees are worn in many regional and personal drapes. This guide explains a common pleated front-and-shoulder method while recognizing that it is only one approach.',
     content: `
-      ${editorialNote}
+      ${growthEditorialNote}
       <h2>There is more than one saree drape</h2>
       <p>A saree is an unstitched length of textile that can be draped in many ways. Regional methods differ in direction, pleats, pallu placement and whether the cloth passes between the legs. The steps below describe one common modern approach; they do not define the only correct way to wear a saree.</p>
 
@@ -494,11 +498,12 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Fabric and care</h2>
       <p>Different textiles respond differently to folding and pinning. A museum's draping method for display is not a garment-care instruction for consumers. Follow the care label and avoid assuming that all silk-like or embellished sarees tolerate steam, washing or direct ironing.</p>
+      <p>Before choosing the supporting garments, use <a href="/blog/does-a-saree-come-with-a-blouse">Does a Saree Come With a Blouse?</a> to verify whether the listing includes a stitched blouse, an unstitched blouse piece or no blouse component.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-13',
-    updatedAt: FACT_CHECKED_AT,
-    factCheckedAt: FACT_CHECKED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'How-To Guide',
     tags: ['how to drape saree', 'beginner saree drape', 'saree pleats', 'saree guide'],
     image: '/images/blog/gdrive/kanchipuram-saree-brass-lamps.webp',
@@ -511,7 +516,7 @@ export const blogPosts: BlogPost[] = [
     title: 'How to Choose a Salwar Kameez by Measurements, Not Body-Type Rules',
     excerpt: 'Body-shape labels do not determine which salwar kameez someone may wear. Compare the exact garment measurements, cut, included pieces and your own fit preference.',
     content: `
-      ${editorialNote}
+      ${growthEditorialNote}
       <h2>Why this guide no longer prescribes “flattering” body types</h2>
       <p>Terms such as apple, pear or hourglass do not supply the measurements needed to fit a garment. They also turn personal style into a rule. A useful fit guide compares the wearer's measurements with the exact garment and states where the design is fitted, straight or flared.</p>
 
@@ -568,11 +573,12 @@ export const blogPosts: BlogPost[] = [
 
       <h2>Optional event guidance</h2>
       <p>A longer coat may be chosen for a wedding ceremony and a shorter jacket for another event, but that is not a universal cultural rule. Follow the couple's dress code, venue requirements and the wearer's comfort.</p>
+      <p>Once you have chosen the garment type, continue with the <a href="/blog/how-should-a-sherwani-fit-measurement-checklist">online Sherwani measurement checklist</a> for body-versus-garment measurements and movement checks.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-13',
-    updatedAt: FACT_CHECKED_AT,
-    factCheckedAt: FACT_CHECKED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'Menswear Guide',
     tags: ['sherwani vs bandhgala', 'jodhpuri suit', 'groom menswear', 'indian menswear terms'],
     image: '/images/blog/gdrive/groomsmen-lavender-pink-turbans.webp',
@@ -716,7 +722,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Navratri 2026 USA: Garba & Chaniya Choli Guide',
     excerpt: 'Plan a Navratri or Garba outfit for a U.S. event with 2026 dates, fit checks, chaniya choli comparisons, and current U.S. shipping guidance.',
     content: `
-      ${navratriEditorialNote}
+      ${growthEditorialNote}
       <p><strong>Shopping for a U.S. celebration?</strong> <a href="/collections/navratri-outfits">Browse current LuxeMia Navratri and Garba outfits</a>, then use the exact product page to verify size, stitching, included pieces, price and availability.</p>
 
       <h2>When is Navratri in 2026?</h2>
@@ -747,15 +753,15 @@ export const blogPosts: BlogPost[] = [
 
       <h2>When should a U.S. shopper order?</h2>
       <p>Start with the exact product's current availability and options. If your event date is fixed, contact LuxeMia before ordering to discuss the selected listing and timing. Preparation and carrier transit can vary, and delivery by a particular event is not guaranteed.</p>
-      <p>LuxeMia ships to United States addresses only. Standard U.S. shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use <strong>LUXE10</strong> for 10% off their first order with no minimum purchase requirement.</p>
+      <p>LuxeMia offers tracked shipping to seven countries; use the <a href="/shipping">current shipping page</a> for route-based rates and thresholds. Tracking is provided after dispatch. First-time shoppers can use <strong>LUXE10</strong> for 10% off their first order with no minimum purchase requirement.</p>
 
       <h2>Shop current Navratri outfits</h2>
       <p><a href="/collections/navratri-outfits"><strong>Shop current Navratri, Garba and chaniya choli listings</strong></a>, compare measurements with the <a href="/sizing-measurements-guide">LuxeMia sizing guide</a>, or <a href="/contact">contact LuxeMia</a> before ordering when a product detail or event deadline is unclear.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-15',
-    updatedAt: NAVRATRI_REVIEWED_AT,
-    factCheckedAt: NAVRATRI_REVIEWED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'Festival Guide',
     tags: ['navratri outfits usa 2026', 'navratri dates', 'garba outfit usa', 'navratri colors', 'chaniya choli usa', 'dandiya outfit'],
     image: '/images/blog/blog-006-teal-green-net.webp',
@@ -803,7 +809,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Custom Bridesmaid & Wedding Guest Lehenga Online USA',
     excerpt: 'Selected LuxeMia occasionwear can be ordered with the customization shown on its current product page. Confirm measurements, color availability, included pieces and the event timeline before checkout.',
     content: `
-      ${contentEditorialNote}
+      ${growthEditorialNote}
       <h2>Can you order a custom bridesmaid or wedding guest lehenga online in the USA?</h2>
       <p>Yes, for selected LuxeMia designs that are currently identified as customizable. This is not a promise that every lehenga, saree or suit can be changed in every way. The <a href="/collections/customizable-indian-outfits">Customizable Indian Outfits collection</a> and the individual product page are the current sources of truth.</p>
       <p>For example, the current lavender georgette lehenga-choli listing is presented as a custom Indian bridesmaid outfit, while a current periwinkle wedding-guest saree is presented with custom-fit ordering. Those examples establish that customization exists on selected products; they do not extend the same options to the rest of the catalog.</p>
@@ -834,15 +840,16 @@ export const blogPosts: BlogPost[] = [
       </ol>
 
       <h2>Timing and shipping</h2>
-      <p>The verified customizable collection advises allowing approximately four to five weeks for planning, but current production and carrier timing must be confirmed separately and delivery by a particular event is not guaranteed. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.</p>
+      <p>The verified customizable collection advises allowing approximately four to five weeks for planning, but current production and carrier timing must be confirmed separately and delivery by a particular event is not guaranteed. Review current destinations, route-based rates and thresholds on the <a href="/shipping">shipping page</a>.</p>
 
       <h2>Does LuxeMia alter an outfit you already own?</h2>
       <p>The reviewed store pages do not establish a mail-in alteration service for customer-owned garments. Do not send an existing lehenga, saree or blouse unless LuxeMia support first confirms that service and its terms in writing. The verified offer covered here is customization on selected products sold by LuxeMia.</p>
+      <p>For a listing-by-listing purchase review, continue with <a href="/blog/how-to-buy-a-bridal-lehenga-online-checklist">How to Buy a Bridal Lehenga Online</a> and <a href="/blog/ready-to-ship-vs-made-to-order-indian-outfits">Ready to Ship vs Made to Order Indian Outfits</a>.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: CONTENT_REVIEWED_AT,
-    updatedAt: CONTENT_REVIEWED_AT,
-    factCheckedAt: CONTENT_REVIEWED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'Wedding Style',
     tags: ['custom bridesmaid lehenga USA', 'wedding guest lehenga online', 'custom indian outfit', 'made to measure lehenga', 'bridesmaid outfit'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7763529613_gafs_aeb346a1-7350-43ec-9684-723413eb964b.jpg?v=1782927153',
@@ -862,7 +869,7 @@ export const blogPosts: BlogPost[] = [
     title: 'Custom Deep Neckline Elbow Sleeve Saree Blouse Online USA',
     excerpt: 'A deep neckline and elbow sleeve are product-specific design requests, not universal LuxeMia options. Use the exact listing and written confirmation to verify the cut, measurements, coverage and event timeline.',
     content: `
-      ${contentEditorialNote}
+      ${growthEditorialNote}
       <h2>Can you order this exact blouse combination?</h2>
       <p>A custom saree blouse with a deep neckline and elbow-length sleeves may be possible only when those choices are offered or confirmed for a specific LuxeMia product. The reviewed catalog does not establish those details as universal options. Before ordering, use the <a href="/collections/customizable-indian-outfits">current customizable collection</a> and obtain written confirmation for the exact neckline, sleeve and fit request.</p>
       <p>A current LuxeMia periwinkle wedding-guest saree is labeled as a custom-fit product. That verifies a selected custom-fit offering, but it does not prove that every blouse shape can be made with that saree or that the same request applies to every listing.</p>
@@ -899,12 +906,13 @@ export const blogPosts: BlogPost[] = [
       <p>Custom measurements reduce guesswork but do not guarantee fit. A low neckline also involves personal movement and coverage preferences that measurements alone may not capture. Explain how the blouse will be worn, ask how the requested depth is measured, and confirm any support or coverage requirement before the order is placed.</p>
 
       <h2>Timing and U.S. delivery</h2>
-      <p>The verified customizable collection advises allowing approximately four to five weeks for planning. Current production and carrier timing should be confirmed separately, especially for a fixed wedding date. LuxeMia ships to United States addresses only; standard shipping is $12 below $150 and free at $150 and above.</p>
+      <p>The verified customizable collection advises allowing approximately four to five weeks for planning. Current production and carrier timing should be confirmed separately, especially for a fixed wedding date. Review current destinations, route-based rates and thresholds on the <a href="/shipping">shipping page</a>.</p>
+      <p>If you are choosing a complete saree listing, also read <a href="/blog/does-a-saree-come-with-a-blouse">Does a Saree Come With a Blouse?</a> before assuming that a photographed blouse or petticoat is included.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: CONTENT_REVIEWED_AT,
-    updatedAt: CONTENT_REVIEWED_AT,
-    factCheckedAt: CONTENT_REVIEWED_AT,
+    updatedAt: GROWTH_CONTENT_REVIEWED_AT,
+    factCheckedAt: GROWTH_CONTENT_REVIEWED_AT,
     category: 'Fit Guide',
     tags: ['custom saree blouse USA', 'deep neckline blouse', 'elbow sleeve saree blouse', 'custom fit blouse', 'saree blouse measurements'],
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/il_fullxfull.7722718686_cgvl_68fe743f-528e-4e82-af0e-993437e86a3c.jpg?v=1782927152',
@@ -918,6 +926,7 @@ export const blogPosts: BlogPost[] = [
       SOURCES.luxemiaShipping,
     ],
   },
+  ...seoGrowthBlogPosts,
   ...recoveredBlogPosts,
 ];
 

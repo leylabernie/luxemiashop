@@ -58,3 +58,5 @@ public/*.csv
 scripts/*
 !scripts/verify-prerender-coverage.cjs
 !scripts/validate-seo-architecture.cjs
+!scripts/generate-openai-search-feed.cjs
+!scripts/validate-openai-search-feed.cjs
