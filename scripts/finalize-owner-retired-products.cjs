@@ -12,6 +12,10 @@
 const fs = require('fs');
 const path = require('path');
 
+// Apply controlled, owner-approved catalog additions before retirement cleanup
+// so every downstream validator reads one finalized sitemap inventory.
+require('./apply-approved-sherwani-sitemap-additions.cjs');
+
 const ROOT = path.resolve(__dirname, '..');
 const GONE_HANDLES_FILE = path.join(ROOT, 'src/data/legacyGoneProductHandles.json');
 const APPROVED_SITEMAP_FILE = path.join(ROOT, 'scripts/approved-sitemap-inventory.json');
