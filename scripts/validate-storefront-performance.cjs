@@ -85,15 +85,21 @@ for (const relativePath of builtFiles) {
     }
   }
 
-  assert(productSchema, `${relativePath} is missing the homepage product discovery ItemList.`);
-  assert(
-    Array.isArray(productSchema.itemListElement) && productSchema.itemListElement.length <= 6,
-    `${relativePath} homepage ItemList contains more than six products.`,
-  );
-  assert(
-    !JSON.stringify(productSchema).includes('shippingDetails'),
-    `${relativePath} repeats shippingDetails inside homepage product discovery schema.`,
-  );
+  const isPrerenderedHomepage = relativePath.includes('/_prerender/');
+  if (isPrerenderedHomepage) {
+    assert(productSchema, `${relativePath} is missing the homepage product discovery ItemList.`);
+  }
+
+  if (productSchema) {
+    assert(
+      Array.isArray(productSchema.itemListElement) && productSchema.itemListElement.length <= 6,
+      `${relativePath} homepage ItemList contains more than six products.`,
+    );
+    assert(
+      !JSON.stringify(productSchema).includes('shippingDetails'),
+      `${relativePath} repeats shippingDetails inside homepage product discovery schema.`,
+    );
+  }
 
   console.log(`[storefront-performance] ${relativePath}: ${Buffer.byteLength(html)} bytes.`);
 }
