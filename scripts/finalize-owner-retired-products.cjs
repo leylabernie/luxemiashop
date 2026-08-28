@@ -12,11 +12,10 @@
 const fs = require('fs');
 const path = require('path');
 
-// Apply controlled, owner-approved catalog additions first, then immediately
-// quarantine any products whose supplier-source media has not passed visual
-// cleaning review. Downstream validators therefore read the final safe state.
+// Apply controlled, owner-approved catalog additions first. The catalog 35757
+// sherwanis now have reviewed, brand-free media and are deliberately released
+// from their temporary 410 quarantine before downstream validation.
 require('./apply-approved-sherwani-sitemap-additions.cjs');
-require('./finalize-supplier-image-quarantine.cjs');
 
 const ROOT = path.resolve(__dirname, '..');
 const GONE_HANDLES_FILE = path.join(ROOT, 'src/data/legacyGoneProductHandles.json');
