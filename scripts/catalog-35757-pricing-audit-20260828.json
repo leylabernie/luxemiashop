@@ -1,0 +1,88 @@
+{
+  "catalog": "35757",
+  "source": "Surat Wholesale Shop catalog 35757 sale prices",
+  "correctedOn": "2026-08-28",
+  "pricingFormula": "supplier INR price x 1.5 / 90",
+  "interpretation": "50 percent markup before INR-to-USD conversion; do not multiply by 0.5",
+  "sizePremiums": {
+    "34": 0,
+    "36": 0,
+    "38": 0,
+    "40": 0,
+    "42": 0,
+    "44": 10,
+    "46": 10,
+    "48": 15,
+    "50": 20,
+    "52": 25,
+    "54": 30,
+    "56": 35,
+    "58": 40,
+    "60": 45
+  },
+  "products": [
+    {
+      "sku": "256486",
+      "handle": "cream-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "supplierPriceInr": 15949,
+      "basePriceUsd": 265.82,
+      "size60PriceUsd": 385.43
+    },
+    {
+      "sku": "256487",
+      "handle": "teal-blue-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "supplierPriceInr": 15949,
+      "basePriceUsd": 265.82,
+      "size60PriceUsd": 385.43
+    },
+    {
+      "sku": "256488",
+      "handle": "beige-fancy-work-art-silk-groom-sherwani-with-stole",
+      "supplierPriceInr": 17763,
+      "basePriceUsd": 296.05,
+      "size60PriceUsd": 429.27
+    },
+    {
+      "sku": "256489",
+      "handle": "pista-green-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "supplierPriceInr": 15207,
+      "basePriceUsd": 253.45,
+      "size60PriceUsd": 367.50
+    },
+    {
+      "sku": "256490",
+      "handle": "dark-peach-fancy-work-art-silk-groom-sherwani-with-stole",
+      "supplierPriceInr": 14398,
+      "basePriceUsd": 239.97,
+      "size60PriceUsd": 347.95
+    },
+    {
+      "sku": "256491",
+      "handle": "grey-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "supplierPriceInr": 12653,
+      "basePriceUsd": 210.88,
+      "size60PriceUsd": 305.78
+    },
+    {
+      "sku": "256492",
+      "handle": "beige-thread-work-art-silk-groom-sherwani-with-stole",
+      "supplierPriceInr": 14329,
+      "basePriceUsd": 238.82,
+      "size60PriceUsd": 346.28
+    },
+    {
+      "sku": "256493",
+      "handle": "cream-thread-work-art-silk-wedding-sherwani-with-stole-design-i",
+      "supplierPriceInr": 13705,
+      "basePriceUsd": 228.42,
+      "size60PriceUsd": 331.20
+    },
+    {
+      "sku": "256494",
+      "handle": "cream-thread-work-art-silk-wedding-sherwani-with-stole-design-ii",
+      "supplierPriceInr": 13705,
+      "basePriceUsd": 228.42,
+      "size60PriceUsd": 331.20
+    }
+  ]
+}
