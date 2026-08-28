@@ -124,7 +124,8 @@ const staticPages = [
 function parseBlogSlugs() {
   const blogPostsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
   const recoveredBlogPostsPath = path.join(__dirname, '..', 'src', 'data', 'recoveredBlogPosts.ts');
-  const files = [blogPostsPath, recoveredBlogPostsPath];
+  const seoGrowthBlogPostsPath = path.join(__dirname, '..', 'src', 'data', 'seoGrowthBlogPosts.ts');
+  const files = [blogPostsPath, recoveredBlogPostsPath, seoGrowthBlogPostsPath];
   const slugs = [];
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();

@@ -114,7 +114,7 @@ function normalizeEditorialShippingCopy(relative) {
   write(relative, source);
 }
 
-for (const relative of ['src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts']) {
+for (const relative of ['src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts', 'src/data/seoGrowthBlogPosts.ts']) {
   normalizeEditorialShippingCopy(relative);
 }
 
@@ -139,7 +139,7 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
 }
 if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
 if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
-for (const relative of ['src/pages/Index.tsx', 'src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts']) {
+for (const relative of ['src/pages/Index.tsx', 'src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts', 'src/data/seoGrowthBlogPosts.ts']) {
   if (!exists(relative)) continue;
   const source = read(relative);
   if (/\$12[^\n]{0,160}(?:shipping|delivery|below \$150)/i.test(source) || /(?:shipping|delivery|free)[^\n]{0,160}\$150/i.test(source)) {

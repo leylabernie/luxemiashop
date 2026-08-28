@@ -97,6 +97,11 @@ const postShopCta: Record<string, { eyebrow: string; heading: string; href: stri
   'navratri-9-day-color-guide-2026': { eyebrow: 'Shop Navratri 2026', heading: 'Browse current Garba, chaniya choli and festive styles.', href: '/collections/navratri-outfits', label: 'Shop Navratri Outfits' },
   'custom-bridesmaid-wedding-guest-lehenga-online-usa': { eyebrow: 'Shop customizable occasionwear', heading: 'Browse designs with currently verified customization options.', href: '/collections/customizable-indian-outfits', label: 'Shop Customizable Outfits' },
   'custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa': { eyebrow: 'Check current options', heading: 'Start with outfits whose product pages identify customization.', href: '/collections/customizable-indian-outfits', label: 'Shop Customizable Outfits' },
+  'sharara-vs-gharara-difference': { eyebrow: 'Compare both silhouettes', heading: 'Browse current sharara and gharara suits.', href: '/collections/sharara-suits', label: 'Shop Sharara Suits' },
+  'ready-to-ship-vs-made-to-order-indian-outfits': { eyebrow: 'Shop by processing option', heading: 'Check each listing for its current processing status.', href: '/collections', label: 'Browse Current Catalog' },
+  'does-a-saree-come-with-a-blouse': { eyebrow: 'Check current saree listings', heading: 'Compare included pieces before choosing a saree.', href: '/sarees', label: 'Shop Sarees' },
+  'how-should-a-sherwani-fit-measurement-checklist': { eyebrow: 'Shop with measurements ready', heading: 'Browse current sherwanis and menswear.', href: '/menswear', label: 'Shop Menswear' },
+  'how-to-buy-a-bridal-lehenga-online-checklist': { eyebrow: 'Use the checklist while you shop', heading: 'Compare current bridal lehengas listing by listing.', href: '/collections/bridal-lehengas', label: 'Shop Bridal Lehengas' },
 };
 
 const BlogPost = () => {
@@ -143,7 +148,7 @@ const BlogPost = () => {
         'ul', 'ol', 'li', 'a', 'strong', 'em', 'b', 'i', 'u',
         'blockquote', 'pre', 'code', 'img', 'figure', 'figcaption',
         'table', 'thead', 'tbody', 'tr', 'th', 'td',
-        'span', 'div', 'sub', 'sup',
+        'span', 'div', 'aside', 'sub', 'sup',
       ],
       ALLOWED_ATTR: [
         'href', 'target', 'rel', 'src', 'alt', 'title', 'class',
@@ -227,7 +232,6 @@ const BlogPost = () => {
   // Estimate word count from stripped content
   const plainTextContent = stripHtml(post.content);
   const wordCount = plainTextContent.split(/\s+/).filter(Boolean).length;
-  const articleBody = plainTextContent.slice(0, 300);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -236,9 +240,7 @@ const BlogPost = () => {
     "description": post.excerpt,
     "image": {
       "@type": "ImageObject",
-      "url": post.image.startsWith("http") ? post.image : `https://luxemia.shop${post.image}`,
-      "width": 1200,
-      "height": 630
+      "url": post.image.startsWith("http") ? post.image : `https://luxemia.shop${post.image}`
     },
     "datePublished": post.publishedAt,
     "dateModified": post.updatedAt,
@@ -262,7 +264,6 @@ const BlogPost = () => {
     "inLanguage": "en-US",
     "genre": post.category,
     "wordCount": wordCount,
-    "articleBody": articleBody,
     "citation": post.sources.map(source => source.url),
     "isBasedOn": post.sources.map(source => ({
       "@type": "CreativeWork",
@@ -518,7 +519,10 @@ const BlogPost = () => {
                   {shopCta.heading}
                 </h2>
                 <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. U.S. shipping is $12 below $150 and free at $150 and above.
+                  Check the exact listing for fabric or materials, included pieces, stitching status, size options, price and current availability. Review current destinations, rates and timing on the{' '}
+                  <Link to="/shipping" className="font-medium text-primary hover:underline">
+                    shipping page
+                  </Link>.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Button asChild>

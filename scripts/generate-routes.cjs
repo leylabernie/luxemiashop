@@ -28,6 +28,7 @@ const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
 const RECOVERED_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/recoveredBlogPosts.ts');
+const SEO_GROWTH_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/seoGrowthBlogPosts.ts');
 
 // ─── Static Routes ──────────────────────────────────────────────────────────
 // These are the non-dynamic, non-blog page routes currently in middleware.ts's
@@ -195,7 +196,7 @@ async function fetchAllProductHandles() {
  * Returns an array of slug strings.
  */
 function parseBlogSlugs() {
-  const files = [BLOG_POSTS_TS, RECOVERED_BLOG_POSTS_TS];
+  const files = [BLOG_POSTS_TS, RECOVERED_BLOG_POSTS_TS, SEO_GROWTH_BLOG_POSTS_TS];
   const slugs = new Set();
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();

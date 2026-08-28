@@ -1,58 +1,66 @@
 # LuxeMia
 
-> LuxeMia is an online Indian ethnic-wear store offering lehengas, sarees, salwar kameez, menswear and jewelry for delivery to United States addresses.
+> LuxeMia is an online Indian ethnic-wear store offering sarees, lehengas, suits, menswear and jewelry. Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.
 
 ## Store information
 
 - Website: https://luxemia.shop
-- Customer support: Philadelphia, Pennsylvania, USA
 - WhatsApp: +1-215-341-9990
 - Email: hello@luxemia.shop
-- Shipping destination: United States only
-- U.S. standard shipping: $12 USD below $150 USD; free at $150 USD and above
-- International shipping: not currently available
-- Fit options vary by product and may include semi-stitched, ready-to-wear and made-to-measure
+- Supported destinations: United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius
+- Current shipping rates and thresholds: https://luxemia.shop/shipping
+- Fit and construction options vary by product and may include unstitched, semi-stitched, ready-to-wear or made-to-measure choices
 
 ## Shopping categories
 
-- Lehengas: https://luxemia.shop/lehengas
-- Sarees: https://luxemia.shop/sarees
-- Salwar suits: https://luxemia.shop/suits
-- Menswear: https://luxemia.shop/menswear
-- Indo-Western: https://luxemia.shop/indowestern
-- Jewelry: https://luxemia.shop/jewelry
-- New arrivals: https://luxemia.shop/new-arrivals
 - All collections: https://luxemia.shop/collections
+- Lehengas: https://luxemia.shop/lehengas
+- Bridal lehengas: https://luxemia.shop/collections/bridal-lehengas
+- Sarees: https://luxemia.shop/sarees
+- Wedding sarees: https://luxemia.shop/collections/wedding-sarees
+- Salwar suits: https://luxemia.shop/suits
 - Sharara suits: https://luxemia.shop/collections/sharara-suits
 - Gharara suits: https://luxemia.shop/collections/gharara-suits
 - Anarkali suits: https://luxemia.shop/collections/anarkali-suits
-- Bridal lehengas: https://luxemia.shop/collections/bridal-lehengas
-- Party-wear lehengas: https://luxemia.shop/collections/party-wear-lehengas
+- Menswear and sherwanis: https://luxemia.shop/menswear
+- Indo-Western: https://luxemia.shop/indowestern
+- Jewelry: https://luxemia.shop/jewelry
+- New arrivals: https://luxemia.shop/new-arrivals
 
 ## Customer guidance
 
 - Shipping policy: https://luxemia.shop/shipping
-- Returns policy: https://luxemia.shop/returns
+- Returns and cancellations: https://luxemia.shop/returns
 - Size guide: https://luxemia.shop/size-guide
 - Measurement guide: https://luxemia.shop/sizing-measurements-guide
 - FAQ: https://luxemia.shop/faq
 - Contact: https://luxemia.shop/contact
 
-## Important policy information
+## Important purchase information
 
-- Dispatch and transit times depend on the product and tailoring option.
-- Sales are final to the extent permitted by applicable law; mandatory consumer rights are not limited.
-- Taxes collected by LuxeMia, if applicable, are calculated at checkout.
-- For genuine shipping damage, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, and item condition.
-- Product availability, price, size and delivery information on the product page and at checkout take priority over summaries in guides.
+- Processing time occurs before dispatch; carrier transit begins after the parcel is accepted by the carrier.
+- The product page and selected variant are the source of truth for materials, included pieces, measurements, construction, price, availability and processing information.
+- Checkout is the source of truth for the final available shipping service, converted amount and taxes collected by LuxeMia, if applicable.
+- Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Follow the current returns policy for damage, defect, incorrect-item or missing-item claims.
+- Contact LuxeMia before ordering for a fixed event date; an estimate is not a delivery guarantee unless confirmed in writing.
 
-## Regional pages
+## Editorial content
 
-- NRI shopping hub: https://luxemia.shop/nri
-- USA: https://luxemia.shop/indian-ethnic-wear-usa
+- Blog: https://luxemia.shop/blog
+- Outfit guides: https://luxemia.shop/blog/attires
+- Fabric guides: https://luxemia.shop/blog/motifs-embroideries
+- Weddings and festivals: https://luxemia.shop/blog/weddings-festivals
+- Fit and how-to: https://luxemia.shop/blog/how-to-care
+- Cultural context: https://luxemia.shop/blog/cultural-context
+- Editorial team: https://luxemia.shop/authors/luxemia-editorial-team
 
-## Editorial policy
+LuxeMia articles use a named editorial-team byline, dated source reviews and visible citations. Styling suggestions are not cultural rules, and product-specific claims should be verified on the current listing.
 
-LuxeMia articles are published by the LuxeMia Editorial Team. Time-sensitive tax and shipping information should be confirmed with the relevant authority. LuxeMia does not present unverified customer counts, sales rankings or individual staff credentials.
+## Machine-readable discovery files
 
-Full page inventory: https://luxemia.shop/llms-full.txt
+- Sitemap: https://luxemia.shop/sitemap.xml
+- Google-compatible merchant feed: https://luxemia.shop/merchant-feed.xml
+- Organic-ready OpenAI product export (pending approved-partner onboarding and registered SFTP delivery): https://luxemia.shop/openai-search-products.jsonl.gz
+- Full canonical page inventory: https://luxemia.shop/llms-full.txt
+
+The OpenAI-ready export is configured for organic product discovery only: search eligibility is enabled, checkout eligibility is disabled and paid-ads eligibility is explicitly disabled. The public file is not a submission or proof of ingestion; approved-partner onboarding and registered SFTP delivery remain required. Inclusion and ranking are not guaranteed.

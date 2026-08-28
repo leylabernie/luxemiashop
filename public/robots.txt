@@ -2,6 +2,7 @@
 User-agent: *
 Allow: /
 Allow: /merchant-feed.xml
+Allow: /openai-search-products.jsonl.gz
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
@@ -75,6 +76,7 @@ Disallow: /_prerender/
 # paths — same disallow set as other bots.
 User-agent: OAI-SearchBot
 Allow: /
+Allow: /openai-search-products.jsonl.gz
 Disallow: /admin
 Disallow: /account
 Disallow: /auth

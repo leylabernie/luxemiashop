@@ -29,6 +29,14 @@ function fail(message) {
 const { blogPosts, PUBLISHED_BLOG_SLUGS } = loadTsModule('src/data/blogPosts.ts');
 const { BLOG_CATEGORY_GROUPS, BLOG_POST_CATEGORY_MAP } = loadTsModule('src/data/blogCategories.ts');
 
+const GROWTH_GUIDE_SLUGS = new Set([
+  'sharara-vs-gharara-difference',
+  'ready-to-ship-vs-made-to-order-indian-outfits',
+  'does-a-saree-come-with-a-blouse',
+  'how-should-a-sherwani-fit-measurement-checklist',
+  'how-to-buy-a-bridal-lehenga-online-checklist',
+]);
+
 if (!Array.isArray(blogPosts) || blogPosts.length === 0) {
   fail('No published articles were loaded.');
   process.exit(1);
@@ -96,10 +104,32 @@ for (const post of blogPosts) {
   for (const pattern of unsupportedClaimPatterns) {
     if (pattern.test(articleText)) fail(`${label} contains blocked legacy copy matching ${pattern}.`);
   }
+
+  if (GROWTH_GUIDE_SLUGS.has(post.slug)) {
+    const excerptWordCount = post.excerpt.trim().split(/\s+/).filter(Boolean).length;
+    const contentWordCount = post.content
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&[a-z0-9#]+;/gi, ' ')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+    const questionH2Count = [...post.content.matchAll(/<h2[^>]*>[^<]*\?<\/h2>/gi)].length;
+    const internalLinkCount = [...post.content.matchAll(/href=["']\/(?!\/)[^"']+["']/gi)].length;
+    const crossGuideLinkCount = [...post.content.matchAll(/href=["']\/blog\/(?:sharara-vs-gharara-difference|ready-to-ship-vs-made-to-order-indian-outfits|does-a-saree-come-with-a-blouse|how-should-a-sherwani-fit-measurement-checklist|how-to-buy-a-bridal-lehenga-online-checklist)["']/gi)].length;
+    const externalCitationCount = [...post.content.matchAll(/href=["']https:\/\/[^"']+["']/gi)].length;
+
+    if (excerptWordCount < 45 || excerptWordCount > 75) fail(`${label} excerpt must be 45–75 words (found ${excerptWordCount}).`);
+    if (contentWordCount < 700) fail(`${label} must contain at least 700 editorial words (found ${contentWordCount}).`);
+    if (!/<table[\s>]/i.test(post.content)) fail(`${label} must contain a decision table.`);
+    if (questionH2Count < 5) fail(`${label} must contain at least five direct-answer H2 questions (found ${questionH2Count}).`);
+    if (internalLinkCount < 6) fail(`${label} must contain at least six useful internal links (found ${internalLinkCount}).`);
+    if (crossGuideLinkCount < 4) fail(`${label} must cross-link the four companion growth guides (found ${crossGuideLinkCount}).`);
+    if (externalCitationCount < 1) fail(`${label} must contain at least one visible inline external citation.`);
+  }
 }
 
 const orphanMappings = Object.keys(BLOG_POST_CATEGORY_MAP).filter(slug => !postSlugs.includes(slug));
 if (orphanMappings.length > 0) fail(`Category map contains unpublished articles: ${orphanMappings.join(', ')}`);
 
 if (process.exitCode) process.exit(process.exitCode);
-console.log(`[blog-content] OK — ${blogPosts.length} articles have unique URLs, dated source reviews, transparent bylines, and active topic hubs.`);
+console.log(`[blog-content] OK — ${blogPosts.length} articles have unique URLs, dated source reviews, transparent bylines, active topic hubs, and validated buyer-guide answer structure.`);

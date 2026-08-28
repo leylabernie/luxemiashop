@@ -1,23 +1,24 @@
-# LuxeMia — Current Canonical Page Inventory for AI Crawlers
+# LuxeMia — Canonical Public Page Inventory
 # https://luxemia.shop/llms-full.txt
 #
-# Every URL below is a current, direct LuxeMia URL. Redirect sources and retired
-# pages are intentionally excluded.
+# These are direct public LuxeMia URLs. Redirect sources, account routes,
+# checkout routes and retired product URLs are intentionally excluded.
+# Product pages are represented by the sitemap and product feeds because the
+# live catalog changes more frequently than this editorial inventory.
 #
-# Shipping destination: United States addresses only. Standard shipping is $12
-# below $150 and free at $150 and above. International shipping is not currently
-# available. All sales are final and exchanges are not accepted, subject to
-# applicable law. For genuine shipping damage, a defective or incorrect item,
-# or a missing item, contact LuxeMia within
-# 48 hours of delivery with clear photos and a continuous unboxing/opening video
-# showing the unopened package, shipping label, and item condition.
+# Tracked shipping is available to the United States, Canada, the United
+# Kingdom, Australia, New Zealand, South Africa and Mauritius. The current
+# route-based rates, thresholds, timing and customs guidance are published at
+# https://luxemia.shop/shipping. Product pages and checkout control the final
+# product, variant, price, availability and delivery information.
 
 ## Homepage
 
 - https://luxemia.shop/
 
-## Product Collections (Category Pages)
+## Product Collections
 
+- https://luxemia.shop/collections
 - https://luxemia.shop/lehengas
 - https://luxemia.shop/sarees
 - https://luxemia.shop/suits
@@ -25,15 +26,17 @@
 - https://luxemia.shop/indowestern
 - https://luxemia.shop/jewelry
 - https://luxemia.shop/new-arrivals
-- https://luxemia.shop/collections
 - https://luxemia.shop/collections/silk-sarees
 - https://luxemia.shop/collections/kanchipuram-sarees
 - https://luxemia.shop/collections/bridal-party-outfits
 - https://luxemia.shop/collections/bollywood-inspired-indian-outfits
+- https://luxemia.shop/collections/customizable-indian-outfits
 - https://luxemia.shop/collections/sharara-suits
 - https://luxemia.shop/collections/gharara-suits
 - https://luxemia.shop/collections/anarkali-suits
 - https://luxemia.shop/collections/bridal-lehengas
+- https://luxemia.shop/collections/wedding-sarees
+- https://luxemia.shop/collections/designer-sarees
 - https://luxemia.shop/collections/party-wear-lehengas
 
 ## Occasion Landing Pages
@@ -43,41 +46,46 @@
 - https://luxemia.shop/collections/mehendi-outfits
 - https://luxemia.shop/collections/eid-outfits
 - https://luxemia.shop/collections/navratri-outfits
+- https://luxemia.shop/collections/haldi-outfits
 
-## Guides & Tools
+## Regional and Service Pages
 
+- https://luxemia.shop/nri
+- https://luxemia.shop/indian-ethnic-wear-usa
+- https://luxemia.shop/wedding-party-orders
 - https://luxemia.shop/sizing-measurements-guide
 - https://luxemia.shop/size-guide
 - https://luxemia.shop/care-guide
+- https://luxemia.shop/lookbook
+- https://luxemia.shop/style-quiz
 
-## Brand & Content
+## Brand, Editorial and Topic Hubs
 
 - https://luxemia.shop/about
-- https://luxemia.shop/lookbook
 - https://luxemia.shop/blog
 - https://luxemia.shop/press
+- https://luxemia.shop/authors/luxemia-editorial-team
 - https://luxemia.shop/blog/attires
 - https://luxemia.shop/blog/motifs-embroideries
 - https://luxemia.shop/blog/weddings-festivals
 - https://luxemia.shop/blog/how-to-care
-- https://luxemia.shop/authors/luxemia-editorial-team
+- https://luxemia.shop/blog/designer-profiles
+- https://luxemia.shop/blog/cultural-context
 
-## NRI Landing Pages
-
-- https://luxemia.shop/nri
-- https://luxemia.shop/indian-ethnic-wear-usa
-
-## Customer Service Pages
+## Customer Service and Policies
 
 - https://luxemia.shop/contact
 - https://luxemia.shop/faq
 - https://luxemia.shop/shipping
+- https://luxemia.shop/pages/shipping-customs
 - https://luxemia.shop/returns
 - https://luxemia.shop/privacy
 - https://luxemia.shop/terms
+- https://luxemia.shop/sitemap
 
 ## Blog Posts
 
+- https://luxemia.shop/blog/indian-to-us-clothing-size-conversion-guide
 - https://luxemia.shop/blog/wedding-saree-for-mother-of-bride
 - https://luxemia.shop/blog/wedding-guest-outfit-ideas
 - https://luxemia.shop/blog/accessorize-indian-ethnic-wear
@@ -87,17 +95,40 @@
 - https://luxemia.shop/blog/how-to-drape-saree-beginner-guide
 - https://luxemia.shop/blog/how-to-choose-salwar-kameez-body-type
 - https://luxemia.shop/blog/sherwani-vs-jodhpuri-vs-bandhgala-groom-guide
+- https://luxemia.shop/blog/anamika-khanna-designer-profile-kolkata-couture
+- https://luxemia.shop/blog/bindi-meaning-history-indian-women
+- https://luxemia.shop/blog/tarun-tahiliani-designer-profile-india-modern-couture
+- https://luxemia.shop/blog/rahul-mishra-designer-profile-paris-haute-couture-sustainable
+- https://luxemia.shop/blog/navratri-9-day-color-guide-2026
+- https://luxemia.shop/blog/sabyasachi-mukherjee-designer-profile-handloom-revival
+- https://luxemia.shop/blog/custom-bridesmaid-wedding-guest-lehenga-online-usa
+- https://luxemia.shop/blog/custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa
+- https://luxemia.shop/blog/plus-size-indian-ethnic-wear-guide
+- https://luxemia.shop/blog/manish-malhotra-bollywood-bridal-designer-profile
+- https://luxemia.shop/blog/indian-wedding-terms-glossary-50-events-rituals-roles
+- https://luxemia.shop/blog/sharara-vs-gharara-difference
+- https://luxemia.shop/blog/ready-to-ship-vs-made-to-order-indian-outfits
+- https://luxemia.shop/blog/does-a-saree-come-with-a-blouse
+- https://luxemia.shop/blog/how-should-a-sherwani-fit-measurement-checklist
+- https://luxemia.shop/blog/how-to-buy-a-bridal-lehenga-online-checklist
 
-## Structured Data & Feeds
+## Structured Data and Discovery Files
 
 - https://luxemia.shop/sitemap.xml
 - https://luxemia.shop/merchant-feed.xml
+- https://luxemia.shop/openai-search-products.jsonl.gz
 - https://luxemia.shop/robots.txt
 - https://luxemia.shop/llms.txt
 - https://luxemia.shop/manifest.json
 
+The OpenAI-ready product export is organic-only: `is_eligible_search` is true,
+`is_eligible_checkout` is false and `is_ads_eligible` is false. It does not
+create or activate an advertising campaign, billing account or paid placement.
+The public file is not a submission or proof of ingestion; approved-partner
+onboarding and registered SFTP delivery remain required.
+
 ## Contact
 
 - WhatsApp: +1-215-341-9990
+- Phone: +1-215-341-9990
 - Email: hello@luxemia.shop
-- Support: USA-based support team

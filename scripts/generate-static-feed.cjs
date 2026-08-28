@@ -64,6 +64,7 @@ const MAX_LOCAL_SNAPSHOT_AGE_DAYS = 7;
 // (e.g. "Luxemia" vs "LuxeMia") which trips Google Merchant Center
 // brand-consistency checks. Always emit this exact string.
 const BRAND_NAME = 'LuxeMia';
+const CURRENT_SHIPPING_SUMMARY = 'Tracked shipping is available to seven countries. Current destination-based rates and thresholds are shown on the LuxeMia Shipping page and at checkout. Tracking is provided after dispatch.';
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
 ]);
@@ -384,22 +385,21 @@ function getMerchantProductType(productType, title) {
 
 function sanitizeShippingAndBoilerplate(text) {
   return text
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, CURRENT_SHIPPING_SUMMARY)
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: Tracking provided after dispatch')
     .replace(/ready to ship Indian wear USA/gi, 'Indian ethnic wear online')
-    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout.')
-    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
-    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, 'Shipping: available to United States addresses only, with current rates shown at checkout')
-    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, 'Shipping: available to United States addresses only, with current rates shown at checkout')
-    .replace(/Free shipping on orders over \$350/gi, 'Current U.S. shipping shown at checkout')
-    .replace(/free shipping on orders over \$350/gi, 'current U.S. shipping shown at checkout')
-    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'Shipping: Free U.S. shipping at $150 and above. $12 flat below that. Estimated delivery is 6-17 business days; tracking provided after dispatch')
-    .replace(/delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'estimated delivery is 6-17 business days with tracking after dispatch')
-    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking provided after dispatch to United States addresses')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
-    .replace(/worldwide shipping/gi, 'United States shipping only')
+    .replace(/Free delivery over \$350,?\s*7-10 business days to USA, Canada, and Australia via [^.]+\./gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Fast Worldwide Shipping - Free shipping on orders over \$350, delivered in 7-10 business days to USA, Canada, and Australia/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Shipping: Free shipping on orders over \$350, delivered within 7-10 business days to USA, Canada, and Australia/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Shipping: Free delivery over \$350, 7-10 business days to USA, Canada, and Australia via premium courier services/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Free shipping on orders over \$350/gi, 'Current destination-based shipping is shown on the Shipping page and at checkout')
+    .replace(/Shipping:\s*Free U\.S\. shipping over \$150;\s*delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi, 'tracking is provided after dispatch to supported destinations')
+    .replace(/7-10 business days to USA, Canada, and Australia/gi, 'tracking is provided after dispatch to supported destinations')
+    .replace(/USA, Canada, and Australia/gi, 'supported destinations')
+    .replace(/worldwide shipping/gi, 'tracked shipping to supported destinations')
     .replace(/perfect blend of tradition and modernit[y]/gi, 'clear balance of traditional craft and ready-to-wear ease')
     .slice(0, 5000);
 }
@@ -419,10 +419,14 @@ function sanitizeShippingAndBoilerplate(text) {
 // rich multi-paragraph descriptions that include outfit components (kameez +
 // bottom + dupatta), bottom style, work details, stitching options, and care.
 function normalizeFeedDeliveryCopy(xml) {
-  return xml.replace(
-    /delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi,
-    'estimated delivery is 6-17 business days with tracking after dispatch'
-  );
+  return xml
+    .replace(/Shipping is available to United States addresses only\.[^<]*/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/U\.S\. standard shipping is \$12 below \$150 and free at \$150 and above\.[^<]*/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(/Free U\.S\. shipping at \$150 and above\.[^<]*/gi, CURRENT_SHIPPING_SUMMARY)
+    .replace(
+      /delivered in 7-10 business days via DHL\/USPS\/UPS to the United States/gi,
+      'tracking is provided after dispatch to supported destinations',
+    );
 }
 
 function normalizeFeedWhitespace(xml) {
@@ -735,20 +739,20 @@ function buildDescription(product, color, material, productType, displayTitle = 
     parts.push(`Selected options: ${optionDetails.join('; ')}.`);
   }
   parts.push('Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering.');
-  parts.push('Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch.');
+  parts.push(CURRENT_SHIPPING_SUMMARY);
 
   let out = parts.join(' ').trim();
   // Tight safety net: if attributes were sparse and we still landed under
   // 150 chars, append a closing line so GMC never sees a sub-150 description.
   if (out.length < 150) {
-    out += ` Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with delivery to United States addresses only.`;
+    out += ' Discover more Indian ethnic wear, sarees, lehengas and salwar suits at LuxeMia, with tracked delivery to seven supported countries.';
   }
   return sanitizeShippingAndBoilerplate(out);
 }
 
 // Shipping is intentionally managed at the Merchant Center account level so
-// the $150 free-shipping threshold can be represented accurately. Item-level
-// shipping entries would override that threshold and can make a $12 order look free.
+// destination-based rates and thresholds remain centralized. Item-level
+// shipping entries would override those account-level rules.
 
 function generateProductHighlights(product, color, material, productType, title, size) {
   const highlights = [];
@@ -780,7 +784,7 @@ function generateProductHighlights(product, color, material, productType, title,
 
   if (productType) highlights.push(`Product type: ${productType}`);
   if (size) highlights.push(`Size option: ${size}`);
-  highlights.push('Shipping to United States addresses only; current rates are shown at checkout');
+  highlights.push('Tracked shipping to seven supported countries; current rates are shown at checkout');
 
   return highlights.slice(0, 5).map((highlight) =>
     `    <g:product_highlight>${escapeXml(highlight.slice(0, 150))}</g:product_highlight>`
@@ -1028,7 +1032,7 @@ async function main() {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Shop Indian ethnic wear online at LuxeMia with shipping to United States addresses only.</description>
+  <description>Shop Indian ethnic wear online at LuxeMia with tracked shipping to seven supported countries.</description>
   <last_build_date>${new Date().toISOString()}</last_build_date>
 ${itemsXml}
 </channel>

@@ -871,6 +871,27 @@
       ]
     },
     {
+      "source": "/openai-search-products.jsonl.gz",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/gzip"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        }
+      ]
+    },
+    {
       "source": "/llms.txt",
       "headers": [
         {
@@ -1018,7 +1039,7 @@
       "destination": "/merchant-feed.xml"
     },
     {
-      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map)).*)",
+      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz)).*)",
       "destination": "/index.html"
     }
   ]
