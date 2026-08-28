@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/apply-gsc-runtime-remediation.cjs && node scripts/apply-legacy-shipping-copy-cleanup.cjs && node scripts/apply-route-based-shipping-growth.cjs && node scripts/apply-route-shipping-seo-fix.cjs && node scripts/apply-route-shipping-final-cleanup.cjs && node scripts/normalize-trust-inputs.cjs && node scripts/apply-trust-source-of-truth.cjs && node scripts/finalize-approved-seo.cjs && node scripts/finalize-prerender-routes.cjs && node scripts/finalize-empty-collection-redirects.cjs && node scripts/finalize-competitor-merchandising.cjs && node scripts/finalize-owner-retired-products.cjs && node scripts/apply-storefront-performance-fix.cjs && npm run validate:shopify-catalog && npm run validate:indexation-recovery && npm run validate:seo-architecture && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/apply-storefront-performance-fix.cjs && node scripts/postprocess-built-trust.cjs && node scripts/finalize-built-approved-seo.cjs && node scripts/verify-prerender-coverage.cjs && node scripts/validate-built-trust.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs && node scripts/validate-storefront-performance.cjs",
+    "build": "node scripts/apply-gsc-runtime-remediation.cjs && node scripts/apply-legacy-shipping-copy-cleanup.cjs && node scripts/apply-route-based-shipping-growth.cjs && node scripts/apply-route-shipping-seo-fix.cjs && node scripts/apply-route-shipping-final-cleanup.cjs && node scripts/normalize-trust-inputs.cjs && node scripts/apply-trust-source-of-truth.cjs && node scripts/finalize-approved-seo.cjs && node scripts/finalize-prerender-routes.cjs && node scripts/finalize-empty-collection-redirects.cjs && node scripts/finalize-competitor-merchandising.cjs && node scripts/finalize-owner-retired-products.cjs && node scripts/apply-storefront-performance-fix.cjs && node scripts/remove-eager-hero-preload.cjs && npm run validate:shopify-catalog && npm run validate:indexation-recovery && npm run validate:seo-architecture && npm run validate:blog && npm run validate:policy-copy && npm run validate:legacy-redirects && npm run validate:product-retirement-lifecycle && node scripts/generate-gone-routes.cjs && vite build && node scripts/generate-routes.cjs && node scripts/prerender.js && node scripts/apply-storefront-performance-fix.cjs && node scripts/postprocess-built-trust.cjs && node scripts/finalize-built-approved-seo.cjs && node scripts/verify-prerender-coverage.cjs && node scripts/validate-built-trust.cjs && node scripts/generate-static-feed.cjs && node scripts/validate-merchant-feed.cjs && node scripts/generate-sitemap.cjs && node scripts/validate-navratri-traffic.cjs && node scripts/validate-storefront-performance.cjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
-    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/typography": "^5.16.0",
     "@types/dompurify": "^3.0.5",
     "@types/node": "^22.16.5",
     "@types/react": "^18.3.23",
@@ -81,7 +81,7 @@
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.21.5",
     "eslint": "^9.32.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "lovable-tagger": "^1.1.13",
