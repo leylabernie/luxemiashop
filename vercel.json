@@ -465,7 +465,7 @@
     },
     {
       "source": "/product/fuchsia-banarasi-brocade-nehru-jacket-with-white-kurta",
-      "destination": "/product/fuchsia-banarasi-nehru-jacket-kurta-set-made-to-measure",
+      "destination": "/product/fuchsia-banarasi-nehru-jacket-kurta-set-ready-to-ship",
       "statusCode": 301
     },
     {
@@ -620,7 +620,7 @@
     },
     {
       "source": "/product/royal-raw-zardosi-bridal-lehenga-engagement-look-032",
-      "destination": "/product/royal-red-raw-silk-zardosi-bridal-lehenga-choli-for-engagement-look",
+      "destination": "/product/royal-red-raw-silk-zardosi-bridal-lehenga-choli-for-reception-couture",
       "statusCode": 301
     },
     {
@@ -690,7 +690,7 @@
     },
     {
       "source": "/collections/ready-to-ship",
-      "destination": "/collections",
+      "destination": "/ready-to-ship",
       "statusCode": 301
     },
     {
@@ -706,11 +706,6 @@
     {
       "source": "/sustainability",
       "destination": "/about",
-      "statusCode": 301
-    },
-    {
-      "source": "/ready-to-ship",
-      "destination": "/collections",
       "statusCode": 301
     },
     {

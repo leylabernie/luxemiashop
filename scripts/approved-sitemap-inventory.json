@@ -1,7 +1,7 @@
 {
   "source": "2026-08-28 organic search release: retained the verified catalog inventory and added five source-reviewed buyer guides; hidden billing and unreviewed product candidates remain excluded",
   "capturedOn": "2026-08-28",
-  "urlCount": 863,
+  "urlCount": 865,
   "paths": [
     "/",
     "/collections",
@@ -27,12 +27,14 @@
     "/menswear",
     "/indowestern",
     "/new-arrivals",
+    "/ready-to-ship",
     "/nri",
     "/indian-ethnic-wear-usa",
     "/wedding-party-orders",
     "/contact",
     "/faq",
     "/shipping",
+    "/pages/shipping-customs",
     "/returns",
     "/size-guide",
     "/sizing-measurements-guide",

@@ -32,12 +32,31 @@ function fail(message) {
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'vercel.json'), 'utf8'));
 const redirects = vercelConfig.redirects || [];
+const approvedInventory = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'scripts/approved-sitemap-inventory.json'), 'utf8'),
+);
+const approvedPaths = new Set(approvedInventory.paths || []);
 const { PUBLISHED_BLOG_SLUGS } = loadTsModule('src/data/blogPosts.ts');
 const { BLOG_CATEGORY_GROUPS } = loadTsModule('src/data/blogCategories.ts');
 const publishedBlogPaths = new Set(PUBLISHED_BLOG_SLUGS.map(slug => `/blog/${slug}`));
 const activeHubPaths = new Set(BLOG_CATEGORY_GROUPS.map(group => `/blog/${group.slug}`));
 const exactRedirects = redirects.filter(redirect => !isParameterized(redirect.source));
 const exactSources = new Set(exactRedirects.map(redirect => redirect.source));
+
+if (exactSources.has('/ready-to-ship')) {
+  fail('/ready-to-ship is a published landing page and must not be shadowed by a redirect.');
+}
+const readyToShipAlias = exactRedirects.find(
+  redirect => redirect.source === '/collections/ready-to-ship',
+);
+if (readyToShipAlias?.destination !== '/ready-to-ship') {
+  fail('/collections/ready-to-ship must redirect directly to /ready-to-ship.');
+}
+for (const requiredPath of ['/ready-to-ship', '/pages/shipping-customs']) {
+  if (!approvedPaths.has(requiredPath)) {
+    fail(`${requiredPath} is a published canonical route and must remain in the approved sitemap inventory.`);
+  }
+}
 
 const requiredCollectionAliases = new Map([
   ['/collections/jewelry', '/jewelry'],
@@ -80,6 +99,15 @@ for (const redirect of redirects) {
 
   if (source.startsWith('/product/') && !isParameterized(source) && !destination.startsWith('/product/')) {
     fail(`${source} redirects a product URL to a non-product destination (${destination}).`);
+  }
+  if (
+    source.startsWith('/product/')
+    && !isParameterized(source)
+    && destination.startsWith('/product/')
+    && !isParameterized(destination)
+    && !approvedPaths.has(destination)
+  ) {
+    fail(`${source} points to a product destination outside the approved sitemap inventory (${destination}).`);
   }
 
   if (source.startsWith('/blog/') && !isParameterized(source)) {

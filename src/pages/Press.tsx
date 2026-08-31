@@ -12,7 +12,6 @@ const Press = () => {
         title="Press & Media — LuxeMia"
         description="LuxeMia press and media inquiries. Contact us for press kit requests, brand assets, and partnership opportunities."
         canonical="https://luxemia.shop/press"
-        noIndex={true}
       />
       <Header />
 

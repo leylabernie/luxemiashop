@@ -330,12 +330,40 @@ function getListedProductAttributes(product) {
   };
 }
 
+function getVerifiedPrimaryStyleReference(product) {
+  const skus = [...new Set(
+    (product?.variants?.edges || [])
+      .map((edge) => String(edge?.node?.sku || '').trim())
+      .filter(Boolean),
+  )];
+  if (skus.length === 0) return '';
+  if (skus.length === 1) return skus[0].slice(0, 80);
+
+  let commonPrefix = skus[0];
+  for (const sku of skus.slice(1)) {
+    let index = 0;
+    const max = Math.min(commonPrefix.length, sku.length);
+    while (index < max && commonPrefix[index] === sku[index]) index += 1;
+    commonPrefix = commonPrefix.slice(0, index);
+    if (!commonPrefix) break;
+  }
+
+  const styleReference = commonPrefix.replace(/[\s._/-]+$/g, '').trim();
+  const referenceIsProductSpecific = styleReference.length >= 6 || /\d/.test(styleReference);
+  return (referenceIsProductSpecific ? styleReference : skus[0]).slice(0, 80);
+}
+
 function buildVerifiedProductCopy(product) {
   if (!product) return '';
 
+  const styleReference = getVerifiedPrimaryStyleReference(product);
+  const styleReferenceCopy = styleReference ? `Style reference: ${styleReference}.` : '';
+
   if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
     const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product.handle);
-    return `${getCustomProductDescription(matched.title)} Checkout accepts United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`;
+    return normalizeWhitespace(
+      `${getCustomProductDescription(matched.title)} ${styleReferenceCopy} Checkout accepts United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`,
+    );
   }
 
   const isSourceVerifiedListing = (product.tags || []).some(
@@ -346,13 +374,15 @@ function buildVerifiedProductCopy(product) {
     : '';
   if (sourceVerifiedDescription.length >= 80) {
     return normalizeWhitespace(
-      `${sourceVerifiedDescription} Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`,
+      `${styleReferenceCopy} ${sourceVerifiedDescription} Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`,
     );
   }
 
   const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
   const attributes = getListedProductAttributes(product);
   const parts = [`${title}.`];
+
+  if (styleReferenceCopy) parts.push(styleReferenceCopy);
 
   if (product.productType) parts.push(`Category: ${product.productType}.`);
   if (attributes.color) parts.push(`Color: ${attributes.color}.`);
@@ -412,7 +442,7 @@ function truncateAtWord(value, maxLength) {
   return `${truncated.trimEnd()}…`;
 }
 
-function clampTitle(raw, brand = 'LuxeMia', maxLength = 58) {
+function clampTitle(raw, brand = 'LuxeMia', maxLength = 80) {
   const cleaned = normalizeWhitespace(raw);
   const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const brandAtStart = new RegExp(`^${escapedBrand}\\s*(?:[|—–:\\-]\\s*)?`, 'i');
@@ -429,6 +459,56 @@ function clampTitle(raw, brand = 'LuxeMia', maxLength = 58) {
   if (title.length <= maxLength) return title;
 
   return `${truncateAtWord(withoutBrand, Math.max(1, maxLength - suffix.length))}${suffix}`;
+}
+
+function disambiguateDuplicateProductRouteTitles(routes) {
+  const productRoutes = routes.filter((route) => route.path.startsWith('/product/') && route.product);
+  const groups = new Map();
+
+  for (const route of productRoutes) {
+    const finalTitle = clampTitle(route.title).toLowerCase();
+    const group = groups.get(finalTitle) || [];
+    group.push(route);
+    groups.set(finalTitle, group);
+  }
+
+  let disambiguatedCount = 0;
+  for (const [finalTitle, group] of groups) {
+    if (group.length < 2) continue;
+
+    const referenceCounts = new Map();
+    for (const route of group) {
+      const reference = getVerifiedPrimaryStyleReference(route.product);
+      const referenceKey = reference.toLowerCase();
+      if (reference) referenceCounts.set(referenceKey, (referenceCounts.get(referenceKey) || 0) + 1);
+    }
+
+    for (const route of group) {
+      const reference = getVerifiedPrimaryStyleReference(route.product);
+      if (!reference || referenceCounts.get(reference.toLowerCase()) !== 1) continue;
+
+      const unbrandedTitle = normalizeWhitespace(route.title)
+        .replace(/^LuxeMia\s*(?:[|—–:\-]\s*)?/i, '')
+        .replace(/\s*(?:[|—–:\-]\s*)?LuxeMia$/i, '')
+        .trim();
+      route.title = `Style ${reference}: ${unbrandedTitle} | LuxeMia`;
+      disambiguatedCount += 1;
+    }
+
+    const unresolved = group.filter((route) => {
+      const reference = getVerifiedPrimaryStyleReference(route.product);
+      return !reference || referenceCounts.get(reference.toLowerCase()) !== 1;
+    });
+    if (unresolved.length > 1) {
+      console.warn(
+        `[prerender] Unresolved duplicate product title '${finalTitle}' shares a missing or repeated style reference: ${unresolved.map((route) => route.path).join(', ')}`,
+      );
+    }
+  }
+
+  if (disambiguatedCount > 0) {
+    console.log(`[prerender] Disambiguated ${disambiguatedCount} duplicate product title(s) with verified SKU/style references`);
+  }
 }
 
 function clampDescription(raw, maxLength = 155) {
@@ -694,12 +774,12 @@ function matchesOccasionProduct(product, occasion) {
   });
 }
 
-function filterProductsForCategory(allProducts, category, newestFirst = false) {
+function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {
   if (category === 'customizable') {
     return allProducts
       .filter((product) => product.availableForSale !== false)
       .filter((product) => CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle))
-      .slice(0, MAX_COLLECTION_PRODUCTS);
+      .slice(0, maxProducts);
   }
 
   if (category.startsWith('occasion:')) {
@@ -707,7 +787,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
     return allProducts
       .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
       .filter((product) => matchesOccasionProduct(product, occasion))
-      .slice(0, MAX_COLLECTION_PRODUCTS);
+      .slice(0, maxProducts);
   }
 
   if (category.startsWith('collection:')) {
@@ -739,7 +819,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       return false;
     });
 
-    return matches.slice(0, MAX_COLLECTION_PRODUCTS);
+    return matches.slice(0, maxProducts);
   }
 
   // Global exclusions: old batch + banned titles
@@ -782,13 +862,13 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       if (!mainCategories.includes(displayCategory)) ordered.push(...products);
     }
 
-    return ordered.slice(0, MAX_COLLECTION_PRODUCTS);
+    return ordered.slice(0, maxProducts);
   }
 
-  if (category === 'all') return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
+  if (category === 'all') return allowed.slice(0, maxProducts);
 
   const types = CATEGORY_PRODUCT_TYPES[category];
-  if (!types) return allowed.slice(0, MAX_COLLECTION_PRODUCTS);
+  if (!types) return allowed.slice(0, maxProducts);
 
   // Menswear: include only men's products, exclude women's wear
   if (category === 'menswear') {
@@ -801,7 +881,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       if (womensKeywords.test(title)) return false;
       if (tags.some(t => t === 'women' || t === 'womens' || t === 'female' || t === 'ladies' || t === 'gender:female' || t === 'gender:women')) return false;
       return true;
-    }).slice(0, MAX_COLLECTION_PRODUCTS);
+    }).slice(0, maxProducts);
   }
 
   // Women's categories: exclude menswear first
@@ -817,7 +897,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       const tags = (p.tags ?? []).map(t => t.toLowerCase());
       return womensFusionTypes.some(t => pt.includes(t)) ||
         tags.some(t => t.includes('indo') || t.includes('fusion') || t === 'contemporary' || t === 'western');
-    }).slice(0, MAX_COLLECTION_PRODUCTS);
+    }).slice(0, maxProducts);
   }
 
   if (category === 'suits') {
@@ -843,7 +923,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       }
       if (/salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani\s+suit|kurti|churidar|patiala/.test(pt)) return true;
       return false;
-    }).slice(0, MAX_COLLECTION_PRODUCTS);
+    }).slice(0, maxProducts);
   }
 
   // Lehengas + Sarees + Jewelry: match by productType with keyword fallback
@@ -872,10 +952,10 @@ function filterProductsForCategory(allProducts, category, newestFirst = false) {
       return false;
     }
     return false;
-  }).slice(0, MAX_COLLECTION_PRODUCTS);
+  }).slice(0, maxProducts);
 }
 
-function filterProductsForCollectionRoute(allProducts, route) {
+function filterProductsForCollectionRoute(allProducts, route, maxProducts = MAX_COLLECTION_PRODUCTS) {
   let candidates = allProducts;
 
   if (route.prerenderSubcategory) {
@@ -900,6 +980,7 @@ function filterProductsForCollectionRoute(allProducts, route) {
     candidates,
     route.category,
     route.path === '/new-arrivals',
+    maxProducts,
   );
 
   if (route.prerenderSubcategory) {
@@ -1011,6 +1092,58 @@ function generateCollectionProductHtml(products) {
   }).join('\n        ');
 
   return `<div style="margin:24px 0">${cards}</div>`;
+}
+
+function generateApprovedOverflowProductLinks(allProducts, displayedProducts) {
+  const displayedHandles = new Set((displayedProducts || []).map((product) => product.handle));
+  const overflowProducts = (allProducts || [])
+    .filter((product) => APPROVED_SITEMAP_PATHS.has(`/product/${product.handle}`))
+    .filter((product) => !displayedHandles.has(product.handle));
+  if (overflowProducts.length === 0) return '';
+
+  const links = overflowProducts
+    .map((product) => `<li><a href="/product/${escapeHtml(product.handle)}">${escapeHtml(sanitizeProductTitle(product.title || product.handle))}</a></li>`)
+    .join('');
+  return `<nav aria-label="More products in this category"><h2>More Products in This Category</h2><ul>${links}</ul></nav>`;
+}
+
+function isAvailableForSiblingLinks(product) {
+  return product?.availableForSale === true
+    || product?.variants?.edges?.some((variant) => variant?.node?.availableForSale === true);
+}
+
+function generateApprovedSiblingProductLinks(product, allShopifyProducts, limit = 4) {
+  if (!product || !allShopifyProducts || allShopifyProducts.size === 0) return '';
+
+  const categoryLink = getProductCategoryInfo(product.productType || '', product.title || '').link;
+  const siblings = Array.from(allShopifyProducts.values())
+    .filter((candidate) => candidate.handle !== product.handle)
+    .filter((candidate) => APPROVED_SITEMAP_PATHS.has(`/product/${candidate.handle}`))
+    .filter(isAvailableForSiblingLinks)
+    .filter((candidate) => getProductCategoryInfo(candidate.productType || '', candidate.title || '').link === categoryLink)
+    .sort((left, right) => left.handle.localeCompare(right.handle, 'en', { sensitivity: 'base' }));
+  if (siblings.length === 0) return '';
+
+  const insertionIndex = siblings.findIndex((candidate) => candidate.handle.localeCompare(product.handle, 'en', { sensitivity: 'base' }) > 0);
+  const ringStart = insertionIndex === -1 ? 0 : insertionIndex;
+  const selected = [];
+  const seenHandles = new Set();
+  for (let step = 0; step < siblings.length && selected.length < limit; step += 1) {
+    const offsets = step === 0 ? [0] : [step, -step];
+    for (const offset of offsets) {
+      const index = (ringStart + offset + siblings.length) % siblings.length;
+      const candidate = siblings[index];
+      if (!candidate || seenHandles.has(candidate.handle)) continue;
+      seenHandles.add(candidate.handle);
+      selected.push(candidate);
+      if (selected.length >= limit) break;
+    }
+  }
+
+  const links = selected
+    .map((candidate) => `<li><a href="/product/${escapeHtml(candidate.handle)}">${escapeHtml(sanitizeProductTitle(candidate.title || candidate.handle))}</a></li>`)
+    .join('');
+  return `<nav aria-label="Related products"><h2>Related Products</h2><ul>${links}</ul></nav>`;
 }
 
 // Build-time HTML directory for every approved, live sitemap product. This is
@@ -2557,6 +2690,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const vendor = (p.vendor || '').trim();
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
     const productAttributes = getListedProductAttributes(p);
+    const styleReference = getVerifiedPrimaryStyleReference(p);
     const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle)
       ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(productType, p.title || route.h1);
@@ -2599,6 +2733,7 @@ function generateHtml(template, route, allShopifyProducts) {
       `<div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizingDetails)}</dd></div>`,
       `<div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>`,
       productType ? `<div><dt>Type</dt><dd>${escapeHtml(productType)}</dd></div>` : '',
+      styleReference ? `<div><dt>Style Reference</dt><dd>${escapeHtml(styleReference)}</dd></div>` : '',
       `<div><dt>Brand</dt><dd>${escapeHtml(brandName)}</dd></div>`,
       productAttributes.color ? `<div><dt>Color</dt><dd>${escapeHtml(productAttributes.color)}</dd></div>` : '',
       `<div><dt>Availability</dt><dd>${isAvailable ? 'In Stock' : 'Currently Unavailable'}</dd></div>`,
@@ -2631,6 +2766,7 @@ function generateHtml(template, route, allShopifyProducts) {
       <p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.</p>
       <h3>How should I care for this product?</h3>
       <p>${careAnswer}</p>`;
+    const siblingProductLinksHtml = generateApprovedSiblingProductLinks(p, allShopifyProducts);
 
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
@@ -2642,6 +2778,7 @@ function generateHtml(template, route, allShopifyProducts) {
         ${detailRows}
       </dl>
       ${productQuestionsHtml}
+      ${siblingProductLinksHtml}
       <h2>Shipping &amp; Delivery</h2>
       <p>Shipping is available to United States addresses only. U.S. standard shipping is free at $150 and above and $12 below $150. Tracking details are emailed when the shipping label is created for dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
@@ -2661,7 +2798,12 @@ function generateHtml(template, route, allShopifyProducts) {
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.
     const allProducts = Array.from(allShopifyProducts.values());
-    const collectionProducts = filterProductsForCollectionRoute(allProducts, route);
+    const allCollectionProducts = filterProductsForCollectionRoute(
+      allProducts,
+      route,
+      Number.POSITIVE_INFINITY,
+    );
+    const collectionProducts = allCollectionProducts.slice(0, MAX_COLLECTION_PRODUCTS);
     const matchLabel = route.prerenderSubcategory
       ? `${route.category}:${route.prerenderSubcategory.slug}`
       : route.category;
@@ -2703,11 +2845,16 @@ function generateHtml(template, route, allShopifyProducts) {
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
     const productCardsHtml = generateCollectionProductHtml(collectionProducts);
+    const overflowProductLinksHtml = generateApprovedOverflowProductLinks(
+      allCollectionProducts,
+      collectionProducts,
+    );
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
       ${routeContent}
       <h2>Products in this Collection</h2>
-      ${productCardsHtml}`;
+      ${productCardsHtml}
+      ${overflowProductLinksHtml}`;
   } else if (route.path === '/' && allShopifyProducts && allShopifyProducts.size > 0) {
     const homepageProducts = filterProductsForCategory(
       Array.from(allShopifyProducts.values()),
@@ -3044,6 +3191,7 @@ async function main() {
     });
   }
   console.log(`[prerender] Total /product/* routes after Shopify merge: ${routes.filter(r => r.path.startsWith('/product/')).length}`);
+  disambiguateDuplicateProductRouteTitles(routes);
 
   let count = 0;
   let productCount = 0;

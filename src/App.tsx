@@ -33,6 +33,7 @@ const Returns = lazy(() => import("./pages/Returns"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NewArrivals = lazy(() => import("./pages/NewArrivals"));
+const ReadyToShip = lazy(() => import("./pages/ReadyToShip"));
 const Indowestern = lazy(() => import("./pages/Indowestern"));
 const Press = lazy(() => import("./pages/Press"));
 const SizeGuide = lazy(() => import("./pages/SizeGuide"));
@@ -182,8 +183,8 @@ const App = () => (
                 <Route path="/collections/eid-outfits" element={<Suspense fallback={<PageLoader />}><EidOutfits /></Suspense>} />
                 <Route path="/collections/navratri-outfits" element={<Suspense fallback={<PageLoader />}><NavratriOutfits /></Suspense>} />
                 <Route path="/collections/haldi-outfits" element={<Suspense fallback={<PageLoader />}><HaldiOutfits /></Suspense>} />
-                <Route path="/ready-to-ship" element={<Navigate to="/collections" replace />} />
-                <Route path="/collections/ready-to-ship" element={<Navigate to="/collections" replace />} />
+                <Route path="/ready-to-ship" element={<Suspense fallback={<PageLoader />}><ReadyToShip /></Suspense>} />
+                <Route path="/collections/ready-to-ship" element={<Navigate to="/ready-to-ship" replace />} />
 
                 <Route path="/sitemap" element={<Suspense fallback={<PageLoader />}><Sitemap /></Suspense>} />
                 <Route path="/style-consultation" element={<Navigate to="/contact" replace />} />

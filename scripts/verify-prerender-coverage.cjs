@@ -37,12 +37,19 @@ require('./postprocess-error-pages.cjs');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const PRERENDER_DIR = path.join(PROJECT_ROOT, 'dist/_prerender');
+const PRERENDER_MANIFEST_JSON = path.join(PRERENDER_DIR, 'manifest.json');
+const APPROVED_SITEMAP_INVENTORY_JSON = path.join(PROJECT_ROOT, 'scripts/approved-sitemap-inventory.json');
 const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
 const MAIN_TSX = path.join(PROJECT_ROOT, 'src/main.tsx');
 const BLOG_POST_PAGE_TSX = path.join(PROJECT_ROOT, 'src/pages/BlogPost.tsx');
 const VERCEL_JSON = path.join(PROJECT_ROOT, 'vercel.json');
 const SITE_URL = 'https://luxemia.shop';
+const APPROVED_PRODUCT_HANDLES = new Set(
+  JSON.parse(fs.readFileSync(APPROVED_SITEMAP_INVENTORY_JSON, 'utf8')).paths
+    .filter((route) => route.startsWith('/product/'))
+    .map((route) => route.slice('/product/'.length)),
+);
 const AUTHOR_ROUTE = '/authors/luxemia-editorial-team';
 const BLOG_TOPIC_HUBS = [
   '/blog/attires',
@@ -356,14 +363,147 @@ function parseCommercialCollectionHtml(route, category) {
     .map((entry) => entry?.item?.url?.match(/\/product\/([^/?#]+)$/)?.[1])
     .filter(Boolean);
   const expected = JSON.stringify(payloadHandles);
-  if (JSON.stringify(linkedHandles) !== expected) {
-    return `${route}: product links do not match the hydration payload`;
+  const cardHandles = linkedHandles.slice(0, payloadHandles.length);
+  if (JSON.stringify(cardHandles) !== expected) {
+    return `${route}: first product-card links do not match the hydration payload`;
+  }
+  const overflowHandles = linkedHandles.slice(payloadHandles.length);
+  const invalidOverflowHandles = overflowHandles.filter((handle) => !APPROVED_PRODUCT_HANDLES.has(handle));
+  if (invalidOverflowHandles.length > 0) {
+    return `${route}: overflow links include product(s) outside the approved sitemap inventory: ${[...new Set(invalidOverflowHandles)].join(', ')}`;
+  }
+  if (new Set(linkedHandles).size !== linkedHandles.length) {
+    return `${route}: product-card and overflow links contain duplicate handles`;
   }
   if (JSON.stringify(itemListHandles) !== expected || itemList.numberOfItems !== payloadHandles.length) {
     return `${route}: ItemList products do not match the hydration payload`;
   }
 
   return null;
+}
+
+function decodeHtmlText(value) {
+  return String(value || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&#(\d+);/g, (_match, codePoint) => String.fromCodePoint(Number(codePoint)))
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function groupProductRecords(records, key) {
+  const groups = new Map();
+  for (const record of records) {
+    const value = record[key];
+    if (!value) continue;
+    const normalized = value.toLowerCase().replace(/\s+/g, ' ').trim();
+    const group = groups.get(normalized) || [];
+    group.push(record);
+    groups.set(normalized, group);
+  }
+  return [...groups.values()].filter((group) => group.length > 1);
+}
+
+function verifyProductDiscoveryAndDuplicateSignals() {
+  const failures = [];
+  const warnings = [];
+  if (!fs.existsSync(PRERENDER_MANIFEST_JSON)) {
+    return {
+      failures: [`${path.relative(PROJECT_ROOT, PRERENDER_MANIFEST_JSON)} is missing`],
+      warnings,
+      approvedProductCount: 0,
+    };
+  }
+
+  let manifest;
+  try {
+    manifest = JSON.parse(fs.readFileSync(PRERENDER_MANIFEST_JSON, 'utf8'));
+  } catch (error) {
+    return {
+      failures: [`${path.relative(PROJECT_ROOT, PRERENDER_MANIFEST_JSON)} is invalid JSON (${error.message})`],
+      warnings,
+      approvedProductCount: 0,
+    };
+  }
+
+  const currentApprovedHandles = new Set(
+    (manifest.productHandles || []).filter((handle) => APPROVED_PRODUCT_HANDLES.has(handle)),
+  );
+  const inboundSources = new Map(
+    [...currentApprovedHandles].map((handle) => [handle, new Set()]),
+  );
+  const productRecords = [];
+
+  for (const route of manifest.routes || []) {
+    const filePath = routeToFilePath(route);
+    if (!fs.existsSync(filePath)) {
+      failures.push(`${route}: prerender manifest route has no HTML file`);
+      continue;
+    }
+    const html = fs.readFileSync(filePath, 'utf8');
+    const linkedHandles = [...html.matchAll(/href=["'](?:https:\/\/luxemia\.shop)?\/product\/([^"'?#]+)(?:[?#][^"']*)?["']/gi)]
+      .map((match) => match[1]);
+    for (const handle of new Set(linkedHandles)) {
+      if (!currentApprovedHandles.has(handle) || route === `/product/${handle}`) continue;
+      inboundSources.get(handle).add(route);
+    }
+
+    if (!route.startsWith('/product/') || !currentApprovedHandles.has(route.slice('/product/'.length))) {
+      continue;
+    }
+
+    const title = decodeHtmlText(html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1]);
+    const h1 = decodeHtmlText(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]);
+    const descriptionTag = [...html.matchAll(/<meta\b[^>]*>/gi)]
+      .map((match) => match[0])
+      .find((tag) => getHtmlAttribute(tag, 'name')?.toLowerCase() === 'description');
+    const metaDescription = decodeHtmlText(descriptionTag ? getHtmlAttribute(descriptionTag, 'content') : '');
+    const productDescription = decodeHtmlText(
+      html.match(/<h2>Product Description<\/h2>\s*<p>([\s\S]*?)<\/p>/i)?.[1],
+    );
+    const styleReference = decodeHtmlText(
+      html.match(/<dt>Style Reference<\/dt>\s*<dd>([\s\S]*?)<\/dd>/i)?.[1],
+    );
+    productRecords.push({ route, title, h1, metaDescription, productDescription, styleReference });
+  }
+
+  for (const [handle, sources] of inboundSources) {
+    if (sources.size < 2) {
+      failures.push(
+        `/product/${handle}: expected at least two distinct crawlable inbound sources, found ${sources.size}${sources.size ? ` (${[...sources].join(', ')})` : ''}`,
+      );
+    }
+  }
+
+  const duplicateTitleGroups = groupProductRecords(productRecords, 'title');
+  for (const group of duplicateTitleGroups) {
+    const distinctH1s = new Set(group.map((record) => record.h1.toLowerCase()));
+    const details = group
+      .map((record) => `${record.route}${record.styleReference ? ` [${record.styleReference}]` : ' [no style reference]'}`)
+      .join(', ');
+    if (distinctH1s.size > 1) {
+      failures.push(`final product title truncation collision across distinct H1s: '${group[0].title}' — ${details}`);
+    } else {
+      warnings.push(`unresolved same-title product cluster: '${group[0].title}' — ${details}`);
+    }
+  }
+
+  for (const group of groupProductRecords(productRecords, 'metaDescription')) {
+    warnings.push(`unresolved duplicate meta-description cluster (${group.length}): ${group.map((record) => record.route).join(', ')}`);
+  }
+  for (const group of groupProductRecords(productRecords, 'productDescription')) {
+    warnings.push(`unresolved duplicate product-description cluster (${group.length}): ${group.map((record) => record.route).join(', ')}`);
+  }
+
+  return {
+    failures,
+    warnings,
+    approvedProductCount: currentApprovedHandles.size,
+  };
 }
 
 function main() {
@@ -451,6 +591,17 @@ function main() {
     process.exit(1);
   }
 
+  const productDiscoverySignals = verifyProductDiscoveryAndDuplicateSignals();
+  if (productDiscoverySignals.failures.length > 0) {
+    console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${productDiscoverySignals.failures.length} product discovery/title check(s) failed.`);
+    for (const failure of productDiscoverySignals.failures) console.error(`  ${failure}`);
+    process.exit(1);
+  }
+  if (productDiscoverySignals.warnings.length > 0) {
+    console.warn(`\n[verify-prerender-coverage] REVIEW: ${productDiscoverySignals.warnings.length} unresolved duplicate product-content cluster(s).`);
+    for (const warning of productDiscoverySignals.warnings) console.warn(`  ${warning}`);
+  }
+
   const productDir = path.join(PRERENDER_DIR, 'product');
   const legacyCopyFailures = fs.existsSync(productDir)
     ? fs.readdirSync(productDir)
@@ -468,7 +619,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML; ${julyRegressionGuards.publishedCount} published articles, ${BLOG_TOPIC_HUBS.length} blog hubs, the factual author route, hydration-safe BlogPosting schema, and legacy-author redirects are aligned; all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema.`);
+  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML; ${julyRegressionGuards.publishedCount} published articles, ${BLOG_TOPIC_HUBS.length} blog hubs, the factual author route, hydration-safe BlogPosting schema, and legacy-author redirects are aligned; all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema; ${productDiscoverySignals.approvedProductCount} approved products have at least two crawlable inbound sources.`);
 }
 
 main();
