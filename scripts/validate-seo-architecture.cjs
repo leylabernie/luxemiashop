@@ -86,6 +86,30 @@ for (const relativePath of navigationFiles) {
 const categoryConfig = read('src/config/categoryConfig.tsx');
 requireText(categoryConfig, 'getDedicatedSubcategoryPath(catSlug, subcategory.slug)', 'dedicated-only mega-menu route resolver');
 requireText(categoryConfig, 'getDedicatedSubcategoryPath(config.slug, subcategory.slug)', 'dedicated filter landing resolver');
+for (const redirectingEditorialPath of [
+  '/maroon-lehenga-for-reception',
+  '/lehenga-for-bridesmaid',
+  '/lehenga-for-mother-of-bride',
+  '/kanjivaram-saree-for-wedding',
+  '/anarkali-suit-for-wedding-guest',
+  '/anarkali-suit-for-mother-of-bride',
+  '/sharara-for-bride-sister',
+]) {
+  forbidText(
+    categoryConfig,
+    `href="${redirectingEditorialPath}"`,
+    `internal editorial link to redirect source ${redirectingEditorialPath}`,
+  );
+}
+
+const pressPage = read('src/pages/Press.tsx');
+forbidText(pressPage, 'noIndex={true}', 'hydrated noindex on sitemap-listed /press page');
+
+const appRoutes = read('src/App.tsx');
+requireText(appRoutes, 'const ReadyToShip = lazy(() => import("./pages/ReadyToShip"));', 'ready-to-ship landing import');
+requireText(appRoutes, '<Route path="/ready-to-ship" element={<Suspense fallback={<PageLoader />}><ReadyToShip /></Suspense>} />', 'indexable ready-to-ship route');
+requireText(appRoutes, '<Route path="/collections/ready-to-ship" element={<Navigate to="/ready-to-ship" replace />} />', 'ready-to-ship alias route');
+forbidText(appRoutes, '<Route path="/ready-to-ship" element={<Navigate', 'client redirect shadowing the ready-to-ship landing page');
 
 const filterSidebar = read('src/components/collections/FilterSidebar.tsx');
 requireText(filterSidebar, 'sub.landingPath', 'clean collection link for stocked facets');

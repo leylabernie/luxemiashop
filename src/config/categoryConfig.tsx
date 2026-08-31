@@ -342,9 +342,9 @@ const LEHENGAS: CategoryConfig = {
       <h3>Bridal, Reception and Party-Wear Lehengas</h3>
       <p>
         Compare bridal lehengas with reception and party-wear styles by weight, work, included pieces and
-        stitching status. For related occasion ideas, see the <a href="/maroon-lehenga-for-reception">reception lehenga guide</a>,
-        the <a href="/lehenga-for-bridesmaid">bridesmaid lehenga guide</a> and the
-        <a href="/lehenga-for-mother-of-bride"> mother-of-the-bride lehenga guide</a>.
+        stitching status. For related occasion ideas, see the <a href="/collections/party-wear-lehengas">reception lehenga selection</a>,
+        the <a href="/collections/bridal-party-outfits">bridal-party outfit collection</a> and the
+        <a href="/collections/party-wear-lehengas"> mother-of-the-bride lehenga selection</a>.
       </p>
       <h3>Ready-to-Ship Bridal Lehengas in the USA</h3>
       <p>
@@ -560,8 +560,8 @@ const SAREES: CategoryConfig = {
       <p>
         Browse the <a href="/collections/silk-sarees">silk saree collection</a> and the
         <a href="/collections/kanchipuram-sarees"> Kanchipuram and Kanjivaram collection</a>, then compare the stated
-        fiber, weave, border, blouse details and availability on each listing. The
-        <a href="/kanjivaram-saree-for-wedding"> Kanjivaram wedding saree guide</a> explains additional shopping considerations.
+        fiber, weave, border, blouse details and availability on each listing. These collection pages provide
+        the current shopping options without relying on discontinued guide URLs.
       </p>
       <h3>Blouse and Sizing Details</h3>
       <p>
@@ -727,9 +727,9 @@ const SUITS: CategoryConfig = {
       <h3>Anarkali, Sharara and Gharara Styles</h3>
       <p>
         Anarkali suits use a flared kurta, while sharara and gharara sets use wide or structured flared bottoms;
-        the exact cut varies by product. Compare the <a href="/anarkali-suit-for-wedding-guest">wedding-guest Anarkali guide</a>,
-        the <a href="/anarkali-suit-for-mother-of-bride">mother-of-the-bride Anarkali guide</a> and the
-        <a href="/sharara-for-bride-sister"> sharara guide</a>, then return to the current listings for availability.
+        the exact cut varies by product. Compare the <a href="/collections/anarkali-suits">wedding-guest Anarkali selection</a>,
+        the <a href="/collections/anarkali-suits">mother-of-the-bride Anarkali selection</a> and the
+        <a href="/collections/sharara-suits"> current sharara selection</a>, then review each listing for availability.
       </p>
       <h3>Sizing and Tailoring</h3>
       <p>

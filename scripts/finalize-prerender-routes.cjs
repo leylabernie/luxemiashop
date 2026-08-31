@@ -98,11 +98,11 @@ updateFile(PRERENDER, (source) => {
   output = output.replace(routeBlockPattern, shippingBlock);
 
   if (!output.includes("if (category === 'ready-to-ship')")) {
-    const categoryFunctionMarker = "function filterProductsForCategory(allProducts, category, newestFirst = false) {\n";
+    const categoryFunctionMarker = "function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {\n";
     if (!output.includes(categoryFunctionMarker)) {
       throw new Error('[prerender-routes] Product category filter function was not found');
     }
-    const readyFilter = `function filterProductsForCategory(allProducts, category, newestFirst = false) {\n  if (category === 'ready-to-ship') {\n    return allProducts\n      .filter((product) => product.availableForSale !== false)\n      .filter((product) => {\n        const days = getListedProductAttributes(product).shipsWithinDays;\n        return Number.isFinite(days) && days >= 1 && days <= 5;\n      })\n      .slice(0, MAX_COLLECTION_PRODUCTS);\n  }\n`;
+    const readyFilter = `function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {\n  if (category === 'ready-to-ship') {\n    return allProducts\n      .filter((product) => product.availableForSale !== false)\n      .filter((product) => {\n        const days = getListedProductAttributes(product).shipsWithinDays;\n        return Number.isFinite(days) && days >= 1 && days <= 5;\n      })\n      .slice(0, maxProducts);\n  }\n`;
     output = output.replace(categoryFunctionMarker, readyFilter);
   }
 

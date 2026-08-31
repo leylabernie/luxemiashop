@@ -87,6 +87,7 @@ const staticPages = [
   { loc: '/menswear', changefreq: 'daily', priority: '0.9' },
   { loc: '/indowestern', changefreq: 'daily', priority: '0.8' },
   { loc: '/new-arrivals', changefreq: 'daily', priority: '0.8' },
+  { loc: '/ready-to-ship', changefreq: 'daily', priority: '0.9' },
   { loc: '/nri', changefreq: 'monthly', priority: '0.8' },
   { loc: '/indian-ethnic-wear-usa', changefreq: 'monthly', priority: '0.8' },
   // '/indian-ethnic-wear-canada' is intentionally omitted because it 301s to
@@ -95,6 +96,7 @@ const staticPages = [
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5' },
   { loc: '/shipping', changefreq: 'monthly', priority: '0.4' },
+  { loc: '/pages/shipping-customs', changefreq: 'monthly', priority: '0.4' },
   { loc: '/returns', changefreq: 'monthly', priority: '0.4' },
   { loc: '/size-guide', changefreq: 'monthly', priority: '0.5' },
   { loc: '/sizing-measurements-guide', changefreq: 'monthly', priority: '0.8' },
