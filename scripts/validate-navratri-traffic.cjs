@@ -56,14 +56,16 @@ const articleHtml = read(articlePath);
 const homepageHtml = read(homepagePath);
 const feedXml = read('dist/merchant-feed.xml');
 const sitemapIndexXml = read('dist/sitemap.xml');
-const sitemapXml = [
+const canonicalSitemapNames = [
   'products',
   'collections',
   'guides',
   'pages',
-  'images',
-].map((name) => {
+];
+for (const name of [...canonicalSitemapNames, 'images']) {
   requireText(sitemapIndexXml, `/sitemap-${name}.xml`, `${name} sitemap index entry`);
+}
+const sitemapXml = canonicalSitemapNames.map((name) => {
   return read(`dist/sitemap-${name}.xml`);
 }).join('\n');
 const blogSource = read('src/data/blogPosts.ts');
