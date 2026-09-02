@@ -88,18 +88,17 @@ function feedItems() {
 
 function findCandidate(route, items) {
   for (const product of collectionProducts(route)) {
-    const min = Number(product.priceRange?.minVariantPrice?.amount).toFixed(2);
-    const variant = product.variants?.edges?.map((entry) => entry.node)
-      .find((entry) => entry.availableForSale && Number(entry.price?.amount).toFixed(2) === min);
-    if (!variant) continue;
-    const numericId = variant.id.split('/').pop();
-    const item = items.find((entry) => {
-      const link = extractTag(entry, 'link');
-      return link.includes(`/product/${product.handle}`) && link.includes(`variant=${numericId}`);
-    });
-    if (item) return { product, variant, item, numericId };
+    for (const variant of product.variants?.edges?.map((entry) => entry.node) || []) {
+      if (!variant.availableForSale) continue;
+      const numericId = variant.id.split('/').pop();
+      const item = items.find((entry) => {
+        const link = extractTag(entry, 'link');
+        return link.includes(`/product/${product.handle}`) && link.includes(`variant=${numericId}`);
+      });
+      if (item) return { product, variant, item, numericId };
+    }
   }
-  throw new Error(`${route}: no in-stock minimum-price variant was shared by the page and Merchant feed`);
+  throw new Error(`${route}: no in-stock variant was shared by the page and Merchant feed`);
 }
 
 function productEvidence(handle, numericId) {
