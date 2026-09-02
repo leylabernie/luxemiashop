@@ -15,7 +15,9 @@ const allSchemaSources = `${index}\n${schema}\n${prerender}`;
 for (const id of ['#organization', '#website', '#brand', '#customer-support']) {
   requireText(allSchemaSources, id, `stable entity ID ${id}`);
 }
-if (allSchemaSources.includes('/#org')) throw new Error('[semantic-completion] Legacy /#org entity ID remains');
+if (/\/#org(?![A-Za-z0-9_-])/.test(allSchemaSources)) {
+  throw new Error('[semantic-completion] Legacy /#org entity ID remains');
+}
 requireText(prerender, "'@type': 'CollectionPage'", 'CollectionPage schema');
 requireText(prerender, "'@type': 'ItemList'", 'ItemList schema');
 
