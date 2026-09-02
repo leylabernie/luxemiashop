@@ -247,7 +247,7 @@ function patchHomepageJsonLd() {
   const organization = graph.find((node) => node['@type'] === 'Organization');
   const store = graph.find((node) => node['@type'] === 'OnlineStore' || (Array.isArray(node['@type']) && node['@type'].includes('OnlineStore')));
   const returnPolicy = graph.find((node) => node['@type'] === 'MerchantReturnPolicy');
-  if (!organization || !store || !returnPolicy) throw new Error('[route-shipping] Required homepage schema nodes missing');
+  if (!organization || !store) throw new Error('[route-shipping] Required homepage entity nodes missing');
 
   const serviceIds = [
     'us-standard-shipping',
@@ -263,8 +263,15 @@ function patchHomepageJsonLd() {
   store.description = 'South Asian ethnic wear store offering sarees, lehengas, suits and menswear with route-based tracked shipping.';
   store.areaServed = ALL_COUNTRIES.map((code) => ({ '@type': 'Country', name: code }));
   store.hasShippingService = organization.hasShippingService;
-  returnPolicy.applicableCountry = ALL_COUNTRIES;
-  returnPolicy.returnPolicyCountry = ALL_COUNTRIES;
+  // Older source snapshots contained one global MerchantReturnPolicy. The
+  // final trust normalizer intentionally removes it because country-specific
+  // mandatory rights and the voluntary final-sale rule cannot be represented
+  // accurately by one machine-readable category. Keep this migration
+  // idempotent when that optional legacy node is already absent.
+  if (returnPolicy) {
+    returnPolicy.applicableCountry = ALL_COUNTRIES;
+    returnPolicy.returnPolicyCountry = ALL_COUNTRIES;
+  }
 
   const makeService = (id, name, countries, rate, threshold) => ({
     '@type': 'ShippingService',
