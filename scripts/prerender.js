@@ -3048,7 +3048,7 @@ function generateHtml(template, route, allShopifyProducts) {
     </script>`;
 
   const seoContent = `
-    <main id="seo-prerender"${route.htmlSitemap ? ' aria-label="Complete product directory"' : ''}>
+    <main id="${route.path === '/returns' ? 'merchant-return-policy' : 'seo-prerender'}"${route.htmlSitemap ? ' aria-label="Complete product directory"' : ''}>
       ${mainBodyContent}
       <nav aria-label="Site navigation">
         <a href="/">Home</a> |
