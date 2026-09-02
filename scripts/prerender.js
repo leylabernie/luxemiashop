@@ -2061,10 +2061,8 @@ const routes = [
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
       <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
-      <h2>Stocked selections and custom selections</h2>
-      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Standard stocked selections remain Ready to Ship, while the custom selection requires additional processing. Fully custom products are shown separately as Made to Order.</p>
-      <h2>Processing and carrier transit are separate</h2>
-      <p>Order processing happens before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Confirm the selected size, included pieces and any custom option before ordering for a fixed event date.</p>
+      <h2>Stocked and custom selections are different</h2>
+      <p>Some stocked products also offer Custom Size, Custom Stitching or Made-to-Measure selections. Standard stocked selections remain Ready to Ship, while a custom selection requires the additional processing stated on the product page.</p>
       <h2>Shipping rates and timing</h2>
       <p><a href="/shipping">View route-based rates</a> for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
     `,
