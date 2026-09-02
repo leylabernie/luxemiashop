@@ -2863,8 +2863,7 @@ function generateHtml(template, route, allShopifyProducts) {
 
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';
-    const includedPieces = productAttributes.includedPieces
-      || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.';
+    const includedPieces = productAttributes.includedPieces;
     const sizingDetails = isCustomizable
       ? 'Made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
@@ -2877,7 +2876,7 @@ function generateHtml(template, route, allShopifyProducts) {
       : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
     const detailRows = [
       `<div><dt>Fabric Details</dt><dd>${escapeHtml(fabricDetails)}</dd></div>`,
-      `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>`,
+      includedPieces ? `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>` : '',
       `<div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizingDetails)}</dd></div>`,
       `<div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>`,
       productType ? `<div><dt>Type</dt><dd>${escapeHtml(productType)}</dd></div>` : '',
