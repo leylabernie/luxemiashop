@@ -1,6 +1,7 @@
 import type { ShopifyProduct } from '@/lib/shopify';
 
 type ProductNode = ShopifyProduct['node'];
+type ProductLike = ShopifyProduct | ProductNode;
 
 const SIZE_OPTION_NAMES = new Set([
   'size',
@@ -12,6 +13,10 @@ const SIZE_OPTION_NAMES = new Set([
 ]);
 
 const STALE_OR_RISKY_COPY = /free worldwide|5-day express|7-10 business days|free shipping on orders over \$350|ships within 1[–-]2 business days from the usa/i;
+
+function getProductNode(product: ProductLike): ProductNode {
+  return 'node' in product ? product.node : product;
+}
 
 function normalizeWhitespace(value: string): string {
   return value.replace(/\s+/g, ' ').trim();
@@ -145,10 +150,10 @@ function commercialFamilyKey(product: ProductNode): string {
 }
 
 export function getCommercialProductQualityScore(
-  product: ShopifyProduct,
+  product: ProductLike,
   duplicateTitleCount = 1,
 ): number {
-  const node = product.node;
+  const node = getProductNode(product);
   const tags = normalizedTags(node);
   const variants = getAvailableVariants(node);
   const imageEdges = node.images?.edges ?? [];
@@ -212,26 +217,27 @@ export function getCommercialProductQualityScore(
   return score;
 }
 
-export function rankCommercialProducts(products: ShopifyProduct[]): ShopifyProduct[] {
+export function rankCommercialProducts<T extends ProductLike>(products: T[]): T[] {
   const duplicateTitleCounts = new Map<string, number>();
   for (const product of products) {
-    const key = normalizedTitle(product.node);
+    const key = normalizedTitle(getProductNode(product));
     duplicateTitleCounts.set(key, (duplicateTitleCounts.get(key) ?? 0) + 1);
   }
 
   const remaining = products.map((product, originalIndex) => {
-    const titleKey = normalizedTitle(product.node);
+    const node = getProductNode(product);
+    const titleKey = normalizedTitle(node);
     return {
       product,
       originalIndex,
       titleKey,
-      familyKey: commercialFamilyKey(product.node),
+      familyKey: commercialFamilyKey(node),
       baseScore: getCommercialProductQualityScore(product, duplicateTitleCounts.get(titleKey) ?? 1),
-      createdAt: new Date(product.node.createdAt).getTime() || 0,
+      createdAt: new Date(node.createdAt).getTime() || 0,
     };
   });
 
-  const ranked: ShopifyProduct[] = [];
+  const ranked: T[] = [];
   const familyUse = new Map<string, number>();
   const titleUse = new Map<string, number>();
 
