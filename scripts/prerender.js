@@ -1432,8 +1432,80 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
   ],
 };
 
+const semanticCommerceRoutes = [
+  {
+    path: '/us-support',
+    title: 'U.S.-Based Online Customer Support | LuxeMia',
+    description: 'Contact LuxeMia for product, sizing, order and issue-reporting support from its U.S.-based online retail team.',
+    h1: 'U.S.-Based Online Customer Support',
+    content: '<p>LuxeMia is an online-only retailer. Contact support by email, phone, WhatsApp or the contact form for product, sizing and order questions.</p><h2>Before ordering</h2><p>Share the product link, destination, selected option, measurements and event date. Support can clarify published details but cannot guarantee event-date delivery.</p><h2>Issue escalation</h2><p>Report damage, defects, a materially misdescribed item, an incorrect item or missing pieces promptly. The 48-hour evidence request does not remove rights that cannot legally be excluded.</p>',
+  },
+  {
+    path: '/editorial-policy',
+    title: 'Editorial Policy and Product-Fact Standards | LuxeMia',
+    description: 'How LuxeMia sources, reviews, dates and corrects product information and Indian attire guides.',
+    h1: 'Editorial Policy and Product-Fact Standards',
+    content: '<p>LuxeMia separates supplier-provided product facts from general educational guidance. Missing optional facts are omitted rather than guessed.</p><h2>Product-fact verification</h2><p>Included pieces require explicit evidence. Availability, price and selected options come from current commerce data.</p><h2>Corrections</h2><p>Send the page URL and supporting source to hello@luxemia.shop.</p>',
+  },
+  {
+    path: '/review-policy',
+    title: 'Customer Review Policy | LuxeMia',
+    description: 'How LuxeMia requests, labels, moderates and publishes customer reviews without inventing or selectively rewriting them.',
+    h1: 'Customer Review Policy',
+    content: '<p>LuxeMia does not invent reviews or alter a customer’s meaning. Verified-purchase labels require a connection to a completed order.</p><h2>Moderation</h2><p>Privacy violations, unlawful content, abuse and spam may be removed. Critical reviews are not rejected simply because they are negative.</p>',
+  },
+  ...[
+    ['/shipping/united-states', 'Shipping Indian Clothing to the United States', '$14.99 USD below $199 USD and free standard shipping at $199 USD or more'],
+    ['/shipping/canada', 'Shipping Indian Clothing to Canada', '$24.99 USD below $299 USD and free standard shipping at $299 USD or more'],
+    ['/shipping/united-kingdom', 'Shipping Indian Clothing to the United Kingdom', '$24.99 USD below $299 USD and free standard shipping at $299 USD or more'],
+    ['/shipping/australia', 'Shipping Indian Clothing to Australia', '$29.99 USD below $349 USD and free standard shipping at $349 USD or more'],
+  ].map(([path, h1, rate]) => ({
+    path,
+    title: `${h1} | LuxeMia`,
+    description: `Current LuxeMia rate, processing, tracking, duties, returns and event-date guidance for ${h1.replace('Shipping Indian Clothing to ', '')}.`,
+    h1,
+    content: `<p>LuxeMia currently offers tracked standard shipping: ${rate}. The final checkout amount is the source of truth.</p><h2>Processing and carrier transit</h2><p>Processing occurs before dispatch. Carrier transit begins after dispatch, and estimates do not guarantee event-date delivery.</p><h2>Duties, taxes and fees</h2><p>Destination-country duties, taxes, brokerage or carrier fees may apply unless checkout expressly states otherwise.</p>`,
+  })),
+  {
+    path: '/festive-wear', title: 'Indian Festive Wear | LuxeMia', h1: 'Indian Festive Wear',
+    description: 'Shop Indian festive outfits for Navratri, Garba, Diwali and other celebrations.',
+    content: '<p>Browse celebration-focused outfits separately from bridal shopping, then confirm each item’s included pieces, stitching, size, processing and availability.</p><h2>Shop by celebration</h2><p><a href="/collections/navratri-outfits">Navratri and Garba outfits</a>, <a href="/collections/diwali-outfits">Diwali outfits</a>, and <a href="/menswear">festive menswear</a>.</p>',
+  },
+  {
+    path: '/indian-wedding-guest-outfits', title: 'Indian Wedding Guest Outfits | LuxeMia', h1: 'Indian Wedding Guest Outfits',
+    description: 'Compare sarees, lehengas, suits and menswear for Indian wedding guests.',
+    content: '<p>Choose by event, venue, dress guidance and comfort rather than one universal rule. Confirm expectations with the hosts when possible.</p><h2>Shop wedding guest styles</h2><p><a href="/collections/wedding-guest-outfits">Browse the wedding guest collection</a>.</p>',
+  },
+  {
+    path: '/wedding-events', title: 'Shop Outfits by Indian Wedding Event | LuxeMia', h1: 'Shop Outfits by Indian Wedding Event',
+    description: 'Find outfit guidance and collections for Mehendi, Haldi, Sangeet and reception events.',
+    content: '<p>Event pages organize current products by shopping intent, not universal dress rules. Hosts, region, religion, venue and family preferences can change what is appropriate.</p><h2>Browse events</h2><p><a href="/collections/mehendi-outfits">Mehendi</a>, <a href="/collections/haldi-outfits">Haldi</a>, and <a href="/collections/wedding-guest-outfits">Sangeet and reception</a>.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment', title: 'Shop Indian Outfits by Fulfillment | LuxeMia', h1: 'Shop Indian Outfits by Fulfillment',
+    description: 'Separate ready-to-ship, made-to-order and customizable Indian outfits before ordering.',
+    content: '<p>Fulfillment describes what happens before dispatch. Availability for sale alone does not prove immediate stock.</p><h2>Choose a fulfillment path</h2><p><a href="/shop-by-fulfillment/ready-to-ship">Ready to ship</a>, <a href="/shop-by-fulfillment/made-to-order">made to order</a>, or <a href="/shop-by-fulfillment/customizable-outfits">customizable outfits</a>.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment/ready-to-ship', title: 'Ready-to-Ship Indian Outfits | LuxeMia', h1: 'Ready-to-Ship Indian Outfits',
+    description: 'Shop items classified as stocked while confirming selected-variant availability and processing.',
+    content: '<p>Ready-to-ship removes the production stage for the selected item but still requires order processing before carrier transit.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment/made-to-order', title: 'Made-to-Order Indian Outfits | LuxeMia', h1: 'Made-to-Order Indian Outfits',
+    description: 'Understand production, measurements and timing for made-to-order Indian clothing.',
+    content: '<p>Made-to-order products begin production after an order is confirmed. Review stated customization, measurements and processing separately from carrier transit.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment/customizable-outfits', title: 'Customizable Indian Outfits | LuxeMia', h1: 'Customizable Indian Outfits',
+    description: 'Shop Indian outfits with only the customization options expressly supported by each listing.',
+    content: '<p>Customization is product-specific. Select only listed options and obtain confirmation for material fit or design requests before checkout.</p><h2>Shop verified options</h2><p><a href="/collections/customizable-indian-outfits">Browse customizable outfits</a> or use the <a href="/sizing-measurements-guide">measurement guide</a>.</p>',
+  },
+];
+
 // Route definitions with SEO metadata
 const routes = [
+  ...semanticCommerceRoutes,
   {
     path: '/',
     title: getIndexableRouteSeo('/').title,
