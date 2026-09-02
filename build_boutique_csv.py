@@ -336,7 +336,7 @@ def get_seo_title(name):
 def get_seo_description(name):
     description = (
         f"Shop {name} at LuxeMia. Review product photos, listed material, "
-        "sizing, price and availability. United States shipping only."
+        "sizing, price and availability. Shipping is available to seven countries."
     )
     if len(description) <= 160:
         return description

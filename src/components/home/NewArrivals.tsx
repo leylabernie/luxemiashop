@@ -8,6 +8,9 @@ import ProductCard from '@/components/ui/ProductCard';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
 const MAX_PER_CATEGORY = 5;
+const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
+  Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
+).toISOString().slice(0, 10)}'`;
 
 // These match the enriched productType values from useShopifyProducts
 const CATEGORIES = [
@@ -22,7 +25,7 @@ const CATEGORIES = [
 type CategoryKey = (typeof CATEGORIES)[number]['key'];
 
 export const NewArrivals = () => {
-  const { products, isLoading } = useShopifyProducts(undefined, true);
+  const { products, isLoading } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
 
   // 1. Filter to products within the 30-day window

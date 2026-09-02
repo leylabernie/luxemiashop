@@ -5,7 +5,7 @@ const services = [
   {
     icon: Truck,
     title: 'Tracked U.S. Shipping',
-    description: 'United States addresses only',
+    description: 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius',
   },
   {
     icon: ShieldCheck,

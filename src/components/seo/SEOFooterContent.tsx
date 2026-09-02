@@ -57,7 +57,7 @@ const SEOFooterContent = () => {
                   Shop <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry online</Link> at LuxeMia. 
                   Discover <strong className="text-foreground">kundan necklace sets</strong>, bridal jewelry, 
                   <strong className="text-foreground"> jhumka earrings</strong>, bangles, and maang tikka. 
-                  Perfect for weddings, festivals, and celebrations. Free U.S. shipping at $150 and above; $12 flat below that.
+                  Perfect for weddings, festivals, and celebrations. Free U.S. standard shipping at $199 and above; $14.99 below that.
                 </p>
               </div>
             </div>
@@ -108,7 +108,7 @@ const SEOFooterContent = () => {
             <div className="text-center mt-8 pt-6 border-t border-border/50">
               <h3 className="font-serif text-lg text-foreground mb-3">Why Choose LuxeMia?</h3>
               <p>
-                LuxeMia offers Indian ethnic clothing online for United States shoppers. Review each listing for its stated fabric or materials, included pieces, available sizes, stitching options, price, and current availability. We offer <strong className="text-foreground">free U.S. shipping at $150 and above and $12 flat below that</strong>, with support by WhatsApp, phone, and email for questions before ordering.
+                LuxeMia offers Indian ethnic clothing online for shoppers in seven countries. Review each listing for its stated fabric or materials, included pieces, available sizes, stitching options, price, and current availability. We offer <strong className="text-foreground">free U.S. standard shipping at $199 and above and $14.99 below that</strong>, with support by WhatsApp, phone, and email for questions before ordering.
                 <Link to="/about" className="text-foreground hover:text-primary transition-colors underline"> Read our story</Link> and discover
                 how LuxeMia presents Indian ethnic wear for weddings and celebrations.
               </p>

@@ -517,7 +517,7 @@ function enrichDescription(
     "Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering."
   );
   details.push(
-    "Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch."
+    "Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch."
   );
 
   return details.join(" ").slice(0, 5000);
@@ -714,7 +714,7 @@ async function handleRequest(req: Request): Promise<Response> {
 <channel>
   <title>LuxeMia - Indian Ethnic Wear</title>
   <link>${SITE_URL}</link>
-  <description>Current LuxeMia product listings with delivery to United States addresses only.</description>${items.join("\n")}
+  <description>Current LuxeMia product listings with delivery to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</description>${items.join("\n")}
 </channel>
 </rss>`;
 

@@ -4,6 +4,21 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/blog/attires",
+      "destination": "/blog/indian-wedding-guest-attire",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/motifs-embroideries",
+      "destination": "/blog/indian-textiles-and-embroidery",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-care",
+      "destination": "/blog/fit-sizing-and-garment-care",
+      "statusCode": 301
+    },
+    {
       "source": "/bestsellers",
       "destination": "/new-arrivals",
       "statusCode": 301

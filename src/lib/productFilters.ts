@@ -1,6 +1,8 @@
 import type { ShopifyProduct } from '@/lib/shopify';
 import type { Subcategory, FilterSection } from '@/config/categoryConfig';
 import { isProductSizeOptionName } from '@/lib/productOptionNames';
+import { rankCommercialProducts } from '@/lib/commercialProductRanking';
+import { isMadeToOrderProduct } from '@/lib/customizableProducts';
 
 /**
  * Product filter + sort + subcategory matching utilities.
@@ -256,14 +258,8 @@ export function applyProductFiltersV2(
           const variants = p.node.variants?.edges || [];
 
           if (valueLower.includes('ready')) {
-            const hasAvailable = variants.some(v => v.node.availableForSale);
-            const hasReadyTag = tags.some(tag => [
-              'ready to ship',
-              'ready-to-ship',
-              'availability:ready to ship',
-              'availability:ready-to-ship',
-            ].includes(tag));
-            return hasAvailable && hasReadyTag;
+            const hasAvailable = variants.some(v => v.node.availableForSale !== false);
+            return hasAvailable && !isMadeToOrderProduct(p.node.handle, p.node.tags);
           }
 
           if (valueLower.includes('available online')) {
@@ -271,9 +267,7 @@ export function applyProductFiltersV2(
           }
 
           if (valueLower.includes('made to order') || valueLower.includes('custom')) {
-            return tags.some(tag =>
-              tag.includes('made to order') || tag.includes('custom') || tag.includes('pre-order')
-            );
+            return isMadeToOrderProduct(p.node.handle, p.node.tags);
           }
 
           return false;
@@ -441,7 +435,7 @@ export const sortProducts = (
       break;
     case 'featured':
     default:
-      break;
+      return rankCommercialProducts(sorted);
   }
 
   return sorted;

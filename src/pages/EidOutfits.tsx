@@ -35,7 +35,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Do you ship Eid outfits to the United States?',
-    answer: 'LuxeMia ships Eid outfits to United States addresses only. Standard shipping is free at $150 and above and $12 below $150. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Eid outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $199 and above and $14.99 below $199. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'How do I confirm what comes with an outfit?',
@@ -71,7 +71,7 @@ const EidOutfits = () => {
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Eid Mubarak</span>
             <h1 className="font-serif text-3xl lg:text-5xl mb-4">Eid Outfits</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Browse currently available products explicitly marked in the catalog for Eid, Ramadan, or chikankari. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to United States addresses only.
+              Browse currently available products explicitly marked in the catalog for Eid, Ramadan, or chikankari. Each product page is the source of truth for fabric, work, included pieces, sizes, price, and availability. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.
             </p>
           </div>
         </div>
@@ -153,12 +153,12 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">Compare Current Prices</h3>
-                <p>Use the live price on each product page. U.S. standard shipping is $12 below $150 and free at $150 and above.</p>
+                <p>Use the live price on each product page. U.S. standard shipping is $14.99 below $199 and free at $199 and above.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to United States addresses only, with tracking after dispatch.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, with tracking after dispatch.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

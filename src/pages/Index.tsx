@@ -28,7 +28,7 @@ const LookbookTeaser = lazy(() => import('@/components/home/LookbookTeaser'));
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above."
+    answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order."
   },
   {
     question: "What is your return policy?",
@@ -47,8 +47,8 @@ const homepageFaqs = [
     answer: "We strive for accurate color representation in our product photography. However, slight color variations may occur due to screen settings and lighting. We recommend reviewing all available product images and descriptions."
   },
   {
-    question: "How much is US shipping?",
-    answer: "US shipping is free at $150 and above. Orders below $150 ship for a flat $12. Taxes, if applicable, are calculated at checkout."
+    question: "How much is U.S. shipping?",
+    answer: "U.S. standard shipping is $14.99 below $199 and free at $199 and above after discounts. Other countries use route-based rates shown on the Shipping page."
   },
   {
     question: "How can I get styling advice for a specific occasion?",
@@ -78,7 +78,7 @@ const Index = () => {
           <div className="container mx-auto grid max-w-7xl grid-cols-1 divide-y divide-white/15 px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-8">
             <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
               <Truck className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
-              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Thoughtful U.S. delivery</span>
+              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Tracked delivery to 7 countries</span>
             </div>
             <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
               <Sparkles className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
@@ -87,6 +87,30 @@ const Index = () => {
             <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
               <Heart className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
               <span className="text-xs uppercase tracking-[0.13em] text-white/85">Warm, personal styling help</span>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="shop-by-need-heading" className="border-b border-[#eaded6] bg-[#fffaf6] py-12 sm:py-16">
+          <div className="container mx-auto max-w-7xl px-5 sm:px-8">
+            <div className="max-w-2xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#a96f72]">Start with what matters most</p>
+              <h2 id="shop-by-need-heading" className="mt-3 font-serif text-3xl text-[#291f20] sm:text-4xl">A clearer way to find the right outfit.</h2>
+              <p className="mt-4 text-sm leading-7 text-[#665a59] sm:text-base">Shop by processing time, occasion, fit support or destination before comparing individual product details.</p>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { title: 'Need it sooner', copy: 'Products whose semi-stitched option has a verified 3–5 business-day processing window; stitched and made-to-measure options take longer.', href: '/ready-to-ship', cta: 'Shop ready to ship' },
+                { title: 'Shop the event', copy: 'Browse wedding, festive, reception, Navratri and guest-ready edits.', href: '/collections', cta: 'Explore collections' },
+                { title: 'Fit and customization', copy: 'See only the size, stitching or made-to-measure options stated on each listing.', href: '/collections/customizable-indian-outfits', cta: 'View custom options' },
+                { title: 'Know delivery costs', copy: 'Compare route-based rates, free-shipping thresholds, duties and timing.', href: '/shipping', cta: 'Review shipping' },
+              ].map((item) => (
+                <Link key={item.title} to={item.href} className="group rounded-sm border border-[#eaded6] bg-white p-6 transition-all hover:-translate-y-1 hover:border-[#c99591] hover:shadow-lg">
+                  <h3 className="font-serif text-xl text-[#291f20]">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#716563]">{item.copy}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#a96f72]">{item.cta} <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" /></span>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
@@ -127,7 +151,8 @@ const Index = () => {
                   alt={FEATURED_CATEGORY_PRODUCTS.sarees.alt}
                   width={680}
                   height={850}
-                  loading="eager"
+                  loading="lazy"
+                  fetchPriority="low"
                   decoding="async"
                   className="h-full w-full object-cover object-top"
                 />

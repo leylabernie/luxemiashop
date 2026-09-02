@@ -5,13 +5,13 @@
 const architecture = /* seo-architecture-json:start */ {
   "routes": {
     "/": {
-      "title": "Indian Ethnic Wear, Sarees & Lehengas USA | LuxeMia",
-      "description": "Shop LuxeMia Indian ethnic wear for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping.",
-      "h1": "LuxeMia Indian Ethnic Wear for U.S. Weddings & Celebrations"
+      "title": "LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA",
+      "description": "Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.",
+      "h1": "LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear"
     },
     "/lehengas": {
-      "title": "Bridal & Ready-to-Ship Lehengas USA | LuxeMia",
-      "description": "Shop bridal and wedding-guest lehengas online in the USA. Compare fabric, included pieces, sizing, availability and tracked U.S. shipping.",
+      "title": "Bridal & Wedding Lehengas Online USA | LuxeMia",
+      "description": "Shop bridal and wedding-guest lehengas online. Compare fabric, included pieces, stitching, sizing, availability and processing details.",
       "h1": "Bridal & Wedding Lehengas Online in the USA"
     },
     "/sarees": {
@@ -21,17 +21,17 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/suits": {
       "title": "Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia",
-      "description": "Shop salwar kameez, Anarkali, sharara and palazzo suits online. Compare fabric, included pieces, sizing and availability. Free U.S. shipping at $150+.",
+      "description": "Shop salwar kameez, Anarkali, sharara and palazzo suits. Compare fabric, included pieces, stitching, sizing, availability and processing details.",
       "h1": "Salwar Kameez & Indian Suits Online in the USA"
     },
     "/menswear": {
       "title": "Buy Sherwanis Online USA | Groom & Wedding | LuxeMia",
-      "description": "Shop sherwanis, kurta pajama and Indo-Western menswear online. Compare stated fabric, included pieces, sizes and availability. Free U.S. shipping at $150+.",
+      "description": "Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and processing details.",
       "h1": "Indian Wedding Menswear & Sherwanis Online in the USA"
     },
     "/jewelry": {
       "title": "Kundan Bridal Jewelry & Wedding Sets | LuxeMia",
-      "description": "Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, pieces and measurements. Free U.S. shipping at $150+.",
+      "description": "Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, included pieces, measurements and availability.",
       "h1": "Indian Bridal Jewelry Sets & Wedding Necklaces"
     },
     "/collections/bridal-lehengas": {

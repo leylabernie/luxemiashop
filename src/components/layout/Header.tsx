@@ -21,8 +21,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const shippingAnnouncements = [
-  'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.',
-  'Tracked U.S. shipping — $12 below $150 and free at $150+.',
+  'Free U.S. standard shipping at $199 and above. $14.99 below that. Tracking provided after dispatch.',
+  'Tracked U.S. shipping — $14.99 below $199 and free at $199+.',
 ];
 
 // Categories without a mega-menu use plain links.
@@ -38,7 +38,7 @@ const secondaryLinks = [
   { name: 'Customizable', href: '/collections/customizable-indian-outfits' },
   { name: 'Bridesmaids', href: '/collections/bridal-party-outfits' },
   { name: 'Bollywood-Inspired', href: '/collections/bollywood-inspired-indian-outfits' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'Guides', href: '/blog' },
 ];
 
 const weddingSareeLinks = [

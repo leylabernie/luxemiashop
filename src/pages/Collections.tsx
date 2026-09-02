@@ -102,7 +102,7 @@ const Collections = () => {
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
             <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
-              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. shipping at $150 and above.
+              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. standard shipping at $199 and above.
             </p>
           </motion.div>
         </section>
@@ -246,7 +246,7 @@ const Collections = () => {
           <h2 className="font-serif text-xl mb-4 text-center">Buy Indian Ethnic Wear Online</h2>
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-3 text-sm leading-relaxed text-center">
             <p>
-              LuxeMia is an online Indian ethnic-wear store for United States shoppers. Browse <strong>bridal and party-wear lehengas</strong>, <strong>silk and wedding sarees</strong>, <strong>Anarkali, sharara and gharara suits</strong>, sherwanis, and Indo-Western outfits.
+              LuxeMia is an online Indian ethnic-wear store for shoppers in seven countries. Browse <strong>bridal and party-wear lehengas</strong>, <strong>silk and wedding sarees</strong>, <strong>Anarkali, sharara and gharara suits</strong>, sherwanis, and Indo-Western outfits.
             </p>
             <p>
               Explore dedicated collections for <Link to="/collections/sharara-suits" className="underline underline-offset-2 hover:text-foreground">sharara suits</Link>, <Link to="/collections/gharara-suits" className="underline underline-offset-2 hover:text-foreground">gharara suits</Link>, <Link to="/collections/anarkali-suits" className="underline underline-offset-2 hover:text-foreground">Anarkali suits</Link>, <Link to="/collections/bridal-lehengas" className="underline underline-offset-2 hover:text-foreground">bridal lehengas</Link>, and <Link to="/collections/party-wear-lehengas" className="underline underline-offset-2 hover:text-foreground">party-wear lehengas</Link>.
@@ -255,7 +255,7 @@ const Collections = () => {
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
             </p>
             <p>
-              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to United States addresses only, with <strong>free U.S. standard shipping at $150 and above</strong> and a $12 rate below $150.
+              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, with <strong>free U.S. standard shipping at $199 and above</strong> and a $14.99 rate below $199.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

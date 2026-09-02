@@ -113,9 +113,9 @@ inspectJsonLd('shipping', shipping, true);
 const ready = readPrerender('/ready-to-ship');
 requireAll('ready-to-ship', ready, [
   'Ready-to-Ship Indian Ethnic Wear',
-  'semi-stitched option has a verified processing window of 3–5 business days',
-  'Ready-to-wear and made-to-measure selections take longer',
-  'Processing is the time before dispatch',
+  'Every purchasable LuxeMia catalog item is Ready to Ship',
+  'Custom Size, Custom Stitching or Made-to-Measure selection',
+  'Processing and carrier transit are separate',
   'View route-based rates',
 ]);
 inspectJsonLd('ready-to-ship', ready, true);
@@ -123,8 +123,8 @@ inspectJsonLd('ready-to-ship', ready, true);
 const readyProductLinks = new Set(
   [...ready.matchAll(/href="\/product\/([^"?]+)"/g)].map((match) => match[1]),
 );
-if (readyProductLinks.size !== 10) {
-  failures.push(`ready-to-ship must contain exactly 10 verified product links; found ${readyProductLinks.size}`);
+if (readyProductLinks.size < 40) {
+  failures.push(`ready-to-ship must contain at least 40 stocked product links; found ${readyProductLinks.size}`);
 }
 
 if (failures.length) {
@@ -133,4 +133,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`[built-trust] OK — ${allHtmlFiles.length} built HTML pages have aligned metadata, route-based shipping, 10 verified five-day Ready-to-Ship products and no false global return schema.`);
+console.log(`[built-trust] OK — ${allHtmlFiles.length} built HTML pages have aligned metadata, route-based shipping, stocked Ready-to-Ship versus Made-to-Order classification and no false global return schema.`);

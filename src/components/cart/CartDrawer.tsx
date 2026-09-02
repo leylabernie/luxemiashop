@@ -10,9 +10,10 @@ import {
   isRakshaBandhanCampaignActive,
   RAKSHA_BANDHAN_CAMPAIGN,
 } from '@/config/rakshaBandhanCampaign';
+import { SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
 
-const FREE_SHIPPING_THRESHOLD = 150;
-const SHIPPING_PROMISE = 'Complimentary U.S. shipping is available when the checkout subtotal after discounts is $150 or more; standard shipping is $12 below that.';
+const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
+const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -220,14 +221,14 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   {subtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
-                      Your current subtotal qualifies for free U.S. shipping
+                      Your current subtotal qualifies for free U.S. standard shipping
                     </div>
                   ) : (
                     <div className="mb-2">
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
                         <span className="flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5" />
-                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} away from complimentary U.S. shipping
+                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} away from free U.S. standard shipping
                         </span>
                         <span className="font-medium">${FREE_SHIPPING_THRESHOLD}</span>
                       </div>
@@ -274,7 +275,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   </div>
                   <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
                     <p>{SHIPPING_PROMISE}</p>
-                    <p className="mt-1">Discounts are applied before shipping eligibility. U.S. delivery only; taxes and final delivery options are calculated at checkout.</p>
+                    <p className="mt-1">Discounts are applied before shipping eligibility. Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.</p>
                   </div>
                   {unavailableItems.length > 0 && (
                     <p className="text-xs text-destructive text-center" role="alert">

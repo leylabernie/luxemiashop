@@ -77,8 +77,8 @@ interface SEOHeadProps {
 }
 
 const SEOHead = ({
-  title = 'Indian Ethnic Wear Online USA | Tracked Shipping | LuxeMia',
-  description = 'Shop Indian outfits for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping.',
+  title = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  description = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.',
   canonical,
   image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   type = 'website',
@@ -132,7 +132,7 @@ const SEOHead = ({
         description:
           (product.description && product.description.trim().length > 0)
             ? product.description
-            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with tracked United States shipping.`,
+            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with tracked shipping to seven supported countries.`,
         sku: product.sku || '',
         gtin: product.gtin,
         mpn: product.mpn,

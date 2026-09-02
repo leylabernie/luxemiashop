@@ -48,11 +48,11 @@ requireAll('src/components/cart/CartDrawer.tsx', [
   'Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.',
 ]);
 requireAll('src/config/seoArchitecture.ts', [
-  'Indian Wedding Sarees & Bridal Lehengas | LuxeMia',
+  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
   'tracked shipping to the USA, Canada, UK and other supported markets',
 ]);
 requireAll('src/config/seoArchitecture.json', [
-  'Indian Wedding Sarees & Bridal Lehengas | LuxeMia',
+  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
 ]);
 requireAll('src/lib/schema.ts', [
   "SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU']",
@@ -69,7 +69,7 @@ requireAll('scripts/prerender.js', [
   "...create('MU', 59.99)",
 ]);
 requireAll('index.html', [
-  'Indian Wedding Sarees &amp; Bridal Lehengas | LuxeMia',
+  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
   'https://luxemia.shop/#canada-uk-standard-shipping',
   'https://luxemia.shop/#australia-nz-standard-shipping',
   'https://luxemia.shop/#south-africa-standard-shipping',
@@ -78,6 +78,9 @@ requireAll('index.html', [
 ]);
 
 const blocked = [
+  /MerchantReturnPolicy/i,
+  /MerchantReturnNotPermitted/i,
+  /Glamour Indian Wear/i,
   /United States addresses only/i,
   /U\.S\. delivery only/i,
   /\$12[^\n]{0,80}(?:shipping|below \$150)/i,

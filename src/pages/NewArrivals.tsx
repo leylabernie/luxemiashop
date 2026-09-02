@@ -17,6 +17,9 @@ import { sortProducts } from '@/lib/productFilters';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
 const MAX_PER_CATEGORY = 5;
+const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
+  Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
+).toISOString().slice(0, 10)}'`;
 
 const CATEGORIES = [
   { key: 'all', label: 'All' },
@@ -37,7 +40,7 @@ const sortOptions = [
 ];
 
 const NewArrivals = () => {
-  const { products, isLoading } = useShopifyProducts(undefined, true);
+  const { products, isLoading } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
   const [sortBy, setSortBy] = useState('newest');
 
@@ -103,7 +106,7 @@ const NewArrivals = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
-        description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, co-ord sets, menswear and jewelry, with free U.S. shipping at $150 and above."
+        description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, co-ord sets, menswear and jewelry, with free U.S. standard shipping at $199 and above."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />
@@ -256,7 +259,7 @@ const NewArrivals = () => {
               This page shows products added to LuxeMia's online catalog during the past 30 days. Browse current <strong>lehengas</strong>, <strong>sarees</strong>, <strong>salwar kameez sets</strong>, <strong>menswear</strong> and <strong>jewelry</strong>, then open the exact listing for fabric, work, sizing, included pieces and availability.
             </p>
             <p>
-              Whether you are shopping for a <strong>festival outfit</strong>, a <strong>wedding guest look</strong> or a <strong>bridal outfit</strong>, compare the exact listing before ordering. <strong>Free U.S. shipping applies at $150 and above</strong>; shipping is $12 below that.
+              Whether you are shopping for a <strong>festival outfit</strong>, a <strong>wedding guest look</strong> or a <strong>bridal outfit</strong>, compare the exact listing before ordering. <strong>Free U.S. standard shipping applies at $199 and above</strong>; shipping is $14.99 below that.
             </p>
           </div>
         </div>

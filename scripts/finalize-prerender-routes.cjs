@@ -59,12 +59,12 @@ const shippingBlock = `  {
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia outfits with a verified semi-stitched processing window of up to five business days. Stitched and made-to-measure options take longer.',
+    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: \`
-      <p>Browse available products whose semi-stitched option has a verified processing window of 3–5 business days. Ready-to-wear and made-to-measure selections take longer. Ready to ship describes processing before dispatch; it does not mean delivery within five business days.</p>
-      <h2>Processing is the time before dispatch</h2>
-      <p>Carrier transit begins after the selected carrier accepts the parcel. Confirm the exact product option, size, included pieces and processing information before ordering for a fixed event date.</p>
+      <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
+      <h2>Stocked and custom selections are different</h2>
+      <p>Some stocked products also offer Custom Size, Custom Stitching or Made-to-Measure selections. Standard stocked selections remain Ready to Ship, while a custom selection requires the additional processing stated on the product page.</p>
       <h2>Shipping rates and timing</h2>
       <p><a href="/shipping">View route-based rates</a> for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
     \`,
@@ -102,7 +102,7 @@ updateFile(PRERENDER, (source) => {
     if (!output.includes(categoryFunctionMarker)) {
       throw new Error('[prerender-routes] Product category filter function was not found');
     }
-    const readyFilter = `function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {\n  if (category === 'ready-to-ship') {\n    return allProducts\n      .filter((product) => product.availableForSale !== false)\n      .filter((product) => {\n        const days = getListedProductAttributes(product).shipsWithinDays;\n        return Number.isFinite(days) && days >= 1 && days <= 5;\n      })\n      .slice(0, maxProducts);\n  }\n`;
+    const readyFilter = `function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {\n  if (category === 'ready-to-ship') {\n    return allProducts\n      .filter((product) => product.availableForSale !== false)\n      .filter((product) => !isMadeToOrderProduct(product))\n      .slice(0, maxProducts);\n  }\n`;
     output = output.replace(categoryFunctionMarker, readyFilter);
   }
 
@@ -122,7 +122,7 @@ updateFile(PRERENDER, (source) => {
 
 for (const [file, required] of [
   [ROUTE_GENERATOR, ["'/ready-to-ship'", "'/shipping'", "'/pages/shipping-customs'"]],
-  [PRERENDER, ["path: '/ready-to-ship'", "category === 'ready-to-ship'", 'days <= 5', 'semi-stitched processing window', '$24.99', '$59.99']],
+  [PRERENDER, ["path: '/ready-to-ship'", "category === 'ready-to-ship'", '!isMadeToOrderProduct(product)', 'Purchasable catalog items are ready to ship', '$24.99', '$59.99']],
 ]) {
   const source = fs.readFileSync(file, 'utf8');
   for (const value of required) {

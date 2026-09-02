@@ -55,6 +55,19 @@ const CUSTOMIZABLE_PRODUCTS = JSON.parse(
 const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
   CUSTOMIZABLE_PRODUCTS.map((product) => [product.handle, product])
 );
+const PRERENDER_MADE_TO_ORDER_TAGS = new Set([
+  'made to order',
+  'availability:made to order',
+  'custom-made',
+]);
+
+function isMadeToOrderProduct(product) {
+  if (!product) return false;
+  if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) return true;
+  return (product.tags || []).some((tag) =>
+    PRERENDER_MADE_TO_ORDER_TAGS.has(String(tag).trim().toLowerCase())
+  );
+}
 const RETIRED_PRODUCT_HANDLES = new Set(
   JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/legacyGoneProductHandles.json'), 'utf8'))
 );
@@ -142,6 +155,7 @@ async function loadTsModule(relativeSrcPath) {
   }
 }
 const FALLBACK_CURRENCY = 'USD';
+let rankCommercialProducts = (products) => [...products];
 
 function normalizeWhitespace(value) {
   return value.replace(/\s+/g, ' ').trim();
@@ -153,21 +167,21 @@ function sanitizeProductCopy(value) {
     // facts, structured data, or customer-facing copy.
     .replace(/\s*Shipping:\s*5-day express delivery to USA and Canada[\s\S]*$/gi, '')
     .replace(/\s*FAQQ\s*:[\s\S]*$/gi, '')
-    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $12 below $150 and free at $150 and above')
-    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard shipping is free at $150 and above and $12 below $150')
-    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. shipping at $150 and above')
-    .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $150 and above')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
+    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'U.S. standard shipping is free at $199 and above and $14.99 below $199')
+    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. standard shipping at $199 and above')
+    .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $199 and above')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. standard shipping at $199 and above. $14.99 below $199. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to the seven supported destination countries via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Current U.S. rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Current U.S. rates and services are shown at checkout')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Current U.S. rates and services are shown at checkout')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
-    .replace(/ready[- ]to[- ]ship/gi, 'available online')
+    .replace(/ready[- ]to[- ]ship/gi, 'Ready to Ship')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
     .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
+    .replace(/the seven supported destination countries/gi, 'the United States')
     .replace(/free shipping on orders over \$350/gi, 'current U.S. shipping shown at checkout');
 }
 
@@ -237,6 +251,29 @@ function getLabeledListingFact(description, labels) {
   return cleanVerifiedFact(plainMatch?.[1]);
 }
 
+function inferIncludedPiecesFromTitle(productTitle = '', tags = []) {
+  const title = String(productTitle || '').replace(/\s+/g, ' ').trim();
+  if (!title) return undefined;
+
+  const normalizedTags = (tags || []).map((tag) => String(tag).trim().toLowerCase());
+  const hasThreePieceEvidence = /\b(?:three|3)[-\s]?piece\b/i.test(title)
+    || normalizedTags.some((tag) => /^(?:three|3)[-\s]?piece(?:\s+suit|\s+set)?$/.test(tag));
+  const hasDupatta = /\bwith\b[^|,;]{0,48}\bdupatta\b/i.test(title);
+
+  if (hasThreePieceEvidence && hasDupatta && /\bpalazzo\b/i.test(title)) return 'Tunic, palazzo pants, and dupatta';
+  if (hasThreePieceEvidence && hasDupatta && /\bsharara\b/i.test(title)) return 'Tunic, sharara pants, and dupatta';
+  if (hasThreePieceEvidence && hasDupatta && /\bgharara\b/i.test(title)) return 'Tunic, gharara pants, and dupatta';
+  if (hasDupatta && /\bsalwar\s+kameez\b/i.test(title)) return 'Kameez, salwar pants, and dupatta';
+  if (hasThreePieceEvidence && hasDupatta && /\b(?:salwar\s+)?suit\b/i.test(title)) return 'Tunic, pants, and dupatta';
+  if (hasDupatta && /\blehenga\s+choli\b/i.test(title)) return 'Lehenga, choli, and dupatta';
+  if (hasDupatta && /\blehenga\b/i.test(title)) return 'Lehenga and dupatta';
+  if (/\bsaree\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bblouse\s+(?:piece|fabric|material)\b/i.test(title)) return 'Saree and blouse fabric';
+  if (/\bsherwani\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bstole\b/i.test(title)) return 'Sherwani and stole';
+  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bvest\b/i.test(title)) return 'Kurta, pajama pants, and vest';
+  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bjacket\b/i.test(title)) return 'Kurta, pajama pants, and jacket';
+  return undefined;
+}
+
 function getExplicitIncludedPieces(product) {
   const fromTag = (product?.tags || []).find((tag) => /^(?:included|included pieces|pieces|set includes|package includes):/i.test(String(tag)));
   if (fromTag) {
@@ -247,6 +284,8 @@ function getExplicitIncludedPieces(product) {
   const listingText = textFromListing(product?.description);
   if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
   const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
+  const titleBackedPieces = inferIncludedPiecesFromTitle(product?.title, product?.tags || []);
+  if (titleBackedPieces) return titleBackedPieces;
   const parsed = cleanVerifiedFact(explicit?.[1]);
   if (!parsed) return undefined;
 
@@ -255,10 +294,10 @@ function getExplicitIncludedPieces(product) {
   // product component when it names an actual garment/accessory and contains
   // no commercial-service language.
   if (/\$|\b(?:approved|price|pricing|fee|charge|service|shipping|delivery|return|refund|tier)\b/i.test(parsed)) {
-    return undefined;
+    return titleBackedPieces;
   }
   if (!/\b(?:blouse|choli|lehenga|skirt|dupatta|saree|fabric|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?|bracelet|ring|tikka|purse|potli)\b/i.test(parsed)) {
-    return undefined;
+    return titleBackedPieces;
   }
   return parsed;
 }
@@ -362,7 +401,7 @@ function buildVerifiedProductCopy(product) {
   if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
     const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product.handle);
     return normalizeWhitespace(
-      `${getCustomProductDescription(matched.title)} ${styleReferenceCopy} Checkout accepts United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`,
+      `${getCustomProductDescription(matched.title)} ${styleReferenceCopy} Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.`,
     );
   }
 
@@ -374,7 +413,7 @@ function buildVerifiedProductCopy(product) {
     : '';
   if (sourceVerifiedDescription.length >= 80) {
     return normalizeWhitespace(
-      `${styleReferenceCopy} ${sourceVerifiedDescription} Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.`,
+      `${styleReferenceCopy} ${sourceVerifiedDescription} Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.`,
     );
   }
 
@@ -399,7 +438,7 @@ function buildVerifiedProductCopy(product) {
 
   parts.push(
     'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'Shipping is available to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.'
+    'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.'
   );
 
   return normalizeWhitespace(parts.join(' '));
@@ -775,10 +814,16 @@ function matchesOccasionProduct(product, occasion) {
 }
 
 function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {
+  if (category === 'ready-to-ship') {
+    return allProducts
+      .filter((product) => product.availableForSale !== false)
+      .filter((product) => !isMadeToOrderProduct(product))
+      .slice(0, MAX_COLLECTION_PRODUCTS);
+  }
   if (category === 'customizable') {
     return allProducts
       .filter((product) => product.availableForSale !== false)
-      .filter((product) => CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle))
+      .filter((product) => isMadeToOrderProduct(product))
       .slice(0, maxProducts);
   }
 
@@ -1218,36 +1263,32 @@ function generateApprovedProductDirectoryHtml(products) {
 // Add a handling window only when custom.ships_within supplies a positive day
 // count. Carrier transit remains omitted because it varies by destination.
 function generateUsProductShippingDetails(shipsWithinDays) {
-  const handlingDays = Number.isFinite(shipsWithinDays) && shipsWithinDays > 0
-    ? Math.trunc(shipsWithinDays)
-    : null;
-  const deliveryTime = handlingDays
-    ? {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: {
-          '@type': 'QuantitativeValue',
-          minValue: 0,
-          maxValue: handlingDays,
-          unitCode: 'DAY',
-        },
-      }
-    : null;
-
-  return [
-    {
+  const handlingDays = Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
+  const deliveryTime = handlingDays ? {
+    '@type': 'ShippingDeliveryTime',
+    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
+  } : null;
+  const withTime = (details) => ({ ...details, ...(deliveryTime ? { deliveryTime } : {}) });
+  const create = (countries, rate, freeThreshold) => [
+    withTime({
       '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-      orderValue: { '@type': 'MonetaryAmount', maxValue: 149.99, currency: 'USD' },
-      shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
-      ...(deliveryTime ? { deliveryTime } : {}),
-    },
-    {
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+      ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
+      shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
+    }),
+    ...(freeThreshold ? [withTime({
       '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-      orderValue: { '@type': 'MonetaryAmount', minValue: 150, currency: 'USD' },
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+      orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
       shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-      ...(deliveryTime ? { deliveryTime } : {}),
-    },
+    })] : []),
+  ];
+  return [
+    ...create('US', 14.99, 199),
+    ...create(['CA', 'GB'], 24.99, 299),
+    ...create(['AU', 'NZ'], 29.99, 349),
+    ...create('ZA', 49.99),
+    ...create('MU', 59.99),
   ];
 }
 
@@ -1306,7 +1347,6 @@ function generateItemListJsonLd(products, category, routePath) {
           availability,
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': `${SITE_URL}/#org` },
-          hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
           shippingDetails: generateUsProductShippingDetails(shipsWithinDays),
         },
       },
@@ -1333,7 +1373,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'Where does LuxeMia ship?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'LuxeMia ships to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.',
+        text: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
       },
     },
     {
@@ -1357,7 +1397,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'What is LuxeMia’s return policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.',
+        text: 'Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours with supporting evidence.',
       },
     },
     {
@@ -1392,15 +1432,87 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
   ],
 };
 
+const semanticCommerceRoutes = [
+  {
+    path: '/us-support',
+    title: 'U.S.-Based Online Customer Support | LuxeMia',
+    description: 'Contact LuxeMia for product, sizing, order and issue-reporting support from its U.S.-based online retail team.',
+    h1: 'U.S.-Based Online Customer Support',
+    content: '<p>LuxeMia is an online-only retailer. Contact support by email, phone, WhatsApp or the contact form for product, sizing and order questions.</p><h2>Before ordering</h2><p>Share the product link, destination, selected option, measurements and event date. Support can clarify published details but cannot guarantee event-date delivery.</p><h2>Issue escalation</h2><p>Report damage, defects, a materially misdescribed item, an incorrect item or missing pieces promptly. The 48-hour evidence request does not remove rights that cannot legally be excluded.</p>',
+  },
+  {
+    path: '/editorial-policy',
+    title: 'Editorial Policy and Product-Fact Standards | LuxeMia',
+    description: 'How LuxeMia sources, reviews, dates and corrects product information and Indian attire guides.',
+    h1: 'Editorial Policy and Product-Fact Standards',
+    content: '<p>LuxeMia separates supplier-provided product facts from general educational guidance. Missing optional facts are omitted rather than guessed.</p><h2>Product-fact verification</h2><p>Included pieces require explicit evidence. Availability, price and selected options come from current commerce data.</p><h2>Corrections</h2><p>Send the page URL and supporting source to hello@luxemia.shop.</p>',
+  },
+  {
+    path: '/review-policy',
+    title: 'Customer Review Policy | LuxeMia',
+    description: 'How LuxeMia requests, labels, moderates and publishes customer reviews without inventing or selectively rewriting them.',
+    h1: 'Customer Review Policy',
+    content: '<p>LuxeMia does not invent reviews or alter a customer’s meaning. Verified-purchase labels require a connection to a completed order.</p><h2>Moderation</h2><p>Privacy violations, unlawful content, abuse and spam may be removed. Critical reviews are not rejected simply because they are negative.</p>',
+  },
+  ...[
+    ['/shipping/united-states', 'Shipping Indian Clothing to the United States', '$14.99 USD below $199 USD and free standard shipping at $199 USD or more'],
+    ['/shipping/canada', 'Shipping Indian Clothing to Canada', '$24.99 USD below $299 USD and free standard shipping at $299 USD or more'],
+    ['/shipping/united-kingdom', 'Shipping Indian Clothing to the United Kingdom', '$24.99 USD below $299 USD and free standard shipping at $299 USD or more'],
+    ['/shipping/australia', 'Shipping Indian Clothing to Australia', '$29.99 USD below $349 USD and free standard shipping at $349 USD or more'],
+  ].map(([path, h1, rate]) => ({
+    path,
+    title: `${h1} | LuxeMia`,
+    description: `Current LuxeMia rate, processing, tracking, duties, returns and event-date guidance for ${h1.replace('Shipping Indian Clothing to ', '')}.`,
+    h1,
+    content: `<p>LuxeMia currently offers tracked standard shipping: ${rate}. The final checkout amount is the source of truth.</p><h2>Processing and carrier transit</h2><p>Processing occurs before dispatch. Carrier transit begins after dispatch, and estimates do not guarantee event-date delivery.</p><h2>Duties, taxes and fees</h2><p>Destination-country duties, taxes, brokerage or carrier fees may apply unless checkout expressly states otherwise.</p>`,
+  })),
+  {
+    path: '/festive-wear', title: 'Indian Festive Wear | LuxeMia', h1: 'Indian Festive Wear',
+    description: 'Shop Indian festive outfits for Navratri, Garba, Diwali and other celebrations.',
+    content: '<p>Browse celebration-focused outfits separately from bridal shopping, then confirm each item’s included pieces, stitching, size, processing and availability.</p><h2>Shop by celebration</h2><p><a href="/collections/navratri-outfits">Navratri and Garba outfits</a>, <a href="/collections/diwali-outfits">Diwali outfits</a>, and <a href="/menswear">festive menswear</a>.</p>',
+  },
+  {
+    path: '/indian-wedding-guest-outfits', title: 'Indian Wedding Guest Outfits | LuxeMia', h1: 'Indian Wedding Guest Outfits',
+    description: 'Compare sarees, lehengas, suits and menswear for Indian wedding guests.',
+    content: '<p>Choose by event, venue, dress guidance and comfort rather than one universal rule. Confirm expectations with the hosts when possible.</p><h2>Shop wedding guest styles</h2><p><a href="/collections/wedding-guest-outfits">Browse the wedding guest collection</a>.</p>',
+  },
+  {
+    path: '/wedding-events', title: 'Shop Outfits by Indian Wedding Event | LuxeMia', h1: 'Shop Outfits by Indian Wedding Event',
+    description: 'Find outfit guidance and collections for Mehendi, Haldi, Sangeet and reception events.',
+    content: '<p>Event pages organize current products by shopping intent, not universal dress rules. Hosts, region, religion, venue and family preferences can change what is appropriate.</p><h2>Browse events</h2><p><a href="/collections/mehendi-outfits">Mehendi</a>, <a href="/collections/haldi-outfits">Haldi</a>, and <a href="/collections/wedding-guest-outfits">Sangeet and reception</a>.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment', title: 'Shop Indian Outfits by Fulfillment | LuxeMia', h1: 'Shop Indian Outfits by Fulfillment',
+    description: 'Separate ready-to-ship, made-to-order and customizable Indian outfits before ordering.',
+    content: '<p>Fulfillment describes what happens before dispatch. Availability for sale alone does not prove immediate stock.</p><h2>Choose a fulfillment path</h2><p><a href="/shop-by-fulfillment/ready-to-ship">Ready to ship</a>, <a href="/shop-by-fulfillment/made-to-order">made to order</a>, or <a href="/shop-by-fulfillment/customizable-outfits">customizable outfits</a>.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment/ready-to-ship', title: 'Ready-to-Ship Indian Outfits | LuxeMia', h1: 'Ready-to-Ship Indian Outfits',
+    description: 'Shop items classified as stocked while confirming selected-variant availability and processing.',
+    content: '<p>Ready-to-ship removes the production stage for the selected item but still requires order processing before carrier transit.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment/made-to-order', title: 'Made-to-Order Indian Outfits | LuxeMia', h1: 'Made-to-Order Indian Outfits',
+    description: 'Understand production, measurements and timing for made-to-order Indian clothing.',
+    content: '<p>Made-to-order products begin production after an order is confirmed. Review stated customization, measurements and processing separately from carrier transit.</p>',
+  },
+  {
+    path: '/shop-by-fulfillment/customizable-outfits', title: 'Customizable Indian Outfits | LuxeMia', h1: 'Customizable Indian Outfits',
+    description: 'Shop Indian outfits with only the customization options expressly supported by each listing.',
+    content: '<p>Customization is product-specific. Select only listed options and obtain confirmation for material fit or design requests before checkout.</p><h2>Shop verified options</h2><p><a href="/collections/customizable-indian-outfits">Browse customizable outfits</a> or use the <a href="/sizing-measurements-guide">measurement guide</a>.</p>',
+  },
+];
+
 // Route definitions with SEO metadata
 const routes = [
+  ...semanticCommerceRoutes,
   {
     path: '/',
     title: getIndexableRouteSeo('/').title,
     description: getIndexableRouteSeo('/').description,
     h1: getIndexableRouteSeo('/').h1,
     content: `
-      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to United States addresses only. Browse Indian wedding guest outfits with U.S.-based support.</p>
+      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Browse Indian wedding guest outfits with U.S.-based support.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
@@ -1422,7 +1534,7 @@ const routes = [
         <li><a href="/collections">Festive Wear</a></li>
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
-      <p>Free U.S. shipping at $150 and above. $12 flat below that. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <p>Free U.S. standard shipping at $199 and above. $14.99 below $199. Tracking details are emailed when the shipping label is created for dispatch.</p>
     `,
   },
   {
@@ -1495,9 +1607,9 @@ const routes = [
     description: getIndexableRouteSeo('/lehengas').description,
     h1: getIndexableRouteSeo('/lehengas').h1,
     content: `
-      <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter only for listings explicitly tagged that way, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
+      <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter for stocked non-custom products, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
       <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
-      <p>The Ready to Ship availability filter requires an explicit catalog tag and an available variant. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
+      <p>The Ready to Ship availability filter includes purchasable products unless Shopify identifies them as Made to Order or Made to Measure. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
       <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
       <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
       <h2>Shop Lehengas by Occasion</h2>
@@ -1806,20 +1918,20 @@ const routes = [
       </ol>
       <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
       <h2>Current shipping availability</h2>
-      <p>Checkout accepts United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Applicable taxes are calculated at checkout.</p>
+      <p>Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Applicable taxes are calculated at checkout.</p>
       <p><a href="/contact">Contact LuxeMia</a> | <a href="/sizing-measurements-guide">Measurement guide</a> | <a href="/returns">Returns policy</a></p>
     `,
   },
   {
     path: '/products',
     title: 'All Products | Shop Indian Ethnic Wear Online | LuxeMia',
-    description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free U.S. shipping at $150 and above.',
+    description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free U.S. standard shipping at $199 and above.',
     h1: 'All Products',
     content: `
-      <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free US shipping at $150 and above.</p>
+      <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free U.S. standard shipping at $199 and above.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Pieces ship with tracking to United States addresses only. U.S. standard shipping is free at $150 and above and $12 below $150.</p>
+      <p>Pieces ship with tracking to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199.</p>
     `,
   },
   {
@@ -1833,7 +1945,7 @@ const routes = [
       <p>Use the product grid to compare current styles, then open the exact listing to confirm the supplied fabric, work, included pieces, measurements and selected option. A category label does not confirm the construction or contents of every design.</p>
       <h3>Plan for a Wedding Date</h3>
       <p>For an event with a fixed date, review the selected product details and current policy information before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and <a href="/shipping">U.S. shipping information</a> for planning details.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/sharara-suits',
@@ -1846,7 +1958,7 @@ const routes = [
       <p>Use the current product grid to compare color, stated fabric, embroidery or work, price and available options. Open the exact listing to confirm the supplied kurti, bottoms, dupatta, lining, size and current availability rather than assuming every set includes the same pieces.</p>
       <h3>Size and Event Planning</h3>
       <p>For a time-sensitive celebration, compare your measurements with the selected listing before ordering. See the <a href="/size-guide">size guide</a>, <a href="/shipping">U.S. shipping information</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/gharara-suits',
@@ -1859,7 +1971,7 @@ const routes = [
       <p>Compare currently listed colors, fabrics, work and price, then confirm the supplied included pieces, size options and availability on the individual product page. Product details—not a style name alone—are the reliable specification for every outfit.</p>
       <h3>Size and Delivery Planning</h3>
       <p>For a fixed event date, compare your measurements with the selected listing before ordering. Review the <a href="/size-guide">size guide</a>, <a href="/shipping">U.S. shipping information</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/anarkali-suits',
@@ -1872,7 +1984,7 @@ const routes = [
       <p>Compare current colors, stated fabric, embroidery or work, price and available options in the product grid. Confirm whether the selected set includes a dupatta, bottoms or lining, plus the listed size and current availability.</p>
       <h3>Plan for a Wedding or Celebration</h3>
       <p>For an event with a fixed date, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and browse <a href="/suits">all current suits</a> for additional styles.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/party-wear-lehengas',
@@ -1885,7 +1997,7 @@ const routes = [
       <p>Use the product grid to compare currently listed styles, then open the selected product page to confirm its supplied fabric, embroidery or work, included pieces, measurements and available option. Do not assume construction or package contents from the category alone.</p>
       <h3>Plan for a Reception or Festive Event</h3>
       <p>For a time-sensitive event, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/lehengas">all current lehengas</a> to compare styles.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/wedding-sarees',
@@ -1898,7 +2010,7 @@ const routes = [
       <p>Use the current product grid to compare wedding and bridal sarees, then verify the selected listing’s fabric wording, blouse material or blouse details, available option and current availability. A category label does not confirm that every saree has the same construction or included pieces.</p>
       <h3>Plan Size and Delivery for a Wedding Event</h3>
       <p>Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. Review <a href="/shipping">U.S. shipping information</a> and browse <a href="/sarees">all current sarees</a> for additional comparison.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/designer-sarees',
@@ -1911,7 +2023,7 @@ const routes = [
       <p>Use the product grid to compare currently listed colors, stated fabric, embroidery or work, price and available options. Open the selected listing to verify its blouse details, dimensions, included pieces and current availability before ordering.</p>
       <h3>Plan for a Reception or Celebration</h3>
       <p>For a fixed event date, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/sarees">all current sarees</a> to compare styles.</p>
-      <p>Free U.S. standard shipping applies at $150 and above; shipping is $12 below that threshold.</p>`,
+      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
     path: '/collections/reception-outfits',
@@ -1978,7 +2090,7 @@ const routes = [
     schemas: [FAQ_PAGE_SCHEMA],
     content: `<p>Find answers to common questions about LuxeMia orders, shipping, final-sale terms, covered order issues, sizing, product details and payment.</p>
       <h2>Where does LuxeMia ship?</h2>
-      <p>LuxeMia ships to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.</p>
       <h2>How long does LuxeMia shipping take?</h2>
       <p>In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.</p>
       <h2>How should I choose a LuxeMia size?</h2>
@@ -1991,24 +2103,57 @@ const routes = [
   },
   {
     path: '/shipping',
-    title: 'U.S. Shipping Policy | Rates & Tracking | LuxeMia',
-    description: 'LuxeMia ships to United States addresses only. Review current rates, timing, tracking and checkout guidance.',
-    h1: 'Shipping Policy',
-    content: '<h2>Shipping destination</h2><p>LuxeMia ships to United States addresses only.</p><h2>Rates</h2><p>U.S. standard shipping is free when the checkout subtotal after discounts is $150 or more and costs $12 below $150. Checkout shows the final available service and charge.</p><h2>Timing</h2><p>Standard delivery is generally estimated at 4–30 business days, including handling and transit. Product, tailoring, destination, and carrier conditions can change the estimate.</p>',
+    title: 'Shipping Policy & International Rates | LuxeMia',
+    description: 'Review tracked shipping rates for seven countries, plus processing, carrier transit, customs, duties, tracking and event-date guidance.',
+    h1: 'Shipping Policy & International Rates',
+    content: `
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. Processing time happens before carrier transit, and checkout shows the final available service and converted amount where supported.</p>
+      <h2>Standard shipping rates</h2>
+      <h3>United States</h3>
+      <ul><li>$14.99 below $199</li><li>Free standard shipping at $199 and above</li></ul>
+      <h3>Canada and the United Kingdom</h3>
+      <ul><li>$24.99 below $299</li><li>Free standard shipping at $299 and above</li></ul>
+      <h3>Australia and New Zealand</h3>
+      <ul><li>$29.99 below $349</li><li>Free standard shipping at $349 and above</li></ul>
+      <h3>South Africa</h3><p>$49.99 per order.</p>
+      <h3>Mauritius</h3><p>$59.99 per order.</p>
+      <h2>Processing and carrier transit</h2>
+      <p>Processing is the time before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Review the exact product page for published processing information and contact LuxeMia before ordering for a fixed event date.</p>
+      <h2>Carriers, consolidation and express service</h2>
+      <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
+      <h2>Customs and duties</h2>
+      <p>Orders outside the United States may incur duties, taxes, brokerage or carrier fees unless checkout or a written quote explicitly states that they are included.</p>
+    `,
+  },
+  {
+    path: '/ready-to-ship',
+    category: 'ready-to-ship',
+    title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
+    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.',
+    h1: 'Ready-to-Ship Indian Ethnic Wear',
+    content: `
+      <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
+      <h2>Stocked and custom selections are different</h2>
+      <p>Some stocked products also offer Custom Size, Custom Stitching or Made-to-Measure selections. Standard stocked selections remain Ready to Ship, while a custom selection requires the additional processing stated on the product page.</p>
+      <h2>Shipping rates and timing</h2>
+      <p><a href="/shipping">View route-based rates</a> for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
+    `,
   },
   {
     path: '/pages/shipping-customs',
-    title: 'U.S. Shipping & Taxes | LuxeMia',
-    description: 'Shipping and tax guidance for LuxeMia customers in the United States.',
-    h1: 'U.S. Shipping & Taxes',
+    title: 'International Shipping, Duties & Customs | LuxeMia',
+    description: 'Review international shipping, duties, customs, brokerage and tracking guidance for all seven LuxeMia destination countries.',
+    h1: 'International Shipping, Duties & Customs',
     content: `
-      <p>LuxeMia ships to United States addresses only.</p>
-      <h2>How much is shipping?</h2>
-      <p>U.S. standard shipping is free when the checkout subtotal after discounts is $150 or more and costs $12 below that. Checkout controls the final available service and charge.</p>
-      <h2>How are taxes handled?</h2>
-      <p>Taxes collected by LuxeMia, if applicable, are calculated during checkout.</p>
+      <p>Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
+      <h2>Duties, taxes and brokerage</h2>
+      <p>International orders may be assessed customs duties, import taxes, value-added tax, brokerage or carrier processing fees. These charges are the customer’s responsibility unless checkout or a written LuxeMia quote explicitly states that they are included.</p>
+      <h2>Carrier routing</h2>
+      <p>LuxeMia may compare qualified carriers and consolidation services by destination, parcel weight, dimensions, customs requirements and cost. A standard rate does not guarantee a particular carrier.</p>
+      <h2>Processing and delivery</h2>
+      <p>Processing time occurs before dispatch. Carrier transit begins after acceptance by the carrier. Delivery estimates are not guarantees unless LuxeMia confirms a guaranteed date in writing.</p>
       <h2>Questions?</h2>
-      <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a shipping or checkout detail is unclear, or read the <a href="/shipping">Shipping Policy</a>.</p>
+      <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a customs, timing or checkout detail is unclear, or review the <a href="/shipping">Shipping Policy</a>.</p>
     `,
   },
   {
@@ -2048,55 +2193,55 @@ const routes = [
     title: 'About LuxeMia — Indian Ethnic Wear Online',
     description: 'Learn about LuxeMia, an online Indian ethnic wear store with clear product details, U.S.-based support, and tracked U.S. shipping.',
     h1: 'About LuxeMia',
-    content: '<p>LuxeMia is an online Indian ethnic wear store shipping to United States addresses only. Product pages explain the available fabric, work, stitching status, sizing, and package contents for each listing.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
+    content: '<p>LuxeMia is an online Indian ethnic wear store shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Product pages explain the available fabric, work, stitching status, sizing, and package contents for each listing.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
   },
 
   {
     path: '/new-arrivals',
     category: 'all',
     title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
-    description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. shipping at $150 and above.",
+    description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. standard shipping at $199 and above.",
     h1: 'New Arrivals',
     content: `
-      <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry with shipping to United States addresses only.</p>
+      <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p>
       <h2>What is new at LuxeMia?</h2>
       <p>This collection brings together LuxeMia's latest wedding, reception, festival, and special-occasion styles so shoppers can find newly added pieces in one place.</p>
-      <p>Free U.S. shipping is available at $150 and above, with $12 flat-rate shipping below $150. Tracking is provided after dispatch.</p>
+      <p>Free U.S. standard shipping is available at $199 and above, with $14.99 shipping below $199. Tracking is provided after dispatch.</p>
     `,
   },
   {
     path: '/indowestern',
     category: 'indowestern',
     title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
-    description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free U.S. shipping at $150 and above.',
+    description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free U.S. standard shipping at $199 and above.',
     h1: 'Indo-Western Collection',
     content: `
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>
       <h2>Fusion Style</h2>
       <p>Our Indo-Western collection blends the elegance of Indian craftsmanship with contemporary global fashion. Think asymmetrical hemlines, cape-style dupattas, dhoti pants paired with crop tops, and jacket-style anarkalis.</p>
-      <p>Compare Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. Free U.S. shipping applies at $150 and above.</p>
+      <p>Compare Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. Free U.S. standard shipping applies at $199 and above.</p>
     `,
   },
   {
     path: '/nri',
     title: 'Indian Ethnic Wear Online for U.S. Shoppers | LuxeMia',
-    description: 'Shop Indian ethnic wear online for delivery to United States addresses. Compare exact product details, sizing and availability. Free U.S. shipping at $150 and above.',
+    description: 'Shop Indian ethnic wear online for delivery to United States addresses. Compare exact product details, sizing and availability. Free U.S. standard shipping at $199 and above.',
     h1: 'Indian Ethnic Wear Online for U.S. Shoppers',
     content: `
       <p>Browse lehengas, sarees, salwar kameez, menswear and jewelry available online for delivery to United States addresses.</p>
       <h2>Shipping to the United States</h2>
-      <p>Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Review each product page for exact sizing, tailoring options and availability.</p>
+      <p>Shipping is free at $199 and above and costs $14.99 below $199. Tracking is provided after dispatch. Review each product page for exact sizing, tailoring options and availability.</p>
     `,
   },
   {
     path: '/indian-ethnic-wear-usa',
     title: 'Indian Ethnic Wear Online in the USA | LuxeMia',
-    description: 'Shop lehengas, sarees, salwar kameez, menswear and jewelry online for U.S. delivery. Free shipping at $150 and above; $12 below. Tracking after dispatch.',
+    description: 'Shop lehengas, sarees, salwar kameez, menswear and jewelry online for U.S. delivery. U.S. standard shipping is free at $199 and above and $14.99 below $199. Tracking follows dispatch.',
     h1: 'Indian Ethnic Wear Online in the USA',
     content: `
       <p>LuxeMia is an online Indian ethnic wear store serving shoppers with United States delivery addresses.</p>
       <h2>United States Shipping</h2>
-      <p>Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch. Duties, taxes or carrier processing fees may apply unless checkout explicitly states otherwise.</p>
+      <p>Shipping is free at $199 and above and costs $14.99 below $199. Tracking is provided after dispatch. Duties, taxes or carrier processing fees may apply unless checkout explicitly states otherwise.</p>
       <h2>Shop by Category</h2>
       <p>Browse <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a>, <a href="/suits">salwar kameez</a>, <a href="/menswear">menswear</a> and <a href="/jewelry">jewelry</a>. Review each listing for exact product details, sizing and availability.</p>
     `,
@@ -2120,7 +2265,7 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/indowestern">Indo-Western</a></li>
       </ul>
-      <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
+      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
@@ -2140,7 +2285,7 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
-      <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
+      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
@@ -2158,7 +2303,7 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
-      <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
+      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
@@ -2176,7 +2321,7 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
-      <p>U.S. shipping is $12 below $150 and free at $150 and above. Tracking is emailed after dispatch.</p>
+      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
     `,
   },
   {
@@ -2194,7 +2339,7 @@ const routes = [
         <li><a href="/lehengas">Lehengas</a></li>
         <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
-      <p>U.S. shipping is $12 below $150 and free at $150 and above. Confirm timing before ordering for a fixed date.</p>
+      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Confirm timing before ordering for a fixed date.</p>
     `,
   },
   {
@@ -2214,7 +2359,7 @@ const routes = [
         <li><a href="/suits">Shop Anarkali and Salwar Suits</a></li>
         <li><a href="/sizing-measurements-guide">Sizing and Measurement Guide</a></li>
       </ul>
-      <p>LuxeMia ships to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use LUXE10 for 10% off with no minimum purchase requirement.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch. First-time shoppers can use LUXE10 for 10% off with no minimum purchase requirement.</p>
       <p>Contact LuxeMia before ordering when your celebration date is fixed. Delivery by a particular event is not guaranteed.</p>
     `,
   },
@@ -2504,8 +2649,8 @@ function generateHtml(template, route, allShopifyProducts) {
       ? productSku
       : '';
     const productAttributes = getListedProductAttributes(live);
-    const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(handle)
-      ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+    const productCategory = isMadeToOrderProduct(live)
+      ? { label: 'Made-to-Order Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
     // Product schema must mirror Merchant Center's product grouping. Google
@@ -2528,7 +2673,6 @@ function generateHtml(template, route, allShopifyProducts) {
       availability: `https://schema.org/${variant?.availableForSale === false ? 'OutOfStock' : 'InStock'}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#org` },
-      hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
       shippingDetails: generateUsProductShippingDetails(productAttributes.shipsWithinDays),
     });
     const schemaVariantProduct = (variant) => {
@@ -2691,7 +2835,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
     const productAttributes = getListedProductAttributes(p);
     const styleReference = getVerifiedPrimaryStyleReference(p);
-    const productCategory = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle)
+    const productCategory = isMadeToOrderProduct(p)
       ? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(productType, p.title || route.h1);
 
@@ -2754,8 +2898,8 @@ function generateHtml(template, route, allShopifyProducts) {
     const deliveryAnswer = isCustomizable
       ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
       : productAttributes.jewelry
-      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to United States addresses only.'
-      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to United States addresses only.';
+      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.'
+      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.';
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
       ${firstQuestion}
@@ -2780,7 +2924,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ${productQuestionsHtml}
       ${siblingProductLinksHtml}
       <h2>Shipping &amp; Delivery</h2>
-      <p>Shipping is available to United States addresses only. U.S. standard shipping is free at $150 and above and $12 below $150. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <p>Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199. Tracking details are emailed when the shipping label is created for dispatch.</p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
   } else if (route.htmlSitemap && allShopifyProducts && allShopifyProducts.size > 0) {
     const approvedProducts = Array.from(allShopifyProducts.values())
@@ -2798,11 +2942,11 @@ function generateHtml(template, route, allShopifyProducts) {
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.
     const allProducts = Array.from(allShopifyProducts.values());
-    const allCollectionProducts = filterProductsForCollectionRoute(
+    const allCollectionProducts = rankCommercialProducts(filterProductsForCollectionRoute(
       allProducts,
       route,
       Number.POSITIVE_INFINITY,
-    );
+    ));
     const collectionProducts = allCollectionProducts.slice(0, MAX_COLLECTION_PRODUCTS);
     const matchLabel = route.prerenderSubcategory
       ? `${route.category}:${route.prerenderSubcategory.slug}`
@@ -2944,6 +3088,13 @@ function escapeHtml(str) {
 }
 
 async function main() {
+  const rankingModule = await loadTsModule('src/lib/commercialProductRanking.ts');
+  if (typeof rankingModule.rankCommercialProducts !== 'function') {
+    throw new Error('[commercial-ranking] Shared ranking module did not export rankCommercialProducts.');
+  }
+  rankCommercialProducts = rankingModule.rankCommercialProducts;
+  console.log('[commercial-ranking] Shared commercial-quality ranking loaded for collection prerenders.');
+
   const indexPath = path.join(DIST_DIR, 'index.html');
 
   if (!fs.existsSync(indexPath)) {
@@ -3178,8 +3329,8 @@ async function main() {
     const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
     const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
     const fallbackDesc = productIsJewelry
-      ? `Shop ${baseTitle} at LuxeMia. Indian jewelry with shipping to United States addresses only. Review the listing for exact materials, finish, stones, and included pieces.`
-      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to United States addresses only; current rates are shown at checkout.`;
+      ? `Shop ${baseTitle} at LuxeMia. Indian jewelry with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the listing for exact materials, finish, stones, and included pieces.`
+      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius; current rates are shown at checkout.`;
     const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
     routes.push({
       path: `/product/${handle}`,

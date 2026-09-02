@@ -238,6 +238,18 @@ function patchPrerender() {
   const relativePath = 'scripts/prerender.js';
   let source = read(relativePath);
 
+  // The follow-up hardener gives conservative title evidence precedence over
+  // free-form description parsing. Preserve that final ordering on repeated
+  // builds instead of recreating the intermediate fallback block.
+  const hardenedPrecedence = String.raw`  const titleBackedPieces = inferIncludedPiecesFromTitle(product?.title, product?.tags || []);
+  if (titleBackedPieces) return titleBackedPieces;
+  const parsed = cleanVerifiedFact(explicit?.[1]);
+  if (!parsed) return undefined;`;
+  if (source.includes(hardenedPrecedence)) {
+    console.log(`[commercial-catalog-recovery] ${relativePath} already uses hardened included-pieces precedence`);
+    return;
+  }
+
   if (!source.includes('function inferIncludedPiecesFromTitle(productTitle =')) {
     source = replaceOnce(
       source,
@@ -278,6 +290,19 @@ function patchPrerender() {
 function patchHtmlGenerator() {
   const relativePath = 'src/middleware/htmlGenerator.ts';
   let source = read(relativePath);
+
+  // The Edge-safe hotfix keeps this helper local because importing the
+  // TypeScript purchase-flow module from middleware breaks Vercel's Edge
+  // packager. Treat that final source shape as already recovered so repeat
+  // production builds do not try to restore the obsolete cross-module import.
+  const hasEdgeSafeHelper = source.includes('function inferIncludedPiecesFromTitle(');
+  const hasEdgeSafeResolution = source.includes(
+    ": inferIncludedPiecesFromTitle(product.title || '', product.tags || []) || listedIncludedPieces;",
+  );
+  if (hasEdgeSafeHelper && hasEdgeSafeResolution) {
+    console.log(`[commercial-catalog-recovery] ${relativePath} already uses the Edge-safe included-pieces helper`);
+    return;
+  }
 
   const optionImport = "import { isProductSizeOptionName } from '../lib/productOptionNames.js';";
   source = replaceOnce(

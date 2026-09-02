@@ -44,17 +44,17 @@ const topicClusters = BLOG_CATEGORY_GROUPS.map(group => ({
 const guideTopics = [
   {
     label: 'Fit & Measurements',
-    link: '/blog/how-to-care',
+    link: '/blog/fit-sizing-and-garment-care',
     description: 'Measurement and draping guides',
   },
   {
     label: 'Fabric Guides',
-    link: '/blog/motifs-embroideries',
+    link: '/blog/indian-textiles-and-embroidery',
     description: 'Fiber, fabric and care terms',
   },
   {
     label: 'Outfit Comparisons',
-    link: '/blog/attires',
+    link: '/blog/indian-wedding-guest-attire',
     description: 'Silhouettes and listing details',
   },
   {
@@ -94,7 +94,7 @@ const Blog = () => {
   // Uses the canonical BLOG_POST_CATEGORY_MAP for category → posts lookup.
   const filteredPosts = useMemo(() => {
     if (activeCluster) {
-      // activeCluster is the category slug (e.g. 'attires', 'motifs-embroideries')
+      // activeCluster is the category slug (e.g. 'indian-wedding-guest-attire', 'indian-textiles-and-embroidery')
       const categorySlugs = new Set(getPostSlugsByCategory(activeCluster));
       return blogPosts.filter(post => categorySlugs.has(post.slug));
     }

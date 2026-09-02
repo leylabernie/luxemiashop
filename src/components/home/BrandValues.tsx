@@ -10,7 +10,7 @@ const values = [
   {
     icon: Leaf,
     title: 'Clear Shipping Cost',
-    description: 'U.S. standard shipping is $12 below $150 and free at $150 and above.',
+    description: 'U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
   },
   {
     icon: Heart,

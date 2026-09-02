@@ -52,10 +52,10 @@ const APPROVED_PRODUCT_HANDLES = new Set(
 );
 const AUTHOR_ROUTE = '/authors/luxemia-editorial-team';
 const BLOG_TOPIC_HUBS = [
-  '/blog/attires',
-  '/blog/motifs-embroideries',
+  '/blog/indian-wedding-guest-attire',
+  '/blog/indian-textiles-and-embroidery',
   '/blog/weddings-festivals',
-  '/blog/how-to-care',
+  '/blog/fit-sizing-and-garment-care',
   '/blog/designer-profiles',
   '/blog/cultural-context',
 ];

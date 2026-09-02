@@ -7,7 +7,7 @@ const Returns = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Returns, Refunds & Cancellations | LuxeMia"
-        description="LuxeMia's final-sale policy and 48-hour process for genuine shipping damage or defect, incorrect items, or missing items."
+        description="LuxeMia change-of-mind rules, issue-reporting process and remedies for damage, defects, misdescription, incorrect items or missing pieces, without limiting mandatory rights."
         canonical="https://luxemia.shop/returns"
       />
       <Header />
@@ -18,8 +18,8 @@ const Returns = () => {
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">Returns</p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Returns Policy</h1>
             <p className="text-muted-foreground leading-relaxed">
-              All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item
-              must be reported within 48 hours of delivery with the required photos and continuous unboxing/opening video.
+              Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item or missing pieces should be
+              reported promptly—preferably within 48 hours—with available photos and unboxing evidence. This evidence request does not limit rights that cannot legally be excluded.
             </p>
           </div>
         </section>
@@ -28,14 +28,14 @@ const Returns = () => {
           <div className="prose prose-neutral max-w-none text-muted-foreground">
             <h2 className="text-foreground">Final sale</h2>
             <p>
-              All purchases are final sale. LuxeMia does not accept buyer-remorse returns or exchanges for fit, color preference, event changes,
-              or a change of mind. Review the product details, images, measurements, and selected options before ordering.
+              LuxeMia does not voluntarily accept buyer-remorse returns or exchanges for fit, color preference, event changes or a change of mind.
+              This change-of-mind rule is separate from remedies for faulty, damaged, materially misdescribed, incorrect or incomplete orders and from mandatory legal rights.
             </p>
 
             <h2 className="text-foreground">Covered order issues</h2>
             <p>
-              If an item arrives damaged or defective, is incorrect, or is missing, contact LuxeMia within 48 hours of delivery. Provide clear photos and a continuous
-              unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition. If LuxeMia confirms a covered
+              If an item arrives damaged or defective, is materially different from its listing, is incorrect, or has missing pieces, contact LuxeMia promptly; reporting within 48 hours is strongly preferred because it helps preserve delivery evidence. Provide clear photos and, when available, a continuous
+              unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition. A missing video does not by itself remove rights that cannot legally be excluded. If LuxeMia confirms a covered
               issue, LuxeMia will provide the applicable resolution and any required return instructions. Do not send an item back unless LuxeMia authorizes it.
             </p>
 
@@ -49,6 +49,12 @@ const Returns = () => {
             <p>
               Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted.
               Email hello@luxemia.shop immediately with your order number.
+            </p>
+
+            <h2 className="text-foreground">Personalized and made-to-order goods</h2>
+            <p>
+              Personalized, altered or made-to-order goods cannot ordinarily be returned for change of mind once work begins. Fault, damage,
+              material misdescription, incorrect fulfillment, missing pieces and mandatory legal rights remain separate and are reviewed under the applicable circumstances.
             </p>
 
             <h2 className="text-foreground">Mandatory rights</h2>

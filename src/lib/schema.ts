@@ -14,8 +14,9 @@ import { getMerchantGoogleProductCategory } from './merchantTaxonomy.js';
 
 export const SITE_URL = 'https://luxemia.shop';
 export const BRAND_NAME = 'LuxeMia';
-export const LEGAL_BUSINESS_NAME = 'Glamour Indian Wear';
-export const SHIPPING_COUNTRIES = ['US'];
+export const LEGAL_BUSINESS_NAME = 'LuxeMia';
+export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
+export const INTERNATIONAL_SHIPPING_COUNTRIES = ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 export const BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`;
 
 export function normalizeBrandName(value?: string | null): string {
@@ -55,106 +56,76 @@ export function getSchemaPrices(priceData: PriceData) {
 // ─── Return Policy Schema ──────────────────────────────────────────────────
 
 export function generateReturnPolicySchema() {
-  return {
-    '@type': 'MerchantReturnPolicy',
-    '@id': `${SITE_URL}/#returnPolicy`,
-    name: 'LuxeMia Final-Sale & Covered Order Issue Policy',
-    applicableCountry: 'US',
-    returnPolicyCountry: 'US',
-    merchantReturnLink: `${SITE_URL}/returns`,
-    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
-    description: 'All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours of delivery with clear photos and a continuous unboxing/opening video, subject to rights that cannot legally be excluded.',
-    url: `${SITE_URL}/returns`,
-  };
+  // Country-specific statutory rights and voluntary return rules cannot be
+  // represented accurately by one global MerchantReturnPolicy object.
+  // Merchant Center remains the source of truth for country-level settings.
+  return null;
 }
 
 // Standard U.S. shipping terms are defined once at the Organization level.
 // Product-level shippingDetails should be added only for documented SKU-specific
 // exceptions, rather than copying policy data into every offer.
 export function generateUsShippingServiceSchema() {
-  return {
+  const createService = (id: string, name: string, countries: string | string[], rate: number, freeThreshold?: number) => ({
     '@type': 'ShippingService',
-    '@id': `${SITE_URL}/#us-standard-shipping`,
-    name: 'LuxeMia U.S. Standard Shipping',
+    '@id': `${SITE_URL}/#${id}`,
+    name,
     shippingConditions: [
       {
         '@type': 'ShippingConditions',
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-        orderValue: {
-          '@type': 'MonetaryAmount',
-          minValue: 0,
-          maxValue: 149.99,
-          currency: 'USD',
-        },
-        shippingRate: { '@type': 'MonetaryAmount', value: 12, currency: 'USD' },
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+        ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', minValue: 0, maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
+        shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
       },
-      {
+      ...(freeThreshold ? [{
         '@type': 'ShippingConditions',
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-        orderValue: {
-          '@type': 'MonetaryAmount',
-          minValue: 150,
-          currency: 'USD',
-        },
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+        orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
         shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-      },
+      }] : []),
     ],
-  };
+  });
+
+  return [
+    createService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 199),
+    createService('canada-uk-standard-shipping', 'LuxeMia Canada and UK Standard Shipping', ['CA', 'GB'], 24.99, 299),
+    createService('australia-nz-standard-shipping', 'LuxeMia Australia and New Zealand Standard Shipping', ['AU', 'NZ'], 29.99, 349),
+    createService('south-africa-standard-shipping', 'LuxeMia South Africa Standard Shipping', 'ZA', 49.99),
+    createService('mauritius-standard-shipping', 'LuxeMia Mauritius Standard Shipping', 'MU', 59.99),
+  ];
 }
 
 // Product-level shipping details mirror the public U.S. shipping terms:
-// $12 below $150 and free at $150+. A handling-time window is emitted only
+// $14.99 below $199 and free at $199+. A handling-time window is emitted only
 // when the product carries a valid custom.ships_within value. Carrier transit
 // remains omitted because it depends on the destination and selected service.
 export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
   const handlingDays = normalizeShipsWithinDays(shipsWithinDays);
-  const shippingDestination = {
-    '@type': 'DefinedRegion',
-    addressCountry: 'US',
-  };
-  const deliveryTime = handlingDays
-    ? {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: {
-          '@type': 'QuantitativeValue',
-          minValue: 0,
-          maxValue: handlingDays,
-          unitCode: 'DAY',
-        },
-      }
-    : null;
-
+  const deliveryTime = handlingDays ? {
+    '@type': 'ShippingDeliveryTime',
+    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
+  } : null;
+  const withTime = (details: Record<string, unknown>) => ({ ...details, ...(deliveryTime && { deliveryTime }) });
+  const create = (countries: string | string[], rate: number, freeThreshold?: number) => [
+    withTime({
+      '@type': 'OfferShippingDetails',
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+      ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
+      shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
+    }),
+    ...(freeThreshold ? [withTime({
+      '@type': 'OfferShippingDetails',
+      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
+      orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
+      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
+    })] : []),
+  ];
   return [
-    {
-      '@type': 'OfferShippingDetails',
-      shippingDestination,
-      orderValue: {
-        '@type': 'MonetaryAmount',
-        maxValue: 149.99,
-        currency: 'USD',
-      },
-      shippingRate: {
-        '@type': 'MonetaryAmount',
-        value: 12,
-        currency: 'USD',
-      },
-      ...(deliveryTime && { deliveryTime }),
-    },
-    {
-      '@type': 'OfferShippingDetails',
-      shippingDestination,
-      orderValue: {
-        '@type': 'MonetaryAmount',
-        minValue: 150,
-        currency: 'USD',
-      },
-      shippingRate: {
-        '@type': 'MonetaryAmount',
-        value: 0,
-        currency: 'USD',
-      },
-      ...(deliveryTime && { deliveryTime }),
-    },
+    ...create('US', 14.99, 199),
+    ...create(['CA', 'GB'], 24.99, 299),
+    ...create(['AU', 'NZ'], 29.99, 349),
+    ...create('ZA', 49.99),
+    ...create('MU', 59.99),
   ];
 }
 
@@ -230,7 +201,6 @@ function generateOfferSchema(
     availability: `https://schema.org/${input.availability}`,
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@id': `${SITE_URL}/#org` },
-    hasMerchantReturnPolicy: { '@id': `${SITE_URL}/#returnPolicy` },
     shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays),
   };
 }
@@ -393,10 +363,9 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#org`,
     name: BRAND_NAME,
-    legalName: LEGAL_BUSINESS_NAME,
     url: SITE_URL,
     logo: BRAND_LOGO_URL,
-    description: 'LuxeMia is an online Indian ethnic wear store serving United States addresses with product details, sizing guidance and tracking after dispatch.',
+    description: 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and tracking after dispatch.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'US',
@@ -431,14 +400,7 @@ export function generateOrganizationSchema() {
       'Mehendi Outfits',
       'Custom Tailoring Indian Wear',
     ],
-    hasMerchantReturnPolicy: generateReturnPolicySchema(),
     hasShippingService: generateUsShippingServiceSchema(),
-    sameAs: [
-      'https://www.instagram.com/luxemiausa',
-      'https://www.facebook.com/LuxeMia',
-      'https://www.pinterest.com/luxemiashop',
-      'https://www.tiktok.com/@shopluxemia',
-    ],
   };
 }
 

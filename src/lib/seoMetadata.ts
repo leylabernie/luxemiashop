@@ -17,7 +17,7 @@ import { getIndexableRouteSeo } from '@/config/seoArchitecture';
 const homepageSeo = getIndexableRouteSeo('/');
 export const DEFAULT_TITLE = homepageSeo.title;
 export const DEFAULT_DESCRIPTION = homepageSeo.description;
-const RETURN_POLICY_SEO_DESCRIPTION = 'Read LuxeMia’s final-sale policy and the 48-hour process for reporting genuine shipping damage or defect, an incorrect item, or a missing item.';
+const RETURN_POLICY_SEO_DESCRIPTION = 'Read LuxeMia’s change-of-mind rules, mandatory consumer rights, cancellation terms and 48-hour process for reporting genuine damage, defects, incorrect items or missing items.';
 
 export interface PageMetadata {
   title: string;
@@ -40,7 +40,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/sarees': {
     title: 'Buy Sarees Online — Silk, Banarasi & Wedding Sarees | LuxeMia',
-    description: "Browse currently listed sarees at LuxeMia. Open each product for its exact fabric, color, included pieces, price and availability. U.S. shipping is free at $150 and above; $12 below.",
+    description: 'Browse currently listed sarees at LuxeMia. Open each product for exact fabric, color, included pieces, price, processing information and availability.',
     canonical: `${SITE_URL}/sarees`,
     image: `${SITE_URL}/og/og-sarees.jpg`,
   },
@@ -82,7 +82,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/about': {
     title: 'Our Story — LuxeMia',
-    description: 'Discover LuxeMia: Indian occasionwear chosen for weddings, festivals, and meaningful celebrations in the United States.',
+    description: 'Discover LuxeMia: Indian occasionwear selected for weddings, festivals and meaningful celebrations, with tracked shipping to seven supported countries.',
     canonical: `${SITE_URL}/about`,
   },
   '/new-arrivals': {
@@ -92,12 +92,12 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/indowestern': {
     title: 'Indo-Western Collection | Fusion Wear Online | LuxeMia',
-    description: "Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. shipping at $150 and above; $12 below.",
+    description: 'Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, stitching, sizes, prices, processing information and availability.',
     canonical: `${SITE_URL}/indowestern`,
   },
   '/nri': {
     title: "Indian Ethnic Wear Online | U.S. Shipping | LuxeMia",
-    description: "Browse LuxeMia's online catalog for delivery to United States addresses. Shipping is $12 below $150 and free at $150 and above; tracking is emailed after dispatch.",
+    description: 'Browse LuxeMia Indian ethnic wear for shoppers in the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius.',
     canonical: `${SITE_URL}/nri`,
   },
   '/nri/usa': {
@@ -107,17 +107,17 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/indian-ethnic-wear-usa': {
     title: "Indian Ethnic Wear Online in the USA | LuxeMia",
-    description: "Browse Indian sarees, lehengas, suits, menswear and jewelry online for delivery to U.S. addresses. Shipping is free at $150 and above and $12 below.",
+    description: 'Browse Indian sarees, lehengas, suits, menswear and jewelry online for U.S. delivery. Standard shipping is $14.99 below $199 and free at $199 and above.',
     canonical: `${SITE_URL}/indian-ethnic-wear-usa`,
   },
   '/shipping': {
-    title: 'U.S. Shipping Policy | LuxeMia',
-    description: 'LuxeMia ships to United States addresses. Standard shipping is $12 below $150 and free at $150 and above; tracking is emailed after dispatch.',
+    title: 'Shipping Policy & International Rates | LuxeMia',
+    description: 'Review LuxeMia tracked shipping rates for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius, plus processing, customs and tracking guidance.',
     canonical: `${SITE_URL}/shipping`,
   },
   '/pages/shipping-customs': {
-    title: 'U.S. Shipping & Taxes | LuxeMia',
-    description: "Review LuxeMia's United States shipping rates, tracking and tax guidance before ordering.",
+    title: 'International Shipping, Duties & Customs | LuxeMia',
+    description: 'Review LuxeMia international shipping, duties, customs, brokerage and tracking guidance for all seven supported destination countries.',s United States shipping rates, tracking and tax guidance before ordering.",
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {
@@ -142,7 +142,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/faq': {
     title: 'FAQ | Frequently Asked Questions | LuxeMia',
-    description: "Answers to common LuxeMia questions about orders, U.S. shipping, cancellations, final-sale terms, sizing and product-specific care.",
+    description: 'Answers to common LuxeMia questions about orders, seven-country shipping, cancellations, statutory rights, sizing, product issues and care.',
     canonical: `${SITE_URL}/faq`,
   },
   '/size-guide': {
