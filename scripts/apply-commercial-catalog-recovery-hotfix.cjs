@@ -41,6 +41,34 @@ function replaceOnce(source, before, after, label) {
   return source.slice(0, first) + after + source.slice(first + before.length);
 }
 
+const EDGE_SAFE_HELPER = String.raw`function inferIncludedPiecesFromTitle(
+  productTitle = '',
+  tags: string[] = [],
+): string | undefined {
+  const title = productTitle.replace(/\s+/g, ' ').trim();
+  if (!title) return undefined;
+
+  const normalizedTags = tags.map((tag) => tag.trim().toLowerCase());
+  const hasThreePieceEvidence = /\b(?:three|3)[-\s]?piece\b/i.test(title)
+    || normalizedTags.some((tag) => /^(?:three|3)[-\s]?piece(?:\s+suit|\s+set)?$/.test(tag));
+  const hasDupatta = /\bwith\b[^|,;]{0,48}\bdupatta\b/i.test(title);
+
+  if (hasThreePieceEvidence && hasDupatta && /\bpalazzo\b/i.test(title)) return 'Tunic, palazzo pants, and dupatta';
+  if (hasThreePieceEvidence && hasDupatta && /\bsharara\b/i.test(title)) return 'Tunic, sharara pants, and dupatta';
+  if (hasThreePieceEvidence && hasDupatta && /\bgharara\b/i.test(title)) return 'Tunic, gharara pants, and dupatta';
+  if (hasDupatta && /\bsalwar\s+kameez\b/i.test(title)) return 'Kameez, salwar pants, and dupatta';
+  if (hasThreePieceEvidence && hasDupatta && /\b(?:salwar\s+)?suit\b/i.test(title)) return 'Tunic, pants, and dupatta';
+  if (hasDupatta && /\blehenga\s+choli\b/i.test(title)) return 'Lehenga, choli, and dupatta';
+  if (hasDupatta && /\blehenga\b/i.test(title)) return 'Lehenga and dupatta';
+  if (/\bsaree\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bblouse\s+(?:piece|fabric|material)\b/i.test(title)) return 'Saree and blouse fabric';
+  if (/\bsherwani\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bstole\b/i.test(title)) return 'Sherwani and stole';
+  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bvest\b/i.test(title)) return 'Kurta, pajama pants, and vest';
+  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bjacket\b/i.test(title)) return 'Kurta, pajama pants, and jacket';
+  return undefined;
+}
+
+`;
+
 function patchPrerenderPrecedence() {
   const relativePath = 'scripts/prerender.js';
   let source = read(relativePath);
@@ -58,6 +86,23 @@ function patchPrerenderPrecedence() {
 function patchMiddlewarePrecedence() {
   const relativePath = 'src/middleware/htmlGenerator.ts';
   let source = read(relativePath);
+
+  // Edge middleware must not import the storefront purchase-flow module,
+  // because that module contains a TypeScript extension import that Vercel's
+  // Edge packager rejects. Keep the same conservative resolver locally.
+  source = source.replace(
+    "import { inferIncludedPiecesFromTitle } from '../lib/productPurchaseFlow.js';\n",
+    '',
+  );
+  if (!source.includes('function inferIncludedPiecesFromTitle(\n  productTitle =')) {
+    source = replaceOnce(
+      source,
+      'function getCategoryUrl(productType?: string, title?: string): string {',
+      `${EDGE_SAFE_HELPER}function getCategoryUrl(productType?: string, title?: string): string {`,
+      'insert Edge-safe local included-pieces resolver',
+    );
+  }
+
   const before = String.raw`    : listedIncludedPieces || inferIncludedPiecesFromTitle(product.title || '', product.tags || []);`;
   const after = String.raw`    : inferIncludedPiecesFromTitle(product.title || '', product.tags || []) || listedIncludedPieces;`;
   source = replaceOnce(source, before, after, 'align middleware included-piece precedence');
