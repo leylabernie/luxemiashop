@@ -383,7 +383,7 @@ def get_seo_description(name, product_type):
     """Generate factual, search-friendly copy without unsupported claims."""
     desc = (
         f"Shop {name} at LuxeMia. Review product photos, listed material, "
-        "sizing, price and availability. United States shipping only."
+        "sizing, price and availability. Shipping is available to seven countries."
     )
     if len(desc) <= 160:
         return desc

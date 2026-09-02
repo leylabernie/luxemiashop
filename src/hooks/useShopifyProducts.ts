@@ -4,7 +4,7 @@ import { sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
 import occasionSignals from '@/data/occasionSignals.json';
 import {
   applyCustomizableProductDetails,
-  CUSTOMIZABLE_PRODUCT_HANDLES,
+  isMadeToOrderProduct,
 } from '@/lib/customizableProducts';
 
 // Shopify productType values mapped to category page routes
@@ -69,7 +69,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
-const CACHE_VERSION = 'v12';
+const CACHE_VERSION = 'v13';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
@@ -250,7 +250,7 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   if (category === 'all') return allowed;
 
   if (category === 'customizable') {
-    return allowed.filter((product) => CUSTOMIZABLE_PRODUCT_HANDLES.has(product.node.handle));
+    return allowed.filter((product) => isMadeToOrderProduct(product.node.handle, product.node.tags));
   }
 
   if (category.startsWith('occasion:')) {
@@ -392,7 +392,7 @@ const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
     };
   });
 
-export const useShopifyProducts = (category?: string, revalidate = false) => {
+export const useShopifyProducts = (category?: string, revalidate = false, storefrontQuery?: string) => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -419,7 +419,7 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
         //    for collection routes. This payload is route-scoped and must never be
         //    stored as the full catalog: doing so makes the next category filter the
         //    previous category's products and can render zero or mixed products.
-        const initial = getInitialData(category);
+        const initial = storefrontQuery ? null : getInitialData(category);
         if (initial) {
           applyProducts(initial);
 
@@ -452,7 +452,11 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
           return;
         }
         // 2. Existing cache + API fallback (unchanged)
-        let allProducts = revalidate ? await fetchAllProducts() : await getAllProducts();
+        let allProducts = storefrontQuery
+          ? await fetchAllProducts(storefrontQuery)
+          : revalidate
+            ? await fetchAllProducts()
+            : await getAllProducts();
         if (revalidate) {
           if (allProducts.length > 0) {
             cachedProducts = allProducts;
@@ -473,7 +477,7 @@ export const useShopifyProducts = (category?: string, revalidate = false) => {
     return () => {
       cancelled = true;
     };
-  }, [category, revalidate]);
+  }, [category, revalidate, storefrontQuery]);
 
   // no-op loadMore since we fetch all at once
   const loadMore = useCallback(() => {}, []);

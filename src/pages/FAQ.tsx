@@ -46,7 +46,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Where do you ship to?',
-          answer: 'LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above.',
+          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
         },
         {
           question: 'How long does shipping take?',
@@ -65,8 +65,8 @@ const FAQ = () => {
           answer: 'Check the carrier tracking first. If the package is significantly delayed or shows no movement, contact hello@luxemia.shop with your order number so LuxeMia can review the shipment and carrier information. Any resolution depends on that review and the applicable policy.',
         },
         {
-          question: 'Do you offer free US shipping?',
-          answer: 'Yes. We offer free US shipping at $150 and above. A flat $12 shipping rate applies below $150.',
+          question: 'Do you offer free U.S. standard shipping?',
+          answer: 'Yes. We offer free U.S. standard shipping at $199 and above. A flat $14.99 shipping rate applies below $199.',
         },
       ],
     },
@@ -88,7 +88,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I return items if they don\'t fit?',
-          answer: 'All sales are final and exchanges are not accepted. Review the exact product measurements and contact LuxeMia before ordering if the listing is unclear.',
+          answer: 'Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Review the exact product measurements and contact LuxeMia before ordering if the listing is unclear.',
         },
         {
           question: 'Which measurements should I compare?',
@@ -114,7 +114,7 @@ const FAQ = () => {
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'All sales are final. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours using the covered-order-issue process.',
+          answer: 'Under LuxeMia’s voluntary policy, change-of-mind, fit and preference returns are not accepted except where applicable law provides otherwise. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours using the covered-order-issue process.',
         },
         {
           question: 'What if my order arrives damaged, incorrect, or incomplete?',
@@ -122,7 +122,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I exchange for a different size or color?',
-          answer: 'Exchanges are not accepted. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear.',
+          answer: 'Voluntary size or color exchanges are not accepted except where applicable law provides otherwise. Review the Size Guide and contact LuxeMia before ordering if sizing or color details are unclear.',
         },
       ],
     },
@@ -222,7 +222,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free US shipping applies at $150 and above, a flat $12 rate applies below $150, and online orders ship with tracking after dispatch.',
+          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free U.S. standard shipping applies at $199 and above, a flat $14.99 rate applies below $199, and online orders ship with tracking after dispatch.',
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
@@ -230,7 +230,7 @@ const FAQ = () => {
         },
         {
           question: 'Do you ship outside the United States?',
-          answer: 'No. LuxeMia currently ships to United States addresses only.',
+          answer: 'Yes. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the Shipping page for destination-based rates, duties and processing guidance.',
         },
         {
           question: 'How do Indian clothing sizes compare to US sizes?',

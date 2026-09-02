@@ -40,6 +40,11 @@ const { PUBLISHED_BLOG_SLUGS } = loadTsModule('src/data/blogPosts.ts');
 const { BLOG_CATEGORY_GROUPS } = loadTsModule('src/data/blogCategories.ts');
 const publishedBlogPaths = new Set(PUBLISHED_BLOG_SLUGS.map(slug => `/blog/${slug}`));
 const activeHubPaths = new Set(BLOG_CATEGORY_GROUPS.map(group => `/blog/${group.slug}`));
+const legacyHubRedirects = new Map([
+  ['/blog/attires', '/blog/indian-wedding-guest-attire'],
+  ['/blog/motifs-embroideries', '/blog/indian-textiles-and-embroidery'],
+  ['/blog/how-to-care', '/blog/fit-sizing-and-garment-care'],
+]);
 const exactRedirects = redirects.filter(redirect => !isParameterized(redirect.source));
 const exactSources = new Set(exactRedirects.map(redirect => redirect.source));
 
@@ -111,10 +116,11 @@ for (const redirect of redirects) {
   }
 
   if (source.startsWith('/blog/') && !isParameterized(source)) {
-    if (destination === '/blog' || activeHubPaths.has(destination)) {
+    const isApprovedHubRename = legacyHubRedirects.get(source) === destination && activeHubPaths.has(destination);
+    if (!isApprovedHubRename && (destination === '/blog' || activeHubPaths.has(destination))) {
       fail(`${source} redirects a specific article URL to a generic blog destination (${destination}).`);
     }
-    if (destination.startsWith('/blog/') && !publishedBlogPaths.has(destination)) {
+    if (!isApprovedHubRename && destination.startsWith('/blog/') && !publishedBlogPaths.has(destination)) {
       fail(`${source} points to an unpublished blog article (${destination}).`);
     }
   }

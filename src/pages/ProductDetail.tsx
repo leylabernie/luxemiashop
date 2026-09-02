@@ -21,6 +21,7 @@ import StickyAddToBag from '@/components/product/StickyAddToBag';
 import {
   applyCustomizableProductDetails,
   getCustomizableProduct,
+  isMadeToOrderProduct,
 } from '@/lib/customizableProducts';
 import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
 import { isProductSizeOptionName } from '@/lib/productOptionNames';
@@ -96,6 +97,7 @@ const ProductDetail = () => {
     [shopifyProduct],
   );
   const customizableProduct = getCustomizableProduct(product?.handle);
+  const madeToOrderProduct = isMadeToOrderProduct(product?.handle, product?.tags);
   const productShipsWithinDays = getProductShipsWithin(product);
   const stylistConversationHref = product
     ? `https://wa.me/12153419990?text=${encodeURIComponent(
@@ -146,11 +148,11 @@ const ProductDetail = () => {
     return '/collections';
   };
 
-  const categoryUrl = customizableProduct
+  const categoryUrl = madeToOrderProduct
     ? '/collections/customizable-indian-outfits'
     : getCategoryUrl(product?.productType);
-  const categoryName = customizableProduct
-    ? 'Customizable Indian Outfits'
+  const categoryName = madeToOrderProduct
+    ? 'Made-to-Order Indian Outfits'
     : product?.productType || 'Collections';
   const productIsAvailable = product
     ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
@@ -235,7 +237,7 @@ const ProductDetail = () => {
   const productSizeValues = product?.options
     ?.find((option) => isProductSizeOptionName(option.name))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
-  const sizeAnswer = customizableProduct
+  const sizeAnswer = madeToOrderProduct
     ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
     : productSizeValues.length > 0
     ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
@@ -258,14 +260,14 @@ const ProductDetail = () => {
       answer: `This saree is listed for ${productOccasions.join(' and ')}.`,
     }] : []),
     {
-      question: `Does LuxeMia ship the ${product.title} within the United States?`,
-      answer: 'Yes. LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.',
+      question: `Where does LuxeMia ship the ${product.title}?`,
+      answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.',
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: customizableProduct
+      answer: madeToOrderProduct
         ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
-        : 'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch. LuxeMia currently ships to United States addresses only.'
+        : 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.'
     },
     ...(customizableProduct ? [{
       question: `Can I request another color for the ${product.title}?`,
@@ -470,7 +472,7 @@ const ProductDetail = () => {
                 <ProductTabs 
                   description={enrichedDescription || product.description}
                   productType={product.productType}
-                  isStitchable={!customizableProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
+                  isStitchable={!madeToOrderProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
                 />
               </div>

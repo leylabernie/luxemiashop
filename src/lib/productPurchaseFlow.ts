@@ -116,9 +116,61 @@ export function selectionRequiresSeparateMeasurements(
   ].some((pattern) => pattern.test(normalizedValue));
 }
 
+export function inferIncludedPiecesFromTitle(
+  productTitle = '',
+  tags: string[] = [],
+): string | undefined {
+  const title = productTitle.replace(/\s+/g, ' ').trim();
+  if (!title) return undefined;
+
+  const normalizedTags = tags.map((tag) => tag.trim().toLowerCase());
+  const hasThreePieceEvidence = /\b(?:three|3)[-\s]?piece\b/i.test(title)
+    || normalizedTags.some((tag) => /^(?:three|3)[-\s]?piece(?:\s+suit|\s+set)?$/.test(tag));
+  const hasDupatta = /\bwith\b[^|,;]{0,48}\bdupatta\b/i.test(title);
+
+  // Only infer components when the title, or an explicit three-piece tag for
+  // an imported suit set, names the garments. Product type alone is never
+  // enough evidence.
+  if (hasThreePieceEvidence && hasDupatta && /\bpalazzo\b/i.test(title)) {
+    return 'Tunic, palazzo pants, and dupatta';
+  }
+  if (hasThreePieceEvidence && hasDupatta && /\bsharara\b/i.test(title)) {
+    return 'Tunic, sharara pants, and dupatta';
+  }
+  if (hasThreePieceEvidence && hasDupatta && /\bgharara\b/i.test(title)) {
+    return 'Tunic, gharara pants, and dupatta';
+  }
+  if (hasDupatta && /\bsalwar\s+kameez\b/i.test(title)) {
+    return 'Kameez, salwar pants, and dupatta';
+  }
+  if (hasThreePieceEvidence && hasDupatta && /\b(?:salwar\s+)?suit\b/i.test(title)) {
+    return 'Tunic, pants, and dupatta';
+  }
+  if (hasDupatta && /\blehenga\s+choli\b/i.test(title)) {
+    return 'Lehenga, choli, and dupatta';
+  }
+  if (hasDupatta && /\blehenga\b/i.test(title)) {
+    return 'Lehenga and dupatta';
+  }
+  if (/\bsaree\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bblouse\s+(?:piece|fabric|material)\b/i.test(title)) {
+    return 'Saree and blouse fabric';
+  }
+  if (/\bsherwani\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bstole\b/i.test(title)) {
+    return 'Sherwani and stole';
+  }
+  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bvest\b/i.test(title)) {
+    return 'Kurta, pajama pants, and vest';
+  }
+  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bjacket\b/i.test(title)) {
+    return 'Kurta, pajama pants, and jacket';
+  }
+
+  return undefined;
+}
+
 /**
  * Uses only listing-backed set contents: normalized metadata first, then one
- * exact included-pieces tag, and finally an explicit "with dupatta" title.
+ * exact included-pieces tag, and finally conservative title/tag evidence.
  * Product type alone is never used to invent set contents.
  */
 export function resolveIncludedPieces(
@@ -149,11 +201,5 @@ export function resolveIncludedPieces(
     if (includedPieces) return includedPieces;
   }
 
-  if (!/\bwith\s+dupatta\b/i.test(productTitle)) return undefined;
-  if (/\blehenga\s+choli\b/i.test(productTitle)) return 'Lehenga choli and dupatta';
-  if (/\blehenga\b/i.test(productTitle)) return 'Lehenga and dupatta';
-  if (/\bsaree\b/i.test(productTitle)) return 'Saree and dupatta';
-  if (/\bsuit\b/i.test(productTitle)) return 'Suit and dupatta';
-
-  return undefined;
+  return inferIncludedPiecesFromTitle(productTitle, tags);
 }

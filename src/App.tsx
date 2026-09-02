@@ -63,6 +63,7 @@ const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
 const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
 const CustomizableOutfits = lazy(() => import("./pages/CustomizableOutfits"));
 const CommercialCollectionLanding = lazy(() => import("./pages/CommercialCollectionLanding"));
+const SemanticCommercePage = lazy(() => import("./pages/SemanticCommercePage"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
 const PageLoader = () => (
@@ -129,6 +130,9 @@ const App = () => (
                 <Route path="/our-story" element={<Navigate to="/about" replace />} />
                 <Route path="/about-us" element={<Navigate to="/about" replace />} />
                 <Route path="/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />
+                <Route path="/us-support" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/editorial-policy" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/review-policy" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
                 <Route path="/brand-story" element={<Navigate to="/about" replace />} />
                 <Route path="/lookbook" element={<Suspense fallback={<PageLoader />}><Lookbook /></Suspense>} />
                 <Route path="/wishlist" element={<Suspense fallback={<PageLoader />}><Wishlist /></Suspense>} />
@@ -136,6 +140,10 @@ const App = () => (
                 <Route path="/account" element={<Suspense fallback={<PageLoader />}><Account /></Suspense>} />
                 <Route path="/contact" element={<Suspense fallback={<PageLoader />}><Contact /></Suspense>} />
                 <Route path="/shipping" element={<Suspense fallback={<PageLoader />}><Shipping /></Suspense>} />
+                <Route path="/shipping/united-states" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shipping/canada" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shipping/united-kingdom" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shipping/australia" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
                 <Route path="/pages/shipping-customs" element={<Suspense fallback={<PageLoader />}><ShippingCustoms /></Suspense>} />
                 <Route path="/shipping-customs" element={<Navigate to="/pages/shipping-customs" replace />} />
                 <Route path="/customs" element={<Navigate to="/pages/shipping-customs" replace />} />
@@ -169,6 +177,14 @@ const App = () => (
                 <Route path="/collections/party-wear-lehengas" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="party-wear-lehengas" /></Suspense>} />
                 <Route path="/collections/wedding-lehengas" element={<Navigate to="/lehengas" replace />} />
                 <Route path="/collections/lehenga-choli" element={<Navigate to="/lehengas" replace />} />
+                <Route path="/collections/earrings" element={<Navigate to="/jewelry" replace />} />
+                <Route path="/collections/evening-gowns" element={<Navigate to="/collections" replace />} />
+                <Route path="/collections/frontpage" element={<Navigate to="/" replace />} />
+                <Route path="/collections/jacket-sets" element={<Navigate to="/suits" replace />} />
+                <Route path="/collections/kurta-pajama-vest" element={<Navigate to="/menswear" replace />} />
+                <Route path="/collections/manthrakodi-sarees" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/saree-gowns" element={<Navigate to="/sarees" replace />} />
+                <Route path="/collections/navratri-garba-outfits-2026" element={<Navigate to="/collections/navratri-outfits" replace />} />
                 <Route path="/collections/:handle" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
                 <Route path="/collections/designer-sarees" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="designer-sarees" /></Suspense>} />
                 <Route path="/blog/designer-wedding-dress-under-50000" element={<Navigate to="/blog/designer-wedding-dress-under-500" replace />} />
@@ -183,6 +199,13 @@ const App = () => (
                 <Route path="/collections/eid-outfits" element={<Suspense fallback={<PageLoader />}><EidOutfits /></Suspense>} />
                 <Route path="/collections/navratri-outfits" element={<Suspense fallback={<PageLoader />}><NavratriOutfits /></Suspense>} />
                 <Route path="/collections/haldi-outfits" element={<Suspense fallback={<PageLoader />}><HaldiOutfits /></Suspense>} />
+                <Route path="/festive-wear" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/indian-wedding-guest-outfits" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/wedding-events" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shop-by-fulfillment" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shop-by-fulfillment/ready-to-ship" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shop-by-fulfillment/made-to-order" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shop-by-fulfillment/customizable-outfits" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
                 <Route path="/ready-to-ship" element={<Suspense fallback={<PageLoader />}><ReadyToShip /></Suspense>} />
                 <Route path="/collections/ready-to-ship" element={<Navigate to="/ready-to-ship" replace />} />
 
@@ -207,10 +230,13 @@ const App = () => (
                 {/* Blog */}
                 <Route path="/blog" element={<Suspense fallback={<PageLoader />}><Blog /></Suspense>} />
                 {/* Utsavpedia-style blog category hub routes — MUST come before /blog/:slug to avoid route collision */}
-                <Route path="/blog/attires" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
-                <Route path="/blog/motifs-embroideries" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/attires" element={<Navigate to="/blog/indian-wedding-guest-attire" replace />} />
+                <Route path="/blog/motifs-embroideries" element={<Navigate to="/blog/indian-textiles-and-embroidery" replace />} />
+                <Route path="/blog/how-to-care" element={<Navigate to="/blog/fit-sizing-and-garment-care" replace />} />
+                <Route path="/blog/indian-wedding-guest-attire" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/indian-textiles-and-embroidery" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/weddings-festivals" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
-                <Route path="/blog/how-to-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
+                <Route path="/blog/fit-sizing-and-garment-care" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/designer-profiles" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/cultural-context" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 {/* Verified retired designer-profile URL: redirect to the live designer category. */}

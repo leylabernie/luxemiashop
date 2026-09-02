@@ -366,7 +366,7 @@ const LEHENGAS: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
         See the <a href="/shipping">shipping policy</a> for current details.
       </p>
     </>
@@ -414,7 +414,7 @@ const SAREES: CategoryConfig = {
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       matchProductType: ['Bridal Saree'],
       seoTitle: 'Bridal Sarees for Indian Brides in USA | Silk & Kanjeevaram - LuxeMia',
-      seoDescription: 'Shop bridal sarees online. Compare each listing\'s stated fabric, weave or work, blouse details, current price and availability. Free U.S. shipping at $150 and above.',
+      seoDescription: 'Shop bridal sarees online. Compare each listing\'s stated fabric, weave or work, blouse details, current price and availability. Free U.S. standard shipping at $199 and above.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding-guest', 'wedding guest', 'bridesmaid', 'role:bridesmaid'], {
@@ -534,7 +534,7 @@ const SAREES: CategoryConfig = {
     },
     {
       question: "Do you ship sarees to the United States?",
-      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch."
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $199 and above and costs $14.99 below that. Tracking is provided after dispatch."
     }
   ],
   // SEO editorial content (Item #14)
@@ -570,7 +570,7 @@ const SAREES: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
         See the <a href="/shipping">shipping policy</a> for current details.
       </p>
     </>
@@ -738,7 +738,7 @@ const SUITS: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
       </p>
     </>
   ),
@@ -898,7 +898,7 @@ const MENSWEAR: CategoryConfig = {
       </p>
       <h3>United States Shipping</h3>
       <p>
-        Free U.S. shipping applies at $150 and above and shipping is $12 below that. Tracking is provided after dispatch.
+        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
       </p>
     </>
   ),
@@ -972,7 +972,7 @@ const JEWELRY: CategoryConfig = {
     },
     {
       question: "Do you ship bridal jewelry to the United States?",
-      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $150 and above and costs $12 below that. Tracking is provided after dispatch."
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $199 and above and costs $14.99 below that. Tracking is provided after dispatch."
     }
   ],
 };

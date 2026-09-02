@@ -125,16 +125,6 @@ const NewArrivalsBanner = () => {
     return () => window.clearTimeout(timer);
   }, [index, isPaused, next, prefersReducedMotion]);
 
-  useEffect(() => {
-    const nextSlide = featuredSlides[(index + 1) % featuredSlides.length];
-    const source =
-      window.matchMedia('(min-width: 640px)').matches && nextSlide.desktopImage
-        ? nextSlide.desktopImage
-        : nextSlide.image;
-    const preloadedImage = new Image();
-    preloadedImage.src = `${source}.webp`;
-  }, [index]);
-
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key === 'ArrowLeft') {
       event.preventDefault();
@@ -244,7 +234,7 @@ const NewArrivalsBanner = () => {
             height={activeSlide.height}
             decoding="async"
             loading="eager"
-            fetchPriority="high"
+            fetchPriority={index === 0 ? 'high' : 'low'}
             className={`absolute inset-0 h-full w-full animate-in zoom-in-105 duration-[7000ms] ease-out ${
               activeSlide.imageFit === 'cover'
                 ? 'object-cover'

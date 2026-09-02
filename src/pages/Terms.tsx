@@ -212,7 +212,7 @@ const Terms = () => {
                 <section id="shipping">
                   <h2 className="text-xl font-serif text-foreground mb-4">7. Shipping and Delivery</h2>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>LuxeMia currently ships to United States addresses only. Standard shipping is $12 below $150 and free at $150 and above. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
+                    <li>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
                     <li>Delivery estimates are not guaranteed and may be affected by weather or carrier delays.</li>
                     <li>LuxeMia is not responsible for delays caused by weather or carrier issues.</li>
                     <li>Risk of loss passes to you upon delivery to the carrier.</li>

@@ -1,5 +1,6 @@
 import { recoveredBlogPosts } from './recoveredBlogPosts';
 import { seoGrowthBlogPosts } from './seoGrowthBlogPosts';
+import { semanticCommerceGuides } from './semanticCommerceGuides';
 
 export interface BlogSource {
   title: string;
@@ -35,6 +36,18 @@ export interface BlogPost {
  * included pieces, sizing and availability.
  */
 export const PUBLISHED_BLOG_SLUGS = [
+  'what-should-a-male-guest-wear-to-a-three-day-indian-wedding',
+  'what-should-a-non-indian-guest-wear-to-an-indian-wedding',
+  'what-saree-fabrics-work-for-an-outdoor-summer-wedding',
+  'saree-versus-lehenga-for-a-wedding-guest',
+  'sherwani-versus-kurta-set',
+  'what-should-guests-wear-to-a-mehendi',
+  'what-should-guests-wear-to-a-sangeet',
+  'ready-to-ship-versus-made-to-order',
+  'what-does-semi-stitched-lehenga-mean',
+  'how-to-measure-for-a-lehenga-ordered-online',
+  'chaniya-choli-versus-lehenga',
+  'how-early-to-order-for-a-fixed-wedding-date',
   'indian-to-us-clothing-size-conversion-guide',
   'wedding-guest-outfit-ideas',
   'wedding-saree-for-mother-of-bride',
@@ -926,6 +939,7 @@ export const blogPosts: BlogPost[] = [
       SOURCES.luxemiaShipping,
     ],
   },
+  ...semanticCommerceGuides,
   ...seoGrowthBlogPosts,
   ...recoveredBlogPosts,
 ];

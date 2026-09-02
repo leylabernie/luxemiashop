@@ -90,11 +90,18 @@ requireAll('src/App.tsx', [
   'path="/collections/manthrakodi-sarees" element={<Navigate to="/sarees" replace />}',
 ]);
 requireAll('src/pages/ReadyToShip.tsx', [
-  'processingDays <= 5',
-  'verified semi-stitched processing window of up to five business days',
-  'Ready-to-wear and made-to-measure selections require additional processing',
-  'Processing is the time before dispatch',
+  'isMadeToOrderProduct(product.node.handle, product.node.tags)',
+  'Every purchasable LuxeMia catalog item is Ready to Ship',
+  'Order processing and carrier transit are separate',
   'View route-based rates',
+]);
+requireAll('src/lib/productFilters.ts', [
+  'isMadeToOrderProduct(p.node.handle, p.node.tags)',
+  "valueLower.includes('ready')",
+]);
+requireAll('src/hooks/useShopifyProducts.ts', [
+  'isMadeToOrderProduct(product.node.handle, product.node.tags)',
+  "const CACHE_VERSION = 'v13'",
 ]);
 requireAll('src/lib/shopify.ts', [
   'shipsWithinDays?: number | null;',
@@ -214,4 +221,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[trust-source] OK — metadata, route shipping, verified five-day Ready-to-Ship data, redirects and structured data use the final source of truth.');
+console.log('[trust-source] OK — metadata, route shipping, stocked Ready-to-Ship versus Made-to-Order classification, redirects and structured data use the final source of truth.');

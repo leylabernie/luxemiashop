@@ -16,7 +16,7 @@ import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelect
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel } from '@/lib/shipBy';
-import { getCustomizableProduct } from '@/lib/customizableProducts';
+import { getCustomizableProduct, isMadeToOrderProduct } from '@/lib/customizableProducts';
 import {
   getCustomerFacingProductOptionName,
   hasNativeProductSizeOption,
@@ -285,6 +285,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
+  const madeToOrderProduct = isMadeToOrderProduct(product.handle, product.tags);
   const { product: serviceAddOnProduct } = useShopifyProduct(
     SERVICE_ADD_ON_PRODUCT_HANDLE,
     { allowHiddenBillingProduct: true },
@@ -298,9 +299,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const isReadyMadeOnly = product.tags?.some((tag) =>
     /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
   ) ?? false;
-  const isStitchable = !customizableProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
-  const isMenswear = !customizableProduct && isMenswearProduct(product.productType, product.tags);
-  const showBottomStyleOption = !customizableProduct && shouldShowBottomStyle(product.productType, product.tags);
+  const isStitchable = !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
+  const isMenswear = !madeToOrderProduct && isMenswearProduct(product.productType, product.tags);
+  const showBottomStyleOption = !madeToOrderProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
   const isLaunchOfferActive = isRakshaBandhanCampaignActive();
@@ -484,6 +485,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       && /\bcustom(?:\s*size)?\b/i.test(value.trim()),
     ),
   [selectedOptions]);
+  const currentSelectionIsMadeToOrder = madeToOrderProduct || isCustomSizeSelected;
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -664,11 +666,24 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
       );
     }
+    if (madeToOrderProduct && !customizableProduct) {
+      customAttributes.push(
+        { key: 'Made to Order', value: 'Yes — confirmation required' },
+        { key: 'Measurements', value: 'Required after order' },
+        { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
+      );
+    }
     if (isCustomSizeSelected) {
       customAttributes.push(
         { key: 'Custom Size', value: 'Measurements must be confirmed before production' },
         { key: 'Measurement Confirmation', value: 'Customer acknowledged before checkout' },
       );
+    }
+    if (isCustomSizeSelected && !madeToOrderProduct) {
+      customAttributes.push({
+        key: 'Timing Estimate',
+        value: 'Approximately 4–5 weeks total for the custom selection; production and transit confirmed separately',
+      });
     }
     if (isStitchable && selectedStitchingType) {
       const stitchingOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
@@ -811,7 +826,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       </div>
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={Boolean(customizableProduct)} />
+      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} />
       {shipByLabel && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
@@ -1333,7 +1348,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
           <dt className="font-medium text-foreground">Sizing & Chart</dt>
           <dd className="text-muted-foreground">
-            {customizableProduct
+            {currentSelectionIsMadeToOrder
               ? 'Made to order from measurements confirmed with LuxeMia. '
               : listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
             <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
@@ -1343,7 +1358,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
           <dt className="font-medium text-foreground">Shipping Estimate</dt>
           <dd className="text-muted-foreground">
-            {customizableProduct
+            {currentSelectionIsMadeToOrder
               ? 'Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the required details and delivery address are known.'
               : shipByLabel
               ? `${shipByLabel}. Tracking details are emailed when the shipping label is created for dispatch.`
@@ -1424,7 +1439,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           </div>
           <div>
             <p className="text-sm font-medium">Tracked shipping</p>
-            <p className="text-xs text-muted-foreground">United States addresses only</p>
+            <p className="text-xs text-muted-foreground">the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius</p>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-card/50 rounded-sm border border-border/30">

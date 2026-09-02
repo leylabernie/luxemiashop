@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  inferIncludedPiecesFromTitle,
   isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
   resolveIncludedPieces,
@@ -155,4 +156,69 @@ test('included pieces prefer normalized metadata and retain exact included tags'
     'Blouse / lehenga skirt / matching dupatta',
   );
   assert.equal(resolveIncludedPieces(null, [], 'Pink Bridal Lehenga'), undefined);
+});
+
+
+test('title-backed included pieces require explicit garment evidence', () => {
+  assert.equal(
+    inferIncludedPiecesFromTitle(
+      'Cream Chinnon Beaded Palazzo Suit with Butti Dupatta',
+      ['three piece suit'],
+    ),
+    'Tunic, palazzo pants, and dupatta',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Embroidered Three-Piece Sharara Suit with Dupatta'),
+    'Tunic, sharara pants, and dupatta',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Silk Three Piece Gharara Suit with Matching Dupatta'),
+    'Tunic, gharara pants, and dupatta',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Cotton Salwar Kameez with Printed Dupatta'),
+    'Kameez, salwar pants, and dupatta',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Pink Net Lehenga Choli with Dupatta'),
+    'Lehenga, choli, and dupatta',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Banarasi Saree with Unstitched Blouse Piece'),
+    'Saree and blouse fabric',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Ivory Groom Sherwani with Embroidered Stole'),
+    'Sherwani and stole',
+  );
+  assert.equal(
+    inferIncludedPiecesFromTitle('Kurta Pajama with Nehru Vest'),
+    'Kurta, pajama pants, and vest',
+  );
+});
+
+test('title inference remains conservative for ambiguous listings', () => {
+  assert.equal(inferIncludedPiecesFromTitle('Pink Bridal Lehenga'), undefined);
+  assert.equal(inferIncludedPiecesFromTitle('Blue Palazzo Suit with Dupatta'), undefined);
+  assert.equal(inferIncludedPiecesFromTitle('Silk Saree with Dupatta'), undefined);
+  assert.equal(inferIncludedPiecesFromTitle('Groom Sherwani'), undefined);
+});
+
+test('normalized metadata and exact included tags still outrank title inference', () => {
+  assert.equal(
+    resolveIncludedPieces(
+      ['Custom top', 'Custom trousers', 'Custom dupatta'],
+      ['three piece suit'],
+      'Cream Palazzo Suit with Dupatta',
+    ),
+    'Custom top, Custom trousers, Custom dupatta',
+  );
+  assert.equal(
+    resolveIncludedPieces(
+      null,
+      ['Included: Kurta, churidar, and stole', 'three piece suit'],
+      'Groom Sherwani with Stole',
+    ),
+    'Kurta, churidar, and stole',
+  );
 });

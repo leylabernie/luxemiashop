@@ -29,6 +29,7 @@ const ROUTES_JSON = path.join(PROJECT_ROOT, 'scripts/routes.json');
 const BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/blogPosts.ts');
 const RECOVERED_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/recoveredBlogPosts.ts');
 const SEO_GROWTH_BLOG_POSTS_TS = path.join(PROJECT_ROOT, 'src/data/seoGrowthBlogPosts.ts');
+const SEMANTIC_COMMERCE_GUIDES_TS = path.join(PROJECT_ROOT, 'src/data/semanticCommerceGuides.ts');
 
 // ─── Static Routes ──────────────────────────────────────────────────────────
 // These are the non-dynamic, non-blog page routes currently in middleware.ts's
@@ -42,12 +43,10 @@ const STATIC_ROUTES = [
   '/sarees',
   '/menswear',
   '/jewelry',
-  '/jewelry',
   '/blog',
   '/collections',
   '/collections/silk-sarees',
   '/collections/kanchipuram-sarees',
-  '/collections/manthrakodi-sarees',
   '/collections/bridal-party-outfits',
   '/collections/bollywood-inspired-indian-outfits',
   '/collections/customizable-indian-outfits',
@@ -61,6 +60,9 @@ const STATIC_ROUTES = [
   '/collections/designer-sarees',
   '/collections/party-wear-lehengas',
   '/about',
+  '/us-support',
+  '/editorial-policy',
+  '/review-policy',
   '/sitemap',
   '/new-arrivals',
   '/indowestern',
@@ -70,6 +72,11 @@ const STATIC_ROUTES = [
   '/care-guide',
   '/faq',
   '/shipping',
+  '/shipping/united-states',
+  '/shipping/canada',
+  '/shipping/united-kingdom',
+  '/shipping/australia',
+  '/ready-to-ship',
   '/pages/shipping-customs',
   '/returns',
   '/contact',
@@ -80,6 +87,13 @@ const STATIC_ROUTES = [
   '/lookbook',
   '/wedding-party-orders',
   '/style-quiz',
+  '/festive-wear',
+  '/indian-wedding-guest-outfits',
+  '/wedding-events',
+  '/shop-by-fulfillment',
+  '/shop-by-fulfillment/ready-to-ship',
+  '/shop-by-fulfillment/made-to-order',
+  '/shop-by-fulfillment/customizable-outfits',
   // Occasion landing pages — high buyer-intent SEO pages
   '/collections/diwali-outfits',
   '/collections/wedding-guest-outfits',
@@ -88,10 +102,10 @@ const STATIC_ROUTES = [
   '/collections/navratri-outfits',
   '/collections/haldi-outfits',
   // Blog topic hubs — each route must contain at least one published article
-  '/blog/attires',
-  '/blog/motifs-embroideries',
+  '/blog/indian-wedding-guest-attire',
+  '/blog/indian-textiles-and-embroidery',
   '/blog/weddings-festivals',
-  '/blog/how-to-care',
+  '/blog/fit-sizing-and-garment-care',
   '/blog/designer-profiles',
   '/blog/cultural-context',
   // Factual organizational author page
@@ -196,7 +210,7 @@ async function fetchAllProductHandles() {
  * Returns an array of slug strings.
  */
 function parseBlogSlugs() {
-  const files = [BLOG_POSTS_TS, RECOVERED_BLOG_POSTS_TS, SEO_GROWTH_BLOG_POSTS_TS];
+  const files = [BLOG_POSTS_TS, RECOVERED_BLOG_POSTS_TS, SEO_GROWTH_BLOG_POSTS_TS, SEMANTIC_COMMERCE_GUIDES_TS];
   const slugs = new Set();
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();

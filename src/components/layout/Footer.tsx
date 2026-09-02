@@ -23,6 +23,9 @@ const footerLinks = {
     { name: 'Suits', href: '/suits' },
     { name: 'Indo-Western', href: '/indowestern' },
     { name: 'Menswear', href: '/menswear' },
+    { name: 'Festive Wear', href: '/festive-wear' },
+    { name: 'Wedding Guest Outfits', href: '/indian-wedding-guest-outfits' },
+    { name: 'Shop by Fulfillment', href: '/shop-by-fulfillment' },
   ],
   collections: [
     { name: 'Customizable Indian Outfits', href: '/collections/customizable-indian-outfits' },
@@ -39,7 +42,9 @@ const footerLinks = {
     { name: 'About LuxeMia', href: '/about' },
     { name: 'Style Quiz', href: '/style-quiz' },
     { name: 'Product Directory', href: '/sitemap' },
-    { name: 'Blog', href: '/blog' },
+    { name: 'Indian Attire Guides', href: '/blog' },
+    { name: 'Editorial Policy', href: '/editorial-policy' },
+    { name: 'Review Policy', href: '/review-policy' },
     { name: 'Plus-Size Indian Wear Guide', href: '/blog/plus-size-indian-ethnic-wear-guide' },
     { name: 'Manish Malhotra Profile', href: '/blog/manish-malhotra-bollywood-bridal-designer-profile' },
     { name: 'Indian Wedding Glossary', href: '/blog/indian-wedding-terms-glossary-50-events-rituals-roles' },
@@ -49,6 +54,7 @@ const footerLinks = {
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Shipping Info', href: '/shipping' },
+    { name: 'U.S. Customer Support', href: '/us-support' },
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'Measurement Worksheet', href: '/sizing-measurements-guide' },
@@ -300,7 +306,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <span className="text-foreground/20">·</span>
             <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
             <span className="text-foreground/20">·</span>
-            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">U.S. Shipping & Taxes</Link>
+            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">International Shipping, Duties & Taxes</Link>
           </div>
 
           {/* Copyright + business info — bottom row, centered */}

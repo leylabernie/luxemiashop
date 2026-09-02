@@ -137,6 +137,7 @@ export interface ShopifyProduct {
     tags?: string[];
     availableForSale?: boolean;
     shipsWithin?: number | null;
+    shipsWithinDays?: number | null;
     shipsWithinMetafield?: { value: string | null } | null;
     fabricMetafield?: { value: string | null } | null;
     materialMetafield?: { value: string | null } | null;
@@ -498,21 +499,20 @@ function sanitizeShopifyProductCopy(value: string): string {
   return (value || '')
     .replace(/\s*Shipping:\s*5-day express delivery to USA and Canada[\s\S]*$/gi, '')
     .replace(/\s*FAQQ\s*:[\s\S]*$/gi, '')
-    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $12 below $150 and free at $150 and above')
-    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard shipping is free at $150 and above and $12 below $150')
-    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. shipping at $150 and above')
-    .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $150 and above')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to USA, Canada, and Australia via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
+    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard U.S. shipping is free at $199 and above and $14.99 below $199')
+    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. standard shipping at $199 and above')
+    .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $199 and above')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. standard shipping at $199 and above. $14.99 below that. Tracking provided after dispatch.')
+    .replace(/Free worldwide shipping to the seven supported destination countries via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
     .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
-    .replace(/ready[- ]to[- ]ship/gi, 'available online')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
-    .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/USA, Canada, and Australia/gi, 'the United States')
+    .replace(/from the USA/gi, 'with tracked delivery')
+    .replace(/the seven supported destination countries/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
     .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
@@ -524,6 +524,13 @@ function parseMetafieldList(value?: string | null): string[] | null {
   } catch {
     return null;
   }
+}
+
+function parseShipsWithinDays(value?: string | null): number | null {
+  const match = (value || '').match(/\d+/);
+  if (!match) return null;
+  const days = Number.parseInt(match[0], 10);
+  return Number.isFinite(days) && days > 0 ? days : null;
 }
 
 function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
@@ -547,6 +554,8 @@ function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
   return {
     ...node,
     metadata,
+    shipsWithinDays: parseShipsWithinDays(node.shipsWithinMetafield?.value),
+    shipsWithin: parseShipsWithinDays(node.shipsWithinMetafield?.value),
     description: sanitizeShopifyProductCopy(node.description || ''),
     descriptionHtml: node.descriptionHtml ? sanitizeShopifyProductCopy(node.descriptionHtml) : node.descriptionHtml,
     title: node.title.replace(/\s*\|\s*Ready to Ship/gi, ''),

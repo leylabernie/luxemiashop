@@ -12,7 +12,7 @@ import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { cn } from '@/lib/utils';
 import { getShipByLabel } from '@/lib/shipBy';
-import { isCustomizableProduct } from '@/lib/customizableProducts';
+import { isMadeToOrderProduct } from '@/lib/customizableProducts';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -254,7 +254,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
 
   const imageUrl = product.node.images.edges[0]?.node.url;
-  const isVerifiedCustom = isCustomizableProduct(product.node.handle);
+  const isMadeToOrder = isMadeToOrderProduct(product.node.handle, product.node.tags);
   const isAvailable = product.node.variants.edges.some((edge) => edge.node.availableForSale !== false);
   const requiresOptionSelection = product.node.variants.edges.length > 1;
   const shipByLabel = getShipByLabel(product.node);
@@ -354,9 +354,9 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           {/* Hover Actions - Desktop only */}
           <div className="hidden lg:flex absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
             <div className="flex gap-2 w-full">
-              {isVerifiedCustom ? (
+              {isMadeToOrder ? (
                 <span className="flex w-full items-center justify-center bg-background/95 px-3 py-2 text-xs font-medium text-foreground backdrop-blur-sm">
-                  View custom color &amp; measurement details
+                  View made-to-order details
                 </span>
               ) : (
                 <button
@@ -369,7 +369,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                   Quick View
                 </button>
               )}
-              {showQuickAdd && !isVerifiedCustom && (
+              {showQuickAdd && !isMadeToOrder && (
                 <Button
                   onClick={handleQuickAdd}
                   size="sm"
@@ -389,9 +389,9 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 New
               </span>
             )}
-            {isVerifiedCustom && isAvailable && (
+            {isMadeToOrder && isAvailable && (
               <span className="rounded-[2px] bg-[#a96f72] px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-[#fff9f4]">
-                Custom color
+                Made to Order
               </span>
             )}
 
@@ -431,7 +431,10 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             </div>
 
           </div>
-          {shipByLabel && (
+          <p className={`text-xs font-medium ${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-green-400'}`}>
+            {isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+          </p>
+          {shipByLabel && !isMadeToOrder && (
             <p className="text-xs text-green-700 dark:text-green-400 font-medium">
               {shipByLabel}
             </p>
@@ -447,7 +450,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
         </div>
       </Link>
       {/* Quick View Modal */}
-      {isQuickViewOpen && !isVerifiedCustom && (
+      {isQuickViewOpen && !isMadeToOrder && (
         <QuickViewModal product={product} onClose={() => setIsQuickViewOpen(false)} />
       )}
     </motion.div>
