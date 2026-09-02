@@ -12,7 +12,7 @@ const Returns = () => {
       />
       <Header />
 
-      <main className="pt-[90px] lg:pt-[132px] pb-16">
+      <main id="merchant-return-policy" className="pt-[90px] lg:pt-[132px] pb-16">
         <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary to-background">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl text-center">
             <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">Returns</p>
