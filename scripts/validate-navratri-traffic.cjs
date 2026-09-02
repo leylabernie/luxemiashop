@@ -55,7 +55,17 @@ const collectionHtml = read(collectionPath);
 const articleHtml = read(articlePath);
 const homepageHtml = read(homepagePath);
 const feedXml = read('dist/merchant-feed.xml');
-const sitemapXml = read('dist/sitemap.xml');
+const sitemapIndexXml = read('dist/sitemap.xml');
+const sitemapXml = [
+  'products',
+  'collections',
+  'guides',
+  'pages',
+  'images',
+].map((name) => {
+  requireText(sitemapIndexXml, `/sitemap-${name}.xml`, `${name} sitemap index entry`);
+  return read(`dist/sitemap-${name}.xml`);
+}).join('\n');
 const blogSource = read('src/data/blogPosts.ts');
 const reviewedAt = blogSource.match(/const GROWTH_CONTENT_REVIEWED_AT = '(\d{4}-\d{2}-\d{2})';/)?.[1];
 if (!reviewedAt) {
