@@ -67,24 +67,22 @@ function patchMiddlewarePrecedence() {
 function patchValidatorScope() {
   const relativePath = 'scripts/validate-commercial-catalog-quality.cjs';
   let source = read(relativePath);
-  const before = String.raw`  if (included) {
-    withIncludedPieces += 1;
-    if (GENERIC_INCLUDED_COPY.test(included)) {
-      genericIncluded += 1;
-      failures.push(__BT__generic included-pieces copy: ${relativePath}__BT__);
-    }
-  }`;
+  const backtick = String.fromCharCode(96);
+  const before = '  if (included) {\n'
+    + '    withIncludedPieces += 1;\n'
+    + '    if (GENERIC_INCLUDED_COPY.test(included)) {\n'
+    + '      genericIncluded += 1;\n'
+    + '      failures.push(' + backtick + 'generic included-pieces copy: ${relativePath}' + backtick + ');\n'
+    + '    }\n'
+    + '  }';
   const after = String.raw`  if (included) {
     withIncludedPieces += 1;
     if (GENERIC_INCLUDED_COPY.test(included)) genericIncluded += 1;
   }`;
 
-  // Build the exact template-literal delimiters without nesting backticks in
-  // this script's own raw template literal.
-  const normalizedBefore = before.replace(/__BT__/g, String.fromCharCode(96));
   source = replaceOnce(
     source,
-    normalizedBefore,
+    before,
     after,
     'limit blocking validation to explicit title-backed product claims',
   );
