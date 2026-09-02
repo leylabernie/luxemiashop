@@ -1,7 +1,7 @@
 {
-  "source": "2026-09-02 semantic commerce release: retained the verified catalog inventory, replaced three redirected blog hubs with descriptive canonical hubs, and added twelve source-reviewed buyer guides plus fourteen trust, shipping, occasion and fulfillment pages",
+  "source": "2026-09-02 semantic commerce release: retained the verified catalog inventory and added twelve source-reviewed buyer guides, fourteen trust, shipping, occasion and fulfillment pages, plus five inventory-backed event collections",
   "capturedOn": "2026-09-02",
-  "urlCount": 898,
+  "urlCount": 903,
   "paths": [
     "/",
     "/collections",
@@ -69,6 +69,11 @@
     "/collections/mehendi-outfits",
     "/collections/eid-outfits",
     "/collections/navratri-outfits",
+    "/collections/navratri-chaniya-choli",
+    "/collections/garba-outfits",
+    "/collections/groomsmen-outfits",
+    "/collections/sangeet-outfits",
+    "/collections/reception-outfits",
     "/collections/haldi-outfits",
     "/blog/what-should-a-male-guest-wear-to-a-three-day-indian-wedding",
     "/blog/what-should-a-non-indian-guest-wear-to-an-indian-wedding",
