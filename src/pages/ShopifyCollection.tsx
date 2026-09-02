@@ -137,6 +137,34 @@ const ShopifyCollectionPage = () => {
           )}
         </section>
 
+        <section className="container mx-auto max-w-5xl px-4 pt-14 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
+            <div>
+              <h2 className="font-serif text-2xl">How to compare {config.name.toLowerCase()}</h2>
+              <div className="mt-5 overflow-x-auto">
+                <table className="w-full border-collapse text-left text-sm">
+                  <thead><tr className="border-b border-border"><th className="p-3">Check</th><th className="p-3">Why it matters</th><th className="p-3">Source of truth</th></tr></thead>
+                  <tbody>
+                    <tr className="border-b border-border"><td className="p-3">Included pieces</td><td className="p-3">Sets do not all contain the same garments</td><td className="p-3">Exact product description</td></tr>
+                    <tr className="border-b border-border"><td className="p-3">Fabric and work</td><td className="p-3">A material name does not prove fiber composition</td><td className="p-3">Product specifications</td></tr>
+                    <tr className="border-b border-border"><td className="p-3">Fit and fulfillment</td><td className="p-3">Sizing, processing and transit are separate</td><td className="p-3">Selected variant and timing details</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <aside className="border border-border bg-card p-6">
+              <h2 className="font-serif text-xl">Choose with confidence</h2>
+              <nav className="mt-4 flex flex-col gap-3 text-sm">
+                <Link className="text-primary underline underline-offset-4" to="/sizing-measurements-guide">Sizing and measurement guide</Link>
+                <Link className="text-primary underline underline-offset-4" to="/blog">Indian attire guides</Link>
+                <Link className="text-primary underline underline-offset-4" to="/shipping">Shipping rates and timing</Link>
+                <Link className="text-primary underline underline-offset-4" to="/returns">Returns and issue reporting</Link>
+                <Link className="text-primary underline underline-offset-4" to="/us-support">Contact LuxeMia support</Link>
+              </nav>
+            </aside>
+          </div>
+        </section>
+
         <section className="mt-16 border-y border-border bg-card/30 py-14">
           <div className="container mx-auto max-w-3xl px-4">
             <h2 className="mb-6 text-center font-serif text-2xl md:text-3xl">{config.editorialTitle}</h2>
