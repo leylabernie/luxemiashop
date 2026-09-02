@@ -184,11 +184,6 @@
       "statusCode": 301
     },
     {
-      "source": "/collections/reception-outfits",
-      "destination": "/collections",
-      "statusCode": 301
-    },
-    {
       "source": "/collections/festive-wear",
       "destination": "/collections",
       "statusCode": 301

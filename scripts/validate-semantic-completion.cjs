@@ -59,6 +59,10 @@ for (const route of requiredInventoryRoutes) {
   requireText(read('scripts/generate-routes.cjs'), route, `route manifest collection ${route}`);
   requireText(read('scripts/generate-sitemap.cjs'), route, `collection sitemap route ${route}`);
 }
+const vercelConfiguration = read('vercel.json');
+if (vercelConfiguration.includes('"source": "/collections/reception-outfits"')) {
+  throw new Error('[semantic-completion] Reception inventory page must not be shadowed by a Vercel redirect');
+}
 for (const forbiddenThinRoute of ['/collections/navratri-menswear']) {
   if ([read('src/App.tsx'), prerender, read('scripts/generate-routes.cjs'), read('scripts/generate-sitemap.cjs')]
     .some((source) => source.includes(forbiddenThinRoute))) {
