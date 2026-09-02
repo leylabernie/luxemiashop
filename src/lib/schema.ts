@@ -200,7 +200,8 @@ function generateOfferSchema(
     priceCurrency: input.currency,
     availability: `https://schema.org/${input.availability}`,
     itemCondition: 'https://schema.org/NewCondition',
-    seller: { '@id': `${SITE_URL}/#org` },
+    seller: { '@id': `${SITE_URL}/#organization` },
+    merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
     shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays),
   };
 }
@@ -361,7 +362,7 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': `${SITE_URL}/#org`,
+    '@id': `${SITE_URL}/#organization`,
     name: BRAND_NAME,
     url: SITE_URL,
     logo: BRAND_LOGO_URL,
@@ -373,12 +374,14 @@ export function generateOrganizationSchema() {
     },
     contactPoint: {
       '@type': 'ContactPoint',
+      '@id': `${SITE_URL}/#customer-support`,
       telephone: '+1-215-341-9990',
       contactType: 'customer service',
       email: 'hello@luxemia.shop',
       areaServed: SHIPPING_COUNTRIES,
       availableLanguage: ['English'],
     },
+    brand: { '@id': `${SITE_URL}/#brand` },
     knowsAbout: [
       'Indian Ethnic Wear',
       'Bridal Lehengas',

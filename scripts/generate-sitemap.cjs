@@ -306,14 +306,12 @@ async function fetchAllProducts() {
 // ─── Sitemap XML Generation ─────────────────────────────────────────────────
 
 function generateSitemap(products) {
-  const today = new Date().toISOString().split('T')[0];
   const urls = [];
 
   // Static pages
   for (const page of staticPages) {
     urls.push(`  <url>
     <loc>${SITE_URL}${page.loc}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
   </url>`);
@@ -322,7 +320,6 @@ function generateSitemap(products) {
   for (const blogPath of blogPosts) {
     urls.push(`  <url>
     <loc>${SITE_URL}${blogPath}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`);
@@ -331,7 +328,7 @@ function generateSitemap(products) {
   // Product pages with images
   for (const product of products) {
     const loc = `${SITE_URL}/product/${escapeXml(product.handle)}`;
-    const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : today;
+    const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : null;
     const imageUrl = product.images?.edges?.[0]?.node?.url;
     const imageTitle = sanitizeProductTitle(product.images?.edges?.[0]?.node?.altText || product.title);
 
@@ -347,7 +344,7 @@ function generateSitemap(products) {
 
     urls.push(`  <url>
     <loc>${loc}</loc>
-    <lastmod>${lastmod}</lastmod>
+    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>${imageTag}
   </url>`);
@@ -358,6 +355,43 @@ function generateSitemap(products) {
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urls.join('\n')}
 </urlset>`;
+}
+
+function splitSitemap(combinedXml) {
+  const blocks = combinedXml.match(/  <url>[\s\S]*?  <\/url>/g) || [];
+  const groups = { products: [], collections: [], guides: [], pages: [], images: [] };
+  const commercialRoots = new Set([
+    '/lehengas', '/sarees', '/suits', '/menswear', '/jewelry', '/indowestern',
+    '/new-arrivals', '/ready-to-ship', '/festive-wear',
+    '/indian-wedding-guest-outfits', '/wedding-events', '/shop-by-fulfillment',
+  ]);
+  for (const block of blocks) {
+    const loc = block.match(/<loc>https:\/\/luxemia\.shop([^<]*)<\/loc>/)?.[1] || '/';
+    if (loc.startsWith('/product/')) {
+      groups.products.push(block);
+      if (block.includes('<image:image>')) groups.images.push(block);
+    } else if (loc.startsWith('/blog') || loc.startsWith('/authors/')) {
+      groups.guides.push(block);
+    } else if (loc.startsWith('/collections') || commercialRoots.has(loc) || loc.startsWith('/shop-by-fulfillment/')) {
+      groups.collections.push(block);
+    } else {
+      groups.pages.push(block);
+    }
+  }
+  const urlset = (entries) => `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${entries.join('\n')}
+</urlset>`;
+  return Object.fromEntries(Object.entries(groups).map(([name, entries]) => [name, urlset(entries)]));
+}
+
+function generateSitemapIndex() {
+  const generatedAt = new Date().toISOString().split('T')[0];
+  const names = ['products', 'collections', 'guides', 'pages', 'images'];
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${names.map((name) => `  <sitemap><loc>${SITE_URL}/sitemap-${name}.xml</loc><lastmod>${generatedAt}</lastmod></sitemap>`).join('\n')}
+</sitemapindex>`;
 }
 
 // ─── Main ───────────────────────────────────────────────────────────────────
@@ -475,18 +509,26 @@ async function main() {
   const deadListPath = path.join(distDir, 'dead-product-handles.json');
   fs.writeFileSync(deadListPath, JSON.stringify([], null, 2));
 
-  const sitemap = generateSitemap(liveProducts);
+  const combinedSitemap = generateSitemap(liveProducts);
+  const splitSitemaps = splitSitemap(combinedSitemap);
+  const sitemap = generateSitemapIndex();
 
   // Write to dist/ (Vercel serves static files from dist/)
   const distPath = path.join(distDir, 'sitemap.xml');
   fs.writeFileSync(distPath, sitemap, 'utf8');
-  console.log(`[sitemap] Written sitemap to ${distPath} (${(sitemap.length / 1024).toFixed(1)} KB, ${liveProducts.length} live products, ${staticPages.length + blogPosts.length} static/blog URLs)`);
+  for (const [name, xml] of Object.entries(splitSitemaps)) {
+    fs.writeFileSync(path.join(distDir, `sitemap-${name}.xml`), xml, 'utf8');
+  }
+  console.log(`[sitemap] Written sitemap index plus five scoped sitemaps to ${distDir} (${liveProducts.length} live products, ${staticPages.length + blogPosts.length} static/blog URLs)`);
 
   // Also write to public/ for dev and fallback
   const publicDir = path.resolve(__dirname, '../public');
   if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
   const publicPath = path.join(publicDir, 'sitemap.xml');
   fs.writeFileSync(publicPath, sitemap, 'utf8');
+  for (const [name, xml] of Object.entries(splitSitemaps)) {
+    fs.writeFileSync(path.join(publicDir, `sitemap-${name}.xml`), xml, 'utf8');
+  }
   console.log(`[sitemap] Also written to ${publicPath}`);
 }
 

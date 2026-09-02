@@ -141,7 +141,7 @@
       "@graph": [
         {
           "@type": "Organization",
-          "@id": "https://luxemia.shop/#org",
+          "@id": "https://luxemia.shop/#organization",
           "name": "LuxeMia",
           "url": "https://luxemia.shop",
           "logo": "https://luxemia.shop/og-image.jpg",
@@ -156,6 +156,7 @@
           },
           "contactPoint": {
             "@type": "ContactPoint",
+            "@id": "https://luxemia.shop/#customer-support",
             "telephone": "+1-215-341-9990",
             "contactType": "customer service",
             "email": "hello@luxemia.shop",
@@ -171,6 +172,9 @@
             "availableLanguage": [
               "English"
             ]
+          },
+          "brand": {
+            "@id": "https://luxemia.shop/#brand"
           },
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -213,7 +217,7 @@
             "OnlineStore",
             "ClothingStore"
           ],
-          "@id": "https://luxemia.shop/#store",
+          "@id": "https://luxemia.shop/#organization",
           "name": "LuxeMia Ethnic Wear",
           "url": "https://luxemia.shop",
           "logo": "https://luxemia.shop/og-image.jpg",
@@ -308,8 +312,14 @@
           "name": "LuxeMia",
           "url": "https://luxemia.shop",
           "publisher": {
-            "@id": "https://luxemia.shop/#org"
+            "@id": "https://luxemia.shop/#organization"
           }
+        },
+        {
+          "@type": "Brand",
+          "@id": "https://luxemia.shop/#brand",
+          "name": "LuxeMia",
+          "url": "https://luxemia.shop"
         },
         {
           "@type": "ShippingService",
