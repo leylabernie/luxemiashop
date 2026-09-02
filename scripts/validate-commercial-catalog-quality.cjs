@@ -129,3 +129,10 @@ if (failures.length > 0) {
     '[commercial-quality] Failed:\n' + failures.slice(0, 100).map((item) => `- ${item}`).join('\n'),
   );
 }
+
+if (genericIncluded > 0) {
+  throw new Error(
+    `[commercial-quality] ${genericIncluded} product page(s) still expose generic included-piece copy; ` +
+    'catalog normalization must finish before release.',
+  );
+}
