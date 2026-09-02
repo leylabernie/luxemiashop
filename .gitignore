@@ -60,3 +60,5 @@ scripts/*
 !scripts/validate-seo-architecture.cjs
 !scripts/generate-openai-search-feed.cjs
 !scripts/validate-openai-search-feed.cjs
+!scripts/submit-indexnow.cjs
+!scripts/validate-semantic-completion.cjs
