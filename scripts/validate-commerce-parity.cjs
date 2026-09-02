@@ -93,7 +93,9 @@ function findCandidate(route, items) {
       const numericId = variant.id.split('/').pop();
       const item = items.find((entry) => {
         const link = extractTag(entry, 'link');
-        return link.includes(`/product/${product.handle}`) && link.includes(`variant=${numericId}`);
+        if (!link.includes(`/product/${product.handle}`)) return false;
+        const variantCount = product.variants?.edges?.length || 0;
+        return link.includes(`variant=${numericId}`) || (variantCount === 1 && !link.includes('variant='));
       });
       if (item) return { product, variant, item, numericId };
     }
