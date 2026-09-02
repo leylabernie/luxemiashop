@@ -832,6 +832,12 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
     return allProducts
       .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
       .filter((product) => matchesOccasionProduct(product, occasion))
+      .filter((product) => occasion !== 'groomsmen' || isMenswearProduct(product))
+      .filter((product) => {
+        if (occasion !== 'navratri-chaniya') return true;
+        const typeAndTitle = `${product.productType ?? ''} ${product.title ?? ''}`;
+        return /lehenga|lehnga|chaniya|choli/i.test(typeAndTitle) && !isMenswearProduct(product);
+      })
       .slice(0, maxProducts);
   }
 
@@ -1480,7 +1486,7 @@ const semanticCommerceRoutes = [
   {
     path: '/wedding-events', title: 'Shop Outfits by Indian Wedding Event | LuxeMia', h1: 'Shop Outfits by Indian Wedding Event',
     description: 'Find outfit guidance and collections for Mehendi, Haldi, Sangeet and reception events.',
-    content: '<p>Event pages organize current products by shopping intent, not universal dress rules. Hosts, region, religion, venue and family preferences can change what is appropriate.</p><h2>Browse events</h2><p><a href="/collections/mehendi-outfits">Mehendi</a>, <a href="/collections/haldi-outfits">Haldi</a>, and <a href="/collections/wedding-guest-outfits">Sangeet and reception</a>.</p>',
+    content: '<p>Event pages organize current products by shopping intent, not universal dress rules. Hosts, region, religion, venue and family preferences can change what is appropriate.</p><h2>Browse events</h2><p><a href="/collections/mehendi-outfits">Mehendi</a>, <a href="/collections/haldi-outfits">Haldi</a>, <a href="/collections/sangeet-outfits">Sangeet</a>, and <a href="/collections/reception-outfits">reception</a>.</p>',
   },
   {
     path: '/shop-by-fulfillment', title: 'Shop Indian Outfits by Fulfillment | LuxeMia', h1: 'Shop Indian Outfits by Fulfillment',
@@ -1531,8 +1537,8 @@ const routes = [
       <ul>
         <li><a href="/lehengas">Bridal Lehengas</a></li>
         <li><a href="/sarees">Wedding Sarees</a></li>
-        <li><a href="/collections">Reception Outfits</a></li>
-        <li><a href="/collections">Festive Wear</a></li>
+        <li><a href="/collections/reception-outfits">Reception Outfits</a></li>
+        <li><a href="/festive-wear">Festive Wear</a></li>
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
       <p>Free U.S. standard shipping at $199 and above. $14.99 below $199. Tracking details are emailed when the shipping label is created for dispatch.</p>
@@ -2027,21 +2033,6 @@ const routes = [
       <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
   },
   {
-    path: '/collections/reception-outfits',
-    title: 'Reception Outfits | Glamorous Party Wear | LuxeMia',
-    description: 'Shop reception outfits at LuxeMia. Glamorous gowns, designer lehengas & contemporary ethnic wear for wedding receptions. Stand out at every event.',
-    h1: 'Reception Outfits Collection',
-    content: '<p>Make a statement at wedding receptions with our glamorous collection. Designer lehengas, contemporary gowns, and elegant ethnic wear for the modern woman.</p>',
-  },
-  {
-    path: '/collections/festive-wear',
-    title: 'Festive Wear | Diwali, Eid & Celebration Outfits | LuxeMia',
-    description: 'Shop festive wear at LuxeMia. Beautiful Indian outfits for Diwali, Eid, Navratri & celebrations. Sarees, lehengas, suits & more.',
-    h1: 'Festive Wear Collection',
-    content: '<p>Celebrate every occasion in style with our festive wear collection. Beautiful sarees, lehengas, and suits perfect for Diwali, Eid, Navratri, and all your special celebrations.</p>',
-  },
-
-  {
     path: '/size-guide',
     title: 'Indian Clothing Size Guide — Compare Product Measurements | LuxeMia',
     description: 'Choose Indian clothing sizes online by comparing your current body measurements with the exact LuxeMia product listing. Free printable measurement worksheet included.',
@@ -2365,6 +2356,66 @@ const routes = [
       <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch. First-time shoppers can use LUXE10 for 10% off with no minimum purchase requirement.</p>
       <p>Contact LuxeMia before ordering when your celebration date is fixed. Delivery by a particular event is not guaranteed.</p>
     `,
+  },
+  {
+    path: '/collections/navratri-chaniya-choli',
+    category: 'occasion:navratri-chaniya',
+    title: 'Navratri Chaniya Choli USA | Current Styles | LuxeMia',
+    description: 'Shop current Navratri chaniya choli and lehenga sets. Compare included pieces, fabric, work, measurements, stitching, price and availability.',
+    h1: 'Navratri Chaniya Choli Online in the USA',
+    content: `<p>This collection contains active lehenga, chaniya and choli listings whose catalog information explicitly mentions Navratri or chaniya. Confirm each product’s exact pieces, measurements, stitching, price and availability.</p>
+      <h2>Choose by shopping need</h2><p><a href="/collections/navratri-outfits">All Navratri outfits</a> · <a href="/collections/garba-outfits">Garba outfits</a> · <a href="/festive-wear">Festive wear</a></p>
+      <h2>Compare before choosing</h2><p>Compare waist, bust, skirt length, closures, garment weight when supplied, dupatta security, embellishment placement and exact included pieces.</p>
+      <h2>Guides and support</h2><p><a href="/blog/chaniya-choli-versus-lehenga">Chaniya choli versus lehenga</a> · <a href="/sizing-measurements-guide">Measurement guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
+      <h2>Frequently asked questions</h2><h3>Is every product a complete three-piece set?</h3><p>No. Verify the exact stated pieces on the product page.</p><h3>Is delivery by my event guaranteed?</h3><p>No. Confirm processing and transit separately before ordering.</p>`,
+  },
+  {
+    path: '/collections/garba-outfits',
+    category: 'occasion:garba',
+    title: 'Garba Outfits USA | Dandiya Clothing | LuxeMia',
+    description: 'Shop active Garba and Dandiya outfit listings. Compare movement, included pieces, fabric, work, measurements, stitching and availability.',
+    h1: 'Garba and Dandiya Outfits Online in the USA',
+    content: `<p>This collection contains active products whose current title, product type or tags explicitly mention Garba or Dandiya. Verify every included piece, measurement, closure, fabric, work, price and selected-variant availability.</p>
+      <h2>Choose by shopping need</h2><p><a href="/collections/navratri-chaniya-choli">Navratri chaniya choli</a> · <a href="/collections/navratri-outfits">All Navratri outfits</a> · <a href="/collections/party-wear-lehengas">Festive lehengas</a></p>
+      <h2>Compare before choosing</h2><p>For movement, compare hem length, waist security, sleeves, neckline, dupatta handling, embellishment placement and footwear.</p>
+      <h2>Guides and support</h2><p><a href="/blog/navratri-9-day-color-guide-2026">Navratri buying guide</a> · <a href="/blog/ready-to-ship-versus-made-to-order">Fulfillment guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
+      <h2>Frequently asked questions</h2><h3>How are Garba products selected?</h3><p>The current catalog must explicitly mention Garba or Dandiya.</p><h3>Is delivery by my event guaranteed?</h3><p>No. Confirm processing and transit separately.</p>`,
+  },
+  {
+    path: '/collections/groomsmen-outfits',
+    category: 'occasion:groomsmen',
+    title: 'Indian Groomsmen Outfits USA | Kurta & Sherwani | LuxeMia',
+    description: 'Shop active menswear listings explicitly identified for groomsmen. Compare kurta, jacket and sherwani pieces, measurements and availability.',
+    h1: 'Indian Groomsmen Outfits Online in the USA',
+    content: `<p>This collection is limited to active menswear whose current catalog information explicitly identifies a groomsman or groomsmen use. Compare included garments, chest and length measurements, fulfillment, price and availability.</p>
+      <h2>Choose by shopping need</h2><p><a href="/menswear">All menswear</a> · <a href="/wedding-party-orders">Group-order support</a> · <a href="/shop-by-fulfillment/made-to-order">Made-to-order outfits</a></p>
+      <h2>Compare before choosing</h2><p>Compare kurta sets, Nehru-style jacket sets and sherwanis by their exact garments, fabric wording, measurements and current selected-size availability.</p>
+      <h2>Guides and support</h2><p><a href="/blog/sherwani-versus-kurta-set">Sherwani versus kurta set</a> · <a href="/sizing-measurements-guide">Measurement guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
+      <h2>Frequently asked questions</h2><h3>Are bridesmaid products included?</h3><p>No. Products need both a groomsmen signal and a menswear signal.</p><h3>Are matching group sizes guaranteed?</h3><p>No. Request a current quantity and size check before ordering.</p>`,
+  },
+  {
+    path: '/collections/sangeet-outfits',
+    category: 'occasion:sangeet',
+    title: 'Sangeet Outfits USA | Indian Dance-Event Styles | LuxeMia',
+    description: 'Shop active products explicitly identified for Sangeet. Compare movement, fabric, included pieces, measurements, fulfillment and availability.',
+    h1: 'Sangeet Outfits Online in the USA',
+    content: `<p>This collection contains active products whose current catalog information explicitly mentions Sangeet. Compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment and selected-variant availability.</p>
+      <h2>Choose by shopping need</h2><p><a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/sharara-suits">Sharara suits</a> · <a href="/menswear">Menswear</a></p>
+      <h2>Compare before choosing</h2><p>Compare lehengas, shararas, sarees and menswear by manageable hems, secure draping, exact set contents, measurements and current availability.</p>
+      <h2>Guides and support</h2><p><a href="/blog/what-should-guests-wear-to-a-sangeet">Sangeet guide</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">Ordering timeline</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
+      <h2>Frequently asked questions</h2><h3>How are Sangeet products selected?</h3><p>The current catalog must explicitly mention Sangeet.</p><h3>Is one silhouette required?</h3><p>No. Follow the host’s dress guidance and event format.</p>`,
+  },
+  {
+    path: '/collections/reception-outfits',
+    category: 'occasion:reception',
+    title: 'Indian Reception Outfits USA | Guest & Party Wear | LuxeMia',
+    description: 'Shop active products explicitly identified for receptions. Compare formality, fabric, work, included pieces, measurements, price and availability.',
+    h1: 'Indian Reception Outfits Online in the USA',
+    content: `<p>This collection contains active products whose current catalog information explicitly mentions a reception. Compare the host’s dress code with each listing’s silhouette, fabric wording, work, included pieces, measurements, fulfillment and availability.</p>
+      <h2>Choose by shopping need</h2><p><a href="/collections/designer-sarees">Designer sarees</a> · <a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/wedding-guest-outfits">Wedding guest outfits</a></p>
+      <h2>Compare before choosing</h2><p>Compare sarees, lehengas, shararas and menswear by the invitation, venue, movement needs, exact product construction and current selected-size availability.</p>
+      <h2>Guides and support</h2><p><a href="/blog/saree-versus-lehenga-for-a-wedding-guest">Saree versus lehenga</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">Ordering timeline</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
+      <h2>Frequently asked questions</h2><h3>How are reception products selected?</h3><p>The current catalog must explicitly mention reception.</p><h3>Are reception outfits always black-tie?</h3><p>No. Follow the invitation and host guidance.</p>`,
   },
   {
     path: '/wedding-party-orders',

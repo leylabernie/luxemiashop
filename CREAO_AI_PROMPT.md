@@ -214,7 +214,7 @@ Title,URL handle,Description,Vendor,Product category,Type,Tags,Published on onli
 | **Image alt text** | Same as product title | `Silk Blue Wedding Wear Embroidery Work Saree` |
 | **Gift card** | Always `FALSE` | `FALSE` |
 | **SEO title** | Same as product title | `Silk Blue Wedding Wear Embroidery Work Saree` |
-| **SEO description** | `Shop the [Title] at LuxeMia. Crafted in premium [Fabric] with exquisite [Work] in [Color]. Perfect for [occasion]. Free U.S. shipping at $150 and above. Dry clean only.` | `Shop the Silk Blue Wedding Wear Embroidery Work Saree at LuxeMia. Crafted in premium Silk with exquisite Embroidery Work in Blue. Perfect for wedding wear. Free U.S. shipping at $150 and above. Dry clean only.` |
+| **SEO description** | `Shop the [Title] at LuxeMia. Crafted in premium [Fabric] with exquisite [Work] in [Color]. Perfect for [occasion]. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Dry clean only.` | `Shop the Silk Blue Wedding Wear Embroidery Work Saree at LuxeMia. Crafted in premium Silk with exquisite Embroidery Work in Blue. Perfect for wedding wear. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Dry clean only.` |
 | **Color (metafield)** | Color in lowercase | `blue` |
 | **Google Shopping / Google product category** | Always `Apparel & Accessories > Clothing` | `Apparel & Accessories > Clothing` |
 | **Google Shopping / Gender** | Sarees/Suits → `Unisex`, Sherwanis → `Male` | `Unisex` |

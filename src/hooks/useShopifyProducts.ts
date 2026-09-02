@@ -255,7 +255,15 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
 
   if (category.startsWith('occasion:')) {
     const occasion = category.slice('occasion:'.length);
-    return allowed.filter((product) => matchesOccasion(product, occasion));
+    return allowed.filter((product) => {
+      if (!matchesOccasion(product, occasion)) return false;
+      if (occasion === 'groomsmen') return isMenswear(product);
+      if (occasion === 'navratri-chaniya') {
+        const typeAndTitle = `${product.node.productType ?? ''} ${product.node.title ?? ''}`;
+        return /lehenga|lehnga|chaniya|choli/i.test(typeAndTitle) && !isMenswear(product);
+      }
+      return true;
+    });
   }
 
   const types = CATEGORY_PRODUCT_TYPES[category];

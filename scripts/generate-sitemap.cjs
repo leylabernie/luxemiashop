@@ -133,6 +133,11 @@ const staticPages = [
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/navratri-chaniya-choli', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/garba-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/groomsmen-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/sangeet-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9' },
 ];
 
 

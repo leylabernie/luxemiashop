@@ -101,6 +101,11 @@ const STATIC_ROUTES = [
   '/collections/eid-outfits',
   '/collections/navratri-outfits',
   '/collections/haldi-outfits',
+  '/collections/navratri-chaniya-choli',
+  '/collections/garba-outfits',
+  '/collections/groomsmen-outfits',
+  '/collections/sangeet-outfits',
+  '/collections/reception-outfits',
   // Blog topic hubs — each route must contain at least one published article
   '/blog/indian-wedding-guest-attire',
   '/blog/indian-textiles-and-embroidery',

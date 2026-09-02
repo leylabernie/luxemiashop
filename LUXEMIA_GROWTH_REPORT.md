@@ -21,13 +21,13 @@ This report details our findings, documents the code-level fixes we have already
 The lack of sales is not a traffic volume problem alone; it is a conversion block problem. Even with modest traffic, LuxeMia should have seen conversions. The three primary conversion blockers are:
 
 ### 1. Extreme "All Sales Final" Customer Friction
-Indian ethnic wear represents a highly emotional, high-ticket purchase (often for weddings or major religious festivals). Buyers are terrified of ordering the wrong size online. 
+Indian ethnic wear represents a highly emotional, high-ticket purchase (often for weddings or major religious festivals). Buyers are terrified of ordering the wrong size online.
 *   **The Blocker**: LuxeMia's returns page explicitly states that all sales are final and exchanges are not accepted for any reason (including sizing). It goes further to state that damage claims require a "mandatory unboxing video." While these policies protect the business from high return shipping costs from India, they **completely destroy buyer confidence**. To a first-time shopper, this reads as highly defensive and suggests a low-quality product.
 *   **The Fix**: Keep the back-end return policy to protect margins, but soften the front-end copy. Introduce the **$30 Fit Guarantee** (which we added to `ProductInfo.tsx` in a recent commit): if the readymade size doesn't fit, offer a $30 local tailoring credit. This completely bypasses return shipping costs while giving the user ultimate confidence to buy.
 
-### 2. High Free Shipping Threshold ($350)
+### 2. High Current U.S. Shipping Threshold ($199)
 *   **The Blocker**: Average order value for a suit or readymade saree is around $120–$180. A $350 shipping threshold forces customers to buy 2 or 3 items to get free shipping. Since they are first-time buyers who are already hesitant about sizing and the "no-returns" policy, they will never commit to a $350 cart. They abandon the cart at checkout when faced with high shipping fees.
-*   **The Fix**: Reduce the free shipping threshold to **$150** or **$200** to capture single-item buyers, and bake the flat-rate shipping cost into product pricing if necessary. 
+*   **The Fix**: Reduce the free U.S. standard shipping threshold to **$199** to capture single-item buyers, and bake the flat-rate shipping cost into product pricing if necessary.
 
 ### 3. Lack of Visual Social Proof and Trust Triggers
 *   **The Blocker**: First-time buyers look for reviews, user-generated photos, and security trust badges. There are currently no product reviews, customer-uploaded photos, or prominent trust seals on the product pages.
@@ -224,7 +224,7 @@ AI search engines (Perplexity, ChatGPT Search, Gemini, Claude, and Apple Intelli
 *   **Objective**: Complete Google indexation of all 675 products and remove GSC "duplicate canonical" flags. Reduce mobile bounce rates by shifting the Welcome Popup trigger to exit-intent.
 
 ### Month 2: Free Stitching Tiers & Shipping Adjustment
-*   **Objective**: Drop the free shipping threshold to **$150** or **$200** for USA and Canada. Launch high-intent occasion collection pages to target late-summer festival queries (e.g. Navratri, Diwali).
+*   **Objective**: Drop the free U.S. standard shipping threshold to **$199** for USA and Canada. Launch high-intent occasion collection pages to target late-summer festival queries (e.g. Navratri, Diwali).
 
 ### Month 3: Seeding Social Proof & Review Automation
 *   **Objective**: Integrate a free review email-capture flow. Reach out to micro-influencers on Instagram/TikTok for organic affiliate partnerships (offer free outfits in exchange for video reviews and unboxing clips).

@@ -4,5 +4,10 @@
   "mehendi": ["mehendi", "mehndi"],
   "eid": ["eid", "chikankari", "ramadan"],
   "navratri": ["navratri", "garba", "chaniya", "dandiya"],
+  "navratri-chaniya": ["navratri", "chaniya"],
+  "garba": ["garba", "dandiya"],
+  "groomsmen": ["groomsmen", "groomsman"],
+  "sangeet": ["sangeet"],
+  "reception": ["reception"],
   "haldi": ["haldi", "turmeric"]
 }
