@@ -526,7 +526,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div><dt>Fabric Details</dt><dd>${escapeHtml(material || 'Review the product description for the fabric or material supplied with this listing.')}</dd></div>
           ${blouseFabric ? `<div><dt>Blouse Fabric</dt><dd>${escapeHtml(blouseFabric)}</dd></div>` : ''}
           ${occasions.length > 0 ? `<div><dt>Occasion</dt><dd>${escapeHtml(occasions.join(', '))}</dd></div>` : ''}
-          <div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.')}</dd></div>
+          ${includedPieces ? `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>` : ''}
           ${careInstructions ? `<div><dt>Care</dt><dd>${escapeHtml(careInstructions)}</dd></div>` : ''}
           ${shopifyCategory ? `<div><dt>Product Category</dt><dd>${escapeHtml(shopifyCategory)}</dd></div>` : ''}
           <div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizes.length > 0 ? `Listed options: ${sizes.join(', ')}. Review the Size Guide before ordering.` : 'Available sizing varies by product. Review the listed options and Size Guide before ordering.')}</dd></div>
