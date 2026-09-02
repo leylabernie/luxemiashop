@@ -96,6 +96,10 @@ const staticPages = [
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
   { loc: '/faq', changefreq: 'monthly', priority: '0.5' },
   { loc: '/shipping', changefreq: 'monthly', priority: '0.4' },
+  { loc: '/shipping/united-states', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/canada', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/united-kingdom', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/australia', changefreq: 'monthly', priority: '0.6' },
   { loc: '/pages/shipping-customs', changefreq: 'monthly', priority: '0.4' },
   { loc: '/returns', changefreq: 'monthly', priority: '0.4' },
   { loc: '/size-guide', changefreq: 'monthly', priority: '0.5' },
@@ -103,11 +107,21 @@ const staticPages = [
   { loc: '/care-guide', changefreq: 'monthly', priority: '0.5' },
   { loc: '/privacy', changefreq: 'yearly', priority: '0.3' },
   { loc: '/terms', changefreq: 'yearly', priority: '0.3' },
+  { loc: '/us-support', changefreq: 'monthly', priority: '0.5' },
+  { loc: '/editorial-policy', changefreq: 'yearly', priority: '0.4' },
+  { loc: '/review-policy', changefreq: 'yearly', priority: '0.4' },
+  { loc: '/festive-wear', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/indian-wedding-guest-outfits', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/wedding-events', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/shop-by-fulfillment', changefreq: 'weekly', priority: '0.7' },
+  { loc: '/shop-by-fulfillment/ready-to-ship', changefreq: 'daily', priority: '0.8' },
+  { loc: '/shop-by-fulfillment/made-to-order', changefreq: 'weekly', priority: '0.7' },
+  { loc: '/shop-by-fulfillment/customizable-outfits', changefreq: 'weekly', priority: '0.8' },
   { loc: '/blog', changefreq: 'weekly', priority: '0.8' },
-  { loc: '/blog/attires', changefreq: 'monthly', priority: '0.7' },
-  { loc: '/blog/motifs-embroideries', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/indian-wedding-guest-attire', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/indian-textiles-and-embroidery', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog/weddings-festivals', changefreq: 'monthly', priority: '0.7' },
-  { loc: '/blog/how-to-care', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/blog/fit-sizing-and-garment-care', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog/designer-profiles', changefreq: 'monthly', priority: '0.7' },
   { loc: '/blog/cultural-context', changefreq: 'monthly', priority: '0.7' },
   { loc: '/authors/luxemia-editorial-team', changefreq: 'monthly', priority: '0.4' },
@@ -127,7 +141,8 @@ function parseBlogSlugs() {
   const blogPostsPath = path.join(__dirname, '..', 'src', 'data', 'blogPosts.ts');
   const recoveredBlogPostsPath = path.join(__dirname, '..', 'src', 'data', 'recoveredBlogPosts.ts');
   const seoGrowthBlogPostsPath = path.join(__dirname, '..', 'src', 'data', 'seoGrowthBlogPosts.ts');
-  const files = [blogPostsPath, recoveredBlogPostsPath, seoGrowthBlogPostsPath];
+  const semanticCommerceGuidesPath = path.join(__dirname, '..', 'src', 'data', 'semanticCommerceGuides.ts');
+  const files = [blogPostsPath, recoveredBlogPostsPath, seoGrowthBlogPostsPath, semanticCommerceGuidesPath];
   const slugs = [];
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();
