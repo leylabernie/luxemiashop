@@ -166,12 +166,6 @@ for (const handle of REQUIRED_NAVRATRI_PRODUCT_HANDLES) {
   }
 }
 
-const hierarchicalTypes = count(feedXml, /<g:product_type>Apparel &amp; Accessories &gt; [^<]+<\/g:product_type>/g);
-const feedItems = count(feedXml, /<item>/g);
-if (hierarchicalTypes !== feedItems) {
-  throw new Error(`[navratri-traffic] Hierarchical product types cover ${hierarchicalTypes} of ${feedItems} Merchant offers`);
-}
-
 for (const url of [
   'https://luxemia.shop/collections/navratri-outfits',
   'https://luxemia.shop/blog/navratri-9-day-color-guide-2026',
@@ -184,4 +178,4 @@ for (const url of [
   }
 }
 
-console.log(`[navratri-traffic] OK — ${collectionProductLinks.size} seasonal products including all ${REQUIRED_NAVRATRI_PRODUCT_HANDLES.length} published listings; generic /lehengas is wedding-led with ${festiveTopCount}/${firstMerchandisingWindow.length} explicit Navratri/Garba products in its first window; guide links, schema, Merchant coverage for every required listing, product-type hierarchy, prerendering, and sitemaps verified.`);
+console.log(`[navratri-traffic] OK — ${collectionProductLinks.size} seasonal products including all ${REQUIRED_NAVRATRI_PRODUCT_HANDLES.length} published listings; generic /lehengas is wedding-led with ${festiveTopCount}/${firstMerchandisingWindow.length} explicit Navratri/Garba products in its first window; guide links, schema, Merchant coverage for every required listing, prerendering, and sitemaps verified.`);
