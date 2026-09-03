@@ -43,6 +43,9 @@ requireAll('src/lib/schema.ts', [
   "'@id': `${options.url}#webpage`",
   "inLanguage: 'en'",
 ]);
+requireAll('scripts/postprocess-built-trust.cjs', [
+  "output.currenciesAccepted = 'USD'",
+]);
 requireAll('src/pages/Blog.tsx', [
   `"publisher": { "@id": "${IDS.organization}" }`,
   `"@id": "${IDS.editorial}"`,

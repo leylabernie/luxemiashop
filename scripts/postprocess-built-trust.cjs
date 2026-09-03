@@ -63,7 +63,9 @@ function cleanSchema(value) {
     output.name = 'LuxeMia';
     output.description = 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and tracking after dispatch.';
     output.areaServed = COUNTRY_OBJECTS;
-    output.currenciesAccepted = 'AUD, CAD, GBP, MUR, NZD, USD';
+    // Catalog prices and published shipping rates are USD. Serving multiple
+    // countries does not prove that their local currencies are accepted.
+    output.currenciesAccepted = 'USD';
   }
   if (output.mpn && output.sku && output.mpn === output.sku) delete output.mpn;
   return output;
