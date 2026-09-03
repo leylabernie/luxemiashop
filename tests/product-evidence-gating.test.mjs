@@ -1,11 +1,16 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { execFile as execFileCallback } from 'node:child_process';
+import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { pathToFileURL } from 'node:url';
+import { promisify } from 'node:util';
 import { build } from 'esbuild';
+import { resolveIncludedPieces } from '../src/lib/productPurchaseFlow.ts';
+
+const execFile = promisify(execFileCallback);
 
 const projectRoot = path.resolve(import.meta.dirname, '..');
 const temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), 'luxemia-product-evidence-'));
@@ -117,6 +122,12 @@ const { buildVerifiedProductCopy } = await import(pathToFileURL(bundledProductCo
 const { isMadeToOrderProduct } = await import(pathToFileURL(bundledCustomizableProductsPath).href);
 const { fetchProductByHandle } = await import(pathToFileURL(bundledShopifyPath).href);
 const { resolveProductLoadStateForHandle } = await import(pathToFileURL(bundledProductHookPath).href);
+const {
+  buildHydrationProductNode,
+  getIncludedComponentsMetafield,
+  getIncludedComponentsMetafieldList,
+  getListedProductAttributes,
+} = await import(pathToFileURL(path.join(projectRoot, 'scripts/prerender.js')).href);
 
 const [
   productInfoSource,
@@ -178,6 +189,277 @@ test('product purchase UI has no synthetic tailoring or fallback size catalog', 
   assert.doesNotMatch(sizeGuideModalSource, /const (?:lehenga|suit|menswear)Sizes|4-6 weeks|0\.8 meter|one-size-fits-all|run true to size|typically have elastic|Most suits come semi-stitched/);
   assert.match(sizeGuideModalSource, /does not apply one universal chart/);
   assert.equal(existsSync(path.join(projectRoot, 'src/components/HowToMeasureModal.tsx')), false);
+});
+
+test('commercial quality never invents missing pieces and rejects incomplete supplied sets', async () => {
+  const fixtureRoot = path.join(temporaryDirectory, 'commercial-quality-fixture');
+  const fixturePath = path.join(fixtureRoot, 'sherwani.html');
+  const supportLinks = [
+    '/sizing-measurements-guide',
+    '/shipping',
+    '/returns',
+    '/contact',
+  ].map((href) => `<a href="${href}">Support</a>`).join('');
+  const page = (included = '', title = 'Beige Art Silk Groom Sherwani with Stole') => `
+    <h1>${title}</h1>
+    <nav aria-label="Shop purchase-intent collections"></nav>
+    ${supportLinks}
+    ${included ? `<dl><dt>Included Pieces</dt><dd>${included}</dd></dl>` : ''}
+  `;
+
+  await mkdir(fixtureRoot, { recursive: true });
+  await writeFile(fixturePath, page());
+  const titleOnlyResult = await execFile(process.execPath, [
+    path.join(projectRoot, 'scripts/validate-commercial-catalog-quality.cjs'),
+  ], { env: { ...process.env, COMMERCIAL_PRODUCT_ROOT: fixtureRoot } });
+  assert.match(titleOnlyResult.stdout, /1 title-only component descriptions left without an inferred Included Pieces row/);
+
+  await writeFile(fixturePath, page('Sherwani only'));
+  await assert.rejects(
+    execFile(process.execPath, [
+      path.join(projectRoot, 'scripts/validate-commercial-catalog-quality.cjs'),
+    ], { env: { ...process.env, COMMERCIAL_PRODUCT_ROOT: fixtureRoot } }),
+    (error) => {
+      assert.match(error.stderr, /evidence-backed component mismatch/);
+      assert.match(error.stderr, /expected sherwani with stole, found "Sherwani only"/);
+      return true;
+    },
+  );
+
+  const threePieceTitle = 'Embroidered Three-Piece Palazzo Suit with Dupatta';
+  await writeFile(fixturePath, page('Palazzo, Dupatta', threePieceTitle));
+  await assert.rejects(
+    execFile(process.execPath, [
+      path.join(projectRoot, 'scripts/validate-commercial-catalog-quality.cjs'),
+    ], { env: { ...process.env, COMMERCIAL_PRODUCT_ROOT: fixtureRoot } }),
+    /three named components including palazzo and dupatta/,
+  );
+
+  await writeFile(fixturePath, page('Kurta, Dupatta; Palazzo not included', threePieceTitle));
+  await assert.rejects(
+    execFile(process.execPath, [
+      path.join(projectRoot, 'scripts/validate-commercial-catalog-quality.cjs'),
+    ], { env: { ...process.env, COMMERCIAL_PRODUCT_ROOT: fixtureRoot } }),
+    /negated component copy cannot be an Included Pieces value/,
+  );
+
+  await writeFile(fixturePath, page('Kurta, Palazzo, No Dupatta', threePieceTitle));
+  await assert.rejects(
+    execFile(process.execPath, [
+      path.join(projectRoot, 'scripts/validate-commercial-catalog-quality.cjs'),
+    ], { env: { ...process.env, COMMERCIAL_PRODUCT_ROOT: fixtureRoot } }),
+    /negated component copy cannot be an Included Pieces value/,
+  );
+
+  await writeFile(fixturePath, page('Kurta, Palazzo, Dupatta', threePieceTitle));
+  await execFile(process.execPath, [
+    path.join(projectRoot, 'scripts/validate-commercial-catalog-quality.cjs'),
+  ], { env: { ...process.env, COMMERCIAL_PRODUCT_ROOT: fixtureRoot } });
+});
+
+test('product prerender and live refresh share structured included-components evidence', async () => {
+  const product = {
+    title: 'Beige Art Silk Groom Sherwani with Stole',
+    description: '',
+    tags: ['included:Wrong fallback'],
+    includedComponentsMetafield: { value: '[" Sherwani ","Stole","stole"]' },
+    options: [],
+    variants: { edges: [] },
+  };
+
+  assert.deepEqual(getIncludedComponentsMetafieldList(product), ['Sherwani', 'Stole']);
+  assert.equal(getIncludedComponentsMetafield(product), 'Sherwani, Stole');
+  assert.equal(getListedProductAttributes(product).includedPieces, 'Sherwani, Stole');
+  assert.match(buildVerifiedProductCopy(product), /Listed components: Sherwani, Stole\./);
+  assert.doesNotMatch(buildVerifiedProductCopy(product), /Wrong fallback/);
+  assert.deepEqual(
+    buildHydrationProductNode(product).metadata.includedComponents,
+    ['Sherwani, Stole'],
+  );
+  const longButAccepted = {
+    ...product,
+    includedComponentsMetafield: {
+      value: JSON.stringify(['A'.repeat(70), 'B'.repeat(40)]),
+    },
+  };
+  const longButAcceptedText = `${'A'.repeat(70)}, ${'B'.repeat(40)}`;
+  assert.equal(getIncludedComponentsMetafield(longButAccepted), longButAcceptedText);
+  assert.equal(
+    resolveIncludedPieces(
+      buildHydrationProductNode(longButAccepted).metadata.includedComponents,
+      longButAccepted.tags,
+    ),
+    longButAcceptedText,
+  );
+  assert.deepEqual(getIncludedComponentsMetafieldList({
+    includedComponentsMetafield: { value: '{"not":"a list"}' },
+  }), []);
+  assert.deepEqual(getIncludedComponentsMetafieldList({
+    includedComponentsMetafield: { value: 'not json' },
+  }), []);
+  assert.deepEqual(getIncludedComponentsMetafieldList({
+    includedComponentsMetafield: { value: '[]' },
+  }), []);
+  assert.deepEqual(getIncludedComponentsMetafieldList({
+    includedComponentsMetafield: { value: '["Sherwani",7]' },
+  }), []);
+  assert.deepEqual(getIncludedComponentsMetafieldList({
+    includedComponentsMetafield: { value: '["Kurta","Dupatta; palazzo not included"]' },
+  }), []);
+  assert.deepEqual(getIncludedComponentsMetafieldList({
+    includedComponentsMetafield: { value: '["Kurta","Palazzo","No Dupatta"]' },
+  }), []);
+
+  const overlengthMetafield = {
+    ...product,
+    title: 'Example Three-Piece Set',
+    tags: ['included:Kurta, Pants, Dupatta'],
+    includedComponentsMetafield: {
+      value: JSON.stringify(['A'.repeat(70), 'B'.repeat(70)]),
+    },
+  };
+  assert.equal(getIncludedComponentsMetafield(overlengthMetafield), undefined);
+  assert.equal(
+    getListedProductAttributes(overlengthMetafield).includedPieces,
+    'Kurta, Pants, Dupatta',
+  );
+  assert.deepEqual(
+    buildHydrationProductNode(overlengthMetafield).metadata.includedComponents,
+    ['Kurta, Pants, Dupatta'],
+  );
+  assert.equal(
+    Object.hasOwn(buildHydrationProductNode(overlengthMetafield), 'includedComponentsMetafield'),
+    false,
+  );
+
+  const descriptionOnly = {
+    ...product,
+    tags: ['facts:source-verified'],
+    includedComponentsMetafield: null,
+    description: 'Set includes: Kurta, Palazzo, Dupatta. This source-reviewed listing description is deliberately long enough to remain the published descriptive copy for the product.',
+  };
+  assert.equal(getListedProductAttributes(descriptionOnly).includedPieces, undefined);
+  assert.equal(buildHydrationProductNode(descriptionOnly).metadata.includedComponents, null);
+
+  const conflictingVerifiedDescription = {
+    ...product,
+    tags: ['facts:source-verified', 'included:Wrong fallback'],
+    description: 'Set includes: Wrong Tunic, Wrong Pants, Wrong Dupatta. This source-reviewed listing description is deliberately long enough to exercise the authoritative structured-component precedence path.',
+  };
+  const authoritativeCopy = buildVerifiedProductCopy(conflictingVerifiedDescription);
+  assert.match(authoritativeCopy, /Listed components: Sherwani, Stole\./);
+  assert.doesNotMatch(authoritativeCopy, /Wrong Tunic|Wrong Pants|Wrong Dupatta|Wrong fallback/);
+
+  assert.match(
+    prerenderSource,
+    /includedComponentsMetafield:\s*metafield\(namespace:\s*"custom",\s*key:\s*"included_components"\)/,
+  );
+  assert.equal(
+    (shopifySource.match(/includedComponentsMetafield:\s*metafield\(namespace:\s*"custom",\s*key:\s*"included_components"\)/g) || []).length,
+    3,
+    'all-products, product-detail, and collection refresh queries must request included components',
+  );
+  assert.match(prerenderSource, /function getIncludedComponentsMetafield\(product\)/);
+  assert.doesNotMatch(prerenderSource, /getExplicitIncludedPieces/);
+  assert.match(
+    prerenderSource,
+    /const includedPieces = getIncludedComponentsMetafield\(product\)[\s\S]*?includedPiecesTag/,
+  );
+
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          product: {
+            ...product,
+            id: 'gid://shopify/Product/structured-components',
+            handle: 'structured-components-refresh',
+            availableForSale: true,
+            priceRange: {
+              minVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+              maxVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+            },
+            compareAtPriceRange: {
+              minVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+              maxVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+            },
+            images: { edges: [] },
+          },
+        },
+      }),
+    });
+    const refreshed = await fetchProductByHandle('structured-components-refresh');
+    assert.equal(
+      resolveIncludedPieces(refreshed?.metadata?.includedComponents, refreshed?.tags),
+      'Sherwani, Stole',
+    );
+
+    globalThis.fetch = async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          product: {
+            ...overlengthMetafield,
+            id: 'gid://shopify/Product/overlength-components',
+            handle: 'overlength-components-refresh',
+            availableForSale: true,
+            priceRange: {
+              minVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+              maxVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+            },
+            compareAtPriceRange: {
+              minVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+              maxVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+            },
+            images: { edges: [] },
+          },
+        },
+      }),
+    });
+    const refreshedOverlength = await fetchProductByHandle('overlength-components-refresh');
+    assert.equal(
+      resolveIncludedPieces(refreshedOverlength?.metadata?.includedComponents, refreshedOverlength?.tags),
+      'Kurta, Pants, Dupatta',
+    );
+
+    globalThis.fetch = async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        data: {
+          product: {
+            ...descriptionOnly,
+            id: 'gid://shopify/Product/description-only-components',
+            handle: 'description-only-components-refresh',
+            availableForSale: true,
+            priceRange: {
+              minVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+              maxVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+            },
+            compareAtPriceRange: {
+              minVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+              maxVariantPrice: { amount: '100.00', currencyCode: 'USD' },
+            },
+            images: { edges: [] },
+          },
+        },
+      }),
+    });
+    const refreshedDescriptionOnly = await fetchProductByHandle('description-only-components-refresh');
+    assert.equal(
+      resolveIncludedPieces(
+        refreshedDescriptionOnly?.metadata?.includedComponents,
+        refreshedDescriptionOnly?.tags,
+      ),
+      undefined,
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test('custom color and measurement claims require current explicit Shopify evidence', () => {

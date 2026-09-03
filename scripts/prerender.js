@@ -138,6 +138,15 @@ async function loadTsModule(relativeSrcPath) {
     fs.unlinkSync(tmpFile);
   }
 }
+const includedComponentsModule = await loadTsModule('src/lib/includedComponents.ts');
+if (
+  typeof includedComponentsModule.parseIncludedComponentsMetafield !== 'function'
+  || typeof includedComponentsModule.normalizeIncludedPiecesText !== 'function'
+) {
+  throw new Error('[included-components] Shared evidence normalizer is missing.');
+}
+const parseIncludedComponentsMetafield = includedComponentsModule.parseIncludedComponentsMetafield;
+const normalizeIncludedPiecesText = includedComponentsModule.normalizeIncludedPiecesText;
 let rankCommercialProducts = (products) => [...products];
 let rankGenericLehengasByIntent = (products) => [...products];
 let getCollectionStandard = () => undefined;
@@ -240,35 +249,15 @@ function getLabeledListingFact(description, labels) {
   return cleanVerifiedFact(plainMatch?.[1]);
 }
 
-function getExplicitIncludedPieces(product) {
-  const fromTag = (product?.tags || []).find((tag) => /^(?:included|included pieces|pieces|set includes|package includes):/i.test(String(tag)));
-  if (fromTag) {
-    const parsed = String(fromTag).replace(/^[^:]+:\s*/, '');
-    return cleanVerifiedFact(parsed);
-  }
+function getIncludedComponentsMetafieldList(product) {
+  return parseIncludedComponentsMetafield(product?.includedComponentsMetafield?.value) || [];
+}
 
-  const sourceVerified = (product?.tags || []).some(
-    (tag) => String(tag).trim().toLowerCase() === 'facts:source-verified',
-  );
-  if (!sourceVerified) return undefined;
-
-  const listingText = textFromListing(product?.description);
-  if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
-  const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
-  const parsed = cleanVerifiedFact(explicit?.[1]);
-  if (!parsed) return undefined;
-
-  // "Includes" also appears in tailoring/pricing prose (for example,
-  // "includes the approved $10 stitching tier"). Only expose the value as a
-  // product component when it names an actual garment/accessory and contains
-  // no commercial-service language.
-  if (/\$|\b(?:approved|price|pricing|fee|charge|service|shipping|delivery|return|refund|tier)\b/i.test(parsed)) {
-    return undefined;
-  }
-  if (!/\b(?:blouse|choli|lehenga|skirt|dupatta|saree|fabric|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?|bracelet|ring|tikka|purse|potli)\b/i.test(parsed)) {
-    return undefined;
-  }
-  return parsed;
+function getIncludedComponentsMetafield(product) {
+  const components = getIncludedComponentsMetafieldList(product);
+  return components.length > 0
+    ? normalizeIncludedPiecesText(components.join(', '))
+    : undefined;
 }
 
 function getVerifiedOccasion(product) {
@@ -326,9 +315,10 @@ function getListedProductAttributes(product) {
   const includedPiecesPrefix = includedPiecesTag
     ? includedPiecePrefixes.find(prefix => String(includedPiecesTag).toLowerCase().startsWith(prefix))
     : null;
-  const includedPieces = includedPiecesTag && includedPiecesPrefix
-    ? String(includedPiecesTag).slice(includedPiecesPrefix.length).trim()
-    : getExplicitIncludedPieces(product);
+  const includedPieces = getIncludedComponentsMetafield(product)
+    || (includedPiecesTag && includedPiecesPrefix
+      ? String(includedPiecesTag).slice(includedPiecesPrefix.length).trim()
+      : undefined);
   const rawShipsWithin = product?.shipsWithinMetafield?.value;
   const shipsWithinDays = rawShipsWithin ? Number.parseInt(String(rawShipsWithin), 10) : null;
 
@@ -340,7 +330,7 @@ function getListedProductAttributes(product) {
     care: cleanVerifiedFact(taggedCare || listedCare),
     occasion: !jewelry ? getVerifiedOccasion(product) : undefined,
     sizes: jewelry ? [] : sizeValues,
-    includedPieces: cleanVerifiedFact(includedPieces),
+    includedPieces: normalizeIncludedPiecesText(includedPieces),
     shipsWithinDays: Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? shipsWithinDays : null,
   };
 }
@@ -521,6 +511,9 @@ query GetAllProducts($first: Int!, $after: String) {
           value
         }
         materialMetafield: metafield(namespace: "custom", key: "material") {
+          value
+        }
+        includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") {
           value
         }
         occasionMetafield: metafield(namespace: "custom", key: "occasion") {
@@ -1041,6 +1034,12 @@ function toSafeInlineJson(value) {
 }
 
 function buildHydrationProductNode(product) {
+  const listedIncludedPieces = getListedProductAttributes(product).includedPieces;
+  // Hydration must consume the exact final representation accepted by the raw
+  // HTML renderer. In particular, an overlength metafield must not reappear in
+  // React after the server deliberately selected a shorter verified fallback.
+  const includedComponents = listedIncludedPieces ? [listedIncludedPieces] : null;
+
   return {
     id: product.id,
     title: sanitizeProductTitle(product.title),
@@ -1056,6 +1055,7 @@ function buildHydrationProductNode(product) {
     availableForSale: product.availableForSale,
     shipsWithinMetafield: product.shipsWithinMetafield || null,
     conditionMetafield: product.conditionMetafield || null,
+    metadata: { includedComponents },
     priceRange: product.priceRange,
     compareAtPriceRange: product.compareAtPriceRange,
     images: product.images,
@@ -3932,7 +3932,16 @@ ${prerenderedHandles.map((handle) => `  '${handle}',`).join('\n')}
   console.log(`[prerender] Written ${buildManifestPath} with ${routes.length} routes`);
 }
 
-main().catch(err => {
-  console.error('[prerender] Fatal error:', err);
-  process.exit(1);
-});
+export {
+  buildHydrationProductNode,
+  getIncludedComponentsMetafield,
+  getIncludedComponentsMetafieldList,
+  getListedProductAttributes,
+};
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch(err => {
+    console.error('[prerender] Fatal error:', err);
+    process.exit(1);
+  });
+}

@@ -2,6 +2,7 @@ import { toast } from 'sonner';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
 import { buildVerifiedProductCopy } from './productDescriptionEnrichment';
+import { parseIncludedComponentsMetafield } from './includedComponents';
 
 // Shopify API Configuration
 const SHOPIFY_API_VERSION = '2025-10';
@@ -465,6 +466,7 @@ const COLLECTION_BY_HANDLE_QUERY = `
             tags
             availableForSale
             shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+            includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
             priceRange {
               minVariantPrice { amount currencyCode }
             }
@@ -521,7 +523,7 @@ function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
     blouseFabric: node.blouseFabricMetafield?.value || node.metadata?.blouseFabric || null,
     color: node.colorMetafield?.value || node.metadata?.color || null,
     occasion: parseMetafieldList(node.occasionMetafield?.value) || node.metadata?.occasion || null,
-    includedComponents: parseMetafieldList(node.includedComponentsMetafield?.value) || node.metadata?.includedComponents || null,
+    includedComponents: parseIncludedComponentsMetafield(node.includedComponentsMetafield?.value) || node.metadata?.includedComponents || null,
     careInstructions: node.careInstructionsMetafield?.value || node.metadata?.careInstructions || null,
     productStyle: node.productStyleMetafield?.value || node.metadata?.productStyle || null,
     shopifyCategory: node.shopifyCategoryMetafield?.value || node.metadata?.shopifyCategory || null,

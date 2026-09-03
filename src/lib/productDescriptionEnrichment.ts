@@ -7,6 +7,8 @@
  */
 
 import type { ShopifyProduct } from '@/lib/shopify';
+import { parseIncludedComponentsMetafield } from '@/lib/includedComponents';
+import { resolveIncludedPieces } from '@/lib/productPurchaseFlow';
 
 export type ProductCategory =
   | 'lehenga'
@@ -93,6 +95,12 @@ function cleanCatalogDescription(value?: string): string {
     .trim();
 }
 
+function removeSupersededIncludedPiecesClaims(value: string): string {
+  return cleanText(value
+    .replace(/\b(?:blouse|choli)\s+(?:piece|fabric|material)\s+included\b[^.!?]*[.!?]?/gi, ' ')
+    .replace(/\b(?:included pieces|set includes|package includes|includes)\s*[:-]?\s*[^.!?]{1,180}[.!?]?/gi, ' '));
+}
+
 function explicitTagValues(tags: string[] | undefined, prefixes: string[]): string[] {
   const normalizedPrefixes = prefixes.map((prefix) => `${prefix.toLowerCase()}:`);
   return [...new Set((tags || [])
@@ -175,16 +183,25 @@ export function buildVerifiedProductCopy(product?: ShopifyProduct['node'] | null
   const sourceVerified = (product.tags || []).some((tag) =>
     tag.trim().toLowerCase() === 'facts:source-verified',
   );
-  const verifiedDescription = sourceVerified
+  const metadata = product.metadata;
+  const includedPieces = resolveIncludedPieces(
+    parseIncludedComponentsMetafield(product.includedComponentsMetafield?.value)
+      || metadata?.includedComponents,
+    product.tags,
+  );
+  const rawVerifiedDescription = sourceVerified
     ? cleanCatalogDescription(product.description || '')
     : '';
+  const verifiedDescription = includedPieces
+    ? removeSupersededIncludedPiecesClaims(rawVerifiedDescription)
+    : rawVerifiedDescription;
   if (verifiedDescription.length >= 80) {
-    return cleanText(`${styleReferenceCopy} ${verifiedDescription} ${DESTINATION_POLICY}`);
+    const authoritativeComponents = includedPieces ? `Listed components: ${includedPieces}.` : '';
+    return cleanText(`${styleReferenceCopy} ${verifiedDescription} ${authoritativeComponents} ${DESTINATION_POLICY}`);
   }
 
   const isJewelry = /\b(?:jewel|jewell|necklace|choker|earring|bangle|bracelet|ring|maang\s*tikka|anklet|kundan|polki)\b/i
     .test(`${product.productType || ''} ${product.title || ''}`);
-  const metadata = product.metadata;
   const title = sanitizeProductTitle(product.title || product.handle || 'Product');
   const colors = [
     cleanAttribute(product.colorMetafield?.value || metadata?.color || ''),
@@ -205,11 +222,6 @@ export function buildVerifiedProductCopy(product?: ShopifyProduct['node'] | null
     cleanAttribute(product.careInstructionsMetafield?.value || metadata?.careInstructions || ''),
     ...explicitTagValues(product.tags, ['care', 'care instructions']),
   ].filter(Boolean);
-  const includedComponents = [
-    ...parseExplicitStringList(product.includedComponentsMetafield?.value),
-    ...(metadata?.includedComponents || []).map(cleanAttribute).filter(Boolean),
-    ...explicitTagValues(product.tags, ['included', 'included pieces', 'pieces', 'set includes', 'package includes']),
-  ];
   const occasions = [
     ...parseExplicitStringList(product.occasionMetafield?.value),
     ...(metadata?.occasion || []).map(cleanAttribute).filter(Boolean),
@@ -226,7 +238,7 @@ export function buildVerifiedProductCopy(product?: ShopifyProduct['node'] | null
   if (materials.length > 0) parts.push(`Listed material${materials.length === 1 ? '' : 's'}: ${[...new Set(materials)].join(', ')}.`);
   if (work.length > 0) parts.push(`Listed work: ${[...new Set(work)].join(', ')}.`);
   if (care.length > 0) parts.push(`Listed care: ${[...new Set(care)].join(', ')}.`);
-  if (includedComponents.length > 0) parts.push(`Listed components: ${[...new Set(includedComponents)].join(', ')}.`);
+  if (includedPieces) parts.push(`Listed components: ${includedPieces}.`);
   if (occasions.length > 0) parts.push(`Listed occasion${occasions.length === 1 ? '' : 's'}: ${[...new Set(occasions)].join(', ')}.`);
   if (sizes.length > 0) parts.push(`Available options: ${sizes.join(', ')}.`);
 

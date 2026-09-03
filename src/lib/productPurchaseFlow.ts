@@ -1,4 +1,8 @@
 import { isConventionalProductSizeValue } from './productOptionNames.ts';
+import {
+  normalizeIncludedComponents,
+  normalizeIncludedPiecesText,
+} from './includedComponents.ts';
 
 export interface VariantOptionLike {
   name: string;
@@ -125,11 +129,9 @@ export function resolveIncludedPieces(
   metadataIncludedComponents: string[] | null | undefined,
   tags: string[] = [],
 ): string | undefined {
-  const metadataComponents = (metadataIncludedComponents ?? [])
-    .map((component) => component.trim())
-    .filter(Boolean);
-  if (metadataComponents.length > 0) {
-    return [...new Set(metadataComponents)].join(', ');
+  const metadataComponents = normalizeIncludedComponents(metadataIncludedComponents);
+  if (metadataComponents) {
+    return metadataComponents.join(', ');
   }
 
   const includedPiecesTag = tags.find((tag) =>
@@ -143,7 +145,7 @@ export function resolveIncludedPieces(
       trimmedTag.toLowerCase().startsWith(prefix),
     );
     const includedPieces = matchedPrefix
-      ? trimmedTag.slice(matchedPrefix.length).trim()
+      ? normalizeIncludedPiecesText(trimmedTag.slice(matchedPrefix.length))
       : '';
     if (includedPieces) return includedPieces;
   }
