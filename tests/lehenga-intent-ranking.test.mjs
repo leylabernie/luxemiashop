@@ -32,8 +32,8 @@ await Promise.all([
   }),
 ]);
 
-const { rankGenericLehengasByIntent } = await import(pathToFileURL(bundledHookPath).href);
-const { matchSubcategory } = await import(pathToFileURL(bundledProductFiltersPath).href);
+const { rankCommercialProducts, rankGenericLehengasByIntent } = await import(pathToFileURL(bundledHookPath).href);
+const { matchSubcategory, sortProducts } = await import(pathToFileURL(bundledProductFiltersPath).href);
 
 test.after(async () => {
   await rm(temporaryDirectory, { recursive: true, force: true });
@@ -116,6 +116,89 @@ test('generic intent ranking puts explicitly orderable products before unknown i
     rankGenericLehengasByIntent([unavailableWedding, availableNeutral])
       .map(({ node }) => node.handle),
     ['available-neutral', 'unknown-bridal'],
+  );
+});
+
+test('server-resolved featured ranks survive hydration without overriding shopper sorts or live refreshes', () => {
+  const rankedProduct = (handle, rank, price, createdAt, quality = 'low') => ({
+    node: {
+      handle,
+      title: `${handle} lehenga`,
+      productType: 'Lehenga',
+      tags: quality === 'high'
+        ? ['source-verified:catalog', 'fabric:silk', 'work:zari', 'included:lehenga']
+        : [],
+      description: quality === 'high' ? 'Verified product detail. '.repeat(40) : 'Short detail.',
+      createdAt,
+      prerenderedFeaturedRank: rank,
+      availableForSale: true,
+      priceRange: { minVariantPrice: { amount: String(price), currencyCode: 'USD' } },
+      images: {
+        edges: Array.from({ length: quality === 'high' ? 7 : 1 }, (_, index) => ({
+          node: { url: `https://cdn.example/${handle}-${index}.jpg`, altText: handle },
+        })),
+      },
+      variants: {
+        edges: [{
+          node: {
+            id: `${handle}-variant`,
+            availableForSale: true,
+            sku: `${handle}-sku`,
+            selectedOptions: [{ name: 'Size', value: 'M' }],
+          },
+        }],
+      },
+      options: [{ name: 'Size', values: ['M'] }],
+    },
+  });
+
+  const first = rankedProduct('server-first', 1, 300, '2026-01-01T00:00:00Z', 'low');
+  const second = rankedProduct('server-second', 2, 100, '2026-03-01T00:00:00Z', 'high');
+  const third = rankedProduct('server-third', 3, 200, '2026-02-01T00:00:00Z', 'low');
+  const shuffled = [third, second, first];
+
+  assert.deepEqual(
+    rankCommercialProducts(shuffled).map(({ node }) => node.handle),
+    ['server-first', 'server-second', 'server-third'],
+  );
+  assert.deepEqual(
+    sortProducts(shuffled, 'featured').map(({ node }) => node.handle),
+    ['server-first', 'server-second', 'server-third'],
+  );
+  assert.deepEqual(
+    rankCommercialProducts([third, first]).map(({ node }) => node.handle),
+    ['server-first', 'server-third'],
+  );
+  assert.deepEqual(
+    sortProducts(shuffled, 'price-asc').map(({ node }) => node.handle),
+    ['server-second', 'server-third', 'server-first'],
+  );
+  assert.deepEqual(
+    sortProducts(shuffled, 'newest').map(({ node }) => node.handle),
+    ['server-second', 'server-third', 'server-first'],
+  );
+
+  const refreshed = [first, second].map(({ node }) => ({
+    node: { ...node, prerenderedFeaturedRank: undefined },
+  }));
+  assert.deepEqual(
+    rankCommercialProducts(refreshed).map(({ node }) => node.handle),
+    ['server-second', 'server-first'],
+  );
+
+  const duplicateRank = [first, { ...second, node: { ...second.node, prerenderedFeaturedRank: 1 } }];
+  assert.deepEqual(
+    rankCommercialProducts(duplicateRank).map(({ node }) => node.handle),
+    ['server-second', 'server-first'],
+  );
+
+  const unsafeRank = [first, {
+    ...second,
+    node: { ...second.node, prerenderedFeaturedRank: Number.MAX_SAFE_INTEGER + 1 },
+  }];
+  assert.deepEqual(
+    rankCommercialProducts(unsafeRank).map(({ node }) => node.handle),
+    ['server-second', 'server-first'],
   );
 });
 

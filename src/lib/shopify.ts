@@ -130,6 +130,7 @@ export interface ShopifyProduct {
     id: string;
     title: string;
     createdAt: string;
+    prerenderedFeaturedRank?: number;
     description: string;
     descriptionHtml?: string;
     handle: string;

@@ -130,7 +130,14 @@ function getInitialData(category?: string): ShopifyProduct[] | null {
   // Only consume the payload if it matches the requested category — otherwise
   // a stale payload from a previous collection page could leak in.
   if (category && data.category && data.category !== category) return null;
-  return data.products;
+  return data.products.map((product, index) => ({
+    node: {
+      ...product.node,
+      // The array order is the build-validated featured order. Preserve it
+      // through first hydration; live catalog refreshes remain unmarked.
+      prerenderedFeaturedRank: index + 1,
+    },
+  }));
 }
 
 const getAllProducts = async (): Promise<ShopifyProduct[]> => {

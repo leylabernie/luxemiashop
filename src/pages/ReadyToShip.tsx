@@ -78,7 +78,7 @@ const ReadyToShip = () => {
         canonical="https://luxemia.shop/ready-to-ship"
         noIndex={!isLoading && !error && sortedProducts.length === 0}
         type="collection"
-        collection={!isLoading && !error
+        collection={!isLoading && !error && sortedProducts.length > 0
           ? { name: 'Ready-to-Ship Indian Ethnic Wear', description: 'Currently purchasable products with positive ready-to-ship catalog evidence.', items: collectionItems }
           : undefined}
         breadcrumbs={[

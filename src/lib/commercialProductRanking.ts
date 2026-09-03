@@ -255,6 +255,22 @@ export function getCommercialProductQualityScore(
 }
 
 export function rankCommercialProducts<T extends ProductLike>(products: T[]): T[] {
+  const prerenderedRanks = products.map((product) => getProductNode(product).prerenderedFeaturedRank);
+  const hasCompletePrerenderedOrder = prerenderedRanks.every(
+    (rank) => Number.isSafeInteger(rank) && Number(rank) > 0,
+  ) && new Set(prerenderedRanks).size === products.length;
+
+  if (hasCompletePrerenderedOrder) {
+    return products
+      .map((product, originalIndex) => ({
+        product,
+        originalIndex,
+        rank: Number(getProductNode(product).prerenderedFeaturedRank),
+      }))
+      .sort((left, right) => left.rank - right.rank || left.originalIndex - right.originalIndex)
+      .map(({ product }) => product);
+  }
+
   const duplicateTitleCounts = new Map<string, number>();
   for (const product of products) {
     const key = normalizedTitle(getProductNode(product));

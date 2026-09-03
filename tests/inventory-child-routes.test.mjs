@@ -41,6 +41,7 @@ const [
   diwaliPage,
   eligibilitySource,
   coverageValidator,
+  productPrerenderValidator,
 ] = await Promise.all([
   read('src/App.tsx'),
   read('src/hooks/useShopifyProducts.ts'),
@@ -67,6 +68,7 @@ const [
   read('src/pages/DiwaliOutfits.tsx'),
   read('src/lib/intentCollectionEligibility.ts'),
   read('scripts/verify-prerender-coverage.cjs'),
+  read('scripts/validate-product-prerender-integrity.cjs'),
 ]);
 
 const temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), 'luxemia-intent-routes-'));
@@ -182,12 +184,16 @@ test('client and prerender share strict durable-intent eligibility with represen
 
   assert.match(inventoryPage, /noIndexFollow=\{!isLoading && !error && sortedProducts\.length === 0\}/);
   assert.match(prerender, /generateItemListJsonLd\(collectionProducts\.slice\(0, 30\), route\.h1, route\.path\)/);
+  assert.match(hook, /function getInitialData[\s\S]*?prerenderedFeaturedRank: index \+ 1/);
   assert.match(prerender, /generateFaqPageJsonLd\(collectionStandard\.faqs\)/);
   assert.match(prerender, /route\.category\s*\? 'collection'/);
   assert.match(prerender, /<meta property="og:type" content="\$\{openGraphType\}"/);
   assert.match(coverageValidator, /parseJsonLdScripts\(html, route, schemaFailures\)/);
   assert.match(coverageValidator, /validateItemListParity\(itemList, payloadHandles\)/);
   assert.doesNotMatch(coverageValidator, /<script type="application\\\/ld\\\+json">/);
+  assert.match(productPrerenderValidator, /validateItemListParity\(itemLists\[0\], payloadHandles\)/);
+  assert.match(productPrerenderValidator, /parseJsonLdScripts\(html, route, schemaFailures\)/);
+  assert.doesNotMatch(productPrerenderValidator, /sameSet\(sortedUnique\(itemHandles\), sortedUnique\(payloadHandles\)\)/);
 });
 
 test('prerender validation accepts attributed schemas and the intentional 30-product ItemList cap', () => {
@@ -221,8 +227,9 @@ test('prerender validation accepts attributed schemas and the intentional 30-pro
   const nestedUrlItemList = {
     '@type': 'ItemList',
     numberOfItems: 25,
-    itemListElement: shortPayload.map((handle) => ({
+    itemListElement: shortPayload.map((handle, index) => ({
       '@type': 'ListItem',
+      position: index + 1,
       item: { url: `https://luxemia.shop/product/${handle}` },
     })),
   };
@@ -234,6 +241,14 @@ test('prerender validation accepts attributed schemas and the intentional 30-pro
 
   const wrongCount = { ...itemList, numberOfItems: 50 };
   assert.match(validateItemListParity(wrongCount, payloadHandles), /do not match/);
+
+  const wrongOrigin = structuredClone(itemList);
+  wrongOrigin.itemListElement[0].url = 'https://evil.example/product/product-1';
+  assert.match(validateItemListParity(wrongOrigin, payloadHandles), /do not match/);
+
+  const wrongPosition = structuredClone(itemList);
+  wrongPosition.itemListElement[0].position = 2;
+  assert.match(validateItemListParity(wrongPosition, payloadHandles), /do not match/);
 });
 
 test('catalog fetch failures stay indexable and show a retry state without claiming zero inventory', () => {
@@ -278,7 +293,7 @@ test('catalog fetch failures stay indexable and show a retry state without claim
 
   assert.match(readyToShipPage, /const \{ products, isLoading, error \} = useShopifyProducts\(\)/);
   assert.match(readyToShipPage, /noIndex=\{!isLoading && !error && sortedProducts\.length === 0\}/);
-  assert.match(readyToShipPage, /collection=\{!isLoading && !error/);
+  assert.match(readyToShipPage, /collection=\{!isLoading && !error && sortedProducts\.length > 0/);
   assert.match(readyToShipPage, /: error \? \(\s*<CatalogLoadError \/>/);
   assert.match(readyToShipPage, /\{!error \? <CollectionDecisionSupport/);
 

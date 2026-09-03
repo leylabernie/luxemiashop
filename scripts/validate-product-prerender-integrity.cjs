@@ -11,11 +11,17 @@
 
 const fs = require('fs');
 const path = require('path');
+const {
+  parseJsonLdScripts,
+  validateItemListParity,
+} = require('./prerender-validation-helpers.cjs');
 
 const ROOT = path.resolve(__dirname, '..');
 const PRERENDER_SOURCE = path.join(ROOT, 'scripts', 'prerender.js');
 const PRODUCT_INFO_SOURCE = path.join(ROOT, 'src', 'components', 'product', 'ProductInfo.tsx');
 const PRODUCT_DETAIL_SOURCE = path.join(ROOT, 'src', 'pages', 'ProductDetail.tsx');
+const READY_TO_SHIP_SOURCE = path.join(ROOT, 'src', 'pages', 'ReadyToShip.tsx');
+const SHOPIFY_PRODUCTS_HOOK_SOURCE = path.join(ROOT, 'src', 'hooks', 'useShopifyProducts.ts');
 const MIDDLEWARE_SOURCE = path.join(ROOT, 'middleware.ts');
 const PRERENDER_DIR = path.join(ROOT, 'dist', '_prerender');
 const PRODUCT_DIR = path.join(PRERENDER_DIR, 'product');
@@ -69,14 +75,9 @@ function sortedUnique(values) {
 }
 
 function parseJsonLd(html, route) {
-  const schemas = [];
-  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
-    try {
-      schemas.push(JSON.parse(match[1]));
-    } catch (error) {
-      fail(`${route}: invalid JSON-LD (${error.message})`);
-    }
-  }
+  const schemaFailures = [];
+  const schemas = parseJsonLdScripts(html, route, schemaFailures).map(({ schema }) => schema);
+  schemaFailures.forEach(fail);
   return schemas;
 }
 
@@ -222,12 +223,9 @@ function validateBuiltReadyToShipCollection() {
   if (collectionSchemas.length !== 1 || itemLists.length !== 1) {
     fail(`${route}: positive evidence result must emit one CollectionPage and one ItemList schema`);
   } else {
-    const itemHandles = (itemLists[0].itemListElement || [])
-      .map((item) => String(item.url || '').match(/\/product\/([^?/#]+)/)?.[1])
-      .filter(Boolean);
     const payloadHandles = products.map((product) => product.handle);
-    if (!sameSet(sortedUnique(itemHandles), sortedUnique(payloadHandles))) {
-      fail(`${route}: ItemList products do not equal the positive-evidence hydration payload`);
+    if (validateItemListParity(itemLists[0], payloadHandles)) {
+      fail(`${route}: ItemList products do not equal the first 30 products in the positive-evidence hydration payload`);
     }
   }
 }
@@ -400,6 +398,8 @@ function validateBuiltProduct(handle) {
 const source = fs.readFileSync(PRERENDER_SOURCE, 'utf8');
 const productInfoSource = fs.readFileSync(PRODUCT_INFO_SOURCE, 'utf8');
 const productDetailSource = fs.readFileSync(PRODUCT_DETAIL_SOURCE, 'utf8');
+const readyToShipSource = fs.readFileSync(READY_TO_SHIP_SOURCE, 'utf8');
+const shopifyProductsHookSource = fs.readFileSync(SHOPIFY_PRODUCTS_HOOK_SOURCE, 'utf8');
 const middlewareSource = fs.readFileSync(MIDDLEWARE_SOURCE, 'utf8');
 
 forbidSource(/\bFALLBACK_(?:OG_IMAGE|PRICE|CURRENCY)\b/, 'product price/image/currency fallback constants');
@@ -442,6 +442,12 @@ if (!/const schemaOfferUrl = product && \/\^\\d\+\$\/\.test\(schemaVariantId\)/.
   || !/\?variant=\$\{encodeURIComponent\(schemaVariantId\)\}/.test(productDetailSource)
   || !/offerUrl:\s*schemaOfferUrl/.test(productDetailSource)) {
   fail('ProductDetail does not preserve the exact Shopify variant URL in hydrated single-variant Offer schema');
+}
+if (!/collection=\{!isLoading && !error && sortedProducts\.length > 0/.test(readyToShipSource)) {
+  fail('ReadyToShip must omit hydrated collection schemas for a confirmed empty result');
+}
+if (!/function getInitialData[\s\S]*?prerenderedFeaturedRank:\s*index \+ 1/.test(shopifyProductsHookSource)) {
+  fail('useShopifyProducts must preserve the build-validated featured order during initial hydration');
 }
 for (const required of [
   /function getVariantAwareProductResponse/,

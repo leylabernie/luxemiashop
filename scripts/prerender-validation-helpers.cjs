@@ -28,10 +28,18 @@ function getItemListHandles(itemList) {
 
 function validateItemListParity(itemList, payloadHandles, limit = 30) {
   const expectedHandles = payloadHandles.slice(0, limit);
+  const itemListElements = Array.isArray(itemList.itemListElement) ? itemList.itemListElement : [];
   const itemListHandles = getItemListHandles(itemList);
+  const elementsAreExact = itemListElements.every((entry, index) => (
+    entry?.['@type'] === 'ListItem'
+    && entry.position === index + 1
+    && (entry.url || entry.item?.url) === `https://luxemia.shop/product/${expectedHandles[index]}`
+  ));
   if (
     JSON.stringify(itemListHandles) !== JSON.stringify(expectedHandles)
     || itemList.numberOfItems !== expectedHandles.length
+    || itemListElements.length !== expectedHandles.length
+    || !elementsAreExact
   ) {
     return 'ItemList products do not match the hydration payload';
   }
