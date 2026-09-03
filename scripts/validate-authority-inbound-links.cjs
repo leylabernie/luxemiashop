@@ -15,11 +15,14 @@ const authorityRoutes = [
   '/shop-by-fulfillment',
 ];
 
-const priorityCountryRoutes = [
+const countryShippingRoutes = [
   '/shipping/united-states',
   '/shipping/canada',
   '/shipping/united-kingdom',
   '/shipping/australia',
+  '/shipping/new-zealand',
+  '/shipping/south-africa',
+  '/shipping/mauritius',
 ];
 
 const failures = [];
@@ -56,7 +59,7 @@ for (const route of authorityRoutes) {
   expectSourceRoute(appRoutes, 'src/App.tsx', route);
 }
 
-for (const route of priorityCountryRoutes) {
+for (const route of countryShippingRoutes) {
   expectSourceRoute(shippingPage, 'src/pages/Shipping.tsx', route);
   expectSourceRoute(appRoutes, 'src/App.tsx', route);
 }
@@ -83,7 +86,7 @@ if (REQUIRE_BUILT) {
 
   if (fs.existsSync(builtShippingPath)) {
     const builtShipping = fs.readFileSync(builtShippingPath, 'utf8');
-    for (const route of priorityCountryRoutes) {
+    for (const route of countryShippingRoutes) {
       expectRenderedLink(builtShipping, 'dist/_prerender/shipping.html', route);
     }
   }
@@ -96,5 +99,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `[validate-authority-inbound-links] OK — ${authorityRoutes.length} authority pillars have homepage and shared-footer links; ${priorityCountryRoutes.length} priority country pages have shipping-page links${REQUIRE_BUILT ? '; prerendered anchors verified' : ''}.`,
+  `[validate-authority-inbound-links] OK — ${authorityRoutes.length} authority pillars have homepage and shared-footer links; all ${countryShippingRoutes.length} country shipping pages have shipping-page links${REQUIRE_BUILT ? '; prerendered anchors verified' : ''}.`,
 );

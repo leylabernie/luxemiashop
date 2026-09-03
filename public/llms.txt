@@ -37,6 +37,13 @@
 ## Customer guidance
 
 - Shipping policy: https://luxemia.shop/shipping
+- United States shipping guide: https://luxemia.shop/shipping/united-states
+- Canada shipping guide: https://luxemia.shop/shipping/canada
+- United Kingdom shipping guide: https://luxemia.shop/shipping/united-kingdom
+- Australia shipping guide: https://luxemia.shop/shipping/australia
+- New Zealand shipping guide: https://luxemia.shop/shipping/new-zealand
+- South Africa shipping guide: https://luxemia.shop/shipping/south-africa
+- Mauritius shipping guide: https://luxemia.shop/shipping/mauritius
 - Returns and cancellations: https://luxemia.shop/returns
 - Size guide: https://luxemia.shop/size-guide
 - Measurement guide: https://luxemia.shop/sizing-measurements-guide

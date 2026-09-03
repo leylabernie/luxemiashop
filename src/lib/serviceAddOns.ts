@@ -1,4 +1,8 @@
 export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
+export const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
+  SERVICE_ADD_ON_PRODUCT_HANDLE,
+  'custom-order-balance-payment',
+]);
 
 /**
  * This record exists only to supply billable checkout lines selected on an
@@ -6,7 +10,7 @@ export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-
  * merchandise, a search result, or a direct product page.
  */
 export const isHiddenBillingProductHandle = (handle?: string | null): boolean =>
-  handle === SERVICE_ADD_ON_PRODUCT_HANDLE;
+  Boolean(handle && HIDDEN_BILLING_PRODUCT_HANDLES.has(handle));
 
 export type ServiceAddOnCode =
   | 'blouse-stitching'

@@ -309,7 +309,7 @@ const middlewareHtml = read('src/middleware/htmlGenerator.ts');
 if (/generateProductHtml|ProductGroup|InStock|OutOfStock/.test(middlewareHtml)) {
   failures.push('src/middleware/htmlGenerator.ts must not restore the retired non-purchasable product renderer');
 }
-for (const evidence of ['return404', "'X-Robots-Tag': 'noindex, follow'"]) {
+for (const evidence of ['return404', "'X-Robots-Tag': 'noindex, nofollow'"]) {
   if (!middlewareHtml.includes(evidence)) failures.push(`src/middleware/htmlGenerator.ts is missing its shared 404 helper evidence: ${evidence}`);
 }
 forbid('src/middleware/htmlGenerator.ts', [

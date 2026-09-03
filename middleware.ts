@@ -5,6 +5,7 @@ import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
 import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
+import { isHiddenBillingProductHandle } from './src/lib/serviceAddOns.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -19,6 +20,42 @@ import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
 // Includes all static pages and blog posts. Product routes are handled
 // dynamically by the SSR path below, so they are NOT in this Set.
 // See src/lib/autoRoutes.ts for the full list.
+
+// Exact public files that Vercel must serve without the SPA router. Keep this
+// allowlist narrow: a blanket `pathname.includes('.')` bypass turns unknown
+// dotted URLs (for example, stale .html or .php links) into soft 404s when the
+// platform's SPA fallback serves index.html.
+const STATIC_PASSTHROUGH_PATHS = new Set([
+  '/robots.txt',
+  '/sitemap.xml',
+  '/sitemap-products.xml',
+  '/sitemap-collections.xml',
+  '/sitemap-guides.xml',
+  '/sitemap-pages.xml',
+  '/sitemap-images.xml',
+  '/merchant-feed.xml',
+  '/google-shopping-feed.xml',
+  '/openai-search-products.jsonl.gz',
+  '/llms.txt',
+  '/llms-full.txt',
+  '/indexnow-manifest.json',
+  '/8e3d7c9415b24a5f9c81e62d1a0374bf.txt',
+  '/3c4a52b9-542f-4bfe-a61b-9afb42f4312c.txt',
+  '/e6b81aa0325a277cfb7c764e603dd9cd.txt',
+  '/google4e3f332d00afc8ba.html',
+]);
+
+const STATIC_PASSTHROUGH_PREFIXES = [
+  '/_prerender',
+  '/assets',
+  '/api',
+  '/catalogs',
+  '/images',
+];
+
+function isPathAtOrBelow(pathname: string, prefix: string): boolean {
+  return pathname === prefix || pathname.startsWith(`${prefix}/`);
+}
 
 // Legacy regional pages that must 301 redirect to /nri
 const LEGACY_REGIONAL_REDIRECT_ROUTES = new Set([
@@ -410,14 +447,11 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(new URL('/new-arrivals', request.url).toString(), 301);
   }
 
-  // Static assets and machine-readable files (including merchant-feed.xml) are
-  // served directly by Vercel. The feed is generated and validated at build time.
+  // Static assets and reviewed machine-readable files are served directly by
+  // Vercel. Unknown dotted paths continue through routing and become real 404s.
   if (
-    pathname.startsWith('/_prerender') ||
-    pathname.startsWith('/assets') ||
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/catalogs') ||
-    pathname.includes('.')
+    STATIC_PASSTHROUGH_PATHS.has(pathname)
+    || STATIC_PASSTHROUGH_PREFIXES.some((prefix) => isPathAtOrBelow(pathname, prefix))
   ) {
     return next();
   }
@@ -549,6 +583,11 @@ async function routeRequest(request: Request): Promise<Response> {
     if (!handle || handle.includes('/')) {
       return return404(request);
     }
+    // Internal charge/support records are never public merchandise. Check
+    // before the prerender manifest so a stale build cannot expose one.
+    if (isHiddenBillingProductHandle(handle)) {
+      return return404(request);
+    }
     if (PRERENDERED_PRODUCT_HANDLES.has(handle)) {
       const requestedVariantId = url.searchParams.get('variant');
       if (requestedVariantId) {
@@ -642,6 +681,6 @@ export const config = {
     '/3c4a52b9-542f-4bfe-a61b-9afb42f4312c.txt',
     '/e6b81aa0325a277cfb7c764e603dd9cd.txt',
     '/google4e3f332d00afc8ba.html',
-    '/((?!_prerender|assets|api|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)).*)',
+    '/((?!_prerender(?:/|$)|assets(?:/|$)|api(?:/|$)|images(?:/|$)|catalogs(?:/|$)|favicon\\.ico$|og-image\\.jpg$|robots\\.txt$|sitemap\\.xml$|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt$|google4e3f332d00afc8ba\\.html$|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)$).*)',
   ],
 };

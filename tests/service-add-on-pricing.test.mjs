@@ -19,7 +19,11 @@ await build({
   logLevel: 'silent',
 });
 
-const { getEligibleServiceAddOns, normalizeServiceOptionLabel } = await import(pathToFileURL(bundledModulePath).href);
+const {
+  getEligibleServiceAddOns,
+  isHiddenBillingProductHandle,
+  normalizeServiceOptionLabel,
+} = await import(pathToFileURL(bundledModulePath).href);
 const [definitionSource, productInfoSource] = await Promise.all([
   readFile(path.join(projectRoot, 'src/lib/serviceAddOns.ts'), 'utf8'),
   readFile(path.join(projectRoot, 'src/components/product/ProductInfo.tsx'), 'utf8'),
@@ -36,6 +40,13 @@ test('service option identity ignores historical display-price suffixes', () => 
   );
   assert.equal(normalizeServiceOptionLabel('Pico & Fall (+EUR 9.50)'), 'pico & fall');
   assert.equal(normalizeServiceOptionLabel('Matching Petticoat'), 'matching petticoat');
+});
+
+test('every internal billing product stays outside the public catalog', () => {
+  assert.equal(isHiddenBillingProductHandle('luxemia-tailoring-saree-finishing-add-ons'), true);
+  assert.equal(isHiddenBillingProductHandle('custom-order-balance-payment'), true);
+  assert.equal(isHiddenBillingProductHandle('public-garment'), false);
+  assert.equal(isHiddenBillingProductHandle(undefined), false);
 });
 
 test('service prices and selected total come only from resolved Shopify variants', () => {

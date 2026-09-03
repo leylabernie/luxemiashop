@@ -16,11 +16,14 @@ import {
 const formatUsd = (amount: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
 
-const priorityDestinationGuides = [
+const destinationGuides = [
   { href: '/shipping/united-states', label: 'Shipping Indian clothing to the United States', description: 'Review current U.S. rates, processing, tracking, and event-date planning.' },
   { href: '/shipping/canada', label: 'Shipping Indian clothing to Canada', description: 'Review current Canada rates, customs responsibility, tracking, and planning guidance.' },
   { href: '/shipping/united-kingdom', label: 'Shipping Indian clothing to the United Kingdom', description: 'Review current UK rates, customs responsibility, tracking, and planning guidance.' },
   { href: '/shipping/australia', label: 'Shipping Indian clothing to Australia', description: 'Review current Australia rates, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/new-zealand', label: 'Shipping Indian clothing to New Zealand', description: 'Review current New Zealand rates, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/south-africa', label: 'Shipping Indian clothing to South Africa', description: 'Review the current South Africa rate, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/mauritius', label: 'Shipping Indian clothing to Mauritius', description: 'Review the current Mauritius rate, customs responsibility, tracking, and planning guidance.' },
 ] as const;
 
 const Shipping = () => {
@@ -126,12 +129,12 @@ const Shipping = () => {
             </p>
 
             <div className="mt-10">
-              <h3 className="text-2xl font-serif text-center">Priority Destination Guides</h3>
+              <h3 className="text-2xl font-serif text-center">Destination Shipping Guides</h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground text-center max-w-3xl mx-auto">
-                Use a destination guide for rate, customs, tracking, support, and event-date details. New Zealand, South Africa, and Mauritius remain covered by the central rate table above.
+                Use the guide for each supported destination to review its published rate, customs responsibility, tracking, support, and event-date planning guidance.
               </p>
-              <nav aria-label="Priority destination shipping guides" className="mt-6 grid gap-4 sm:grid-cols-2">
-                {priorityDestinationGuides.map((guide) => (
+              <nav aria-label="Destination shipping guides" className="mt-6 grid gap-4 sm:grid-cols-2">
+                {destinationGuides.map((guide) => (
                   <Link
                     key={guide.href}
                     to={guide.href}

@@ -21,6 +21,9 @@ const sitemapGeneratorPath = path.join(root, 'scripts', 'generate-sitemap.cjs');
 const indexNowBuilderPath = path.join(root, 'scripts', 'submit-indexnow.cjs');
 const indexNowNotifierPath = path.join(root, 'scripts', 'notify-indexnow.cjs');
 const indexNowWorkflowPath = path.join(root, '.github', 'workflows', 'indexnow-after-production.yml');
+const serviceAddOnsPath = path.join(root, 'src', 'lib', 'serviceAddOns.ts');
+const staticFeedGeneratorPath = path.join(root, 'scripts', 'generate-static-feed.cjs');
+const vercelFeedPath = path.join(root, 'api', 'merchant-feed.ts');
 
 const middleware = fs.readFileSync(middlewarePath, 'utf8');
 const robots = fs.readFileSync(robotsPath, 'utf8');
@@ -38,6 +41,9 @@ const sitemapGenerator = fs.readFileSync(sitemapGeneratorPath, 'utf8');
 const indexNowBuilder = fs.readFileSync(indexNowBuilderPath, 'utf8');
 const indexNowNotifier = fs.readFileSync(indexNowNotifierPath, 'utf8');
 const indexNowWorkflow = fs.readFileSync(indexNowWorkflowPath, 'utf8');
+const serviceAddOns = fs.readFileSync(serviceAddOnsPath, 'utf8');
+const staticFeedGenerator = fs.readFileSync(staticFeedGeneratorPath, 'utf8');
+const vercelFeed = fs.readFileSync(vercelFeedPath, 'utf8');
 
 const machineReadablePaths = [
   '/robots.txt',
@@ -69,6 +75,24 @@ requireText(middleware, 'withCanonicalQuerySignals', 'HTTP query canonicalizatio
 requireText(middleware, "headers.set('Link'", 'HTTP Link canonical header');
 requireText(middleware, "headers.set('X-Robots-Tag', 'noindex, follow')", 'facet noindex directive');
 requireText(middleware, "rel=\"canonical\"", 'clean canonical relation');
+requireText(middleware, 'STATIC_PASSTHROUGH_PATHS', 'exact static-file passthrough allowlist');
+requireText(middleware, 'api(?:/|$)', 'boundary-safe internal matcher exclusions');
+
+for (const hiddenHandle of [
+  'luxemia-tailoring-saree-finishing-add-ons',
+  'custom-order-balance-payment',
+]) {
+  for (const [source, label] of [
+    [serviceAddOns, 'shared hidden-billing registry'],
+    [prerender, 'product prerender exclusion'],
+    [sitemapGenerator, 'sitemap exclusion'],
+    [staticFeedGenerator, 'static Merchant-feed exclusion'],
+    [vercelFeed, 'dynamic Merchant-feed exclusion'],
+    [app, 'SPA direct-route guard'],
+  ]) {
+    requireText(source, hiddenHandle, `${label} for ${hiddenHandle}`);
+  }
+}
 
 requireText(shopifyProxy, "{ status: 'found'; product: ShopifyProduct }", 'found Shopify lookup result');
 requireText(shopifyProxy, "{ status: 'not_found' }", 'definitive Shopify not-found result');
@@ -218,6 +242,17 @@ const approvedProductHandles = approvedPaths
   .map((routePath) => routePath.slice('/product/'.length));
 const productManifestSet = new Set(productManifestHandles);
 const approvedProductSet = new Set(approvedProductHandles);
+for (const hiddenHandle of [
+  'luxemia-tailoring-saree-finishing-add-ons',
+  'custom-order-balance-payment',
+]) {
+  if (productManifestHandles.includes(hiddenHandle)) {
+    failures.push(`Hidden billing handle must not appear in the product prerender manifest: ${hiddenHandle}`);
+  }
+  if (approvedProductHandles.includes(hiddenHandle)) {
+    failures.push(`Hidden billing handle must not appear in the approved sitemap inventory: ${hiddenHandle}`);
+  }
+}
 if (
   approvedInventory.urlCount !== approvedPaths.length
   || new Set(approvedPaths).size !== approvedPaths.length
@@ -348,6 +383,20 @@ async function validateCanonicalHostAndFeedAliases() {
   }
 
   const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+  const spaFallback = (vercelConfig.rewrites || []).find((entry) => entry.destination === '/index.html');
+  if (!spaFallback?.source.includes('.*\\..*')) {
+    failures.push('The Vercel SPA fallback must exclude every dotted path so unknown file-like URLs cannot become soft 404s.');
+  }
+  for (const [artifactPath, contentType] of [
+    ['/indexnow-manifest.json', 'application/json; charset=utf-8'],
+    ['/8e3d7c9415b24a5f9c81e62d1a0374bf.txt', 'text/plain; charset=utf-8'],
+  ]) {
+    const headerRule = (vercelConfig.headers || []).find((entry) => entry.source === artifactPath);
+    const headers = new Map((headerRule?.headers || []).map((entry) => [entry.key.toLowerCase(), entry.value]));
+    if (headers.get('content-type') !== contentType || !headers.has('cache-control')) {
+      failures.push(`${artifactPath} must have explicit content-type and cache-control headers.`);
+    }
+  }
   const canonicalFeedUrl = 'https://luxemia.shop/merchant-feed.xml';
   const feedAliases = [
     '/feed.xml',
@@ -436,11 +485,46 @@ async function validateCanonicalHostAndFeedAliases() {
       failures.push('A verified retired editorial URL without an exact replacement must return 410 noindex,nofollow.');
     }
 
-    const missingResponse = await builtMiddleware.default(
-      new Request('https://luxemia.shop/validator-definitive-missing-page'),
-    );
-    if (missingResponse.status !== 404 || missingResponse.headers.get('x-robots-tag') !== 'noindex, follow') {
-      failures.push('An unmatched public URL must return a real 404 with an HTTP noindex directive.');
+    for (const missingPath of [
+      '/validator-definitive-missing-page',
+      '/definitely-missing.html',
+      '/definitely-missing.php',
+      '/definitely-missing.pdf',
+      '/folder.with-dot/page',
+      '/apiary',
+      '/assets-old',
+    ]) {
+      const missingResponse = await builtMiddleware.default(
+        new Request(`https://luxemia.shop${missingPath}`),
+      );
+      const missingBody = await missingResponse.text();
+      if (
+        missingResponse.status !== 404
+        || missingResponse.headers.get('x-robots-tag') !== 'noindex, nofollow'
+        || missingResponse.headers.has('x-middleware-next')
+        || missingResponse.headers.has('link')
+        || !/<meta\s+name=["']robots["']\s+content=["']noindex,nofollow["']\s*\/?\s*>/i.test(missingBody)
+        || /<link\b[^>]*\brel=["']canonical["']/i.test(missingBody)
+      ) {
+        failures.push(`${missingPath} must return a real 404 with matching noindex,nofollow HTTP and HTML signals and no canonical.`);
+      }
+    }
+
+    for (const hiddenHandle of [
+      'luxemia-tailoring-saree-finishing-add-ons',
+      'custom-order-balance-payment',
+    ]) {
+      const hiddenResponse = await builtMiddleware.default(
+        new Request(`https://luxemia.shop/product/${hiddenHandle}`),
+      );
+      const hiddenBody = await hiddenResponse.text();
+      if (
+        hiddenResponse.status !== 404
+        || hiddenResponse.headers.get('x-robots-tag') !== 'noindex, nofollow'
+        || /rel=["']canonical["']|application\/ld\+json|ProductGroup/i.test(hiddenBody)
+      ) {
+        failures.push(`Internal billing handle must return a schema-free, non-canonical 404: ${hiddenHandle}.`);
+      }
     }
 
     const previewResponse = await builtMiddleware.default(

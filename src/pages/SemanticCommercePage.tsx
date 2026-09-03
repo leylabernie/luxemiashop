@@ -84,6 +84,9 @@ const countryByPath: Record<string, { code: string; title: string }> = {
   '/shipping/canada': { code: 'CA', title: 'Shipping Indian Clothing to Canada' },
   '/shipping/united-kingdom': { code: 'GB', title: 'Shipping Indian Clothing to the United Kingdom' },
   '/shipping/australia': { code: 'AU', title: 'Shipping Indian Clothing to Australia' },
+  '/shipping/new-zealand': { code: 'NZ', title: 'Shipping Indian Clothing to New Zealand' },
+  '/shipping/south-africa': { code: 'ZA', title: 'Shipping Indian Clothing to South Africa' },
+  '/shipping/mauritius': { code: 'MU', title: 'Shipping Indian Clothing to Mauritius' },
 };
 
 function countryDefinition(path: string): Definition | undefined {

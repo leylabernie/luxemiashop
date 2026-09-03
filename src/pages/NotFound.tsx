@@ -5,7 +5,7 @@ import { trackPageNotFound } from "@/hooks/useAnalytics";
 
 /**
  * 404 page — designed to:
- *   1. Stay indexable-but-deindexed (noIndex) so Google doesn't index "404" pages
+ *   1. Stay non-indexable (noIndex) so search engines don't index 404 pages
  *   2. Provide real content (not a thin "Page Not Found" stub) so any 404 that
  *      leaks through doesn't trip Google's soft-404 heuristic
  *   3. Smart-suggest relevant destinations based on the broken URL's keywords

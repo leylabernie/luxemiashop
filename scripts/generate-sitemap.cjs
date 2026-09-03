@@ -22,9 +22,10 @@ const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
 const MIN_APPROVED_SITEMAP_URL_COUNT = 786;
-const STATIC_CONTENT_REVIEWED_AT = '2026-09-02';
+const STATIC_CONTENT_REVIEWED_AT = '2026-09-03';
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
+  'custom-order-balance-payment',
 ]);
 const RETIRED_PRODUCT_HANDLES = new Set(
   JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8'))
@@ -133,6 +134,9 @@ const staticPages = [
   { loc: '/shipping/canada', changefreq: 'monthly', priority: '0.6' },
   { loc: '/shipping/united-kingdom', changefreq: 'monthly', priority: '0.6' },
   { loc: '/shipping/australia', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/new-zealand', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/south-africa', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/mauritius', changefreq: 'monthly', priority: '0.6' },
   { loc: '/pages/shipping-customs', changefreq: 'monthly', priority: '0.4' },
   { loc: '/returns', changefreq: 'monthly', priority: '0.4' },
   { loc: '/size-guide', changefreq: 'monthly', priority: '0.5' },

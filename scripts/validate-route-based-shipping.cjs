@@ -79,6 +79,37 @@ requireAll('index.html', [
   '"ClothingStore"',
 ]);
 
+const countryGuides = [
+  { route: '/shipping/united-states', code: 'US', country: 'the United States', rate: '$14.99 USD below $199 USD and free standard shipping at $199 USD or more' },
+  { route: '/shipping/canada', code: 'CA', country: 'Canada', rate: '$24.99 USD below $299 USD and free standard shipping at $299 USD or more' },
+  { route: '/shipping/united-kingdom', code: 'GB', country: 'the United Kingdom', rate: '$24.99 USD below $299 USD and free standard shipping at $299 USD or more' },
+  { route: '/shipping/australia', code: 'AU', country: 'Australia', rate: '$29.99 USD below $349 USD and free standard shipping at $349 USD or more' },
+  { route: '/shipping/new-zealand', code: 'NZ', country: 'New Zealand', rate: '$29.99 USD below $349 USD and free standard shipping at $349 USD or more' },
+  { route: '/shipping/south-africa', code: 'ZA', country: 'South Africa', rate: '$49.99 USD per order' },
+  { route: '/shipping/mauritius', code: 'MU', country: 'Mauritius', rate: '$59.99 USD per order' },
+];
+
+for (const guide of countryGuides) {
+  const title = `Shipping Indian Clothing to ${guide.country}`;
+  requireAll('src/App.tsx', [`path="${guide.route}"`]);
+  requireAll('src/pages/Shipping.tsx', [`href: '${guide.route}'`]);
+  requireAll('src/pages/SemanticCommercePage.tsx', [
+    `'${guide.route}': { code: '${guide.code}', title: '${title}' }`,
+  ]);
+  requireAll('src/lib/dynamicSitemap.ts', [`{ loc: '${guide.route}'`]);
+  requireAll('scripts/generate-routes.cjs', [`'${guide.route}'`]);
+  requireAll('src/lib/autoRoutes.ts', [`'${guide.route}'`]);
+  requireAll('scripts/routes.json', [`"${guide.route}"`]);
+  requireAll('scripts/generate-sitemap.cjs', [`{ loc: '${guide.route}'`]);
+  requireAll('scripts/approved-sitemap-inventory.json', [`"${guide.route}"`]);
+  requireAll('scripts/prerender.js', [
+    `['${guide.route}', '${title}', '${guide.rate}']`,
+    `href="${guide.route}"`,
+  ]);
+  requireAll('public/llms.txt', [`https://luxemia.shop${guide.route}`]);
+  requireAll('public/llms-full.txt', [`https://luxemia.shop${guide.route}`]);
+}
+
 const blocked = [
   /['"]@type['"]\s*:\s*['"]MerchantReturnPolicy['"]/i,
   /['"]merchantReturnCategory['"]\s*:\s*['"]https:\/\/schema\.org\/MerchantReturnNotPermitted['"]/i,
@@ -131,4 +162,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[route-shipping] OK — five route-based zones, exact thresholds, structured data, Ready-to-Ship filtering and homepage discovery are aligned.');
+console.log('[route-shipping] OK — five route-based zones, seven country guides, exact thresholds, structured data, Ready-to-Ship filtering and discovery are aligned.');

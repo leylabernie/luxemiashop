@@ -38,7 +38,7 @@ export async function return404(request: Request): Promise<Response> {
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'public, max-age=300',
-      'X-Robots-Tag': 'noindex, follow',
+      'X-Robots-Tag': 'noindex, nofollow',
     },
   });
 }

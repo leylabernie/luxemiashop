@@ -102,6 +102,49 @@ const sitemapGenerator = read('scripts/generate-sitemap.cjs');
 requireText(sitemapGenerator, 'STATIC_CONTENT_REVIEWED_AT', 'meaningful static-page lastmod source');
 requireText(sitemapGenerator, 'lastmodByName', 'content-derived scoped sitemap lastmod');
 
+// Merchant discovery and organic discovery must cover the same public product
+// pages. The feed can contain several variant offers per product, but no feed
+// handle may be absent from the product sitemap and no sitemapped product may
+// lack an orderable Merchant offer.
+const merchantFeedPath = path.join(root, 'dist', 'merchant-feed.xml');
+if (!fs.existsSync(merchantFeedPath)) {
+  throw new Error('[semantic-completion] Missing generated Merchant feed');
+}
+const merchantFeed = fs.readFileSync(merchantFeedPath, 'utf8');
+const merchantProductUrls = new Set(
+  [...merchantFeed.matchAll(/<g:link>([\s\S]*?)<\/g:link>/gi)]
+    .map((match) => normalizeHtmlText(match[1]))
+    .map((value) => {
+      try {
+        const url = new URL(value);
+        return url.origin === 'https://luxemia.shop' && url.pathname.startsWith('/product/')
+          ? `${url.origin}${url.pathname}`
+          : '';
+      } catch {
+        return '';
+      }
+    })
+    .filter(Boolean),
+);
+const sitemapProductUrls = new Set(
+  [...read('dist/sitemap-products.xml').matchAll(/<loc>([\s\S]*?)<\/loc>/gi)]
+    .map((match) => normalizeHtmlText(match[1])),
+);
+const feedOnlyProducts = [...merchantProductUrls].filter((url) => !sitemapProductUrls.has(url));
+const sitemapOnlyProducts = [...sitemapProductUrls].filter((url) => !merchantProductUrls.has(url));
+if (
+  merchantProductUrls.size === 0
+  || sitemapProductUrls.size === 0
+  || feedOnlyProducts.length > 0
+  || sitemapOnlyProducts.length > 0
+) {
+  throw new Error(
+    `[semantic-completion] Merchant/sitemap product coverage differs: `
+    + `${merchantProductUrls.size} Merchant products, ${sitemapProductUrls.size} sitemap products, `
+    + `${feedOnlyProducts.length} feed-only, ${sitemapOnlyProducts.length} sitemap-only.`,
+  );
+}
+
 const indexNow = read('scripts/submit-indexnow.cjs');
 const indexNowNotifier = read('scripts/notify-indexnow.cjs');
 const indexNowWorkflow = read('.github/workflows/indexnow-after-production.yml');

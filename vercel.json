@@ -933,6 +933,32 @@
       ]
     },
     {
+      "source": "/indexnow-manifest.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/8e3d7c9415b24a5f9c81e62d1a0374bf.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
       "source": "/e6b81aa0325a277cfb7c764e603dd9cd.txt",
       "headers": [
         {
@@ -1050,7 +1076,7 @@
       "destination": "/google4e3f332d00afc8ba.html"
     },
     {
-      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz)).*)",
+      "source": "/((?!_prerender(?:/|$)|assets(?:/|$)|api(?:/|$)|catalogs(?:/|$)|images(?:/|$)|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

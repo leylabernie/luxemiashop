@@ -86,6 +86,7 @@ const RETIRED_PRODUCT_HANDLES = new Set(
 );
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
+  'custom-order-balance-payment',
 ]);
 const SIZE_OPTION_NAMES = new Set([
   'size',
@@ -1633,6 +1634,9 @@ const semanticCommerceRoutes = [
     ['/shipping/canada', 'Shipping Indian Clothing to Canada', '$24.99 USD below $299 USD and free standard shipping at $299 USD or more'],
     ['/shipping/united-kingdom', 'Shipping Indian Clothing to the United Kingdom', '$24.99 USD below $299 USD and free standard shipping at $299 USD or more'],
     ['/shipping/australia', 'Shipping Indian Clothing to Australia', '$29.99 USD below $349 USD and free standard shipping at $349 USD or more'],
+    ['/shipping/new-zealand', 'Shipping Indian Clothing to New Zealand', '$29.99 USD below $349 USD and free standard shipping at $349 USD or more'],
+    ['/shipping/south-africa', 'Shipping Indian Clothing to South Africa', '$49.99 USD per order'],
+    ['/shipping/mauritius', 'Shipping Indian Clothing to Mauritius', '$59.99 USD per order'],
   ].map(([path, h1, rate]) => ({
     path,
     title: `${h1} | LuxeMia`,
@@ -2323,10 +2327,10 @@ const routes = [
       <p><a href="/shipping/canada">Canada shipping details</a> · <a href="/shipping/united-kingdom">United Kingdom shipping details</a></p>
       <ul><li>$24.99 below $299</li><li>Free standard shipping at $299 and above</li></ul>
       <h3>Australia and New Zealand</h3>
-      <p><a href="/shipping/australia">Australia shipping details</a></p>
+      <p><a href="/shipping/australia">Australia shipping details</a> · <a href="/shipping/new-zealand">New Zealand shipping details</a></p>
       <ul><li>$29.99 below $349</li><li>Free standard shipping at $349 and above</li></ul>
-      <h3>South Africa</h3><p>$49.99 per order.</p>
-      <h3>Mauritius</h3><p>$59.99 per order.</p>
+      <h3>South Africa</h3><p><a href="/shipping/south-africa">South Africa shipping details</a>: $49.99 per order.</p>
+      <h3>Mauritius</h3><p><a href="/shipping/mauritius">Mauritius shipping details</a>: $59.99 per order.</p>
       <h2>Processing and carrier transit</h2>
       <p>Processing is the time before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Review the exact product page for published processing information and contact LuxeMia before ordering for a fixed event date.</p>
       <h2>Carriers, consolidation and express service</h2>

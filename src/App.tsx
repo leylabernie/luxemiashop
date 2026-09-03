@@ -124,6 +124,7 @@ const App = () => (
                 <Route path="/product/ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 {/* Internal billing support: never expose a standalone customer product page. */}
                 <Route path="/product/luxemia-tailoring-saree-finishing-add-ons" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
+                <Route path="/product/custom-order-balance-payment" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 <Route path="/product/:handle" element={<Suspense fallback={<PageLoader />}><ProductDetail /></Suspense>} />
                 <Route path="/collections" element={<Suspense fallback={<PageLoader />}><Collections /></Suspense>} />
                 <Route path="/lehengas" element={<Suspense fallback={<PageLoader />}><Lehengas /></Suspense>} />
@@ -148,6 +149,9 @@ const App = () => (
                 <Route path="/shipping/canada" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
                 <Route path="/shipping/united-kingdom" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
                 <Route path="/shipping/australia" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shipping/new-zealand" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shipping/south-africa" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
+                <Route path="/shipping/mauritius" element={<Suspense fallback={<PageLoader />}><SemanticCommercePage /></Suspense>} />
                 <Route path="/pages/shipping-customs" element={<Suspense fallback={<PageLoader />}><ShippingCustoms /></Suspense>} />
                 <Route path="/shipping-customs" element={<Navigate to="/pages/shipping-customs" replace />} />
                 <Route path="/customs" element={<Navigate to="/pages/shipping-customs" replace />} />

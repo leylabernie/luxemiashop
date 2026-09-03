@@ -1,7 +1,7 @@
 {
   "source": "2026-09-03 semantic commerce release: 834 live, orderable products passed the canonical-prerender, image, positive-USD-price, availability, substantive-copy and duplicate handle/primary-image collision gates; hidden billing, retired, unavailable and failed-quality candidates remain excluded",
   "capturedOn": "2026-09-03",
-  "urlCount": 951,
+  "urlCount": 954,
   "paths": [
     "/",
     "/collections",
@@ -45,6 +45,9 @@
     "/shipping/canada",
     "/shipping/united-kingdom",
     "/shipping/australia",
+    "/shipping/new-zealand",
+    "/shipping/south-africa",
+    "/shipping/mauritius",
     "/pages/shipping-customs",
     "/returns",
     "/size-guide",
