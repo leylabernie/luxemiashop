@@ -43,6 +43,17 @@ const COMMON_FAQS = [
   },
 ];
 
+const INVENTORY_SHARED_FAQS = [
+  {
+    question: 'How do I confirm what is included with an outfit?',
+    answer: 'Open the exact product page and review its included-pieces details and images. A collection name does not add a blouse, dupatta, bottoms, jewelry, or accessory that the listing does not state.',
+  },
+  {
+    question: 'How should I plan for a fixed event date?',
+    answer: 'Confirm the selected product, size, fulfillment classification, processing information, destination, and carrier transit separately. Contact LuxeMia before ordering because delivery by a particular event is not guaranteed.',
+  },
+];
+
 const PROFILES: Record<CollectionStandardProfileKey, CollectionStandardProfile> = {
   mixed: {
     chooseBy: [
@@ -219,7 +230,7 @@ interface CollectionStandardOverride extends CollectionStandardProfile {
 
 const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverride>> = {
   '/collections/wedding-guest-lehengas': {
-    directAnswer: 'This collection contains currently orderable lehenga listings with explicit wedding-guest, bridesmaid or maid-of-honor catalog evidence; listings expressly identified as bridal are excluded. Compare the exact skirt, choli or blouse, dupatta, fabric wording, work, measurements, stitching, selected variant, fulfillment and price before ordering. A collection match does not prove that every pictured piece is included or that one style suits every wedding.',
+    directAnswer: 'This collection contains currently orderable lehenga listings with explicit wedding-guest, bridesmaid or maid-of-honor catalog evidence. Bridal, bride, dulhan or trousseau wording in the title or product type and bride-specific role evidence are excluded; a generic bridal tag does not override explicit bridesmaid or maid-of-honor evidence. Compare the exact pieces, measurements, selected variant, fulfillment and price before ordering.',
     chooseBy: [
       { label: 'All wedding guest outfits', href: '/collections/wedding-guest-outfits' },
       { label: 'All lehengas', href: '/lehengas' },
@@ -237,13 +248,13 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { label: 'How early to order', href: '/blog/how-early-to-order-for-a-fixed-wedding-date' },
     ],
     faqs: [
-      { question: 'Which products appear in this wedding-guest lehenga collection?', answer: 'Products must have current product and variant availability, a lehenga signal in the title or product type, no menswear evidence, explicit wedding-guest, bridesmaid or maid-of-honor evidence, and no bridal or bride-role evidence.' },
+      { question: 'Which products appear in this wedding-guest lehenga collection?', answer: 'Products must have current product and variant availability, a lehenga signal in the title or product type, no menswear evidence, and explicit wedding-guest, bridesmaid or maid-of-honor evidence. Bridal, bride, dulhan or trousseau title or product-type wording and bride-specific role evidence are excluded; a generic bridal tag does not override explicit bridesmaid or maid-of-honor evidence.' },
       { question: 'Does every listing include a choli and dupatta?', answer: 'No. Open the selected listing and verify every expressly included piece; photographs and the collection name do not add items.' },
       ...COMMON_FAQS,
     ],
   },
   '/collections/wedding-guest-kurta-sets': {
-    directAnswer: 'This collection contains currently orderable menswear with an explicit kurta-set garment signal and wedding-guest catalog evidence. Compare the exact kurta, pajama or other bottoms, jacket, dupatta or stole, fabric wording, chest and length measurements, selected size, fulfillment and price. The collection name does not establish which garments or accessories are included with a listing.',
+    directAnswer: 'This collection contains currently orderable menswear with an explicit kurta-set garment signal plus wedding-guest, bridesmaid or maid-of-honor catalog evidence. Compare the exact kurta, pajama or other bottoms, jacket, dupatta or stole, fabric wording, chest and length measurements, selected size, fulfillment and price. The collection name does not establish which garments or accessories are included with a listing.',
     chooseBy: [
       { label: 'All wedding guest outfits', href: '/collections/wedding-guest-outfits' },
       { label: 'All Indian menswear', href: '/menswear' },
@@ -267,7 +278,7 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
     ],
   },
   '/collections/diwali-womenswear': {
-    directAnswer: 'This collection contains currently orderable women’s outfit listings with explicit Diwali, festive or festival evidence and a supported garment signal, such as saree, lehenga, salwar suit or Indo-Western. Compare exact fabric wording, work, included pieces, measurements, selected variant, fulfillment and price. Follow the host or organizer’s guidance because no color or silhouette is universally required for every celebration.',
+    directAnswer: 'This collection contains currently orderable outfit listings with explicit Diwali, festive or festival evidence, a supported garment signal such as saree, lehenga, salwar suit or Indo-Western, and no menswear evidence. Compare exact fabric wording, work, included pieces, measurements, selected variant, fulfillment and price. Follow the host or organizer’s guidance because no color or silhouette is universally required for every celebration.',
     chooseBy: [
       { label: 'All Diwali outfits', href: '/collections/diwali-outfits' },
       { label: 'Diwali menswear', href: '/collections/diwali-menswear' },
@@ -285,13 +296,13 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { label: 'Sizing and measurements', href: '/sizing-measurements-guide' },
     ],
     faqs: [
-      { question: 'Which products appear in this Diwali womenswear collection?', answer: 'A current product must have an orderable garment variant, explicit Diwali, festive or festival evidence, a supported womenswear garment signal and no menswear evidence, and it cannot be a standalone blouse.' },
+      { question: 'Which products appear in this Diwali womenswear collection?', answer: 'A current product must have an orderable garment variant, explicit Diwali, festive or festival evidence, a supported outfit signal and no menswear evidence, and it cannot be a standalone blouse.' },
       { question: 'Is one color or silhouette required for Diwali?', answer: 'No. Practices vary; follow the host or organizer and choose from the exact verified product details.' },
       ...COMMON_FAQS,
     ],
   },
   '/collections/diwali-menswear': {
-    directAnswer: 'This collection contains currently orderable menswear with explicit Diwali, festive or festival evidence and a supported garment signal, such as kurta, sherwani, jacket or dhoti. Compare each listing by its exact fabric wording, included garments, chest and length measurements, selected size, fulfillment and price. Follow the host or organizer’s guidance because no color or level of formality is universally required.',
+    directAnswer: 'This collection contains currently orderable menswear with explicit Diwali, festive or festival evidence and a supported garment signal, such as kurta, sherwani, Nehru or Modi jacket, or dhoti. Compare each listing by its exact fabric wording, included garments, chest and length measurements, selected size, fulfillment and price. Follow the host or organizer’s guidance because no color or level of formality is universally required.',
     chooseBy: [
       { label: 'All Diwali outfits', href: '/collections/diwali-outfits' },
       { label: 'Diwali womenswear', href: '/collections/diwali-womenswear' },
@@ -312,6 +323,128 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { question: 'Which products appear in this Diwali menswear collection?', answer: 'A current product must have an orderable garment variant plus explicit Diwali, festive or festival evidence, menswear evidence and a supported menswear garment signal.' },
       { question: 'Does every kurta listing include matching bottoms or a jacket?', answer: 'No. Confirm every garment and accessory expressly included on the selected product page.' },
       ...COMMON_FAQS,
+    ],
+  },
+  '/collections/navratri-chaniya-choli': {
+    directAnswer: 'This collection contains currently orderable lehenga, chaniya and choli listings whose current catalog information explicitly mentions Navratri or chaniya. Compare the selected product’s exact skirt, blouse or choli, dupatta, fabric, work, measurements, stitching status, price and availability before ordering for Garba or Dandiya.',
+    chooseBy: [
+      { label: 'All Navratri outfits', href: '/collections/navratri-outfits' },
+      { label: 'Garba and Dandiya outfits', href: '/collections/garba-outfits' },
+      { label: 'All festive wear', href: '/festive-wear' },
+    ],
+    decisionRows: [
+      ['Chaniya choli or lehenga set', 'Traditional skirt-and-top styling', 'Exact listed pieces and skirt measurements'],
+      ['Mirror or embroidered work', 'Visual movement for dance events', 'Placement, care and garment weight when supplied'],
+      ['Ready-to-ship classification', 'Avoiding a production stage', 'Selected variant, processing and transit remain separate'],
+    ],
+    selectionGuidance: 'For dancing, compare waist, bust, skirt length, closures, garment weight when supplied, and dupatta security. Follow the dress guidance of your own host, temple, or community rather than assuming a universal color schedule.',
+    guideLinks: [
+      { label: 'Chaniya choli versus lehenga', href: '/blog/chaniya-choli-versus-lehenga' },
+      { label: 'Navratri 2026 buying guide', href: '/blog/navratri-9-day-color-guide-2026' },
+      { label: 'Online measurement guide', href: '/sizing-measurements-guide' },
+    ],
+    faqs: [
+      { question: 'Which products appear in this Navratri chaniya choli collection?', answer: 'Products must have current product and variant availability, explicit Navratri or chaniya evidence, a supported outfit signal, a lehenga, chaniya or choli signal in the title or product type, and no menswear evidence. Accessory product types and standalone blouse listings are excluded.' },
+      { question: 'Is every product a complete three-piece set?', answer: 'No. Set contents vary. Verify the exact skirt, blouse or choli, dupatta, jacket, and any other stated component on the selected listing.' },
+      ...INVENTORY_SHARED_FAQS,
+    ],
+  },
+  '/collections/garba-outfits': {
+    directAnswer: 'This collection contains currently orderable outfits whose current catalog information explicitly mentions Garba or Dandiya. Choose for movement and venue conditions, then verify every included piece, measurement, closure, fabric, embellishment, stitching option, price and selected-variant availability on the exact product page.',
+    chooseBy: [
+      { label: 'Navratri chaniya choli', href: '/collections/navratri-chaniya-choli' },
+      { label: 'All Navratri outfits', href: '/collections/navratri-outfits' },
+      { label: 'Festive lehengas', href: '/collections/party-wear-lehengas' },
+    ],
+    decisionRows: [
+      ['Chaniya choli or lehenga', 'Skirt movement and traditional styling', 'Waist, length, closures and listed contents'],
+      ['Coordinated festive set', 'Simpler piece coordination', 'Whether bottoms and dupatta are explicitly included'],
+      ['Made-to-order option', 'Supported size or color planning', 'Production begins after order confirmation'],
+    ],
+    selectionGuidance: 'Compare hem length, waist security, sleeve and neckline comfort, dupatta handling, embellishment placement, footwear, and the amount of movement expected. Confirm event timing before ordering and do not treat availability for sale as immediate dispatch.',
+    guideLinks: [
+      { label: 'Navratri 2026 buying guide', href: '/blog/navratri-9-day-color-guide-2026' },
+      { label: 'Chaniya choli versus lehenga', href: '/blog/chaniya-choli-versus-lehenga' },
+      { label: 'Ready-to-ship versus made-to-order', href: '/blog/ready-to-ship-versus-made-to-order' },
+    ],
+    faqs: [
+      { question: 'Which products appear in this Garba outfit collection?', answer: 'Products must have current product and variant availability, a supported outfit signal, and explicit Garba or Dandiya evidence in current catalog fields. Accessory product types and standalone blouse listings are excluded.' },
+      { question: 'Does LuxeMia guarantee delivery before my Garba event?', answer: 'No. Review processing and transit separately and contact LuxeMia before ordering for a fixed date.' },
+      ...INVENTORY_SHARED_FAQS,
+    ],
+  },
+  '/collections/groomsmen-outfits': {
+    directAnswer: 'This collection is limited to currently orderable menswear whose current catalog information explicitly identifies a groomsman or groomsmen use. Compare kurta sets, Nehru-style jacket sets, sherwanis, stated colors, included garments, chest and length measurements, fulfillment, price and availability before planning a coordinated group order.',
+    chooseBy: [
+      { label: 'All Indian menswear', href: '/menswear' },
+      { label: 'Wedding-party order support', href: '/wedding-party-orders' },
+      { label: 'Made-to-order outfits', href: '/shop-by-fulfillment/made-to-order' },
+    ],
+    decisionRows: [
+      ['Kurta pajama set', 'Flexible ceremony or guest styling', 'Exact kurta, bottom and jacket contents'],
+      ['Nehru-style jacket set', 'Coordinated layered group look', 'Jacket fabric, closure and supplied pieces'],
+      ['Sherwani', 'More formal wedding styling', 'Chest, length, bottoms and accessories'],
+    ],
+    selectionGuidance: 'For a group order, collect event date, delivery country, group size, color direction, and individual measurements before requesting availability. A shared product does not guarantee that every required size or quantity is available.',
+    guideLinks: [
+      { label: 'Male guest three-day wedding guide', href: '/blog/what-should-a-male-guest-wear-to-a-three-day-indian-wedding' },
+      { label: 'Sherwani versus kurta set', href: '/blog/sherwani-versus-kurta-set' },
+      { label: 'Sizing and measurement guide', href: '/sizing-measurements-guide' },
+    ],
+    faqs: [
+      { question: 'Which products appear in this groomsmen outfit collection?', answer: 'Products must have current product and variant availability, a supported outfit signal, explicit groomsman or groomsmen evidence, and independent menswear garment or gender evidence. A groomsmen role term alone is not treated as menswear evidence.' },
+      { question: 'Can LuxeMia guarantee matching sizes for a full group?', answer: 'No. Send the group requirements for a current product-and-size availability check before ordering.' },
+      ...INVENTORY_SHARED_FAQS,
+    ],
+  },
+  '/collections/sangeet-outfits': {
+    directAnswer: 'This collection contains currently orderable products whose current catalog information explicitly mentions Sangeet. Lehengas, shararas, sarees, kurta sets and Indo-Western outfits can suit different events; compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment, price and selected-variant availability before ordering.',
+    chooseBy: [
+      { label: 'All wedding events', href: '/wedding-events' },
+      { label: 'Party-wear lehengas', href: '/collections/party-wear-lehengas' },
+      { label: 'Sharara suits', href: '/collections/sharara-suits' },
+      { label: 'Indian menswear', href: '/menswear' },
+    ],
+    decisionRows: [
+      ['Lehenga or sharara', 'Dance-friendly festive volume', 'Hem, waist, dupatta and stated set contents'],
+      ['Saree', 'Draped evening styling', 'Blouse details, drape support and footwear'],
+      ['Kurta or Indo-Western', 'Men’s or streamlined movement', 'Jacket, bottom, chest and length details'],
+    ],
+    selectionGuidance: 'Follow the invitation and host’s formality or color guidance. Compare secure draping, manageable hems, breathable construction when verified, and comfortable footwear. Product labels do not guarantee fit, weight, or included pieces.',
+    guideLinks: [
+      { label: 'What should guests wear to a Sangeet?', href: '/blog/what-should-guests-wear-to-a-sangeet' },
+      { label: 'Saree versus lehenga for a wedding guest', href: '/blog/saree-versus-lehenga-for-a-wedding-guest' },
+      { label: 'How early to order', href: '/blog/how-early-to-order-for-a-fixed-wedding-date' },
+    ],
+    faqs: [
+      { question: 'Which products appear in this Sangeet outfit collection?', answer: 'Products must have current product and variant availability, a supported outfit signal, and explicit Sangeet evidence in current catalog fields. Accessory product types and standalone blouse listings are excluded.' },
+      { question: 'Is one silhouette required for a Sangeet?', answer: 'No. Event formality and host guidance vary; choose from verified product details and the activities planned.' },
+      ...INVENTORY_SHARED_FAQS,
+    ],
+  },
+  '/collections/reception-outfits': {
+    directAnswer: 'This collection contains currently orderable products whose current catalog information explicitly mentions a reception. Compare the host’s dress code with each listing’s silhouette, fabric wording, work, included pieces, measurements, fulfillment, price and selected-variant availability. Reception formality varies, so no single garment type is universally required.',
+    chooseBy: [
+      { label: 'All wedding events', href: '/wedding-events' },
+      { label: 'Designer sarees', href: '/collections/designer-sarees' },
+      { label: 'Party-wear lehengas', href: '/collections/party-wear-lehengas' },
+      { label: 'Wedding guest outfits', href: '/collections/wedding-guest-outfits' },
+    ],
+    decisionRows: [
+      ['Designer or party saree', 'Draped formal styling', 'Fabric, blouse details and drape planning'],
+      ['Lehenga or sharara', 'Festive evening volume', 'Included pieces, hem and movement'],
+      ['Kurta, sherwani or Indo-Western', 'Men’s formal or fusion styling', 'Jacket, bottoms and exact measurements'],
+    ],
+    selectionGuidance: 'Start with the invitation and venue. Compare ceremony-to-reception outfit changes, indoor or outdoor conditions, movement, footwear, and the selected product’s actual construction. Confirm timing before purchasing for a fixed wedding weekend.',
+    guideLinks: [
+      { label: 'What should a non-Indian guest wear?', href: '/blog/what-should-a-non-indian-guest-wear-to-an-indian-wedding' },
+      { label: 'Saree versus lehenga', href: '/blog/saree-versus-lehenga-for-a-wedding-guest' },
+      { label: 'How early to order', href: '/blog/how-early-to-order-for-a-fixed-wedding-date' },
+    ],
+    faqs: [
+      { question: 'Which products appear in this reception outfit collection?', answer: 'Products must have current product and variant availability, a supported outfit signal, and explicit reception evidence in current catalog fields. Accessory product types and standalone blouse listings are excluded.' },
+      { question: 'Are reception outfits always black-tie?', answer: 'No. Follow the invitation and host guidance because venue, region, family preferences, and event format vary.' },
+      ...INVENTORY_SHARED_FAQS,
     ],
   },
 };

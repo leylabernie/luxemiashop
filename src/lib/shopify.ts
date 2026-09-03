@@ -1,7 +1,8 @@
 import { toast } from 'sonner';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
-import { buildVerifiedProductCopy } from './productDescriptionEnrichment';
+import { GONE_PRODUCT_HANDLES } from './goneRoutes';
+import { buildVerifiedProductCopy, sanitizeProductTitle } from './productDescriptionEnrichment';
 import { parseIncludedComponentsMetafield } from './includedComponents';
 
 // Shopify API Configuration
@@ -302,7 +303,7 @@ const STOREFRONT_LISTING_QUERY = `
               }
             }
           }
-          variants(first: 1) {
+          variants(first: 100) {
             edges {
               node {
                 id
@@ -540,7 +541,7 @@ function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
     shipsWithin: parseShipsWithinDays(node.shipsWithinMetafield?.value),
     description: verifiedDescription,
     descriptionHtml: verifiedDescription ? `<p>${verifiedDescription}</p>` : undefined,
-    title: node.title.replace(/\s*\|\s*Ready to Ship/gi, ''),
+    title: sanitizeProductTitle(node.title),
   };
 }
 
@@ -645,7 +646,10 @@ export async function fetchProducts(first: number = 12, query?: string): Promise
 
   return edges
     .map(sanitizeProductEdge)
-    .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle));
+    .filter((product: ShopifyProduct) => (
+      !isHiddenBillingProductHandle(product.node.handle)
+      && !GONE_PRODUCT_HANDLES.has(product.node.handle)
+    ));
 }
 
 export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]> {
@@ -676,13 +680,17 @@ export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]
     }
   }
 
-  return allProducts.filter((product) => !isHiddenBillingProductHandle(product.node.handle));
+  return allProducts.filter((product) => (
+    !isHiddenBillingProductHandle(product.node.handle)
+    && !GONE_PRODUCT_HANDLES.has(product.node.handle)
+  ));
 }
 
 export async function fetchProductByHandle(
   handle: string,
   options: { allowHiddenBillingProduct?: boolean } = {},
 ): Promise<ShopifyProduct['node'] | null> {
+  if (GONE_PRODUCT_HANDLES.has(handle)) return null;
   if (isHiddenBillingProductHandle(handle) && !options.allowHiddenBillingProduct) return null;
 
   const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
@@ -703,6 +711,7 @@ export async function fetchProductByHandle(
   // `productByHandle`) so the response shape is `data.product`, not
   // `data.productByHandle`.
   const product = sanitizeProductNode(data.data.product);
+  if (GONE_PRODUCT_HANDLES.has(product.handle)) return null;
   return !isHiddenBillingProductHandle(product.handle) || options.allowHiddenBillingProduct
     ? product
     : null;
@@ -736,7 +745,10 @@ export async function fetchCollectionByHandle(
     image: collection.image || null,
     products: collection.products.edges
       .map(sanitizeProductEdge)
-      .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle)),
+      .filter((product: ShopifyProduct) => (
+        !isHiddenBillingProductHandle(product.node.handle)
+        && !GONE_PRODUCT_HANDLES.has(product.node.handle)
+      )),
   };
 }
 

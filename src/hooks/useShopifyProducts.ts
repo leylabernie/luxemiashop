@@ -76,7 +76,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // Cache key is versioned — bump CACHE_VERSION when the product schema changes
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
-const CACHE_VERSION = 'v13';
+const CACHE_VERSION = 'v14';
 const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
@@ -291,7 +291,10 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   if (category.startsWith('occasion:')) {
     const occasion = category.slice('occasion:'.length);
     if (isDurableIntentCollectionSlug(occasion)) {
-      return allowed.filter((product) => isEligibleForDurableIntent(product.node, occasion));
+      return allowed.filter((product) => isEligibleForDurableIntent({
+        ...product.node,
+        title: sanitizeProductTitle(product.node.title),
+      }, occasion));
     }
     const signalOccasion = occasion.startsWith('wedding-guest-')
       ? 'wedding-guest'

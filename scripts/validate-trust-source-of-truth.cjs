@@ -112,7 +112,7 @@ requireAll('src/hooks/useShopifyProducts.ts', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
   'hasExplicitReadyToShipEvidence(product.node)',
   'variants.length > 0 && variants.some((edge) => edge.node.availableForSale === true)',
-  "const CACHE_VERSION = 'v13'",
+  "const CACHE_VERSION = 'v14'",
 ]);
 requireAll('src/lib/readyToShipEvidence.ts', [
   'hasExplicitReadyToShipEvidence',

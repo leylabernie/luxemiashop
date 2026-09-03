@@ -18,11 +18,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
-const DURABLE_INTENT_COLLECTION_PATHS = new Set([
+const INVENTORY_BACKED_COLLECTION_PATHS = new Set([
   '/collections/wedding-guest-lehengas',
   '/collections/wedding-guest-kurta-sets',
   '/collections/diwali-womenswear',
   '/collections/diwali-menswear',
+  '/collections/navratri-chaniya-choli',
+  '/collections/garba-outfits',
+  '/collections/groomsmen-outfits',
+  '/collections/sangeet-outfits',
+  '/collections/reception-outfits',
 ]);
 const SEO_ARCHITECTURE = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8')
@@ -147,6 +152,15 @@ if (
 }
 const parseIncludedComponentsMetafield = includedComponentsModule.parseIncludedComponentsMetafield;
 const normalizeIncludedPiecesText = includedComponentsModule.normalizeIncludedPiecesText;
+const productDescriptionModule = await loadTsModule('src/lib/productDescriptionEnrichment.ts');
+if (
+  typeof productDescriptionModule.buildVerifiedProductCopy !== 'function'
+  || typeof productDescriptionModule.sanitizeProductTitle !== 'function'
+) {
+  throw new Error('[product-copy] Shared product-copy or title sanitizer is missing.');
+}
+const buildVerifiedProductCopy = productDescriptionModule.buildVerifiedProductCopy;
+const sanitizeProductTitle = productDescriptionModule.sanitizeProductTitle;
 let rankCommercialProducts = (products) => [...products];
 let rankGenericLehengasByIntent = (products) => [...products];
 let getCollectionStandard = () => undefined;
@@ -154,6 +168,7 @@ let indexableCollectionPaths = [];
 let hasExplicitReadyToShipEvidence = () => false;
 let isDurableIntentCollectionSlug = () => false;
 let isEligibleForDurableIntent = () => false;
+let isIntentEvidenceSafeTag = () => true;
 
 function normalizeWhitespace(value) {
   return value.replace(/\s+/g, ' ').trim();
@@ -181,18 +196,6 @@ function sanitizeProductCopy(value) {
     .replace(/from the USA/gi, 'for supported destinations')
     .replace(/the seven supported destination countries/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
     .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
-}
-
-function sanitizeProductTitle(value) {
-  return (value || '')
-    .replace(/^buy\s+/i, '')
-    .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
-    .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
-    .replace(/\bhandcrafted\s+/gi, '')
-    .replace(/\s*(?:[|–—-]\s*)?luxemia(?:\.shop)?\s*$/gi, '')
-    .replace(/\s*[|–—-]\s*$/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 const JEWELRY_PRODUCT_PATTERN = /\b(jewel|jewell|necklace|choker|earring|bangle|bracelet|ring|maang\s*tikka|anklet|kundan|polki)\b/i;
@@ -357,8 +360,6 @@ function getVerifiedPrimaryStyleReference(product) {
   const referenceIsProductSpecific = styleReference.length >= 6 || /\d/.test(styleReference);
   return (referenceIsProductSpecific ? styleReference : skus[0]).slice(0, 80);
 }
-
-let buildVerifiedProductCopy = () => '';
 
 function getProductCategoryInfo(productType = '', title = '') {
   const type = productType.toLowerCase();
@@ -691,7 +692,6 @@ const MENSWEAR_TAGS_EXACT = new Set(['mens', "men's", 'groom', 'groomsmen', 'gro
 const EXCLUDED_TITLE_KEYWORDS = /\b(turban|sunglasses?)\b/i;
 const SAREE_TITLE_KEYWORDS = /\b(saree|sari)\b/i;
 const STANDALONE_BLOUSE_TITLE_KEYWORDS = /\b(blouse|choli)\b/i;
-const OBSOLETE_POLICY_TAG_PATTERN = /\b(canada|australia)\b|\b(worldwide|international|global)\s+(shipping|delivery)\b|\bfree\s+(worldwide\s+)?shipping\b|\bshipping\b.{0,30}(\$|usd|over|above|below|under)/i;
 // Keep crawler and shopper collection inventories aligned. The storefront
 // disabled the April-batch cutoff on 2026-07-10, so the prerender must not
 // silently discard products that the hydrated commercial landing displays.
@@ -723,7 +723,7 @@ function isStandaloneBlouseProduct(product) {
 }
 
 function getCrawlerSafeTags(tags) {
-  return (tags ?? []).filter(tag => !OBSOLETE_POLICY_TAG_PATTERN.test(String(tag)));
+  return (tags ?? []).filter(tag => isIntentEvidenceSafeTag(String(tag)));
 }
 
 function getDisplayCategory(productType) {
@@ -792,7 +792,7 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
     if (isDurableIntentCollectionSlug(occasion)) {
       return allProducts
         .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
-        .filter((product) => isEligibleForDurableIntent(product, occasion))
+        .filter((product) => isEligibleForDurableIntent(buildHydrationProductNode(product), occasion))
         .slice(0, maxProducts);
     }
     const signalOccasion = occasion.startsWith('wedding-guest-')
@@ -802,12 +802,13 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
         : occasion;
     return allProducts
       .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
-      .filter((product) => matchesOccasionProduct(product, signalOccasion))
-      .filter((product) => occasion !== 'groomsmen' || isMenswearProduct(product))
       .filter((product) => {
+        const hydrationProduct = buildHydrationProductNode(product);
+        if (!matchesOccasionProduct(hydrationProduct, signalOccasion)) return false;
+        if (occasion === 'groomsmen') return isMenswearProduct(hydrationProduct);
         if (occasion !== 'navratri-chaniya') return true;
-        const typeAndTitle = `${product.productType ?? ''} ${product.title ?? ''}`;
-        return /lehenga|lehnga|chaniya|choli/i.test(typeAndTitle) && !isMenswearProduct(product);
+        const typeAndTitle = `${hydrationProduct.productType ?? ''} ${hydrationProduct.title ?? ''}`;
+        return /lehenga|lehnga|chaniya|choli/i.test(typeAndTitle) && !isMenswearProduct(hydrationProduct);
       })
       .slice(0, maxProducts);
   }
@@ -1005,6 +1006,25 @@ function filterProductsForCollectionRoute(allProducts, route, maxProducts = MAX_
     maxProducts,
   );
 
+  if (INVENTORY_BACKED_COLLECTION_PATHS.has(route.path)) {
+    const hydrationMatchedHandles = new Set(
+      filterProductsForCategory(
+        selectedProducts.map((product) => buildHydrationProductNode(product)),
+        route.category,
+        false,
+        Number.POSITIVE_INFINITY,
+      ).map((product) => product.handle),
+    );
+    const unstableHandles = selectedProducts
+      .map((product) => product.handle)
+      .filter((handle) => !hydrationMatchedHandles.has(handle));
+    if (unstableHandles.length > 0) {
+      throw new Error(
+        `${route.path} contains ${unstableHandles.length} intent product(s) that would disappear after hydration: ${unstableHandles.join(', ')}`,
+      );
+    }
+  }
+
   if (route.prerenderSubcategory) {
     const hydrationMatchedHandles = new Set(
       applyCommercialLandingSubcategory(
@@ -1055,7 +1075,13 @@ function buildHydrationProductNode(product) {
     availableForSale: product.availableForSale,
     shipsWithinMetafield: product.shipsWithinMetafield || null,
     conditionMetafield: product.conditionMetafield || null,
-    metadata: { includedComponents },
+    occasionMetafield: product.occasionMetafield || null,
+    genderMetafield: product.genderMetafield || null,
+    metadata: {
+      includedComponents,
+      occasion: product.metadata?.occasion || null,
+      gender: product.metadata?.gender || product.genderMetafield?.value || null,
+    },
     priceRange: product.priceRange,
     compareAtPriceRange: product.compareAtPriceRange,
     images: product.images,
@@ -2569,7 +2595,7 @@ const routes = [
     path: '/collections/wedding-guest-lehengas',
     category: 'occasion:wedding-guest-lehengas',
     title: 'Wedding Guest Lehengas | Current Styles | LuxeMia',
-    description: 'Browse orderable lehengas with explicit wedding-guest or bridesmaid evidence; expressly bridal listings are excluded. Verify every product detail.',
+    description: 'Browse orderable lehengas with wedding-guest, bridesmaid or maid-of-honor evidence. Bride-specific listings are excluded; generic bridal tags need explicit bridal-party role evidence.',
     h1: 'Wedding Guest Lehengas',
     content: '',
   },
@@ -2577,7 +2603,7 @@ const routes = [
     path: '/collections/wedding-guest-kurta-sets',
     category: 'occasion:wedding-guest-kurta-sets',
     title: 'Wedding Guest Kurta Sets | Indian Menswear | LuxeMia',
-    description: 'Browse orderable menswear with explicit kurta-set and wedding-guest catalog evidence. Verify included garments, measurements, variants and fulfillment.',
+    description: 'Browse orderable menswear with kurta-set and wedding-guest, bridesmaid or maid-of-honor evidence. Verify included garments, measurements, variants and fulfillment.',
     h1: 'Wedding Guest Kurta Sets',
     content: '',
   },
@@ -2585,7 +2611,7 @@ const routes = [
     path: '/collections/diwali-womenswear',
     category: 'occasion:diwali-womenswear',
     title: 'Diwali Womenswear | Sarees, Lehengas & Suits | LuxeMia',
-    description: 'Browse orderable women’s outfits with explicit Diwali or festival evidence and a supported garment signal. Compare sizes, contents and fulfillment.',
+    description: 'Browse orderable Diwali outfit listings with a supported garment signal and no menswear evidence. Compare sizes, contents and fulfillment.',
     h1: 'Diwali Outfits for Women',
     content: '',
   },
@@ -2603,59 +2629,39 @@ const routes = [
     title: 'Navratri Chaniya Choli | Current Styles | LuxeMia',
     description: 'Shop current Navratri chaniya choli and lehenga sets. Compare included pieces, fabric, work, measurements, stitching, price and availability.',
     h1: 'Navratri Chaniya Choli Online',
-    content: `<p>This collection contains active lehenga, chaniya and choli listings whose current catalog information explicitly mentions Navratri or chaniya. Compare the selected product’s exact skirt, blouse or choli, dupatta, fabric, work, measurements, stitching status, price and availability before ordering for Garba or Dandiya.</p>
-      <h2>Choose by shopping need</h2><p><a href="/collections/navratri-outfits">All Navratri outfits</a> · <a href="/collections/garba-outfits">Garba outfits</a> · <a href="/festive-wear">Festive wear</a></p>
-      <h2>Compare before choosing</h2><p>Compare waist, bust, skirt length, closures, garment weight when supplied, dupatta security, embellishment placement and exact included pieces.</p>
-      <h2>Guides and support</h2><p><a href="/blog/chaniya-choli-versus-lehenga">Chaniya choli versus lehenga</a> · <a href="/sizing-measurements-guide">Measurement guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
-      <h2>Frequently asked questions</h2><h3>Is every product a complete three-piece set?</h3><p>No. Verify the exact stated pieces on the product page.</p><h3>Is delivery by my event guaranteed?</h3><p>No. Confirm processing and transit separately before ordering.</p>`,
+    content: '',
   },
   {
     path: '/collections/garba-outfits',
     category: 'occasion:garba',
     title: 'Garba Outfits | Dandiya Clothing | LuxeMia',
-    description: 'Shop active Garba and Dandiya outfit listings. Compare movement, included pieces, fabric, work, measurements, stitching and availability.',
+    description: 'Browse orderable Garba and Dandiya outfits. Compare movement, included pieces, fabric, work, measurements, stitching and availability.',
     h1: 'Garba and Dandiya Outfits Online',
-    content: `<p>This collection contains active products whose current title, product type, or tags explicitly mention Garba or Dandiya. Choose for movement and venue conditions, then verify every included piece, measurement, closure, fabric, embellishment, stitching option, price and selected-variant availability on the exact product page.</p>
-      <h2>Choose by shopping need</h2><p><a href="/collections/navratri-chaniya-choli">Navratri chaniya choli</a> · <a href="/collections/navratri-outfits">All Navratri outfits</a> · <a href="/collections/party-wear-lehengas">Festive lehengas</a></p>
-      <h2>Compare before choosing</h2><p>For movement, compare hem length, waist security, sleeves, neckline, dupatta handling, embellishment placement and footwear.</p>
-      <h2>Guides and support</h2><p><a href="/blog/navratri-9-day-color-guide-2026">Navratri buying guide</a> · <a href="/blog/ready-to-ship-versus-made-to-order">Fulfillment guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
-      <h2>Frequently asked questions</h2><h3>How are Garba products selected?</h3><p>The current catalog must explicitly mention Garba or Dandiya.</p><h3>Is delivery by my event guaranteed?</h3><p>No. Confirm processing and transit separately.</p>`,
+    content: '',
   },
   {
     path: '/collections/groomsmen-outfits',
     category: 'occasion:groomsmen',
     title: 'Indian Groomsmen Outfits | Kurta & Sherwani | LuxeMia',
-    description: 'Shop active menswear listings explicitly identified for groomsmen. Compare kurta, jacket and sherwani pieces, measurements and availability.',
+    description: 'Browse orderable groomsmen outfits with independent menswear evidence. Compare kurta, jacket and sherwani pieces, measurements and availability.',
     h1: 'Indian Groomsmen Outfits Online',
-    content: `<p>This collection is limited to active menswear whose current catalog information explicitly identifies a groomsman or groomsmen use. Compare kurta sets, Nehru-style jacket sets, sherwanis, stated colors, included garments, chest and length measurements, fulfillment, price and availability before planning a coordinated group order.</p>
-      <h2>Choose by shopping need</h2><p><a href="/menswear">All menswear</a> · <a href="/wedding-party-orders">Group-order support</a> · <a href="/shop-by-fulfillment/made-to-order">Made-to-order outfits</a></p>
-      <h2>Compare before choosing</h2><p>Compare kurta sets, Nehru-style jacket sets and sherwanis by their exact garments, fabric wording, measurements and current selected-size availability.</p>
-      <h2>Guides and support</h2><p><a href="/blog/sherwani-versus-kurta-set">Sherwani versus kurta set</a> · <a href="/sizing-measurements-guide">Measurement guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
-      <h2>Frequently asked questions</h2><h3>Are bridesmaid products included?</h3><p>No. Products need both a groomsmen signal and a menswear signal.</p><h3>Are matching group sizes guaranteed?</h3><p>No. Request a current quantity and size check before ordering.</p>`,
+    content: '',
   },
   {
     path: '/collections/sangeet-outfits',
     category: 'occasion:sangeet',
     title: 'Sangeet Outfits | Indian Dance-Event Styles | LuxeMia',
-    description: 'Shop active products explicitly identified for Sangeet. Compare movement, fabric, included pieces, measurements, fulfillment and availability.',
+    description: 'Browse orderable outfits explicitly identified for Sangeet. Compare movement, fabric, included pieces, measurements, fulfillment and availability.',
     h1: 'Sangeet Outfits Online',
-    content: `<p>This collection contains active products whose current catalog information explicitly mentions Sangeet. Lehengas, shararas, sarees, kurta sets and Indo-Western outfits can suit different events; compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment, price and selected-variant availability before ordering.</p>
-      <h2>Choose by shopping need</h2><p><a href="/wedding-events">All wedding events</a> · <a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/sharara-suits">Sharara suits</a> · <a href="/menswear">Menswear</a></p>
-      <h2>Compare before choosing</h2><p>Compare lehengas, shararas, sarees and menswear by manageable hems, secure draping, exact set contents, measurements and current availability.</p>
-      <h2>Guides and support</h2><p><a href="/blog/what-should-guests-wear-to-a-sangeet">Sangeet guide</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">Ordering timeline</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
-      <h2>Frequently asked questions</h2><h3>How are Sangeet products selected?</h3><p>The current catalog must explicitly mention Sangeet.</p><h3>Is one silhouette required?</h3><p>No. Follow the host’s dress guidance and event format.</p>`,
+    content: '',
   },
   {
     path: '/collections/reception-outfits',
     category: 'occasion:reception',
     title: 'Indian Reception Outfits | Guest & Party Wear | LuxeMia',
-    description: 'Shop active products explicitly identified for receptions. Compare formality, fabric, work, included pieces, measurements, price and availability.',
+    description: 'Browse orderable outfits explicitly identified for receptions. Compare formality, fabric, work, included pieces, measurements, price and availability.',
     h1: 'Indian Reception Outfits Online',
-    content: `<p>This collection contains active products whose current catalog information explicitly mentions a reception. Compare the host’s dress code with each listing’s silhouette, fabric wording, work, included pieces, measurements, fulfillment, price and selected-variant availability. Reception formality varies, so no single garment type is universally required.</p>
-      <h2>Choose by shopping need</h2><p><a href="/wedding-events">All wedding events</a> · <a href="/collections/designer-sarees">Designer sarees</a> · <a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/wedding-guest-outfits">Wedding guest outfits</a></p>
-      <h2>Compare before choosing</h2><p>Compare sarees, lehengas, shararas and menswear by the invitation, venue, movement needs, exact product construction and current selected-size availability.</p>
-      <h2>Guides and support</h2><p><a href="/blog/saree-versus-lehenga-for-a-wedding-guest">Saree versus lehenga</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">Ordering timeline</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
-      <h2>Frequently asked questions</h2><h3>How are reception products selected?</h3><p>The current catalog must explicitly mention reception.</p><h3>Are reception outfits always black-tie?</h3><p>No. Follow the invitation and host guidance.</p>`,
+    content: '',
   },
   {
     path: '/wedding-party-orders',
@@ -3371,7 +3377,7 @@ function generateHtml(template, route, allShopifyProducts) {
       );
     }
 
-    if (DURABLE_INTENT_COLLECTION_PATHS.has(route.path) && collectionStandard) {
+    if (INVENTORY_BACKED_COLLECTION_PATHS.has(route.path) && collectionStandard) {
       const faqPageJsonLd = generateFaqPageJsonLd(collectionStandard.faqs);
       if (faqPageJsonLd) {
         html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(faqPageJsonLd)}</script>\n</head>`);
@@ -3538,14 +3544,12 @@ async function main() {
     rankingModule,
     collectionStandardsModule,
     readyToShipEvidenceModule,
-    productCopyModule,
     productEvidenceModule,
     intentCollectionEligibilityModule,
   ] = await Promise.all([
     loadTsModule('src/lib/commercialProductRanking.ts'),
     loadTsModule('src/config/collectionStandards.ts'),
     loadTsModule('src/lib/readyToShipEvidence.ts'),
-    loadTsModule('src/lib/productDescriptionEnrichment.ts'),
     loadTsModule('src/lib/productEvidence.ts'),
     loadTsModule('src/lib/intentCollectionEligibility.ts'),
   ]);
@@ -3575,19 +3579,16 @@ async function main() {
   hasExplicitCustomMeasurementEvidence = productEvidenceModule.hasExplicitCustomMeasurementEvidence;
   hasExplicitCustomizationEvidence = productEvidenceModule.hasExplicitCustomizationEvidence;
 
-  if (typeof productCopyModule.buildVerifiedProductCopy !== 'function') {
-    throw new Error('[product-copy] Shared evidence-safe product-copy builder is missing.');
-  }
-  buildVerifiedProductCopy = productCopyModule.buildVerifiedProductCopy;
-
   if (
     typeof intentCollectionEligibilityModule.isDurableIntentCollectionSlug !== 'function'
     || typeof intentCollectionEligibilityModule.isEligibleForDurableIntent !== 'function'
+    || typeof intentCollectionEligibilityModule.isIntentEvidenceSafeTag !== 'function'
   ) {
     throw new Error('[intent-collections] Shared durable-intent eligibility helpers are missing.');
   }
   isDurableIntentCollectionSlug = intentCollectionEligibilityModule.isDurableIntentCollectionSlug;
   isEligibleForDurableIntent = intentCollectionEligibilityModule.isEligibleForDurableIntent;
+  isIntentEvidenceSafeTag = intentCollectionEligibilityModule.isIntentEvidenceSafeTag;
 
   if (
     typeof collectionStandardsModule.getCollectionStandard !== 'function'

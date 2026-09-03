@@ -1,9 +1,54 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const esbuild = require('esbuild');
 
 const root = path.resolve(__dirname, '..');
 const read = (relative) => fs.readFileSync(path.join(root, relative), 'utf8');
+const loadTsModule = (relative) => {
+  const result = esbuild.buildSync({
+    entryPoints: [path.join(root, relative)],
+    bundle: true,
+    format: 'cjs',
+    platform: 'node',
+    write: false,
+    logLevel: 'silent',
+  });
+  const loadedModule = { exports: {} };
+  const execute = new Function('module', 'exports', 'require', result.outputFiles[0].text);
+  execute(loadedModule, loadedModule.exports, require);
+  return loadedModule.exports;
+};
+const normalizeHtmlText = (value) => String(value || '')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&(#x[\da-f]+|#\d+|amp|quot|lt|gt|apos|nbsp);/gi, (match, entity) => {
+    const normalized = entity.toLowerCase();
+    if (normalized === 'amp') return '&';
+    if (normalized === 'quot') return '"';
+    if (normalized === 'lt') return '<';
+    if (normalized === 'gt') return '>';
+    if (normalized === 'apos') return "'";
+    if (normalized === 'nbsp') return ' ';
+    const radix = normalized.startsWith('#x') ? 16 : 10;
+    const digits = normalized.replace(/^#x?/, '');
+    const codePoint = Number.parseInt(digits, radix);
+    return Number.isInteger(codePoint) && codePoint >= 0 && codePoint <= 0x10FFFF
+      ? String.fromCodePoint(codePoint)
+      : match;
+  })
+  .replace(/\s+/g, ' ')
+  .trim();
+const collectSchemaByType = (value, expectedType, result = []) => {
+  if (Array.isArray(value)) {
+    for (const entry of value) collectSchemaByType(entry, expectedType, result);
+    return result;
+  }
+  if (!value || typeof value !== 'object') return result;
+  const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+  if (types.includes(expectedType)) result.push(value);
+  for (const nested of Object.values(value)) collectSchemaByType(nested, expectedType, result);
+  return result;
+};
 const requireText = (source, value, label) => {
   if (!source.includes(value)) throw new Error(`[semantic-completion] Missing ${label}: ${value}`);
 };
@@ -109,31 +154,123 @@ const requiredInventoryRoutes = [
   '/collections/sangeet-outfits',
   '/collections/reception-outfits',
 ];
+const appSource = read('src/App.tsx');
 const inventoryCollectionSource = read('src/pages/InventoryBackedCollection.tsx');
+const { getCollectionStandard } = loadTsModule('src/config/collectionStandards.ts');
+const inventoryFaqSchemaPaths = prerender.match(
+  /const INVENTORY_BACKED_COLLECTION_PATHS = new Set\(\[([\s\S]*?)\]\);/,
+)?.[1] || '';
+requireText(inventoryCollectionSource, 'answer: standard.directAnswer', 'shared React collection direct-answer consumer');
+requireText(prerender, 'route.collectionStandard = standard', 'shared prerender collection-standard assignment');
+requireText(prerender, 'escapeHtml(collectionStandard.directAnswer)', 'shared prerender collection direct-answer consumer');
 for (const route of requiredInventoryRoutes) {
-  requireText(read('src/App.tsx'), route, `routed inventory collection ${route}`);
+  const slug = route.slice('/collections/'.length);
+  requireText(
+    appSource,
+    `<Route path="${route}" element={<Suspense fallback={<PageLoader />}><InventoryBackedCollection landing="${slug}" /></Suspense>} />`,
+    `exact routed inventory landing ${route}`,
+  );
   requireText(prerender, route, `prerendered inventory collection ${route}`);
   requireText(read('scripts/generate-routes.cjs'), route, `route manifest collection ${route}`);
   requireText(read('scripts/generate-sitemap.cjs'), route, `collection sitemap route ${route}`);
 
-  const slug = route.slice('/collections/'.length);
-  const reactStart = inventoryCollectionSource.indexOf(`  '${slug}': {`);
+  const reactStart = inventoryCollectionSource.indexOf(`  '${slug}': withCollectionStandard({`);
   const prerenderStart = prerender.indexOf(`    path: '${route}',`);
   if (reactStart < 0 || prerenderStart < 0) {
-    throw new Error(`[semantic-completion] Could not locate direct-answer sources for ${route}`);
+    throw new Error(`[semantic-completion] ${route} must use the shared collection-standard path`);
   }
 
-  const reactBlock = inventoryCollectionSource.slice(reactStart, reactStart + 6000);
-  const prerenderBlock = prerender.slice(prerenderStart, prerenderStart + 6000);
-  const reactAnswer = reactBlock.match(/\n\s+answer: '([^'\n]+)',/)?.[1];
-  const prerenderAnswer = prerenderBlock.match(/content:\s*`<p>([\s\S]*?)<\/p>/)?.[1];
-  if (!reactAnswer || !prerenderAnswer) {
-    throw new Error(`[semantic-completion] Missing direct answer for ${route}`);
+  const reactEnd = inventoryCollectionSource.indexOf('\n  }),', reactStart);
+  if (reactEnd < 0) {
+    throw new Error(`[semantic-completion] Could not bound the React collection config for ${route}`);
   }
-  requireDirectAnswerLength(reactAnswer, `${route} React`);
-  requireDirectAnswerLength(prerenderAnswer, `${route} prerender`);
-  if (reactAnswer !== prerenderAnswer) {
-    throw new Error(`[semantic-completion] React and prerender direct answers differ for ${route}`);
+  const reactBlock = inventoryCollectionSource.slice(reactStart, reactEnd);
+  const prerenderEnd = prerender.indexOf('\n  },', prerenderStart);
+  if (prerenderEnd < 0) {
+    throw new Error(`[semantic-completion] Could not bound the prerender route for ${route}`);
+  }
+  const prerenderBlock = prerender.slice(prerenderStart, prerenderEnd);
+  if (!/\n\s+content:\s*'',/.test(prerenderBlock)) {
+    throw new Error(`[semantic-completion] ${route} duplicates shared standard copy in its prerender route`);
+  }
+  requireText(inventoryFaqSchemaPaths, `'${route}'`, `inventory FAQ schema route ${route}`);
+
+  const answer = getCollectionStandard?.(route)?.directAnswer;
+  if (!answer) throw new Error(`[semantic-completion] Missing shared direct answer for ${route}`);
+  const standard = getCollectionStandard(route);
+  if (!reactBlock.includes(`slug: '${slug}'`) || !reactBlock.includes(`category: '${standard.category}'`)) {
+    throw new Error(`[semantic-completion] React slug or category differs from the shared source for ${route}`);
+  }
+  if (!prerenderBlock.includes(`category: '${standard.category}'`)) {
+    throw new Error(`[semantic-completion] Prerender category differs from the shared source for ${route}`);
+  }
+  for (const field of ['category', 'title', 'description', 'h1']) {
+    const pattern = new RegExp(`\\n\\s+${field}: '([^'\\n]+)'`);
+    const reactValue = reactBlock.match(pattern)?.[1];
+    const prerenderValue = prerenderBlock.match(pattern)?.[1];
+    if (!reactValue || reactValue !== prerenderValue) {
+      throw new Error(`[semantic-completion] React and prerender ${field} differ for ${route}`);
+    }
+  }
+  requireDirectAnswerLength(answer, `${route} shared`);
+
+  const builtPath = path.join(root, 'dist', '_prerender', `${route.slice(1)}.html`);
+  if (!fs.existsSync(builtPath)) {
+    throw new Error(`[semantic-completion] Missing built inventory collection: ${route}`);
+  }
+  const builtHtml = fs.readFileSync(builtPath, 'utf8');
+  const mainMatches = [...builtHtml.matchAll(/<main\b(?=[^>]*\bid=["']seo-prerender["'])[^>]*>([\s\S]*?)<\/main>/gi)];
+  if (mainMatches.length !== 1) {
+    throw new Error(`[semantic-completion] Expected one built #seo-prerender main for ${route}; found ${mainMatches.length}`);
+  }
+  const main = mainMatches[0][1];
+  const answerMatches = [...main.matchAll(/<p\b(?=[^>]*\bdata-collection-direct-answer\b)[^>]*>([\s\S]*?)<\/p>/gi)];
+  const immediateAnswer = main.match(
+    /<h1\b[^>]*>[\s\S]*?<\/h1>\s*<p\b(?=[^>]*\bdata-collection-direct-answer\b)[^>]*>([\s\S]*?)<\/p>/i,
+  )?.[1];
+  if (answerMatches.length !== 1 || !immediateAnswer) {
+    throw new Error(`[semantic-completion] Expected one immediate built direct answer for ${route}; found ${answerMatches.length}`);
+  }
+  if (normalizeHtmlText(immediateAnswer) !== normalizeHtmlText(answer)) {
+    throw new Error(`[semantic-completion] Built direct answer differs from the shared source for ${route}`);
+  }
+
+  const visibleFaqBlocks = [...main.matchAll(/<div\b(?=[^>]*\bdata-collection-faqs\b)[^>]*>([\s\S]*?)<\/div>/gi)];
+  const visibleFaqs = visibleFaqBlocks.length === 1
+    ? [...visibleFaqBlocks[0][1].matchAll(/<h3\b[^>]*>([\s\S]*?)<\/h3>\s*<p\b[^>]*>([\s\S]*?)<\/p>/gi)]
+      .map((match) => ({
+        question: normalizeHtmlText(match[1]),
+        answer: normalizeHtmlText(match[2]),
+      }))
+    : [];
+  const expectedFaqs = standard.faqs.map((faq) => ({
+    question: normalizeHtmlText(faq.question),
+    answer: normalizeHtmlText(faq.answer),
+  }));
+  if (visibleFaqBlocks.length !== 1 || JSON.stringify(visibleFaqs) !== JSON.stringify(expectedFaqs)) {
+    throw new Error(`[semantic-completion] Built visible FAQs differ from the shared source for ${route}`);
+  }
+
+  const faqPages = [];
+  for (const match of builtHtml.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      collectSchemaByType(JSON.parse(match[1]), 'FAQPage', faqPages);
+    } catch {
+      // Other build validators report malformed JSON-LD. This invariant still
+      // fails below when it cannot find the exact inventory FAQPage.
+    }
+  }
+  if (faqPages.length !== 1) {
+    throw new Error(`[semantic-completion] Expected one built FAQPage for ${route}; found ${faqPages.length}`);
+  }
+  const builtFaqs = Array.isArray(faqPages[0].mainEntity)
+    ? faqPages[0].mainEntity.map((question) => ({
+      question: question?.name,
+      answer: question?.acceptedAnswer?.text,
+    }))
+    : [];
+  if (JSON.stringify(builtFaqs) !== JSON.stringify(standard.faqs)) {
+    throw new Error(`[semantic-completion] Built FAQPage differs from the shared source for ${route}`);
   }
 }
 for (const route of ['/collections/palazzo-suits', '/collections/sherwani-for-groom', '/collections/banarasi-sarees']) {

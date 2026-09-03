@@ -417,7 +417,8 @@ requireSource(/assertExactLiveProductRouteSet\(routes, productMap\)/, 'exact liv
 requireSource(/getLiveProductPrerenderEvidence\(live\)/, 'source-backed Product schema evidence gate');
 requireSource(/getLiveProductPrerenderEvidence\(p\)/, 'source-backed visible product evidence gate');
 requireSource(/loadTsModule\('src\/lib\/productDescriptionEnrichment\.ts'\)/, 'shared evidence-safe product-copy module loading');
-requireSource(/buildVerifiedProductCopy\s*=\s*productCopyModule\.buildVerifiedProductCopy/, 'shared product-copy builder assignment');
+requireSource(/const buildVerifiedProductCopy\s*=\s*productDescriptionModule\.buildVerifiedProductCopy/, 'shared product-copy builder assignment');
+requireSource(/const sanitizeProductTitle\s*=\s*productDescriptionModule\.sanitizeProductTitle/, 'shared product-title sanitizer assignment');
 requireSource(/loadTsModule\('src\/lib\/productEvidence\.ts'\)/, 'shared customization-evidence module loading');
 requireSource(/hasExplicitCustomizationEvidence\s*=\s*productEvidenceModule\.hasExplicitCustomizationEvidence/, 'shared customization-evidence assignment');
 requireSource(/conditionMetafield: metafield\(namespace: "custom", key: "condition"\)/, 'Shopify condition metafield query');

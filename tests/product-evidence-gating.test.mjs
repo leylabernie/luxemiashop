@@ -656,7 +656,8 @@ test('live refresh and prerender share the evidence-safe product-copy builder', 
   assert.match(shopifySource, /const verifiedDescription = buildVerifiedProductCopy\(node\)/);
   assert.doesNotMatch(shopifySource, /sanitizeShopifyProductCopy/);
   assert.match(prerenderSource, /loadTsModule\('src\/lib\/productDescriptionEnrichment\.ts'\)/);
-  assert.match(prerenderSource, /buildVerifiedProductCopy = productCopyModule\.buildVerifiedProductCopy/);
+  assert.match(prerenderSource, /const buildVerifiedProductCopy = productDescriptionModule\.buildVerifiedProductCopy/);
+  assert.match(prerenderSource, /const sanitizeProductTitle = productDescriptionModule\.sanitizeProductTitle/);
   assert.match(prerenderSource, /loadTsModule\('src\/lib\/productEvidence\.ts'\)/);
   assert.match(prerenderSource, /hasExplicitCustomizationEvidence = productEvidenceModule\.hasExplicitCustomizationEvidence/);
 });
