@@ -4,6 +4,7 @@ import { ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import type { ShopifyProduct } from '@/lib/shopify';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
 
 interface StickyAddToBagProps {
   product: ShopifyProduct['node'];
@@ -20,7 +21,8 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isAvailable = product.variants.edges.some((edge) => edge.node.availableForSale !== false);
+  const isAvailable = product.availableForSale === true
+    && product.variants.edges.some((edge) => edge.node.availableForSale === true);
   const price = parseFloat(product.priceRange.minVariantPrice.amount);
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount
     ? parseFloat(product.compareAtPriceRange.minVariantPrice.amount)
@@ -55,10 +57,10 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium line-clamp-1">{product.title}</p>
               <p className="text-sm font-semibold">
-                ${price.toFixed(2)}
+                {formatCurrencyAmount(price, product.priceRange.minVariantPrice.currencyCode)}
                 {compareAtPrice && compareAtPrice > price && (
                   <span className="text-xs text-muted-foreground line-through ml-1 font-normal">
-                    ${compareAtPrice.toFixed(2)}
+                    {formatCurrencyAmount(compareAtPrice, product.compareAtPriceRange!.minVariantPrice.currencyCode)}
                   </span>
                 )}
               </p>

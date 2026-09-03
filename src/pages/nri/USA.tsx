@@ -9,16 +9,16 @@ const USA = () => (
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
       seoTitle: 'Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping at $199 and above; $14.99 below. Tracking after dispatch.',
+      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping at $199 and above; $14.99 below. Review current products and delivery guidance.',
       heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
-      shippingTime: 'tracking provided after dispatch',
+      shippingTime: 'tracking timing varies by fulfilled order',
       shippingCost: '$14.99 per order; free at $199 and above',
       customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
           question: 'How long does shipping to the United States take?',
-          answer: 'Tracking is provided after dispatch, and carrier transit begins after dispatch. Delivery timing depends on the product, any selected tailoring, and the service shown at checkout. Contact LuxeMia before ordering if your event date is time-sensitive.',
+          answer: 'When tracking is issued, carrier scans can appear after label creation. Carrier transit begins after dispatch. Delivery timing depends on the product, any selected tailoring, and the service shown at checkout. Contact LuxeMia before ordering if your event date is time-sensitive.',
         },
         {
           question: 'Is shipping free to the United States?',
@@ -40,7 +40,7 @@ const USA = () => (
       benefits: [
         { icon: Truck, title: 'U.S. Delivery', description: '$14.99 per order; free at $199 and above' },
         { icon: Shield, title: 'Clear Policies', description: 'Shipping and damage-claim terms online' },
-        { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
+        { icon: Clock, title: 'Tracked', description: 'When tracking is issued, carrier scans may appear after label creation' },
       ],
     }}
   />

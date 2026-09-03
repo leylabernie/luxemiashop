@@ -35,7 +35,8 @@ const REQUIRED_FIELDS = Object.freeze([
   'seller_name',
   'target_countries',
 ]);
-const VALID_AVAILABILITY = new Set(['in_stock', 'out_of_stock', 'pre_order', 'backorder', 'unknown']);
+const VALID_AVAILABILITY = new Set(['in_stock']);
+const VALID_CONDITIONS = new Set(['new', 'refurbished', 'used']);
 const VALID_AGE_GROUPS = new Set(['newborn', 'infant', 'toddler', 'kids', 'adult']);
 const MONEY_PATTERN = /^(\d+(?:\.\d{1,4})?)\s+([A-Z]{3})$/;
 const STALE_SHIPPING_PATTERN = /United States addresses only|U\.S\. standard shipping is \$12 below \$150|Free U\.S\. shipping at \$150/i;
@@ -139,14 +140,12 @@ function validateRecord(record, index) {
   if (!VALID_AVAILABILITY.has(record.availability)) {
     throw new Error(`Record ${record.item_id} has invalid availability ${record.availability}`);
   }
-  if (record.availability === 'pre_order' && !record.availability_date) {
-    throw new Error(`Record ${record.item_id} requires availability_date for pre_order`);
+  if (record.condition !== undefined) {
+    assertBoundedString(record, 'condition', 30);
+    if (!VALID_CONDITIONS.has(record.condition)) {
+      throw new Error(`Record ${record.item_id} has unsupported explicit condition ${record.condition}`);
+    }
   }
-  if (record.availability_date !== undefined && !Number.isFinite(Date.parse(record.availability_date))) {
-    throw new Error(`Record ${record.item_id} has invalid availability_date ${record.availability_date}`);
-  }
-
-  if (record.condition !== undefined) assertBoundedString(record, 'condition', 30);
   if (record.product_category !== undefined) assertBoundedString(record, 'product_category', 750);
   if (record.material !== undefined) assertBoundedString(record, 'material', 100);
   if (record.color !== undefined) assertBoundedString(record, 'color', 40);
@@ -166,9 +165,9 @@ function validateRecord(record, index) {
     throw new Error(`Record ${record.item_id} requires boolean listing_has_variations`);
   }
   assertBoundedString(record, 'group_id', 100, true);
-  if (record.listing_has_variations) {
-    if (!record.variant_dict || typeof record.variant_dict !== 'object' || Array.isArray(record.variant_dict)) {
-      throw new Error(`Record ${record.item_id} requires variant_dict for a grouped listing`);
+  if (record.variant_dict !== undefined) {
+    if (!record.listing_has_variations || typeof record.variant_dict !== 'object' || Array.isArray(record.variant_dict)) {
+      throw new Error(`Record ${record.item_id} has variant_dict without an evidenced grouped listing`);
     }
     const variantEntries = Object.entries(record.variant_dict);
     if (variantEntries.length === 0) {
@@ -181,13 +180,11 @@ function validateRecord(record, index) {
     }
   }
 
-  if (record.is_digital !== false) {
-    throw new Error(`Record ${record.item_id} must identify the apparel item as is_digital=false`);
+  for (const unsupportedAssertion of ['is_digital', 'accepts_returns', 'accepts_exchanges', 'return_policy']) {
+    if (unsupportedAssertion in record) {
+      throw new Error(`Record ${record.item_id} contains unsupported assertion ${unsupportedAssertion}`);
+    }
   }
-  if (record.accepts_returns !== false || record.accepts_exchanges !== false) {
-    throw new Error(`Record ${record.item_id} must match LuxeMia's current final-sale policy`);
-  }
-  assertHttpsUrl(record.return_policy, 'return_policy', record.item_id);
 }
 
 function readGzipJsonl(feedPath) {

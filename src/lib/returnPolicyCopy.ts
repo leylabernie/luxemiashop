@@ -3,13 +3,16 @@
  * Use these constants instead of restating return terms in individual pages.
  */
 export const RETURN_POLICY_SUMMARY =
-  'All sales are final and exchanges are not accepted. For genuine shipping damage or defect, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.';
+  'Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours of delivery—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.';
 
 export const RETURN_POLICY_FAQ_ANSWER =
-  'All sales are final and exchanges are not accepted. For genuine shipping damage or defect, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video. See Returns & Cancellations for the complete claim instructions.';
+  'Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours of delivery—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded. See Returns & Cancellations for complete instructions.';
 
 export const COVERED_ORDER_ISSUE_ANSWER =
-  'If an item arrives damaged or defective, is incorrect, or is missing, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition. Keep the item and packaging until LuxeMia reviews the claim.';
+  'Report damage, defects, material misdescription, an incorrect item, or missing pieces promptly—preferably within 48 hours of delivery—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded. Keep the item and packaging until LuxeMia reviews the request.';
+
+export const CANCELLATION_POLICY_ANSWER =
+  'Contact LuxeMia immediately to request cancellation. Requests received within 24 hours are more likely to be reviewed before fulfillment begins, but cancellation is not guaranteed and may become unavailable sooner. A request is not confirmed until LuxeMia accepts it. Nothing in this process limits rights that cannot legally be excluded.';
 
 export const RETURN_POLICY_SEO_DESCRIPTION =
-  'Read LuxeMia’s final-sale policy and the 48-hour process for reporting genuine shipping damage or defect, an incorrect item, or a missing item.';
+  'Read LuxeMia’s change-of-mind final-sale terms and process for promptly reporting damage, defects, misdescription, incorrect items or missing pieces without limiting non-excludable rights.';

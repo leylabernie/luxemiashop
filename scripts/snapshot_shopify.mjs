@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 /**
- * Snapshot all current Shopify products to a CSV file for rollback safety.
- * Captures: Handle, Title, Type, Vendor, Tags, Body HTML summary, Variant price,
- * Image URL, Status. This is the "before" state we can restore from if needed.
+ * Capture a read-only Shopify catalog audit summary.
+ *
+ * This intentionally compact report is not an importable backup: it records
+ * only counts plus the first variant/image and must never be represented as a
+ * complete or restorable Shopify export.
  */
 
 import { writeFileSync, mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 const SHOPIFY_API_VERSION = '2025-10';
@@ -77,8 +80,9 @@ async function main() {
   console.log(`\nTotal: ${products.length} products\n`);
 
   const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const outPath = `/home/z/my-project/download/shopify-snapshot-BEFORE-${ts}.csv`;
-  mkdirSync('/home/z/my-project/download', { recursive: true });
+  const outputDirectory = resolve(process.env.SHOPIFY_AUDIT_OUTPUT_DIR || 'artifacts/shopify-audits');
+  const outPath = resolve(outputDirectory, `shopify-catalog-audit-${ts}.csv`);
+  mkdirSync(outputDirectory, { recursive: true });
 
   const headers = [
     'handle', 'id', 'title', 'product_type', 'vendor', 'tags',
@@ -105,25 +109,22 @@ async function main() {
   writeFileSync(outPath, lines.join('\n') + '\n');
 
   console.log(`═══════════════════════════════════════════════════════════════`);
-  console.log(`  SNAPSHOT COMPLETE — ROLLBACK FILE CREATED`);
+  console.log(`  READ-ONLY CATALOG AUDIT COMPLETE`);
   console.log(`═══════════════════════════════════════════════════════════════`);
   console.log(`  File: ${outPath}`);
   console.log(`  Rows: ${products.length}`);
-  console.log(`  `);
-  console.log(`  If anything goes wrong with the fixes, you can restore by`);
-  console.log(`  importing this CSV via Shopify Admin → Products → Import`);
-  console.log(`  (check "Overwrite existing products with same handle")`);
+  console.log(`  This summary is not a complete Shopify export or restore file.`);
   console.log(`═══════════════════════════════════════════════════════════════\n`);
 
   // Quick stats
   const vendorCounts = {};
   const typeCount = {};
   for (const p of products) {
-    vendorCount[p.vendor] = (vendorCount[p.vendor] || 0) + 1;
+    vendorCounts[p.vendor] = (vendorCounts[p.vendor] || 0) + 1;
     typeCount[p.product_type] = (typeCount[p.product_type] || 0) + 1;
   }
   console.log('Current vendor distribution:');
-  for (const [v, c] of Object.entries(vendorCount).sort((a, b) => b[1] - a[1])) {
+  for (const [v, c] of Object.entries(vendorCounts).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${c}  ${v}`);
   }
   console.log('\nTop 10 product types:');

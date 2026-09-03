@@ -58,8 +58,11 @@ import {
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import { useListingFilters } from '@/hooks/useListingFilters';
 import { filterSortAndSubcategorize } from '@/lib/productFilters';
+import { rankGenericLehengasByIntent } from '@/lib/commercialProductRanking';
 import ProductCard from '@/components/ui/ProductCard';
 import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
+import CollectionDecisionSupport, { CollectionDirectAnswer } from '@/components/collections/CollectionDecisionSupport';
+import { getCollectionStandard } from '@/config/collectionStandards';
 import { FilterSidebar, ActiveFilterTags } from './FilterSidebar';
 import type { CategoryConfig } from '@/config/categoryConfig';
 
@@ -79,13 +82,25 @@ interface CategoryListingProps {
   defaultSubcategory?: string;
 }
 
+const CatalogLoadError = ({ retryHref }: { retryHref: string }) => (
+  <div className="rounded-sm border border-destructive/30 bg-destructive/5 px-6 py-12 text-center" role="alert">
+    <h2 className="font-serif text-2xl">Current products could not be loaded</h2>
+    <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+      Product availability is temporarily unavailable. Try this page again, or contact LuxeMia before relying on a specific option.
+    </p>
+    <Button asChild className="mt-5" variant="outline">
+      <a href={retryHref}>Try again</a>
+    </Button>
+  </div>
+);
+
 export function CategoryListing({ config, defaultSubcategory }: CategoryListingProps) {
   const location = useLocation();
   // Fetch products from Shopify Storefront API (via the shared hook).
   // Note: useShopifyPaginatedProducts is currently stubbed (returns all
   // products in one fetch) — the "Load More" button below does real
   // client-side slicing of the already-fetched list.
-  const { products, isLoading } = useShopifyPaginatedProducts(config.slug);
+  const { products, isLoading, error } = useShopifyPaginatedProducts(config.slug);
 
   // URL-persistent filter state
   const {
@@ -105,15 +120,16 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
 
   // Apply filters + subcategory + sort
   const filteredProducts = useMemo(() => {
-    // Do not spend merchandising space on products with no purchasable variant.
-    // A product remains eligible when Shopify omits availability (older catalog
-    // records), but an explicit false on every variant means it cannot convert.
+    // Do not spend merchandising space on products unless Shopify explicitly
+    // confirms both the product and at least one variant are orderable.
     const purchasableProducts = products.filter((product) => {
       const variants = product.node.variants?.edges || [];
-      return variants.length > 0 && variants.some((edge) => edge.node.availableForSale !== false);
+      return product.node.availableForSale === true
+        && variants.length > 0
+        && variants.some((edge) => edge.node.availableForSale === true);
     });
 
-    return filterSortAndSubcategorize(
+    const sortedProducts = filterSortAndSubcategorize(
       purchasableProducts,
       state.filters,
       state.priceRange,
@@ -121,7 +137,14 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
       config.filters,
       activeSubcategory
     );
-  }, [products, state, config, activeSubcategory]);
+
+    return config.slug === 'lehengas'
+      && state.sortBy === 'featured'
+      && activeFilterCount === 0
+      && !activeSubcategory
+      ? rankGenericLehengasByIntent(sortedProducts)
+      : sortedProducts;
+  }, [products, state, config, activeSubcategory, activeFilterCount]);
 
   // Reset visible count when filters change (so user doesn't have to scroll
   // past stale "loaded more" content)
@@ -162,12 +185,10 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
       listingParams.has(name.toLowerCase()),
     );
   }, [config.filters, location.search]);
-  const cleanFacetCanonical = !defaultSubcategory && activeSubcategory?.landingPath
-    ? `https://luxemia.shop${activeSubcategory.landingPath}`
-    : config.canonical;
   const canonical = hasListingQueryState
-    ? cleanFacetCanonical
+    ? config.canonical
     : activeSubcategory?.seoCanonical || config.canonical;
+  const collectionStandard = getCollectionStandard(location.pathname);
 
   return (
     <div className="min-h-screen bg-[#fcf8f4]">
@@ -179,11 +200,13 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
         type="collection"
         image={config.ogImage}
         breadcrumbs={config.breadcrumbs}
-        collection={{
-          name: activeSubcategory ? `${config.heroTitle} — ${activeSubcategory.label}` : config.heroTitle,
-          description: activeSubcategory?.seoDescription || config.seoDescription,
-          items: collectionItems,
-        }}
+        collection={!isLoading && !error
+          ? {
+              name: activeSubcategory ? `${config.heroTitle} — ${activeSubcategory.label}` : config.heroTitle,
+              description: activeSubcategory?.seoDescription || config.seoDescription,
+              items: collectionItems,
+            }
+          : undefined}
         faqs={config.faqs}
       />
       <Header />
@@ -197,7 +220,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
             alt={config.heroAlt || config.name}
             eyebrow="Explore Our"
             title={config.heroTitle}
-            description={config.heroSubtitle}
+            description={collectionStandard?.directAnswer || config.heroSubtitle}
           />
         )}
 
@@ -227,11 +250,14 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
               h1 here so the page still has a single H1 for SEO. Hero banner
               already has the H1 when no sub is active. */}
           {activeSubcategory && (
-            <h1 className="text-3xl md:text-4xl font-serif mt-4 mb-2">
-              {defaultSubcategory
-                ? config.heroTitle
-                : `${activeSubcategory.label} ${config.name}`}
-            </h1>
+            <>
+              <h1 className="text-3xl md:text-4xl font-serif mt-4 mb-2">
+                {defaultSubcategory
+                  ? config.heroTitle
+                  : `${activeSubcategory.label} ${config.name}`}
+              </h1>
+              <CollectionDirectAnswer path={location.pathname} className="max-w-3xl text-sm leading-7 text-muted-foreground" />
+            </>
           )}
           {activeSubcategory?.seoDescription && (
             <p className="text-sm text-muted-foreground max-w-2xl mb-2">
@@ -265,20 +291,28 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
               {/* Toolbar */}
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#e3cfca] pb-5">
                 <p className="text-sm leading-5 text-[#7f706d]">
-                  Showing{' '}
-                  <span className="font-medium text-[#3b292c]">
-                    {visibleProducts.length}
-                  </span>
-                  {filteredProducts.length !== visibleProducts.length && (
-                    <> of <span className="text-foreground font-medium">{filteredProducts.length}</span></>
-                  )}{' '}
-                  products
-                  {activeSubcategory && (
-                    <span className="text-muted-foreground/70"> in {activeSubcategory.label}</span>
+                  {isLoading ? (
+                    'Loading current products…'
+                  ) : error ? (
+                    'Current products are temporarily unavailable'
+                  ) : (
+                    <>
+                      Showing{' '}
+                      <span className="font-medium text-[#3b292c]">
+                        {visibleProducts.length}
+                      </span>
+                      {filteredProducts.length !== visibleProducts.length && (
+                        <> of <span className="text-foreground font-medium">{filteredProducts.length}</span></>
+                      )}{' '}
+                      products
+                      {activeSubcategory && (
+                        <span className="text-muted-foreground/70"> in {activeSubcategory.label}</span>
+                      )}
+                    </>
                   )}
                 </p>
 
-                <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+                {!error ? <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                   {/* Mobile Filter Button */}
                   <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
                     <SheetTrigger asChild>
@@ -332,7 +366,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </div>
+                </div> : null}
               </div>
 
               {/* Active Filter Tags */}
@@ -367,6 +401,8 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                     </div>
                   ))}
                 </div>
+              ) : error ? (
+                <CatalogLoadError retryHref={`${location.pathname}${location.search}`} />
               ) : visibleProducts.length > 0 ? (
                 <>
                   <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4 lg:gap-6">
@@ -409,6 +445,8 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
             </div>
           </div>
         </div>
+
+      {!error ? <CollectionDecisionSupport path={location.pathname} products={filteredProducts} isLoading={isLoading} showFaqs={false} /> : null}
 
       {/* Editorial / SEO Content Section — shown below the product grid
           for keyword-rich content that helps search engines understand the

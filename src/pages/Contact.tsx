@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Clock, Send, MapPin } from 'lucide-react';
+import { Mail, Phone, MessageCircle, Send, MapPin } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -9,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { trackLeadSubmission } from '@/hooks/useAnalytics';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -41,12 +43,7 @@ const Contact = () => {
         throw new Error(data?.error || error?.message || 'Unable to save message');
       }
 
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'generate_lead', {
-          lead_source: 'contact_form',
-          lead_type: 'customer_inquiry',
-        });
-      }
+      trackLeadSubmission('contact_form');
 
       toast.success('Message received!', {
         description: "Your message is in our support queue.",
@@ -66,7 +63,7 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Contact Us — LuxeMia"
-        description="Contact LuxeMia with questions about orders, sizing or a product listing. Reach U.S.-based support by email, phone, WhatsApp or the contact form."
+        description="Contact LuxeMia with questions about orders, sizing or a product listing. Reach online support by email, phone, WhatsApp or the contact form."
         canonical="https://luxemia.shop/contact"
       />
       <Header />
@@ -104,7 +101,7 @@ const Contact = () => {
                 <div>
                   <h2 className="text-2xl font-serif mb-6">We'd Love to Hear From You</h2>
                   <p className="text-muted-foreground">
-                    Our customer care team is available to assist you with any inquiries. Reach out through any of the channels below.
+                    Choose one of the channels below. Response times vary and same-day replies are not guaranteed.
                   </p>
                 </div>
 
@@ -135,14 +132,12 @@ const Contact = () => {
 
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-secondary rounded-sm">
-                      <Clock className="h-5 w-5 text-primary" />
+                      <MessageCircle className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-medium mb-1">Business Hours</h3>
-                      <p className="text-muted-foreground">
-                        Monday - Saturday: 10AM - 7PM EST<br />
-                        Sunday: 11AM - 5PM EST
-                      </p>
+                      <h3 className="font-medium mb-1">WhatsApp</h3>
+                      <a href="https://wa.me/12153419990?text=Hi%2C%20I%20need%20help%20with%20a%20LuxeMia%20product%20or%20order" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Message +1 215-341-9990</a>
+                      <p className="mt-1 text-xs text-muted-foreground">Do not send payment-card details. Include a product link or order number when relevant.</p>
                     </div>
                   </div>
 
@@ -151,10 +146,10 @@ const Contact = () => {
                       <MapPin className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-medium mb-1">USA-Based Support</h3>
+                      <h3 className="font-medium mb-1">Online Support</h3>
                       <p className="text-muted-foreground">
                         LuxeMia<br />
-                        USA-based support team
+                        Online customer-support queue
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         Online-only Indian ethnic wear store
@@ -172,6 +167,11 @@ const Contact = () => {
               >
                 <div className="bg-card border border-border/50 rounded-sm p-6 lg:p-8">
                   <h2 className="text-xl font-serif mb-6">Send Us a Message</h2>
+                  <p className="mb-6 text-sm leading-6 text-muted-foreground">
+                    Submitting this form asks LuxeMia to respond to your request. The{' '}
+                    <Link className="text-primary underline underline-offset-4" to="/privacy">Privacy Policy</Link>{' '}
+                    explains how contact and consultation information is handled. Do not include payment-card details or another person&apos;s sensitive information.
+                  </p>
                   
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
@@ -239,6 +239,11 @@ const Contact = () => {
                       )}
                     </Button>
                   </form>
+                  <nav aria-label="Contact policies" className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t border-border pt-5 text-sm">
+                    <Link className="text-primary underline underline-offset-4" to="/us-support">Support guidance</Link>
+                    <Link className="text-primary underline underline-offset-4" to="/returns">Returns and covered issues</Link>
+                    <Link className="text-primary underline underline-offset-4" to="/shipping">Shipping policy</Link>
+                  </nav>
                 </div>
               </motion.div>
             </div>

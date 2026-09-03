@@ -6,6 +6,9 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/ui/ProductCard';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
+import CollectionDecisionSupport, { CollectionDirectAnswer } from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
 const MAX_PER_CATEGORY = 5;
@@ -40,7 +44,7 @@ const sortOptions = [
 ];
 
 const NewArrivals = () => {
-  const { products, isLoading } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
+  const { products, isLoading, error } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
   const [sortBy, setSortBy] = useState('newest');
 
@@ -51,7 +55,7 @@ const NewArrivals = () => {
     const groups: Record<string, typeof products> = {};
     const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
 
-    for (const product of products) {
+    for (const product of products.filter(({ node }) => isProductExplicitlyOrderable(node))) {
       const created = new Date(product.node.createdAt).getTime();
       if (created > cutoff) {
         const cat = product.node.productType || 'Other';
@@ -99,8 +103,8 @@ const NewArrivals = () => {
     return counts;
   }, [allOrdered, recentByCategory]);
 
-  const totalNew = allOrdered.length;
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Newest First';
+  const collectionItems = toCollectionSchemaItems(filteredProducts);
 
   return (
     <div className="min-h-screen bg-background">
@@ -108,6 +112,14 @@ const NewArrivals = () => {
         title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
         description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, co-ord sets, menswear and jewelry, with free U.S. standard shipping at $199 and above."
         canonical="https://luxemia.shop/new-arrivals"
+        type="collection"
+        collection={!isLoading && !error && collectionItems.length > 0
+          ? { name: 'New Arrivals', description: 'Current LuxeMia Indian ethnic-wear products added within the stated new-arrival window.', items: collectionItems }
+          : undefined}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'New Arrivals', url: '/new-arrivals' },
+        ]}
       />
       <Header />
       <main className="pt-[88px] lg:pt-[124px]">
@@ -145,12 +157,7 @@ const NewArrivals = () => {
               <span className="text-xs uppercase tracking-widest text-white/70">New Indian Ethnic Wear</span>
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
-            <p className="text-white/80 font-light max-w-md mx-auto text-sm lg:text-base">
-              {isLoading
-                ? 'Explore recently added lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.'
-                : `Explore ${totalNew} recently added ${totalNew === 1 ? 'style' : 'styles'}, including lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.`
-              }
-            </p>
+            <CollectionDirectAnswer path="/new-arrivals" className="mx-auto max-w-3xl text-sm font-light leading-relaxed text-white/85 lg:text-base" />
           </div>
         </div>
 
@@ -226,10 +233,12 @@ const NewArrivals = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <CatalogLoadError retryHref="/new-arrivals" />
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground text-lg mb-2">No new arrivals in this category yet.</p>
-              <p className="text-muted-foreground text-sm">Check back soon for newly added online styles.</p>
+              <p className="text-muted-foreground text-sm">Choose another category to browse the products currently returned.</p>
             </div>
           ) : (
             <AnimatePresence mode="wait">
@@ -248,6 +257,7 @@ const NewArrivals = () => {
             </AnimatePresence>
           )}
         </section>
+        {!error ? <CollectionDecisionSupport path="/new-arrivals" products={filteredProducts} isLoading={isLoading} /> : null}
       </main>
 
       {/* SEO section — keyword content for Google crawlers */}

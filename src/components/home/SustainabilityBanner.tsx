@@ -11,7 +11,7 @@ const values = [
   },
   {
     icon: Headphones,
-    title: 'U.S.-Based Support',
+    title: 'Pre-Order Support',
     description: 'Contact us before ordering with questions about sizing, products, or policies.',
   },
   {
@@ -22,7 +22,7 @@ const values = [
   {
     icon: Truck,
     title: 'Tracked Shipping',
-    description: 'Tracking is provided after dispatch for orders to United States addresses.',
+    description: 'When tracking is issued, carrier scans can appear after label creation.',
   },
 ];
 
@@ -39,13 +39,13 @@ const SustainabilityBanner = () => {
             transition={{ duration: 0.6 }}
           >
             <p className="text-xs tracking-luxury uppercase text-muted-foreground mb-3">
-              Our Promise
+              Shopping Information
             </p>
             <h2 className="font-serif text-3xl lg:text-4xl mb-6">
-              Honest Service, Real Value
+              Product and Policy Details
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              LuxeMia is an online Indian ethnic wear store shipping to United States addresses. We publish the available
+              LuxeMia is an online Indian ethnic wear store shipping to seven supported countries. We publish the available
               product details, shipping costs, final-sale terms, and damage-claim requirements so
               customers can review them before ordering.
             </p>
@@ -90,7 +90,7 @@ const SustainabilityBanner = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-background rounded-sm p-8 lg:p-10 shadow-sm"
           >
-            <h3 className="font-serif text-2xl mb-8 text-center">What We Stand For</h3>
+            <h3 className="font-serif text-2xl mb-8 text-center">How to Check a Listing</h3>
 
             <div className="grid grid-cols-1 gap-6">
               <div className="text-center">

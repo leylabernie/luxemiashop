@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TrendingUp, ArrowRight, Heart, ShoppingBag } from 'lucide-react';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
@@ -9,35 +9,37 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
+import { getDirectCardVariant } from '@/lib/purchaseOptions';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
 
 const TrendingNow = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading, error } = useShopifyProducts();
+  const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
   
   // Editorial selection only; price is not treated as evidence of popularity.
   const trendingProducts = useMemo(() =>
-    products.slice(0, 4)
+    products.filter(({ node }) => isProductExplicitlyOrderable(node)).slice(0, 4)
   , [products]);
-
-  const formatPrice = (amount: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(parseFloat(amount));
-  };
 
   const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
-    const variant = product.node.variants.edges[0]?.node;
+    if (!isProductExplicitlyOrderable(product.node)) return;
+    const variant = getDirectCardVariant(product.node);
+    if (!variant) {
+      navigate(`/product/${product.node.handle}#product-purchase`);
+      return;
+    }
     addItem({
-      product: product,
-      variantId: variant?.id || product.node.id,
-      variantTitle: variant?.title || 'Default',
-      price: product.node.priceRange.minVariantPrice,
+      product,
+      variantId: variant.id,
+      variantTitle: variant.title,
+      price: variant.price,
       quantity: 1,
-      selectedOptions: variant?.selectedOptions || [],
+      selectedOptions: variant.selectedOptions || [],
     });
     toast.success('Added to bag!', { position: 'top-center' });
   };
@@ -81,6 +83,8 @@ const TrendingNow = () => {
       </section>
     );
   }
+
+  if (error) return null;
 
   return (
     <section className="py-16 lg:py-24 bg-card/30">
@@ -159,7 +163,7 @@ const TrendingNow = () => {
                       onClick={(e) => handleQuickAdd(e, product)}
                     >
                       <ShoppingBag className="h-4 w-4 mr-2" />
-                      Quick Add
+                      {getDirectCardVariant(product.node) ? 'Add to Bag' : 'Choose Options'}
                     </Button>
                   </div>
                   
@@ -188,12 +192,18 @@ const TrendingNow = () => {
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium">
-                      {formatPrice(product.node.priceRange.minVariantPrice.amount)}
+                      {formatCurrencyAmount(
+                        product.node.priceRange.minVariantPrice.amount,
+                        product.node.priceRange.minVariantPrice.currencyCode,
+                      )}
                     </span>
                     {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
                       parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(product.node.priceRange.minVariantPrice.amount) && (
                       <span className="text-xs text-muted-foreground line-through">
-                        {formatPrice(product.node.compareAtPriceRange.minVariantPrice.amount)}
+                        {formatCurrencyAmount(
+                          product.node.compareAtPriceRange.minVariantPrice.amount,
+                          product.node.compareAtPriceRange.minVariantPrice.currencyCode,
+                        )}
                       </span>
                     )}
                     {product.node.compareAtPriceRange?.minVariantPrice?.amount &&

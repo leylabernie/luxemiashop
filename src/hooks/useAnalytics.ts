@@ -1,18 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-
-const GA_MEASUREMENT_ID = 'G-D1NN0TC3Y0';
-
-declare global {
-  interface Window {
-    gtag?: (
-      command: 'config' | 'event',
-      targetIdOrEventName: string,
-      params?: Record<string, unknown>,
-    ) => void;
-    dataLayer: unknown[];
-  }
-}
+import {
+  ANALYTICS_CONSENT_CHANGED_EVENT,
+  GA_MEASUREMENT_ID,
+  initializeAnalyticsFromStoredConsent,
+  isAnalyticsConsentGranted,
+  setAnalyticsPageContext,
+} from '@/lib/analyticsConsent';
+import {
+  toAnalyticsCountry,
+  toAnalyticsCurrency,
+  toAnalyticsRegion,
+  toAnalyticsPageUrl,
+  toAnalyticsReferrerOrigin,
+  toAnalyticsRoutePath,
+  toAnalyticsTailoringCategory,
+  toAnalyticsTransactionId,
+} from '@/lib/analyticsPrivacy';
 
 export interface AnalyticsItem {
   id: string;
@@ -44,22 +48,43 @@ interface AnalyticsPurchase {
 }
 
 const cleanString = (value?: string) => value?.trim() || undefined;
-const resolveCurrency = (currency?: string) => cleanString(currency)?.toUpperCase() || 'USD';
+const resolveCurrency = (currency?: string) => toAnalyticsCurrency(currency);
 
-const toGaItem = (item: AnalyticsItem) => ({
-  item_id: item.id,
-  item_name: item.name,
-  price: item.price,
-  quantity: item.quantity ?? 1,
-  ...(cleanString(item.category) && { item_category: cleanString(item.category) }),
-  ...(cleanString(item.variant) && { item_variant: cleanString(item.variant) }),
-  ...(cleanString(item.productGroupId) && { item_product_group_id: cleanString(item.productGroupId) }),
-  ...(cleanString(item.itemListId) && { item_list_id: cleanString(item.itemListId) }),
-  ...(cleanString(item.itemListName) && { item_list_name: cleanString(item.itemListName) }),
-  ...(typeof item.index === 'number' && { index: item.index }),
-  ...(cleanString(item.tailoringOption) && { item_tailoring_option: cleanString(item.tailoringOption) }),
-  ...(cleanString(item.occasion) && { item_occasion: cleanString(item.occasion) }),
-});
+const sendConsentGatedEvent = (
+  eventName: string,
+  params: Record<string, unknown>,
+  beforeDispatch?: () => void,
+): boolean => {
+  if (
+    typeof window === 'undefined'
+    || !isAnalyticsConsentGranted()
+    || !initializeAnalyticsFromStoredConsent()
+    || typeof window.gtag !== 'function'
+  ) return false;
+
+  beforeDispatch?.();
+  window.gtag('event', eventName, params);
+  return true;
+};
+
+const toGaItem = (item: AnalyticsItem) => {
+  const tailoringCategory = toAnalyticsTailoringCategory(item.tailoringOption);
+
+  return {
+    item_id: item.id,
+    item_name: item.name,
+    price: item.price,
+    quantity: item.quantity ?? 1,
+    ...(cleanString(item.category) && { item_category: cleanString(item.category) }),
+    ...(cleanString(item.variant) && { item_variant: cleanString(item.variant) }),
+    ...(cleanString(item.productGroupId) && { item_product_group_id: cleanString(item.productGroupId) }),
+    ...(cleanString(item.itemListId) && { item_list_id: cleanString(item.itemListId) }),
+    ...(cleanString(item.itemListName) && { item_list_name: cleanString(item.itemListName) }),
+    ...(typeof item.index === 'number' && { index: item.index }),
+    ...(tailoringCategory && { item_tailoring_option: tailoringCategory }),
+    ...(cleanString(item.occasion) && { item_occasion: cleanString(item.occasion) }),
+  };
+};
 
 const sendEcommerceEvent = (
   eventName: string,
@@ -68,10 +93,14 @@ const sendEcommerceEvent = (
   currency?: string,
   additionalParams: Record<string, unknown> = {},
 ) => {
-  if (typeof window.gtag !== 'function' || !Number.isFinite(value)) return;
+  const resolvedCurrency = resolveCurrency(currency);
+  if (
+    !Number.isFinite(value)
+    || !resolvedCurrency
+  ) return;
 
-  window.gtag('event', eventName, {
-    currency: resolveCurrency(currency),
+  sendConsentGatedEvent(eventName, {
+    currency: resolvedCurrency,
     value,
     ...additionalParams,
     items: items.map(toGaItem),
@@ -86,17 +115,39 @@ const cartValue = (items: AnalyticsItem[]) => items.reduce(
 // Track page views for SPA navigation.
 export const usePageTracking = () => {
   const location = useLocation();
+  const previousPageLocation = useRef<string | undefined>(
+    typeof document === 'undefined' ? undefined : toAnalyticsReferrerOrigin(document.referrer),
+  );
 
   useEffect(() => {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', 'page_view', {
+    const sendPageView = () => {
+      if (typeof window === 'undefined') return;
+
+      const pageLocation = toAnalyticsPageUrl(`${window.location.origin}${location.pathname}`);
+      if (!pageLocation) return;
+      const pagePath = toAnalyticsRoutePath(location.pathname);
+      if (!sendConsentGatedEvent('page_view', {
         send_to: GA_MEASUREMENT_ID,
-        page_path: location.pathname + location.search,
-        page_location: window.location.href,
+        // Query strings can contain checkout or contact identifiers. Analytics
+        // receives only the route, never a search string or fragment.
+        page_path: pagePath,
+        page_location: pageLocation,
         page_title: document.title,
-      });
-    }
-  }, [location]);
+      }, () => {
+        setAnalyticsPageContext(pageLocation, previousPageLocation.current);
+      })) return;
+      previousPageLocation.current = pageLocation;
+    };
+
+    sendPageView();
+    const handleConsentChange = (event: Event) => {
+      const choice = (event as CustomEvent<{ choice?: string }>).detail?.choice;
+      if (choice === 'accepted') sendPageView();
+    };
+
+    window.addEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, handleConsentChange);
+    return () => window.removeEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, handleConsentChange);
+  }, [location.pathname]);
 };
 
 export const trackViewItemList = (
@@ -174,9 +225,10 @@ export const trackAddShippingInfo = (
   shippingCountry?: string,
   currency?: string,
 ) => {
+  const normalizedCountry = toAnalyticsCountry(shippingCountry);
   sendEcommerceEvent('add_shipping_info', items, value, currency, {
     shipping_tier: shippingTier,
-    ...(cleanString(shippingCountry) && { shipping_country: cleanString(shippingCountry)?.toUpperCase() }),
+    ...(normalizedCountry && { shipping_country: normalizedCountry }),
   });
 };
 
@@ -191,32 +243,46 @@ export const trackAddPaymentInfo = (
   });
 };
 
-// The purchase event is sent only from OrderConfirmation after an order ID is
-// available. This prevents the generic app shell from creating empty or duplicate
-// purchases when a shopper returns from Shopify checkout.
+// Guarded utility only: the public OrderConfirmation route does not call this
+// function or trust order data from its URL. A future authenticated integration
+// must supply verified order facts and preserve the consent checks below.
 export const trackPurchase = (data: AnalyticsPurchase) => {
-  if (typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
+  const transactionId = toAnalyticsTransactionId(data.transactionId);
+  const currency = resolveCurrency(data.currency);
+  const shippingCountry = toAnalyticsCountry(data.shippingCountry);
+  const shippingState = toAnalyticsRegion(data.shippingState);
+  if (
+    !transactionId
+    || !currency
+    || !Number.isFinite(data.value)
+  ) return;
 
-  window.gtag('event', 'purchase', {
-    transaction_id: data.transactionId,
-    currency: resolveCurrency(data.currency),
+  sendConsentGatedEvent('purchase', {
+    transaction_id: transactionId,
+    currency,
     value: data.value,
     ...(typeof data.tax === 'number' && { tax: data.tax }),
     ...(typeof data.shipping === 'number' && { shipping: data.shipping }),
     ...(cleanString(data.coupon) && { coupon: cleanString(data.coupon) }),
-    ...(cleanString(data.shippingCountry) && { shipping_country: cleanString(data.shippingCountry)?.toUpperCase() }),
-    ...(cleanString(data.shippingState) && { shipping_state: cleanString(data.shippingState)?.toUpperCase() }),
+    ...(shippingCountry && { shipping_country: shippingCountry }),
+    ...(shippingState && { shipping_state: shippingState }),
     ...(data.customerType && { customer_type: data.customerType }),
     items: data.items.map(toGaItem),
   });
 };
 
 export const trackRefund = (data: AnalyticsPurchase) => {
-  if (typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
+  const transactionId = toAnalyticsTransactionId(data.transactionId);
+  const currency = resolveCurrency(data.currency);
+  if (
+    !transactionId
+    || !currency
+    || !Number.isFinite(data.value)
+  ) return;
 
-  window.gtag('event', 'refund', {
-    transaction_id: data.transactionId,
-    currency: resolveCurrency(data.currency),
+  sendConsentGatedEvent('refund', {
+    transaction_id: transactionId,
+    currency,
     value: data.value,
     items: data.items.map(toGaItem),
   });
@@ -226,24 +292,55 @@ export const trackRefund = (data: AnalyticsPurchase) => {
 // postal addresses. Those fields belong in the form/CRM, not GA4 event payloads.
 export const trackConsultationSubmission = (data: {
   country?: string;
-  occasion?: string;
+  occasion?: 'styling_consultation' | 'wedding_party_group_order';
 }) => {
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'generate_lead', {
-      currency: 'USD',
-      value: 0,
-      lead_category: 'styling_consultation',
-      event_label: data.occasion || 'styling_consultation',
-      market_focus: cleanString(data.country)?.toUpperCase() === 'US' ? 'US' : 'international',
-    });
-  }
+  sendConsentGatedEvent('generate_lead', {
+    value: 0,
+    lead_category: 'styling_consultation',
+    event_label: data.occasion || 'styling_consultation',
+    market_focus: cleanString(data.country)?.toUpperCase() === 'US' ? 'US' : 'international',
+  });
 };
 
 export const trackConsultationBookingAttempt = (method: 'whatsapp' | 'email') => {
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'consultation_booking_attempt', {
-      contact_method: method,
-      market_focus: 'US',
-    });
-  }
+  sendConsentGatedEvent('consultation_booking_attempt', {
+    contact_method: method,
+    support_scope: 'pre_order',
+  });
+};
+
+const LEAD_EVENT_DETAILS = {
+  contact_form: 'customer_inquiry',
+  custom_order_form: 'made_to_measure_inquiry',
+} as const;
+
+export const trackLeadSubmission = (source: keyof typeof LEAD_EVENT_DETAILS) => (
+  sendConsentGatedEvent('generate_lead', {
+    lead_source: source,
+    lead_type: LEAD_EVENT_DETAILS[source],
+  })
+);
+
+// Search queries can contain names, email addresses, order numbers, or other
+// free-form text. Track only a bounded result count and a fixed storefront scope.
+export const trackSearchResults = (resultCount: number): boolean => {
+  if (!Number.isFinite(resultCount) || resultCount < 0) return false;
+
+  return sendConsentGatedEvent('view_search_results', {
+    search_scope: 'catalog',
+    result_count: Math.min(Math.trunc(resultCount), 1_000),
+  });
+};
+
+export const trackPageNotFound = (): boolean => {
+  const pageReferrer = typeof document === 'undefined'
+    ? undefined
+    : toAnalyticsReferrerOrigin(document.referrer);
+
+  return sendConsentGatedEvent('page_404', {
+    // Never send the attempted path: malformed URLs can contain customer data.
+    page_path: '/404',
+    ...(pageReferrer && { page_referrer: pageReferrer }),
+    page_title: '404 — Page Not Found',
+  });
 };

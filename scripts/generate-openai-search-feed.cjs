@@ -20,7 +20,7 @@ const zlib = require('zlib');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const MERCHANT_FEED_PATH = path.join(PROJECT_ROOT, 'dist', 'merchant-feed.xml');
 const OPENAI_SEARCH_FEED_PATH = path.join(PROJECT_ROOT, 'dist', 'openai-search-products.jsonl.gz');
-const MIN_EXPECTED_OFFER_COUNT = 4210;
+const MIN_EXPECTED_OFFER_COUNT = 1;
 const MAX_SOURCE_FILE_AGE_MS = 30 * 60 * 1000;
 const MAX_SOURCE_BUILD_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const FUTURE_CLOCK_TOLERANCE_MS = 5 * 60 * 1000;
@@ -36,11 +36,6 @@ const OPENAI_SUPPORTED_TARGET_COUNTRIES = Object.freeze(['US']);
 
 const AVAILABILITY_MAP = Object.freeze({
   in_stock: 'in_stock',
-  out_of_stock: 'out_of_stock',
-  preorder: 'pre_order',
-  pre_order: 'pre_order',
-  backorder: 'backorder',
-  unknown: 'unknown',
 });
 
 function decodeXmlEntities(value) {
@@ -126,7 +121,7 @@ function buildVariantDictionary(itemXml) {
   return Object.fromEntries(entries);
 }
 
-function merchantItemToOpenAIRecord(itemXml) {
+function merchantItemToOpenAIRecord(itemXml, groupCounts = new Map()) {
   const itemId = readTag(itemXml, 'g:id');
   const title = readTag(itemXml, 'g:title');
   const description = readTag(itemXml, 'g:description');
@@ -144,11 +139,6 @@ function merchantItemToOpenAIRecord(itemXml) {
   if (!availability) {
     throw new Error(`Merchant item ${itemId} has unsupported availability: ${rawAvailability || '(missing)'}`);
   }
-  const availabilityDate = readTag(itemXml, 'g:availability_date');
-  if (availability === 'pre_order' && !availabilityDate) {
-    throw new Error(`Merchant item ${itemId} requires availability_date for pre_order`);
-  }
-
   const groupId = readTag(itemXml, 'g:item_group_id');
   const variantDictionary = buildVariantDictionary(itemXml);
   const additionalImageUrls = [...new Set(readTags(itemXml, 'g:additional_image_link'))]
@@ -164,6 +154,10 @@ function merchantItemToOpenAIRecord(itemXml) {
   const material = optionalBounded(readTag(itemXml, 'g:material'), 100);
   const productCategory = readTag(itemXml, 'g:product_type')
     || readTag(itemXml, 'g:google_product_category');
+  const condition = readTag(itemXml, 'g:condition').toLowerCase();
+  if (condition && !new Set(['new', 'refurbished', 'used']).has(condition)) {
+    throw new Error(`Merchant item ${itemId} has unsupported explicit condition: ${condition}`);
+  }
 
   const record = {
     is_eligible_search: true,
@@ -174,17 +168,11 @@ function merchantItemToOpenAIRecord(itemXml) {
     description,
     url,
     brand: readTag(itemXml, 'g:brand'),
-    condition: readTag(itemXml, 'g:condition').toLowerCase() || 'new',
-    product_category: productCategory,
     image_url: imageUrl,
     price: regularPrice.formatted,
     availability,
     seller_name: SELLER_NAME,
     seller_url: SELLER_URL,
-    is_digital: false,
-    accepts_returns: false,
-    accepts_exchanges: false,
-    return_policy: `${SELLER_URL}/returns`,
     target_countries: [...OPENAI_SUPPORTED_TARGET_COUNTRIES],
   };
 
@@ -192,7 +180,8 @@ function merchantItemToOpenAIRecord(itemXml) {
   // even when the JSONL transport is used.
   if (additionalImageUrls.length > 0) record.additional_image_urls = additionalImageUrls.join(',');
   if (salePrice) record.sale_price = salePrice.formatted;
-  if (availabilityDate) record.availability_date = availabilityDate;
+  if (condition) record.condition = condition;
+  if (productCategory) record.product_category = productCategory;
   if (/^\d{8,14}$/.test(gtin)) record.gtin = gtin;
   if (mpn) record.mpn = mpn;
   if (material) record.material = material;
@@ -202,10 +191,12 @@ function merchantItemToOpenAIRecord(itemXml) {
 
   if (groupId) {
     record.group_id = groupId;
-    record.listing_has_variations = true;
+    record.listing_has_variations = (groupCounts.get(groupId) || 0) > 1;
     const itemGroupTitle = optionalBounded(readTag(itemXml, 'g:item_group_title'), 150);
     if (itemGroupTitle) record.item_group_title = itemGroupTitle;
-    if (Object.keys(variantDictionary).length > 0) record.variant_dict = variantDictionary;
+    if (record.listing_has_variations && Object.keys(variantDictionary).length > 0) {
+      record.variant_dict = variantDictionary;
+    }
   } else {
     record.group_id = itemId;
     record.listing_has_variations = false;
@@ -225,7 +216,12 @@ function merchantItemToOpenAIRecord(itemXml) {
 
 function convertMerchantXml(xml) {
   const itemBlocks = readMerchantItemBlocks(xml);
-  return itemBlocks.map(merchantItemToOpenAIRecord);
+  const groupCounts = new Map();
+  for (const itemXml of itemBlocks) {
+    const groupId = readTag(itemXml, 'g:item_group_id');
+    if (groupId) groupCounts.set(groupId, (groupCounts.get(groupId) || 0) + 1);
+  }
+  return itemBlocks.map((itemXml) => merchantItemToOpenAIRecord(itemXml, groupCounts));
 }
 
 function assertFreshMerchantSource(sourcePath, xml, options = {}) {

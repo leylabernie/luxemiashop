@@ -1,16 +1,15 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
-import {
-  isRakshaBandhanCampaignActive,
-  RAKSHA_BANDHAN_CAMPAIGN,
-} from '@/config/rakshaBandhanCampaign';
 import { SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
+import { isVariantExplicitlyOrderable } from '@/lib/orderability';
 
 const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
 const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
@@ -20,7 +19,128 @@ interface CartDrawerProps {
   onClose: () => void;
 }
 
+type CartModalKeyboardEvent = Pick<
+  KeyboardEvent,
+  'key' | 'shiftKey' | 'preventDefault' | 'stopPropagation'
+>;
+
+const CART_MODAL_FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(', ');
+
+const getCartModalFocusableElements = (drawer: HTMLElement): HTMLElement[] => (
+  Array.from(drawer.querySelectorAll<HTMLElement>(CART_MODAL_FOCUSABLE_SELECTOR))
+    .filter((element) => (
+      element.getAttribute('aria-hidden') !== 'true' && !element.hasAttribute('hidden')
+    ))
+);
+
+const handleCartModalKeyDown = (
+  event: CartModalKeyboardEvent,
+  drawer: HTMLElement,
+  close: () => void,
+  activeElement: Element | null = document.activeElement,
+) => {
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    event.stopPropagation();
+    close();
+    return;
+  }
+
+  if (event.key !== 'Tab') return;
+
+  const focusableElements = getCartModalFocusableElements(drawer);
+  if (focusableElements.length === 0) {
+    event.preventDefault();
+    drawer.focus({ preventScroll: true });
+    return;
+  }
+
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+
+  if (!drawer.contains(activeElement)) {
+    event.preventDefault();
+    (event.shiftKey ? lastElement : firstElement).focus();
+  } else if (event.shiftKey && activeElement === firstElement) {
+    event.preventDefault();
+    lastElement.focus();
+  } else if (!event.shiftKey && activeElement === lastElement) {
+    event.preventDefault();
+    firstElement.focus();
+  }
+};
+
+interface IsolatedElementState {
+  element: Element;
+  hadInert: boolean;
+  ariaHidden: string | null;
+}
+
+const isolateCartModalEnvironment = (
+  drawer: HTMLElement,
+  backdrop: HTMLElement | null,
+  body: HTMLElement = document.body,
+): (() => void) => {
+  const previousOverflow = body.style.getPropertyValue('overflow');
+  const previousOverflowPriority = body.style.getPropertyPriority('overflow');
+  const isolatedElements: IsolatedElementState[] = [];
+
+  body.style.setProperty('overflow', 'hidden');
+
+  // The drawer is rendered inside the application tree instead of a portal.
+  // Walk to <body> and isolate each sibling branch that does not contain the
+  // drawer. Keep the visual backdrop interactive for pointer dismissal.
+  let modalBranch: Element = drawer;
+  while (modalBranch.parentElement) {
+    const parent = modalBranch.parentElement;
+    for (const sibling of Array.from(parent.children)) {
+      if (sibling === modalBranch || sibling === backdrop || sibling.contains(backdrop)) continue;
+
+      isolatedElements.push({
+        element: sibling,
+        hadInert: sibling.hasAttribute('inert'),
+        ariaHidden: sibling.getAttribute('aria-hidden'),
+      });
+      sibling.setAttribute('inert', '');
+      sibling.setAttribute('aria-hidden', 'true');
+    }
+
+    if (parent === body) break;
+    modalBranch = parent;
+  }
+
+  let restored = false;
+  return () => {
+    if (restored) return;
+    restored = true;
+
+    for (const { element, hadInert, ariaHidden } of isolatedElements.reverse()) {
+      if (!hadInert) element.removeAttribute('inert');
+      if (ariaHidden === null) element.removeAttribute('aria-hidden');
+      else element.setAttribute('aria-hidden', ariaHidden);
+    }
+
+    if (previousOverflow) {
+      body.style.setProperty('overflow', previousOverflow, previousOverflowPriority);
+    } else {
+      body.style.removeProperty('overflow');
+    }
+  };
+};
+
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
+  const drawerRef = useRef<HTMLElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+  const onCloseRef = useRef(onClose);
   const {
     items,
     isLoading,
@@ -35,28 +155,58 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       trackCartView();
     }
   }, [isOpen, trackCartView]);
-  
-  const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
-  const currencyCode = items[0]?.price.currencyCode || 'USD';
-  const isRakhiSaleActive = isRakshaBandhanCampaignActive();
-  const amountUntilRakhiDiscount = Math.max(
-    0,
-    RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal - subtotal,
-  );
-  // Persisted carts can outlive Shopify inventory changes. Block checkout when
-  // the locally stored variant is explicitly unavailable instead of sending a
-  // stale line to Shopify and giving the customer a confusing API error.
-  const unavailableItems = items.filter((item) => {
-    const variant = item.product.node.variants?.edges?.find((edge) => edge.node.id === item.variantId);
-    return variant?.node.availableForSale === false;
-  });
 
-  const formatPrice = (amount: number, _currency: string) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
-  };
+  useLayoutEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useLayoutEffect(() => {
+    if (!isOpen || !drawerRef.current) return;
+
+    const drawer = drawerRef.current;
+    previouslyFocusedRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+
+    // This control exists for empty, loading, and populated bags, making it a
+    // stable initial target without unexpectedly activating a cart action.
+    (closeButtonRef.current ?? drawer).focus({ preventScroll: true });
+    const restoreModalEnvironment = isolateCartModalEnvironment(
+      drawer,
+      backdropRef.current,
+    );
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      handleCartModalKeyDown(event, drawer, () => onCloseRef.current());
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      restoreModalEnvironment();
+      const previouslyFocused = previouslyFocusedRef.current;
+      previouslyFocusedRef.current = null;
+      if (previouslyFocused?.isConnected) {
+        previouslyFocused.focus({ preventScroll: true });
+      }
+    };
+  }, [isOpen]);
+
+  const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
+  const cartCurrencies = new Set(
+    items.map((item) => item.price.currencyCode.trim().toUpperCase()).filter(Boolean),
+  );
+  const hasSingleCurrency = cartCurrencies.size === 1;
+  const currencyCode = hasSingleCurrency ? [...cartCurrencies][0] : null;
+  const isUsdCart = currencyCode === 'USD';
+  // Persisted carts can outlive Shopify inventory changes. Missing or negative
+  // availability is not permission to submit a stale line to Shopify.
+  const unavailableItems = items.filter((item) =>
+    !isVariantExplicitlyOrderable(item.product.node, item.variantId),
+  );
 
   const handleCheckoutClick = () => {
-    // Preserve checkout intent: the bag moves directly to secure checkout
+    // Preserve checkout intent: the bag moves directly to Shopify checkout
     // without inserting a promotional or email-capture interruption.
     proceedToCheckout();
   };
@@ -72,29 +222,34 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     }
   };
 
+  // No exit-presence delay: when isOpen becomes false, the modal DOM is
+  // removed in the same commit that the layout-effect cleanup releases its
+  // focus trap and background isolation, then restores focus to the opener.
+  if (!isOpen) return null;
+
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
+    <>
           {/* Backdrop */}
           <motion.div
+            ref={backdropRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             className="fixed inset-0 bg-foreground/30 z-50"
             onClick={onClose}
+            aria-hidden="true"
           />
 
           {/* Drawer */}
           <motion.aside
+            ref={drawerRef}
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
             className="fixed top-0 right-0 bottom-0 z-50 flex w-full flex-col border-l border-border/60 bg-background shadow-2xl sm:w-[440px]"
             role="dialog"
             aria-modal="true"
             aria-labelledby="cart-title"
+            tabIndex={-1}
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-border/70 bg-card/30 px-5 py-5 sm:px-6">
@@ -103,6 +258,8 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 <h2 id="cart-title" className="mt-1 font-serif text-2xl leading-none">Your Bag <span className="text-base text-muted-foreground">({items.length})</span></h2>
               </div>
               <button
+                ref={closeButtonRef}
+                type="button"
                 onClick={onClose}
                 className="rounded-full p-2 transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                 aria-label="Close cart"
@@ -171,7 +328,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                           </div>
                         )}
                           <p className="text-sm font-semibold text-foreground">
-                            {formatPrice(parseFloat(item.price.amount), item.price.currencyCode)}
+                            {formatCurrencyAmount(item.price.amount, item.price.currencyCode)}
                           </p>
                         
                         <div className="mt-3 flex items-center justify-between">
@@ -217,7 +374,8 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             {items.length > 0 && (
               <div className="border-t border-border/60 bg-card/70 backdrop-blur-sm">
                 {/* Free Shipping Progress */}
-                <div className="px-5 pb-3 pt-4 sm:px-6">
+                {isUsdCart ? (
+                  <div className="px-5 pb-3 pt-4 sm:px-6">
                   {subtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
@@ -228,9 +386,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
                         <span className="flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5" />
-                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} away from free U.S. standard shipping
+                          {formatCurrencyAmount(FREE_SHIPPING_THRESHOLD - subtotal, 'USD')} away from free U.S. standard shipping
                         </span>
-                        <span className="font-medium">${FREE_SHIPPING_THRESHOLD}</span>
+                        <span className="font-medium">{formatCurrencyAmount(FREE_SHIPPING_THRESHOLD, 'USD')}</span>
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-foreground/10">
                         <motion.div
@@ -242,36 +400,24 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       </div>
                     </div>
                   )}
-                </div>
+                  </div>
+                ) : (
+                  <div className="px-5 pb-3 pt-4 text-xs leading-relaxed text-muted-foreground sm:px-6">
+                    Destination, shipping rate, and any checkout currency conversion are confirmed at checkout.{' '}
+                    <Link to="/shipping" onClick={onClose} className="font-medium text-foreground underline underline-offset-4">
+                      View shipping rates
+                    </Link>
+                  </div>
+                )}
 
                 <div className="space-y-3 px-5 pb-4 sm:px-6">
-                  {isRakhiSaleActive && (
-                    <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
-                      {amountUntilRakhiDiscount === 0 ? (
-                        <p className="text-xs leading-relaxed text-foreground">
-                          Your offer is unlocked. Enter{' '}
-                          <strong className="font-semibold tracking-wide">
-                            {RAKSHA_BANDHAN_CAMPAIGN.code}
-                          </strong>{' '}
-                          at checkout for {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off.
-                        </p>
-                      ) : (
-                        <p className="text-xs leading-relaxed text-foreground">
-                          Add {formatPrice(amountUntilRakhiDiscount, currencyCode)} more, then enter{' '}
-                          <strong className="font-semibold tracking-wide">
-                            {RAKSHA_BANDHAN_CAMPAIGN.code}
-                          </strong>{' '}
-                          at checkout for {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off.
-                        </p>
-                      )}
-                      <p className="mt-1 text-[11px] text-muted-foreground">
-                        Ends {RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Cannot be combined with other discounts.
-                      </p>
-                    </div>
-                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground/70">Subtotal</span>
-                    <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>
+                    <span className="font-medium">
+                      {currencyCode
+                        ? formatCurrencyAmount(subtotal, currencyCode)
+                        : 'Confirmed at checkout'}
+                    </span>
                   </div>
                   <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
                     <p>{SHIPPING_PROMISE}</p>
@@ -298,11 +444,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     ) : (
                       <>
                         <ArrowRight className="mr-2 h-4 w-4" />
-                        Proceed to Secure Checkout
+                        Proceed to Shopify Checkout
                       </>
                     )}
                   </Button>
-                  <p className="text-center text-[11px] leading-relaxed text-muted-foreground">Payment is completed securely on LuxeMia’s checkout page.</p>
+                  <p className="text-center text-[11px] leading-relaxed text-muted-foreground">Payment is completed on Shopify checkout.</p>
                   <button
                     onClick={onClose}
                     className="w-full text-sm text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary underline underline-offset-4"
@@ -315,11 +461,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 <div className="grid grid-cols-3 divide-x divide-border/50 border-t border-border/50">
                   <span className="flex flex-col items-center gap-1 px-2 py-3 text-center text-[10px] leading-tight text-muted-foreground">
                     <ShieldCheck className="h-3.5 w-3.5 text-foreground" />
-                    Secure checkout
+                    Shopify checkout
                   </span>
                   <span className="flex flex-col items-center gap-1 px-2 py-3 text-center text-[10px] leading-tight text-muted-foreground">
                     <ShieldCheck className="h-3.5 w-3.5 text-foreground" />
-                    U.S.-based support
+                    Contact support
                   </span>
                   <span className="flex flex-col items-center gap-1 px-2 py-3 text-center text-[10px] leading-tight text-muted-foreground">
                     <Award className="h-3.5 w-3.5 text-foreground" />
@@ -330,9 +476,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             )}
           </motion.aside>
 
-        </>
-      )}
-    </AnimatePresence>
+    </>
   );
 };
 

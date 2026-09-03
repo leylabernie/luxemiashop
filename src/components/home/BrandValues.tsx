@@ -14,8 +14,8 @@ const values = [
   },
   {
     icon: Heart,
-    title: 'Customer Support',
-    description: 'Contact our U.S.-based support team before ordering with product, sizing, or policy questions.',
+    title: 'Pre-Order Support',
+    description: 'Contact LuxeMia before ordering with product, sizing, or policy questions.',
   },
   {
     icon: Award,

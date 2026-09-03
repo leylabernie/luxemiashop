@@ -1,17 +1,16 @@
 /**
  * Banner products verified against live Shopify on 2026-08-07.
  *
- * Selection rule: highest-priced active, published product with at least one
- * available variant in each storefront category. The local images below are
- * optimized copies of those products' Shopify images; product details are not
- * altered.
+ * The local images below are optimized copies of the named Shopify product
+ * images. This static presentation map intentionally contains no price,
+ * inventory or fulfillment value; those facts must come from current commerce
+ * data wherever they are displayed.
  */
 
 export interface FeaturedCategoryProduct {
   category: string;
   title: string;
   handle: string;
-  price: number;
   href: string;
   image: string;
   imageWebp: string;
@@ -23,7 +22,6 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     category: 'Lehengas',
     title: 'Red Raw Silk Thread Work Indian Bridal Lehenga Choli for Wedding Party',
     handle: 'red-raw-silk-thread-work-indian-bridal-lehenga-choli-for-wedding-party',
-    price: 1188.87,
     href: '/lehengas',
     image: '/images/categories/highest-price-lehenga-2026.jpg',
     imageWebp: '/images/categories/highest-price-lehenga-2026.webp',
@@ -33,7 +31,6 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     category: 'Sarees',
     title: 'Deep Blue & Rani Pink Korvai Pure Kanjivaram Silk Saree',
     handle: 'deep-blue-and-rani-pink-korvai-kanjivaram-silk-saree',
-    price: 338,
     href: '/sarees',
     image: '/images/categories/highest-price-saree-2026.jpg',
     imageWebp: '/images/categories/highest-price-saree-2026.webp',
@@ -43,7 +40,6 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     category: 'Salwar Kameez',
     title: 'Shimmer Tissue Peplum Skirt Set',
     handle: 'luxemia-shimmer-tissue-peplum-skirt-set',
-    price: 184.99,
     href: '/suits',
     image: '/images/categories/highest-price-suit-2026.jpg',
     imageWebp: '/images/categories/highest-price-suit-2026.webp',
@@ -53,7 +49,6 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     category: 'Menswear',
     title: 'Mauve Banarasi Brocade Kurta Pajama Set - Wedding Guest',
     handle: 'handcrafted-mauve-banarasi-brocade-kurta-pajama-set-wedding-guest',
-    price: 249,
     href: '/menswear',
     image: '/images/categories/highest-price-menswear-2026.jpg',
     imageWebp: '/images/categories/highest-price-menswear-2026.webp',
@@ -63,7 +58,6 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     category: 'Indo-Western',
     title: 'Cream Indo Western Dress with Thread Embroidery for Wedding',
     handle: 'cream-indo-western-dress-embroidery',
-    price: 244.33,
     href: '/indowestern',
     image: '/images/categories/highest-price-indowestern-2026.jpg',
     imageWebp: '/images/categories/highest-price-indowestern-2026.webp',
@@ -73,7 +67,6 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     category: 'Jewelry',
     title: 'Majestic Magenta Kundan Layered Bridal Necklace Set',
     handle: 'majestic-magenta-kundan-layered-bridal-necklace-set',
-    price: 200,
     href: '/jewelry',
     image: '/images/categories/highest-price-jewelry-2026.jpg',
     imageWebp: '/images/categories/highest-price-jewelry-2026.webp',

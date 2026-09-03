@@ -58,11 +58,14 @@ if (productFiles.length === 0) {
 }
 
 let changed = 0;
-let withoutLegacyBlock = 0;
+let alreadyAligned = 0;
 for (const filePath of productFiles) {
   const source = fs.readFileSync(filePath, 'utf8');
   if (!source.includes('aria-label="Featured shopping guides"')) {
-    withoutLegacyBlock += 1;
+    if (!source.includes('aria-label="Shop purchase-intent collections"')) {
+      throw new Error(`[commercial-links] Product page contains neither the legacy nor approved commercial navigation: ${filePath}`);
+    }
+    alreadyAligned += 1;
     continue;
   }
 
@@ -81,10 +84,6 @@ for (const filePath of productFiles) {
   changed += 1;
 }
 
-if (changed === 0) {
-  throw new Error('[commercial-links] No product page contained the expected editorial navigation block.');
-}
-
 console.log(
-  `[commercial-links] Replaced editorial navigation with purchase-intent links on ${changed} product pages; ${withoutLegacyBlock} product pages had no legacy block.`,
+  `[commercial-links] Replaced editorial navigation with purchase-intent links on ${changed} product pages; ${alreadyAligned} product pages were already aligned.`,
 );

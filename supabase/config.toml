@@ -1,34 +1,31 @@
 project_id = "mxrvlizhrofsroydenti"
 
 [functions.get-order]
-verify_jwt = false
+verify_jwt = true
 
 [functions.order-webhook]
 verify_jwt = false
 
 [functions.send-tracking-notification]
-verify_jwt = false
-
-[functions.sync-products]
-verify_jwt = false
+verify_jwt = true
 
 [functions.sync-to-shopify]
-verify_jwt = false
+verify_jwt = true
 
 [functions.image-proxy]
 verify_jwt = false
 
 [functions.generate-sitemap]
-verify_jwt = false
+verify_jwt = true
 
 [functions.regenerate-sitemap]
-verify_jwt = false
+verify_jwt = true
 
 [functions.cleanup-shopify-duplicates]
-verify_jwt = false
+verify_jwt = true
 
 [functions.abandoned-cart-reminder]
-verify_jwt = false
+verify_jwt = true
 
 [functions.submit-email]
 verify_jwt = false
@@ -37,7 +34,13 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.validate-images]
-verify_jwt = false
+verify_jwt = true
 
 [functions.update-shopify-products]
-verify_jwt = false
+verify_jwt = true
+
+[functions.merchant-feed]
+verify_jwt = true
+
+[functions.admin-stats]
+verify_jwt = true

@@ -107,7 +107,7 @@ export const ProductFilters = ({
             onClick={() => toggleSection('Price')}
             className="flex items-center justify-between w-full text-left mb-4"
           >
-            <span className="text-sm font-medium uppercase tracking-wide">Price</span>
+            <span className="text-sm font-medium uppercase tracking-wide">Price (USD)</span>
             <ChevronDown
               className={`h-4 w-4 transition-transform ${
                 expandedSections.includes('Price') ? 'rotate-180' : ''

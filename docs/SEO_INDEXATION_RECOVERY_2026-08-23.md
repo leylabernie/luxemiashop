@@ -4,6 +4,11 @@ Date: 2026-08-23
 Source plan: `Luxemia_Shop_SEO_Recovery_Action_Plan.pdf`  
 Production domain: `https://luxemia.shop`
 
+> Historical implementation record. This document describes the source work
+> prepared on the date above; it is not evidence that the current branch,
+> preview, or production deployment contains or passes these changes. Use the
+> current release gates and live HTTP checks for deployment status.
+
 ## Implemented in this release
 
 1. **HTTP-level query consolidation for every public HTML route**

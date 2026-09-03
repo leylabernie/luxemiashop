@@ -75,17 +75,17 @@ const LookbookTeaser = () => {
             className="lg:pl-8"
           >
             <p className="mb-4 text-xs uppercase tracking-luxury text-[#a96f72]">
-              The LuxeMia edit
+              Current catalog views
             </p>
             <h2 className="mb-6 font-serif text-3xl leading-tight text-[#352629] lg:text-5xl">
-              A closer look at the pieces made for your next celebration.
+              A closer look at current LuxeMia products.
             </h2>
             <p className="mb-8 max-w-md font-light leading-relaxed text-[#765f5b]">
-              Explore real LuxeMia pieces across sarees, lehengas, occasion sets, and jewelry. Let colour, texture, and craft guide you toward a look that feels unmistakably yours.
+              Browse product groupings across sarees, lehengas, suits and jewelry. Open the exact listing to confirm materials, included pieces, sizing, availability and fulfillment before ordering.
             </p>
             <Button variant="outline" size="lg" asChild className="border-[#c99a94] bg-[#fffaf6] text-[#493235] hover:bg-[#f1dbd5]">
               <Link to="/collections" className="group">
-                Explore the collection
+                Browse current products
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>

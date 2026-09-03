@@ -116,21 +116,21 @@ const Blog = () => {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
+    "@id": "https://luxemia.shop/blog#blog",
     "name": "LuxeMia Fact-Checked Indian Ethnic Wear Guides",
-    "description": "Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear for customers in the United States",
+    "description": "Source-based guides to Indian clothing terms, sizing, textiles, cultural context and occasionwear for customers in LuxeMia's seven supported shipping countries",
     "url": "https://luxemia.shop/blog",
-    "inLanguage": "en-US",
+    "inLanguage": "en",
     "genre": categories.join(", "),
     "mainEntityOfPage": {
       "@id": "https://luxemia.shop/blog"
     },
-    "publisher": {
+    "publisher": { "@id": "https://luxemia.shop/#organization" },
+    "author": {
       "@type": "Organization",
-      "name": "LuxeMia",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://luxemia.shop/favicon.ico"
-      }
+      "@id": "https://luxemia.shop/authors/luxemia-editorial-team#editorial-team",
+      "name": "LuxeMia Editorial Team",
+      "url": "https://luxemia.shop/authors/luxemia-editorial-team"
     },
     "blogPost": blogPosts.map(post => ({
       "@type": "BlogPosting",
@@ -139,9 +139,7 @@ const Blog = () => {
       "datePublished": post.publishedAt,
       "dateModified": post.updatedAt,
       "author": {
-        "@type": "Organization",
-        "name": post.author,
-        "url": "https://luxemia.shop/authors/luxemia-editorial-team"
+        "@id": "https://luxemia.shop/authors/luxemia-editorial-team#editorial-team"
       },
       "url": `https://luxemia.shop/blog/${post.slug}`
     }))
@@ -173,7 +171,7 @@ const Blog = () => {
         canonical="https://luxemia.shop/blog"
         breadcrumbs={[
           { name: 'Home', url: '/' },
-          { name: 'Blog', url: '/blog' },
+          { name: 'Guides', url: '/blog' },
         ]}
       />
       <Helmet>
@@ -201,7 +199,7 @@ const Blog = () => {
                 </Link>
               </li>
               <li><ChevronRight className="w-3 h-3 text-muted-foreground" /></li>
-              <li className="text-foreground font-medium">Blog</li>
+              <li className="text-foreground font-medium">Guides</li>
             </ol>
           </div>
         </nav>
@@ -438,7 +436,7 @@ const Blog = () => {
                       <p className="text-xs text-muted-foreground mb-4">
                         Explore by category
                       </p>
-                      <nav aria-label="Blog guide topics" className="space-y-1">
+                      <nav aria-label="Guide topics" className="space-y-1">
                         {guideTopics.map(topic => (
                           <Link
                             key={topic.label}
@@ -527,7 +525,7 @@ const Blog = () => {
               Stay Updated with Fashion Trends
             </h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              Subscribe to our newsletter for the latest articles on Indian fashion, styling tips, and exclusive offers for NRIs in the United States.
+              Subscribe to the newsletter for new Indian-attire guides, catalog updates, and current offers.
             </p>
             <Link
               to="/#newsletter"

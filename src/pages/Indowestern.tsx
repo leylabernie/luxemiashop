@@ -21,8 +21,12 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
 import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
+import CollectionDecisionSupport from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
+import { getCollectionStandard } from '@/config/collectionStandards';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 
 const indowesternFaqs = [
   {
@@ -31,7 +35,7 @@ const indowesternFaqs = [
   },
   {
     question: 'How do I choose a size?',
-    answer: 'Use the size options and measurements shown on the individual product page. Contact our U.S.-based support before ordering if you need help comparing the listing to your measurements.',
+    answer: 'Use the size options and measurements shown on the individual product page. Contact LuxeMia before ordering if you need help comparing the listing to your measurements.',
   },
   {
     question: 'Do you ship Indo-Western outfits in the United States?',
@@ -55,19 +59,24 @@ const sortOptions = [
 ];
 
 const Indowestern = () => {
-  const { products, isLoading } = useShopifyProducts('indowestern');
+  const { products, isLoading, error } = useShopifyProducts('indowestern');
   const [sortBy, setSortBy] = useState('featured');
 
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
 
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const collectionItems = toCollectionSchemaItems(sortedProducts);
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Indo-Western Dresses Online | Fusion Indian Outfits USA | LuxeMia"
-        description="Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, sizes, prices and availability. Free U.S. standard shipping at $199 and above; $14.99 below."
+        title="Buy Indo-Western Dresses Online | Fusion Indian Outfits | LuxeMia"
+        description="Browse currently listed Indo-Western and fusion outfits at LuxeMia. Compare exact product details, sizes, prices and availability, with tracked shipping to seven supported countries."
         canonical="https://luxemia.shop/indowestern"
+        type="collection"
+        collection={!isLoading && !error && collectionItems.length > 0
+          ? { name: 'Indo-Western Outfits', description: 'Current LuxeMia Indo-Western and fusion outfit listings.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Indo-Western', url: '/indowestern' },
@@ -83,14 +92,14 @@ const Indowestern = () => {
           alt={FEATURED_CATEGORY_PRODUCTS.indowestern.alt}
           eyebrow="Fusion Fashion"
           title="Indo-Western"
-          description="Browse the Indo-Western and fusion styles currently available. Each listing shows the exact design, included pieces, size options, price, and availability."
+          description={getCollectionStandard('/indowestern')?.directAnswer || 'Browse the Indo-Western and fusion styles currently available.'}
         />
 
         {/* Keyword-rich intro — helps Google understand page topic */}
         <div className="bg-background border-b border-border/20 py-6">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
             <p className="text-sm text-muted-foreground leading-relaxed text-center">
-              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. Open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius; standard shipping is $14.99 below $199 and free at $199 and above.
+              Compare embroidered Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. Open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius; U.S. standard shipping is $14.99 below $199 and free at $199 and above, while the other destinations use the rates and thresholds on the Shipping page.
             </p>
           </div>
         </div>
@@ -99,7 +108,7 @@ const Indowestern = () => {
         <div className="border-b border-border/30 bg-background sticky top-[90px] lg:top-[132px] z-30">
           <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              {isLoading ? 'Loading…' : `${sortedProducts.length} styles`}
+              {isLoading ? 'Loading…' : error ? 'Inventory unavailable' : `${sortedProducts.length} styles`}
             </p>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -136,10 +145,12 @@ const Indowestern = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <CatalogLoadError retryHref="/indowestern" />
           ) : sortedProducts.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-muted-foreground font-light mb-4">No Indo-Western styles available right now.</p>
-              <p className="text-sm text-muted-foreground">Check back soon — new fusion pieces arrive regularly.</p>
+              <p className="text-sm text-muted-foreground">Browse another current collection or use the contact page for product questions.</p>
             </div>
           ) : (
             <motion.div
@@ -154,6 +165,7 @@ const Indowestern = () => {
             </motion.div>
           )}
         </section>
+        {!error ? <CollectionDecisionSupport path="/indowestern" products={sortedProducts} isLoading={isLoading} showFaqs={false} /> : null}
       </main>
 
       {/* FAQ Section */}

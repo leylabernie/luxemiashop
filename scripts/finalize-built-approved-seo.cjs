@@ -4,9 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
+const HOME_TITLE = 'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia';
 const HOME_TITLE_HTML = HOME_TITLE.replace(/&/g, '&amp;');
-const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
+const HOME_DESCRIPTION = 'Shop South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to seven supported countries.';
 const files = [
   path.join(ROOT, 'dist', 'index.html'),
   path.join(ROOT, 'dist', '_prerender', 'index.html'),

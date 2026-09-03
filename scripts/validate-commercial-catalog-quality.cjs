@@ -6,9 +6,18 @@
 const fs = require('fs');
 const path = require('path');
 
-const PRODUCT_ROOT = path.resolve(__dirname, '../dist/_prerender/product');
+const PRODUCT_ROOT = process.env.COMMERCIAL_PRODUCT_ROOT
+  ? path.resolve(process.env.COMMERCIAL_PRODUCT_ROOT)
+  : path.resolve(__dirname, '../dist/_prerender/product');
 const COMMERCIAL_LINK_MARKER = 'aria-label="Shop purchase-intent collections"';
 const GENERIC_INCLUDED_COPY = /see the product description and images|review the product images|review the listing images|exact set contents/i;
+const NEGATED_INCLUDED_COPY = /\b(?:no\s+(?:saree|sari|lehenga|skirt|choli|blouse|kurta|kameez|tunic|top|shirt|pajama|pyjama|pants?|palazzo|sharara|gharara|salwar|bottom|trousers?|dupatta|sherwani|stole|jacket|vest|belt|scarf|cape)\b|not\s+included|not\s+supplied|not\s+part\s+of|does\s+not\s+include|do\s+not\s+include|doesn['’]?t\s+include|don['’]?t\s+include|(?:is|are)(?:\s+not|n['’]?t)\s+included|sold\s+separately|exclud(?:e|es|ed|ing)|without)\b/i;
+const REQUIRED_PRODUCT_SUPPORT_LINKS = [
+  '/sizing-measurements-guide',
+  '/shipping',
+  '/returns',
+  '/contact',
+];
 
 function walk(directory) {
   if (!fs.existsSync(directory)) return [];
@@ -31,8 +40,25 @@ function decode(value) {
     .trim();
 }
 
-function requirement(label, ...groups) {
-  return { label, groups };
+const COMPONENT_GROUPS = [
+  /\b(?:saree|sari)\b/i,
+  /\b(?:lehenga|skirt)\b/i,
+  /\b(?:choli|blouse)\b/i,
+  /\b(?:kurta|kameez|tunic|top|shirt)\b/i,
+  /\b(?:pajama|pyjama|pants?|palazzo|sharara|gharara|salwar|bottom|trousers?)\b/i,
+  /\bdupatta\b/i,
+  /\bsherwani\b/i,
+  /\bstole\b/i,
+  /\b(?:jacket|vest)\b/i,
+  /\b(?:belt|scarf|cape)\b/i,
+];
+
+function requirement(label, minimumComponentCount, ...groups) {
+  return { label, minimumComponentCount, groups };
+}
+
+function countNamedComponents(includedPieces) {
+  return COMPONENT_GROUPS.filter((pattern) => pattern.test(includedPieces)).length;
 }
 
 function inferRequiredComponents(title) {
@@ -40,48 +66,48 @@ function inferRequiredComponents(title) {
   const hasDupatta = /\bwith\b[^|,;]{0,48}\bdupatta\b/i.test(title);
 
   if (hasThreePieceEvidence && hasDupatta && /\bpalazzo\b/i.test(title)) {
-    return requirement('palazzo three-piece set', /\b(?:tunic|top|kameez|kurta)\b/i, /\bpalazzo\b/i, /\bdupatta\b/i);
+    return requirement('three named components including palazzo and dupatta', 3, /\bpalazzo\b/i, /\bdupatta\b/i);
   }
   if (hasThreePieceEvidence && hasDupatta && /\bsharara\b/i.test(title)) {
-    return requirement('sharara three-piece set', /\b(?:tunic|top|kameez|kurta)\b/i, /\bsharara\b/i, /\bdupatta\b/i);
+    return requirement('three named components including sharara and dupatta', 3, /\bsharara\b/i, /\bdupatta\b/i);
   }
   if (hasThreePieceEvidence && hasDupatta && /\bgharara\b/i.test(title)) {
-    return requirement('gharara three-piece set', /\b(?:tunic|top|kameez|kurta)\b/i, /\bgharara\b/i, /\bdupatta\b/i);
+    return requirement('three named components including gharara and dupatta', 3, /\bgharara\b/i, /\bdupatta\b/i);
   }
   if (hasDupatta && /\bsalwar\s+kameez\b/i.test(title)) {
-    return requirement('salwar kameez set', /\b(?:kameez|tunic|top|kurta)\b/i, /\bsalwar\b/i, /\bdupatta\b/i);
+    return requirement('salwar kameez set', 3, /\b(?:kameez|tunic|top|kurta)\b/i, /\bsalwar\b/i, /\bdupatta\b/i);
   }
   if (hasThreePieceEvidence && hasDupatta && /\b(?:salwar\s+)?suit\b/i.test(title)) {
-    return requirement(
-      'three-piece suit',
-      /\b(?:tunic|top|kameez|kurta)\b/i,
-      /\b(?:pants?|palazzo|sharara|gharara|salwar|bottom|trousers?)\b/i,
-      /\bdupatta\b/i,
-    );
+    return requirement('three named components including dupatta', 3, /\bdupatta\b/i);
   }
   if (hasDupatta && /\blehenga\s+choli\b/i.test(title)) {
-    return requirement('lehenga choli set', /\blehenga\b/i, /\b(?:choli|blouse)\b/i, /\bdupatta\b/i);
+    return requirement('lehenga choli set', 3, /\blehenga\b/i, /\b(?:choli|blouse)\b/i, /\bdupatta\b/i);
   }
   if (hasDupatta && /\blehenga\b/i.test(title)) {
-    return requirement('lehenga set', /\blehenga\b/i, /\bdupatta\b/i);
+    return requirement('lehenga set', 2, /\blehenga\b/i, /\bdupatta\b/i);
   }
   if (/\b(?:saree|sari)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bblouse\s+(?:piece|fabric|material)\b/i.test(title)) {
-    return requirement('saree with blouse fabric', /\b(?:saree|sari)\b/i, /\bblouse\b/i);
+    return requirement('saree with blouse fabric', 2, /\b(?:saree|sari)\b/i, /\bblouse\b/i);
   }
   if (/\bsherwani\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bstole\b/i.test(title)) {
-    return requirement('sherwani with stole', /\bsherwani\b/i, /\bstole\b/i);
+    return requirement('sherwani with stole', 2, /\bsherwani\b/i, /\bstole\b/i);
   }
   if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bvest\b/i.test(title)) {
-    return requirement('kurta pajama with vest', /\bkurta\b/i, /\b(?:pajama|pyjama|pants?)\b/i, /\bvest\b/i);
+    return requirement('kurta pajama with vest', 3, /\bkurta\b/i, /\b(?:pajama|pyjama|pants?)\b/i, /\bvest\b/i);
   }
   if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bjacket\b/i.test(title)) {
-    return requirement('kurta pajama with jacket', /\bkurta\b/i, /\b(?:pajama|pyjama|pants?)\b/i, /\bjacket\b/i);
+    return requirement('kurta pajama with jacket', 3, /\bkurta\b/i, /\b(?:pajama|pyjama|pants?)\b/i, /\bjacket\b/i);
   }
   return undefined;
 }
 
-function satisfiesRequirement(included, expected) {
-  return expected.groups.every((pattern) => pattern.test(included));
+function findEvidenceBackedTitleMismatch(title, includedPieces) {
+  const expected = inferRequiredComponents(title);
+  if (!expected || !String(includedPieces || '').trim()) return undefined;
+  return expected.groups.every((pattern) => pattern.test(includedPieces))
+    && countNamedComponents(includedPieces) >= expected.minimumComponentCount
+    ? undefined
+    : expected.label;
 }
 
 const files = walk(PRODUCT_ROOT);
@@ -93,6 +119,7 @@ const failures = [];
 let withCommercialLinks = 0;
 let withIncludedPieces = 0;
 let titleBackedChecked = 0;
+let titleOnlyComponents = 0;
 let genericIncluded = 0;
 
 for (const filePath of files) {
@@ -104,24 +131,41 @@ for (const filePath of files) {
   if (html.includes(COMMERCIAL_LINK_MARKER)) withCommercialLinks += 1;
   else failures.push(`missing purchase-intent navigation: ${relativePath}`);
 
+  for (const href of REQUIRED_PRODUCT_SUPPORT_LINKS) {
+    if (!html.includes(`href="${href}"`)) {
+      failures.push(`missing ${href} support link: ${relativePath}`);
+    }
+  }
+
   if (included) {
     withIncludedPieces += 1;
     if (GENERIC_INCLUDED_COPY.test(included)) genericIncluded += 1;
+    if (NEGATED_INCLUDED_COPY.test(included)) {
+      failures.push(`negated component copy cannot be an Included Pieces value: ${relativePath}; found "${included}"`);
+    }
   }
 
   const expected = inferRequiredComponents(title);
   if (expected) {
-    titleBackedChecked += 1;
-    if (!included || !satisfiesRequirement(included, expected)) {
-      failures.push(
-        `title-backed component mismatch: ${relativePath}; expected ${expected.label}, found "${included || 'missing'}"`,
-      );
+    if (!included) {
+      // A title remains navigation text, not evidence for a supplied component.
+      // The renderer intentionally omits Included Pieces until Shopify supplies
+      // normalized metadata or an explicitly prefixed fact tag.
+      titleOnlyComponents += 1;
+    } else {
+      titleBackedChecked += 1;
+      const mismatch = findEvidenceBackedTitleMismatch(title, included);
+      if (mismatch) {
+        failures.push(
+          `evidence-backed component mismatch: ${relativePath}; expected ${mismatch}, found "${included}"`,
+        );
+      }
     }
   }
 }
 
 console.log(
-  `[commercial-quality] Checked ${files.length} product pages; ${withCommercialLinks} have purchase-intent navigation; ${withIncludedPieces} expose included pieces; ${titleBackedChecked} explicit title-backed sets verified; ${genericIncluded} legacy generic values queued for catalog remediation.`,
+  `[commercial-quality] Checked ${files.length} product pages; ${withCommercialLinks} have purchase-intent navigation; ${withIncludedPieces} expose included pieces; ${titleBackedChecked} evidence-backed title/component pairs verified; ${titleOnlyComponents} title-only component descriptions left without an inferred Included Pieces row; ${genericIncluded} legacy generic values queued for catalog remediation.`,
 );
 
 if (failures.length > 0) {

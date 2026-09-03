@@ -63,7 +63,7 @@ export interface Subcategory {
   seoDescription?: string;
   /** Optional canonical URL override (defaults to <config.canonical>?sub=<slug>) */
   seoCanonical?: string;
-  /** Dedicated, indexable collection URL when this filter has a stocked landing page. */
+  /** Dedicated, indexable collection URL when this filter has a maintained landing page. */
   landingPath?: string;
 }
 
@@ -197,7 +197,7 @@ const LEHENGAS: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.lehengas.alt,
   heroTitle: getIndexableRouteSeo('/lehengas').h1,
-  heroSubtitle: 'Bridal, wedding guest and festive lehengas for U.S. delivery. Use the Ready to Ship filter for listings explicitly tagged that way, then confirm fabric, included pieces, sizing and shipping timing on the product page.',
+  heroSubtitle: 'Browse current bridal, wedding-guest and festive lehenga listings with tracked shipping to seven supported countries. Use Ready to Ship only for positively classified products, then confirm fabric, included pieces, sizing and timing on the exact product page.',
   seoTitle: getIndexableRouteSeo('/lehengas').title,
   seoDescription: getIndexableRouteSeo('/lehengas').description,
   canonical: 'https://luxemia.shop/lehengas',
@@ -210,8 +210,8 @@ const LEHENGAS: CategoryConfig = {
   subcategories: [
     // By Occasion (simplified — 3 main occasions)
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
-      seoTitle: 'Bridal Lehengas Online USA | Red & Maroon Wedding Lehengas - LuxeMia',
-      seoDescription: 'Shop bridal lehengas online in the USA. Use the Ready to Ship filter for eligible listings, then compare colors, fabric, included pieces, sizing and tracked U.S. shipping.',
+      seoTitle: 'Bridal Lehengas Online | Red & Maroon Wedding Lehengas - LuxeMia',
+      seoDescription: 'Shop bridal lehengas online. Use the Ready to Ship filter for eligible listings, then compare colors, fabric, included pieces, sizing and tracked shipping.',
       seoCanonical: 'https://luxemia.shop/lehengas?sub=bridal',
     }),
     occasionSub('wedding-guest', 'Wedding Guest', ['occasion:wedding', 'wedding', 'guest'], {
@@ -236,7 +236,7 @@ const LEHENGAS: CategoryConfig = {
     styleSub('net', 'Net', ['fabric:net', 'net']),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
-    priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
+    priceSub('premium-300-plus', '$300+', 300, 10000),
   ],
   filters: [
     {
@@ -318,7 +318,7 @@ const LEHENGAS: CategoryConfig = {
     },
     {
       question: "How long does it take to receive a bridal lehenga?",
-      answer: "Lehengas ship with tracking after dispatch. Timing depends on the product and any selected tailoring, so contact LuxeMia before ordering for a time-sensitive event."
+      answer: "When tracking is issued, carrier scans can appear after label creation. Timing depends on the product and any selected tailoring, so contact LuxeMia before ordering for a time-sensitive event."
     },
     {
       question: "Can I customize the color of my lehenga?",
@@ -346,7 +346,7 @@ const LEHENGAS: CategoryConfig = {
         the <a href="/collections/bridal-party-outfits">bridal-party outfit collection</a> and the
         <a href="/collections/party-wear-lehengas"> mother-of-the-bride lehenga selection</a>.
       </p>
-      <h3>Ready-to-Ship Bridal Lehengas in the USA</h3>
+      <h3>Ready-to-Ship Bridal Lehengas</h3>
       <p>
         Use the Ready to Ship availability filter to view only listings explicitly tagged for that status.
         Confirm the selected size, included pieces and product-specific shipping estimate before ordering,
@@ -364,10 +364,10 @@ const LEHENGAS: CategoryConfig = {
         Available sizes and any optional tailoring vary by product. Review the listing and
         <a href="/size-guide"> size guide</a>, and contact LuxeMia before ordering if your event date is time-sensitive.
       </p>
-      <h3>United States Shipping</h3>
+      <h3>Shipping to Seven Countries</h3>
       <p>
-        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
-        See the <a href="/shipping">shipping policy</a> for current details.
+        Free U.S. standard shipping applies at $199 and above and shipping is $14.99 below that.
+        LuxeMia also serves six other supported countries at their published destination rates. See the <a href="/shipping">shipping policy</a> for current details.
       </p>
     </>
   ),
@@ -382,7 +382,7 @@ const SAREES: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.sarees.alt,
   heroTitle: getIndexableRouteSeo('/sarees').h1,
-  heroSubtitle: 'Shop Banarasi-style, silk, georgette, wedding and festive sarees online in the U.S. Review each listing for its exact fabric, blouse information, dimensions and stitching status.',
+  heroSubtitle: 'Browse current Banarasi-style, silk, georgette, wedding and festive saree listings with tracked shipping to seven supported countries. Review each exact listing for fabric wording, blouse information, dimensions and stitching status.',
   seoTitle: getIndexableRouteSeo('/sarees').title,
   seoDescription: getIndexableRouteSeo('/sarees').description,
   canonical: 'https://luxemia.shop/sarees',
@@ -413,7 +413,7 @@ const SAREES: CategoryConfig = {
     // saree gown, ready-to-wear, casual wear, festival wear, festive).
     occasionSub('bridal', 'Bridal', ['occasion:bridal', 'bridal'], {
       matchProductType: ['Bridal Saree'],
-      seoTitle: 'Bridal Sarees for Indian Brides in USA | Silk & Kanjeevaram - LuxeMia',
+      seoTitle: 'Bridal Sarees for Indian Brides | Silk & Kanjeevaram - LuxeMia',
       seoDescription: 'Shop bridal sarees online. Compare each listing\'s stated fabric, weave or work, blouse details, current price and availability. Free U.S. standard shipping at $199 and above.',
       seoCanonical: 'https://luxemia.shop/sarees?sub=bridal',
     }),
@@ -439,24 +439,25 @@ const SAREES: CategoryConfig = {
     // an old catalog import added the word "wedding" to many unrelated saree titles.
     occasionSub('wedding', 'Ceremony Sarees', ['occasion:wedding', 'occasion:bridal', 'role:bride'], {
       matchProductType: ['Wedding Saree', 'Bridal Saree'],
-      seoTitle: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
-      seoDescription: 'Shop wedding sarees online in the USA. Compare each listing’s stated fabric, work, blouse details, price and current availability.',
+      seoTitle: 'Wedding Sarees Online | Indian Wedding Sarees | LuxeMia',
+      seoDescription: 'Shop wedding sarees online. Compare each listing’s stated fabric, work, blouse details, price and current availability.',
       seoCanonical: 'https://luxemia.shop/collections/wedding-sarees',
     }),
     occasionSub('designer', 'Designer', ['occasion:designer'], {
       matchProductType: ['Designer Saree'],
-      seoTitle: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
-      seoDescription: 'Shop designer sarees online in the USA. Compare stated fabric, work, blouse details, price and availability on each listing.',
+      seoTitle: 'Designer Sarees Online | Embroidered & Party-Wear Styles | LuxeMia',
+      seoDescription: 'Shop designer sarees online. Compare stated fabric, work, blouse details, price and availability on each listing.',
       seoCanonical: 'https://luxemia.shop/collections/designer-sarees',
     }),
     // By Fabric (simplified — 4 main fabrics)
     styleSub('silk', 'Silk', ['fabric:silk', 'silk', 'banarasi', 'kanchipuram', 'kanjeevaram']),
+    styleSub('banarasi', 'Banarasi', ['fabric:banarasi', 'banarasi', 'banarasi silk', 'banarasi saree', 'banarasi brocade']),
     styleSub('georgette', 'Georgette', ['fabric:georgette', 'georgette']),
     styleSub('chiffon', 'Chiffon', ['fabric:chiffon', 'chiffon']),
     styleSub('organza', 'Organza', ['fabric:organza', 'organza']),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
-    priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
+    priceSub('premium-300-plus', '$300+', 300, 10000),
   ],
   filters: [
     {
@@ -533,8 +534,8 @@ const SAREES: CategoryConfig = {
       answer: "Follow the care instructions on the exact product page or label. For delicate silk, zari, embroidery or uncertain materials, ask a qualified cleaner before washing or pressing."
     },
     {
-      question: "Do you ship sarees to the United States?",
-      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $199 and above and costs $14.99 below that. Tracking is provided after dispatch."
+      question: "Where does LuxeMia ship sarees?",
+      answer: "LuxeMia ships to seven supported countries. U.S. standard shipping is free at $199 and above and costs $14.99 below that; the other destinations use the rates and thresholds on the Shipping page."
     }
   ],
   // SEO editorial content (Item #14)
@@ -545,7 +546,7 @@ const SAREES: CategoryConfig = {
         Browse sarees for weddings, receptions, festivals and other celebrations. Product pages state the
         supplied fabric, weave or embellishment details, blouse information, dimensions and current price.
       </p>
-      <h3>Buy Indian Wedding Sarees Online in the U.S.</h3>
+      <h3>Buy Indian Wedding Sarees Online</h3>
       <p>
         Compare wedding and festive sarees by their stated fabric, weave or work, blouse details and availability.
         LuxeMia does not treat a style name as proof of fiber, weaving method or origin; use the exact product details
@@ -558,7 +559,8 @@ const SAREES: CategoryConfig = {
       </p>
       <h3>Silk, Kanchipuram and Kanjivaram Sarees</h3>
       <p>
-        Browse the <a href="/collections/silk-sarees">silk saree collection</a> and the
+        Browse the <a href="/collections/silk-sarees">silk saree collection</a>, the
+        <a href="/collections/banarasi-sarees"> Banarasi saree collection</a> and the
         <a href="/collections/kanchipuram-sarees"> Kanchipuram and Kanjivaram collection</a>, then compare the stated
         fiber, weave, border, blouse details and availability on each listing. These collection pages provide
         the current shopping options without relying on discontinued guide URLs.
@@ -568,10 +570,10 @@ const SAREES: CategoryConfig = {
         Blouse fabric, stitching status and optional tailoring vary by product. Check the included-pieces section
         and contact LuxeMia before ordering if you need help with measurements or timing.
       </p>
-      <h3>United States Shipping</h3>
+      <h3>Shipping to Seven Countries</h3>
       <p>
-        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
-        See the <a href="/shipping">shipping policy</a> for current details.
+        Free U.S. standard shipping applies at $199 and above and shipping is $14.99 below that.
+        LuxeMia also serves six other supported countries at their published destination rates. See the <a href="/shipping">shipping policy</a> for current details.
       </p>
     </>
   ),
@@ -586,7 +588,7 @@ const SUITS: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.suits.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.suits.alt,
   heroTitle: getIndexableRouteSeo('/suits').h1,
-  heroSubtitle: 'Anarkalis, shararas and palazzo sets for celebrations. For selected custom colour or made-to-measure possibilities, explore LuxeMia custom options.',
+  heroSubtitle: 'Browse current Anarkali, sharara and palazzo listings with tracked shipping to seven supported countries. Custom colour or made-to-measure availability applies only to designs expressly identified in LuxeMia custom options.',
   seoTitle: getIndexableRouteSeo('/suits').title,
   seoDescription: getIndexableRouteSeo('/suits').description,
   canonical: 'https://luxemia.shop/suits',
@@ -617,7 +619,7 @@ const SUITS: CategoryConfig = {
     occasionSub('casual', 'Casual', ['occasion:casual', 'casual', 'everyday']),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
-    priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
+    priceSub('premium-300-plus', '$300+', 300, 10000),
   ],
   filters: [
     {
@@ -736,9 +738,10 @@ const SUITS: CategoryConfig = {
         Available sizes and any optional tailoring vary by product. Use the <a href="/size-guide">size guide</a>
         and contact LuxeMia before ordering if your event date is time-sensitive.
       </p>
-      <h3>United States Shipping</h3>
+      <h3>Shipping to Seven Countries</h3>
       <p>
-        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
+        Free U.S. standard shipping applies at $199 and above and shipping is $14.99 below that.
+        LuxeMia also serves six other supported countries at their published destination rates.
       </p>
     </>
   ),
@@ -753,7 +756,7 @@ const MENSWEAR: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.menswear.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.menswear.alt,
   heroTitle: getIndexableRouteSeo('/menswear').h1,
-  heroSubtitle: 'Kurta sets, sherwanis and Indo-Western, in stock. Sizes listed by chest and length measurement.',
+  heroSubtitle: 'Browse current kurta, sherwani and Indo-Western menswear listings with tracked shipping to seven supported countries. Confirm the selected variant, included garments, measurements, availability and fulfillment on the exact product page.',
   seoTitle: getIndexableRouteSeo('/menswear').title,
   seoDescription: getIndexableRouteSeo('/menswear').description,
   canonical: 'https://luxemia.shop/menswear',
@@ -766,6 +769,12 @@ const MENSWEAR: CategoryConfig = {
   subcategories: [
     // By Style (simplified — 3 main styles)
     styleSub('sherwani', 'Sherwani', ['style:sherwani', 'sherwani']),
+    {
+      slug: 'groom-sherwani',
+      label: 'Groom Sherwani',
+      group: 'style',
+      matchTags: ['role:groom', 'occasion:groom', 'groom sherwani'],
+    },
     styleSub('kurta-pajama', 'Kurta Pajama', ['style:kurta', 'kurta', 'kurta pajama']),
     styleSub('indo-western', 'Indo-Western', ['style:indo western', 'indo-western', 'indo western']),
     // By Fabric (simplified)
@@ -777,7 +786,7 @@ const MENSWEAR: CategoryConfig = {
     occasionSub('festive', 'Festive', ['occasion:festive', 'festive', 'reception', 'party', 'engagement']),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),
-    priceSub('premium-300-plus', 'Premium $300+', 300, 10000),
+    priceSub('premium-300-plus', '$300+', 300, 10000),
   ],
   filters: [
     {
@@ -896,9 +905,10 @@ const MENSWEAR: CategoryConfig = {
         night, or a big-and-tall Nehru-jacket look, confirm the exact fabric, measurement process, set contents
         and event timing on the product page before ordering.
       </p>
-      <h3>United States Shipping</h3>
+      <h3>Shipping to Seven Countries</h3>
       <p>
-        Free U.S. shipping applies at $199 and above and shipping is $14.99 below that. Tracking is provided after dispatch.
+        Free U.S. standard shipping applies at $199 and above and shipping is $14.99 below that.
+        LuxeMia also serves six other supported countries at their published destination rates.
       </p>
     </>
   ),
@@ -968,11 +978,11 @@ const JEWELRY: CategoryConfig = {
     },
     {
       question: "How should I care for my Kundan jewelry?",
-      answer: "Keep jewelry dry and away from perfume, hairspray and harsh cleaners. Store pieces separately to reduce scratching, and follow any care instructions supplied with the item."
+      answer: "Follow any care instructions supplied for the exact item. Materials and finishes vary; if no instructions are provided, ask LuxeMia or a qualified jewelry-care professional before applying a cleaner or exposing the piece to water or cosmetics."
     },
     {
-      question: "Do you ship bridal jewelry to the United States?",
-      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $199 and above and costs $14.99 below that. Tracking is provided after dispatch."
+      question: "Where does LuxeMia ship bridal jewelry?",
+      answer: "LuxeMia ships to seven supported countries. U.S. standard shipping is free at $199 and above and costs $14.99 below that; the other destinations use the rates and thresholds on the Shipping page."
     }
   ],
 };

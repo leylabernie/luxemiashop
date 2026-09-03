@@ -1,20 +1,18 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Crown, Users, Sparkles, Star, Feather, Zap, Diamond, Palette, ArrowRight, RotateCcw, Check } from 'lucide-react';
+import { ArrowRight, RotateCcw, Check } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
 import ProductCard from '@/components/ui/ProductCard';
 import type { ShopifyProduct } from '@/lib/shopify';
 
 type Answers = {
-  occasion?: string;
-  style?: string;
-  colors?: string;
   budget?: string;
   silhouette?: string;
 };
@@ -83,6 +81,7 @@ const filterByBudget = (products: ShopifyProduct[], budget: string): ShopifyProd
   const range = BUDGET_RANGE[budget];
   if (!range) return products;
   return products.filter(p => {
+    if (p.node.priceRange.minVariantPrice.currencyCode !== 'USD') return false;
     const price = parseFloat(p.node.priceRange.minVariantPrice.amount);
     return price >= range[0] && price <= range[1];
   });
@@ -90,126 +89,47 @@ const filterByBudget = (products: ShopifyProduct[], budget: string): ShopifyProd
 
 const STEPS: QuizStep[] = [
   {
-    id: 'occasion',
-    question: "What's the occasion?",
-    subtitle: "Tell us what you're dressing for",
-    options: [
-      { value: 'bridal', icon: Crown, label: "I'm the Bride", desc: 'Dressing for my own wedding or pre-wedding events' },
-      { value: 'guest', icon: Users, label: 'Wedding Guest', desc: 'Attending a friend or family wedding' },
-      { value: 'festive', icon: Sparkles, label: 'Festive Occasion', desc: 'Diwali, Eid, Navratri, or religious celebration' },
-      { value: 'party', icon: Star, label: 'Party / Reception', desc: 'Birthday, anniversary, or evening event' },
-    ],
-  },
-  {
-    id: 'style',
-    question: "What's your style personality?",
-    subtitle: 'Choose the aesthetic that feels most like you',
-    options: [
-      { value: 'traditional', icon: Diamond, label: 'Traditional & Regal', desc: 'Rich embroidery, classic silhouettes, timeless elegance' },
-      { value: 'modern', icon: Feather, label: 'Modern & Minimalist', desc: 'Clean lines, understated elegance, contemporary details' },
-      { value: 'bold', icon: Zap, label: 'Bold & Glamorous', desc: 'Statement pieces, maximum drama, showstopping presence' },
-      { value: 'fusion', icon: Palette, label: 'Fusion & Indo-Western', desc: 'East meets West, modern silhouettes with Indian craft' },
-    ],
-  },
-  {
-    id: 'colors',
-    question: 'Choose your color story',
-    subtitle: 'Which palette speaks to you most?',
-    options: [
-      { value: 'jewel', label: 'Jewel Tones', desc: 'Deep ruby, sapphire blue, emerald, regal purple', swatch: ['#9B2335', '#1B4B8A', '#1A5C38', '#5B2D8E'] },
-      { value: 'pastel', label: 'Soft Pastels', desc: 'Blush pink, powder blue, lavender, mint, ivory', swatch: ['#F4A7B9', '#B8D4E8', '#C9B3D8', '#A8D5B5'] },
-      { value: 'metallic', label: 'Rich Metallics', desc: 'Antique gold, rose gold, silver, champagne', swatch: ['#C9A84C', '#E8A87C', '#B8C0CC', '#C9A876'] },
-      { value: 'bright', label: 'Bold & Bright', desc: 'Hot pink, electric blue, tangerine, cobalt', swatch: ['#E91E8C', '#1E7BC4', '#FF6B35', '#2B5CE6'] },
-    ],
-  },
-  {
     id: 'budget',
-    question: "What's your budget?",
-    subtitle: 'We have beautiful pieces at every price point',
+    question: 'Which USD price range should we use?',
+    subtitle: 'This filters the current Shopify minimum product price; it does not assess quality or suitability.',
     options: [
-      { value: 'low', label: 'Under $200', desc: 'Elegant everyday pieces and casual festive wear' },
-      { value: 'mid', label: '$200 – $500', desc: 'Semi-formal embroidered outfits and occasion wear' },
-      { value: 'high', label: '$500 – $1,000', desc: 'Stylish pieces and semi-bridal collections' },
-      { value: 'luxury', label: '$1,000+', desc: 'Bridal and beautifully made pieces' },
+      { value: 'low', label: 'Under $200 USD', desc: 'Minimum listed price from $0 through $200 USD' },
+      { value: 'mid', label: '$200–$500 USD', desc: 'Minimum listed price from $200 through $500 USD' },
+      { value: 'high', label: '$500–$1,000 USD', desc: 'Minimum listed price from $500 through $1,000 USD' },
+      { value: 'luxury', label: '$1,000+ USD', desc: 'Minimum listed price at or above $1,000 USD' },
     ],
   },
   {
     id: 'silhouette',
-    question: 'Which silhouette calls to you?',
-    subtitle: 'Your favourite way to wear Indian fashion',
+    question: 'Which catalog type should we filter?',
+    subtitle: 'The result uses Shopify product types and explicit catalog fields; verify every listing before ordering.',
     options: [
-      { value: 'lehenga', label: 'Flowing Lehenga', desc: 'Grand flared skirt with fitted blouse and dupatta' },
-      { value: 'saree', label: 'Draped Saree', desc: 'Six yards of timeless, graceful Indian elegance' },
-      { value: 'suit', label: 'Suit / Anarkali', desc: 'Long kameez with trousers — versatile and comfortable' },
-      { value: 'indo', label: 'Indo-Western', desc: 'Contemporary silhouettes fused with Indian embellishment' },
+      { value: 'lehenga', label: 'Lehenga', desc: 'Filter product types containing a lehenga term' },
+      { value: 'saree', label: 'Saree', desc: 'Filter product types containing a saree term' },
+      { value: 'suit', label: 'Suit / Anarkali', desc: 'Filter product types containing a suit, sharara, or Anarkali term' },
+      { value: 'indo', label: 'Indo-Western', desc: 'Filter explicit product types, tags, or titles containing Indo-Western or fusion terms' },
     ],
   },
 ];
 
 const getProfile = (answers: Answers): Profile => {
-  const { occasion, style, silhouette } = answers;
-
-  if (occasion === 'bridal') {
-    if (style === 'fusion' || style === 'modern') {
-      return {
-        name: 'The Contemporary Bride',
-        tagline: 'Modern luxe with Indian soul',
-        description: "You love Indian craftsmanship but want a fresh, contemporary silhouette. Indo-Western bridal pieces and modern lehengas with clean embroidery are your perfect match.",
-        emoji: '✨',
-        gradient: 'from-violet-50 via-purple-50 to-pink-50 dark:from-violet-950/30 dark:via-purple-950/30 dark:to-pink-950/30',
-        primaryHref: '/indowestern',
-      };
-    }
-    return {
-      name: 'The Classic Bride',
-      tagline: 'Regal, timeless, unforgettable',
-      description: 'You were born for the grandeur of a classic bridal lehenga — rich zardozi work, flowing silhouettes, and jewel-toned fabrics that make every moment iconic.',
-      emoji: '👑',
-      gradient: 'from-rose-50 via-red-50 to-orange-50 dark:from-rose-950/30 dark:via-red-950/30 dark:to-orange-950/30',
-      primaryHref: '/lehengas',
-    };
-  }
-
-  if (occasion === 'festive') {
-    return {
-      name: 'The Festive Queen',
-      tagline: 'Born to celebrate in color',
-      description: 'Festivals are your stage. You love vibrant colors, celebratory embroidery, and outfits that radiate joy. Salwar kameez, sharara sets, and festive lehengas are your signature.',
-      emoji: '🎊',
-      gradient: 'from-amber-50 via-orange-50 to-yellow-50 dark:from-amber-950/30 dark:via-orange-950/30 dark:to-yellow-950/30',
-      primaryHref: '/collections',
-    };
-  }
-
-  if (occasion === 'party' || style === 'fusion') {
-    return {
-      name: 'The Style Fusion Icon',
-      tagline: 'Where East meets effortlessly West',
-      description: "You're drawn to contemporary Indo-Western pieces — structured jackets over lehengas, dhoti pants, cape sarees, and pieces that turn heads at any modern event.",
-      emoji: '⚡',
-      gradient: 'from-blue-50 via-indigo-50 to-violet-50 dark:from-blue-950/30 dark:via-indigo-950/30 dark:to-violet-950/30',
-      primaryHref: '/indowestern',
-    };
-  }
-
-  if (silhouette === 'saree' || (style === 'modern' && silhouette !== 'lehenga')) {
-    return {
-      name: 'The Timeless Draper',
-      tagline: 'Grace, poise, and six yards of perfection',
-      description: 'The saree is your language. Whether Kanchipuram silk, Banarasi brocade, or elegant georgette — you carry yourself with effortless grace and quiet confidence.',
-      emoji: '🌸',
-      gradient: 'from-emerald-50 via-teal-50 to-cyan-50 dark:from-emerald-950/30 dark:via-teal-950/30 dark:to-cyan-950/30',
-      primaryHref: '/sarees',
-    };
-  }
-
+  const resultBySilhouette: Record<string, { label: string; href: string }> = {
+    lehenga: { label: 'Lehenga', href: '/lehengas' },
+    saree: { label: 'Saree', href: '/sarees' },
+    suit: { label: 'Suit and Anarkali', href: '/suits' },
+    indo: { label: 'Indo-Western', href: '/indowestern' },
+  };
+  const result = resultBySilhouette[answers.silhouette || ''] || {
+    label: 'Current Catalog',
+    href: '/collections',
+  };
   return {
-    name: 'The Regal Wedding Guest',
-    tagline: 'Every wedding needs a showstopper guest',
-    description: "You know how to dress for someone else's big day without upstaging — bold enough to photograph beautifully, elegant enough to respect the occasion.",
-    emoji: '💎',
-    gradient: 'from-pink-50 via-fuchsia-50 to-purple-50 dark:from-pink-950/30 dark:via-fuchsia-950/30 dark:to-purple-950/30',
-    primaryHref: '/lehengas',
+    name: `${result.label} Catalog Result`,
+    tagline: 'Live catalog filters applied',
+    description: 'These results use only the selected silhouette filter, USD price range, and current availability fields. They do not verify fit, comfort, color accuracy, event suitability, construction, or included pieces; the selected product page controls.',
+    emoji: '🔎',
+    gradient: 'from-stone-50 via-rose-50 to-amber-50 dark:from-stone-950/30 dark:via-rose-950/30 dark:to-amber-950/30',
+    primaryHref: result.href,
   };
 };
 
@@ -237,7 +157,11 @@ const StyleQuiz = () => {
   const [showResult, setShowResult] = useState(false);
 
   // Pre-fetch ALL products as soon as quiz mounts (cached for result display)
-  const { products: allProducts, isLoading: productsLoading } = useShopifyProducts();
+  const {
+    products: allProducts,
+    isLoading: productsLoading,
+    error: productsError,
+  } = useShopifyProducts();
 
   const current = STEPS[step];
 
@@ -273,27 +197,26 @@ const StyleQuiz = () => {
     if (!showResult || !answers.silhouette) return [];
     let filtered = filterBySilhouette(allProducts, answers.silhouette);
     if (answers.budget) {
-      const byBudget = filterByBudget(filtered, answers.budget);
-      // Fall back to all in silhouette category if budget filter is too narrow
-      filtered = byBudget.length >= 4 ? byBudget : filtered;
+      filtered = filterByBudget(filtered, answers.budget);
     }
-    // Keep only available products
-    filtered = filtered.filter(p => p.node.variants.edges[0]?.node.availableForSale !== false);
+    // Availability is positive evidence: require both the product flag and at
+    // least one explicitly available variant.
+    filtered = filtered.filter(p => (
+      p.node.availableForSale === true
+      && p.node.variants.edges.some((edge) => edge.node.availableForSale === true)
+    ));
     return filtered.slice(0, 8);
   }, [showResult, allProducts, answers.silhouette, answers.budget]);
 
-  // Fallback products if silhouette category empty (show any online orders)
-  const displayProducts = matchedProducts.length > 0
-    ? matchedProducts
-    : allProducts.filter(p => p.node.variants.edges[0]?.node.availableForSale !== false).slice(0, 8);
+  const displayProducts = matchedProducts;
 
   const profile = showResult ? getProfile(answers) : null;
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Find Your Style — LuxeMia Style Quiz"
-        description="Take LuxeMia's style quiz to discover your perfect Indian ethnic wear look. Get personalised outfit recommendations in 5 quick questions."
+        title="Filter the Current Catalog — LuxeMia Browse Quiz"
+        description="Use two catalog filters—USD price range and product type—then verify all product, fit, color, availability, and occasion details on the selected listing."
         canonical="https://luxemia.shop/style-quiz"
         noIndex={true}
       />
@@ -422,7 +345,7 @@ const StyleQuiz = () => {
                     transition={{ delay: 0.2 }}
                     className="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3"
                   >
-                    Your Style Profile
+                    Your Catalog Filter
                   </motion.p>
                   <motion.h1
                     initial={{ opacity: 0, y: 20 }}
@@ -455,11 +378,11 @@ const StyleQuiz = () => {
               <section className="py-14">
                 <div className="container mx-auto px-4 lg:px-8">
                   <div className="text-center mb-10">
-                    <h2 className="text-2xl lg:text-3xl font-serif mb-2">Outfits Matched For You</h2>
+                    <h2 className="text-2xl lg:text-3xl font-serif mb-2">Current Catalog Results</h2>
                     <p className="text-sm text-muted-foreground">
                       {answers.budget && BUDGET_RANGE[answers.budget]
-                        ? `Filtered to your budget${BUDGET_RANGE[answers.budget][1] < 99999 ? ` · $${BUDGET_RANGE[answers.budget][0]}–$${BUDGET_RANGE[answers.budget][1]}` : ` · $${BUDGET_RANGE[answers.budget][0]}+`}`
-                        : 'Selected from our collection'}
+                        ? `USD minimum price filter${BUDGET_RANGE[answers.budget][1] < 99999 ? ` · $${BUDGET_RANGE[answers.budget][0]}–$${BUDGET_RANGE[answers.budget][1]}` : ` · $${BUDGET_RANGE[answers.budget][0]}+`}`
+                        : 'Current catalog records'}
                     </p>
                   </div>
 
@@ -467,6 +390,8 @@ const StyleQuiz = () => {
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                       {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
                     </div>
+                  ) : productsError ? (
+                    <CatalogLoadError retryHref="/style-quiz" />
                   ) : displayProducts.length > 0 ? (
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                       {displayProducts.map((product, i) => (
@@ -474,7 +399,7 @@ const StyleQuiz = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-center text-muted-foreground py-12">Loading your matched pieces…</p>
+                    <p className="text-center text-muted-foreground py-12">No current products match both selected filters.</p>
                   )}
 
                   {/* CTA row */}
@@ -492,11 +417,11 @@ const StyleQuiz = () => {
                   </div>
 
                   <p className="text-center text-xs text-muted-foreground mt-6">
-                    Want expert help?{' '}
+                    Need listing-specific help?{' '}
                     <Link to="/contact" className="underline hover:text-foreground">
                       Contact LuxeMia for help
                     </Link>{' '}
-                    with our team.
+                    before ordering.
                   </p>
                 </div>
               </section>

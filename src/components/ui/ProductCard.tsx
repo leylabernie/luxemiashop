@@ -11,8 +11,11 @@ import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { cn } from '@/lib/utils';
-import { getShipByLabel } from '@/lib/shipBy';
+import { getProcessingEstimateLabel } from '@/lib/shipBy';
 import { isMadeToOrderProduct } from '@/lib/customizableProducts';
+import { hasExplicitReadyToShipEvidence } from '@/lib/readyToShipEvidence';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
+import { getDirectCardVariant, requiresProductPageSelection } from '@/lib/purchaseOptions';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -20,15 +23,6 @@ interface ProductCardProps {
   showQuickAdd?: boolean;
   className?: string;
 }
-
-const priceFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
-
-const formatPrice = (amount: string, _currency: string) => {
-  return priceFormatter.format(parseFloat(amount));
-};
 
 /**
  * Build a rich, SEO-optimized alt text from product tags.
@@ -190,20 +184,21 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (product.node.variants.edges.length > 1) {
-      setIsQuickViewOpen(true);
+    if (product.node.availableForSale !== true) return;
+    if (requiresProductPageSelection(product.node)) {
+      window.location.assign(`/product/${product.node.handle}#product-purchase`);
       return;
     }
-    const firstVariant = product.node.variants.edges.find((edge) => edge.node.availableForSale)?.node || product.node.variants.edges[0]?.node;
-    if (!firstVariant) return;
+    const directVariant = getDirectCardVariant(product.node);
+    if (!directVariant) return;
 
     addItem({
       product,
-      variantId: firstVariant.id,
-      variantTitle: firstVariant.title,
-      price: firstVariant.price,
+      variantId: directVariant.id,
+      variantTitle: directVariant.title,
+      price: directVariant.price,
       quantity: 1,
-      selectedOptions: firstVariant.selectedOptions,
+      selectedOptions: directVariant.selectedOptions,
     });
 
     toast.success('Added to bag', {
@@ -255,9 +250,13 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isMadeToOrder = isMadeToOrderProduct(product.node.handle, product.node.tags);
-  const isAvailable = product.node.variants.edges.some((edge) => edge.node.availableForSale !== false);
-  const requiresOptionSelection = product.node.variants.edges.length > 1;
-  const shipByLabel = getShipByLabel(product.node);
+  const isAvailable = product.node.availableForSale === true
+    && product.node.variants.edges.some((edge) => edge.node.availableForSale === true);
+  const isReadyToShip = isAvailable
+    && !isMadeToOrder
+    && hasExplicitReadyToShipEvidence(product.node);
+  const requiresOptionSelection = requiresProductPageSelection(product.node);
+  const processingEstimateLabel = getProcessingEstimateLabel(product.node);
 
   // "New" badge — products added within the last 30 days
   const NEW_ARRIVAL_WINDOW_DAYS = 30;
@@ -413,7 +412,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <p className="text-sm font-semibold text-[#493235]">
-                {formatPrice(
+                {formatCurrencyAmount(
                   product.node.priceRange.minVariantPrice.amount,
                   product.node.priceRange.minVariantPrice.currencyCode
                 )}
@@ -422,7 +421,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) >
                 parseFloat(product.node.priceRange.minVariantPrice.amount) && (
                 <p className="text-sm text-muted-foreground line-through">
-                  {formatPrice(
+                  {formatCurrencyAmount(
                     product.node.compareAtPriceRange.minVariantPrice.amount,
                     product.node.compareAtPriceRange.minVariantPrice.currencyCode
                   )}
@@ -431,12 +430,12 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             </div>
 
           </div>
-          <p className={`text-xs font-medium ${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-green-400'}`}>
-            {isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+          <p className={`text-xs font-medium ${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : isReadyToShip ? 'text-green-700 dark:text-green-400' : 'text-muted-foreground'}`}>
+            {isMadeToOrder ? 'Made to Order' : isReadyToShip ? 'Ready to Ship' : 'Processing details on listing'}
           </p>
-          {shipByLabel && !isMadeToOrder && (
-            <p className="text-xs text-green-700 dark:text-green-400 font-medium">
-              {shipByLabel}
+          {processingEstimateLabel && !isMadeToOrder && (
+            <p className="text-xs text-muted-foreground">
+              {processingEstimateLabel}
             </p>
           )}
           {product.node.compareAtPriceRange?.minVariantPrice?.amount &&

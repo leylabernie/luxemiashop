@@ -1,6 +1,9 @@
 import { toast } from 'sonner';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
+import { GONE_PRODUCT_HANDLES } from './goneRoutes';
+import { buildVerifiedProductCopy, sanitizeProductTitle } from './productDescriptionEnrichment';
+import { parseIncludedComponentsMetafield } from './includedComponents';
 
 // Shopify API Configuration
 const SHOPIFY_API_VERSION = '2025-10';
@@ -129,6 +132,7 @@ export interface ShopifyProduct {
     id: string;
     title: string;
     createdAt: string;
+    prerenderedFeaturedRank?: number;
     description: string;
     descriptionHtml?: string;
     handle: string;
@@ -299,7 +303,7 @@ const STOREFRONT_LISTING_QUERY = `
               }
             }
           }
-          variants(first: 1) {
+          variants(first: 100) {
             edges {
               node {
                 id
@@ -463,6 +467,7 @@ const COLLECTION_BY_HANDLE_QUERY = `
             tags
             availableForSale
             shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
+            includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
             priceRange {
               minVariantPrice { amount currencyCode }
             }
@@ -495,27 +500,6 @@ const COLLECTION_BY_HANDLE_QUERY = `
   }
 `;
 
-function sanitizeShopifyProductCopy(value: string): string {
-  return (value || '')
-    .replace(/\s*Shipping:\s*5-day express delivery to USA and Canada[\s\S]*$/gi, '')
-    .replace(/\s*FAQQ\s*:[\s\S]*$/gi, '')
-    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $14.99 below $199 and free at $199 and above')
-    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Standard U.S. shipping is free at $199 and above and $14.99 below $199')
-    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. standard shipping at $199 and above')
-    .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $199 and above')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. standard shipping at $199 and above. $14.99 below that. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to the seven supported destination countries via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
-    .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
-    .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
-    .replace(/within two business days/gi, 'with tracked shipping')
-    .replace(/within 2 business days/gi, 'with tracked shipping')
-    .replace(/from the USA/gi, 'with tracked delivery')
-    .replace(/the seven supported destination countries/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
-    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
-}
-
 function parseMetafieldList(value?: string | null): string[] | null {
   if (!value) return null;
   try {
@@ -527,13 +511,12 @@ function parseMetafieldList(value?: string | null): string[] | null {
 }
 
 function parseShipsWithinDays(value?: string | null): number | null {
-  const match = (value || '').match(/\d+/);
-  if (!match) return null;
-  const days = Number.parseInt(match[0], 10);
+  const days = Number((value || '').trim());
   return Number.isFinite(days) && days > 0 ? days : null;
 }
 
 function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
+  const verifiedDescription = buildVerifiedProductCopy(node);
   const metadata: ProductMetadata = {
     ...node.metadata,
     fabric: node.fabricMetafield?.value || node.metadata?.fabric || null,
@@ -541,7 +524,7 @@ function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
     blouseFabric: node.blouseFabricMetafield?.value || node.metadata?.blouseFabric || null,
     color: node.colorMetafield?.value || node.metadata?.color || null,
     occasion: parseMetafieldList(node.occasionMetafield?.value) || node.metadata?.occasion || null,
-    includedComponents: parseMetafieldList(node.includedComponentsMetafield?.value) || node.metadata?.includedComponents || null,
+    includedComponents: parseIncludedComponentsMetafield(node.includedComponentsMetafield?.value) || node.metadata?.includedComponents || null,
     careInstructions: node.careInstructionsMetafield?.value || node.metadata?.careInstructions || null,
     productStyle: node.productStyleMetafield?.value || node.metadata?.productStyle || null,
     shopifyCategory: node.shopifyCategoryMetafield?.value || node.metadata?.shopifyCategory || null,
@@ -556,9 +539,9 @@ function sanitizeProductNode<T extends ShopifyProduct['node']>(node: T): T {
     metadata,
     shipsWithinDays: parseShipsWithinDays(node.shipsWithinMetafield?.value),
     shipsWithin: parseShipsWithinDays(node.shipsWithinMetafield?.value),
-    description: sanitizeShopifyProductCopy(node.description || ''),
-    descriptionHtml: node.descriptionHtml ? sanitizeShopifyProductCopy(node.descriptionHtml) : node.descriptionHtml,
-    title: node.title.replace(/\s*\|\s*Ready to Ship/gi, ''),
+    description: verifiedDescription,
+    descriptionHtml: verifiedDescription ? `<p>${verifiedDescription}</p>` : undefined,
+    title: sanitizeProductTitle(node.title),
   };
 }
 
@@ -638,7 +621,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
     toast.error("Shopify: Payment required", {
       description: "Shopify API access requires an active Shopify billing plan."
     });
-    return null;
+    throw new Error('Shopify Storefront API request failed with HTTP 402 (payment required).');
   }
 
   if (!response.ok) {
@@ -655,16 +638,18 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 }
 
 export async function fetchProducts(first: number = 12, query?: string): Promise<ShopifyProduct[]> {
-  try {
-    const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query });
-    if (!data) return [];
-    return (data.data.products.edges || [])
-      .map(sanitizeProductEdge)
-      .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle));
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    return [];
+  const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query });
+  const edges = data?.data?.products?.edges;
+  if (!Array.isArray(edges)) {
+    throw new Error('Shopify product listing returned an invalid response.');
   }
+
+  return edges
+    .map(sanitizeProductEdge)
+    .filter((product: ShopifyProduct) => (
+      !isHiddenBillingProductHandle(product.node.handle)
+      && !GONE_PRODUCT_HANDLES.has(product.node.handle)
+    ));
 }
 
 export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]> {
@@ -672,80 +657,99 @@ export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]
   let cursor: string | null = null;
   let hasNextPage = true;
 
-  try {
-    while (hasNextPage) {
-      const variables: Record<string, unknown> = { first: 250, query };
-      if (cursor) variables.after = cursor;
+  while (hasNextPage) {
+    const variables: Record<string, unknown> = { first: 250, query };
+    if (cursor) variables.after = cursor;
 
-      const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, variables);
-      if (!data) break;
-
-      const edges = data.data.products.edges || [];
-      allProducts.push(...edges.map(sanitizeProductEdge));
-
-      const pageInfo = data.data.products.pageInfo;
-      hasNextPage = pageInfo?.hasNextPage ?? false;
-      cursor = pageInfo?.endCursor ?? null;
+    const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, variables);
+    const productsConnection = data?.data?.products;
+    if (
+      !productsConnection
+      || !Array.isArray(productsConnection.edges)
+      || typeof productsConnection.pageInfo?.hasNextPage !== 'boolean'
+    ) {
+      throw new Error('Shopify product catalog returned an invalid response.');
     }
-  } catch (error) {
-    console.error('Error fetching all products:', error);
+
+    allProducts.push(...productsConnection.edges.map(sanitizeProductEdge));
+
+    hasNextPage = productsConnection.pageInfo.hasNextPage;
+    cursor = productsConnection.pageInfo.endCursor ?? null;
+    if (hasNextPage && !cursor) {
+      throw new Error('Shopify product catalog pagination returned no cursor.');
+    }
   }
 
-  return allProducts.filter((product) => !isHiddenBillingProductHandle(product.node.handle));
+  return allProducts.filter((product) => (
+    !isHiddenBillingProductHandle(product.node.handle)
+    && !GONE_PRODUCT_HANDLES.has(product.node.handle)
+  ));
 }
 
 export async function fetchProductByHandle(
   handle: string,
   options: { allowHiddenBillingProduct?: boolean } = {},
 ): Promise<ShopifyProduct['node'] | null> {
+  if (GONE_PRODUCT_HANDLES.has(handle)) return null;
   if (isHiddenBillingProductHandle(handle) && !options.allowHiddenBillingProduct) return null;
 
-  try {
-    const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
-    if (!data) return null;
-    // The query now uses `product(handle:)` (replacing the deprecated
-    // `productByHandle`) so the response shape is `data.product`, not
-    // `data.productByHandle`.
-    const product = data.data.product ? sanitizeProductNode(data.data.product) : null;
-    return product && (!isHiddenBillingProductHandle(product.handle) || options.allowHiddenBillingProduct)
-      ? product
-      : null;
-  } catch (error) {
-    console.error('Error fetching product:', error);
-    return null;
+  const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
+  if (!data?.data || !Object.prototype.hasOwnProperty.call(data.data, 'product')) {
+    throw new Error('Shopify product lookup returned an invalid response.');
   }
+
+  // Shopify represents a real handle miss as an explicit null product in an
+  // otherwise successful GraphQL response. Network, HTTP, billing, malformed
+  // response, and GraphQL errors must keep throwing so the UI can offer a
+  // retry without falsely declaring the product removed.
+  if (data.data.product === null) return null;
+  if (!data.data.product || typeof data.data.product !== 'object') {
+    throw new Error('Shopify product lookup returned an invalid product.');
+  }
+
+  // The query now uses `product(handle:)` (replacing the deprecated
+  // `productByHandle`) so the response shape is `data.product`, not
+  // `data.productByHandle`.
+  const product = sanitizeProductNode(data.data.product);
+  if (GONE_PRODUCT_HANDLES.has(product.handle)) return null;
+  return !isHiddenBillingProductHandle(product.handle) || options.allowHiddenBillingProduct
+    ? product
+    : null;
 }
 
 export async function fetchCollectionByHandle(
   handle: string,
   signal?: AbortSignal,
 ): Promise<ShopifyCollection | null> {
-  try {
-    const data = await storefrontApiRequest(
-      COLLECTION_BY_HANDLE_QUERY,
-      { handle, first: 250 },
-      signal,
-    );
-    const collection = data?.data?.collection;
-    if (!collection) return null;
-
-    return {
-      id: collection.id,
-      title: collection.title,
-      handle: collection.handle,
-      description: collection.description || '',
-      descriptionHtml: collection.descriptionHtml || '',
-      image: collection.image || null,
-      products: (collection.products?.edges || [])
-        .map(sanitizeProductEdge)
-        .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle)),
-    };
-  } catch (error) {
-    if ((error as Error).name !== 'AbortError') {
-      console.error(`Error fetching collection ${handle}:`, error);
-    }
-    return null;
+  const data = await storefrontApiRequest(
+    COLLECTION_BY_HANDLE_QUERY,
+    { handle, first: 250 },
+    signal,
+  );
+  if (!data?.data || !Object.prototype.hasOwnProperty.call(data.data, 'collection')) {
+    throw new Error(`Shopify collection lookup returned an invalid response for ${handle}.`);
   }
+
+  const collection = data.data.collection;
+  if (collection === null) return null;
+  if (!collection || typeof collection !== 'object' || !Array.isArray(collection.products?.edges)) {
+    throw new Error(`Shopify collection lookup returned invalid collection data for ${handle}.`);
+  }
+
+  return {
+    id: collection.id,
+    title: collection.title,
+    handle: collection.handle,
+    description: collection.description || '',
+    descriptionHtml: collection.descriptionHtml || '',
+    image: collection.image || null,
+    products: collection.products.edges
+      .map(sanitizeProductEdge)
+      .filter((product: ShopifyProduct) => (
+        !isHiddenBillingProductHandle(product.node.handle)
+        && !GONE_PRODUCT_HANDLES.has(product.node.handle)
+      )),
+  };
 }
 
 export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string | null> {

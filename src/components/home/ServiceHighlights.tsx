@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const services = [
   {
     icon: Truck,
-    title: 'Tracked U.S. Shipping',
+    title: 'Tracked Shipping',
     description: 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius',
   },
   {
@@ -19,17 +19,17 @@ const services = [
   },
   {
     icon: Clock,
-    title: 'Tracking After Dispatch',
-    description: 'Tracking is sent by email after dispatch',
+    title: 'Tracking Updates',
+    description: 'When issued, carrier scans may appear after label creation',
   },
   {
     icon: RefreshCw,
-    title: '24-Hour Cancellation',
-    description: 'Contact support within 24 hours of ordering',
+    title: 'Cancellation Requests',
+    description: 'Request promptly; approval depends on order status',
   },
   {
     icon: Sparkles,
-    title: 'U.S.-Based Support',
+    title: 'Pre-Order Support',
     description: 'Product and sizing help before ordering',
   },
 ];

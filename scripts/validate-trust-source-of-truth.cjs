@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
-const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
+const HOME_TITLE = 'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia';
+const HOME_DESCRIPTION = 'Shop South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to seven supported countries.';
 const SHIPPING_TITLE = 'Shipping Policy & International Rates | LuxeMia';
 const failures = [];
 
@@ -91,9 +91,18 @@ requireAll('src/App.tsx', [
 ]);
 requireAll('src/pages/ReadyToShip.tsx', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
-  'Every purchasable LuxeMia catalog item is Ready to Ship',
-  'Order processing and carrier transit are separate',
+  'hasExplicitReadyToShipEvidence(product.node)',
+  'variants.length > 0 && variants.some((edge) => edge.node.availableForSale === true)',
+  'noIndex={!isLoading && !error && sortedProducts.length === 0}',
+  'CollectionDirectAnswer path="/ready-to-ship"',
   'View route-based rates',
+]);
+requireAll('src/config/collectionStandards.ts', [
+  'catalog record explicitly identifies ready-to-ship status through a supported tag or positive ships-within value',
+  'Availability for sale and the absence of a made-to-order label do not prove ready-to-ship status',
+]);
+block('src/config/collectionStandards.ts', [
+  /Every purchasable LuxeMia catalog item is Ready to Ship/i,
 ]);
 requireAll('src/lib/productFilters.ts', [
   'isMadeToOrderProduct(p.node.handle, p.node.tags)',
@@ -101,7 +110,13 @@ requireAll('src/lib/productFilters.ts', [
 ]);
 requireAll('src/hooks/useShopifyProducts.ts', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
-  "const CACHE_VERSION = 'v13'",
+  'hasExplicitReadyToShipEvidence(product.node)',
+  'variants.length > 0 && variants.some((edge) => edge.node.availableForSale === true)',
+  "const CACHE_VERSION = 'v14'",
+]);
+requireAll('src/lib/readyToShipEvidence.ts', [
+  'hasExplicitReadyToShipEvidence',
+  'node.shipsWithinMetafield?.value ?? node.shipsWithinDays ?? node.shipsWithin',
 ]);
 requireAll('src/lib/shopify.ts', [
   'shipsWithinDays?: number | null;',
@@ -117,20 +132,64 @@ requireAll('src/lib/schema.ts', [
   "createService('australia-nz-standard-shipping'",
   "createService('south-africa-standard-shipping'",
   "createService('mauritius-standard-shipping'",
+  "currenciesAccepted: 'USD'",
 ]);
 requireAll('index.html', [
   HOME_TITLE,
   HOME_DESCRIPTION,
   '"ClothingStore"',
-  'AUD, CAD, GBP, MUR, NZD, USD',
+  '"currenciesAccepted": "USD"',
   'hello@luxemia.shop',
   '+1-215-341-9990',
+]);
+block('src/lib/schema.ts', [/AUD,\s*CAD,\s*GBP,\s*MUR,\s*NZD,\s*USD/i]);
+block('index.html', [/AUD,\s*CAD,\s*GBP,\s*MUR,\s*NZD,\s*USD/i]);
+requireAll('src/lib/returnPolicyCopy.ts', [
+  'Change-of-mind purchases are final sale.',
+  'reported promptly—preferably within 48 hours of delivery',
+  'with available photos and, when available, unboxing evidence',
+  'A missing video does not by itself remove rights that cannot legally be excluded.',
 ]);
 requireAll('scripts/prerender.js', [
   "...create(['CA', 'GB'], 24.99, 299)",
   "...create(['AU', 'NZ'], 29.99, 349)",
   "...create('ZA', 49.99)",
   "...create('MU', 59.99)",
+]);
+requireAll('CREAO_AI_PROMPT.md', [
+  'Evidence-Only Shopify Catalog Draft Prompt',
+  'luxemia_catalog_evidence.csv',
+  'Product status | `draft`',
+  'Published | `FALSE`',
+  'Do not invent or hardcode',
+  'A non-empty factual field lacks a matching evidence row',
+]);
+requireAll('supabase/migrations/20260902221500_secure_consultation_lead_access.sql', [
+  'DROP POLICY IF EXISTS "Allow authenticated read"',
+  'REVOKE SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER',
+  'FROM anon, authenticated',
+  'GRANT ALL ON public.consultation_leads TO service_role',
+]);
+requireAll('src/data/semanticCommerceGuides.ts', [
+  'https://www.nist.gov/publications/body-dimensions-apparel',
+  'https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods',
+  'https://www.cbp.gov/trade/basic-import-export/internet-purchases',
+  'https://www.vam.ac.uk/articles/indian-textiles',
+  '/collections/groomsmen-outfits',
+]);
+requireAll('src/components/product/ProductTabs.tsx', [
+  'Only explicitly prefixed fact tags are displayed',
+  'does not infer fabric, fiber composition, included pieces, color, work, or occasion',
+  'does not apply a universal chart to this item',
+  'A product-specific care instruction was not supplied',
+]);
+requireAll('middleware.ts', [
+  "if (productLookup.status === 'unavailable')",
+  'return return404(request);',
+]);
+block('middleware.ts', [
+  /jewelryFallback/i,
+  /generateJewelryProductHtml/i,
 ]);
 
 const blockedRuntimePatterns = [
@@ -139,15 +198,64 @@ const blockedRuntimePatterns = [
   /Glamour Indian Wear/i,
   /United States addresses only/i,
   /U\.S\. delivery only/i,
-  /\$12[^\n]{0,100}(?:shipping|below \$150)/i,
+  /\$12(?!\d)[^\n]{0,100}(?:shipping|below \$150)/i,
   /free[^\n]{0,60}\$150/i,
   /International standard shipping is \$14\.99 below \$300/i,
   /LuxeMia — Indian Ethnic Wear Online for (?:US|U\.S\.) Delivery/i,
   /Free worldwide shipping/i,
+  /free shipping[^\n]{0,80}(?:over|above|at) \$350/i,
+  /orders? (?:over|above) \$350[^\n]{0,80}free shipping/i,
   /All orders ship with full DHL Express tracking/i,
   /Custom sizing:\s*Available on request/i,
   /published 1[–-]3 business-day processing/i,
   /processing window of three business days or less/i,
+  /\$30 Fit Guarantee/i,
+  /Free Custom Stitching/i,
+  /Made-to-measure included/i,
+];
+
+const blockedPolicyPatterns = [
+  /\bAll sales are final\b/i,
+  /\bAll sales final\b/i,
+  /\bmandatory unboxing video\b/i,
+  /\bcontinuous unboxing(?:\/opening)? video is required\b/i,
+  /\bcontact (?:us|LuxeMia) within 48 hours\b/i,
+  /\bmust be reported within 48 hours\b/i,
+  /\bmust be submitted within 48 hours\b/i,
+  /\bclaims? accepted within 48 hours\b/i,
+  /\balongside the required video\b/i,
+  /\binclude the required photos\b/i,
+];
+
+const blockedCatalogMarketingPatterns = [
+  /\bnear-perfect fit\b/i,
+  /\b(?:3-5|6-8|8-10) business days\b/i,
+  /\bcomfortable for all-day wear\b/i,
+  /\bHand-crafted\b/i,
+  /\bflatters all skin tones\b/i,
+  /\b200\+ style combinations\b/i,
+  /\bauthentic\b/i,
+  /\bSourced directly from India's textile hubs\b/i,
+  /\bquality-inspected before shipping\b/i,
+  /\bhigh-quality\b/i,
+  /\bpremium\s+(?:georgette|fabric|quality)\b/i,
+  /\bbreathable\b/i,
+  /\bdesigner-quality\b/i,
+  /\bperfect for\b/i,
+  /\baffordable luxury\b/i,
+  /\bflattering across skin tones\b/i,
+];
+
+const blockedCatalogPromptInstructions = [
+  /USD_selling_price\s*=\s*INR_selling_price/i,
+  /Inventory quantity[^\n]{0,80}Always\s+`?50/i,
+  /Status[^\n]{0,80}Always\s+`?Active/i,
+  /Vendor[^\n]{0,80}Always\s+`?LuxemiaShop/i,
+  /Yes, this \[product type\] comes with a matching blouse piece/i,
+  /We recommend dry cleaning to preserve/i,
+  /Sourced from India's finest textile regions/i,
+  /Fabric Descriptions\s*\n\s*\|/i,
+  /Work Descriptions\s*\n\s*\|/i,
 ];
 
 for (const relative of [
@@ -168,9 +276,45 @@ for (const relative of [
   'scripts/prerender.js',
   'public/llms.txt',
   'api/merchant-feed.ts',
+  'shopify-vol34-FINAL.csv',
+  'shopify-vol34-georgette-lehengas.csv',
+  'CREAO_AI_PROMPT.md',
+  'LUXEMIA_GROWTH_REPORT.md',
 ]) {
   block(relative, blockedRuntimePatterns);
 }
+
+for (const relative of [
+  'index.html',
+  'src/lib/returnPolicyCopy.ts',
+  'src/lib/seoMetadata.ts',
+  'src/pages/Returns.tsx',
+  'src/pages/FAQ.tsx',
+  'src/pages/NavratriOutfits.tsx',
+  'src/pages/CareGuide.tsx',
+  'src/pages/Privacy.tsx',
+  'src/pages/Terms.tsx',
+  'src/pages/SemanticCommercePage.tsx',
+  'src/components/product/ProductInfo.tsx',
+  'src/components/product/ProductTabs.tsx',
+  'src/middleware/htmlGenerator.ts',
+  'supabase/functions/sync-to-shopify/index.ts',
+  'scripts/prerender.js',
+  'shopify-vol34-FINAL.csv',
+  'shopify-vol34-georgette-lehengas.csv',
+  'LUXEMIA_GROWTH_REPORT.md',
+]) {
+  block(relative, blockedPolicyPatterns);
+}
+
+for (const relative of [
+  'shopify-vol34-FINAL.csv',
+  'shopify-vol34-georgette-lehengas.csv',
+]) {
+  block(relative, blockedCatalogMarketingPatterns);
+}
+
+block('CREAO_AI_PROMPT.md', blockedCatalogPromptInstructions);
 
 block('scripts/prerender.js', [
   /priceValidUntil\s*:/i,
@@ -207,6 +351,15 @@ try {
       const serialized = JSON.stringify(parsed);
       if (serialized.includes('MerchantReturnPolicy')) failures.push(`index.html JSON-LD block ${index + 1} contains MerchantReturnPolicy`);
       if (serialized.includes('Glamour Indian Wear')) failures.push(`index.html JSON-LD block ${index + 1} contains an unverified legal name`);
+      if (Array.isArray(parsed['@graph'])) {
+        const organizations = parsed['@graph'].filter(node => node && node['@id'] === 'https://luxemia.shop/#organization');
+        if (organizations.length !== 1) failures.push(`index.html JSON-LD must define exactly one #organization node; found ${organizations.length}`);
+        const types = organizations[0]?.['@type'];
+        const typeList = Array.isArray(types) ? types : [types];
+        for (const requiredType of ['Organization', 'OnlineStore', 'ClothingStore']) {
+          if (!typeList.includes(requiredType)) failures.push(`index.html #organization is missing @type ${requiredType}`);
+        }
+      }
     } catch (error) {
       failures.push(`index.html JSON-LD block ${index + 1} is invalid JSON: ${error.message}`);
     }
@@ -221,4 +374,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[trust-source] OK — metadata, route shipping, stocked Ready-to-Ship versus Made-to-Order classification, redirects and structured data use the final source of truth.');
+console.log('[trust-source] OK — metadata, route shipping, positive-evidence Ready-to-Ship classification, redirects and structured data use the final source of truth.');

@@ -1,7 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 const ProductSearch = lazy(() => import('../search/ProductSearch'));
 import { MegaMenuNavItem } from './MegaMenuNavItem';
@@ -10,10 +9,6 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { useCartStore } from '@/stores/cartStore';
 import { useAuth } from '@/hooks/useAuth';
 import {
-  isRakshaBandhanCampaignActive,
-  RAKSHA_BANDHAN_CAMPAIGN,
-} from '@/config/rakshaBandhanCampaign';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -21,7 +16,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 const shippingAnnouncements = [
-  'Free U.S. standard shipping at $199 and above. $14.99 below that. Tracking provided after dispatch.',
+  'Free U.S. standard shipping at $199 USD and above. $14.99 USD below that. Other routes use current Shipping page rates.',
   'Tracked U.S. shipping — $14.99 below $199 and free at $199+.',
 ];
 
@@ -50,14 +45,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
-  const isRakhiSaleActive = isRakshaBandhanCampaignActive();
-  // Keep the verified short-lived offer persistently visible while it is active.
-  // Shipping details remain available on the shipping page and throughout checkout.
-  const announcements = isRakhiSaleActive
-    ? [
-        `72-Hour Offer — ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ with code ${RAKSHA_BANDHAN_CAMPAIGN.code}. Ends ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
-      ]
-    : shippingAnnouncements;
+  const announcements = shippingAnnouncements;
   const displayedAnnouncement = announcements[announcementIdx % announcements.length];
 
   const wishlistItems = useWishlistStore(state => state.items);
@@ -99,11 +87,7 @@ const Header = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
         {/* Rotating Announcement Bar — CSS-only fade (PSI 2026-07-22: removed framer-motion) */}
         <div
-          className={`overflow-hidden border-b ${
-            isRakhiSaleActive
-              ? 'border-[#d4b078]/35 bg-gradient-to-r from-[#4a0f24] via-[#741d3a] to-[#4a0f24] text-[#fff8e7]'
-              : 'border-transparent bg-foreground text-background'
-          }`}
+          className="overflow-hidden border-b border-transparent bg-foreground text-background"
           style={{ height: '32px' }}
         >
           <div className="container mx-auto px-4 h-full flex items-center justify-center relative">
@@ -163,10 +147,6 @@ const Header = () => {
 
             {/* Right Icons */}
             <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 ml-auto lg:ml-6">
-              <div className="hidden sm:block">
-                <CurrencySelector />
-              </div>
-
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 className="p-2.5 min-w-[40px] min-h-[40px] flex items-center justify-center hover:bg-card rounded-full transition-colors"

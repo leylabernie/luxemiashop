@@ -184,11 +184,6 @@
       "statusCode": 301
     },
     {
-      "source": "/collections/reception-outfits",
-      "destination": "/collections",
-      "statusCode": 301
-    },
-    {
       "source": "/collections/festive-wear",
       "destination": "/collections",
       "statusCode": 301
@@ -269,6 +264,11 @@
       "statusCode": 301
     },
     {
+      "source": "/collections/navratri-garba-outfits-2026",
+      "destination": "/collections/navratri-outfits",
+      "statusCode": 301
+    },
+    {
       "source": "/collections/saree-gowns",
       "destination": "/sarees",
       "statusCode": 301
@@ -315,33 +315,38 @@
     },
     {
       "source": "/feed.xml",
-      "destination": "/merchant-feed.xml",
+      "destination": "https://luxemia.shop/merchant-feed.xml",
       "statusCode": 301
     },
     {
       "source": "/shopping-feed.xml",
-      "destination": "/merchant-feed.xml",
+      "destination": "https://luxemia.shop/merchant-feed.xml",
       "statusCode": 301
     },
     {
       "source": "/products.xml",
-      "destination": "/merchant-feed.xml",
+      "destination": "https://luxemia.shop/merchant-feed.xml",
       "statusCode": 301
     },
     {
       "source": "/google-shopping.xml",
-      "destination": "/merchant-feed.xml",
+      "destination": "https://luxemia.shop/merchant-feed.xml",
       "statusCode": 301
     },
     {
       "source": "/feed.tsv",
-      "destination": "/merchant-feed.xml",
+      "destination": "https://luxemia.shop/merchant-feed.xml",
       "statusCode": 301
     },
     {
       "source": "/api/merchant-feed",
-      "destination": "/merchant-feed.xml",
-      "statusCode": 302
+      "destination": "https://luxemia.shop/merchant-feed.xml",
+      "statusCode": 301
+    },
+    {
+      "source": "/google-shopping-feed.xml",
+      "destination": "https://luxemia.shop/merchant-feed.xml",
+      "statusCode": 301
     },
     {
       "source": "/privacy-policy",
@@ -928,6 +933,32 @@
       ]
     },
     {
+      "source": "/indexnow-manifest.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/8e3d7c9415b24a5f9c81e62d1a0374bf.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
       "source": "/e6b81aa0325a277cfb7c764e603dd9cd.txt",
       "headers": [
         {
@@ -958,7 +989,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';"
         },
         {
           "key": "X-Frame-Options",
@@ -1010,7 +1041,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'none'; worker-src 'self';"
         },
         {
           "key": "X-Frame-Options",
@@ -1045,11 +1076,7 @@
       "destination": "/google4e3f332d00afc8ba.html"
     },
     {
-      "source": "/google-shopping-feed.xml",
-      "destination": "/merchant-feed.xml"
-    },
-    {
-      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz)).*)",
+      "source": "/((?!_prerender(?:/|$)|assets(?:/|$)|api(?:/|$)|catalogs(?:/|$)|images(?:/|$)|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

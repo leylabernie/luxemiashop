@@ -7,6 +7,7 @@ import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
 
 interface CompleteTheLookProps {
   currentProductId: string;
@@ -63,14 +64,14 @@ const isOutfitProduct = (product: ShopifyProduct): boolean => {
 
 const isPurchasable = (product: ShopifyProduct): boolean => {
   const variants = product.node.variants?.edges || [];
-  return product.node.availableForSale !== false
-    && variants.some((variant) => variant.node.availableForSale !== false);
+  return product.node.availableForSale === true
+    && variants.some((variant) => variant.node.availableForSale === true);
 };
 
 const availableVariants = (product: ShopifyProduct) =>
   (product.node.variants?.edges || [])
     .map((edge) => edge.node)
-    .filter((variant) => variant.availableForSale !== false);
+    .filter((variant) => variant.availableForSale === true);
 
 export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLookProps) => {
   const addItem = useCartStore((state) => state.addItem);
@@ -82,22 +83,28 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
     let active = true;
 
     const fetchComplementaryProducts = async () => {
-      // Fetch a sufficiently broad live Shopify pool, then apply deterministic
-      // product-type filtering client-side. This avoids relying on inconsistent
-      // legacy tags and guarantees every recommendation has a real product URL,
-      // real variant ID, current price, and current publication state.
-      const products = await fetchProducts(80);
-      if (!active) return;
+      try {
+        // Fetch a sufficiently broad live Shopify pool, then apply deterministic
+        // product-type filtering client-side. This avoids relying on inconsistent
+        // legacy tags and guarantees every recommendation has a real product URL,
+        // real variant ID, current price, and current publication state.
+        const products = await fetchProducts(80);
+        if (!active) return;
 
-      const complementary = products.filter((product) => {
-        if (product.node.id === currentProductId || !isPurchasable(product)) return false;
-        return currentIsJewelry ? isOutfitProduct(product) : isJewelryProduct(product);
-      });
+        const complementary = products.filter((product) => {
+          if (product.node.id === currentProductId || !isPurchasable(product)) return false;
+          return currentIsJewelry ? isOutfitProduct(product) : isJewelryProduct(product);
+        });
 
-      setLiveProducts(complementary);
+        setLiveProducts(complementary);
+      } catch (error) {
+        if (!active) return;
+        console.error('Unable to load optional related products:', error);
+        setLiveProducts([]);
+      }
     };
 
-    fetchComplementaryProducts();
+    void fetchComplementaryProducts();
 
     return () => {
       active = false;
@@ -137,18 +144,12 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
     });
   };
 
-  const formatPrice = (amount: string, currency: string) =>
-    new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency || 'USD',
-    }).format(Number.parseFloat(amount));
-
   if (recommendations.length === 0) return null;
 
-  const sectionTitle = currentIsJewelry ? 'Pairs Well With' : 'Complete the Look';
+  const sectionTitle = 'Current Related Catalog';
   const sectionSubtitle = currentIsJewelry
-    ? 'Current outfits from the live LuxeMia catalog'
-    : 'Current jewelry and accessories from the live LuxeMia catalog';
+    ? 'Current outfit records from Shopify; no compatibility or styling match is implied'
+    : 'Current jewelry and accessory records from Shopify; no compatibility or styling match is implied';
 
   return (
     <section className="py-16 border-t border-border" aria-labelledby="complete-the-look-heading">
@@ -218,7 +219,7 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
                 </p>
                 <h3 className="font-medium text-sm line-clamp-2">{product.node.title}</h3>
                 <p className="text-sm text-muted-foreground">
-                  {formatPrice(
+                  {formatCurrencyAmount(
                     product.node.priceRange.minVariantPrice.amount,
                     product.node.priceRange.minVariantPrice.currencyCode,
                   )}

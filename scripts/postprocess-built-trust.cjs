@@ -5,8 +5,8 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
-const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
-const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, wedding sarees, lehengas, salwar kameez and menswear with tracked shipping to the USA, Canada, UK and other supported markets.';
+const HOME_TITLE = 'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia';
+const HOME_DESCRIPTION = 'Shop South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to seven supported countries.';
 const SHIPPING_TITLE = 'Shipping Policy & International Rates | LuxeMia';
 const SHIPPING_DESCRIPTION = 'Review LuxeMia tracked shipping rates for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius, plus processing, customs and tracking guidance.';
 const OG_IMAGE_ALT = 'LuxeMia Ethnic Wear — Sarees, Lehengas & Wedding Outfits';
@@ -45,7 +45,11 @@ function cleanSchema(value) {
   }
 
   const outputTypes = Array.isArray(output['@type']) ? output['@type'] : [output['@type']];
-  if (outputTypes.includes('Organization')) {
+  const schemaId = typeof output['@id'] === 'string' ? output['@id'] : '';
+  const isCanonicalStore = outputTypes.includes('OnlineStore')
+    || outputTypes.includes('ClothingStore')
+    || /\/(?:#organization|#store)$/.test(schemaId);
+  if (outputTypes.includes('Organization') && isCanonicalStore) {
     output.name = 'LuxeMia';
     output.description = 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and tracking after dispatch.';
     if (output.contactPoint && typeof output.contactPoint === 'object') {
@@ -54,12 +58,14 @@ function cleanSchema(value) {
       output.contactPoint.areaServed = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
     }
   }
-  if (outputTypes.includes('OnlineStore') || outputTypes.includes('ClothingStore')) {
-    output['@type'] = ['OnlineStore', 'ClothingStore'];
-    output.name = 'LuxeMia Ethnic Wear';
-    output.description = 'Authentic South Asian ethnic wear, wedding sarees, bridal lehengas, suits and menswear with tracked shipping to seven supported countries.';
+  if (isCanonicalStore && (outputTypes.includes('OnlineStore') || outputTypes.includes('ClothingStore'))) {
+    output['@type'] = ['Organization', 'OnlineStore', 'ClothingStore'];
+    output.name = 'LuxeMia';
+    output.description = 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and tracking after dispatch.';
     output.areaServed = COUNTRY_OBJECTS;
-    output.currenciesAccepted = 'AUD, CAD, GBP, MUR, NZD, USD';
+    // Catalog prices and published shipping rates are USD. Serving multiple
+    // countries does not prove that their local currencies are accepted.
+    output.currenciesAccepted = 'USD';
   }
   if (output.mpn && output.sku && output.mpn === output.sku) delete output.mpn;
   return output;

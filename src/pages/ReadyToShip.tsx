@@ -13,8 +13,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import CollectionDecisionSupport, { CollectionDirectAnswer } from '@/components/collections/CollectionDecisionSupport';
 import { sortProducts } from '@/lib/productFilters';
 import { isMadeToOrderProduct } from '@/lib/customizableProducts';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
+import { hasExplicitReadyToShipEvidence } from '@/lib/readyToShipEvidence';
 
 const PRODUCTS_PER_PAGE = 48;
 
@@ -25,18 +28,31 @@ const sortOptions = [
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
+const CatalogLoadError = () => (
+  <div className="rounded-sm border border-destructive/30 bg-destructive/5 px-6 py-14 text-center" role="alert">
+    <h2 className="font-serif text-2xl">Current ready-to-ship products could not be loaded</h2>
+    <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+      Product availability is temporarily unavailable. Try this page again, or contact LuxeMia before relying on a specific option.
+    </p>
+    <Button asChild className="mt-5" variant="outline">
+      <a href="/ready-to-ship">Try again</a>
+    </Button>
+  </div>
+);
+
 const ReadyToShip = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading, error } = useShopifyProducts();
   const [sortBy, setSortBy] = useState('featured');
   const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
 
   const readyProducts = useMemo(
     () => products.filter((product) => {
       if (isMadeToOrderProduct(product.node.handle, product.node.tags)) return false;
-      if (product.node.availableForSale === false) return false;
+      if (product.node.availableForSale !== true) return false;
+      if (!hasExplicitReadyToShipEvidence(product.node)) return false;
 
       const variants = product.node.variants?.edges || [];
-      return variants.length === 0 || variants.some((edge) => edge.node.availableForSale !== false);
+      return variants.length > 0 && variants.some((edge) => edge.node.availableForSale === true);
     }),
     [products],
   );
@@ -48,6 +64,7 @@ const ReadyToShip = () => {
   const visibleProducts = sortedProducts.slice(0, visibleCount);
   const hasMore = visibleCount < sortedProducts.length;
   const currentSort = sortOptions.find((option) => option.value === sortBy)?.label || 'Featured';
+  const collectionItems = toCollectionSchemaItems(visibleProducts);
 
   useEffect(() => {
     setVisibleCount(PRODUCTS_PER_PAGE);
@@ -57,8 +74,13 @@ const ReadyToShip = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Ready-to-Ship Indian Ethnic Wear | LuxeMia"
-        description="Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order."
+        description="Browse products whose current catalog record explicitly identifies ready-to-ship status. Confirm the selected variant, processing information and destination before ordering."
         canonical="https://luxemia.shop/ready-to-ship"
+        noIndex={!isLoading && !error && sortedProducts.length === 0}
+        type="collection"
+        collection={!isLoading && !error && sortedProducts.length > 0
+          ? { name: 'Ready-to-Ship Indian Ethnic Wear', description: 'Currently purchasable products with positive ready-to-ship catalog evidence.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Ready to Ship', url: '/ready-to-ship' },
@@ -70,16 +92,12 @@ const ReadyToShip = () => {
         <section className="border-b border-border/30 bg-secondary/40 py-10 lg:py-14">
           <div className="container mx-auto px-4 text-center lg:px-8">
             <span className="mb-3 block text-xs uppercase tracking-widest text-muted-foreground">
-              Stocked catalog styles
+              Explicitly classified catalog styles
             </span>
             <h1 className="mb-4 font-serif text-3xl lg:text-5xl">Ready-to-Ship Indian Ethnic Wear</h1>
-            <p className="mx-auto max-w-3xl text-sm font-light leading-relaxed text-muted-foreground lg:text-base">
-              Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked
-              <strong className="font-medium text-foreground"> Made to Order</strong> or
-              <strong className="font-medium text-foreground"> Made to Measure</strong>. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch. Order processing and carrier transit are separate.
-            </p>
+            <CollectionDirectAnswer path="/ready-to-ship" className="mx-auto max-w-3xl text-sm font-light leading-relaxed text-muted-foreground lg:text-base" />
             <p className="mt-4 text-xs text-muted-foreground">
-              Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Those custom selections require additional processing and use the timing stated on the product page.{' '}
+              Ready-to-ship applies only when the current catalog record positively identifies that fulfillment status. If a listing also offers a custom selection, review that selection&apos;s separate processing information.{' '}
               <Link className="text-primary underline" to="/collections/customizable-indian-outfits">
                 View made-to-order outfits.
               </Link>
@@ -96,9 +114,11 @@ const ReadyToShip = () => {
             <p className="text-sm text-muted-foreground">
               {isLoading
                 ? 'Loading…'
-                : `${visibleProducts.length} of ${sortedProducts.length} ready-to-ship styles`}
+                : error
+                  ? 'Current ready-to-ship inventory is temporarily unavailable'
+                  : `${visibleProducts.length} of ${sortedProducts.length} ready-to-ship styles`}
             </p>
-            <DropdownMenu>
+            {!error ? <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-2 text-sm font-light">
                   Sort: {currentSort} <ChevronDown className="h-4 w-4" />
@@ -115,7 +135,7 @@ const ReadyToShip = () => {
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> : null}
           </div>
         </div>
 
@@ -131,6 +151,8 @@ const ReadyToShip = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <CatalogLoadError />
           ) : visibleProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
@@ -154,10 +176,11 @@ const ReadyToShip = () => {
               <p className="mb-4 text-sm text-muted-foreground">
                 No currently available ready-to-ship products were returned.
               </p>
-              <Link to="/collections"><Button variant="outline" size="sm">View All Collections</Button></Link>
+              <Button asChild variant="outline" size="sm"><Link to="/collections">View All Collections</Link></Button>
             </div>
           )}
         </section>
+        {!error ? <CollectionDecisionSupport path="/ready-to-ship" products={sortedProducts} isLoading={isLoading} /> : null}
       </main>
 
       <Footer />

@@ -28,6 +28,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const {
+  getHtmlAttribute,
+  parseJsonLdScripts,
+  validateItemListParity,
+} = require('./prerender-validation-helpers.cjs');
 
 // This guard already runs immediately after prerender.js. Sanitize the actual
 // error document first so every successful build also enforces consistent
@@ -132,12 +137,6 @@ function parseAutoRoutes() {
   return extractQuotedValues(block[1]);
 }
 
-function getHtmlAttribute(tag, attribute) {
-  const escapedAttribute = attribute.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = tag.match(new RegExp(`\\b${escapedAttribute}\\s*=\\s*(["'])(.*?)\\1`, 'i'));
-  return match?.[2] ?? null;
-}
-
 function collectSchemaNodesByType(value, schemaType, nodes = []) {
   if (Array.isArray(value)) {
     for (const entry of value) collectSchemaNodesByType(entry, schemaType, nodes);
@@ -151,20 +150,6 @@ function collectSchemaNodesByType(value, schemaType, nodes = []) {
     collectSchemaNodesByType(nestedValue, schemaType, nodes);
   }
   return nodes;
-}
-
-function parseJsonLdScripts(html, route, failures) {
-  const parsed = [];
-  for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
-    const attributes = match[1];
-    if (getHtmlAttribute(attributes, 'type')?.toLowerCase() !== 'application/ld+json') continue;
-    try {
-      parsed.push({ attributes, schema: JSON.parse(match[2]) });
-    } catch (error) {
-      failures.push(`${route}: invalid JSON-LD (${error.message})`);
-    }
-  }
-  return parsed;
 }
 
 function verifyJulyRegressionGuards(routes) {
@@ -347,21 +332,13 @@ function parseCommercialCollectionHtml(route, category) {
   const linkedHandles = [...html.matchAll(/href="\/product\/([^"?#]+)"/g)].map((match) => match[1]);
   if (linkedHandles.length === 0) return `${route}: prerendered HTML has no product links`;
 
-  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
-    .map((match) => {
-      try {
-        return JSON.parse(match[1]);
-      } catch {
-        return null;
-      }
-    })
-    .filter(Boolean);
+  const schemaFailures = [];
+  const schemas = parseJsonLdScripts(html, route, schemaFailures)
+    .map(({ schema }) => schema);
+  if (schemaFailures.length > 0) return schemaFailures[0];
   const itemList = schemas.find((schema) => schema['@type'] === 'ItemList');
   if (!itemList) return `${route}: missing valid ItemList JSON-LD`;
 
-  const itemListHandles = (itemList.itemListElement || [])
-    .map((entry) => entry?.item?.url?.match(/\/product\/([^/?#]+)$/)?.[1])
-    .filter(Boolean);
   const expected = JSON.stringify(payloadHandles);
   const cardHandles = linkedHandles.slice(0, payloadHandles.length);
   if (JSON.stringify(cardHandles) !== expected) {
@@ -375,9 +352,8 @@ function parseCommercialCollectionHtml(route, category) {
   if (new Set(linkedHandles).size !== linkedHandles.length) {
     return `${route}: product-card and overflow links contain duplicate handles`;
   }
-  if (JSON.stringify(itemListHandles) !== expected || itemList.numberOfItems !== payloadHandles.length) {
-    return `${route}: ItemList products do not match the hydration payload`;
-  }
+  const itemListParityFailure = validateItemListParity(itemList, payloadHandles);
+  if (itemListParityFailure) return `${route}: ${itemListParityFailure}`;
 
   return null;
 }
@@ -572,8 +548,8 @@ function main() {
     seoArchitectureFailures.push('/: homepage still advertises a search action without an indexable search route');
   }
   const homepageLogoCount = (homepageHtml.match(/"logo"\s*:\s*"https:\/\/luxemia\.shop\/og-image\.jpg"/g) || []).length;
-  if (homepageLogoCount !== 2) {
-    seoArchitectureFailures.push(`/: expected two branded Organization/OnlineStore logo references, found ${homepageLogoCount}`);
+  if (homepageLogoCount !== 1) {
+    seoArchitectureFailures.push(`/: expected one consolidated Organization/OnlineStore logo reference, found ${homepageLogoCount}`);
   }
 
   if (seoArchitectureFailures.length > 0) {

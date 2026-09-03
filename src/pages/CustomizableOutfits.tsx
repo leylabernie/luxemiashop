@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import ProductCard from '@/components/ui/ProductCard';
+import CollectionDecisionSupport, { CollectionDirectAnswer } from '@/components/collections/CollectionDecisionSupport';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,6 +15,9 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { SHIPPING_DESTINATION_NAMES } from '@/config/shippingPolicy';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
+import { trackLeadSubmission } from '@/hooks/useAnalytics';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -22,28 +26,50 @@ const sortOptions = [
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
+const supportedCountries = [
+  'United States',
+  'Canada',
+  'United Kingdom',
+  'Australia',
+  'New Zealand',
+  'South Africa',
+  'Mauritius',
+] as const;
+
 const customizableFaqs = [
   {
     question: 'What is customizable in this collection?',
-    answer: 'Every design on this page is verified for a custom color and made-to-order sizing from measurements confirmed with LuxeMia. Other design changes are not included unless LuxeMia confirms them in writing.',
+    answer: 'Products appear here only when their current Shopify record explicitly identifies a customization option and a currently available variant. Open the exact product page to see whether the supported option concerns color, size, measurements, or another listed choice. A collection label does not add options the listing does not state.',
   },
   {
     question: 'How do I request a custom color?',
-    answer: 'Send LuxeMia the product link, requested color, event date, and country before ordering. LuxeMia must confirm fabric availability and timing in writing.',
+    answer: 'Request a custom color only when the current product page explicitly offers that option. Send LuxeMia the product link, requested color, event date, and country; the request, material availability, price, and timing must be confirmed in writing before you rely on them.',
   },
   {
     question: 'How long does a made-to-order outfit take?',
-    answer: 'Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Timing and rush delivery are not guaranteed unless confirmed in writing.',
+    answer: 'There is no universal production window for this collection. Use the processing information on the exact current listing and obtain written confirmation of production time and carrier transit before ordering for a fixed date. Rush delivery is not guaranteed unless confirmed for the order.',
   },
   {
     question: 'Where does LuxeMia currently ship these outfits?',
-    answer: 'Checkout currently accepts shipping addresses in seven countries only. U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
+    answer: `Checkout currently accepts shipping addresses in ${SHIPPING_DESTINATION_NAMES}. Rates vary by destination; review the shipping page and confirm the final amount at checkout.`,
   },
   {
     question: 'Can a custom order be returned?',
-    answer: 'Custom orders are final sale, subject to applicable law. For genuine shipping damage, an incorrect item, or a missing item, follow the evidence and reporting requirements on the Returns page.',
+    answer: 'Custom or personalized orders are final sale for change of mind, subject to applicable law. Damage, defects, material misdescription, an incorrect item, or missing pieces use the covered-order-issue process on the Returns page.',
   },
 ];
+
+const CatalogLoadError = () => (
+  <div className="rounded-sm border border-destructive/30 bg-destructive/5 p-8 text-center" role="alert">
+    <h2 className="font-serif text-2xl">Current customizable products could not be loaded</h2>
+    <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+      Product availability is temporarily unavailable. Try this page again, or contact LuxeMia before relying on a specific option.
+    </p>
+    <Button asChild className="mt-5" variant="outline">
+      <a href="/collections/customizable-indian-outfits">Try again</a>
+    </Button>
+  </div>
+);
 
 const CustomizableOutfits = () => {
   const { products, isLoading, error } = useShopifyProducts('customizable');
@@ -57,11 +83,13 @@ const CustomizableOutfits = () => {
     requestedColor: '',
     eventDate: '',
     occasion: '',
-    zipCode: '',
+    country: '',
+    postalCode: '',
     notes: '',
   });
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find((option) => option.value === sortBy)?.label || 'Featured';
+  const collectionItems = toCollectionSchemaItems(sortedProducts);
 
   const scrollToInquiry = () => {
     document.getElementById('custom-order-inquiry')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -77,7 +105,8 @@ const CustomizableOutfits = () => {
       `Requested colour: ${inquiry.requestedColor.trim()}`,
       `Event date: ${inquiry.eventDate}`,
       `Occasion: ${inquiry.occasion.trim()}`,
-      `U.S. ZIP code: ${inquiry.zipCode.trim()}`,
+      `Delivery country: ${inquiry.country}`,
+      `Postal code: ${inquiry.postalCode.trim()}`,
       `Additional notes: ${inquiry.notes.trim() || 'None provided'}`,
     ].join('\n');
 
@@ -87,7 +116,7 @@ const CustomizableOutfits = () => {
           name: inquiry.name.trim(),
           email: inquiry.email.trim().toLowerCase(),
           phone: inquiry.phone.trim() || 'Not provided — custom-order form',
-          country: 'United States',
+          country: inquiry.country,
           occasion: `${inquiry.occasion.trim()} — event date ${inquiry.eventDate}`,
           requirements,
         },
@@ -97,17 +126,12 @@ const CustomizableOutfits = () => {
         throw new Error(data?.error || error?.message || 'Unable to send inquiry');
       }
 
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'generate_lead', {
-          lead_source: 'custom_order_form',
-          lead_type: 'made_to_measure_inquiry',
-        });
-      }
+      trackLeadSubmission('custom_order_form');
 
-      toast.success('Your inquiry is with LuxeMia.', {
-        description: 'We will review the design, colour request, and event timing before confirming what is possible.',
+      toast.success('Inquiry saved.', {
+        description: 'Design, colour, fabric, measurements, and timing remain unconfirmed until you receive a written reply.',
       });
-      setInquiry({ name: '', email: '', phone: '', productLink: '', requestedColor: '', eventDate: '', occasion: '', zipCode: '', notes: '' });
+      setInquiry({ name: '', email: '', phone: '', productLink: '', requestedColor: '', eventDate: '', occasion: '', country: '', postalCode: '', notes: '' });
     } catch (error) {
       console.error('Custom-order inquiry failed:', error);
       toast.error('We could not send your inquiry.', {
@@ -121,10 +145,13 @@ const CustomizableOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Customizable Indian Outfits | Custom Color & Measurements | LuxeMia"
-        description="Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering."
+        title="Customizable Indian Outfits | Product-Specific Options | LuxeMia"
+        description="Browse currently orderable Indian outfits whose Shopify records explicitly identify a customization option. Confirm the exact option and timing on the product page."
         canonical="https://luxemia.shop/collections/customizable-indian-outfits"
         type="collection"
+        collection={!isLoading && !error
+          ? { name: 'Customizable Indian Outfits', description: 'Currently orderable Indian outfits with customization options explicitly identified in their Shopify product records.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -137,11 +164,9 @@ const CustomizableOutfits = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <section className="border-b border-border/30 bg-secondary/40 py-12 lg:py-16">
           <div className="container mx-auto max-w-4xl px-4 text-center lg:px-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Verified made-to-order designs</p>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Product-specific customization</p>
             <h1 className="font-serif text-3xl lg:text-5xl">Customizable Indian Outfits</h1>
-            <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground lg:text-base">
-              These selected lehengas, sarees, kurta sets, and wedding outfits can be made in a custom color and tailored from measurements confirmed with LuxeMia. No other design option is promised unless it is confirmed in writing for the exact product.
-            </p>
+            <CollectionDirectAnswer path="/collections/customizable-indian-outfits" className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground lg:text-base" />
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button onClick={scrollToInquiry} variant="luxury" className="gap-2">
                 Start a custom order inquiry <Send className="h-4 w-4" />
@@ -155,15 +180,15 @@ const CustomizableOutfits = () => {
           <div className="container mx-auto grid max-w-6xl gap-6 px-4 md:grid-cols-3 lg:px-8">
             <div>
               <h2 id="custom-order-process" className="font-serif text-xl">1. Request and confirm</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Send the product link, requested color, event date, and delivery country. LuxeMia confirms fabric availability and feasibility before the order proceeds.</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Open the current product page first, then send its link, the listed option you want, your event date, and delivery country. LuxeMia confirms whether the exact request is supported before you rely on it.</p>
             </div>
             <div>
-              <h2 className="font-serif text-xl">2. Submit measurements</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Provide the measurements requested for the design. Production starts only after the required details are complete and confirmed.</p>
+              <h2 className="font-serif text-xl">2. Confirm required details</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Provide measurements only when the exact listing or LuxeMia’s written confirmation requires them. Any supported material, color, size, or construction request must be confirmed for that product.</p>
             </div>
             <div>
               <h2 className="font-serif text-xl">3. Production, then transit</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after the required details and delivery address are known.</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">There is no universal production window. Use product-specific processing evidence and obtain written confirmation of production time and carrier transit before ordering for a fixed date.</p>
             </div>
           </div>
         </section>
@@ -174,7 +199,7 @@ const CustomizableOutfits = () => {
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a96f72]">Your made-to-measure enquiry</p>
                 <h2 id="custom-order-inquiry-heading" className="mt-4 font-serif text-3xl leading-[0.98] text-[#352629] lg:text-4xl">Tell us about the celebration you are dressing for.</h2>
-                <p className="mt-5 text-sm leading-7 text-[#765f5b]">Share the exact design, colour you have in mind, event date, and U.S. ZIP code. LuxeMia will review the request before confirming fabric availability, measurements, and timing in writing.</p>
+                <p className="mt-5 text-sm leading-7 text-[#765f5b]">Share the exact design, colour you have in mind, event date, delivery country, and postal code. Submitting a request saves it for review; fabric availability, measurements, and timing remain unconfirmed until you receive a written reply.</p>
                 <p className="mt-5 text-xs leading-5 text-[#765f5b]">A product link is helpful but not required. Please do not submit payment details in this form.</p>
               </div>
 
@@ -201,8 +226,21 @@ const CustomizableOutfits = () => {
                     <Input id="custom-colour" required value={inquiry.requestedColor} onChange={(event) => setInquiry({ ...inquiry, requestedColor: event.target.value })} placeholder="For example, dusty rose" />
                   </div>
                   <div>
-                    <label htmlFor="custom-zip" className="mb-2 block text-sm font-medium text-[#493235]">U.S. ZIP code</label>
-                    <Input id="custom-zip" required value={inquiry.zipCode} onChange={(event) => setInquiry({ ...inquiry, zipCode: event.target.value })} placeholder="For timing confirmation" />
+                    <label htmlFor="custom-country" className="mb-2 block text-sm font-medium text-[#493235]">Delivery country</label>
+                    <select
+                      id="custom-country"
+                      required
+                      value={inquiry.country}
+                      onChange={(event) => setInquiry({ ...inquiry, country: event.target.value })}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      <option value="">Select a supported country</option>
+                      {supportedCountries.map((country) => <option key={country} value={country}>{country}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="custom-postal-code" className="mb-2 block text-sm font-medium text-[#493235]">Postal code</label>
+                    <Input id="custom-postal-code" required value={inquiry.postalCode} onChange={(event) => setInquiry({ ...inquiry, postalCode: event.target.value })} placeholder="For timing confirmation" />
                   </div>
                 </div>
                 <div className="mt-4">
@@ -217,6 +255,10 @@ const CustomizableOutfits = () => {
                   <label htmlFor="custom-notes" className="mb-2 block text-sm font-medium text-[#493235]">Anything else we should know? <span className="font-normal text-[#806d69]">(optional)</span></label>
                   <Textarea id="custom-notes" value={inquiry.notes} onChange={(event) => setInquiry({ ...inquiry, notes: event.target.value })} placeholder="Measurements question, styling preference, or anything helpful for LuxeMia to know" rows={4} />
                 </div>
+                <p className="mt-4 text-xs leading-5 text-[#765f5b]">
+                  LuxeMia uses these details only to review and respond to your custom-order request. Do not include payment information or identity documents. See the{' '}
+                  <Link to="/privacy" className="text-primary underline underline-offset-4">Privacy Policy</Link> for retention, service-provider, and deletion-request information.
+                </p>
                 <Button type="submit" variant="luxury" className="mt-6 w-full" disabled={isSubmittingInquiry}>
                   {isSubmittingInquiry ? 'Sending your inquiry…' : 'Send custom order inquiry'}
                 </Button>
@@ -227,8 +269,14 @@ const CustomizableOutfits = () => {
 
         <div className="sticky top-[90px] z-30 border-b border-border/30 bg-background lg:top-[132px]">
           <div className="container mx-auto flex items-center justify-between px-4 py-3 lg:px-8">
-            <p className="text-sm text-muted-foreground">{isLoading ? 'Loading…' : `${sortedProducts.length} verified designs`}</p>
-            <DropdownMenu>
+            <p className="text-sm text-muted-foreground">
+              {isLoading
+                ? 'Loading…'
+                : error
+                  ? 'Current customizable inventory is temporarily unavailable'
+                  : `${sortedProducts.length} verified designs`}
+            </p>
+            {!error ? <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-2">Sort: {currentSort} <ChevronDown className="h-4 w-4" /></Button>
               </DropdownMenuTrigger>
@@ -239,13 +287,13 @@ const CustomizableOutfits = () => {
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> : null}
           </div>
         </div>
 
         <section className="container mx-auto px-4 py-10 lg:px-8 lg:py-14" aria-label="Customizable products">
           {error ? (
-            <p className="rounded-sm border border-destructive/30 bg-destructive/5 p-6 text-center text-sm">Products could not be loaded. Please contact LuxeMia for the current customizable selection.</p>
+            <CatalogLoadError />
           ) : isLoading ? (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
               {Array.from({ length: 8 }).map((_, index) => <div key={index} className="aspect-[3/4] animate-pulse rounded-sm bg-muted" />)}
@@ -261,13 +309,15 @@ const CustomizableOutfits = () => {
           )}
         </section>
 
+        {!error ? <CollectionDecisionSupport path="/collections/customizable-indian-outfits" products={sortedProducts} isLoading={isLoading} showFaqs={false} /> : null}
+
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto max-w-4xl px-4 lg:px-8">
             <h2 className="text-center font-serif text-2xl">Ordering, shipping, and final-sale terms</h2>
             <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
-              <p>LuxeMia checkout currently accepts shipping addresses in seven countries only. U.S. standard shipping is $14.99 below $199 and free at $199 and above.</p>
-              <p>All orders are final sale, subject to applicable law. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering.</p>
-              <p>Need help before completing the form? Use <Link to="/contact" className="text-primary underline underline-offset-4">LuxeMia contact options</Link> with the exact product link, requested colour, measurements question, event date, and U.S. ZIP code.</p>
+              <p>LuxeMia checkout currently accepts shipping addresses in {SHIPPING_DESTINATION_NAMES}. U.S. standard shipping is $14.99 below $199 and free at $199 and above; other destinations use the rates on the Shipping Policy.</p>
+              <p>Custom or personalized orders are final sale for change of mind, subject to applicable law. Damage, defects, material misdescription, an incorrect item, or missing pieces remain covered by the order-issue process. Review the <Link to="/returns" className="text-primary underline underline-offset-4">Returns Policy</Link> before ordering.</p>
+              <p>Need help before completing the form? Use <Link to="/contact" className="text-primary underline underline-offset-4">LuxeMia contact options</Link> with the exact product link, requested colour, measurements question, event date, delivery country, and postal code.</p>
             </div>
             <nav aria-label="Related collections" className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/lehengas"><Button variant="outline" size="sm">Lehengas</Button></Link>

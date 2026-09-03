@@ -30,7 +30,7 @@ Every published guide identifies its sources and review date. Brand-owned source
     'Cultural Context',
     'Shopping Guidance',
   ],
-  location: 'United States',
+  location: 'Online',
   publishedAt: '2026-01-05',
 };
 

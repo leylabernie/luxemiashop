@@ -18,6 +18,43 @@ function getProductNode(product: ProductLike): ProductNode {
   return 'node' in product ? product.node : product;
 }
 
+const GENERIC_LEHENGA_WEDDING_INTENT = /\b(bridal|bride|wedding|reception|sangeet|engagement|mehendi|mehndi|haldi|bridesmaid)\b/i;
+const GENERIC_LEHENGA_FESTIVE_INTENT = /\b(navratri|garba|dandiya|raas|chaniya(?:[-\s]+choli)?)\b/i;
+
+function genericLehengaIntentTier(product: ProductLike): number {
+  const node = getProductNode(product);
+  const intentText = [node.title ?? '', node.productType ?? '', ...(node.tags ?? [])].join(' ');
+
+  // An explicit festival signal wins over a coincidental wedding tag. Those
+  // products remain discoverable, but dedicated festive collections carry
+  // their primary occasion while the generic lehenga route stays wedding-led.
+  if (GENERIC_LEHENGA_FESTIVE_INTENT.test(intentText)) return 2;
+  if (GENERIC_LEHENGA_WEDDING_INTENT.test(intentText)) return 0;
+  return 1;
+}
+
+function isExplicitlyOrderableProduct(product: ProductLike): boolean {
+  const node = getProductNode(product);
+  return node.availableForSale === true
+    && (node.variants?.edges ?? []).some(({ node: variant }) => variant.availableForSale === true);
+}
+
+export function rankGenericLehengasByIntent<T extends ProductLike>(products: T[]): T[] {
+  return products
+    .map((product, originalIndex) => ({
+      product,
+      originalIndex,
+      orderabilityTier: isExplicitlyOrderableProduct(product) ? 0 : 1,
+      intentTier: genericLehengaIntentTier(product),
+    }))
+    .sort((left, right) =>
+      left.orderabilityTier - right.orderabilityTier
+      || left.intentTier - right.intentTier
+      || left.originalIndex - right.originalIndex,
+    )
+    .map(({ product }) => product);
+}
+
 function normalizeWhitespace(value: string): string {
   return value.replace(/\s+/g, ' ').trim();
 }
@@ -88,7 +125,7 @@ function hasColor(product: ProductNode, tags: string[]): boolean {
     || hasText(product.colorMetafield?.value);
 }
 
-function hasFulfilmentClassification(product: ProductNode, tags: string[]): boolean {
+function hasFulfilmentClassification(tags: string[]): boolean {
   return tags.some((tag) =>
     /^(?:availability:)?(?:ready[- ]to[- ]ship|made[- ]to[- ]order|custom|pre[- ]order)$/.test(tag),
   );
@@ -106,7 +143,7 @@ function hasVerifiedTiming(product: ProductNode): boolean {
 function getAvailableVariants(product: ProductNode) {
   return (product.variants?.edges ?? [])
     .map((edge) => edge.node)
-    .filter((variant) => variant.availableForSale !== false);
+    .filter((variant) => variant.availableForSale === true);
 }
 
 function getSizeChoiceCount(product: ProductNode): number {
@@ -167,7 +204,7 @@ export function getCommercialProductQualityScore(
 
   let score = 0;
 
-  if (node.availableForSale !== false && variants.length > 0) score += 30;
+  if (node.availableForSale === true && variants.length > 0) score += 30;
   if (sourceVerified) score += 125;
   if (hasIncludedPieces(node, tags)) score += 40;
   if (hasMaterial(node, tags)) score += 28;
@@ -175,7 +212,7 @@ export function getCommercialProductQualityScore(
   if (hasOccasion(node, tags)) score += 22;
   if (hasConstruction(node, tags)) score += 28;
   if (hasColor(node, tags)) score += 10;
-  if (hasFulfilmentClassification(node, tags)) score += 18;
+  if (hasFulfilmentClassification(tags)) score += 18;
   if (hasVerifiedTiming(node)) score += 18;
   if (hasText(node.productType)) score += 10;
   if (hasText(node.seo?.title)) score += 8;
@@ -218,6 +255,22 @@ export function getCommercialProductQualityScore(
 }
 
 export function rankCommercialProducts<T extends ProductLike>(products: T[]): T[] {
+  const prerenderedRanks = products.map((product) => getProductNode(product).prerenderedFeaturedRank);
+  const hasCompletePrerenderedOrder = prerenderedRanks.every(
+    (rank) => Number.isSafeInteger(rank) && Number(rank) > 0,
+  ) && new Set(prerenderedRanks).size === products.length;
+
+  if (hasCompletePrerenderedOrder) {
+    return products
+      .map((product, originalIndex) => ({
+        product,
+        originalIndex,
+        rank: Number(getProductNode(product).prerenderedFeaturedRank),
+      }))
+      .sort((left, right) => left.rank - right.rank || left.originalIndex - right.originalIndex)
+      .map(({ product }) => product);
+  }
+
   const duplicateTitleCounts = new Map<string, number>();
   for (const product of products) {
     const key = normalizedTitle(getProductNode(product));
@@ -232,6 +285,7 @@ export function rankCommercialProducts<T extends ProductLike>(products: T[]): T[
       originalIndex,
       titleKey,
       familyKey: commercialFamilyKey(node),
+      isOrderable: isExplicitlyOrderableProduct(product),
       baseScore: getCommercialProductQualityScore(product, duplicateTitleCounts.get(titleKey) ?? 1),
       createdAt: new Date(node.createdAt).getTime() || 0,
     };
@@ -253,14 +307,20 @@ export function rankCommercialProducts<T extends ProductLike>(products: T[]): T[
       const currentBest = remaining[bestIndex];
 
       if (
-        adjustedScore > bestAdjustedScore
+        (candidate.isOrderable && !currentBest.isOrderable)
         || (
-          adjustedScore === bestAdjustedScore
+          candidate.isOrderable === currentBest.isOrderable
           && (
-            candidate.createdAt > currentBest.createdAt
+            adjustedScore > bestAdjustedScore
             || (
-              candidate.createdAt === currentBest.createdAt
-              && candidate.originalIndex < currentBest.originalIndex
+              adjustedScore === bestAdjustedScore
+              && (
+                candidate.createdAt > currentBest.createdAt
+                || (
+                  candidate.createdAt === currentBest.createdAt
+                  && candidate.originalIndex < currentBest.originalIndex
+                )
+              )
             )
           )
         )

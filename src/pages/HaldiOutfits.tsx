@@ -11,6 +11,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import CollectionDecisionSupport from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -39,7 +42,7 @@ const haldiOutfitFaqs = [
   },
   {
     question: 'Do you ship haldi ceremony outfits to the USA and the United States?',
-    answer: 'LuxeMia ships haldi ceremony outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $199 and above and $14.99 below $199. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships haldi ceremony outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199; the other destinations use the rates and thresholds on the Shipping page. Confirm timing before ordering for a fixed wedding date.',
   },
 ];
 
@@ -48,7 +51,7 @@ const HALDI_COLOR_KEYWORDS = /\b(yellow|gold|mustard|pastel|turmeric|marigold|ca
 const HALDI_TAG_KEYWORDS = ['haldi', 'occasion:haldi', 'mehendi haldi', 'mehendi-haldi'];
 
 const HaldiOutfits = () => {
-  const { products, isLoading } = useShopifyProducts('occasion:haldi');
+  const { products, isLoading, error } = useShopifyProducts('occasion:haldi');
   const [sortBy, setSortBy] = useState('featured');
 
   // Filter products with haldi-related tags OR yellow/gold/pastel colors
@@ -71,6 +74,7 @@ const HaldiOutfits = () => {
 
   const sortedProducts = useMemo(() => sortProducts(filteredProducts, sortBy), [filteredProducts, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const collectionItems = toCollectionSchemaItems(sortedProducts);
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,6 +82,10 @@ const HaldiOutfits = () => {
         title="Haldi Ceremony Outfits — Current Listings | LuxeMia"
         description="Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms."
         canonical="https://luxemia.shop/collections/haldi-outfits"
+        type="collection"
+        collection={!isLoading && !error && collectionItems.length > 0
+          ? { name: 'Haldi Ceremony Outfits', description: 'Current LuxeMia products explicitly marked for Haldi or turmeric.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Occasions', url: '/collections' },
@@ -112,7 +120,7 @@ const HaldiOutfits = () => {
         <div className="border-b border-border/30 bg-background sticky top-[90px] lg:top-[132px] z-30">
           <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              {isLoading ? 'Loading…' : `${sortedProducts.length} styles`}
+              {isLoading ? 'Loading…' : error ? 'Inventory unavailable' : `${sortedProducts.length} styles`}
             </p>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -144,6 +152,8 @@ const HaldiOutfits = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <CatalogLoadError retryHref="/collections/haldi-outfits" />
           ) : sortedProducts.length > 0 ? (
             <motion.div
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
@@ -165,6 +175,8 @@ const HaldiOutfits = () => {
           )}
         </section>
 
+        {!error ? <CollectionDecisionSupport path="/collections/haldi-outfits" products={sortedProducts} isLoading={isLoading} showFaqs={false} /> : null}
+
         {/* About section — editorial content targeting keywords */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
@@ -185,7 +197,7 @@ const HaldiOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Haldi Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, with tracking after dispatch.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. When tracking is issued, carrier scans can appear after label creation.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

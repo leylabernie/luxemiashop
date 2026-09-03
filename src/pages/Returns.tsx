@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { CANCELLATION_POLICY_ANSWER } from '@/lib/returnPolicyCopy';
 
 const Returns = () => {
   return (
@@ -19,7 +20,7 @@ const Returns = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Returns Policy</h1>
             <p className="text-muted-foreground leading-relaxed">
               Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item or missing pieces should be
-              reported promptly—preferably within 48 hours—with available photos and unboxing evidence. This evidence request does not limit rights that cannot legally be excluded.
+              reported promptly—preferably within 48 hours of delivery—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.
             </p>
           </div>
         </section>
@@ -42,14 +43,11 @@ const Returns = () => {
             <h2 className="text-foreground">How to report a covered issue</h2>
             <p>
               Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> with your order number, item name, and issue. For a covered order issue,
-              include the required photos and continuous video. Keep the item and all packaging until LuxeMia reviews the request.
+              include available photos and, when available, a continuous unboxing/opening video. A missing video does not by itself remove rights that cannot legally be excluded. Keep the item and all packaging until LuxeMia reviews the request.
             </p>
 
             <h2 className="text-foreground">Order cancellations</h2>
-            <p>
-              Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted.
-              Email hello@luxemia.shop immediately with your order number.
-            </p>
+            <p>{CANCELLATION_POLICY_ANSWER} Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> with the order number.</p>
 
             <h2 className="text-foreground">Personalized and made-to-order goods</h2>
             <p>

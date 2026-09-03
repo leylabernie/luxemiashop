@@ -22,9 +22,14 @@ const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
 const MIN_APPROVED_SITEMAP_URL_COUNT = 786;
+const STATIC_CONTENT_REVIEWED_AT = '2026-09-03';
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
+  'custom-order-balance-payment',
 ]);
+const RETIRED_PRODUCT_HANDLES = new Set(
+  JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8'))
+);
 if (!SHOPIFY_STOREFRONT_TOKEN) {
   console.warn('[sitemap] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set; safe sitemap generation will fail.');
 }
@@ -43,11 +48,33 @@ const ALL_PRODUCTS_QUERY = `
           title
           updatedAt
           productType
+          availableForSale
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
           images(first: 1) {
             edges {
               node {
                 url
                 altText
+              }
+            }
+          }
+          variants(first: 100) {
+            pageInfo {
+              hasNextPage
+            }
+            edges {
+              node {
+                id
+                availableForSale
+                price {
+                  amount
+                  currencyCode
+                }
               }
             }
           }
@@ -79,8 +106,15 @@ const staticPages = [
   { loc: '/collections/sharara-suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/gharara-suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/anarkali-suits', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/palazzo-suits', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/sherwani-for-groom', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/wedding-sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/banarasi-sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/wedding-guest-lehengas', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/wedding-guest-kurta-sets', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/diwali-womenswear', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/diwali-menswear', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/designer-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
@@ -100,6 +134,9 @@ const staticPages = [
   { loc: '/shipping/canada', changefreq: 'monthly', priority: '0.6' },
   { loc: '/shipping/united-kingdom', changefreq: 'monthly', priority: '0.6' },
   { loc: '/shipping/australia', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/new-zealand', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/south-africa', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/shipping/mauritius', changefreq: 'monthly', priority: '0.6' },
   { loc: '/pages/shipping-customs', changefreq: 'monthly', priority: '0.4' },
   { loc: '/returns', changefreq: 'monthly', priority: '0.4' },
   { loc: '/size-guide', changefreq: 'monthly', priority: '0.5' },
@@ -133,6 +170,11 @@ const staticPages = [
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/navratri-chaniya-choli', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/garba-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/groomsmen-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/sangeet-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/reception-outfits', changefreq: 'weekly', priority: '0.9' },
 ];
 
 
@@ -143,7 +185,7 @@ function parseBlogSlugs() {
   const seoGrowthBlogPostsPath = path.join(__dirname, '..', 'src', 'data', 'seoGrowthBlogPosts.ts');
   const semanticCommerceGuidesPath = path.join(__dirname, '..', 'src', 'data', 'semanticCommerceGuides.ts');
   const files = [blogPostsPath, recoveredBlogPostsPath, seoGrowthBlogPostsPath, semanticCommerceGuidesPath];
-  const slugs = [];
+  const entries = new Map();
   const excludedSlugs = new Set();
   const publishedSlugs = new Set();
 
@@ -169,16 +211,26 @@ function parseBlogSlugs() {
   for (const filePath of files) {
     if (!fs.existsSync(filePath)) { continue; }
     const fileContent = fs.readFileSync(filePath, 'utf8');
+    const fileName = path.basename(filePath);
+    const dateConstant = fileName === 'blogPosts.ts'
+      ? 'GROWTH_CONTENT_REVIEWED_AT'
+      : fileName === 'seoGrowthBlogPosts.ts'
+      ? 'PUBLISHED_AT'
+      : 'REVIEWED_AT';
+    const reviewedAt = fileContent.match(new RegExp(`const\\s+${dateConstant}\\s*=\\s*['"](\\d{4}-\\d{2}-\\d{2})['"]`))?.[1];
+    if (!reviewedAt) {
+      throw new Error(`[sitemap] Missing meaningful ${dateConstant} date in ${fileName}`);
+    }
     const slugRegex = /["']?slug["']?\s*:\s*['"]([^'"]+)['"]/g;
     let match;
     while ((match = slugRegex.exec(fileContent)) !== null) {
       if (publishedSlugs.has(match[1]) && !excludedSlugs.has(match[1])) {
-        slugs.push(match[1]);
+        entries.set(match[1], reviewedAt);
       }
     }
   }
-  console.log(`[sitemap] Parsed ${slugs.length} allowlisted blog slugs`);
-  return slugs.map(slug => `/blog/${slug}`);
+  console.log(`[sitemap] Parsed ${entries.size} allowlisted blog slugs with source-reviewed dates`);
+  return [...entries].map(([slug, lastmod]) => ({ loc: `/blog/${slug}`, lastmod }));
 }
 
 // Blog posts — auto-parsed from src/data/blogPosts.ts
@@ -215,6 +267,37 @@ function forceJpeg(url) {
     return `${clean}${sep}format=jpg&width=1200`;
   }
   return url;
+}
+
+function isPositiveUsdMoney(value) {
+  return typeof value?.amount === 'string'
+    && Number.isFinite(Number(value.amount))
+    && Number(value.amount) > 0
+    && value.currencyCode === 'USD';
+}
+
+function getSitemapProductEvidenceFailures(product) {
+  const failures = [];
+  const variants = product?.variants?.edges?.map((edge) => edge?.node).filter(Boolean) || [];
+  const availableVariants = variants.filter((variant) => variant.availableForSale === true);
+  const imageUrl = product?.images?.edges?.[0]?.node?.url;
+
+  if (!String(product?.handle || '').trim()) failures.push('missing handle');
+  if (!String(product?.title || '').trim()) failures.push('missing title');
+  if (!product?.updatedAt || Number.isNaN(Date.parse(product.updatedAt))) failures.push('missing valid updatedAt');
+  if (product?.availableForSale !== true) failures.push('product is not available for sale');
+  if (!String(imageUrl || '').trim()) failures.push('missing product image');
+  if (!isPositiveUsdMoney(product?.priceRange?.minVariantPrice)) failures.push('missing positive USD product price');
+  if (product?.variants?.pageInfo?.hasNextPage) failures.push('variant set exceeds the complete 100-variant query');
+  if (availableVariants.length === 0) failures.push('no explicitly available variant');
+  if (availableVariants.some((variant) => !/^gid:\/\/shopify\/ProductVariant\/\d+$/.test(String(variant.id || '')))) {
+    failures.push('available variant is missing a numeric Shopify ID');
+  }
+  if (availableVariants.some((variant) => !isPositiveUsdMoney(variant.price))) {
+    failures.push('available variant is missing a positive USD price');
+  }
+
+  return failures;
 }
 
 // ─── Built-output validation ────────────────────────────────────────────────
@@ -259,6 +342,31 @@ function validatePrerenderedRoute(routePath, manifestRoutes, exactRedirectSource
       `(found ${robots.join(', ') || 'none'})`
     );
   }
+
+  if (routePath.startsWith('/product/')) {
+    const productSchemaCount = [...html.matchAll(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    )].reduce((count, match) => {
+      try {
+        const schema = JSON.parse(match[1]);
+        return count + (['Product', 'ProductGroup'].includes(schema?.['@type']) ? 1 : 0);
+      } catch {
+        return count;
+      }
+    }, 0);
+    const hasSubstantiveCopy = /<h1>[^<]{3,}<\/h1>/i.test(html)
+      && /<h2>Product Description<\/h2>\s*<p>[^<]{80,}<\/p>/i.test(html);
+    const hasPurchasableOffer = /data-product-primary-offer\b[^>]*data-price=["'][^"']+["'][^>]*data-currency=["']USD["'][^>]*data-availability=["']In Stock["']/i.test(html)
+      && /data-product-variant-cta=["']true["']/i.test(html);
+    const hasTrustLinks = /href=["']\/shipping["']/.test(html)
+      && /href=["']\/returns["']/.test(html);
+    if (productSchemaCount !== 1 || !hasSubstantiveCopy || !hasPurchasableOffer || !hasTrustLinks) {
+      throw new Error(
+        `Sitemap product must have one Product/ProductGroup schema, substantive initial copy, `
+        + `an explicitly available USD purchase control, and shipping/returns links: ${routePath}`,
+      );
+    }
+  }
 }
 
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
@@ -300,7 +408,10 @@ async function fetchAllProducts() {
   }
 
   console.log(`[sitemap] Fetched ${allProducts.length} total products from Shopify`);
-  return allProducts.filter((product) => !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle));
+  return allProducts.filter((product) => (
+    !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle)
+    && !RETIRED_PRODUCT_HANDLES.has(product.handle)
+  ));
 }
 
 // ─── Sitemap XML Generation ─────────────────────────────────────────────────
@@ -312,14 +423,16 @@ function generateSitemap(products) {
   for (const page of staticPages) {
     urls.push(`  <url>
     <loc>${SITE_URL}${page.loc}</loc>
+    <lastmod>${page.lastmod || STATIC_CONTENT_REVIEWED_AT}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>
   </url>`);
   }
   // Blog posts — uses the compact published blogPosts source
-  for (const blogPath of blogPosts) {
+  for (const blogPost of blogPosts) {
     urls.push(`  <url>
-    <loc>${SITE_URL}${blogPath}</loc>
+    <loc>${SITE_URL}${blogPost.loc}</loc>
+    <lastmod>${blogPost.lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>`);
@@ -329,6 +442,7 @@ function generateSitemap(products) {
   for (const product of products) {
     const loc = `${SITE_URL}/product/${escapeXml(product.handle)}`;
     const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : null;
+    if (!lastmod) throw new Error(`[sitemap] Product is missing Shopify updatedAt: ${product.handle}`);
     const imageUrl = product.images?.edges?.[0]?.node?.url;
     const imageTitle = sanitizeProductTitle(product.images?.edges?.[0]?.node?.altText || product.title);
 
@@ -344,7 +458,7 @@ function generateSitemap(products) {
 
     urls.push(`  <url>
     <loc>${loc}</loc>
-    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
+    <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>${imageTag}
   </url>`);
@@ -385,12 +499,18 @@ ${entries.join('\n')}
   return Object.fromEntries(Object.entries(groups).map(([name, entries]) => [name, urlset(entries)]));
 }
 
-function generateSitemapIndex() {
-  const generatedAt = new Date().toISOString().split('T')[0];
+function generateSitemapIndex(splitSitemaps) {
   const names = ['products', 'collections', 'guides', 'pages', 'images'];
+  const lastmodByName = Object.fromEntries(names.map((name) => {
+    const dates = [...splitSitemaps[name].matchAll(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/g)]
+      .map((match) => match[1])
+      .sort();
+    if (dates.length === 0) throw new Error(`[sitemap] Scoped sitemap ${name} has no meaningful lastmod values`);
+    return [name, dates.at(-1)];
+  }));
   return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${names.map((name) => `  <sitemap><loc>${SITE_URL}/sitemap-${name}.xml</loc><lastmod>${generatedAt}</lastmod></sitemap>`).join('\n')}
+${names.map((name) => `  <sitemap><loc>${SITE_URL}/sitemap-${name}.xml</loc><lastmod>${lastmodByName[name]}</lastmod></sitemap>`).join('\n')}
 </sitemapindex>`;
 }
 
@@ -458,27 +578,70 @@ async function main() {
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
 
+  const productEvidence = products.map((product) => ({
+    product,
+    failures: getSitemapProductEvidenceFailures(product),
+  }));
+  const sitemapEligibleProducts = productEvidence
+    .filter((entry) => entry.failures.length === 0)
+    .map((entry) => entry.product);
   const productByPath = new Map(
-    products.map((product) => [`/product/${product.handle}`, product])
+    sitemapEligibleProducts.map((product) => [`/product/${product.handle}`, product])
   );
+  if (productByPath.size !== sitemapEligibleProducts.length) {
+    throw new Error('Eligible Shopify sitemap products contain duplicate handles.');
+  }
+
+  const primaryImageOwners = new Map();
+  for (const product of sitemapEligibleProducts) {
+    const imageUrl = product.images.edges[0].node.url.split('?')[0];
+    const owners = primaryImageOwners.get(imageUrl) || [];
+    owners.push(product.handle);
+    primaryImageOwners.set(imageUrl, owners);
+  }
+  const duplicatePrimaryImages = [...primaryImageOwners.entries()]
+    .filter(([, handles]) => handles.length > 1);
+  if (duplicatePrimaryImages.length > 0) {
+    throw new Error(
+      `Eligible Shopify sitemap products reuse a primary image across handles: `
+      + duplicatePrimaryImages.slice(0, 10).map(([, handles]) => handles.join(' / ')).join(', '),
+    );
+  }
+
   const approvedProductPaths = approvedPaths.filter((routePath) => routePath.startsWith('/product/'));
   const missingApprovedProducts = approvedProductPaths.filter((routePath) => !productByPath.has(routePath));
+  const unapprovedEligibleProducts = [...productByPath.keys()]
+    .filter((routePath) => !approvedPathSet.has(routePath));
   if (missingApprovedProducts.length > 0) {
+    const evidenceByPath = new Map(productEvidence.map((entry) => [
+      `/product/${entry.product.handle}`,
+      entry.failures,
+    ]));
     throw new Error(
-      `Approved sitemap product(s) are missing from the current Shopify response: ` +
-      `${missingApprovedProducts.slice(0, 20).join(', ')}` +
+      `Approved sitemap product(s) are absent or no longer orderable/eligible in the current Shopify response: ` +
+      `${missingApprovedProducts.slice(0, 20).map((routePath) => {
+        const reasons = evidenceByPath.get(routePath);
+        return `${routePath}${reasons?.length ? ` (${reasons.join('; ')})` : ' (absent)'}`;
+      }).join(', ')}` +
       (missingApprovedProducts.length > 20 ? ` (+${missingApprovedProducts.length - 20} more)` : '')
     );
   }
+  if (unapprovedEligibleProducts.length > 0) {
+    throw new Error(
+      `Current orderable, evidence-complete Shopify product(s) are silently omitted from the approved sitemap/IndexNow inventory: `
+      + unapprovedEligibleProducts.slice(0, 20).join(', ')
+      + (unapprovedEligibleProducts.length > 20 ? ` (+${unapprovedEligibleProducts.length - 20} more)` : ''),
+    );
+  }
   const liveProducts = approvedProductPaths.map((routePath) => productByPath.get(routePath));
-  const excludedCandidateCount = products.length - liveProducts.length;
+  const excludedCandidateCount = productEvidence.filter((entry) => entry.failures.length > 0).length;
   console.log(
-    `[sitemap] Approved inventory retained ${liveProducts.length} products; ` +
-    `excluded ${excludedCandidateCount} Shopify candidate product(s) outside the approved/live sitemap scope.`
+    `[sitemap] Approved inventory exactly matches ${liveProducts.length} orderable, evidence-complete products; ` +
+    `excluded ${excludedCandidateCount} unavailable or failed-evidence Shopify candidate product(s).`
   );
   const sitemapPaths = [
     ...staticPages.map((page) => page.loc),
-    ...blogPosts,
+    ...blogPosts.map((post) => post.loc),
     ...liveProducts.map((product) => `/product/${product.handle}`),
   ];
   const sitemapPathSet = new Set(sitemapPaths);
@@ -511,7 +674,7 @@ async function main() {
 
   const combinedSitemap = generateSitemap(liveProducts);
   const splitSitemaps = splitSitemap(combinedSitemap);
-  const sitemap = generateSitemapIndex();
+  const sitemap = generateSitemapIndex(splitSitemaps);
 
   // Write to dist/ (Vercel serves static files from dist/)
   const distPath = path.join(distDir, 'sitemap.xml');
@@ -521,15 +684,6 @@ async function main() {
   }
   console.log(`[sitemap] Written sitemap index plus five scoped sitemaps to ${distDir} (${liveProducts.length} live products, ${staticPages.length + blogPosts.length} static/blog URLs)`);
 
-  // Also write to public/ for dev and fallback
-  const publicDir = path.resolve(__dirname, '../public');
-  if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
-  const publicPath = path.join(publicDir, 'sitemap.xml');
-  fs.writeFileSync(publicPath, sitemap, 'utf8');
-  for (const [name, xml] of Object.entries(splitSitemaps)) {
-    fs.writeFileSync(path.join(publicDir, `sitemap-${name}.xml`), xml, 'utf8');
-  }
-  console.log(`[sitemap] Also written to ${publicPath}`);
 }
 
 main().catch(err => {

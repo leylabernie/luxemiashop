@@ -57,7 +57,7 @@ const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
     name: 'Manthrakodi Sarees',
     eyebrow: 'Kerala Christian Bridal Sarees',
     title: 'Manthrakodi Sarees for Kerala Christian Weddings | LuxeMia',
-    description: 'Shop Manthrakodi sarees for Kerala Christian weddings. Browse bridal sarees with clearly stated fabric, border, blouse and product details for U.S. delivery.',
+    description: 'Shop Manthrakodi sarees for Kerala Christian weddings. Browse bridal sarees with clearly stated fabric, border, blouse and product details, with tracked shipping to seven supported countries.',
     canonical: 'https://luxemia.shop/collections/manthrakodi-sarees',
     intro: 'This collection shows current listings identified for Manthrakodi sarees associated with Kerala Christian wedding traditions. Review each product page for the exact fabric, border, blouse and availability details.',
     editorialTitle: 'Selecting a Manthrakodi Saree',

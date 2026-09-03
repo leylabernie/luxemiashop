@@ -10,7 +10,7 @@ const Press = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Press & Media — LuxeMia"
-        description="LuxeMia press and media inquiries. Contact us for press kit requests, brand assets, and partnership opportunities."
+        description="Contact LuxeMia about press, media, brand-asset and partnership requests. Asset availability and response timing vary by request."
         canonical="https://luxemia.shop/press"
       />
       <Header />
@@ -32,7 +32,7 @@ const Press = () => {
               transition={{ delay: 0.1 }}
               className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
             >
-              For press inquiries, partnerships, and media requests, please get in touch with our team.
+              For press inquiries, partnerships, and media requests, use the contact details below.
             </motion.p>
           </div>
         </section>
@@ -43,7 +43,7 @@ const Press = () => {
             <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 bg-card rounded-lg p-6 border border-border">
               <div>
                 <h2 className="font-display text-xl text-foreground mb-2">Press Inquiries</h2>
-                <p className="text-muted-foreground">For media inquiries, interviews, and press kit requests — including logos, brand guidelines, and product images</p>
+                <p className="text-muted-foreground">Email the request, intended use and deadline. Asset availability and response timing vary; sending a request does not confirm an interview, partnership or usage permission.</p>
               </div>
               <div className="flex gap-4">
                 <Button asChild variant="outline" className="gap-2">
@@ -61,13 +61,12 @@ const Press = () => {
         <section className="py-20">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-display text-2xl md:text-3xl text-foreground mb-4">
-              Brand Assets Available on Request
+              Ask About Brand Assets
             </h2>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              We provide official logos, brand guidelines, and high-resolution product images
-              for editorial and partnership use. Email us at{" "}
+              Email us at{" "}
               <a href="mailto:hello@luxemia.shop" className="text-primary underline">hello@luxemia.shop</a>{" "}
-              with your request and we'll send the assets directly.
+              with the outlet, intended use, asset requested and deadline. Any available assets and applicable usage terms must be confirmed in writing before use; materials are not promised until confirmed in writing.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild className="gap-2">

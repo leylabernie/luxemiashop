@@ -1,10 +1,11 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import SEOHead from "@/components/seo/SEOHead";
+import { trackPageNotFound } from "@/hooks/useAnalytics";
 
 /**
  * 404 page — designed to:
- *   1. Stay indexable-but-deindexed (noIndex) so Google doesn't index "404" pages
+ *   1. Stay non-indexable (noIndex) so search engines don't index 404 pages
  *   2. Provide real content (not a thin "Page Not Found" stub) so any 404 that
  *      leaks through doesn't trip Google's soft-404 heuristic
  *   3. Smart-suggest relevant destinations based on the broken URL's keywords
@@ -16,13 +17,7 @@ const NotFound = () => {
 
   useEffect(() => {
     // Log 404s to GA4 for monitoring broken-link sources
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('event', 'page_404', {
-        page_path: location.pathname,
-        page_referrer: document.referrer,
-        page_title: '404 — Page Not Found',
-      });
-    }
+    trackPageNotFound();
     // Also log to console for dev visibility
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);
@@ -60,9 +55,8 @@ const NotFound = () => {
           We can't find that page
         </p>
         <p className="text-muted-foreground mb-10 leading-relaxed">
-          The URL may have been renamed, moved, or retired. We've logged this error
-          and will fix any broken internal links. In the meantime, try one of these
-          popular destinations:
+          The URL may have been renamed, moved, or retired. Try one of these
+          current destinations:
         </p>
 
         {/* Primary CTAs */}

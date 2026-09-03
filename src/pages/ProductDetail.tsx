@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import Header from '@/components/layout/Header';
@@ -18,39 +18,16 @@ import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
 import StickyAddToBag from '@/components/product/StickyAddToBag';
-import {
-  applyCustomizableProductDetails,
-  getCustomizableProduct,
-  isMadeToOrderProduct,
-} from '@/lib/customizableProducts';
+import { isMadeToOrderProduct } from '@/lib/customizableProducts';
 import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
 import { isProductSizeOptionName } from '@/lib/productOptionNames';
 import { getProductShipsWithin } from '@/lib/shipBy';
-
-// Determine if a product type supports stitching options
-const STITCHABLE_PRODUCT_TYPES = [
-  'salwar kameez', 'salwar kameez suit', 'lehenga', 'lehenga choli', 'saree', 'sarees',
-  'anarkali', 'sharara suit', 'pakistani suit', 'palazzo suit', 'gharara suit',
-  'wedding suit',
-];
-
-const isStitchableProductType = (productType?: string): boolean => {
-  if (!productType) return false;
-  const lower = productType.toLowerCase();
-  return STITCHABLE_PRODUCT_TYPES.some(t => lower.includes(t));
-};
-
-const hasExplicitTailoringOffer = (productType?: string, tags?: string[]): boolean => {
-  if (!isStitchableProductType(productType)) return false;
-  const normalizedTags = tags ?? [];
-  const hasTailoringStatus = normalizedTags.some((tag) =>
-    /^(tailoring|stitching|availability):/i.test(tag.trim()),
-  );
-  const isReadyMadeOnly = normalizedTags.some((tag) =>
-    /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
-  );
-  return hasTailoringStatus && !isReadyMadeOnly;
-};
+import {
+  hasExplicitCustomColorEvidence,
+  hasExplicitCustomizationEvidence,
+  hasExplicitCustomMeasurementEvidence,
+  hasExplicitMenswearEvidence,
+} from '@/lib/productEvidence';
 
 const JEWELRY_PRODUCT_TYPES = [
   'jewel', 'necklace', 'choker', 'earring', 'bangle', 'bracelet',
@@ -63,6 +40,55 @@ const isJewelryProductType = (productType?: string): boolean => {
   return JEWELRY_PRODUCT_TYPES.some((type) => lower.includes(type));
 };
 
+interface RelevantProductGuide {
+  href: string;
+  label: string;
+  description: string;
+}
+
+const getRelevantProductGuide = (
+  productType?: string,
+  tags?: string[],
+  isCustomizable = false,
+): RelevantProductGuide => {
+  if (isCustomizable) {
+    return {
+      href: '/blog/ready-to-ship-versus-made-to-order',
+      label: 'Read the ready-to-ship versus made-to-order guide',
+      description: 'Compare production, dispatch, measurement, and event-date planning before ordering a verified customizable design.',
+    };
+  }
+
+  const normalizedType = productType?.toLowerCase() || '';
+  if (/\blehenga\b/.test(normalizedType)) {
+    return {
+      href: '/blog/saree-versus-lehenga-for-a-wedding-guest',
+      label: 'Read the saree versus lehenga guide',
+      description: 'Compare silhouettes, construction details, and listing-specific fit information for a wedding-guest purchase.',
+    };
+  }
+  if (/\b(?:saree|sari)\b/.test(normalizedType)) {
+    return {
+      href: '/blog/what-saree-fabrics-work-for-an-outdoor-summer-wedding',
+      label: 'Read the saree fabric planning guide',
+      description: 'Learn which fabric and construction facts to verify on an exact saree listing before an outdoor event.',
+    };
+  }
+  if (hasExplicitMenswearEvidence(productType, tags)) {
+    return {
+      href: '/blog/sherwani-versus-kurta-set',
+      label: 'Read the sherwani versus kurta set guide',
+      description: 'Compare formality, included pieces, fit, and movement using the facts stated on the current listing.',
+    };
+  }
+
+  return {
+    href: '/sizing-measurements-guide',
+    label: 'Read the sizing and measurement guide',
+    description: 'Use the measurement worksheet alongside the exact sizes and construction details supplied by this listing.',
+  };
+};
+
 const sanitizeSeoTitle = (value?: string | null): string => (value || '')
   .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
   .replace(/\s+/g, ' ')
@@ -70,6 +96,8 @@ const sanitizeSeoTitle = (value?: string | null): string => (value || '')
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
+  const [searchParams] = useSearchParams();
+  const requestedVariantId = searchParams.get('variant');
   const { product: shopifyProduct, isLoading: shopifyLoading, error: shopifyError } = useShopifyProduct(handle);
   const [selectedVariantImageUrl, setSelectedVariantImageUrl] = useState<string | null>(null);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
@@ -89,15 +117,22 @@ const ProductDetail = () => {
   // Vercel setup or webhook configuration required.
   const product = useMemo(
     () => shopifyProduct
-      ? applyCustomizableProductDetails({
+      ? {
           ...shopifyProduct,
           title: sanitizeProductTitle(shopifyProduct.title),
-        })
+        }
       : shopifyProduct,
     [shopifyProduct],
   );
-  const customizableProduct = getCustomizableProduct(product?.handle);
+  const hasCustomColorEvidence = hasExplicitCustomColorEvidence(product);
+  const hasCustomMeasurementEvidence = hasExplicitCustomMeasurementEvidence(product);
+  const hasCustomizationEvidence = hasExplicitCustomizationEvidence(product);
   const madeToOrderProduct = isMadeToOrderProduct(product?.handle, product?.tags);
+  const relevantProductGuide = getRelevantProductGuide(
+    product?.productType,
+    product?.tags,
+    hasCustomizationEvidence,
+  );
   const productShipsWithinDays = getProductShipsWithin(product);
   const stylistConversationHref = product
     ? `https://wa.me/12153419990?text=${encodeURIComponent(
@@ -105,7 +140,11 @@ const ProductDetail = () => {
       )}`
     : 'https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20need%20help%20with%20a%20product%20before%20ordering.';
   const isLoading = shopifyLoading;
-  const error = shopifyError || (!shopifyLoading && !shopifyProduct ? 'Product not found' : null);
+  // The data hook reserves this exact error for a confirmed catalog miss.
+  // Every other empty, settled result remains an indexable retry state: a
+  // transient Storefront failure must not tell shoppers or crawlers that the
+  // product was removed.
+  const isProductNotFound = shopifyError === 'Product not found';
 
   // Track recently viewed and analytics
   useEffect(() => {
@@ -121,7 +160,17 @@ const ProductDetail = () => {
       
       // Track the actual default purchasable variant. The parent product ID is
       // retained separately for product-group reporting across color/size options.
-      const defaultVariant = product.variants.edges.find((edge) => edge.node.availableForSale)
+      const requestedVariant = requestedVariantId
+        ? product.variants.edges.find((edge) => (
+            edge.node.id === requestedVariantId
+            || edge.node.id.endsWith(`/${requestedVariantId}`)
+          ))
+        : undefined;
+      const defaultVariant = (
+        product.availableForSale === true && requestedVariant?.node.availableForSale === true
+          ? requestedVariant
+          : product.variants.edges.find((edge) => edge.node.availableForSale === true)
+      )
         || product.variants.edges[0];
       trackViewItem({
         id: defaultVariant?.node.id || product.id,
@@ -134,7 +183,7 @@ const ProductDetail = () => {
         occasion: product.metadata?.occasion?.join(', ') || undefined,
       });
     }
-  }, [product, addToRecentlyViewed]);
+  }, [product, addToRecentlyViewed, requestedVariantId]);
 
   // Get category URL from product type
   const getCategoryUrl = (productType?: string) => {
@@ -154,11 +203,30 @@ const ProductDetail = () => {
   const categoryName = madeToOrderProduct
     ? 'Made-to-Order Indian Outfits'
     : product?.productType || 'Collections';
-  const productIsAvailable = product
-    ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
-    : false;
-  const schemaVariant = product?.variants.edges.find((variant) => variant.node.availableForSale)?.node
-    || product?.variants.edges[0]?.node;
+  const requestedVariant = requestedVariantId && product
+    ? product.variants.edges.find((variant) => (
+        variant.node.id === requestedVariantId
+        || variant.node.id.endsWith(`/${requestedVariantId}`)
+      ))?.node
+    : undefined;
+  const firstAvailableVariant = product?.variants.edges.find(
+    (variant) => variant.node.availableForSale === true,
+  )?.node;
+  const schemaVariant = (
+    product?.availableForSale === true && requestedVariant?.availableForSale === true
+      ? requestedVariant
+      : firstAvailableVariant
+  ) || product?.variants.edges[0]?.node;
+  const productIsAvailable = Boolean(
+    product?.availableForSale === true
+    && schemaVariant?.availableForSale === true,
+  );
+  const primaryMoney = schemaVariant?.price || product?.priceRange.minVariantPrice;
+  const primaryImage = schemaVariant?.image?.url || product?.images.edges[0]?.node.url;
+  const schemaVariantId = schemaVariant?.id.split('/').pop() || '';
+  const schemaOfferUrl = product && /^\d+$/.test(schemaVariantId)
+    ? `https://luxemia.shop/product/${product.handle}?variant=${encodeURIComponent(schemaVariantId)}`
+    : undefined;
 
   // Enrich thin descriptions only with attributes supported by the listing.
   // Some legacy jewelry records contain garment option values (for example,
@@ -185,7 +253,7 @@ const ProductDetail = () => {
   const productGoogleCategory = productMetadata?.googleProductCategory || getGoogleProductCategory(product?.productType, product?.title);
   const productSchemaCategory = productShopifyCategory === 'Saris'
     ? 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing > Saris & Lehengas > Saris'
-    : product?.productType || 'Ethnic Wear';
+    : product?.productType || undefined;
   const productAdditionalProperties = [
     { name: 'Fabric', value: productMaterial },
     { name: 'Blouse Fabric', value: productBlouseFabric },
@@ -196,9 +264,8 @@ const ProductDetail = () => {
     { name: 'Product Style', value: productMetadata?.productStyle || undefined },
     { name: 'Shopify Category', value: productShopifyCategory },
     { name: 'Google Product Category', value: productGoogleCategory },
-    { name: 'Gender', value: productMetadata?.gender || (isJewelryProduct ? undefined : 'Female') },
-    { name: 'Condition', value: productMetadata?.condition || 'New' },
-    { name: 'Market', value: 'United States' },
+    { name: 'Gender', value: productMetadata?.gender || undefined },
+    { name: 'Condition', value: productMetadata?.condition || undefined },
   ].filter((entry): entry is { name: string; value: string } => Boolean(entry.value));
 
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
@@ -237,8 +304,8 @@ const ProductDetail = () => {
   const productSizeValues = product?.options
     ?.find((option) => isProductSizeOptionName(option.name))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
-  const sizeAnswer = madeToOrderProduct
-    ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+  const sizeAnswer = hasCustomMeasurementEvidence
+    ? 'This listing exposes a Custom size or measurement option. Select only an available listing option, then contact LuxeMia to confirm the required measurement handoff before ordering.'
     : productSizeValues.length > 0
     ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
     : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
@@ -246,7 +313,7 @@ const ProductDetail = () => {
   const productFaqs = product ? [
     ...(isJewelryProduct ? [{
       question: `What is included with the ${product.title}?`,
-      answer: 'The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.'
+      answer: 'Only the included pieces, finish, colors, and dimensions expressly stated in Product Details are supplied as listing facts. Contact LuxeMia before ordering if the set contents are unclear.'
     }] : [{
       question: `What sizes are available for the ${product.title}?`,
       answer: sizeAnswer
@@ -257,21 +324,23 @@ const ProductDetail = () => {
     }] : []),
     ...(productOccasions.length > 0 ? [{
       question: `When can I wear the ${product.title}?`,
-      answer: `This saree is listed for ${productOccasions.join(' and ')}.`,
+      answer: `This product is listed for ${productOccasions.join(' and ')}.`,
     }] : []),
     {
       question: `Where does LuxeMia ship the ${product.title}?`,
-      answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.',
+      answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. When tracking is issued, carrier scans can appear after label creation.',
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
       answer: madeToOrderProduct
-        ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
-        : 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.'
+        ? 'This listing is classified as made to order. Production and dispatch timing are product-specific and must be confirmed before ordering for a fixed event date. Carrier transit begins after dispatch.'
+        : productShipsWithinDays
+        ? `This listing supplies a processing estimate of within ${productShipsWithinDays} ${productShipsWithinDays === 1 ? 'day' : 'days'}. Carrier transit and delivery timing are separate.`
+        : 'Processing and dispatch timing depend on this item and its selected options. Confirm timing before ordering for a fixed event date; carrier transit begins after dispatch.'
     },
-    ...(customizableProduct ? [{
+    ...(hasCustomColorEvidence ? [{
       question: `Can I request another color for the ${product.title}?`,
-      answer: 'Yes. A custom color is available for this verified design. Contact LuxeMia with the product link and requested color so fabric availability can be confirmed before ordering. Other design changes are not promised unless LuxeMia confirms them in writing.',
+      answer: 'This listing exposes an explicit custom-color option. Use only that listed option and contact LuxeMia with the product link and requested color for confirmation before ordering. Other design changes are not promised.',
     }] : []),
     {
       question: `Can I return the ${product.title}?`,
@@ -279,9 +348,7 @@ const ProductDetail = () => {
     },
     {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
-      answer: isJewelryProduct
-        ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe it gently after wear and store pieces separately in a soft pouch.'
-        : productCare || 'Follow any product-specific care instructions in Product Details. Dry cleaning is recommended for embroidered or embellished ethnic wear; avoid ironing directly over decoration.'
+      answer: productCare || 'Product-specific care instructions were not supplied with this listing. Contact LuxeMia before cleaning, pressing, washing, or applying products to the item.'
     }
   ] : [];
 
@@ -292,8 +359,7 @@ const ProductDetail = () => {
     const schemaImages = product.images.edges
       .map((edge) => edge.node.url)
       .filter(Boolean);
-    const material = productMaterial
-      || (/\breal\s+chinon\b/i.test(`${product.title} ${product.description}`) ? 'Real Chinon' : undefined);
+    const material = productMaterial;
     const groupId = product.handle.length <= 50
       ? product.handle
       : `p${product.id.split('/').pop() || product.handle}`;
@@ -316,14 +382,13 @@ const ProductDetail = () => {
         image: variant.image?.url ? [variant.image.url] : schemaImages,
         sku: variant.sku,
         gtin: variant.barcode,
-        mpn: normalizeBrandName(product.vendor) === 'LuxeMia' && variant.sku && !variant.barcode
-          ? variant.sku
-          : undefined,
         color,
         size,
         price: variant.price.amount,
         currency: variant.price.currencyCode,
-        availability: variant.availableForSale ? 'InStock' as const : 'OutOfStock' as const,
+        availability: product.availableForSale === true && variant.availableForSale === true
+          ? 'InStock' as const
+          : 'OutOfStock' as const,
       };
     });
 
@@ -337,6 +402,7 @@ const ProductDetail = () => {
       googleProductCategory: productGoogleCategory,
       material,
       additionalProperties: productAdditionalProperties,
+      condition: productMetadata?.condition,
       productGroupId: groupId,
       shipsWithinDays: productShipsWithinDays,
       variesBy: [
@@ -351,6 +417,7 @@ const ProductDetail = () => {
     productAdditionalProperties,
     productGoogleCategory,
     productMaterial,
+    productMetadata?.condition,
     productSchemaCategory,
     productShipsWithinDays,
   ]);
@@ -372,20 +439,21 @@ const ProductDetail = () => {
           })()}
           canonical={`https://luxemia.shop/product/${product.handle}`}
           type="product"
-          image={product.images.edges[0]?.node.url}
+          image={primaryImage}
           product={{
             name: product.title,
-            price: product.priceRange.minVariantPrice.amount,
-            currency: product.priceRange.minVariantPrice.currencyCode,
-            image: product.images.edges[0]?.node.url || '',
+            offerUrl: schemaOfferUrl,
+            price: primaryMoney?.amount || '',
+            currency: primaryMoney?.currencyCode || '',
+            image: primaryImage || '',
             description: enrichedDescription || product.description || '',
             availability: productIsAvailable ? 'InStock' : 'OutOfStock',
+            condition: productMetadata?.condition || undefined,
             sku: schemaVariant?.sku || '',
             gtin: schemaVariant?.barcode || undefined,
-            mpn: normalizeBrandName(product.vendor) === 'LuxeMia' && schemaVariant?.sku && !schemaVariant?.barcode
-              ? schemaVariant.sku
+            originalPrice: schemaVariant?.compareAtPrice?.currencyCode === primaryMoney?.currencyCode
+              ? schemaVariant?.compareAtPrice?.amount
               : undefined,
-            originalPrice: product.compareAtPriceRange?.maxVariantPrice?.amount,
             category: productSchemaCategory,
             brand: normalizeBrandName(product.vendor),
             color: productColor,
@@ -403,11 +471,17 @@ const ProductDetail = () => {
           ]}
           faqs={productFaqs}
         />
-      ) : !isLoading ? (
+      ) : isProductNotFound ? (
         <SEOHead
           title="Product Not Found | LuxeMia"
           description="This product could not be found."
           noIndex={true}
+        />
+      ) : !isLoading ? (
+        <SEOHead
+          title="Product page temporarily unavailable | LuxeMia"
+          description="This product page could not be loaded right now. Please try again."
+          canonical={handle ? `https://luxemia.shop/product/${handle}` : undefined}
         />
       ) : null}
 
@@ -426,7 +500,7 @@ const ProductDetail = () => {
 
           {isLoading ? (
             <ProductSkeleton />
-          ) : error || !product ? (
+          ) : isProductNotFound ? (
             <div className="text-center py-20">
               <h2 className="text-2xl font-serif mb-4">Product Not Found</h2>
               <p className="text-muted-foreground mb-6">
@@ -438,6 +512,27 @@ const ProductDetail = () => {
                   Browse Lehengas
                 </Link>
               </Button>
+            </div>
+          ) : !product ? (
+            <div
+              className="text-center py-20"
+              role="alert"
+              aria-labelledby="product-load-error-heading"
+            >
+              <h2 id="product-load-error-heading" className="text-2xl font-serif mb-4">
+                We couldn't load this product
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                The product has not been confirmed as removed. Check your connection and try loading this page again.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Button type="button" onClick={() => window.location.reload()}>
+                  Try Again
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/collections">Browse All Collections</Link>
+                </Button>
+              </div>
             </div>
           ) : (
             <motion.div
@@ -457,7 +552,7 @@ const ProductDetail = () => {
                 
                 {/* Product Info */}
                 <ProductInfo
-                  key={product.id}
+                  key={`${product.id}:${requestedVariantId || 'default'}`}
                   product={{
                     ...product,
                     title: sanitizeProductTitle(product.title),
@@ -472,10 +567,28 @@ const ProductDetail = () => {
                 <ProductTabs 
                   description={enrichedDescription || product.description}
                   productType={product.productType}
-                  isStitchable={!madeToOrderProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
                 />
               </div>
+
+              <aside
+                className="mb-16 rounded-lg border border-border bg-secondary/20 p-6"
+                aria-labelledby="relevant-product-guide-heading"
+                data-hydrated-product-guide-link
+              >
+                <h2 id="relevant-product-guide-heading" className="font-serif text-2xl">
+                  Buying guidance for this product
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {relevantProductGuide.description}
+                </p>
+                <Link
+                  to={relevantProductGuide.href}
+                  className="mt-4 inline-flex font-medium text-primary underline underline-offset-4"
+                >
+                  {relevantProductGuide.label}
+                </Link>
+              </aside>
 
               {/* Visible FAQs — kept in sync with FAQ structured data above. */}
               {productFaqs.length > 0 && (

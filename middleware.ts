@@ -1,11 +1,11 @@
 import { rewrite, next } from '@vercel/functions';
 import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
-import { generateProductHtml, return404 } from './src/middleware/htmlGenerator.js';
+import { return404 } from './src/middleware/htmlGenerator.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
-import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
 import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
+import { isHiddenBillingProductHandle } from './src/lib/serviceAddOns.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -20,6 +20,42 @@ import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
 // Includes all static pages and blog posts. Product routes are handled
 // dynamically by the SSR path below, so they are NOT in this Set.
 // See src/lib/autoRoutes.ts for the full list.
+
+// Exact public files that Vercel must serve without the SPA router. Keep this
+// allowlist narrow: a blanket `pathname.includes('.')` bypass turns unknown
+// dotted URLs (for example, stale .html or .php links) into soft 404s when the
+// platform's SPA fallback serves index.html.
+const STATIC_PASSTHROUGH_PATHS = new Set([
+  '/robots.txt',
+  '/sitemap.xml',
+  '/sitemap-products.xml',
+  '/sitemap-collections.xml',
+  '/sitemap-guides.xml',
+  '/sitemap-pages.xml',
+  '/sitemap-images.xml',
+  '/merchant-feed.xml',
+  '/google-shopping-feed.xml',
+  '/openai-search-products.jsonl.gz',
+  '/llms.txt',
+  '/llms-full.txt',
+  '/indexnow-manifest.json',
+  '/8e3d7c9415b24a5f9c81e62d1a0374bf.txt',
+  '/3c4a52b9-542f-4bfe-a61b-9afb42f4312c.txt',
+  '/e6b81aa0325a277cfb7c764e603dd9cd.txt',
+  '/google4e3f332d00afc8ba.html',
+]);
+
+const STATIC_PASSTHROUGH_PREFIXES = [
+  '/_prerender',
+  '/assets',
+  '/api',
+  '/catalogs',
+  '/images',
+];
+
+function isPathAtOrBelow(pathname: string, prefix: string): boolean {
+  return pathname === prefix || pathname.startsWith(`${prefix}/`);
+}
 
 // Legacy regional pages that must 301 redirect to /nri
 const LEGACY_REGIONAL_REDIRECT_ROUTES = new Set([
@@ -88,11 +124,17 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
 // Format: full pathname starting with '/'.
 // Example: '/collections/some-old-collection', '/some-old-landing-page'
 const GONE_ROUTES: Set<string> = new Set<string>([
+  // Retired editorial URL with no one-to-one replacement. A broad category
+  // redirect would be a soft 404, so preserve an explicit 410 response.
+  '/blog/jj-valaya-royal-couture-house-of-valaya',
   // ── Manually maintained entries (add retired URLs from GSC export here) ──
   // Product was deleted from Shopify but still gets GSC impressions (8 imp, 1 click
   // at pos 6.38 as of 2026-07-11). 410 tells Google to drop it from the index
   // immediately, vs. 404 which Google retries for weeks.
   '/product/art-silk-pista-green-groom-wear-thread-work-readymade-sherwani',
+  // Verified retired listing with no source-backed one-to-one replacement.
+  // A broad menswear redirect would be a soft 404 and misstate equivalence.
+  '/product/ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809',
   // Search Console redirect examples checked on 22 Aug 2026. Shopify searches
   // found no exact active replacement, so these retired product URLs must not
   // redirect shoppers or crawlers to unrelated catalog items.
@@ -174,6 +216,25 @@ function returnShopifyUnavailable(): Response {
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'no-store',
       'Retry-After': '60',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
+function returnProductDeploymentPending(): Response {
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
+    `<meta name="viewport" content="width=device-width,initial-scale=1">` +
+    `<meta name="robots" content="noindex,nofollow">` +
+    `<title>Product page update in progress — LuxeMia</title></head><body>` +
+    `<h1>This product page is being prepared.</h1>` +
+    `<p>Please try again after the next storefront deployment.</p></body></html>`;
+  return new Response(html, {
+    status: 503,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Retry-After': '300',
+      'X-Robots-Tag': 'noindex, nofollow',
     },
   });
 }
@@ -231,9 +292,11 @@ function hasIndexationNoiseParams(searchParams: URLSearchParams): boolean {
 }
 
 function getCleanFacetCanonicalPath(url: URL): string {
+  const parameterNames = [...url.searchParams.keys()];
+  const hasOnlySubcategory = parameterNames.length === 1 && parameterNames[0].toLowerCase() === 'sub';
   const subcategory = url.searchParams.get('sub');
   const category = url.pathname.match(/^\/(lehengas|sarees|suits|menswear|jewelry)$/)?.[1];
-  return category && subcategory
+  return hasOnlySubcategory && category && subcategory
     ? getDedicatedSubcategoryPath(category, subcategory) || url.pathname
     : url.pathname;
 }
@@ -291,6 +354,49 @@ function withCanonicalQuerySignals(request: Request, response: Response): Respon
   });
 }
 
+/**
+ * Merchant links identify a concrete Shopify variant with `?variant=`. The
+ * build emits one complete ProductGroup plus exact purchase links for every
+ * current variant, while this response transform makes the requested offer
+ * the primary visible price before React runs. A missing or unavailable ID has
+ * no purchase-link evidence and therefore cannot be promoted into the HTML.
+ */
+async function getVariantAwareProductResponse(
+  request: Request,
+  handle: string,
+  requestedVariantId: string,
+): Promise<Response | null> {
+  if (!/^\d+$/.test(requestedVariantId)) return null;
+
+  const prerenderUrl = new URL(`/_prerender/product/${handle}.html`, request.url);
+  prerenderUrl.search = '';
+  const prerendered = await fetch(prerenderUrl);
+  if (!prerendered.ok) return null;
+
+  const html = await prerendered.text();
+  const purchaseLinkPattern = new RegExp(
+    `<a data-product-variant-cta="true" data-variant-id="${requestedVariantId}" data-price="([0-9]+(?:\\.[0-9]+)?)" data-currency="([A-Z]{3})" href="[^"]+">`,
+  );
+  const offer = html.match(purchaseLinkPattern);
+  if (!offer || !Number.isFinite(Number(offer[1])) || Number(offer[1]) <= 0) return null;
+
+  const primaryOfferPattern = /<p data-product-primary-offer\b[^>]*>[\s\S]*?<\/p>/;
+  if (!primaryOfferPattern.test(html)) return null;
+
+  const price = Number(offer[1]).toFixed(2);
+  const currency = offer[2];
+  const variantHtml = html.replace(
+    primaryOfferPattern,
+    `<p data-product-primary-offer data-variant-id="${requestedVariantId}" data-price="${offer[1]}" data-currency="${currency}" data-availability="In Stock">Price: <strong>${currency} ${price}</strong> | In Stock</p>`,
+  );
+  const headers = new Headers(prerendered.headers);
+  headers.delete('Content-Encoding');
+  headers.delete('Content-Length');
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+  headers.set('Cache-Control', 'public, max-age=0, s-maxage=300');
+  return new Response(variantHtml, { status: 200, headers });
+}
+
 // ─── Main Middleware ─────────────────────────────────────────────────────────
 
 export default async function middleware(request: Request) {
@@ -341,14 +447,11 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(new URL('/new-arrivals', request.url).toString(), 301);
   }
 
-  // Static assets and machine-readable files (including merchant-feed.xml) are
-  // served directly by Vercel. The feed is generated and validated at build time.
+  // Static assets and reviewed machine-readable files are served directly by
+  // Vercel. Unknown dotted paths continue through routing and become real 404s.
   if (
-    pathname.startsWith('/_prerender') ||
-    pathname.startsWith('/assets') ||
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/catalogs') ||
-    pathname.includes('.')
+    STATIC_PASSTHROUGH_PATHS.has(pathname)
+    || STATIC_PASSTHROUGH_PREFIXES.some((prefix) => isPathAtOrBelow(pathname, prefix))
   ) {
     return next();
   }
@@ -446,7 +549,6 @@ async function routeRequest(request: Request): Promise<Response> {
     '/collections/kurta-pajama-vest': '/menswear',
     '/collections/manthrakodi-sarees': '/sarees',
     '/collections/saree-gowns': '/sarees',
-    '/collections/reception-outfits': '/collections',
     '/collections/festive-wear': '/collections',
     '/collections/sarees': '/sarees',
     '/collections/salwar-kameez': '/suits',
@@ -471,44 +573,37 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(new URL(COLLECTION_301_REDIRECTS[pathname], request.url).toString(), 301);
   }
 
-  // Product pages use one response path for crawlers and shoppers. Existing
-  // prerenders are fastest; products added since the latest deployment fall
-  // back to live Shopify rendering. Missing handles always return a true 404.
+  // Product pages use one response path for crawlers and shoppers. A live
+  // Shopify product that is newer than this deployment must fail closed until
+  // the next build creates the same fully interactive, purchasable prerender
+  // used by the rest of the catalog. Never publish a standalone product page
+  // that claims availability but cannot add the selected variant to checkout.
   if (pathname.startsWith('/product/')) {
     const handle = pathname.replace('/product/', '');
     if (!handle || handle.includes('/')) {
       return return404(request);
     }
+    // Internal charge/support records are never public merchandise. Check
+    // before the prerender manifest so a stale build cannot expose one.
+    if (isHiddenBillingProductHandle(handle)) {
+      return return404(request);
+    }
     if (PRERENDERED_PRODUCT_HANDLES.has(handle)) {
+      const requestedVariantId = url.searchParams.get('variant');
+      if (requestedVariantId) {
+        const variantResponse = await getVariantAwareProductResponse(
+          request,
+          handle,
+          requestedVariantId,
+        );
+        if (variantResponse) return variantResponse;
+      }
       return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
     }
 
     const productLookup = await fetchProductByHandle(handle);
     if (productLookup.status === 'found') {
-      const canonicalUrl = `https://luxemia.shop/product/${handle}`;
-      return new Response(generateProductHtml(productLookup.product, canonicalUrl), {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
-          'X-Robots-Tag': 'index, follow',
-        },
-      });
-    }
-
-    // Locally catalogued jewelry remains serviceable without Shopify. Every
-    // other upstream failure must stay transient instead of becoming a 404.
-    const jewelryProduct = getJewelryProductByHandle(handle);
-    if (jewelryProduct) {
-      const canonicalUrl = `https://luxemia.shop/product/${handle}`;
-      return new Response(generateJewelryProductHtml(jewelryProduct, canonicalUrl), {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
-          'X-Robots-Tag': 'index, follow',
-        },
-      });
+      return returnProductDeploymentPending();
     }
 
     if (productLookup.status === 'unavailable') {
@@ -571,6 +666,21 @@ export const config = {
   matcher: [
     '/robots.txt',
     '/sitemap.xml',
-    '/((?!_prerender|assets|api|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)).*)',
+    '/sitemap-products.xml',
+    '/sitemap-collections.xml',
+    '/sitemap-guides.xml',
+    '/sitemap-pages.xml',
+    '/sitemap-images.xml',
+    '/merchant-feed.xml',
+    '/google-shopping-feed.xml',
+    '/openai-search-products.jsonl.gz',
+    '/llms.txt',
+    '/llms-full.txt',
+    '/indexnow-manifest.json',
+    '/8e3d7c9415b24a5f9c81e62d1a0374bf.txt',
+    '/3c4a52b9-542f-4bfe-a61b-9afb42f4312c.txt',
+    '/e6b81aa0325a277cfb7c764e603dd9cd.txt',
+    '/google4e3f332d00afc8ba.html',
+    '/((?!_prerender(?:/|$)|assets(?:/|$)|api(?:/|$)|images(?:/|$)|catalogs(?:/|$)|favicon\\.ico$|og-image\\.jpg$|robots\\.txt$|sitemap\\.xml$|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt$|google4e3f332d00afc8ba\\.html$|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|txt|xml|tsv)$).*)',
   ],
 };

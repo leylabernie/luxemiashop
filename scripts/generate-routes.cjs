@@ -1,27 +1,22 @@
 #!/usr/bin/env node
 /**
- * Auto-generate the prerendered routes list for LuxeMia.
+ * Validate or explicitly regenerate the committed prerender route manifests.
  *
  * This script:
- *   1. Fetches all product handles from the Shopify Storefront API (with pagination)
- *   2. Reads blog post slugs from src/data/blogPosts.ts (via regex parsing)
- *   3. Combines these with a static list of page routes
- *   4. Writes TWO output files:
+ *   1. Reads published blog post slugs from the authored source files
+ *   2. Combines these with the reviewed static page routes
+ *   3. Checks or explicitly writes TWO committed source files:
  *      a. src/lib/autoRoutes.ts  — TypeScript module exporting PRERENDERED_ROUTES as a Set
- *      b. scripts/routes.json    — JSON array of routes for use by prerender.js
+ *      b. scripts/routes.json    — JSON array used by the built-coverage guard
  *
- * Run: node scripts/generate-routes.cjs
- * Automatically run during: npm run build  (after vite build, before prerender)
+ * Release check: node scripts/generate-routes.cjs --check
+ * Maintainer update: node scripts/generate-routes.cjs --write
  */
 
 const fs = require('fs');
 const path = require('path');
 
 // ─── Config ─────────────────────────────────────────────────────────────────
-
-const SHOPIFY_STOREFRONT_URL =
-  'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
-const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const AUTO_ROUTES_TS = path.join(PROJECT_ROOT, 'src/lib/autoRoutes.ts');
@@ -55,8 +50,15 @@ const STATIC_ROUTES = [
   '/collections/sharara-suits',
   '/collections/gharara-suits',
   '/collections/anarkali-suits',
+  '/collections/palazzo-suits',
+  '/collections/sherwani-for-groom',
   '/collections/bridal-lehengas',
   '/collections/wedding-sarees',
+  '/collections/banarasi-sarees',
+  '/collections/wedding-guest-lehengas',
+  '/collections/wedding-guest-kurta-sets',
+  '/collections/diwali-womenswear',
+  '/collections/diwali-menswear',
   '/collections/designer-sarees',
   '/collections/party-wear-lehengas',
   '/about',
@@ -76,6 +78,9 @@ const STATIC_ROUTES = [
   '/shipping/canada',
   '/shipping/united-kingdom',
   '/shipping/australia',
+  '/shipping/new-zealand',
+  '/shipping/south-africa',
+  '/shipping/mauritius',
   '/ready-to-ship',
   '/pages/shipping-customs',
   '/returns',
@@ -101,6 +106,11 @@ const STATIC_ROUTES = [
   '/collections/eid-outfits',
   '/collections/navratri-outfits',
   '/collections/haldi-outfits',
+  '/collections/navratri-chaniya-choli',
+  '/collections/garba-outfits',
+  '/collections/groomsmen-outfits',
+  '/collections/sangeet-outfits',
+  '/collections/reception-outfits',
   // Blog topic hubs — each route must contain at least one published article
   '/blog/indian-wedding-guest-attire',
   '/blog/indian-textiles-and-embroidery',
@@ -113,93 +123,6 @@ const STATIC_ROUTES = [
 ];
 
 // ─── Shopify GraphQL ────────────────────────────────────────────────────────
-
-const GET_ALL_PRODUCT_HANDLES_QUERY = `
-  query GetAllProductHandles($first: Int!, $after: String) {
-    products(first: $first, after: $after) {
-      pageInfo { hasNextPage endCursor }
-      edges {
-        node { handle }
-      }
-    }
-  }
-`;
-
-/**
- * Fetch all product handles from Shopify Storefront API with pagination.
- * Returns an array of handle strings (e.g. ["velvet-bridal-lehenga", "silk-saree-1"]).
- * Throws on any incomplete response so a partial source cannot be published.
- */
-async function fetchAllProductHandles() {
-  const handles = [];
-  let cursor = null;
-  let hasNextPage = true;
-  const MAX_PAGES = 50; // safety limit — 250 * 50 = 12,500 products
-
-  let page = 0;
-  try {
-    while (hasNextPage && page < MAX_PAGES) {
-      page++;
-      console.log(
-        `[generate-routes] Fetching product handles page ${page} (cursor: ${cursor || 'start'})...`
-      );
-
-      const resp = await fetch(SHOPIFY_STOREFRONT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
-        },
-        body: JSON.stringify({
-          query: GET_ALL_PRODUCT_HANDLES_QUERY,
-          variables: { first: 250, after: cursor },
-        }),
-      });
-
-      if (!resp.ok) {
-        throw new Error(`Shopify API returned ${resp.status} ${resp.statusText}`);
-      }
-
-      const json = await resp.json();
-
-      if (Array.isArray(json.errors) && json.errors.length > 0) {
-        throw new Error(`Shopify GraphQL errors: ${JSON.stringify(json.errors)}`);
-      }
-
-      const data = json?.data?.products;
-      if (!data || !Array.isArray(data.edges) || typeof data.pageInfo?.hasNextPage !== 'boolean') {
-        throw new Error('Shopify returned an unexpected products response shape');
-      }
-
-      for (const edge of data.edges) {
-        if (edge.node?.handle) {
-          handles.push(edge.node.handle);
-        }
-      }
-
-      hasNextPage = data.pageInfo.hasNextPage;
-      const nextCursor = data.pageInfo.endCursor ?? null;
-      if (hasNextPage && (!nextCursor || nextCursor === cursor)) {
-        throw new Error('Shopify pagination did not provide a new end cursor');
-      }
-      cursor = nextCursor;
-    }
-  } catch (err) {
-    throw new Error(`Shopify product source failed on page ${page}: ${err.message}`);
-  }
-
-  if (hasNextPage) {
-    throw new Error(
-      `Shopify product source exceeded the ${MAX_PAGES}-page safety limit; refusing partial output`
-    );
-  }
-  if (handles.length === 0) {
-    throw new Error('Shopify product source returned zero handles; refusing partial output');
-  }
-
-  console.log(`[generate-routes] Fetched ${handles.length} product handles from Shopify`);
-  return handles;
-}
 
 // ─── Blog Slug Parsing ──────────────────────────────────────────────────────
 
@@ -290,7 +213,8 @@ function generateAutoRoutesTs(routes) {
   const routeLines = routes.map((r) => `  '${r}',`).join('\n');
 
   return `// AUTO-GENERATED by scripts/generate-routes.cjs — do not edit manually.
-// Regenerated on each build via: node scripts/generate-routes.cjs
+// Regenerate before commit with: node scripts/generate-routes.cjs --write
+// Release builds verify this committed source with: node scripts/generate-routes.cjs --check
 
 export const PRERENDERED_ROUTES: Set<string> = new Set([
 ${routeLines}
@@ -299,9 +223,10 @@ ${routeLines}
 }
 
 /**
- * Write both output files.
+ * Check both committed files during release, or rewrite them only when a
+ * maintainer explicitly requests --write before commit.
  */
-function writeOutputFiles(routes) {
+function syncOutputFiles(routes, write) {
   // Ensure parent directories exist
   const autoRoutesDir = path.dirname(AUTO_ROUTES_TS);
   const routesJsonDir = path.dirname(ROUTES_JSON);
@@ -313,38 +238,46 @@ function writeOutputFiles(routes) {
     fs.mkdirSync(routesJsonDir, { recursive: true });
   }
 
-  // Write src/lib/autoRoutes.ts
   const tsContent = generateAutoRoutesTs(routes);
-  fs.writeFileSync(AUTO_ROUTES_TS, tsContent, 'utf8');
-  console.log(
-    `[generate-routes] Written ${AUTO_ROUTES_TS} (${routes.length} routes)`
-  );
-
-  // Write scripts/routes.json
   const jsonContent = JSON.stringify(routes, null, 2) + '\n';
-  fs.writeFileSync(ROUTES_JSON, jsonContent, 'utf8');
-  console.log(
-    `[generate-routes] Written ${ROUTES_JSON} (${routes.length} routes)`
-  );
+
+  if (write) {
+    fs.writeFileSync(AUTO_ROUTES_TS, tsContent, 'utf8');
+    fs.writeFileSync(ROUTES_JSON, jsonContent, 'utf8');
+    console.log(`[generate-routes] Wrote both committed route manifests (${routes.length} routes)`);
+    return;
+  }
+
+  const mismatches = [];
+  if (!fs.existsSync(AUTO_ROUTES_TS) || fs.readFileSync(AUTO_ROUTES_TS, 'utf8') !== tsContent) {
+    mismatches.push('src/lib/autoRoutes.ts');
+  }
+  if (!fs.existsSync(ROUTES_JSON) || fs.readFileSync(ROUTES_JSON, 'utf8') !== jsonContent) {
+    mismatches.push('scripts/routes.json');
+  }
+  if (mismatches.length > 0) {
+    throw new Error(
+      `${mismatches.join(' and ')} ${mismatches.length === 1 ? 'is' : 'are'} stale; `
+      + 'run this script with --write and commit the result before releasing',
+    );
+  }
+  console.log(`[generate-routes] OK — both committed route manifests match ${routes.length} reviewed routes.`);
 }
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('[generate-routes] Generating prerendered routes list...');
-
-  // 1. Fetch product handles from Shopify
-  if (!SHOPIFY_STOREFRONT_TOKEN) {
-    throw new Error(
-      'SHOPIFY_STOREFRONT_TOKEN is not set; refusing to generate a potentially incomplete route manifest'
-    );
+  const write = process.argv.includes('--write');
+  const check = process.argv.includes('--check');
+  if (write === check) {
+    throw new Error('Choose exactly one mode: --check for releases or --write before commit.');
   }
-  const productHandles = await fetchAllProductHandles();
+  console.log(`[generate-routes] ${write ? 'Regenerating' : 'Checking'} the committed prerender route manifests...`);
 
-  // 2. Parse blog slugs from the published blogPosts.ts source
+  // 1. Parse blog slugs from the published source files.
   const blogSlugs = parseBlogSlugs();
 
-  // 3. Build combined routes list
+  // 2. Build combined routes list
   //    - Static routes first
   //    - Then blog routes (/blog/<slug>)
   //    - NOTE: /product/* routes are NOT included — they are handled
@@ -377,15 +310,12 @@ async function main() {
     }
   }
 
-  // 4. Write output files only after every required source completed successfully.
-  writeOutputFiles(finalRoutes);
+  // 3. Check or explicitly write only after every source completed successfully.
+  syncOutputFiles(finalRoutes, write);
 
   const blogCount = finalRoutes.filter((r) => r.startsWith('/blog/')).length;
   console.log(
     `[generate-routes] Done: ${STATIC_ROUTES.length} configured static + ${blogCount} blog = ${finalRoutes.length} unique routes`
-  );
-  console.log(
-    `[generate-routes] Note: ${productHandles.length} product handles fetched — prerenderManifest.ts is written by prerender.js`
   );
 }
 

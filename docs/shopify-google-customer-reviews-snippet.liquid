@@ -1,49 +1,21 @@
-<!-- Google Customer Reviews — Shopify Order Status Page Additional Script -->
-<!--
-  HOW TO INSTALL:
-  1. Go to Shopify Admin → Settings → Checkout
-  2. Scroll to "Order status page" section
-  3. Paste this entire script into the "Additional scripts" box
-  4. Click Save
+{% comment %}
+RETIRED — DO NOT INSTALL THIS FILE AS AN ORDER-STATUS ADDITIONAL SCRIPT.
 
-  This script:
-  - Shows the Google Customer Reviews opt-in survey after checkout
-  - Passes real order data (order ID, customer email, country, estimated delivery)
-  - Works with your GMC merchant ID: 5773333098
--->
+The former example was unsafe because it:
 
-<script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
-<script>
-  window.renderOptIn = function() {
-    window.gapi.load('surveyoptin', function() {
-      window.gapi.surveyoptin.render(
-        {
-          // REQUIRED
-          "merchant_id": 5773333098,
-          "order_id": "{{ order.order_number }}",
-          "email": "{{ order.email }}",
-          "delivery_country": "{{ order.shipping_address.country_code }}",
-          "estimated_delivery_date": "{{ order.created_at | date: '%s' | plus: 1209600 | date: '%Y-%m-%d' }}",
+1. treated every Shopify SKU as a GTIN even though a SKU is not evidence of a
+   GTIN; and
+2. invented an estimated delivery date by adding 14 days to the order date.
 
-          // OPTIONAL — product GTINs if available
-          "products": [{% for line_item in order.line_items %}{% if line_item.sku != blank %}{"gtin":"{{ line_item.sku }}"}{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %}]
-        });
-    });
-  }
-</script>
+Google Customer Reviews may be rendered only by a checkout/order-status
+integration that receives all required values from trusted order data. The
+`estimated_delivery_date` must be an actual order-level estimate backed by the
+selected product, processing path, destination, and carrier service. It must
+not be calculated from a universal offset. Omit `products` unless each supplied
+identifier is a verified GTIN for that exact line item. If a required value is
+missing or invalid, skip the survey opt-in instead of supplying a fallback.
 
-<!-- Google Customer Reviews Badge (optional — shows rating on order confirmation) -->
-<script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
-<script>
-  window.renderBadge = function() {
-    var ratingBadgeContainer = document.createElement("div");
-    document.body.appendChild(ratingBadgeContainer);
-    window.gapi.load('ratingbadge', function() {
-      window.gapi.ratingbadge.render(
-        ratingBadgeContainer, {
-          "merchant_id": 5773333098,
-          "position": "BOTTOM_LEFT"
-        });
-    });
-  }
-</script>
+Any future implementation must also follow Shopify's current consent-aware
+customer-privacy and pixel controls and must be reviewed against the visible
+LuxeMia Privacy and Review policies before deployment.
+{% endcomment %}

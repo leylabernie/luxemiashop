@@ -11,11 +11,26 @@ import {
 } from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
 import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
+import { isVariantExplicitlyOrderable } from '@/lib/orderability';
 
 export interface CartAttribute {
   key: string;
   value: string;
 }
+
+// This shopper-visible reference is sent on both a garment line and each of
+// its service lines. Shopify therefore keeps otherwise identical service
+// variants distinct, while the persisted cart can restore the relationship.
+export const GARMENT_LINE_ID_ATTRIBUTE = 'Garment Reference';
+
+export const createGarmentLineId = (): string => {
+  const uuid = globalThis.crypto?.randomUUID?.();
+  if (uuid) return `LM-${uuid}`;
+
+  // randomUUID is available in supported browsers. Keep a collision-resistant
+  // fallback for embedded browsers instead of making a service selection fail.
+  return `LM-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+};
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -57,6 +72,13 @@ const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[]) => (
   JSON.stringify(left || []) === JSON.stringify(right || [])
 );
 
+export const getGarmentLineId = (
+  item: Pick<CartItem, 'customAttributes'>,
+): string | undefined => item.customAttributes
+  ?.find((attribute) => attribute.key === GARMENT_LINE_ID_ATTRIBUTE)
+  ?.value
+  .trim() || undefined;
+
 const getTailoringOption = (item: CartItem) => item.customAttributes
   ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key))
   ?.value;
@@ -66,6 +88,32 @@ const appliesToProductTitle = (item: CartItem) => item.customAttributes
   ?.value;
 
 const isServiceLine = (item: CartItem) => isHiddenBillingProductHandle(item.product.node.handle);
+
+const isDependentServiceLine = (
+  candidate: CartItem,
+  garment: CartItem,
+  items: CartItem[],
+): boolean => {
+  if (!isServiceLine(candidate)) return false;
+
+  const garmentLineId = getGarmentLineId(garment);
+  if (garmentLineId) {
+    return getGarmentLineId(candidate) === garmentLineId;
+  }
+
+  // Preserve unambiguous carts saved before line references were introduced.
+  // If multiple legacy garment lines have the same title, declining to infer a
+  // parent is safer than changing or removing another garment's service.
+  if (getGarmentLineId(candidate)) return false;
+  const legacyParentsWithSameTitle = items.filter((item) => (
+    !isServiceLine(item)
+    && !getGarmentLineId(item)
+    && item.product.node.title === garment.product.node.title
+  ));
+
+  return legacyParentsWithSameTitle.length === 1
+    && appliesToProductTitle(candidate) === garment.product.node.title;
+};
 
 const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => {
   const serviceLine = isServiceLine(item);
@@ -86,7 +134,7 @@ const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsIte
       : (item.variantTitle !== 'Default Title' ? item.variantTitle : undefined),
     productGroupId: item.product.node.id,
     tailoringOption: getTailoringOption(item),
-    occasion: item.product.node.metadata?.occasion || undefined,
+    occasion: item.product.node.metadata?.occasion?.join(', ') || undefined,
   };
 };
 
@@ -100,6 +148,12 @@ export const useCartStore = create<CartStore>()(
       isCartOpen: false,
 
       addItem: (item) => {
+        if (!isVariantExplicitlyOrderable(item.product.node, item.variantId)) {
+          console.warn('Blocked cart addition without explicit Shopify availability', item.variantId);
+          toast.error('This selection is currently unavailable. Please choose another option.');
+          return;
+        }
+
         const { items } = get();
         const existingItem = items.find((current) => (
           current.variantId === item.variantId
@@ -136,6 +190,14 @@ export const useCartStore = create<CartStore>()(
           return;
         }
 
+        if (
+          quantity > current.quantity
+          && !isVariantExplicitlyOrderable(current.product.node, current.variantId)
+        ) {
+          toast.error('This selection is currently unavailable. Its quantity cannot be increased.');
+          return;
+        }
+
         const quantityDelta = quantity - current.quantity;
         if (quantityDelta > 0) {
           trackAddToCart(toAnalyticsItem(current, quantityDelta));
@@ -143,16 +205,15 @@ export const useCartStore = create<CartStore>()(
           trackRemoveFromCart(toAnalyticsItem(current, Math.abs(quantityDelta)));
         }
 
-        const appliesToTitle = current.product.node.title;
         const shouldSyncServiceQuantities = !isServiceLine(current);
+        const currentItems = get().items;
 
         set({
-          items: get().items.map((item) => {
+          items: currentItems.map((item) => {
             const isCurrentLine = item.variantId === variantId
               && sameAttributes(item.customAttributes, customAttributes);
             const isDependentService = shouldSyncServiceQuantities
-              && isServiceLine(item)
-              && appliesToProductTitle(item) === appliesToTitle;
+              && isDependentServiceLine(item, current, currentItems);
 
             return isCurrentLine || isDependentService ? { ...item, quantity } : item;
           }),
@@ -166,19 +227,19 @@ export const useCartStore = create<CartStore>()(
         ));
         if (!itemToRemove) return;
 
+        const currentItems = get().items;
         const removeDependentServices = !isServiceLine(itemToRemove);
-        const linesToRemove = get().items.filter((item) => {
+        const linesToRemove = currentItems.filter((item) => {
           const isCurrentLine = item.variantId === variantId
             && sameAttributes(item.customAttributes, customAttributes);
           const isDependentService = removeDependentServices
-            && isServiceLine(item)
-            && appliesToProductTitle(item) === itemToRemove.product.node.title;
+            && isDependentServiceLine(item, itemToRemove, currentItems);
           return isCurrentLine || isDependentService;
         });
 
         linesToRemove.forEach((item) => trackRemoveFromCart(toAnalyticsItem(item)));
         set({
-          items: get().items.filter((item) => !linesToRemove.includes(item)),
+          items: currentItems.filter((item) => !linesToRemove.includes(item)),
         });
       },
 
@@ -203,6 +264,10 @@ export const useCartStore = create<CartStore>()(
       createCheckout: async () => {
         const { items, setLoading, setCheckoutUrl } = get();
         if (items.length === 0) return null;
+        if (items.some((item) => !isVariantExplicitlyOrderable(item.product.node, item.variantId))) {
+          toast.error('One or more bag items is no longer available. Remove it to continue.');
+          return null;
+        }
 
         const totalValue = items.reduce(
           (sum, item) => sum + Number(item.price.amount) * item.quantity,
@@ -236,11 +301,11 @@ export const useCartStore = create<CartStore>()(
           }
 
           console.error('Shopify returned no checkout URL; preserving the cart');
-          toast.error('Checkout could not be created. Your bag is saved — please try again.');
+          toast.error('Checkout could not be created. Your bag remains in this browser — please try again.');
           return null;
         } catch (error) {
           console.error('Failed to create checkout:', error);
-          toast.error('Checkout is temporarily unavailable. Your bag is saved — please try again.');
+          toast.error('Checkout is temporarily unavailable. Your bag remains in this browser — please try again.');
           return null;
         } finally {
           setLoading(false);

@@ -8,7 +8,7 @@ import type { BlogPost } from '@/data/blogPosts';
 import BlogPostVisual from '@/components/blog/BlogPostVisual';
 import { BLOG_AUTHORS, getAuthorBySlug } from '@/data/blogAuthors';
 import { getBlogCategoryGroup } from '@/data/blogCategories';
-import { Calendar, Clock, MapPin, BadgeCheck, BookOpen, ChevronRight, Home, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, Globe2, BadgeCheck, BookOpen, ChevronRight, Home, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -54,11 +54,7 @@ const AuthorBio = () => {
       "name": author.name,
       "description": author.credentials + '. ' + author.bio.slice(0, 300),
       "url": `https://luxemia.shop/authors/${author.slug}`,
-      "knowsAbout": author.expertise,
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "US"
-      }
+      "knowsAbout": author.expertise
     }
   };
 
@@ -67,12 +63,12 @@ const AuthorBio = () => {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://luxemia.shop" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://luxemia.shop/blog" },
+      { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://luxemia.shop/blog" },
       { "@type": "ListItem", "position": 3, "name": author.name, "item": `https://luxemia.shop/authors/${author.slug}` },
     ],
   };
 
-  const metaTitle = `${author.name} — ${author.role} | LuxeMia Blog`;
+  const metaTitle = `${author.name} — ${author.role} | LuxeMia Guides`;
   const metaDescription = `${author.credentials}. ${author.bio.slice(0, 140).trim()}... Read ${author.name}'s articles on Indian ethnic wear at LuxeMia.`;
 
   return (
@@ -98,7 +94,7 @@ const AuthorBio = () => {
               <Home className="w-3 h-3" /> Home
             </Link>
             <ChevronRight className="w-3 h-3" />
-            <Link to="/blog" className="hover:text-foreground">Blog</Link>
+            <Link to="/blog" className="hover:text-foreground">Guides</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-foreground font-medium">{author.name}</span>
           </nav>
@@ -123,7 +119,7 @@ const AuthorBio = () => {
                   {author.credentials}
                 </p>
                 <p className="text-muted-foreground mb-4 flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
+                  <Globe2 className="w-4 h-4" />
                   {author.location}
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -173,7 +169,7 @@ const AuthorBio = () => {
               <div className="text-center py-12 border border-border rounded-lg">
                 <BookOpen className="w-10 h-10 mx-auto text-muted-foreground mb-3" />
                 <p className="text-muted-foreground">
-                  No articles published yet. Check back soon!
+                  No articles by this author are currently published.
                 </p>
               </div>
             ) : (

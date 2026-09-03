@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Clock, FileText, Package, ShieldCheck, ShoppingBag, Truck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -14,6 +15,16 @@ import {
 
 const formatUsd = (amount: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+
+const destinationGuides = [
+  { href: '/shipping/united-states', label: 'Shipping Indian clothing to the United States', description: 'Review current U.S. rates, processing, tracking, and event-date planning.' },
+  { href: '/shipping/canada', label: 'Shipping Indian clothing to Canada', description: 'Review current Canada rates, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/united-kingdom', label: 'Shipping Indian clothing to the United Kingdom', description: 'Review current UK rates, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/australia', label: 'Shipping Indian clothing to Australia', description: 'Review current Australia rates, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/new-zealand', label: 'Shipping Indian clothing to New Zealand', description: 'Review current New Zealand rates, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/south-africa', label: 'Shipping Indian clothing to South Africa', description: 'Review the current South Africa rate, customs responsibility, tracking, and planning guidance.' },
+  { href: '/shipping/mauritius', label: 'Shipping Indian clothing to Mauritius', description: 'Review the current Mauritius rate, customs responsibility, tracking, and planning guidance.' },
+] as const;
 
 const Shipping = () => {
   return (
@@ -65,7 +76,7 @@ const Shipping = () => {
                 { icon: Truck, title: 'Route-Based Rates', desc: 'Pricing reflects each destination group rather than one worldwide rate' },
                 { icon: Package, title: 'Consolidated Orders', desc: 'Multi-item orders normally ship together after all pieces are ready' },
                 { icon: Clock, title: 'Timing Shown', desc: 'Processing and carrier transit are stated separately' },
-                { icon: ShieldCheck, title: 'Tracked Dispatch', desc: 'Tracking is provided after the parcel is dispatched' },
+                { icon: ShieldCheck, title: 'Shipment Tracking', desc: 'When tracking is issued, carrier scans can appear after label creation' },
               ].map((item, index) => (
                 <motion.div
                   key={item.title}
@@ -116,6 +127,25 @@ const Shipping = () => {
             <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
               Rates are stated in USD. Shopify may display an available local presentment currency. Checkout controls the final converted amount and available service.
             </p>
+
+            <div className="mt-10">
+              <h3 className="text-2xl font-serif text-center">Destination Shipping Guides</h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground text-center max-w-3xl mx-auto">
+                Use the guide for each supported destination to review its published rate, customs responsibility, tracking, support, and event-date planning guidance.
+              </p>
+              <nav aria-label="Destination shipping guides" className="mt-6 grid gap-4 sm:grid-cols-2">
+                {destinationGuides.map((guide) => (
+                  <Link
+                    key={guide.href}
+                    to={guide.href}
+                    className="rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40"
+                  >
+                    <span className="font-medium text-primary underline underline-offset-4">{guide.label}</span>
+                    <span className="mt-2 block text-sm leading-6 text-muted-foreground">{guide.description}</span>
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
         </section>
 
@@ -127,9 +157,9 @@ const Shipping = () => {
             </div>
             <div className="grid gap-6 md:grid-cols-3">
               {[
-                ['1', 'Processing', 'The product page shows the current processing or ship-by estimate when available. Tailoring, sourcing or made-to-order work occurs before dispatch.'],
+                ['1', 'Processing', 'The product page shows the current listing-supplied processing estimate when available. Tailoring, sourcing or made-to-order work occurs before dispatch.'],
                 ['2', 'Consolidation', 'When an order contains multiple items, the item with the longest processing time normally determines the dispatch date.'],
-                ['3', 'Tracked Transit', 'Carrier transit starts after dispatch. Tracking is sent when the parcel enters the shipping workflow.'],
+                ['3', 'Tracked Transit', 'When tracking is issued, carrier scans can appear after label creation or acceptance.'],
               ].map(([step, title, copy]) => (
                 <div key={step} className="rounded-lg border border-border bg-card p-6">
                   <p className="font-serif text-3xl text-primary">{step}</p>
@@ -147,6 +177,16 @@ const Shipping = () => {
 
         <section className="py-16">
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+            <div className="mb-12 rounded-lg border border-border bg-card p-6">
+              <h2 className="font-serif text-2xl">Before you place an order</h2>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">Confirm whether the selected item is ready to ship, made to order or customizable, then read the order-issue process. Support can clarify published information but cannot guarantee an event-date delivery.</p>
+              <nav aria-label="Shipping-related policies and support" className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+                <Link className="text-primary underline underline-offset-4" to="/shop-by-fulfillment">Compare fulfillment types</Link>
+                <Link className="text-primary underline underline-offset-4" to="/returns">Returns and covered order issues</Link>
+                <Link className="text-primary underline underline-offset-4" to="/us-support">Online support for U.S. customers</Link>
+                <Link className="text-primary underline underline-offset-4" to="/contact">Contact LuxeMia</Link>
+              </nav>
+            </div>
             <h2 className="text-2xl font-serif mb-8 text-center">Shipping FAQ</h2>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="destinations">

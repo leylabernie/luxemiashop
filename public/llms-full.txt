@@ -26,6 +26,7 @@
 - https://luxemia.shop/indowestern
 - https://luxemia.shop/jewelry
 - https://luxemia.shop/new-arrivals
+- https://luxemia.shop/ready-to-ship
 - https://luxemia.shop/collections/silk-sarees
 - https://luxemia.shop/collections/kanchipuram-sarees
 - https://luxemia.shop/collections/bridal-party-outfits
@@ -34,24 +35,53 @@
 - https://luxemia.shop/collections/sharara-suits
 - https://luxemia.shop/collections/gharara-suits
 - https://luxemia.shop/collections/anarkali-suits
+- https://luxemia.shop/collections/palazzo-suits
+- https://luxemia.shop/collections/sherwani-for-groom
 - https://luxemia.shop/collections/bridal-lehengas
+- https://luxemia.shop/collections/wedding-guest-lehengas
+- https://luxemia.shop/collections/wedding-guest-kurta-sets
 - https://luxemia.shop/collections/wedding-sarees
+- https://luxemia.shop/collections/banarasi-sarees
 - https://luxemia.shop/collections/designer-sarees
 - https://luxemia.shop/collections/party-wear-lehengas
 
 ## Occasion Landing Pages
 
+- https://luxemia.shop/festive-wear
+- https://luxemia.shop/indian-wedding-guest-outfits
+- https://luxemia.shop/wedding-events
 - https://luxemia.shop/collections/diwali-outfits
+- https://luxemia.shop/collections/diwali-womenswear
+- https://luxemia.shop/collections/diwali-menswear
 - https://luxemia.shop/collections/wedding-guest-outfits
 - https://luxemia.shop/collections/mehendi-outfits
 - https://luxemia.shop/collections/eid-outfits
 - https://luxemia.shop/collections/navratri-outfits
 - https://luxemia.shop/collections/haldi-outfits
+- https://luxemia.shop/collections/reception-outfits
+- https://luxemia.shop/collections/navratri-chaniya-choli
+- https://luxemia.shop/collections/garba-outfits
+- https://luxemia.shop/collections/groomsmen-outfits
+- https://luxemia.shop/collections/sangeet-outfits
+
+## Fulfillment Guides
+
+- https://luxemia.shop/shop-by-fulfillment
+- https://luxemia.shop/shop-by-fulfillment/ready-to-ship
+- https://luxemia.shop/shop-by-fulfillment/made-to-order
+- https://luxemia.shop/shop-by-fulfillment/customizable-outfits
 
 ## Regional and Service Pages
 
 - https://luxemia.shop/nri
 - https://luxemia.shop/indian-ethnic-wear-usa
+- https://luxemia.shop/shipping/united-states
+- https://luxemia.shop/shipping/canada
+- https://luxemia.shop/shipping/united-kingdom
+- https://luxemia.shop/shipping/australia
+- https://luxemia.shop/shipping/new-zealand
+- https://luxemia.shop/shipping/south-africa
+- https://luxemia.shop/shipping/mauritius
 - https://luxemia.shop/wedding-party-orders
 - https://luxemia.shop/sizing-measurements-guide
 - https://luxemia.shop/size-guide
@@ -62,13 +92,16 @@
 ## Brand, Editorial and Topic Hubs
 
 - https://luxemia.shop/about
+- https://luxemia.shop/us-support
+- https://luxemia.shop/editorial-policy
+- https://luxemia.shop/review-policy
 - https://luxemia.shop/blog
 - https://luxemia.shop/press
 - https://luxemia.shop/authors/luxemia-editorial-team
-- https://luxemia.shop/blog/attires
-- https://luxemia.shop/blog/motifs-embroideries
+- https://luxemia.shop/blog/indian-wedding-guest-attire
+- https://luxemia.shop/blog/indian-textiles-and-embroidery
 - https://luxemia.shop/blog/weddings-festivals
-- https://luxemia.shop/blog/how-to-care
+- https://luxemia.shop/blog/fit-sizing-and-garment-care
 - https://luxemia.shop/blog/designer-profiles
 - https://luxemia.shop/blog/cultural-context
 
@@ -84,6 +117,19 @@
 - https://luxemia.shop/sitemap
 
 ## Blog Posts
+
+- https://luxemia.shop/blog/what-should-a-male-guest-wear-to-a-three-day-indian-wedding
+- https://luxemia.shop/blog/what-should-a-non-indian-guest-wear-to-an-indian-wedding
+- https://luxemia.shop/blog/what-saree-fabrics-work-for-an-outdoor-summer-wedding
+- https://luxemia.shop/blog/saree-versus-lehenga-for-a-wedding-guest
+- https://luxemia.shop/blog/sherwani-versus-kurta-set
+- https://luxemia.shop/blog/what-should-guests-wear-to-a-mehendi
+- https://luxemia.shop/blog/what-should-guests-wear-to-a-sangeet
+- https://luxemia.shop/blog/ready-to-ship-versus-made-to-order
+- https://luxemia.shop/blog/what-does-semi-stitched-lehenga-mean
+- https://luxemia.shop/blog/how-to-measure-for-a-lehenga-ordered-online
+- https://luxemia.shop/blog/chaniya-choli-versus-lehenga
+- https://luxemia.shop/blog/how-early-to-order-for-a-fixed-wedding-date
 
 - https://luxemia.shop/blog/indian-to-us-clothing-size-conversion-guide
 - https://luxemia.shop/blog/wedding-saree-for-mother-of-bride

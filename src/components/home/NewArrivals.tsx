@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
 const MAX_PER_CATEGORY = 5;
@@ -25,7 +26,7 @@ const CATEGORIES = [
 type CategoryKey = (typeof CATEGORIES)[number]['key'];
 
 export const NewArrivals = () => {
-  const { products, isLoading } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
+  const { products, isLoading, error } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
 
   // 1. Filter to products within the 30-day window
@@ -36,7 +37,7 @@ export const NewArrivals = () => {
     // Group by enriched productType (already set by useShopifyProducts)
     const groups: Record<string, typeof products> = {};
 
-    for (const product of products) {
+    for (const product of products.filter(({ node }) => isProductExplicitlyOrderable(node))) {
       const created = new Date(product.node.createdAt).getTime();
       if (created > cutoff) {
         const cat = product.node.productType || 'Other';
@@ -121,7 +122,7 @@ export const NewArrivals = () => {
   }
 
   // ── Empty state ──
-  if (totalNew === 0) return null;
+  if (error || totalNew === 0) return null;
 
   return (
     <section className="bg-[#fffaf6] py-16 lg:py-24">

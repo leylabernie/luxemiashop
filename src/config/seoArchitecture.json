@@ -1,29 +1,29 @@
 {
   "routes": {
     "/": {
-      "title": "LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA",
-      "description": "Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.",
+      "title": "Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia",
+      "description": "Shop South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to seven supported countries.",
       "h1": "LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear"
     },
     "/lehengas": {
-      "title": "Bridal & Wedding Lehengas Online USA | LuxeMia",
-      "description": "Shop bridal and wedding-guest lehengas online. Compare fabric, included pieces, stitching, sizing, availability and processing details.",
-      "h1": "Bridal & Wedding Lehengas Online in the USA"
+      "title": "Bridal & Wedding Lehengas Online | LuxeMia",
+      "description": "Browse bridal and wedding-guest lehengas. Verify fabric, included pieces, sizing, availability and processing. Tracked shipping serves seven countries.",
+      "h1": "Bridal & Wedding Lehengas Online"
     },
     "/sarees": {
-      "title": "Buy Indian Wedding Sarees Online in the U.S. | LuxeMia",
-      "description": "Shop Indian wedding, silk and festive sarees online in the U.S. Compare stated fabric, work, blouse details, availability and tracked shipping.",
-      "h1": "Indian Wedding Sarees Online in the USA"
+      "title": "Indian Wedding Sarees Online | LuxeMia",
+      "description": "Browse current wedding, silk and festive sarees. Verify fabric, work, blouse details, availability and processing. Tracked shipping serves seven countries.",
+      "h1": "Indian Wedding Sarees Online"
     },
     "/suits": {
       "title": "Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia",
-      "description": "Shop salwar kameez, Anarkali, sharara and palazzo suits. Compare fabric, included pieces, stitching, sizing, availability and processing details.",
-      "h1": "Salwar Kameez & Indian Suits Online in the USA"
+      "description": "Browse current salwar kameez, Anarkali, sharara and palazzo suits. Verify exact product details. Tracked shipping serves seven countries.",
+      "h1": "Salwar Kameez & Indian Suits Online"
     },
     "/menswear": {
-      "title": "Buy Sherwanis Online USA | Groom & Wedding | LuxeMia",
-      "description": "Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and processing details.",
-      "h1": "Indian Wedding Menswear & Sherwanis Online in the USA"
+      "title": "Sherwanis & Indian Wedding Menswear | LuxeMia",
+      "description": "Browse current sherwanis, kurta pajama and Indo-Western menswear. Verify included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Indian Wedding Menswear & Sherwanis Online"
     },
     "/jewelry": {
       "title": "Kundan Bridal Jewelry & Wedding Sets | LuxeMia",
@@ -31,39 +31,54 @@
       "h1": "Indian Bridal Jewelry Sets & Wedding Necklaces"
     },
     "/collections/bridal-lehengas": {
-      "title": "Bridal Lehengas USA | Indian Wedding Styles | LuxeMia",
-      "description": "Shop bridal lehengas online in the USA. Compare current colors, stated fabric, embroidery, included choli and dupatta pieces, sizing and availability.",
-      "h1": "Bridal Lehengas Online in the USA"
+      "title": "Bridal Lehengas | Indian Wedding Styles | LuxeMia",
+      "description": "Browse current bridal lehenga listings. Verify color, fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Bridal Lehengas Online"
     },
     "/collections/party-wear-lehengas": {
-      "title": "Party-Wear Lehengas USA | Festive Styles | LuxeMia",
-      "description": "Shop party-wear lehengas online in the USA. Compare colors, stated fabric, embroidery, included pieces, sizing and availability for festive events.",
-      "h1": "Party-Wear Lehengas Online in the USA"
+      "title": "Party-Wear Lehengas & Festive Styles | LuxeMia",
+      "description": "Browse current party-wear lehenga listings. Verify color, fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Party-Wear Lehengas Online"
     },
     "/collections/wedding-sarees": {
-      "title": "Wedding Sarees USA | Indian Bridal Styles | LuxeMia",
-      "description": "Shop wedding sarees online in the USA. Compare current bridal styles by stated fabric, work, blouse details, price and availability before ordering.",
-      "h1": "Wedding Sarees Online in the USA"
+      "title": "Wedding Sarees & Indian Bridal Styles | LuxeMia",
+      "description": "Browse current wedding saree listings. Verify fabric, work, blouse details, price and availability. Tracked shipping serves seven countries.",
+      "h1": "Wedding Sarees Online"
+    },
+    "/collections/banarasi-sarees": {
+      "title": "Banarasi Sarees | Current Catalog Listings | LuxeMia",
+      "description": "Browse current sarees with explicit Banarasi evidence. Verify fabric wording, work, blouse details, dimensions and availability before ordering.",
+      "h1": "Banarasi Sarees Online"
     },
     "/collections/designer-sarees": {
-      "title": "Designer Sarees USA | Embroidered Party Styles | LuxeMia",
-      "description": "Shop designer sarees online in the USA. Compare colors, stated fabric, embellishment, blouse details, price and availability.",
-      "h1": "Designer & Party-Wear Sarees Online in the USA"
+      "title": "Designer & Party-Wear Sarees Online | LuxeMia",
+      "description": "Browse current designer and party-wear sarees. Verify color, fabric, work, blouse details and availability. Tracked shipping serves seven countries.",
+      "h1": "Designer & Party-Wear Sarees Online"
     },
     "/collections/sharara-suits": {
-      "title": "Sharara Suits USA | Wedding & Festive | LuxeMia",
-      "description": "Shop sharara suits online in the USA. Compare colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.",
-      "h1": "Sharara Suits Online in the USA"
+      "title": "Sharara Suits | Wedding & Festive Styles | LuxeMia",
+      "description": "Browse current sharara suit listings. Verify fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Sharara Suits Online"
     },
     "/collections/gharara-suits": {
-      "title": "Gharara Suits USA | Wedding & Festive | LuxeMia",
-      "description": "Shop gharara suits online in the USA. Compare colors, stated fabric, embroidery, included pieces, sizes and availability for celebrations.",
-      "h1": "Gharara Suits Online in the USA"
+      "title": "Gharara Suits | Wedding & Festive Styles | LuxeMia",
+      "description": "Browse current gharara suit listings. Verify fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Gharara Suits Online"
     },
     "/collections/anarkali-suits": {
-      "title": "Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia",
-      "description": "Shop Anarkali suits online in the USA. Compare colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.",
-      "h1": "Anarkali Suits Online in the USA"
+      "title": "Anarkali Suits | Wedding & Party Wear | LuxeMia",
+      "description": "Browse current Anarkali suit listings. Verify fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Anarkali Suits Online"
+    },
+    "/collections/palazzo-suits": {
+      "title": "Palazzo Suits | Wedding & Festive Styles | LuxeMia",
+      "description": "Browse current palazzo suit listings. Verify fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.",
+      "h1": "Palazzo Suits Online"
+    },
+    "/collections/sherwani-for-groom": {
+      "title": "Groom Sherwanis | Indian Wedding Menswear | LuxeMia",
+      "description": "Browse current groom sherwani listings. Verify fabric, work, included garments, measurements and availability. Tracked shipping serves seven countries.",
+      "h1": "Groom Sherwanis Online"
     }
   },
   "subcategoryLandingPaths": {
@@ -92,18 +107,24 @@
       "festive": "/collections/designer-sarees",
       "designer": "/collections/designer-sarees",
       "silk": "/collections/silk-sarees",
+      "banarasi": "/collections/banarasi-sarees",
       "nri-wedding": "/collections/wedding-guest-outfits"
     },
     "suits": {
       "anarkali": "/collections/anarkali-suits",
       "sharara": "/collections/sharara-suits",
       "gharara": "/collections/gharara-suits",
+      "palazzo": "/collections/palazzo-suits",
       "wedding": "/collections/wedding-guest-outfits",
       "party-wear": "/collections/wedding-guest-outfits",
       "festive": "/collections/wedding-guest-outfits",
       "bridesmaid": "/collections/bridal-party-outfits",
       "mother-of-bride": "/collections/bridal-party-outfits",
       "nri-wedding": "/collections/wedding-guest-outfits"
+    },
+    "menswear": {
+      "sherwani": "/collections/sherwani-for-groom",
+      "groom-sherwani": "/collections/sherwani-for-groom"
     }
   }
 }

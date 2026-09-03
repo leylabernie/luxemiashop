@@ -13,7 +13,10 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const STATIC_FEED_PATH = path.join(PROJECT_ROOT, 'public', 'merchant-feed.xml');
+// The validated feed is generated during the release into dist/. A committed
+// public/ snapshot was deliberately retired because it could outlive Shopify
+// catalog changes and silently override the current artifact.
+const STATIC_FEED_PATH = path.join(PROJECT_ROOT, 'dist', 'merchant-feed.xml');
 const baseUrl = (process.argv[2] || process.env.MERCHANT_FEED_BASE_URL || '').trim();
 
 function fail(message) {

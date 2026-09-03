@@ -1,16 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
-import { X, Sparkles, Clock, Check } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { X, Sparkles, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import {
+  ANALYTICS_CONSENT_CHANGED_EVENT,
+  ANALYTICS_SETTINGS_VISIBILITY_EVENT,
+  getAnalyticsConsent,
+  type AnalyticsConsentChoice,
+} from '@/lib/analyticsConsent';
 
 // CRITICAL: Do NOT import supabase at the top level.
 // The supabase client chunk (~44KB / 37KB unused) was previously bundled
 // into the initial payload even though it is only used inside handleSubmit.
-// Dynamic-importing it here lets Vite split it into a separate chunk that
-// only loads when a user actually submits the form.
+// Calling the configured Edge Function URL directly avoids loading that client
+// chunk and, unlike a hardcoded project hostname, follows the deployed app's
+// VITE_SUPABASE_URL source of truth.
 // See PSI diagnosis 2026-07-15: "Reduce unused JavaScript — vendor-supabase 44KB".
 
 const emailSchema = z.object({
@@ -30,24 +37,77 @@ const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 3;
 const DISCOUNT_CODE = 'LUXE10';
-const NEWSLETTER_FUNCTION_URL =
-  'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email';
+const SUPABASE_URL = String(import.meta.env.VITE_SUPABASE_URL || '').replace(/\/+$/, '');
+
+type PopupStorage = Pick<Storage, 'getItem' | 'setItem'>;
+
+const getPopupStorage = (): PopupStorage | null => {
+  if (typeof window === 'undefined') return null;
+
+  try {
+    return window.localStorage;
+  } catch {
+    // Some privacy modes throw while accessing the localStorage property.
+    return null;
+  }
+};
+
+const readPopupStorageItem = (
+  key: string,
+  storage: PopupStorage | null = getPopupStorage(),
+): string | null => {
+  try {
+    return storage?.getItem(key) ?? null;
+  } catch {
+    return null;
+  }
+};
+
+const writePopupStorageItem = (
+  key: string,
+  value: string,
+  storage: PopupStorage | null = getPopupStorage(),
+): boolean => {
+  try {
+    if (!storage) return false;
+    storage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const parseRateLimitTimestamps = (stored: string | null): number[] => {
+  if (!stored) return [];
+
+  try {
+    const parsed: unknown = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (timestamp): timestamp is number => typeof timestamp === 'number' && Number.isFinite(timestamp),
+    );
+  } catch {
+    return [];
+  }
+};
+
+const getRateLimitTimestamps = (): number[] => (
+  parseRateLimitTimestamps(readPopupStorageItem(RATE_LIMIT_KEY))
+);
 
 const checkRateLimit = (): boolean => {
   const now = Date.now();
-  const stored = localStorage.getItem(RATE_LIMIT_KEY);
-  const timestamps: number[] = stored ? JSON.parse(stored) : [];
+  const timestamps = getRateLimitTimestamps();
   const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
   return recentAttempts.length < MAX_ATTEMPTS;
 };
 
 const recordAttempt = () => {
   const now = Date.now();
-  const stored = localStorage.getItem(RATE_LIMIT_KEY);
-  const timestamps: number[] = stored ? JSON.parse(stored) : [];
+  const timestamps = getRateLimitTimestamps();
   const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
   recentAttempts.push(now);
-  localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
+  writePopupStorageItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
 };
 
 // ─── Trigger tuning ────────────────────────────────────────────────────
@@ -67,10 +127,46 @@ const NewVisitorPopup = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [subscriptionSaved, setSubscriptionSaved] = useState(false);
   const [discountCode, setDiscountCode] = useState<string | null>(null);
+  const [consentResolved, setConsentResolved] = useState(() => getAnalyticsConsent() !== null);
+  const [analyticsSettingsOpen, setAnalyticsSettingsOpen] = useState(() => (
+    getAnalyticsConsent() === null || window.location.hash === '#cookie-settings'
+  ));
   const triggeredRef = useRef(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    const syncConsent = (event: Event) => {
+      const choice = (event as CustomEvent<{ choice?: AnalyticsConsentChoice | null }>).detail?.choice;
+      const resolved = choice === 'accepted' || choice === 'declined';
+      setConsentResolved(resolved);
+      if (!resolved) setIsOpen(false);
+    };
+    const syncSettingsVisibility = (event: Event) => {
+      const open = Boolean((event as CustomEvent<{ open?: boolean }>).detail?.open);
+      setAnalyticsSettingsOpen(open);
+      if (open) setIsOpen(false);
+    };
+
+    window.addEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, syncConsent);
+    window.addEventListener(ANALYTICS_SETTINGS_VISIBILITY_EVENT, syncSettingsVisibility);
+    return () => {
+      window.removeEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, syncConsent);
+      window.removeEventListener(ANALYTICS_SETTINGS_VISIBILITY_EVENT, syncSettingsVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Avoid competing dialog and focus contexts while the shopper is deciding
+    // whether to enable optional analytics.
+    if (!consentResolved || analyticsSettingsOpen) {
+      setIsOpen(false);
+      return;
+    }
+
     // Product pages and the Custom Options inquiry journey are decision
     // screens. Do not place a welcome-offer modal over their selections,
     // add-to-bag controls, or made-to-measure form.
@@ -82,11 +178,12 @@ const NewVisitorPopup = () => {
       return;
     }
 
-    // Respect previous dismissal
-    if (localStorage.getItem('luxemia_popup_seen')) return;
-
     // Server-side / unsupported — bail without listeners
     if (typeof window === 'undefined') return;
+
+    // Respect previous dismissal. If storage is blocked, keep the popup usable
+    // for this page instead of crashing the storefront.
+    if (readPopupStorageItem('luxemia_popup_seen')) return;
 
     const trigger = () => {
       if (triggeredRef.current) return;
@@ -122,12 +219,76 @@ const NewVisitorPopup = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
 
     return cleanup;
-  }, [location.pathname]);
+  }, [analyticsSettingsOpen, consentResolved, location.pathname]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsOpen(false);
-    localStorage.setItem('luxemia_popup_seen', 'true');
-  };
+    writePopupStorageItem('luxemia_popup_seen', 'true');
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen || !dialogRef.current) return;
+
+    const dialog = dialogRef.current;
+    previouslyFocusedRef.current = document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+
+    const getFocusableElements = () => Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((element) => (
+      element.getAttribute('aria-hidden') !== 'true' && !element.hasAttribute('hidden')
+    ));
+
+    // The close control is stable across both form and success states and does
+    // not summon a mobile keyboard when this automatically opened dialog appears.
+    (closeButtonRef.current ?? dialog).focus({ preventScroll: true });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        event.stopPropagation();
+        handleClose();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusableElements = getFocusableElements();
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        dialog.focus({ preventScroll: true });
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (!dialog.contains(activeElement)) {
+        event.preventDefault();
+        (event.shiftKey ? lastElement : firstElement).focus();
+      } else if (event.shiftKey && activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      const previouslyFocused = previouslyFocusedRef.current;
+      previouslyFocusedRef.current = null;
+      if (previouslyFocused?.isConnected) {
+        previouslyFocused.focus({ preventScroll: true });
+      }
+    };
+  }, [handleClose, isOpen]);
 
   const validateEmail = (value: string): boolean => {
     const result = emailSchema.safeParse({ email: value });
@@ -155,7 +316,11 @@ const NewVisitorPopup = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(NEWSLETTER_FUNCTION_URL, {
+      if (!SUPABASE_URL) {
+        throw new Error('Newsletter service is not configured.');
+      }
+
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -170,23 +335,21 @@ const NewVisitorPopup = () => {
         retryAfter?: number;
       };
 
-      // The isolated service may legitimately return an empty 2xx response after
-      // recording a lead. Treat a 2xx result with no error payload as success;
-      // only reject explicit error payloads or unsuccessful HTTP responses.
+      // Treat a 2xx result with no error payload as success; only reject an
+      // explicit error payload or unsuccessful HTTP response.
       if (!response.ok || data.success === false || Boolean(data.error)) {
         if (data.retryAfter) {
           toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
           return;
         }
 
-        // The isolated function saves the lead before attempting email delivery.
-        // If the provider rejects delivery, reveal the verified code directly and
-        // state the limitation instead of leaving the shopper in a dead-end state.
+        // The verified Shopify code can still be shown when the newsletter
+        // service is unavailable, but do not imply that the email was stored.
         if (response.status === 503) {
           setDiscountCode(DISCOUNT_CODE);
+          setSubscriptionSaved(false);
           setIsSuccess(true);
-          navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
-          toast.info('Your code is ready below. Email delivery is temporarily unavailable.');
+          toast.info('The newsletter service is unavailable. The welcome code is shown below.');
           return;
         }
 
@@ -195,8 +358,8 @@ const NewVisitorPopup = () => {
 
       toast.success('Welcome to LuxeMia! Your discount code is ready.');
       setDiscountCode(DISCOUNT_CODE);
+      setSubscriptionSaved(true);
       setIsSuccess(true);
-      navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
     } catch (error) {
       console.error('Subscription error:', error);
       toast.error('Something went wrong. Please try again.');
@@ -215,14 +378,17 @@ const NewVisitorPopup = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-foreground/60 backdrop-blur-sm z-50"
             onClick={handleClose}
+            aria-hidden="true"
           />
           {/* The wrapper owns centering. Framer Motion owns only entrance transforms,
               preventing animation styles from overriding CSS translate centering. */}
           <div
+            ref={dialogRef}
             className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
             role="dialog"
             aria-modal="true"
             aria-labelledby="welcome-offer-heading"
+            tabIndex={-1}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.96, y: 16 }}
@@ -234,6 +400,8 @@ const NewVisitorPopup = () => {
             <div className="relative">
               {/* Close button — 44x44px touch target for mobile */}
               <button
+                ref={closeButtonRef}
+                type="button"
                 onClick={handleClose}
                 className="absolute top-3 right-3 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-foreground/5 rounded-full transition-colors z-20 bg-background/80 backdrop-blur-sm"
                 aria-label="Close popup"
@@ -283,11 +451,11 @@ const NewVisitorPopup = () => {
 
                   {!isSuccess ? (
                     <>
-                      {/* Pre-header with urgency cue */}
+                      {/* Verified welcome offer; Shopify currently has no end date. */}
                       <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
-                        <Clock className="w-4 h-4 text-primary" />
+                        <Sparkles className="w-4 h-4 text-primary" />
                         <p className="text-xs tracking-[0.15em] uppercase text-primary font-semibold">
-                          Limited Time Welcome Offer
+                          First-Order Welcome Offer
                         </p>
                       </div>
 
@@ -304,7 +472,7 @@ const NewVisitorPopup = () => {
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span><strong className="text-foreground">Early access</strong> to new arrivals & festive collections</span>
+                          <span><strong className="text-foreground">Email updates</strong> about new arrivals and offers</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
@@ -315,7 +483,12 @@ const NewVisitorPopup = () => {
                       {/* Email form */}
                       <form onSubmit={handleSubmit} className="space-y-3">
                         <div>
+                          <label htmlFor="welcome-offer-email" className="sr-only">
+                            Email address
+                          </label>
                           <input
+                            id="welcome-offer-email"
+                            name="email"
                             type="email"
                             value={email}
                             onChange={(e) => {
@@ -328,10 +501,18 @@ const NewVisitorPopup = () => {
                             maxLength={255}
                             autoComplete="email"
                             inputMode="email"
+                            aria-invalid={emailError ? 'true' : undefined}
+                            aria-describedby={emailError ? 'welcome-offer-email-error' : undefined}
                             className={`w-full bg-transparent border px-4 py-3.5 text-base sm:text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all placeholder:text-foreground/40 font-light rounded-md disabled:opacity-50 ${emailError ? 'border-destructive' : 'border-border'}`}
                           />
                           {emailError && (
-                            <p className="text-destructive text-xs mt-1 text-center sm:text-left">{emailError}</p>
+                            <p
+                              id="welcome-offer-email-error"
+                              role="alert"
+                              className="text-destructive text-xs mt-1 text-center sm:text-left"
+                            >
+                              {emailError}
+                            </p>
                           )}
                         </div>
                         <Button
@@ -357,14 +538,12 @@ const NewVisitorPopup = () => {
                         </Button>
                       </form>
 
-                      {/* Trust signals */}
-                      <div className="flex items-center justify-center sm:justify-start gap-4 mt-4 text-[11px] text-foreground/40">
-                        <span>No spam, ever</span>
-                        <span>·</span>
-                        <span>Unsubscribe anytime</span>
-                        <span className="hidden sm:inline">·</span>
-                        <span className="hidden sm:inline">USA-based customer support</span>
-                      </div>
+                      <p className="mt-4 text-center text-[11px] leading-relaxed text-foreground/50 sm:text-left">
+                        By submitting, you ask LuxeMia to show the welcome code on this screen and subscribe this address to future product or offer updates. You can unsubscribe from marketing emails. See the{' '}
+                        <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground">
+                          Privacy Policy
+                        </Link>.
+                      </p>
                     </>
                   ) : (
                     /* ─── Success State ─── */
@@ -382,10 +561,14 @@ const NewVisitorPopup = () => {
                         <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
                       </motion.div>
 
-                      <h3 className="font-serif text-2xl mb-2">You're In</h3>
+                      <h3 id="welcome-offer-heading" className="font-serif text-2xl mb-2">
+                        {subscriptionSaved ? "You're subscribed" : 'Welcome code available'}
+                      </h3>
 
                       <p className="text-sm text-foreground/60 mb-4">
-                        Your exclusive <strong className="text-foreground">10% off</strong> code is ready:
+                        {subscriptionSaved
+                          ? 'Your subscription was saved and your 10% off welcome code is ready:'
+                          : 'Your subscription was not saved, but the verified 10% off welcome code is available:'}
                       </p>
 
                       <div className="bg-muted px-6 py-3 rounded-md inline-block mb-4 border-2 border-dashed border-primary/30">
@@ -395,7 +578,7 @@ const NewVisitorPopup = () => {
                       </div>
 
                       <p className="text-xs text-foreground/50 mb-6">
-                        Code copied to clipboard. Apply it at checkout.
+                        Copy this code and apply it at checkout. Shopify confirms final eligibility.
                       </p>
 
                       <Button

@@ -16,13 +16,20 @@
 - All collections: https://luxemia.shop/collections
 - Lehengas: https://luxemia.shop/lehengas
 - Bridal lehengas: https://luxemia.shop/collections/bridal-lehengas
+- Wedding-guest lehengas: https://luxemia.shop/collections/wedding-guest-lehengas
 - Sarees: https://luxemia.shop/sarees
 - Wedding sarees: https://luxemia.shop/collections/wedding-sarees
+- Banarasi sarees: https://luxemia.shop/collections/banarasi-sarees
 - Salwar suits: https://luxemia.shop/suits
 - Sharara suits: https://luxemia.shop/collections/sharara-suits
 - Gharara suits: https://luxemia.shop/collections/gharara-suits
 - Anarkali suits: https://luxemia.shop/collections/anarkali-suits
+- Palazzo suits: https://luxemia.shop/collections/palazzo-suits
 - Menswear and sherwanis: https://luxemia.shop/menswear
+- Groom sherwanis: https://luxemia.shop/collections/sherwani-for-groom
+- Wedding-guest kurta sets: https://luxemia.shop/collections/wedding-guest-kurta-sets
+- Diwali womenswear: https://luxemia.shop/collections/diwali-womenswear
+- Diwali menswear: https://luxemia.shop/collections/diwali-menswear
 - Indo-Western: https://luxemia.shop/indowestern
 - Jewelry: https://luxemia.shop/jewelry
 - New arrivals: https://luxemia.shop/new-arrivals
@@ -30,6 +37,13 @@
 ## Customer guidance
 
 - Shipping policy: https://luxemia.shop/shipping
+- United States shipping guide: https://luxemia.shop/shipping/united-states
+- Canada shipping guide: https://luxemia.shop/shipping/canada
+- United Kingdom shipping guide: https://luxemia.shop/shipping/united-kingdom
+- Australia shipping guide: https://luxemia.shop/shipping/australia
+- New Zealand shipping guide: https://luxemia.shop/shipping/new-zealand
+- South Africa shipping guide: https://luxemia.shop/shipping/south-africa
+- Mauritius shipping guide: https://luxemia.shop/shipping/mauritius
 - Returns and cancellations: https://luxemia.shop/returns
 - Size guide: https://luxemia.shop/size-guide
 - Measurement guide: https://luxemia.shop/sizing-measurements-guide
@@ -44,9 +58,9 @@
 - Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Follow the current returns policy for damage, defect, incorrect-item or missing-item claims.
 - Contact LuxeMia before ordering for a fixed event date; an estimate is not a delivery guarantee unless confirmed in writing.
 
-## Editorial content
+## Guides and editorial content
 
-- Blog: https://luxemia.shop/blog
+- Guides hub: https://luxemia.shop/blog
 - Outfit guides: https://luxemia.shop/blog/indian-wedding-guest-attire
 - Fabric guides: https://luxemia.shop/blog/indian-textiles-and-embroidery
 - Weddings and festivals: https://luxemia.shop/blog/weddings-festivals

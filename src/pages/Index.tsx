@@ -44,7 +44,7 @@ const homepageFaqs = [
   },
   {
     question: "How can I ensure the color of the outfit is accurate when viewing online?",
-    answer: "We strive for accurate color representation in our product photography. However, slight color variations may occur due to screen settings and lighting. We recommend reviewing all available product images and descriptions."
+    answer: "Photographs do not guarantee an exact color match because lighting, editing and display settings can change how a color appears. Review every supplied image and the written color information, then contact LuxeMia before ordering if an exact shade is essential."
   },
   {
     question: "How much is U.S. shipping?",
@@ -74,7 +74,7 @@ const Index = () => {
       <main id="main-content" className="pt-[88px] lg:pt-[124px]">
         <NewArrivalsBanner />
 
-        <section aria-label="LuxeMia shopping promises" className="relative z-10 overflow-hidden bg-[linear-gradient(105deg,#3b2a2d_0%,#624044_52%,#3d2b2d_100%)] text-[#fff9f4]">
+        <section aria-label="LuxeMia shopping information" className="relative z-10 overflow-hidden bg-[linear-gradient(105deg,#3b2a2d_0%,#624044_52%,#3d2b2d_100%)] text-[#fff9f4]">
           <div className="container mx-auto grid max-w-7xl grid-cols-1 divide-y divide-white/15 px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-8">
             <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
               <Truck className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
@@ -82,11 +82,11 @@ const Index = () => {
             </div>
             <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
               <Sparkles className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
-              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Curated for every celebration</span>
+              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Wedding and festival collections</span>
             </div>
             <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
               <Heart className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
-              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Warm, personal styling help</span>
+              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Product and sizing questions</span>
             </div>
           </div>
         </section>
@@ -100,7 +100,7 @@ const Index = () => {
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { title: 'Need it sooner', copy: 'Products whose semi-stitched option has a verified 3–5 business-day processing window; stitched and made-to-measure options take longer.', href: '/ready-to-ship', cta: 'Shop ready to ship' },
+                { title: 'Ready-to-ship options', copy: 'Browse purchasable products with positive ready-to-ship catalog evidence. Processing and carrier transit remain separate.', href: '/ready-to-ship', cta: 'Shop ready to ship' },
                 { title: 'Shop the event', copy: 'Browse wedding, festive, reception, Navratri and guest-ready edits.', href: '/collections', cta: 'Explore collections' },
                 { title: 'Fit and customization', copy: 'See only the size, stitching or made-to-measure options stated on each listing.', href: '/collections/customizable-indian-outfits', cta: 'View custom options' },
                 { title: 'Know delivery costs', copy: 'Compare route-based rates, free-shipping thresholds, duties and timing.', href: '/shipping', cta: 'Review shipping' },
@@ -120,14 +120,14 @@ const Index = () => {
             <div className="max-w-2xl">
               <p className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">
                 <span className="h-px w-9 bg-[#a96f72]" />
-                A boutique collection, chosen with care
+                Current Indian occasionwear online
               </p>
               <h1 id="homepage-heading" className="font-serif text-[clamp(2.8rem,6vw,5.7rem)] leading-[0.9] tracking-[-0.035em] text-[#291f20]">
                 {homepageHeadingLead} for{' '}
                 <em className="font-normal text-[#a96f72]">{homepageHeadingAccent}</em>
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-[#665a59] sm:text-lg">
-                Discover expressive silhouettes, handpicked for weddings, festivals, evening celebrations and every entrance worth remembering.
+                Compare current sarees, lehengas, suits, menswear and jewelry, then open the exact listing for materials, included pieces, sizes, availability and fulfillment.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-5">
                 <Link
@@ -184,16 +184,16 @@ const Index = () => {
             </div>
             <div className="flex items-center px-6 py-14 sm:px-12 lg:order-1 lg:px-16 lg:py-20">
               <div className="max-w-md">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#f1b9b4]">Made to your moment</p>
-                <h2 id="customizable-home-heading" className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">A look that feels entirely yours.</h2>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#f1b9b4]">Customization inquiries</p>
+                <h2 id="customizable-home-heading" className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">Confirm every option before ordering.</h2>
                 <p className="mt-6 text-sm leading-7 text-white/70 sm:text-base">
-                  Explore selected designs available for custom color and made-to-measure tailoring. We confirm the details with you before production begins.
+                  Review how LuxeMia handles customization inquiries, then use the exact product listing and written confirmation to determine whether a color, measurement, or tailoring option is available and how timing applies.
                 </p>
                 <Link
                   to="/collections/customizable-indian-outfits"
                   className="group mt-8 inline-flex items-center gap-3 rounded-full border border-[#f1b9b4] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#fff9f4] transition-colors duration-300 hover:bg-[#f1b9b4] hover:text-[#3b292c]"
                 >
-                  Discover custom options <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  Review the inquiry process <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>
@@ -227,17 +227,17 @@ const Index = () => {
               <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
                 <p className="font-serif text-3xl text-[#f1bbb5]">01</p>
                 <h3 className="mt-7 font-serif text-xl">A touch of home</h3>
-                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Pieces chosen for the colours, textures, and rituals that make a celebration feel deeply familiar.</p>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Browse current product images and use the exact listing to verify color, material, included pieces and options.</p>
               </div>
               <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
                 <p className="font-serif text-3xl text-[#f1bbb5]">02</p>
                 <h3 className="mt-7 font-serif text-xl">Guidance with care</h3>
-                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">A more personal way to choose when you would like a little reassurance around fit, detail, or occasion.</p>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Use the online contact options when a published size, product detail or policy needs clarification.</p>
               </div>
               <div className="bg-[#3c2b2e]/90 p-6 sm:p-7">
                 <p className="font-serif text-3xl text-[#f1bbb5]">03</p>
                 <h3 className="mt-7 font-serif text-xl">Made for memory</h3>
-                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">For weddings, festivals, and the in-between moments that become part of a family&rsquo;s story.</p>
+                <p className="mt-3 text-sm leading-6 text-[#fff9f4]/70">Compare wedding, festival and general celebration collections without treating a collection name as a universal dress rule.</p>
               </div>
             </div>
           </div>
@@ -268,22 +268,22 @@ const Index = () => {
         {/* Style Quiz CTA */}
         <section className="relative overflow-hidden border-y border-[#dfc1bb] bg-[radial-gradient(circle_at_8%_75%,rgba(220,170,159,0.38),transparent_22%),radial-gradient(circle_at_91%_15%,rgba(232,206,171,0.48),transparent_24%),#f7e9e3] py-16 lg:py-20">
           <div className="container mx-auto px-4 lg:px-8 max-w-3xl text-center">
-            <p className="text-xs tracking-[0.2em] uppercase text-[#a96f72] mb-3">A little guidance, just for you</p>
+            <p className="text-xs tracking-[0.2em] uppercase text-[#a96f72] mb-3">Catalog filtering</p>
             <h2 className="text-3xl lg:text-4xl font-serif mb-4">
-              Find the look that feels like you
+              Narrow the Current Catalog
             </h2>
             <p className="text-muted-foreground font-light mb-8 max-w-xl mx-auto leading-relaxed">
-              Not sure where to begin? Answer five quick questions, and we will guide you toward outfits that suit your occasion, personality and budget.
+              Use two filters—Shopify product type and USD minimum price—to narrow current products. The result does not verify fit, comfort, color, event suitability, construction, included pieces, or fulfillment details.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <Link
                 to="/style-quiz"
                 className="inline-flex items-center gap-2 rounded-full bg-[#3b2a2d] px-8 py-3.5 text-sm font-medium tracking-wide text-[#fff9f4] shadow-[0_10px_20px_rgba(59,42,45,0.18)] transition-colors hover:bg-[#a96f72]"
               >
-                Take the Style Quiz
+                Open the Browse Quiz
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </Link>
-              <p className="text-xs text-muted-foreground">Takes less than 2 minutes · Free · No signup needed</p>
+              <p className="text-xs text-muted-foreground">No signup needed · Verify every result on its product page</p>
             </div>
           </div>
         </section>
