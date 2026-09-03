@@ -334,7 +334,7 @@ forbid('src/components/product/DeliveryEstimate.tsx', [
 ]);
 
 requireText('src/lib/shopify.ts', [
-  "import { buildVerifiedProductCopy } from './productDescriptionEnrichment';",
+  "import { buildVerifiedProductCopy, sanitizeProductTitle } from './productDescriptionEnrichment';",
   'const verifiedDescription = buildVerifiedProductCopy(node);',
   'description: verifiedDescription,',
 ]);
@@ -343,7 +343,7 @@ forbid('src/lib/shopify.ts', [
 ]);
 requireText('scripts/prerender.js', [
   "loadTsModule('src/lib/productDescriptionEnrichment.ts')",
-  'buildVerifiedProductCopy = productCopyModule.buildVerifiedProductCopy;',
+  'const buildVerifiedProductCopy = productDescriptionModule.buildVerifiedProductCopy;',
 ]);
 requireText('src/lib/productDescriptionEnrichment.ts', [
   "tag.trim().toLowerCase() === 'facts:source-verified'",
