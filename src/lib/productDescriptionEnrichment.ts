@@ -61,7 +61,7 @@ export function sanitizeProductTitle(value?: string): string {
     .replace(/\s*(?:[|–—-]\s*)?ready[-\s]?to[-\s]?ship\b/gi, '')
     .replace(/\s*(?:[|–—-]\s*)?handcrafted indian bridal luxury\b/gi, '')
     .replace(/\bhandcrafted\s+/gi, '')
-    .replace(/\s*(?:[|–—-]\s*)?luxemia\s*$/gi, '')
+    .replace(/\s*(?:[|–—-]\s*)?luxemia(?:\.shop)?\s*$/gi, '')
     .replace(/\s*[|–—-]\s*$/g, '')
     .replace(/\s+/g, ' ')
     .trim();

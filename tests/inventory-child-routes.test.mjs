@@ -271,6 +271,16 @@ test('client and prerender share strict durable-intent eligibility with represen
     ...importedBoilerplate,
     title: sanitizeProductTitle(importedBoilerplate.title),
   }, 'wedding-guest-lehengas'), true, 'client normalization matches prerender eligibility input');
+  assert.equal(
+    sanitizeProductTitle('Buy Pista Green Cotton Navratri Lehenga Choli | luxemia.shop'),
+    'Pista Green Cotton Navratri Lehenga Choli',
+    'catalog-appended storefront domains never survive as product-title or H1 suffixes',
+  );
+  assert.equal(
+    sanitizeProductTitle('Pista Green Cotton Navratri Lehenga Choli | LuxeMia'),
+    'Pista Green Cotton Navratri Lehenga Choli',
+    'the canonical brand suffix remains normalized by the shared sanitizer',
+  );
   expect('wedding-guest-lehengas', { title: 'Bridesmaid Lehenga Necklace', productType: 'Jewelry Set' }, false);
   expect('wedding-guest-lehengas', { title: 'Bridal Lehenga for Sangeet', productType: 'Bridal Lehenga', tags: ['wedding guest'] }, false);
   expect('wedding-guest-lehengas', { title: 'Reception Lehenga', productType: 'Lehenga Choli', tags: ['reception'] }, false);
