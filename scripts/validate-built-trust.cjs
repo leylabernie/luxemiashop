@@ -225,10 +225,11 @@ const review = readPrerender('/review-policy');
 requireTitle('review-policy', review, 'Customer Review Program Conditions | LuxeMia');
 requireAll('review-policy', review, [
   'This page does not claim that Google Customer Reviews enrollment, survey eligibility or a seller rating is currently active',
-  'shopper decides whether to opt in',
+  'with the shopper deciding whether to opt in',
   'The public LuxeMia return page has no signed Shopify order context',
   'A survey integration may be enabled only in Shopify’s protected post-purchase context',
   'If a required field is unavailable or cannot be verified, the survey must not render',
+  'The shopper must retain the optional opt-in choice described by the provider.',
   'does not create, seed, rewrite or selectively suppress customer reviews',
   'A badge-script request by itself is not evidence that enrollment, survey eligibility or a seller rating is active',
   '/editorial-policy',
