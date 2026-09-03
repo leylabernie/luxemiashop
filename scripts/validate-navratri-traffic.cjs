@@ -108,9 +108,9 @@ if (festiveTopCount > Math.floor(firstMerchandisingWindow.length * 0.25)) {
   throw new Error(`[navratri-traffic] Navratri/Garba products occupy ${festiveTopCount} of the first ${firstMerchandisingWindow.length} generic lehenga slots`);
 }
 
-requireText(collectionHtml, '<title>Navratri Outfits USA 2026 | Garba Styles | LuxeMia</title>', 'collection search title');
+requireText(collectionHtml, '<title>Navratri Outfits 2026 | Garba Styles | LuxeMia</title>', 'collection search title');
 requireText(collectionHtml, '<link rel="canonical" href="https://luxemia.shop/collections/navratri-outfits"', 'collection canonical');
-requireText(collectionHtml, '<h1>Navratri Outfits for Garba in the USA</h1>', 'collection H1');
+requireText(collectionHtml, '<h1>Navratri Outfits for Garba</h1>', 'collection H1');
 requirePattern(collectionHtml, /"@type"\s*:\s*"CollectionPage"/, 'CollectionPage schema');
 requirePattern(collectionHtml, /"@type"\s*:\s*"ItemList"/, 'ItemList schema');
 requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#products', 'linked collection product schema');
