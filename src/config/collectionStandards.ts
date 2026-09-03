@@ -237,7 +237,7 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { label: 'How early to order', href: '/blog/how-early-to-order-for-a-fixed-wedding-date' },
     ],
     faqs: [
-      { question: 'How are wedding-guest lehengas selected?', answer: 'The product must be an orderable lehenga, have an explicit wedding-guest or bridesmaid role signal, and not be expressly identified as bridal.' },
+      { question: 'Which products appear in this wedding-guest lehenga collection?', answer: 'Products must have current product and variant availability, a lehenga signal in the title or product type, no menswear evidence, explicit wedding-guest, bridesmaid or maid-of-honor evidence, and no bridal or bride-role evidence.' },
       { question: 'Does every listing include a choli and dupatta?', answer: 'No. Open the selected listing and verify every expressly included piece; photographs and the collection name do not add items.' },
       ...COMMON_FAQS,
     ],
@@ -261,7 +261,7 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { label: 'Sizing and measurements', href: '/sizing-measurements-guide' },
     ],
     faqs: [
-      { question: 'Which kurta sets appear on this wedding-guest page?', answer: 'Products need current kurta-set, menswear and explicit wedding-guest evidence and must retain an orderable garment variant.' },
+      { question: 'Which products appear in this wedding-guest kurta-set collection?', answer: 'Products must have current product and variant availability, a supported kurta-set signal in the title or product type, menswear evidence, and explicit wedding-guest, bridesmaid or maid-of-honor evidence.' },
       { question: 'Is a jacket or pajama always included?', answer: 'No. Confirm every included garment and accessory on the selected product page before ordering.' },
       ...COMMON_FAQS,
     ],
@@ -285,7 +285,7 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { label: 'Sizing and measurements', href: '/sizing-measurements-guide' },
     ],
     faqs: [
-      { question: 'How are products selected for Diwali womenswear?', answer: 'A current orderable product must have Diwali, festive or festival evidence, positive women’s outfit or garment evidence, and no menswear classification.' },
+      { question: 'Which products appear in this Diwali womenswear collection?', answer: 'A current product must have an orderable garment variant, explicit Diwali, festive or festival evidence, a supported womenswear garment signal and no menswear evidence, and it cannot be a standalone blouse.' },
       { question: 'Is one color or silhouette required for Diwali?', answer: 'No. Practices vary; follow the host or organizer and choose from the exact verified product details.' },
       ...COMMON_FAQS,
     ],
@@ -309,7 +309,7 @@ const ROUTE_STANDARD_OVERRIDES: Partial<Record<string, CollectionStandardOverrid
       { label: 'Sizing and measurements', href: '/sizing-measurements-guide' },
     ],
     faqs: [
-      { question: 'How are products selected for Diwali menswear?', answer: 'A current product must have menswear, Diwali or festival, and supported garment evidence, plus at least one orderable garment variant.' },
+      { question: 'Which products appear in this Diwali menswear collection?', answer: 'A current product must have an orderable garment variant plus explicit Diwali, festive or festival evidence, menswear evidence and a supported menswear garment signal.' },
       { question: 'Does every kurta listing include matching bottoms or a jacket?', answer: 'No. Confirm every garment and accessory expressly included on the selected product page.' },
       ...COMMON_FAQS,
     ],

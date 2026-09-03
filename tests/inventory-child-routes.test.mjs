@@ -139,6 +139,10 @@ test('durable wedding-guest and Diwali child intents have one canonical source-t
 
     const standard = getCollectionStandard(routePath);
     assert.ok(standard, `${routePath} has a shared collection standard`);
+    assert.ok(
+      standard.faqs.some((faq) => /Which products appear in/i.test(faq.question)),
+      `${routePath} has a route-specific product-eligibility FAQ`,
+    );
     const routeBlock = prerender.slice(prerender.indexOf(`    path: '${routePath}',`), prerender.indexOf('  },', prerender.indexOf(`    path: '${routePath}',`)) + 4);
     assert.match(routeBlock, /content: '',/, `${routePath} has no duplicate prerender copy`);
     const wordCount = standard.directAnswer.trim().split(/\s+/).filter(Boolean).length;

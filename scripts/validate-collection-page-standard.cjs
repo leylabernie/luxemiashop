@@ -170,6 +170,9 @@ function validateSourceInvariants() {
       const approvedPaths = new Set(approvedInventory.paths || []);
       for (const routePath of INDEXABLE_COLLECTION_PATHS || []) {
         const standard = getCollectionStandard(routePath);
+        if (!standard?.faqs?.some((faq) => /Which products appear in/i.test(faq?.question || ''))) {
+          fail(`source: ${routePath} is missing a collection-specific product-eligibility FAQ.`);
+        }
         const internalLinks = [
           ...(standard?.chooseBy || []),
           ...(standard?.guideLinks || []),
