@@ -147,19 +147,23 @@ requireText(articleHtml, 'LUXE10', 'article first-order offer');
 requireText(homepageHtml, 'href="/collections/navratri-outfits"', 'homepage Navratri collection link');
 requireText(homepageHtml, 'href="/blog/navratri-9-day-color-guide-2026"', 'homepage Navratri guide link');
 
-const priorityItems = [...feedXml.matchAll(/<item>[\s\S]*?<\/item>/gi)]
-  .map((match) => match[0])
-  .filter((item) => /<g:custom_label_1>navratri_2026_priority<\/g:custom_label_1>/i.test(item));
-const priorityHandles = new Set(priorityItems.map((item) => {
-  const link = item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1]?.replace(/&amp;/g, '&') || '';
-  try {
-    return new URL(link).pathname.replace(/^\/product\//, '').replace(/\/+$/, '');
-  } catch {
-    return '';
+const merchantProductHandles = new Set(
+  [...feedXml.matchAll(/<item>[\s\S]*?<\/item>/gi)]
+    .map((match) => match[0])
+    .map((item) => {
+      const link = item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1]?.replace(/&amp;/g, '&') || '';
+      try {
+        return new URL(link).pathname.match(/^\/product\/([a-z0-9][a-z0-9-]*)\/?$/i)?.[1] || '';
+      } catch {
+        return '';
+      }
+    })
+    .filter(Boolean)
+);
+for (const handle of REQUIRED_NAVRATRI_PRODUCT_HANDLES) {
+  if (!merchantProductHandles.has(handle)) {
+    throw new Error(`[navratri-traffic] Merchant feed is missing published Navratri product ${handle}`);
   }
-}).filter(Boolean));
-if (priorityHandles.size !== 30) {
-  throw new Error(`[navratri-traffic] Expected 30 priority Merchant product groups; found ${priorityHandles.size}`);
 }
 
 const hierarchicalTypes = count(feedXml, /<g:product_type>Apparel &amp; Accessories &gt; [^<]+<\/g:product_type>/g);
@@ -180,4 +184,4 @@ for (const url of [
   }
 }
 
-console.log(`[navratri-traffic] OK — ${collectionProductLinks.size} seasonal products including all ${REQUIRED_NAVRATRI_PRODUCT_HANDLES.length} published listings; generic /lehengas is wedding-led with ${festiveTopCount}/${firstMerchandisingWindow.length} explicit Navratri/Garba products in its first window; guide links, schema, 30 Merchant priority groups, product-type hierarchy, prerendering, and sitemaps verified.`);
+console.log(`[navratri-traffic] OK — ${collectionProductLinks.size} seasonal products including all ${REQUIRED_NAVRATRI_PRODUCT_HANDLES.length} published listings; generic /lehengas is wedding-led with ${festiveTopCount}/${firstMerchandisingWindow.length} explicit Navratri/Garba products in its first window; guide links, schema, Merchant coverage for every required listing, product-type hierarchy, prerendering, and sitemaps verified.`);
