@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -8,6 +9,11 @@ import { build } from 'esbuild';
 
 const projectRoot = path.resolve(import.meta.dirname, '..');
 const read = (relativePath) => readFile(path.join(projectRoot, relativePath), 'utf8');
+const require = createRequire(import.meta.url);
+const {
+  parseJsonLdScripts,
+  validateItemListParity,
+} = require('../scripts/prerender-validation-helpers.cjs');
 
 const [
   app,
@@ -34,6 +40,7 @@ const [
   weddingGuestPage,
   diwaliPage,
   eligibilitySource,
+  coverageValidator,
 ] = await Promise.all([
   read('src/App.tsx'),
   read('src/hooks/useShopifyProducts.ts'),
@@ -59,6 +66,7 @@ const [
   read('src/pages/WeddingGuestOutfits.tsx'),
   read('src/pages/DiwaliOutfits.tsx'),
   read('src/lib/intentCollectionEligibility.ts'),
+  read('scripts/verify-prerender-coverage.cjs'),
 ]);
 
 const temporaryDirectory = await mkdtemp(path.join(os.tmpdir(), 'luxemia-intent-routes-'));
@@ -177,6 +185,55 @@ test('client and prerender share strict durable-intent eligibility with represen
   assert.match(prerender, /generateFaqPageJsonLd\(collectionStandard\.faqs\)/);
   assert.match(prerender, /route\.category\s*\? 'collection'/);
   assert.match(prerender, /<meta property="og:type" content="\$\{openGraphType\}"/);
+  assert.match(coverageValidator, /parseJsonLdScripts\(html, route, schemaFailures\)/);
+  assert.match(coverageValidator, /validateItemListParity\(itemList, payloadHandles\)/);
+  assert.doesNotMatch(coverageValidator, /<script type="application\\\/ld\\\+json">/);
+});
+
+test('prerender validation accepts attributed schemas and the intentional 30-product ItemList cap', () => {
+  const payloadHandles = Array.from({ length: 50 }, (_, index) => `product-${index + 1}`);
+  const itemList = {
+    '@type': 'ItemList',
+    numberOfItems: 30,
+    itemListElement: payloadHandles.slice(0, 30).map((handle, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: `https://luxemia.shop/product/${handle}`,
+    })),
+  };
+  const html = [
+    '<script data-prerender-schema type="application/ld+json">',
+    JSON.stringify(itemList),
+    '</script>',
+    '<script nonce="fixture" TYPE="application/ld+json" data-prerender-schema>',
+    JSON.stringify({ '@type': 'CollectionPage' }),
+    '</script>',
+  ].join('');
+  const failures = [];
+  const parsed = parseJsonLdScripts(html, '/collections/fixture', failures);
+
+  assert.deepEqual(failures, []);
+  assert.equal(parsed.length, 2);
+  assert.deepEqual(parsed[0].schema, itemList);
+  assert.equal(validateItemListParity(parsed[0].schema, payloadHandles), null);
+
+  const shortPayload = payloadHandles.slice(0, 25);
+  const nestedUrlItemList = {
+    '@type': 'ItemList',
+    numberOfItems: 25,
+    itemListElement: shortPayload.map((handle) => ({
+      '@type': 'ListItem',
+      item: { url: `https://luxemia.shop/product/${handle}` },
+    })),
+  };
+  assert.equal(validateItemListParity(nestedUrlItemList, shortPayload), null);
+
+  const wrongLastProduct = structuredClone(itemList);
+  wrongLastProduct.itemListElement[29].url = 'https://luxemia.shop/product/wrong-product';
+  assert.match(validateItemListParity(wrongLastProduct, payloadHandles), /do not match/);
+
+  const wrongCount = { ...itemList, numberOfItems: 50 };
+  assert.match(validateItemListParity(wrongCount, payloadHandles), /do not match/);
 });
 
 test('catalog fetch failures stay indexable and show a retry state without claiming zero inventory', () => {
